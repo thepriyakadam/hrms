@@ -4,7 +4,6 @@
     <tr>  
       <th>Code</th>
       <th>Name</th>
-      <th>Description</th>
       <th>Price</th>
       <th>Action</th>
     </tr>
@@ -14,7 +13,6 @@
       <tr>
         <td><%= food_coupan_master.code %></td>
         <td><%= food_coupan_master.try(:name) %></td>
-        <td><%= food_coupan_master.description %></td>
         <td><%= food_coupan_master.price %></td>
         <td>
           <% if food_coupan_master.is_confirm == true %>

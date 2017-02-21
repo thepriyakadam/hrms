@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@travel_option,html: {id: 'travel'},remote:true) do |f| %>
+<%= bootstrap_form_for(@travel_option,html: {id: 'travel_option'},remote:true) do |f| %>
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
@@ -19,4 +19,29 @@
     </div>
   </div>
 <% end %>
+
+<script>
+$("#travel_option").validate({
+    rules: {
+      "travel_option[code]":{
+        required: true,
+      },
+      "travel_option[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "travel_option[code]":{
+        required: "Please Specify Code",
+      },
+       "travel_option[name]":{
+        required: "Please Specify Travel Travel Type",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
 

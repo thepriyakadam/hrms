@@ -42,10 +42,10 @@ class OnDutyRequestsController < ApplicationController
     if @on_duty_request.is_available?
       flash[:alert] = "Your Request already has been sent"
       if current_user.employee_id == @on_duty_request.employee_id
-          redirect_to new_on_duty_request_path
-        else
-          redirect_to employee_list_on_duty_requests_path
-        end
+        redirect_to new_on_duty_request_path
+      else
+        redirect_to employee_list_on_duty_requests_path
+      end
     else
       if @employee.manager_id.nil?
         flash[:alert] = 'Reporting manager not set please set Reporting Manager'
@@ -62,7 +62,7 @@ class OnDutyRequestsController < ApplicationController
         if @on_duty_request.leave_type == 'Full Day'
           @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f + 1
         elsif @on_duty_request.leave_type == 'Full/Half'
-          if @on_duty_request.last_half == true && @on_duty_request.last_half == true
+          if @on_duty_request.last_half == true && @on_duty_request.first_half == true
             @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f
           elsif @on_duty_request.first_half == true || @on_duty_request.last_half == true
             @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f + 0.5
@@ -94,9 +94,16 @@ class OnDutyRequestsController < ApplicationController
         end
           OdStatusRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',change_date: Date.today)
 
+          if @employee.manager.email.nil? or @employee.manager.email == ""
+              flash[:notice] = "Send request without email."
+            else
+              flash[:notice] = 'Od Request sent successfully.'
+              OdRequestMailer.pending(@on_duty_request).deliver_now
+            end
+
         flash[:notice] = "Request Created Successfully"
         if current_user.employee_id == @on_duty_request.employee_id
-          redirect_to new_on_duty_request_path
+          redirect_to on_duty_requests_path
         else
           redirect_to employee_list_on_duty_requests_path
         end
@@ -155,6 +162,9 @@ class OnDutyRequestsController < ApplicationController
 
   def employee_od_request_detail
     @current_request = OnDutyRequest.find(params[:format])
+    @employee = Employee.find(@current_request.employee_id)
+    @on_duty_requests = OnDutyRequest.where(employee_id: @employee).order("id DESC")
+
   end
 
   def employee_list
@@ -188,6 +198,30 @@ class OnDutyRequestsController < ApplicationController
   def hr_view_request
     @employee = Employee.find(params[:format])
     @on_duty_requests = OnDutyRequest.where(employee_id: @employee.id).order("id DESC")
+  end
+
+  def show_od_record
+    @on_duty_request = OnDutyRequest.find(params[:format])
+    @particular_od_records = @on_duty_request.particular_od_records
+  end
+
+  def od_request_list
+    if current_user.class == Group
+      @first_level_request_lists = OnDutyRequest.where(is_pending: true, is_first_approved: nil, is_first_rejected: nil, is_cancelled: nil)
+      @second_level_request_lists = OnDutyRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil)
+    else
+      @first_level_request_lists = OnDutyRequest.where(is_pending: true, is_first_approved: nil, is_first_rejected: nil, is_cancelled: nil)
+      @on_duty_request = OnDutyRequest.where.not(second_reporter_id: nil).pluck(:second_reporter_id)
+      @second_level_request_lists = OnDutyRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil,second_reporter_id: @on_duty_request)
+    end
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="LeaveProcess"
+  end
+
+  def employee_od_request_detil_for_admin
+    @current_request = OnDutyRequest.find(params[:format])
+    @employee = Employee.find(@current_request.employee_id)
+    @on_duty_requests = OnDutyRequest.where(employee_id: @employee).order("id DESC")
   end
 
   private

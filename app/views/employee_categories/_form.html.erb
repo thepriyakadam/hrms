@@ -32,3 +32,28 @@
     </div>
   </div>
 <% end %>
+
+<script>
+$("#employee_category").validate({
+    rules: {
+      "employee_category[code]":{
+        required: true,
+      },
+      "employee_category[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "employee_category[code]":{
+        required: "Please Specify Employee Code",
+      },
+       "employee_category[name]":{
+        required: "Please Specify Employee Category",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

@@ -3,6 +3,7 @@ class OnDutyRequest < ActiveRecord::Base
   belongs_to :employee
   has_many :od_records
   has_many :od_status_records
+  has_many :particular_od_records
   belongs_to :first_reporter, class_name: 'Employee'
   belongs_to :second_reporter, class_name: 'Employee'
 
@@ -80,7 +81,7 @@ class OnDutyRequest < ActiveRecord::Base
         for i in self.start_date.to_date..self.end_date.to_date
           if self.is_there(i)
           else
-          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD', count: 1, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id))
           end
         end
 
@@ -92,47 +93,47 @@ class OnDutyRequest < ActiveRecord::Base
             if i == start_date
               if self.is_there(i)
               else
-              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5, department_id: self.employee.try(:department_id))
               end
             elsif i == end_date
               if self.is_there(i)
               else
-              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5,department_id: self.employee.try(:department_id))
               end
             else
               if self.is_there(i)
               else
-              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD', count: 1, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id))
               end
             end #i==start_date
           elsif self.last_half == true
             if i == start_date
               if self.is_there(i)
               else
-              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5, department_id: self.employee.try(:department_id))
               end
             else
               if self.is_there(i)
               else
-              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD', count: 1, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id))
               end
             end
           elsif self.first_half == true
             if i == end_date
               if self.is_there(i)
               else
-              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5,department_id: self.employee.try(:department_id))
               end
             else
               if self.is_there(i)
               else
-              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD', count: 1, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id))
               end
             end
           else
             if self.is_there(i)
             else
-            EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD', count: 1, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+            EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id))
             end
           end #self.first_half
         end #for i in
@@ -141,7 +142,7 @@ class OnDutyRequest < ActiveRecord::Base
         for i in self.start_date.to_date..self.start_date.to_date
           if self.is_there(i)
           else
-          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5,department_id: self.employee.try(:department_id))
           end
         end #for
       end # FULL DAY

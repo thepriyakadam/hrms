@@ -9,6 +9,9 @@ Rails.application.routes.draw do
       get :employee_list
       get :from_hr
       get :hr_view_request
+      get :show_od_record
+      get :od_request_list
+      get :employee_od_request_detil_for_admin
     end
   end
 
@@ -768,6 +771,7 @@ end
       get :final_approve
       get :first_reject
       get :second_reject
+      get :final_reject
   end
 end
   resources :travel_options do

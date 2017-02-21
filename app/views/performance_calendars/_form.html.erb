@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@performance_calendar,remote:true) do |f| %>
+<%= bootstrap_form_for(@performance_calendar,html: {id: 'performance_calendar'},remote:true) do |f| %>
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
@@ -55,4 +55,42 @@
     yearRange: '-200:+1',
     dateFormat: 'dd-mm-yy' });
   }); 
+</script>
+
+<script>
+$("#performance_calendar").validate({
+    rules: {
+      "performance_calendar[period_id]":{
+        required: true,
+      },
+      "performance_calendar[performance_activity_id]":{
+        required: true,
+      },
+      "performance_calendar[start_date]":{
+        required: true,
+      },
+      "performance_calendar[end_date]":{
+        required: true,
+      }
+    },
+    messages: {
+      "performance_calendar[period_id]":{
+        required: "Please Select Period",
+      },
+      "performance_calendar[performance_activity_id]":{
+        required: "Please Select Performance Activity",
+      },
+      "performance_calendar[start_date]":{
+        required: "Please Select Start Date",
+      },
+      "performance_calendar[end_date]":{
+        required: "Please Select End Date",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
 </script>

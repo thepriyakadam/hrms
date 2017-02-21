@@ -13,3 +13,27 @@
     </div>
   </div>
 <% end %>
+
+
+<script>
+$("#degree_type").validate({
+    rules: {
+      "degree_type[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "degree_type[name]":{
+        required: "Please Specify Qualification Level",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+
+
+

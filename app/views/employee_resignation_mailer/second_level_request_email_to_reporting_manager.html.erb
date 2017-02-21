@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+     <h4>Resignation Request</h4>
+    <p>
+      Dear,<%= @reporting_master.prefix %><%= @reporting_master.try(:first_name).to_s %> <%= @reporting_master.try(:middle_name).to_s %> <%= @reporting_master.try(:last_name).to_s %><br><br>
+      This is to inform you that you have a Employee Resignation Request at Second Level.
+      Details for Resignation is given below.<br><br>
+       1. <b>Employee Name :-</b> <%= @employee.prefix %><%= @employee.try(:first_name).to_s %> <%= @employee.try(:middle_name).to_s %> <%= @employee.try(:last_name).to_s %><br><br>
+       2. <b>Resignation Date :-</b> <%= @employee_resignation.resignation_date %><br><br>
+       3. <b>Reason For Leaving :-</b> <%= @employee_resignation.reason %><br><br>
+       4. <b>Notice Period :-</b> <%= @employee_resignation.notice_period %><br><br>
+       5. <b>Short Notice Period :-</b> <%= @employee_resignation.short_notice_period %><br><br>
+       6. <b>Requested Releaving Date :-</b> <%= @employee_resignation.tentative_leaving_date %><br><br>
+       7. <b>Remark:-</b> <%= @employee_resignation.remark %><br><br>
+       8. <b>Interview Date:-</b> <%= @employee_resignation.exit_interview_date %><br><br>
+       9. <b>Note:-</b> <%= @employee_resignation.note %><br><br>
+       10. <b>Leaving Date:-</b> <%= @employee_resignation.leaving_date %><br><br>
+       11. <b>Settled On:-</b> <%= @employee_resignation.settled_on %><br><br>
+       12. <b>Reason:-</b> <%= @employee_resignation.reason %><br><br>
+        With Regards,<br><br>
+        BFTL HR
+     </p>
+  </body>
+</html>

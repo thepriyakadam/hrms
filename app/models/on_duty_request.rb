@@ -3,6 +3,7 @@ class OnDutyRequest < ActiveRecord::Base
   belongs_to :employee
   has_many :od_records
   has_many :od_status_records
+  has_many :particular_od_records
   belongs_to :first_reporter, class_name: 'Employee'
   belongs_to :second_reporter, class_name: 'Employee'
 

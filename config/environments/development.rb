@@ -46,6 +46,7 @@ Rails.application.configure do
   # config.action_mailer.perform_deliveries = true,
   ActionMailer::Base.delivery_method = :smtp
 
+
   ActionMailer::Base.smtp_settings = {
     address: 'mail.bhandarigroup.in',
     port: 25,
@@ -55,6 +56,7 @@ Rails.application.configure do
     authentication: :plain
   }
   
+
   # # Root url
   # config.action_mailer.default_url_options = { host: 'mail.bhandarigroup.in', port: 3000 }
   # # config.domain = 'lvh.me'
@@ -70,11 +72,13 @@ Rails.application.configure do
   #   authentication: :plain
   # }
   
+
 #   # Root url
 #   config.action_mailer.default_url_options = { host: 'mail.rajgreen.co.in', port: 3000 }
 #   # config.domain = 'lvh.me'
 #   # config.action_mailer.perform_deliveries = true,
 #   ActionMailer::Base.delivery_method = :smtp
+
 
 #   ActionMailer::Base.smtp_settings = {
 #     :address => "mail.rajgreen.co.in",

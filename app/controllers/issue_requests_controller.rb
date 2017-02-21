@@ -14,7 +14,6 @@ class IssueRequestsController < ApplicationController
   # GET /issue_requests/1
   # GET /issue_requests/1.json
   def show
-    # byebug
      @issue_request = IssueRequest.find(params[:id])
   end
 

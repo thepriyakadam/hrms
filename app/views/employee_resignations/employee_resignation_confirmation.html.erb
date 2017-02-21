@@ -11,9 +11,6 @@
       <th>Employee ID</th>
       <th>Employee Name</th>
       <th>Resignation Date</th>
-      <th>Reason</th>
-      <th>Notice period(in days)</th>
-      <th>Short notice period(in days)</th>
       <th>Tentative leaving date</th>
     </tr>
   </thead>
@@ -25,17 +22,11 @@
         <td><font color='green'> *<%= employee_resignation.employee.try(:manual_employee_code) %></font></td>
         <td><font color='green'><%= full_name(employee_resignation.employee)%></font></td>
         <td><font color='green'><%= employee_resignation.resignation_date %></font></td>
-        <td><font color='green'><%= employee_resignation.reason %></font></td>
-        <td><font color='green'><%= employee_resignation.notice_period %></font></td>
-        <td><font color='green'><%= employee_resignation.short_notice_period %></font></td>
         <td><font color='green'><%= employee_resignation.tentative_leaving_date %></font></td>
       <% else %>
         <td><%= employee_resignation.employee.try(:manual_employee_code) %></td>
         <td><%= full_name(employee_resignation.employee)%></td>
         <td><%= employee_resignation.resignation_date %></td>
-        <td><%= employee_resignation.reason %></td>
-        <td><%= employee_resignation.notice_period %></td>
-        <td><%= employee_resignation.short_notice_period %></td>
         <td><%= employee_resignation.tentative_leaving_date %></td>
       </tr>
       <% end %>
@@ -116,10 +107,6 @@
       <td><%= @employee_resignation.rehired %></td>
     </tr>
 
-    <tr>
-
-
-    </tr>
 </table><br>
 <div id="myModal" class="modal fade"></div>
 <div id="myModal1" class="modal fade"></div>

@@ -4,18 +4,20 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h4>Od Request Approved</h4>
+    <h4>OD Request Approved</h4>
     <p>
       
-      Employee ID : <%= @manager.manual_employee_code %><br>
-      Employee Name : <%= @manager.first_name.to_s+' '+@manager.last_name.to_s %><br>
+      Employee ID : <%= @manager.try(:manual_employee_code) %><br>
+      Employee Name : <%= @manager.try(:first_name).to_s+' '+@manager.try(:middle_name)+' '+@manager.try(:last_name).to_s %><br>
       Approved
 
       You have one leave request from <br>
       
-      Employee ID : <%= @od_request.employee.manual_employee_code %><br>
-      Employee Name : <%= @od_request.employee.first_name.to_s+' '+@od_request.employee.last_name.to_s %><br>
-      From <%= @od_request.start_date.to_date %>To<%= @od_request.end_date.to_date%><br>
+      Employee ID : <%= @od_request.employee.try(:manual_employee_code) %><br>
+      Employee Name : <%= @od_request.employee.try(:first_name).to_s+' '+@od_request.employee.try(:middle_name).to_s+' '+@od_request.employee.try(:last_name).to_s %><br>
+      Department : <%= @od_request.employee.try(:department).try(:name) %><br>
+      Designation : <%= @od_request.employee.try(:joining_detail).try(:employee_designation).try(:name) %><br>
+      From <%= @od_request.start_date.to_date %> To <%= @od_request.end_date.to_date%><br>
       No of Days : <%= @od_request.no_of_day %> 
     </p>
   </body>

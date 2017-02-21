@@ -1,13 +1,13 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Employee Particular Od Request</h3>
+    <h3 class="box-title">Employee Particular OD Request</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
-          <th>Od Date</th>
-          <th>Is Full</th>
+          <th>OD Date</th>
+          <th>OD Type</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -16,7 +16,7 @@
         <% @particular_od_records.each do |p| %>
           <tr>
             <td><%= p.leave_date.to_date %></td>
-            <td><%= p.is_full %></td>
+            <td><%= p.is_full ? "Full Day" : "Half Day" %></td>
             <% if p.is_cancel_after_approve %>
               <td><small class="label label-info">Cancelled After Approve</small></td>
             <% else %>
@@ -27,6 +27,6 @@
       </tbody>
     </table>    
     <br>
-      <%= link_to 'Back',hr_view_request_on_duty_requests_path(@on_duty_request.employee_id), class: 'btn btn-default btn-sm' %>
+      <%= link_to 'Back',hr_view_request_on_duty_requests_path(@on_duty_request.employee_id), class: 'btn btn-default btn-sm fa fa-arrow-left' %>
   </div>
 </div>

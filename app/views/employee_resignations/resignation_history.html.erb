@@ -12,6 +12,7 @@
             <tr>
               <th>ID</th>
               <th>Employee Name</th>
+              <th>Designation</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -21,6 +22,7 @@
               <tr>
                 <td><%= pending_resignation_request.employee.try(:manual_employee_code) %></td>
                 <td><%= pending_resignation_request.employee.try(:first_name) %> <%= pending_resignation_request.employee.try(:middle_name) %> <%=pending_resignation_request.employee.try(:last_name) %></td>
+                <td><% pending_resignation_request.employee.joining_detail.employee_designation.try(:name) %></td>
                 <td>
                   <%= link_to 'View Detail',employee_resignation_confirmation_employee_resignations_path(pending_resignation_request),class: 'btn btn-sm btn-warning' %>
                 </td>
@@ -37,6 +39,7 @@
             <tr>
               <th>ID</th>
               <th>Employee Name</th>
+              <th>Designation</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -46,6 +49,7 @@
               <tr>
                 <td><%= first_approved_resignation_request.employee.try(:manual_employee_code) %></td>
                 <td><%= first_approved_resignation_request.employee.try(:first_name) %> <%= first_approved_resignation_request.employee.try(:middle_name) %> <%=first_approved_resignation_request.employee.try(:last_name) %></td>
+                <td><% first_approved_resignation_request.employee.joining_detail.employee_designation.try(:name) %></td>
                 <td>
                   <%= link_to 'View Detail',employee_resignation_confirmation_employee_resignations_path(first_approved_resignation_request),class: 'btn btn-sm btn-warning' %>
                 </td>

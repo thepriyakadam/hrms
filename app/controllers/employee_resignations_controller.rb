@@ -8,7 +8,8 @@ class EmployeeResignationsController < ApplicationController
       format.html
       format.csv { send_data @employee_resignations.to_csv }
       format.xls
-        @employee_resignations = EmployeeResignation.where("employee_id=? and (resign_status = ? or resign_status = ?)",current_user.employee_id,"Pending","Cancelled")
+        # @employee_resignations = EmployeeResignation.where("employee_id=? and (resign_status = ? or resign_status = ?)",current_user.employee_id,"Pending","Cancelled")
+        @employee_resignations = EmployeeResignation.all
     end
     session[:active_tab] ="employee_resignation"
     session[:active_tab1] = "resignation"
@@ -33,50 +34,51 @@ class EmployeeResignationsController < ApplicationController
   end
 
 
-  # def create
-  #   @employee_resignation = EmployeeResignation.new(employee_resignation_params)
-  #   @employee_resignation.resign_status = "Pending"
-  #   respond_to do |format|
-  #     if @employee_resignation.save
-  #        # ReportingMastersResign.create(reporting_master_id: @employee_resignation.reporting_master_id, employee_resignation_id: @employee_resignation.id)
-  #        # ResignationHistory.create(employee_resignation_id: @employee_resignation.id,resign_status: @employee_resignation.resign_status,employee_id: @employee_resignation.employee_id,reporting_master_id: @employee_resignation.reporting_master_id,resignation_date: @employee_resignation.resignation_date,reason: @employee_resignation.reason,is_notice_period: @employee_resignation.is_notice_period,notice_period: @employee_resignation.notice_period,short_notice_period: @employee_resignation.short_notice_period,tentative_leaving_date: @employee_resignation.tentative_leaving_date,remark: @employee_resignation.remark,exit_interview_date: @employee_resignation.exit_interview_date,note: @employee_resignation.note,leaving_date: @employee_resignation.leaving_date,settled_on: @employee_resignation.settled_on,has_left: @employee_resignation.has_left,notice_served: @employee_resignation.notice_served,rehired: @employee_resignation.rehired,leaving_reason_id: @employee_resignation.leaving_reason_id)
-
-  #        byebug
-  #        employees=Employee.where(employee_id: @employee_resignation.employee_id)
-         
-  #       EmployeeResignation.where(id: @employee_resignation.id).update_all(reporting_master_id: e.manager_id)
-     
-         
-  #        EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
-  #       format.html { redirect_to @employee_resignation, notice: 'Employee Resignation created successfully.' }
-  #       format.json { render :show, status: :created, location: @employee_resignation }
-  #     else
-  #       format.html { render :new }
-  #       format.json { render json: @employee_resignation.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-
-
   def create
     @employee_resignation = EmployeeResignation.new(employee_resignation_params)
-    @employee_resignation.resign_status = "Pending"
-      @employee_resignation.save
-        # @employee_resignation = EmployeeResignation.new
-        # byebug
-        @employees=Employee.where(id: @employee_resignation.employee_id)
-        @employees.each do |e|
-          # byebug
-          if e.manager_id.present?
-           EmployeeResignation.where(id: @employee_resignation.id).update_all(reporting_master_id: e.manager_id,is_pending: true)
-           ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Pending",change_date: Date.today)
-         else
-        end
-    end
-      EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
+    if @employee_resignation.is_there?
+      flash[:alert] = "Your Request already has been sent"
       redirect_to employee_resignations_path
-      flash[:notice] = 'Employee Resignation created successfully.'   
+     else
+      respond_to do |format|
+        if @employee_resignation.save
+          @employees=Employee.where(id: @employee_resignation.employee_id).take
+           EmployeeResignation.where(id: @employee_resignation.id).update_all(reporting_master_id: @employees.manager_id,is_pending: true,resign_status: "Pending")
+           ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Pending",change_date: Date.today)
+           EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
+          format.html { redirect_to @employee_resignation, notice: 'Employee Resignation was successfully Created.' }
+          format.json { render :show, status: :created, location: @employee_resignation }
+        else
+          format.html { render :new }
+          format.json { render json: @employee_resignation.errors, status: :unprocessable_entity }
+        end
+      end
+    end
   end
+
+
+ 
+
+
+  # def create
+  #   @employee_resignation = EmployeeResignation.new(employee_resignation_params)
+  #   # @employee_resignation.resign_status = "Pending"
+  #     @employee_resignation.save
+  #       # @employee_resignation = EmployeeResignation.new
+  #       # byebug
+  #       @employees=Employee.where(id: @employee_resignation.employee_id)
+  #       @employees.each do |e|
+  #         # byebug
+  #         if e.manager_id.present?
+  #          EmployeeResignation.where(id: @employee_resignation.id).update_all(reporting_master_id: e.manager_id,is_pending: true,resign_status: "Pending")
+  #          ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Pending",change_date: Date.today)
+  #        else
+  #       end
+  #   end
+  #     EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
+  #     redirect_to employee_resignations_path
+  #     flash[:notice] = 'Employee Resignation created successfully.'   
+  # end
 
   # PATCH/PUT /employee_resignations/1
   # PATCH/PUT /employee_resignations/1.json

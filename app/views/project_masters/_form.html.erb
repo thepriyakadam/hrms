@@ -31,18 +31,17 @@ $("#project_master").validate({
       "project_master[code]":{
         required: true,
       },
-       "project_master[name]":{
+      "project_master[name]":{
         required: true,
-      },
+      }
        },
     messages: {
       "project_master[code]":{
-        required: "Please Specify Code",
+        required: "Please Specify Project Master Code",
       },
-    messages: {
-      "project_master[name]":{
-        required: "Please Specify Name",
-      },
+       "project_master[name]":{
+        required: "Please Specify Project Master Name",
+      }
        },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})

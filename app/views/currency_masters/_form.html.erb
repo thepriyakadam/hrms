@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@currency_master,remote: true) do |f| %>
+<%= bootstrap_form_for(@currency_master,htlm: {id: 'currency_master'},remote: true) do |f| %>
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
@@ -23,3 +23,27 @@
   </div>
 <% end %>
 
+<script>
+$("#currency_master").validate({
+    rules: {
+      "currency_master[code]":{
+        required: true,
+      },
+      "currency_master[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "currency_master[code]":{
+        required: "Please Specify Code",
+      },
+       "currency_master[name]":{
+        required: "Please Specify Name",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

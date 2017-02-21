@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@role,remote:true) do |f| %>
+<%= bootstrap_form_for(@role,html: {id: 'role'},remote:true) do |f| %>
   <div class="row">
     <div class="col-sm-2">
       <div class="form-group required">
@@ -22,3 +22,29 @@
     </div>
   </div>
 <% end %>
+
+<script>
+$("#role").validate({
+    rules: {
+      "role[code]":{
+        required: true,
+      },
+      "role[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "role[code]":{
+        required: "Please Specify Code",
+      },
+       "role[name]":{
+        required: "Please Specify Employee Role",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

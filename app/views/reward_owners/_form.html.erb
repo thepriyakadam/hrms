@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@reward_owner,remote:true) do |f| %>
+<%= bootstrap_form_for(@reward_owner,html: {id: 'reward_owner'},remote:true) do |f| %>
 
   <div class="row">
     <div class="col-sm-3">
@@ -37,3 +37,28 @@
   </div>
     <% end %>
 <br>
+
+<script>
+$("#reward_owner").validate({
+    rules: {
+      "reward_owner[code]":{
+        required: true,
+      },
+      "reward_owner[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "reward_owner[code]":{
+        required: "Please Specify Code",
+      },
+       "reward_owner[name]":{
+        required: "Please Specify Name",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

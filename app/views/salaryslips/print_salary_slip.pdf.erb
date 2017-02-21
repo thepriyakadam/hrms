@@ -24,7 +24,7 @@ div.nobreak{ page-break-inside: avoid;
           <center><strong><%= @employee.company_location.company.try(:description) %></strong><br><%= @employee.company_location.try(:address) %>, <%= @employee.company_location.try(:name) %>.  </center>
         </td>           
        </tr>
-       <tr>
+        <tr>
          <th>Employee Detail</th>
          <th>Working Day</th>
          <th>Leave Details</th>
@@ -46,7 +46,6 @@ div.nobreak{ page-break-inside: avoid;
        <strong> Payable Day : </strong><%= @working_day.try(:payable_day) %><br><br>
        </td>
        <td>
-
         <% @leave_details.each do |ld| %>
              <strong> <%= ld.leav_category.name %>  - Leave: </strong> <%= ld.no_of_leave %> - <strong> Balance: </strong> <%= ld.balance %><br><br>
         <% end %>

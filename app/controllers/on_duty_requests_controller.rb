@@ -197,6 +197,11 @@ class OnDutyRequestsController < ApplicationController
     @on_duty_requests = OnDutyRequest.where(employee_id: @employee.id).order("id DESC")
   end
 
+  def show_od_record
+    @on_duty_request = OnDutyRequest.find(params[:format])
+    @particular_od_records = @on_duty_request.particular_od_records
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_on_duty_request

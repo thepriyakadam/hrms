@@ -68,6 +68,24 @@ class OdStatusRecordsController < ApplicationController
     redirect_to on_duty_requests_path
   end
 
+  def cancel_after_approve
+    @particular_od_record = ParticularOdRecord.find(params[:format])
+    @on_duty_request = OnDutyRequest.find_by_employee_id(@particular_od_record.employee_id)
+    @current_emp = current_user.employee_id
+    
+    @date = @particular_od_record.leave_date.strftime("%Y-%m-%d")
+    OdRecord.where("on_duty_request_id =? AND day =?", @particular_od_record.on_duty_request_id, @date).update_all(status: "Cancelled")
+    @particular_od_record.update(is_cancel_after_approve: true)
+    EmployeeAttendance.where("employee_id = ? AND day = ?", @particular_od_record.employee_id,@particular_od_record.leave_date.to_date).destroy_all
+      if @on_duty_request.employee.email.nil? || @on_duty_request.employee.email == ''
+        flash[:notice] = 'Od Cancelled Successfully without email.'
+      else
+        flash[:notice] = 'Od Cancelled Successfully.'
+        OdRequestMailer.cancel_after_approve(@particular_od_record,@current_emp).deliver_now
+      end
+      redirect_to show_od_record_on_duty_requests_path(format: @particular_od_record.on_duty_request_id)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_on_duty_request

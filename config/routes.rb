@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get :employee_list
       get :from_hr
       get :hr_view_request
+      get :show_od_record
     end
   end
 

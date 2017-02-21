@@ -42,7 +42,7 @@ class OdRequestMailer < ApplicationMailer
     @employee = Employee.find(@od_request.employee_id)
     @manager = Employee.find(@od_request.first_reporter_id)
     email = @employee.try(:email)
-    mail(to: email, subject: 'Leave Rejected At Second Level')
+    mail(to: email, subject: 'Od Rejected At Second Level')
   end
 
   def cancel(request)
@@ -50,6 +50,15 @@ class OdRequestMailer < ApplicationMailer
     @employee = Employee.find(@od_request.employee_id)
     @manager = Employee.find(@od_request.first_reporter_id)
     email = @manager.try(:email)
-    mail(to: email, subject: 'Leave Cancelled By Employee')
+    mail(to: email, subject: 'Od Cancelled By Employee')
   end
+
+  def cancel_after_approve(particular_od_record,current_emp)
+    @current_emp = Employee.find(current_emp)
+    @particular_od_record = particular_od_record
+    @employee = Employee.find(@particular_od_record.employee_id)
+    @emp = @employee.email
+    mail(to: @emp, subject: 'Od Cancel')
+  end
+
 end

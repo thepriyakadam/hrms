@@ -1,5 +1,6 @@
 <br>
 <%= form_for :pdf_salaries, url: { action: 'print_exit_interview',format: 'pdf',id: @exit_interview.id},:html => {:target => '_blank'} do |f| %>
+ 
 
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
@@ -21,6 +22,6 @@
       </tr>
     <% end %>
   </tbody>
-  <%= f.submit "Print Exit Interview",class: "btn btn-xl btn-warning fa fa-print" %>
+   <%= f.submit "Print Exit Interview",class: "btn btn-xl btn-info fa fa-print" %><br>
 </table>
 <% end %>

@@ -22,7 +22,7 @@
                 <td><%= pending_resignation_request.employee.try(:manual_employee_code) %></td>
                 <td><%= pending_resignation_request.employee.try(:first_name) %> <%= pending_resignation_request.employee.try(:middle_name) %> <%=pending_resignation_request.employee.try(:last_name) %></td>
                 <td>
-                  <%= link_to 'View Detail',employee_resignation_confirmation_employee_resignations_path(pending_resignation_request),class: 'btn btn-sm btn-info' %>
+                  <%= link_to 'View Detail',employee_resignation_confirmation_employee_resignations_path(pending_resignation_request),class: 'btn btn-sm btn-primary' %>
                 </td>
               </tr>
             <% end %>
@@ -47,7 +47,7 @@
                 <td><%= first_approved_resignation_request.employee.try(:manual_employee_code) %></td>
                 <td><%= first_approved_resignation_request.employee.try(:first_name) %> <%= first_approved_resignation_request.employee.try(:middle_name) %> <%=first_approved_resignation_request.employee.try(:last_name) %></td>
                 <td>
-                  <%= link_to 'View Detail',employee_resignation_confirmation_employee_resignations_path(first_approved_resignation_request),class: 'btn btn-sm btn-info' %>
+                  <%= link_to 'View Detail',employee_resignation_confirmation_employee_resignations_path(first_approved_resignation_request),class: 'btn btn-sm btn-primary' %>
                 </td>
               </tr>
             <% end %>

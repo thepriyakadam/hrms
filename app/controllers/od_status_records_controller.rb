@@ -9,7 +9,7 @@ class OdStatusRecordsController < ApplicationController
   		OdStatusRecord.create(on_duty_request_id: @on_duty_request.id,employee_id: current_user.employee_id,status: 'FinalApproved',change_date: Date.today)
   		@on_duty_request.create_for_particular_od_record(@on_duty_request)
       @on_duty_request.create_od_in_attendance
-      OdRequestMailer.first_approve1(@on_duty_request).deliver_now
+      OdRequestMailer.first_approve_final(@on_duty_request).deliver_now
   	else #manager_2 available
   		@on_duty_request.update(is_first_approved: true,current_status: 'FirstApproved',second_reporter_id: @on_duty_request.employee.manager_2_id)
   		OdRecord.where(on_duty_request_id: @on_duty_request.id).update_all(status: 'FirstApproved')

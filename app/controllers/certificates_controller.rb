@@ -15,6 +15,8 @@ class CertificatesController < ApplicationController
   # GET /certificates/new
   def new
     @certificate = Certificate.new
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="certificate"
   end
 
   # GET /certificates/1/edit

@@ -121,6 +121,7 @@ class EmployeeResignationsController < ApplicationController
   end
 
   def employee_resignation_list
+    # @employee = Employee.find(params[:emp_id])
     @employee_resignations = EmployeeResignation.all
     session[:active_tab] ="employee_resignation"
     session[:active_tab1] = "resignation"
@@ -295,7 +296,7 @@ class EmployeeResignationsController < ApplicationController
   end
 
   def emp_resignation_history
-    @employee_resignations = EmployeeResignation.all
+    @employee_resignations = EmployeeResignation.group(:employee_id)
     session[:active_tab] ="employee_resignation"
     session[:active_tab1] = "resignation"
   end
@@ -306,11 +307,20 @@ class EmployeeResignationsController < ApplicationController
   #   @resignation_histories = ResignationHistory.where(employee_resignation_id: @employee_resignation_id.id)
   # end
 
-  def show_resignation_detail
+  def show_resignation_status_detail
     @employee_resignation = EmployeeResignation.find(params[:format])
+    # byebug
     # @employee_resignation_id = EmployeeResignation.find(params[:resignation_id])
     @resignation_status_records = ResignationStatusRecord.where(employee_resignation_id: @employee_resignation.id)
+    @employee_resignations = EmployeeResignation.where(id: @employee_resignation.id).take
+    session[:active_tab] ="employee_resignation"
+    session[:active_tab1] = "resignation"
   end
+
+  # def show_resignation_detail
+  #   @employee_resignation = EmployeeResignation.find(params[:format])
+  #   @employee_resignations = EmployeeResignation.where(id: @employee_resignation.id)
+  # end
 
 
   def edit_n_approve_modal
@@ -417,6 +427,13 @@ class EmployeeResignationsController < ApplicationController
     @employee = Employee.find(params[:id])
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @notice_period = @joining_detail.notice_period
+  end
+
+  def all_employee_resignation_list
+    @employee = Employee.find(params[:emp_id])
+    @employee_resignations = EmployeeResignation.where(employee_id: @employee.id)
+    session[:active_tab] ="employee_resignation"
+    session[:active_tab1] = "resignation"
   end
 
   private

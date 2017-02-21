@@ -12,6 +12,7 @@
       <th>Employee Name</th>
       <th>Resignation Date</th>
       <th>Tentative leaving date</th>
+      <th>Status</th>
     </tr>
   </thead>
 
@@ -22,15 +23,14 @@
         <td><font color='green'> *<%= employee_resignation.employee.try(:manual_employee_code) %></font></td>
         <td><font color='green'><%= full_name(employee_resignation.employee)%></font></td>
         <td><font color='green'><%= employee_resignation.resignation_date %></font></td>
-        <td><font color='green'><%= employee_resignation.reason %></font></td>
-        <td><font color='green'><%= employee_resignation.notice_period %></font></td>
-        <td><font color='green'><%= employee_resignation.short_notice_period %></font></td>
         <td><font color='green'><%= employee_resignation.tentative_leaving_date %></font></td>
+        <td><font color='green'><%= employee_resignation.resign_status %></font></td>
       <% else %>
         <td><%= employee_resignation.employee.try(:manual_employee_code) %></td>
         <td><%= full_name(employee_resignation.employee)%></td>
         <td><%= employee_resignation.resignation_date %></td>
         <td><%= employee_resignation.tentative_leaving_date %></td>
+        <td><%= employee_resignation.resign_status %></td>
       </tr>
       <% end %>
       <% end %>
@@ -50,67 +50,81 @@
       <td><b>Resignation Code</b></td>
       <td><%= @employee_resignation.id %></td>
     
-      <td><b>Request By</b></td>
+      <td><b>Employee Name</b></td>
       <td><%= full_name(@employee_resignation.employee) %></td>
     </tr>
     <tr>
-      <td><b>Approved By</b></td>
-      <td><%=  %></td>
+      <td><b>Reporting Manager 1</b></td>
+      <td><%= @employee_resignation.employee.manager.try(:first_name) %> <%= @employee_resignation.employee.manager.try(:middle_name) %> <%= @employee_resignation.employee.manager.try(:last_name) %></td>
     
-      <td><b>Employee ID</b></td>
-      <td><%= @employee_resignation.employee.try(:manual_employee_code) %></td>
+      <td><b>Reporting Manager 2</b></td>
+      <td><%= @employee_resignation.employee.try(:manager_2).try(:first_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:middle_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:last_name) %></td>
+    </tr>
+
+    <tr>
+
+    <td><b>Resignation Date</b></td>
+      <td><%= @employee_resignation.resignation_date %></td>
+
+      <td><b>Exit interview date</b></td>
+      <td><%= @employee_resignation.exit_interview_date %></td>
+
     </tr>
     <tr>
-      <td><b>Resignation Date</b></td>
-      <td><%= @employee_resignation.resignation_date %></td>
+      
   
       <td><b>Reason</b></td>
-      <td><%= @employee_resignation.reason %></td>
+      <td colspan="3"><%= @employee_resignation.reason %></td>
     </tr>
     <tr>
       <td><b>Is Notice Period</b></td>
       <td><%= @employee_resignation.is_notice_period %></td>
    
-      <td><b>Notice period</b></td>
+      <td><b>Notice Period</b></td>
       <td><%= @employee_resignation.notice_period %></td>
     </tr>
     <tr>
-      <td><b>Short notice period</b></td>
+      <td><b>Short Notice Period</b></td>
       <td><%= @employee_resignation.short_notice_period %></td>
   
-      <td><b>Tentative leaving date</b></td>
+      <td><b>Tentative Leaving Date</b></td>
       <td><%= @employee_resignation.tentative_leaving_date %></td>
     </tr>
     <tr>
       <td><b>Remark</b></td>
-      <td><%= @employee_resignation.remark %></td>
+      <td colspan="3"><%= @employee_resignation.remark %></td>
   
-      <td><b>Exit interview date</b></td>
-      <td><%= @employee_resignation.exit_interview_date %></td>
+      
     </tr>
     <tr>
       <td><b>Note</b></td>
-      <td><%= @employee_resignation.note %></td>
-   
-      <td><b>Leaving date</b></td>
-      <td><%= @employee_resignation.leaving_date %></td>
-    </tr>
+      <td colspan="3"><%= @employee_resignation.note %></td>
+     </tr>
     <tr>
-      <td><b>Settled on</b></td>
+      <td><b>Leaving Date</b></td>
+      <td><%= @employee_resignation.leaving_date %></td>
+  
+      <td><b>Settled On</b></td>
       <td><%= @employee_resignation.settled_on %></td>
    
-      <td><b>Has left</b></td>
-      <td><%= @employee_resignation.has_left %></td>
+     
     </tr>
     <tr>
-      <td><b>Notice served</b></td>
+     <td><b>Has Left</b></td>
+      <td><%= @employee_resignation.has_left %></td>
+
+      <td><b>Notice Served</b></td>
       <td><%= @employee_resignation.notice_served %></td>
   
-      <td><b>Rehired</b></td>
-      <td><%= @employee_resignation.rehired %></td>
+     
     </tr>
 
     <tr>
+     <td><b>Rehired</b></td>
+      <td><%= @employee_resignation.rehired %></td>
+
+      <td><b>Current Status</b></td>
+      <td><%= @employee_resignation.resign_status %></td>
 
 
     </tr>
@@ -120,25 +134,29 @@
 <div id="myModal2" class="modal fade"></div>
 
   <% if @employee_resignation.resign_status == "Pending" %>
+  <%= link_to 'Back', resignation_history_employee_resignations_path,class: 'btn btn-default fa fa-arrow-left' %> | 
      <%= link_to 'Approve',first_approve_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-info fa fa-check' %> |
-      <%= link_to 'Reject',first_reject_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-danger fa fa-trash' %> |
+      <%= link_to 'Reject',first_reject_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-danger fa fa-trash' %>
       <!-- <= link_to 'Approve & Send next',modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %>  |
       <= link_to 'Edit & Send Next',edit_n_send_next_modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn-sm btn-primary fa fa-check',remote: true %> | -->
-      <%= link_to 'Edit & Approve',edit_n_approve_modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %>
+      <!-- <= link_to 'Edit & Approve',edit_n_approve_modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %> -->
 
   <% elsif @employee_resignation.resign_status == "FirstApproved" %>
+   <%= link_to 'Back', resignation_history_employee_resignations_path,class: 'btn btn-default fa fa-arrow-left' %> | 
     <%= link_to 'Approve',second_approve_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-info fa fa-check' %> |
-      <%= link_to 'Reject',second_reject_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-danger fa fa-trash' %> |
+      <%= link_to 'Reject',second_reject_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-danger fa fa-trash' %>
       <!-- <= link_to 'Approve & Send next',modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %>  |
       <= link_to 'Edit & Send Next',edit_n_send_next_modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn-sm btn-primary fa fa-check',remote: true %> | -->
-      <%= link_to 'Edit & Approve',edit_n_approve_modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %>
+      <!-- <= link_to 'Edit & Approve',edit_n_approve_modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %> -->
+      
 
   <% elsif @employee_resignation.resign_status == "SecondApproved" %>
+  <%= link_to 'Back', resignation_history_employee_resignations_path,class: 'btn btn-default fa fa-arrow-left' %> | 
     <%= link_to 'Approve',final_approve_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-info fa fa-check' %> |
-      <%= link_to 'Reject',final_reject_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-danger fa fa-trash' %> |
+      <%= link_to 'Reject',final_reject_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-danger fa fa-trash' %>
       <!-- <= link_to 'Approve & Send next',modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %>  |
       <= link_to 'Edit & Send Next',edit_n_send_next_modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn-sm btn-primary fa fa-check',remote: true %> | -->
-      <%= link_to 'Edit & Approve',edit_n_approve_modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %>
+      <!-- <= link_to 'Edit & Approve',edit_n_approve_modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %> -->
 
   <% end %>
 

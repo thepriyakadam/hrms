@@ -24,8 +24,8 @@
         <td><%= g.employee.try(:company_location).try(:name) %> - <%= g.employee.try(:department).try(:name) %></td> 
          <td><%= g.employee.try(:contact_no) %></td>
         <td><%= g.employee.try(:joining_detail).try(:employee_designation).try(:name) %></td>
-        <td> <%= link_to '', g,class: 'btn btn-xs btn-default fa fa-eye' %> 
-         <%= link_to 'Exit Interview', new_exit_interview_path(g),class: 'btn btn-xs btn-primary' %> </td>
+<!--        <= link_to '', g,class: 'btn btn-xs btn-default fa fa-eye' %> 
+ -->         <td><%= link_to '', show_resignation_status_detail_employee_resignations_path(g),class: 'btn btn-xs btn-default fa fa-eye' %> </td>
         </tr>
         <% end %>
       </tbody>

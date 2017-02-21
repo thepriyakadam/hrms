@@ -770,6 +770,9 @@ end
       get :first_reject
       get :second_reject
       get :final_reject
+      get :all_employee_resignation_list
+      get :show_resignation_status_detail
+      get :show_resignation_detail
   end
 end
   resources :travel_options do

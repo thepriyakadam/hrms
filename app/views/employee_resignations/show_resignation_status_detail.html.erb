@@ -1,0 +1,128 @@
+<div class="box">
+  <div class="box-header">
+  <h6 class="box-title"></h6>   
+    <div class="pull-right">
+      <!-- <= link_to 'Print Report', print_resignation_detail_employee_resignations_path(format: 'pdf',emp_id: @employee_resignation_id.employee_id,resignation_id: @employee_resignation_id.id),class: "btn btn-xl btn-info fa fa-print" %> -->
+     
+    </div>
+  </div>
+  <div class="box-body">
+   <table id="example2" class="table table-bordered table-hover table-condensed'">
+   <tr>
+      <th colspan="4"><center>Employee Resignation Request of : <%= @employee_resignation.employee.try(:manual_employee_code) %> <%= @employee_resignation.employee.try(:first_name) %> <%= @employee_resignation.employee.try(:middle_name) %> <%= @employee_resignation.employee.try(:last_name) %></center></th>
+    </tr>
+
+<tr>
+
+      <td><b>Resignation Code</b></td>
+      <td><%= @employee_resignation.id %></td>
+    
+      <td><b>Employee Name</b></td>
+      <td><%= full_name(@employee_resignation.employee) %></td>
+    </tr>
+    <tr>
+      <td><b>Reporting Manager 1</b></td>
+      <td><%= @employee_resignation.employee.manager.try(:first_name) %> <%= @employee_resignation.employee.manager.try(:middle_name) %> <%= @employee_resignation.employee.manager.try(:last_name) %></td>
+    
+      <td><b>Reporting Manager 2</b></td>
+      <td><%= @employee_resignation.employee.try(:manager_2).try(:first_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:middle_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:last_name) %></td>
+    </tr>
+
+    <tr>
+
+    <td><b>Resignation Date</b></td>
+      <td><%= @employee_resignation.resignation_date %></td>
+
+      <td><b>Exit interview date</b></td>
+      <td><%= @employee_resignation.exit_interview_date %></td>
+
+    </tr>
+    <tr>
+      
+  
+      <td><b>Reason</b></td>
+      <td colspan="3"><%= @employee_resignation.reason %></td>
+    </tr>
+    <tr>
+      <td><b>Is Notice Period</b></td>
+      <td><%= @employee_resignation.is_notice_period %></td>
+   
+      <td><b>Notice Period</b></td>
+      <td><%= @employee_resignation.notice_period %></td>
+    </tr>
+    <tr>
+      <td><b>Short Notice Period</b></td>
+      <td><%= @employee_resignation.short_notice_period %></td>
+  
+      <td><b>Tentative Leaving Date</b></td>
+      <td><%= @employee_resignation.tentative_leaving_date %></td>
+    </tr>
+    <tr>
+      <td><b>Remark</b></td>
+      <td colspan="3"><%= @employee_resignation.remark %></td>
+  
+      
+    </tr>
+    <tr>
+      <td><b>Note</b></td>
+      <td colspan="3"><%= @employee_resignation.note %></td>
+     </tr>
+    <tr>
+      <td><b>Leaving Date</b></td>
+      <td><%= @employee_resignation.leaving_date %></td>
+  
+      <td><b>Settled On</b></td>
+      <td><%= @employee_resignation.settled_on %></td>
+   
+     
+    </tr>
+    <tr>
+     <td><b>Has Left</b></td>
+      <td><%= @employee_resignation.has_left %></td>
+
+      <td><b>Notice Served</b></td>
+      <td><%= @employee_resignation.notice_served %></td>
+  
+     
+    </tr>
+
+    <tr>
+     <td><b>Rehired</b></td>
+      <td><%= @employee_resignation.rehired %></td>
+
+      <td><b>Current Status</b></td>
+      <td><%= @employee_resignation.resign_status %></td>
+
+
+    </tr>
+
+</table><br>
+
+    <table id="example2" class="table table-bordered table-hover table-condensed'">
+      <thead>
+      <tr>
+      <th colspan="4"><center>Employee Resignation Process</center></th>
+      </tr>
+        <tr>
+          <th>ID</th>
+          <th>Manager Name</th>
+          <th>Process Date</th>
+          <th>Process Status</th>
+      </thead>
+
+      <tbody>
+        <% @resignation_status_records.each do |resignation_status_record| %>
+          <tr>
+
+            <% a=resignation_status_record.change_status_employee_id %>
+              <% b=Employee.where(id: a).take %>
+              <td><%= b.manual_employee_code %></td>
+              <td><%= b.first_name+" "+b.middle_name+" "+b.last_name %></td>
+            <td><%= resignation_status_record.change_date.to_date %></td>
+            <td><%= resignation_status_record.status %></td>   
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -36,6 +36,7 @@ class EmployeeResignationsController < ApplicationController
 
   def create
     @employee_resignation = EmployeeResignation.new(employee_resignation_params)
+
     if @employee_resignation.is_there?
       flash[:alert] = "Your Request already has been sent"
       redirect_to employee_resignations_path
@@ -55,30 +56,6 @@ class EmployeeResignationsController < ApplicationController
       end
     end
   end
-
-
- 
-
-
-  # def create
-  #   @employee_resignation = EmployeeResignation.new(employee_resignation_params)
-  #   # @employee_resignation.resign_status = "Pending"
-  #     @employee_resignation.save
-  #       # @employee_resignation = EmployeeResignation.new
-  #       # byebug
-  #       @employees=Employee.where(id: @employee_resignation.employee_id)
-  #       @employees.each do |e|
-  #         # byebug
-  #         if e.manager_id.present?
-  #          EmployeeResignation.where(id: @employee_resignation.id).update_all(reporting_master_id: e.manager_id,is_pending: true,resign_status: "Pending")
-  #          ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Pending",change_date: Date.today)
-  #        else
-  #       end
-  #   end
-  #     EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
-  #     redirect_to employee_resignations_path
-  #     flash[:notice] = 'Employee Resignation created successfully.'   
-  # end
 
   # PATCH/PUT /employee_resignations/1
   # PATCH/PUT /employee_resignations/1.json

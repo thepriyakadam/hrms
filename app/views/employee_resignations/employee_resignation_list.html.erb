@@ -19,7 +19,7 @@
       <tbody>
         <% @employee_resignations.each do |g| %>
         <tr>
-        <td><%= g.try(:manual_employee_code)%></td>
+        <td><%= g.employee.try(:manual_employee_code)%></td>
         <td> <%= full_name(g.employee)%></td>
         <td><%= g.employee.try(:company_location).try(:name) %> - <%= g.employee.try(:department).try(:name) %></td> 
          <td><%= g.employee.try(:contact_no) %></td>

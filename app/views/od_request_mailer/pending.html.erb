@@ -15,7 +15,7 @@
       </tr>
       <tr>
         <td> Employee Name :</td>
-        <td> <%= @od_request.employee.try(:first_name).to_s+' '+@od_request.employee.try(:middle_name).to_s+' '+@od_request.employee.try(:last_name).to_s %></td>
+        <td> <%= @od_request.employee.try(:first_name)+' '+@od_request.employee.try(:middle_name)+' '+@od_request.employee.try(:last_name) %></td>
       </tr>
       <tr>
         <td> Date :</td>

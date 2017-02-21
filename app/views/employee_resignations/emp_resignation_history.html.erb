@@ -1,6 +1,6 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Employee List</h3>
+    <h3 class="box-title">Employee Resignation List</h3>
     <div class="pull-right">
     </div>
   </div>
@@ -20,7 +20,8 @@
             <td><%= employee_resignation.employee.try(:manual_employee_code) %></td>
             <td><%= full_name(employee_resignation.employee)%></td>
             <td>
-              <%= link_to '', show_resignation_detail_employee_resignations_path(emp_id: employee_resignation.employee_id,resignation_id: employee_resignation.id), class: 'btn btn-default fa fa-eye btn-sm' %>
+              <!-- <= link_to '', show_resignation_detail_employee_resignations_path(emp_id: employee_resignation.employee_id,resignation_id: employee_resignation.id), class: 'btn btn-default fa fa-eye btn-sm' %> -->
+              <%= link_to '', show_resignation_detail_employee_resignations_path(employee_resignation), class: 'btn btn-default fa fa-eye btn-sm' %>
             </td>
           </tr>
           <% end %>

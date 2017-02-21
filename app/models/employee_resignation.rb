@@ -23,4 +23,25 @@ class EmployeeResignation < ActiveRecord::Base
 													      EmployeeResignation.where(is_stop_pay_request: false).pluck(:employee_id)
 													    end
 	end
+
+  # def is_available?
+  #   flag = false
+  #   employee_resignations = EmployeeResignation.where(employee_id: self.employee_id).where.not(resign_status: 'Pending').where.not(resign_status: 'FirstApproved').where.not(resign_status: 'SecondApproved').where.not(resign_status: 'FinalApproved') 
+  # end
+
+  def is_there?
+    flag = 0
+    flag1 = 0
+    flag2 = 0
+    flag3 = 0
+      flag = EmployeeResignation.exists?(employee_id: self.employee_id,resign_status: 'Pending') ||
+      flag1 = EmployeeResignation.exists?(employee_id: self.employee_id,resign_status: 'FirstApproved') ||
+      flag2 = EmployeeResignation.exists?(employee_id: self.employee_id,resign_status: 'SecondApproved') ||
+      flag3 = EmployeeResignation.exists?(employee_id: self.employee_id,resign_status: 'FinalApproved')
+    flag
+    flag1
+    flag2
+    flag3
+  end
+
 end

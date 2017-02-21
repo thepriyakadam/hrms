@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@religion,remote:true) do |f| %>
+<%= bootstrap_form_for(@religion,html: {id: 'religion'},remote:true) do |f| %>
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
@@ -13,3 +13,24 @@
     </div>
   </div>
 <% end %>
+
+<script>
+$("#religion").validate({
+    rules: {
+      "religion[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "religion[name]":{
+        required: "Please Specify Religion",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+

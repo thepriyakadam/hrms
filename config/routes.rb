@@ -771,6 +771,7 @@ end
       get :final_approve
       get :first_reject
       get :second_reject
+      get :final_reject
   end
 end
   resources :travel_options do

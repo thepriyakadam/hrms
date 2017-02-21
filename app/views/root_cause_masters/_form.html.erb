@@ -32,3 +32,28 @@
       </div>
     </div>
 <% end %>
+
+<script>
+$("#root_cause_master").validate({
+    rules: {
+      "root_cause_master[code]":{
+        required: true,
+      },
+      "root_cause_master[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "root_cause_master[code]":{
+        required: "Please Specify Code",
+      },
+       "root_cause_master[name]":{
+        required: "Please Specify Name",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

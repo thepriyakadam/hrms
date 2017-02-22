@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h4>OD Request Cancelled</h4>
+    <p>
+      OD request is Cancel after approved
+      Employee ID : <%= @current_emp.try(:manual_employee_code) %><br>
+      Employee Name : <%= @current_emp.try(:first_name).to_s+' '+@current_emp.try(:middle_name)+' '+@current_emp.try(:last_name).to_s %><br>
+      Date <%= @particular_od_record.leave_date.to_date %><br>
+    </p>
+  </body>
+</html>

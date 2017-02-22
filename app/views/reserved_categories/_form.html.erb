@@ -25,3 +25,29 @@
     </div>
   </div>
 <% end %>
+
+<script>
+$("#reserved_category").validate({
+    rules: {
+      "reserved_category[code]":{
+        required: true,
+      },
+      "reserved_category[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "reserved_category[code]":{
+        required: "Please Specify Reservation Category Code",
+      },
+       "reserved_category[name]":{
+        required: "Please Specify Reservation Category Name",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

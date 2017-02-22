@@ -43,6 +43,7 @@ class Ability
         can :read, AdvanceSalary, employee_id: user.employee_id
         can :read, Attendance, employee_id: user.employee_id
         can :manage, GoalBunch, employee_id: user.employee_id
+        can :manage, OnDutyRequest, employee_id: user.employee_id
         can :manage, GoalRating, appraisee_id: user.employee_id
         can :manage, TravelRequest, employee_id: user.employee_id
         can [:read, :create, :update], DailyBillDetail, travel_request_id: user.employee_id

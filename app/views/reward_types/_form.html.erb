@@ -32,3 +32,27 @@
   </div>
 <% end %><br>
 
+<script>
+$("#reward_type").validate({
+    rules: {
+      "reward_type[code]":{
+        required: true,
+      },
+      "reward_type[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "reward_type[code]":{
+        required: "Please Specify Code",
+      },
+       "reward_type[name]":{
+        required: "Please Specify Name",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

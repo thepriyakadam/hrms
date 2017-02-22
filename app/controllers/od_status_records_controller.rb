@@ -9,11 +9,13 @@ class OdStatusRecordsController < ApplicationController
   		OdStatusRecord.create(on_duty_request_id: @on_duty_request.id,employee_id: current_user.employee_id,status: 'FinalApproved',change_date: Date.today)
   		@on_duty_request.create_for_particular_od_record(@on_duty_request)
       @on_duty_request.create_od_in_attendance
+      OdRequestMailer.first_approve_final(@on_duty_request).deliver_now
   	else #manager_2 available
   		@on_duty_request.update(is_first_approved: true,current_status: 'FirstApproved',second_reporter_id: @on_duty_request.employee.manager_2_id)
   		OdRecord.where(on_duty_request_id: @on_duty_request.id).update_all(status: 'FirstApproved')
   		OdStatusRecord.create(on_duty_request_id: @on_duty_request.id,employee_id: current_user.employee_id,status: 'FirstApproved',change_date: Date.today)
-  	end	
+  	  OdRequestMailer.first_approve(@on_duty_request).deliver_now
+    end	
   	flash[:notice] = "Approved Successfully"
   	redirect_to request_approval_list_on_duty_requests_path
   end
@@ -25,6 +27,7 @@ class OdStatusRecordsController < ApplicationController
   	OdStatusRecord.create(on_duty_request_id: @on_duty_request.id,employee_id: current_user.employee_id,status: 'FinalApproved',change_date: Date.today)
   	@on_duty_request.create_for_particular_od_record(@on_duty_request)
     @on_duty_request.create_od_in_attendance
+    OdRequestMailer.second_approve(@on_duty_request).deliver_now
   	flash[:notice] = "Approved Successfully"
   	redirect_to request_approval_list_on_duty_requests_path
   end
@@ -34,8 +37,9 @@ class OdStatusRecordsController < ApplicationController
   	@on_duty_request.update(is_first_rejected: true,current_status: 'Rejected')
   	OdRecord.where(on_duty_request_id: @on_duty_request.id).update_all(status: 'Rejected')
   	OdStatusRecord.create(on_duty_request_id: @on_duty_request.id,employee_id: current_user.employee_id,status: 'Rejected',change_date: Date.today)
-  		
-  	flash[:alert] = "Rejected Successfully"
+  	OdRequestMailer.first_reject(@on_duty_request).deliver_now
+
+  	flash[:notice] = "Rejected Successfully"
   	redirect_to request_approval_list_on_duty_requests_path
   end
 
@@ -44,8 +48,8 @@ class OdStatusRecordsController < ApplicationController
     @on_duty_request.update(is_second_rejected: true,current_status: 'Rejected')
     OdRecord.where(on_duty_request_id: @on_duty_request.id).update_all(status: 'Rejected')
     OdStatusRecord.create(on_duty_request_id: @on_duty_request.id,employee_id: current_user.employee_id,status: 'Rejected',change_date: Date.today)
-  
-    flash[:alert] = "Rejected Successfully"
+    OdRequestMailer.second_reject(@on_duty_request).deliver_now
+    flash[:notice] = "Rejected Successfully"
     redirect_to request_approval_list_on_duty_requests_path
   end
 
@@ -54,9 +58,31 @@ class OdStatusRecordsController < ApplicationController
     @on_duty_request.update(is_cancelled: true,current_status: 'Cancelled')
     OdRecord.where(on_duty_request_id: @on_duty_request.id).update_all(status: 'Cancelled')
     OdStatusRecord.create(on_duty_request_id: @on_duty_request.id,employee_id: current_user.employee_id,status: 'Cancelled',change_date: Date.today)
-  
-    flash[:alert] = "Cancelled Successfully"
+    if @on_duty_request.first_reporter.email.nil? || @on_duty_request.first_reporter.email == ''
+      flash[:notice] = 'Leave Cancelled Successfully without email.'
+    else
+      OdRequestMailer.cancel(@on_duty_request).deliver_now
+      flash[:notice] = 'OD Cancelled Successfully.'
+    end
     redirect_to on_duty_requests_path
+  end
+
+  def cancel_after_approve
+    @particular_od_record = ParticularOdRecord.find(params[:format])
+    @on_duty_request = OnDutyRequest.find_by_employee_id(@particular_od_record.employee_id)
+    @current_emp = current_user.employee_id
+    
+    @date = @particular_od_record.leave_date.strftime("%Y-%m-%d")
+    OdRecord.where("on_duty_request_id =? AND day =?", @particular_od_record.on_duty_request_id, @date).update_all(status: "Cancelled")
+    @particular_od_record.update(is_cancel_after_approve: true)
+    EmployeeAttendance.where("employee_id = ? AND day = ?", @particular_od_record.employee_id,@particular_od_record.leave_date.to_date).destroy_all
+      if @on_duty_request.employee.email.nil? || @on_duty_request.employee.email == ''
+        flash[:notice] = 'OD Cancelled Successfully without email.'
+      else
+        flash[:notice] = 'OD Cancelled Successfully.'
+        OdRequestMailer.cancel_after_approve(@particular_od_record,@current_emp).deliver_now
+      end
+      redirect_to show_od_record_on_duty_requests_path(format: @particular_od_record.on_duty_request_id)
   end
 
   private

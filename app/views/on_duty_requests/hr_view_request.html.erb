@@ -34,11 +34,10 @@
       <table id="example" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
-            <th>Leave type</th>
-            <th>Start date</th>
-            <th>End date</th>
-            <th>No of day</th>
-            <th>Current status</th>
+            <th>OD Type</th>
+            <th>From Date</th>
+            <th>To Date</th>
+            <th>No of Day</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -51,7 +50,6 @@
               <td><%= on_duty_request.start_date.to_date %></td>
               <td><%= on_duty_request.end_date.to_date %></td>
               <td><%= on_duty_request.no_of_day %></td>
-              <td><%= on_duty_request.current_status %></td>
               <td>
                  <% on_duty_request.od_status_records.try(:each) do |o| %>
                     <% case o.status %>
@@ -72,19 +70,20 @@
               </td>
               <td>
                 <%= link_to '', on_duty_request, class: 'btn btn-default btn-xs fa fa-eye' %>
-                <% if on_duty_request.current_status == "Pending" %>
-                  <%= link_to '', cancel_od_status_record_path(on_duty_request), data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-trash' %>
-                <% else %>
-                 
-                <% end %>
+                  <% if on_duty_request.current_status == "FinalApproved" %>
+                    <%= link_to 'Revert',show_od_record_on_duty_requests_path(on_duty_request), class: 'btn btn-danger btn-xs' %>
+                  <% elsif on_duty_request.current_status == "Pending" %>
+                    <%= link_to '', cancel_od_status_record_path(on_duty_request), data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-trash' %>
+                  <% else %>
+                  <% end %>
 
               </td>
             </tr>
           <% end %>
         </tbody>
       </table>
+        <%= link_to 'Back', employee_list_on_duty_requests_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
     </div>
-<%= link_to 'Back', employee_list_on_duty_requests_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
 </div>
 <script type="text/javascript">
   $(document).ready(function() {

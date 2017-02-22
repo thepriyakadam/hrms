@@ -1,14 +1,17 @@
+<style type="text/css">
 
+ .page-break { display:block; clear:both; page-break-after:always; }
+
+</style>
 <% @salaryslips.each do |e| %>
  <%  @addable_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",false,e.id) %>
-   <%@deducted_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",true,e.id) %>
+  <%@deducted_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",true,e.id) %>
   <% @working_day = Workingday.find(e.workingday_id) %>
    <% @employee = Employee.find(e.employee_id) %>
   <% @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id) %>
    <% @leave_details = LeaveDetail.where(salaryslip_id: e.id) %>
    <% @slip_information = SlipInformation.find_by(salaryslip_id: e.id) %>
-      <body>
-      <br>
+     <div class="page-break">
         <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
       <thead>
         <tr>
@@ -59,17 +62,15 @@
          
       </tbody>
     </table>
- <style>
+
    
-   table {page-break-inside: avoid;}
-</style>
        <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
       <thead>
       <tr><td colspan="3"><center><strong> Salary Details </strong></center></td></tr>
         <tr>
-          <th>Salary Component</th>
-          <th style="text-align: right;">Actual Amount</th>
-          <th style="text-align: right;">Calculated Amount</th>
+          <th><center>Salary Component</center></th>
+          <th style="text-align: right;"><center>Actual Amount</center></th>
+          <th style="text-align: right;"><center>Calculated Amount</center></th>
           <!-- <th>Action</th> -->
         </tr>
       </thead>
@@ -89,9 +90,9 @@
          <!--  <td></td> -->
         </tr>
          <tr>
-          <td><strong>Deduction Component</strong></td>
+          <td><strong><center>Deduction Component</center></strong></td>
           <td align="right"><strong></strong></td>
-          <td align="right"><strong>Amount</strong></td>
+          <td align="right"><strong><center>Amount</center></strong></td>
          <!--  <td></td> -->
         </tr>
         <% @deducted_salary_components.each do |item| %>
@@ -121,15 +122,15 @@
           <td align="right"><strong><%= e.calculated_net_salary.round %></strong></td>
           <!-- <td></td> -->
         </tr>
+         <tr>
+        <td colspan="3"><center>This is a computer generated slip, hence no signature is required.</center></td>
+        </tr>
       </tbody>
-      <tfoot>
-        
-      </tfoot>
     </table>
-    </body><br><br>
-    </body>
+   <br><br>
+   </div>
 <% end %>
-</body>
+
  
 
 

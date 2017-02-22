@@ -22,9 +22,9 @@ class PdfSalariesController < ApplicationController
               layout: '/layouts/pdf.html.erb',
               :template => 'pdf_salaries/salary_slip_company_location_department.pdf.erb',
               # :orientation      => 'Landscape', # default , Landscape
-              :page_height      => 1200,
+              :page_height      => 1000,
               :dpi              => '300',
-              :margin           => {:top    => 30, # default 10 (mm)
+              :margin           => {:top    => 20, # default 10 (mm)
                             :bottom => 30,
                             :left   => 10,
                             :right  => 10},
@@ -133,7 +133,7 @@ end
         :page_height      => 1000,
         :dpi              => '300',
         :margin           => {:top    => 20, # default 10 (mm)
-                      :bottom => 90,
+                      :bottom => 30,
                       :left   => 10,
                       :right  => 10},
         :show_as_html => params[:debug].present?

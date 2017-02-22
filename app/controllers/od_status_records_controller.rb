@@ -7,7 +7,7 @@ class OdStatusRecordsController < ApplicationController
   		@on_duty_request.update(is_first_approved: true,current_status: 'FinalApproved')
   		OdRecord.where(on_duty_request_id: @on_duty_request.id).update_all(status: 'FinalApproved')
   		OdStatusRecord.create(on_duty_request_id: @on_duty_request.id,employee_id: current_user.employee_id,status: 'FinalApproved',change_date: Date.today)
-  		@on_duty_request.create_for_particular_od_record(@on_duty_request)
+  		#@on_duty_request.create_for_particular_od_record(@on_duty_request)
       @on_duty_request.create_od_in_attendance
       OdRequestMailer.first_approve_final(@on_duty_request).deliver_now
   	else #manager_2 available
@@ -25,7 +25,7 @@ class OdStatusRecordsController < ApplicationController
   	@on_duty_request.update(is_second_approved: true,current_status: 'FinalApproved')
   	OdRecord.where(on_duty_request_id: @on_duty_request.id).update_all(status: 'FinalApproved')
   	OdStatusRecord.create(on_duty_request_id: @on_duty_request.id,employee_id: current_user.employee_id,status: 'FinalApproved',change_date: Date.today)
-  	@on_duty_request.create_for_particular_od_record(@on_duty_request)
+  	#@on_duty_request.create_for_particular_od_record(@on_duty_request)
     @on_duty_request.create_od_in_attendance
     OdRequestMailer.second_approve(@on_duty_request).deliver_now
   	flash[:notice] = "Approved Successfully"

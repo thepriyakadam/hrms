@@ -25,7 +25,7 @@ class PdfSalariesController < ApplicationController
               :page_height      => 1000,
               :dpi              => '300',
               :margin           => {:top    => 20, # default 10 (mm)
-                            :bottom => 110,
+                            :bottom => 30,
                             :left   => 10,
                             :right  => 10},
               :show_as_html => params[:debug].present?
@@ -133,7 +133,7 @@ end
         :page_height      => 1000,
         :dpi              => '300',
         :margin           => {:top    => 20, # default 10 (mm)
-                      :bottom => 110,
+                      :bottom => 30,
                       :left   => 10,
                       :right  => 10},
         :show_as_html => params[:debug].present?

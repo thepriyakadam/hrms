@@ -61,6 +61,21 @@ class DueActionsController < ApplicationController
     @due_actions = DueAction.all
   end
 
+  def confirm_employee_due_action
+    @due_action_ids = params[:due_action_ids]
+    if @due_action_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to root_url
+    else
+      @due_action_ids.each do |did|
+        @due_action = DueAction.find(did)
+        @due_action.update(is_confirm: true) 
+        flash[:notice] = "Confirmed Successfully"
+      end
+      redirect_to root_url
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_due_action
@@ -69,6 +84,6 @@ class DueActionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def due_action_params
-      params.require(:due_action).permit(:due_detail_id, :name, :remark, :amount, :due_detail_id, :due_employee_detail_id)
+      params.require(:due_action).permit(:due_detail_id, :name, :remark, :status,:is_confirm,:amount, :due_detail_id, :due_employee_detail_id)
     end
 end

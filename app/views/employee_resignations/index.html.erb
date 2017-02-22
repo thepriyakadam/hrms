@@ -28,16 +28,16 @@
             <td><%= employee_resignation.leaving_date %></td>
             <td><%= employee_resignation.notice_period %></td>
             <td>
-            <% employee_resignation.resign_status.try(:each) do |er| %>
-            <% case er.resign_status %>
+            <% employee_resignation.resignation_status_records.try(:each) do |er| %>
+            <% case er.status %>
             <% when "Pending" %>
-              <small class="label label-danger">Pending</small>
+              <small class="label label-default">Pending</small>
             <% when "FirstApproved" %>
               <small class="label label-primary">FirstApproved</small>
               <% when "SecondApproved" %>
-              <small class="label label-primary">SecondApproved</small>
-              <<% when "FinalApproved" %>
-              <small class="label label-primary">FinalApproved</small>
+              <small class="label label-info">SecondApproved</small>
+              <% when "FinalApproved" %>
+              <small class="label label-success">FinalApproved</small>
               <% when "FirstRejected" %>
               <small class="label label-danger">FirstRejected</small>
               <% when "SecondRejected" %>

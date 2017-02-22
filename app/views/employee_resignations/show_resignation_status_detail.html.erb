@@ -33,26 +33,69 @@
     <td><b>Resignation Date</b></td>
       <td><%= @employee_resignation.resignation_date %></td>
 
-      <td><b>Exit interview date</b></td>
-      <td><%= @employee_resignation.exit_interview_date %></td>
-
+      <!-- <td><b>Exit interview date</b></td>
+      <td><%= @employee_resignation.exit_interview_date %></td> -->
+      
+      <th><strong>Leaving Reason</strong></th>
+      <td><%= @employee_resignation.leaving_reason.try(:name)%></td>
     </tr>
     <tr>
+
+    <tr>
+      <td><b>Notice Period</b></td>
+      <td><%= @employee_resignation.notice_period %></td>
+   
+      <td><b>Short Notice Period</b></td>
+      <td><%= @employee_resignation.short_notice_period %></td>
+    </tr>
       
-  
+  <tr>
       <td><b>Reason</b></td>
       <td colspan="3"><%= @employee_resignation.reason %></td>
     </tr>
+
+
     <tr>
-      <td><b>Is Notice Period</b></td>
-      <td><%= @employee_resignation.is_notice_period %></td>
-   
-      <td><b>Notice Period</b></td>
-      <td><%= @employee_resignation.notice_period %></td>
-    </tr>
-    <tr>
-      <td><b>Short Notice Period</b></td>
-      <td><%= @employee_resignation.short_notice_period %></td>
+     <th><strong>Requested Releaving Date</strong></th>
+     <td><%= @employee_resignation.tentative_leaving_date %></td>
+     
+
+     <th><strong>Exit Interview Date</strong></th>
+      <td><%= @employee_resignation.exit_interview_date %></td>
+  
+  </tr>
+
+  <tr>
+
+      <th><strong>Leaving Date</strong></th>
+      <td><%= @employee_resignation.leaving_date %></td>
+      
+     <th><strong>Settled On</strong></th>
+     <td><%= @employee_resignation.settled_on %></td>
+
+  </tr>
+
+  <tr>
+ <th><strong>Note</strong></th>
+  <td colspan="3"><%= @employee_resignation.note %></td>
+
+  <!-- <th><strong>Remark</strong></th>
+ <td><%= @employee_resignation.remark %></td> -->
+</tr>
+
+<tr>
+
+  <th><strong>Current Status</strong></th>
+  <td><%= @employee_resignation.resign_status %></td>
+  
+ <th></th>
+ <td></td>
+
+</tr>
+
+
+   <!--  <tr>
+    
   
       <td><b>Tentative Leaving Date</b></td>
       <td><%= @employee_resignation.tentative_leaving_date %></td>
@@ -94,7 +137,7 @@
       <td><%= @employee_resignation.resign_status %></td>
 
 
-    </tr>
+    </tr> -->
 
 </table><br>
 

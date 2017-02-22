@@ -14,6 +14,14 @@
  
 </tr>
 
+ <tr>
+    <td><b>Reporting Manager 1</b></td>
+    <td><%= @employee_resignation.employee.manager.try(:first_name) %> <%= @employee_resignation.employee.manager.try(:middle_name) %> <%= @employee_resignation.employee.manager.try(:last_name) %></td>
+
+    <td><b>Reporting Manager 2</b></td>
+    <td><%= @employee_resignation.employee.try(:manager_2).try(:first_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:middle_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:last_name) %></td>
+ </tr>
+
 <tr>
   <th><strong>Resignation Date</strong></th>
   <td><%= @employee_resignation.resignation_date %></td>
@@ -33,21 +41,21 @@
 </tr>
 
 <tr>
- <th><strong>Tentative Leaving Date</strong></th>
+ 
+ <th><strong>Reason</strong></th>
+  <td colspan="3"><%= @employee_resignation.reason %></td>
+
+
+</tr>
+
+<tr>
+ <th><strong>Requested Releaving Date</strong></th>
  <td><%= @employee_resignation.tentative_leaving_date %></td>
  
 
  <th><strong>Exit Interview Date</strong></th>
   <td><%= @employee_resignation.exit_interview_date %></td>
   
-</tr>
-
-<tr>
- <th><strong>Note</strong></th>
-  <td><%= @employee_resignation.note %></td>
-
-  <th><strong>Remark</strong></th>
- <td><%= @employee_resignation.remark %></td>
 </tr>
 
 <tr>
@@ -61,12 +69,26 @@
 </tr>
 
 <tr>
- 
- <th><strong>Reason</strong></th>
-  <td colspan="3"><%= @employee_resignation.reason %></td>
+ <th><strong>Note</strong></th>
+  <td colspan="3"><%= @employee_resignation.note %></td>
 
+  <!-- <th><strong>Remark</strong></th>
+ <td><%= @employee_resignation.remark %></td> -->
+</tr>
+
+<tr>
+
+  <th><strong>Current Status</strong></th>
+  <td><%= @employee_resignation.resign_status %></td>
+  
+ <th></th>
+ <td></td>
 
 </tr>
+
+
+
+
 
 </table><br>
 <!-- <= link_to 'Edit', edit_employee_resignation_path(@employee_resignation),class: 'btn btn-success btn-sm fa fa-edit' %> -->

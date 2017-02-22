@@ -1,0 +1,13 @@
+<label class="control-label required" for="company_district" aria-required="true">Select Employee</label>
+
+
+<% if @form == 'company' %>
+	<%= select :company,:employee_id,(@employees.present? ? (@employees.collect {|b| [b.id]}) : {}),{prompt:"Select Employee",hide_label:true},class: "form-control"%>
+	<%elsif @form == 'employee' %>
+	<%= select :employee,:employee_id,(@employees.present? ? (@employees.collect {|b| [b.id]}) : {}),{prompt:"Select Employee",hide_label:true},class: "form-control"%>
+<%elsif @form == 'due_detail' %>
+	<%= select :due_detail,:employee_id,(@employees.present? ? (@employees.collect {|b| [b.id]}) : {}),{prompt:"Select Employee",hide_label:true},class: "form-control"%>
+<%else %>
+	<%= select :company,:employee_id,(@employees.present? ? (@employees.collect {|b| [b.id]}) : {}),{prompt:"Select Employee",hide_label:true},class: "form-control"%>
+	
+<%end%>

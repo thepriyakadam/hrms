@@ -97,7 +97,7 @@ class OnDutyRequestsController < ApplicationController
           if @employee.manager.email.nil? or @employee.manager.email == ""
               flash[:notice] = "Send request without email."
             else
-              flash[:notice] = 'Od Request sent successfully.'
+              flash[:notice] = 'OD Request sent successfully.'
               OdRequestMailer.pending(@on_duty_request).deliver_now
             end
 

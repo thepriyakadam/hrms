@@ -17,7 +17,6 @@
               <th>Company</th>
               <th>Company Location</th>
               <th>Department</th>
-              <th>Justification</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -33,7 +32,6 @@
             <td><%= employee_transfer.company.try(:name) %></td>
             <td><%= employee_transfer.employee.try(:company_location).try(:name) %></td>  
             <td><%= employee_transfer.employee.try(:department).try(:name) %></td>
-            <td><%= employee_transfer.justification %></td>
             <td>
             <%= link_to 'Approve / Reject', employee_transfer_confirmation_employee_transfers_path(employee_transfer),class: 'btn btn-sm btn-primary' %>
            </td>

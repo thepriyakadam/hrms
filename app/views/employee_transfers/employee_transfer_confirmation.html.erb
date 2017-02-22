@@ -84,19 +84,23 @@
 
             <tr>
               <th>Justification</th>
-              <td><%= @current_request.justification %></td>
-              <th></th>
-              <td></td>           
+              <td colspan="3"><%= @current_request.justification %></td>       
             </tr>
    </tbody>
    </table>         
 
     <div id="myModal" class="modal fade"></div>
     <div id="myModal1" class="modal fade"></div>
+    <tr>
+    <th colspan="1"><center>
       <%= link_to 'Approve',approve_transfer_employee_transfers_path(@employee_transfer),class: 'btn btn-sm btn-primary fa fa-check' %> |
       <%= link_to 'Reject',reject_transfer_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-danger fa fa-trash' %> |
       <%= link_to 'Approve & Send next',modal_approve_employee_transfers_path(@employee_transfer.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %> |
       <%= link_to 'Edit & Approve',modal_edit_employee_transfers_path(@employee_transfer.id),class: 'btn btn btn-sm btn-info fa fa-modx',remote: true %> |
       <%= link_to 'Edit and send next',modal_edit_and_send_next_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-info fa fa-check', remote: true %>
+      <%= link_to 'Back', transfer_request_employee_transfers_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
+      </center>
+      </th>
+      </tr>
   </div>
 </div>

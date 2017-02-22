@@ -133,7 +133,7 @@ end
         :page_height      => 1000,
         :dpi              => '300',
         :margin           => {:top    => 20, # default 10 (mm)
-                      :bottom => 60,
+                      :bottom => 90,
                       :left   => 10,
                       :right  => 10},
         :show_as_html => params[:debug].present?
@@ -141,6 +141,9 @@ end
     end
   end
 end
+
+ 
+
 
   def show_employee_costunit_wise
    session[:active_tab] ="PayrollManagement"

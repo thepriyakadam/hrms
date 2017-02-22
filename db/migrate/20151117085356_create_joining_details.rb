@@ -3,7 +3,6 @@ class CreateJoiningDetails < ActiveRecord::Migration
     create_table :joining_details do |t|
       t.references :employee, index: true, foreign_key: true
       t.date :joining_date
-      t.string :designation
       t.references :employee_grade, index: true, foreign_key: true
       t.references :employee_designation, index: true, foreign_key: true
       t.date :confirmation_date

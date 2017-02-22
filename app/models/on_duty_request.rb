@@ -63,7 +63,7 @@ class OnDutyRequest < ActiveRecord::Base
   def is_present?
     flag = 0
     for i in self.start_date.to_date..self.end_date.to_date
-      flag = EmployeeAttendance.exists?(day: i, employee_id: self.employee_id)
+      flag = EmployeeAttendance.where(day: i, employee_id: self.employee_id).where.not(employee_leav_request_id: nil)
     end
     flag
   end
@@ -76,6 +76,7 @@ class OnDutyRequest < ActiveRecord::Base
   
   def create_od_in_attendance
     if self.is_present?
+      "Attendance already available"
     else
       if self.leave_type == "Full Day"
         for i in self.start_date.to_date..self.end_date.to_date

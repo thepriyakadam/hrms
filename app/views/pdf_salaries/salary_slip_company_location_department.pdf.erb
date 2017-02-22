@@ -6,39 +6,39 @@ th {
   page-break-inside: avoid; 
 }
 </style>
-<% @salaryslips.each do |e| %>
- <%  @addable_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",false,e.id) %>
-   <%@deducted_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",true,e.id) %>
+  <% @salaryslips.each do |e| %>
+  <%  @addable_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",false,e.id) %>
+  <%@deducted_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",true,e.id) %>
   <% @working_day = Workingday.find(e.workingday_id) %>
-   <% @employee = Employee.find(e.employee_id) %>
+  <% @employee = Employee.find(e.employee_id) %>
   <% @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id) %>
-  <body>
-  </br>
-        <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
-      <thead>
-        <tr>
-          <td colspan="7">
-           <center><strong><%= @employee.company_location.company.try(:description) %></strong><br> <%= @employee.company_location.try(:address) %> - <%= @employee.company_location.try(:name) %></center>
-          </td>           
-        </tr>
-        <tr><td colspan="7"><center><strong> Employee Details </strong></center></td></tr>
-        <tr>
-          <td colspan="2">Salary Slip : <%= e.month%> - <%= e.year%></td>
-          <td>Leave Type</td>
-          <td>Leave</td>  
-          <td>Balance</td>   
-          <td colspan="2"></td>
-        </tr>
-        <tr>
-          <th>Employee ID</th>
-          <td><%= @employee.manual_employee_code%></td>
-          <th>CL</th>        
-          <td align="right"><%= @working_day.try(:cl_leave) %></td> 
-          <td align="right"><%= @working_day.try(:cl_balance) %></td> 
-          <th>Monthly Days</th>        
-          <td align="right"><%= @working_day.try(:day_in_month) %></td>            
-        </tr>
-      </thead>
+    <body>
+      </br>
+      <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
+        <thead>
+          <tr>
+            <td colspan="7">
+             <center><strong><%= @employee.company_location.company.try(:description) %></strong><br> <%= @employee.company_location.try(:address) %> - <%= @employee.company_location.try(:name) %></center>
+            </td>           
+          </tr>
+          <tr><td colspan="7"><center><strong> Employee Details </strong></center></td></tr>
+          <tr>
+            <td colspan="2">Salary Slip : <%= e.month%> - <%= e.year%></td>
+            <td>Leave Type</td>
+            <td>Leave</td>  
+            <td>Balance</td>   
+            <td colspan="2"></td>
+          </tr>
+          <tr>
+            <th>Employee ID</th>
+            <td><%= @employee.manual_employee_code%></td>
+            <th>CL</th>        
+            <td align="right"><%= @working_day.try(:cl_leave) %></td> 
+            <td align="right"><%= @working_day.try(:cl_balance) %></td> 
+            <th>Monthly Days</th>        
+            <td align="right"><%= @working_day.try(:day_in_month) %></td>            
+          </tr>
+        </thead>
       <tbody>
         <tr>
           <th>Employee Name</th>
@@ -96,7 +96,8 @@ th {
         </tr>
       </tbody>
     </table>
-       <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
+
+    <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
       <thead>
       <tr><td colspan="3"><center><strong> Salary Details </strong></center></td></tr>
         <tr>
@@ -156,6 +157,7 @@ th {
         </tr>
       </tbody>
     </table>
+    <br><br>
     </body>
 <% end %>
 </body>

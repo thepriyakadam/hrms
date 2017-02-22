@@ -64,7 +64,11 @@ class OdStatusRecordsController < ApplicationController
       OdRequestMailer.cancel(@on_duty_request).deliver_now
       flash[:notice] = 'OD Cancelled Successfully.'
     end
-    redirect_to on_duty_requests_path
+    if @on_duty_request.employee_id == current_user.employee_id
+      redirect_to on_duty_requests_path
+    else
+      redirect_to hr_view_request_on_duty_requests_path(@on_duty_request.employee_id)
+    end
   end
 
   def cancel_after_approve

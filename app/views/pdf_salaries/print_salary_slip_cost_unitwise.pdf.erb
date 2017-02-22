@@ -1,14 +1,17 @@
+<style type="text/css">
 
+ .page-break { display:block; clear:both; page-break-after:always; }
+
+</style>
 <% @salaryslips.each do |e| %>
  <%  @addable_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",false,e.id) %>
-   <%@deducted_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",true,e.id) %>
+  <%@deducted_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",true,e.id) %>
   <% @working_day = Workingday.find(e.workingday_id) %>
    <% @employee = Employee.find(e.employee_id) %>
   <% @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id) %>
    <% @leave_details = LeaveDetail.where(salaryslip_id: e.id) %>
    <% @slip_information = SlipInformation.find_by(salaryslip_id: e.id) %>
-      <body>
-      <br>
+     <div class="page-break">
         <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
       <thead>
         <tr>
@@ -59,10 +62,8 @@
          
       </tbody>
     </table>
- <style>
+
    
-   table {page-break-inside: avoid;}
-</style>
        <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
       <thead>
       <tr><td colspan="3"><center><strong> Salary Details </strong></center></td></tr>
@@ -125,14 +126,11 @@
         <td colspan="3"><center>This is a computer generated slip, hence no signature is required.</center></td>
         </tr>
       </tbody>
-      <tfoot>
-        
-      </tfoot>
     </table>
-    </body><br><br>
-    </body>
+   <br><br>
+   </div>
 <% end %>
-</body>
+
  
 
 

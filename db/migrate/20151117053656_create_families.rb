@@ -21,10 +21,11 @@ class CreateFamilies < ActiveRecord::Migration
       t.string :medical_claim
       t.string :marital
       t.string :blood_group
-      t.string :religion
       t.string :is_handicap
       t.string :handicap_type
       t.string :profession
+      t.references :religion, index: true, foreign_key: true
+
 
       t.timestamps null: false
     end

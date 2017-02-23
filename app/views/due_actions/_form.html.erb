@@ -3,6 +3,8 @@
 <%= f.hidden_field :due_employee_detail_id, value: @due_employee_detail.id  %>
 <%= f.hidden_field :due_detail_id, value: @due_employee_detail.due_detail_id  %>
 <!--<= f.hidden_field :due_detail_id, value: @due_detail.id  %>-->
+<% if @due_employee_detail.is_confirmed == true %>
+  <% else %>
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
@@ -38,6 +40,7 @@
     </div>
 
   </div>
+<% end %>
 <% end %><br>
 
 <script>

@@ -1,6 +1,6 @@
 class PdfSalariesController < ApplicationController
 
-def salary_slip_company_location_department
+  def salary_slip_company_location_department
       @month = params[:month]
       @year = params[:year]
       @company = params[:company_id]
@@ -11,30 +11,28 @@ def salary_slip_company_location_department
         flash[:alert] = "Please Select the Checkbox"
         redirect_to select_month_year_form_pdf_salaries_path
       else
-        @salary1.each do |s|
-        @salaryslip_employee = Employee.find_by_id(s)
-      @employees = Employee.where(id: s,company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
-      @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
-    end
-
-      respond_to do |format|
-        format.html
-        format.pdf do
-        render :pdf => 'print_salary_slip_cost_unitwise',
-        layout: '/layouts/pdf.html.erb',
-        :template => 'pdf_salaries/salary_slip_company_location_department.pdf.erb',
-        # :orientation      => 'Landscape', # default , Landscape
-        :page_height      => 1200,
-        :dpi              => '300',
-        :margin           => {:top    => 30, # default 10 (mm)
-                      :bottom => 30,
-                      :left   => 10,
-                      :right  => 10},
-        :show_as_html => params[:debug].present?
-    end
+          @salaryslip_employee = Employee.find_by_id(@salary1)
+          @employees = Employee.where(id: @salary1,company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+          @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
+        
+            respond_to do |format|
+              format.html
+              format.pdf do
+              render :pdf => 'print_salary_slip_cost_unitwise',
+              layout: '/layouts/pdf.html.erb',
+              :template => 'pdf_salaries/salary_slip_company_location_department.pdf.erb',
+              # :orientation      => 'Landscape', # default , Landscape
+              :page_height      => 1000,
+              :dpi              => '300',
+              :margin           => {:top    => 20, # default 10 (mm)
+                            :bottom => 30,
+                            :left   => 10,
+                            :right  => 10},
+              :show_as_html => params[:debug].present?
+          end
+        end
+      end #if/else
   end
-end
-end
 
     def print_salary_slip_monthwise
       @month = params[:salary][:month]
@@ -43,8 +41,8 @@ end
       @company_location = params[:employee][:company_location_id]
       @department = params[:employee][:department_id]
 
-      @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
-      @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
+      # @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+      # @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
        
       if current_user.class == Group
         if @company == ""
@@ -135,7 +133,7 @@ end
         :page_height      => 1000,
         :dpi              => '300',
         :margin           => {:top    => 20, # default 10 (mm)
-                      :bottom => 60,
+                      :bottom => 30,
                       :left   => 10,
                       :right  => 10},
         :show_as_html => params[:debug].present?
@@ -143,6 +141,9 @@ end
     end
   end
 end
+
+ 
+
 
   def show_employee_costunit_wise
    session[:active_tab] ="PayrollManagement"

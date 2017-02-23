@@ -19,7 +19,7 @@
         <% @due_actions.each do |due_action| %>
           <tr>
             <td>
-            |<% if due_action.is_confirm == true %>
+            <% if due_action.is_confirm == true %>
             <% else %>
             <%= check_box_tag "due_action_ids[]", due_action.id %>
             <% end %>

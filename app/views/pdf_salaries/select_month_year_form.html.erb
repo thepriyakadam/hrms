@@ -22,15 +22,15 @@
        <div class="col-sm-2">
             <div class="form-group required">
             <div class="input-group">
-              <%= f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
+              <%= f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
             </div>
             </div>
       </div>
      
       <div class="col-sm-2">
             <div class="form-group required">
-              <div id="company_location">
-                <%= render 'employees/company_location_dropdown' %> 
+              <div id="company_location_with_label">
+                <%= render 'employees/company_location_dropdown_with_label' %> 
             </div> 
             </div>
           </div>
@@ -52,14 +52,12 @@
           </div>
         </div>
         </div>
-         
-        
        
-</div>
- <div class="ajax-progress"></div>
-       <div id="employee_list_pdf"></div>
-</div>
-<%end%>
+        <div class="ajax-progress"></div>
+        <div id="employee_list_pdf"></div>
+      <%end%>
+    </div>
+  </div>
 
 <script type="text/javascript">
   $("#salary").validate({

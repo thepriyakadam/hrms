@@ -284,6 +284,9 @@ end
       get :due_employee_detail_history
       get :all_employee_list
       get :specific_due_action_list
+      get :emp_resignation_list
+      get :due_clearence_list
+      get :full_and_final_settlement
     end
   end
 

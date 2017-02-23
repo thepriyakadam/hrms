@@ -174,7 +174,7 @@
                    <% if company_policy.document_file_name == nil %>
                    <small class="label label-default">Not Available</small>
                      <% else %>
-                     <%= link_to '',download_docs_path(id: company_policy.id),class: 'btn btn-xs btn btn-primary fa fa-download' %>
+                     <%= link_to '',download_docs_path(id: company_policy.id),class: 'btn btn-xs btn btn-primary fa fa-download',:target => "_blank" %>
                      <% end %>
                   </td>
                 </tr>

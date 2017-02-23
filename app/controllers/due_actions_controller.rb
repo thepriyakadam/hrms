@@ -62,17 +62,29 @@ class DueActionsController < ApplicationController
   end
 
   def confirm_employee_due_action
+    # byebug
+    # @due_employee_detail = DueEmployeeDetail.find(params[:due_employee_detail_id])
     @due_action_ids = params[:due_action_ids]
     if @due_action_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
-      redirect_to root_url
+      redirect_to employee_due_detail_history_due_details_path
     else
       @due_action_ids.each do |did|
         @due_action = DueAction.find(did)
-        @due_action.update(is_confirm: true) 
+        @due_action.update(is_confirm: true)
+        # byebug
+        # if @due_action.is_exist(@due_action.due_employee_detail_id)
+        #  DueEmployeeDetail.where(id: @due_action.due_employee_detail_id).update_all(is_confirmed: true)
+        # else
+        # end
+        a=DueAction.where(due_employee_detail_id: @due_action.due_employee_detail_id,is_confirm: nil)
+        if a.present?
+        else
+          DueEmployeeDetail.where(id: @due_action.due_employee_detail_id).update_all(is_confirmed: true)
+        end
         flash[:notice] = "Confirmed Successfully"
       end
-      redirect_to root_url
+      redirect_to employee_due_detail_history_due_details_path
     end
   end
 

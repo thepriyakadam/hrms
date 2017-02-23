@@ -7,9 +7,9 @@
         <tr>
           <th>Item Name</th>
           <th>Remark</th>
-          <th>Amount</th>
-          <th>Status</th>
           <th>Confirmed</th>
+          <th>Status</th>
+          <th>Amount</th>
        </tr>
       </thead>
 
@@ -18,15 +18,21 @@
           <tr>
             <td><%= due_action.name %></td>
             <td><%= due_action.remark %></td>
-            <td><%= due_action.amount %></td>
-            <td><%= due_action.status ? "Yes" : "No" %></td>
             <td>
-            <% if due_action.is_confirm == nil %>
-            <small class="label label-primary">Not Confirmed</small>
-            <% else %>
-            <small class="label label-default">Confirmed</small>
-            <% end %>
+              <% if due_action.is_confirm == nil %>
+              <small class="label label-primary">Not Confirmed</small>
+              <% else %>
+              <small class="label label-default">Confirmed</small>
+              <% end %>
             </td>
+             <td>
+              <% if due_action.status == false %>
+              <small class="label label-default">Pending</small>
+              <% else %>
+              <small class="label label-success">Clear</small>
+              <% end %>
+            </td>
+            <td><%= due_action.amount %></td>
           </tr>
         <% end %>
       </tbody>

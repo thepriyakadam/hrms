@@ -1,0 +1,163 @@
+<div class="box">
+<div class="box-header">
+<h3 class="box-title">Due Details For : <%= full_name(@due_employee_details.first.employee) %> , Template Name : <%= @due_employee_details.first.due_template.try(:name) %></h3>
+  <!-- <div class="pull-right">
+    <= link_to "Full & Final Settlement", full_and_final_settlement_due_details_path,class: 'btn btn-primary' %> 
+  </div> -->
+</div>
+<div class="box-body">
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+  <% @due_employee_details.each do |due_employee_detail| %>
+  <tr><th colspan="5"><center>Member Detail</center></th></tr>
+    <tr>
+     <th>ID</th>
+     <th>Member</th>
+     <th>Department</th>
+     <th>Designation</th>
+     <th></th>
+     </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+        <td><%= due_employee_detail.reporting_master.employee.try(:manual_employee_code) %></td>      
+        <td><%= full_name(due_employee_detail.reporting_master.employee) %></td>
+        <td><%= due_employee_detail.reporting_master.employee.department.try(:name) %></td> 
+        <td><%= due_employee_detail.employee.joining_detail.employee_designation.try(:name) %></td>
+        <td></td>
+      </tr>
+      <tr><th colspan="5"><center>Due Detail</center></th></tr>
+      <tr>
+          <th>Item Name</th>
+          <th>Remark</th>
+          <th>Confirm</th>
+          <th>Status</th>
+          <th>Amount</th>
+      </tr>
+      <% due_employee_detail.due_actions.try(:each) do |due_action| %>
+      <tr>
+        <td><%= due_action.name %></td>
+        <td><%= due_action.remark %></td>
+        <td><%= due_action.is_confirm ? "Yes" : "No" %></td>
+        <td>
+          <% if due_action.status == false %>
+          <small class="label label-default">Pending</small>
+          <% else %>
+          <small class="label label-success">Clear</small>
+          <% end %>
+        </td>
+        <td><%= due_action.amount %></td>
+      </tr>
+      <%end%><br>
+      <tr>
+        <th>Pending Total</th>
+        <% a=DueAction.where(due_employee_detail_id: due_employee_detail,status: false) %>
+        <th><%= a.sum(:amount) %></th>
+     
+        <th>Clear Total</th>
+        <% b=DueAction.where(due_employee_detail_id: due_employee_detail,status: true) %>
+        <th><%= b.sum(:amount) %></th>
+
+        <th><%= due_employee_detail.due_actions.sum(:amount) %></th>
+      </tr>
+      <tr><th colspan="5"></th></tr>
+    <% end %>
+    <tr>
+        <th>Grand Pending Total</th>
+        <% a=DueEmployeeDetail.where(employee_id: @employee.id).pluck(:id) %>
+        <% b=DueAction.where(due_employee_detail_id: a,status: false) %>
+        <th><%= b.sum(:amount) %></th>
+     
+        <th> Grand Clear Total</th>
+        <% c=DueAction.where(due_employee_detail_id: a,status: true) %>
+        <th><%= c.sum(:amount) %></th>
+        
+        <% d=DueAction.where(due_employee_detail_id: a) %>
+        <th><%= d.sum(:amount) %></th>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="box-body">
+ <table id="example1" class="table table-bordered table-hover table-condensed">
+    <thead>
+     <!--  <tr>
+        <td colspan="8"><center><strong><%= current_user.company_location.company.description %></strong><br><%= current_user.company_location.address %>, <= current_user.company_location.name %></center></td>
+      </tr> -->
+      <tr><th colspan="4"><center>Advance Salary Detail</center></th></tr>
+      <tr>
+        <th>Advance Amount</th>
+        <th>No. of Installment</th>
+        <th>Installment Amount</th>
+        <th>Advance Date</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @advance_salaries.each do |advance_salary| %>
+        <tr>
+          <td><%= advance_salary.advance_amount %></td>
+          <td><%= advance_salary.no_of_instalment %></td>
+          <td><%= advance_salary.instalment_amount %></td>
+          <td><%= advance_salary.advance_date %></td>
+         
+       </tr>
+      <!--  <tr>
+          <td colspan="3">Total</td>
+          <th><= @sum.advance_amount %></th>
+          <td colspan="4"></td>
+       </tr> -->
+       <tr><th colspan="4"><center>Installment Detail</center></th></tr>
+      <tr>
+          <th colspan="3">Instalment Date</th>
+          <th>Instalment Amount</th>
+          
+      </tr>
+      <% advance_salary.instalments.where(is_complete: false).try(:each) do |instalment| %>
+      <tr>
+          <td colspan="3"><%= instalment.try(:instalment_date) %></td>
+          <td><%= instalment.try(:instalment_amount)  %></td>
+      </tr>
+     
+      <%end%><br>
+       <tr>
+       <th colspan="3">Total</th>
+         <th><% inst=advance_salary.instalments.where(is_complete: false) %>
+           <%= inst.sum(:instalment_amount) %>
+         </th>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="box-body">
+    <table id="example6" class="table table-bordered table-hover table-condensed'">
+    <thead>
+      <tr><th colspan="2"><center>Leave Balance</center></th></tr>
+      <tr>
+      <th>Category</th>
+      <th>No. of Leave</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @employee_leav_balances.each do |employee_leav_balance| %>
+      <tr>
+        <td><%= employee_leav_balance.leav_category.try(:code) %> - <%= employee_leav_balance.leav_category.try(:name) %></td>
+        <td><%= employee_leav_balance.no_of_leave %></td>
+        </tr>
+       
+      <% end %>
+       <tr>
+         <th>Total</th>
+           <th><%= @employee_leav_balances.sum(:no_of_leave) %>
+           </th>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+</div>

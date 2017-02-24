@@ -10,6 +10,8 @@
         <tr>
           <th>Employee ID</th>
           <th>Employee Name</th>
+          <th>Department</th>
+          <th>Designation</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -19,9 +21,11 @@
           <tr>
             <td><%= employee_resignation.employee.try(:manual_employee_code) %></td>
             <td><%= full_name(employee_resignation.employee)%></td>
+            <td><%= employee_resignation.employee.department.try(:name) %></td>
+            <td><%= employee_resignation.employee.joining_detail.employee_designation.try(:name) %></td>
             <td>
               <!-- <= link_to '', show_resignation_detail_employee_resignations_path(emp_id: employee_resignation.employee_id,resignation_id: employee_resignation.id), class: 'btn btn-default fa fa-eye btn-sm' %> -->
-              <%= link_to '', show_resignation_detail_employee_resignations_path(employee_resignation), class: 'btn btn-default fa fa-eye btn-sm' %>
+              <%= link_to '', all_employee_resignation_list_employee_resignations_path(emp_id: employee_resignation.employee_id), class: 'btn btn-default fa fa-eye btn-sm' %>
             </td>
           </tr>
           <% end %>

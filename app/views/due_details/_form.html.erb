@@ -4,11 +4,44 @@
 <!--   <= render 'show_travel_request' %>
  --></div>
   <div class="row">
+  <!-- <div class="col-sm-2">
+        <div class="field">
+          <div class="input-group">
+            <= select :company_id,:abc, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
+          </div>
+        </div>
+      </div>
+     
+      <div class="col-sm-2">
+        <div class="field">
+          <div id="company_location_with_label">
+            <= render 'employees/company_location_dropdown_with_label' %> 
+        </div> 
+        </div>
+      </div>
+
+      <div class="col-sm-2">
+        <div class="field">
+          <div class="input-group">
+            <div id="department">
+              <= render 'employees/department_dropdown' %> 
+            </div> 
+          </div>
+        </div>
+      </div> -->
      <div class="col-sm-3">
           <div class="form-group required">
-          <%= f.select :reporting_master_id,all_reporting_master_list,{label: 'No Dues Owner',include_blank: " Select No Dues Owner"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+          <%= f.select :reporting_master_id,all_reporting_master_list,{label: 'Template Member',include_blank: " Select Member"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
             </div>
         </div>
+
+    <!-- <div class="col-sm-2">
+        <div class="field">
+            <div id="depwise_employee">
+              <= render 'employees/department_wise_employee' %> 
+            </div> 
+          </div>
+      </div> -->
 
     <div class="col-sm-3">
      <label>Status</label>

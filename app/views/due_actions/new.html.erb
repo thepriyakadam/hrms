@@ -3,13 +3,15 @@
     <h3 class="box-title">No Dues Action <!-- For : <= full_name(@due_employee_details.try(:first).(:employee)) %> , Template Name : <= @due_employee_details.first.due_template.try(:name) %> --></h3>
   </div><!-- /.box-header -->
 	<div class="box-body">
+	<!--  < if @due_employee_detail.is_confirmed == true %> -->
 		<div id="form">
 			<%= render 'form' %>	
 		</div>
-		
-		<div id="due_actions_li">
+<!-- 		< else %>
+ -->		<div id="due_actions_li">
 			<%= render 'due_actions_list' %>
 		</div>
-	</div><!-- /.box-body -->
+<!-- 		< end %>
+ -->	</div><!-- /.box-body -->
 </div><!-- /.box -->
 

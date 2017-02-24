@@ -4,12 +4,35 @@ class EmployeeResignationsController < ApplicationController
   # GET /employee_resignations
   # GET /employee_resignations.json
   def index
-    respond_to do |format|
-      format.html
-      format.csv { send_data @employee_resignations.to_csv }
-      format.xls
-        # @employee_resignations = EmployeeResignation.where("employee_id=? and (resign_status = ? or resign_status = ?)",current_user.employee_id,"Pending","Cancelled")
+    # respond_to do |format|
+    #   format.html
+    #   format.csv { send_data @employee_resignations.to_csv }
+    #   format.xls
+    #     # @employee_resignations = EmployeeResignation.where("employee_id=? and (resign_status = ? or resign_status = ?)",current_user.employee_id,"Pending","Cancelled")
+    #     @employee_resignations = EmployeeResignation.all
+    # end
+    if current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
         @employee_resignations = EmployeeResignation.all
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        @employee_resignations = EmployeeResignation.where(employee_id: @employees)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @employee_resignations = EmployeeResignation.where(employee_id: @employees)
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+        @employee_resignations = EmployeeResignation.where(employee_id: @employees)
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
+        @employee_resignations = EmployeeResignation.where(employee_id: @employees)
+      else current_user.role.name == 'Employee'
+        @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
+        redirect_to home_index_path
+      end
+    else
+      @employees = Employee.all
     end
     session[:active_tab] ="employee_resignation"
     session[:active_tab1] = "resignation"
@@ -44,7 +67,8 @@ class EmployeeResignationsController < ApplicationController
       respond_to do |format|
         if @employee_resignation.save
           @employees=Employee.where(id: @employee_resignation.employee_id).take
-           EmployeeResignation.where(id: @employee_resignation.id).update_all(reporting_master_id: @employees.manager_id,is_pending: true,resign_status: "Pending")
+          @date_diff = (@employee_resignation.tentative_leaving_date - @employee_resignation.resignation_date).to_i
+           EmployeeResignation.where(id: @employee_resignation.id).update_all(short_notice_period: @date_diff,reporting_master_id: @employees.manager_id,is_pending: true,resign_status: "Pending")
            ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Pending",change_date: Date.today)
            EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
           format.html { redirect_to @employee_resignation, notice: 'Employee Resignation was successfully Created.' }
@@ -98,6 +122,7 @@ class EmployeeResignationsController < ApplicationController
   end
 
   def employee_resignation_list
+    # @employee = Employee.find(params[:emp_id])
     @employee_resignations = EmployeeResignation.all
     session[:active_tab] ="employee_resignation"
     session[:active_tab1] = "resignation"
@@ -188,7 +213,7 @@ class EmployeeResignationsController < ApplicationController
     @employee_resignation = EmployeeResignation.find(params[:format])
     @employee_resignation.update(final_reporter_id: current_user.employee_id,is_final_approved: true,resign_status: "FinalApproved")
     ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "FinalApproved",change_date: Date.today)
-    EmployeeResignationMailer.no_second_reporter_approval_email_to_employee(@employee_resignation).deliver_now
+    # EmployeeResignationMailer.no_second_reporter_approval_email_to_employee(@employee_resignation).deliver_now
     EmployeeResignationMailer.final_approval_email_to_employee(@employee_resignation).deliver_now
     flash[:notice] = 'Resignation Request Approved Successfully'
     redirect_to final_approval_emp_resignation_list_employee_resignations_path
@@ -272,7 +297,7 @@ class EmployeeResignationsController < ApplicationController
   end
 
   def emp_resignation_history
-    @employee_resignations = EmployeeResignation.all
+    @employee_resignations = EmployeeResignation.group(:employee_id)
     session[:active_tab] ="employee_resignation"
     session[:active_tab1] = "resignation"
   end
@@ -283,11 +308,20 @@ class EmployeeResignationsController < ApplicationController
   #   @resignation_histories = ResignationHistory.where(employee_resignation_id: @employee_resignation_id.id)
   # end
 
-  def show_resignation_detail
+  def show_resignation_status_detail
     @employee_resignation = EmployeeResignation.find(params[:format])
+    # byebug
     # @employee_resignation_id = EmployeeResignation.find(params[:resignation_id])
     @resignation_status_records = ResignationStatusRecord.where(employee_resignation_id: @employee_resignation.id)
+    @employee_resignations = EmployeeResignation.where(id: @employee_resignation.id).take
+    session[:active_tab] ="employee_resignation"
+    session[:active_tab1] = "resignation"
   end
+
+  # def show_resignation_detail
+  #   @employee_resignation = EmployeeResignation.find(params[:format])
+  #   @employee_resignations = EmployeeResignation.where(id: @employee_resignation.id)
+  # end
 
 
   def edit_n_approve_modal
@@ -394,6 +428,33 @@ class EmployeeResignationsController < ApplicationController
     @employee = Employee.find(params[:id])
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @notice_period = @joining_detail.notice_period
+  end
+
+  def all_employee_resignation_list
+    @employee = Employee.find(params[:emp_id])
+    @employee_resignations = EmployeeResignation.where(employee_id: @employee.id)
+    session[:active_tab] ="employee_resignation"
+    session[:active_tab1] = "resignation"
+  end
+
+  def final_approved_list
+    @employee_resignations = EmployeeResignation.where(resign_status: "FinalApproved")
+    session[:active_tab] ="employee_resignation"
+    session[:active_tab1] = "resignation"
+  end
+
+  def confirm_resignation
+     @employee_resignation = EmployeeResignation.find(params[:format])
+     JoiningDetail.where(employee_id: @employee_resignation.employee_id).update_all(leaving_date: @employee_resignation.leaving_date)
+     Employee.where(id: @employee_resignation.employee_id).update_all(status: "Inactive")
+     redirect_to final_approved_list_employee_resignations_path
+     flash[:notice] = 'Resignation Request Confirmed Successfully.'   
+  end
+
+  def cancel_resignation_list
+    @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id,resign_status: "Pending")
+    session[:active_tab] ="employee_resignation"
+    session[:active_tab1] = "resignation"
   end
 
   private

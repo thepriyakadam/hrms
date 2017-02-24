@@ -41,7 +41,7 @@ class EmployeeResignationMailer < ApplicationMailer
   def second_level_request_email_to_reporting_manager(employee_resignation)
       @employee_resignation = EmployeeResignation.find(employee_resignation.id)
       @employee = Employee.find(@employee_resignation.employee_id)
-      @reporting_master = Employee.find(@employee_resignation.reporting_master_id)
+      @reporting_master = Employee.find(@employee_resignation.second_reporter_id)
       @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
       mail(to: @reporting_master.email, subject: 'Resignation Request Approval at Second Level')
   end

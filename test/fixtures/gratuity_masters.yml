@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  no_of_year: MyString
+  base_component: MyString
+  day_in_month: 1
+  payable_day: MyString
+  is_active: false
+  is_confirm: false
+
+two:
+  no_of_year: MyString
+  base_component: MyString
+  day_in_month: 1
+  payable_day: MyString
+  is_active: false
+  is_confirm: false

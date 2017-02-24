@@ -160,4 +160,87 @@
   </table>
 </div>
 
+
+
+<div class="box-body">
+    <table id="example6" class="table table-bordered table-hover table-condensed'">
+    <thead>
+  
+      <% @workingdays.each do |workingday| %>
+       <tr>
+        <td><%= workingday.month_name %> <%= workingday.year %> <%= workingday.payable_day %> </td>
+     </tr>
+    
+    
+      </thead>
+      <tbody>
+       </tbody>
+  </table>
+      <% @salaryslips = Salaryslip.where(workingday_id: workingday).take %>
+      <% @addable_salary_components = SalaryslipComponent.where(salaryslip_id: @salaryslips,is_deducted: false) %>
+    <table id="example6" class="table table-bordered table-hover table-condensed'">
+    <thead>
+        <tr>
+        <% @addable_salary_components.try(:each) do |asc| %>
+
+            <td><%= asc.salary_component.name %> : <%= asc.calculated_amount.round %></td>
+          
+        <% end %>
+     
+       
+         </tr>
+     </tbody>
+  </table>
+        <% @salaryslips = Salaryslip.where(workingday_id: workingday).take %>
+        <% @deducted_salary_components = SalaryslipComponent.where(salaryslip_id: @salaryslips,is_deducted: true) %>
+        <table id="example6" class="table table-bordered table-hover table-condensed'">
+        <thead>
+         <tr>
+       <% @deducted_salary_components.try(:each) do |dsc| %>
+        
+            <% unless dsc.salary_component_id.nil? %>
+              <td><%= dsc.salary_component.name %> : <%= dsc.calculated_amount.round %></td>
+            <%else%>
+              <td><%= dsc.other_component_name %> : <%= dsc.calculated_amount.round %></td>
+            <%end%>
+        <% end %>
+       <tr>
+        <% workingday.salaryslips.try(:each) do |salslip| %>
+       
+          <td><strong>Gross Salary</strong> :<%= salslip.calculated_gross_salary.round %></strong></td>
+       
+          <td><strong>Total Deduction</strong> : <%= salslip.calculated_total_deduction.round %></strong></td>
+        
+          <td><strong>Net Salary</strong> :<strong><%= salslip.calculated_net_salary.round %></strong></td>
+      
+      
+        <% end %>
+          </tr>
+         </tbody>
+  </table>
+  <br>
+      <% end %>
+   
 </div>
+
+
+</div>
+
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>
+
+

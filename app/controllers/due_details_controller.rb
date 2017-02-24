@@ -209,7 +209,7 @@ class DueDetailsController < ApplicationController
     @due_employee_details = DueEmployeeDetail.where(employee_id: @employee_resignations,is_confirmed: true).pluck(:employee_id)
     @employees = Employee.where(id: @due_employee_details)
     session[:active_tab] = "employee_resignation"
-    session[:active_tab1] ="no_due_mgmt"
+    session[:active_tab1] ="full_and_final"
   end
 
   def due_clearence_list
@@ -224,6 +224,8 @@ class DueDetailsController < ApplicationController
      @workingdays = Workingday.where(employee_id: @employee.id,full_and_final: true)
      @workingdays_1 = Workingday.where(employee_id: @employee.id,full_and_final: true).pluck(:id)
      @salaryslips = Salaryslip.where(workingday_id: @workingdays_1)
+
+     @gratuities = Gratuity.where(employee_id: @employee.id)
 
      session[:active_tab] = "employee_resignation"
      session[:active_tab1] ="no_due_mgmt"

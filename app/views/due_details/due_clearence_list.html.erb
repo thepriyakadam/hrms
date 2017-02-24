@@ -165,7 +165,7 @@
 <div class="box-body">
     <table id="example6" class="table table-bordered table-hover table-condensed'">
     <thead>
-  
+
       <% @workingdays.each do |workingday| %>
        <tr>
         <td><%= workingday.month_name %> <%= workingday.year %> <%= workingday.payable_day %> </td>
@@ -217,11 +217,36 @@
         <% end %>
           </tr>
          </tbody>
-  </table>
-  <br>
+        </table>
+       <br>
       <% end %>
-   
+    </div>
+
+  <div class="box-body">
+    <table id="example6" class="table table-bordered table-hover table-condensed'">
+    <thead>
+      <tr><th colspan="4"><center>Gratuity</center></th></tr>
+      <tr>
+      <th>Amount</th>
+      <th>No. of Year</th>
+      <th>Total</th>
+      <th>Day</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @gratuities.each do |gratuity| %>
+      <tr>
+        <td><%= gratuity.gratuity_amount %></td>
+        <td><%= gratuity.no_of_year %></td>
+        <td><%= gratuity.total_gratuity %></td>
+        <td><%= gratuity.day %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
+
 
 
 </div>

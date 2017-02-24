@@ -29,9 +29,9 @@
         <tr>
           <th><%= i= i+1 %></th>
           <td><%= employee_promotion.employee.try(:company_location).try(:name) %> - <%= employee_promotion.employee.try(:department).try(:name) %></td>
-          <td><%= employee_promotion.employee_grade.name %></td>
-          <td><%= employee_promotion.employee_designation.name %></td>
-          <td><%= employee_promotion.employee_category.name %></td>
+          <td><%= employee_promotion.employee_grade.try(:name) %></td>
+          <td><%= employee_promotion.employee_designation.try(:name) %></td>
+          <td><%= employee_promotion.employee_category.try(:name) %></td>
           <td><%= employee_promotion.employee_ctc %></td>
           <td><%= employee_promotion.justification %></td>
           <td><%= employee_promotion.effective_from %></td>

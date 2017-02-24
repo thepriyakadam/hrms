@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170223053723) do
+ActiveRecord::Schema.define(version: 20170224101706) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1684,6 +1684,33 @@ ActiveRecord::Schema.define(version: 20170223053723) do
   add_index "goal_ratings", ["period_id"], name: "index_goal_ratings_on_period_id"
   add_index "goal_ratings", ["reviewer_id"], name: "index_goal_ratings_on_reviewer_id"
   add_index "goal_ratings", ["training_topic_master_id"], name: "index_goal_ratings_on_training_topic_master_id"
+
+  create_table "gratuities", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.string   "no_of_year"
+    t.string   "base_component"
+    t.decimal  "total_gratuity"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "gratuity_master_id"
+    t.decimal  "gratuity_amount"
+    t.date     "day"
+    t.boolean  "is_confirm"
+  end
+
+  add_index "gratuities", ["employee_id"], name: "index_gratuities_on_employee_id"
+  add_index "gratuities", ["gratuity_master_id"], name: "index_gratuities_on_gratuity_master_id"
+
+  create_table "gratuity_masters", force: :cascade do |t|
+    t.string   "no_of_year"
+    t.string   "base_component"
+    t.integer  "day_in_month"
+    t.string   "payable_day"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "groups", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

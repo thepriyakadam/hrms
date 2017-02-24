@@ -1,0 +1,1 @@
+json.partial! "gratuity_masters/gratuity_master", gratuity_master: @gratuity_master

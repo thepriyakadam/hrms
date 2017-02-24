@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   
+  resources :gratuities 
+  resources :gratuity_masters do 
+    collection do
+      get :is_confirm
+    end
+  end
   resources :monthly_arrears
   resources :on_duty_requests do 
     collection do

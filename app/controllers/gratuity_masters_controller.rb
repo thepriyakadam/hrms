@@ -16,6 +16,9 @@ class GratuityMastersController < ApplicationController
   def new
     @gratuity_master = GratuityMaster.new
     @gratuity_masters = GratuityMaster.all
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="PayrollSetup"
+    session[:active_tab2] ="EmployerMaster"
   end
 
   # GET /gratuity_masters/1/edit

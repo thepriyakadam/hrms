@@ -28,7 +28,7 @@ class GratuitiesController < ApplicationController
     @employee = Employee.find_by(id: @gratuity.employee_id)
     @joining_detail = JoiningDetail.find_by(employee_id: @employee.id)
     @gratuity_master = GratuityMaster.where(is_active: true).take
-    date = (Date.today - @joining_detail.joining_date.to_date).to_i
+    date = (@joining_date.leaving_date.to_date - @joining_detail.joining_date.to_date).to_i
     @year = (date/365).to_f
     if @year >= @gratuity_master.no_of_year.to_f
       @employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employee.id)

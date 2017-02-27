@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170224101706) do
+ActiveRecord::Schema.define(version: 20170227050304) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -163,9 +163,12 @@ ActiveRecord::Schema.define(version: 20170224101706) do
     t.string   "name"
     t.text     "definition"
     t.boolean  "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.boolean  "is_confirm"
+    t.boolean  "attribute_weightage"
+    t.string   "from"
+    t.string   "to"
   end
 
   create_table "attribute_rating_sheets", force: :cascade do |t|
@@ -1588,10 +1591,13 @@ ActiveRecord::Schema.define(version: 20170224101706) do
 
   create_table "goal_perspectives", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.boolean  "is_confirm"
     t.boolean  "status"
+    t.boolean  "goal_weightage"
+    t.integer  "from"
+    t.integer  "to"
   end
 
   create_table "goal_rating_sheets", force: :cascade do |t|

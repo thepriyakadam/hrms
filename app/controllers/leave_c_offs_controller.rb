@@ -198,6 +198,7 @@ class LeaveCOffsController < ApplicationController
     @no_of_leav = @emp_leav_bal1.no_of_leave
 
     if @leave_c_off.c_off_type == 'Full Day'
+      byebug
       @leave_c_off.update(expiry_date: nil,is_expire: nil,leave_count: 1,expiry_status: nil,c_off_expire_day: nil)
       @emp_leav_bal1.update(no_of_leave: @no_of_leav.to_f + 1 )
     elsif @leave_c_off.c_off_type == 'Half Day'

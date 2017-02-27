@@ -36,6 +36,15 @@ class GoalRatingsController < ApplicationController
      @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
   end
 
+
+  def select_dropdown
+    if params[:goal_type] == "Goal"
+      @flag = true
+    else
+      @flag = false
+    end
+  end
+
   # POST /goal_ratings
   # POST /goal_ratings.json
   def create
@@ -43,17 +52,48 @@ class GoalRatingsController < ApplicationController
     @employee = Employee.find(@goal_bunch.employee_id)
     @goal_rating = GoalRating.new(goal_rating_params)
     #GoalRating.create(period_id: @goal_bunch.period_id)
+   
     goal_weightage_sum = @goal_rating.goal_weightage_sum(@goal_bunch, @goal_rating)
     if goal_weightage_sum <= 100
       if params[:flag] == "Goal"
         @goal_rating.goal_perspective_id = params[:common][:id]
         @dropdown = true
+
+        @goal = GoalPerspective.find_by(id: @goal_rating.goal_perspective_id)
+        if @goal.goal_weightage == true
+          @weightage_limit = @goal_rating.goal_weightage >= @goal.from && @goal_rating.goal_weightage <= @goal.to
+          if @weightage_limit == true
+            @goal_rating.save
+            @flag1 = true
+            @flag = true
+          else
+            @flag1 = false
+          end
+        else
+          @goal_rating.save
+          @flag = true
+        end
+
       else
         @goal_rating.attribute_master_id = params[:common][:id]
         @dropdown = false
+
+        @attribute = AttributeMaster.find_by(id: @goal_rating.attribute_master_id)
+        if @attribute.attribute_weightage == true
+          @weightage_limit = @goal_rating.goal_weightage >= @attribute.from && @goal_rating.goal_weightage <= @attribute.to
+          if @weightage_limit == true
+            @goal_rating.save
+            @flag1 = true
+            @flag = true
+          else
+            @flag1 = false
+          end
+        else
+          @goal_rating.save
+          @flag = true
+        end
+        
       end
-      @goal_rating.save
-      @flag = true
       @goal_rating = GoalRating.new
       #@goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
       @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
@@ -452,13 +492,6 @@ class GoalRatingsController < ApplicationController
   def training_plan_create
   end
 
-  def select_dropdown
-    if params[:goal_type] == "Goal"
-      @flag = true
-    else
-      @flag = false
-    end
-  end
 
   def goal_set_modal
     @goal_rating = GoalRating.find(params[:format])

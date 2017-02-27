@@ -11,20 +11,34 @@
         <%= f.text_field :name,placeholder: 'Attribute Name',label:'Name' %>
       </div>
     </div>
-     <div class="col-sm-4">
+     <div class="col-sm-6">
       <div class="field">
         <%= f.text_field :definition, placeholder: 'Definition',label:'Definition' %>
       </div>
     </div>
-    
+  </div>
+  <div class="row">
+    <div class="col-sm-2">
+      <div class="field">
+        <%= f.check_box :attribute_weightage, label: 'Weightage'%>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="field">
+        <%= f.text_field :from,hide_label:true, placeholder: 'From'%>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="field">
+        <%= f.text_field :to,hide_label:true, placeholder: 'To'%>
+      </div>
+    </div>
+
      <div class="col-sm-2">
-     <label> Status </label>
       <div class="field">
         <%= f.check_box :status,label:'Status' %>
       </div>
       </div>
-    </div>
-    <div class="row">
     <div class="col-sm-3">
       <div class="actions">
         <%= f.submit"Create Attribute ", :class => class_name, data: { disable_with: data_info } %>

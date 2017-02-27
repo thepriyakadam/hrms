@@ -866,6 +866,21 @@ ActiveRecord::Schema.define(version: 20170224062827) do
   add_index "employee_attributes", ["employee_id"], name: "index_employee_attributes_on_employee_id"
   add_index "employee_attributes", ["performance_period_id"], name: "index_employee_attributes_on_performance_period_id"
 
+  create_table "employee_attributes", force: :cascade do |t|
+    t.integer  "attribute_master_id"
+    t.integer  "weightage"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "performance_period_id"
+    t.integer  "employee_id"
+    t.boolean  "is_confirm"
+    t.string   "emp_head"
+  end
+
+  add_index "employee_attributes", ["attribute_master_id"], name: "index_employee_attributes_on_attribute_master_id"
+  add_index "employee_attributes", ["employee_id"], name: "index_employee_attributes_on_employee_id"
+  add_index "employee_attributes", ["performance_period_id"], name: "index_employee_attributes_on_performance_period_id"
+
   create_table "employee_bank_details", force: :cascade do |t|
     t.integer  "employee_id"
     t.string   "account_no"

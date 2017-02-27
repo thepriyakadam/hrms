@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170224101706) do
+ActiveRecord::Schema.define(version: 20170224062827) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1673,15 +1673,14 @@ ActiveRecord::Schema.define(version: 20170224101706) do
 
   create_table "gratuities", force: :cascade do |t|
     t.integer  "employee_id"
-    t.string   "no_of_year"
-    t.string   "base_component"
-    t.decimal  "total_gratuity"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
     t.integer  "gratuity_master_id"
     t.decimal  "gratuity_amount"
+    t.string   "no_of_year"
+    t.decimal  "total_gratuity"
     t.date     "day"
     t.boolean  "is_confirm"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   add_index "gratuities", ["employee_id"], name: "index_gratuities_on_employee_id"

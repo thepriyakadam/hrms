@@ -3700,6 +3700,8 @@ ActiveRecord::Schema.define(version: 20170227050304) do
     t.decimal  "calculated_payable_days"
     t.decimal  "ot_hours"
     t.decimal  "od_leave"
+    t.boolean  "paid"
+    t.boolean  "full_and_final"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

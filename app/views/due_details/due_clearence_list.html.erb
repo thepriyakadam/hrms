@@ -53,28 +53,28 @@
       <tr>
         <th>Pending Total</th>
         <% a=DueAction.where(due_employee_detail_id: due_employee_detail,status: false) %>
-        <th><%= a.sum(:amount) %></th>
+        <th><%= pending_total=a.sum(:amount) %></th>
      
         <th>Clear Total</th>
         <% b=DueAction.where(due_employee_detail_id: due_employee_detail,status: true) %>
-        <th><%= b.sum(:amount) %></th>
+        <th><%= clear_total=b.sum(:amount) %></th>
 
-        <th><%= due_employee_detail.due_actions.sum(:amount) %></th>
+        <th><%= total=due_employee_detail.due_actions.sum(:amount) %></th>
       </tr>
       <tr><th colspan="5"></th></tr>
     <% end %>
     <tr>
         <th>Grand Pending Total</th>
-        <% a=DueEmployeeDetail.where(employee_id: @employee.id).pluck(:id) %>
-        <% b=DueAction.where(due_employee_detail_id: a,status: false) %>
-        <th><%= b.sum(:amount) %></th>
+        <% c=DueEmployeeDetail.where(employee_id: @employee.id).pluck(:id) %>
+        <% d=DueAction.where(due_employee_detail_id: c,status: false) %>
+        <th><%= grand_pending_total=d.sum(:amount) %></th>
      
         <th> Grand Clear Total</th>
-        <% c=DueAction.where(due_employee_detail_id: a,status: true) %>
-        <th><%= c.sum(:amount) %></th>
+        <% e=DueAction.where(due_employee_detail_id: c,status: true) %>
+        <th><%= grand_clear_total=e.sum(:amount) %></th>
         
-        <% d=DueAction.where(due_employee_detail_id: a) %>
-        <th><%= d.sum(:amount) %></th>
+        <% f=DueAction.where(due_employee_detail_id: c) %>
+        <th><%= f.sum(:amount) %></th>
     </tr>
   </tbody>
 </table>
@@ -160,4 +160,147 @@
   </table>
 </div>
 
+
+
+<div class="box-body">
+    <table id="example6" class="table table-bordered table-hover table-condensed'">
+    <thead>
+
+      <% @workingdays.each do |workingday| %>
+       <tr>
+        <td><%= workingday.month_name %> <%= workingday.year %> <%= workingday.payable_day %> </td>
+     </tr>
+    
+    
+      </thead>
+      <tbody>
+       </tbody>
+  </table>
+      <% @salaryslips = Salaryslip.where(workingday_id: workingday).take %>
+      <% @addable_salary_components = SalaryslipComponent.where(salaryslip_id: @salaryslips,is_deducted: false) %>
+    <table id="example6" class="table table-bordered table-hover table-condensed'">
+    <thead>
+        <tr>
+        <% @addable_salary_components.try(:each) do |asc| %>
+
+            <td><%= asc.salary_component.name %> : <%= asc.calculated_amount.round %></td>
+          
+        <% end %>
+     
+       
+         </tr>
+     </tbody>
+  </table>
+        <% @salaryslips = Salaryslip.where(workingday_id: workingday).take %>
+        <% @deducted_salary_components = SalaryslipComponent.where(salaryslip_id: @salaryslips,is_deducted: true) %>
+        <table id="example6" class="table table-bordered table-hover table-condensed'">
+        <thead>
+         <tr>
+       <% @deducted_salary_components.try(:each) do |dsc| %>
+        
+            <% unless dsc.salary_component_id.nil? %>
+              <td><%= dsc.salary_component.name %> : <%= dsc.calculated_amount.round %></td>
+            <%else%>
+              <td><%= dsc.other_component_name %> : <%= dsc.calculated_amount.round %></td>
+            <%end%>
+        <% end %>
+       <tr>
+        <% workingday.salaryslips.try(:each) do |salslip| %>
+       
+          <td><strong>Gross Salary</strong> :<%= salslip.calculated_gross_salary.round %></strong></td>
+       
+          <td><strong>Total Deduction</strong> : <%= salslip.calculated_total_deduction.round %></strong></td>
+        
+          <td><strong>Net Salary</strong> :<strong><%= salslip.calculated_net_salary.round %></strong></td>
+      
+      
+        <% end %>
+          </tr>
+         </tbody>
+        </table>
+       <br>
+      <% end %>
+    </div>
+
+  <div class="box-body">
+    <table id="example6" class="table table-bordered table-hover table-condensed'">
+    <thead>
+      <tr><th colspan="4"><center>Gratuity</center></th></tr>
+      <tr>
+      <th>Amount</th>
+      <th>No. of Year</th>
+      <th>Total</th>
+      <th>Day</th>
+     </tr>
+  </thead>
+
+  <tbody>
+    <% @gratuities.each do |gratuity| %>
+      <tr>
+        <td><%= gratuity.gratuity_amount %></td>
+        <td><%= gratuity.no_of_year %></td>
+        <td><%= gratuity.total_gratuity %></td>
+        <td><%= gratuity.day %></td>
+      </tr>
+      <% end %>
+  </tbody>
+  </table>
 </div>
+
+<div class="box-body">
+    <table id="example6" class="table table-bordered table-hover table-condensed'">
+    <thead>
+      <tr><th colspan="7"><center>Amount to be Paid </center></th></tr>
+      <tr>
+      <th>Clearance Pending</th>
+      <th>Installment</th>
+      <th>Total</th>
+      <th>Net Salary</th>
+      <th>Gratuity</th>
+      <th>Total</th>
+      <th>Final Total</th>
+     </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+        <td><%= grand_pending_total %></td>
+        <td><% adv_sal = AdvanceSalary.where(employee_id:  @employee.id).pluck(:id) 
+        instal=Instalment.where(advance_salary_id: adv_sal,is_complete: false) %>
+        <%= instal_total=instal.sum(:instalment_amount) %></td>
+        <td><strong><%= total_1=grand_pending_total + instal_total  %></strong></td>
+        <td><% @salaryslips = Salaryslip.where(workingday_id: @workingdays_1) 
+        net_salary=@salaryslips.sum(:calculated_net_salary).round %>
+        <%= net_salary %></td>
+        <td><% grat=@gratuities.take %>
+          <%= total_grat=grat.total_gratuity %>
+        </td>
+        <td><strong><%= total_2=net_salary+total_grat %></strong></td>
+        <td><strong><%= final_total=total_1-total_2 %></strong></td>
+      </tr>
+  </tbody>
+  </table>
+</div>
+
+
+
+</div>
+
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>
+
+

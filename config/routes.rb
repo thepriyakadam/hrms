@@ -293,6 +293,8 @@ end
       get :emp_resignation_list
       get :due_clearence_list
       get :full_and_final_settlement
+      get :emp_salary_list
+      get :show_full_and_final_employee
     end
   end
 

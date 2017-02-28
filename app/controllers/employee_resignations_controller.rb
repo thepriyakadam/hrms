@@ -297,7 +297,31 @@ class EmployeeResignationsController < ApplicationController
   end
 
   def emp_resignation_history
-    @employee_resignations = EmployeeResignation.group(:employee_id)
+    # @employee_resignations = EmployeeResignation.group(:employee_id)
+    if current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @employee_resignations = EmployeeResignation.group(:employee_id)
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        @employee_resignations = EmployeeResignation.where(employee_id: @employees).group(:employee_id)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @employee_resignations = EmployeeResignation.where(employee_id: @employees).group(:employee_id)
+      elsif current_user.role.name == 'HOD'
+        # byebug
+        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+        @employee_resignations = EmployeeResignation.where(employee_id: @employees).group(:employee_id)
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
+        @employee_resignations = EmployeeResignation.where(employee_id: @employees).group(:employee_id)
+      else current_user.role.name == 'Employee'
+        @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
+        redirect_to home_index_path
+      end
+    else
+      @employees = Employee.all
+    end
     session[:active_tab] ="employee_resignation"
     session[:active_tab1] = "resignation"
   end

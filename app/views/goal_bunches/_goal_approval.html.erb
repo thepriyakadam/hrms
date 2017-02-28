@@ -117,9 +117,9 @@
            <tr><th colspan="6"><center>Goal List</center></th></tr>
             <tr>
               <th>Goal perspective</th>
-              <th>Goal measure</th>
+              <th>Measure</th>
               <th>Target</th>
-              <th>Goal weightage</th>
+              <th>Weightage</th>
               <th>Aligned</th>
               <th>Action</th>
             </tr>
@@ -150,9 +150,9 @@
           <tr><th colspan="6"><center>Attribute List</center></th></tr>
             <tr>
               <th>Attribute</th>
-              <th>Goal measure</th>
+              <th>Measure</th>
               <th>Target</th>
-              <th>Goal weightage</th>
+              <th>Weightage</th>
               <th>Aligned</th>
               <th>Action</th>
             </tr>
@@ -169,7 +169,7 @@
                   <% if goal_rating.goal_bunch.goal_confirm == true %>
                     <small class="label label-info">Confirmed</small>
                   <% else %>
-                    <%= link_to '', attribute_modal_goal_ratings_path(goal_rating_id: goal_rating,period_id: @period.id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+                    <%= link_to '', goal_modal_goal_ratings_path(goal_rating_id: goal_rating,period_id: @period.id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
                   <% end %>
                 </td>
               </tr>

@@ -4,6 +4,9 @@
       <th>Code</th>
       <th>Attribute</th>
       <th>Definition</th>
+      <th>Weightage</th>
+      <th>From</th>
+      <th>To</th>
       <th>Status</th>
       <th>Action</th>
     </tr>
@@ -15,6 +18,9 @@
         <td><%= attribute_master.code %></td>
         <td><%= attribute_master.name %></td>
         <td><%= attribute_master.definition %></td>
+        <td><%= attribute_master.attribute_weightage ? "Yes" : "No" %></td>
+        <td><%= attribute_master.from %></td>
+        <td><%= attribute_master.to %></td>
         <td><%= attribute_master.status ? "Active" : "Inactive" %></td>
         <td>
           <% if attribute_master.is_confirm == true %>

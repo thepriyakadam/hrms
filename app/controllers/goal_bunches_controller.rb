@@ -147,10 +147,17 @@ class GoalBunchesController < ApplicationController
     @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id)
 
       @goal_bunch = GoalBunch.find_by(id: @goal_bunch_id)
+      sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
+    if sum == 100
       @goal_bunch.update(goal_confirm: true)
       flash[:notice] = "Confirmed Successfully" 
       GoalBunchMailer.send_email_to_appraisee(@goal_bunch).deliver_now
       redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
+    else
+      flash[:alert] = "Goal weightage sum should be 100"
+      redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
+    end 
+
   end
 
   def appraiser_comment

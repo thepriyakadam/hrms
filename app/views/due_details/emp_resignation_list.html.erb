@@ -31,7 +31,7 @@
         <% @due_employee_details_1 = DueEmployeeDetail.where(employee_id: employee,is_confirmed: true).count
            @due_employee_details_2 = DueEmployeeDetail.where(employee_id: employee,is_confirmed: nil).count  %>
 	    <% if @due_employee_details_2 == 0 && @due_employee_details_1 > 0 %>
-	    <%= link_to ' View Template', due_clearence_list_due_details_path(emp_id: employee.id),class: 'btn btn-xs btn-warning' %>
+	    <%= link_to ' View Template', due_clearence_list_due_details_path(emp_id: employee.id),class: 'btn btn-xs btn-info' %>
 	   <%else%>
 	     <small class="label label-default">Pending</small>
 	    <%end%>

@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   
+  resources :gratuities 
+  resources :gratuity_masters do 
+    collection do
+      get :is_confirm
+    end
+  end
   resources :monthly_arrears
   resources :on_duty_requests do 
     collection do
@@ -287,6 +293,8 @@ end
       get :emp_resignation_list
       get :due_clearence_list
       get :full_and_final_settlement
+      get :emp_salary_list
+      get :show_full_and_final_employee
     end
   end
 

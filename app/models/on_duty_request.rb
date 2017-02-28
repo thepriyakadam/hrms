@@ -20,134 +20,123 @@ class OnDutyRequest < ActiveRecord::Base
     flag
   end
 
-  def create_for_particular_od_record(on_duty_request)
-    for i in on_duty_request.start_date.to_date..on_duty_request.end_date.to_date
-      if on_duty_request.leave_type == 'Full Day'
-        ParticularOdRecord.create(employee_id: on_duty_request.employee_id,on_duty_request_id: on_duty_request.id,leave_date: i,is_full: true)
-      elsif on_duty_request.leave_type == 'Full/Half'
-          start_date = on_duty_request.start_date.to_date
-          end_date = on_duty_request.end_date.to_date
-        if on_duty_request.first_half == true && on_duty_request.last_half == true
-          if i == start_date
-            ParticularOdRecord.create(employee_id: on_duty_request.employee_id,on_duty_request_id: on_duty_request.id,leave_date: i,is_full: false)
-          elsif i == end_date
-            ParticularOdRecord.create(employee_id: on_duty_request.employee_id,on_duty_request_id: on_duty_request.id,leave_date: i,is_full: false)
-          else
-            ParticularOdRecord.create(employee_id: on_duty_request.employee_id,on_duty_request_id: on_duty_request.id,leave_date: i,is_full: true)
-          end
-        elsif on_duty_request.last_half == true
-          if i == start_date
-            ParticularOdRecord.create(employee_id: on_duty_request.employee_id,on_duty_request_id: on_duty_request.id,leave_date: i,is_full: false)
-          else
-            ParticularOdRecord.create(employee_id: on_duty_request.employee_id,on_duty_request_id: on_duty_request.id,leave_date: i,is_full: true)
-          end
-        elsif on_duty_request.first_half == true
-          if i == end_date
-            ParticularOdRecord.create(employee_id: on_duty_request.employee_id,on_duty_request_id: on_duty_request.id,leave_date: i,is_full: false)
-          else
-            ParticularOdRecord.create(employee_id: on_duty_request.employee_id,on_duty_request_id: on_duty_request.id,leave_date: i,is_full: true)
-          end
-        else
-          if i == start_date
-            ParticularOdRecord.create(employee_id: on_duty_request.employee_id,on_duty_request_id: on_duty_request.id,leave_date: i,is_full: false)
-          else
-            ParticularOdRecord.create(employee_id: on_duty_request.employee_id,on_duty_request_id: on_duty_request.id,leave_date: i,is_full: true)
-          end
-        end #@on_duty_request.first_half == true   
-      else #leave_type = "Half Day"
-        ParticularOdRecord.create(employee_id: on_duty_request.employee_id,on_duty_request_id: on_duty_request.id,leave_date: i,is_full: false)
-      end
-    end #for i
-  end
-
-  def is_present?
-    flag = 0
-    for i in self.start_date.to_date..self.end_date.to_date
-      flag = EmployeeAttendance.where(day: i, employee_id: self.employee_id).where.not(employee_leav_request_id: nil)
-    end
-    flag
-  end
-
- def is_there(i)
-    flag = 0
-      flag = EmployeeAttendance.exists?(day: i,employee_id: self.employee_id)
-    flag
-  end
-  
   def create_od_in_attendance
-    if self.is_present?
-      "Attendance already available"
-    else
-      if self.leave_type == "Full Day"
-        for i in self.start_date.to_date..self.end_date.to_date
-          if self.is_there(i)
-          else
-          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id))
-          end
-        end
+    flag = 0
+    flag1 = 0
+    for i in self.start_date.to_date..self.end_date.to_date
+        flag = EmployeeAttendance.exists?(day: i,employee_id: self.employee_id)
+      if flag == true
+          flag1 = EmployeeAttendance.exists?(day: i,employee_id: self.employee_id,employee_leav_request_id: nil)
+        if flag1 == true
+            @emp_attendance = EmployeeAttendance.where(day: i,employee_id: self.employee_id).take
+            start_date = self.start_date.to_date
+            end_date = self.end_date.to_date
+            if self.leave_type == "Full Day"
+              @emp_attendance.update(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
+            elsif self.leave_type == "Full/Half"
+              if self.first_half == true && self.last_half == true
+                if i == start_date
+                  @emp_attendance.update(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5, department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
+                elsif i == end_date
+                  @emp_attendance.update(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5,department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
+                else
+                  @emp_attendance.update(employee_id: self.employee_id, day: i, present: "OD", count: 1,department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
+                end
+              elsif self.last_half == true
+                if i == start_date
+                  @emp_attendance.update(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5, department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
+                else
+                  @emp_attendance.update(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
+                end
+              elsif self.first_half == true
+                if i == end_date
+                  @emp_attendance.update(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5,department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
+                else
+                  @emp_attendance.update(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
+                end
+              else
+                @emp_attendance.update(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
+              end #self.first_half == true && self.last_half == true
+            else #self.leave_type == "Full Day"
+              @emp_attendance.update(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5,department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
+            end #self.leave_type == "Full Day"
+        else #flag1
+          if self.leave_type == "Full Day"
+            ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: true,is_cancel_after_approve: true)
+            elsif self.leave_type == "Full/Half"
+              if self.first_half == true && self.last_half == true
+                if i == start_date
+                  ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: false,is_cancel_after_approve: true)
+                elsif i == end_date
+                  ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: false,is_cancel_after_approve: true)
+                else
+                  ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: true,is_cancel_after_approve: true)
+                end
+              elsif self.last_half == true
+                if i == start_date
+                  ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: false,is_cancel_after_approve: true)
+                else
+                  ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: true,is_cancel_after_approve: true)
+                end
+              elsif self.first_half == true
+                if i == end_date
+                  ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: false,is_cancel_after_approve: true)
+                else
+                  ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: true,is_cancel_after_approve: true)
+                end
+              else
+                ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: true,is_cancel_after_approve: true)
+              end #self.first_half == true && self.last_half == true
+            else #self.leave_type == "Full Day"
+              ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: false,is_cancel_after_approve: true)
+            end #self.leave_type == "Full Day"
+        end #flag1
 
-      elsif self.leave_type == "Full/Half"
-        for i in self.start_date.to_date..self.end_date.to_date
-          start_date = self.start_date.to_date
-          end_date = self.end_date.to_date
+      else #flag
+
+        if self.leave_type == "Full Day"
+          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
+          ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: true)
+        elsif self.leave_type == "Full/Half"
           if self.first_half == true && self.last_half == true
             if i == start_date
-              if self.is_there(i)
-              else
-              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5, department_id: self.employee.try(:department_id))
-              end
+              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5, department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
+              ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: false)
             elsif i == end_date
-              if self.is_there(i)
-              else
-              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5,department_id: self.employee.try(:department_id))
-              end
+              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5,department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
+              ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: false)
             else
-              if self.is_there(i)
-              else
-              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id))
-              end
+              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
+              ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: true)
             end #i==start_date
           elsif self.last_half == true
             if i == start_date
-              if self.is_there(i)
-              else
-              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5, department_id: self.employee.try(:department_id))
-              end
+              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5, department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
+              ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: false)
             else
-              if self.is_there(i)
-              else
-              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id))
-              end
+              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
+              ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: true)
             end
           elsif self.first_half == true
             if i == end_date
-              if self.is_there(i)
-              else
-              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5,department_id: self.employee.try(:department_id))
-              end
+              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5,department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
+              ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: false)
             else
-              if self.is_there(i)
-              else
-              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id))
-              end
+              EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
+              ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: true)
             end
           else
-            if self.is_there(i)
-            else
-            EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id))
-            end
+            EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
+            ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: true)
           end #self.first_half
-        end #for i in
-
-      else #FULL DAY
-        for i in self.start_date.to_date..self.start_date.to_date
-          if self.is_there(i)
-          else
-          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5,department_id: self.employee.try(:department_id))
-          end
-        end #for
-      end # FULL DAY
-    end# 
-  end
+        else #FULL DAY
+          for i in self.start_date.to_date..self.start_date.to_date
+            EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/OD", count: 0.5,department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
+            ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: false)
+          end #for
+        end # FULL DAY
+      end #flag
+    end#for i in 
+  end #def
 
 end

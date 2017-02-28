@@ -228,7 +228,7 @@ class DueDetailsController < ApplicationController
      @gratuities = Gratuity.where(employee_id: @employee.id)
 
      session[:active_tab] = "employee_resignation"
-     session[:active_tab1] ="no_due_mgmt"
+     session[:active_tab1] ="full_and_final"
   end
 
 

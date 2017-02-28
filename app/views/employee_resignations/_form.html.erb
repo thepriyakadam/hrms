@@ -75,25 +75,23 @@
       </div> -->
 
       <div class="col-sm-3">
-       <label>Exit Interview Date</label>
        <div class="field">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :exit_interview_date,hide_label: true, class: 'resignation'%>
+          <%= f.text_field :exit_interview_date, class: 'resignation',label:'Exit Interview Date'%>
         </div>
        </div>
       </div>
 
       <div class="col-sm-3">
-       <label>Leaving Date</label>
-       <div class="field">
+       <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :leaving_date,hide_label: true, class: 'resignation'%>
+          <%= f.text_field :leaving_date, class: 'resignation',label:'Leaving Date'%>
         </div>
        </div>
       </div>

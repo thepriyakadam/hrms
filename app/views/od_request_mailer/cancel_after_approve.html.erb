@@ -8,7 +8,7 @@
     <p>
       OD request is Cancel after approved
       Employee ID : <%= @current_emp.try(:manual_employee_code) %><br>
-      Employee Name : <%= @current_emp.try(:first_name).to_s+' '+@current_emp.try(:middle_name)+' '+@current_emp.try(:last_name).to_s %><br>
+      Employee Name : <%= @current_emp.try(:first_name).to_s+' '+@current_emp.try(:middle_name).to_s+' '+@current_emp.try(:last_name).to_s  %><br>
       Date <%= @particular_od_record.leave_date.to_date %><br>
     </p>
   </body>

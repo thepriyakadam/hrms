@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170218053643) do
+ActiveRecord::Schema.define(version: 20170224091456) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -712,9 +712,11 @@ ActiveRecord::Schema.define(version: 20170218053643) do
     t.string   "name"
     t.text     "remark"
     t.decimal  "amount"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.integer  "due_employee_detail_id"
+    t.boolean  "is_confirm"
+    t.boolean  "status",                 default: false
   end
 
   add_index "due_actions", ["due_detail_id"], name: "index_due_actions_on_due_detail_id"
@@ -734,24 +736,8 @@ ActiveRecord::Schema.define(version: 20170218053643) do
   add_index "due_details", ["due_template_id"], name: "index_due_details_on_due_template_id"
   add_index "due_details", ["reporting_master_id"], name: "index_due_details_on_reporting_master_id"
 
-  create_table "due_employee_details", force: :cascade do |t|
-    t.integer  "employee_id"
-    t.integer  "due_template_id"
-    t.integer  "due_employee_template_id"
-    t.integer  "due_detail_id"
-    t.integer  "reporting_master_id"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.boolean  "is_confirmed"
-    t.integer  "employee_resignation_id"
-  end
-
-  add_index "due_employee_details", ["due_detail_id"], name: "index_due_employee_details_on_due_detail_id"
-  add_index "due_employee_details", ["due_employee_template_id"], name: "index_due_employee_details_on_due_employee_template_id"
-  add_index "due_employee_details", ["due_template_id"], name: "index_due_employee_details_on_due_template_id"
-  add_index "due_employee_details", ["employee_id"], name: "index_due_employee_details_on_employee_id"
-  add_index "due_employee_details", ["employee_resignation_id"], name: "index_due_employee_details_on_employee_resignation_id"
-  add_index "due_employee_details", ["reporting_master_id"], name: "index_due_employee_details_on_reporting_master_id"
+# Could not dump table "due_employee_details" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
   create_table "due_employee_templates", force: :cascade do |t|
     t.integer  "employee_id"
@@ -855,6 +841,7 @@ ActiveRecord::Schema.define(version: 20170218053643) do
     t.string   "month_name"
     t.decimal  "late_mark"
     t.integer  "machine_attendance_id"
+    t.integer  "on_duty_request_id"
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id"
@@ -862,6 +849,7 @@ ActiveRecord::Schema.define(version: 20170218053643) do
   add_index "employee_attendances", ["employee_id"], name: "index_employee_attendances_on_employee_id"
   add_index "employee_attendances", ["employee_leav_request_id"], name: "index_employee_attendances_on_employee_leav_request_id"
   add_index "employee_attendances", ["machine_attendance_id"], name: "index_employee_attendances_on_machine_attendance_id"
+  add_index "employee_attendances", ["on_duty_request_id"], name: "index_employee_attendances_on_on_duty_request_id"
 
   create_table "employee_attributes", force: :cascade do |t|
     t.integer  "attribute_master_id"
@@ -1683,6 +1671,32 @@ ActiveRecord::Schema.define(version: 20170218053643) do
   add_index "goal_ratings", ["reviewer_id"], name: "index_goal_ratings_on_reviewer_id"
   add_index "goal_ratings", ["training_topic_master_id"], name: "index_goal_ratings_on_training_topic_master_id"
 
+  create_table "gratuities", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "gratuity_master_id"
+    t.decimal  "gratuity_amount"
+    t.string   "no_of_year"
+    t.decimal  "total_gratuity"
+    t.date     "day"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "gratuities", ["employee_id"], name: "index_gratuities_on_employee_id"
+  add_index "gratuities", ["gratuity_master_id"], name: "index_gratuities_on_gratuity_master_id"
+
+  create_table "gratuity_masters", force: :cascade do |t|
+    t.string   "no_of_year"
+    t.string   "base_component"
+    t.integer  "day_in_month"
+    t.string   "payable_day"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "groups", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -2144,6 +2158,7 @@ ActiveRecord::Schema.define(version: 20170218053643) do
     t.boolean  "ot_option"
     t.boolean  "time_master"
     t.boolean  "time_adjusted"
+    t.date     "leaving_date"
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id"
@@ -3679,6 +3694,8 @@ ActiveRecord::Schema.define(version: 20170218053643) do
     t.decimal  "calculated_payable_days"
     t.decimal  "ot_hours"
     t.decimal  "od_leave"
+    t.boolean  "paid"
+    t.boolean  "full_and_final"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

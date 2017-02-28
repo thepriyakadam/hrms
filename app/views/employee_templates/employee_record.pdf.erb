@@ -1,33 +1,24 @@
-<style>
-th {
-    text-align: left;
-}
-tr {
-    page-break-inside: avoid;
-}
-div.alwaysbreak { page-break-before: always; }
-div.nobreak:before { clear:both; }
-div.nobreak{ page-break-inside: avoid;
-  /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
-}
+<style type="text/css">
+ .page-break { display:block; clear:both; page-break-after:always; }
 </style>
-<div>
+
 <div class="box box-default">
   <div class="box-body">
 
        <% i=0 %>
       <% @employee_ids.each do |e|  %>
         <% @employee = Employee.find_by(id: e) %>
-      <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+        <div class = "page-break" >
+      <table style="border-collapse: collapse;font-size:11pt;" border=1 width=1200 cellpadding="5" cellspacing="5">
         <tr><td colspan="5"><center><strong><%=@employee.company_location.company.try(:description)%></strong> <br> <%= @employee.company_location.try(:address)%></center></td></tr>
 
         <tbody>
         <% @employee = Employee.find_by(id: e) %>
         <tr><th colspan="5"><center> Employee Basic Detail</center></th></tr>
           <tr>
-            <th><%= i=i+1 %></th>
+            <% i=i+1 %>
             <td>ID : <%= @employee.manual_employee_code %></td>
-            <td colspan="2">Name : <%= full_name(@employee) %></td>
+            <td colspan="3">Name : <%= full_name(@employee) %></td>
             <td>Department : <%= @employee.try(:department).try(:name) %></td>
           </tr>
 
@@ -186,7 +177,8 @@ div.nobreak{ page-break-inside: avoid;
 
           
       </tbody>
-    </table> <br>
+    </table>
+    </div> <br>
           <% end %>
     
   </div>

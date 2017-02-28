@@ -42,9 +42,9 @@
 <!--             < else %>
  -->            
           <% if have_due_template(employee) %>
-                <%= link_to ' Assign Template', all_due_template_due_details_path(emp_id: employee.id),class: 'btn btn-xs btn-primary' %>
+                <%= link_to ' Assign Template', all_due_template_due_details_path(emp_id: employee.id),class: 'btn btn-xs btn-info' %>
               <% else %>
-                <%= link_to ' View Template', due_employee_detail_list_due_details_path(emp_id: employee.id),class: 'btn btn-xs btn-warning' %>
+                <%= link_to ' View Template', due_employee_detail_list_due_details_path(emp_id: employee.id),class: 'btn btn-xs btn-primary' %>
            <% end %>
 <!--          < end %>
  -->        </td>

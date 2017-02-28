@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Gratuity Masters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>No of year</th>
+      <th>Base component</th>
+      <th>Day in month</th>
+      <th>Payable day</th>
+      <th>Is active</th>
+      <th>Is confirm</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @gratuity_masters.each do |gratuity_master| %>
+      <tr>
+        <td><%= gratuity_master.no_of_year %></td>
+        <td><%= gratuity_master.base_component %></td>
+        <td><%= gratuity_master.day_in_month %></td>
+        <td><%= gratuity_master.payable_day %></td>
+        <td><%= gratuity_master.is_active %></td>
+        <td><%= gratuity_master.is_confirm %></td>
+        <td><%= link_to 'Show', gratuity_master %></td>
+        <td><%= link_to 'Edit', edit_gratuity_master_path(gratuity_master) %></td>
+        <td><%= link_to 'Destroy', gratuity_master, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Gratuity master', new_gratuity_master_path %>

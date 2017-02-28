@@ -1,106 +1,76 @@
+<style type="text/css">
 
+ .page-break { display:block; clear:both; page-break-after:always; }
+
+</style>
 <% @salaryslips.each do |e| %>
  <%  @addable_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",false,e.id) %>
-   <%@deducted_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",true,e.id) %>
+  <%@deducted_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",true,e.id) %>
   <% @working_day = Workingday.find(e.workingday_id) %>
    <% @employee = Employee.find(e.employee_id) %>
   <% @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id) %>
-  <body>
+   <% @leave_details = LeaveDetail.where(salaryslip_id: e.id) %>
+   <% @slip_information = SlipInformation.find_by(salaryslip_id: e.id) %>
+     <div class="page-break">
         <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
       <thead>
         <tr>
-          <td colspan="7">
-            <center><strong><%= @employee.company_location.company.try(:description) %></strong><br> <%= @employee.company_location.try(:address) %> - <%= @employee.company_location.try(:name) %></center>
+          <td colspan="4">
+           <% if @employee.company_location.company.company_logo == nil %>
+           <% else %>
+        <center> <%= wicked_pdf_image_tag @employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+        <%end%>
+           <center><strong><%= @employee.company_location.company.try(:description) %></strong><br> <%= @employee.company_location.try(:address) %> - <%= @employee.company_location.try(:name) %></center>
           </td>           
         </tr>
-        <tr><td colspan="7"><center><strong> Employee Details </strong></center></td></tr>
+         <tr>
+         <th>Employee Detail</th>
+         <th>Working Day</th>
+         <th>Leave Details</th>
+         <th>Slip Information</th>
+         </tr>
+     </thead>
+     <tbody>
         <tr>
-          <td colspan="2">Salary Slip : <%= e.month%> - <%= e.year%></td>
-          <td>Leave Type</td>
-          <td>Leave</td>  
-          <td>Balance</td>   
-          <td colspan="2"></td>
-        </tr>
-        <tr>
-          <th>Employee ID</th>
-          <td><%= @employee.manual_employee_code%></td>
-          <th>CL</th>        
-          <td align="right"><%= @working_day.try(:cl_leave) %></td> 
-          <td align="right"><%= @working_day.try(:cl_balance) %></td> 
-          <th>Monthly Days</th>        
-          <td align="right"><%= @working_day.try(:day_in_month) %></td>            
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th>Employee Name</th>
-          <td><%= full_name(@employee) %></td>
-          <th>EL</th>        
-          <td align="right"><%= @working_day.try(:el_leave) %></td>
-          <td align="right"><%= @working_day.try(:el_balance) %></td>
-          <th>Working Days</th>
-          <td align="right"><%= @working_day.try(:present_day) %></td>
-        </tr>
-        <tr>
-          <th>Department</th>
-          <td><%= @employee.department.try(:name) %></td>
-          <th>C.off</th>        
-          <td align="right"><%= @working_day.try(:coff_leave) %></td>
-          <td align="right"><%= @working_day.try(:coff_balance) %></td>      
-          <th>Holidays</th>        
-          <td align="right"><%= @working_day.try(:holiday_in_month) %></td>   
-        </tr>
-        <tr>
-          <th>Designation</th>
-          <td><%= @employee.joining_detail.try(:employee_designation).name %></td>
-          <th>Advance Leave</th>    
-          <td align="right"><%= 0 %></td>   
-          <td align="right"><%= 0 %></td>
-          <th>Week Off</th>    
-          <td align="right"><%= @working_day.try(:week_off_day) %></td>
-        </tr>
-        <tr>
-          <th>Unit</th>
-          <td><%= @employee.joining_detail.cost_center.try(:name) %></td>
-          <th>ESIC Leave</th>        
-          <td align="right"><%= @working_day.try(:esic_leave) %></td> 
-          <td align="right"><%= 0 %></td>   
-          <th>Absent Days</th>
-          <td align="right"><%= @working_day.try(:absent_day) %></td>       
-        </tr>
-        <tr>
-          <th>Contact No.</th>
-          <td><%= @employee.contact_no %></td>
-          <th>LWP</th>    
-          <td align="right"><%= @working_day.try(:lwp_leave) %></td>  
-          <td align="right"><%= 0%></td>      
-          <th>Payble Days</th>
-          <td align="right"><%= @working_day.try(:payable_day) %></td>
-        </tr>
-        <tr>
-          <th>ESIC No.</th>
-          <td><%= @employee.joining_detail.try(:employee_efic_no) %></td>
-          <th>PF No.</th>
-          <td colspan="2" align="right"><%= @employee.joining_detail.try(:employee_pf_no) %></td>
-          
-          <th>UAN No.</th>
-          <td align="right"><%= @employee.joining_detail.try(:employee_uan_no) %></td>
-        </tr>
+       <td>
+       <strong> ID: </strong> <%= @employee.manual_employee_code%><br><br> 
+       <strong> Name: </strong> <%= full_name(@employee) %><br><br> 
+       <strong> Designation: </strong> <%= @slip_information.try(:employee_designation).try(:name) %><br><br>
+       <strong> Department : </strong> <%= @slip_information.try(:department).try(:name) %><br><br>
+       <strong> Unit: </strong> <%= @slip_information.try(:cost_center).try(:name)%><br><br>
+       </td>
+       <td>
+       <strong> Present Day : </strong> <%= @working_day.try(:present_day) %> <br><br> 
+       <strong> Holiday : </strong> <%= @working_day.try(:holiday_in_month) %><br><br> 
+       <strong> Week Off : </strong> <%= @working_day.try(:week_off_day) %><br><br> 
+       <strong> Absent Day : </strong> <%= @working_day.try(:absent_day) %><br><br> 
+       <strong> Payable Day : </strong><%= @working_day.try(:payable_day) %><br><br>
+       </td>
+       <td>
+        <% @leave_details.each do |ld| %>
+             <strong> <%= ld.leav_category.name %>  - Leave: </strong> <%= ld.no_of_leave %> - <strong> Balance: </strong> <%= ld.balance %><br><br>
+        <% end %>
+        </td>
+       <td>
+       <strong> Salary Slip <br><br>
+       <strong> UAN No : </strong> <%= @slip_information.try(:uan_no) %><br><br>
+       <strong> PF No :   </strong><%= @slip_information.try(:pf_no) %><br><br>
+       <strong> ESIC No : </strong> <%= @slip_information.try(:esic_no) %><br><br>
+       </td>
+       </tr>
+
+         
       </tbody>
     </table>
 
-    <style>
-   table {
-  page-break-inside: avoid; 
-}
-</style>
-    <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
+   
+       <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
       <thead>
       <tr><td colspan="3"><center><strong> Salary Details </strong></center></td></tr>
         <tr>
-          <th>Salary Component</th>
-          <th style="text-align: right;">Actual Amount</th>
-          <th style="text-align: right;">Calculated Amount</th>
+          <th><center>Salary Component</center></th>
+          <th style="text-align: right;"><center>Actual Amount</center></th>
+          <th style="text-align: right;"><center>Calculated Amount</center></th>
           <!-- <th>Action</th> -->
         </tr>
       </thead>
@@ -120,9 +90,9 @@
          <!--  <td></td> -->
         </tr>
          <tr>
-          <td><strong>Deduction Component</strong></td>
+          <td><strong><center>Deduction Component</center></strong></td>
           <td align="right"><strong></strong></td>
-          <td align="right"><strong>Amount</strong></td>
+          <td align="right"><strong><center>Amount</center></strong></td>
          <!--  <td></td> -->
         </tr>
         <% @deducted_salary_components.each do |item| %>
@@ -152,10 +122,15 @@
           <td align="right"><strong><%= e.calculated_net_salary.round %></strong></td>
           <!-- <td></td> -->
         </tr>
+         <tr>
+        <td colspan="3"><center>This is a computer generated slip, hence no signature is required.</center></td>
+        </tr>
       </tbody>
     </table>
-    <br><br>
-    </body>
+   <br><br>
+   </div>
 <% end %>
-</body>
+
+ 
+
 

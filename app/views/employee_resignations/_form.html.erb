@@ -32,44 +32,47 @@
           </div>
         </div>
 
-         <!-- <div class="col-sm-3">
-          <div class="form-group required">
-          <= f.select :reporting_master_id, all_reporting_master_list, {include_blank: "Select Approval",label:"Request To"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
-          </div>
-        </div>  -->
-
          <div class="col-sm-3">
          <div class="field">
            <%= f.text_field :notice_period, label:'Notice Period (in days)',readonly: true %>
          </div>
        </div>
        
+      </div>  
+
+       <div class="row">
+
+      <div class="col-sm-12">
+        <div class="field">
+          <%= f.text_area :reason, label: "Reason" %>
+        </div>
       </div>
+      </div>
+
       <div class="row">
 
-      <div class="col-sm-3">
+    <!--   <div class="col-sm-3">
        <div class="field">
-         <%= f.text_field :short_notice_period, label:'Short Notice Period (in days)' %>
+         < f.text_field :short_notice_period, label:'Short Notice Period (in days)' %>
        </div>
       </div>
-
+ -->
       <div class="col-sm-3">
-       <label>Requested Releaving Date</label>
-       <div class="field">
+       <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :tentative_leaving_date,hide_label: true, class: 'resignation'%>
+          <%= f.text_field :tentative_leaving_date, class: 'resignation',label:'Requested Releaving Date'%>
         </div>
        </div>
       </div>
       
-      <div class="col-sm-3">
+     <!--  <div class="col-sm-3">
        <div class="field">
-         <%= f.text_field :remark, label:'Remark' %>
+         < f.text_field :remark, label:'Remark' %>
        </div>
-      </div>
+      </div> -->
 
       <div class="col-sm-3">
        <label>Exit Interview Date</label>
@@ -80,17 +83,6 @@
           </div>
           <%= f.text_field :exit_interview_date,hide_label: true, class: 'resignation'%>
         </div>
-       </div>
-      </div>
-    
-      </div>
-
-      <div class="row">
-      
-  
-      <div class="col-sm-3">
-       <div class="field">
-         <%= f.text_field :note, label:'Note' %>
        </div>
       </div>
 
@@ -117,25 +109,30 @@
           </div>
         </div>
       </div>
+    
       </div>
 
-
-    <div class="row">
-
-      <div class="col-sm-6">
-        <div class="field">
-          <%= f.text_area :reason, label: "Reason" %>
-        </div>
-      </div>
-
+      <div class="row">
       
-      <div class="col-sm-3">
-      <label>Stop Payment Request</label>
-        <div class="field">
-          <%= f.check_box :is_stop_pay_request, label:'Stop Payment Request' %>
+  
+      <div class="col-sm-12">
+       <div class="field">
+         <%= f.text_area :note, label:'Note' %>
        </div>
       </div>
+
+
+
    
+
+      
+      <!-- <div class="col-sm-3">
+      <label>Stop Payment Request</label>
+        <div class="field">
+          <= f.check_box :is_stop_pay_request, label:'Stop Payment Request' %>
+       </div>
+      </div>
+    -->
 
      </div>
     

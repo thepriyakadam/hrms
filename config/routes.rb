@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   
+  resources :gratuities 
+  resources :gratuity_masters do 
+    collection do
+      get :is_confirm
+    end
+  end
   resources :monthly_arrears
   resources :on_duty_requests do 
     collection do
@@ -261,7 +267,11 @@ end
       get :offer_letter
     end
    end
-  resources :due_actions
+  resources :due_actions do
+    collection do
+       post :confirm_employee_due_action
+    end
+   end
   resources :due_details do
     collection do
       get :all_employee_resignation_list
@@ -280,6 +290,11 @@ end
       get :due_employee_detail_history
       get :all_employee_list
       get :specific_due_action_list
+      get :emp_resignation_list
+      get :due_clearence_list
+      get :full_and_final_settlement
+      get :emp_salary_list
+      get :show_full_and_final_employee
     end
   end
 
@@ -772,6 +787,12 @@ end
       get :first_reject
       get :second_reject
       get :final_reject
+      get :all_employee_resignation_list
+      get :show_resignation_status_detail
+      get :show_resignation_detail
+      get :final_approved_list
+      get :confirm_resignation
+      get :cancel_resignation_list
   end
 end
   resources :travel_options do
@@ -1898,6 +1919,7 @@ end
       post :dynamic_report
       get :left_employee_xl
       get :left_employee_pdf
+      get :collect_employee
     end
     member do
       get :edit_manager

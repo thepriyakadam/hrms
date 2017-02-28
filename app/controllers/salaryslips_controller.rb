@@ -1379,6 +1379,9 @@ class SalaryslipsController < ApplicationController
     Salaryslip.where(id: @salaryslip.id).update_all(actual_gross_salary: actual_gross_salary,actual_total_deduction: actual_total_deduction,actual_net_salary: actual_net_salary,calculated_gross_salary: calculated_gross_salary,calculated_total_deduction: calculated_total_deduction,calculated_net_salary: calculated_net_salary)
 
 
+    Workingday.where(employee_id: eid, month_name: @month, year: @year).update_all(paid: true)
+
+
           # @arrear = EmployeeArrear.where('employee_id = ? and is_paid = ?', @employee.id, false).take
           # next if @arrear.nil?
           # arrear_start_date = @arrear.start_date

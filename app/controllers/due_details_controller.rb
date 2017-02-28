@@ -102,8 +102,10 @@ class DueDetailsController < ApplicationController
       @due_detail_ids.each do |did|
        due_det = DueDetail.where(id: did)
        due_det.each do |dd|
+       DueEmployeeDetail.create(due_detail_id: dd.id,reporting_master_id: dd.reporting_master_id,employee_id: @emp,due_template_id: @due_template,is_proceed: true)
+      # DueEmployeeDetail.create(due_detail_id: dd.id,reporting_master_id: dd.reporting_master_id,employee_id: @emp,due_template_id: @due_template,is_confirmed: true)
+      # DueEmployeeDetail.create(due_detail_id: dd.id,reporting_master_id: dd.reporting_master_id,employee_id: @emp,due_template_id: @due_template)
 
-      DueEmployeeDetail.create(due_detail_id: dd.id,reporting_master_id: dd.reporting_master_id,employee_id: @emp,due_template_id: @due_template,is_confirmed: true)
       # DueEmployeeDetail.create(reporting_master_id: did,employee_id: @employee.id,due_template_id: @due_template,is_confirmed: true)
       flash[:notice] = "Created Successfully & Request Also Sent to the Selected Due Owner."
       end
@@ -124,14 +126,15 @@ class DueDetailsController < ApplicationController
   def employee_due_detail_history
     # byebug
     @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
-    @due_employee_details = DueEmployeeDetail.where(reporting_master_id: @reporting_masters,is_confirmed: true)
+    # @due_employee_details = DueEmployeeDetail.where(reporting_master_id: @reporting_masters)
+    @due_employee_details = DueEmployeeDetail.where(reporting_master_id: @reporting_masters,is_proceed: true)
     session[:active_tab] = "employee_resignation"
     session[:active_tab1] ="no_due_mgmt"
   end
 
   def all_employee_list
-     @employee_resignations = EmployeeResignation.where(resign_status: "Approved").pluck(:employee_id)
-     @employees = Employee.where(id: @employee_resignations,status: "Active")
+     @employee_resignations = EmployeeResignation.where(resign_status: "FinalApproved").pluck(:employee_id)
+     @employees = Employee.where(id: @employee_resignations,status: "Inactive")
      session[:active_tab] = "employee_resignation"
     session[:active_tab1] ="no_due_mgmt"
   end
@@ -163,8 +166,12 @@ class DueDetailsController < ApplicationController
      # @employee_resignation = EmployeeResignation.find(params[:format])
      # @employee = Employee.find(@employee_resignation.employee_id)
      @employee = Employee.find(params[:emp_id])
-     @due_employee_details = DueEmployeeDetail.where(employee_id: @employee.id,is_confirmed: true)
-     @due_employee_details_1 = DueEmployeeDetail.where(employee_id: @employee.id,is_confirmed: true).pluck(:id)
+
+     # @due_employee_details = DueEmployeeDetail.where(employee_id: @employee.id,is_confirmed: true)
+     # @due_employee_details_1 = DueEmployeeDetail.where(employee_id: @employee.id,is_confirmed: true).pluck(:id)
+
+     @due_employee_details = DueEmployeeDetail.where(employee_id: @employee.id,is_proceed: true)
+     @due_employee_details_1 = DueEmployeeDetail.where(employee_id: @employee.id,is_proceed: true).pluck(:id)
      @due_actions = DueAction.where(due_employee_detail_id: @due_employee_details_1)
   end
 
@@ -187,6 +194,82 @@ class DueDetailsController < ApplicationController
   def specific_due_action_list
     @due_employee_detail = DueEmployeeDetail.find(params[:format])
     @due_actions = DueAction.where(due_employee_detail_id: @due_employee_detail.id)
+  end
+
+  # def emp_resignation_list
+  #   @employee_resignations = EmployeeResignation.where(resign_status: "FinalApproved").pluck(:employee_id)
+  #   @employees = Employee.where(id: @employee_resignations,status: "Inactive")
+  #   session[:active_tab] = "employee_resignation"
+  #   session[:active_tab1] ="no_due_mgmt"
+  # end
+
+
+  def emp_resignation_list
+    @employee_resignations = EmployeeResignation.where(resign_status: "FinalApproved").pluck(:employee_id)
+    @due_employee_details = DueEmployeeDetail.where(employee_id: @employee_resignations,is_confirmed: true).pluck(:employee_id)
+    @employees = Employee.where(id: @due_employee_details)
+    session[:active_tab] = "employee_resignation"
+    session[:active_tab1] ="full_and_final"
+  end
+
+  def due_clearence_list
+     @employee = Employee.find(params[:emp_id])
+     @due_employee_details = DueEmployeeDetail.where(employee_id: @employee.id,is_confirmed: true)
+     @due_employee_details_1 = DueEmployeeDetail.where(employee_id: @employee.id,is_confirmed: true).pluck(:id)
+     @due_actions = DueAction.where(due_employee_detail_id: @due_employee_details_1,is_confirm: true)
+     @advance_salaries = AdvanceSalary.where(employee_id: @employee.id)
+     # byebug
+     @leav_category = LeavCategory.where(is_active: true,is_cashable: true).pluck(:id)
+     @employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employee.id,leav_category_id: @leav_category,is_active: true)
+     @workingdays = Workingday.where(employee_id: @employee.id,full_and_final: true)
+     @workingdays_1 = Workingday.where(employee_id: @employee.id,full_and_final: true).pluck(:id)
+     @salaryslips = Salaryslip.where(workingday_id: @workingdays_1)
+
+     @gratuities = Gratuity.where(employee_id: @employee.id)
+
+     session[:active_tab] = "employee_resignation"
+     session[:active_tab1] ="no_due_mgmt"
+  end
+
+
+
+  def emp_salary_list
+     @workingday = Workingday.find(params[:format])
+     @employees = Employee.where(id: @workingday.employee_id)
+
+  end
+
+  def show_full_and_final_employee
+    @month = params[:month]
+    @year = params[:year]
+    # byebug
+    @workingdays = Workingday.where(month_name: @month, year: @year,full_and_final: true).pluck(:employee_id)
+    @salaryslips = Salaryslip.where(month: @month, year: @year.to_s).pluck(:employee_id)
+    emp_ids = @workingdays - @salaryslips
+    if current_user.class == Group
+      @employees = Employee.where(id: emp_ids)  
+    elsif current_user.class == Member
+      if current_user.role.name == "GroupAdmin"
+        @employees = Employee.where(id: emp_ids)
+      elsif current_user.role.name == "Admin"
+        company_employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        new_ids = company_employees & emp_ids
+        @employees = Employee.where(id: new_ids)
+      elsif current_user.role.name == "Branch"
+        location_employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        new_ids = location_employees & emp_ids
+        @employees = Employee.where(id: new_ids)
+      elsif current_user.role.name == "HOD"
+        department_employees = Employee.where(department_id: current_user.company_location_id)
+        new_ids = department_employees & emp_ids
+        @employees = Employee.where(id: new_ids)
+      end
+    end
+  end
+
+  def full_and_final_settlement
+     session[:active_tab] = "employee_resignation"
+     session[:active_tab1] ="full_and_final"
   end
 
   private

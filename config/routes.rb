@@ -543,8 +543,6 @@ end
       post :print_subordinate_list
       post :all_subordinate_list
       get :performance_type
-      get :attribute_modal
-      patch :update_attribute_modal
       get :period_for_training
       get :training_request
       post :create_attribute_training
@@ -556,8 +554,6 @@ end
       get :modal_training_plan
       get :goal_set_modal
       patch :update_goal_set_modal
-      get :attribute_set_modal
-      patch :update_attribute_set_modal
       get :trainee_list
       post :print_employee_detail
       get :all_emp_list

@@ -1255,7 +1255,7 @@ require 'roo'
  #   end
  # end
 
- EmployeeLeavBalance.update_all(is_confirm: false)
+ # EmployeeLeavBalance.update_all(is_confirm: false)
 
 # FoodDeduction.last.destroy
 
@@ -1561,3 +1561,6 @@ require 'roo'
 #  end
 #  end
 # end
+
+GoalRating.destroy_all
+GoalBunch.destroy_all

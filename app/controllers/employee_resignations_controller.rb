@@ -65,7 +65,7 @@ class EmployeeResignationsController < ApplicationController
       redirect_to employee_resignations_path
      else
       if @employee_resignation.employee.try(:manager_id).nil?
-        flash[:alert] = "Reporting manager not set please set Reporting Manager"
+        flash[:alert] = "Reporting Manager not set please set Reporting Manager"
         redirect_to new_employee_resignation_path
       else
       respond_to do |format|

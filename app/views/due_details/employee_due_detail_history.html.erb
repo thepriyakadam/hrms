@@ -21,7 +21,11 @@
        <td><%= due_employee_detail.reporting_master.employee.try(:first_name) %> <%= due_employee_detail.reporting_master.employee.try(:moddle_name) %> <%= due_employee_detail.reporting_master.employee.try(:last_name) %></td>
        <td><%= due_employee_detail.due_template.try(:name) %></td>
         <td>
+        <% if due_employee_detail.is_confirmed == true %>
           <%= link_to ' Approve Due Clearance', new_due_action_path(due_employee_detail_id: due_employee_detail.id),class: 'btn btn-xs btn-primary' %>
+          <% else %>
+          <%= link_to ' View Due Clearance', new_due_action_path(due_employee_detail_id: due_employee_detail.id),class: 'btn btn-xs btn-info' %>
+          <% end %>
         </td>
       </tr>
     <% end %>

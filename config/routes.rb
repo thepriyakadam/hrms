@@ -579,6 +579,7 @@ end
       get :detail_employee_wise_xls
       get :period_rating_wise
       post :Period_rating_wise_employee
+      get :Period_rating_wise_employee
       get :period_rating_wise_pdf
       get :period_rating_wise_xls
       get :increment_index_report

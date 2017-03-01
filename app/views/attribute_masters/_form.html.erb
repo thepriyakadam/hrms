@@ -3,42 +3,44 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :code,placeholder: 'Attribute Code',label:'Code' %>
+        <%= f.text_field :code,placeholder: 'Attribute Code',hide_label:true %>
       </div>
     </div> 
      <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :name,placeholder: 'Attribute Name',label:'Name' %>
+        <%= f.text_field :name,placeholder: 'Attribute Name',hide_label:true %>
       </div>
     </div>
      <div class="col-sm-6">
       <div class="field">
-        <%= f.text_field :definition, placeholder: 'Definition',label:'Definition' %>
+        <%= f.text_field :definition, placeholder: 'Definition',hide_label:true %>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <div class="field">
         <%= f.check_box :attribute_weightage, label: 'Weightage'%>
       </div>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <div class="field">
         <%= f.text_field :from,hide_label:true, placeholder: 'From'%>
       </div>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <div class="field">
         <%= f.text_field :to,hide_label:true, placeholder: 'To'%>
       </div>
     </div>
 
-     <div class="col-sm-2">
+     <div class="col-sm-3">
       <div class="field">
         <%= f.check_box :status,label:'Status' %>
       </div>
       </div>
+  </div>
+  <div class="row">
     <div class="col-sm-3">
       <div class="actions">
         <%= f.submit"Create Attribute ", :class => class_name, data: { disable_with: data_info } %>

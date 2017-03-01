@@ -1174,6 +1174,8 @@ def destroy_employee
 end
 
 def employee_report
+  session[:active_tab] ="EmployeeManagement"
+  session[:active_tab1] ="Reports"
 end
 
 def show_employee_list

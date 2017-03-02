@@ -18,6 +18,12 @@ Rails.application.routes.draw do
       get :show_od_record
       get :od_request_list
       get :employee_od_request_detil_for_admin
+      get :on_duty_request_report
+      post :request_report
+      get :request_report
+      get :on_duty_request_status_report
+      get :status_wise_report_list
+      post :status_wise_report_list
     end
   end
 
@@ -1914,21 +1920,15 @@ end
       get :left_employee_xl
       get :left_employee_pdf
       get :collect_employee
-<<<<<<< HEAD
       get :select_company_company_location_and_department
       get :show_employee
       post :print_employee
       get :print_employee
       get :employee_list_pdf
-      # get :employee_according_to_location_and_department
-      # post :show_employee_list
-      # get :show_employee_list
-=======
       get :employee_report 
       post :show_employee_list
       get :show_all_record
       post :show_all_record
->>>>>>> 2046f331158504a12f906f9ed2d166766602ad29
     end
     member do
       get :edit_manager

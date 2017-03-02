@@ -1,0 +1,1 @@
+json.array! @gratuity_masters, partial: 'gratuity_masters/gratuity_master', as: :gratuity_master

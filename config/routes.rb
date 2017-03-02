@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   
+  resources :gratuities 
+  resources :gratuity_masters do 
+    collection do
+      get :is_confirm
+    end
+  end
   resources :monthly_arrears
   resources :on_duty_requests do 
     collection do
@@ -287,6 +293,8 @@ end
       get :emp_resignation_list
       get :due_clearence_list
       get :full_and_final_settlement
+      get :emp_salary_list
+      get :show_full_and_final_employee
     end
   end
 
@@ -537,8 +545,6 @@ end
       post :print_subordinate_list
       post :all_subordinate_list
       get :performance_type
-      get :attribute_modal
-      patch :update_attribute_modal
       get :period_for_training
       get :training_request
       post :create_attribute_training
@@ -550,8 +556,6 @@ end
       get :modal_training_plan
       get :goal_set_modal
       patch :update_goal_set_modal
-      get :attribute_set_modal
-      patch :update_attribute_set_modal
       get :trainee_list
       post :print_employee_detail
       get :all_emp_list
@@ -575,6 +579,7 @@ end
       get :detail_employee_wise_xls
       get :period_rating_wise
       post :Period_rating_wise_employee
+      get :Period_rating_wise_employee
       get :period_rating_wise_pdf
       get :period_rating_wise_xls
       get :increment_index_report
@@ -1343,9 +1348,6 @@ end
       post :salary_employee_wise
       get :employee_wise_pdf
       get :employee_wise_xls
-      get :employee_list
-      get :show_all_record
-      post :show_all_record
       get :employee_record
     end
   end
@@ -1912,6 +1914,7 @@ end
       get :left_employee_xl
       get :left_employee_pdf
       get :collect_employee
+<<<<<<< HEAD
       get :select_company_company_location_and_department
       get :show_employee
       post :print_employee
@@ -1920,6 +1923,12 @@ end
       # get :employee_according_to_location_and_department
       # post :show_employee_list
       # get :show_employee_list
+=======
+      get :employee_report 
+      post :show_employee_list
+      get :show_all_record
+      post :show_all_record
+>>>>>>> 2046f331158504a12f906f9ed2d166766602ad29
     end
     member do
       get :edit_manager

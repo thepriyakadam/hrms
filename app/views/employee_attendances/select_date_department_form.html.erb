@@ -3,36 +3,53 @@
     <h3 class="box-title">Attendance Department Wise</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <%= bootstrap_form_for(:pdf_salaries, url: { action: 'show_departmntwise_employee'},html: {id: "salary"}) do |f| %>
-  	 <div class="row">
-        <div class="col-sm-3">
-         <div class="form-group required">
-          <div class="input-group">
-            <div class="input-group-addon">
-              <i class="fa fa-calendar"></i>
+    <%= bootstrap_form_for(:employee, url: { action: 'show_departmntwise_employee'},html: {id: "employee"}) do |f| %>
+  	   <div class="row">
+          <div class="col-sm-2">
+          <label>Date</label>
+            <div class="form-group required">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <%= text_field :employee, :date,{hide_label: true , placeholder: 'Date',class: 'form-control request_date'}%>
+              </div>
             </div>
-            <%= text_field :salary, :date,{hide_label: true , placeholder: 'Date',class: 'form-control request_date'}%>
           </div>
-         </div>
-        </div>
 
-      <div class="col-sm-3">
-        <div class="field">
-          <%= select :salary, :company_location_id, all_department_type_list2,{include_blank: 'select Location'},class: 'form-control' %>
-        </div>
-      </div> 
-      <div class="col-sm-3">
-        <%= f.submit "show Employee List",class: "btn btn-xl btn-primary fa fa-print" %>
-      </div>
+          <div class="col-sm-2">
+            <label>Company</label>
+            <div class="form-group required">
+              <%= f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
+            </div>
+          </div>
 
-    </div><br>
-    <div id="employee_list_pdf"></div>
+          <div class="col-sm-2">
+            <div class="field">
+              <div id="company_location_with_label">
+                <%= render 'employees/company_location_dropdown_with_label' %> 
+            </div>
+            </div>
+          </div>
 
-  <% end %>
+          <div class="col-sm-2">
+            <div class="field">
+              <div class="input-group">
+                <div id="department">
+                  <%= render 'employees/department_dropdown' %> 
+                </div> 
+              </div>
+            </div>
+          </div>
 
+          <div class="col-sm-3" style="padding-top:20px;">
+            <%= f.submit "show Employee List",class: "btn btn-xl btn-primary fa fa-print" %>
+          </div>
+        </div><br>
+        <div id="employee_list_pdf"></div>
+      <% end %>
+    </div>
   </div>
-</div>
-
 
 <script type="text/javascript">
   $(function(){
@@ -43,21 +60,15 @@
     dateFormat: 'dd-mm-yy' });
   }); 
 
-  $("#salary").validate({
+  $("#employee").validate({
     rules: {
-      "salary[date]":{
-        required: true
-      },
-      "salary[company_location_id]":{
+      "employee[date]":{
         required: true
       }
     },
     messages: {
-      "salary[date]":{
+      "employee[date]":{
         required: "Please specify date"
-      },
-      "salary[company_location_id]":{
-        required: "Please specify Location"
       }
     },
     errorPlacement: function(error, element) {
@@ -65,5 +76,4 @@
      error.insertAfter(element.parent(element));
     }
   });
-  
 </script>

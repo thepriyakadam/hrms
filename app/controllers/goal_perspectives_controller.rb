@@ -93,6 +93,6 @@ class GoalPerspectivesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_perspective_params
-      params.require(:goal_perspective).permit(:status,:is_confirm,:name)
+      params.require(:goal_perspective).permit(:goal_weightage,:from,:to,:status,:is_confirm,:name)
     end
 end

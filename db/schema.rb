@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170223070956) do
+ActiveRecord::Schema.define(version: 20170301093409) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -163,9 +163,12 @@ ActiveRecord::Schema.define(version: 20170223070956) do
     t.string   "name"
     t.text     "definition"
     t.boolean  "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.boolean  "is_confirm"
+    t.boolean  "attribute_weightage"
+    t.string   "from"
+    t.string   "to"
   end
 
   create_table "attribute_rating_sheets", force: :cascade do |t|
@@ -841,6 +844,7 @@ ActiveRecord::Schema.define(version: 20170223070956) do
     t.string   "month_name"
     t.decimal  "late_mark"
     t.integer  "machine_attendance_id"
+    t.integer  "on_duty_request_id"
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id"
@@ -848,6 +852,7 @@ ActiveRecord::Schema.define(version: 20170223070956) do
   add_index "employee_attendances", ["employee_id"], name: "index_employee_attendances_on_employee_id"
   add_index "employee_attendances", ["employee_leav_request_id"], name: "index_employee_attendances_on_employee_leav_request_id"
   add_index "employee_attendances", ["machine_attendance_id"], name: "index_employee_attendances_on_machine_attendance_id"
+  add_index "employee_attendances", ["on_duty_request_id"], name: "index_employee_attendances_on_on_duty_request_id"
 
   create_table "employee_attributes", force: :cascade do |t|
     t.integer  "attribute_master_id"
@@ -1586,10 +1591,13 @@ ActiveRecord::Schema.define(version: 20170223070956) do
 
   create_table "goal_perspectives", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.boolean  "is_confirm"
     t.boolean  "status"
+    t.boolean  "goal_weightage"
+    t.integer  "from"
+    t.integer  "to"
   end
 
   create_table "goal_rating_sheets", force: :cascade do |t|
@@ -1668,6 +1676,32 @@ ActiveRecord::Schema.define(version: 20170223070956) do
   add_index "goal_ratings", ["period_id"], name: "index_goal_ratings_on_period_id"
   add_index "goal_ratings", ["reviewer_id"], name: "index_goal_ratings_on_reviewer_id"
   add_index "goal_ratings", ["training_topic_master_id"], name: "index_goal_ratings_on_training_topic_master_id"
+
+  create_table "gratuities", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "gratuity_master_id"
+    t.decimal  "gratuity_amount"
+    t.string   "no_of_year"
+    t.decimal  "total_gratuity"
+    t.date     "day"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "gratuities", ["employee_id"], name: "index_gratuities_on_employee_id"
+  add_index "gratuities", ["gratuity_master_id"], name: "index_gratuities_on_gratuity_master_id"
+
+  create_table "gratuity_masters", force: :cascade do |t|
+    t.string   "no_of_year"
+    t.string   "base_component"
+    t.integer  "day_in_month"
+    t.string   "payable_day"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "groups", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -3251,13 +3285,15 @@ ActiveRecord::Schema.define(version: 20170223070956) do
     t.string   "esic_no"
     t.string   "pf_no"
     t.string   "uan_no"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.string   "account_no"
+    t.integer  "employee_designation_id"
   end
 
   add_index "slip_informations", ["cost_center_id"], name: "index_slip_informations_on_cost_center_id"
   add_index "slip_informations", ["department_id"], name: "index_slip_informations_on_department_id"
+  add_index "slip_informations", ["employee_designation_id"], name: "index_slip_informations_on_employee_designation_id"
   add_index "slip_informations", ["salaryslip_id"], name: "index_slip_informations_on_salaryslip_id"
 
   create_table "society_member_ships", force: :cascade do |t|
@@ -3666,6 +3702,8 @@ ActiveRecord::Schema.define(version: 20170223070956) do
     t.decimal  "calculated_payable_days"
     t.decimal  "ot_hours"
     t.decimal  "od_leave"
+    t.boolean  "paid"
+    t.boolean  "full_and_final"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

@@ -24,12 +24,6 @@ class GoalBunchesController < ApplicationController
     session[:active_tab] ="EmployeeSelfService"
   end
 
-  # GET /goal_bunches/1/edit
-  def edit
-  end
-
-  # POST /goal_bunches
-  # POST /goal_bunches.json
   def create
     @goal_bunch = GoalBunch.new(goal_bunch_params)
       if @goal_bunch.save
@@ -40,22 +34,9 @@ class GoalBunchesController < ApplicationController
         @flag = false
       end
   end
-
-  def create_multiple_bunch
-   @goal_bunch = GoalBunch.new(goal_bunch_params)
-    if @goal_bunch.save
-      @flag = true
-      @goal_bunch = GoalBunch.new 
-      redirect_to period_for_multiple_goal_bunches_path
-    else
-      @flag = false
-    redirect_to period_for_multiple_goal_bunches_path
-    end
-  end
-
-
-  def period_for_multiple
-    @goal_bunches = GoalBunch.all
+  
+  # GET /goal_bunches/1/edit
+  def edit
   end
 
   # PATCH/PUT /goal_bunches/1
@@ -76,6 +57,50 @@ class GoalBunchesController < ApplicationController
     @goal_bunch.destroy
     flash[:notice] = "Deleted Successfully"
     redirect_to new_goal_bunch_path
+  end
+
+  # POST /goal_bunches
+  # POST /goal_bunches.json
+  def appraiser_confirm
+    @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:emp_id])
+    @period = Period.find(params[:period_id])
+
+    @employees = Employee.where(id: @employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id)
+
+      @goal_bunch = GoalBunch.find_by(id: @goal_bunch_id)
+      sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
+    if sum == 100
+      @goal_bunch.update(goal_confirm: true)
+      flash[:notice] = "Confirmed Successfully" 
+      GoalBunchMailer.send_email_to_appraisee(@goal_bunch).deliver_now
+      redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
+    else
+      flash[:alert] = "Goal weightage sum should be 100"
+      redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
+    end 
+  end
+
+  def create_multiple_bunch
+   @goal_bunch = GoalBunch.new(goal_bunch_params)
+    if @goal_bunch.save
+      @flag = true
+      @goal_bunch = GoalBunch.new 
+      redirect_to period_for_multiple_goal_bunches_path
+    else
+      @flag = false
+    redirect_to period_for_multiple_goal_bunches_path
+    end
+  end
+
+
+  def period_for_multiple
+    @goal_bunches = GoalBunch.all
   end
 
   def subordinate_list
@@ -132,25 +157,6 @@ class GoalBunchesController < ApplicationController
     @emps = current_login.subordinates.pluck(:id)
     #@emp1 = Employee.where(id: @emps).pluck(:id)
     @employees = GoalBunch.where(employee_id: @emps,goal_confirm: true,period_id: @period.id)
-  end
-
-  def appraiser_confirm
-    @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
-    @employee = Employee.find(params[:emp_id])
-    @period = Period.find(params[:period_id])
-
-    @employees = Employee.where(id: @employee.id)
-    @qualifications = Qualification.where(employee_id: @employee.id)
-    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
-    @experiences = Experience.where(employee_id: @employee.id)
-    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
-    @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id)
-
-      @goal_bunch = GoalBunch.find_by(id: @goal_bunch_id)
-      @goal_bunch.update(goal_confirm: true)
-      flash[:notice] = "Confirmed Successfully" 
-      GoalBunchMailer.send_email_to_appraisee(@goal_bunch).deliver_now
-      redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
   end
 
   def appraiser_comment

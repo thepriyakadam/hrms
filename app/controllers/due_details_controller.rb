@@ -209,7 +209,7 @@ class DueDetailsController < ApplicationController
     @due_employee_details = DueEmployeeDetail.where(employee_id: @employee_resignations,is_confirmed: true).pluck(:employee_id)
     @employees = Employee.where(id: @due_employee_details)
     session[:active_tab] = "employee_resignation"
-    session[:active_tab1] ="no_due_mgmt"
+    session[:active_tab1] ="full_and_final"
   end
 
   def due_clearence_list
@@ -221,11 +221,55 @@ class DueDetailsController < ApplicationController
      # byebug
      @leav_category = LeavCategory.where(is_active: true,is_cashable: true).pluck(:id)
      @employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employee.id,leav_category_id: @leav_category,is_active: true)
+     @workingdays = Workingday.where(employee_id: @employee.id,full_and_final: true)
+     @workingdays_1 = Workingday.where(employee_id: @employee.id,full_and_final: true).pluck(:id)
+     @salaryslips = Salaryslip.where(workingday_id: @workingdays_1)
+
+     @gratuities = Gratuity.where(employee_id: @employee.id)
+
+     session[:active_tab] = "employee_resignation"
+     session[:active_tab1] ="full_and_final"
+  end
+
+
+
+  def emp_salary_list
+     @workingday = Workingday.find(params[:format])
+     @employees = Employee.where(id: @workingday.employee_id)
+
+  end
+
+  def show_full_and_final_employee
+    @month = params[:month]
+    @year = params[:year]
+    # byebug
+    @workingdays = Workingday.where(month_name: @month, year: @year,full_and_final: true).pluck(:employee_id)
+    @salaryslips = Salaryslip.where(month: @month, year: @year.to_s).pluck(:employee_id)
+    emp_ids = @workingdays - @salaryslips
+    if current_user.class == Group
+      @employees = Employee.where(id: emp_ids)  
+    elsif current_user.class == Member
+      if current_user.role.name == "GroupAdmin"
+        @employees = Employee.where(id: emp_ids)
+      elsif current_user.role.name == "Admin"
+        company_employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        new_ids = company_employees & emp_ids
+        @employees = Employee.where(id: new_ids)
+      elsif current_user.role.name == "Branch"
+        location_employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        new_ids = location_employees & emp_ids
+        @employees = Employee.where(id: new_ids)
+      elsif current_user.role.name == "HOD"
+        department_employees = Employee.where(department_id: current_user.company_location_id)
+        new_ids = department_employees & emp_ids
+        @employees = Employee.where(id: new_ids)
+      end
+    end
   end
 
   def full_and_final_settlement
-    # byebug
-     @employee = Employee.find(params[:emp_id])
+     session[:active_tab] = "employee_resignation"
+     session[:active_tab1] ="full_and_final"
   end
 
   private

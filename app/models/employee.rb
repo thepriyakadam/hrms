@@ -69,6 +69,7 @@ class Employee < ActiveRecord::Base
   has_many :week_off_masters
   has_many :machine_attendances
   has_many :on_duty_requests
+  has_many :gratuity
   
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',
@@ -182,6 +183,84 @@ class Employee < ActiveRecord::Base
     Employee.where(id: finals)
   end
   
+  def employee_role_wise(company,company_location,department,current_user)
+    if current_user.class == Group
+      if company == ""
+        @employees = Employee.where(status: 'Active')
+      elsif company_location == ""
+        @employees = Employee.where(company_id: company.to_i,status: 'Active')
+      elsif department == ""
+        @employees = Employee.where(company_location_id: company_location.to_i,status: 'Active')
+      else
+        @employees = Employee.where(company_id: company.to_i,company_location_id: company_location.to_i,department_id: department.to_i,status: 'Active')
+      end
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        if company == ""
+          @employees = Employee.where(status: 'Active')
+        elsif company_location == ""
+          @employees = Employee.where(company_id: company.to_i,status: 'Active')
+        elsif department == ""
+          @employees = Employee.where(company_location_id: company_location.to_i,status: 'Active')
+        else
+          @employees = Employee.where(company_id: company.to_i,company_location_id: company_location.to_i,department_id: department.to_i,status: 'Active')
+        end
+      elsif current_user.role.name == 'Admin'
+        if company == ""
+          @employees = Employee.where(company_id: current_user.company_location.company_id,status: 'Active')
+        elsif company_location == ""
+          @employees = Employee.where(company_id: company.to_i,status: 'Active')
+        elsif department == ""
+          @employees = Employee.where(company_location_id: company_location.to_i,status: 'Active')
+        else
+          @employees = Employee.where(company_id: company.to_i,company_location_id: company_location.to_i,department_id: department.to_i,status: 'Active')
+        end
+      elsif current_user.role.name == 'Branch'
+        if company == "" || company_location == ""
+          @employees = Employee.where(company_location_id: current_user.company_location_id,status: 'Active')
+        elsif department == ""
+          @employees = Employee.where(company_location_id: company_location.to_i,status: 'Active')
+        else 
+          @employees = Employee.where(company_id: company.to_i,company_location_id: company_location.to_i,department_id: department.to_i,status: 'Active')
+        end
+      end
+    end
+  end
+
+  def employee_type_wise_role(employee_type,company,location,current_user)
+    if current_user.class == Group
+      if location == ""
+        @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i)
+      else 
+        @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i,company_location_id: location.to_i)
+      end
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        if location == ""
+          @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i)
+        else 
+          @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i,company_location_id: location.to_i)
+        end
+       elsif current_user.role.name == 'Admin'
+        if location == ""
+          @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i)
+        else 
+          @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i,company_location_id: location.to_i)
+        end
+        elsif current_user.role.name == 'Branch'
+        if location == ""
+          @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i)
+        else 
+          @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i,company_location_id: location.to_i)
+        end
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Superviser'
+      elsif current_user.role.name == 'Employee'
+      end
+    end
+  end
+
   private
 
   def self.find_by_role(current_user)
@@ -246,4 +325,5 @@ class Employee < ActiveRecord::Base
     end
   end
 
+  
 end

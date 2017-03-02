@@ -1,0 +1,63 @@
+<%= bootstrap_form_for(@gratuity_master,html: {id: 'gratuity_master'},remote:true) do |f| %>
+  
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :no_of_year,hide_label:true, placeholder: 'No Of Year' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%=select_tag("components[]",options_for_select(SalaryComponent.where(is_base: true).collect {|ff| [ff.name, ff.id] }),{:multiple=>true,:id => "batches",class: "form-control"})%>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="field">
+        <%= f.number_field :day_in_month,hide_label:true, placeholder: 'Day In Month' %>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="field">
+        <%= f.text_field :payable_day,hide_label:true, placeholder: 'Payable Day' %>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="field">
+        <%= f.check_box :is_active, label: 'Active' %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+
+ $("#gratuity_master").validate({
+    rules: {
+      "gratuity_master[no_of_year]":{
+        required: true
+      },
+      "gratuity_master[base_component]":{
+        required: true
+      }
+    },
+    messages: {
+      "gratuity_master[no_of_year]":{
+        required: "Please Specify No Of Year"
+      },
+      "gratuity_master[base_component]":{
+        required: "Please Specify Base Component"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

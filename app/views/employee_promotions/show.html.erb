@@ -4,14 +4,10 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
-    <tr> 
-      <th colspan="2"></th>
-      <th colspan="2"></th>
-    </tr>
-
+   
     <tr>
       <th><strong>Employee Name</strong></th>
-      <td><%= @employee_promotion.employee.try(:first_name) %> <%= @employee_promotion.employee.try(:middle_name) %> <%= @employee_promotion.employee.try(:last_name) %></td>
+      <td><%= full_name(@employee_promotion.employee) %></td>
     
       <th><strong>Department</strong></th>
       <td><%= @employee_promotion.department.try(:name) %></td>
@@ -36,10 +32,9 @@
     <tr>
       <th><strong>Effective From</strong></th>
       <td><%= @employee_promotion.effective_from %></td>
-      <th></th>
-      <td></td>
-     <!--  <th><strong>Effective To</strong></th>
-      <td><%= @employee_promotion.effective_to %></td> -->
+
+      <th><strong>Effective To</strong></th>
+      <td><%= "Till Next Promotion" %></td>
     </tr>
 
     <tr>
@@ -47,7 +42,7 @@
       <td colspan="3"><%= @employee_promotion.justification %></td>
     </tr>
 
-    </table>
+    </table><br>
 
     <%= link_to 'Edit', edit_employee_promotion_path(@employee_promotion),class: 'btn btn-success btn-sm fa fa-edit' %> |
     <%= link_to 'Back', employee_promotions_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>

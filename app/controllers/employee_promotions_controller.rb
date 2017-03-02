@@ -29,6 +29,8 @@ class EmployeePromotionsController < ApplicationController
   # POST /employee_promotions.json
   def create
     @employee_promotion = EmployeePromotion.new(employee_promotion_params)
+    @effective  =  EmployeePromotion.where(employee_id: @employee_promotion.employee_id).last
+    @effective.update(effective_to: @employee_promotion.effective_from)
     @employee_id = params[:employee_promotion][:employee_id]
     @department_id = params[:employee_promotion][:department_id]
     @employee_designation_id = params[:employee_promotion][:employee_designation_id]

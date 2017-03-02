@@ -30,19 +30,16 @@
         <%= f.text_field :location %>
       </div>
     </div>
+  </div>
 
-    </div>
-
-   <div class="row">
+  <div class="row">
     <div class="col-sm-6">
       <div class="field">
         <%= f.text_field :description %>
       </div>
     </div>
-   
-  
     <div class="col-sm-3">
-    <label>Status </label>
+      <label>Status </label>
       <div class="field">
         <%= f.check_box :status, label: 'Active' %>
       </div>
@@ -55,12 +52,9 @@
       </div>
     </div>
   </div>
-
-    <% end %>
+<% end %>
 
 <script type="text/javascript">
-
-
  $("#company_event").validate({
     rules: {
       "company_event[event_name]":{

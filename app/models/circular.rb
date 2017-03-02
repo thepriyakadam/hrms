@@ -4,7 +4,7 @@ class Circular < ActiveRecord::Base
   has_attached_file :document, :path => "attachments/attach_resume/:basename.:extension"
 
   validates_attachment_presence :document
-  validates_attachment_size :document, less_than: 9.megabytes
+  validates_attachment_size :document, less_than: 15.megabytes
   validates_attachment :document, content_type: { content_type: %w(application/pdf application/msword application/msexcel application/vnd.openxmlformats-officedocument.wordprocessingml.document) }
 
 

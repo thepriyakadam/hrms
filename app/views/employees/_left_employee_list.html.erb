@@ -23,8 +23,8 @@
         </tbody>
       </table>
   </div>
-  <%= link_to " Excel Report ",left_employee_xl_employees_path(employee_type_id: params[:employee][:employee_type_id],company_id: params[:employee][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <%= link_to " Print ",left_employee_pdf_employees_path(employee_type_id: params[:employee][:employee_type_id],company_id: params[:employee][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+  <%= link_to " Excel Report ",dynamic_report_employees_path(employee_type_id: params[:employee][:employee_type_id],company_id: params[:employee][:company_id],company_location_id: params[:employee][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <%= link_to " Print ",dynamic_report_employees_path(employee_type_id: params[:employee][:employee_type_id],company_id: params[:employee][:company_id],company_location_id: params[:employee][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>
 
 <script type="text/javascript">

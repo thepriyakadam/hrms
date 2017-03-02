@@ -45,7 +45,15 @@
 
     <tr>
       <th><strong>Description</strong></th>
-      <td colspan="3"><%= @accident_record.description %></td>
+      <td><%= @accident_record.description %></td>
+      <th><strong>Download Image</strong></th>
+      <td>
+      <% if @accident_record.avatar_file_name == nil %>
+    <small class="label label-default">Image Not Available</small>
+      <% else %>
+    <center><%= link_to'',download_jpg_path(@accident_record),class: 'btn btn-xs fa fa-picture-o' %></center>
+  <% end %>
+  </td>
     </tr>
   </table><br>
       <%= link_to 'Edit', edit_accident_record_path(@accident_record),class: 'btn btn-success btn-sm fa fa-edit' %> |

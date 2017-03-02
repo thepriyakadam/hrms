@@ -1076,6 +1076,22 @@ def show_employee_list
   @employees = @employee.employee_role_wise(@company,@company_location,@department,current_user)
 end
 
+def print_employee
+  # byebug
+      @company = params[:employee][:company_id]
+      @company_location = params[:employee][:company_location_id]
+      @department = params[:employee][:department_id]
+      @employee = params[:employee_ids]
+      if @employee.nil?
+        flash[:alert] = "Please Select the Checkbox"
+        redirect_to select_company_company_location_and_department_employees_path
+      else
+          @employee = Employee.find_by_id(@employee)
+          @employees = Employee.where(id: @employee,company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+          @emp = Employee.where(id: @employees)
+  end
+end
+  
 def show_all_record
   @employee_ids = params[:employee_ids]
   if @employee_ids.nil?

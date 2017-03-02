@@ -448,45 +448,23 @@ class EmployeeAttendancesController < ApplicationController
     end
   end
 
-  # def attendance_total_xls
-  #   @year, @month = params[:year], params[:month]
-  #   @date = Date.new(@year.to_i, Workingday.months[@month])
-  #   @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
-  #   respond_to do |format|
-  #     format.xls {render template: 'employee_attendances/attendance_total.xls.erb'}
-  #   end
-  # end
-
-  # def attendance_total_pdf
-  #   @year, @month = params[:year], params[:month]
-  #   @date = Date.new(@year.to_i, Workingday.months[@month])
-  #   @day = @date.end_of_month.day
-  #   @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
-  #   respond_to do |format|
-  #     format.json
-  #     format.pdf do
-  #       render pdf: 'employee_attendance',
-  #             layout: 'pdf.html',
-  #             orientation: 'Landscape',
-  #             template: 'employee_attendances/attendance_total_pdf.pdf.erb',
-  #             show_as_html: params[:debug].present?,
-  #             margin:  { top:1,bottom:1,left:1,right:1 }
-  #     end
-  #   end
-  # end
-
   def select_date_department_form
     session[:active_tab] ="TimeManagement"
     session[:active_tab1] ="Report"
   end
 
   def show_departmntwise_employee
-    @date = params[:salary][:date]
-    @department = params[:salary][:company_location_id]
-    @employees = Employee.where(department_id: @department).pluck(:id)
-    @employee_attendances = EmployeeAttendance.where(day: @date.to_date ,employee_id: @employees)
-    @employee_attendance_id = EmployeeAttendance.where(day: @date.to_date ,employee_id: @employees).take
+    @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
+    @date = params[:employee][:date]
+    @company = params[:employee][:company_id]
+    @location = params[:employee][:company_location_id]
+    @department = params[:employee][:department_id]
+    @employee_attendances = @employee_attendance.attendance_date_wise_role(@date,@company,@location,@department,current_user)
     
+  end
+
+  def employee_list_for_print
+    @employee_attendances = params[:employee_attendances]
     respond_to do |f|
       f.js
       f.xls {render template: 'employee_attendances/print_department_wise.xls.erb'}
@@ -500,39 +478,6 @@ class EmployeeAttendancesController < ApplicationController
       end
     end
   end
-
-  # def department_wise_pdf
-  #   @date = params[:date]
-  #   @department = params[:department]
-  #   @employees = Employee.where(department_id: @department).pluck(:id)
-  #   @employee_attendances = EmployeeAttendance.where(day: @date.to_date,employee_id: @employees)
-    
-  #   respond_to do |format|
-  #       format.html
-  #       format.pdf do
-  #       render :pdf => 'print_department_wise',
-  #       layout: '/layouts/pdf.html.erb',
-  #       :template => 'employee_attendances/print_department_wise.pdf.erb',
-  #       :orientation      => 'Landscape', # default , Landscape
-  #       :page_height      => 1000,
-  #       :dpi              => '300',
-  #       :margin           => {:top    => 10, # default 10 (mm)
-  #                     :bottom => 10,
-  #                     :left   => 20,
-  #                     :right  => 20},
-  #       :show_as_html => params[:debug].present?
-  #     end
-  #   end
-  # end
-
-  # def department_wise_xls
-  #   @date, @department = params[:date], params[:department]
-  #   @employees = Employee.where(department_id: @department).pluck(:id)
-  #   @employee_attendances = EmployeeAttendance.where(day: @date.to_date,employee_id: @employees)
-  #   respond_to do |format|
-  #     format.xls {render template: 'employee_attendances/print_department_wise.xls.erb'}
-  #   end
-  # end
 
   def select_date_present_form
     session[:active_tab] ="TimeManagement"

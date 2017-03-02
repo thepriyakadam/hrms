@@ -1,0 +1,183 @@
+<div class="box box-default">
+  <div class="box-body">
+     <div class="pull-right">
+        <%= link_to 'PDF Report', show_all_record_employees_path(format: 'pdf',employee_ids: @employee_ids ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+        <%= link_to "Excel Report",show_all_record_employees_path(format: "xls",employee_ids: @employee_ids ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+        <%= link_to 'Back',employee_report_employees_path,class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+      </div>
+      <br><br>
+
+       <% i=0 %>
+      <% @employee_ids.each do |e|  %>
+        <% @employee = Employee.find_by(id: e) %>
+      <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+        <tr><td colspan="5"><center><strong><%=@employee.company_location.company.try(:description)%></strong> <br> <%= @employee.company_location.try(:address)%></center></td></tr>
+
+        <tbody>
+        <% @employee = Employee.find_by(id: e) %>
+        <tr><th colspan="5"><center> Employee Basic Detail</center></th></tr>
+          <tr>
+            <th><%= i=i+1 %></th>
+            <td>ID : <%= @employee.manual_employee_code %></td>
+            <td colspan="2">Name : <%= full_name(@employee) %></td>
+            <td>Department : <%= @employee.try(:department).try(:name) %></td>
+          </tr>
+
+          <tr><th colspan="5"><center>Qualification Detail</center></th></tr>
+          <tr>
+            <th colspan="2">Degree</th>
+            <th>Year Of Passing</th>
+            <th colspan="2">Marks</th>
+          </tr>
+          <% @qualifications = Qualification.where(employee_id: e) %>
+          <% @qualifications.each do |q|  %>
+            <tr>
+              <td colspan="2"><%= q.try(:degree).try(:name) %></td>
+              <td><%= q.try(:year).try(:name) %></td>
+              <td colspan="2"><%= q.try(:marks) %></td>
+            </tr> 
+          <% end %>
+          <tr><th colspan="5"><center>Joining Detail</center></th></tr>
+          <tr>
+            <th>Joining Date</th>
+            <th>Joining Designation</th>
+            <th>Employee Category</th>
+            <th>Current Designation</th>
+            <th>Proposed Designation</th>
+          </tr>
+          <% @joining_details = JoiningDetail.where(employee_id: e) %>
+          <% @goal_bunch = GoalBunch.where(employee_id: e).last %>
+          <% @joining_details.each do |g|  %>
+          <% @employee_promotion = EmployeePromotion.where(employee_id: e).first %>
+            <tr>
+              <td><%= g.try(:joining_date) %></td>
+              <td><%= @employee_promotion.try(:employee_designation).try(:name) %></td>
+              <td><%= g.try(:employee_category).try(:name) %></td>
+              <td><%=  g.try(:employee_designation).try(:name) %></td>
+              <td><%= @goal_bunch.try(:r_designation).try(:name) %></td>
+            </tr> 
+          <% end %>
+          <tr><th colspan="5"><center>Promotion Detail</center></th></tr>
+          <tr>
+            <th>Joining CTC</th>
+            <th>Current CTC</th>
+            <th>Last Salary Revision</th>
+            <th>Last Promotion</th>
+            <th>Past Experience(in year)</th>
+          </tr>
+            <% @current_template = EmployeeTemplate.where(employee_id: e,is_active: true).take %>
+            <% @first_template = EmployeeTemplate.where(employee_id: e).first %>
+            <% @last_template = EmployeeTemplate.where(employee_id: e).last %>
+            <% @experience = Experience.where(employee_id: e) %>
+            <% @employee_promotion_last = EmployeePromotion.where(employee_id: e).last %>
+
+            <% @current_employee_salary_templates = @current_template.try(:employee_salary_templates) %>
+            <% @first_employee_salary_templates = @first_template.try(:employee_salary_templates) %>
+          <tr> 
+            <% if @first_employee_salary_templates == nil %>
+              <td></td>
+            <% else %>
+              <td><%= @first_employee_salary_templates.sum(:annual_amount) %></td>
+            <% end %>
+            <% if @current_employee_salary_templates == nil %>
+              <td></td>
+            <% else %>
+              <td><%= @current_employee_salary_templates.sum(:annual_amount) %></td>
+            <% end %>
+            <td><%= @last_template.try(:start_date) %></td>
+            <td><%= @employee_promotion_last.try(:effective_from) %></td>
+            <td><%= @experience.sum(:no_of_year) %></td>
+          </tr> 
+          <tr><th colspan="5"><center>Salary Detail</center></th></tr>
+          <tr>
+            <th colspan="2">CTC 1</th>
+            <th>CTC 2</th>
+            <th colspan="2">CTC 3</th>
+          </tr>
+            <% @employee_templates = EmployeeTemplate.where(employee_id: e).last(3) %>
+            <% @emp_temp1 = @employee_templates.try(:first) %>
+            <% @emp_temp = @employee_templates.last(2) %>
+            <% @emp_temp2 = @emp_temp.try(:first) %>
+            <% @emp_temp3 = @employee_templates.try(:last) %>
+
+            <% @employee_template1 = EmployeeTemplate.find_by(id: @emp_temp1.try(:id)) %>
+            <% @employee_salary_templates1 = @employee_template1.try(:employee_salary_templates) %>
+            <% @employee_template2 = EmployeeTemplate.find_by(id: @emp_temp2.try(:id)) %>
+            <% @employee_salary_templates2 = @employee_template2.try(:employee_salary_templates) %>
+            <% @employee_template3 = EmployeeTemplate.find_by(id: @emp_temp3.try(:id)) %>
+            <% @employee_salary_templates3 = @employee_template3.try(:employee_salary_templates) %>
+          <tr>
+            <% if @employee_salary_templates1 == nil %>
+            <% else %>
+              <td colspan="2"><%= @employee_salary_templates1.sum(:annual_amount) %></td>
+            <% end %>
+            <% if @employee_salary_templates2 == nil %>
+            <% else %>
+              <td><%= @employee_salary_templates2.sum(:annual_amount) %></td>
+            <% end %>
+            <% if @employee_salary_templates3 == nil %>
+            <% else %>
+              <td colspan="2"><%= @employee_salary_templates3.sum(:annual_amount) %></td>
+            <% end %>
+          </tr>
+
+           <tr><th colspan="5"><center>Performance Detail</center></th></tr>
+          <tr>
+            <th>Period</th>
+            <th>Appraisee Rating</th>
+            <th>Appraiser Rating</th>
+            <th>Reviewer Rating</th>
+            <th>Final Rating</th>
+          </tr>
+            <% @goal_bunches = GoalBunch.where(employee_id: e).last(3) %>
+            <% @goal_bunches.each do |goal_bunch| %>
+              <tr>
+                <td><%= goal_bunch.try(:period).try(:name)%></td>
+                <td><%= goal_bunch.try(:appraisee_rating_id).to_f.round(2) %></td>
+                <td><%= goal_bunch.try(:appraiser_rating) %></td>
+                <td><%= goal_bunch.try(:reviewer_rating_id) %></td>
+                <td><%= goal_bunch.try(:final_rating_id) %></td>
+              </tr> 
+            <% end %>
+            <tr><th colspan="5"><center>Recommendation</center></th></tr>
+            <tr>
+              <th>Period</th>
+              <th>Increment</th>
+              <th>Promotion</th>
+              <th>Revised Designation</th>
+              <th>Revised CTC</th>
+            </tr>
+             <% @goal_bunches = GoalBunch.where(employee_id: e).last(3) %>
+             <% @goal_bunches.each do |goal_bunch| %>
+              <tr>
+                <td><%= goal_bunch.try(:period).try(:name)%></td>
+                <td><%= goal_bunch.try(:r_increment) %></td>
+                <td><%= goal_bunch.try(:r_promotion) %></td>
+                <td><%= goal_bunch.try(:r_designation).try(:name) %></td>
+                <td><%= goal_bunch.try(:r_ctc) %></td>
+              </tr>
+            <% end %>
+            <tr><th colspan="5"><center>Reward</center></th></tr>
+            <tr>
+              <th>Period</th>
+              <th>Final Increment</th>
+              <th>Promotion</th>
+              <th>Revised Designation</th>
+              <th >Revised CTC</th>
+            </tr>
+             <% @goal_bunches = GoalBunch.where(employee_id: e).last(3) %>
+             <% @goal_bunches.each do |goal_bunch| %>
+              <tr>
+                <td><%= goal_bunch.try(:period).try(:name)%></td>
+                <td><%= goal_bunch.try(:f_increment) %></td>
+                <td><%= goal_bunch.try(:f_promotion) %></td>
+                <td><%= goal_bunch.try(:f_designation).try(:name) %></td>
+                <td><%= goal_bunch.try(:f_ctc) %></td>
+              </tr>
+            <% end %>  
+      </tbody>
+    </table> <br>
+    <% end %>
+   
+  </div>
+</div>

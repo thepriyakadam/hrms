@@ -1912,6 +1912,14 @@ end
       get :left_employee_xl
       get :left_employee_pdf
       get :collect_employee
+      get :select_company_company_location_and_department
+      get :show_employee
+      post :print_employee
+      get :print_employee
+      get :employee_list_pdf
+      # get :employee_according_to_location_and_department
+      # post :show_employee_list
+      # get :show_employee_list
     end
     member do
       get :edit_manager

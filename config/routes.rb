@@ -579,6 +579,7 @@ end
       get :detail_employee_wise_xls
       get :period_rating_wise
       post :Period_rating_wise_employee
+      get :Period_rating_wise_employee
       get :period_rating_wise_pdf
       get :period_rating_wise_xls
       get :increment_index_report
@@ -1351,9 +1352,6 @@ end
       post :salary_employee_wise
       get :employee_wise_pdf
       get :employee_wise_xls
-      get :employee_list
-      get :show_all_record
-      post :show_all_record
       get :employee_record
     end
   end
@@ -1920,6 +1918,10 @@ end
       get :left_employee_xl
       get :left_employee_pdf
       get :collect_employee
+      get :employee_report 
+      post :show_employee_list
+      get :show_all_record
+      post :show_all_record
     end
     member do
       get :edit_manager

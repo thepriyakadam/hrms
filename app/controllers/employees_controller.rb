@@ -170,6 +170,7 @@ class EmployeesController < ApplicationController
   def update
      respond_to do |format|
       if @employee.update(employee_params)
+        Member.find_by(employee_id: @employee.id).update(company_id: employee_params["company_id"],company_location_id:employee_params["company_location_id"],department_id:employee_params["department_id"] )
         format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
         format.json { render :show, status: :ok, location: @employee }
       else
@@ -1170,8 +1171,91 @@ end
 
 def destroy_employee
   session[:active_tab] ="UserAdministration"
-  
 end
+
+def employee_report
+  session[:active_tab] ="EmployeeManagement"
+  session[:active_tab1] ="Reports"
+end
+
+def show_employee_list
+  @company = params[:employee][:company_id]
+  @company_location = params[:employee][:company_location_id]
+  @department = params[:employee][:department_id]
+  if current_user.class == Group
+    if @company == ""
+      @employees = Employee.where(status: 'Active')
+    elsif @company_location == ""
+      @employees = Employee.where(company_id: @company.to_i,status: 'Active')
+    elsif @department == ""
+      @employees = Employee.where(company_location_id: @company_location.to_i,status: 'Active')
+    else
+      @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i,status: 'Active')
+    end
+  elsif current_user.class == Member
+    if current_user.role.name == 'GroupAdmin'
+      if @company == ""
+        @employees = Employee.where(status: 'Active')
+      elsif @company_location == ""
+        @employees = Employee.where(company_id: @company.to_i,status: 'Active')
+      elsif @department == ""
+        @employees = Employee.where(company_location_id: @company_location.to_i,status: 'Active')
+      else
+        @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i,status: 'Active')
+      end
+    elsif current_user.role.name == 'Admin'
+      if @company == ""
+        @employees = Employee.where(company_id: current_user.company_location.company_id,status: 'Active')
+      elsif @company_location == ""
+        @employees = Employee.where(company_id: @company.to_i,status: 'Active')
+      elsif @department == ""
+        @employees = Employee.where(company_location_id: @company_location.to_i,status: 'Active')
+      else
+        @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i,status: 'Active')
+      end
+    elsif current_user.role.name == 'Branch'
+      if @company == "" || @company_location == ""
+        @employees = Employee.where(company_location_id: current_user.company_location_id,status: 'Active')
+      elsif @department == ""
+        @employees = Employee.where(company_location_id: @company_location.to_i,status: 'Active')
+      else 
+        @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i,status: 'Active')
+      end
+    end
+  end
+end
+
+def show_all_record
+  @employee_ids = params[:employee_ids]
+  if @employee_ids.nil?
+    flash[:alert] = "Please Select the checkbox"
+    @employees = []
+    redirect_to show_all_record_employee_templates_path
+  else
+    @employee_ids.each do |e|
+      @employee = Employee.find_by(id: e)
+    end
+  end
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employees/employee_record.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'show_all_record',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employees/employee_record.pdf.erb',
+        :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 10,
+                          :right  => 10},
+            :show_as_html => params[:debug].present?
+      end
+    end
+  end
+
 
   # def destroy_details
   #   @employee = Employee.find(params[:emp_id])

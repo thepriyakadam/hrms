@@ -10,59 +10,59 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <tr>
   <th><strong>Vacancy No.</strong></th>
-  <td><%= @vacancy_master1.id %></td>
+  <td><%= @vacancy_master.id %></td>
    <th><strong>Request To</strong></th>
   <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %> </td>
   </tr>
 
   <tr>
   <th><strong>Organization</strong></th>
-  <td><%= @vacancy_master1.other_organization %></td>
+  <td><%= @vacancy_master.other_organization %></td>
    <th><strong>Job Title</strong></th>
   <td><%= @vacancy_master.employee_designation.name %></td>
   </tr>
 
   <tr>
   <th><strong>Vacancy Name</strong></th>
-  <td><%= @vacancy_master1.vacancy_name %></td>
+  <td><%= @vacancy_master.vacancy_name %></td>
   <th><strong>Location</strong></th>
-  <td><%= @vacancy_master1.company_location.try(:name) %></td>
+  <td><%= @vacancy_master.company_location.try(:name) %></td>
   </tr>
 
 <tr> 
   <th><strong>Department</strong></th>
-  <td><%= @vacancy_master1.department.name %></td>
+  <td><%= @vacancy_master.department.name %></td>
   <th><strong>No. of Positions</strong></th>
-  <td><%= @vacancy_master1.no_of_position %></td>
+  <td><%= @vacancy_master.no_of_position %></td>
 </tr>
 
 <tr>  
   <th><strong>Experience</strong></th>
-  <td><%= @vacancy_master1.experience %></td>
+  <td><%= @vacancy_master.experience %></td>
   <th><strong>Budget</strong></th>
-  <td><%= @vacancy_master1.budget %></td>
+  <td><%= @vacancy_master.budget %></td>
 </tr>
 <tr>
 
  <tr>
    <th><strong>Fulfillment Date</strong></th>
-  <td><%= @vacancy_master1.vacancy_post_date %></td>
+  <td><%= @vacancy_master.vacancy_post_date %></td>
   <th><strong>Keyword</strong></th>
-  <td><%= @vacancy_master1.keyword %></td>
+  <td><%= @vacancy_master.keyword %></td>
 </tr>
 
 <tr>
   <th><strong>Organization</strong></th>
-  <td><%= @vacancy_master1.other_organization %></td>
+  <td><%= @vacancy_master.other_organization %></td>
   <th><strong>Qualification 1</strong></th>
-  <td><%= @vacancy_master1.degree.try(:name) %></td>
+  <td><%= @vacancy_master.degree.try(:name) %></td>
 </tr>
 
  <tr>
   <th><strong>Qualification 2</strong></th>
-  <td><%= @vacancy_master1.degree_1.try(:name) %></td>
+  <td><%= @vacancy_master.degree_1.try(:name) %></td>
   <th><strong>Qualification 3</strong></th>
-  <td><%= @vacancy_master1.degree_2.try(:name) %></td>
+  <td><%= @vacancy_master.degree_2.try(:name) %></td>
 </tr>
 
 <tr>
@@ -80,18 +80,23 @@
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
+      <th>ID</th>
       <th>Approved By</th>
       <th>Date</th>
       <th>Time</th>
       <th>Status</th>
 <!--       <th>Action</th>
- -->    </tr>
+ --> </tr>
   </thead>
 
   <tbody>
     <% @reporting_masters_vacancy_masters.each do |reporting_masters_vacancy_master| %>
-       <tr>
-                <td><%= reporting_masters_vacancy_master.reporting_master.employee.try(:first_name) %> <%= reporting_masters_vacancy_master.reporting_master.employee.try(:middle_name) %> <%= reporting_masters_vacancy_master.reporting_master.employee.try(:last_name) %></td>
+       <tr>     
+                <td><%= reporting_masters_vacancy_master.reporting_master_id %></td>
+                <td><% a=reporting_masters_vacancy_master.reporting_master_id
+                emp=Employee.where(id: a).take %>
+                  <%= emp.try(:first_name)%> <%= emp.try(:middle_name)%> <%= emp.try(:last_name)%>
+                </td>
                 <td><%= reporting_masters_vacancy_master.created_at.to_date %></td>
                 <td><%= reporting_masters_vacancy_master.created_at %></td>
                  <td>
@@ -103,6 +108,10 @@
                     <small class="label label-primary">Edit And Approved</small>
                     <% elsif reporting_masters_vacancy_master.vacancy_status == "Rejected" %>
                     <small class="label label-primary">Rejected</small>
+                    <% elsif reporting_masters_vacancy_master.vacancy_status == "FirstApproved" %>
+                    <small class="label label-primary">FirstApproved</small>
+                    <% elsif reporting_masters_vacancy_master.vacancy_status == "SecondApproved" %>
+                    <small class="label label-primary">SecondApproved</small>
                     <% elsif reporting_masters_vacancy_master.vacancy_status == "Approved" %>
                     <small class="label label-primary">Approved</small>
                     <% else %>

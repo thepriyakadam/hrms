@@ -1,6 +1,7 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Due Clearance Form For : <!-- <= full_name(@due_employee_details.try(:first).(:employee)) %> , Template Name : <= @due_employee_details.first.due_template.try(:name) %> --></h3>
+    <h3 class="box-title">Employee Due Clearance Form For : <% a=DueEmployeeDetail.where(id: @due_employee_detail.id).take
+    b=Employee.where(id: a.employee_id).take %> <%= b.manual_employee_code %> <%= b.try(:first_name)+' '+b.try(:middle_name)+' '+b.try(:last_name) %> , Template Name : <%= a.due_template.try(:name) %></h3>
   </div><!-- /.box-header -->
 	<div class="box-body">
 	<!--  < if @due_employee_detail.is_confirmed == true %> -->

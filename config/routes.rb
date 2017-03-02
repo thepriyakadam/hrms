@@ -1102,6 +1102,10 @@ end
       get :show_vacancy_request_history
       get :reporting_masters_vacancy_master_list
       post :import
+      get :first_approve
+      get :approve_and_send_next
+      get :final_approval_vacancy_list
+      get :final_approve
     end
   end
   resources :leave_c_offs do

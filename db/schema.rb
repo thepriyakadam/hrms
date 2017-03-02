@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170227050304) do
+ActiveRecord::Schema.define(version: 20170302113203) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1927,6 +1927,7 @@ ActiveRecord::Schema.define(version: 20170227050304) do
     t.boolean  "is_confirm"
     t.integer  "selected_resume_id"
     t.string   "job_title"
+    t.text     "address"
   end
 
   add_index "interview_schedules", ["employee_id"], name: "index_interview_schedules_on_employee_id"

@@ -41,18 +41,24 @@
       <% end %>
   </tbody>
 </table>
-<div class="row">
-    <div class="col-sm-12"><strong> <font color='green'>Note - * Row is the latest row to approve/reject </font></strong></div>
-    </div><br>
+  <div class="row">
+      <div class="col-sm-12"><strong> <font color='green'>Note - * Row is the latest row to approve/reject </font></strong></div>
+  </div><br>
   <div class="box-header">
     <h3 class="box-title"></h3>
     <div class="pull-right">
+    <% vacancy_master_1 = VacancyMaster.where(id: @vacancy_master.id).take
+     employ_1 = Employee.where(id: vacancy_master_1.reporting_master_id).take  %>
+    First Reporter : <%= employ_1.try(:manager).try(:manual_employee_code) %> <%= employ_1.try(:manager).try(:first_name) %> <%= employ_1.try(:manager).try(:middle_name) %> <%= employ_1.try(:manager).try(:last_name) %> <br>
+
+    Second Reporter : <%= employ_1.try(:manager_2).try(:manual_employee_code) %> <%= employ_1.try(:manager_2).try(:first_name) %> <%= employ_1.try(:manager_2).try(:middle_name) %> <%= employ_1.try(:manager_2).try(:last_name) %> <br>
     </div>
   </div>
+
 <div>
 <table id="example" class="table table-bordered table-hover table-condensed">
   <tbody>
-  <tr><td colspan="4"><font color='red'><center>Vacancy Request Details</center></td></tr>
+  <tr><td colspan="4"><font color='red'><center>Current Vacancy Request</center></td></tr>
     <tr>
       <th>Vacancy Code</th>
       <td><%= @vacancy_master.id %></td>
@@ -61,8 +67,10 @@
       <td><%= @vacancy_master.employee.try(:first_name) %> <%= @vacancy_master.employee.try(:middle_name) %> <%= @vacancy_master.employee.try(:last_name) %></td>
     </tr>
     <tr>
-      <th>Approved By</th>
-      <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td>
+      <th><strong>Current Request To</strong></th>
+      <!-- <td><= @employee.try(:first_name) %> <= @employee.try(:middle_name) %> <= @employee.try(:last_name) %> </td> -->
+      <td><% emp=Employee.where(id: @vacancy_master.reporting_master_id).take %>
+      <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %> </td>
    
       <th>Organization</th>
       <td><%= @vacancy_master.other_organization %></td>
@@ -120,19 +128,48 @@
       <td colspan="3"><%= @vacancy_master.justification %></td>
       
     </tr>
-    <tr><th>Description</th>
-      <td colspan="3"><%= @vacancy_master.description %></td></tr>
+    <tr>
+      <th>Description</th>
+      <td colspan="3"><%= @vacancy_master.description %></td>
+    </tr>
   </tbody>
 </table>
     <div id="myModal" class="modal fade"></div>
     <div id="myModal1" class="modal fade"></div>
     <div id="myModal3" class="modal fade"></div>
-<%= link_to 'Approve',approve_vacancy_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-primary fa fa-check' %> |
-<%= link_to 'Reject',reject_vacancy_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-danger fa fa-trash' %> |
-<%= link_to 'Approve & Send next',modal_vacancy_masters_path(@vacancy_master.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %> 
+    <% if @vacancy_master.employee.manager_id.present? && @vacancy_master.employee.manager_2_id.present? && @vacancy_master.current_status == "Pending" %>
+      <%= link_to 'Approve',first_approve_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-primary fa fa-check' %> |
+      <%= link_to 'Reject',reject_vacancy_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-danger fa fa-trash' %>
+
+    <% elsif @vacancy_master.employee.manager_id.present? && @vacancy_master.employee.manager_2_id.present? && @vacancy_master.current_status == "FirstApproved" %>
+      <%= link_to 'Approve',first_approve_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-primary fa fa-check' %> |
+      <%= link_to 'Reject',reject_vacancy_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-danger fa fa-trash' %>
+      | <%= link_to 'Approve & Send next',approve_and_send_next_vacancy_masters_path(@vacancy_master.id),class: 'btn btn btn-sm btn-success' %> 
+
+    <% elsif @vacancy_master.employee.manager_id.present? && @vacancy_master.employee.manager_2_id.nil? && @vacancy_master.current_status == "Pending" %>
+      <%= link_to 'Approve',approve_vacancy_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-info fa fa-check' %> |
+      <%= link_to 'Reject',reject_vacancy_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-danger fa fa-trash' %>
+    <% end %>
+    
+    <% if @vacancy_master.current_status == "Approved & Send Next"  %>
+      <% vacancy_master = VacancyMaster.where(id: @vacancy_master.id,current_status: "Approved & Send Next").take
+       employ = Employee.where(id: vacancy_master.reporting_master_id).take %>
+    
+      <% if employ.manager_id.present? && employ.manager_2_id.present? && @vacancy_master.current_status == "Approved & Send Next"  %>
+       <%= link_to 'Approve',first_approve_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-primary fa fa-check' %> |
+        <%= link_to 'Reject',reject_vacancy_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-danger fa fa-trash' %>
+        | <%= link_to 'Approve & Send next',approve_and_send_next_vacancy_masters_path(@vacancy_master.id),class: 'btn btn btn-sm btn-success' %> 
+    
+      <% elsif employ.manager_id.present? && employ.manager_2_id.nil? && @vacancy_master.current_status == "Approved & Send Next" %>
+        <%= link_to 'Approve',approve_vacancy_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-info fa fa-check' %> |
+        <%= link_to 'Reject',reject_vacancy_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-danger fa fa-trash' %>
+       <!-- <= link_to 'Approve & Send next',modal_vacancy_masters_path(@vacancy_master.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %> -->
+      <% end %>
+      <% elsif @vacancy_master.current_status == "SecondApproved"  %>
+      <%= link_to 'Final Approve',final_approve_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-info fa fa-check' %>
+    <% end %>
 <!-- link_to 'Update No. Of Positions',modal1_vacancy_masters_path(@vacancy_master.id),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>-->
 <!-- link_to 'Edit & Approve',modal3_vacancy_masters_path(@vacancy_master.id),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>-->
-    </div>
 </div>
 
 <script>

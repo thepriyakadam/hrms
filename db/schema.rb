@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170227050304) do
+ActiveRecord::Schema.define(version: 20170301093409) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -3285,13 +3285,15 @@ ActiveRecord::Schema.define(version: 20170227050304) do
     t.string   "esic_no"
     t.string   "pf_no"
     t.string   "uan_no"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.string   "account_no"
+    t.integer  "employee_designation_id"
   end
 
   add_index "slip_informations", ["cost_center_id"], name: "index_slip_informations_on_cost_center_id"
   add_index "slip_informations", ["department_id"], name: "index_slip_informations_on_department_id"
+  add_index "slip_informations", ["employee_designation_id"], name: "index_slip_informations_on_employee_designation_id"
   add_index "slip_informations", ["salaryslip_id"], name: "index_slip_informations_on_salaryslip_id"
 
   create_table "society_member_ships", force: :cascade do |t|

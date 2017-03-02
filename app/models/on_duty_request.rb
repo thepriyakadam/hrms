@@ -24,13 +24,13 @@ class OnDutyRequest < ActiveRecord::Base
     flag = 0
     flag1 = 0
     for i in self.start_date.to_date..self.end_date.to_date
+      start_date = self.start_date.to_date
+      end_date = self.end_date.to_date
         flag = EmployeeAttendance.exists?(day: i,employee_id: self.employee_id)
       if flag == true
           flag1 = EmployeeAttendance.exists?(day: i,employee_id: self.employee_id,employee_leav_request_id: nil)
         if flag1 == true
             @emp_attendance = EmployeeAttendance.where(day: i,employee_id: self.employee_id).take
-            start_date = self.start_date.to_date
-            end_date = self.end_date.to_date
             if self.leave_type == "Full Day"
               @emp_attendance.update(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id),on_duty_request_id: self.id)
             elsif self.leave_type == "Full/Half"

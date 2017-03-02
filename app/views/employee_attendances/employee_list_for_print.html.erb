@@ -4,7 +4,6 @@
       <center><p class="text-primary"> Attendance Not Available </p></center> 
     <% else %>
 
-      <%= form_for (:employees, url: { action: 'employee_list_for_print'},employee_attendances: @employee_attendances) do |f| %>
         <table id="example" class="table table-bordered table-hover table-condensed">
           <thead>
             <tr>
@@ -31,10 +30,6 @@
             <% end %>
           </tbody>
         </table>
-        <div class="col-sm-3">
-          <%= f.submit "Show Employee List", class: "btn btn-primary btn-sm" %>
-        </div>
-      <% end %>
     <% end %>
   </div>
 </div>

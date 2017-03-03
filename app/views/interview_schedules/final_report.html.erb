@@ -82,6 +82,10 @@
         <td><%= interview_analysis.comment %></td>
       </tr>
     <% end %>
+    <tr>
+        <th>Total Score</th>
+        <th colspan="6"><% interv_analy = InterviewAnalysis.where(interview_schedule_id: @interview_schedule.id) %><%=  %></th>
+    </tr>
   </tbody>
 </table>
 <% end %>   

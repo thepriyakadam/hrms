@@ -433,11 +433,28 @@ end
   end
 
   def reporting_masters_vacancy_master_list
-    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+    # @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+    @vacancy_master = VacancyMaster.find(params[:format])
     # @reporting_master = ReportingMaster.find(@vacancy_master.reporting_master_id)
     # @employee = Employee.find(@reporting_master.employee_id)
     # @vacancy_master1 = VacancyMaster.where(id: @vacancy_master.id)
     @reporting_masters_vacancy_masters = ReportingMastersVacancyMaster.where(vacancy_master_id: @vacancy_master.id)
+  end
+
+  def vac_history
+     @vacancy_masters = VacancyMaster.group(:employee_id)
+     session[:active_tab] ="recruitment"
+     session[:active_tab1] ="particular_vacancy"
+  end
+
+  def current_employee_vacancy_list
+     # byebug
+     @vacancy_master = params[:emp_id]
+     @vacancy_masters = VacancyMaster.where(employee_id: @vacancy_master)
+  end
+
+  def show_vacancy_master_reporting_master_list
+
   end
 
   private

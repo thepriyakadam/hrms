@@ -1,7 +1,7 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Vacancy Request History List</h3>
-    </div>
+<!--     <h3 class="box-title">Vacancy Request History List</h3>
+ -->    </div>
 
 <p id="notice"><%= notice %></p>
 
@@ -9,10 +9,13 @@
 
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <tr>
+      <th colspan="4"><center>Vacancy Request of : <%= @vacancy_master.employee.try(:manual_employee_code) %> <%= @vacancy_master.employee.try(:first_name) %> <%= @vacancy_master.employee.try(:middle_name) %> <%= @vacancy_master.employee.try(:last_name) %></center></th>
+    </tr>
+  <tr>
   <th><strong>Vacancy No.</strong></th>
   <td><%= @vacancy_master.id %></td>
    <th><strong>Request To</strong></th>
-  <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %> </td>
+  <td><!-- <= @employee.try(:first_name) %> <= @employee.try(:middle_name) %> <= @employee.try(:last_name) %> --> </td>
   </tr>
 
   <tr>
@@ -80,6 +83,9 @@
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
+      <th colspan="5"><center>Vacancy Process</center></th>
+      </tr>
+    <tr>
       <th>ID</th>
       <th>Approved By</th>
       <th>Date</th>
@@ -101,15 +107,17 @@
                 <td><%= reporting_masters_vacancy_master.created_at %></td>
                  <td>
                     <% if reporting_masters_vacancy_master.vacancy_status == "Pending" %>
-                    <small class="label label-primary">Pending</small>
+                    <small class="label label-default">Pending</small>
                     <% elsif reporting_masters_vacancy_master.vacancy_status == "Approved & Send Next" %>
                     <small class="label label-primary">Approved & Send Next</small>
                     <% elsif reporting_masters_vacancy_master.vacancy_status == "Edit And Approved" %>
                     <small class="label label-primary">Edit And Approved</small>
                     <% elsif reporting_masters_vacancy_master.vacancy_status == "Rejected" %>
-                    <small class="label label-primary">Rejected</small>
+                    <small class="label label-danger">Rejected</small>
                     <% elsif reporting_masters_vacancy_master.vacancy_status == "FirstApproved" %>
                     <small class="label label-primary">FirstApproved</small>
+                    <% elsif reporting_masters_vacancy_master.vacancy_status == "FinalApproved" %>
+                    <small class="label label-primary">FinalApproved</small>
                     <% elsif reporting_masters_vacancy_master.vacancy_status == "SecondApproved" %>
                     <small class="label label-primary">SecondApproved</small>
                     <% elsif reporting_masters_vacancy_master.vacancy_status == "Approved" %>
@@ -122,7 +130,7 @@
     <% end %>
   </tbody>
 </table>
-<%= link_to 'Back', vacancy_history_vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+<%= link_to 'Back', current_employee_vacancy_list_vacancy_masters_path(emp_id: @vacancy_master.employee_id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
  </div>
 </div>
 

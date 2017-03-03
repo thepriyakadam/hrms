@@ -45,6 +45,9 @@ class InductionActivitiesController < ApplicationController
     @induction_activity = InductionActivity.new(induction_activity_params)
     @induction_activities = InductionActivity.all
       if @induction_activity.save
+        time_diff=Time.at((@induction_activity.to-@induction_activity.from).round).utc.strftime "%H:%M"
+        final_time_diff_in_hrs=time_diff.to_time.strftime("%H").to_i + time_diff.to_time.strftime("%M").to_f/60
+        InductionActivity.where(id: @induction_activity.id).update_all(duration: final_time_diff_in_hrs)
         @induction_activity = InductionActivity.new
         flash[:notice] = 'Induction Activity saved Successfully.'
       end
@@ -161,6 +164,6 @@ class InductionActivitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def induction_activity_params
-      params.require(:induction_activity).permit(:activity_date,:from,:to,:start_date,:is_confirmed,:avatar,:induction_master_id,:activity, :day, :duration, :employee_id, :induction_master_id)
+      params.require(:induction_activity).permit(:activity_date,:from,:to,:start_date,:program_agenda,:is_confirmed,:avatar,:induction_master_id,:activity, :day, :duration, :employee_id, :induction_master_id)
     end
 end

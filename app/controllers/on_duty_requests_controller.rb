@@ -341,7 +341,21 @@ class OnDutyRequestsController < ApplicationController
         #margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
+   
+  end
+
+  def on_duty_request_report
+     session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="ODReports"
+  end
+
+  def on_duty_request_status_report
     session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="ODReports"
+  end
+
+  def on_duty_approval_report
+     session[:active_tab] ="LeaveManagement"
     session[:active_tab1] ="ODReports"
   end
 

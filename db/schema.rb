@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170301093409) do
+ActiveRecord::Schema.define(version: 20170303041422) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1576,6 +1576,11 @@ ActiveRecord::Schema.define(version: 20170301093409) do
     t.datetime "avatar_updated_at"
     t.date     "start_date"
     t.boolean  "induction_completed"
+    t.date     "activity_date"
+    t.time     "activity_time"
+    t.text     "program_agenda"
+    t.time     "from"
+    t.time     "to"
   end
 
   add_index "induction_activities", ["employee_id"], name: "index_induction_activities_on_employee_id"

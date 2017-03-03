@@ -3,9 +3,9 @@ class InductionActivity < ActiveRecord::Base
   belongs_to :induction_master
   has_many :induction_details
 
-  validates :activity, presence: true
-  validates :day, presence: true
-  validates :duration, presence: true
+  validates :activity_date, presence: true
+  validates :from, presence: true
+  validates :to, presence: true
   validates :employee_id, presence: true
 
   has_attached_file :avatar, path: ':rails_root/attachments_induction_activity/induction_activity/:style/:basename.:extension' 

@@ -157,7 +157,7 @@ class OnDutyRequestsController < ApplicationController
     end
     
     session[:active_tab] ="LeaveManagement"
-    session[:active_tab1] ="LeaveProcess"
+    session[:active_tab1] ="ODProcess"
   end
 
   def employee_od_request_detail
@@ -187,7 +187,7 @@ class OnDutyRequestsController < ApplicationController
       end
     end
     session[:active_tab] ="LeaveManagement"
-    session[:active_tab1] ="LeaveProcess"
+    session[:active_tab1] ="ODProcess"
   end
 
   def from_hr
@@ -215,7 +215,7 @@ class OnDutyRequestsController < ApplicationController
       @second_level_request_lists = OnDutyRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil,second_reporter_id: @on_duty_request)
     end
     session[:active_tab] ="LeaveManagement"
-    session[:active_tab1] ="LeaveProcess"
+    session[:active_tab1] ="ODProcess"
   end
 
   def employee_od_request_detil_for_admin
@@ -341,6 +341,8 @@ class OnDutyRequestsController < ApplicationController
         #margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="ODReports"
   end
 
   def status_wise_report_list
@@ -470,6 +472,8 @@ class OnDutyRequestsController < ApplicationController
         #margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="ODReports"
   end
 
   def show_approved_record

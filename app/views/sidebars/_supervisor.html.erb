@@ -52,8 +52,6 @@
         <ul class="treeview-menu">
         <li><a href="/employee_leav_requests/employee_list"><i class="fa fa-tags"></i>Leave Request</a></li>
         <li><a href="/employee_leav_requests/approved_or_rejected_leave_request"><i class="fa fa-tags"></i>Leave Approval</a></li>
-        <li><a href="/on_duty_requests/employee_list"><i class="fa fa-tags"></i>OD Request</a></li>
-        <li><a href="/on_duty_requests/request_approval_list"><i class="fa fa-tags"></i>OD Approval</a></li>
         </ul>
       </li>
       <li class="treeview" id="LeaveReports">
@@ -63,7 +61,22 @@
         <li><a href="/employee_leav_requests/leave_req_status_report"><i class="fa fa-tags"></i>Status Wise Leave</a></li>
         <li><a href="/particular_leave_records/leave_approval_report"><i class="fa fa-tags"></i>Leave Approved</a></li>
         </ul>
-      </li>  
+      </li> 
+      <li class="treeview" id="ODProcess">
+        <a href="#"><i class="fa fa-edit"></i> On Duty Process  <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+        <li><a href="/on_duty_requests/request_approval_list"><i class="fa fa-tags"></i>OD Approval</a></li>
+        </ul>
+      </li>
+      
+      <li class="treeview" id="ODReports">
+        <a href="#"><i class="fa fa-edit"></i> On Duty Reports  <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+        <li><a href="/on_duty_requests/on_duty_request_report"><i class="fa fa-tags"></i>On Duty Request </a></li>
+        <li><a href="/on_duty_requests/on_duty_request_status_report"><i class="fa fa-tags"></i>Status Wise On Duty</a></li>
+        <li><a href="/on_duty_requests/on_duty_approval_report"><i class="fa fa-tags"></i>On Duty Approved</a></li>
+        </ul>
+      </li>   
     </ul>
   </li>
 
@@ -84,7 +97,7 @@
     </ul>
   </li>
 
-     <li class="treeview" id="employee_resignation">
+    <li class="treeview" id="employee_resignation">
     <a href="#">
       <i class="glyphicon glyphicon-th-large"></i> <span>Separation Management</span>
       <i class="fa fa-angle-left pull-right"></i>
@@ -93,19 +106,10 @@
        <li class="treeview" id="resignation"> 
        <a href="#"><i class="fa fa-edit"></i>Employee Resignation <i class="fa fa-angle-left pull-right"></i></a>
        <ul class="treeview-menu">
-       <li><a href="/employee_resignations/resignation_history"><i class="fa fa-tags"></i> Resignation Approval </a></li>
+       <li><a href="/employee_resignations"><i class="fa fa-tags"></i> Resignation Status </a></li>
+       <li><a href="/employee_resignations/resignation_history"><i class="fa fa-tags"></i> Approve/Reject </a></li>
        </ul>
       </li> 
-        <li class="treeview" id= "no_due_mgmt">
-        <a href="#"><i class="fa fa-edit"></i> Due Clearance  <i class="fa fa-angle-left pull-right"></i></a>
-        <ul class="treeview-menu">
-    <!--  <li><a href="/due_details/all_employee_resignation_list"><i class="fa fa-tags"> </i> Assign Template </a></li> -->
-     <!-- <li><a href="/due_details/all_employee_due_detail"><i class="fa fa-tags"> </i>Send For Confirmation</a></li> -->
-     <li><a href="/due_details/employee_due_detail_history"><i class="fa fa-tags"> </i>Approve </a></li>
-        </ul>
-      </li> 
-
-   
     </ul>
   </li>
 

@@ -156,11 +156,11 @@ class InductionActivitiesController < ApplicationController
     end
 
     def induction_detail_params
-      params.require(:induction_detail).permit(:employee_id, :start_date, :induction_master_id, :induction_activity_id)
+      params.require(:induction_detail).permit(:activity_date,:from,:to,:start_date,:employee_id, :start_date, :induction_master_id, :induction_activity_id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def induction_activity_params
-      params.require(:induction_activity).permit(:start_date,:is_confirmed,:avatar,:induction_master_id,:activity, :day, :duration, :employee_id, :induction_master_id)
+      params.require(:induction_activity).permit(:activity_date,:from,:to,:start_date,:is_confirmed,:avatar,:induction_master_id,:activity, :day, :duration, :employee_id, :induction_master_id)
     end
 end

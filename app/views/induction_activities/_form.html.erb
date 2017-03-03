@@ -1,13 +1,8 @@
 <%= bootstrap_form_for(@induction_activity,html: {id: "induction_activity"},induction_master_id: @induction_master.id) do |f| %>
-
 <%= f.hidden_field :induction_master_id,value:@induction_master.id  %>
 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-
- <div>
-  <%= render 'show_induction_master_list' %>
-  </div>
-
- <!--  Template No:<td><%= @induction_master.code %></td>
+<!-- 
+  Template No:<td><%= @induction_master.code %></td>
   Description:<td><%= @induction_master.description %></td> -->
   <div class="row">
       <div class="col-sm-3">

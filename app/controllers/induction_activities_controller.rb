@@ -15,6 +15,7 @@ class InductionActivitiesController < ApplicationController
   # GET /induction_activities/new
   def new
     @induction_activity = InductionActivity.new
+    # byebug
     @induction_master = InductionMaster.find(params[:induction_master_id])
     @induction_activities = InductionActivity.where(induction_master_id: @induction_master.id)
   end
@@ -45,6 +46,9 @@ class InductionActivitiesController < ApplicationController
     @induction_activity = InductionActivity.new(induction_activity_params)
     @induction_activities = InductionActivity.all
       if @induction_activity.save
+        time_diff=Time.at((@induction_activity.to-@induction_activity.from).round).utc.strftime "%H:%M"
+        # final_time_diff_in_hrs=time_diff.to_time.strftime("%H").to_i + time_diff.to_time.strftime("%M").to_f/60
+        InductionActivity.where(id: @induction_activity.id).update_all(duration: time_diff)
         @induction_activity = InductionActivity.new
         flash[:notice] = 'Induction Activity saved Successfully.'
       end
@@ -60,12 +64,14 @@ class InductionActivitiesController < ApplicationController
 
   def destroy
     @induction_activity.destroy
-    @induction_master = InductionMaster.find(params[:induction_master_id])
-    @induction_activities = InductionActivity.where(induction_master_id: @induction_master.id)
+    flash[:alert] = 'Activity Destroyed Successfully'
+    redirect_to new_induction_activity_path(induction_master_id: params[:induction_master_id])
   end
 
   def employee_list
-     @employees = Employee.all
+     # @employees = Employee.all
+     @induction_details = InductionDetail.where(induction_completed: true).pluck(:employee_id)
+     @employees = Employee.where.not(id: @induction_details)
      # @employee = Employee.find(params[:emp_id])
      # @induction_details = InductionDetail.where(employee_id: @employee.id)
      session[:active_tab] ="EmployeeManagement"
@@ -105,6 +111,13 @@ class InductionActivitiesController < ApplicationController
     @induction_details = InductionDetail.where(induction_master_id: @induction_master.id)
   end
 
+  def search_template
+     @employee = Employee.find(params[:format])
+    # @induction_master = params[:id]
+    # @induction_activities = InductionActivity.where(induction_master_id: @induction_master.id)
+    # @induction_details = InductionDetail.where(induction_master_id: @induction_master.id)
+  end
+
   def download_document
     @induction_activity = InductionActivity.find(params[:id])
     send_file @induction_activity.avatar.path,
@@ -118,10 +131,12 @@ class InductionActivitiesController < ApplicationController
   end
 
   def create_induction_detail
+    # byebug
     @induction_master = InductionMaster.find(params[:id])
-    @induction_det = params[:induction_detail][:start_date]
+    # @induction_det = params[:induction_detail][:start_date]
     @emp = params[:induction_detail][:employee_id]
-    InductionDetail.create(start_date: @induction_det,employee_id: @emp,induction_master_id:@induction_master.id,induction_completed: :false)
+    # InductionDetail.create(start_date: @induction_det,employee_id: @emp,induction_master_id:@induction_master.id,induction_completed: false)
+    InductionDetail.create(employee_id: @emp,induction_master_id: @induction_master.id,induction_completed: false)
     flash[:notice] = 'Induction Details was saved Successfully.'
     redirect_to employee_list_induction_activities_path
   end
@@ -137,6 +152,9 @@ class InductionActivitiesController < ApplicationController
   def update_induction
     @induction_activity = InductionActivity.find(params[:id])
     @induction_activity.update(induction_activity_params)
+    time_diff=Time.at((@induction_activity.to-@induction_activity.from).round).utc.strftime "%H:%M"
+    # final_time_diff_in_hrs=time_diff.to_time.strftime("%H").to_i + time_diff.to_time.strftime("%M").to_f/60
+    InductionActivity.where(id: @induction_activity.id).update_all(duration: time_diff)
     @induction_master = InductionMaster.find(params[:induction_master_id])
     flash[:notice] = 'Activity Updated Successfully'
     redirect_to new_induction_activity_path(induction_master_id: @induction_master.id)
@@ -161,6 +179,6 @@ class InductionActivitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def induction_activity_params
-      params.require(:induction_activity).permit(:activity_date,:from,:to,:start_date,:is_confirmed,:avatar,:induction_master_id,:activity, :day, :duration, :employee_id, :induction_master_id)
+      params.require(:induction_activity).permit(:activity_date,:from,:to,:start_date,:program_agenda,:is_confirmed,:avatar,:induction_master_id,:activity, :day, :duration, :employee_id, :induction_master_id)
     end
 end

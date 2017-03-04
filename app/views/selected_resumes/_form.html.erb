@@ -7,55 +7,50 @@
   <%= render 'show_vacancy_detail' %>
 </div>
 <div class="row">
-  <div class="col-sm-3">
+
+ <div class="col-sm-3">
     <div class="form-group required">
       <%= f.text_field :name,label: 'Name' %>
     </div>
   </div>
 
-   <div class="col-sm-3">
-    <div class="field">
-      <%= f.text_field :contact_no,label: 'Contact No.' %>
+<div class="col-sm-3">
+    <div class="form-group required">
+    <%= f.text_field :job_title,value: @vacancy_master.vacancy_name,readonly: true, label: 'Job Title' %>
     </div>
   </div>
 
   <div class="col-sm-3">
-      <div class="field">
+      <div class="form-group required">
         <%= f.text_field :skillset,label: 'Skillset' %>
       </div>
   </div>
-    
+
   <div class="col-sm-3">
-      <label>Educational Qualification</label>
       <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
           </div>
-          <%= f.select :degree_id, all_degree_list,{hide_label: true,include_blank: " Select Qualification"} %>
+          <%= f.select :degree_id, all_degree_list,{include_blank: " Select Qualification",label: "Educational Qualification"} %>
         </div>
       </div>
     </div>
-  </div>
+
+   
+   
+ 
+
+</div>
 
 <div class="row">
 
- <div class="col-sm-3">
-    <div class="field">
-    <%= f.text_field :job_title,value: @vacancy_master.vacancy_name,readonly: true, label: 'Job Title' %>
-    </div>
-  </div>
-  <div class="col-sm-3">
+<div class="col-sm-3">
     <div class="field">
       <%= f.text_field :ctc, label: 'Expected CTC' %>
     </div>
   </div>
 
-  <div class="col-sm-3">
-    <div class="field">
-      <%= f.text_field :email_id, label: 'Email Id' %>
-    </div>
-  </div>
 
   <div class="col-sm-3">
     <div class="field">
@@ -63,13 +58,31 @@
     </div>
   </div>
 
-</div>
-<div class="row">
- <div class="col-sm-3">
+  <div class="col-sm-3">
     <div class="field">
       <%= f.text_field :notice_period, label: 'Notice Period' %>
     </div>
   </div>
+
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :contact_no,label: 'Contact No.' %>
+    </div>
+  </div>
+
+ 
+
+ 
+
+</div>
+<div class="row">
+
+ <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :email_id, label: 'Email Id' %>
+    </div>
+  </div>
+
 
   <div class="col-sm-3">
     <div class="field">
@@ -82,22 +95,22 @@
         <%= f.file_field :passport_photo,label: 'Photo Upload(only jpeg,jpg,png)' %>
       </div>
     </div>
-</div>
 
+  
+</div>
 <div class="row">
-  <div class="col-sm-3">
+<div class="col-sm-3">
     <div class="actions">
       <%= f.submit "Create", class: "btn btn-primary btn-sm" %>
     </div>
   </div>
-</div>
-
-</div>
+  </div>
 <% end %>
+</div>
 <script>
 $("#selected_resume").validate({
     rules: {
-      "selected_resume[name]":{
+      "selected_resume[skillset]":{
         required: true
               },
       "selected_resume[degree_id]":{
@@ -105,8 +118,8 @@ $("#selected_resume").validate({
       }
     },
     messages: {
-      "selected_resume[name]":{
-        required: "Please specify Name"
+      "selected_resume[skillset]":{
+        required: "Please specify Skillset"
       },
       "selected_resume[degree_id]":{
         required: "Please specify Qualification"

@@ -1,0 +1,21 @@
+<table id="example3" class="table table-bordered table-hover table-condensed">
+ <thead>
+  <tr> 
+	  <th>Vacancy Code</th> 
+	  <th>Job Title</th> 
+	  <th>Department</th> 
+	  <th>Qualification</th> 
+	  <th>No. of Position</th> 
+	  <th>Experience</th> </tr> 
+ </thead> 
+ <tbody> 
+ <tr> 
+	 <td><%= @vacancy_master.id %></td>
+	 <td><%= @vacancy_master.vacancy_name %></td>
+	 <td><%= @vacancy_master.company_location.try(:name) %></td> 
+	 <td><%= @vacancy_master.degree.try(:name) %></td> 
+	 <td><%= @vacancy_master.no_of_position %></td> 
+	 <td><%= @vacancy_master.experience %></td> 
+ </tr> 
+ </tbody> 
+ </table>

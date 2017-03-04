@@ -64,6 +64,10 @@ class EmployeeResignationsController < ApplicationController
       flash[:alert] = "Your Request already has been sent"
       redirect_to employee_resignations_path
      else
+      if @employee_resignation.employee.try(:manager_id).nil?
+        flash[:alert] = "Reporting Manager not set please set Reporting Manager"
+        redirect_to new_employee_resignation_path
+      else
       respond_to do |format|
         if @employee_resignation.save
           @employees=Employee.where(id: @employee_resignation.employee_id).take
@@ -80,6 +84,7 @@ class EmployeeResignationsController < ApplicationController
       end
     end
   end
+end
 
   # PATCH/PUT /employee_resignations/1
   # PATCH/PUT /employee_resignations/1.json

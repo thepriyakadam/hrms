@@ -4,8 +4,10 @@
     <tr>
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
       <th>Name</th>
-      <th>Contact No.</th>
-      <th>Degree</th>
+      <th>Email Id</th>
+      <th>Job Title</th>
+      <th>Skillset</th>
+      <th>Contact No</th>
       <th>Status</th>
 <!--       <th>Offer Letter Status</th>
  -->      <th>Resume</th>
@@ -26,8 +28,10 @@
           <% end %>
         </td>
         <td><%= selected_resume.name %></td>
+        <td><%= selected_resume.email_id %></td>
+        <td><%= selected_resume.job_title %></td>
+        <td><%= selected_resume.skillset %></td>
         <td><%= selected_resume.contact_no %></td>
-        <td><%= selected_resume.degree.try(:name) %></td>
         <td>
           <div id="myModal1" class="modal fade"></div>
           <% if selected_resume.status == "Shortlisted" %>
@@ -37,7 +41,7 @@
             <%= link_to '',modal_change_status_selected_resumes_path(selected_resume,vacancy_master_id: @vacancy_master.id),class: 'btn btn btn-sm btn-default fa fa-info',remote: true %>
             <% elsif selected_resume.status == "Interview Rescheduled" %>
             <small class="label label-default">Interview Rescheduled</small>
-            <%= link_to ' Update Status',modal_change_status_selected_resumes_path(selected_resume),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>
+            <%= link_to ' Update Status',modal_change_status_selected_resumes_path(selected_resume),class: 'btn btn btn-xs btn-default fa fa-modx',remote: true %>
             <% else %>
             <small class="label label-default">Not Yet Shortlisted</small>
             <% end %>

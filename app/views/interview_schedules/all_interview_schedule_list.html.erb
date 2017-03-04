@@ -7,6 +7,7 @@
     <tr>
       <th>Sr.No</th>
       <th>Candidate Name</th>
+      <th>Job Title</th>
       <th>Location</th>
       <th>Action</th>
     </tr>
@@ -18,6 +19,12 @@
       <tr>
         <td><%= i=i+1 %></td>
         <td><%= interview_schedule.candidate_name %></td>
+        <td><!-- < interview_sched=InterviewSchedule.where(id: interview_schedule).take
+        resume = SelectedResume.where(id: interview_sched.selected_resume_id).take
+        vacancy = VacancyMaster.where(id: resume.vacancy_master_id).take %> -->
+         <!--  <= vacancy.vacancy_name %> -->
+         <%= interview_schedule.job_title %>
+        </td>
         <td><%= interview_schedule.location %></td>
         <td><%= link_to ' Report',final_report_interview_schedules_path(interview_schedule),class: 'btn btn-xs btn-primary' %></td>
       </tr>

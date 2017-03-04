@@ -23,19 +23,17 @@
       </div>
     </div>
 
-     <div class="col-sm-3">
+     <div class="col-sm-1">
       <label>Status</label>
         <div class="field">
           <%= f.check_box :status, label:'Cleared' %>
        </div>
       </div>
-    </div>
     
-    <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-2">
     <label></label>
       <div class="actions">
-        <%= f.submit "Create No Dues Action ",:class => class_name,  data: { disable_with: data_info } %>
+        <%= f.submit "Create",:class => class_name,  data: { disable_with: data_info } %>
       </div>
     </div>
 

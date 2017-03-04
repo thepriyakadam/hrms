@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170303040100) do
+<<<<<<< HEAD
+ActiveRecord::Schema.define(version: 20170304054259) do
+=======
+ActiveRecord::Schema.define(version: 20170303041422) do
+>>>>>>> aa19bf6b44a6d3fe35aee7f2b0921498e91a073b
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1750,7 +1754,7 @@ ActiveRecord::Schema.define(version: 20170303040100) do
   create_table "induction_activities", force: :cascade do |t|
     t.text     "activity"
     t.string   "day"
-    t.integer  "duration"
+    t.string   "duration"
     t.integer  "employee_id"
     t.integer  "induction_master_id"
     t.datetime "created_at",          null: false
@@ -1762,9 +1766,10 @@ ActiveRecord::Schema.define(version: 20170303040100) do
     t.date     "start_date"
     t.boolean  "induction_completed"
     t.date     "activity_date"
+    t.time     "activity_time"
+    t.text     "program_agenda"
     t.time     "from"
     t.time     "to"
-    t.text     "program_agenda"
   end
 
   add_index "induction_activities", ["employee_id"], name: "index_induction_activities_on_employee_id"
@@ -1931,6 +1936,7 @@ ActiveRecord::Schema.define(version: 20170303040100) do
     t.boolean  "is_confirm"
     t.integer  "selected_resume_id"
     t.string   "job_title"
+    t.text     "address"
   end
 
   add_index "interview_schedules", ["employee_id"], name: "index_interview_schedules_on_employee_id"

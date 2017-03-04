@@ -4,10 +4,11 @@
     </div>
   </div>
   <div class="box-body">
-<table id="example2" class="table table-bordered table-hover table-condensed">
+<table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
       <th>Sr.No</th>
+      <th>ID</th>
       <th>Employee Name</th>
 <!--       <th>Start Date</th>
  -->      <th>Template Code</th>
@@ -23,6 +24,7 @@
     <% @induction_details.each do |induction_detail| %>
       <tr>
         <td><%= i=i+1 %></td>
+         <td><%= induction_detail.employee.manual_employee_code %></td>
         <td><%= induction_detail.employee.try(:first_name) %> <%= induction_detail.employee.try(:middle_name) %> <%= induction_detail.employee.try(:last_name) %></td>
 <!--         <td><%= induction_detail.start_date %></td>
  -->        <td><%= induction_detail.induction_master.code %></td>
@@ -51,3 +53,8 @@
 </table>
  </div>
 </div>
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>

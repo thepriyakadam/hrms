@@ -75,7 +75,7 @@ class InductionDetailsController < ApplicationController
     @induction_detail = InductionDetail.find(params[:format])
     @induction_detail.update(induction_completed: true,end_date: Time.zone.now.to_date)
     redirect_to all_induction_detail_list_induction_details_path
-    flash[:notice] = 'induction Confirmed Successfully'
+    flash[:notice] = 'Induction Confirmed Successfully'
   end
 
   def print_induction_details

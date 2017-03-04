@@ -46,8 +46,8 @@ class InductionActivitiesController < ApplicationController
     @induction_activities = InductionActivity.all
       if @induction_activity.save
         time_diff=Time.at((@induction_activity.to-@induction_activity.from).round).utc.strftime "%H:%M"
-        final_time_diff_in_hrs=time_diff.to_time.strftime("%H").to_i + time_diff.to_time.strftime("%M").to_f/60
-        InductionActivity.where(id: @induction_activity.id).update_all(duration: final_time_diff_in_hrs)
+        # final_time_diff_in_hrs=time_diff.to_time.strftime("%H").to_i + time_diff.to_time.strftime("%M").to_f/60
+        InductionActivity.where(id: @induction_activity.id).update_all(duration: time_diff)
         @induction_activity = InductionActivity.new
         flash[:notice] = 'Induction Activity saved Successfully.'
       end

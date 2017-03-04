@@ -220,8 +220,13 @@ end
     ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "FinalApproved",change_date: Date.today)
     # EmployeeResignationMailer.no_second_reporter_approval_email_to_employee(@employee_resignation).deliver_now
     EmployeeResignationMailer.final_approval_email_to_employee(@employee_resignation).deliver_now
-    flash[:notice] = 'Resignation Request Approved Successfully'
-    redirect_to final_approval_emp_resignation_list_employee_resignations_path
+    if @employee_resignation.resign_status == "FinalApproved"
+      flash[:notice] = 'Resignation Request Approved Successfully'
+      redirect_to final_approval_emp_resignation_list_employee_resignations_path
+    else
+      flash[:notice] = 'Resignation Request Approved Successfully'
+      redirect_to resignation_history_employee_resignations_path
+    end
   end
 
   def first_reject

@@ -15,8 +15,8 @@
               <th>Department</th>
               <th>Qualification</th>
               <th>Status</th>
-              <th>Action</th>
-            </tr>
+<!--               <th>Action</th>
+ -->            </tr>
           </thead>
 
           <tbody>
@@ -43,9 +43,9 @@
                     <%= link_to 'Approve / Reject', vacancy_request_confirmation_vacancy_masters_path(vacancy_master),class: 'btn btn-xs btn-primary' %>
                     <% end %>
                   </td>
-                  <td>
-                    <%= link_to 'History',reporting_masters_vacancy_master_list_vacancy_masters_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-primary' %>
-                  </td>
+                 <!--  <td>
+                    <= link_to 'History',reporting_masters_vacancy_master_list_vacancy_masters_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-primary' %>
+                  </td> -->
               </tr>
             <% end %>
           </tbody>

@@ -15,6 +15,7 @@ class InductionActivitiesController < ApplicationController
   # GET /induction_activities/new
   def new
     @induction_activity = InductionActivity.new
+    # byebug
     @induction_master = InductionMaster.find(params[:induction_master_id])
     @induction_activities = InductionActivity.where(induction_master_id: @induction_master.id)
   end
@@ -46,8 +47,8 @@ class InductionActivitiesController < ApplicationController
     @induction_activities = InductionActivity.all
       if @induction_activity.save
         time_diff=Time.at((@induction_activity.to-@induction_activity.from).round).utc.strftime "%H:%M"
-        final_time_diff_in_hrs=time_diff.to_time.strftime("%H").to_i + time_diff.to_time.strftime("%M").to_f/60
-        InductionActivity.where(id: @induction_activity.id).update_all(duration: final_time_diff_in_hrs)
+        # final_time_diff_in_hrs=time_diff.to_time.strftime("%H").to_i + time_diff.to_time.strftime("%M").to_f/60
+        InductionActivity.where(id: @induction_activity.id).update_all(duration: time_diff)
         @induction_activity = InductionActivity.new
         flash[:notice] = 'Induction Activity saved Successfully.'
       end
@@ -63,8 +64,8 @@ class InductionActivitiesController < ApplicationController
 
   def destroy
     @induction_activity.destroy
-    @induction_master = InductionMaster.find(params[:induction_master_id])
-    @induction_activities = InductionActivity.where(induction_master_id: @induction_master.id)
+    flash[:alert] = 'Activity Destroyed Successfully'
+    redirect_to new_induction_activity_path(induction_master_id: params[:induction_master_id])
   end
 
   def employee_list
@@ -151,6 +152,9 @@ class InductionActivitiesController < ApplicationController
   def update_induction
     @induction_activity = InductionActivity.find(params[:id])
     @induction_activity.update(induction_activity_params)
+    time_diff=Time.at((@induction_activity.to-@induction_activity.from).round).utc.strftime "%H:%M"
+    # final_time_diff_in_hrs=time_diff.to_time.strftime("%H").to_i + time_diff.to_time.strftime("%M").to_f/60
+    InductionActivity.where(id: @induction_activity.id).update_all(duration: time_diff)
     @induction_master = InductionMaster.find(params[:induction_master_id])
     flash[:notice] = 'Activity Updated Successfully'
     redirect_to new_induction_activity_path(induction_master_id: @induction_master.id)

@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
+ActiveRecord::Schema.define(version: 20170304054259) do
+=======
 ActiveRecord::Schema.define(version: 20170303041422) do
+>>>>>>> aa19bf6b44a6d3fe35aee7f2b0921498e91a073b
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1750,7 +1754,7 @@ ActiveRecord::Schema.define(version: 20170303041422) do
   create_table "induction_activities", force: :cascade do |t|
     t.text     "activity"
     t.string   "day"
-    t.integer  "duration"
+    t.string   "duration"
     t.integer  "employee_id"
     t.integer  "induction_master_id"
     t.datetime "created_at",          null: false

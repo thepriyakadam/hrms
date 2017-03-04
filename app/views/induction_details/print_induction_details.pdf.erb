@@ -1,56 +1,41 @@
- <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+   <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
     <tr>
-      <td colspan="5">
+      <td colspan="6">
         <center>
-           <% if current_user.employee.company_location.company.company_logo == nil %>
+            <% if current_user.employee.company_location.company.company_logo == nil %>
           <% else %>
-            <center> <%= image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+            <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
             <%end%>
           <%= current_user.employee.company_location.company.description %><br>
           <%= current_user.employee.company_location.company.address %><br>
        </center><br>
       </td>
     </tr>
+   
    <tr>
-     <th><strong>Employee Id</strong></th>
-      <td><%= @induction_detail.employee.manual_employee_code %></td>
+     <td colspan="2"><strong>ID : </strong> <%= @induction_detail.employee.manual_employee_code %></td>
       
-      <th><strong>Employee</strong></th>
-      <td><%= @induction_detail.employee.try(:first_name) %> <%= @induction_detail.employee.try(:middle_name) %> <%= @induction_detail.employee.try(:last_name) %></td>
+      <td colspan="2"><strong>Employee : </strong><%= @induction_detail.employee.try(:first_name) %> <%= @induction_detail.employee.try(:middle_name) %> <%= @induction_detail.employee.try(:last_name) %></td>
+
+      <td colspan="2"><strong>Contact No : </strong><%= @induction_detail.employee.contact_no %></td>
     </tr>
     <tr>
-      <th><strong>Department</strong></th>
-      <td><%= @induction_detail.employee.company_location.try(:name) %> - <%= @induction_detail.employee.department.try(:name) %></td>
+      <td colspan="2"><strong>Department : </strong><%= @induction_detail.employee.company_location.try(:name) %> - <%= @induction_detail.employee.department.try(:name) %></td>
 
-      <th><strong>Designation</strong></th>
-      <td><%= @induction_detail.employee.joining_detail.try(:employee_designation).try(:name)%></td>
+      <td colspan="2"> <strong>Designation : </strong> <%= @induction_detail.employee.joining_detail.try(:employee_designation).try(:name)%></td>
+
+       <td colspan="2"><strong>Date Of Joining : </strong><%= @induction_detail.employee.joining_detail.joining_date %></td>
     </tr>
-
-    <tr>
-      <th><strong>Date Of Joining</strong></th>
-      <td><%= @induction_detail.employee.joining_detail.joining_date %></td>
-
-      <!--  <th><strong>Induction Start Date</strong></th>
-      <td><%= @induction_detail.start_date %></td> -->
-
-      <th><strong>Induction End Date</strong></th>
-      <td><%= @induction_detail.end_date %></td>
-   </tr>
-
-  </table><br><br>
-
-  <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
-  <thead>
+     <tr><th colspan="6"><center>Induction Activity</center></th></tr>
     <tr>
       <th>Sr.No</th>
       <th>Day</th>
       <th>From</th>
       <th>To</th>
       <th>Duration</th>
-      <th>Person</th>
-      <th>Program Agenda</th>
+      <th>Contact Person</th>
+      
     </tr>
-  </thead>
 
   <tbody>
   <% i = 0 %>
@@ -62,7 +47,10 @@
         <td><%= induction_activity.to %></td>
         <td><%= induction_activity.duration %></td>
         <td><%= full_name(induction_activity.employee) %></td>
-        <td><%= induction_activity.program_agenda %></td>
+      </tr>
+      <tr>
+      <td></td>
+      <td colspan="5"><strong>Program Agenda : </strong> <%= induction_activity.program_agenda %></td>
       </tr>
       <% end %>
   </tbody>

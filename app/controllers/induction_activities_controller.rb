@@ -68,7 +68,9 @@ class InductionActivitiesController < ApplicationController
   end
 
   def employee_list
-     @employees = Employee.all
+     # @employees = Employee.all
+     @induction_details = InductionDetail.where(induction_completed: true).pluck(:employee_id)
+     @employees = Employee.where.not(id: @induction_details)
      # @employee = Employee.find(params[:emp_id])
      # @induction_details = InductionDetail.where(employee_id: @employee.id)
      session[:active_tab] ="EmployeeManagement"
@@ -108,6 +110,13 @@ class InductionActivitiesController < ApplicationController
     @induction_details = InductionDetail.where(induction_master_id: @induction_master.id)
   end
 
+  def search_template
+     @employee = Employee.find(params[:format])
+    # @induction_master = params[:id]
+    # @induction_activities = InductionActivity.where(induction_master_id: @induction_master.id)
+    # @induction_details = InductionDetail.where(induction_master_id: @induction_master.id)
+  end
+
   def download_document
     @induction_activity = InductionActivity.find(params[:id])
     send_file @induction_activity.avatar.path,
@@ -121,10 +130,12 @@ class InductionActivitiesController < ApplicationController
   end
 
   def create_induction_detail
+    # byebug
     @induction_master = InductionMaster.find(params[:id])
-    @induction_det = params[:induction_detail][:start_date]
+    # @induction_det = params[:induction_detail][:start_date]
     @emp = params[:induction_detail][:employee_id]
-    InductionDetail.create(start_date: @induction_det,employee_id: @emp,induction_master_id:@induction_master.id,induction_completed: :false)
+    # InductionDetail.create(start_date: @induction_det,employee_id: @emp,induction_master_id:@induction_master.id,induction_completed: false)
+    InductionDetail.create(employee_id: @emp,induction_master_id: @induction_master.id,induction_completed: false)
     flash[:notice] = 'Induction Details was saved Successfully.'
     redirect_to employee_list_induction_activities_path
   end

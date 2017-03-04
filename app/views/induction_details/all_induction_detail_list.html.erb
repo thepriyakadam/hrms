@@ -9,8 +9,8 @@
     <tr>
       <th>Sr.No</th>
       <th>Employee Name</th>
-      <th>Start Date</th>
-      <th>Template Code</th>
+<!--       <th>Start Date</th>
+ -->      <th>Template Code</th>
       <th>Completed</th>
       <th>Completion Date</th>
       <th>Status</th>
@@ -24,8 +24,8 @@
       <tr>
         <td><%= i=i+1 %></td>
         <td><%= induction_detail.employee.try(:first_name) %> <%= induction_detail.employee.try(:middle_name) %> <%= induction_detail.employee.try(:last_name) %></td>
-        <td><%= induction_detail.start_date %></td>
-        <td><%= induction_detail.induction_master.code %></td>
+<!--         <td><%= induction_detail.start_date %></td>
+ -->        <td><%= induction_detail.induction_master.code %></td>
         <td><%= induction_detail.induction_completed ? "Yes" : "No" %></td>
         <td><%= induction_detail.end_date %></td>
         <td>
@@ -39,12 +39,12 @@
         </td>
         <div id="myModal" class="modal fade"></div>
         <td>
-          <% if induction_detail.induction_completed == true %>
-          <%= link_to 'Show', induction_detail,class: 'btn btn-xs btn-info fa fa-check' %>
-          <% else %>
-            <%= link_to ' Update Date',update_date_modal_induction_details_path(induction_detail),class: 'btn btn btn-xs btn-success fa fa-modx',remote: true %>
-          <% end %>
-        </td>
+<!--           < if induction_detail.induction_completed == true %>
+ -->          <%= link_to 'Show', induction_detail,class: 'btn btn-xs btn-info fa fa-check' %>
+          <!-- < else %> -->
+           <!--  <= link_to ' Update Date',update_date_modal_induction_details_path(induction_detail),class: 'btn btn btn-xs btn-success fa fa-modx',remote: true %> -->
+<!--           < end %>
+ -->        </td>
       </tr>
     <% end %>
   </tbody>

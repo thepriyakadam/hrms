@@ -5,9 +5,8 @@
       <th>Day</th>
       <th>From</th>
       <th>To</th>
-      <th>Duration (In Hrs)</th>
+      <th>Duration</th>
       <th>Contact Person</th>
-      
       <th>Action</th>
     </tr>
   </thead>
@@ -25,7 +24,7 @@
         <td>
           <div id="myModal" class="modal fade"></div>
             <%= link_to '',modal_induction_activity_induction_activities_path(induction_master_id: induction_activity.induction_master_id, induction_activity_id: induction_activity),class: 'btn btn btn-xs btn-success fa fa-edit',remote: true %>
-            <%= link_to '', induction_activity, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close',remote:true %>
+            <%= link_to '',induction_activity, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close' %>
         </td>
       </tr>
       <tr>

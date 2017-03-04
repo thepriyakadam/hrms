@@ -231,9 +231,9 @@ class OnDutyRequestsController < ApplicationController
     @location = params[:employee] ? params[:employee][:company_location_id] : params[:company_location_id]
     @department = params[:employee] ? params[:employee][:department_id] : params[:department_id]
   
-   @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
-        @on_duty_request_id = OnDutyRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
-        @on_duty_requests = OnDutyRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+    @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
+    @on_duty_request_id = OnDutyRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+    @on_duty_requests = OnDutyRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
 
     if current_user.class == Group
       if @company_id == ""
@@ -303,7 +303,7 @@ class OnDutyRequestsController < ApplicationController
           @on_duty_requests = OnDutyRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'HOD'
-        if @company_id == "" || @location == "" || @department == ""
+        if @company_id == "" || @location == "" || @department == nil
           @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
           @on_duty_request_id = OnDutyRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
           @on_duty_requests = OnDutyRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
@@ -313,20 +313,22 @@ class OnDutyRequestsController < ApplicationController
           @on_duty_requests = OnDutyRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Supervisor'
-        if @company_id == "" || @location == "" || @department == ""
+        # byebug
+        if @company_id == "" || @location == nil || @department == ""
           @emp = Employee.find(current_user.employee_id)
           @employees = @emp.subordinates
           @on_duty_request_id = OnDutyRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
           @on_duty_requests = OnDutyRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
        else
+        # byebug
           @emp = Employee.find(current_user.employee_id)
           @employees = @emp.subordinates
           @on_duty_request_id = OnDutyRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
           @on_duty_requests = OnDutyRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Employee'
-      end #current_user.role
-    end #current_user.class
+      end 
+    end
 
     respond_to do |f|
       f.js
@@ -341,7 +343,6 @@ class OnDutyRequestsController < ApplicationController
         #margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
-   
   end
 
   def on_duty_request_report
@@ -448,7 +449,7 @@ class OnDutyRequestsController < ApplicationController
           @on_duty_requests = OnDutyRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'HOD'
-        if @company == "" || @location == "" || @department == ""
+        if @company == "" || @location == "" || @department == nil
           @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
           @on_duty_request_id = OnDutyRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees).take
           @on_duty_requests = OnDutyRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
@@ -566,7 +567,7 @@ class OnDutyRequestsController < ApplicationController
           @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'HOD'
-        if @company_id == "" || @location == "" || @department == ""
+        if @company_id == "" || @location == "" || @department == nil
           @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
           @particular_od_record_id = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
           @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)

@@ -92,15 +92,15 @@ class GoalRatingsController < ApplicationController
     @employee = Employee.find(@goal_rating.appraisee_id)
     @goal_bunch = GoalBunch.find(@goal_rating.goal_bunch_id)
     goal_weightage_sum = @goal_rating.goal_weightage_sumdate(@goal_bunch, @goal_rating.goal_weightage, params)
-     
+     weightage = goal_rating_params["goal_weightage"].to_i
       if goal_weightage_sum <= 100
         if @goal_rating.goal_type == "Goal"
            @goal = GoalPerspective.find_by(id: @goal_rating.goal_perspective_id)
-              goal_id_sum = @goal_rating.goal_id_sum(@goal_rating)
+              goal_id_sum_update = @goal_rating.goal_id_sum_update(@goal_rating,weightage)
 
           if @goal.goal_weightage == true
             #@weightage_limit = goal_rating_params["goal_weightage"].to_i >= @goal.from && goal_rating_params["goal_weightage"].to_i <= @goal.to
-            @weightage_limit = goal_id_sum >= @goal.from && goal_id_sum <= @goal.to
+            @weightage_limit = goal_id_sum_update >= @goal.from && goal_id_sum_update <= @goal.to
 
             if @weightage_limit == true
                @goal_rating.update(goal_rating_params)
@@ -122,10 +122,10 @@ class GoalRatingsController < ApplicationController
 
         elsif @goal_rating.goal_type == "Attribute"
           @attribute = AttributeMaster.find_by(id: @goal_rating.attribute_master_id)
-          attribute_id_sum = @goal_rating.attribute_id_sum(@goal_rating)
+          attribute_id_sum_update = @goal_rating.attribute_id_sum_update(@goal_rating,weightage)
           if @attribute.attribute_weightage == true
             #@weightage_limit = goal_rating_params["goal_weightage"].to_i >= @attribute.from.to_i && goal_rating_params["goal_weightage"].to_i <= @attribute.to.to_i
-            @weightage_limit = attribute_id_sum.to_i >= @attribute.from.to_i && attribute_id_sum.to_i <= @attribute.to.to_i
+            @weightage_limit = attribute_id_sum_update.to_i >= @attribute.from.to_i && attribute_id_sum_update.to_i <= @attribute.to.to_i
             if @weightage_limit == true
               @goal_rating.update(goal_rating_params)
               @flag1 = true
@@ -182,12 +182,17 @@ class GoalRatingsController < ApplicationController
     @period = Period.find(params[:period_id])
     @goal_bunch = GoalBunch.find(@goal_rating.goal_bunch_id)
     goal_weightage_sum = @goal_rating.goal_weightage_sumdate(@goal_bunch, @goal_rating.goal_weightage, params)
-    
+    weightage = goal_rating_params["goal_weightage"].to_i
+
     if goal_weightage_sum <= 100
       if @goal_rating.goal_type == "Goal"
          @goal = GoalPerspective.find_by(id: @goal_rating.goal_perspective_id)
+         goal_id_sum_update = @goal_rating.goal_id_sum_update(@goal_rating,weightage)
+
         if @goal.goal_weightage == true
-          @weightage_limit = goal_rating_params["goal_weightage"].to_i >= @goal.from && goal_rating_params["goal_weightage"].to_i <= @goal.to
+          #@weightage_limit = goal_rating_params["goal_weightage"].to_i >= @goal.from && goal_rating_params["goal_weightage"].to_i <= @goal.to
+          @weightage_limit = goal_id_sum_update >= @goal.from && goal_id_sum_update <= @goal.to
+
           if @weightage_limit == true
              @goal_rating.update(goal_rating_params)
             @flag1 = true
@@ -207,8 +212,10 @@ class GoalRatingsController < ApplicationController
         end
       elsif @goal_rating.goal_type == "Attribute"
         @attribute = AttributeMaster.find_by(id: @goal_rating.attribute_master_id)
+        attribute_id_sum_update = @goal_rating.attribute_id_sum_update(@goal_rating,weightage)
         if @attribute.attribute_weightage == true
-          @weightage_limit = goal_rating_params["goal_weightage"].to_i >= @attribute.from.to_i && goal_rating_params["goal_weightage"].to_i <= @attribute.to.to_i
+          #@weightage_limit = goal_rating_params["goal_weightage"].to_i >= @attribute.from.to_i && goal_rating_params["goal_weightage"].to_i <= @attribute.to.to_i
+          @weightage_limit = attribute_id_sum_update.to_i >= @attribute.from.to_i && attribute_id_sum_update.to_i <= @attribute.to.to_i
           if @weightage_limit == true
             @goal_rating.update(goal_rating_params)
             @flag1 = true
@@ -233,7 +240,7 @@ class GoalRatingsController < ApplicationController
       redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id,period_id: @period.id)
     end  
   end
-
+  
   def self_modal
     @goal_rating = GoalRating.find(params[:format])
   end

@@ -15,8 +15,7 @@
         <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
         <%end%>
         <strong><%= current_user.employee.company_location.company.try(:description) %></strong> <br>
-        <%= current_user.employee.company_location.company.try(:address) %><br>
-        <%= current_user.employee.department.try(:name) %> - <%= current_user.employee.company_location.try(:name) %> </center> 
+        <%= current_user.employee.company_location.company.try(:address) %> </center> 
         </td></tr>
 
         <tr><th colspan="8"><center> Employee On Duty Request Report </center></th></tr>

@@ -536,7 +536,7 @@ class EmployeesController < ApplicationController
 
   def collect_department
      @company_location = CompanyLocation.find(params[:id])
-      if current_user.role.name == 'HOD'
+      if current_user.role.name == 'HOD' ||  current_user.role.name == 'Supervisor'
         @departments = Department.where(id: current_user.department_id)
       else
          @departments = Department.where(company_location_id: @company_location.id)

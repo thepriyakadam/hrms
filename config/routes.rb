@@ -24,6 +24,10 @@ Rails.application.routes.draw do
       get :on_duty_request_status_report
       get :status_wise_report_list
       post :status_wise_report_list
+      get :on_duty_approval_report
+      get :approved_record_list
+      get :show_approved_record
+      post :show_approved_record
     end
   end
 

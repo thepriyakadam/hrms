@@ -4,27 +4,13 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-  <table class="table table-bordered table-hover table-condensed">
-    <tbody>
-    <tr>
-      <td colspan="2">You have one leave request from </td>
-    </tr>
-      <tr>
-        <td> ID :</td>
-        <td><%= @od_request.employee.try(:manual_employee_code) %></td>
-      </tr>
-      <tr>
-        <td> Employee Name :</td>
-        <td> <%= @od_request.employee.try(:first_name).to_s+' '+@od_request.employee.try(:middle_name).to_s+' '+@od_request.employee.try(:last_name).to_s %></td>
-      </tr>
-      <tr>
-        <td> Date :</td>
-        <td><%= @od_request.start_date.to_date %> To <%= @od_request.end_date.to_date%></td>
-      <tr>
-        <td> No of Days :</td>
-        <td><%= @od_request.no_of_day %></td>
-      </tr>
-      
+ <h4> You have one OD request from  </h4>
+ <p>
+  Employee ID :<%= @od_request.employee.try(:manual_employee_code) %><br>
+  Employee Name : <%= @od_request.employee.try(:first_name).to_s+' '+@od_request.employee.try(:middle_name).to_s+' '+@od_request.employee.try(:last_name).to_s %><br>
+  Date : <%= @od_request.start_date.to_date %> To <%= @od_request.end_date.to_date%><br>
+  No of Days <%= @od_request.no_of_day %><br>
+  Reason :<%= @od_request.reason %><br>
 
     </tbody>
   </table>

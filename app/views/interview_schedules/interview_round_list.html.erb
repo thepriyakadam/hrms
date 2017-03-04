@@ -1,22 +1,25 @@
 <div class="box">
   <div class="box-header">
-    <h6 class="box-title">Interview Round of : <%= @interview_schedule.try(:candidate_name) %></h6>
+    <!-- <h6 class="box-title">Interview Round of : <= @interview_schedule.try(:candidate_name) %></h6> -->
+    <h6 class="box-title">Interviewee List</h6>
 <div class="box-body">
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
-    <tr>  
+    <tr>
+      <th>Candidate Name</th> 
       <th>Interviewer Name</th>
-      <th>Interview type</th>
-      <th>Interview date</th>
-      <th>Interview time</th>
+      <th>Interview Type</th>
+      <th>Interview Date</th>
+      <th>Interview Time</th>
       <th>Location</th>
-      <th>Schedule comment</th>
+      <th>Schedule Comment</th>
       <th>Evaluation</th>
     </tr>
   </thead>
   <tbody>
     <% @interview_rounds.each do |interview_round| %>
       <tr>
+        <td><%= interview_round.interview_schedule.try(:candidate_name) %></td>
         <td><%= full_name(interview_round.employee) %></td>
         <td><%= interview_round.interview_type.try(:name) %></td>
         <td><%= interview_round.interview_date %></td>
@@ -24,6 +27,7 @@
         <td><%= interview_round.location %></td>
         <td><%= interview_round.schedule_comment %></td>
         <td>
+            <%= link_to '', resume_list_interview_schedules_path(interview_round),class: 'btn btn-xs fa fa-download' %>
             <%= link_to ' Evaluate', new_interview_analysis_path(interview_round_id: interview_round.id),class: 'btn btn-xs btn-success fa fa-comment' %>
         </td>
         <!-- <td>

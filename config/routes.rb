@@ -24,6 +24,10 @@ Rails.application.routes.draw do
       get :on_duty_request_status_report
       get :status_wise_report_list
       post :status_wise_report_list
+      get :on_duty_approval_report
+      get :approved_record_list
+      get :show_approved_record
+      post :show_approved_record
     end
   end
 
@@ -1109,6 +1113,12 @@ end
       get :show_vacancy_request_history
       get :reporting_masters_vacancy_master_list
       post :import
+      get :first_approve
+      get :approve_and_send_next
+      get :final_approval_vacancy_list
+      get :final_approve
+      get :vac_history
+      get :current_employee_vacancy_list
     end
   end
   resources :leave_c_offs do

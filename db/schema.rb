@@ -1734,6 +1734,7 @@ ActiveRecord::Schema.define(version: 20170303040100) do
     t.boolean  "is_confirm"
     t.integer  "selected_resume_id"
     t.string   "job_title"
+    t.text     "address"
   end
 
   add_index "interview_schedules", ["employee_id"], name: "index_interview_schedules_on_employee_id"

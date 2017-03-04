@@ -5,11 +5,16 @@
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
     <tr>
-      <th colspan="5">
-        <center><strong><%= current_user.employee.company_location.company.description %></strong></center><br>
-        <center><strong>Induction Schedule</strong></center>
-        <center><small></small></center>   
-      </th>
+      <td colspan="5">
+        <center>
+           <% if current_user.employee.company_location.company.company_logo == nil %>
+          <% else %>
+            <center> <%= image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+            <%end%>
+          <%= current_user.employee.company_location.company.description %><br>
+          <%= current_user.employee.company_location.company.address %><br>
+       </center><br>
+      </td>
     </tr>
    <tr>
      <th><strong>Employee Id</strong></th>
@@ -30,25 +35,63 @@
       <th><strong>Date Of Joining</strong></th>
       <td><%= @induction_detail.employee.joining_detail.joining_date %></td>
 
-      <th><strong>Induction Start Date</strong></th>
-      <td><%= @induction_detail.start_date %></td>
+      <!-- <th><strong>Induction Start Date</strong></th>
+      <td><%= @induction_detail.start_date %></td> -->
+
+      <th><strong>Induction End Date</strong></th>
+      <td><%= @induction_detail.end_date %></td>
    </tr>
 
-    <tr>
+    <!-- <tr>
       <th><strong>Induction End Date</strong></th>
       <td><%= @induction_detail.end_date %></td>
 
       <th><strong></strong></th>
       <td></td>
-   </tr>
+   </tr> -->
   </table><br><br>
-  </div>
+  
 
   <div>
-    <%= render 'induction_activity_list' %>
+    <div class="box-body">
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>Day</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Duration</th>
+      <th>Person</th>
+      <th>Program Agenda</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% i = 0 %>
+    <% @induction_activities.each do |induction_activity| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= induction_activity.activity_date %></td>
+        <td><%= induction_activity.from %></td>
+        <td><%= induction_activity.to %></td>
+        <td><%= induction_activity.duration %></td>
+        <td><%= full_name(induction_activity.employee) %></td>
+        <td><%= induction_activity.program_agenda %></td>
+        <!-- <td>
+            if induction_activity.avatar_file_name == nil %>
+           <small class="label label-default">Document Not Available</small>
+             < else %>
+             <center>< link_to '',download_document_path(id: induction_activity.id),class: 'btn btn-xs btn-primary fa fa-download' %></center>
+              end %>
+        </td> -->
+      </tr>
+      <% end %>
+  </tbody>
+</table>
+</div>
+  </div><br>
+
+  <%= link_to " Print",print_induction_details_induction_details_path(id: @induction_detail.id, format: "pdf"), class: "btn btn-xl btn-primary fa fa-print",:target => "_blank" %>
   </div>
-  
-  </div>
-  <div class="col-sm-3">
-    <%= link_to " Print",print_induction_details_induction_details_path(id: @induction_detail.id, format: "pdf"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
-  </div>
+  </div><br>

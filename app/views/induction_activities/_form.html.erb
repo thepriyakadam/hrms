@@ -23,7 +23,7 @@
             <div class="input-group-addon">
               <i class="fa fa-clock-o"></i>
             </div>
-             <%= f.text_field :from,label: "Time", placeholder: 'In Time',class: 'form-control timepicker' %>
+             <%= f.text_field :from,label: "From",class: 'form-control timepicker' %>
           </div><!-- /.input group -->
         </div><!-- /.form group -->
       </div>
@@ -36,7 +36,7 @@
             <div class="input-group-addon">
               <i class="fa fa-clock-o"></i>
             </div>
-            <%= f.text_field :to,label: "Time", placeholder: 'In Time',class: 'form-control timepicker' %>
+            <%= f.text_field :to,label: "To",class: 'form-control timepicker' %>
           </div><!-- /.input group -->
         </div><!-- /.form group -->
       </div>
@@ -51,7 +51,7 @@
     <div class="row">
      <div class="col-sm-6">
       <div class="form-group required">
-        <%= f.text_area :program_agenda,placeholder: 'Eg: Program Agenda' %>
+        <%= f.text_area :program_agenda,placeholder: 'Eg: Program Agenda',label: "Program Agenda" %>
       </div>
     </div>
   </div>
@@ -77,9 +77,11 @@
     $('.activity_date').datepicker({
     changeYear:true,
     changeMonth: true,
-    yearRange: '-200:-0',
+    yearRange: '-5:+2',
     dateFormat: 'dd-mm-yy' });
-    </script>
+  }); 
+</script>
+
 <script>
 $("#induction_activity").validate({
     rules: {

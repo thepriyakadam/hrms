@@ -157,7 +157,7 @@ class OnDutyRequestsController < ApplicationController
     end
     
     session[:active_tab] ="LeaveManagement"
-    session[:active_tab1] ="LeaveProcess"
+    session[:active_tab1] ="ODProcess"
   end
 
   def employee_od_request_detail
@@ -187,7 +187,7 @@ class OnDutyRequestsController < ApplicationController
       end
     end
     session[:active_tab] ="LeaveManagement"
-    session[:active_tab1] ="LeaveProcess"
+    session[:active_tab1] ="ODProcess"
   end
 
   def from_hr
@@ -215,7 +215,7 @@ class OnDutyRequestsController < ApplicationController
       @second_level_request_lists = OnDutyRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil,second_reporter_id: @on_duty_request)
     end
     session[:active_tab] ="LeaveManagement"
-    session[:active_tab1] ="LeaveProcess"
+    session[:active_tab1] ="ODProcess"
   end
 
   def employee_od_request_detil_for_admin
@@ -341,6 +341,22 @@ class OnDutyRequestsController < ApplicationController
         #margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
+   
+  end
+
+  def on_duty_request_report
+     session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="ODReports"
+  end
+
+  def on_duty_request_status_report
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="ODReports"
+  end
+
+  def on_duty_approval_report
+     session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="ODReports"
   end
 
   def status_wise_report_list
@@ -470,8 +486,125 @@ class OnDutyRequestsController < ApplicationController
         #margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="ODReports"
   end
-    
+
+  def show_approved_record
+     @start_date = params[:employee] ? params[:employee][:start_date] : params[:start_date]
+    @end_date = params[:employee] ? params[:employee][:end_date] : params[:end_date]
+    @company_id = params[:employee] ? params[:employee][:company_id] : params[:company_id]
+    @location = params[:employee] ? params[:employee][:company_location_id] : params[:company_location_id]
+    @department = params[:employee] ? params[:employee][:department_id] : params[:department_id]
+  
+    if current_user.class == Group
+      if @company_id == ""
+        @particular_od_record_id = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).take
+        @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime)
+      elsif @location == ""
+        @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
+        @particular_od_record_id = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+        @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+      elsif @department == ""
+        @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+        @particular_od_record_id = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+        @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+      else
+        @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+        @particular_od_record_id = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+        @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+      end
+      
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        if @company_id == ""
+          @particular_od_record_id = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).take
+          @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime)
+        elsif @location == ""
+          @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
+          @particular_od_record_id = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+          @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        elsif @department == ""
+          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+          @particular_od_record_id = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+          @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        else
+          @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @particular_od_record_id = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+          @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        end
+      elsif current_user.role.name == 'Admin'
+        if @company_id == ""
+          @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+          @particular_od_record_id = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+          @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        elsif @location == ""
+          @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
+          @particular_od_record_id = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+          @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        elsif @department == ""
+          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+          @particular_od_record_id = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+          @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        else
+          @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @particular_od_record_id = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+          @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        end
+      elsif current_user.role.name == 'Branch'
+        if @company_id == "" || @location == ""
+          @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+          @particular_od_record_id = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+          @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        elsif @department == ""
+          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+          @particular_od_record_id = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+          @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        else
+          @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @particular_od_record_id = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+          @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        end
+      elsif current_user.role.name == 'HOD'
+        if @company_id == "" || @location == "" || @department == ""
+          @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+          @particular_od_record_id = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+          @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        else
+          @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @particular_od_record_id = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+          @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        end
+      elsif current_user.role.name == 'Supervisor'
+        if @company_id == "" || @location == "" || @department == ""
+          @emp = Employee.find(current_user.employee_id)
+          @employees = @emp.subordinates
+          @particular_od_record_id = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+          @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        else
+          @emp = Employee.find(current_user.employee_id)
+          @employees = @emp.subordinates
+          @particular_od_record_id = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+          @particular_od_records = ParticularOdRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        end
+      elsif current_user.role.name == 'Employee'
+      end
+    end
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'on_duty_requests/approved_record.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'show_approved_record',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'on_duty_requests/approved_record.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
+      
 
   private
     # Use callbacks to share common setup or constraints between actions.

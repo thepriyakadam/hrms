@@ -1,10 +1,15 @@
  <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
     <tr>
- <th colspan="5">
-        <center><strong><%= current_user.employee.company_location.company.description %></strong></center><br>
-        <center><strong>Induction Schedule</strong></center>
-        <center><small></small></center>   
-      </th>
+      <td colspan="5">
+        <center>
+           <% if current_user.employee.company_location.company.company_logo == nil %>
+          <% else %>
+            <center> <%= image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+            <%end%>
+          <%= current_user.employee.company_location.company.description %><br>
+          <%= current_user.employee.company_location.company.address %><br>
+       </center><br>
+      </td>
     </tr>
    <tr>
      <th><strong>Employee Id</strong></th>
@@ -25,15 +30,11 @@
       <th><strong>Date Of Joining</strong></th>
       <td><%= @induction_detail.employee.joining_detail.joining_date %></td>
 
-       <th><strong>Induction Start Date</strong></th>
-      <td><%= @induction_detail.start_date %></td>
-   </tr>
-   <tr>
+      <!--  <th><strong>Induction Start Date</strong></th>
+      <td><%= @induction_detail.start_date %></td> -->
+
       <th><strong>Induction End Date</strong></th>
       <td><%= @induction_detail.end_date %></td>
-
-      <th><strong></strong></th>
-      <td></td>
    </tr>
 
   </table><br><br>
@@ -42,22 +43,26 @@
   <thead>
     <tr>
       <th>Sr.No</th>
-      <th>Activity</th>
       <th>Day</th>
-      <th>Duration(Hrs)</th>
-      <th>Contact Person</th>
-   </tr>
+      <th>From</th>
+      <th>To</th>
+      <th>Duration</th>
+      <th>Person</th>
+      <th>Program Agenda</th>
+    </tr>
   </thead>
 
   <tbody>
   <% i = 0 %>
-   <% @induction_activities.each do |induction_activity| %>
+    <% @induction_activities.each do |induction_activity| %>
       <tr>
         <td><%= i=i+1 %></td>
-        <td><%= induction_activity.activity %></td>
-        <td><%= induction_activity.day %></td>
+        <td><%= induction_activity.activity_date %></td>
+        <td><%= induction_activity.from %></td>
+        <td><%= induction_activity.to %></td>
         <td><%= induction_activity.duration %></td>
         <td><%= full_name(induction_activity.employee) %></td>
+        <td><%= induction_activity.program_agenda %></td>
       </tr>
       <% end %>
   </tbody>

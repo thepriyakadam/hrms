@@ -171,11 +171,12 @@ end
 
   def reject_vacancy
     @vacancy_master = VacancyMaster.find(params[:format])
-    @vacancy_master.update(current_status: "Rejected")
+    @vacancy_master.update(current_status: "Rejected",reporting_master_id: current_user.employee_id)
+    ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id,reporting_master_id: current_user.employee_id,vacancy_status: "Rejected")
     # ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: @vacancy_master.reporting_master_id, vacancy_status: "Rejected")
-    @reporting_masters = ReportingMaster.where(employee_id: current_user.employee_id).pluck(:id)
-    ReportingMastersVacancyMaster.where(reporting_master_id: @reporting_masters,vacancy_master_id: @vacancy_master.id).update_all(vacancy_status: "Rejected")
-    VacancyRequestHistory.create(vacancy_master_id: @vacancy_master.id, vacancy_name: @vacancy_master.vacancy_name,no_of_position: @vacancy_master.no_of_position,description: @vacancy_master.description,vacancy_post_date: @vacancy_master.vacancy_post_date,budget: @vacancy_master.budget,department_id: @vacancy_master.department_id,employee_designation_id: @vacancy_master.employee_designation_id,company_location_id: @vacancy_master.company_location_id,degree_id: @vacancy_master.degree_id,degree_1_id: @vacancy_master.degree_1_id,degree_2_id: @vacancy_master.degree_2_id,keyword: @vacancy_master.keyword,other_organization: @vacancy_master.other_organization,industry: @vacancy_master.industry,reporting_master_id: @vacancy_master.reporting_master_id,employee_id: @vacancy_master.employee_id,justification: @vacancy_master.justification,current_status: "Rejected")
+    # @reporting_masters = ReportingMaster.where(employee_id: current_user.employee_id).pluck(:id)
+    # ReportingMastersVacancyMaster.where(reporting_master_id: @reporting_masters,vacancy_master_id: @vacancy_master.id).update_all(vacancy_status: "Rejected")
+    # VacancyRequestHistory.create(vacancy_master_id: @vacancy_master.id, vacancy_name: @vacancy_master.vacancy_name,no_of_position: @vacancy_master.no_of_position,description: @vacancy_master.description,vacancy_post_date: @vacancy_master.vacancy_post_date,budget: @vacancy_master.budget,department_id: @vacancy_master.department_id,employee_designation_id: @vacancy_master.employee_designation_id,company_location_id: @vacancy_master.company_location_id,degree_id: @vacancy_master.degree_id,degree_1_id: @vacancy_master.degree_1_id,degree_2_id: @vacancy_master.degree_2_id,keyword: @vacancy_master.keyword,other_organization: @vacancy_master.other_organization,industry: @vacancy_master.industry,reporting_master_id: @vacancy_master.reporting_master_id,employee_id: @vacancy_master.employee_id,justification: @vacancy_master.justification,current_status: "Rejected")
     # VacancyMasterMailer.reject_vacancy_email(@vacancy_master).deliver_now
     flash[:alert] = 'Vacancy Request Rejected'
     redirect_to vacancy_history_vacancy_masters_path

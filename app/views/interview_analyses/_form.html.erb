@@ -5,7 +5,7 @@
       <div class="row">
 
       <div class="col-sm-3">
-        <label>Evaluation Criteria</label>
+        <label>Attributes</label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
@@ -18,7 +18,7 @@
 
        <div class="col-sm-3">
         <label>Skillset</label>
-          <div class="form-group required">
+          <div class="field">
             <div class="input-group">
               <div class="input-group-addon">
                 <%= link_to "", new_interview_attribute_path,class: "fa fa-plus fa-success",:target => "_blank" %>
@@ -42,7 +42,7 @@
 
       <div class="col-sm-3">
         <div class="form-group required">
-         <%= f.text_field :comment ,label:"Comment" %>
+         <%= f.text_field :comment ,label:"Remarks" %>
         </div>
       </div>
       </div>
@@ -63,9 +63,6 @@ $("#interview_analysis").validate({
       "interview_analysis[interview_evalution_id]":{
         required: true
               },
-      "interview_analysis[interview_decision_id]":{
-        required: true
-      },
       "interview_analysis[comment]":{
         required: true
       }
@@ -73,9 +70,6 @@ $("#interview_analysis").validate({
     messages: {
       "interview_analysis[interview_evalution_id]":{
         required: "Please specify Evaluation Criteria"
-      },
-      "interview_analysis[interview_decision_id]":{
-        required: "Please specify Interview Decision"
       },
       "interview_analysis[comment]":{
         required: "Please specify Comment"

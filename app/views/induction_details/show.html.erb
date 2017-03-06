@@ -38,8 +38,7 @@
       <th>From</th>
       <th>To</th>
       <th>Duration</th>
-      <th>Contact Person</th>
-      
+      <th>Facilitator&Presenter</th>
     </tr>
 
   <tbody>
@@ -51,7 +50,8 @@
         <td><%= induction_activity.from %></td>
         <td><%= induction_activity.to %></td>
         <td><%= induction_activity.duration %></td>
-        <td><%= full_name(induction_activity.employee) %></td>
+        <td><%= induction_activity.facilitator_1 %> , 
+        <%= induction_activity.facilitator_2 %></td>
       </tr>
       <tr>
       <td></td>

@@ -167,6 +167,13 @@ class InductionActivitiesController < ApplicationController
   #    @induction_activities = InductionActivity.where(induction_master_id: @induction_details_1)
   # end
 
+  def confirm
+    @induction_master = InductionMaster.find(params[:format])
+    InductionActivity.where(induction_master_id: @induction_master.id).update_all(is_confirm: true)
+    flash[:notice] = 'Activity Confirmed Successfully'
+    redirect_to new_induction_activity_path(induction_master_id: @induction_master.id)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_induction_activity
@@ -179,6 +186,6 @@ class InductionActivitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def induction_activity_params
-      params.require(:induction_activity).permit(:activity_date,:from,:to,:start_date,:program_agenda,:is_confirmed,:avatar,:induction_master_id,:activity, :day, :duration, :employee_id, :induction_master_id)
+      params.require(:induction_activity).permit(:activity_date,:from,:to,:facilitator_1,:facilitator_2,:start_date,:program_agenda,:is_confirmed,:avatar,:induction_master_id,:activity, :day, :duration, :employee_id, :induction_master_id)
     end
 end

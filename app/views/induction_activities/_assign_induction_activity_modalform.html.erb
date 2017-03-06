@@ -8,22 +8,18 @@
     <div class="modal-body">
     <%= bootstrap_form_for :induction_activity,url:{action:"update_induction",id: @induction_activity.id,induction_master_id: @induction_master.id},html: {id: 'induction_activity'} do |f| %>
         <div class="row">
-<!-- 
-    <div class="col-sm-3">
-      <= f.text_field :activity_date,label: "Activity Date", class: 'form-control activity_date' %>
-    </div> -->
 
-       <div class="col-sm-3">
-          <div class="form group-required">
-          <div class="input-group">
-            <div class="input-group-addon">
-              <i class="fa fa-calendar"></i>
+
+    <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+               <%= f.date_field :activity_date, label: "Induction Date"%>
             </div>
-            <%= f.text_field :activity_date,label: "Day",class: 'activity_date'%>
           </div>
         </div>
-      </div>
-
 
       <div class="col-sm-3">
       <div class="bootstrap-timepicker">
@@ -71,9 +67,16 @@
       </div>
     </div>
   </div>
+<<<<<<< HEAD
    <%end%>
   
  </div>
+=======
+        </div>
+    </div>
+    <%end%>
+
+>>>>>>> 1740a81509aa8605966404c1d9457969314520fe
 
 <script type="text/javascript">
   $(function(){
@@ -87,11 +90,18 @@
     yearRange: '-100:-0',
     dateFormat: 'dd-mm-yy' });
   }); 
+<<<<<<< HEAD
   </script>
 
   
 
 <script type="text/javascript">
+=======
+</script>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+<script>
+>>>>>>> 1740a81509aa8605966404c1d9457969314520fe
 $("#induction_activity").validate({
     rules: {
       "induction_activity[activity_date]":{

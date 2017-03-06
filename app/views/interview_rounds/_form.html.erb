@@ -40,10 +40,12 @@
         <div class="form-group">
           <label>Interview Time</label>
           <div class="input-group">
-            <%= f.text_field :interview_time,hide_label:true, class: 'form-control timepicker' %>
+            
             <div class="input-group-addon">
               <i class="fa fa-clock-o"></i>
+
             </div>
+            <%= f.text_field :interview_time,hide_label:true, class: 'form-control timepicker' %>
           </div><!-- /.input group -->
         </div><!-- /.form group -->
       </div>
@@ -58,9 +60,9 @@
       </div>
     </div>
 
-    <div class="col-sm-4">
+    <div class="col-sm-6">
       <div class="field">
-        <%= f.text_area :schedule_comment,label:'Schedule Comment' %>
+        <%= f.text_field :schedule_comment,label:'Description' %>
       </div>
     </div>
 

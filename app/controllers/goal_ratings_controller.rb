@@ -92,7 +92,9 @@ class GoalRatingsController < ApplicationController
     @employee = Employee.find(@goal_rating.appraisee_id)
     @goal_bunch = GoalBunch.find(@goal_rating.goal_bunch_id)
     goal_weightage_sum = @goal_rating.goal_weightage_sumdate(@goal_bunch, @goal_rating.goal_weightage, params)
+
      weightage = goal_rating_params["goal_weightage"].to_i
+
       if goal_weightage_sum <= 100
         if @goal_rating.goal_type == "Goal"
            @goal = GoalPerspective.find_by(id: @goal_rating.goal_perspective_id)
@@ -144,7 +146,6 @@ class GoalRatingsController < ApplicationController
             redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
           end
         end
-
       else
          @flag = false
             flash[:alert] = "Weightage Sum should be 100 "

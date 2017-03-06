@@ -142,6 +142,18 @@ end
   end
 end
 
+def curent_salary_template
+  @employee_templates = EmployeeTemplate.where(is_active: true).pluck(:id)
+  @employee_salary_templates = EmployeeSalaryTemplate.where(employee_template_id: @employee_templates).group(:employee_id)
+end
+
+def current_employee_salary_template
+  @employee_salary_template = EmployeeSalaryTemplate.find(params[:format])
+  @employee_templates = EmployeeTemplate.where(is_active: true).pluck(:id)
+  @employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employee_salary_template.try(:employee_id),employee_template_id: @employee_templates)
+
+end
+
  
 
 

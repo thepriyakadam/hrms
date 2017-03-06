@@ -6,7 +6,8 @@ class InductionActivity < ActiveRecord::Base
   validates :activity_date, presence: true
   validates :from, presence: true
   validates :to, presence: true
-  validates :employee_id, presence: true
+  validates :facilitator_1, presence: true
+  # validates :employee_id, presence: true
 
   has_attached_file :avatar, path: ':rails_root/attachments_induction_activity/induction_activity/:style/:basename.:extension' 
   # validates_attachment_presence :avatar

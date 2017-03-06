@@ -1,0 +1,56 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">
+      Employee Salary Template -
+      <%= code_full_name(@employee_salary_templates.try(:first).try(:employee)) %>
+    </h3>
+    <div class="box-tools pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Salary Component</th>
+          <th>Deducted</th>
+          <th>Monthly Amount</th>
+          <th>Annual Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @employee_salary_templates.each do |template| %>
+          <tr>
+           <td><%= template.try(:salary_component).try(:name)%></td>
+           <td><%= template.try(:is_deducted) ? "Yes" : "No" %></td>
+           <td align="right"><%= template.try(:monthly_amount)%></td>
+           <td align="right"><%= template.try(:annual_amount)%></td>
+          </tr>
+        <% end %> 
+        <tr>
+          <th colspan="1">Total</th>
+          <th colspan="1"></th>
+          <td align="right"><strong><%= @employee_salary_templates.sum(:monthly_amount) %></strong></td>
+          <td align="right"><strong><%= @employee_salary_templates.sum(:annual_amount) %></strong></td>
+        </tr>    
+      </tbody>
+    </table><br>
+      <%= link_to 'Back', curent_salary_template_pdf_salaries_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+    </div>
+  </div><!-- /.box-body -->
+
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>

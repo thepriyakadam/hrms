@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20170304054259) do
-=======
-ActiveRecord::Schema.define(version: 20170303041422) do
->>>>>>> aa19bf6b44a6d3fe35aee7f2b0921498e91a073b
+ActiveRecord::Schema.define(version: 20170306114807) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1131,17 +1127,17 @@ ActiveRecord::Schema.define(version: 20170303041422) do
     t.integer  "reporting_master_id"
     t.string   "resign_status"
     t.boolean  "is_stop_pay_request"
-    t.integer  "second_reporter_id"
-    t.integer  "final_reporter_id"
+    t.datetime "application_date"
     t.boolean  "is_pending"
+    t.boolean  "is_cancelled"
     t.boolean  "is_first_approved"
     t.boolean  "is_second_approved"
-    t.boolean  "is_final_approved"
-    t.boolean  "is_cancelled"
     t.boolean  "is_first_rejected"
     t.boolean  "is_second_rejected"
+    t.integer  "second_reporter_id"
+    t.integer  "final_reporter_id"
+    t.boolean  "is_final_approved"
     t.boolean  "is_final_rejected"
-    t.datetime "application_date"
   end
 
   add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id"
@@ -1766,10 +1762,12 @@ ActiveRecord::Schema.define(version: 20170303041422) do
     t.date     "start_date"
     t.boolean  "induction_completed"
     t.date     "activity_date"
-    t.time     "activity_time"
-    t.text     "program_agenda"
     t.time     "from"
     t.time     "to"
+    t.text     "program_agenda"
+    t.text     "facilitator_1"
+    t.text     "facilitator_2"
+    t.boolean  "is_confirm"
   end
 
   add_index "induction_activities", ["employee_id"], name: "index_induction_activities_on_employee_id"
@@ -2175,6 +2173,8 @@ ActiveRecord::Schema.define(version: 20170303041422) do
     t.boolean  "time_master"
     t.boolean  "time_adjusted"
     t.date     "leaving_date"
+    t.integer  "replacement_id"
+    t.boolean  "is_new",                  default: true
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id"
@@ -2184,6 +2184,7 @@ ActiveRecord::Schema.define(version: 20170303041422) do
   add_index "joining_details", ["employee_grade_id"], name: "index_joining_details_on_employee_grade_id"
   add_index "joining_details", ["employee_id"], name: "index_joining_details_on_employee_id"
   add_index "joining_details", ["payment_mode_id"], name: "index_joining_details_on_payment_mode_id"
+  add_index "joining_details", ["replacement_id"], name: "index_joining_details_on_replacement_id"
   add_index "joining_details", ["reserved_category_id"], name: "index_joining_details_on_reserved_category_id"
 
   create_table "late_mark_masters", force: :cascade do |t|

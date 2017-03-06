@@ -47,17 +47,22 @@
         </div><!-- /.form group -->
       </div>
     </div>
-   <div class="col-sm-3">
+    <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.select :employee_id,all_employee_list,{label: "Contact Person",include_blank: " Select Contact Person"} %>
+        <%= f.text_field :facilitator_1,label: "Facilitator 1&Presenter" %>
       </div>
     </div>
     </div>
 
    <div class="row">
-     <div class="col-sm-6">
-      <div class="form-group required">
-        <%= f.text_area :program_agenda,placeholder: 'Eg: Program Agenda',label: "Program Agenda" %>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :facilitator_2,label: "Facilitator 2&Presenter" %>
+      </div>
+    </div>
+     <div class="col-sm-9">
+      <div class="field">
+        <%= f.text_field :program_agenda,placeholder: 'Eg: Program Agenda',label: "Program Agenda" %>
       </div>
     </div>
   </div>

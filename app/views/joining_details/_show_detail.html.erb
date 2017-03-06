@@ -84,6 +84,16 @@
       <td> <%= @joining_detail.medical_schem %></td>
     </tr>
 
+    <tr>
+      <th><strong>Employee Option</strong></th>
+      <td><%= @joining_detail.is_new ? "New" : "Replace" %></td>
+
+
+      <th><strong>Employee Replacement of</strong></th>
+      <td><%= full_name(@joining_detail.try(:replacement).try(:employee)) %></td>
+     </tr>
+
+
     <tr><th colspan="4"><center><font color='#0077b3'>EMPLOYEE PAYROLL DETAILS</font></center> </th></tr>
 
     <tr>
@@ -152,6 +162,7 @@
       <td><%= @joining_detail.ot_rate %></td>
      </tr>
 
+     
  </table>
   </div><!-- /.box -->
 </div>

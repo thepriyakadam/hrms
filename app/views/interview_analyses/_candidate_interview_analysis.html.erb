@@ -3,10 +3,10 @@
   <thead>
     <tr>
 <!--       <th>Interviewer Name</th>
- -->      <th>Evaluation Criteria</th>
+ -->      <th>Attributes</th>
       <th>Skillset</th>
       <th>Evaluation</th>
-      <th>Comment</th>
+      <th>Remarks</th>
       <!-- th>Action</th> -->
     </tr>
   </thead>
@@ -25,13 +25,14 @@
       </tr> 
     <% end %>
     <tr>
-        <th>Total Score</th>
-        <th colspan="4"><% interv_analy = InterviewAnalysis.where(interview_round_id: @interview_round.id) %><%=  %></th>
+        <th colspan="2">Total Score</th>
+        <th colspan="2"><% interv_analy = InterviewAnalysis.where(interview_round_id: @interview_round.id).pluck(:interview_decision_id)
+        interv_dec = InterviewDecision.where(id: interv_analy).pluck(:name).map {|i| i.to_i} %><%= interv_dec.sum %></th>
     </tr>
   </tbody>
 </table>
 <div class="col-sm-3">
-  <%= f.submit "Print",class: "btn btn-xl btn-warning fa fa-print" %> |
+  <%= f.submit "Print",class: "btn btn-xl btn-info fa fa-print" %> |
   <%= link_to 'Back', interview_round_list_interview_schedules_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 </div>
 <% end %>

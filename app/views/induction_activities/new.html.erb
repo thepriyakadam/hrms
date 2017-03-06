@@ -12,7 +12,12 @@
 		<div id="induction_activity_li">
 			<%= render 'induction_activity_list' %>
 		</div>
+		<% if @induction_activity.is_confirm == true %>
+		<% else %>
+		<%= link_to 'Confirm',confirm_induction_activities_path(@induction_master.id),data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-info fa fa-check' %> |
+		<% end %>
 		<%= link_to 'Back', new_induction_master_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+       
 	</div><!-- /.box-body -->
 </div><!-- /.box -->
 

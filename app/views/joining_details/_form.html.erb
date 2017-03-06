@@ -7,6 +7,21 @@
 <%= f.hidden_field :employee_id, value: @employee.id %>
     <div class="row">
      <div class="col-sm-3">
+        <div class="field" id="checker">
+        <%= f.select :is_new,[['New','true'],['Replace','false']],{label: 'Employee Option',include_blank: " Select Employee Option"} %>
+       </div>
+     </div>
+
+    <div class="col-sm-3">
+          <div class="field" id="dependent-box">
+            <div id="emp_option">
+                <%= f.select :replacement_id,all_inactive_employee_with_code,{label: "Employee",include_blank: " Select Employee"} %>
+            </div>
+          </div>
+        </div>
+     </div>
+    <div class="row">
+     <div class="col-sm-3">
         <div class="field">
         <%= f.text_field :employee_uan_no, label:'UAN No' %>
        </div>
@@ -323,3 +338,21 @@ $("#joining_detail").validate({
     }
    });
 </script>
+
+<script type="text/javascript">
+   $(document).ready(function () {
+        var checkbox = $('#checker'); 
+        var dependent = $('#dependent-box');
+        if (checkbox.attr('checked') != undefined){
+           dependent.show();
+        } else {
+            dependent.hide();
+        }
+        
+        checkbox.change(function(e){
+           dependent.toggle(); 
+        });
+    }); 
+
+</script>
+

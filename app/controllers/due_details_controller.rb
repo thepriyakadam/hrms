@@ -227,6 +227,26 @@ class DueDetailsController < ApplicationController
 
      @gratuities = Gratuity.where(employee_id: @employee.id)
 
+    #  @employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employee.id)
+    #  @leave_cash_masters = LeaveCashMaster.where(is_active: true)
+    #  # @day_in_month =  @leave_cashable.date.end_of_month.day
+    #  day_in_month = Date.today.end_of_month.day
+    #  sum = @employee_leav_balances.sum(:no_of_leave)
+    #  @employee_salary_templates.try(:each) do |est|
+    #  @leave_cash_masters.try(:each) do |lcm|
+    #     formula_string = lcm.base_component.split(',').map {|i| i.to_i}
+    #     @employee_templates = EmployeeTemplate.where(employee_id: @employee.id,is_active: true).take
+    #     formula_item = EmployeeSalaryTemplate.where(salary_component_id: formula_string,employee_id: @employee.id,employee_template_id: @employee_templates.id)  
+    #     @total = formula_item.sum(:monthly_amount)
+    #     # byebug
+    #     # formula_item_monthly_amount = ( @total.to_f / @day_in_month.to_i * lcm.rate.to_f ) * @leave_cashable.cashable.to_f
+    #     formula_item_monthly_amount = ( @total.to_f / day_in_month.to_i * lcm.rate.to_f ) * sum.to_i
+    #     # LeaveCashable.where(id: @leave_cashable.id).update_all(amount: formula_item_monthly_amount)
+    #   end
+    # end
+     #  # byebug
+     #  formula_item_monthly_amount_1 = formula_item_monthly_amount.map {|i| i.to_i}
+
      session[:active_tab] = "employee_resignation"
      session[:active_tab1] ="full_and_final"
   end

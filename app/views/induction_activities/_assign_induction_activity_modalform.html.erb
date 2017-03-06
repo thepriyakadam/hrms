@@ -9,9 +9,18 @@
     <%= bootstrap_form_for :induction_activity,url:{action:"update_induction",id: @induction_activity.id,induction_master_id: @induction_master.id},html: {id: 'induction_activity'} do |f| %>
         <div class="row">
 
+    
+
     <div class="col-sm-3">
-      <%= f.text_field :activity_date,label: "Activity Date", class: 'form-control activity_date' %>
-    </div>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+               <%= f.date_field :activity_date, label: "Induction Date"%>
+            </div>
+          </div>
+        </div>
 
       <div class="col-sm-3">
       <div class="bootstrap-timepicker">
@@ -62,9 +71,7 @@
         </div>
     </div>
     <%end%>
-    <div class="modal-footer"></div>
-  </div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
+
 
 <script type="text/javascript">
   $(function(){
@@ -78,7 +85,8 @@
     dateFormat: 'dd-mm-yy' });
   }); 
 </script>
-
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
 <script>
 $("#induction_activity").validate({
     rules: {

@@ -66,7 +66,29 @@ class InductionDetailsController < ApplicationController
   end
 
   def all_induction_detail_list
-   @induction_details = InductionDetail.all
+    if current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @induction_details = InductionDetail.all
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        @induction_details = InductionDetail.where(employee_id: @employees)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @induction_details = InductionDetail.where(employee_id: @employees)
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+        @induction_details = InductionDetail.where(employee_id: @employees)
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
+        @induction_details = InductionDetail.where(employee_id: @employees)
+      else current_user.role.name == 'Employee'
+        @induction_details = InductionDetail.where(employee_id: @employees)
+        redirect_to home_index_path
+      end
+    else
+      @employees = Employee.all
+    end
    session[:active_tab] ="EmployeeManagement"
     session[:active_tab1] ="EmployeeInduction"
   end
@@ -75,7 +97,7 @@ class InductionDetailsController < ApplicationController
     @induction_detail = InductionDetail.find(params[:format])
     @induction_detail.update(induction_completed: true,end_date: Time.zone.now.to_date)
     redirect_to all_induction_detail_list_induction_details_path
-    flash[:notice] = 'induction Confirmed Successfully'
+    flash[:notice] = 'Induction Confirmed Successfully'
   end
 
   def print_induction_details

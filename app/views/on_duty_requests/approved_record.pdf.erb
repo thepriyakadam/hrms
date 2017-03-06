@@ -1,0 +1,42 @@
+<style type="text/css">
+    th { text-align: left; }
+    tr { page-break-inside: avoid; }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;}
+</style>
+   
+  
+ <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+        <% i = 0 %>
+        <tr><td colspan="8"><center>
+       <% if current_user.employee.company_location.company.company_logo == nil %>
+      <% else %>
+        <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+        <%end%>
+        <strong><%= current_user.employee.company_location.company.try(:description) %></strong> <br>
+        <%= current_user.employee.company_location.company.try(:address) %></center> 
+        </td></tr>
+
+        <tr><th colspan="8"><center> Employee On Duty Report </center></th></tr>
+
+    <tr>
+    <th>Sr. No.</th>
+      <th>Employee ID</th>
+      <th>Employee Name</th>
+      <th>Leave Date</th>
+      <th>Cancel After Approve</th>
+    </tr>
+ 
+
+    <% @particular_od_records.each do |particular_od_record| %>
+      <tr>
+       <td><%= i = i+1 %></td>
+        <td><%= particular_od_record.employee.try(:manual_employee_code) %></td>
+        <td><%= full_name(particular_od_record.employee) %></td>
+        <td><%= particular_od_record.leave_date.to_date %></td>
+        <td><%= particular_od_record.is_cancel_after_approve %></td>
+      </tr>
+    <% end %>
+   </tbody>
+</table>

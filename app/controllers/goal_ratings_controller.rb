@@ -92,7 +92,7 @@ class GoalRatingsController < ApplicationController
     @employee = Employee.find(@goal_rating.appraisee_id)
     @goal_bunch = GoalBunch.find(@goal_rating.goal_bunch_id)
     goal_weightage_sum = @goal_rating.goal_weightage_sumdate(@goal_bunch, @goal_rating.goal_weightage, params)
-     
+
      weightage = goal_rating_params["goal_weightage"].to_i
 
       if goal_weightage_sum <= 100
@@ -241,7 +241,7 @@ class GoalRatingsController < ApplicationController
       redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id,period_id: @period.id)
     end  
   end
-
+  
   def self_modal
     @goal_rating = GoalRating.find(params[:format])
   end

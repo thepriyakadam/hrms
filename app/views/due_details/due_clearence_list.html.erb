@@ -1,6 +1,6 @@
 <div class="box">
 <div class="box-header">
-<h3 class="box-title">Due Details For : <%= full_name(@due_employee_details.first.employee) %> , Template Name : <%= @due_employee_details.first.due_template.try(:name) %></h3>
+<h3 class="box-title">Due Details For : <%= code_full_name(@due_employee_details.first.employee) %> , Template Name : <%= @due_employee_details.first.due_template.try(:name) %></h3>
   <!-- <div class="pull-right">
     <= link_to "Full & Final Settlement", full_and_final_settlement_due_details_path,class: 'btn btn-primary' %> 
   </div> -->
@@ -155,6 +155,21 @@
          <th>Total</th>
            <th><%= @employee_leav_balances.sum(:no_of_leave) %>
            </th>
+        </tr>
+        <tr>
+     <% @leave_cash_masters = LeaveCashMaster.where(is_active: true)
+     # @day_in_month =  @leave_cashable.date.end_of_month.day
+     day_in_month = Date.today.end_of_month.day
+     sum = @employee_leav_balances.sum(:no_of_leave)
+        @leave_cash_masters.try(:each) do |lcm|
+          formula_string = lcm.base_component.split(',').map {|i| i.to_i}
+          @employee_templates = EmployeeTemplate.where(employee_id: @employee.id,is_active: true).take
+          formula_item = EmployeeSalaryTemplate.where(salary_component_id: formula_string,employee_id: @employee.id,employee_template_id: @employee_templates.id)  
+          @total = formula_item.sum(:monthly_amount) %>
+          <% formula_item_monthly_amount = ( @total.to_f / day_in_month.to_i * lcm.rate.to_f ) * sum.to_i %>
+          <th>Leave Encashment Amount</th>
+           <th><%= formula_item_monthly_amount.to_f.round %></th>
+        <% end %>
         </tr>
     </tbody>
   </table>

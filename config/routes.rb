@@ -18,6 +18,16 @@ Rails.application.routes.draw do
       get :show_od_record
       get :od_request_list
       get :employee_od_request_detil_for_admin
+      get :on_duty_request_report
+      post :request_report
+      get :request_report
+      get :on_duty_request_status_report
+      get :status_wise_report_list
+      post :status_wise_report_list
+      get :on_duty_approval_report
+      get :approved_record_list
+      get :show_approved_record
+      post :show_approved_record
     end
   end
 
@@ -517,6 +527,7 @@ end
     get :modal_induction_activity
     post :update_induction
     get :view_induction_list
+    get :confirm
     end
   end
   resources :induction_masters
@@ -1103,6 +1114,12 @@ end
       get :show_vacancy_request_history
       get :reporting_masters_vacancy_master_list
       post :import
+      get :first_approve
+      get :approve_and_send_next
+      get :final_approval_vacancy_list
+      get :final_approve
+      get :vac_history
+      get :current_employee_vacancy_list
     end
   end
   resources :leave_c_offs do
@@ -1450,6 +1467,8 @@ end
       post :print_salary_slip_excel
       get :dynamic_dropdown
       post :salary_slip_company_location_department
+      get :curent_salary_template
+      get :current_employee_salary_template
     end
    end
  
@@ -1914,6 +1933,11 @@ end
       get :left_employee_xl
       get :left_employee_pdf
       get :collect_employee
+      get :select_company_company_location_and_department
+      get :show_employee
+      post :print_employee
+      get :print_employee
+      get :employee_list_pdf
       get :employee_report 
       post :show_employee_list
       get :show_all_record

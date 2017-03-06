@@ -64,6 +64,10 @@ class EmployeeResignationsController < ApplicationController
       flash[:alert] = "Your Request already has been sent"
       redirect_to employee_resignations_path
      else
+      if @employee_resignation.employee.try(:manager_id).nil?
+        flash[:alert] = "Reporting Manager not set please set Reporting Manager"
+        redirect_to new_employee_resignation_path
+      else
       respond_to do |format|
         if @employee_resignation.save
           @employees=Employee.where(id: @employee_resignation.employee_id).take
@@ -80,6 +84,7 @@ class EmployeeResignationsController < ApplicationController
       end
     end
   end
+end
 
   # PATCH/PUT /employee_resignations/1
   # PATCH/PUT /employee_resignations/1.json
@@ -215,8 +220,13 @@ class EmployeeResignationsController < ApplicationController
     ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "FinalApproved",change_date: Date.today)
     # EmployeeResignationMailer.no_second_reporter_approval_email_to_employee(@employee_resignation).deliver_now
     EmployeeResignationMailer.final_approval_email_to_employee(@employee_resignation).deliver_now
-    flash[:notice] = 'Resignation Request Approved Successfully'
-    redirect_to final_approval_emp_resignation_list_employee_resignations_path
+    if @employee_resignation.resign_status == "FinalApproved"
+      flash[:notice] = 'Resignation Request Approved Successfully'
+      redirect_to final_approval_emp_resignation_list_employee_resignations_path
+    else
+      flash[:notice] = 'Resignation Request Approved Successfully'
+      redirect_to resignation_history_employee_resignations_path
+    end
   end
 
   def first_reject

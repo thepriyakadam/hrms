@@ -1,37 +1,131 @@
-<div class="modal-dialog" style="height:1000px; max-height:100px; width:800px; max-width:1200px;">
+<!-- Main content -->
+<div class="modal-dialog" style="height:1000px; max-height:150px; width:1000px; max-width:1400px;">
   <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Activity Details </center></h4>
+    </div>
     <div class="modal-body">
-     <%= bootstrap_form_for :induction_activity,url:{action:"update_induction",id: @induction_activity.id,induction_master_id: @induction_master.id} do |f| %>
+    <%= bootstrap_form_for :induction_activity,url:{action:"update_induction",id: @induction_activity.id,induction_master_id: @induction_master.id},html: {id: 'induction_activity'} do |f| %>
         <div class="row">
-          <div class="col-sm-3">
-            <%= f.text_field :activity,placeholder: 'Eg: Meeting with HR Manager',hide_label: true%>
-          </div>
-          <div class="col-sm-3">
-            <%= f.text_field :day,placeholder: 'Eg: 1,2,3',hide_label: true %>
-          </div>
-        </div><br>
-         <div class="row">
-          <div class="col-sm-3">
-            <div class="form-group required">
-              <%= f.text_field :duration,placeholder: 'In Hrs',hide_label: true %>
+
+    
+
+    <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+               <%= f.date_field :activity_date, label: "Induction Date"%>
             </div>
           </div>
-          <div class="col-sm-3">
-           <div class="form-group required">
-            <%= f.select :employee_id,all_employee_list,{hide_label: true,include_blank: " Select Employee"} %>
-           </div>
-          </div>
-          </div><br>
-          <div class="row">
-          <div class="col-sm-3">
-            <%= f.submit "Update Induction Activity ", class: 'btn btn-sm btn-warning fa fa-modx' %>
-          </div>
         </div>
-      <% end %>
-      <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+
+      <div class="col-sm-3">
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+             <%= f.text_field :from,label: "From",class: 'form-control timepicker' %>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+    </div>
+
+   <div class="col-sm-3">
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+            <%= f.text_field :to,label: "To",class: 'form-control timepicker' %>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+    </div>
+   <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :employee_id,all_employee_list,{label: "Contact Person",include_blank: " Select Contact Person"} %>
+      </div>
+    </div>
+    </div>
+
+   <div class="row">
+     <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_area :program_agenda,placeholder: 'Eg: Program Agenda',label: "Program Agenda" %>
+      </div>
     </div>
   </div>
-</div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Update Induction Activity", class: 'btn btn-primary btn-sm' %>
+      </div>
+    </div>
+  </div>
+        </div>
+    </div>
+    <%end%>
+
+
+<script type="text/javascript">
+  $(function(){
+     $(".timepicker").timepicker({
+    showInputs: false
+  });
+    $('.activity_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:-0',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+<script>
+$("#induction_activity").validate({
+    rules: {
+      "induction_activity[activity_date]":{
+        required: true
+              },
+      "induction_activity[from]":{
+        required: true
+      },
+      "induction_activity[to]":{
+        required: true
+      },
+      "induction_activity[employee_id]":{
+        required: true
+      }
+    },
+    messages: {
+      "induction_activity[activity_date]":{
+        required: "Please specify Activity"
+      },
+      "induction_activity[from]":{
+        required: "Please specify Day"
+      },
+      "induction_activity[to]":{
+        required: "Please specify duration"
+      },
+      "induction_activity[employee_id]":{
+        required: "Please specify Contact Person Name"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+
+
 
 
   

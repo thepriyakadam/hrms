@@ -30,11 +30,13 @@ class Ability
         can :manage, [EmployeeLeavRequest, ParticularLeaveRecord]
         can :manage, [GoalBunch, GoalRating]
         can :manage, [TravelRequest, DailyBillDetail]
+        can :manage, [OnDutyRequest, ParticularOdRecord]
       elsif user.role.name == 'Supervisor'
         can :read, Employee
         can :manage, EmployeeLeavRequest
         can :manage, [GoalBunch, GoalRating]
         can :manage, [TravelRequest, DailyBillDetail]
+        can :manage, [OnDutyRequest, ParticularOdRecord]
       elsif user.role.name == 'Employee'
         can :read, Employee, id: user.employee_id
         can :read, [JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family]

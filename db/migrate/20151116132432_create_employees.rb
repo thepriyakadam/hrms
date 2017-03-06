@@ -1,9 +1,10 @@
 class CreateEmployees < ActiveRecord::Migration
   def change
     create_table :employees do |t|
-      t.references :department, index: true, foreign_key: true
+      
       t.string :manual_employee_code
       t.string :employee_code, index: true
+      t.string :employees, :prefix
       t.string :first_name
       t.string :middle_name
       t.string :last_name
@@ -29,8 +30,10 @@ class CreateEmployees < ActiveRecord::Migration
       t.string :status
       t.references :employee_type, index: true, foreign_key: true
       t.string :gender
-      t.string :religion
       t.references :manager, index: true
+      t.references :department, index: true, foreign_key: true
+      t.references :religion, index: true, foreign_key: true
+  
 
       t.timestamps null: false
     end

@@ -230,8 +230,9 @@ end
      employee = Employee.where(id: reporting_master).take
      first_manager_id = employee.manager_id
      second_manager_id = employee.manager_2_id
+     #@travel_request.update(current_status: "SecondApproved",reporting_master_id: first_manager_id)
     @vacancy_master.update(current_status: "SecondApproved",reporting_master_id: second_manager_id)
-    ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id,reporting_master_id: first_manager_id,vacancy_status: "SecondApproved")
+    ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id,reporting_master_id: current_user.employee_id,vacancy_status: "SecondApproved")
     flash[:notice] = 'Vacancy Request Approved Successfully'
     redirect_to vacancy_history_vacancy_masters_path
     else
@@ -255,8 +256,8 @@ end
         flash[:notice] = 'Vacancy Request Sent to Higher Authority for Approval'
         redirect_to vacancy_history_vacancy_masters_path
      elsif employee.manager_2_id.nil?
-           @vacancy_master.update(reporting_master_id: first_manager_id,current_status: "SecondApproved")
-           ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id,reporting_master_id: current_user.employee_id,vacancy_status: "SecondApproved")
+           @vacancy_master.update(reporting_master_id: first_manager_id,current_status: "Approved & Send Next")
+           ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id,reporting_master_id: current_user.employee_id,vacancy_status: "Approved & Send Next")
            flash[:notice] = 'Vacancy Request Approved Successfully'
            redirect_to vacancy_history_vacancy_masters_path
      end

@@ -12,10 +12,8 @@
     <tr>
       <th>ID</th>
       <th>Employee Name</th>
-      <th>Request To</th>
       <th>From Date</th>
       <th>Place</th>
-      <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -25,30 +23,25 @@
       <tr>
         <td><%= travel_request.employee.try(:manual_employee_code) %></td>
         <td><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></td>
-        <td><%= travel_request.try(:reporting_master).try(:employee).try(:first_name) %> <%= travel_request.try(:reporting_master).try(:employee).try(:middle_name) %> <%= travel_request.try(:reporting_master).try(:employee).try(:last_name) %></td>
+     
         <td><%= travel_request.traveling_date %></td>
         <td><%= travel_request.place %></td>
-        <td>
-            <% if travel_request.current_status == "Pending" %>
-              <small class="label label-primary">Pending</small>
-            <% elsif travel_request.current_status == "Approved & Send Next" %>
-              <small class="label label-primary">Approved & Send Next</small>
-            <% elsif travel_request.current_status == "Edit & Send Next" %>
-              <small class="label label-primary">Edit & Send Next</small>
-            <% elsif travel_request.current_status == "Approved" %>
-              <small class="label label-primary">Approved</small>
-            <% elsif travel_request.current_status == "Edit & Approved" %>
-              <small class="label label-primary">Edit & Approved</small>
-            <% else %>
-              <small class="label label-primary">Rejected</small>
-            <% end %>
-        </td>
-        <td>
-          <% if travel_request.current_status == "Approved" or travel_request.current_status == "Reject" or travel_request.current_status == "Edit & Approved" %>
-          <% else %>
-          <%= link_to 'Approve / Reject',travel_request_confirmation_travel_requests_path(travel_request),class: 'btn btn-sm btn-warning' %>
-          <% end %>
-          <%= link_to '', travel_request,class: 'btn btn-xs btn-default fa fa-eye' %>
+       <td>
+         <% if travel_request.current_status == "Pending" %>
+         <%= link_to 'Approve / Reject', travel_request_confirmation_travel_requests_path(travel_request),class: 'btn btn-xs btn-primary' %>
+         <% elsif travel_request.current_status == "Approved & Send Next" %>
+         <%= link_to 'Approve / Reject', travel_request_confirmation_travel_requests_path(travel_request),class: 'btn btn-xs btn-primary' %>
+         <% elsif travel_request.current_status == "Edit And Approved" %>
+         <small class="label label-success">Edit And Approved</small>
+         <% elsif travel_request.current_status == "Approved" %>
+         <small class="label label-primary">Approved</small>
+         <% elsif travel_request.current_status == "Rejected" %>
+         <small class="label label-primary">Rejected</small>
+         <% else %>
+         <%= link_to 'Approve / Reject', travel_request_confirmation_travel_requests_path(travel_request),class: 'btn btn-xs btn-primary' %>
+        <%= link_to '', travel_request,class: 'btn btn-xs btn-default fa fa-eye' %>
+        <% end %>
+      </td>
         </td>
       </tr>
     <% end %>

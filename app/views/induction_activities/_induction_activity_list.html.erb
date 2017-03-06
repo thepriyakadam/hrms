@@ -24,12 +24,14 @@
         <td>
           <div id="myModal" class="modal fade"></div>
             <%= link_to '',modal_induction_activity_induction_activities_path(induction_master_id: induction_activity.induction_master_id, induction_activity_id: induction_activity),class: 'btn btn btn-xs btn-success fa fa-edit',remote: true %>
-            <%= link_to '',induction_activity, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close' %>
+            <%= link_to '',induction_activity, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close' ,remote: true%>
         </td>
       </tr>
       <tr>
-        <th></th>
-        <td colspan="6"><strong> Program Agenda :  </strong> <%= induction_activity.program_agenda %></td>
+        <th colspan="7"><center><strong>Program Agenda</strong></center></th>
+        </tr>
+        <tr>
+        <td colspan="7"><%= induction_activity.program_agenda %></td>
       </tr>
     <% end %>
   </tbody>

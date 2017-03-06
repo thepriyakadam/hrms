@@ -26,7 +26,8 @@
       <td><%= @travel_request.employee.company_location.try(:name) %> - <%= @travel_request.employee.department.try(:name) %></td>
 
       <th><strong>Request To</strong></th>
-      <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td>
+     <td><% emp=Employee.where(id: @travel_request.reporting_master_id).take %>
+      <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %> </td>
     </tr>
 
     <tr>
@@ -57,9 +58,14 @@
       <tr>
       <th><strong>Advance</strong></th>
       <td><%= @travel_request.total_advance %></td>
-  
+
+      <th><strong>Current Status</strong></th>
+      <td><%= @travel_request.current_status %></td>
+    </tr>
+
+    <tr>
       <th><strong>Tour Purpose</strong></th>
-      <td><%= @travel_request.tour_purpose %></td>
+      <td colspan="3"><%= @travel_request.tour_purpose %></td>
       
     </tr>
 

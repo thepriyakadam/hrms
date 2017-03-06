@@ -8,10 +8,22 @@
     <div class="modal-body">
     <%= bootstrap_form_for :induction_activity,url:{action:"update_induction",id: @induction_activity.id,induction_master_id: @induction_master.id},html: {id: 'induction_activity'} do |f| %>
         <div class="row">
-
+<!-- 
     <div class="col-sm-3">
-      <%= f.text_field :activity_date,label: "Activity Date", class: 'form-control activity_date' %>
-    </div>
+      <= f.text_field :activity_date,label: "Activity Date", class: 'form-control activity_date' %>
+    </div> -->
+
+       <div class="col-sm-3">
+          <div class="form group-required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :activity_date,label: "Day",class: 'activity_date'%>
+          </div>
+        </div>
+      </div>
+
 
       <div class="col-sm-3">
       <div class="bootstrap-timepicker">
@@ -46,7 +58,7 @@
     </div>
 
    <div class="row">
-     <div class="col-sm-6">
+     <div class="col-sm-12">
       <div class="form-group required">
         <%= f.text_area :program_agenda,placeholder: 'Eg: Program Agenda',label: "Program Agenda" %>
       </div>
@@ -59,27 +71,27 @@
       </div>
     </div>
   </div>
-        </div>
-    </div>
-    <%end%>
-    <div class="modal-footer"></div>
-  </div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
+   <%end%>
+  
+ </div>
 
 <script type="text/javascript">
   $(function(){
      $(".timepicker").timepicker({
     showInputs: false
   });
+
     $('.activity_date').datepicker({
     changeYear:true,
     changeMonth: true,
     yearRange: '-100:-0',
     dateFormat: 'dd-mm-yy' });
   }); 
-</script>
+  </script>
 
-<script>
+  
+
+<script type="text/javascript">
 $("#induction_activity").validate({
     rules: {
       "induction_activity[activity_date]":{

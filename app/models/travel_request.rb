@@ -8,6 +8,6 @@ class TravelRequest < ActiveRecord::Base
   has_many :reporting_masters, through: :reporting_masters_travel_requests
   validates :tour_purpose, presence: true
   validates :place, presence: true
-  validates :reporting_master_id, presence: true
+  
   validates :traveling_date, presence: true
 end

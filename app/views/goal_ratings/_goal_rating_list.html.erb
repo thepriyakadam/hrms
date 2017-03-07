@@ -25,10 +25,12 @@
               <td><%= goal_rating.aligned %></td>
               <td>
                 <% if goal_rating.goal_bunch.goal_confirm == true %>
-                <small class="label label-info">Confirmed</small>
+                <small class="label label-success">Confirmed</small>
+                <% elsif goal_rating.goal_bunch.goal_confirm == false %>
+                <small class="label label-info">Send For Approval</small>
                 <% else %>
-                <%= link_to '', goal_set_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
-                  <!-- < link_to '', edit_goal_rating_path(id: goal_rating,goal_bunch_id: @goal_ratings.goal_bunch_id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %> -->
+                  <%= link_to '', goal_set_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+                  <%= link_to '', goal_rating, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close' %>
                 <% end %>
               </td>
             </tr>
@@ -62,9 +64,12 @@
             <td><%= goal_rating.aligned %></td>
             <td>
               <% if goal_rating.goal_bunch.goal_confirm == true %>
-              <small class="label label-info">Confirmed</small>
+              <small class="label label-success">Confirmed</small>
+              <% elsif goal_rating.goal_bunch.goal_confirm == false %>
+                <small class="label label-info">Send For Approval</small>
               <% else %>
-                <%= link_to '', goal_set_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+                  <%= link_to '', goal_set_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+                  <%= link_to '', goal_rating, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close' %>
               <% end %>
             </td>
           </tr>
@@ -75,7 +80,11 @@
 </div>
 
   <% if @goal_bunch.goal_confirm == false %>
-  <small class="label label-info">Request has been send for Confirmation</small>
+    <small class="label label-info">Request has been send for Confirmation</small>
+    <%= link_to 'Back',new_goal_bunch_path, class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  <% elsif @goal_bunch.goal_confirm == true %>
+    <small class="label label-success">Goal Confirmed</small>
+    <%= link_to 'Back',new_goal_bunch_path, class: 'btn btn-sm btn-default fa fa-arrow-left' %>
   <% else %>
     <div class="row">
       <div class="col-sm-3">

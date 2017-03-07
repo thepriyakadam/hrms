@@ -17,8 +17,10 @@
         <% @reporting_masters_travel_requests1.each do |a| %>
           <tr>
             <td><%= i=i+1 %></td>
-            <td><%= a.reporting_master.employee.manual_employee_code %></td>
-            <td><%= a.reporting_master.employee.try(:first_name) %> <%= a.reporting_master.employee.try(:middle_name) %> <%= a.reporting_master.employee.try(:last_name) %></td>
+            <% b=a.reporting_master_id
+                emp=Employee.where(id: b).take %>
+            <td><%= emp.manual_employee_code%></td>
+            <td><%= emp.try(:first_name)%> <%= emp.try(:middle_name)%> <%= emp.try(:last_name)%></td>
   	        <td><%= a.travel_status %></td>
             <td><%= a.daily_bill_comment %></td>
             <td>

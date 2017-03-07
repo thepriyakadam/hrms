@@ -94,7 +94,7 @@ class TravelRequestsController < ApplicationController
 
   def daily_bill
      # @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
-    @travel_requests = TravelRequest.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"Approved")
+    @travel_requests = TravelRequest.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"FinalApproved")
     session[:active_tab] = "TravelManagemnt"
     session[:active_tab1] = "expensesclaimprocess"  
   end
@@ -179,14 +179,17 @@ class TravelRequestsController < ApplicationController
   def reject_travel_request
     # byebug
     @travel_request = TravelRequest.find(params[:format])
-    @travel_request.update(current_status: "Reject")
-    TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,employee_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Reject")
-    @reporting_masters = ReportingMaster.where(employee_id: current_user.employee_id).pluck(:id)
-    ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters,travel_request_id: @travel_request.id).update_all(travel_status: "Reject")
-    TravelRequestMailer.reject_travel_request_email(@travel_request).deliver_now
+    @travel_request.update(current_status: "Rejected",reporting_master_id: current_user.employee_id)
+    # TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,employee_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Reject")
+    # @reporting_masters = ReportingMaster.where(employee_id: current_user.employee_id).pluck(:id)
+    ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,reporting_master_id: current_user.employee_id)
+    ReportingMastersTravelRequest.update_all(travel_status: "Rejected")
+    # TravelRequestMailer.reject_travel_request_email(@travel_request).deliver_now
+    # flash[:alert] = 'Travel Request Rejected'
     flash[:alert] = 'Travel Request Rejected'
     redirect_to travel_history_travel_requests_path
   end
+
 
   def approve_and_send_next 
     # byebug
@@ -244,6 +247,8 @@ class TravelRequestsController < ApplicationController
 
   def final_approval_travel_list
      @travel_requests = TravelRequest.where(current_status: "SecondApproved")
+     session[:active_tab] = "TravelManagemnt"
+     session[:active_tab1] = "travelrequestprocess" 
   end
 
 

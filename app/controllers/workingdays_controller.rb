@@ -280,14 +280,12 @@ class WorkingdaysController < ApplicationController
       elsif current_user.role.name == "Admin"
         @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
         @workingday = Salaryslip.where(month: @month,year: @year,employee_id: @employee).pluck(:workingday_id)
-        @workingdays = Workingday.where(month_name: @month, year: @year.to_s).where.not(id: @workingday)
+        @workingdays = Workingday.where(month_name: @month, year: @year.to_s,employee_id: @employees).where.not(id: @workingday)
       elsif current_user.role.name == "Branch"
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
         @workingday = Salaryslip.where(month: @month,year: @year,employee_id: @employees).pluck(:workingday_id)
-        @workingdays = Workingday.where(month_name: @month,year: @year.to_s).where.not(id: @workingday)
+        @workingdays = Workingday.where(month_name: @month,year: @year.to_s,employee_id: @employees).where.not(id: @workingday)
 
-        # @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        # @workingdays = Workingday.where(month_name: @month, year: @year.to_s, employee_id: @employees)
       end  
     end    
   end

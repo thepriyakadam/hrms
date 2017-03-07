@@ -31,9 +31,9 @@ class DailyBillDetailsController < ApplicationController
     @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
 
 
-    reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
-    @reporting_master = ReportingMaster.find(@travel_request.reporting_master_id)
-    @employee = Employee.find(@reporting_master.employee_id)
+    # reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    # @reporting_master = ReportingMaster.find(@travel_request.reporting_master_id)
+    # @employee = Employee.find(@reporting_master.employee_id)
     session[:active_tab] = "master"
     session[:active_tab1] ="daily_bill_master_setup"
   end
@@ -158,42 +158,17 @@ class DailyBillDetailsController < ApplicationController
   end 
 
   def daily_bill_request_confirmation
+    # byebug
     @travel_request = TravelRequest.find(params[:format])
-    # @travel_request_hisory = TravelRequestHistory.find(params[:format])
-    reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
-    @reporting_master = ReportingMaster.find(@travel_request.reporting_master_id)
-    @employee = Employee.find(@reporting_master.employee_id)
-    @dbl = ReportingMastersTravelRequest.where(travel_request_id: 27).pluck(:status).last
-    # @c1 = @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).count
-    # for i in 1..c1
-       
-    # end
-    # @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
-    # @reporting_masters_travel_request = ReportingMastersTravelRequest.find_by_reporting_master_id(params[:format])
+    
+  
     @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
     @reporting_masters_travel_requests2 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).second
     @reporting_masters_travel_requests3 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).third
     @reporting_masters_travel_requests4 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).fourth
     @reporting_masters_travel_requests5 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).fifth
-    # @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).first
-
-    
-    # @reporting_masters_travel_requests = ReportingMastersTravelRequest.all
-    # if @reporting_masters_travel_requests2.status == nil
-    #     flash[:notice] = 'Not Yet Approved So pls wait.........'  
-    #   elsif @reporting_masters_travel_requests3.status == nil
-    #     flash[:notice] = 'Not Yet Approved So pls wait.........'  
-    #   elsif @reporting_masters_travel_requests4.status == nil
-    #     flash[:notice] = 'Not Yet Approved So pls wait.........'  
-    #   elsif @reporting_masters_travel_requests5.status == nil
-    #     flash[:notice] = 'Not Yet Approved So pls wait.........'  
-    #   else
-      @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id,is_confirm: :true)
-    # end
-    
-    
-    # @daily_bill_details = DailyBillDetail.where(reporting_master_id: reporting_masters,travel_request_id: @travel_request.id,is_confirm: true)
-    # @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id,is_confirm: true)
+    @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id,is_confirm: :true)
+   
     session[:active_tab] ="travelmgmt"
   end
 
@@ -228,7 +203,7 @@ class DailyBillDetailsController < ApplicationController
      # @travel_requests = TravelRequest.where(daily_bill_status: "true",reporting_master_id: reporting_masters)
 
      # @travel_requests = TravelRequest.where(daily_bill_status: "true",current_status: "Approved",reporting_master_id: @reporting_masters)
-     @travel_requests = TravelRequest.where(current_status: "Approved",reporting_master_id: @reporting_masters)
+     @travel_requests = TravelRequest.where(current_status: "FinalApproved",reporting_master_id: current_user.employee_id)
      # @travel_request_histories = TravelRequestHistory.where(daily_bill_status: "true",reporting_master_id: reporting_masters)
 
      # @travel_request_histories = TravelRequestHistory.where(daily_bill_status: "true",reporting_master_id: reporting_masters)
@@ -406,12 +381,15 @@ class DailyBillDetailsController < ApplicationController
   end
 
   def is_confirm
+    # byebug
     @travel_request = TravelRequest.find(params[:travel_request_id])
     @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
     @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[0]
+    @reporting_masters_travel_requests_1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[1] #new code
+    ReportingMastersTravelRequest.where(id: @reporting_masters_travel_requests.id).update_all(status: true) #new code
     DailyBillDetail.where(travel_request_id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests.reporting_master_id,is_confirm: :true)
     c1 = @daily_bill_details.sum(:travel_expence).to_i
-    TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests.reporting_master_id,is_confirm: :true,expense: c1)
+    TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests_1.reporting_master_id,is_confirm: true,expense: c1)
     flash[:notice] = "Confirmed Successfully"
     redirect_to new_daily_bill_detail_path(travel_request_id: @travel_request.id)
   end

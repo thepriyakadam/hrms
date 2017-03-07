@@ -95,7 +95,7 @@
   <div class="col-sm-6">
     <div class="actions">
      <%= link_to 'Approve & Send Next',comment_modal_daily_bill_details_path(@travel_request.id),class: 'btn btn-sm btn-primary',remote: true %> 
-     <% if @dbl = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:status).last == nil && @dbl1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:travel_status).last == "Approved" %>
+     <% if @dbl = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:status).last == nil && @dbl1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:travel_status).last == "FinalApproved" %>
     <!--  | <= link_to 'Reject',reject_request_daily_bill_details_path(@travel_request.id),class: 'btn btn-sm btn-danger' %> -->
      <% else %>
      <% end %>

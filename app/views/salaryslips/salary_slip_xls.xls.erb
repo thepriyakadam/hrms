@@ -189,11 +189,11 @@
           
          <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
           <% @deducted_salaryslip_items.each do |item| %>
-              <% if item.other_component_name == "PF" %>
+              <% if item.other_component_name == "Provident Fund" %>
                 <Cell ss:Index="42"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% elsif item.other_component_name == "ESIC" %>
                 <Cell ss:Index="43"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
-              <% elsif item.other_component_name == "Prof. Tax" %>
+              <% elsif item.other_component_name == "Professional Tax" %>
                 <Cell ss:Index="44"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% elsif item.other_component_name == "Retention" %>
                 <Cell ss:Index="45"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>

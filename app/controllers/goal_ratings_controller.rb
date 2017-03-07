@@ -11,6 +11,14 @@ class GoalRatingsController < ApplicationController
     @goal_bunches = GoalBunch.all    
   end
  
+  def destroy
+    @goal_bunch = @goal_rating.goal_bunch_id
+    @employee = @goal_rating.appraisee_id
+    @goal_rating.destroy
+    flash[:notice] = "Deleted Successfully"
+    redirect_to new_goal_rating_path(id: @goal_bunch, emp_id:@employee)
+  end
+
   def select_dropdown
     if params[:goal_type] == "Goal"
       @flag = true

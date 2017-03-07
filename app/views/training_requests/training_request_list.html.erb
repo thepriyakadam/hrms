@@ -16,7 +16,6 @@
           <th>Request Date</th>
           <th>No. Of Trainee</th>
           <th>Place</th>
-          <th>Status</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -30,19 +29,6 @@
             <td><%= training_request.training_date %></td>
             <td><%= training_request.no_of_employee %></td>
             <td><%= training_request.place %></td>
-            
-            <td>
-              <% if training_request.status == "Pending" %>
-              <small class="label label-primary">Pending</small>
-                  <% elsif training_request.status == "Approved" %>
-                  <small class="label label-primary">Approved</small>
-                  <% elsif training_request.status == "Rejected" %>
-                  <small class="label label-primary">Rejected</small>
-                  <% elsif training_request.status == "Approved & Send Next" %>
-                  <small class="label label-primary">Approved & Send Next</small>   
-              <% else %>
-              <% end %>
-          </td>
           <td>
             <% if training_request.status == "Approved" or training_request.status == "Rejected" %>
             <% else %>

@@ -838,9 +838,12 @@ end
       patch :create_dept_wise_request
       post :comment
       post :create_department_wise_training_request
-      post :approve_and_send_next
       get :approve_training_request
       get :modal_approve_and_send_next
+      get :first_approve
+      get :approve_and_send_next
+      get :final_approval_training_list
+      get :final_approve
     end
   end
   resources :selected_resumes  do

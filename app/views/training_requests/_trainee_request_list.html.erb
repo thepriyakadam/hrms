@@ -1,12 +1,12 @@
 <!---<= bootstrap_form_for TraineeRequest.new,url:{action:'approve_training_request',training_request_id: @training_request.id} do |f| %>-->
-<%= bootstrap_form_for TraineeRequest.new,url:{action:'approve_and_send_next',training_request_id: @training_request.id} do |f| %>
-<div class="row">
+<!-- <= bootstrap_form_for TraineeRequest.new,url:{action:'approve_and_send_next',training_request_id: @training_request.id} do |f| %> -->
+<!-- <div class="row">
       <div class="col-sm-4">
-       <!-- <= select :training_request,:reporting_master_id,all_reporting_master_list1,{label: 'Reporting Manager',include_blank: " Select Reporting Manager"}, class: "form-control" %>-->
-       <label>Approve & Send Request To:</label>
-        <%= select :training_request,:reporting_master_id,approve_and_send_next_rep_master_list,{label: 'Reporting Manager',include_blank: " Select Reporting Manager"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
-      </div>
-    </div><br>
+       <! <= select :training_request,:reporting_master_id,all_reporting_master_list1,{label: 'Reporting Manager',include_blank: " Select Reporting Manager"}, class: "form-control" %>-->
+      <!--  label>Approve & Send Request To:</label>
+        <= select :training_request,:reporting_master_id,approve_and_send_next_rep_master_list,{label: 'Reporting Manager',include_blank: " Select Reporting Manager"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %> -->
+     <!--  div>
+    div><br> --> 
     <div class="box-header with-border">
     <h3 class="box-title">Employee's Who are Going To Attend Training</h3>
   </div>
@@ -24,7 +24,7 @@
    <% @trainee_requests.each do |trainee_request| %>
       <tr>
          <td>
-          <% if trainee_request.is_complete == true %>
+          <% if trainee_request.is_complete == nil %>
           <% else %>
             <%= check_box_tag "trainee_request_ids[]", trainee_request.id %>
           <% end %>
@@ -37,25 +37,50 @@
   </tbody>
 </table><br>
 
-<div class="row">
+<td>
+  <% if @training_request.employee.manager_id.present? && @training_request.employee.manager_2_id.present? && @training_request.status == "Pending" %>
+      <%= link_to ' Approve',first_approve_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check' %> |
+      <%= link_to ' Reject',reject_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash' %> 
+  <%  elsif @training_request.employee.manager_id.present? && @training_request.employee.manager_2_id.present? && @training_request.status == "FirstApproved" %>
+    <%= link_to ' Approve',first_approve_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check' %> |
+    <%= link_to ' Reject',reject_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash' %> 
+    <%= link_to 'Approve & Send next',approve_and_send_next_training_requests_path(@training_request.id),class: 'btn btn btn-xs btn-success' %> 
+  <% elsif @training_request.employee.manager_id.present? && @training_request.employee.manager_2_id.nil? && @training_request.status == "Pending" %>
+    <%= link_to ' Approve',approve_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check' %> |
+    <%= link_to ' Reject',reject_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash' %> 
+  <% end %>
+
+  <% if @training_request.status == "Approved & Send Next" %>
+      <% training_request = TrainingRequest.where(id: @training_request.id , status: "Approved & Send Next").take %>
+      <% employ = Employee.where(id: training_request.reporting_master_id).take %>
+
+  <% if @training_request.employee.manager_id.present? && @training_request.employee.manager_2_id.present? && @training_request.status == "Approved & Send Next" %>
+      <%= link_to 'Approve',first_approve_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Reject',reject_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
+
+    <% elsif @training_request.employee.manager_id.present? && @training_request.employee.manager_2_id.nil? && @training_request.status == "Approved & Send Next"%>
+    <%= link_to 'Approve',approve_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'Reject',reject_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
+      %>     
+    <% end %>
+   <% elsif @training_request.status == "SecondApproved"  %>
+      <%= link_to 'Final Approve',final_approve_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check' %>
+    <% end %>
+</td>
+
+<!-- <div class="row">
   <div class="col-sm-9">
     <div class="actions">
-      <!--<= f.submit " Approve", class: 'btn btn-sm btn-info fa fa-check' %>-->
-      <%= f.submit " Approve & Send Next", class: 'btn btn-sm btn-primary fa fa-check' %>
-      <!-- <div id="myModal" class="modal fade"></div>
-      <= link_to 'Approve & Send next',modal_approve_and_send_next_training_requests_path(@training_request.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %> -->  |
-      <%= link_to ' Approve',approve_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check' %> |
-      <%= link_to ' Reject',reject_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash' %> 
-      <!-- <= link_to ' Comment',modal_reject_comment_training_requests_path(@training_request.id),class: 'btn btn-sm btn-primary fa fa-commenting-o',remote: true %> -->
+      <= f.submit " Approve & Send Next", class: 'btn btn-sm btn-primary fa fa-check' %>
+    
+      <= link_to ' Approve',approve_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check' %> |
+      <= link_to ' Reject',reject_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash' %> 
+  
     </div>
   </div>
 </div>
-<% end %>
 
-<!--<= link_to ' Comment & Approve',approve_training_request_training_requests_path(training_request_id: @training_request.id),class: 'btn btn-sm btn-info fa fa-check' %>  |-->
-
- 
-
+ -->
 
 <script type="text/javascript">
   $(function () {

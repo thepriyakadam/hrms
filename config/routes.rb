@@ -943,6 +943,10 @@ end
       get :travel_request_employee_name_report
       get :print_travel_request_employee_name_report
       post :print_travel_request_employee_name_report
+      get :first_approve
+      get :approve_and_send_next
+      get :final_approve
+      get :final_approval_travel_list
     end
   end
  

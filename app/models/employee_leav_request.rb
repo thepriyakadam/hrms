@@ -343,7 +343,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
     flag
   end
 
-  def is_available1?
+  def is_first_approved?
     flag = false
     leave_records = LeaveRecord.where(employee_id: self.employee_id,status: 'FirstApproved')
     leave_records.each do |l|
@@ -356,7 +356,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
     flag
   end
 
-  def is_available2?
+  def is_final_approved?
     flag = false
     leave_records = LeaveRecord.where(employee_id: self.employee_id,status: 'FinalApproved')
     leave_records.each do |l|
@@ -408,5 +408,100 @@ class EmployeeLeavRequest < ActiveRecord::Base
     elsif count_2 > @monthly_limit
     end
   end
+
+  def leave_record_create(employee_leav_request)
+    for i in employee_leav_request.start_date.to_date..employee_leav_request.end_date.to_date 
+      start_date = employee_leav_request.start_date.to_date
+      end_date = employee_leav_request.end_date.to_date
+      if employee_leav_request.leave_type == 'Full Day'
+        LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 1,leav_category_id: employee_leav_request.leav_category_id)
+      elsif employee_leav_request.leave_type == 'Full/Half'
+        if employee_leav_request.first_half == true && employee_leav_request.last_half == true
+          if i == start_date
+            LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 0.5,leav_category_id: employee_leav_request.leav_category_id)
+          elsif i == end_date
+            LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 0.5,leav_category_id: employee_leav_request.leav_category_id)
+          else
+            LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 1,leav_category_id: employee_leav_request.leav_category_id)
+          end
+        elsif employee_leav_request.last_half == true
+          if i == start_date
+            LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 0.5,leav_category_id: employee_leav_request.leav_category_id)
+          else
+            LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 1,leav_category_id: employee_leav_request.leav_category_id)
+          end
+        elsif employee_leav_request.first_half == true
+          if i == end_date
+            LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 0.5,leav_category_id: employee_leav_request.leav_category_id)
+          else
+            LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 1,leav_category_id: employee_leav_request.leav_category_id)
+          end
+        else
+          LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 1,leav_category_id: employee_leav_request.leav_category_id)
+        end
+      else
+        LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 0.5,leav_category_id: employee_leav_request.leav_category_id)
+      end
+    end
+  end
+
+  def leave_monthly_limit(employee_leav_request)
+    @leav_category = LeavCategory.find_by(id: self.leav_category_id)
+    
+      for i in self.start_date.to_datetime..self.end_date.to_datetime
+        start_month = self.start_date.strftime("%B")
+        end_month = self.end_date.strftime("%B")
+        if start_month == end_month
+          @lr = LeaveRecord.where("employee_id = ? AND strftime('%m/%Y', day) = ? AND leav_category_id = ?" ,  self.employee_id,i.strftime('%m/%Y'),self.leav_category_id).where.not(status: 'Cancelled').where.not(status: 'Rejected')
+          a = 0
+          @lr.each do |l|
+            a = a + l.count
+          end#do
+            @month_same = a.to_f + employee_leav_request.leave_count.to_f
+        
+        else #month
+          @start_date = start_date.to_datetime
+          @end_date = end_date.to_datetime
+            elr_1 = 0
+            elr_2 = 0
+
+          for d in @start_date..@end_date 
+            if d.strftime('%m/%Y') == @start_date.strftime('%m/%Y')
+              elr_1 = elr_1 + 1
+            else d.strftime('%m/%Y') == @end_date.strftime('%m/%Y')
+              elr_2 = elr_2 + 1
+            end
+          end
+              elr_1
+              elr_2
+
+          @lr_1 = LeaveRecord.where("employee_id = ? AND strftime('%m/%Y', day) = ? AND leav_category_id = ?" ,  self.employee_id,@start_date.strftime('%m/%Y'),self.leav_category_id).where.not(status: 'Cancelled').where.not(status: 'Rejected')
+          a = 0
+          @lr_1.each do |l|
+            a = a + l.count
+          end#do
+           @count1 = a.to_f + elr_1.to_f
+
+          @lr_2 = LeaveRecord.where("employee_id = ? AND strftime('%m/%Y', day) = ? AND leav_category_id = ?" ,  self.employee_id,@end_date.strftime('%m/%Y'),self.leav_category_id).where.not(status: 'Cancelled').where.not(status: 'Rejected')
+          b = 0
+          @lr_2.each do |l|
+            b = b + l.count
+          end#do
+           @count2 = b.to_f + elr_2.to_f
+           
+          main = @count1.to_f <= @leav_category.monthly_leave.to_f && @count2.to_f <= @leav_category.monthly_leave.to_f
+            if main == true
+              @month_diff1 = @leav_category.monthly_leave.to_f
+            else
+              @month_diff2 = @leav_category.monthly_leave.to_f + 2
+            end#main == true
+        end #month
+      end #for
+        if start_month == end_month
+          @month_same
+        else
+          @month_diff1 || @month_diff2
+        end
+  end #def
 
 end

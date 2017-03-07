@@ -2125,10 +2125,13 @@ ActiveRecord::Schema.define(version: 20170306114807) do
     t.datetime "updated_at",               null: false
     t.integer  "employee_leav_request_id"
     t.integer  "employee_id"
+    t.decimal  "count"
+    t.integer  "leav_category_id"
   end
 
   add_index "leave_records", ["employee_id"], name: "index_leave_records_on_employee_id"
   add_index "leave_records", ["employee_leav_request_id"], name: "index_leave_records_on_employee_leav_request_id"
+  add_index "leave_records", ["leav_category_id"], name: "index_leave_records_on_leav_category_id"
 
   create_table "leave_status_records", force: :cascade do |t|
     t.integer  "employee_leav_request_id"

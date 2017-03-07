@@ -6,14 +6,13 @@
   <body>
     <h4>OD Request Approved</h4>
     <p>
-      
-      Employee ID : <%= @manager.try(:manual_employee_code) %><br>
+      ID : <%= @manager.try(:manual_employee_code) %><br>
       Employee Name : <%= @manager.try(:first_name).to_s+' '+@manager.try(:middle_name).to_s+' '+@manager.try(:last_name).to_s %><br>
       Approved
 
       You have one leave request from <br>
       
-      Employee ID : <%= @od_request.employee.try(:manual_employee_code) %><br>
+      ID : <%= @od_request.employee.try(:manual_employee_code) %><br>
       Employee Name : <%= @od_request.employee.try(:first_name).to_s+' '+@od_request.employee.try(:middle_name).to_s+' '+@od_request.employee.try(:last_name).to_s %><br>
       Department : <%= @od_request.employee.try(:department).try(:name) %><br>
       Designation : <%= @od_request.employee.try(:joining_detail).try(:employee_designation).try(:name) %><br>

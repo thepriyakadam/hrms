@@ -9,6 +9,7 @@
       <th>Payable Day</th>
       <th>Month</th>
       <th>Year</th>
+      <th>Location</th>
     </tr>
   </thead>
   <tbody>
@@ -21,6 +22,7 @@
         <td><%= w.payable_day %></td>
         <td><%= w.month_name %></td>
         <td><%= w.year %></td>
+        <td><%= w.employee.company_location.try(:name) %></td>
       </tr>
     <% end %>
   </tbody>

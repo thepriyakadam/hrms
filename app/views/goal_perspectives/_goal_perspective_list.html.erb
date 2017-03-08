@@ -1,7 +1,11 @@
+<br>
 <table class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
       <th>Goal Perspective</th>
+      <th>Weightage</th>
+      <th>From</th>
+      <th>To</th>
       <th>Status</th>
       <th>Action</th>
     </tr>
@@ -10,6 +14,9 @@
     <% @goal_perspectives.each do |goal_perspective| %>
       <tr>
         <td><%= goal_perspective.name %></td>
+        <td><%= goal_perspective.goal_weightage ? "Yes" : "No" %></td>
+        <td><%= goal_perspective.from %></td>
+        <td><%= goal_perspective.to %></td>
         <td><%= goal_perspective.status ? "Active" : "Inactive" %></td>
         <td>
           <% if goal_perspective.is_confirm == true %>

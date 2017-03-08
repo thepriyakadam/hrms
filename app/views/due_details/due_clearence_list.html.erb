@@ -1,6 +1,6 @@
 <div class="box">
 <div class="box-header">
-<h3 class="box-title">Due Details For : <%= full_name(@due_employee_details.first.employee) %> , Template Name : <%= @due_employee_details.first.due_template.try(:name) %></h3>
+<h3 class="box-title">Due Details For : <%= code_full_name(@due_employee_details.first.employee) %> , Template Name : <%= @due_employee_details.first.due_template.try(:name) %></h3>
   <!-- <div class="pull-right">
     <= link_to "Full & Final Settlement", full_and_final_settlement_due_details_path,class: 'btn btn-primary' %> 
   </div> -->
@@ -53,28 +53,28 @@
       <tr>
         <th>Pending Total</th>
         <% a=DueAction.where(due_employee_detail_id: due_employee_detail,status: false) %>
-        <th><%= a.sum(:amount) %></th>
+        <th><%= pending_total=a.sum(:amount) %></th>
      
         <th>Clear Total</th>
         <% b=DueAction.where(due_employee_detail_id: due_employee_detail,status: true) %>
-        <th><%= b.sum(:amount) %></th>
+        <th><%= clear_total=b.sum(:amount) %></th>
 
-        <th><%= due_employee_detail.due_actions.sum(:amount) %></th>
+        <th><%= total=due_employee_detail.due_actions.sum(:amount) %></th>
       </tr>
       <tr><th colspan="5"></th></tr>
     <% end %>
     <tr>
         <th>Grand Pending Total</th>
-        <% a=DueEmployeeDetail.where(employee_id: @employee.id).pluck(:id) %>
-        <% b=DueAction.where(due_employee_detail_id: a,status: false) %>
-        <th><%= b.sum(:amount) %></th>
+        <% c=DueEmployeeDetail.where(employee_id: @employee.id).pluck(:id) %>
+        <% d=DueAction.where(due_employee_detail_id: c,status: false) %>
+        <th><%= grand_pending_total=d.sum(:amount) %></th>
      
         <th> Grand Clear Total</th>
-        <% c=DueAction.where(due_employee_detail_id: a,status: true) %>
-        <th><%= c.sum(:amount) %></th>
+        <% e=DueAction.where(due_employee_detail_id: c,status: true) %>
+        <th><%= grand_clear_total=e.sum(:amount) %></th>
         
-        <% d=DueAction.where(due_employee_detail_id: a) %>
-        <th><%= d.sum(:amount) %></th>
+        <% f=DueAction.where(due_employee_detail_id: c) %>
+        <th><%= f.sum(:amount) %></th>
     </tr>
   </tbody>
 </table>
@@ -231,7 +231,7 @@
       <th>No. of Year</th>
       <th>Total</th>
       <th>Day</th>
-    </tr>
+     </tr>
   </thead>
 
   <tbody>
@@ -241,9 +241,44 @@
         <td><%= gratuity.no_of_year %></td>
         <td><%= gratuity.total_gratuity %></td>
         <td><%= gratuity.day %></td>
-        </tr>
+      </tr>
       <% end %>
-    </tbody>
+  </tbody>
+  </table>
+</div>
+
+<div class="box-body">
+    <table id="example6" class="table table-bordered table-hover table-condensed'">
+    <thead>
+      <tr><th colspan="7"><center>Amount to be Paid </center></th></tr>
+      <tr>
+      <th>Clearance Pending</th>
+      <th>Installment</th>
+      <th>Total</th>
+      <th>Net Salary</th>
+      <th>Gratuity</th>
+      <th>Total</th>
+      <th>Final Total</th>
+     </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+        <td><%= grand_pending_total %></td>
+        <td><% adv_sal = AdvanceSalary.where(employee_id:  @employee.id).pluck(:id) 
+        instal=Instalment.where(advance_salary_id: adv_sal,is_complete: false) %>
+        <%= instal_total=instal.sum(:instalment_amount) %></td>
+        <td><strong><%= total_1=grand_pending_total + instal_total  %></strong></td>
+        <td><% @salaryslips = Salaryslip.where(workingday_id: @workingdays_1) 
+        net_salary=@salaryslips.sum(:calculated_net_salary).round %>
+        <%= net_salary %></td>
+        <td><% grat=@gratuities.take %>
+          <%= total_grat=grat.total_gratuity %>
+        </td>
+        <td><strong><%= total_2=net_salary+total_grat %></strong></td>
+        <td><strong><%= final_total=total_1-total_2 %></strong></td>
+      </tr>
+  </tbody>
   </table>
 </div>
 

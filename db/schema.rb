@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170224091456) do
+ActiveRecord::Schema.define(version: 20170304054259) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -163,9 +163,12 @@ ActiveRecord::Schema.define(version: 20170224091456) do
     t.string   "name"
     t.text     "definition"
     t.boolean  "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.boolean  "is_confirm"
+    t.boolean  "attribute_weightage"
+    t.string   "from"
+    t.string   "to"
   end
 
   create_table "attribute_rating_sheets", force: :cascade do |t|
@@ -1588,10 +1591,13 @@ ActiveRecord::Schema.define(version: 20170224091456) do
 
   create_table "goal_perspectives", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.boolean  "is_confirm"
     t.boolean  "status"
+    t.boolean  "goal_weightage"
+    t.integer  "from"
+    t.integer  "to"
   end
 
   create_table "goal_rating_sheets", force: :cascade do |t|
@@ -1744,7 +1750,7 @@ ActiveRecord::Schema.define(version: 20170224091456) do
   create_table "induction_activities", force: :cascade do |t|
     t.text     "activity"
     t.string   "day"
-    t.integer  "duration"
+    t.string   "duration"
     t.integer  "employee_id"
     t.integer  "induction_master_id"
     t.datetime "created_at",          null: false
@@ -1755,6 +1761,10 @@ ActiveRecord::Schema.define(version: 20170224091456) do
     t.datetime "avatar_updated_at"
     t.date     "start_date"
     t.boolean  "induction_completed"
+    t.date     "activity_date"
+    t.time     "from"
+    t.time     "to"
+    t.text     "program_agenda"
   end
 
   add_index "induction_activities", ["employee_id"], name: "index_induction_activities_on_employee_id"
@@ -1921,6 +1931,7 @@ ActiveRecord::Schema.define(version: 20170224091456) do
     t.boolean  "is_confirm"
     t.integer  "selected_resume_id"
     t.string   "job_title"
+    t.text     "address"
   end
 
   add_index "interview_schedules", ["employee_id"], name: "index_interview_schedules_on_employee_id"
@@ -3279,13 +3290,15 @@ ActiveRecord::Schema.define(version: 20170224091456) do
     t.string   "esic_no"
     t.string   "pf_no"
     t.string   "uan_no"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.string   "account_no"
+    t.integer  "employee_designation_id"
   end
 
   add_index "slip_informations", ["cost_center_id"], name: "index_slip_informations_on_cost_center_id"
   add_index "slip_informations", ["department_id"], name: "index_slip_informations_on_department_id"
+  add_index "slip_informations", ["employee_designation_id"], name: "index_slip_informations_on_employee_designation_id"
   add_index "slip_informations", ["salaryslip_id"], name: "index_slip_informations_on_salaryslip_id"
 
   create_table "society_member_ships", force: :cascade do |t|

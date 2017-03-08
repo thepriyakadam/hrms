@@ -33,11 +33,12 @@
      <tbody>
         <tr>
        <td>
-       <strong> ID: </strong> <%= @employee.manual_employee_code%><br><br> 
-       <strong> Name: </strong> <%= full_name(@employee) %><br><br> 
-       <strong> Designation: </strong> <%= @slip_information.try(:employee_designation).try(:name) %><br><br>
+       <strong> ID : </strong> <%= @employee.manual_employee_code%><br><br> 
+       <strong> Name : </strong> <%= full_name(@employee) %><br><br> 
+       <strong> Contact No : </strong> <%= @employee.try(:contact_no)%><br><br> 
+       <strong> Designation : </strong> <%= @employee.joining_detail.try(:employee_designation).try(:name) %><br><br>
        <strong> Department : </strong> <%= @slip_information.try(:department).try(:name) %><br><br>
-       <strong> Unit: </strong> <%= @slip_information.try(:cost_center).try(:name)%><br><br>
+       <strong> Unit : </strong> <%= @slip_information.try(:cost_center).try(:name)%><br><br>
        </td>
        <td>
        <strong> Present Day : </strong> <%= @working_day.try(:present_day) %> <br><br> 
@@ -52,7 +53,7 @@
         <% end %>
         </td>
        <td>
-       <strong> Salary Slip <br><br>
+       <strong> Salary Slip : <%= @working_day.try(:month_name) %> - <%= @working_day.try(:year) %> <br><br>
        <strong> UAN No : </strong> <%= @slip_information.try(:uan_no) %><br><br>
        <strong> PF No :   </strong><%= @slip_information.try(:pf_no) %><br><br>
        <strong> ESIC No : </strong> <%= @slip_information.try(:esic_no) %><br><br>
@@ -132,6 +133,3 @@
      <br><br>
    </div>
 <% end %>
-
-
-

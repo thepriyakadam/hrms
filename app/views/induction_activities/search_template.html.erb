@@ -1,28 +1,10 @@
  <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Assign Induction Template To Employee</h3>
+    <h3 class="box-title">Assign Induction Template To Employee : <%= @employee.manual_employee_code %> - <%= full_name(@employee) %></h3>
     <div class="box-tools pull-right">
     </div>
   </div><!-- /.box-header -->
 <div class="box-body">
-
-<table class="table table-bordered table-hover">
-      <tr>
-        <th>ID</th>
-        <th>Employee Name</th>
-        <th>Department</th>
-        <th>Designation</th>
-        <th>Contact No</th>
-      </tr>
-      <tr>
-        <td><%= @employee.manual_employee_code %></td>
-        <td><%= full_name(@employee) %></td>
-        <td><%= @employee.company_location.try(:name) %> - <%= @employee.department.try(:name) %></td>
-        <td><%= @employee.joining_detail.try(:employee_designation).try(:name)%></td>
-        <td><%= @employee.contact_no %></td>
-      </tr>
-    </table><br>
-
  <div class="row">
 	    <div class="col-sm-3">
          <div class="field">
@@ -36,9 +18,9 @@
 	    
 </div>
 
-<div id="induction_document_download_details">
+<!-- <div id="induction_document_download_details">
 	    
-</div>
+</div> -->
 
 </div>
 </div>

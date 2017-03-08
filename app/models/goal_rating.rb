@@ -27,4 +27,33 @@ class GoalRating < ActiveRecord::Base
     prev_total = previous_goals.sum(:goal_weightage) - goal_weightage.to_i
     prev_total + params[:goal_rating][:goal_weightage].to_i
   end
+
+  def goal_id_sum(goal_rating)
+    previous_weightage = GoalRating.where(goal_perspective_id: goal_rating.goal_perspective_id)
+    weightage = previous_weightage.sum(:goal_weightage)
+    weightage + goal_rating.goal_weightage
+  end
+
+  def attribute_id_sum(goal_rating)
+    previous_weightage = GoalRating.where(attribute_master_id: goal_rating.attribute_master_id)
+    weightage = previous_weightage.sum(:goal_weightage)
+    weightage + goal_rating.goal_weightage
+  end
+
+  def goal_id_sum_update(goal_rating,weightage1)
+   previous_weightage = GoalRating.where(goal_perspective_id: goal_rating.goal_perspective_id)
+   goal_rating1 = previous_weightage.find_by(id: goal_rating.id)
+   weigh = goal_rating1.goal_weightage
+   weightage = previous_weightage.sum(:goal_weightage) - weigh.to_i
+    weightage + weightage1
+ end
+
+ def attribute_id_sum_update(goal_rating,weightage1)
+   previous_weightage = GoalRating.where(attribute_master_id: goal_rating.attribute_master_id)
+   weightage = previous_weightage.sum(:goal_weightage)
+   goal_rating1 = previous_weightage.find_by(id: goal_rating.id)
+   weigh = goal_rating1.goal_weightage
+   weightage = previous_weightage.sum(:goal_weightage) - weigh.to_i
+    weightage + weightage1
+ end
 end

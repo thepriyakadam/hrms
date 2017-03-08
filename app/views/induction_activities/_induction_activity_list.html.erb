@@ -2,12 +2,12 @@
   <thead>
     <tr>
       <th>Sr.No</th>
-      <th>Activity</th>
       <th>Day</th>
-      <th>Duration(Hrs)</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Duration</th>
       <th>Contact Person</th>
-<!--       <th>Download</th>
- -->      <th>Action</th>
+      <th>Action</th>
     </tr>
   </thead>
 
@@ -16,28 +16,20 @@
     <% @induction_activities.each do |induction_activity| %>
       <tr>
         <td><%= i=i+1 %></td>
-        <td><%= induction_activity.activity %></td>
-        <td><%= induction_activity.day %></td>
+        <td><%= induction_activity.activity_date %></td>
+        <td><%= induction_activity.from %></td>
+        <td><%= induction_activity.to %></td>
         <td><%= induction_activity.duration %></td>
         <td><%= full_name(induction_activity.employee) %></td>
-       <!--  <td>
-        <if induction_activity.avatar_file_name == nil %>
-           <small class="label label-default">Document Not Available</small>
-             < else %>
-             <center><link_to '',download_document_path(id: induction_activity.id),class: 'btn btn-xs btn-primary fa fa-download' %></center>
-        < if induction_activity.avatar_file_name == nil %>
-           <small class="label label-default">Document Not Available</small>
-             < else %>
-             <center>< link_to '',download_document_path(id: induction_activity.id),class: 'btn btn-xs btn-primary fa fa-download' %></center>
-             < end %>
-        </td> -->
         <td>
-          <!--= link_to '', edit_induction_activity_path(induction_activity) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>-->
-
           <div id="myModal" class="modal fade"></div>
-       <%= link_to ' Update Activity',modal_induction_activity_induction_activities_path(induction_master_id: induction_activity.induction_master_id, induction_activity_id: induction_activity),class: 'btn btn btn-xs btn-success fa fa-modx',remote: true %>
-            <%= link_to '', induction_activity, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close',remote:true %>
+            <%= link_to '',modal_induction_activity_induction_activities_path(induction_master_id: induction_activity.induction_master_id, induction_activity_id: induction_activity),class: 'btn btn btn-xs btn-success fa fa-edit',remote: true %>
+            <%= link_to '',induction_activity, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close' %>
         </td>
+      </tr>
+      <tr>
+        <th></th>
+        <td colspan="6"><strong> Program Agenda :  </strong> <%= induction_activity.program_agenda %></td>
       </tr>
     <% end %>
   </tbody>

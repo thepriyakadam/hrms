@@ -30,9 +30,9 @@
       </tbody>
     </table>  
 
-      <%= link_to " Excel Report ",period_rating_wise_xls_goal_ratings_path(period_id: params[:period_id], rating_id: params[:rating_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%= link_to " Excel Report ",Period_rating_wise_employee_goal_ratings_path(:salary =>{:period_id => params[:salary][:period_id],:rating_id => params[:salary][:rating_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
       
-      <%= link_to " Print Report ",period_rating_wise_pdf_goal_ratings_path(period_id: params[:period_id], rating_id: params[:rating_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+      <%= link_to " PDF Report ",Period_rating_wise_employee_goal_ratings_path(:salary =>{:period_id => params[:salary][:period_id],:rating_id => params[:salary][:rating_id]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 
   </div>
 </div>

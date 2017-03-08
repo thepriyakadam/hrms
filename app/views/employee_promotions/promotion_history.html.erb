@@ -17,7 +17,6 @@
         <th>Designation</th>
         <th>Category</th>
         <th>CTC</th>
-        <th>Justification</th>
         <th>Effective From</th>
         <th>Effective To</th>
         <th>Action</th>
@@ -33,10 +32,12 @@
           <td><%= employee_promotion.employee_designation.try(:name) %></td>
           <td><%= employee_promotion.employee_category.try(:name) %></td>
           <td><%= employee_promotion.employee_ctc %></td>
-          <td><%= employee_promotion.justification %></td>
           <td><%= employee_promotion.effective_from %></td>
           <td><%= employee_promotion.effective_to %></td>
-          <td><%= link_to '', display_certificate_employee_promotions_path(emp_promotion_id: employee_promotion.id),class: 'btn btn-default btn-xs fa fa-certificate' %></td> 
+          <td><%= link_to 'Certificate', display_certificate_employee_promotions_path(emp_promotion_id: employee_promotion.id),class: 'btn btn-primary btn-xs ' %>
+          <%= link_to '', employee_promotion,class: 'btn btn-default btn-xs fa fa-eye' %>
+
+          </td> 
         </tr>
       <% end %>
     </tbody>

@@ -13,7 +13,7 @@ div.nobreak{ page-break-inside: avoid;
 </style>
      
  <div>
-  <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
+  <table style="border-collapse: collapse; font-size:12t;" border=1 width=1200 cellpadding="10">
       <thead>
        <tr>
         <td colspan="4">
@@ -32,11 +32,12 @@ div.nobreak{ page-break-inside: avoid;
        </tr>
        <tr>
        <td>
-       <strong> ID: </strong> <%= @employee.manual_employee_code%><br><br> 
-       <strong> Name: </strong> <%= full_name(@employee) %><br><br> 
+       <strong> ID : </strong> <%= @employee.manual_employee_code%><br><br> 
+       <strong> Name : </strong> <%= full_name(@employee) %><br><br>
+       <strong> Contact No : </strong> <%= @employee.try(:contact_no)%><br><br> 
        <strong> Designation: </strong> <%= @slip_information.try(:employee_designation).try(:name) %><br><br>
        <strong> Department : </strong> <%= @slip_information.try(:department).try(:name) %><br><br>
-       <strong> Unit: </strong> <%= @slip_information.try(:cost_center).try(:name)%><br><br>
+       <strong> Unit : </strong> <%= @slip_information.try(:cost_center).try(:name)%><br><br>
        </td>
        <td>
        <strong> Present Day : </strong> <%= @working_day.try(:present_day) %> <br><br> 
@@ -59,7 +60,7 @@ div.nobreak{ page-break-inside: avoid;
        </tr>
   </tbody>
   </table>
-<table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="5">
+<table style="border-collapse: collapse; font-size:12pt;" border=1 width=1200 cellpadding="5">
   <thead>
   <tr><td colspan="7"><center><strong>Salary Details</strong></center> </td></tr>
     <tr>

@@ -206,7 +206,10 @@ end
 
   def resume_list
      @selected_resume = SelectedResume.new
-     @interview_schedule = InterviewSchedule.find(params[:format])
+     # @interview_schedule = InterviewSchedule.find(params[:format])
+     @interview_round = InterviewRound.find(params[:format])
+     @interview_schedule = InterviewSchedule.where(id: @interview_round.interview_schedule_id).take
+     # @selected_resumes = SelectedResume.where(id: @interview_schedule.selected_resume_id)
      @selected_resumes = SelectedResume.where(id: @interview_schedule.selected_resume_id)
   end
 
@@ -275,9 +278,9 @@ end
   end
 
   def interview_round_list
-    @interview_schedule = InterviewSchedule.find(params[:format])
-    # @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id,employee_id: current_user.employee_id)
-    @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id)
+    # @interview_schedule = InterviewSchedule.find(params[:format])
+    @interview_rounds = InterviewRound.where(employee_id: current_user.employee_id)
+    # @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id)
   end
 
   def modal_schedule_list
@@ -307,6 +310,6 @@ end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def interview_schedule_params
-    params.require(:interview_schedule).permit(:selected_resume_id, :employee_id, :interview_schedule_id, :email_id, :candidate_name, :interview_date, :location, :job_title)
+    params.require(:interview_schedule).permit(:selected_resume_id, :employee_id, :address,:interview_schedule_id, :email_id, :candidate_name, :interview_date, :location, :job_title)
   end
 end

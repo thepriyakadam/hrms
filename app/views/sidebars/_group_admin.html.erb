@@ -179,10 +179,12 @@
       <li class="treeview" id="Reports">
         <a href="#"><i class="fa fa-edit"></i> Reports <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-        <li><a href="/employees/employee_list_report"><i class="fa fa-tags"></i> Employee </a></li>
-        <li><a href="/reports/basic_details/new"><i class="fa fa-tags"></i> Employee Details </a></li>
+       
+       <!--  <li><a href="/reports/basic_details/new"><i class="fa fa-tags"></i> Employee Details </a></li> -->
+        <li><a href="/employees/employee_report"><i class="fa fa-tags"></i> Employee Details </a></li>
       <!-- <li><a href="/reports/basic_details/employee_list"><i class="fa fa-tags"></i>Employee Selective</a></li> -->      
-        <li><a href="/reports/basic_details/employee_list"><i class="fa fa-tags"></i> Employee Selective </a></li>
+       <!--  <li><a href="/reports/basic_details/employee_list"><i class="fa fa-tags"></i> Employee Selective </a></li> -->
+        <li><a href="/employees/employee_list_report"><i class="fa fa-tags"></i> Employee </a></li>
         <li><a href="/reports/joining_details/new"><i class="fa fa-tags"></i> Onbording </a></li>
         <li><a href="/reports/bank_details/new"><i class="fa fa-tags"></i> Bank  </a></li>
         <li><a href="/reports/qualification_details/new"><i class="fa fa-tags"></i> Qualification </a></li>
@@ -263,23 +265,38 @@
         <li><a href="/employee_leav_requests/employee_list"><i class="fa fa-tags"></i>Leave Request</a></li>
         <li><a href="/employee_leav_requests/approved_or_rejected_leave_request"><i class="fa fa-tags"></i>Leave Approval</a></li>
         <li><a href="/employee_leav_requests/all_leave_request_list"><i class="fa fa-tags"></i>Admin Leave Approval</a></li>
+        </ul>
+      </li>
+
+
+      <li class="treeview" id="LeaveReports">
+        <a href="#"><i class="fa fa-edit"></i> Leave Reports  <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+        <li><a href="/employee_leav_requests/leave_request_report"><i class="fa fa-tags"></i>Leave Request </a></li>
+        <li><a href="/employee_leav_requests/leave_req_status_report"><i class="fa fa-tags"></i>Status Wise Leave</a></li>
+        <li><a href="/particular_leave_records/leave_approval_report"><i class="fa fa-tags"></i>Leave Approved</a></li>
+        <li><a href="/leave_c_offs/search_by_c_off_date"><i class="fa fa-tags"></i>C.Off Report</a></li>
+         <li><a href="/employee_leav_balances/employee_leave_balance"><i class="fa fa-tags"></i>Leave Balance </a></li>
+        </ul>
+      </li>  
+
+      <li class="treeview" id="ODProcess">
+        <a href="#"><i class="fa fa-edit"></i> On Duty Process  <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
         <li><a href="/on_duty_requests/employee_list"><i class="fa fa-tags"></i>OD Request</a></li>
         <li><a href="/on_duty_requests/request_approval_list"><i class="fa fa-tags"></i>OD Approval</a></li>
         <li><a href="/on_duty_requests/od_request_list"><i class="fa fa-tags"></i>Admin OD Approval</a></li>
         </ul>
       </li>
-      <li class="treeview" id="LeaveReports">
-        <a href="#"><i class="fa fa-edit"></i> Reports  <i class="fa fa-angle-left pull-right"></i></a>
+
+      <li class="treeview" id="ODReports">
+        <a href="#"><i class="fa fa-edit"></i> On Duty Reports  <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-         <li><a href="/employee_leav_requests/search_by_start_date"><i class="fa fa-tags"></i>Leave Request</a></li>
-        <li><a href="/particular_leave_records/search_by_leave_date"><i class="fa fa-tags"></i>Approval Leave </a></li>
-        <li><a href="/employee_leav_balances/employee_leave_balance"><i class="fa fa-tags"></i>Leave Balance </a></li>
-        <li><a href="/leave_c_offs/search_by_c_off_date"><i class="fa fa-tags"></i>C.Off Report</a></li>
-        <li><a href="/employee_leav_requests/leave_request_report"><i class="fa fa-tags"></i>Leave Request </a></li>
-        <li><a href="/employee_leav_requests/leave_req_status_report"><i class="fa fa-tags"></i>Status Wise Leave</a></li>
-        <li><a href="/particular_leave_records/leave_approval_report"><i class="fa fa-tags"></i>Leave Approved</a></li>
+        <li><a href="/on_duty_requests/on_duty_request_report"><i class="fa fa-tags"></i>On Duty Request </a></li>
+        <li><a href="/on_duty_requests/on_duty_request_status_report"><i class="fa fa-tags"></i>Status Wise On Duty</a></li>
+        <li><a href="/on_duty_requests/on_duty_approval_report"><i class="fa fa-tags"></i>On Duty Approved</a></li>
         </ul>
-      </li>  
+      </li>
     </ul>
   </li>
 
@@ -662,14 +679,13 @@
        <li class="treeview" id="resignation"> 
        <a href="#"><i class="fa fa-edit"></i>Employee Resignation <i class="fa fa-angle-left pull-right"></i></a>
        <ul class="treeview-menu">
-       <li><a href="/leaving_reasons/new"><i class="fa fa-tags"></i> Leaving Reason Master </a></li>
-      <li><a href="/employee_resignations/new"><i class="fa fa-tags"></i> Resignation </a></li>
-      <li><a href="/employee_resignations/emp_resignation_history"><i class="fa fa-tags"></i> View Resignation </a></li>
-      <li><a href="/employee_resignations/cancel_resignation_list"><i class="fa fa-tags"></i> Cancel Resignation</a></li>
-      <li><a href="/employee_resignations"><i class="fa fa-tags"></i> Resignation List</a></li>
-       <li><a href="/employee_resignations/resignation_history"><i class="fa fa-tags"></i> Resignation Approval </a></li>
-       <li><a href="/employee_resignations/final_approval_emp_resignation_list"><i class="fa fa-tags"></i> Final Approval </a></li> 
-      <li><a href="/employee_resignations/final_approved_list"><i class="fa fa-tags"></i> Confirm </a></li> 
+      <li><a href="/employee_resignations/new"><i class="fa fa-tags"></i> Employee Resignation </a></li>
+<!--       <li><a href="/employee_resignations/cancel_resignation_list"><i class="fa fa-tags"></i> Cancel Resignation</a></li>
+ -->      <li><a href="/employee_resignations"><i class="fa fa-tags"></i> Resignation Status</a></li>
+       <li><a href="/employee_resignations/resignation_history"><i class="fa fa-tags"></i> Approve/Reject </a></li>
+       <li><a href="/employee_resignations/final_approval_emp_resignation_list"><i class="fa fa-tags"></i> Final Approve/Reject </a></li> 
+      <li><a href="/employee_resignations/final_approved_list"><i class="fa fa-tags"></i> Confirm Resignation</a></li> 
+      <li><a href="/employee_resignations/emp_resignation_history"><i class="fa fa-tags"></i> Resignation History</a></li>
       <li><a href="/employee_resignations/employee_resignation_list"><i class="fa fa-tags"></i> Exit Interview </a></li>
        </ul>
       </li> 
@@ -680,7 +696,7 @@
          <li><a href="/due_details/all_employee_list"><i class="fa fa-tags"> </i>Assign Template </a></li>
     <!--  <li><a href="/due_details/all_employee_resignation_list"><i class="fa fa-tags"> </i> Assign Template </a></li> -->
      <!-- <li><a href="/due_details/all_employee_due_detail"><i class="fa fa-tags"> </i>Send For Confirmation</a></li> -->
-     <li><a href="/due_details/employee_due_detail_history"><i class="fa fa-tags"> </i>Approve </a></li>
+     <li><a href="/due_details/employee_due_detail_history"><i class="fa fa-tags"> </i>Due Clearance </a></li>
         </ul>
       </li> 
       <li class="treeview" id= "full_and_final">
@@ -702,26 +718,36 @@
      <li id="particular_vacancy">
       <a href="#"><i class="fa fa-edit"></i> Vacancy <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-        <li><a href="/vacancy_masters"><i class="fa fa-tags"></i> Create Vacancy </a></li>
-        <li><a href="/vacancy_masters/vacancy_history"><i class="fa fa-tags"></i> Approve Vacancy </a></li>
+        <li><a href="/vacancy_masters/new"><i class="fa fa-tags"></i> Create Vacancy </a></li>
+        <li><a href="/vacancy_masters/vacancy_history"><i class="fa fa-tags"></i> Approve/Reject </a></li>
+         <li><a href="/vacancy_masters/final_approval_vacancy_list"><i class="fa fa-tags"></i> Final Approve/Reject </a></li> 
        <!--  <li><a href="/vacancy_masters"><i class="fa fa-tags"></i> Cancel Vacancy </a></li>  -->
-        <li><a href="/vacancy_masters/approve_vacancy_list"><i class="fa fa-tags"></i> Vacancy List </a></li>
+        <!-- <li><a href="/vacancy_masters/approve_vacancy_list"><i class="fa fa-tags"></i> Vacancy List </a></li> -->
+        <li><a href="/vacancy_masters"><i class="fa fa-tags"></i> Vacancy Status </a></li>
         <!-- <li><a href="/vacancy_masters/approved_vacancy_request_history_list"><i class="fa fa-tags"></i> Approved Vacancy List </a></li> -->
-        <li><a href="/vacancy_masters/approved_vacancy_list"><i class="fa fa-tags"></i> Approved Vacancy List </a></li>
-         <li><a href="/vacancy_masters/vacancy_resume"><i class="fa fa-tags"></i> Job Profile </a></li>
-        <li><a href="/vacancy_masters/vacancy_profile"><i class="fa fa-tags"></i> Vacancywise Profile </a></li>
+        <!-- <li><a href="/vacancy_masters/approved_vacancy_list"><i class="fa fa-tags"></i> Approved Vacancy List </a></li> -->
+        <li><a href="/vacancy_masters/vac_history"><i class="fa fa-tags"></i> Vacancy History </a></li>
+         
 <!--          <li><a href="/interview_schedules"><i class="fa fa-tags"></i> Interview Schedule List</a></li>
  -->        </ul>
       </li>
+      <li id="interview_sched">
+        <a href="#"><i class="fa fa-edit"></i>Interview Process <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+        <li><a href="/vacancy_masters/vacancy_resume"><i class="fa fa-tags"></i> Job Profile </a></li>
+        <li><a href="/vacancy_masters/vacancy_profile"><i class="fa fa-tags"></i> Vacancywise Profile </a></li>
+        <li><a href="/interview_schedules"><i class="fa fa-tags"></i> Interview Round </a></li>
+        <!-- <li><a href="/interview_schedules/interviewee_list"><i class="fa fa-tags"></i> Interviewee List </a></li> -->
+        <li><a href="/interview_schedules/interview_round_list"><i class="fa fa-tags"></i> Interviewee List </a></li>
+        <li><a href="/interview_schedules/all_interview_schedule_list"><i class="fa fa-tags"></i> Report </a></li>
+        </ul>
+      </li>   
       <li id="general_vacancy">
         <a href="#"><i class="fa fa-edit"></i>Candidate Profile <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/selected_resumes/new1"><i class="fa fa-tags"></i> Candidate Profile </a></li>
         <li><a href="/selected_resumes/all_resume_list"><i class="fa fa-tags"></i> Resume Shortlist </a></li>
         <li><a href="/interview_schedules/new1"><i class="fa fa-tags"></i> Interview Schedule </a></li>
-        <li><a href="/interview_schedules"><i class="fa fa-tags"></i> Interview Round </a></li>
-        <li><a href="/interview_schedules/interviewee_list"><i class="fa fa-tags"></i> Interviewee List </a></li>
-        <li><a href="/interview_schedules/all_interview_schedule_list"><i class="fa fa-tags"></i> Report </a></li>
         </ul>
       </li>   
        <li id="candidate_regist">

@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h6 class="box-title">Interview Evaluation Of :- <%= @interview_round.interview_schedule.try(:candidate_name) %></h6>
+    <h6 class="box-title">Interview Evaluation Of :- <%= @interview_round.interview_schedule.try(:candidate_name) %> , Interviewer Name : <%= @interview_round.employee.try(:first_name) %> <%= @interview_round.employee.try(:middle_name) %> <%= @interview_round.employee.try(:last_name) %></h6>
   </div><!-- /.box-header -->
 	<div class="box-body">
 		<div id="form">

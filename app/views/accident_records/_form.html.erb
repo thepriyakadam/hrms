@@ -95,31 +95,32 @@
         </div>
       </div>  
      
-      <!-- <div class="row">
+      <div class="row">
        <div class="col-sm-3">
       <div class="field">
-        <= f.file_field :avatar,label: 'Upload Photo', multiple: true %>
+        <%= f.file_field :avatar,label: 'Upload Photo', multiple: true %>
       </div>
       </div> 
-      </div> --><br>
+      </div>
+      <br>
 
-<div id="entry1" class="clonedInput">
+<!-- <div id="entry1" class="clonedInput">
   <div class="row">
       <div class="col-sm-3">
           <div class="field">
-              <%= f.file_field :avatar,label: 'Upload Photo' , class: 'input_avatar' %>
+              <= f.file_field :avatar,label: 'Upload Photo' , class: 'input_avatar' %>
           </div>
       </div> 
-  <% unless params['controller'] == 'accident_records' and params['action'] == 'edit' %>
+  < unless params['controller'] == 'accident_records' and params['action'] == 'edit' %>
   <div class="row">
       <div class="col-sm-1">
           <input type="button" id="btnAdd" value="+" class="btn btn-xs btn-success"> 
           <input type="button" id="btnDel" value="-" class="btn btn-xs btn-danger">
       </div>
   </div><br>
-  <%end%>
+  <end%>
   </div>
-    </div>
+    </div> -->
    <div class="row">
       <div class="col-sm-3">
         <label></label>
@@ -136,7 +137,7 @@
   </div><!-- /.box-body -->
 </div><!-- /.box -->
 
-<script type="text/javascript">
+<!-- script type="text/javascript">
     $(function () {
     $('#btnAdd').click(function () {
       var num     = $('.clonedInput').length, 
@@ -167,8 +168,8 @@
     $('#btnAdd').attr('disabled', false);
     $('#btnDel').attr('disabled', true);
   });
-</script>
-
+script>
+ -->
 <script type="text/javascript">
   $(function(){
     $('.food_coupan_date').datepicker({

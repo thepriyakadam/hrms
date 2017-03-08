@@ -18,6 +18,16 @@ Rails.application.routes.draw do
       get :show_od_record
       get :od_request_list
       get :employee_od_request_detil_for_admin
+      get :on_duty_request_report
+      post :request_report
+      get :request_report
+      get :on_duty_request_status_report
+      get :status_wise_report_list
+      post :status_wise_report_list
+      get :on_duty_approval_report
+      get :approved_record_list
+      get :show_approved_record
+      post :show_approved_record
     end
   end
 
@@ -545,8 +555,6 @@ end
       post :print_subordinate_list
       post :all_subordinate_list
       get :performance_type
-      get :attribute_modal
-      patch :update_attribute_modal
       get :period_for_training
       get :training_request
       post :create_attribute_training
@@ -558,8 +566,6 @@ end
       get :modal_training_plan
       get :goal_set_modal
       patch :update_goal_set_modal
-      get :attribute_set_modal
-      patch :update_attribute_set_modal
       get :trainee_list
       post :print_employee_detail
       get :all_emp_list
@@ -583,6 +589,7 @@ end
       get :detail_employee_wise_xls
       get :period_rating_wise
       post :Period_rating_wise_employee
+      get :Period_rating_wise_employee
       get :period_rating_wise_pdf
       get :period_rating_wise_xls
       get :increment_index_report
@@ -1106,6 +1113,12 @@ end
       get :show_vacancy_request_history
       get :reporting_masters_vacancy_master_list
       post :import
+      get :first_approve
+      get :approve_and_send_next
+      get :final_approval_vacancy_list
+      get :final_approve
+      get :vac_history
+      get :current_employee_vacancy_list
     end
   end
   resources :leave_c_offs do
@@ -1351,9 +1364,6 @@ end
       post :salary_employee_wise
       get :employee_wise_pdf
       get :employee_wise_xls
-      get :employee_list
-      get :show_all_record
-      post :show_all_record
       get :employee_record
     end
   end
@@ -1920,6 +1930,15 @@ end
       get :left_employee_xl
       get :left_employee_pdf
       get :collect_employee
+      get :select_company_company_location_and_department
+      get :show_employee
+      post :print_employee
+      get :print_employee
+      get :employee_list_pdf
+      get :employee_report 
+      post :show_employee_list
+      get :show_all_record
+      post :show_all_record
     end
     member do
       get :edit_manager

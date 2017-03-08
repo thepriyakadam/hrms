@@ -11,7 +11,6 @@
             <tr>
               <th>ID</th>
               <th>Employee Name</th>
-              <th>Request To</th>
               <th>Employee Designation</th>
               <th>Employee Category</th>
               <th>Company</th>
@@ -26,7 +25,6 @@
           <tr>
             <td><%= employee_transfer.employee.try(:manual_employee_code) %></td>
             <td><%= full_name(employee_transfer.employee) %></td>
-            <td><%= employee_transfer.reporting_master.employee.try(:first_name) %> <%= employee_transfer.reporting_master.employee.try(:middle_name) %> <%= employee_transfer.reporting_master.employee.try(:last_name) %></td>
             <td><%= employee_transfer.employee_designation.try(:name) %></td>
             <td><%= employee_transfer.employee_category.try(:name) %></td>
             <td><%= employee_transfer.company.try(:name) %></td>

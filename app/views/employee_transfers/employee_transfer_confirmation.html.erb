@@ -11,7 +11,6 @@
             <tr>
               <th>ID</th>
               <th>Employee Name</th>
-              <th>Request To</th>
               <th>Employee Designation</th>
               <th>Employee Category</th>
               <th>Company</th>
@@ -24,10 +23,9 @@
           <tbody>
           <% @employee_transfers.each do |employee_transfer| %>
           <tr>
-          <% if @current_request.id == employee_transfer.id %>
+          <% if @employee_transfer.id == employee_transfer.id %>
           <th><font color='green'>*<%= employee_transfer.employee.try(:manual_employee_code) %></font></th>
                 <th><font color='green'><%= full_name(employee_transfer.employee) %></th></font>
-                <th><font color='green'><%= employee_transfer.reporting_master.employee.try(:first_name) %> <%= employee_transfer.reporting_master.employee.try(:middle_name) %> <%= employee_transfer.reporting_master.employee.try(:last_name) %></th></font>
                 <th><font color='green'><%= employee_transfer.employee_designation.try(:name) %></th></font>
                 <th><font color='green'><%= employee_transfer.employee_category.try(:name) %></th></font>
                 <th><font color='green'><%= employee_transfer.company.try(:name) %></th></font>
@@ -38,7 +36,6 @@
                 <%else%>
             <td><%= employee_transfer.employee.try(:manual_employee_code) %></td>
              <td><%= full_name(employee_transfer.employee) %></td>
-            <td><%= employee_transfer.reporting_master.employee.try(:first_name) %> <%= employee_transfer.reporting_master.employee.try(:middle_name) %> <%= employee_transfer.reporting_master.employee.try(:last_name) %></td>
             <td><%= employee_transfer.employee_designation.try(:name) %></td>
             <td><%= employee_transfer.employee_category.try(:name) %></td>
             <td><%= employee_transfer.company.try(:name) %></td>
@@ -51,56 +48,92 @@
       </tbody>
     </table>
 
+    <div class="row">
+      <div class="col-sm-12"><strong> <font color='green'>Note - * Row is the latest row to approve/reject </font></strong></div>
+  </div><br>
+
 <table id="example1" class="table table-bordered table-hover table-condensed">
 <tbody>
             <tr><td colspan="4"><font color='red'><center>Current Transfer Request Detail</center></font></td></tr>
             <tr>
             <th> ID </th>
-            <td><%= @current_request.employee.try(:manual_employee_code) %></td>
+            <td><%= @employee_transfer.try(:employee).try(:manual_employee_code) %></td>
             <th>Employee Name</th>
-            <td><%= full_name(@current_request.employee) %></td>
+            <td><%= full_name(@employee_transfer.employee) %></td>
             </tr>
 
             <tr>
               <th>Request To</th>
-              <td><%= @current_request.reporting_master.employee.try(:first_name) %> <%= @current_request.reporting_master.employee.try(:middle_name) %> <%= @current_request.reporting_master.employee.try(:last_name) %></td>
+              <td><% emp=Employee.where(id: @employee_transfer.reporting_master_id).take %>
+              <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
               <th>Employee Designation</th>
-              <td><%= @current_request.employee_designation.try(:name) %></td>
+              <td><%= @employee_transfer.try(:employee_designation).try(:name) %></td>
             </tr>
 
             <tr>
               <th>Employee Category</th>
-              <td><%= @current_request.employee_category.try(:name) %></td>
+              <td><%= @employee_transfer.try(:employee_category).try(:name) %></td>
               <th>Company</th>
-              <td><%= @current_request.company.try(:name) %></td>
+              <td><%= @employee_transfer.try(:company).try(:name) %></td>
             </tr>
 
             <tr>
               <th>Company Location</th>
-              <td><%= @current_request.employee.try(:company_location).try(:name) %></td>
+              <td><%= @employee_transfer.try(:employee).try(:company_location).try(:name) %></td>
                <th>Department</th>
-              <td><%= @current_request.employee.try(:department).try(:name) %></td>
+              <td><%= @employee_transfer.try(:employee).try(:department).try(:name) %></td>
             </tr>
 
             <tr>
               <th>Justification</th>
-              <td colspan="3"><%= @current_request.justification %></td>       
+              <td colspan="3"><%= @employee_transfer.justification %></td>       
             </tr>
    </tbody>
    </table>         
 
     <div id="myModal" class="modal fade"></div>
     <div id="myModal1" class="modal fade"></div>
+   
+   <tr>
+      <% if @employee_transfer.employee.manager_id.present? && @employee_transfer.employee.manager_2_id.present? && @employee_transfer.current_status == "Pending" %>
+      <%= link_to 'Approve',first_approve_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+     <%= link_to 'Reject',reject_transfer_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-danger fa fa-trash' %>
+      <% elsif @employee_transfer.employee.manager_id.present? && @employee_transfer.employee.manager_2_id.present? && @employee_transfer.current_status == "FirstApproved" %>
+       <%= link_to 'Approve',first_approve_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+       <%= link_to 'Reject',reject_transfer_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-danger fa fa-trash' %>
+        <%= link_to 'Approve & Send next',approve_and_send_next_employee_transfers_path(@employee_transfer.id),class: 'btn btn btn-xs btn-success' %> 
+      <% elsif @employee_transfer.employee.manager_id.present? && @employee_transfer.employee.manager_2_id.nil? && @employee_transfer.current_status == "Pending" %>
+        <%= link_to 'Approve',approve_employee_transfer_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+       <%= link_to 'Reject',reject_transfer_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-danger fa fa-trash' %>
+       <% end %>
+
+      <% if @employee_transfer.current_status == "Approved & Send Next" %>
+       <% employee_transfer = TravelRequest.where(id: @employee_transfer.id , current_status: "Approved & Send Next").take %>
+      <% employ = Employee.where(id: employee_transfer.reporting_master_id).take %>
+       <% if @employee_transfer.employee.manager_id.present? && @employee_transfer.employee.manager_2_id.present? && @employee_transfer.current_status == "Approved & Send Next" %>
+       <%= link_to 'Approve',first_approve_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Reject',reject_transfer_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-danger fa fa-trash' %>
+
+    <% elsif @employee_transfer.employee.manager_id.present? && @employee_transfer.employee.manager_2_id.nil? && @employee_transfer.current_status == "Approved & Send Next"%>
+    <%= link_to 'Approve',approve_employee_transfer_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'Reject',reject_transfer_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-danger fa fa-trash' %>
+      %>     
+    <% end %>
+   <% elsif @employee_transfer.current_status == "SecondApproved"  %>
+      <%= link_to 'Final Approve',final_approve_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-info fa fa-check' %>
+    <% end %>
+   </tr>
+<!-- 
     <tr>
     <th colspan="1"><center>
-      <%= link_to 'Approve',approve_transfer_employee_transfers_path(@employee_transfer),class: 'btn btn-sm btn-primary fa fa-check' %> |
-      <%= link_to 'Reject',reject_transfer_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-danger fa fa-trash' %> |
-      <%= link_to 'Approve & Send next',modal_approve_employee_transfers_path(@employee_transfer.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %> |
-      <%= link_to 'Edit & Approve',modal_edit_employee_transfers_path(@employee_transfer.id),class: 'btn btn btn-sm btn-info fa fa-modx',remote: true %> |
-      <%= link_to 'Edit and send next',modal_edit_and_send_next_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-info fa fa-check', remote: true %>
-      <%= link_to 'Back', transfer_request_employee_transfers_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
+      <= link_to 'Approve',approve_transfer_employee_transfers_path(@employee_transfer),class: 'btn btn-sm btn-primary fa fa-check' %> |
+      <= link_to 'Reject',reject_transfer_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-danger fa fa-trash' %> |
+      <= link_to 'Approve & Send next',modal_approve_employee_transfers_path(@employee_transfer.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %> |
+      <= link_to 'Edit & Approve',modal_edit_employee_transfers_path(@employee_transfer.id),class: 'btn btn btn-sm btn-info fa fa-modx',remote: true %> |
+      <= link_to 'Edit and send next',modal_edit_and_send_next_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-info fa fa-check', remote: true %>
+      <= link_to 'Back', transfer_request_employee_transfers_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
       </center>
       </th>
-      </tr>
+      </tr> -->
   </div>
 </div>

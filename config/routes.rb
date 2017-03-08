@@ -320,6 +320,11 @@ end
       patch :update_transfer_details
       get :modal_edit_and_send_next
       post :update_and_send_next_transfer_details
+      get :first_approve
+      get :approve_and_send_next
+      get :final_approve
+      get :final_approval_transfer_list
+      get :approve_employee_transfer
     end
   end
 

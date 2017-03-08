@@ -27,18 +27,26 @@ class EmployeeTransfersController < ApplicationController
   def create
     @employee_transfer = EmployeeTransfer.new(employee_transfer_params)
     @employee_transfer.current_status = "Pending"
+
+     a=current_user.employee_id
+    emp = Employee.where(id: a).take
+    if emp.try(:manager_id).nil?
+        flash[:alert] = "Reporting Manager not set please set Reporting Manager"
+        redirect_to employee_transfers_path
+      else
     respond_to do |format|
      
       if @employee_transfer.save
-        ReportingEmployeeTransfer.create(reporting_master_id: @employee_transfer.reporting_master_id, employee_transfer_id: @employee_transfer.id, status: @employee_transfer.current_status)
+        EmployeeTransfer.where(id: @employee_transfer.id).update_all(reporting_master_id: emp.manager_id,current_status: "Pending")
+        ReportingEmployeeTransfer.create(reporting_master_id: current_user.employee_id, employee_transfer_id: @employee_transfer.id, status: "Pending")
         TransferHistory.create(employee_transfer_id: @employee_transfer.id,employee_id: @employee_transfer.employee_id,reporting_master_id: @employee_transfer.reporting_master_id,employee_designation_id: @employee_transfer.employee_designation_id,employee_category_id: @employee_transfer.employee_category_id,company_id: @employee_transfer.company_id,company_location_id: @employee_transfer.company_location_id,department_id: @employee_transfer.department_id,justification: @employee_transfer.justification,current_status: @employee_transfer.current_status)
-        EmployeeTransferMailer.transfer_request(@employee_transfer).deliver_now
+        # EmployeeTransferMailer.transfer_request(@employee_transfer).deliver_now
         format.html { redirect_to @employee_transfer, notice: 'Employee transfer was successfully created.' }
         format.json { render :show, status: :created, location: @employee_transfer }
       else
         format.html { render :new }
         format.json { render json: @employee_transfer.errors, status: :unprocessable_entity }
-
+       end
       end
     end
   end
@@ -69,38 +77,140 @@ class EmployeeTransfersController < ApplicationController
   end
 
   def transfer_request
-    reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
-    @employee_transfers = EmployeeTransfer.where("reporting_master_id = ? and (current_status = ? or current_status = ? or current_status = ?)",reporting_masters,"Pending","Approved & Send Next","Edit & Send Next")
+    # reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    # @employee_transfers = EmployeeTransfer.where("reporting_master_id = ? and (current_status = ? or current_status = ? or current_status = ?)",reporting_masters,"Pending","Approved & Send Next","Edit & Send Next")
+     @employee_transfers = EmployeeTransfer.where("reporting_master_id = ? and (current_status = ? or current_status = ? or current_status = ?)",current_user.employee_id,"Pending","FirstApproved","Approved & Send Next")
+
     session[:active_tab] = "transfer"
   end
 
   def employee_transfer_confirmation
-     reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
-     @employee_transfer = EmployeeTransfer.find(params[:format])
-     @employee_transfers = EmployeeTransfer.where(reporting_master_id: reporting_masters).order("id DESC")
-     @current_request = EmployeeTransfer.find(params[:format])
-     @employee = Employee.find(@current_request.employee_id)
+     # reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+     # @employee_transfer = EmployeeTransfer.find(params[:format])
+     # @employee_transfers = EmployeeTransfer.where(reporting_master_id: reporting_masters).order("id DESC")
+     # @current_request = EmployeeTransfer.find(params[:format])
+     # @employee = Employee.find(@current_request.employee_id)
+      @employee_transfer = EmployeeTransfer.find(params[:format])
+      @employee_transfers = EmployeeTransfer.where(id: @employee_transfer.id)
   end
 
-  def approve_transfer
-    @employee_transfer = EmployeeTransfer.find(params[:format])
-    @employee_transfer.update(current_status: "Approved")
-    ReportingEmployeeTransfer.create(reporting_master_id: @employee_transfer.reporting_master_id, employee_transfer_id: @employee_transfer.id, status: @employee_transfer.current_status)
-    TransferHistory.create(employee_transfer_id: @employee_transfer.id,employee_id: @employee_transfer.employee_id,reporting_master_id: @employee_transfer.reporting_master_id,employee_designation_id: @employee_transfer.employee_designation_id,employee_category_id: @employee_transfer.employee_category_id,company_id: @employee_transfer.company_id,company_location_id: @employee_transfer.company_location_id,department_id: @employee_transfer.department_id,justification: @employee_transfer.justification,current_status: @employee_transfer.current_status)
-    EmployeeTransferMailer.approve_transfer(@employee_transfer).deliver_now
-    flash[:notice] = 'Employee Transfer Approved'
-    redirect_to transfer_request_employee_transfers_path
+   def approve_employee_transfer
+    # byebug
+  #new code
+     @employee_transfer = EmployeeTransfer.find(params[:format])
+     first_manager_id = @employee_transfer.employee
+     if @employee_transfer.current_status == "Pending"
+     @employee_transfer.update(current_status: "SecondApproved")
+     ReportingEmployeeTransfer.create(employee_transfer_id: @employee_transfer.id,reporting_master_id: current_user.employee_id,status: "SecondApproved")
+     flash[:notice] = 'Transfer Request Approved Successfully'
+     redirect_to transfer_request_employee_transfers_path
+     elsif  @employee_transfer.current_status == "Approved & Send Next"
+     reporting_master = @employee_transfer.reporting_master_id
+     employee = Employee.where(id: reporting_master).take
+     first_manag_id = employee.manager_id
+     @employee_transfer.update(current_status: "SecondApproved")
+     ReportingEmployeeTransfer.create(employee_transfer_id: @employee_transfer.id,reporting_master_id: current_user.employee_id,status: "SecondApproved")
+     flash[:notice] = 'Transfer Request Approved Successfully'
+     redirect_to transfer_request_employee_transfers_path
+     else
+    end
   end
+ 
+  def first_approve
+    # byebug
+    @employee_transfer = EmployeeTransfer.find(params[:format])
+    first_manager_id = @employee_transfer.employee.manager_id
+    second_manager_id = @employee_transfer.employee.manager_2_id
+    if @employee_transfer.current_status == "FirstApproved"
+    @employee_transfer.update(current_status: "SecondApproved")
+    ReportingEmployeeTransfer.create(employee_transfer_id: @employee_transfer.id,reporting_master_id: second_manager_id,status: "SecondApproved")
+    flash[:notice] = 'Transfer Request Approved Successfully at First Level'
+    redirect_to transfer_request_employee_transfers_path
+   elsif @employee_transfer.current_status == "Approved & Send Next"
+     reporting_master = @employee_transfer.reporting_master_id
+     employee = Employee.where(id: reporting_master).take
+     first_manager_id = employee.manager_id
+     second_manager_id = employee.manager_2_id
+    @employee_transfer.update(current_status: "SecondApproved",reporting_master_id: first_manager_id)
+    ReportingEmployeeTransfer.create(employee_transfer_id: @employee_transfer.id,reporting_master_id: current_user.employee_id,status: "SecondApproved")
+    flash[:notice] = 'Transfer Request Approved Successfully'
+    redirect_to transfer_request_employee_transfers_path
+    else
+    @employee_transfer.update(reporting_master_id: second_manager_id,current_status: "FirstApproved")
+    ReportingEmployeeTransfer.create(reporting_master_id: first_manager_id, employee_transfer_id: @employee_transfer.id,status: "FirstApproved")
+    flash[:notice] = 'Transfer Request Approved Successfully'
+    redirect_to transfer_request_employee_transfers_path
+    end
+  end
+
+
+  # def approve_transfer
+  #   @employee_transfer = EmployeeTransfer.find(params[:format])
+  #   @employee_transfer.update(current_status: "Approved")
+  #   ReportingEmployeeTransfer.create(reporting_master_id: @employee_transfer.reporting_master_id, employee_transfer_id: @employee_transfer.id, status: @employee_transfer.current_status)
+  #   TransferHistory.create(employee_transfer_id: @employee_transfer.id,employee_id: @employee_transfer.employee_id,reporting_master_id: @employee_transfer.reporting_master_id,employee_designation_id: @employee_transfer.employee_designation_id,employee_category_id: @employee_transfer.employee_category_id,company_id: @employee_transfer.company_id,company_location_id: @employee_transfer.company_location_id,department_id: @employee_transfer.department_id,justification: @employee_transfer.justification,current_status: @employee_transfer.current_status)
+  #   EmployeeTransferMailer.approve_transfer(@employee_transfer).deliver_now
+  #   flash[:notice] = 'Employee Transfer Approved'
+  #   redirect_to transfer_request_employee_transfers_path
+  # end
 
   def reject_transfer
     @employee_transfer = EmployeeTransfer.find(params[:format])
-    @employee_transfer.update(current_status: "Rejected")
-    ReportingEmployeeTransfer.create(reporting_master_id: @employee_transfer.reporting_master_id, employee_transfer_id: @employee_transfer.id, status: @employee_transfer.current_status)
-    TransferHistory.create(employee_transfer_id: @employee_transfer.id,employee_id: @employee_transfer.employee_id,reporting_master_id: @employee_transfer.reporting_master_id,employee_designation_id: @employee_transfer.employee_designation_id,employee_category_id: @employee_transfer.employee_category_id,company_id: @employee_transfer.company_id,company_location_id: @employee_transfer.company_location_id,department_id: @employee_transfer.department_id,justification: @employee_transfer.justification,current_status: @employee_transfer.current_status)
-    EmployeeTransferMailer.reject_transfer(@employee_transfer).deliver_now
-    flash[:notice] = 'Employee Transfer Rejected'
+    @employee_transfer.update(current_status: "Rejected",reporting_master_id: current_user.employee_id)
+    # TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,employee_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Reject")
+    # @reporting_masters = ReportingMaster.where(employee_id: current_user.employee_id).pluck(:id)
+    ReportingEmployeeTransfer.where(employee_transfer_id: @employee_transfer.id,reporting_master_id: current_user.employee_id)
+    ReportingEmployeeTransfer.update_all(travel_status: "Rejected")
+    # TravelRequestMailer.reject_travel_request_email(@travel_request).deliver_now
+    # flash[:alert] = 'Travel Request Rejected'
+    flash[:alert] = 'Transfer Request Rejected'
     redirect_to transfer_request_employee_transfers_path
+    # @employee_transfer = EmployeeTransfer.find(params[:format])
+    # @employee_transfer.update(current_status: "Rejected")
+    # ReportingEmployeeTransfer.create(reporting_master_id: @employee_transfer.reporting_master_id, employee_transfer_id: @employee_transfer.id, status: @employee_transfer.current_status)
+    # TransferHistory.create(employee_transfer_id: @employee_transfer.id,employee_id: @employee_transfer.employee_id,reporting_master_id: @employee_transfer.reporting_master_id,employee_designation_id: @employee_transfer.employee_designation_id,employee_category_id: @employee_transfer.employee_category_id,company_id: @employee_transfer.company_id,company_location_id: @employee_transfer.company_location_id,department_id: @employee_transfer.department_id,justification: @employee_transfer.justification,current_status: @employee_transfer.current_status)
+    # EmployeeTransferMailer.reject_transfer(@employee_transfer).deliver_now
+    # flash[:notice] = 'Employee Transfer Rejected'
+    # redirect_to transfer_request_employee_transfers_path
   end
+
+   def approve_and_send_next 
+    # byebug
+    @employee_transfer = EmployeeTransfer.find(params[:format])
+     reporting_master = @employee_transfer.reporting_master_id
+     employee = Employee.where(id: reporting_master).take
+     first_manager_id = employee.manager_id
+     second_manager_id = employee.manager_2_id
+     if employee.manager_id.present? && employee.manager_2_id.present?
+        @employee_transfer.update(reporting_master_id: first_manager_id,current_status: "Approved & Send Next")
+        ReportingEmployeeTransfer.create(employee_transfer_id: @employee_transfer.id,reporting_master_id: current_user.employee_id,status: "Approved & Send Next")
+        flash[:notice] = 'Transfer Request Sent to Higher Authority for Approval'
+        edirect_to transfer_request_employee_transfers_path
+     elsif employee.manager_2_id.nil?
+           @employee_transfer.update(reporting_master_id: first_manager_id,current_status: "Approved & Send Next")
+           ReportingEmployeeTransfer.create(employee_transfer_id: @employee_transfer.id,reporting_master_id: current_user.employee_id,status: "Approved & Send Next")
+           flash[:notice] = 'Transfer Request Approved Successfully'
+           redirect_to transfer_request_employee_transfers_path
+     end
+  end
+
+  def final_approve
+    @employee_transfer = EmployeeTransfer.find(params[:format])
+    @employee_transfer.update(current_status: "FinalApproved",reporting_master_id: current_user.employee_id)
+    ReportingEmployeeTransfer.create(employee_transfer_id: @employee_transfer.id,reporting_master_id: current_user.employee_id,status: "FinalApproved")
+    if @employee_transfer.current_status == "FinalApproved"
+      flash[:notice] = 'Travel Request Approved Successfully'
+      redirect_to travel_history_travel_requests_path
+    else
+      flash[:notice] = 'Travel Request Approved Successfully'
+      redirect_to transfer_request_employee_transfers_path
+    end
+  end
+
+  def final_approval_transfer_list
+     @travel_requests = EmployeeTransfer.where(current_status: "SecondApproved")
+  end
+
 
   def modal_approve
     @employee_transfer = EmployeeTransfer.find(params[:format])

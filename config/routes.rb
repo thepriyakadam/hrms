@@ -844,6 +844,7 @@ end
       get :approve_and_send_next
       get :final_approval_training_list
       get :final_approve
+      post :selected_employee_training_list
     end
   end
   resources :selected_resumes  do

@@ -120,12 +120,15 @@ class TrainingRequestsController < ApplicationController
 
   def training_request_confirmation
     @training_request = TrainingRequest.find(params[:training_request_id])
-    # reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
-    # @reporting_master = ReportingMaster.find(@training_request.reporting_master_id)
-    # @employee = Employee.find(@reporting_master.employee_id)
-    # @trainee_requests1 =TraineeRequest.where(training_request_id: @training_request.id).update_all(reporting_master_id: @training_request.reporting_master_id)
     @trainee_requests =TraineeRequest.where(training_request_id: @training_request.id,is_complete: true)
     # @trainee_requests = TraineeRequest.where(training_request_id: @training_request.id) 
+ end
+
+  def selected_employee_training_list
+    # byebug
+    @employee_ids = params[:employee_ids]
+    # @training_request = TrainingRequest.find(params[:training_request_id])
+    @trainee_requests =TraineeRequest.where(id: @employee_ids)    
   end
 
   # def approve_training_request

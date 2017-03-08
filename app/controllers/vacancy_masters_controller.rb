@@ -238,8 +238,12 @@ end
     flash[:notice] = 'Vacancy Request Approved Successfully'
     redirect_to vacancy_history_vacancy_masters_path
     else
-    @vacancy_master.update(reporting_master_id: second_manager_id,current_status: "FirstApproved")
-    ReportingMastersVacancyMaster.create(reporting_master_id: first_manager_id, vacancy_master_id: @vacancy_master.id,vacancy_status: "FirstApproved")
+    reporting_master = @training_request.reporting_master_id #new code
+     employee = Employee.where(id: reporting_master).take #new code
+     first_manager_id = employee.manager_id #new code
+     second_manager_id = employee.manager_2_id #new code
+    @vacancy_master.update(reporting_master_id: first_manager_id,current_status: "FirstApproved")
+    ReportingMastersVacancyMaster.create(reporting_master_id: current_user.employee_id, vacancy_master_id: @vacancy_master.id,vacancy_status: "FirstApproved")
     flash[:notice] = 'Vacancy Request Approved Successfully'
     redirect_to vacancy_history_vacancy_masters_path
     end

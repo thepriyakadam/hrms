@@ -32,7 +32,7 @@
           <td>
             <% if training_request.status == "Approved" or training_request.status == "Rejected" %>
             <% else %>
-            <%= link_to 'Approve / Reject',training_request_confirmation_training_requests_path(training_request_id: training_request.id),class: 'btn btn-sm btn-warning' %> 
+            <%= link_to 'Approve / Reject',training_request_confirmation_training_requests_path(training_request_id: training_request.id),class: 'btn btn-sm btn-primary' %> 
             <% end %>
         </td>
             </tr>

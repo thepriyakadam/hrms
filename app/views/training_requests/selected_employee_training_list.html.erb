@@ -88,6 +88,7 @@
     <% end %>
    <% elsif @training_request.status == "SecondApproved"  %>
       <%= link_to 'Final Approve',final_approve_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Reject',reject_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
     <% end %>
 </td>
 

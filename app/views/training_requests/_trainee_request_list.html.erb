@@ -1,15 +1,16 @@
 <!---<= bootstrap_form_for TraineeRequest.new,url:{action:'approve_training_request',training_request_id: @training_request.id} do |f| %>-->
-<%= bootstrap_form_for TraineeRequest.new,url:{action:'approve_and_send_next',training_request_id: @training_request.id} do |f| %>
-<div class="row">
+<!-- <= bootstrap_form_for TraineeRequest.new,url:{action:'approve_and_send_next',training_request_id: @training_request.id} do |f| %> -->
+<!-- <div class="row">
       <div class="col-sm-4">
-       <!-- <= select :training_request,:reporting_master_id,all_reporting_master_list1,{label: 'Reporting Manager',include_blank: " Select Reporting Manager"}, class: "form-control" %>-->
-       <label>Approve & Send Request To:</label>
-        <%= select :training_request,:reporting_master_id,approve_and_send_next_rep_master_list,{label: 'Reporting Manager',include_blank: " Select Reporting Manager"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
-      </div>
-    </div><br>
+       <! <= select :training_request,:reporting_master_id,all_reporting_master_list1,{label: 'Reporting Manager',include_blank: " Select Reporting Manager"}, class: "form-control" %>-->
+      <!--  label>Approve & Send Request To:</label>
+        <= select :training_request,:reporting_master_id,approve_and_send_next_rep_master_list,{label: 'Reporting Manager',include_blank: " Select Reporting Manager"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %> -->
+     <!--  div>
+    div><br> --> 
     <div class="box-header with-border">
     <h3 class="box-title">Employee's Who are Going To Attend Training</h3>
   </div>
+   <%= bootstrap_form_for :employee,url:{action:"selected_employee_training_list",id: @training_request.id},html: {id: 'employee'} do |f| %>
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
@@ -24,7 +25,7 @@
    <% @trainee_requests.each do |trainee_request| %>
       <tr>
          <td>
-          <% if trainee_request.is_complete == true %>
+          <% if trainee_request.is_complete == nil %>
           <% else %>
             <%= check_box_tag "trainee_request_ids[]", trainee_request.id %>
           <% end %>
@@ -36,26 +37,8 @@
       <% end %>
   </tbody>
 </table><br>
-
-<div class="row">
-  <div class="col-sm-9">
-    <div class="actions">
-      <!--<= f.submit " Approve", class: 'btn btn-sm btn-info fa fa-check' %>-->
-      <%= f.submit " Approve & Send Next", class: 'btn btn-sm btn-primary fa fa-check' %>
-      <!-- <div id="myModal" class="modal fade"></div>
-      <= link_to 'Approve & Send next',modal_approve_and_send_next_training_requests_path(@training_request.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %> -->  |
-      <%= link_to ' Approve',approve_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check' %> |
-      <%= link_to ' Reject',reject_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash' %> 
-      <!-- <= link_to ' Comment',modal_reject_comment_training_requests_path(@training_request.id),class: 'btn btn-sm btn-primary fa fa-commenting-o',remote: true %> -->
-    </div>
-  </div>
-</div>
-<% end %>
-
-<!--<= link_to ' Comment & Approve',approve_training_request_training_requests_path(training_request_id: @training_request.id),class: 'btn btn-sm btn-info fa fa-check' %>  |-->
-
- 
-
+ <%= f.submit "List Of Selected Employee",class: "btn btn-primary btn-sm" %>
+    <% end %>
 
 <script type="text/javascript">
   $(function () {

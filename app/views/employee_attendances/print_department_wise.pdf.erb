@@ -14,15 +14,25 @@ div.nobreak{ page-break-inside: avoid;
 <div>
       <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
         <thead>
-        <tr><td colspan="6"><center><strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.try(:address)%></center></td></tr>
-        <tr><td colspan="6"><center>Employee Attendance Detail Departmentwise</center></td></tr>
           <tr>
-            <th>Employee ID</th>
-            <th>Employee Name</th>
-            <th>Department Name</th>
-            <th>Present</th>
-            <th>Day</th>
+            <td colspan="6"><center> 
+              <% if current_user.employee.company_location.company.company_logo == nil %>
+              <% else %>
+                <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+              <%end%> 
+                <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="6"><center>Employee Attendance : - <%=@start%> to <%=@end%></center>
+            </td>
+          </tr>
+          <tr>
+            <th>ID</th>
+            <th>Employee</th>
+            <th>Department</th>
             <th>Contact No</th>
+            <th>Present</th>
           </tr>
         </thead>
         <tbody>
@@ -31,9 +41,8 @@ div.nobreak{ page-break-inside: avoid;
               <td><%= a.employee.manual_employee_code %></td>
               <td><%= a.employee.first_name %> <%= a.employee.middle_name %> <%= a.employee.last_name %></td>
               <td><%= a.employee.company_location.try(:name) %> - <%= a.employee.department.try(:name) %></td>
-              <td><%= a.try(:present) %></td>
-              <td><%= a.try(:day) %></td>
               <td><%= a.employee.contact_no %></td>
+              <td><%= a.try(:present) %></td>
             </tr>
           <% end %>
         </tbody>

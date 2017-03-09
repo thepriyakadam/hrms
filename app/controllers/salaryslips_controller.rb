@@ -56,6 +56,7 @@ class SalaryslipsController < ApplicationController
       @instalments = @advance_salary.instalments
       @instalments.try(:each) do |i|
         unless i.instalment_date.nil?
+
           if i.try(:instalment_date).strftime('%B') == params['month'] && i.try(:instalment_date).strftime('%Y') == params['year']
             @instalment_array << i
           end
@@ -350,6 +351,7 @@ class SalaryslipsController < ApplicationController
             @instalments = a.instalments
             @instalments.try(:each) do |i|
               unless i.instalment_date.nil?
+                i.update(is_paid: true)
                 if i.try(:instalment_date).strftime('%B') == params['month'] && i.try(:instalment_date).strftime('%Y') == params['year']
                   @instalment_array << i
                 end

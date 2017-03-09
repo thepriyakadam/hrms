@@ -15,6 +15,9 @@
 
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
+  <tr>
+      <td colspan="8"><center>Expense Claim List</center></td>
+    </tr>
     <tr>
 <!--       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
  -->
@@ -48,20 +51,20 @@
             <% elsif daily_bill_detail.request_status == "Rejected" %>
             <small class="label label-danger">Rejected</small>
             <% elsif daily_bill_detail.request_status == "Approved & Send Next" %>
-            <small class="label label-warning">Approved & Send Next</small>
+            <small class="label label-primary">Approved & Send Next</small>
             <% else %>
             <% end %>
         </td>
         <td>
            <% if daily_bill_detail.passport_photo_file_name == nil %>
-           <small class="label label-warning">Not Available</small>
+           <small class="label label-default">Not Available</small>
              <% else %>
              <%= link_to '',download_pics_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-picture-o' %>
              <% end %>
         </td>
          <td>
            <% if daily_bill_detail.avatar_file_file_name == nil %>
-           <small class="label label-warning">Not Available</small>
+           <small class="label label-default">Not Available</small>
              <% else %>
              <%= link_to '',download_doc_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-download' %>
              <% end %>
@@ -94,11 +97,16 @@
 <div class="row">
   <div class="col-sm-6">
     <div class="actions">
-     <%= link_to 'Approve & Send Next',comment_modal_daily_bill_details_path(@travel_request.id),class: 'btn btn-sm btn-primary',remote: true %> 
-     <% if @dbl = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:status).last == nil && @dbl1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:travel_status).last == "Approved" %>
-    <!--  | <= link_to 'Reject',reject_request_daily_bill_details_path(@travel_request.id),class: 'btn btn-sm btn-danger' %> -->
+    <% @daily_bill = ReportingMastersTravelRequest.where(status: nil).count %>
+    <% if @daily_bill == 1 %>
+    <%= link_to 'Approve',comment_modal_daily_bill_details_path(@travel_request.id),class: 'btn btn-sm btn-info',remote: true %> 
      <% else %>
+     <%= link_to 'Approve & Send Next',comment_modal_daily_bill_details_path(@travel_request.id),class: 'btn btn-sm btn-primary',remote: true %>
      <% end %>
+    <!--  < if @dbl = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:status).last == nil && @dbl1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:travel_status).last == "FinalApproved" %>
+    <!-  | <= link_to 'Reject',reject_request_daily_bill_details_path(@travel_request.id),class: 'btn btn-sm btn-danger' %> -->
+    <!--  < else %>
+     < end %> -->
      </div>
   </div>
 </div>

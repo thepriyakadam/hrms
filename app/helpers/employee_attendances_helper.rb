@@ -64,6 +64,7 @@ module EmployeeAttendancesHelper
     exist.select {|k,v| v == "PG" }.count
   end
   
+  
  
 
   # def payable_day_count(exist)

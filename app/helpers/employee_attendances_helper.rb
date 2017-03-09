@@ -97,7 +97,7 @@ module EmployeeAttendancesHelper
     exist.select {|k,v| v == "C.Off" }.count + (exist.select {|k,v| v == "P/C.Off" }.count)/2.to_f 
   end
 
-   def od_day_count(exist)
+  def od_day_count(exist)
     exist.select {|k,v| v == "OD" }.count + (exist.select {|k,v| v == "P/OD" }.count)/2.to_f 
   end
 
@@ -127,24 +127,21 @@ module EmployeeAttendancesHelper
     present_day = 0
     attendances.each do |a|
       if a.employee_leav_request.leave_type == "Full Day"
-        full_leave = full_leave + 1
         if a.employee_leav_request.leav_category.is_payble
           pay_leave = pay_leave + 1
         else
           non_pay_leave = non_pay_leave + 1
         end
       else
-        half_leave = half_leave + 0.5
         if a.employee_leav_request.leav_category.is_payble
           pay_leave = pay_leave + 0.5
           present_day = present_day + 0.5
         else
           non_pay_leave = non_pay_leave + 0.5
+          present_day = present_day + 0.5
         end
       end
     end
-    arr << half_leave
-    arr << full_leave
     arr << pay_leave
     arr << non_pay_leave
     arr << present_day

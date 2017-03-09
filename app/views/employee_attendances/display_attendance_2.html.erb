@@ -1,3 +1,5 @@
+<div class="box">
+  <div class="box-body">
       <table id="example6" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
@@ -16,7 +18,7 @@
         </thead>
         <tbody>
           <% exist = {} %>
-          <% @employees.each do |e| %>
+          <% @employee_attendances.each do |e| %>
             <tr>
             <td><%= e.employee.try(:manual_employee_code) %></td>
               <td><%= full_name(e.employee) %></td>
@@ -64,10 +66,13 @@
           <%end%>
         </tbody>
       </table>
-      <%= link_to " Excel Report ",display_attendance_2_employee_attendances_path(month: params[:month], year: params[:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%= link_to " Excel Report ",display_attendance_2_employee_attendances_path(:employee => {:month => params[:employee][:month],:year => params[:employee][:year],:company_id => params[:employee][:company_id],:company_location_id => params[:employee][:company_location_id],:department_id => params[:employee][:department_id]},format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
 
-      <%= link_to " Print Attendance Slip ",display_attendance_2_employee_attendances_path(month: params[:month], year: params[:year], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
-
+      <%= link_to " Print Attendance Slip ",display_attendance_2_employee_attendances_path(:employee => {:month => params[:employee][:month],:year => params[:employee][:year],:company_id => params[:employee][:company_id],:company_location_id => params[:employee][:company_location_id],:department_id => params[:employee][:department_id]},format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+      
+      <%= link_to "Back",emp_attendance_employee_attendances_path,class: "btn btn-sm btn-default" %>
+  </div>
+</div>
   <!-- </div>
 </div> -->
 

@@ -1,6 +1,10 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Create Expense Claim</h3> <!-- Request To: <= @employee.try(:first_name) %> <= @employee.try(:middle_name) %> <= @employee.try(:last_name) %> -->
+    <% if @a = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:status).last == true %>
+    <h3 class="box-title">View Expense Claim</h3>
+    <% else %>
+    <h3 class="box-title">Create Expense Claim</h3>
+    <% end %> <!-- Request To: <= @employee.try(:first_name) %> <= @employee.try(:middle_name) %> <= @employee.try(:last_name) %> -->
 
   </div><!-- /.box-header -->
     <div class="box-body">

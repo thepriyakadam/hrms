@@ -1,0 +1,98 @@
+ <div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Training Request Confirmation </h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+ <table class="table table-bordered table-hover table-condensed">
+      <tr>
+        <th><strong>Employee ID</strong></th>
+        <td><%= @training_requests.employee.try(:manual_employee_code) %></td>
+      
+        <th><strong>Training Topic</strong></th>
+        <td><%= @training_requests.training_topic_master.try(:name) %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Request Date</strong></th>
+        <td><%= @training_requests.training_date %></td>
+      
+        <th><strong>Request To</strong></th>
+        <td><%= @training_requests.reporting_master_id %></td>
+      </tr>
+      <tr>
+        <th><strong>No. Of Employee</strong></th>
+        <td><%= @training_requests.no_of_employee %></td>
+      
+        <th><strong>Place</strong></th>
+        <td><%= @training_requests.place %></td>
+      </tr>
+      <tr>
+        <th><strong>Description</strong></th>
+        <td><%= @training_requests.description %></td>
+      
+        <th><strong>Justification</strong></th>
+        <td><%= @training_requests.justification %></td>
+      </tr>
+      <!-- <tr>
+        <th><strong>Comment</strong></th>
+        <td colspan="4"><%= @training_request.comment %></td>
+      </tr> -->
+    </table><br>
+
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Employee ID</th>
+      <th>Employee Name</th>
+      <th>Contact No</th>
+      
+      </tr>
+  </thead>
+
+  <tbody>
+   <% @trainee_requests.each do |trainee_request| %>
+      <tr>
+        <td><%= trainee_request.employee.try(:manual_employee_code) %></td>
+        <td><%= full_name(trainee_request.employee) %> </td>
+        <td><%= trainee_request.employee.try(:contact_no) %></td>
+      </tr>
+      <% end %>
+  </tbody>
+</table><br>
+
+<td>
+  <% if @training_request.employee.manager_id.present? && @training_request.employee.manager_2_id.present? && @training_request.status == "Pending" %>
+      <%= link_to ' Approve',first_approve_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check' %> |
+      <%= link_to ' Reject',reject_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash' %> 
+  <%  elsif @training_request.employee.manager_id.present? && @training_request.employee.manager_2_id.present? && @training_request.status == "FirstApproved" %>
+    <%= link_to ' Approve',first_approve_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check' %> |
+    <%= link_to ' Reject',reject_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash' %> 
+    <%= link_to 'Approve & Send next',approve_and_send_next_training_requests_path(@training_request.id),class: 'btn btn btn-xs btn-success' %> 
+  <% elsif @training_request.employee.manager_id.present? && @training_request.employee.manager_2_id.nil? && @training_request.status == "Pending" %>
+    <%= link_to ' Approve',approve_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check' %> |
+    <%= link_to ' Reject',reject_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash' %> 
+  <% end %>
+
+  <% if @training_request.status == "Approved & Send Next" %>
+      <% training_request = TrainingRequest.where(id: @training_request.id , status: "Approved & Send Next").take %>
+      <% employ = Employee.where(id: training_request.reporting_master_id).take %>
+
+  <% if @training_request.employee.manager_id.present? && @training_request.employee.manager_2_id.present? && @training_request.status == "Approved & Send Next" %>
+      <%= link_to 'Approve',first_approve_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Reject',reject_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
+
+    <% elsif @training_request.employee.manager_id.present? && @training_request.employee.manager_2_id.nil? && @training_request.status == "Approved & Send Next"%>
+    <%= link_to 'Approve',approve_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'Reject',reject_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
+      %>     
+    <% end %>
+   <% elsif @training_request.status == "SecondApproved"  %>
+      <%= link_to 'Final Approve',final_approve_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+    <% end %>
+</td>
+
+
+</div>
+</div>
+
+

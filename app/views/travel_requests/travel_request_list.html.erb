@@ -13,7 +13,6 @@
     <tr>
       <th>ID</th>
       <th>Employee Name</th>
-      <th>Request To</th>
       <th>Traveling Date</th>
       <th>Place</th>
       <th>Total Advance</th>
@@ -25,9 +24,8 @@
   <tbody>
     <% @travel_requests.each do |travel_request| %>
       <tr>
-        <td><%= travel_request.employee.try(:manual_employee_code) %></td>
-        <td><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></td>
-        <td><%= travel_request.reporting_master.employee.try(:first_name) %> <%= travel_request.reporting_master.employee.try(:middle_name) %> <%= travel_request.reporting_master.employee.try(:last_name) %></td>
+        <td><%= travel_request.try(:employee).try(:manual_employee_code) %></td>
+        <td><%= travel_request.try(:employee).try(:first_name) %> <%= travel_request.try(:employee).try(:middle_name) %> <%= travel_request.try(:employee).try(:last_name) %></td>
         <td><%= travel_request.traveling_date %></td>
         <td><%= travel_request.place %></td>
         <td><%= travel_request.total_advance %></td>

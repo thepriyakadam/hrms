@@ -39,7 +39,7 @@ class EmployeeTransfersController < ApplicationController
       if @employee_transfer.save
         EmployeeTransfer.where(id: @employee_transfer.id).update_all(reporting_master_id: emp.manager_id,current_status: "Pending")
         ReportingEmployeeTransfer.create(reporting_master_id: current_user.employee_id, employee_transfer_id: @employee_transfer.id, status: "Pending")
-        TransferHistory.create(employee_transfer_id: @employee_transfer.id,employee_id: @employee_transfer.employee_id,reporting_master_id: @employee_transfer.reporting_master_id,employee_designation_id: @employee_transfer.employee_designation_id,employee_category_id: @employee_transfer.employee_category_id,company_id: @employee_transfer.company_id,company_location_id: @employee_transfer.company_location_id,department_id: @employee_transfer.department_id,justification: @employee_transfer.justification,current_status: @employee_transfer.current_status)
+        TransferHistory.create(employee_transfer_id: @employee_transfer.id,employee_id: @employee_transfer.employee_id,reporting_master_id: @employee_transfer.reporting_master_id,employee_designation: @employee_transfer.employee_designation,employee_category: @employee_transfer.employee_category,company: @employee_transfer.company,company_location: @employee_transfer.company_location,department: @employee_transfer.department,justification: @employee_transfer.justification,current_status: @employee_transfer.current_status)
         # EmployeeTransferMailer.transfer_request(@employee_transfer).deliver_now
         format.html { redirect_to @employee_transfer, notice: 'Employee transfer was successfully created.' }
         format.json { render :show, status: :created, location: @employee_transfer }
@@ -56,7 +56,7 @@ class EmployeeTransfersController < ApplicationController
   def update
     respond_to do |format|
       if @employee_transfer.update(employee_transfer_params)
-        EmployeeTransferMailer.transfer_request(@employee_transfer).deliver_now
+        # EmployeeTransferMailer.transfer_request(@employee_transfer).deliver_now
         format.html { redirect_to @employee_transfer, notice: 'Employee transfer was successfully updated.' }
         format.json { render :show, status: :ok, location: @employee_transfer }
       else
@@ -85,14 +85,27 @@ class EmployeeTransfersController < ApplicationController
   end
 
   def employee_transfer_confirmation
+    # byebug
      # reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
      # @employee_transfer = EmployeeTransfer.find(params[:format])
      # @employee_transfers = EmployeeTransfer.where(reporting_master_id: reporting_masters).order("id DESC")
      # @current_request = EmployeeTransfer.find(params[:format])
      # @employee = Employee.find(@current_request.employee_id)
+     # byebug
       @employee_transfer = EmployeeTransfer.find(params[:format])
       @employee_transfers = EmployeeTransfer.where(id: @employee_transfer.id)
+      @employee = Employee.find_by_id(@employee_transfer.employee_id)
+      @joining_detail= JoiningDetail.find_by_employee_id(@employee)
   end
+
+  
+   def employee_transfer_confirmation_2
+      @employee_transfer = EmployeeTransfer.find(params[:format])
+      @employee_transfers = EmployeeTransfer.where(id: @employee_transfer.id)
+      @employee = Employee.find_by_id(@employee_transfer.employee_id)
+      @joining_detail= JoiningDetail.find_by_employee_id(@employee)
+   end
+
 
    def approve_employee_transfer
     # byebug
@@ -160,7 +173,7 @@ class EmployeeTransfersController < ApplicationController
     # TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,employee_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Reject")
     # @reporting_masters = ReportingMaster.where(employee_id: current_user.employee_id).pluck(:id)
     ReportingEmployeeTransfer.where(employee_transfer_id: @employee_transfer.id,reporting_master_id: current_user.employee_id)
-    ReportingEmployeeTransfer.update_all(travel_status: "Rejected")
+    ReportingEmployeeTransfer.update_all(status: "Rejected")
     # TravelRequestMailer.reject_travel_request_email(@travel_request).deliver_now
     # flash[:alert] = 'Travel Request Rejected'
     flash[:alert] = 'Transfer Request Rejected'
@@ -195,12 +208,20 @@ class EmployeeTransfersController < ApplicationController
   end
 
   def final_approve
+    byebug
     @employee_transfer = EmployeeTransfer.find(params[:format])
     @employee_transfer.update(current_status: "FinalApproved",reporting_master_id: current_user.employee_id)
     ReportingEmployeeTransfer.create(employee_transfer_id: @employee_transfer.id,reporting_master_id: current_user.employee_id,status: "FinalApproved")
+    # @employee_designation = params[:employee_transfer][:employee_designation_id]
+    # @employee_category = params[:employee_transfer][:employee_category_id]
+    # @company = params[:employee_transfer][:company_id]
+    # @company_location_id = params[:employee_transfer][:company_location_id]
+    # @department_id = params[:employee_transfer][:department_id]
+    # EmployeeTransfer.update(employee_designation_id: @employee_designation,employee_category_id: @employee_category,company_id: @company_id,company_location_id: @company_location_id,department_id: @department_id)
+    # TransferHistory.update(employee_designation_id: @employee_transfer.employee_designation_id,employee_category_id: @employee_transfer.employee_category_id,company_id: @employee_transfer.company_id,company_location_id: @employee_transfer.company_location_id,department_id: @employee_transfer.department_id)
     if @employee_transfer.current_status == "FinalApproved"
       flash[:notice] = 'Travel Request Approved Successfully'
-      redirect_to travel_history_travel_requests_path
+      redirect_to transfer_request_employee_transfers_path
     else
       flash[:notice] = 'Travel Request Approved Successfully'
       redirect_to transfer_request_employee_transfers_path
@@ -208,7 +229,8 @@ class EmployeeTransfersController < ApplicationController
   end
 
   def final_approval_transfer_list
-     @travel_requests = EmployeeTransfer.where(current_status: "SecondApproved")
+    # byebug
+     @employee_transfers = EmployeeTransfer.where(current_status: "SecondApproved")
   end
 
 
@@ -283,11 +305,11 @@ class EmployeeTransfersController < ApplicationController
     end
 
     def transfer_history_params
-    params.require(:employee_transfer).permit(:employee_transfer_id,:employee_id,:reporting_master_id,:employee_designation_id,:employee_category_id,:company_id,:company_location_id,:department_id,:justification,:current_status)
+    params.require(:employee_transfer).permit(:employee_transfer_id,:employee_id,:reporting_master_id,:justification,:current_status,:employee_designation,:employee_category,:company,:company_location,:department)
   end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_transfer_params
-      params.require(:employee_transfer).permit(:employee_id, :reporting_master_id, :employee_designation_id, :employee_category_id, :company_id, :company_location_id, :department_id, :justification)
+      params.require(:employee_transfer).permit(:employee_id, :reporting_master_id, :justification,:employee_designation,:employee_category,:company,:company_location,:department)
     end
 end

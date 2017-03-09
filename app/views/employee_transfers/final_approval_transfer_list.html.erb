@@ -17,76 +17,27 @@
               <th>Company Location</th>
               <th>Department</th>
               <th>Justification</th>
+              <th>Action</th>
             </tr>
           </thead>
 
           <tbody>
           <% @employee_transfers.each do |employee_transfer| %>
           <tr>
-          <% if @employee_transfer.id == employee_transfer.id %>
-          <th><font color='green'>*<%= employee_transfer.employee.try(:manual_employee_code) %></font></th>
-                <th><font color='green'><%= full_name(employee_transfer.employee) %></th></font>
-                <th><font color='green'><%= employee_transfer.employee_designation.try(:name) %></th></font>
-                <th><font color='green'><%= employee_transfer.employee_category.try(:name) %></th></font>
-                <th><font color='green'><%= employee_transfer.company.try(:name) %></th></font>
-                <th><font color='green'><%= employee_transfer.employee.try(:company_location).try(:name) %></th></font>
-                <th><font color='green'><%= employee_transfer.employee.try(:department).try(:name) %></th></font>
-                 <th><font color='green'><%= employee_transfer.justification %></th></font>
-
-                <%else%>
+         
             <td><%= employee_transfer.employee.try(:manual_employee_code) %></td>
-             <td><%= full_name(employee_transfer.employee) %></td>
-            <td><%= employee_transfer.employee_designation.try(:name) %></td>
-            <td><%= employee_transfer.employee_category.try(:name) %></td>
-            <td><%= employee_transfer.company.try(:name) %></td>
-            <td><%= employee_transfer.employee.try(:company_location).try(:name) %></td>  
-            <td><%= employee_transfer.employee.try(:department).try(:name) %></td>
+             <td><%= employee_transfer.try(:employee).try(:first_name) %> <%= employee_transfer.try(:employee).try(:middle_name) %> <%= employee_transfer.try(:employee).try(:last_name) %></td>
+            <td><%= employee_transfer.employee_designation %></td>
+            <td><%= employee_transfer.employee_category %></td>
+            <td><%= employee_transfer.company %></td>
+            <td><%= employee_transfer.company_location %></td>  
+            <td><%= employee_transfer.department %></td>
             <td><%= employee_transfer.justification %></td>
-             <% end %>
+             <td>
+           <%= link_to 'View Detail',employee_transfer_confirmation_2_employee_transfers_path(employee_transfer),class: 'btn btn-xs btn-primary' %>
+                </td>
           </tr>
         <% end %>
       </tbody>
     </table>
-
-    <div class="row">
-      <div class="col-sm-12"><strong> <font color='green'>Note - * Row is the latest row to approve/reject </font></strong></div>
-  </div><br>
-
-<table id="example1" class="table table-bordered table-hover table-condensed">
-<tbody>
-            <tr><td colspan="4"><font color='red'><center>Current Transfer Request Detail</center></font></td></tr>
-            <tr>
-            <th> ID </th>
-            <td><%= @employee_transfer.try(:employee).try(:manual_employee_code) %></td>
-            <th>Employee Name</th>
-            <td><%= full_name(@employee_transfer.employee) %></td>
-            </tr>
-
-            <tr>
-              <th>Request To</th>
-              <td><% emp=Employee.where(id: @employee_transfer.reporting_master_id).take %>
-              <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
-              <th>Employee Designation</th>
-              <td><%= @employee_transfer.try(:employee_designation).try(:name) %></td>
-            </tr>
-
-            <tr>
-              <th>Employee Category</th>
-              <td><%= @employee_transfer.try(:employee_category).try(:name) %></td>
-              <th>Company</th>
-              <td><%= @employee_transfer.try(:company).try(:name) %></td>
-            </tr>
-
-            <tr>
-              <th>Company Location</th>
-              <td><%= @employee_transfer.try(:employee).try(:company_location).try(:name) %></td>
-               <th>Department</th>
-              <td><%= @employee_transfer.try(:employee).try(:department).try(:name) %></td>
-            </tr>
-
-            <tr>
-              <th>Justification</th>
-              <td colspan="3"><%= @employee_transfer.justification %></td>       
-            </tr>
-   </tbody>
-   </table>         
+ 

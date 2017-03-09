@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170306114807) do
+ActiveRecord::Schema.define(version: 20170309050724) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1228,6 +1228,11 @@ ActiveRecord::Schema.define(version: 20170306114807) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.string   "current_status"
+    t.string   "employee_designation"
+    t.string   "employee_category"
+    t.string   "company"
+    t.string   "company_location"
+    t.string   "department"
   end
 
   add_index "employee_transfers", ["company_id"], name: "index_employee_transfers_on_company_id"
@@ -3469,6 +3474,11 @@ ActiveRecord::Schema.define(version: 20170306114807) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.string   "current_status"
+    t.string   "employee_designation"
+    t.string   "employee_category"
+    t.string   "company"
+    t.string   "company_location"
+    t.string   "department"
   end
 
   add_index "transfer_histories", ["company_id"], name: "index_transfer_histories_on_company_id"

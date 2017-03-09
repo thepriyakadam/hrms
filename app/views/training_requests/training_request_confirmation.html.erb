@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Training Request Confirmation </h3>
+    <h3 class="box-title">Select Employee For Training </h3>
   </div><!-- /.box-header -->
   <div class="box-body">
     <table class="table table-bordered table-hover table-condensed">
@@ -17,7 +17,7 @@
         <td><%= @training_request.training_date %></td>
       
         <th><strong>Request To</strong></th>
-        <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td>
+        <td><%= @training_request.reporting_master_id %></td>
       </tr>
       <tr>
         <th><strong>No. Of Employee</strong></th>

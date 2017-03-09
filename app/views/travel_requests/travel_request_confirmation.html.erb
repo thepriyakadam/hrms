@@ -43,11 +43,11 @@
   <div class="box-header">
     <h3 class="box-title"></h3>
     <div class="pull-right">
-   <!--  < travel_request_1 = TravelRequest.where(id: @travel_request.id).take
+    <% travel_request_1 = TravelRequest.where(id: @travel_request.id).take
      employ_1 = Employee.where(id: travel_request_1.reporting_master_id).take  %>
-    First Reporter : <= employ_1.try(:manager).try(:manual_employee_code) %> < employ_1.try(:manager).try(:first_name) %> <= employ_1.try(:manager).try(:middle_name) %> <= employ_1.try(:manager).try(:last_name) %> <br>
+    First Reporter : <%= employ_1.try(:manager).try(:manual_employee_code) %> <% employ_1.try(:manager).try(:first_name) %> <%= employ_1.try(:manager).try(:middle_name) %> <%= employ_1.try(:manager).try(:last_name) %> <br>
 
-    Second Reporter : <= employ_1.try(:manager_2).try(:manual_employee_code) %> <= employ_1.try(:manager_2).try(:first_name) %> < employ_1.try(:manager_2).try(:middle_name) %> <= employ_1.try(:manager_2).try(:last_name) %> <br> -->
+    Second Reporter : <%= employ_1.try(:manager_2).try(:manual_employee_code) %> <%= employ_1.try(:manager_2).try(:first_name) %> <% employ_1.try(:manager_2).try(:middle_name) %> <%= employ_1.try(:manager_2).try(:last_name) %> <br>
     </div>
   </div>
 

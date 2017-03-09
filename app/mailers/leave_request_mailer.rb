@@ -8,6 +8,7 @@ class LeaveRequestMailer < ApplicationMailer
 
   def first_approve(request)
     @leave_request = request
+    
     @from_manager = Employee.find(@leave_request.first_reporter_id)
     to_manager = Employee.find(@leave_request.second_reporter_id)
     email = to_manager.try(:email)

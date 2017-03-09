@@ -56,6 +56,7 @@ class SalaryslipsController < ApplicationController
       @instalments = @advance_salary.instalments
       @instalments.try(:each) do |i|
         unless i.instalment_date.nil?
+
           if i.try(:instalment_date).strftime('%B') == params['month'] && i.try(:instalment_date).strftime('%Y') == params['year']
             @instalment_array << i
           end
@@ -350,6 +351,7 @@ class SalaryslipsController < ApplicationController
             @instalments = a.instalments
             @instalments.try(:each) do |i|
               unless i.instalment_date.nil?
+                i.update(is_paid: true)
                 if i.try(:instalment_date).strftime('%B') == params['month'] && i.try(:instalment_date).strftime('%Y') == params['year']
                   @instalment_array << i
                 end
@@ -453,8 +455,8 @@ class SalaryslipsController < ApplicationController
                 deducted_actual_amount = 0
                 deducted_calculated_amount = 0
               end
-              @salary_component = SalaryComponent.find_by(name: "PF")
-              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'PF',salary_component_id: @salary_component.id)
+              @salary_component = SalaryComponent.find_by(name: "Provident Fund")
+              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Provident Fund',salary_component_id: @salary_component.id)
             end
           end
 
@@ -555,19 +557,19 @@ class SalaryslipsController < ApplicationController
           if s.basis_actual_amount == true
             # byebug
               if @total_actual.between?(s.min_amount, s.max_amount) && @month != "March" && @employee.company_location_id == s.company_location_id
-              @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
-                SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.for_month, calculated_amount: s.for_month, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)            
+              @salary_component = SalaryComponent.find_by(name: "Professional Tax")
+                SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.for_month, calculated_amount: s.for_month, is_deducted: true, other_component_name: 'Professional Tax',salary_component_id: @salary_component.id)            
               elsif @month == 'March' && @total_actual.between?(s.min_amount, s.max_amount) && @employee.company_location_id == s.company_location_id
-                @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
-                SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.march_amount, calculated_amount: s.march_amount, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
+                @salary_component = SalaryComponent.find_by(name: "Professional Tax")
+                SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.march_amount, calculated_amount: s.march_amount, is_deducted: true, other_component_name: 'Professional Tax',salary_component_id: @salary_component.id)
               end
           else
               if @total.between?(s.min_amount, s.max_amount) && @month != "March" && @employee.company_location_id == s.company_location_id
-              @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
-                SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.for_month, calculated_amount: s.for_month, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
+              @salary_component = SalaryComponent.find_by(name: "Professional Tax")
+                SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.for_month, calculated_amount: s.for_month, is_deducted: true, other_component_name: 'Professional Tax',salary_component_id: @salary_component.id)
               elsif @month == 'March' && @total_actual.between?(s.min_amount, s.max_amount) && @employee.company_location_id == s.company_location_id
-                @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
-                SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.march_amount, calculated_amount: s.march_amount, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
+                @salary_component = SalaryComponent.find_by(name: "Professional Tax")
+                SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.march_amount, calculated_amount: s.march_amount, is_deducted: true, other_component_name: 'Professional Tax',salary_component_id: @salary_component.id)
               end
           end
       end
@@ -1012,8 +1014,8 @@ class SalaryslipsController < ApplicationController
               deducted_actual_amount = 0
               deducted_calculated_amount = 0
             end
-            @salary_component = SalaryComponent.find_by(name: "PF")
-            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'PF',salary_component_id: @salary_component.id)
+            @salary_component = SalaryComponent.find_by(name: "Provident Fund")
+            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Provident Fund',salary_component_id: @salary_component.id)
           end
         end
 
@@ -1113,20 +1115,20 @@ class SalaryslipsController < ApplicationController
           # byebug
             if @total_actual.between?(s.min_amount, s.max_amount) && @month != "March" && @employee.company_location_id == s.company_location_id
               # byebug
-              @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
-              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.for_month, calculated_amount: s.for_month, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)            
+              @salary_component = SalaryComponent.find_by(name: "Professional Tax")
+              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.for_month, calculated_amount: s.for_month, is_deducted: true, other_component_name: 'Professional Tax',salary_component_id: @salary_component.id)            
             elsif @month == 'March' && @total_actual.between?(s.min_amount, s.max_amount) && @employee.company_location_id == s.company_location_id
-              @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
-              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.march_amount, calculated_amount: s.march_amount, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
+              @salary_component = SalaryComponent.find_by(name: "Professional Tax")
+              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.march_amount, calculated_amount: s.march_amount, is_deducted: true, other_component_name: 'Professional Tax',salary_component_id: @salary_component.id)
             end
         else
           # byebug
             if @total.between?(s.min_amount, s.max_amount) && @month != "March" && @employee.company_location_id == s.company_location_id
-              @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
-              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.for_month, calculated_amount: s.for_month, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
+              @salary_component = SalaryComponent.find_by(name: "Professional Tax")
+              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.for_month, calculated_amount: s.for_month, is_deducted: true, other_component_name: 'Professional Tax',salary_component_id: @salary_component.id)
             elsif @month == 'March' && @total_actual.between?(s.min_amount, s.max_amount) && @employee.company_location_id == s.company_location_id
-              @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
-              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.march_amount, calculated_amount: s.march_amount, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
+              @salary_component = SalaryComponent.find_by(name: "Professional Tax")
+              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.march_amount, calculated_amount: s.march_amount, is_deducted: true, other_component_name: 'Professional Tax',salary_component_id: @salary_component.id)
             end
         end
       end

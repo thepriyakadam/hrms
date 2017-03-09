@@ -1,42 +1,36 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Training Request</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover table-condensed">
-      <tr> 
-        <th colspan="2"></th>
-        <th colspan="2"></th>
-      </tr>
-
+     <table class="table table-bordered table-hover table-condensed">
+    <tr>
+      <td colspan="4"><center>Training Request Detail</center></td>
+    </tr>
       <tr>
         <th><strong>Employee ID</strong></th>
         <td><%= @training_request.employee.try(:manual_employee_code) %></td>
-
-        <th><strong>Employee Name </strong></th>
-        <td><%= full_name(@training_request.employee) %></td>
-      </tr>
-
-      <tr>
+      
         <th><strong>Training Topic</strong></th>
         <td><%= @training_request.training_topic_master.try(:name) %></td>
- 
+      </tr>
+
+      <tr>
         <th><strong>Request Date</strong></th>
         <td><%= @training_request.training_date %></td>
-      </tr>
-      <tr>
-
-        <th><strong>Reporting Manager</strong></th>
-        <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td>   
       
-        <th><strong>No Of Employee</strong></th>
-        <td><%= @training_request.no_of_employee %></td>
+        <th><strong>Request To</strong></th>
+        <% training_req = TrainingRequest.where(id: @training_request.id).take
+        emp = Employee.where(id: training_req.reporting_master_id).take %>
+        <td><%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
       </tr>
       <tr>
-
+        <th><strong>No. Of Employee</strong></th>
+        <td><%= @training_request.no_of_employee %></td>
+      
         <th><strong>Place</strong></th>
         <td><%= @training_request.place %></td>
-      
+      </tr>
+      <tr>
         <th><strong>Description</strong></th>
         <td colspan="3"><%= @training_request.description %></td>
       </tr>
@@ -44,12 +38,13 @@
       <tr>
         <th><strong>Justification</strong></th>
         <td colspan="3"><%= @training_request.justification %></td>
-
       </tr>
-
-    </table>
+      <!-- <tr>
+        <th><strong>Comment</strong></th>
+        <td colspan="4"><%= @training_request.comment %></td>
+      </tr> -->
+    </table><br>
   <div class="box-header with-border">
-    <h3 class="box-title">Employee's Who are Going To Attend Training</h3>
   </div>
     <div>
        <%= render 'trainee_request' %>

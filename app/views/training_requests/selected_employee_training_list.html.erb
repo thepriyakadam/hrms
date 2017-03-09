@@ -1,9 +1,14 @@
  <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Training Request Confirmation </h3>
+  <% training_request = TrainingRequest.where(id: @training_request.id).take
+     employ_1 = Employee.where(id: training_request.reporting_master_id).take  %>
+    <h3 class="box-title">Training Request Confirmation  , First Reporter : <%= employ_1.try(:manager).try(:manual_employee_code) %> <% employ_1.try(:manager).try(:first_name) %> <%= employ_1.try(:manager).try(:middle_name) %> <%= employ_1.try(:manager).try(:last_name) %> , Second Reporter : <%= employ_1.try(:manager_2).try(:manual_employee_code) %> <% employ_1.try(:manager_2).try(:first_name) %> <%= employ_1.try(:manager_2).try(:middle_name) %> <%= employ_1.try(:manager_2).try(:last_name) %> <br></h3>
   </div><!-- /.box-header -->
   <div class="box-body">
  <table class="table table-bordered table-hover table-condensed">
+    <tr>
+      <td colspan="4"><center>Training Request Detail</center></td>
+    </tr>
       <tr>
         <th><strong>Employee ID</strong></th>
         <td><%= @training_requests.employee.try(:manual_employee_code) %></td>
@@ -17,7 +22,9 @@
         <td><%= @training_requests.training_date %></td>
       
         <th><strong>Request To</strong></th>
-        <td><%= @training_requests.reporting_master_id %></td>
+        <% training_req = TrainingRequest.where(id: @training_request.id).take
+        emp = Employee.where(id: training_req.reporting_master_id).take %>
+        <td><%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
       </tr>
       <tr>
         <th><strong>No. Of Employee</strong></th>
@@ -28,10 +35,12 @@
       </tr>
       <tr>
         <th><strong>Description</strong></th>
-        <td><%= @training_requests.description %></td>
-      
+        <td colspan="3"><%= @training_requests.description %></td>
+      </tr>
+
+      <tr>
         <th><strong>Justification</strong></th>
-        <td><%= @training_requests.justification %></td>
+        <td colspan="3"><%= @training_requests.justification %></td>
       </tr>
       <!-- <tr>
         <th><strong>Comment</strong></th>
@@ -42,8 +51,13 @@
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th>Employee ID</th>
-      <th>Employee Name</th>
+      <td colspan="5"><center>Shortlisted Employee</center></td>
+    </tr>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Department</th>
+      <th>Designation</th>
       <th>Contact No</th>
       
       </tr>
@@ -52,9 +66,11 @@
   <tbody>
    <% @trainee_requests.each do |trainee_request| %>
       <tr>
-        <td><%= trainee_request.employee.try(:manual_employee_code) %></td>
-        <td><%= full_name(trainee_request.employee) %> </td>
-        <td><%= trainee_request.employee.try(:contact_no) %></td>
+      <td><%= trainee_request.employee.try(:manual_employee_code) %></td> 
+      <td><%= full_name(trainee_request.employee) %></td>
+      <td><%= trainee_request.employee.department.try(:name) %></td>
+      <td><%= trainee_request.employee.joining_detail.employee_designation.try(:name) %></td>
+      <td><%= trainee_request.employee.try(:contact_no) %></td>
       </tr>
       <% end %>
   </tbody>
@@ -91,6 +107,7 @@
       <%= link_to 'Reject',reject_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
     <% end %>
 </td>
+ <%= link_to 'Back', training_request_confirmation_training_requests_path(training_request_id: @training_request.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 
 
 </div>

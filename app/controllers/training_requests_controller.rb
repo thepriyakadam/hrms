@@ -60,6 +60,7 @@ class TrainingRequestsController < ApplicationController
     a=current_user.employee_id
     emp = Employee.where(id: a).take
     @employee_ids = params[:employee_ids]
+    byebug
      if @employee_ids.nil?
           flash[:alert] = "Please Select the Checkbox"
           redirect_to new_training_request_path
@@ -347,7 +348,7 @@ end
   end
 
   def confirmation_list
-   @training_requests = TrainingRequest.where(status:"FinalApproved")
+   @training_requests = TrainingRequest.all
    session[:active_tab] = "trainingmgmt" 
   end
 

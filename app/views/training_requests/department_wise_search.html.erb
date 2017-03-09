@@ -9,8 +9,7 @@
           <%= select :department_id,:hhh, all_department_type_list1,{include_blank: 'Select Department'},{onchange:"var a={department_id:$(this).val()}; $.get('/training_requests/show_dept_wise_form',a,function(response){});",class: 'form-control'} %>
            </div>
         </div>
-      </div><br>
-
+      </div>
        <div id="training_request_frm"></div>
        <div id="employee_list"></div>
     </div>

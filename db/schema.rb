@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170304054259) do
+ActiveRecord::Schema.define(version: 20170306114807) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1765,6 +1765,9 @@ ActiveRecord::Schema.define(version: 20170304054259) do
     t.time     "from"
     t.time     "to"
     t.text     "program_agenda"
+    t.text     "facilitator_1"
+    t.text     "facilitator_2"
+    t.boolean  "is_confirm"
   end
 
   add_index "induction_activities", ["employee_id"], name: "index_induction_activities_on_employee_id"
@@ -2170,6 +2173,8 @@ ActiveRecord::Schema.define(version: 20170304054259) do
     t.boolean  "time_master"
     t.boolean  "time_adjusted"
     t.date     "leaving_date"
+    t.integer  "replacement_id"
+    t.boolean  "is_new",                  default: true
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id"
@@ -2179,6 +2184,7 @@ ActiveRecord::Schema.define(version: 20170304054259) do
   add_index "joining_details", ["employee_grade_id"], name: "index_joining_details_on_employee_grade_id"
   add_index "joining_details", ["employee_id"], name: "index_joining_details_on_employee_id"
   add_index "joining_details", ["payment_mode_id"], name: "index_joining_details_on_payment_mode_id"
+  add_index "joining_details", ["replacement_id"], name: "index_joining_details_on_replacement_id"
   add_index "joining_details", ["reserved_category_id"], name: "index_joining_details_on_reserved_category_id"
 
   create_table "late_mark_masters", force: :cascade do |t|
@@ -2317,10 +2323,13 @@ ActiveRecord::Schema.define(version: 20170304054259) do
     t.datetime "updated_at",               null: false
     t.integer  "employee_leav_request_id"
     t.integer  "employee_id"
+    t.decimal  "count"
+    t.integer  "leav_category_id"
   end
 
   add_index "leave_records", ["employee_id"], name: "index_leave_records_on_employee_id"
   add_index "leave_records", ["employee_leav_request_id"], name: "index_leave_records_on_employee_leav_request_id"
+  add_index "leave_records", ["leav_category_id"], name: "index_leave_records_on_leav_category_id"
 
   create_table "leave_status_records", force: :cascade do |t|
     t.integer  "employee_leav_request_id"

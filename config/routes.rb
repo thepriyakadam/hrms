@@ -527,6 +527,7 @@ end
     get :modal_induction_activity
     post :update_induction
     get :view_induction_list
+    get :confirm
     end
   end
   resources :induction_masters
@@ -942,6 +943,10 @@ end
       get :travel_request_employee_name_report
       get :print_travel_request_employee_name_report
       post :print_travel_request_employee_name_report
+      get :first_approve
+      get :approve_and_send_next
+      get :final_approve
+      get :final_approval_travel_list
     end
   end
  
@@ -1466,6 +1471,8 @@ end
       post :print_salary_slip_excel
       get :dynamic_dropdown
       post :salary_slip_company_location_department
+      get :curent_salary_template
+      get :current_employee_salary_template
     end
    end
  

@@ -9,9 +9,17 @@
     <%= bootstrap_form_for :induction_activity,url:{action:"update_induction",id: @induction_activity.id,induction_master_id: @induction_master.id},html: {id: 'induction_activity'} do |f| %>
         <div class="row">
 
+
     <div class="col-sm-3">
-      <%= f.text_field :activity_date,label: "Activity Date", class: 'form-control activity_date' %>
-    </div>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+               <%= f.date_field :activity_date, label: "Induction Date"%>
+            </div>
+          </div>
+        </div>
 
       <div class="col-sm-3">
       <div class="bootstrap-timepicker">
@@ -38,17 +46,22 @@
         </div><!-- /.form group -->
       </div>
     </div>
-   <div class="col-sm-3">
+    <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.select :employee_id,all_employee_list,{label: "Contact Person",include_blank: " Select Contact Person"} %>
+        <%= f.text_field :facilitator_1,label: "Facilitator 1&Presenter" %>
       </div>
     </div>
     </div>
 
    <div class="row">
-     <div class="col-sm-6">
-      <div class="form-group required">
-        <%= f.text_area :program_agenda,placeholder: 'Eg: Program Agenda',label: "Program Agenda" %>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :facilitator_2,label: "Facilitator 2&Presenter" %>
+      </div>
+    </div>
+     <div class="col-sm-9">
+      <div class="field">
+        <%= f.text_field :program_agenda,placeholder: 'Eg: Program Agenda',label: "Program Agenda" %>
       </div>
     </div>
   </div>
@@ -59,27 +72,26 @@
       </div>
     </div>
   </div>
-        </div>
-    </div>
-    <%end%>
-    <div class="modal-footer"></div>
-  </div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
+   <%end%>
+  
 
 <script type="text/javascript">
   $(function(){
      $(".timepicker").timepicker({
     showInputs: false
   });
+
     $('.activity_date').datepicker({
     changeYear:true,
     changeMonth: true,
     yearRange: '-100:-0',
     dateFormat: 'dd-mm-yy' });
   }); 
-</script>
+  </script>
 
-<script>
+  
+
+<script type="text/javascript">
 $("#induction_activity").validate({
     rules: {
       "induction_activity[activity_date]":{

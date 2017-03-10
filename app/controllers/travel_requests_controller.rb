@@ -27,7 +27,8 @@ class TravelRequestsController < ApplicationController
     else
       @employees = Employee.all
     end
-    session[:active_tab] = "trainingmgmt"
+    session[:active_tab] = "TravelManagemnt"
+    session[:active_tab1] = "travelrequestprocess"
   end
 
   # GET /travel_requests/1
@@ -42,6 +43,8 @@ class TravelRequestsController < ApplicationController
   # GET /travel_requests/new
   def new
     @travel_request = TravelRequest.new
+    session[:active_tab] = "TravelManagemnt"
+    session[:active_tab1] = "travelrequestprocess"
   end
 
   # GET /travel_requests/1/edit
@@ -56,9 +59,9 @@ class TravelRequestsController < ApplicationController
     
     a=current_user.employee_id
     emp = Employee.where(id: a).take
-    if @employee_resignation.is_there?
+    if @travel_request.is_there?
       flash[:alert] = "Your Request already has been sent"
-      redirect_to employee_resignations_path
+      redirect_to travel_requests_path
      else
     if emp.try(:manager_id).nil?
         flash[:alert] = "Reporting Manager not set please set Reporting Manager"

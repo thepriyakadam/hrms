@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+      <th>ID</th>
       <th>Member</th>
       <th>Status</th>
     </tr>
@@ -11,6 +12,7 @@
     <% @due_details.each do |due_detail| %>
       <tr>
         <td><%= check_box_tag "due_detail_ids[]", due_detail.id %></td>
+        <td><%= due_detail.reporting_master.employee.try(:manual_employee_code) %></td>
         <td><%= full_name(due_detail.reporting_master.employee) %></td>
         <td><%= due_detail.status ? "Active" : "Inactive" %></td>
       </tr>

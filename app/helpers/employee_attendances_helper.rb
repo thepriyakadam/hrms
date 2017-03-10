@@ -60,18 +60,15 @@ module EmployeeAttendancesHelper
     exist.select {|k,v| v == "A" || v == "" }.count + (exist.select {|k,v| v == "P/2" }.count)/2.to_f
   end
 
-  def gate_pass_count(exist)
-    exist.select {|k,v| v == "PG" }.count
-  end
+  # def gate_pass_count(exist)
+  #   exist.select {|k,v| v == "PG" }.count
+  # end
 
   # def payable_day_count(exist)
   #   exist.select {|k,v| v == "P" }.count
   # end
 
-  def total_leave_count(exist)
-    leave = LeavCategory.all.collect {|c| c.code }
-    exist.select {|k,v| leave.member?(v)}.count
-  end
+ 
 
   def cl_leave_count(exist)
     exist.select {|k,v| v == "CL" }.count + (exist.select {|k,v| v == "P/CL" }.count)/2.to_f 
@@ -102,30 +99,20 @@ module EmployeeAttendancesHelper
   end
 
 
-  # def non_pay_leave_count(exist)
-  #   leave = LeavCategory.where(is_payble: false).collect {|c| c.code }
-  #   exist.select {|k,v| leave.member?(v)}.count
-  # end
-
-  # def pay_leave_count(date, employee)
-  #   leave = LeavCategory.where(is_payble: true).collect {|c| c.code }
-  #   EmployeeAttendance.where("strftime('%m/%Y',day) = ?", date.strftime('%m/%Y')).where(employee_id: employee.employee_id,present:leave).sum(:count).to_f
-  # end
-
-  # def non_pay_leave_count(date, employee)
-  #   leave = LeavCategory.where(is_payble: false).collect {|c| c.code }
-  #   EmployeeAttendance.where("strftime('%m/%Y',day) = ?", date.strftime('%m/%Y')).where(employee_id: employee.employee_id,present:leave).sum(:count).to_f
-  # end
-
   def create_leave(date,employee)
     arr = []
-    attendances = EmployeeAttendance.where("strftime('%m/%Y',day) = ?", date.strftime('%m/%Y')).where(employee_id: employee.employee_id).where.not(employee_leav_request_id: nil)
-    half_leave = 0
-    full_leave = 0
+    #attendances = EmployeeAttendance.where("strftime('%m/%Y',day) = ?", date.strftime('%m/%Y')).where(employee_id: employee.employee_id).where.not(employee_leav_request_id: nil) || (EmployeeAttendance.where(present: "PG"))    
+      
+    attendances = EmployeeAttendance.where("strftime('%m/%Y',day) = ? AND employee_id = ?",date.strftime('%m/%Y'),employee.employee_id)
     pay_leave = 0
     non_pay_leave = 0
     present_day = 0
+    gate_pass = 0
+    gate_pas = 0
+    gatepass = 0
+    gatepas = 0
     attendances.each do |a|
+      if a.employee_leav_request_id != nil
       if a.employee_leav_request.leave_type == "Full Day"
         if a.employee_leav_request.leav_category.is_payble
           pay_leave = pay_leave + 1
@@ -140,11 +127,26 @@ module EmployeeAttendancesHelper
           non_pay_leave = non_pay_leave + 0.5
           present_day = present_day + 0.5
         end
+      end 
+    else #nil
+
+      if a.present == "PG"
+       if gatepass <= 2
+        gate_pass = gate_pass + 0.5
+        present_day = present_day + 0.5
+        gatepass = gatepass + 2
+       else
+        gate_pas = gate_pas + 0.5
+        present_day = present_day + 0.5
+       end
       end
+    end#
     end
     arr << pay_leave
     arr << non_pay_leave
     arr << present_day
+    arr << gate_pass
+    arr << gate_pas
     arr
   end
 

@@ -7,8 +7,8 @@
       <td colspan="4"><center>Training Request Detail</center></td>
     </tr>
       <tr>
-        <th><strong>Employee ID</strong></th>
-        <td><%= @training_request.employee.try(:manual_employee_code) %></td>
+        <th><strong>Employee Name</strong></th>
+        <td><%= @training_request.employee.try(:manual_employee_code) %> - <%= @training_request.employee.try(:first_name) %> <%= @training_request.employee.try(:middle_name) %> <%= @training_request.employee.try(:last_name) %></td>
       
         <th><strong>Training Topic</strong></th>
         <td><%= @training_request.training_topic_master.try(:name) %></td>

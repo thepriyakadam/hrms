@@ -4,29 +4,29 @@ class TrainingRequestsController < ApplicationController
   # GET /training_requests
   # GET /training_requests.json
   def index
-    # if current_user.class == Member
-    #   if current_user.role.name == 'GroupAdmin'
+    if current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
         @training_requests = TrainingRequest.all
-    #   elsif current_user.role.name == 'Admin'
-    #     @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-    #     @training_requests = TrainingRequest.where(employee_id: @employees)
-    #   elsif current_user.role.name == 'Branch'
-    #     @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-    #     @training_requests = TrainingRequest.where(employee_id: @employees)
-    #   elsif current_user.role.name == 'HOD'
-    #     @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
-    #     @training_requests = TrainingRequest.where(employee_id: @employees)
-    #   elsif current_user.role.name == 'Supervisor'
-    #     @emp = Employee.find(current_user.employee_id)
-    #     @employees = @emp.subordinates
-    #     @training_requests = TrainingRequest.where(employee_id: @employees)
-    #   else current_user.role.name == 'Employee'
-    #     @training_requests = TrainingRequest.where(employee_id: current_user.employee_id)
-    #     redirect_to home_index_path
-    #   end
-    # else
-    #   @employees = Employee.all
-    # end
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        @training_requests = TrainingRequest.where(employee_id: @employees)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @training_requests = TrainingRequest.where(employee_id: @employees)
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+        @training_requests = TrainingRequest.where(employee_id: @employees)
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
+        @training_requests = TrainingRequest.where(employee_id: @employees)
+      else current_user.role.name == 'Employee'
+        @training_requests = TrainingRequest.where(employee_id: current_user.employee_id)
+        redirect_to home_index_path
+      end
+    else
+      @employees = Employee.all
+    end
     session[:active_tab] ="trainingmgmt"
   end
 
@@ -60,7 +60,7 @@ class TrainingRequestsController < ApplicationController
     a=current_user.employee_id
     emp = Employee.where(id: a).take
     @employee_ids = params[:employee_ids]
-    byebug
+    # byebug
      if @employee_ids.nil?
           flash[:alert] = "Please Select the Checkbox"
           redirect_to new_training_request_path
@@ -446,6 +446,47 @@ end
 
   def final_approval_training_list
      @training_requests = TrainingRequest.where(status: "SecondApproved")
+  end
+
+  def emp_training_history
+    if current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @training_requests = TrainingRequest.group(:employee_id)
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        @training_requests = TrainingRequest.where(employee_id: @employees).group(:employee_id)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @training_requests = TrainingRequest.where(employee_id: @employees).group(:employee_id)
+      elsif current_user.role.name == 'HOD'
+        # byebug
+        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+        @training_requests = TrainingRequest.where(employee_id: @employees).group(:employee_id)
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
+        @training_requests = TrainingRequest.where(employee_id: @employees).group(:employee_id)
+      else current_user.role.name == 'Employee'
+        @training_requests = TrainingRequest.where(employee_id: current_user.employee_id)
+        redirect_to home_index_path
+      end
+    else
+      @employees = Employee.all
+    end
+    session[:active_tab] ="trainingmgmt"
+  end
+
+  def particular_training_history
+    @employee = Employee.find(params[:emp_id])
+    @training_requests = TrainingRequest.where(employee_id: @employee.id)
+    session[:active_tab] ="trainingmgmt"
+  end
+
+  def show_reporting_masters_training_req_list
+    @training_request = TrainingRequest.find(params[:format])
+    @reporting_masters_training_reqs = ReportingMastersTrainingReq.where(training_request_id: @training_request.id)
+    @trainee_requests =TraineeRequest.where(training_request_id: @training_request.id)
+
   end
 
 

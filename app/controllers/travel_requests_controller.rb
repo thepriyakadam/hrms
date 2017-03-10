@@ -27,8 +27,7 @@ class TravelRequestsController < ApplicationController
     else
       @employees = Employee.all
     end
-    session[:active_tab] = "TravelManagemnt"
-    session[:active_tab1] = "travelrequestprocess" 
+    session[:active_tab] = "trainingmgmt"
   end
 
   # GET /travel_requests/1

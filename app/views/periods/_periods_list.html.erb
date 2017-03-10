@@ -18,6 +18,7 @@
         <td><%= period.status ? "Active" : "Inactive" %></td>
         <td>
           <% if period.is_confirm == true %>
+          <%= link_to '', edit_period_path(period),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <small class= "label label-primary">Confirmed</small>
           <% else %>
             <%= link_to '', edit_period_path(period),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>

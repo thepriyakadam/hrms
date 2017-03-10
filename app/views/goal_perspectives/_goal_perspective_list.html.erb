@@ -20,6 +20,7 @@
         <td><%= goal_perspective.status ? "Active" : "Inactive" %></td>
         <td>
           <% if goal_perspective.is_confirm == true %>
+          <%= link_to '', edit_goal_perspective_path(goal_perspective),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <small class= "label label-primary">Confirmed</small>
           <% else %>
             <%= link_to '', edit_goal_perspective_path(goal_perspective),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>

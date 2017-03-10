@@ -27,8 +27,7 @@ class TravelRequestsController < ApplicationController
     else
       @employees = Employee.all
     end
-    session[:active_tab] = "TravelManagemnt"
-    session[:active_tab1] = "travelrequestprocess" 
+    session[:active_tab] = "trainingmgmt"
   end
 
   # GET /travel_requests/1
@@ -37,6 +36,7 @@ class TravelRequestsController < ApplicationController
     # byebug
      # @reporting_master = ReportingMaster.find(@travel_request.employee_id)
      # @employee = Employee.find(@reporting_master.employee_id)
+     @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
   end
 
   # GET /travel_requests/new

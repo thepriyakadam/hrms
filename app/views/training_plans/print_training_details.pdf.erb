@@ -1,11 +1,16 @@
    
-    <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
-    <tr> 
-    <th colspan="4">
-        <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
-        <center><small>Training Details</small></center>
-        <center><small></small></center>   
-      </th>
+    <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
+    <tr>
+      <td colspan="4">
+        <center>
+            <% if current_user.employee.company_location.company.company_logo == nil %>
+          <% else %>
+            <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+            <%end%>
+          <%= current_user.employee.company_location.company.description %><br>
+          <%= current_user.employee.company_location.company.address %><br>
+       </center><br>
+      </td>
     </tr>
       <tr>
         <th><strong> Training Date </strong></th>
@@ -46,7 +51,7 @@
       <tr><td colspan="4"></td></tr>
     </table>
 
-<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+<table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
     <thead>
     <tr>
       <th>Sr.No</th>

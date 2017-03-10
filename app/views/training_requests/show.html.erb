@@ -49,6 +49,46 @@
     <div>
        <%= render 'trainee_request' %>
     </div>
+
+     <table id="example1" class="table table-bordered table-hover table-condensed">
+    <thead>
+    <tr>
+      <td colspan="3"><center>Training Request Process</center></td>
+    </tr>
+      <tr>
+        <th>Approver ID</th>
+        <th>Approver Name</th>
+        <th>Training Request Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @reporting_masters_training_reqs.each do |rmt| %>
+        <tr>
+          <% emp = Employee.where(id: rmt.reporting_master_id).take %>
+          <td><%= emp.manual_employee_code %></td>
+          <td> <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %> </td>
+          <td>
+             <% if rmt.training_status == "Pending" %>
+             <small class="label label-default">Pending</small>
+             <% elsif rmt.training_status == "FirstApproved" %>
+             <small class="label label-primary">FirstApproved</small>
+             <% elsif rmt.training_status == "SecondApproved" %>
+             <small class="label label-primary">SecondApproved</small>
+             <% elsif rmt.training_status == "FinalApproved" %>
+             <small class="label label-primary">FinalApproved</small>
+             <% elsif rmt.training_status == "Rejected" %>
+             <small class="label label-primary">Rejected</small>
+             <% elsif rmt.training_status == "Approved & Send Next" %>
+             <small class="label label-primary">Approved & Send Next</small>
+             <% else %>
+             <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table><br>
+
       <!-- <= link_to 'Edit', edit_training_request_path(@training_request),class: 'btn btn-success btn-sm fa fa-edit' %> | -->
       <%= link_to 'Back', training_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
   </div>

@@ -36,6 +36,7 @@ class TravelRequestsController < ApplicationController
     # byebug
      # @reporting_master = ReportingMaster.find(@travel_request.employee_id)
      # @employee = Employee.find(@reporting_master.employee_id)
+     @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
   end
 
   # GET /travel_requests/new

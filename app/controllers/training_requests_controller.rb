@@ -34,6 +34,7 @@ class TrainingRequestsController < ApplicationController
   # GET /training_requests/1.json
   def show
    @trainee_requests =TraineeRequest.where(training_request_id: @training_request.id)
+   @reporting_masters_training_reqs = ReportingMastersTrainingReq.where(training_request_id: @training_request.id)
     # @reporting_master = ReportingMaster.find(@training_request.reporting_master.employee_id)
     # @employee = Employee.find(@reporting_master.employee_id)
   end
@@ -475,20 +476,6 @@ end
     end
     session[:active_tab] ="trainingmgmt"
   end
-
-  def particular_training_history
-    @employee = Employee.find(params[:emp_id])
-    @training_requests = TrainingRequest.where(employee_id: @employee.id)
-    session[:active_tab] ="trainingmgmt"
-  end
-
-  def show_reporting_masters_training_req_list
-    @training_request = TrainingRequest.find(params[:format])
-    @reporting_masters_training_reqs = ReportingMastersTrainingReq.where(training_request_id: @training_request.id)
-    @trainee_requests =TraineeRequest.where(training_request_id: @training_request.id)
-
-  end
-
 
   # def reject_training_request
   #   @training_request = TrainingRequest.find(params[:format])

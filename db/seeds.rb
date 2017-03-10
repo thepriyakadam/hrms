@@ -1535,10 +1535,7 @@ require 'roo'
 #  end
 # end
 
-GoalRating.destroy_all
-GoalBunch.destroy_all
-
-
+Rating.update_all(is_confirm: nil)
 # ex = Roo::Excel.new("#{Rails.root}/public/HRMSONE EMPLOYEE BANK DATA.xls")
 # ex.default_sheet = ex.sheets[1] #siya feb
 # i = 1

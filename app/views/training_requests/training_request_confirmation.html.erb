@@ -19,8 +19,10 @@
         <th><strong>Request Date</strong></th>
         <td><%= @training_request.training_date %></td>
       
-        <th><strong>Request To</strong></th>
-        <td><%= @training_request.reporting_master_id %></td>
+       <th><strong>Request To</strong></th>
+        <% training_req = TrainingRequest.where(id: @training_request.id).take
+        emp = Employee.where(id: training_req.reporting_master_id).take %>
+        <td><%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
       </tr>
       <tr>
         <th><strong>No. Of Employee</strong></th>

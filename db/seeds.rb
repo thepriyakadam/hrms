@@ -1535,12 +1535,8 @@ require 'roo'
 #  end
 # end
 
-TrainingTopicMaster.destroy_all
-TrainingRequest.destroy_all
-ReportingMastersTrainingReq.destroy_all
-TraineeRequest.destroy_all
-TrainingPlan.destroy_all
-Trainee.destroy_all
+GoalRating.destroy_all
+GoalBunch.destroy_all
 
 # ex = Roo::Excel.new("#{Rails.root}/public/HRMSONE EMPLOYEE BANK DATA.xls")
 # ex.default_sheet = ex.sheets[1] #siya feb

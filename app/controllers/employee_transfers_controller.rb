@@ -207,26 +207,38 @@ class EmployeeTransfersController < ApplicationController
      end
   end
 
+  # def final_approve
+  #   # byebug
+  #   @employee_transfer = EmployeeTransfer.find(params[:format])
+  #   @employee_transfer.update(current_status: "FinalApproved",reporting_master_id: current_user.employee_id)
+  #   ReportingEmployeeTransfer.create(employee_transfer_id: @employee_transfer.id,reporting_master_id: current_user.employee_id,status: "FinalApproved")
+  #   # @employee_designation = params[:employee_transfer][:employee_designation_id]
+  #   # @employee_category = params[:employee_transfer][:employee_category_id]
+  #   # @company = params[:employee_transfer][:company_id]
+  #   # @company_location_id = params[:employee_transfer][:company_location_id]
+  #   # @department_id = params[:employee_transfer][:department_id]
+  #   # EmployeeTransfer.update(employee_designation_id: @employee_designation,employee_category_id: @employee_category,company_id: @company_id,company_location_id: @company_location_id,department_id: @department_id)
+  #   # TransferHistory.update(employee_designation_id: @employee_transfer.employee_designation_id,employee_category_id: @employee_transfer.employee_category_id,company_id: @employee_transfer.company_id,company_location_id: @employee_transfer.company_location_id,department_id: @employee_transfer.department_id)
+  #   if @employee_transfer.current_status == "FinalApproved"
+  #     flash[:notice] = 'Travel Request Approved Successfully'
+  #     redirect_to transfer_request_employee_transfers_path
+  #   else
+  #     flash[:notice] = 'Travel Request Approved Successfully'
+  #     redirect_to transfer_request_employee_transfers_path
+  #   end
+  # end
+  
   def final_approve
-    byebug
-    @employee_transfer = EmployeeTransfer.find(params[:format])
+  @employee_transfer = EmployeeTransfer.find(params[:format])
     @employee_transfer.update(current_status: "FinalApproved",reporting_master_id: current_user.employee_id)
     ReportingEmployeeTransfer.create(employee_transfer_id: @employee_transfer.id,reporting_master_id: current_user.employee_id,status: "FinalApproved")
-    # @employee_designation = params[:employee_transfer][:employee_designation_id]
-    # @employee_category = params[:employee_transfer][:employee_category_id]
-    # @company = params[:employee_transfer][:company_id]
-    # @company_location_id = params[:employee_transfer][:company_location_id]
-    # @department_id = params[:employee_transfer][:department_id]
-    # EmployeeTransfer.update(employee_designation_id: @employee_designation,employee_category_id: @employee_category,company_id: @company_id,company_location_id: @company_location_id,department_id: @department_id)
-    # TransferHistory.update(employee_designation_id: @employee_transfer.employee_designation_id,employee_category_id: @employee_transfer.employee_category_id,company_id: @employee_transfer.company_id,company_location_id: @employee_transfer.company_location_id,department_id: @employee_transfer.department_id)
     if @employee_transfer.current_status == "FinalApproved"
-      flash[:notice] = 'Travel Request Approved Successfully'
+      flash[:notice] = 'Transfer Request Approved Successfully'
       redirect_to transfer_request_employee_transfers_path
     else
-      flash[:notice] = 'Travel Request Approved Successfully'
+      flash[:notice] = 'Transfer Request Approved Successfully'
       redirect_to transfer_request_employee_transfers_path
     end
-  end
 
   def final_approval_transfer_list
     # byebug

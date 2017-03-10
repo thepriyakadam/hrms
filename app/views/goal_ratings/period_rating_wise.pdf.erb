@@ -1,27 +1,19 @@
-<style>
-th {
-    text-align: left;
-}
-tr {
-    page-break-inside: avoid;
-}
-div.alwaysbreak { page-break-before: always; }
-div.nobreak:before { clear:both; }
-div.nobreak{ page-break-inside: avoid;
-  /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
-}
+<style type="text/css">
+ .page-break { display:block; clear:both; page-break-after:always; }
 </style>
-<div>
-  <center><h3>Employee Rating Detail</h3></center>
-      <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover" >
+  <div class = "page-break">
+     <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="5"> 
         <thead>
+        <tr>
+          <td colspan="6"><center>Employee Rating Detail</center></td>
+        </tr>
           <tr>
-            <th>Employee ID</th>
+            <th>ID</th>
             <th>Employee Name</th>
             <th>Appraisee Rating</th>
             <th>Appraiser Rating</th>
             <th>Reviewer Rating</th>
-            <th>Reviewer Rating</th>
+            <th>Final Rating</th>
           </tr>
         </thead>
         <tbody>
@@ -37,3 +29,4 @@ div.nobreak{ page-break-inside: avoid;
           <% end %>
         </tbody>
       </table>
+    </div>

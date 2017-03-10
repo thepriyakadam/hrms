@@ -16,8 +16,7 @@
       <% @employee_promotions = EmployeePromotion.where(employee_id: e.employee_id) %>
       <% @goal_ratings = GoalRating.where(goal_bunch_id: e.id,appraisee_id: e.employee_id, goal_type: 'Goal') %>
       <% @attribute_ratings = GoalRating.where(goal_bunch_id: e.id,appraisee_id: e.employee_id, goal_type: 'Attribute') %>
-
-      <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">    
+      <table id="example" class="table table-bordered table-hover table-condensed"> 
         <thead>
         <tr>
         <% i=i+1%>
@@ -49,7 +48,8 @@
       <br>
 
     
-      <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+      
+      <table id="example" class="table table-bordered table-hover table-condensed">
           <thead>
           <tr><th colspan="4"><center>Previous Experience</center></th></tr>
             <tr>
@@ -72,7 +72,8 @@
         </table>
         <br>
 
-        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+        
+      <table id="example" class="table table-bordered table-hover table-condensed">
           <thead>
           <tr><th colspan="4"><center>Qualification</center></th></tr>
             <tr>
@@ -95,7 +96,8 @@
         </table>
         <br>
 
-      <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+      
+      <table id="example" class="table table-bordered table-hover table-condensed">
         <thead>
         <tr><th colspan="7"><center>Promotion Detail</center></th></tr>
           <tr>
@@ -124,7 +126,8 @@
       </table>
       <br>
 
-        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+       
+      <table id="example" class="table table-bordered table-hover table-condensed">
           <thead>
           <tr><th colspan="10"><center>Performance Record</center></th></tr>
           <tr><th colspan="10"><center>Goals</center></th></tr>
@@ -159,7 +162,8 @@
           </tbody>
         </table>
 
-        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+       
+      <table id="example" class="table table-bordered table-hover table-condensed">
           <thead>
           <tr><th colspan="10"><center>Attributes</center></th></tr>
             <tr>
@@ -199,7 +203,8 @@
     <% else %>
 
        <% goal_bunch = GoalBunch.find_by_employee_id(e.employee_id)%>
-       <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+       
+      <table id="example" class="table table-bordered table-hover table-condensed">
         <tbody>
           <tr><th colspan="2"><center>Overall Performance Detail</center></th></tr>
             <tr>
@@ -238,7 +243,8 @@
       </table>
       <br>
       <% goal_bunch = GoalBunch.find_by_employee_id(e.employee_id) %>
-       <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+       
+      <table id="example" class="table table-bordered table-hover table-condensed">
         <tbody>
           <tr><th colspan="2"><center>Detail</center></th><th>Contact No</th><th>Sign</th></tr>
             <tr>

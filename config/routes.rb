@@ -844,6 +844,9 @@ end
       get :final_approval_training_list
       get :final_approve
       post :selected_employee_training_list
+      get :emp_training_history
+      get :particular_training_history
+      get :show_reporting_masters_training_req_list
     end
   end
   resources :selected_resumes  do

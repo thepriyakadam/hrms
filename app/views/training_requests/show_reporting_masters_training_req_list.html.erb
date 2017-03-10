@@ -1,0 +1,123 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+  </div><!-- /.box-header -->
+  <div class="box-body">
+     <table class="table table-bordered table-hover table-condensed">
+    <tr>
+      <td colspan="4"><center>Training Request Detail</center></td>
+    </tr>
+      <tr>
+        <th><strong>Employee Name</strong></th>
+        <td><%= @training_request.employee.try(:manual_employee_code) %> - <%= @training_request.employee.try(:first_name) %> <%= @training_request.employee.try(:middle_name) %> <%= @training_request.employee.try(:last_name) %></td>
+      
+        <th><strong>Training Topic</strong></th>
+        <td><%= @training_request.training_topic_master.try(:name) %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Request Date</strong></th>
+        <td><%= @training_request.training_date %></td>
+      
+        <th><strong>Request To</strong></th>
+        <% training_req = TrainingRequest.where(id: @training_request.id).take
+        emp = Employee.where(id: training_req.reporting_master_id).take %>
+        <td><%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
+      </tr>
+      <tr>
+        <th><strong>No. Of Employee</strong></th>
+        <td><%= @training_request.no_of_employee %></td>
+      
+        <th><strong>Place</strong></th>
+        <td><%= @training_request.place %></td>
+      </tr>
+      <tr>
+        <th><strong>Description</strong></th>
+        <td colspan="3"><%= @training_request.description %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Justification</strong></th>
+        <td colspan="3"><%= @training_request.justification %></td>
+      </tr>
+      <!-- <tr>
+        <th><strong>Comment</strong></th>
+        <td colspan="4"><%= @training_request.comment %></td>
+      </tr> -->
+    </table><br>
+  <div class="box-header with-border">
+  </div>
+  <table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <td colspan="6"><center>Employee List For Training</center></td>
+    </tr>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Department</th>
+      <th>Designation</th>
+      <th>Contact No</th>
+      <th>Status</th>
+      </tr>
+  </thead>
+
+  <tbody>
+   <% @trainee_requests.each do |trainee_request| %>
+      <tr>
+        <td><%= trainee_request.employee.try(:manual_employee_code) %></td> 
+        <td><%= full_name(trainee_request.employee) %></td>
+        <td><%= trainee_request.employee.department.try(:name) %></td>
+        <td><%= trainee_request.employee.joining_detail.employee_designation.try(:name) %></td>
+        <td><%= trainee_request.employee.try(:contact_no) %></td>
+        <td>
+          <% if trainee_request.is_complete == true %>
+          <small class="label label-primary">Selected</small>
+          <% else %>
+          <small class="label label-default">Not Selected</small>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+  </tbody>
+</table><br>
+
+	 <table id="example1" class="table table-bordered table-hover table-condensed">
+	  <thead>
+	  <tr>
+      <td colspan="3"><center>Training Request Process</center></td>
+    </tr>
+	    <tr>
+	      <th>Approver ID</th>
+        <th>Approver Name</th>
+        <th>Training Request Status</th>
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	    <% @reporting_masters_training_reqs.each do |rmt| %>
+	      <tr>
+	        <% emp = Employee.where(id: rmt.reporting_master_id).take %>
+	        <td><%= emp.manual_employee_code %></td>
+	        <td> <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %> </td>
+	        <td>
+	         <% if rmt.training_status == "Pending" %>
+	         <small class="label label-primary">Pending</small>
+	         <% elsif rmt.training_status == "FirstApproved" %>
+	         <small class="label label-primary">FirstApproved</small>
+	         <% elsif rmt.training_status == "SecondApproved" %>
+	         <small class="label label-primary">SecondApproved</small>
+	         <% elsif rmt.training_status == "Rejected" %>
+	         <small class="label label-primary">Rejected</small>
+	         <% elsif rmt.training_status == "Approved & Send Next" %>
+	         <small class="label label-primary">Approved & Send Next</small>
+	         <% else %>
+	         <% end %>
+	        </td>
+	      </tr>
+	      <% end %>
+	    </tbody>
+	  </table>
+      <!-- <= link_to 'Edit', edit_training_request_path(@training_request),class: 'btn btn-success btn-sm fa fa-edit' %> | -->
+      <%= link_to 'Back', training_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div>
+</div>

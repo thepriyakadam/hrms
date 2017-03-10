@@ -21,10 +21,10 @@
 
   <tbody>
       <tr>
-        <td><%= due_employee_detail.reporting_master.employee.try(:manual_employee_code) %></td>      
-        <td><%= full_name(due_employee_detail.reporting_master.employee) %></td>
-        <td><%= due_employee_detail.reporting_master.employee.department.try(:name) %></td> 
-        <td><%= due_employee_detail.employee.joining_detail.employee_designation.try(:name) %></td>
+        <td><%= due_employee_detail.try(:reporting_master).try(:employee).try(:manual_employee_code) %></td>      
+        <td><%= full_name(due_employee_detail.try(:reporting_master).try(:employee)) %></td>
+        <td><%= due_employee_detail.try(:reporting_master).try(:employee).try(:department).try(:name) %></td> 
+        <td><%= due_employee_detail.try(:employee).try(:joining_detail).try(:employee_designation).try(:name) %></td>
         <td></td>
       </tr>
       <tr><th colspan="5"><center>Due Detail</center></th></tr>
@@ -37,9 +37,9 @@
       </tr>
       <% due_employee_detail.due_actions.try(:each) do |due_action| %>
       <tr>
-        <td><%= due_action.name %></td>
-        <td><%= due_action.remark %></td>
-        <td><%= due_action.is_confirm ? "Yes" : "No" %></td>
+        <td><%= due_action.try(:name) %></td>
+        <td><%= due_action.try(:remark) %></td>
+        <td><%= due_action.try(:is_confirm) ? "Yes" : "No" %></td>
         <td>
           <% if due_action.status == false %>
           <small class="label label-default">Pending</small>
@@ -288,10 +288,16 @@
         net_salary=@salaryslips.sum(:calculated_net_salary).round %>
         <%= net_salary %></td>
         <td><% grat=@gratuities.take %>
-          <%= total_grat=grat.total_gratuity %>
+        <% if grat.try(:total_gratuity).nil? %>
+        <% else %>
+          <%= total_grat=grat.try(:total_gratuity) %> 
+          <% end %>
         </td>
+        <% if grat.try(:total_gratuity).nil? %>
+        <% else %>
         <td><strong><%= total_2=net_salary+total_grat %></strong></td>
         <td><strong><%= final_total=total_1-total_2 %></strong></td>
+        <% end %>
       </tr>
   </tbody>
   </table>

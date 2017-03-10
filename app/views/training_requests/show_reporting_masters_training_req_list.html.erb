@@ -101,11 +101,13 @@
 	        <td> <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %> </td>
 	        <td>
 	         <% if rmt.training_status == "Pending" %>
-	         <small class="label label-primary">Pending</small>
+	         <small class="label label-default">Pending</small>
 	         <% elsif rmt.training_status == "FirstApproved" %>
 	         <small class="label label-primary">FirstApproved</small>
 	         <% elsif rmt.training_status == "SecondApproved" %>
 	         <small class="label label-primary">SecondApproved</small>
+	         <% elsif rmt.training_status == "FinalApproved" %>
+	         <small class="label label-primary">FinalApproved</small>
 	         <% elsif rmt.training_status == "Rejected" %>
 	         <small class="label label-primary">Rejected</small>
 	         <% elsif rmt.training_status == "Approved & Send Next" %>
@@ -116,8 +118,8 @@
 	      </tr>
 	      <% end %>
 	    </tbody>
-	  </table>
+	  </table><br>
       <!-- <= link_to 'Edit', edit_training_request_path(@training_request),class: 'btn btn-success btn-sm fa fa-edit' %> | -->
-      <%= link_to 'Back', training_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      <%= link_to 'Back', particular_training_history_training_requests_path(emp_id: @trainee_request.employee),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
   </div>
 </div>

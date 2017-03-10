@@ -42,8 +42,8 @@
   <tbody>
       <tr>
         <td><%= due_employee_detail.reporting_master.employee.try(:manual_employee_code) %></td>      
-        <td><%= full_name(due_employee_detail.reporting_master.employee) %></td>
-        <td><%= due_employee_detail.reporting_master.employee.department.try(:name) %></td> 
+        <td><%= full_name(due_employee_detail.try(:reporting_master).try(:employee)) %></td>
+        <td><%= due_employee_detail.try(:reporting_master).try(:employee).try(:department).try(:name) %></td> 
         <td></td>
         <td></td>
       </tr>
@@ -57,7 +57,7 @@
       </tr>
       <% due_employee_detail.due_actions.try(:each) do |due_action| %>
       <tr>
-        <td><%= due_action.name %></td>
+        <td><%= due_action.try(:name) %></td>
         <td><%= due_action.remark %></td>
         <td><%= due_action.is_confirm ? "Yes" : "No" %></td>
         <td>

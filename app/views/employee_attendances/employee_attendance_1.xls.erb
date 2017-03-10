@@ -26,7 +26,6 @@
                 <td><%= v %></td>
               <%end%>
             </tr> 
-            
               
             <% present_day = present_day_count(exist) %>
 
@@ -91,7 +90,6 @@
             <% end %>
 
             <%= hidden_field e.employee_id, 'gatepass', value: gate_pass %>
-            
             <% exist.clear %>
           <%end%>
         </tbody>

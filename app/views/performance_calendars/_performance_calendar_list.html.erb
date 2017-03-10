@@ -18,6 +18,7 @@
         <td><%= performance_calendar.end_date %></td>
          <td>
           <% if performance_calendar.is_confirm == true %>
+          <%= link_to '', edit_performance_calendar_path(performance_calendar) ,class: 'btn btn-sm btn-success btn-xs fa fa-edit',remote:true %>
             <small class= "label label-primary">Confirmed</small>
           <% else %>
             <%= link_to '', edit_performance_calendar_path(performance_calendar) ,class: 'btn btn-sm btn-success btn-xs fa fa-edit',remote:true %>

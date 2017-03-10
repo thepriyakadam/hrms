@@ -13,19 +13,19 @@
         </div>
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :employee_designation, label: 'Employee Designation', class: 'employee_transfer' %>
+            <%= f.text_field :designation, label: 'Employee Designation', class: 'employee_transfer' %>
           </div>
         </div>
     
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :employee_category,label: 'Employee Category', class: 'employee_transfer'%>
+            <%= f.text_field :category,label: 'Employee Category', class: 'employee_transfer'%>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :company,label: 'Company', class: 'employee_transfer'%>
+            <%= f.text_field :employee_company,label: 'Company', class: 'employee_transfer'%>
           </div>
         </div>
 
@@ -36,13 +36,13 @@
 
          <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :company_location,label: 'Company Location', class: 'employee_transfer'%>
+            <%= f.text_field :employee_company_location,label: 'Company Location', class: 'employee_transfer'%>
           </div>
         </div>
        
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :department,label: 'Department', class: 'employee_transfer'%>
+            <%= f.text_field :employee_department,label: 'Department', class: 'employee_transfer'%>
           </div>
         </div>
      
@@ -69,36 +69,36 @@
 <script>
 $("#employee_transfer").validate({
     rules: {
-      "employee_transfer[employee_designation]":{
+      "employee_transfer[designation]":{
         required: true,
       },
-      "employee_transfer[employee_category]":{
+      "employee_transfer[category]":{
         required: true,
       },
-      "employee_transfer[company]":{
+      "employee_transfer[employee_company]":{
         required: true,
       },
-      "employee_transfer[company_location]":{
+      "employee_transfer[employee_company_location]":{
         required: true,
       },
-      "employee_transfer[department]":{
+      "employee_transfer[employee_department]":{
         required: true,
       }
     },
     messages: {
-      "employee_transfer[employee_designation]":{
+      "employee_transfer[designation]":{
         required: "Please Specify Designation",
       },
-      "employee_transfer[employee_category]":{
+      "employee_transfer[category]":{
         required: "Please Specify Category",
       },
-      "employee_transfer[company]":{
+      "employee_transfer[employee_company]":{
         required: "Please Specify Company",
       },
-      "employee_transfer[company_location]":{
+      "employee_transfer[employee_company_location]":{
         required: "Please Specify Company Location",
       },
-      "employee_transfer[department]":{
+      "employee_transfer[employee_department]":{
         required: "Please Specify Department",
       }
     },

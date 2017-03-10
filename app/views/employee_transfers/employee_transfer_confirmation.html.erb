@@ -26,11 +26,11 @@
           <% if @employee_transfer.id == employee_transfer.id %>
           <th><font color='green'>*<%= employee_transfer.employee.try(:manual_employee_code) %></font></th>
                 <th><font color='green'><%= full_name(employee_transfer.employee) %></th></font>
-                <th><font color='green'><%= employee_transfer.employee_designation %></th></font>
-                <th><font color='green'><%= employee_transfer.employee_category %></th></font>
-                <th><font color='green'><%= employee_transfer.company %></th></font>
-                <th><font color='green'><%= employee_transfer.company_location %></th></font>
-                <th><font color='green'><%= employee_transfer.department %></th></font>
+                <th><font color='green'><%= employee_transfer.designation %></th></font>
+                <th><font color='green'><%= employee_transfer.category %></th></font>
+                <th><font color='green'><%= employee_transfer.employee_company %></th></font>
+                <th><font color='green'><%= employee_transfer.employee_company_location %></th></font>
+                <th><font color='green'><%= employee_transfer.employee_department %></th></font>
                  <th><font color='green'><%= employee_transfer.justification %></th></font>
 
                 <%else%>
@@ -99,21 +99,21 @@
               <td><% emp=Employee.where(id: @employee_transfer.reporting_master_id).take %>
               <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
               <th>Employee Designation</th>
-              <td><%= @employee_transfer.employee_designation %></td>
+              <td><%= @employee_transfer.designation %></td>
             </tr>
 
             <tr>
               <th>Employee Category</th>
-              <td><%= @employee_transfer.employee_category %></td>
+              <td><%= @employee_transfer.category %></td>
               <th>Company</th>
-              <td><%= @employee_transfer.company %></td>
+              <td><%= @employee_transfer.employee_company %></td>
             </tr>
 
             <tr>
               <th>Company Location</th>
-              <td><%= @employee_transfer.company_location %></td>
+              <td><%= @employee_transfer.employee_company_location %></td>
                <th>Department</th>
-              <td><%= @employee_transfer.department %></td>
+              <td><%= @employee_transfer.employee_department %></td>
             </tr>
 
             <tr>

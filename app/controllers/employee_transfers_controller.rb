@@ -39,7 +39,7 @@ class EmployeeTransfersController < ApplicationController
       if @employee_transfer.save
         EmployeeTransfer.where(id: @employee_transfer.id).update_all(reporting_master_id: emp.manager_id,current_status: "Pending")
         ReportingEmployeeTransfer.create(reporting_master_id: current_user.employee_id, employee_transfer_id: @employee_transfer.id, status: "Pending")
-        TransferHistory.create(employee_transfer_id: @employee_transfer.id,employee_id: @employee_transfer.employee_id,reporting_master_id: @employee_transfer.reporting_master_id,employee_designation: @employee_transfer.employee_designation,employee_category: @employee_transfer.employee_category,company: @employee_transfer.company,company_location: @employee_transfer.company_location,department: @employee_transfer.department,justification: @employee_transfer.justification,current_status: @employee_transfer.current_status)
+        TransferHistory.create(employee_transfer_id: @employee_transfer.id,employee_id: @employee_transfer.employee_id,reporting_master_id: @employee_transfer.reporting_master_id,employee_designation: @employee_transfer.designation,employee_category: @employee_transfer.category,company: @employee_transfer.employee_company,company_location: @employee_transfer.employee_company_location,department: @employee_transfer.employee_department,justification: @employee_transfer.justification,current_status: @employee_transfer.current_status)
         # EmployeeTransferMailer.transfer_request(@employee_transfer).deliver_now
         format.html { redirect_to @employee_transfer, notice: 'Employee transfer was successfully created.' }
         format.json { render :show, status: :created, location: @employee_transfer }
@@ -317,11 +317,11 @@ class EmployeeTransfersController < ApplicationController
     end
 
     def transfer_history_params
-    params.require(:employee_transfer).permit(:employee_transfer_id,:employee_id,:reporting_master_id,:justification,:current_status,:employee_designation,:employee_category,:company,:company_location,:department)
+    params.require(:employee_transfer).permit(:employee_transfer_id,:employee_id,:reporting_master_id,:justification,:current_status,:designation,:category,:employee_company,:employee_company_location,:employee_department,:employee_designation_id,:employee_category_id,:company_id,:company_location_id,:department_id)
   end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_transfer_params
-      params.require(:employee_transfer).permit(:employee_id, :reporting_master_id, :justification,:employee_designation,:employee_category,:company,:company_location,:department)
+      params.require(:employee_transfer).permit(:employee_id, :reporting_master_id, :justification,:designation,:category,:employee_company,:employee_company_location,:employee_department,:employee_designation_id,:employee_category_id,:company_id,:company_location_id,:department_id)
     end
 end

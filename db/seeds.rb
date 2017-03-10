@@ -1536,19 +1536,6 @@ require 'roo'
 # end
 
 
-InductionMaster.update_all(description: "First Template")
-TravelRequest.destroy_all
-ReportingMastersTravelRequest.destroy_all
-TravelRequestHistory.destroy_all
-DailyBillDetail.destroy_all
-TravelExpence.destroy_all
-EmployeeResignation.destroy_all
-ResignationStatusRecord.destroy_all
-DueDetail.destroy_all
-DueEmployeeDetail.destroy_all
-DueAction.destroy_all
-DueTemplate.destroy_all
-
 # ex = Roo::Excel.new("#{Rails.root}/public/HRMSONE EMPLOYEE BANK DATA.xls")
 # ex.default_sheet = ex.sheets[1] #siya feb
 # i = 1

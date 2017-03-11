@@ -10,7 +10,7 @@
           <th>ID</th>
           <th>Employee Name</th>
           <th>Appraiser Name</th>
-          <th>Reviewer Name</th>
+          <th>Department</th>
           <th>Appraisee Rating</th>
           <th>Appraiser Rating</th>
           <th>Reviewer Rating</th>
@@ -24,7 +24,7 @@
         <td><%= e.employee.manual_employee_code %></td>
         <td><%= full_name(e.employee) %> </td>
         <td><%= full_name(e.employee.manager) %></td> 
-        <td><%= full_name(e.employee.manager_2) %></td>
+        <td><%= e.employee.department.try(:name) %></td>
         <td><%= e.appraisee_rating_id %></td>
         <td><%= e.appraiser_rating %></td>
         <td><%= e.reviewer_rating_id %></td>

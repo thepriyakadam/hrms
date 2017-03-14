@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String"> Salary Slip</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String"> Leave Category</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String"> No Of Leave </Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String"> Balance </Data></Cell>
+      </Row>
+
+      <% @leave_details.each do |leave_detail| %>
+      <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= leave_detail.salaryslip_id %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= leave_detail.leav_category_id %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= leave_detail.no_of_leave %></Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="String"><%= leave_detail.balance %></Data></Cell>
+      </Row>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
+
+
+
+
+

@@ -962,12 +962,13 @@ class SalaryslipsController < ApplicationController
             sa.employee_template_id = current_template.id
             sa.save!
           end
-          leave_count = 0
           @salaryslip = Salaryslip.last
           @employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employee.id)
             @employee_leav_balances.each do |elb|
               if elb.is_active == true
                 @particular_leave_records = ParticularLeaveRecord.where(employee_id: elb.employee_id,leav_category_id: elb.leav_category_id)
+                
+              leave_count = 0
                 @particular_leave_records.each do |plr|
                   @date = plr.leave_date
                   month = @date.strftime("%B")
@@ -1927,4 +1928,15 @@ end
     end
   end
 
+  def leave_detail
+    @leave_details = LeaveDetail.all
+     
+  end
+
+  def leave_detail_xls
+    @leave_details = LeaveDetail.all
+    respond_to do |format|
+      format.xls {render template: 'salaryslips/leave_detail_xls.xls.erb'}
+    end
+  end
 end

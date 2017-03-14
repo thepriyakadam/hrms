@@ -140,7 +140,7 @@ class EmployeeLeavRequestsController < ApplicationController
               elsif
                 @employee_leav_request.leave_count < @leav_category.from or @employee_leav_request.leave_count > @leav_category.to 
                 @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
-                flash.now[:alert] = "Leave Range is #{@leav_category.from} - #{@leav_category.to} "
+                flash.now[:alert] = "Leave Range for #{@leav_category.code} is #{@leav_category.from} - #{@leav_category.to} "
                 render :new
 
                 #@leave_coff = LeaveCOff.where(employee_id: @employee.id)

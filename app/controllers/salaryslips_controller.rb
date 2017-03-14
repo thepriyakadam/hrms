@@ -55,8 +55,7 @@ class SalaryslipsController < ApplicationController
     unless @advance_salary.nil?
       @instalments = @advance_salary.instalments
       @instalments.try(:each) do |i|
-        unless i.instalment_date.nil?
-
+        unless i.instalment_date.nil?   
           if i.try(:instalment_date).strftime('%B') == params['month'] && i.try(:instalment_date).strftime('%Y') == params['year']
             @instalment_array << i
           end
@@ -351,7 +350,7 @@ class SalaryslipsController < ApplicationController
             @instalments = a.instalments
             @instalments.try(:each) do |i|
               unless i.instalment_date.nil?
-                i.update(is_paid: true)
+                i.update(is_complete: true)
                 if i.try(:instalment_date).strftime('%B') == params['month'] && i.try(:instalment_date).strftime('%Y') == params['year']
                   @instalment_array << i
                 end
@@ -894,6 +893,7 @@ class SalaryslipsController < ApplicationController
             @instalments = a.instalments
             @instalments.try(:each) do |i|
               unless i.instalment_date.nil?
+                i.update(is_complete: true)
                 if i.try(:instalment_date).strftime('%B') == params['month'] && i.try(:instalment_date).strftime('%Y') == params['year']
                   @instalment_array << i
                 end
@@ -1833,21 +1833,20 @@ end
     end
   end
 
-
   def show_employee
     @month = params[:month]
     @year = params[:year]
     if current_user.class == Group
-      @salaryslips = Salaryslip.where(month: @month, year: @year.to_s)
+      @salaryslips = Salaryslip.where(month: @month, year: @year.to_s,is_confirm: nil)
     elsif current_user.class == Member
       if current_user.role.name == "GroupAdmin"
-        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s)
+        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s,is_confirm: nil)
       elsif current_user.role.name == "Admin"
         @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees)
+        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees,is_confirm: nil)
       elsif current_user.role.name == "Branch"
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees)
+        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees,is_confirm: nil)
       end  
     end    
   end

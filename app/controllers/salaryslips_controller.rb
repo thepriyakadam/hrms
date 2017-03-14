@@ -55,8 +55,7 @@ class SalaryslipsController < ApplicationController
     unless @advance_salary.nil?
       @instalments = @advance_salary.instalments
       @instalments.try(:each) do |i|
-        unless i.instalment_date.nil?
-
+        unless i.instalment_date.nil?   
           if i.try(:instalment_date).strftime('%B') == params['month'] && i.try(:instalment_date).strftime('%Y') == params['year']
             @instalment_array << i
           end
@@ -351,7 +350,7 @@ class SalaryslipsController < ApplicationController
             @instalments = a.instalments
             @instalments.try(:each) do |i|
               unless i.instalment_date.nil?
-                i.update(is_paid: true)
+                i.update(is_complete: true)
                 if i.try(:instalment_date).strftime('%B') == params['month'] && i.try(:instalment_date).strftime('%Y') == params['year']
                   @instalment_array << i
                 end
@@ -894,6 +893,7 @@ class SalaryslipsController < ApplicationController
             @instalments = a.instalments
             @instalments.try(:each) do |i|
               unless i.instalment_date.nil?
+                i.update(is_complete: true)
                 if i.try(:instalment_date).strftime('%B') == params['month'] && i.try(:instalment_date).strftime('%Y') == params['year']
                   @instalment_array << i
                 end
@@ -962,12 +962,13 @@ class SalaryslipsController < ApplicationController
             sa.employee_template_id = current_template.id
             sa.save!
           end
-          leave_count = 0
           @salaryslip = Salaryslip.last
           @employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employee.id)
             @employee_leav_balances.each do |elb|
               if elb.is_active == true
                 @particular_leave_records = ParticularLeaveRecord.where(employee_id: elb.employee_id,leav_category_id: elb.leav_category_id)
+                
+              leave_count = 0
                 @particular_leave_records.each do |plr|
                   @date = plr.leave_date
                   month = @date.strftime("%B")
@@ -1833,21 +1834,20 @@ end
     end
   end
 
-
   def show_employee
     @month = params[:month]
     @year = params[:year]
     if current_user.class == Group
-      @salaryslips = Salaryslip.where(month: @month, year: @year.to_s)
+      @salaryslips = Salaryslip.where(month: @month, year: @year.to_s,is_confirm: nil)
     elsif current_user.class == Member
       if current_user.role.name == "GroupAdmin"
-        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s)
+        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s,is_confirm: nil)
       elsif current_user.role.name == "Admin"
         @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees)
+        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees,is_confirm: nil)
       elsif current_user.role.name == "Branch"
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees)
+        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees,is_confirm: nil)
       end  
     end    
   end
@@ -1927,4 +1927,15 @@ end
     end
   end
 
+  def leave_detail
+    @leave_details = LeaveDetail.all
+     
+  end
+
+  def leave_detail_xls
+    @leave_details = LeaveDetail.all
+    respond_to do |format|
+      format.xls {render template: 'salaryslips/leave_detail_xls.xls.erb'}
+    end
+  end
 end

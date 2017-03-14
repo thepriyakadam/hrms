@@ -5,30 +5,51 @@
   </div><!-- /.box-header -->
 
   <div class="box-body">
-    <%= bootstrap_form_for(:salaryslip_component, url: { action: 'index',format: 'xml'}) do |f| %>
+    <%= bootstrap_form_for(:salaryslip_component, url: { action: 'index',format: 'xml'},html: {id: "salaryslip_component"}) do |f| %>
       <div class="row">
-        <div class="col-sm-3">
-          <div class="field">
-            <%= select :salaryslip_component,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
-           </div>
-        </div>
         <div class="col-sm-3">
           <div class="field">
             <%= select :salaryslip_component,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
           </div>
         </div>
-        </div><br>
-
-        <div class="row">
         <div class="col-sm-3">
+          <div class="field">
+            <%= select :salaryslip_component,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
+           </div>
+        </div>
+         <div class="col-sm-3">
           <div class="actions">
-            <%= f.submit "Download XML", class: "btn btn-sm btn-warning" %>
+            <%= f.submit "Download XML", class: "btn btn-sm btn-primary" %>
           </div>
         </div>
-        </div>
-
+        </div><br>
       <br>
     <% end %>
   </div><!-- /.box-body -->
 </div><!-- /.box -->
+
+<script>
+$("#salaryslip_component").validate({
+    rules: {
+      "salaryslip_component[year]":{
+        required: true
+              },
+      "salaryslip_component[month]":{
+        required: true
+      }
+    },
+    messages: {
+      "salaryslip_component[year]":{
+        required: "Please Select Year"
+      },
+      "salaryslip_component[month]":{
+        required: "Please Select Month"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
 

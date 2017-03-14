@@ -145,6 +145,7 @@
     <% end %>
    <% elsif @travel_request.current_status == "SecondApproved"  %>
       <%= link_to 'Final Approve',final_approve_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check' %>
+      <%= link_to 'Reject',reject_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
     <% end %>
 
     <!--   end

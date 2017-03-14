@@ -5,15 +5,17 @@
   <div class="box-body">
     <%= bootstrap_form_for(@employee_resignation,html: {id: 'employee_resignation'}) do |f| %>
     <%= f.hidden_field :employee_id, :value => current_user.employee_id %>
+     <%= f.hidden_field :application_date, value: Date.today %>
      
       <div class="row">
+  
         <div class="col-sm-3">
         <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :resignation_date,class: 'resignation_date',label:'Resignation Date'%>
+              <%= f.text_field :resignation_date,class: 'resignation',label:'Resignation Date'%>
             </div>
           </div>
         </div>
@@ -24,102 +26,113 @@
           </div>
         </div>
 
-        <div class="col-sm-3">
-        <div class="form-group required">
-           <%= f.select :reporting_master_id, all_reporting_master_list, {include_blank: "Select Approval",label:"Request To"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>       
-          </div>
-        </div>
+         <div class="col-sm-3">
+         <div class="field">
+           <%= f.text_field :notice_period, label:'Notice Period (in days)',readonly: true %>
+         </div>
+       </div>
+       
+      </div>  
 
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :notice_period, label:'Notice Period (in days)' %>
-          </div>
-        </div> 
+       <div class="row">
+
+      <div class="col-sm-12">
+        <div class="field">
+          <%= f.text_area :reason, label: "Reason" %>
+        </div>
       </div>
-
-      <div class="row"> 
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :short_notice_period, label:'Short Notice Period (in days)' %>
-          </div>
-        </div>
-
-        <div class="col-sm-3">
-          <label>Requested Releaving Date</label>
-          <div class="field">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-                <%= f.text_field :tentative_leaving_date,hide_label: true, class: 'tentative_leaving_date'%>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :remark, label:'Remark' %>
-          </div>
-        </div>
-
-        <div class="col-sm-3">
-          <label>Exit Interview Date</label>
-          <div class="field">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-                <%= f.text_field :exit_interview_date,hide_label: true, class: 'exit_interview_date'%>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div class="row">
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :note, label:'Note' %>
-          </div>
-        </div>
 
-        <div class="col-sm-3">
-          <label>Leaving Date</label>
-          <div class="field">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-                <%= f.text_field :leaving_date,hide_label: true, class: 'leaving_date'%>
-            </div>
+    <!--   <div class="col-sm-3">
+       <div class="field">
+         < f.text_field :short_notice_period, label:'Short Notice Period (in days)' %>
+       </div>
+      </div>
+ -->
+      <div class="col-sm-3">
+       <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
           </div>
+          <%= f.text_field :tentative_leaving_date, class: 'resignation',label:'Requested Releaving Date'%>
         </div>
+       </div>
+      </div>
+      
+     <!--  <div class="col-sm-3">
+       <div class="field">
+         < f.text_field :remark, label:'Remark' %>
+       </div>
+      </div> -->
 
-        <div class="col-sm-3">
-          <label>Settled On</label>
-          <div class="field">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-                <%= f.text_field :settled_on,hide_label: true, class: 'settled_on'%>
-            </div>
+      <div class="col-sm-3">
+       <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
           </div>
+          <%= f.text_field :exit_interview_date, class: 'resignation',label:'Exit Interview Date'%>
         </div>
+       </div>
       </div>
 
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="field">
-            <%= f.text_area :reason, label: "Exit Interview" %>
+      <div class="col-sm-3">
+       <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :leaving_date, class: 'resignation',label:'Leaving Date'%>
+        </div>
+       </div>
+      </div>
+
+      <div class="col-sm-3">
+        <label>Settled On</label>
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :settled_on,hide_label: true, class: 'resignation'%>
           </div>
         </div>
       </div>
     
+      </div>
+
+      <div class="row">
+      
+  
+      <div class="col-sm-12">
+       <div class="field">
+         <%= f.text_area :note, label:'Note' %>
+       </div>
+      </div>
+
+
+
+   
+
+      
+      <!-- <div class="col-sm-3">
+      <label>Stop Payment Request</label>
+        <div class="field">
+          <= f.check_box :is_stop_pay_request, label:'Stop Payment Request' %>
+       </div>
+      </div>
+    -->
+
+     </div>
+    
    <div class="row">
-     <div class="col-sm-3">
+     <div class="col-sm-6">
       <div class="actions">
-          <%= f.submit 'Create Employee Resignation',class: 'btn btn-sm btn-primary' %>
-          <%= link_to 'Back', employee_resignations_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+        <%= f.submit 'Create Employee Resignation',class: "btn btn-primary btn-sm"  %>
+        <%= link_to 'Back', employee_resignations_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
       </div>
      </div>
    </div>
@@ -127,58 +140,55 @@
     
   </div><!-- /.box-body -->
 </div><!--box -->
+
+
+
+
 <script type="text/javascript">
   $(function(){
-    $('.resignation_date').datepicker({
+    $('.resignation').datepicker({
     changeYear:true,
     changeMonth: true,
-    yearRange: '-2:+25',
+    yearRange: '-5:+10',
     dateFormat: 'dd-mm-yy' });
 
-    $('.tentative_leaving_date').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-2:+25',
-    dateFormat: 'dd-mm-yy' });
-
-    $('.exit_interview_date').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-2:+25',
-    dateFormat: 'dd-mm-yy' });
-
-    $('.leaving_date').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-2:+25',
-    dateFormat: 'dd-mm-yy' });
-
-     $('.settled_on').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-2:+25',
-    dateFormat: 'dd-mm-yy' });
-
-  }); 
-</script>
-
-<script>
-$("#employee_resignation").validate({
+    $("#employee_resignation").validate({
     rules: {
-      "employee_resignation[reporting_master_id]":{
-        required: true
-      },
-      "employee_resignation[resignation_date]":{
-        required: true
+      "employee_resignation[employee_id]":{
+        required: true,
       }
     },
     messages: {
-      "employee_resignation[reporting_master_id]":{
-        required: "Please specify Reporting Manager"
+      "employee_resignation[employee_id]":{
+        required: "Please Select ",
+      }
+      },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+  }); 
+</script>
+
+
+<!-- <script>
+$("#employee_resignation").validate({
+    rules: {
+      "employee_resignation[employee_id]":{
+        required: true,
       },
       "employee_resignation[resignation_date]":{
-        required: "Please specify Date"
+        required: true,
       }
+    },
+    messages: {
+      "employee_resignation[code]":{
+        required: "Please Select Employee",
+      },
+      "employee_resignation[name]":{
+        required: "Please Select",
+      } 
     },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
@@ -186,3 +196,5 @@ $("#employee_resignation").validate({
     }
    });
 </script>
+
+ -->

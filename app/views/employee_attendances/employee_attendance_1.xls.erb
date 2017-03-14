@@ -26,7 +26,6 @@
                 <td><%= v %></td>
               <%end%>
             </tr> 
-            
             <% present_day = present_day_count(exist) %>
             <% holiday_in_month = holiday_in_month_count(exist) %>
             <% week_off_day = week_off_day_count(exist) %>
@@ -51,8 +50,8 @@
              <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
                 <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + workingday[0] + workingday[3].to_f + workingday[2] + od_day %>
               <% else %>
-                <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[0] + workingday[3].to_f + workingday[2] + od_day %>
-              <% end %>            
+                <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[0] + @b.to_f + 2 + workingday[2] + od_day %>
+              <% end %>
             <% exist.clear %>
           <%end%>
         </tbody>

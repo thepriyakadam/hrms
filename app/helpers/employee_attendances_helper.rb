@@ -60,10 +60,6 @@ module EmployeeAttendancesHelper
     exist.select {|k,v| v == "A" || v == "" }.count + (exist.select {|k,v| v == "P/2" }.count)/2.to_f
   end
 
-  # def gate_pass_count(exist)
-  #   exist.select {|k,v| v == "PG" }.count
-  # end
-
   # def payable_day_count(exist)
   #   exist.select {|k,v| v == "P" }.count
   # end

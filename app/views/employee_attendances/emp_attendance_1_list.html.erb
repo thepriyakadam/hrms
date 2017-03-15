@@ -17,41 +17,71 @@
                 <td><%= v %></td>
               <%end%>
             </tr> 
+              
             <% present_day = present_day_count(exist) %>
+
             <% holiday_in_month = holiday_in_month_count(exist) %>
+
             <% week_off_day = week_off_day_count(exist) %>
+
             <% gate_pass = gate_pass_count(exist) %>
 
-            <% # full_pay_leave = full_pay_leave_count(exist) %>
-            <% # half_pay_leave = half_pay_leave_count(exist) %>
+            <% od_day = od_day_count(exist) %>
 
-            <% # pay_leave = full_pay_leave + half_pay_leave %>
 
-            <% # full_lwp_leave = full_lwp_leave_count(exist) %>
-            <% # half_lwp_leave = half_lwp_leave_count(exist) %>
-
-            <% # lwp_leave = full_lwp_leave + half_lwp_leave %>
             <% workingday = [] %>
             <% workingday = create_leave(@date, e) %>
-            
-            <% payable_day = present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[2] %>
 
             <%= hidden_field_tag "attendances[]", e.id %>
-            <%= hidden_field e.employee_id, 'employee_id', value: e.employee_id %>
-            <%= hidden_field e.employee_id, 'month_name', value: @date.strftime("%B") %>
-            <%= hidden_field e.employee_id, 'year', value: @date.strftime("%Y") %>
-            <%= hidden_field e.employee_id, 'day_in_month', value: count_day(@day,e.employee_id) %>
-            <%= hidden_field e.employee_id, 'year', value: @date.strftime("%Y") %>
-            <%= hidden_field e.employee_id, 'present_day', value: present_day %>
-            <%= hidden_field e.employee_id, 'total_leave', value: total_leave_count(exist) %>
-            <%= hidden_field e.employee_id, 'nonpay_leave', value: workingday[3] %>
-            <%= hidden_field e.employee_id, 'pay_leave', value: workingday[2] %>
-            <%= hidden_field e.employee_id, 'holiday_in_month', value: holiday_in_month %>
-            <%= hidden_field e.employee_id, 'week_off_day', value: week_off_day %>
-            <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count(exist) %>
-            <%= hidden_field e.employee_id, 'payable_day', value: payable_day %>
-            <%= hidden_field e.employee_id, 'gatepass', value: gate_pass %>
 
+            <%= hidden_field e.employee_id, 'employee_id', value: e.employee_id %>
+
+            <%= hidden_field e.employee_id, 'month_name', value: @date.strftime("%B") %>
+
+            <%= hidden_field e.employee_id, 'year', value: @date.strftime("%Y") %>
+
+            <%= hidden_field e.employee_id, 'day_in_month', value: count_day(@day,e.employee_id) %>
+
+            <%= hidden_field e.employee_id, 'present_day', value: present_day + workingday[2] %>
+
+            <%= hidden_field e.employee_id, 'od_day', value: od_day %>
+
+            <%= hidden_field e.employee_id, 'total_leave', value: workingday[0] + workingday[1] %>
+
+            <%= hidden_field e.employee_id, 'nonpay_leave', value: workingday[1] %>
+
+            <%= hidden_field e.employee_id, 'pay_leave', value: workingday[0] %>
+
+            <%= hidden_field e.employee_id, 'holiday_in_month', value: holiday_in_month %>
+
+            <%= hidden_field e.employee_id, 'week_off_day', value: week_off_day %>
+           
+            <% if gate_pass <= 2 %>
+              <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count(exist) %>
+            <% else %>
+              <% @a = gate_pass.to_f - 2 %>
+              <% @b = @a.to_f/2 %>
+              <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count(exist) + @b.to_f %>
+            <% end %>
+
+            <% if gate_pass <= 2 %>
+              <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+                <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + workingday[0] + gate_pass.to_f + workingday[2] + od_day %>
+              <% else %>
+                <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[0] + gate_pass.to_f + workingday[2] + od_day %>
+              <% end %>
+            <% else %>
+              <% @a = gate_pass.to_f - 2 %>
+              <% @b = @a.to_f/2 %>
+              <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+                <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + workingday[0] + @b.to_f + 2 + workingday[2] + od_day %>
+              <% else %>
+                <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[0] + @b.to_f + 2 + workingday[2] + od_day %>
+              <% end %>
+            <% end %>
+
+            <%= hidden_field e.employee_id, 'gatepass', value: gate_pass %>
+            
             <% exist.clear %>
           <%end%>
         </tbody>

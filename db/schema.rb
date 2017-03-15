@@ -3709,25 +3709,15 @@ ActiveRecord::Schema.define(version: 20170310123007) do
     t.decimal  "payable_day"
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
-    t.decimal  "lwp_leave"
-    t.decimal  "cl_leave"
-    t.decimal  "el_leave"
-    t.decimal  "esic_leave"
-    t.decimal  "coff_leave"
-    t.decimal  "advance_leave"
-    t.decimal  "cl_balance"
-    t.decimal  "el_balance"
-    t.decimal  "coff_balance"
-    t.decimal  "advance_balance"
     t.boolean  "is_confirm"
     t.decimal  "pay_leave"
     t.decimal  "nonpay_leave",            precision: 10, scale: 2
     t.decimal  "gatepass"
     t.decimal  "calculated_payable_days"
     t.decimal  "ot_hours"
-    t.decimal  "od_leave"
     t.boolean  "paid"
     t.boolean  "full_and_final"
+    t.decimal  "od_day"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

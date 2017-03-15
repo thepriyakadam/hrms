@@ -10,4 +10,20 @@ class TravelRequest < ActiveRecord::Base
   validates :place, presence: true
   
   validates :traveling_date, presence: true
+
+  def is_there?
+    flag = 0
+    flag1 = 0
+    flag2 = 0
+    flag3 = 0
+      flag = TravelRequest.exists?(employee_id: self.employee_id,current_status: 'Pending') ||
+      flag1 = TravelRequest.exists?(employee_id: self.employee_id,current_status: 'FirstApproved') ||
+      flag2 = TravelRequest.exists?(employee_id: self.employee_id,current_status: 'SecondApproved') ||
+      flag3 = TravelRequest.exists?(employee_id: self.employee_id,current_status: 'FinalApproved')
+    flag
+    flag1
+    flag2
+    flag3
+  end
+
 end

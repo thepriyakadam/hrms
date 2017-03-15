@@ -268,7 +268,7 @@ class EmployeesController < ApplicationController
             # UserPasswordMailer.welcome_email(company,pass).deliver_now
           else
             p user.errors
-            flash[:alert] = 'Employee not assigned successfully.'
+            flash[:alert] = 'Employee not assigned'
             redirect_to assign_role_employees_path
           end
         end

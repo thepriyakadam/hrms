@@ -4,7 +4,29 @@ class TravelRequestsController < ApplicationController
   # GET /travel_requests
   # GET /travel_requests.json
   def index
-    @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
+    if current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @travel_requests = TravelRequest.all
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        @travel_requests = TravelRequest.where(employee_id: @employees)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @travel_requests = TravelRequest.where(employee_id: @employees)
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+        @travel_requests = TravelRequest.where(employee_id: @employees)
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
+        @travel_requests = TravelRequest.where(employee_id: @employees)
+      else current_user.role.name == 'Employee'
+        @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
+        redirect_to home_index_path
+      end
+    else
+      @employees = Employee.all
+    end
     session[:active_tab] = "TravelManagemnt"
     session[:active_tab1] = "travelrequestprocess" 
   end
@@ -34,6 +56,10 @@ class TravelRequestsController < ApplicationController
     
     a=current_user.employee_id
     emp = Employee.where(id: a).take
+    if @employee_resignation.is_there?
+      flash[:alert] = "Your Request already has been sent"
+      redirect_to employee_resignations_path
+     else
     if emp.try(:manager_id).nil?
         flash[:alert] = "Reporting Manager not set please set Reporting Manager"
         redirect_to travel_requests_path
@@ -63,6 +89,7 @@ class TravelRequestsController < ApplicationController
     end
     end
   end
+end
 
   # PATCH/PUT /travel_requests/1
   # PATCH/PUT /travel_requests/1.json
@@ -180,10 +207,11 @@ class TravelRequestsController < ApplicationController
     # byebug
     @travel_request = TravelRequest.find(params[:format])
     @travel_request.update(current_status: "Rejected",reporting_master_id: current_user.employee_id)
+    ReportingMastersTravelRequest.create(reporting_master_id: current_user.employee_id, travel_request_id: @travel_request.id,travel_status: "Rejected")
     # TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,employee_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Reject")
     # @reporting_masters = ReportingMaster.where(employee_id: current_user.employee_id).pluck(:id)
-    ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,reporting_master_id: current_user.employee_id)
-    ReportingMastersTravelRequest.update_all(travel_status: "Rejected")
+    # ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,reporting_master_id: current_user.employee_id)
+    # ReportingMastersTravelRequest.update_all(travel_status: "Rejected")
     # TravelRequestMailer.reject_travel_request_email(@travel_request).deliver_now
     # flash[:alert] = 'Travel Request Rejected'
     flash[:alert] = 'Travel Request Rejected'

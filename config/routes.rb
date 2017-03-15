@@ -1464,6 +1464,8 @@ end
       get :show_salaryslip_formate_3
       get :print_salary_slip_formate_3
       get :search_by_slip_detail
+      get :leave_detail
+      get :leave_detail_xls
     end
   end
  

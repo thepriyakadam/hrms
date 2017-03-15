@@ -1,15 +1,7 @@
-<style>
-th {
-    text-align: left;
-}
-tr {
-    page-break-inside: avoid;
-}
-div.alwaysbreak { page-break-before: always; }
-div.nobreak:before { clear:both; }
-div.nobreak{ page-break-inside: avoid;
-  /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
-}
+<style type="text/css">
+
+ .page-break { display:block; clear:both; page-break-after:always; }
+
 </style>
 <div>
     <% i=0%>
@@ -22,8 +14,8 @@ div.nobreak{ page-break-inside: avoid;
   <% @goal_ratings = GoalRating.where(appraisee_id: e.employee_id, goal_bunch_id: e.id, goal_type: 'Goal') %>
   <% @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", e.id ,'Attribute') %>
   <% @goal_bunches = GoalBunch.where(employee_id: e.employee_id, id: e.id).group(:employee_id) %>
-
-<table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="10" cellspacing="10">    
+<div class="page-break">
+<table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="5">    
   <thead>
   <tr>
     <% i=i+1%>
@@ -53,7 +45,7 @@ div.nobreak{ page-break-inside: avoid;
   </tbody>
 </table>
 
-<table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="10" cellspacing="10">    
+<table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="5">    
   <thead>
   <tr><th colspan="4"><center>Previous Experience</center></th></tr>
     <tr>
@@ -75,7 +67,7 @@ div.nobreak{ page-break-inside: avoid;
   </tbody>
 </table>
 
- <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="10" cellspacing="10">     
+ <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="5" >     
     <thead>
     <tr><th colspan="4"><center>Qualification</center></th></tr>
       <tr>
@@ -98,7 +90,7 @@ div.nobreak{ page-break-inside: avoid;
   </table>
 
 
- <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="10" cellspacing="10">    
+ <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="5">    
     <thead>
     <tr><th colspan="7"><center>Promotion Details</center></th></tr>
       <tr>
@@ -127,7 +119,7 @@ div.nobreak{ page-break-inside: avoid;
   </table>
 
 
-  <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="10" cellspacing="10">     
+  <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="5">     
     <thead>
     <tr><th colspan="10"><center>Performance Record</center></th></tr>
     <tr><th colspan="10"><center>Goals</center></th></tr>
@@ -162,7 +154,7 @@ div.nobreak{ page-break-inside: avoid;
     </tbody>
   </table>
 
- <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="10" cellspacing="10">     
+ <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="5">     
     <thead>
     <tr><th colspan="10"><center>Attributes</center></th></tr>
       <tr>
@@ -197,7 +189,7 @@ div.nobreak{ page-break-inside: avoid;
 
   </table>
 
- <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="10" cellspacing="10">    
+ <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="5">    
     <tbody>
       <% @goal_bunches.each do |goal_bunch| %>
       <tr><th colspan="2"><center>Overall Performance Detail</center></th></tr>
@@ -237,7 +229,7 @@ div.nobreak{ page-break-inside: avoid;
     </tbody>
   </table>
 
- <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="10" cellspacing="10">     
+ <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="5">     
     <tbody>
       <% @goal_bunches.each do |goal_bunch| %>
       <tr><th colspan="2"><center>Detail</center></th><th>Contact No</th><th>Sign</th></tr>
@@ -262,5 +254,6 @@ div.nobreak{ page-break-inside: avoid;
       <% end %>
     </tbody>
   </table>
+  </div>
 </div>
 <% end %>

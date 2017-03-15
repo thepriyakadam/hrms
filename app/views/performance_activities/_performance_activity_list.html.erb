@@ -15,6 +15,7 @@
         <td><%= performance_activity.description %></td>
         <td>
           <% if performance_activity.is_confirm == true %>
+          <%= link_to '', edit_performance_activity_path(performance_activity) ,class: 'btn btn-sm btn-success btn-xs fa fa-edit',remote:true %>
             <small class= "label label-primary">Confirmed</small>
           <% else %>
             <%= link_to '', edit_performance_activity_path(performance_activity) ,class: 'btn btn-sm btn-success btn-xs fa fa-edit',remote:true %>

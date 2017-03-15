@@ -40,52 +40,63 @@ class GoalRatingsController < ApplicationController
       if params[:flag] == "Goal"
         @goal_rating.goal_perspective_id = params[:common][:id]
         @dropdown = true
-
         @goal_perspective = GoalPerspective.find_by(id: @goal_rating.goal_perspective_id)
         #@goal_ratings = GoalRating.where(appraisee_id: @goal_rating.appraisee_id,goal_perspective_id: @goal_perspective.id)
         goal_id_sum = @goal_rating.goal_id_sum(@goal_rating)
 
-        if @goal_perspective.goal_weightage == true
-          @weightage_limit = goal_id_sum >= @goal_perspective.from && goal_id_sum <= @goal_perspective.to
-          if @weightage_limit == true
-            @goal_rating.save
-            @flag1 = true
-            @flag = true
+          if @goal_perspective.goal_weightage == true  
+            @current_weightage = @goal_rating.goal_weightage >= @goal_perspective.from && @goal_rating.goal_weightage <= @goal_perspective.to
+            if @current_weightage == true
+              @weightage_limit = goal_id_sum >= @goal_perspective.from && goal_id_sum <= @goal_perspective.to
+              if @weightage_limit == true
+                @goal_rating.save
+                @flag1 = true
+                @flag = true
+              else
+                @flag1 = false
+              end
+            else
+              @flag2 = false
+            end
           else
-            @flag1 = false
+             @goal_rating.save
+              @flag = true
           end
-        else
-          @goal_rating.save
-          @flag = true
-        end
 
-      elsif params[:flag] == "Attribute"
-        @goal_rating.attribute_master_id = params[:common][:id]
-        @dropdown = false
+        elsif params[:flag] == "Attribute"
+          @goal_rating.attribute_master_id = params[:common][:id]
+          @dropdown = false
 
-        @attribute = AttributeMaster.find_by(id: @goal_rating.attribute_master_id)
-         attribute_id_sum = @goal_rating.attribute_id_sum(@goal_rating)
-        if @attribute.attribute_weightage == true
-           @weightage_limit = attribute_id_sum.to_i >= @attribute.from.to_i && attribute_id_sum.to_i <= @attribute.to.to_i
-          if @weightage_limit == true
-            @goal_rating.save
-            @flag1 = true
-            @flag = true
+          @attribute = AttributeMaster.find_by(id: @goal_rating.attribute_master_id)
+           attribute_id_sum = @goal_rating.attribute_id_sum(@goal_rating)
+          
+          if @attribute.attribute_weightage == true
+            @current_weightage = @goal_rating.goal_weightage.to_i >= @attribute.from.to_i && @goal_rating.goal_weightage.to_i <= @attribute.to.to_i
+            if @current_weightage == true
+               @weightage_limit = attribute_id_sum.to_i >= @attribute.from.to_i && attribute_id_sum.to_i <= @attribute.to.to_i
+              
+              if @weightage_limit == true
+                @goal_rating.save
+                @flag1 = true
+                @flag = true
+              else
+                @flag1 = false
+              end
+            else
+              @flag2 = false
+            end
           else
-            @flag1 = false
+            @goal_rating.save
+            @flag = true
           end
-        else
-          @goal_rating.save
-          @flag = true
         end
+        @goal_rating = GoalRating.new
+        #@goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
+        @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
+        @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
+      else
+        @flag = false
       end
-      @goal_rating = GoalRating.new
-      #@goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
-      @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
-      @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
-    else
-      @flag = false
-    end
   end
 
   def goal_set_modal
@@ -109,19 +120,27 @@ class GoalRatingsController < ApplicationController
               goal_id_sum_update = @goal_rating.goal_id_sum_update(@goal_rating,weightage)
 
           if @goal.goal_weightage == true
-            #@weightage_limit = goal_rating_params["goal_weightage"].to_i >= @goal.from && goal_rating_params["goal_weightage"].to_i <= @goal.to
-            @weightage_limit = goal_id_sum_update >= @goal.from && goal_id_sum_update <= @goal.to
+            @current_weightage = weightage >= @goal.from && weightage <= @goal.to
+            if @current_weightage == true
 
-            if @weightage_limit == true
-               @goal_rating.update(goal_rating_params)
-              @flag1 = true
-              @flag = true
-            flash[:notice] = "Updated Successfully !"
-            redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+              #@weightage_limit = goal_rating_params["goal_weightage"].to_i >= @goal.from && goal_rating_params["goal_weightage"].to_i <= @goal.to
+              @weightage_limit = goal_id_sum_update >= @goal.from && goal_id_sum_update <= @goal.to
+
+              if @weightage_limit == true
+                 @goal_rating.update(goal_rating_params)
+                @flag1 = true
+                @flag = true
+              flash[:notice] = "Updated Successfully !"
+              redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+              else
+                @flag1 = false
+              flash[:alert] = "Weightage Limit should be within range "
+              redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+              end
             else
-              @flag1 = false
-            flash[:alert] = "Weightage Limit should be within range "
-            redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+              @flag2 = false
+              flash[:alert] = "Weightage should be within range "
+              redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
             end
           else
             @goal_rating.update(goal_rating_params)
@@ -134,18 +153,25 @@ class GoalRatingsController < ApplicationController
           @attribute = AttributeMaster.find_by(id: @goal_rating.attribute_master_id)
           attribute_id_sum_update = @goal_rating.attribute_id_sum_update(@goal_rating,weightage)
           if @attribute.attribute_weightage == true
-            #@weightage_limit = goal_rating_params["goal_weightage"].to_i >= @attribute.from.to_i && goal_rating_params["goal_weightage"].to_i <= @attribute.to.to_i
-            @weightage_limit = attribute_id_sum_update.to_i >= @attribute.from.to_i && attribute_id_sum_update.to_i <= @attribute.to.to_i
-            if @weightage_limit == true
-              @goal_rating.update(goal_rating_params)
-              @flag1 = true
-              @flag = true
-            flash[:notice] = "Updated Successfully !"
-            redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+            @current_weightage = weightage.to_i >= @attribute.from.to_i && weightage.to_i <= @attribute.to.to_i
+            if @current_weightage == true
+
+              #@weightage_limit = goal_rating_params["goal_weightage"].to_i >= @attribute.from.to_i && goal_rating_params["goal_weightage"].to_i <= @attribute.to.to_i
+              @weightage_limit = attribute_id_sum_update.to_i >= @attribute.from.to_i && attribute_id_sum_update.to_i <= @attribute.to.to_i
+              if @weightage_limit == true
+                @goal_rating.update(goal_rating_params)
+                @flag1 = true
+                @flag = true
+              flash[:notice] = "Updated Successfully !"
+              redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+              else
+                @flag1 = false
+              flash[:alert] = "Weightage Limit should be within range "
+              redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+              end
             else
-              @flag1 = false
-            flash[:alert] = "Weightage Limit should be within range "
-            redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+              flash[:alert] = "Weightage should be within range "
+              redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
             end
           else
             @goal_rating.update(goal_rating_params)
@@ -199,20 +225,27 @@ class GoalRatingsController < ApplicationController
          goal_id_sum_update = @goal_rating.goal_id_sum_update(@goal_rating,weightage)
 
         if @goal.goal_weightage == true
-          #@weightage_limit = goal_rating_params["goal_weightage"].to_i >= @goal.from && goal_rating_params["goal_weightage"].to_i <= @goal.to
-          @weightage_limit = goal_id_sum_update >= @goal.from && goal_id_sum_update <= @goal.to
+          @current_weightage = @goal_rating.goal_weightage >= @goal.from && @goal_rating.goal_weightage <= @goal.to
+          if @current_weightage == true
+            #@weightage_limit = goal_rating_params["goal_weightage"].to_i >= @goal.from && goal_rating_params["goal_weightage"].to_i <= @goal.to
+            @weightage_limit = goal_id_sum_update >= @goal.from && goal_id_sum_update <= @goal.to
 
-          if @weightage_limit == true
-             @goal_rating.update(goal_rating_params)
-            @flag1 = true
-            @flag = true
-            flash[:notice] = "Updated Successfully !"
-            redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id,period_id: @period.id)
+            if @weightage_limit == true
+               @goal_rating.update(goal_rating_params)
+              @flag1 = true
+              @flag = true
+              flash[:notice] = "Updated Successfully!"
+              redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id,period_id: @period.id)
+            else
+              @flag1 = false
+              flash[:alert] = "Weightage Limit should be within range "
+              redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id,period_id: @period.id)
+            end
           else
-            @flag1 = false
-            flash[:alert] = "Weightage Limit should be within range "
+            flash[:alert] = "Weightage should be within range "
             redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id,period_id: @period.id)
           end
+
         else
           @goal_rating.update(goal_rating_params)
           @flag = true
@@ -223,17 +256,23 @@ class GoalRatingsController < ApplicationController
         @attribute = AttributeMaster.find_by(id: @goal_rating.attribute_master_id)
         attribute_id_sum_update = @goal_rating.attribute_id_sum_update(@goal_rating,weightage)
         if @attribute.attribute_weightage == true
-          #@weightage_limit = goal_rating_params["goal_weightage"].to_i >= @attribute.from.to_i && goal_rating_params["goal_weightage"].to_i <= @attribute.to.to_i
-          @weightage_limit = attribute_id_sum_update.to_i >= @attribute.from.to_i && attribute_id_sum_update.to_i <= @attribute.to.to_i
-          if @weightage_limit == true
-            @goal_rating.update(goal_rating_params)
-            @flag1 = true
-            @flag = true
-            flash[:notice] = "Updated Successfully !"
-            redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id,period_id: @period.id)
+           @current_weightage = @goal_rating.goal_weightage >= @attribute.from && @goal_rating.goal_weightage <= @attribute.to
+          if @current_weightage == true
+            #@weightage_limit = goal_rating_params["goal_weightage"].to_i >= @attribute.from.to_i && goal_rating_params["goal_weightage"].to_i <= @attribute.to.to_i
+            @weightage_limit = attribute_id_sum_update.to_i >= @attribute.from.to_i && attribute_id_sum_update.to_i <= @attribute.to.to_i
+            if @weightage_limit == true
+              @goal_rating.update(goal_rating_params)
+              @flag1 = true
+              @flag = true
+              flash[:notice] = "Updated Successfully !"
+              redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id,period_id: @period.id)
+            else
+              @flag1 = false
+              flash[:alert] = "Weightage Limit should be within range "
+              redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id,period_id: @period.id)
+            end
           else
-            @flag1 = false
-            flash[:alert] = "Weightage Limit should be within range "
+            flash[:alert] = "Weightage should be within range "
             redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id,period_id: @period.id)
           end
         else

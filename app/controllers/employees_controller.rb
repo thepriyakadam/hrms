@@ -139,18 +139,24 @@ class EmployeesController < ApplicationController
     @form = 'employee'
   end
 
-   
-
   # POST /employees
   # POST /employees.json
   def create
     @employee = Employee.new(employee_params)
+    @employee_type = EmployeeType.find_by(name: "Probationary")
+    @employees = Employee.where(employee_type_id: @employee_type.id)
     @department = Department.find(@employee.department_id)
     authorize! :create, @employee
       if @employee.save
         @emp1=params[:employee][:employee_code_master_id]
         EmployeeCodeMaster.where(id: @emp1).update_all(last_range: @employee.manual_employee_code)
         @employee.update(company_location_id: @department.company_location_id,company_id: @department.company_location.company_id)
+        @employees.each do |e|
+          if e.joining_detail.confirmation_date != nil && e.joining_detail.confirmation_date <= Date.today
+            employee_type = EmployeeType.find_by(name: "Confirmed")
+            e.update(employee_type_id: employee_type.id)
+          end
+        end
         redirect_to @employee    
       else
         render :new

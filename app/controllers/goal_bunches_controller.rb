@@ -243,7 +243,7 @@ class GoalBunchesController < ApplicationController
   def appraisee_comment
     @employee = Employee.find(current_user.employee_id)
     @goal_bunch_id = GoalBunch.find(params[:id]) 
-    @goal_bunches = GoalBunch.where(employee_id: @employee.id, id: @goal_bunch_id.id)
+    @goal_bunches = GoalBunch.find_by(id: @goal_bunch_id.id)
 
     @employees = Employee.where(id: @employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)
@@ -646,22 +646,26 @@ class GoalBunchesController < ApplicationController
   end
 
   def self_overall_comment_confirm
-    @goal_bunch_ids = params[:goal_bunch_ids]
-      if @goal_bunch_ids.nil?
-        flash[:alert] = "Please Select the Checkbox"
-      else
-        @goal_bunch_ids.each do |eid|
-        @goal_bunch = GoalBunch.find(eid)
+    # @goal_bunch_id = params[:goal_bunch_ids]
+    #   if @goal_bunch_ids.nil?
+    #     flash[:alert] = "Please Select the Checkbox"
+    #   else
+    #     @goal_bunch_ids.each do |eid|
+    #     @goal_bunch = GoalBunch.find(eid)
 
-        @goal_bunch.update(appraisee_confirm: true)      
-        flash[:notice] = "Confirmed Successfully"
-      end
-        GoalBunchMailer.send_email_to_appraiser(@goal_bunch).deliver_now
-        flash[:notice] = "Self Evaluation Confirmed Email Sent Successfully"
+    #     @goal_bunch.update(appraisee_confirm: true)      
+    #     flash[:notice] = "Confirmed Successfully"
+    #   end
+    #     GoalBunchMailer.send_email_to_appraiser(@goal_bunch).deliver_now
+    #     flash[:notice] = "Self Evaluation Confirmed Email Sent Successfully"
         
-      end
+    #   end
       @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+      GoalBunch.find_by(id: @goal_bunch.id).update(appraisee_confirm: true)
+       flash[:notice] = "Confirmed Successfully"
+       GoalBunchMailer.send_email_to_appraiser(@goal_bunch).deliver_now
       @employee = Employee.find(params[:emp_id])
+
     redirect_to appraisee_comment_goal_bunches_path(emp_id: @employee.id,id: @goal_bunch.id)
   end
 

@@ -163,7 +163,7 @@ class GoalBunchesController < ApplicationController
     @period = Period.find(params[:period_id])
     @employee = Employee.find(params[:emp_id])
     @goal_bunch_id = GoalBunch.find(params[:goal_id]) 
-    @goal_bunches = GoalBunch.where(employee_id: @employee.id, id: @goal_bunch_id.id)
+    @goal_bunches = GoalBunch.find_by(id: @goal_bunch_id.id)
     @employee_promotions = EmployeePromotion.where(employee_id: current_user.employee_id)
     @employees = Employee.where(id: @employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)
@@ -331,7 +331,7 @@ class GoalBunchesController < ApplicationController
     @period = Period.find(params[:period_id])
     @employee = Employee.find(params[:emp_id])
     @goal_bunch_id = GoalBunch.find(params[:id])
-    @goal_bunches = GoalBunch.where(employee_id: @employee.id, id: @goal_bunch_id.id)
+    @goal_bunches = GoalBunch.find_by(id: @goal_bunch_id.id)
     @employees = Employee.where(id: @employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
@@ -427,10 +427,7 @@ class GoalBunchesController < ApplicationController
     #@goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id.id)
     @goal_ratings = GoalRating.where(appraisee_id: @employee.id,goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal')
     @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch_id.id ,'Attribute')
-
-    #@goal_bunches = GoalBunch.where(employee_id: @employee.id,reviewer_confirm: true,id: @goal_bunch_id.id)
-
-    @goal_bunches = GoalBunch.where(employee_id: @employee.id,id: @goal_bunch_id.id)
+    @goal_bunches = GoalBunch.find_by(id: @goal_bunch_id.id)
     @goal_bunch = GoalBunch.find_by_employee_id(@employee.id)
     #@goal_bunch = GoalBunch.where(employee_id: @employee.id,id: @goal_bunch_id.id)
   end
@@ -459,19 +456,11 @@ class GoalBunchesController < ApplicationController
 
   def final_comment_confirm
     @employee = Employee.find(params[:emp_id])
-    @goal_bunch_ids = params[:goal_bunch_ids]
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @period = Period.find(params[:period_id])
-      if @goal_bunch_ids.nil?
-        flash[:alert] = "Please Select the Checkbox"
-      else
-        @goal_bunch_ids.each do |eid|
-        @goal_bunch = GoalBunch.find(eid)
-
-        @goal_bunch.update(final_confirm: true, final_id: params[:final_id])      
-        flash[:notice] = "Confirmed Successfully"
-        end
-      end
-      @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+     
+        GoalBunch.find_by(id: @goal_bunch.id).update(final_confirm: true, final_id: params[:final_id])      
+       
     redirect_to final_comment_goal_bunches_path(emp_id: @employee.id,id: @goal_bunch.id,period_id: @period.id)
   end
 
@@ -646,25 +635,11 @@ class GoalBunchesController < ApplicationController
   end
 
   def self_overall_comment_confirm
-    # @goal_bunch_id = params[:goal_bunch_ids]
-    #   if @goal_bunch_ids.nil?
-    #     flash[:alert] = "Please Select the Checkbox"
-    #   else
-    #     @goal_bunch_ids.each do |eid|
-    #     @goal_bunch = GoalBunch.find(eid)
-
-    #     @goal_bunch.update(appraisee_confirm: true)      
-    #     flash[:notice] = "Confirmed Successfully"
-    #   end
-    #     GoalBunchMailer.send_email_to_appraiser(@goal_bunch).deliver_now
-    #     flash[:notice] = "Self Evaluation Confirmed Email Sent Successfully"
-        
-    #   end
-      @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
-      GoalBunch.find_by(id: @goal_bunch.id).update(appraisee_confirm: true)
-       flash[:notice] = "Confirmed Successfully"
-       GoalBunchMailer.send_email_to_appraiser(@goal_bunch).deliver_now
-      @employee = Employee.find(params[:emp_id])
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    GoalBunch.find_by(id: @goal_bunch.id).update(appraisee_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    GoalBunchMailer.send_email_to_appraiser(@goal_bunch).deliver_now
+    @employee = Employee.find(params[:emp_id])
 
     redirect_to appraisee_comment_goal_bunches_path(emp_id: @employee.id,id: @goal_bunch.id)
   end
@@ -690,26 +665,17 @@ class GoalBunchesController < ApplicationController
 
   def appraiser_overall_comment_confirm
     @employee = Employee.find(params[:emp_id])
-    @goal_bunch_ids = params[:goal_bunch_ids]
     @period = Period.find(params[:period_id])
-      if @goal_bunch_ids.nil?
-        flash[:alert] = "Please Select the Checkbox"
-      else
-        @goal_bunch_ids.each do |eid|
-        @goal_bunch = GoalBunch.find(eid)
-
-        @goal_bunch.update(appraiser_confirm: true)      
-        flash[:notice] = "Confirmed Successfully"
-        end
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+      GoalBunch.find_by(id: @goal_bunch.id).update(appraiser_confirm: true)      
+      flash[:notice] = "Confirmed Successfully"
           if @employee.manager_2_id == nil
             flash[:notice] = "No Reviewer Available"
           else
             GoalBunchMailer.send_email_to_reviewer(@goal_bunch).deliver_now
             flash[:notice] = "Appraiser Evaluation Confirmed Email Sent Successfully"
           end
-      end
-      @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
-    redirect_to appraiser_comment_goal_bunches_path(emp_id: @employee.id,goal_id: @goal_bunch_id.id,period_id: @period.id)
+    redirect_to appraiser_comment_goal_bunches_path(emp_id: @employee.id,goal_id: @goal_bunch.id,period_id: @period.id)
   end
 
   def modal_reviewer_overall
@@ -735,19 +701,12 @@ class GoalBunchesController < ApplicationController
 
   def reviewer_overall_comment_confirm
     @employee = Employee.find(params[:emp_id])
-    @goal_bunch_ids = params[:goal_bunch_ids]
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @period = Period.find(params[:period_id])
-      if @goal_bunch_ids.nil?
-        flash[:alert] = "Please Select the Checkbox"
-      else
-        @goal_bunch_ids.each do |eid|
-        @goal_bunch = GoalBunch.find(eid)
-
-        @goal_bunch.update(reviewer_confirm: true)      
-        flash[:notice] = "Confirmed Successfully"
-        end
-      end
-      @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+      
+    GoalBunch.find_by(id: @goal_bunch.id).update(reviewer_confirm: true)      
+    flash[:notice] = "Confirmed Successfully"
+        
     redirect_to reviewer_comment_goal_bunches_path(emp_id: @employee.id,id: @goal_bunch.id,period_id: @period.id)
   end
 

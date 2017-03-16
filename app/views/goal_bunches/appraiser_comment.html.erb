@@ -132,7 +132,7 @@
                   <td><%= goal_rating.goal_weightage %></td>
                   <td><%= goal_rating.aligned %></td>
                   <td><%= goal_rating.appraisee_comment %></td>
-                  <td><%= goal_rating.appraisee_rating_id %></td>
+                  <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
                   <td><%= text_field_tag 'appraiser_comments[]',"",class: "form-control",autofocus: true %></td>
                   <td><%= select_tag 'appraiser_ratings[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %></td>
                   <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
@@ -165,7 +165,7 @@
                   <td><%= goal_rating.goal_weightage %></td>
                   <td><%= goal_rating.aligned %></td>
                   <td><%= goal_rating.appraisee_comment %></td>
-                  <td><%= goal_rating.appraisee_rating_id %></td>
+                  <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
                   <td><%= text_field_tag 'appraiser_comments[]',"",class: "form-control" %></td>
                   <td><%= select_tag 'appraiser_ratings[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %></td>
                   <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
@@ -222,9 +222,9 @@
             <td><%= weightage = goal_rating.goal_weightage %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
-            <td><%= goal_rating.appraisee_rating_id %></td>
+            <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
             <td><%= goal_rating.appraiser_comment %></td>
-            <td><%= appraiser_rating = goal_rating.appraiser_rating_id %></td>
+            <td><%= appraiser_rating = goal_rating.try(:appraiser_rating).try(:value) %></td>
             <td>
               <% if @goal_bunch.appraiser_confirm == true %>
               <small class="label label-info">Confirmed</small>
@@ -238,7 +238,7 @@
         <% end %>
         <tr>
           <th colspan="2"><h6><font color='red' size='2'>Appraiser Rating For Goal</font></h6> </th>
-          <th colspan="8"><h6><font color='red' size='2'> <%= appraiser_goal_sum.round(4) %></font></h6> </th>
+          <th colspan="8"><h6><font color='red' size='2'> <%= appraiser_goal_sum.round(2) %></font></h6> </th>
         </tr>
       </tbody>
     </table>
@@ -270,9 +270,9 @@
             <td><%= weightage = goal_rating.goal_weightage %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
-            <td><%= goal_rating.appraisee_rating_id %></td>
+            <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
             <td><%= goal_rating.appraiser_comment %></td>
-            <td><%= appraiser_rating = goal_rating.appraiser_rating_id %></td>
+            <td><%= appraiser_rating = goal_rating.try(:appraiser_rating).try(:value) %></td>
             <td>
               <% if @goal_bunch.appraiser_confirm == true %>
               <small class="label label-info">Confirmed</small>
@@ -286,13 +286,13 @@
         <% end %>
         <tr>
           <th colspan="2"> <h6><font color='red' size='2'>Appraiser Rating For Attribute </font></h6></th>
-           <th colspan="8"> <h6><font color='red' size='2'><%= appraiser_attribute_sum.round(4) %></font></h6></th>
+           <th colspan="8"> <h6><font color='red' size='2'><%= appraiser_attribute_sum.round(2) %></font></h6></th>
         </tr>
         <tr>
           <th colspan="2"> <h6><font color='red' size='2'>Overall </font></h6></th>
          
-          <th colspan="8"> <h6><font color='red' size='2'><%= (appraiser_attribute_sum + appraiser_goal_sum /2).round(4) %></font></h6></th>
-           <% @Overall = (appraiser_attribute_sum + appraiser_goal_sum /2).round(4) %>
+          <th colspan="8"> <h6><font color='red' size='2'><%= (appraiser_attribute_sum + appraiser_goal_sum /2).round(2) %></font></h6></th>
+           <% @Overall = (appraiser_attribute_sum + appraiser_goal_sum /2).round(2) %>
         </tr>
       </tbody>
     </table>
@@ -317,33 +317,25 @@
   <div class="box-header with-border">
     <h3 class="box-title">Overall Comment</h3>
   </div>
-  <%= bootstrap_form_for GoalBunch.new,url:{action:'appraiser_overall_comment_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunch.id,period_id: @period.id} do |f| %>
+  <%= bootstrap_form_for GoalBunch.new,url:{action:'appraiser_overall_comment_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunches.id,period_id: @period.id} do |f| %>
     <table class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
-          <th><input type="checkbox" id="selectAll" value="selectAll"></th>
           <th>Overall Comment</th>
           <th>Overall Rating</th>
         </tr>
       </thead>
       <tbody>
-      <% @goal_bunches.each do |goal_bunch| %>
         <tr>
-          <td>
-            <% if goal_bunch.appraiser_confirm == true %>
-            <% else %>
-            <%= check_box_tag "goal_bunch_ids[]", goal_bunch.id %>
-            <% end %>
-          </td>
-          <td><%= goal_bunch.appraiser_comment %></td>
-          <td><%= goal_bunch.appraiser_rating %></td>
+          <td><%= @goal_bunches.appraiser_comment %></td>
+          <td><%= @goal_bunches.appraiser_rating %></td>
         </tr>
-        <% end %>
       </tbody>
     </table>
     
     <% unless @goal_bunch.nil? %>
-      <% if @goal_bunch.appraiser_comment == nil %>
+    <% if @goal_bunch.appraiser_comment == nil or @goal_bunch.appraiser_confirm != nil %>
+       <%= link_to 'Back',period_list_appraiser_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
       <% else %>
         <div class="row">
           <div class="col-sm-6">
@@ -352,7 +344,6 @@
                <%= link_to 'Back',period_list_appraiser_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
             </div>
           </div>
-         
         </div>
       <% end %>
     <% end %>
@@ -364,19 +355,3 @@
 </div>
 
 <div id="myModal" class="modal fade"></div>
-<script type="text/javascript">
-  $(function () {
-    $('#selectAll').click(function() {
-      if (this.checked) {
-        $(':checkbox').each(function() {
-          this.checked = true;                       
-        });
-      } 
-      else {
-        $(':checkbox').each(function() {
-          this.checked = false;                        
-        });
-      } 
-    });
-  });
-</script>

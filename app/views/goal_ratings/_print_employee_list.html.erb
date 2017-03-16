@@ -27,7 +27,7 @@
         <td><%= e.employee.department.try(:name) %></td>
         <td><%= e.appraisee_rating_id %></td>
         <td><%= e.appraiser_rating %></td>
-        <td><%= e.reviewer_rating_id %></td>
+        <td><%= e.reviewer_rating.try(:value) %></td>
         <td><%= e.final_rating_id %></td>
         </tr>
         <% end %>

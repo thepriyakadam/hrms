@@ -14,6 +14,8 @@ class GoalRating < ActiveRecord::Base
   belongs_to :appraiser, class_name: 'Employee'
   belongs_to :reviewer, class_name: 'Employee'
 
+  belongs_to :appraisee_rating, class_name: 'Rating'
+  belongs_to :appraiser_rating, class_name: 'Rating'
   #validates :goal_perspective_id, presence: true
   #validates :attribute_master_id, presence: true
 

@@ -133,9 +133,9 @@
           <Cell ss:Index="44"><Data ss:Type="String"><%= goal_bunch.try(:appraiser_comment) %></Data></Cell>
           <Cell ss:Index="45"><Data ss:Type="String"><%= goal_bunch.try(:appraiser_rating) %></Data></Cell>
           <Cell ss:Index="46"><Data ss:Type="String"><%= goal_bunch.try(:review_comment) %></Data></Cell>
-          <Cell ss:Index="47"><Data ss:Type="String"><%= goal_bunch.try(:reviewer_rating_id) %></Data></Cell>
+          <Cell ss:Index="47"><Data ss:Type="String"><%= goal_bunch.try(:reviewer_rating).try(:value) %></Data></Cell>
           <Cell ss:Index="48"><Data ss:Type="String"><%= goal_bunch.try(:final_comment) %></Data></Cell>
-          <Cell ss:Index="49"><Data ss:Type="String"><%= goal_bunch.try(:final_rating_id) %></Data></Cell>
+          <Cell ss:Index="49"><Data ss:Type="String"><%= goal_bunch.try(:final_rating).try(:value) %></Data></Cell>
      </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

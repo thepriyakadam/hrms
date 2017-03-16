@@ -138,9 +138,9 @@
               <td><%= goal_rating.goal_weightage %></td>
               <td><%= goal_rating.aligned %></td>
               <td><%= goal_rating.appraisee_comment %></td>
-              <td><%= goal_rating.appraisee_rating_id %></td>
+              <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
               <td><%= goal_rating.appraiser_comment %></td>
-              <td><%= goal_rating.appraiser_rating_id %></td>
+              <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
             </tr>
           <% end %>
         </tbody>
@@ -168,9 +168,9 @@
               <td><%= goal_rating.goal_weightage %></td>
               <td><%= goal_rating.aligned %></td>
               <td><%= goal_rating.appraisee_comment %></td>
-              <td><%= goal_rating.appraisee_rating_id %></td>
+              <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
               <td><%= goal_rating.appraiser_comment %></td>
-              <td><%= goal_rating.appraiser_rating_id %></td>
+              <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
             </tr>
           <% end %>
         </tbody>

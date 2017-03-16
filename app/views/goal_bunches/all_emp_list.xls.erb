@@ -75,9 +75,9 @@
           <Cell ss:Index="22"><Data ss:Type="String"><%= goal_bunch.try(:appraiser_comment) %></Data></Cell>
           <Cell ss:Index="23"><Data ss:Type="String"><%= goal_bunch.try(:appraiser_rating) %></Data></Cell>
           <Cell ss:Index="24"><Data ss:Type="String"><%= goal_bunch.try(:review_comment) %></Data></Cell>
-          <Cell ss:Index="25"><Data ss:Type="String"><%= goal_bunch.try(:reviewer_rating_id) %></Data></Cell>
+          <Cell ss:Index="25"><Data ss:Type="String"><%= goal_bunch.try(:reviewer_rating).try(:value) %></Data></Cell>
           <Cell ss:Index="26"><Data ss:Type="String"><%= goal_bunch.try(:final_comment) %></Data></Cell>
-          <Cell ss:Index="27"><Data ss:Type="String"><%= goal_bunch.try(:final_rating_id) %></Data></Cell>
+          <Cell ss:Index="27"><Data ss:Type="String"><%= goal_bunch.try(:final_rating).try(:value) %></Data></Cell>
         </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

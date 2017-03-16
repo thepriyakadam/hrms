@@ -143,10 +143,6 @@ class GoalBunchesController < ApplicationController
   def appraiser_subordinate
     @periods = Period.where(status: true).group(:id)
     @goal_bunches = GoalBunch.where(appraisee_confirm: true).group(:period_id)
-    #@goal_bunches = GoalBunch.where(period_id: @period.id).group(:period_id)
-
-    # current_login = Employee.find(current_user.employee_id)
-    # @employees = current_login.subordinates
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_cycle"
   end
@@ -155,7 +151,6 @@ class GoalBunchesController < ApplicationController
      @period = Period.find(params[:period_id])
     current_login = Employee.find(current_user.employee_id)
     @emps = current_login.subordinates.pluck(:id)
-    #@emp1 = Employee.where(id: @emps).pluck(:id)
     @employees = GoalBunch.where(employee_id: @emps,goal_confirm: true,period_id: @period.id)
   end
 

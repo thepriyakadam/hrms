@@ -211,7 +211,7 @@
             <td><%= weightage = goal_rating.goal_weightage %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
-            <td><%= appraisee_rating = goal_rating.appraisee_rating.value %></td>
+            <td><%= appraisee_rating = goal_rating.try(:appraisee_rating).try(:value) %></td>
             <td>
             <% if @goal_bunch.appraisee_confirm == true %>
               <small class="label label-info">Confirmed</small>
@@ -254,7 +254,7 @@
             <td><%= weightage = goal_rating.goal_weightage %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
-            <td><%= appraisee_rating = goal_rating.appraisee_rating.value %></td>
+            <td><%= appraisee_rating = goal_rating.try(:appraisee_rating).try(:value) %></td>
             <td>
             <% if @goal_bunch.appraisee_confirm == true %>
               <small class="label label-info">Confirmed</small>

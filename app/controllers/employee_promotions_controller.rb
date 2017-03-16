@@ -171,6 +171,6 @@ class EmployeePromotionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_promotion_params
-      params.require(:employee_promotion).permit(:employee_id, :department_id, :employee_designation_id, :employee_grade_id, :employee_category_id, :employee_ctc, :justification, :effective_from, :effective_to)
+      params.require(:employee_promotion).permit(:employee_id, :department_id, :employee_designation_id, :employee_grade_id, :employee_category_id, :employee_ctc, :justification, :effective_from, :effective_to,:designation,:grade,:category,:employee_department)
     end
 end

@@ -326,6 +326,7 @@ end
       get :final_approval_transfer_list
       get :approve_employee_transfer
       get :employee_transfer_confirmation_2
+      post :final_approve
     end
   end
 

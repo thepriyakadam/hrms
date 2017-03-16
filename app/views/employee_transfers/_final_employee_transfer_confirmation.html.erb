@@ -1,7 +1,7 @@
 <div class="box box-default">
   <div class="box-header with-border">
     <div class="box-body">
-      <%= bootstrap_form_for(@employee_transfer,url: {action: 'final_approve'},html: {id: 'employee_transfer'}) do |f| %>
+      <%= bootstrap_form_for(:employee_transfer,url: {action: 'final_approve'},html: {id: 'employee_transfer'}) do |f| %>
 
       <%= f.hidden_field :employee_id, value: current_user.employee_id %>
       <div class="row">

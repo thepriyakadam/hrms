@@ -67,8 +67,32 @@ class VacancyMastersController < ApplicationController
       else
     respond_to do |format|
       if @vacancy_master.save
+        # byebug
         VacancyMaster.where(id: @vacancy_master.id).update_all(reporting_master_id: emp.manager_id,current_status: "Pending")
         ReportingMastersVacancyMaster.create(reporting_master_id: current_user.employee_id, vacancy_master_id: @vacancy_master.id,vacancy_status: "Pending")
+
+        # client = Twilio::REST::Client.new(TWILIO_CONFIG['sid'], TWILIO_CONFIG['token'])
+      
+      # Create and send an SMS message
+        # client.account.sms.messages.create(
+        #   from: TWILIO_CONFIG['from'],
+        #   to: @vacancy_master.description,
+        #   body: "@vacancy_master.id"
+        # )
+
+
+      #   byebug
+      #   emp=Employee.where(id: current_user.employee_id).take
+
+      #   message = client.account.messages.create(
+      #   :from => TWILIO_CONFIG['from'],
+      #   :to => emp.contact_no,
+      #   :body => @vacancy_master.id,
+      #   # US phone numbers can make use of an image as well.
+      #   # :media_url => image_url 
+      # )
+      # puts message.to
+      
         # ReportingMastersVacancyMaster.create(reporting_master_id: @vacancy_master.reporting_master_id, vacancy_master_id: @vacancy_master.id)
         # VacancyRequestHistory.create(vacancy_master_id: @vacancy_master.id, vacancy_name: @vacancy_master.vacancy_name,no_of_position: @vacancy_master.no_of_position,description: @vacancy_master.description,vacancy_post_date: @vacancy_master.vacancy_post_date,budget: @vacancy_master.budget,department_id: @vacancy_master.department_id,employee_designation_id: @vacancy_master.employee_designation_id,company_location_id: @vacancy_master.company_location_id,degree_id: @vacancy_master.degree_id,degree_1_id: @vacancy_master.degree_1_id,degree_2_id: @vacancy_master.degree_2_id,experience: @vacancy_master.experience,keyword: @vacancy_master.keyword,other_organization: @vacancy_master.other_organization,industry: @vacancy_master.industry,reporting_master_id: @vacancy_master.reporting_master_id,current_status: @vacancy_master.current_status,employee_id: @vacancy_master.employee_id,justification: @vacancy_master.justification)
         # VacancyMasterMailer.vacancy_request(@vacancy_master).deliver_now

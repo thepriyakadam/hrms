@@ -63,7 +63,9 @@ Rails.application.routes.draw do
   resources :employee_week_offs do
     collection do
       get :revert_week_off
-      
+      post :employee_week_off_list
+      get :edit_week_off_modal
+      post :edit_week_off
     end
   end
   resources :late_mark_masters do

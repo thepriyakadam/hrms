@@ -4,7 +4,6 @@ class EmployeeWeekOffsController < ApplicationController
   # GET /employee_week_offs
   # GET /employee_week_offs.json
   def index
-    @employee_week_offs = EmployeeWeekOff.all
     session[:active_tab] ="TimeManagement"
     session[:active_tab1] ="AttendanceSetup"
   end
@@ -63,11 +62,48 @@ class EmployeeWeekOffsController < ApplicationController
     end
   end
 
+  def employee_week_off_list
+    from_date = params[:employee_week_off][:from_date]
+    to_date = params[:employee_week_off][:to_date]
+    employee = params[:employee_week_off][:employee_id]
+    @employee_week_offs = EmployeeWeekOff.where(date: from_date.to_date..to_date.to_date,employee_id: employee)
+  end
+
   def revert_week_off
     @employee_week_off = EmployeeWeekOff.find(params[:format])
     EmployeeAttendance.where(employee_id: @employee_week_off.employee_id,day: @employee_week_off.date).destroy_all
     @employee_week_off.destroy
     flash[:notice] = "Revert successfully"
+    redirect_to employee_week_offs_path
+  end
+
+  def edit_week_off_modal
+    @employee_week_off = EmployeeWeekOff.find(params[:format])
+  end
+
+  def edit_week_off
+    date = params[:employee_week_off][:date]
+    @date = date.to_date
+    day = @date.strftime('%a')
+    employee_week_off_id = params[:employee_week_off_id]
+    @employee_week_off = EmployeeWeekOff.find_by(id: employee_week_off_id)
+    @employee_attendance = EmployeeAttendance.where(employee_id: @employee_week_off.employee_id,day: @employee_week_off.date).take
+    
+    if @employee_week_off.is_present(@date,@employee_week_off.employee_id)
+      @emp_atten = EmployeeAttendance.where(employee_id: @employee_week_off.employee_id,day: @date).take
+      if @emp_atten.employee_leav_request_id == nil && @emp_atten.on_duty_request_id == nil
+        @emp_atten.update(present: "W")
+        @employee_week_off.update(day: day,date: @date)
+        @employee_attendance.destroy
+      else
+        flash[:alert] = "Attendance Available!"
+      end
+    else
+      EmployeeAttendance.create(employee_id: @employee_week_off.employee_id,day: @date,present: "W",department_id: @employee_week_off.try(:employee).try(:department_id)) 
+      @employee_week_off.update(day: day,date: @date)
+      @employee_attendance.destroy
+    end
+    flash[:notice] = "Updated successfully"
     redirect_to employee_week_offs_path
   end
 

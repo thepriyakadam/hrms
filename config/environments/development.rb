@@ -53,7 +53,7 @@ Rails.application.configure do
     domain: '192.168.0.62',
     user_name: 'hrmsdws-bhandarigroup',
     password: 'hrms1234',
-    authentication: :plain
+    authentication: :plain,
      openssl_verify_mode: 'none'
   }
   

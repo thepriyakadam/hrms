@@ -396,6 +396,3 @@ DEPENDENCIES
   wirble
   wkhtmltopdf-binary (~> 0.9.9.3)
   yaml_db
-
-BUNDLED WITH
-   1.14.6

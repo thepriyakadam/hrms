@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170306114807) do
+ActiveRecord::Schema.define(version: 20170317070345) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1127,17 +1127,17 @@ ActiveRecord::Schema.define(version: 20170306114807) do
     t.integer  "reporting_master_id"
     t.string   "resign_status"
     t.boolean  "is_stop_pay_request"
-    t.integer  "second_reporter_id"
-    t.integer  "final_reporter_id"
+    t.datetime "application_date"
     t.boolean  "is_pending"
+    t.boolean  "is_cancelled"
     t.boolean  "is_first_approved"
     t.boolean  "is_second_approved"
-    t.boolean  "is_final_approved"
-    t.boolean  "is_cancelled"
     t.boolean  "is_first_rejected"
     t.boolean  "is_second_rejected"
+    t.integer  "second_reporter_id"
+    t.integer  "final_reporter_id"
+    t.boolean  "is_final_approved"
     t.boolean  "is_final_rejected"
-    t.datetime "application_date"
   end
 
   add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id"
@@ -1916,6 +1916,7 @@ ActiveRecord::Schema.define(version: 20170306114807) do
     t.text     "schedule_comment"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.boolean  "is_confirm"
   end
 
   add_index "interview_rounds", ["employee_id"], name: "index_interview_rounds_on_employee_id"
@@ -1935,6 +1936,7 @@ ActiveRecord::Schema.define(version: 20170306114807) do
     t.integer  "selected_resume_id"
     t.string   "job_title"
     t.text     "address"
+    t.boolean  "is_confirmed"
   end
 
   add_index "interview_schedules", ["employee_id"], name: "index_interview_schedules_on_employee_id"
@@ -3585,8 +3587,8 @@ ActiveRecord::Schema.define(version: 20170306114807) do
     t.text     "description"
     t.date     "vacancy_post_date"
     t.string   "budget"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.integer  "department_id"
     t.integer  "employee_designation_id"
     t.integer  "company_location_id"
@@ -3602,6 +3604,8 @@ ActiveRecord::Schema.define(version: 20170306114807) do
     t.string   "current_status"
     t.integer  "employee_id"
     t.text     "justification"
+    t.date     "vacancy_fullfillment_date"
+    t.boolean  "is_confirmed"
   end
 
   add_index "vacancy_masters", ["company_location_id"], name: "index_vacancy_masters_on_company_location_id"

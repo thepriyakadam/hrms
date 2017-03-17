@@ -2,6 +2,10 @@
   <div class="box-body">
   <%= bootstrap_form_for(@interview_analysis,html: {id: 'interview_analysis'},interview_round_id: @interview_round.id) do |f| %>
   <%= f.hidden_field :interview_round_id,value:@interview_round.id  %>
+  <% @interview_rounds_1 = InterviewRound.where(id: @interview_round.id,is_confirm: true).count
+           @interview_rounds_2 = InterviewRound.where(id: @interview_round.id,is_confirm: nil).count  %>
+      <% if @interview_rounds_2 == 0 && @interview_rounds_1 > 0 %>
+     <%else%>
       <div class="row">
 
       <div class="col-sm-3">
@@ -55,6 +59,7 @@
       </div>
     </div>
     </div>
+<% end %>
 <% end %>
 
 <script>

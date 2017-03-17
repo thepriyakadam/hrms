@@ -165,10 +165,10 @@
   </div>
 <% end %>
 <script>
-$(function(){
-  $.validator.addMethod("numbersOnly", function (value, element) {
-    return this.optional(element) || /^[0-9]+$/i.test(value);
-}, "Please enter numbers only.");
+// $(function(){
+//   $.validator.addMethod("numbersOnly", function (value, element) {
+//     return this.optional(element) || /^[0-9]+$/i.test(value);
+// }, "Please enter numbers only.");
 
 $("#vacancy_master").validate({
     rules: {

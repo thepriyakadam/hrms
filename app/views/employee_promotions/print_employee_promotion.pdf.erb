@@ -9,7 +9,7 @@
 
  <% @employee_promotions.each do |employee_promotion| %>
 <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
-<tr><th colspan="5"><center><strong><%= @employee_promotions.first.employee.company_location.company.try(:description) %><br> <%= @employee_promotions.first.employee.company_location.company.try(:address) %><br> <%= @employee_promotions.first.employee.department.try(:name) %> - <%= @employee_promotions.first.employee.company_location.try(:name) %></strong></center></th></tr>
+<tr><th colspan="5"><center><strong><%= @employee_promotions.first.employee.company_location.company.try(:description) %><br> <%= @employee_promotions.first.employee.company_location.company.try(:address) %><br> <%= @employee_promotions.first.employee.company_location.try(:name) %></strong></center></th></tr>
 <tr><th colspan="1">From Date: <%= employee_promotion.effective_from %></th><th colspan="3"><center> Promotion History of <%= @employee_promotions.first.try(:employee).try(:manual_employee_code) %> <%= full_name(@employee_promotions.first.try(:employee)) %></center></th><th colspan="1">To Date: <%= employee_promotion.effective_to %></th></tr>
   <tr>
         <th>Department</th>

@@ -344,6 +344,12 @@ end
       get :approve_employee_transfer
       get :employee_transfer_confirmation_2
       post :final_approve
+      get :transfer_employee_name_report
+      get :print_transfer_employee_name_report
+      post :print_transfer_employee_name_report
+      get :transfer_employee_name_report_pdf
+      get :transfer_employee_name_report_xls
+
     end
   end
 

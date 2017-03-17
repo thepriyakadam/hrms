@@ -53,7 +53,7 @@
 
      <table id="example1" class="table table-bordered table-hover table-condensed">
 <tbody>
-            <tr><td colspan="4"><font color='red'><center>Previous Employee Detail</center></font></td></tr>
+            <tr><td colspan="4"><font color='red'><center><b>Previous Detail's of Employee</b></center></font></td></tr>
             <tr><th> ID </th>
               <td><%= @employee_transfer.try(:employee).try(:manual_employee_code) %></td>
               <th>Employee Name</th>
@@ -82,109 +82,134 @@
 </tbody>
     </table>
 
-
-    <div class="row">
-      <div class="col-sm-12"><strong> <font color='green'>Note - * Row is the latest row to approve/reject </font></strong></div>
+  <div class="row">
+    <div class="col-sm-12"><strong> <font color='green'>Note - * Row is the latest row to approve/reject </font></strong></div>
   </div><br>
 
 <table id="example1" class="table table-bordered table-hover table-condensed">
-<tbody>
-            <tr><td colspan="4"><font color='red'><center>Current Transfer Request Detail</center></font></td></tr>
-            <tr>
-            <th> ID </th>
-            <td><%= @employee_transfer.try(:employee).try(:manual_employee_code) %></td>
-            <th>Employee Name</th>
-            <td><%= full_name(@employee_transfer.employee) %></td>
-            </tr>
-
-            <tr>
-              <th>Request To</th>
-              <td><% emp=Employee.where(id: @employee_transfer.reporting_master_id).take %>
-              <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
-              <th>Employee Designation</th>
-              <td><%= @employee_transfer.designation %></td>
-            </tr>
-
-            <tr>
-              <th>Employee Category</th>
-              <td><%= @employee_transfer.category %></td>
-              <th>Company</th>
-              <td><%= @employee_transfer.employee_company %></td>
-            </tr>
-
-            <tr>
-              <th>Company Location</th>
-              <td><%= @employee_transfer.employee_company_location %></td>
-               <th>Department</th>
-              <td><%= @employee_transfer.employee_department %></td>
-            </tr>
-
-            <tr>
-              <th>Justification</th>
-              <td colspan="3"><%= @employee_transfer.justification %></td>       
-            </tr>
-   </tbody>
-   </table> 
-     <%= bootstrap_form_for(:employee_transfer,url: {action: 'final_approve',employee_transfer_id: @employee_transfer.id} ) do |f| %>
-
-      <%= f.hidden_field :employee_id, value: current_user.employee_id %>
-       <!-- <= f.hidden_field :employee_transfer_id, value: @employee_transfer.id %> -->
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="form-group required">
-            <%= f.select :employee_designation_id,all_employee_designation,{include_blank: 'Select Designation',label: 'Employee Designation'},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
-          </div>
-        </div>
+  <tbody>
+    <tr><td colspan="4"><font color='red'><center><b>Current Transfer Detail's of Employee</b></center></font></td></tr>
+      <tr>
+        <th> ID </th>
+        <td><%= @employee_transfer.try(:employee).try(:manual_employee_code) %></td>
+        <th>Employee Name</th>
+        <td><%= full_name(@employee_transfer.employee) %></td>
+      </tr>
     
-        <div class="col-sm-3">
-          <div class="form-group required">
-            <%= f.select :employee_category_id,all_employee_category,{include_blank: 'Select Category',label: 'Employee Category'} %>
-          </div>
-        </div>
+    <tr>
+      <th>Request To</th>
+      <td><% emp=Employee.where(id: @employee_transfer.reporting_master_id).take %>
+          <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
+      <th>Employee Designation</th>
+      <td><%= @employee_transfer.designation %></td>
+    </tr>
 
-         <div class="col-sm-3">
-            <div class="field">
-            <div class="input-group">
-              <%=f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
-            </div>
-            </div>
-          </div>
+    <tr>
+      <th>Employee Category</th>
+      <td><%= @employee_transfer.category %></td>
+      <th>Company</th>
+      <td><%= @employee_transfer.employee_company %></td>
+    </tr>
 
+    <tr>
+      <th>Company Location</th>
+      <td><%= @employee_transfer.employee_company_location %></td>
+      <th>Department</th>
+      <td><%= @employee_transfer.employee_department %></td>
+    </tr>
 
-         <div class="col-sm-3">
-            <div class="field">
-            <div class="input-group">
-              <div id="company_location_with_label">
-                <%= render 'employees/company_location_dropdown_with_label' %> 
-            </div> 
-            </div>
-            </div>
-          </div>
+    <tr>
+      <th>Justification</th>
+      <td colspan="3"><%= @employee_transfer.justification %></td>       
+    </tr>
+  </tbody>
+</table> 
+<%= bootstrap_form_for(:employee_transfer,url: {action: 'final_approve',employee_transfer_id: @employee_transfer.id ,html: {id: 'employee_transfer'}}) do |f| %>
+<%= f.hidden_field :employee_id, value: @employee.id %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :employee_designation_id,all_employee_designation,{include_blank: 'Select Designation',label: 'Employee Designation'},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
       </div>
-
-     <div class="row">
-          <div class="col-sm-3">
-            <div class="field">
-            <div class="input-group">
-              <div id="department">
-                <%= render 'employees/department_dropdown' %> 
-            </div> 
-            </div>
-            </div>
-          </div>
-          <%= f.submit'Final Approve', :class => class_name, data: { disable_with: data_info } %> 
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.select :employee_category_id,all_employee_category,{include_blank: 'Select Category',label: 'Employee Category'} %>
+        </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <div class="input-group">
+          <%=f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <div class="input-group">
+          <div id="company_location_with_label">
+            <%= render 'employees/company_location_dropdown_with_label' %> 
+          </div> 
+        </div>
+      </div>
     </div>
   </div>
-</div>
-<!-- <= f.submit 'Final Approve',final_approve_employee_transfers_path(),class: 'btn btn-sm btn-info fa fa-check' %>
- --> 
-  <% end %>
-   
- 
-     
-  <!--  < if @employee_transfer.current_status == "SecondApproved"  %> -->
-      
-<!--     <end %> -->
-  
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <div class="input-group">
+          <div id="department">
+            <%= render 'employees/department_dropdown' %> 
+          </div> 
+        </div>
+      </div>
+    </div>
+      <%= f.submit'Final Approve', :class => class_name, data: { disable_with: data_info } %> | <%= link_to 'Back', final_approval_transfer_list_employee_transfers_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
   </div>
+<% end %>
+
+<script>
+$("#employee_transfer").validate({
+    rules: {
+      "employee_transfer[employee_designation_id]":{
+        required: true,
+      },
+      "employee_transfer[employee_category_id]":{
+        required: true,
+      },
+      "employee_transfer[company_id]":{
+        required: true,
+      },
+      "employee_transfer[company_location_id]":{
+        required: true,
+      },
+      "employee_transfer[department_id]":{
+        required: true,
+      }
+    },
+    messages: {
+      "employee_transfer[employee_designation_id]":{
+        required: "Please Specify Designation",
+      },
+      "employee_transfer[employee_category_id]":{
+        required: "Please Specify Category",
+      },
+      "employee_transfer[company_id]":{
+        required: "Please Specify Company",
+      },
+      "employee_transfer[company_location_id]":{
+        required: "Please Specify Company Location",
+      },
+      "employee_transfer[department_id]":{
+        required: "Please Specify Department",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
 </div>
+</div>
+

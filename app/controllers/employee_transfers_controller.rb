@@ -25,31 +25,34 @@ class EmployeeTransfersController < ApplicationController
   # POST /employee_transfers
   # POST /employee_transfers.json
   def create
+    # byebug
     @employee_transfer = EmployeeTransfer.new(employee_transfer_params)
+    @employee = Employee.find(@employee_transfer.employee_id)
+    @employee_transfer.reporting_master_id = @employee.manager_id
     @employee_transfer.current_status = "Pending"
-
-     a=current_user.employee_id
-    emp = Employee.where(id: a).take
-    if emp.try(:manager_id).nil?
-        flash[:alert] = "Reporting Manager not set please set Reporting Manager"
-        redirect_to employee_transfers_path
-      else
+    
+    if @employee_transfer.is_available? 
+      flash[:alert] = "Your Request already has been sent"
+      redirect_to employee_transfers_path
+     else
     respond_to do |format|
-     
       if @employee_transfer.save
-        EmployeeTransfer.where(id: @employee_transfer.id).update_all(reporting_master_id: emp.manager_id,current_status: "Pending")
         ReportingEmployeeTransfer.create(reporting_master_id: current_user.employee_id, employee_transfer_id: @employee_transfer.id, status: "Pending")
-        TransferHistory.create(employee_transfer_id: @employee_transfer.id,employee_id: @employee_transfer.employee_id,reporting_master_id: @employee_transfer.reporting_master_id,designation: @employee_transfer.designation,category: @employee_transfer.category,employee_company: @employee_transfer.employee_company,employee_company_location: @employee_transfer.employee_company_location,employee_department: @employee_transfer.employee_department,justification: @employee_transfer.justification,current_status: @employee_transfer.current_status)
+        TransferHistory.create(employee_transfer_id: @employee_transfer.id,employee_id: @employee_transfer.employee_id,reporting_master_id: @employee_transfer.reporting_master_id,designation: @employee_transfer.designation,category: @employee_transfer.category,employee_company: @employee_transfer.employee_company,employee_company_location: @employee_transfer.employee_company_location,employee_department: @employee_transfer.employee_department,justification: @employee_transfer.justification,current_status: @employee_transfer.current_status,department_id:  @employee_transfer.employee.department_id,company_id: @employee_transfer.employee.company_id,company_location_id: @employee_transfer.employee.company_location_id,employee_designation_id: @employee_transfer.employee.joining_detail.employee_designation_id,employee_category_id: @employee_transfer.employee.joining_detail.employee_category_id)
+        # @joining_detail = JoiningDetail.find_by_employee_id(@employee_id)
+        # @employee = Employee.find_by_id(@employee_id)
+        # TransferHistory.create(employee_designation_id: @joining_detail.employee_designation_id,employee_category_id: @joining_detail.employee_category_id,company_id:  @employee.company_id,company_location_id: @employee.company_location_id,department_id: @employee.department_id)
         # EmployeeTransferMailer.transfer_request(@employee_transfer).deliver_now
+
         format.html { redirect_to @employee_transfer, notice: 'Employee transfer was successfully created.' }
         format.json { render :show, status: :created, location: @employee_transfer }
       else
         format.html { render :new }
         format.json { render json: @employee_transfer.errors, status: :unprocessable_entity }
        end
-      end
     end
   end
+end
 
   # PATCH/PUT /employee_transfers/1
   # PATCH/PUT /employee_transfers/1.json
@@ -234,14 +237,23 @@ class EmployeeTransfersController < ApplicationController
   
   def final_approve
  # byebug
-    @employee_designation_id = params[:employee_transfer][:employee_designation_id]
-    @employee_category_id = params[:employee_transfer][:employee_category_id]
-    @company = params[:employee_transfer][:company_id]
-    @company_location_id = params[:employee][:company_location_id]
-    @department_id = params[:employee][:department_id]
-   @employee_transfer = EmployeeTransfer.find(params[:employee_transfer_id])
+    @employee_id = params[:employee_transfer] ? params[:employee_transfer][:employee_id] : params[:employee_id]
+    @employee_designation_id = params[:employee_transfer] ? params[:employee_transfer][:employee_designation_id] : params[:employee_designation_id]
+    @employee_category_id = params[:employee_transfer] ? params[:employee_transfer][:employee_category_id] : params[:employee_category_id]
+    @company = params[:employee_transfer] ? params[:employee_transfer][:company_id] : params[:company_id]
+    @company_location_id = params[:employee] ? params[:employee][:company_location_id] : params[:company_location_id]
+    @department_id = params[:employee] ? params[:employee][:department_id] : params[:department_id]
+    @employee_transfer = EmployeeTransfer.find(params[:employee_transfer_id])
     @employee_transfer.update(current_status: "FinalApproved",reporting_master_id: current_user.employee_id,employee_designation_id: @employee_designation_id,employee_category_id: @employee_category_id,company_id: @company,company_location_id: @company_location_id,department_id: @department_id)
+    @joining_detail= JoiningDetail.find_by_employee_id(@employee_id)    
+    @joining_detail.update(employee_designation_id: @employee_designation_id,employee_category_id: @employee_category_id)
+    @employee = Employee.find_by_id(@employee_id)    
+    @employee.update(company_id: @company,company_location_id: @company_location_id,department_id: @department_id)   
     ReportingEmployeeTransfer.create(employee_transfer_id: @employee_transfer.id,reporting_master_id: current_user.employee_id,status: "FinalApproved")
+ 
+    # @transfer_history = TransferHistory.find_by(employee_transfer_id: @employee_transfer.id)  
+    # @transfer_history.update(employee_designation_id: @joining_detail.employee_designation_id,employee_category_id: @joining_detail.employee_category_id,company_id:  @employee.company_id,company_location_id: @employee.company_location_id,department_id: @employee.department_id)
+
     if @employee_transfer.current_status == "FinalApproved"
       flash[:notice] = 'Transfer Request Approved Successfully'
       redirect_to transfer_request_employee_transfers_path
@@ -319,6 +331,32 @@ class EmployeeTransfersController < ApplicationController
 
     flash[:notice] = 'Transfer Request Successfully Updated & send to Higher Authority.'  
 
+  end
+
+  def print_transfer_employee_name_report
+
+     @employee_id = params[:employee_transfer] ? params[:employee_transfer][:employee_id] : params[:employee_id]
+     @employee = Employee.find_by(id: @employee_id)
+     @employee_transfers = EmployeeTransfer.where(employee_id: @employee_id)
+      respond_to do |format|
+     format.js
+     format.xls {render template: 'employee_transfers/transfer_employee_name_report_xls.xls.erb'}
+     format.html
+     format.pdf do
+      render pdf: 'transfer_employee_name_report_pdf',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'employee_transfers/transfer_employee_name_report_pdf.pdf.erb',
+            # show_as_html: params[:debug].present?,
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+        end
+      end
   end
 
   private

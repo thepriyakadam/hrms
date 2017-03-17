@@ -11,7 +11,6 @@ class GoalBunch < ActiveRecord::Base
   belongs_to :r_designation, class_name: 'EmployeeDesignation'
   belongs_to :f_designation, class_name: 'EmployeeDesignation'
   
-
   belongs_to :reviewer_rating, class_name: 'Rating'
   belongs_to :final_rating, class_name: 'Rating'
 

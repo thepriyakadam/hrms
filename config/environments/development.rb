@@ -82,6 +82,7 @@ Rails.application.configure do
 #   ActionMailer::Base.delivery_method = :smtp
 
 
+
 #   ActionMailer::Base.smtp_settings = {
 #     :address => "mail.rajgreen.co.in",
 #     :port => 25,

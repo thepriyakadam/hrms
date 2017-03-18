@@ -1,8 +1,11 @@
 <%= bootstrap_form_for @selected_resume,url:{action:'is_confirm',vacancy_master_id: @vacancy_master.id} do |f| %>   
-<table class="table table-bordered table-hover table-condensed example3">
+<table id="example" class="table table-bordered table-hover table-condensed example3">
   <thead>
     <tr>
+      <% if @vacancy_master.is_confirmed == true %>
+      <% else %>
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+      <% end %>
       <th>Name</th>
       <th>Email Id</th>
       <th>Job Title</th>
@@ -19,6 +22,8 @@
   <tbody>
     <% @selected_resumes.each do |selected_resume| %>
       <tr>
+        <% if @vacancy_master.is_confirmed == true %>
+        <% else %>
         <td>
           <% if selected_resume.status == "Shortlisted" %>
           <% elsif selected_resume.status == "Interview Scheduled" %>
@@ -27,6 +32,7 @@
             <%= check_box_tag "selected_resume_ids[]", selected_resume.id %>
           <% end %>
         </td>
+        <% end %>
         <td><%= selected_resume.name %></td>
         <td><%= selected_resume.email_id %></td>
         <td><%= selected_resume.job_title %></td>
@@ -38,10 +44,10 @@
             <small class="label label-primary">Shortlisted</small>
             <% elsif selected_resume.status == "Interview Scheduled" %>
             <small class="label label-primary">Interview Scheduled</small>
-            <%= link_to '',modal_change_status_selected_resumes_path(selected_resume,vacancy_master_id: @vacancy_master.id),class: 'btn btn btn-sm btn-default fa fa-info',remote: true %>
+            <!-- <= link_to '',modal_change_status_selected_resumes_path(selected_resume,vacancy_master_id: @vacancy_master.id),class: 'btn btn btn-sm btn-default fa fa-info',remote: true %> -->
             <% elsif selected_resume.status == "Interview Rescheduled" %>
             <small class="label label-default">Interview Rescheduled</small>
-            <%= link_to ' Update Status',modal_change_status_selected_resumes_path(selected_resume),class: 'btn btn btn-xs btn-default fa fa-modx',remote: true %>
+           <!--  <= link_to ' Update Status',modal_change_status_selected_resumes_path(selected_resume),class: 'btn btn btn-xs btn-default fa fa-modx',remote: true %> -->
             <% else %>
             <small class="label label-default">Not Yet Shortlisted</small>
             <% end %>
@@ -58,7 +64,7 @@
          <% if selected_resume.avatar_file_name == nil %>
            <small class="label label-default">Not Available</small>
              <% else %>
-             <center><%= link_to '',download_resume_path(id: selected_resume.id),class: 'btn btn-xs fa fa-download' %>
+             <center><%= link_to '',download_resume_path(id: selected_resume.id),class: 'btn btn-xs fa fa-download',target: "_blank" %>
              <% end %>
              </center>
         </td>
@@ -72,9 +78,14 @@
         <td>
         <div id="myModal" class="modal fade"></div>
 
-        <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
+        
         <!--<= link_to '', selected_resume, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>-->
+        <% if selected_resume.status == "Interview Scheduled" %>
+        <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
+        <% else %>
+        <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
         <%= link_to '',modal_profile_update_selected_resumes_path(selected_resume,vacancy_master_id: @vacancy_master.id),class: 'btn btn btn-xs btn-success fa fa-edit',remote: true %>
+        <% end %>
            <% if selected_resume.status == "Shortlisted" %>
           <%= link_to ' Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>
           <% elsif selected_resume.status == "Interview Rescheduled" %>
@@ -93,12 +104,31 @@
 <div class="row">
   <div class="col-sm-6">
     <div class="actions">
-      <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+   <!-- < @selected_resume_1 = SelectedResume.where(vacancy_master_id: @vacancy_master.id,status: "Shortlisted").count
+     @selected_resume_2 = SelectedResume.where(vacancy_master_id: @vacancy_master.id,status: "Interview Scheduled").count
+     @selected_resume_3 = SelectedResume.where(vacancy_master_id: @vacancy_master.id,status: nil).count %>
+     < if @selected_resume_3 == 0 && @selected_resume_1 > 0 || @selected_resume_2 > 0 %>
+     <= link_to 'Back', vacancy_resume_vacancy_masters_path,class:"btn btn-sm btn-default fa fa-arrow-left" %>
+      < else %> -->
+      <% if @vacancy_master.is_confirmed == true %>
       <%= link_to 'Back', vacancy_resume_vacancy_masters_path,class:"btn btn-sm btn-default fa fa-arrow-left" %>
+       <% else %>
+      <%= f.submit "Confirm", class: 'btn btn-primary btn-sm',data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Back', vacancy_resume_vacancy_masters_path,class:"btn btn-sm btn-default fa fa-arrow-left" %>
+      <% end %>
+      <!-- < end %> -->
     </div>
   </div>
 </div>
 <% end %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
 
 
 

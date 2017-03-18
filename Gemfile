@@ -6,12 +6,17 @@ gem 'rails', '4.2.4'
 # gem 'mysql2', '~> 0.3.18'
 gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
 
+gem 'twilio-ruby', '~> 4.11', '>= 4.11.1'
+
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
+
+gem 'whenever', '~> 0.9.4',:require => false
+
 gem 'therubyracer', platforms: :ruby
 gem 'query_report'
 gem 'kaminari', '~> 0.16.3'
@@ -38,6 +43,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'thin', '~> 1.6', '>= 1.6.4'
+
+gem 'bundler'
 
 # for pdf generation
 gem 'prawn', '~> 1.3.0'
@@ -133,3 +140,4 @@ gem "axlsx_rails"
 
 #Chart
 gem "chartkick"
+gem 'pry'

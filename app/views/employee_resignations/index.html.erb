@@ -21,7 +21,7 @@
       <tbody>
         <% @employee_resignations.each do |employee_resignation| %>
           <tr>
-            <td><%= employee_resignation.employee.manual_employee_code %></td>
+            <td><%= employee_resignation.employee.try(:manual_employee_code) %></td>
             <td><%= full_name(employee_resignation.employee) %></td>
             <td><%= employee_resignation.resignation_date %></td>
             <td><%= employee_resignation.leaving_date %></td>

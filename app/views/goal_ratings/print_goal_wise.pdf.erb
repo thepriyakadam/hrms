@@ -145,9 +145,9 @@
           <td><%= goal_rating.goal_weightage %></td>
           <td><%= goal_rating.aligned %></td>
           <td><%= goal_rating.appraisee_comment %></td>
-          <td><%= goal_rating.appraisee_rating_id %></td>
+          <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
           <td><%= goal_rating.appraiser_comment %></td>
-          <td><%= goal_rating.appraiser_rating_id %></td>
+          <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
           <td><%= goal_rating.reviewer_comment %></td>
         </tr>
       <% end %>
@@ -179,9 +179,9 @@
           <td><%= goal_rating.goal_weightage %></td>
           <td><%= goal_rating.aligned %></td>
           <td><%= goal_rating.appraisee_comment %></td>
-          <td><%= goal_rating.appraisee_rating_id %></td>
+          <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
           <td><%= goal_rating.appraiser_comment %></td>
-          <td><%= goal_rating.appraiser_rating_id %></td>
+          <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
           <td><%= goal_rating.reviewer_comment %></td>
         </tr>
       <% end %>
@@ -215,7 +215,7 @@
         </tr>
         <tr>
           <th>Reviewer Rating</th>
-          <td><%= goal_bunch.try(:reviewer_rating_id) %></td>
+          <td><%= goal_bunch.try(:reviewer_rating).try(:value) %></td>
         </tr>
         <tr>
           <th>Final Comment</th>
@@ -223,7 +223,7 @@
         </tr>
         <tr>
           <th>Final Rating</th>
-          <td><%= goal_bunch.try(:final_rating_id) %></td>
+          <td><%= goal_bunch.try(:final_rating).try(:value) %></td>
         </tr>
       <% end %>
     </tbody>

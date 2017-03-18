@@ -32,7 +32,7 @@
             <Cell ss:Index="5"><Data ss:Type="String"><%= employee.department.try(:name) %></Data></Cell>
 
             <Cell ss:Index="6"><Data ss:Type="String"><%= employee_salary_template.annual_amount %></Data></Cell> 
-            <Cell ss:Index="7"><Data ss:Type="String"><%= goal_bunch.final_rating_id %></Data></Cell>
+            <Cell ss:Index="7"><Data ss:Type="String"><%= goal_bunch.final_rating.try(:value) %></Data></Cell>
           </Row><!-- Row -->
         <% end %><!-- slip -->
       </Table>

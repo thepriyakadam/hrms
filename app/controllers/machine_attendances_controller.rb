@@ -524,6 +524,8 @@ class MachineAttendancesController < ApplicationController
 		format.csv { send_data @machine_attendances.to_csv }
 		format.xls
 	 end
+	 session[:active_tab] ="TimeManagement"
+     session[:active_tab1] ="AttendanceSetup"
 	end
 
 	def import

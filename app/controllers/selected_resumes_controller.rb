@@ -145,7 +145,7 @@ class SelectedResumesController < ApplicationController
     send_file @selected_resume.avatar.path,
               filename: @selected_resume.avatar_file_name,
               type: @selected_resume.avatar_content_type,
-              disposition: 'attachment'
+              disposition: 'inline'
   end
 
   def download_image
@@ -242,6 +242,19 @@ class SelectedResumesController < ApplicationController
   def part_resume
      @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
      @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
+  end
+
+  def modal_vacancy_dropdown
+    @selected_resume = SelectedResume.find(params[:format])
+  end
+
+  def update_vacancy
+     # byebug
+     @selected_resume = SelectedResume.find(params[:id])
+     @vacancy_name = params[:selected_resume][:vacancy_master_id]
+     SelectedResume.where(id: @selected_resume.id).update_all(vacancy_master_id: @vacancy_name)
+     flash[:notice] = 'Vacancy Updated Successfully'
+     redirect_to all_resume_list_selected_resumes_path
   end
 
 

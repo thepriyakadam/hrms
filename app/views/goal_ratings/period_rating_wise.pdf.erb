@@ -23,8 +23,8 @@
           <td><%= e.employee.first_name %> <%= e.employee.middle_name %> <%= e.employee.last_name %> </td>
           <td><%= e.appraisee_rating_id %></td> 
           <td><%= e.appraiser_rating %></td>
-          <td><%= e.reviewer_rating_id %></td>
-          <td><%= e.final_rating_id %></td>
+          <td><%= e.reviewer_rating.try(:value) %></td>
+          <td><%= e.final_rating.try(:value) %></td>
           </tr>
           <% end %>
         </tbody>

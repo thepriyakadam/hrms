@@ -20,7 +20,7 @@
         <% @employees.each do |e| %>
           <tr>
             <td><%= e.manual_employee_code %></td>
-            <td><%= e.first_name %> <%= e.middle_name %> <%= e.last_name %> </td>
+            <td><%= full_name(e) %></td>
             <td><%= e.company_location.try(:name) %> - <%= e.department.try(:name) %></td> 
             <td><%= e.joining_detail.employee_designation.try(:name) %></td>
             <td><%= e.contact_no %></td>

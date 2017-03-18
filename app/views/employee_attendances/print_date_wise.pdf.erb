@@ -29,7 +29,7 @@ div.nobreak{ page-break-inside: avoid;
           <% @employee_attendances.each do |a| %>
             <tr>
               <td><%= a.employee.manual_employee_code %></td>
-              <td><%= a.employee.first_name %> <%= a.employee.middle_name %> <%= a.employee.last_name %></td>
+              <td><%= full_name(a.employee) %></td>
               <td><%= a.employee.company_location.try(:name) %> - <%= a.employee.department.try(:name) %></td>
               <td><%= a.try(:present) %></td>
               <td><%= a.try(:day) %></td>

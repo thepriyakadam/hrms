@@ -2,12 +2,12 @@
   <div class="box-header">
     <h3 class="box-title">Resume List</h3>
 <div class="box-body">
-<%= bootstrap_form_for @selected_resume,url:{action:'is_confirm_resume'} do |f| %>   
-<table class="table table-bordered table-hover table-condensed example3">
+<!-- <= bootstrap_form_for @selected_resume,url:{action:'is_confirm_resume'} do |f| %>   
+ --><table id="example" class="table table-bordered table-hover table-condensed example3">
   <thead>
     <tr>
-      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-      <th>Name</th>
+<!--       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+ -->      <th>Name</th>
       <th>Contact No.</th>
       <th>Degree</th>
       <th>Status</th>
@@ -21,14 +21,14 @@
   <tbody>
     <% @selected_resumes.each do |selected_resume| %>
       <tr>
-        <td>
-          <% if selected_resume.status == "Shortlisted" %>
-          <% elsif selected_resume.status == "Interview Scheduled" %>
-          <% elsif selected_resume.status == "Interview Rescheduled" %>
-          <% else %>
-            <%= check_box_tag "selected_resume_ids[]", selected_resume.id %>
-          <% end %>
-        </td>
+        <!-- <td>
+          < if selected_resume.status == "Shortlisted" %>
+          < elsif selected_resume.status == "Interview Scheduled" %>
+          < elsif selected_resume.status == "Interview Rescheduled" %>
+          < else %>
+            <= check_box_tag "selected_resume_ids[]", selected_resume.id %>
+          < end %>
+        </td> -->
         <td><%= selected_resume.name %></td>
         <td><%= selected_resume.contact_no %></td>
         <td><%= selected_resume.degree.try(:name) %></td>
@@ -70,17 +70,22 @@
               <% end %>
         </td>
         <td>
-        <div id="myModal" class="modal fade"></div>
+<!--         <div id="myModal" class="modal fade"></div>
+ -->
+        <div id="myModal2" class="modal fade"></div>
 
         <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
-        <%= link_to '', selected_resume, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+        <%= link_to 'Select Vacancy',modal_vacancy_dropdown_selected_resumes_path(selected_resume),class: 'btn btn btn-xs btn-primary fa',remote: true %>
+
+       <!--  <= link_to '', selected_resume, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %> -->
         <!--<= link_to '',modal_profile_update_selected_resumes_path(selected_resume),class: 'btn btn btn-xs btn-success fa fa-edit',remote: true %>-->
-           <% if selected_resume.status == "Shortlisted" %>
-          <%= link_to ' Interview', new1_interview_schedules_path(selected_resume),class: 'btn btn-xs btn-primary fa fa-check' %>
-          <% elsif selected_resume.status == "Interview Rescheduled" %>
-          <%= link_to ' Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>
-          <% else %>
-          <% end %>
+
+           <!-- < if selected_resume.status == "Shortlisted" %>
+          <= link_to ' Interview', new1_interview_schedules_path(selected_resume),class: 'btn btn-xs btn-primary fa fa-check' %>
+          < elsif selected_resume.status == "Interview Rescheduled" %>
+          <= link_to ' Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>
+          < else %>
+          < end %> -->
           
         </td>
       </tr>
@@ -90,15 +95,15 @@
 
 <div id="myModal2" class="modal fade"></div>
 
-<div class="row">
+<!-- <div class="row">
   <div class="col-sm-3">
     <div class="actions">
-      <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> 
+      <= f.submit "Confirm", class: 'btn btn-primary btn-sm',data: { confirm: 'Are you sure?',remote:true } %> 
       
     </div>
   </div>
-</div>
- <% end %>
+</div> 
+ < end %>-->
  </div>
  </div>
  </div>
@@ -120,4 +125,12 @@
       } 
     });
   });
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
 </script>

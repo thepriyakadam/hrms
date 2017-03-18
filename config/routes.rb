@@ -437,6 +437,7 @@ end
       get :interview_round_reschedule
       post :reschedule_interview
       get :interview_reschedule_list
+      post :confirm_interview_round
     end
   end
   resources :interview_types do
@@ -878,6 +879,8 @@ end
     post :update_profile
     get :part_resume
     post :is_confirm_resume
+    get :modal_vacancy_dropdown
+    post :update_vacancy
     end
   end
   resources :assigned_assets do

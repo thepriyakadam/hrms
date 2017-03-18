@@ -52,14 +52,25 @@
              <!-- <td>
               < link_to ' List',interview_reschedule_list_interview_schedules_path(interview_schedule),class: 'btn btn-xs btn-primary fa fa-sticky-note-o' %>
             </td> -->
-            <td>
-              <%= link_to ' Interview Round', new_interview_round_path(interview_schedule_id: interview_schedule.id),class: 'btn btn-xs btn-primary' %>
-            </td>
+        <td>
+            <% @interview_round_1 = InterviewRound.where(interview_schedule_id: interview_schedule,interview_round_confirm: true).count
+              @interview_round_2 = InterviewRound.where(interview_schedule_id: interview_schedule,interview_round_confirm: nil).count %>
+            <% if @interview_round_2 == 0 && @interview_round_1 > 0  %>
+            <%= link_to ' View Round Details', new_interview_round_path(interview_schedule_id: interview_schedule.id),class: 'btn btn-xs btn-info' %>
+            <% else %>
+             <%= link_to ' Interview Round', new_interview_round_path(interview_schedule_id: interview_schedule.id),class: 'btn btn-xs btn-primary' %>
+            <% end %>
+        </td>
         <td>
          <div id="myModal1" class="modal fade"></div>
-<!--           <= link_to '', interview_schedule,class: 'btn btn-xs btn-default fa fa-eye' %>
- -->          <%= link_to '', interview_schedule,method: :delete,data:{confirm:'Are you sure?'},class: 'btn btn-xs btn-danger fa fa-close' %>
-          <!--<= link_to '',modal_schedule_list_interview_schedules_path(interview_schedule),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>-->
+          <%= link_to '', interview_schedule,class: 'btn btn-xs btn-default fa fa-eye' %>
+          <% @interview_round_1 = InterviewRound.where(interview_schedule_id: interview_schedule,interview_round_confirm: true).count
+                        @interview_round_2 = InterviewRound.where(interview_schedule_id: interview_schedule,interview_round_confirm: nil).count %>
+            <% if @interview_round_2 == 0 && @interview_round_1 > 0  %>
+            <% else %>
+          <%= link_to '', interview_schedule,method: :delete,data:{confirm:'Are you sure?'},class: 'btn btn-xs btn-danger fa fa-close' %>
+          <%= link_to '',modal_schedule_list_interview_schedules_path(interview_schedule),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
+          <% end %>
         </td>
           <!--= link_to '', edit_interview_schedule_path(interview_schedule),class: 'btn btn-success btn-xs fa fa-edit' %>-->
       </tr>

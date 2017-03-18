@@ -2,7 +2,10 @@
 <table id="example" class="table table-bordered table-hover table-condensed example3">
   <thead>
     <tr>
+      <% if @vacancy_master.is_confirmed == true %>
+      <% else %>
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+      <% end %>
       <th>Name</th>
       <th>Email Id</th>
       <th>Job Title</th>
@@ -19,6 +22,8 @@
   <tbody>
     <% @selected_resumes.each do |selected_resume| %>
       <tr>
+        <% if @vacancy_master.is_confirmed == true %>
+        <% else %>
         <td>
           <% if selected_resume.status == "Shortlisted" %>
           <% elsif selected_resume.status == "Interview Scheduled" %>
@@ -27,6 +32,7 @@
             <%= check_box_tag "selected_resume_ids[]", selected_resume.id %>
           <% end %>
         </td>
+        <% end %>
         <td><%= selected_resume.name %></td>
         <td><%= selected_resume.email_id %></td>
         <td><%= selected_resume.job_title %></td>
@@ -107,7 +113,7 @@
       <% if @vacancy_master.is_confirmed == true %>
       <%= link_to 'Back', vacancy_resume_vacancy_masters_path,class:"btn btn-sm btn-default fa fa-arrow-left" %>
        <% else %>
-      <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+      <%= f.submit "Confirm", class: 'btn btn-primary btn-sm',data: { confirm: 'Are you sure?' } %>
       <%= link_to 'Back', vacancy_resume_vacancy_masters_path,class:"btn btn-sm btn-default fa fa-arrow-left" %>
       <% end %>
       <!-- < end %> -->

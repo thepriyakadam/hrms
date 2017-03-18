@@ -8,8 +8,8 @@
       <th colspan="4"><center>Vacancy Request Details of : <%= @vacancy_master.employee.try(:manual_employee_code) %> <%= @vacancy_master.employee.try(:first_name) %> <%= @vacancy_master.employee.try(:middle_name) %> <%= @vacancy_master.employee.try(:last_name) %></center></th>
     </tr>
   <tr>
-  <th><strong>Vacancy No.</strong></th>
-  <td><%= @vacancy_master.id %></td>
+  <th><strong>Vacancy Code</strong></th>
+  <td><%= @vacancy_master.vacancy_code %></td>
    <th><strong>Current Request To</strong></th>
   <!-- <td><= @employee.try(:first_name) %> <= @employee.try(:middle_name) %> <= @employee.try(:last_name) %> </td> -->
   <td><% emp=Employee.where(id: @vacancy_master.reporting_master_id).take %>

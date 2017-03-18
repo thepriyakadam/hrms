@@ -32,7 +32,7 @@
       <th>Status</th>
     </tr>
 
- <% @on_duty_requests.each do |on_duty_request| %>
+    <% @on_duty_requests.each do |on_duty_request| %>
       <tr>
       <td><%= i = i+1 %></td>
         <td><%= on_duty_request.employee.try(:manual_employee_code) %></td>

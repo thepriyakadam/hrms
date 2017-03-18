@@ -44,7 +44,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'thin', '~> 1.6', '>= 1.6.4'
 
-gem 'bundler', '~> 1.11', '>= 1.11.2'
+gem 'bundler'
 
 # for pdf generation
 gem 'prawn', '~> 1.3.0'
@@ -140,3 +140,4 @@ gem "axlsx_rails"
 
 #Chart
 gem "chartkick"
+gem 'pry'

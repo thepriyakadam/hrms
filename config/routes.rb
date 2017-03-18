@@ -442,6 +442,7 @@ end
       get :interview_round_reschedule
       post :reschedule_interview
       get :interview_reschedule_list
+      post :confirm_interview_round
     end
   end
   resources :interview_types do
@@ -767,6 +768,7 @@ end
   resources :interview_analyses do
     collection do
       post :print_interview_analysis_list
+      get :confirm_interview_analysis
     end
   end
   resources :interview_decisions do
@@ -882,6 +884,8 @@ end
     post :update_profile
     get :part_resume
     post :is_confirm_resume
+    get :modal_vacancy_dropdown
+    post :update_vacancy
     end
   end
   resources :assigned_assets do
@@ -1149,6 +1153,9 @@ end
       get :final_approve
       get :vac_history
       get :current_employee_vacancy_list
+      get :confirm_interview_schedule_list
+      get :confirm_vacancy
+      get :confirm_candidate_1
     end
   end
   resources :leave_c_offs do

@@ -3,7 +3,7 @@
     <%= form_for :workingday, url: { action: "is_confirm_workingday", date: @date } do |f| %>
       <table id="example5" class="table table-bordered table-hover table-condensed">
       <thead>
-      <tr><td colspan="12"><center>Working Days : <%= @month %> - <%= @year %></center></td></tr>
+      <tr><td colspan="13"><center>Working Days : <%= @month %> - <%= @year %></center></td></tr>
         <tr>
           <th>ID</th>
           <th>Employee</th>
@@ -11,6 +11,7 @@
           <th>Holiday</th>
           <th>Week Off</th>
           <th>OD</th>
+          <th>Gate Pass</th>
           <th>Pay Leave</th>
           <th>Non Pay Leave</th>
           <th>Absent</th>
@@ -28,6 +29,7 @@
             <td><%= workingday.holiday_in_month %></td>
             <td><%= workingday.week_off_day %></td>
             <td><%= workingday.od_leave %></td>
+            <td><%= workingday.gatepass %></td>
             <td><%= workingday.pay_leave %></td>
             <td><%= workingday.nonpay_leave %></td>
             <td><%= workingday.absent_day %></td>

@@ -211,7 +211,7 @@
             <td><%= weightage = goal_rating.goal_weightage %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
-            <td><%= appraisee_rating = goal_rating.appraisee_rating_id %></td>
+            <td><%= appraisee_rating = goal_rating.try(:appraisee_rating).try(:value) %></td>
             <td>
             <% if @goal_bunch.appraisee_confirm == true %>
               <small class="label label-info">Confirmed</small>
@@ -225,7 +225,7 @@
         <% end %>
         <tr>
         <th colspan="2"><h6><font color='red' size='2'>Appraisee Rating For Goal </font></h6></th>
-        <th colspan="6"><h6><font color='red' size='2'> <%= appraisee_goal_sum.round(4) %></font></h6></th></tr>
+        <th colspan="6"><h6><font color='red' size='2'> <%= appraisee_goal_sum.round(2) %></font></h6></th></tr>
       </tbody>
     </table>
 
@@ -254,7 +254,7 @@
             <td><%= weightage = goal_rating.goal_weightage %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
-            <td><%= appraisee_rating = goal_rating.appraisee_rating_id %></td>
+            <td><%= appraisee_rating = goal_rating.try(:appraisee_rating).try(:value) %></td>
             <td>
             <% if @goal_bunch.appraisee_confirm == true %>
               <small class="label label-info">Confirmed</small>
@@ -268,11 +268,11 @@
           </tr>
         <% end %>
         <tr><th colspan="2"><h6><font color='red' size='2'>Appraisee Rating For Attribute</font></h6></th>
-        <th colspan="6"><h6><font color='red' size='2'> <%= appraisee_attribute_sum.round(4) %></font></h6></th>
+        <th colspan="6"><h6><font color='red' size='2'> <%= appraisee_attribute_sum.round(2) %></font></h6></th>
         </tr>
         <tr>
         <th colspan="2"> <h6><font color='red' size='2'>Overall </font></h6></th>
-        <th colspan="6"> <h6><font color='red' size='2'><%= (appraisee_attribute_sum + appraisee_goal_sum ).round(4) %></font></h6></th>
+        <th colspan="6"> <h6><font color='red' size='2'><%= (appraisee_attribute_sum + appraisee_goal_sum ).round(2) %></font></h6></th>
         </tr>
       </tbody>
     </table>
@@ -301,33 +301,25 @@
 <div class="box-header with-border">
   <h3 class="box-title">Overall Comment</h3>
 </div>
-<%= bootstrap_form_for GoalBunch.new,url:{action:'self_overall_comment_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunch.id} do |f| %>
+<%= bootstrap_form_for GoalBunch.new,url:{action:'self_overall_comment_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunches.id} do |f| %>
  <table class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th><input type="checkbox" id="selectAll" value="selectAll"></th>
         <th>Overall Comment</th>
         <th>Overall Rating</th>
       </tr>
     </thead>
     <tbody>
-    <% @goal_bunches.each do |goal_bunch| %>
       <tr>
-        <td>
-          <% if goal_bunch.appraisee_confirm == true %>
-          <% else %>
-          <%= check_box_tag "goal_bunch_ids[]", goal_bunch.id %>
-          <% end %>
-        </td>
-        <td><%= goal_bunch.appraisee_comment %></td>
-        <td><%= goal_bunch.appraisee_rating_id.to_f.round(4) %></td>
+        <td><%= @goal_bunches.appraisee_comment %></td>
+        <td><%= @goal_bunches.appraisee_rating_id.to_f.round(2) %></td>
       </tr>
-      <% end %>
     </tbody>
   </table>
 
     <% unless @goal_bunch.nil? %>
-      <% if @goal_bunch.appraisee_comment == nil %>
+      <% if @goal_bunch.appraisee_comment == nil or @goal_bunch.appraisee_confirm != nil %>
+       <%= link_to 'Back',period_list_appraisee_goal_bunches_path,class: 'btn btn-sm btn-default fa fa-arrow-left'%>
       <% else %>
         <div class="row">
           <div class="col-sm-3">

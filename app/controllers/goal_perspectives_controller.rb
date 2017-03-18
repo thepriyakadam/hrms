@@ -14,31 +14,8 @@ class GoalPerspectivesController < ApplicationController
 
   # GET /goal_perspectives/new
   def new
-    @goal_perspective = GoalPerspective.new
-
-    if current_user.class == Member
-      if current_user.role.name == 'GroupAdmin'
-        @goal_perspectives = GoalPerspective.all
-      elsif current_user.role.name == 'Admin'
-        @department_id = Employee.where(company_id: current_user.company_location.company_id).pluck(:department_id)
-        @goal_perspectives = GoalPerspective.where(department_id: @department_id)
-      elsif current_user.role.name == 'Branch'
-        @department_id = Employee.where(company_location_id: current_user.company_location_id).pluck(:department_id)
-        @goal_perspectives = GoalPerspective.where(department_id: @department_id)
-      elsif current_user.role.name == 'HOD'
-        @goal_perspectives = GoalPerspective.where(department_id: current_user.department_id)
-      elsif current_user.role.name == 'Supervisor'
-        @emp = Employee.find(current_user.employee_id)
-        @goal_perspectives = @emp.subordinates
-      else current_user.role.name == 'Employee'
-        @department_id = Employee.where(id: current_user.employee_id).pluck(:department_id)
-         @goal_perspectives = GoalPerspective.where(department_id: @department_id)
-      end
-    else
-        @goal_perspectives = GoalPerspective.all
-    end
-
-   
+    @goal_perspective = GoalPerspective.new  
+    @goal_perspectives = GoalPerspective.all
     session[:active_tab] = "GlobalSetup"
     session[:active_tab1] = "Performance"
   end

@@ -1,7 +1,7 @@
 <div class="box">
   <div class="box-header with-border">
     <div class="pull-right"></div>
-    <h3>Particular Vacancy Request List</h3><br>
+    <h3>Vacancy Status List</h3><br>
     
   </div><!-- /.box-header -->
   <div class="box-body">
@@ -11,7 +11,7 @@
           <thead>
             <tr>
               <th>Sr.No</th>
-              <th>Vacancy ID</th>
+              <th>Vacancy Code</th>
               <th>Job Title</th>
               <th>Open Date</th>
               <th>Closed Date</th>
@@ -27,7 +27,7 @@
             <% @particular_vacancy_requests.each do |particular_vacancy_request| %>
               <tr>
                 <td><%= i=i+1 %></td>
-                <td><%= particular_vacancy_request.vacancy_master_id %></td>
+                <td><%= particular_vacancy_request.vacancy_master.try(:vacancy_code) %></td>
                 <td><%= particular_vacancy_request.vacancy_name %></td>
                 <td><%= particular_vacancy_request.open_date %></td>
                 <td><%= particular_vacancy_request.closed_date %></td>
@@ -53,3 +53,11 @@
       </div>
    </div>
   </div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

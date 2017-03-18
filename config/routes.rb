@@ -762,6 +762,7 @@ end
   resources :interview_analyses do
     collection do
       post :print_interview_analysis_list
+      get :confirm_interview_analysis
     end
   end
   resources :interview_decisions do
@@ -1144,6 +1145,9 @@ end
       get :final_approve
       get :vac_history
       get :current_employee_vacancy_list
+      get :confirm_interview_schedule_list
+      get :confirm_vacancy
+      get :confirm_candidate_1
     end
   end
   resources :leave_c_offs do

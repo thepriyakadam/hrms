@@ -145,7 +145,7 @@ class SelectedResumesController < ApplicationController
     send_file @selected_resume.avatar.path,
               filename: @selected_resume.avatar_file_name,
               type: @selected_resume.avatar_content_type,
-              disposition: 'attachment'
+              disposition: 'inline'
   end
 
   def download_image

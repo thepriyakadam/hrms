@@ -58,10 +58,13 @@ Rails.application.configure do
   }
   
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 =======
 >>>>>>> af9d38fe5b20bf1948dab4898a96108e5b0a2fb6
+=======
+>>>>>>> be9e02c3260edefda8ba4368ce97f9526bcfd77b
   # # Root url
   # config.action_mailer.default_url_options = { host: 'mail.bhandarigroup.in', port: 3000 }
   # # config.domain = 'lvh.me'
@@ -87,9 +90,13 @@ Rails.application.configure do
 #   ActionMailer::Base.delivery_method = :smtp
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 32ae09a615067ba027942d98d7f08adbdede2cfc
 =======
 >>>>>>> af9d38fe5b20bf1948dab4898a96108e5b0a2fb6
+=======
+
+>>>>>>> be9e02c3260edefda8ba4368ce97f9526bcfd77b
 
 #   ActionMailer::Base.smtp_settings = {
 #     :address => "mail.rajgreen.co.in",

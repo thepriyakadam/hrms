@@ -618,8 +618,8 @@ class EmployeeAttendancesController < ApplicationController
           @employee_attendances = EmployeeAttendance.where(day: @start.to_date..@end.to_date,employee_id: @employees)
           @employee_attendance_id = EmployeeAttendance.where(day: @start.to_date..@end.to_date,employee_id: @employees).take
         end
-        elsif current_user.role.name == 'Admin'
-         if company == ""
+      elsif current_user.role.name == 'Admin'
+        if company == ""
           @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
           @employee_attendances = EmployeeAttendance.where(day: @start.to_date..@end.to_date,employee_id: @employees)
           @employee_attendance_id = EmployeeAttendance.where(day: @start.to_date..@end.to_date,employee_id: @employees).take

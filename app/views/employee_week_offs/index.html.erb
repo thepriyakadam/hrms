@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Revert Week Off</h3>
+    <h3 class="box-title">Revert Week Off </h3>
     <div class="box-body">
       <%= bootstrap_form_for(:employee_week_off, url: {action: 'employee_week_off_list'},html: {id: 'employee_week_off'},remote:true) do |f| %>
         <div class="row">
@@ -10,7 +10,7 @@
                  <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
                  </div>
-                <%= f.text_field :from_date, hide_label: true,placeholder: "From Date", class: 'date'%>
+                <%= f.text_field :from_date, hide_label: true,placeholder: "From Date", class: 'weekoff_date'%>
                </div>
              </div>
             </div>
@@ -20,7 +20,7 @@
                  <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
                  </div>
-                <%= f.text_field :to_date, hide_label: true,placeholder: "To Date", class: 'date'%>
+                <%= f.text_field :to_date, hide_label: true,placeholder: "To Date", class: 'weekoff_date'%>
                </div>
              </div>
             </div>
@@ -48,12 +48,14 @@
     $('.ajax-progress').show();
     $("#employee_attendance").submit();
   })
-
+  </script>
+  
+  <script type="text/javascript">
   $(function(){
-    $('.date').datepicker({
+    $('.weekoff_date').datepicker({
     changeYear:true,
     changeMonth: true,
-    yearRange: '-1:+10',
+    yearRange: '-2:+20',
     dateFormat: 'dd-mm-yy' });
   }); 
 </script> 

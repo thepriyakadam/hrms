@@ -25,7 +25,7 @@
             <td><%= check_box_tag "week_off_master_ids[]",week_off_master.id %></td>
 
             <td><%= week_off_master.employee.manual_employee_code %></td>
-            <td><%= week_off_master.employee.try(:first_name) %> <%= week_off_master.employee.try(:middle_name) %> <%= week_off_master.employee.try(:last_name) %></td>
+            <td><%= full_name(week_off_master.employee) %></td>
             <td><%= week_off_master.day %></td>
             <td><%= week_off_master.from %></td>
             <td><%= week_off_master.to %></td>

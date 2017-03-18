@@ -1,5 +1,8 @@
 <div class="modal-dialog">
   <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
     <div class="modal-body">
 
       <%= bootstrap_form_for(:goal_bunch,url:{action:'self_overall_comment_create',employee_id: current_user.employee_id,goal_bunch_id: @goal_bunch.id,appraisee_overall: @appraisee_overall},html: {id: 'goal_bunch'}) do |f| %>
@@ -17,9 +20,10 @@
         </div>
       <% end %>
 
-    </div>
-  </div>
-</div>
+      </div>
+    <div class="modal-footer"></div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
 
 <script type="text/javascript">
   $("#goal_bunch").validate({

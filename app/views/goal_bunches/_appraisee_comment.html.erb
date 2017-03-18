@@ -5,7 +5,7 @@
   <thead>
    <tr><th colspan="7"><center>Employee Details</center></th></tr>
     <tr>
-      <th>Employee Id</th>
+      <th>ID</th>
       <th>Name</th>
       <th>Age</th>
       <th>Department</th>
@@ -18,7 +18,7 @@
     <% @employees.each do |a| %>
     <tr>
       <td><%= a.manual_employee_code %></td> 
-      <td><%= a.first_name %> <%= a.middle_name %> <%= a.last_name %></td>
+      <td><%= full_name(a) %></td>
       <td><%=  %></td>
       <td><%= a.department.try(:name) %></td>
       <td><%= @joining_detail.joining_date %></td>
@@ -276,9 +276,7 @@
         </tr>
       </tbody>
     </table>
-
-    
-   
+     
        <% @Overall = (appraisee_attribute_sum + appraisee_goal_sum ) %>
 
   <div class="row">

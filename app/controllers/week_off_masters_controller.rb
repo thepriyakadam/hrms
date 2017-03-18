@@ -17,7 +17,7 @@ class WeekOffMastersController < ApplicationController
     @week_off_master = WeekOffMaster.new
     @week_off_masters = WeekOffMaster.all
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="AttendanceSetup"
+    session[:active_tab1] ="WeekoffSetup"
   end
 
   # GET /week_off_masters/1/edit
@@ -72,7 +72,7 @@ class WeekOffMastersController < ApplicationController
       @week_off_masters = WeekOffMaster.where(is_send: nil).where(employee_id: @employees)
     end
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="AttendanceSetup"
+    session[:active_tab1] ="WeekoffSetup"
   end
 
   def employee_list

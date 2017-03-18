@@ -21,13 +21,14 @@
           <tbody>
             <% @vacancy_masters.each do |vacancy_master| %>
               <tr>
-                <td><%= vacancy_master.id %></td>
+                <td><%= vacancy_master.vacancy_code %></td>
                 <td><%= vacancy_master.vacancy_name %></td>
                  <td><%= vacancy_master.no_of_position %></td>
                 <td><%= vacancy_master.company_location.try(:name) %> - <%= vacancy_master.department.try(:name) %></td>
                
                 <td><%= vacancy_master.experience %></td>
                 <td>
+                  <%= link_to '', vacancy_master,class: 'btn btn-xs btn-default fa fa-eye' %>
                   <%= link_to 'View Profile',part_resume_selected_resumes_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-primary' %>
                 </td>
               </tr>

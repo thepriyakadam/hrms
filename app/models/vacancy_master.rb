@@ -1,5 +1,5 @@
 class VacancyMaster < ActiveRecord::Base
-  # protokoll :employee_code, pattern: 'VAC#####'
+  protokoll :vacancy_code, pattern: 'VAC#######'
   belongs_to :department
   belongs_to :employee_designation
   belongs_to :company_location

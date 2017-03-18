@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170317070345) do
+ActiveRecord::Schema.define(version: 20170318044750) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1914,9 +1914,10 @@ ActiveRecord::Schema.define(version: 20170317070345) do
     t.time     "interview_time"
     t.string   "location"
     t.text     "schedule_comment"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.boolean  "is_confirm"
+    t.boolean  "interview_round_confirm"
   end
 
   add_index "interview_rounds", ["employee_id"], name: "index_interview_rounds_on_employee_id"
@@ -3606,6 +3607,7 @@ ActiveRecord::Schema.define(version: 20170317070345) do
     t.text     "justification"
     t.date     "vacancy_fullfillment_date"
     t.boolean  "is_confirmed"
+    t.string   "vacancy_code"
   end
 
   add_index "vacancy_masters", ["company_location_id"], name: "index_vacancy_masters_on_company_location_id"

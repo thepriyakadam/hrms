@@ -1,33 +1,95 @@
+<%= bootstrap_form_for SelectedResume.new,url:{action:'confirm_interview_round',interview_schedule_id: @interview_schedule.id} do |f| %>   
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
+      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
       <th>ID</th>
       <th>Interviewer Name</th>
       <th>Interview Type</th>
       <th>Interview Date</th>
       <th>Interview Time</th>
       <th>Location</th>
-      <th>Desrciption</th>
       <th>Action</th>
     </tr>
   </thead>
   <tbody>
     <% @interview_rounds.each do |interview_round| %>
       <tr>
+        <td>
+          <% if interview_round.interview_round_confirm == true %>
+          <% else %>
+            <%= check_box_tag "interview_round_ids[]", interview_round.id %>
+          <% end %>
+        </td>
         <td><%= interview_round.employee.manual_employee_code %></td>
         <td><%= full_name(interview_round.employee) %></td>
         <td><%= interview_round.interview_type.try(:name) %></td>
         <td><%= interview_round.interview_date %></td>
         <td><%= interview_round.interview_time %></td>
         <td><%= interview_round.location %></td>
-        <td><%= interview_round.schedule_comment %></td>
         <td>
-          <!-- <= link_to '', edit_interview_round_path(interview_round),class: 'btn btn-success btn-xs fa fa-edit',remote:true %> -->
+          <% if interview_round.interview_round_confirm == true %>
+          <%= link_to ' List',interview_reschedule_list_interview_rounds_path(interview_round),class: 'btn btn-xs btn-primary fa fa-sticky-note-o' %>
+          <% else %>
+          <%= link_to '', edit_interview_round_path(interview_round),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
           <%= link_to '',  interview_round, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
           <%= link_to ' Reschedule', interview_round_reschedule_interview_rounds_path(id:interview_round.id,interview_schedule_id: @interview_schedule.id),class: 'btn btn-xs btn-warning fa fa-envelope-o'  %>
           <%= link_to ' List',interview_reschedule_list_interview_rounds_path(interview_round),class: 'btn btn-xs btn-primary fa fa-sticky-note-o' %>
+          <% end %>
         </td>
+      </tr>
+      <tr>
+          <th colspan="8"><center><strong>Description</strong></center></th>
+      </tr>
+      <tr>
+          <td colspan="8"><%= interview_round.schedule_comment %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<!-- div class="col-sm-6">
+    <= link_to 'Confirm Round',confirm_interview_round_interview_rounds_path(interview_schedule_id: @interview_schedule.id),data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> |
+    <= link_to 'Back', interview_schedules_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+ </div> -->
+
+ <div class="row">
+  <div class="col-sm-6">
+    <div class="actions">
+   <% @interview_round_1 = InterviewRound.where(interview_schedule_id: @interview_schedule.id,interview_round_confirm: true).count
+     @interview_round_2 = InterviewRound.where(interview_schedule_id: @interview_schedule.id,interview_round_confirm: nil).count %>
+    <% if @interview_round_2 == 0 && @interview_round_1 > 0  %>
+    <%= link_to 'Back', interview_schedules_path,class:"btn btn-sm btn-default fa fa-arrow-left" %>
+    <% else %>
+      <%= f.submit "Confirm", class: 'btn btn-primary btn-sm',data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Back', interview_schedules_path,class:"btn btn-sm btn-default fa fa-arrow-left" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>
+
+<!-- <script type="text/javascript">
+  $(document).ready(function() {
+    $('#example').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script> -->

@@ -61,6 +61,10 @@ class VacancyMastersController < ApplicationController
     # @vacancy_master.current_status = "Pending"
     a=current_user.employee_id
     emp = Employee.where(id: a).take
+    if @vacancy_master.is_there?
+      flash[:alert] = "Your Request already has been sent"
+      redirect_to new_vacancy_master_path
+     else
     if emp.try(:manager_id).nil?
         flash[:alert] = "Reporting Manager not set please set Reporting Manager"
         redirect_to new_vacancy_master_path
@@ -107,6 +111,7 @@ class VacancyMastersController < ApplicationController
     end
   end
 end
+end
 
   # PATCH/PUT /vacancy_masters/1
   # PATCH/PUT /vacancy_masters/1.json
@@ -152,6 +157,7 @@ end
      # @reporting_master = ReportingMaster.find(@vacancy_master.reporting_master_id)
      # @employee = Employee.find(@reporting_master.employee_id)
      # @vacancy_masters = VacancyMaster.where(reporting_master_id: reporting_masters)
+     # @vacancy_masters = VacancyMaster.where(employee_id: current_user.employee_id) #new code
      @vacancy_masters = VacancyMaster.where(id: @vacancy_master.id)
   end
 

@@ -54,6 +54,22 @@ class VacancyMaster < ActiveRecord::Base
     end
   end
 
+
+  def is_there?
+    flag = 0
+    flag1 = 0
+    flag2 = 0
+    flag3 = 0
+      flag = VacancyMaster.exists?(employee_id: self.employee_id,current_status: 'Pending') ||
+      flag1 = VacancyMaster.exists?(employee_id: self.employee_id,current_status: 'FirstApproved') ||
+      flag2 = VacancyMaster.exists?(employee_id: self.employee_id,current_status: 'SecondApproved') ||
+      flag3 = VacancyMaster.exists?(employee_id: self.employee_id,current_status: 'FinalApproved')
+    flag
+    flag1
+    flag2
+    flag3
+  end
+
   def accessible_attributes
     [employee_designation_id,experience,keyword,other_organization, department_id, degree_id, company_location_id, vacancy_name, no_of_position, description, vacancy_post_date, budget]
   end

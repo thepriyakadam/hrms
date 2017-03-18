@@ -110,18 +110,16 @@
                     <small class="label label-default">Pending</small>
                     <% elsif reporting_masters_vacancy_master.vacancy_status == "Approved & Send Next" %>
                     <small class="label label-primary">Approved & Send Next</small>
-                    <% elsif reporting_masters_vacancy_master.vacancy_status == "Edit And Approved" %>
-                    <small class="label label-primary">Edit And Approved</small>
                     <% elsif reporting_masters_vacancy_master.vacancy_status == "Rejected" %>
                     <small class="label label-danger">Rejected</small>
                     <% elsif reporting_masters_vacancy_master.vacancy_status == "FirstApproved" %>
                     <small class="label label-primary">FirstApproved</small>
                     <% elsif reporting_masters_vacancy_master.vacancy_status == "FinalApproved" %>
-                    <small class="label label-primary">FinalApproved</small>
+                    <small class="label label-success">FinalApproved</small>
                     <% elsif reporting_masters_vacancy_master.vacancy_status == "SecondApproved" %>
-                    <small class="label label-primary">SecondApproved</small>
-                    <% elsif reporting_masters_vacancy_master.vacancy_status == "Approved" %>
-                    <small class="label label-primary">Approved</small>
+                    <small class="label label-info">SecondApproved</small>
+                    <% elsif reporting_masters_vacancy_master.vacancy_status == "Cancelled" %>
+                    <small class="label label-warning">Cancelled</small>
                     <% else %>
                     <% end %>
                   </td>
@@ -130,7 +128,8 @@
     <% end %>
   </tbody>
 </table>
-<%= link_to 'Back', current_employee_vacancy_list_vacancy_masters_path(emp_id: @vacancy_master.employee_id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+<!-- <= link_to 'Back', current_employee_vacancy_list_vacancy_masters_path(emp_id: @vacancy_master.employee_id),class: 'btn btn-default btn-sm fa fa-arrow-left' %> -->
+<%= link_to 'Back', vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
  </div>
 </div>
 

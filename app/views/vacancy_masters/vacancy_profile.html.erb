@@ -14,7 +14,6 @@
               <th>No. of Position</th>
               <th>Department</th>
               <th>Experience</th>
-              <th>Justification</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -28,10 +27,15 @@
                 <td><%= vacancy_master.company_location.try(:name) %> - <%= vacancy_master.department.try(:name) %></td>
                
                 <td><%= vacancy_master.experience %></td>
-                <td><%= vacancy_master.justification %></td>
                 <td>
                   <%= link_to 'View Profile',part_resume_selected_resumes_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-primary' %>
                 </td>
+              </tr>
+               <tr>
+                  <th colspan="6"><center><strong>Justification</strong></center></th>
+                </tr>
+                <tr>
+                  <td colspan="6"><%= vacancy_master.justification %></td>
               </tr>
             <% end %>
           </tbody>

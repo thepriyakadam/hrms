@@ -1,0 +1,192 @@
+<div class="box box-default">
+<div class="box-header with-border">
+<!--     <h3 class="box-title">Vacancy Master Details</h3>
+ -->  </div><!-- /.box-header -->
+ <div class="box-body">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
+   <tr>
+      <th colspan="4"><center>Vacancy Request Details of : <%= @vacancy_master.employee.try(:manual_employee_code) %> <%= @vacancy_master.employee.try(:first_name) %> <%= @vacancy_master.employee.try(:middle_name) %> <%= @vacancy_master.employee.try(:last_name) %></center></th>
+    </tr>
+  <tr>
+  <th><strong>Vacancy No.</strong></th>
+  <td><%= @vacancy_master.id %></td>
+   <th><strong>Current Request To</strong></th>
+  <!-- <td><= @employee.try(:first_name) %> <= @employee.try(:middle_name) %> <= @employee.try(:last_name) %> </td> -->
+  <td><% emp=Employee.where(id: @vacancy_master.reporting_master_id).take %>
+      <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %> </td>
+  </tr>
+
+  <tr>
+  <th><strong>Organization</strong></th>
+  <td><%= @vacancy_master.other_organization %></td>
+   <th><strong>Job Title</strong></th>
+  <td><%= @vacancy_master.employee_designation.name %></td>
+  </tr>
+
+  <tr>
+  <th><strong>Vacancy Name</strong></th>
+  <td><%= @vacancy_master.vacancy_name %></td>
+  <th><strong>Location</strong></th>
+  <td><%= @vacancy_master.company_location.try(:name) %></td>
+  </tr>
+
+<tr> 
+  <th><strong>Department</strong></th>
+  <td><%= @vacancy_master.department.name %></td>
+  <th><strong>Total Positions</strong></th>
+  <td><%= @vacancy_master.no_of_position %></td>
+</tr>
+
+<% particular_vacancy_open = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id,is_complete: nil).count
+        particular_vacancy_closed = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id,is_complete: true).count %>
+
+<tr> 
+  <th><strong>Open Position</strong></th>
+  <td><%= particular_vacancy_open %></td>
+  <th><strong>Closed Position</strong></th>
+  <td><%= particular_vacancy_closed %></td>
+</tr>
+
+<tr>  
+  <th><strong>Experience</strong></th>
+  <td><%= @vacancy_master.experience %></td>
+  <th><strong>Budget</strong></th>
+  <td><%= @vacancy_master.budget %></td>
+</tr>
+<tr>
+
+ <tr>
+  <th><strong>Application Date</strong></th>
+  <td><%= @vacancy_master.vacancy_post_date %></td>
+   <th><strong>Fulfillment Date</strong></th>
+  <td><%= @vacancy_master.vacancy_fullfillment_date %></td>
+</tr>
+
+<tr>
+  <th><strong>Keyword</strong></th>
+  <td><%= @vacancy_master.keyword %></td>
+  <th><strong>Organization</strong></th>
+  <td><%= @vacancy_master.other_organization %></td>
+</tr>
+
+ <tr>
+  <th><strong>Qualification 1</strong></th>
+  <td><%= @vacancy_master.degree.try(:name) %></td>
+  <th><strong>Qualification 2</strong></th>
+  <td><%= @vacancy_master.degree_1.try(:name) %></td>
+</tr>
+
+<tr>
+ <th><strong>Qualification 3</strong></th>
+  <td><%= @vacancy_master.degree_2.try(:name) %></td>
+  <th><strong>Current Staus</strong></th>
+  <td><%= @vacancy_master.current_status %></td>
+ </tr>
+
+<tr>
+  <th><strong>Description</strong></th>
+  <td colspan="3"><%= @vacancy_master.description %></td>
+</tr>
+
+<tr>
+  <th><strong>Justification</strong></th>
+  <td colspan="3"><%= @vacancy_master.justification %></td>
+</tr>
+
+</table><br>
+
+<table id="example2" class="table table-bordered table-hover table-condensed">
+<tr>
+    <th colspan="4"><center>Interview Schedule Details</center></th>
+ </tr>
+<tr> 
+  <th><strong>Job Title</strong></th>
+  <td><%= @interview_schedule.job_title %></td>
+
+  <th><strong>Candidate Name</strong></th>
+  <td><%= @interview_schedule.candidate_name %></td>
+</tr>
+
+<tr> 
+  <th><strong>Email Id</strong></th>
+  <td><%= @interview_schedule.email_id %></td>
+
+  <th><strong>Interview Date</strong></th>
+  <td><%= @interview_schedule.interview_date %></td>
+</tr>
+
+<tr> 
+  <th><strong>Location</strong></th>
+  <td><%= @interview_schedule.location %></td>
+
+
+  <th></th>
+  <td></td>
+</tr>
+
+</table><br>
+
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+  <% @interview_rounds.each do |interview_round| %>
+  <tr><th colspan="4"><center>Interview Rounds</center></th></tr>
+    
+  </thead>
+  <tbody>
+    
+      <tr>
+        <td>Interviewer Name : <%= full_name(interview_round.employee) %></td>
+        <td>Type : <%= interview_round.interview_type.try(:name) %></td>
+     
+        <td colspan="2">Date : <%= interview_round.interview_date %> - Time : <%= interview_round.interview_time %></td>
+      </tr>
+      <tr>
+        <td>Location : <%= interview_round.location %></td>
+        <td colspan="3">Description : <%= interview_round.schedule_comment %></td>
+<!--         <td><= interview_rounds.interview_analysis.interview_evalution.try(:name) %></td>
+ -->  </tr>
+      <tr><th colspan="4"><center>Interview Evaluation</center></th></tr>
+      <tr>
+          <th>Attributes</th>
+          <th>Skillset</th>
+          <th>Evaluation</th>
+          <th>Remarks</th>
+          
+      </tr>
+      <% interview_round.interview_analyses.try(:each) do |ia| %>
+      <tr>
+          <td><%= ia.interview_evalution.try(:name) %></td>
+          <td><%= ia.interview_attribute.try(:name) %></td>
+          <td><%= ia.interview_decision.try(:name) %></td>
+          <td><%= ia.comment %></td>
+      </tr>
+     
+      <%end%><br>
+       <tr>
+       <th colspan="2">Total Score</th>
+       <th colspan="2"><% interv_analy = InterviewAnalysis.where(interview_round_id: interview_round).pluck(:interview_decision_id)
+        interv_dec = InterviewDecision.where(id: interv_analy).pluck(:name).map {|i| i.to_i} %>
+        <%= interv_dec.sum %>
+       </th>
+      </tr>
+    <% end %>
+    <tr>
+      <th colspan="2">Overall Total Score</th>
+      <th colspan="2"><% interview_schedule = InterviewSchedule.where(id: @interview_schedule.id).pluck(:id)
+            inter_round = InterviewRound.where(interview_schedule_id: interview_schedule).pluck(:id)
+            interv_analy = InterviewAnalysis.where(interview_round_id: inter_round).pluck(:interview_decision_id)
+            interv_dec = InterviewDecision.where(id: interv_analy).pluck(:name).map {|i| i.to_i} %>
+            <%= interv_dec.sum %>
+      </th>
+    </tr>  
+  </tbody>
+</table><br>
+<!--<= link_to 'Edit', edit_vacancy_master_path(@vacancy_master),class: 'btn btn-success btn-sm fa fa-edit' %> -->
+<% if @interview_schedule.is_confirmed == true %>
+<%= link_to 'Back', confirm_interview_schedule_list_vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+<% else %>
+<%= link_to 'Confirm Candidate',confirm_candidate_1_vacancy_masters_path(@interview_schedule.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %> |
+<%= link_to 'Back', confirm_interview_schedule_list_vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+<% end %>
+</div>
+</div>

@@ -103,6 +103,31 @@ class InterviewAnalysesController < ApplicationController
     end
   end
 
+  def confirm_interview_analysis
+    @interview_round = InterviewRound.find(params[:interview_round_id])
+    InterviewRound.where(id: @interview_round.id).update_all(is_confirm: true)
+    # a=InterviewRound.where(id: @interview_round.id,is_confirm: nil)
+
+    # a=InterviewRound.where(id: @interview_round.id,is_confirm: true).last
+    # if a.is_confirm == true
+    #   InterviewSchedule.where(id: @interview_round.interview_schedule.id).update_all(is_confirm: true)
+    # else
+    # end
+
+    @interview_rounds_1 = InterviewRound.where(interview_schedule_id: @interview_round.interview_schedule_id,is_confirm: true).count
+    @interview_rounds_2 = InterviewRound.where(interview_schedule_id: @interview_round.interview_schedule_id,is_confirm: nil).count
+     if @interview_rounds_2 == 0 && @interview_rounds_1 > 0
+        InterviewSchedule.where(id: @interview_round.interview_schedule.id).update_all(is_confirm: true)
+     else
+     end
+    # if a.present?
+    # else
+    #   InterviewSchedule.where(id: @interview_round.interview_schedule.id).update_all(is_confirm: true)
+    # end
+    flash[:notice] = "Evaluation Confirmed Successfully"
+    redirect_to interview_round_list_interview_schedules_path
+  end
+
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_interview_analysis

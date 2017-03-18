@@ -1,5 +1,9 @@
 <div class="modal-dialog">
   <div class="modal-content">
+   <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4><center> Confirm Candidates </center></h4>
+    </div>
     <div class="modal-body" style="height:1000px; max-height:100px; width:630px; max-width:630px;">
      <%= bootstrap_form_for :particular_vacancy_request,url:{action:"confirm_candidate",id: @particular_vacancy_request.id},html: {id: 'particular_vacancy_request'} do |f| %>
         <div class="row">
@@ -7,7 +11,7 @@
              <%= f.select :candidate_name, all_candidate_name2, {hide_label: true,include_blank: " Select Candidate Name"}, class: 'input_degree_stream_id' %>
           </div>
           <div class="col-sm-3">
-            <%= f.submit "Confirm Candidates", class: 'btn btn-sm btn-warning fa fa-modx' %>
+            <%= f.submit "Confirm Candidates", class: 'btn btn-sm btn-primary fa fa-modx' %>
           </div>
         </div>
       <% end %>

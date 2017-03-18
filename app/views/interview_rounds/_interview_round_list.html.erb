@@ -1,6 +1,7 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
-    <tr>  
+    <tr>
+      <th>ID</th>
       <th>Interviewer Name</th>
       <th>Interview Type</th>
       <th>Interview Date</th>
@@ -13,6 +14,7 @@
   <tbody>
     <% @interview_rounds.each do |interview_round| %>
       <tr>
+        <td><%= interview_round.employee.manual_employee_code %></td>
         <td><%= full_name(interview_round.employee) %></td>
         <td><%= interview_round.interview_type.try(:name) %></td>
         <td><%= interview_round.interview_date %></td>
@@ -20,7 +22,7 @@
         <td><%= interview_round.location %></td>
         <td><%= interview_round.schedule_comment %></td>
         <td>
-          <%= link_to '', edit_interview_round_path(interview_round),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <!-- <= link_to '', edit_interview_round_path(interview_round),class: 'btn btn-success btn-xs fa fa-edit',remote:true %> -->
           <%= link_to '',  interview_round, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
           <%= link_to ' Reschedule', interview_round_reschedule_interview_rounds_path(id:interview_round.id,interview_schedule_id: @interview_schedule.id),class: 'btn btn-xs btn-warning fa fa-envelope-o'  %>
           <%= link_to ' List',interview_reschedule_list_interview_rounds_path(interview_round),class: 'btn btn-xs btn-primary fa fa-sticky-note-o' %>

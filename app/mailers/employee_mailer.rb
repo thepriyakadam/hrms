@@ -33,7 +33,7 @@ class EmployeeMailer < ApplicationMailer
       arr=Array.new
       emps[0..3].each do |obj|
          arr << obj
-          mail(to: obj.try(:email), subject: 'Birthday Invitation')  }
+          mail(to: obj.try(:email), subject: 'Birthday Invitation')
       end
       # attachments.inline['bday.jpg'] = File.read("#{Rails.root}/app/assets/images/bday.jpg")
   end
@@ -45,3 +45,11 @@ class EmployeeMailer < ApplicationMailer
 # end
 
 end
+
+
+# arr=Array.new
+# objects[0..3].each do |obj|
+#     arr << obj
+# end
+
+# p arr;

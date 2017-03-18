@@ -4,15 +4,16 @@ class GoalBunch < ActiveRecord::Base
   belongs_to :appraisee
   belongs_to :appraiser
   belongs_to :reviewer
-  belongs_to :reviewer_rating
   belongs_to :final
-  belongs_to :final_rating
   has_many :goal_ratings
   belongs_to :appraisee_rating
 
   belongs_to :r_designation, class_name: 'EmployeeDesignation'
   belongs_to :f_designation, class_name: 'EmployeeDesignation'
   
+  belongs_to :reviewer_rating, class_name: 'Rating'
+  belongs_to :final_rating, class_name: 'Rating'
+
   validates_uniqueness_of :period_id, :scope => :employee_id
 
   def self.appraisergoal_sum(appraiser_goal_ratings)

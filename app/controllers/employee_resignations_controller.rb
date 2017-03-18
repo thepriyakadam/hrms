@@ -141,7 +141,6 @@ end
   # end
 
   def resignation_history
-    # byebug
     @pending_resignation_requests = EmployeeResignation.where(is_pending: true, is_first_approved: nil,is_first_rejected: nil, is_cancelled: nil,reporting_master_id: current_user.employee_id)
     @first_approved_resignation_requests = EmployeeResignation.where(is_first_approved: true, is_second_approved: nil,is_second_rejected: nil, is_cancelled: nil,second_reporter_id: current_user.employee_id)
     session[:active_tab] ="employee_resignation"

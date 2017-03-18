@@ -31,6 +31,23 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :manager_self_services do
+    collection do
+      get :subordinate_list
+      get :appraiser_subordinate
+      get :reviewer_subordinate
+      get :employee_list
+      get :approved_or_rejected_leave_request
+      get :all_leave_request_list
+      get :request_approval_list
+      get :od_request_list
+      get :training_request_list
+      get :final_approval_training_list
+      get :resignation_history
+      get :final_approval_emp_resignation_list
+    end
+  end
+
   resources :od_status_records do
     collection do
       get :cancel_after_approve

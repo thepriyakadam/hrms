@@ -15,7 +15,6 @@ class EmployeeTransfer < ActiveRecord::Base
     flag = 0
     flag1 = 0
     flag2 = 0
-   
       flag = EmployeeTransfer.exists?(employee_id: self.employee_id,current_status: 'Pending') ||
       flag1 = EmployeeTransfer.exists?(employee_id: self.employee_id,current_status: 'FirstApproved') ||
       flag2 = EmployeeTransfer.exists?(employee_id: self.employee_id,current_status: 'SecondApproved') 

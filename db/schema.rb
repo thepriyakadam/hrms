@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170320060327) do
+ActiveRecord::Schema.define(version: 20170320065646) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2424,6 +2424,7 @@ ActiveRecord::Schema.define(version: 20170320060327) do
     t.boolean  "is_gps"
     t.float    "latitude"
     t.float    "longitude"
+    t.string   "location"
   end
 
   add_index "members", ["company_id"], name: "index_members_on_company_id"

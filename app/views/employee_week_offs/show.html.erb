@@ -6,7 +6,7 @@
     <table id="example2" class="table table-bordered table-hover table-condensed">
       <tr>
         <th><strong>Employee:</strong></th>
-        <td><%= @employee_week_off.employee.first_name %> <%= @employee_week_off.employee.middle_name %> <%= @employee_week_off.employee.last_name %></td>
+        <td><%= full_name(@employee_week_off.employee) %></td>
         
         <th><strong>Day:</strong></th>
         <td><%= @employee_week_off.day %></td>

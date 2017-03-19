@@ -16,7 +16,7 @@
         <th colspan="7"><center>Employee Performance Detail</center></th>
         </tr>
           <tr>
-            <th>Employee ID</th>
+            <th>ID</th>
             <th>Name</th>
             <th>Age</th>
             <th>Department</th>
@@ -28,7 +28,7 @@
         <tbody>
           <tr>
             <td><%= @emp1.manual_employee_code %></td> 
-            <td><%= @emp1.first_name %> <%= @emp1.middle_name %> <%= @emp1.last_name %></td>
+            <td><%= full_name(@emp1) %></td>
             <td><%=  %></td>
             <td><%= @emp1.department.try(:name) %></td>
             <td><%= @joining_detail.joining_date %></td>

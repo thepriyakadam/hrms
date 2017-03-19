@@ -11,7 +11,7 @@
 <!-- <tr><div style="float:right;"> </div><br><br></tr> -->
   <td colspan="4"><b><b><center>Certificate Of Promotion</center></b></b></td><hr>
   <tr><td colspan="4"><center><strong><%= @employee_promotion.employee.company_location.company.try(:description) %></strong> <br>
-        <%= @employee_promotion.employee.company_location.company.try(:address) %><br> <%= @employee_promotion.employee.department.try(:name) %> -
+        <%= @employee_promotion.employee.company_location.company.try(:address) %><br> 
         <%= @employee_promotion.employee.company_location.try(:name) %></center> </td></tr><hr>
  
  <p> Dear Mr./Miss.<b> <%= @employee_promotion.employee.try(:first_name) %> <%= @employee_promotion.employee.try(:middle_name) %> <%= @employee_promotion.employee.try(:last_name) %> </b> </p>

@@ -47,18 +47,18 @@ module EmployeesHelper
 
   def employee_list_by_company_location
     if current_user.class == Group
-      Employee.all.collect { |e| [e.manual_employee_code + '  ' +e.try(:prefix).to_s + ' ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
+      Employee.where(status: "Active").collect { |e| [e.manual_employee_code + '  ' +e.try(:prefix).to_s + ' ' + e.first_name.to_s + ' ' +e.try(:middle_name).to_s + ' ' +  e.last_name.to_s, e.id] }
     else
       if current_user.role.name == 'GroupAdmin'
-        Employee.all.collect { |e| [e.manual_employee_code + '  ' +e.try(:prefix).to_s + ' ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
+        Employee.where(status: "Active").collect { |e| [e.manual_employee_code + '  ' +e.try(:prefix).to_s + ' ' + e.first_name.to_s + ' ' + e.try(:middle_name).to_s + ' ' + e.last_name.to_s, e.id] }
       elsif current_user.role.name == 'Admin'
-        Employee.where(company_id: current_user.company_location.company_id).collect { |e| [e.manual_employee_code + '  ' + e.try(:prefix).to_s + ' ' +e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
+        Employee.where(company_id: current_user.company_location.company_id,status: "Active").collect { |e| [e.manual_employee_code + '  ' + e.try(:prefix).to_s + ' ' +e.first_name.to_s + ' ' + e.try(:middle_name).to_s + ' ' + e.last_name.to_s, e.id] }
       elsif current_user.role.name == 'Branch'
-        Employee.where(company_location_id: current_user.company_location_id).collect { |e| [e.manual_employee_code + '  ' +e.try(:prefix).to_s + ' ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
+        Employee.where(company_location_id: current_user.company_location_id,status: "Active").collect { |e| [e.manual_employee_code + '  ' +e.try(:prefix).to_s + ' ' + e.first_name.to_s + ' ' + e.try(:middle_name).to_s + ' ' + e.last_name.to_s, e.id] }
       elsif current_user.role.name == "AccountAdmin"
-        Employee.where(company_location_id: current_user.company_id).collect { |e| [e.manual_employee_code + '  ' + e.try(:prefix).to_s + ' ' +e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
+        Employee.where(company_location_id: current_user.company_id,status: "Active").collect { |e| [e.manual_employee_code + '  ' + e.try(:prefix).to_s + ' ' +e.first_name.to_s + ' ' + e.try(:middle_name).to_s + ' ' + e.last_name.to_s, e.id] }
       elsif  current_user.role.name == 'HOD'
-        Employee.where(department_id: current_user.department_id).collect { |e| [e.manual_employee_code + '  ' + e.try(:prefix).to_s + ' ' +e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
+        Employee.where(department_id: current_user.department_id,status: "Active").collect { |e| [e.manual_employee_code + '  ' + e.try(:prefix).to_s + ' ' +e.first_name.to_s + ' ' +e.try(:middle_name).to_s + ' ' + e.last_name.to_s, e.id] }
       end
     end
   end

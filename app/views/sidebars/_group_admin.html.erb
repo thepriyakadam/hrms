@@ -334,14 +334,23 @@
         <i class="fa fa-edit"></i> Attendance Setup <i class="fa fa-angle-left pull-right"></i>
       </a>
       <ul class="treeview-menu">
-       <li><a href="/shift_masters/new"><i class="fa fa-tags"> </i>Shift Master</a></li>
-       <li><a href="/company_time_masters/new"><i class="fa fa-tags"> </i>Time Master</a></li>
-       <li><a href="/machine_attendances/new"><i class="fa fa-tags"> </i>Machine Attendances</a></li>
+       <li><a href="/shift_masters/new"><i class="fa fa-tags"> </i> Shift Master</a></li>
+       <li><a href="/company_time_masters/new"><i class="fa fa-tags"> </i> Time Master</a></li>
+       <li><a href="/machine_attendances/new"><i class="fa fa-tags"> </i> Machine Attendances</a></li>
+       <li><a href="/machine_attendances/import_machine_attendance"><i class="fa fa-tags"></i> Machine Data Upload</a></li>
+     </ul>
+      </li> 
+
+       <li class="treeview" id="WeekoffSetup">
+      <a href="#">
+      <i class="fa fa-edit"></i> Week Off / Holiday <i class="fa fa-angle-left pull-right"></i>
+      </a>
+      <ul class="treeview-menu">
        <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
        <li><a href="/week_off_masters/new"><i class="fa fa-tags"></i> Week Off Setup </a></li>
        <li><a href="/week_off_masters/week_off_list"><i class="fa fa-tags"></i> Confirm Week Off </a></li>
        <li><a href="/employee_week_offs"><i class="fa fa-tags"></i> Revert Week Off</a></li>
-       <li><a href="/machine_attendances/import_machine_attendance"><i class="fa fa-tags"></i> Machine Data Upload</a></li>
+       <li><a href="/employee_week_offs/date_wise_week_off"><i class="fa fa-tags"></i> Week Off Report </a></li>
      </ul>
       </li> 
 
@@ -354,7 +363,7 @@
        <li><a href="/employee_attendances/revert_attendance_employeewise"><i class="fa fa-tags"></i> Revert Employee Wise </a></li>
        <li><a href="/employee_attendances/revert_attendance"><i class="fa fa-tags"></i> Revert Unit Wise </a></li>
        <li><a href="/employee_attendances"><i class="fa fa-tags"></i> Confirm Attendance  </a></li>
-       <li><a href="/workingdays/revert_workingday"><i class="fa fa-tags"> </i>Revert Workingday</a></li>
+       <li><a href="/workingdays/revert_workingday"><i class="fa fa-tags"> </i> Revert Workingday</a></li>
      <!-- <li><a href="/workingdays/search_month_year"><i class="fa fa-tags"> </i>Attendace Update(Auto) </a></li> -->
      <!--  <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
       <li><a href="/company_shifts/new"><i class="fa fa-tags"></i> Shifts Maintenance </a></li>
@@ -692,6 +701,7 @@
     <ul class="treeview-menu">
        <li><a href="/employee_transfers/new"><i class="fa fa-tags"></i> Transfer Request </a></li>
        <li><a href="/employee_transfers/transfer_request"><i class="fa fa-tags"></i> Approve/Reject Request </a></li>
+       <li><a href="/employee_transfers/final_approval_transfer_list"><i class="fa fa-tags"></i> Final Approval  </a></li>
     </ul>
    </li>
 
@@ -783,7 +793,7 @@
     </ul>
   </li>
 
-   <li class="treeview" id="trainingmgmt">
+    <li class="treeview" id="trainingmgmt">
     <a href=""><i class="fa fa-briefcase"></i> <span> Training Management </span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
       <li><a href="/training_requests/department_wise_search"><i class="fa fa-tags"></i> Request </a></li>

@@ -2,82 +2,101 @@
   <div class="box-header with-border">
     <h3 class="box-title">Employee Transfer</h3>
     <div class="box-body">
-      <%= bootstrap_form_for(@employee_transfer) do |f| %>
+      <%= bootstrap_form_for(@employee_transfer,html: {id: 'employee_transfer'}) do |f| %>
 
       <%= f.hidden_field :employee_id, value: current_user.employee_id %>
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-         <!--  <label>Vacancy Approval</label> -->
-            <%= f.select :reporting_master_id,all_reporting_master_list,{label: 'Request To',include_blank: " Select Reporting Person"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+            <%= f.text_field :designation, label: 'Employee Designation', class: 'employee_transfer' %>
           </div>
         </div>
-      
+    
         <div class="col-sm-3">
-          <div class="field">
-            <%= f.select :employee_designation_id,all_employee_designation,{include_blank: 'Select Designation',label: 'Employee Designation'},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
+          <div class="form-group required">
+            <%= f.text_field :category,label: 'Employee Category', class: 'employee_transfer'%>
           </div>
         </div>
 
         <div class="col-sm-3">
-          <div class="field">
-            <%= f.select :employee_category_id,all_employee_category,{include_blank: 'Select Category',label: 'Employee Category'} %>
+          <div class="form-group required">
+            <%= f.text_field :employee_company,label: 'Company', class: 'employee_transfer'%>
           </div>
         </div>
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.select :company_id, all_company,{label: 'Company Select',include_blank: " Select Company"} %>
-          </div>
-        </div>
-        </div>
         
-        <div class="row">
-        
-
          <div class="col-sm-3">
-          <div class="field">
-            <%= f.select :company_location_id, all_company_with_location,{label: 'Department Location',include_blank: " Select Department Location"} %>
-          </div>
-        </div>
-
-   
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.select :department_id,all_department_type_list1,{include_blank: 'Select Department',label: 'Department'},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+          <div class="form-group required">
+            <%= f.text_field :employee_company_location,label: 'Company Location', class: 'employee_transfer'%>
           </div>
         </div>
        
+
+        
+        </div>
+
+         <div class="row">
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :employee_department,label: 'Department', class: 'employee_transfer'%>
+          </div>
+        </div>
+     
+    
+
         <div class="col-sm-6">
           <div class="field">
             <%= f.text_field :justification %>
           </div>
+          </div>
         </div>
-      </div>
-      </div>
-
+ 
       <div class="row">
-      <div class="col-sm-6">
-          <div class="field">
         <div class="actions">
-          <%= f.submit'Create Employee Transfer',class: 'btn btn-sm btn-primary' %> 
+          <%= f.submit'Create Employee Transfer', :class => class_name, data: { disable_with: data_info } %> 
           <!--  <= link_to 'Back',employee_list_employee_transfers_path,class: 'btn btn-default btn-sm fa fa-arrow-left'%> -->
         </div>
       </div>
     </div>
+      <% end %>
+
   </div>
-  <% end %>
+</div>
 
-
-<script type="text/javascript">
- $("#employee_transfer").validate({
+<script>
+$("#employee_transfer").validate({
     rules: {
-      "employee_transfer[reporting_master_id]":{
-        required: true
+      "employee_transfer[designation]":{
+        required: true,
+      },
+      "employee_transfer[category]":{
+        required: true,
+      },
+      "employee_transfer[employee_company]":{
+        required: true,
+      },
+      "employee_transfer[employee_company_location]":{
+        required: true,
+      },
+      "employee_transfer[employee_department]":{
+        required: true,
       }
     },
     messages: {
-      "employee_transfer[reporting_master_id]":{
-        required: "Please specify Reporting Master"
+      "employee_transfer[designation]":{
+        required: "Please Specify Designation",
+      },
+      "employee_transfer[category]":{
+        required: "Please Specify Category",
+      },
+      "employee_transfer[employee_company]":{
+        required: "Please Specify Company",
+      },
+      "employee_transfer[employee_company_location]":{
+        required: "Please Specify Company Location",
+      },
+      "employee_transfer[employee_department]":{
+        required: "Please Specify Department",
       }
     },
     errorPlacement: function(error, element) {

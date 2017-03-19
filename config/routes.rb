@@ -63,7 +63,12 @@ Rails.application.routes.draw do
   resources :employee_week_offs do
     collection do
       get :revert_week_off
-      
+      post :employee_week_off_list
+      get :edit_week_off_modal
+      post :edit_week_off
+      get :date_wise_week_off
+      post :show_date_wise_weekoff
+      get :show_date_wise_weekoff
     end
   end
   resources :late_mark_masters do
@@ -337,6 +342,19 @@ end
       patch :update_transfer_details
       get :modal_edit_and_send_next
       post :update_and_send_next_transfer_details
+      get :first_approve
+      get :approve_and_send_next
+      get :final_approve
+      get :final_approval_transfer_list
+      get :approve_employee_transfer
+      get :employee_transfer_confirmation_2
+      post :final_approve
+      get :transfer_employee_name_report
+      get :print_transfer_employee_name_report
+      post :print_transfer_employee_name_report
+      get :transfer_employee_name_report_pdf
+      get :transfer_employee_name_report_xls
+
     end
   end
 

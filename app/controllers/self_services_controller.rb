@@ -60,7 +60,4 @@ class SelfServicesController < ApplicationController
     @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
     session[:active_tab] ="EmployeeSelfService"
   end
-
-
 end
-

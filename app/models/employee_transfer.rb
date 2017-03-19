@@ -9,4 +9,19 @@ class EmployeeTransfer < ActiveRecord::Base
   # validates :reporting_master_id,presence:true
   # validates :employee_id,presence:true
   # validates :departemnt,presence:true
+
+
+  def is_available?
+    flag = 0
+    flag1 = 0
+    flag2 = 0
+      flag = EmployeeTransfer.exists?(employee_id: self.employee_id,current_status: 'Pending') ||
+      flag1 = EmployeeTransfer.exists?(employee_id: self.employee_id,current_status: 'FirstApproved') ||
+      flag2 = EmployeeTransfer.exists?(employee_id: self.employee_id,current_status: 'SecondApproved') 
+    flag
+    flag1
+    flag2
+   
+  end
+
 end

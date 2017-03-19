@@ -1,6 +1,13 @@
 <div class="modal-dialog" style="height:1000px; max-height:1000px; width:1000px; max-width:1400px;">
   <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h5 class="modal-title"><center> Update Goal & Attribute </center></h5>
+    </div>
     <div class="modal-body">
+
+
+
       <%= bootstrap_form_for :week_off_master,url:{action:"update_week_off",week_off_master_id: @week_off_master.id},html: {id: 'week_off_master'} do |f| %>
         <div class="row">
           <div class="col-sm-3">
@@ -43,9 +50,12 @@
     	    </div>
     	  </div>
   	   <% end %>
+     
       </div>
-    </div>
-  </div>
+    <div class="modal-footer"></div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+
 
 <script type="text/javascript">
   $(function(){

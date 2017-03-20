@@ -6,6 +6,8 @@ class EmployeeTransfer < ActiveRecord::Base
   belongs_to :company
   belongs_to :company_location
   belongs_to :department
+  has_many :reporting_employee_transfers
+  has_many :reporting_masters, :through =>:reporting_employee_transfers 
   # validates :reporting_master_id,presence:true
   # validates :employee_id,presence:true
   # validates :departemnt,presence:true

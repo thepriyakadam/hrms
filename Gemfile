@@ -64,6 +64,7 @@ gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
 #inline edit
 gem 'best_in_place', '~> 3.0.1'
 
+# gem 'backup', '~> 4.4'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

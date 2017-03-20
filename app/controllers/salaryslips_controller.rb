@@ -1847,7 +1847,7 @@ end
         @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees,is_confirm: nil)
       elsif current_user.role.name == "Branch"
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees,is_confirm: nil)
+        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees)
       end  
     end    
   end

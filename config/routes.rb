@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
-  
-  resources :gratuities 
-  resources :gratuity_masters do 
+
+  resources :gratuities
+  resources :gratuity_masters do
     collection do
       get :is_confirm
     end
   end
   resources :monthly_arrears
-  resources :on_duty_requests do 
+  resources :on_duty_requests do
     collection do
       get :select_checkbox
       get :request_approval_list
@@ -112,7 +112,7 @@ Rails.application.routes.draw do
       get :collect_amount
     end
   end
-  resources :week_off_masters do 
+  resources :week_off_masters do
     collection do
       post :assign_week_off
       post :employee_list
@@ -243,7 +243,7 @@ Rails.application.routes.draw do
       post :memberwise_report_list
       get :memberwise_report_list_xls
       get :memberwise_report_list_pdf
-      
+
     end
    end
   resources :issue_masters do
@@ -258,7 +258,7 @@ Rails.application.routes.draw do
     end
    end
   resources :issue_tracker_accesses
-   
+
   resources :issue_tracker_members do
     collection do
       get :is_confirm
@@ -419,7 +419,7 @@ end
       get :is_confirm
     end
   end
- 
+
   resources :years do
     collection do
       get :is_confirm
@@ -726,7 +726,7 @@ end
       patch :update_modal_self
     end
   end
- 
+
   resources :exit_interviews  do
     collection do
       post :print_exit_interview
@@ -991,7 +991,7 @@ end
       get :final_approval_travel_list
     end
   end
- 
+
 
   namespace :reports do
     get 'monthly_expences_details/new'
@@ -1036,25 +1036,25 @@ end
 
     get 'family_details/new'
     post 'family_details/family_detail_report'
- 
+
     get 'physical_details/new'
     post 'physical_details/physical_detail_report'
- 
+
     get 'award_details/new'
     post 'award_details/award_detail_report'
- 
+
     get 'certification_details/new'
     post 'certification_details/certification_detail_report'
- 
+
     get 'skillset_details/new'
     post 'skillset_details/skillset_detail_report'
- 
+
     get 'experience_details/new'
     post 'experience_details/experience_detail_report'
- 
+
     get 'qualification_details/new'
     post 'qualification_details/qualification_detail_report'
- 
+
     get 'bank_details/new'
     post 'bank_details/bank_detail_report'
 
@@ -1074,12 +1074,12 @@ end
     get 'salaries/new'
     post 'salaries/date_range_report'
     get 'salaries/download'
-   
+
     post 'salaries/ctc_yearly_report'
     get 'salaries/ctc_yearly'
 
 
-   
+
   #   get 'certificate/new'
   #   post 'certificate/certificate_print'
   end
@@ -1322,7 +1322,7 @@ end
       get :is_confirm
     end
   end
- 
+
   resources :society_member_ships do
     collection do
       get :is_confirm
@@ -1423,7 +1423,7 @@ end
       get :is_confirm
     end
   end
- 
+
   resources :payment_modes do
     collection do
       get :is_confirm
@@ -1504,7 +1504,7 @@ end
       get :leave_detail_xls
     end
   end
- 
+
   resources :pdf_salaries do
     collection do
       get :employee_list_pdf
@@ -1522,7 +1522,7 @@ end
       get :current_employee_salary_template
     end
    end
- 
+
   resources :salary_slip_ledgers do
     collection do
       get :select_month_year_form
@@ -1659,7 +1659,7 @@ end
       get :current_template
     end
   end
- 
+
   resources :salary_component_templates do
     collection do
       get :salary_template_page
@@ -1781,7 +1781,7 @@ end
   end
   resources :employee_bank_details do
     collection do
-      post :import  
+      post :import
       get :import_xl
     end
   end
@@ -1798,7 +1798,7 @@ end
       patch :update_leave_auto
     end
   end
- 
+
   resources :leav_rejecteds
   resources :leav_approveds
   resources :employee_leav_requests do
@@ -1989,7 +1989,7 @@ end
       post :print_employee
       get :print_employee
       get :employee_list_pdf
-      get :employee_report 
+      get :employee_report
       post :show_employee_list
       get :show_all_record
       post :show_all_record
@@ -2124,4 +2124,10 @@ end
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+  namespace :api do
+    resources :user_auths,:only => [:create], defaults: {format: 'json'}
+    post 'user_auths/user_sign_up' => 'user_auths#user_sign_up', defaults: {format: 'json'}
+    post 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
+  end
 end

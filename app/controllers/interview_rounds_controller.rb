@@ -123,6 +123,29 @@ class InterviewRoundsController < ApplicationController
      @interview_round_reschedules = InterviewRoundReschedule.where(interview_round_id: @interview_round.id)
   end
 
+  # def confirm_interview_round
+  #     @interview_schedule = InterviewSchedule.find(params[:interview_schedule_id])
+  #     InterviewRound.where(interview_schedule_id: @interview_schedule.id).update_all(interview_round_confirm: true)
+  #     flash[:notice] = "Interview Round Confirmed Successfully"
+  #     redirect_to new_interview_round_path(interview_schedule_id: @interview_schedule.id)
+  # end
+
+  def confirm_interview_round
+    @interview_schedule = InterviewSchedule.find(params[:interview_schedule_id])
+    @interview_round_ids = params[:interview_round_ids]
+    if @interview_round_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to new_interview_round_path(interview_schedule_id: @interview_schedule.id)
+    else
+      @interview_round_ids.each do |eid|
+      @interview_round = InterviewRound.find(eid)
+      @interview_round.update(interview_round_confirm: true) 
+      flash[:notice] = "Interview Round Confirmed Successfully"
+    end 
+     redirect_to new_interview_round_path(interview_schedule_id: @interview_schedule.id)
+   end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_interview_round

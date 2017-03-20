@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170309062116) do
+ActiveRecord::Schema.define(version: 20170320065646) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1098,6 +1098,10 @@ ActiveRecord::Schema.define(version: 20170309062116) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.boolean  "current"
+    t.string   "designation"
+    t.string   "grade"
+    t.string   "category"
+    t.string   "employee_department"
   end
 
   add_index "employee_promotions", ["department_id"], name: "index_employee_promotions_on_department_id"
@@ -1225,9 +1229,14 @@ ActiveRecord::Schema.define(version: 20170309062116) do
     t.integer  "company_location_id"
     t.integer  "department_id"
     t.text     "justification"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.string   "current_status"
+    t.string   "designation"
+    t.string   "category"
+    t.string   "employee_company"
+    t.string   "employee_company_location"
+    t.string   "employee_department"
   end
 
   add_index "employee_transfers", ["company_id"], name: "index_employee_transfers_on_company_id"
@@ -1914,8 +1923,10 @@ ActiveRecord::Schema.define(version: 20170309062116) do
     t.time     "interview_time"
     t.string   "location"
     t.text     "schedule_comment"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.boolean  "is_confirm"
+    t.boolean  "interview_round_confirm"
   end
 
   add_index "interview_rounds", ["employee_id"], name: "index_interview_rounds_on_employee_id"
@@ -1935,6 +1946,7 @@ ActiveRecord::Schema.define(version: 20170309062116) do
     t.integer  "selected_resume_id"
     t.string   "job_title"
     t.text     "address"
+    t.boolean  "is_confirmed"
   end
 
   add_index "interview_schedules", ["employee_id"], name: "index_interview_schedules_on_employee_id"
@@ -2409,6 +2421,10 @@ ActiveRecord::Schema.define(version: 20170309062116) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.boolean  "is_gps"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "location"
   end
 
   add_index "members", ["company_id"], name: "index_members_on_company_id"
@@ -3466,9 +3482,14 @@ ActiveRecord::Schema.define(version: 20170309062116) do
     t.integer  "company_location_id"
     t.integer  "department_id"
     t.text     "justification"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.string   "current_status"
+    t.string   "designation"
+    t.string   "category"
+    t.string   "employee_company"
+    t.string   "employee_company_location"
+    t.string   "employee_department"
   end
 
   add_index "transfer_histories", ["company_id"], name: "index_transfer_histories_on_company_id"
@@ -3585,8 +3606,8 @@ ActiveRecord::Schema.define(version: 20170309062116) do
     t.text     "description"
     t.date     "vacancy_post_date"
     t.string   "budget"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.integer  "department_id"
     t.integer  "employee_designation_id"
     t.integer  "company_location_id"
@@ -3602,6 +3623,9 @@ ActiveRecord::Schema.define(version: 20170309062116) do
     t.string   "current_status"
     t.integer  "employee_id"
     t.text     "justification"
+    t.date     "vacancy_fullfillment_date"
+    t.boolean  "is_confirmed"
+    t.string   "vacancy_code"
   end
 
   add_index "vacancy_masters", ["company_location_id"], name: "index_vacancy_masters_on_company_location_id"
@@ -3699,23 +3723,12 @@ ActiveRecord::Schema.define(version: 20170309062116) do
     t.decimal  "payable_day"
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
-    t.decimal  "lwp_leave"
-    t.decimal  "cl_leave"
-    t.decimal  "el_leave"
-    t.decimal  "esic_leave"
-    t.decimal  "coff_leave"
-    t.decimal  "advance_leave"
-    t.decimal  "cl_balance"
-    t.decimal  "el_balance"
-    t.decimal  "coff_balance"
-    t.decimal  "advance_balance"
     t.boolean  "is_confirm"
     t.decimal  "pay_leave"
     t.decimal  "nonpay_leave",            precision: 10, scale: 2
     t.decimal  "gatepass"
     t.decimal  "calculated_payable_days"
     t.decimal  "ot_hours"
-    t.decimal  "od_leave"
     t.boolean  "paid"
     t.boolean  "full_and_final"
     t.decimal  "od_day"

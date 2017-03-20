@@ -17,7 +17,7 @@ class WeekOffMastersController < ApplicationController
     @week_off_master = WeekOffMaster.new
     @week_off_masters = WeekOffMaster.all
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="AttendanceSetup"
+    session[:active_tab1] ="WeekoffSetup"
   end
 
   # GET /week_off_masters/1/edit
@@ -72,7 +72,7 @@ class WeekOffMastersController < ApplicationController
       @week_off_masters = WeekOffMaster.where(is_send: nil).where(employee_id: @employees)
     end
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="AttendanceSetup"
+    session[:active_tab1] ="WeekoffSetup"
   end
 
   def employee_list
@@ -86,13 +86,13 @@ class WeekOffMastersController < ApplicationController
 
     if current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
-        @emp_id = WeekOffMaster.where(day: @day,from: @from.to_date,to: @to.to_date).pluck(:employee_id)
+        @emp_id = WeekOffMaster.where(from: @from.to_date,to: @to.to_date).pluck(:employee_id)
         @employees = Employee.where.not(id: @emp_id)      
       elsif current_user.role.name == 'Admin'
-        @emp_id = WeekOffMaster.where(day: @day,from: @from.to_date,to: @to.to_date).pluck(:employee_id)
+        @emp_id = WeekOffMaster.where(from: @from.to_date,to: @to.to_date).pluck(:employee_id)
         @employees = Employee.where(company_id: current_user.company_location.company_id).where.not(id: @emp_id)
       elsif current_user.role.name == 'Branch'
-        @emp_id = WeekOffMaster.where(day: @day,from: @from.to_date,to: @to.to_date).pluck(:employee_id)
+        @emp_id = WeekOffMaster.where(from: @from.to_date,to: @to.to_date).pluck(:employee_id)
         @employees = Employee.where(company_location_id: current_user.company_location_id).where.not(id: @emp_id)
       else
         @employees = Employee.all

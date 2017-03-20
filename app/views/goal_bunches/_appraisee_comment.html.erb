@@ -5,7 +5,7 @@
   <thead>
    <tr><th colspan="7"><center>Employee Details</center></th></tr>
     <tr>
-      <th>Employee Id</th>
+      <th>ID</th>
       <th>Name</th>
       <th>Age</th>
       <th>Department</th>
@@ -18,7 +18,7 @@
     <% @employees.each do |a| %>
     <tr>
       <td><%= a.manual_employee_code %></td> 
-      <td><%= a.first_name %> <%= a.middle_name %> <%= a.last_name %></td>
+      <td><%= full_name(a) %></td>
       <td><%=  %></td>
       <td><%= a.department.try(:name) %></td>
       <td><%= @joining_detail.joining_date %></td>
@@ -211,7 +211,7 @@
             <td><%= weightage = goal_rating.goal_weightage %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
-            <td><%= appraisee_rating = goal_rating.appraisee_rating_id %></td>
+            <td><%= appraisee_rating = goal_rating.try(:appraisee_rating).try(:value) %></td>
             <td>
             <% if @goal_bunch.appraisee_confirm == true %>
               <small class="label label-info">Confirmed</small>
@@ -225,7 +225,7 @@
         <% end %>
         <tr>
         <th colspan="2"><h6><font color='red' size='2'>Appraisee Rating For Goal </font></h6></th>
-        <th colspan="6"><h6><font color='red' size='2'> <%= appraisee_goal_sum.round(4) %></font></h6></th></tr>
+        <th colspan="6"><h6><font color='red' size='2'> <%= appraisee_goal_sum.round(2) %></font></h6></th></tr>
       </tbody>
     </table>
 
@@ -254,7 +254,7 @@
             <td><%= weightage = goal_rating.goal_weightage %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
-            <td><%= appraisee_rating = goal_rating.appraisee_rating_id %></td>
+            <td><%= appraisee_rating = goal_rating.try(:appraisee_rating).try(:value) %></td>
             <td>
             <% if @goal_bunch.appraisee_confirm == true %>
               <small class="label label-info">Confirmed</small>
@@ -268,17 +268,15 @@
           </tr>
         <% end %>
         <tr><th colspan="2"><h6><font color='red' size='2'>Appraisee Rating For Attribute</font></h6></th>
-        <th colspan="6"><h6><font color='red' size='2'> <%= appraisee_attribute_sum.round(4) %></font></h6></th>
+        <th colspan="6"><h6><font color='red' size='2'> <%= appraisee_attribute_sum.round(2) %></font></h6></th>
         </tr>
         <tr>
         <th colspan="2"> <h6><font color='red' size='2'>Overall </font></h6></th>
-        <th colspan="6"> <h6><font color='red' size='2'><%= (appraisee_attribute_sum + appraisee_goal_sum ).round(4) %></font></h6></th>
+        <th colspan="6"> <h6><font color='red' size='2'><%= (appraisee_attribute_sum + appraisee_goal_sum ).round(2) %></font></h6></th>
         </tr>
       </tbody>
     </table>
-
-    
-   
+     
        <% @Overall = (appraisee_attribute_sum + appraisee_goal_sum ) %>
 
   <div class="row">
@@ -311,8 +309,8 @@
     </thead>
     <tbody>
       <tr>
-        <td><%= goal_bunches.appraisee_comment %></td>
-        <td><%= goal_bunches.appraisee_rating_id.to_f.round(4) %></td>
+        <td><%= @goal_bunches.appraisee_comment %></td>
+        <td><%= @goal_bunches.appraisee_rating_id.to_f.round(2) %></td>
       </tr>
     </tbody>
   </table>

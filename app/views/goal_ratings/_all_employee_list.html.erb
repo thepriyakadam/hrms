@@ -17,7 +17,7 @@
               <th colspan="2"><center> Location Level</center></th>
             </tr>
             <tr>
-              <th>Employee ID</th>
+              <th>ID</th>
               <th>Employee Name</th>
               <th>Department</th>
               <th>Basic Salary(Annual)</th>
@@ -38,7 +38,7 @@
             <% @goal_bunches.each do |e| %>
             <tr>
             <td><%= e.employee.manual_employee_code %></td>
-            <td><%= e.employee.first_name %> <%= e.employee.middle_name %> <%= e.employee.last_name %> </td>
+            <td><%= full_name(e.employee) %></td>
             <td><%= e.employee.try(:company_location).try(:name) %> - <%= e.employee.try(:department).try(:name) %></td>
             <% a = EmployeeTemplate.where(employee_id: e.employee_id,is_active: true).last %>
             <% b = EmployeeSalaryTemplate.where(employee_template_id: a.id,employee_id: e.employee_id,salary_component_id: 3).last %>

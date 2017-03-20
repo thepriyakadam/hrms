@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
  <div class="box box-default">
   <div class="box-header with-border">
   <% training_request = TrainingRequest.where(id: @training_request.id).take
@@ -48,6 +50,7 @@
       </tr> -->
     </table><br>
 
+>>>>>>> d22b11f13f724087e348b7f12b403bd2c8080ead
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
@@ -76,6 +79,8 @@
   </tbody>
 </table><br>
 
+<<<<<<< HEAD
+=======
 <td>
   <% if @training_request.employee.manager_id.present? && @training_request.employee.manager_2_id.present? && @training_request.status == "Pending" %>
       <%= link_to ' Approve',first_approve_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %> |
@@ -114,3 +119,4 @@
 </div>
 
 
+>>>>>>> d22b11f13f724087e348b7f12b403bd2c8080ead

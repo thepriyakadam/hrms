@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
-  
-  resources :gratuities 
-  resources :gratuity_masters do 
+
+  resources :gratuities
+  resources :gratuity_masters do
     collection do
       get :is_confirm
     end
   end
   resources :monthly_arrears
-  resources :on_duty_requests do 
+  resources :on_duty_requests do
     collection do
       get :select_checkbox
       get :request_approval_list
@@ -31,6 +31,23 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :manager_self_services do
+    collection do
+      get :subordinate_list
+      get :appraiser_subordinate
+      get :reviewer_subordinate
+      get :employee_list
+      get :approved_or_rejected_leave_request
+      get :all_leave_request_list
+      get :request_approval_list
+      get :od_request_list
+      get :training_request_list
+      get :final_approval_training_list
+      get :resignation_history
+      get :final_approval_emp_resignation_list
+    end
+  end
+
   resources :od_status_records do
     collection do
       get :cancel_after_approve
@@ -46,7 +63,12 @@ Rails.application.routes.draw do
   resources :employee_week_offs do
     collection do
       get :revert_week_off
-      
+      post :employee_week_off_list
+      get :edit_week_off_modal
+      post :edit_week_off
+      get :date_wise_week_off
+      post :show_date_wise_weekoff
+      get :show_date_wise_weekoff
     end
   end
   resources :late_mark_masters do
@@ -90,7 +112,7 @@ Rails.application.routes.draw do
       get :collect_amount
     end
   end
-  resources :week_off_masters do 
+  resources :week_off_masters do
     collection do
       post :assign_week_off
       post :employee_list
@@ -221,7 +243,7 @@ Rails.application.routes.draw do
       post :memberwise_report_list
       get :memberwise_report_list_xls
       get :memberwise_report_list_pdf
-      
+
     end
    end
   resources :issue_masters do
@@ -236,7 +258,7 @@ Rails.application.routes.draw do
     end
    end
   resources :issue_tracker_accesses
-   
+
   resources :issue_tracker_members do
     collection do
       get :is_confirm
@@ -320,6 +342,19 @@ end
       patch :update_transfer_details
       get :modal_edit_and_send_next
       post :update_and_send_next_transfer_details
+      get :first_approve
+      get :approve_and_send_next
+      get :final_approve
+      get :final_approval_transfer_list
+      get :approve_employee_transfer
+      get :employee_transfer_confirmation_2
+      post :final_approve
+      get :transfer_employee_name_report
+      get :print_transfer_employee_name_report
+      post :print_transfer_employee_name_report
+      get :transfer_employee_name_report_pdf
+      get :transfer_employee_name_report_xls
+
     end
   end
 
@@ -384,7 +419,7 @@ end
       get :is_confirm
     end
   end
- 
+
   resources :years do
     collection do
       get :is_confirm
@@ -420,6 +455,7 @@ end
       get :interview_round_reschedule
       post :reschedule_interview
       get :interview_reschedule_list
+      post :confirm_interview_round
     end
   end
   resources :interview_types do
@@ -690,7 +726,7 @@ end
       patch :update_modal_self
     end
   end
- 
+
   resources :exit_interviews  do
     collection do
       post :print_exit_interview
@@ -745,6 +781,7 @@ end
   resources :interview_analyses do
     collection do
       post :print_interview_analysis_list
+      get :confirm_interview_analysis
     end
   end
   resources :interview_decisions do
@@ -860,6 +897,8 @@ end
     post :update_profile
     get :part_resume
     post :is_confirm_resume
+    get :modal_vacancy_dropdown
+    post :update_vacancy
     end
   end
   resources :assigned_assets do
@@ -952,7 +991,7 @@ end
       get :final_approval_travel_list
     end
   end
- 
+
 
   namespace :reports do
     get 'monthly_expences_details/new'
@@ -997,25 +1036,25 @@ end
 
     get 'family_details/new'
     post 'family_details/family_detail_report'
- 
+
     get 'physical_details/new'
     post 'physical_details/physical_detail_report'
- 
+
     get 'award_details/new'
     post 'award_details/award_detail_report'
- 
+
     get 'certification_details/new'
     post 'certification_details/certification_detail_report'
- 
+
     get 'skillset_details/new'
     post 'skillset_details/skillset_detail_report'
- 
+
     get 'experience_details/new'
     post 'experience_details/experience_detail_report'
- 
+
     get 'qualification_details/new'
     post 'qualification_details/qualification_detail_report'
- 
+
     get 'bank_details/new'
     post 'bank_details/bank_detail_report'
 
@@ -1035,12 +1074,12 @@ end
     get 'salaries/new'
     post 'salaries/date_range_report'
     get 'salaries/download'
-   
+
     post 'salaries/ctc_yearly_report'
     get 'salaries/ctc_yearly'
 
 
-   
+
   #   get 'certificate/new'
   #   post 'certificate/certificate_print'
   end
@@ -1127,6 +1166,9 @@ end
       get :final_approve
       get :vac_history
       get :current_employee_vacancy_list
+      get :confirm_interview_schedule_list
+      get :confirm_vacancy
+      get :confirm_candidate_1
     end
   end
   resources :leave_c_offs do
@@ -1280,7 +1322,7 @@ end
       get :is_confirm
     end
   end
- 
+
   resources :society_member_ships do
     collection do
       get :is_confirm
@@ -1381,7 +1423,7 @@ end
       get :is_confirm
     end
   end
- 
+
   resources :payment_modes do
     collection do
       get :is_confirm
@@ -1462,7 +1504,7 @@ end
       get :leave_detail_xls
     end
   end
- 
+
   resources :pdf_salaries do
     collection do
       get :employee_list_pdf
@@ -1480,7 +1522,7 @@ end
       get :current_employee_salary_template
     end
    end
- 
+
   resources :salary_slip_ledgers do
     collection do
       get :select_month_year_form
@@ -1617,7 +1659,7 @@ end
       get :current_template
     end
   end
- 
+
   resources :salary_component_templates do
     collection do
       get :salary_template_page
@@ -1739,7 +1781,7 @@ end
   end
   resources :employee_bank_details do
     collection do
-      post :import  
+      post :import
       get :import_xl
     end
   end
@@ -1756,7 +1798,7 @@ end
       patch :update_leave_auto
     end
   end
- 
+
   resources :leav_rejecteds
   resources :leav_approveds
   resources :employee_leav_requests do
@@ -1947,7 +1989,7 @@ end
       post :print_employee
       get :print_employee
       get :employee_list_pdf
-      get :employee_report 
+      get :employee_report
       post :show_employee_list
       get :show_all_record
       post :show_all_record
@@ -2082,4 +2124,10 @@ end
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+  namespace :api do
+    resources :user_auths,:only => [:create], defaults: {format: 'json'}
+    post 'user_auths/user_sign_up' => 'user_auths#user_sign_up', defaults: {format: 'json'}
+    get 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
+  end
 end

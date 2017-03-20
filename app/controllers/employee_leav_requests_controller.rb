@@ -26,6 +26,7 @@ class EmployeeLeavRequestsController < ApplicationController
   end
 
   def create
+    # binding.pry
     @employee_leav_request = EmployeeLeavRequest.new(employee_leav_request_params)
     @employee = Employee.find(@employee_leav_request.employee_id)
     start_date = params['employee_leav_request']['start_date']

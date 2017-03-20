@@ -6,6 +6,7 @@
   <div class="box-body">
   <%= bootstrap_form_for(@vacancy_master,html: {id: 'vacancy_master'}) do |f| %>
   <%= f.hidden_field :employee_id, :value => current_user.employee_id %>
+  <%= f.hidden_field :vacancy_post_date, value: Date.today %>
       <div class="row">
 
        <div class="col-sm-3">
@@ -78,7 +79,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-               <%= f.text_field :vacancy_post_date, label: 'Vacancy Fulfillment Date', class: 'birth_date'%>
+               <%= f.text_field :vacancy_fullfillment_date, label: 'Vacancy Fulfillment Date', class: 'birth_date'%>
             </div>
           </div>
         </div>      
@@ -165,10 +166,10 @@
   </div>
 <% end %>
 <script>
-$(function(){
-  $.validator.addMethod("numbersOnly", function (value, element) {
-    return this.optional(element) || /^[0-9]+$/i.test(value);
-}, "Please enter numbers only.");
+// $(function(){
+//   $.validator.addMethod("numbersOnly", function (value, element) {
+//     return this.optional(element) || /^[0-9]+$/i.test(value);
+// }, "Please enter numbers only.");
 
 $("#vacancy_master").validate({
     rules: {

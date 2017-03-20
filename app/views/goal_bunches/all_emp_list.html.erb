@@ -26,7 +26,7 @@
         <tr><th colspan="8"><center>Employee Detail</center></th></tr>
           <tr>
             <th>Sr.No</th>
-            <th>Employee ID</th>
+            <th>ID</th>
             <th>Name</th>
             <th>Age</th>
             <th>Department</th>
@@ -152,9 +152,9 @@
                 <td><%= goal_rating.try(:goal_weightage) %></td>
                 <td><%= goal_rating.try(:aligned) %></td>
                 <td><%= goal_rating.try(:appraisee_comment) %></td>
-                <td><%= goal_rating.try(:appraisee_rating_id) %></td>
+                <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
                 <td><%= goal_rating.try(:appraiser_comment) %></td>
-                <td><%= goal_rating.try(:appraiser_rating_id) %></td>
+                <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
                 <td><%= goal_rating.try(:reviewer_comment) %></td>
               </tr>
             <% end %>
@@ -185,9 +185,9 @@
                 <td><%= attribute_rating.try(:goal_weightage) %></td>
                 <td><%= attribute_rating.try(:aligned) %></td>
                 <td><%= attribute_rating.try(:appraisee_comment) %></td>
-                <td><%= attribute_rating.try(:appraisee_rating_id) %></td>
+                <td><%= attribute_rating.try(:appraisee_rating).try(:value) %></td>
                 <td><%= attribute_rating.try(:appraiser_comment) %></td>
-                <td><%= attribute_rating.try(:appraiser_rating_id) %></td>
+                <td><%= attribute_rating.try(:appraiser_rating).try(:value) %></td>
                 <td><%= attribute_rating.try(:reviewer_comment) %></td>
               </tr>
             <% end %>
@@ -225,7 +225,7 @@
             </tr>
             <tr>
               <th>Reviewer Rating</th>
-              <td><%= goal_bunch.try(:reviewer_rating_id) %></td>
+              <td><%= goal_bunch.try(:reviewer_rating).try(:value) %></td>
             </tr>
             <tr>
               <th>Final Comment</th>
@@ -233,7 +233,7 @@
             </tr>
             <tr>
               <th>Final Rating</th>
-              <td><%= goal_bunch.try(:final_rating_id) %></td>
+              <td><%= goal_bunch.try(:final_rating).try(:value) %></td>
             </tr>
         </tbody>
       </table>
@@ -244,17 +244,17 @@
           <tr><th colspan="2"><center>Detail</center></th><th>Sign</th></tr>
             <tr>
               <th>Appraisee Name</th>
-              <td><%= goal_bunch.employee.try(:first_name) %> <%= goal_bunch.employee.try(:middle_name) %> <%= goal_bunch.employee.try(:last_name) %></td>
+              <td><%= full_name(goal_bunch.employee) %></td>
               <td></td>
             </tr>
             <tr>
               <th>Appraiser Name</th>
-              <td><%= goal_bunch.employee.manager.try(:first_name) %> <%= goal_bunch.employee.manager.try(:middle_name) %> <%= goal_bunch.employee.manager.try(:last_name) %></td>
+              <td><%= full_name(goal_bunch.employee.try(:manager)) %></td>
               <td></td>
             </tr>
             <tr>
               <th>Reviewer Name</th>
-              <td><%= goal_bunch.employee.manager_2.try(:first_name) %> <%= goal_bunch.employee.manager_2.try(:middle_name) %> <%= goal_bunch.employee.manager_2.try(:last_name) %></td>
+              <td><%= full_name(goal_bunch.employee.try(:manager_2)) %></td>
               <td></td>
             </tr>
             <tr>

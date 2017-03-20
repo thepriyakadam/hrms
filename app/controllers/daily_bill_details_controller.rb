@@ -19,6 +19,7 @@ class DailyBillDetailsController < ApplicationController
     session[:active_tab] = "TravelManagemnt"
     session[:active_tab1] = "travelrequestreports"
  end
+ 
 
 
   # GET /daily_bill_details/new

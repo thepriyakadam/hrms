@@ -18,7 +18,7 @@ div.nobreak{ page-break-inside: avoid;
   <thead>
   <tr><th colspan="7"><center>Employee Detail</center></th></tr>
     <tr>
-      <th>Employee ID</th>
+      <th>ID</th>
       <th>Name</th>
       <th>Age</th>
       <th>Department</th>
@@ -142,9 +142,9 @@ div.nobreak{ page-break-inside: avoid;
           <td><%= goal_rating.goal_weightage %></td>
           <td><%= goal_rating.aligned %></td>
           <td><%= goal_rating.appraisee_comment %></td>
-          <td><%= goal_rating.appraisee_rating_id %></td>
+          <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
           <td><%= goal_rating.appraiser_comment %></td>
-          <td><%= goal_rating.appraiser_rating_id %></td>
+          <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
           <td><%= goal_rating.reviewer_comment %></td>
         </tr>
       <% end %>
@@ -174,9 +174,9 @@ div.nobreak{ page-break-inside: avoid;
           <td><%= goal_rating.goal_weightage %></td>
           <td><%= goal_rating.aligned %></td>
           <td><%= goal_rating.appraisee_comment %></td>
-          <td><%= goal_rating.appraisee_rating_id %></td>
+          <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
           <td><%= goal_rating.appraiser_comment %></td>
-          <td><%= goal_rating.appraiser_rating_id %></td>
+          <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
           <td><%= goal_rating.reviewer_comment %></td>
         </tr>
       <% end %>
@@ -210,7 +210,7 @@ div.nobreak{ page-break-inside: avoid;
         </tr>
         <tr>
           <th>Reviewer Rating</th>
-          <td><%= goal_bunch.try(:reviewer_rating_id) %></td>
+          <td><%= goal_bunch.try(:reviewer_rating).try(:value) %></td>
         </tr>
         <tr>
           <th>Final Comment</th>
@@ -218,7 +218,7 @@ div.nobreak{ page-break-inside: avoid;
         </tr>
         <tr>
           <th>Final Rating</th>
-          <td><%= goal_bunch.try(:final_rating_id) %></td>
+          <td><%= goal_bunch.try(:final_rating).try(:value) %></td>
         </tr>
       <% end %>
     </tbody>

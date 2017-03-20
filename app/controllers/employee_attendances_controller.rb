@@ -215,7 +215,6 @@ class EmployeeAttendancesController < ApplicationController
     company = params[:employee][:company_id]
     location = params[:employee][:company_location_id]
     department = params[:employee][:department_id]
-    # @employee_attendances = EmployeeAttendance.where(day: @month)
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
     @start_date = @date
@@ -297,7 +296,6 @@ class EmployeeAttendancesController < ApplicationController
         orientation: 'Landscape',
         template: 'employee_attendances/employee_slip_pdf.pdf.erb',
         show_as_html: params[:debug].present?
-        #margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
   end
@@ -323,7 +321,6 @@ class EmployeeAttendancesController < ApplicationController
           
           EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
           EmployeeWeekOff.where("strftime('%m/%Y', date) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
-        # ff=EmployeeAttendance.where(employee_id: x,month_name: b.month_name).take
         
           d=Workingday.where(employee_id: x)
           d.each do |f|
@@ -621,8 +618,8 @@ class EmployeeAttendancesController < ApplicationController
           @employee_attendances = EmployeeAttendance.where(day: @start.to_date..@end.to_date,employee_id: @employees)
           @employee_attendance_id = EmployeeAttendance.where(day: @start.to_date..@end.to_date,employee_id: @employees).take
         end
-        elsif current_user.role.name == 'Admin'
-         if company == ""
+      elsif current_user.role.name == 'Admin'
+        if company == ""
           @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
           @employee_attendances = EmployeeAttendance.where(day: @start.to_date..@end.to_date,employee_id: @employees)
           @employee_attendance_id = EmployeeAttendance.where(day: @start.to_date..@end.to_date,employee_id: @employees).take

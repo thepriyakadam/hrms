@@ -20,25 +20,25 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :department_id,all_department_type_list1,{include_blank: 'Select Department',label: 'Department'},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+            <%= f.text_field :employee_department,label: 'Department' %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :employee_designation_id,all_employee_designation,{include_blank: 'Select Designation',label: 'Employee Designation'},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
+            <%= f.text_field :designation,label: 'Employee Designation'  %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :employee_grade_id,all_employee_grade,{include_blank: 'Select Grade',label: 'Employee Grade'}  %>
+            <%= f.text_field :grade, label: 'Employee Grade' %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :employee_category_id,all_employee_category,{include_blank: 'Select Category',label: 'Employee Category'} %>
+            <%= f.text_field :category,label: 'Employee Category' %>
           </div>
         </div>
       </div>

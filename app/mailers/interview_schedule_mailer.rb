@@ -1,9 +1,12 @@
 class InterviewScheduleMailer < ApplicationMailer
   
-  def sample_email(interview_schedule)
+  def sample_email
     @employee = Employee.find(interview_schedule.employee_id)
-    @interview_schedule = InterviewSchedule.find(interview_schedule.id)
+    @interview_schedule = interview_schedule
+    # @interview_schedule = InterviewSchedule.where(id: 3).take
+    # @interview_schedule = InterviewSchedule.where(id: 3).take
     @emp = InterviewSchedule.find_by_employee_id(interview_schedule.employee_id)
+    # mail(to: 'maheshstackoverlow1712@gmail.com', subject: 'Interview Schedule')
     mail(to: @interview_schedule.email_id, subject: 'Interview Schedule')
   end
 

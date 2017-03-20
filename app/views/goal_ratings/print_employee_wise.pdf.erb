@@ -12,7 +12,7 @@
     <th colspan="7"><center>Employee Detail</center></th>
    </tr>
     <tr>
-      <th>Employee ID</th>
+      <th>ID</th>
       <th>Name</th>
       <th>Age</th>
       <th>Department</th>
@@ -24,7 +24,7 @@
   <tbody>
     <tr>
       <td><%= @employee.manual_employee_code %></td> 
-      <td><%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %></td>
+      <td><%= full_name(@employee) %></td>
       <td><%=  %></td>
       <td><%= @employee.department.try(:name) %></td>
       <td><%= @joining_detail.joining_date %></td>
@@ -150,9 +150,9 @@
           <td><%= goal_rating.goal_weightage %></td>
           <td><%= goal_rating.aligned %></td>
           <td><%= goal_rating.appraisee_comment %></td>
-          <td><%= goal_rating.appraisee_rating_id %></td>
+          <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
           <td><%= goal_rating.appraiser_comment %></td>
-          <td><%= goal_rating.appraiser_rating_id %></td>
+          <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
           <td><%= goal_rating.reviewer_comment %></td>
         </tr>
       <% end %>
@@ -184,9 +184,9 @@
           <td><%= goal_rating.goal_weightage %></td>
           <td><%= goal_rating.aligned %></td>
           <td><%= goal_rating.appraisee_comment %></td>
-          <td><%= goal_rating.appraisee_rating_id %></td>
+          <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
           <td><%= goal_rating.appraiser_comment %></td>
-          <td><%= goal_rating.appraiser_rating_id %></td>
+          <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
           <td><%= goal_rating.reviewer_comment %></td>
         </tr>
       <% end %>
@@ -219,7 +219,7 @@
         </tr>
         <tr>
           <td><strong> Reviewer Rating </strong></td>
-          <td><%= goal_bunch.try(:reviewer_rating_id) %></td>
+          <td><%= goal_bunch.try(:reviewer_rating).try(:value) %></td>
         </tr>
         <tr>
           <td><strong> Final Comment </strong></td>
@@ -227,7 +227,7 @@
         </tr>
         <tr>
           <td><strong> Final Rating </strong></td>
-          <td><%= goal_bunch.try(:final_rating_id) %></td>
+          <td><%= goal_bunch.try(:final_rating).try(:value) %></td>
         </tr>
       <% end %>
     </tbody>

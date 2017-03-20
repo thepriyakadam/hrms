@@ -10,7 +10,7 @@
         <thead>
         <tr><td colspan="8"><center> Employee Goal Details for Training </center></td></tr>
           <tr>
-            <th>Employee ID</th>
+            <th>ID</th>
             <th>Name</th>
             <th>Period</th>
             <th>Department</th>
@@ -26,11 +26,11 @@
           <%= bootstrap_form_for :login, url: {action: 'create_goal_training',emp_id: a.appraisee_id,goal_rating_id: a.id,period_id: @period_id}, html: {id: 'login'} do |f| %> 
           <%= f.hidden_field :period_id,value: @period_id %>
             <td><%= a.appraisee.manual_employee_code %></td> 
-            <td><%= a.appraisee.first_name %> <%= a.appraisee.middle_name %> <%= a.appraisee.last_name %></td>
+            <td><%= full_name(a.appraisee) %></td>
             <td><%= a.goal_bunch.period.name %></td>
             <td><%= a.appraisee.try(:department).try(:name) %></td>
             <td><%= a.goal_perspective.try(:name) %></td>
-            <td><%= a.appraiser_rating_id %></td>
+            <td><%= a.appraiser_rating.try(:value) %></td>
             <td><%= select_tag :training_topic_master_id,options_for_select(all_training_topic),{class: "form-control",hide_label: true,include_blanck: "Select Training Topic",value: a.training_topic_master_id} %></td>
             <td><%= f.submit "Confirm Training", class: 'btn btn-info btn-sm fa fa-user-plus' %></td>
             <% end %>
@@ -64,7 +64,7 @@
             <td><%= a.goal_bunch.period.try(:name) %></td>
             <td><%= a.appraisee.try(:department).try(:name) %></td>
             <td><%= a.attribute_master.try(:name) %></td>
-            <td><%= a.appraiser_rating_id %></td>
+            <td><%= a.appraiser_rating.try(:value) %></td>
             <td><%= select_tag :training_topic_master_id,options_for_select(all_training_topic),{class: "form-control",hide_label: true,include_blanck: "Select Training Topic",value: a.training_topic_master_id} %></td>
             <td><%= f.submit "Confirm Training", class: 'btn btn-info btn-sm fa fa-user-plus' %></td>
             <% end %>

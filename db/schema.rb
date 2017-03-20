@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170318044750) do
+ActiveRecord::Schema.define(version: 20170320060327) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1097,7 +1097,6 @@ ActiveRecord::Schema.define(version: 20170318044750) do
     t.date     "effective_to"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "current"
     t.string   "designation"
     t.string   "grade"
     t.string   "category"
@@ -1333,8 +1332,6 @@ ActiveRecord::Schema.define(version: 20170318044750) do
     t.string   "passport_photo_content_type"
     t.integer  "passport_photo_file_size"
     t.datetime "passport_photo_updated_at"
-    t.string   "punch_card_id"
-    t.string   "prefix"
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"
@@ -2421,6 +2418,9 @@ ActiveRecord::Schema.define(version: 20170318044750) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.boolean  "is_gps"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "members", ["company_id"], name: "index_members_on_company_id"
@@ -3719,12 +3719,23 @@ ActiveRecord::Schema.define(version: 20170318044750) do
     t.decimal  "payable_day"
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
+    t.decimal  "lwp_leave"
+    t.decimal  "cl_leave"
+    t.decimal  "el_leave"
+    t.decimal  "esic_leave"
+    t.decimal  "coff_leave"
+    t.decimal  "advance_leave"
+    t.decimal  "cl_balance"
+    t.decimal  "el_balance"
+    t.decimal  "coff_balance"
+    t.decimal  "advance_balance"
     t.boolean  "is_confirm"
     t.decimal  "pay_leave"
     t.decimal  "nonpay_leave",            precision: 10, scale: 2
     t.decimal  "gatepass"
     t.decimal  "calculated_payable_days"
     t.decimal  "ot_hours"
+    t.decimal  "od_leave"
     t.boolean  "paid"
     t.boolean  "full_and_final"
     t.decimal  "od_day"

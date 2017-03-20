@@ -6,3 +6,12 @@
 	    <%= hidden_field_tag :flag, "Full/Half" %>
 	  </div>
 	</div>
+
+	<div class="col-sm-2">
+	  <label>Half Day Present</label>
+	  <div class="form-group required">
+	  	<%= select :common,:half_day_present,['Present','Absent'] ,{label: 'Half Day Present',include_blank: "Select",class: 'form-control'} %>
+
+	    <%= hidden_field_tag :flag, "Full/Half" %>
+	  </div>
+	</div>

@@ -67,7 +67,7 @@ class OnDutyRequestsController < ApplicationController
           elsif @on_duty_request.first_half == true || @on_duty_request.last_half == true
             @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f + 0.5
           else
-            @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f + 1
+            @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f + 0.5
           end  
         elsif @on_duty_request.leave_type == 'Half Day'
           if @on_duty_request.first_half == true || @on_duty_request.last_half == true

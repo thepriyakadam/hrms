@@ -29,7 +29,6 @@ class Api::UserAuthsController < ApplicationController
 			logger.info("User #{email} failed signin, password \"#{password}\" is invalid")
 			render :status=>401, :json=>{:status=>"Failure",:message=>"Invalid password."}
 		else
-			binding.pry
 			if @user.is_gps
 				@lat = params[:lat].to_f
 				@lang = params[:longi].to_f

@@ -29,10 +29,11 @@ class Api::UserAuthsController < ApplicationController
 			logger.info("User #{email} failed signin, password \"#{password}\" is invalid")
 			render :status=>401, :json=>{:status=>"Failure",:message=>"Invalid password."}
 		else
+			binding.pry
 			if @user.is_gps
 				@lat = params[:lat].to_f
 				@lang = params[:longi].to_f
-				@mid = Member.near([@lat, @lang], 5).map(&:id)
+				@mid = Member.near([@lat, @lang], 10).map(&:id)
 				if @mid.include?(@user.id)
 					render :status=>200, :json=>{:status=>"Success"}
 				else

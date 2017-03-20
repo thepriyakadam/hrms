@@ -83,8 +83,8 @@ Rails.application.configure do
 #   ActionMailer::Base.smtp_settings = {
 #     :address => "mail.amaazia.com",
 #     :port => 465,
-#     :user_name => "vish.hake04@gmail.com",
-#     :password => "vish9604331394",
+#     :user_name => "ranna.p@amaazia.com",
+#     :password => "ranna@123",
 #     :authentication => 'plain',
 # }
 

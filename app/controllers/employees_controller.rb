@@ -173,18 +173,25 @@ class EmployeesController < ApplicationController
 
   # PATCH/PUT /employees/1
   # PATCH/PUT /employees/1.json
-  def update
-     respond_to do |format|
-      if @employee.update(employee_params)
-        Member.find_by(employee_id: @employee.id).update(company_id: employee_params["company_id"],company_location_id:employee_params["company_location_id"],department_id:employee_params["department_id"] )
-        format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
-        format.json { render :show, status: :ok, location: @employee }
-      else
-        format.html { render :edit }
-        format.json { render json: @employee.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+   def update
+    respond_to do |format|
+     if @employee.update(employee_params)
+       @emp = @employee.id
+       @member = Member.find_by(employee_id: @emp)
+       if @member.nil?
+         format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
+         format.json { render :show, status: :ok, location: @employee }
+       else
+         Member.find_by(employee_id: @employee.id).update(company_id: employee_params["company_id"],company_location_id:employee_params["company_location_id"],department_id:employee_params["department_id"] )
+         format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
+         format.json { render :show, status: :ok, location: @employee }
+       end
+     else
+       format.html { render :edit }
+       format.json { render json: @employee.errors, status: :unprocessable_entity }
+     end
+   end
+ end
 
   # DELETE /employees/1
   # DELETE /employees/1.json

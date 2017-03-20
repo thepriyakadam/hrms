@@ -16,7 +16,7 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 
 gem 'whenever', '~> 0.9.4',:require => false
-
+gem 'geocoder'
 gem 'therubyracer', platforms: :ruby
 gem 'query_report'
 gem 'kaminari', '~> 0.16.3'

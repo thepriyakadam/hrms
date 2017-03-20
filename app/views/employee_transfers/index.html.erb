@@ -24,11 +24,11 @@
       <tr>
         <td><%= employee_transfer.employee.try(:manual_employee_code) %></td>
         <td><%= employee_transfer.reporting_master_id%></td>
-        <td><%= employee_transfer.employee_designation.try(:name) %></td>
-        <td><%= employee_transfer.employee_category.try(:name) %></td>
-        <td><%= employee_transfer.company.try(:name) %></td>
-        <td><%= employee_transfer.company_location.try(:name) %></td>  
-        <td><%= employee_transfer.department.try(:name) %></td>
+        <td><%= employee_transfer.designation %></td>
+        <td><%= employee_transfer.category %></td>
+        <td><%= employee_transfer.employee_company %></td>
+        <td><%= employee_transfer.employee_company_location %></td>  
+        <td><%= employee_transfer.employee_department %></td>
         <td><%= employee_transfer.justification %></td>
         <td>
         <!-- <= link_to '', employee_transfer,class:'btn btn-xs btn-default fa fa-eye' %> -->

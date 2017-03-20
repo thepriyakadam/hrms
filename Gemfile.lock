@@ -130,6 +130,7 @@ GEM
     execjs (2.7.0)
     ffi (1.9.17)
     ffi (1.9.17-x64-mingw32)
+    geocoder (1.4.3)
     gherkin (4.0.0)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
@@ -363,6 +364,7 @@ DEPENDENCIES
   datagrid (~> 1.4, >= 1.4.1)
   devise
   email_verifier
+  geocoder
   globalid (~> 0.3.7)
   hirb
   jbuilder (~> 2.0)
@@ -403,3 +405,6 @@ DEPENDENCIES
   wirble
   wkhtmltopdf-binary (~> 0.9.9.3)
   yaml_db
+
+BUNDLED WITH
+   1.11.2

@@ -143,7 +143,7 @@ class EmployeesController < ApplicationController
   # POST /employees.json
   def create
     @employee = Employee.new(employee_params)
-    @employee_type = EmployeeType.find_by(name: "Probationary")
+    @employee_type = EmployeeType.find_by(name: "Probation")
     @employees = Employee.where(employee_type_id: @employee_type.id)
     @department = Department.find(@employee.department_id)
     authorize! :create, @employee
@@ -153,7 +153,7 @@ class EmployeesController < ApplicationController
         @employee.update(company_location_id: @department.company_location_id,company_id: @department.company_location.company_id)
         @employees.each do |e|
           if e.joining_detail.confirmation_date != nil && e.joining_detail.confirmation_date <= Date.today
-            employee_type = EmployeeType.find_by(name: "Confirmed")
+            employee_type = EmployeeType.find_by(name: "Permanent")
             e.update(employee_type_id: employee_type.id)
           end
         end

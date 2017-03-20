@@ -18,7 +18,7 @@
               <strong>ID : <%= @employee.manual_employee_code %></strong>
             </td> 
             <td colspan = "2">
-              <strong>Name : <%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %></strong>
+              <strong>Name : <%= full_name(@employee) %></strong>
             </td> 
             <td colspan="2">
               <strong>Department :  <%= @employee.company_location.try(:name) %> - <%= @employee.department.try(:name) %></strong>

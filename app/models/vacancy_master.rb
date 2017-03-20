@@ -21,8 +21,9 @@ class VacancyMaster < ActiveRecord::Base
   belongs_to :degree_2, class_name: 'Degree'
 
   validates :employee_designation_id, presence: true
+  validates :vacancy_name, presence: true
   validates :no_of_position, presence: true
-  validates :vacancy_post_date, presence: true
+  validates :vacancy_fullfillment_date, presence: true
   # validates :reporting_master_id, presence: true
 
   def self.to_csv(options = {})

@@ -1109,6 +1109,7 @@ end
       get :modal_schedule_list
       post :update_interview_schedule
       patch :create_new
+      get :show_interview_round_list
     end
   end
   resources :vacancy_masters do

@@ -6,7 +6,7 @@
   <div class="box-body">
     <div class="row">
       <div class="col-sm-12">
-        <table id="example" class="table table-bordered table-hover table-condensed">
+        <table id="example3" class="table table-bordered table-hover table-condensed">
           <thead>
             <tr>
               <th>Vacancy Code</th>
@@ -49,12 +49,6 @@
                   <% end %>
                 </td>
               </tr>
-              <tr>
-                  <th colspan="9"><center><strong>Justification</strong></center></th>
-                </tr>
-                <tr>
-                  <td colspan="9"><%= vacancy_master.justification %></td>
-              </tr>
             <% end %>
           </tbody>
         </table>
@@ -62,8 +56,10 @@
     </div>
   </div>
 </div>
-<script>
-$(document).ready(function() {
-    $('#example').DataTable();
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example3').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
 } );
 </script>

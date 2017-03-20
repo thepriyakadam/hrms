@@ -237,7 +237,8 @@ end
   end
 
   def all_interview_schedule_list
-     @interview_schedules = InterviewSchedule.all
+     # @interview_schedules = InterviewSchedule.all
+     @interview_schedules = InterviewSchedule.where(is_confirmed: true)
      session[:active_tab] ="recruitment"
      session[:active_tab1] ="general_vacancy"
   end
@@ -295,6 +296,20 @@ end
      @trainee.update(email_id: @email_id,location: @location,interview_date: @interview_date)
      flash[:notice] = 'Interview Details Updated Successfully'
      redirect_to interview_schedules_path
+    end
+
+  def confirm_vacancy
+    @interview_schedule = InterviewSchedule.find(params[:format])
+    @selected_resume = SelectedResume.where(id: @interview_schedule.selected_resume_id).take
+    @vacancy_master = VacancyMaster.where(id: @selected_resume.vacancy_master_id).take
+    @interview_analyses = InterviewAnalysis.where(interview_schedule_id: @interview_schedule.id)
+    @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id)
+  end
+
+    def show_interview_round_list
+       @interview_round = InterviewRound.find(params[:format])
+       @interview_schedule
+       @interview_rounds = InterviewRound.where(id: @interview_round.id).take
     end
 
   private

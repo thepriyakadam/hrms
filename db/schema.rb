@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170318044750) do
+ActiveRecord::Schema.define(version: 20170320065646) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1001,7 +1001,6 @@ ActiveRecord::Schema.define(version: 20170318044750) do
     t.date     "effective_to"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "current"
     t.string   "designation"
     t.string   "grade"
     t.string   "category"
@@ -1215,8 +1214,6 @@ ActiveRecord::Schema.define(version: 20170318044750) do
     t.string   "passport_photo_content_type"
     t.integer  "passport_photo_file_size"
     t.datetime "passport_photo_updated_at"
-    t.string   "punch_card_id"
-    t.string   "prefix"
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"
@@ -2223,6 +2220,10 @@ ActiveRecord::Schema.define(version: 20170318044750) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.boolean  "is_gps"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "location"
   end
 
   add_index "members", ["company_id"], name: "index_members_on_company_id"

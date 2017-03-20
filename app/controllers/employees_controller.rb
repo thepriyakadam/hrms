@@ -165,7 +165,6 @@ class EmployeesController < ApplicationController
 
 
   def display_emp_code_master
-    # byebug
     @emp1= params[:id]
     @emp_master_code = EmployeeCodeMaster.where(id: @emp1,is_active: true).take
     @last = @emp_master_code.last_range.succ

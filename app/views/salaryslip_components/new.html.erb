@@ -17,6 +17,11 @@
             <%= select :salaryslip_component,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
            </div>
         </div>
+        <div class="col-sm-3">
+        <div class="form-group required">
+           <%= select :salaryslip_component,:company_id,all_company,{hide_label: true,include_blank: " Select Company"}, class: "form-control" %>
+         </div>
+        </div>
          <div class="col-sm-3">
           <div class="actions">
             <%= f.submit "Download XML", class: "btn btn-sm btn-primary" %>

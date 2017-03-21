@@ -38,17 +38,28 @@ class EmployeeMailer < ApplicationMailer
   #     # attachments.inline['bday.jpg'] = File.read("#{Rails.root}/app/assets/images/bday.jpg")
   # end
 
-  def birthday_invitation
+  # def birthday_invitation
+  #   date = Date.today 
+  #   emps=Employee.where.not("status = ? AND strftime('%d/%m', date_of_birth) = ?", "Active" , date.strftime('%d/%m'))
+  #   emps.find_in_batches(batch_size: 20) do |group|
+  #     emails = group.map(&:email)
+  #     mail(to: emails, subject: 'Birthday Invitation')
+  #     sleep(5)
+  # end
+
+  # end
+
+
+def birthday_invitation
     date = Date.today 
     emps=Employee.where.not("status = ? AND strftime('%d/%m', date_of_birth) = ?", "Active" , date.strftime('%d/%m'))
     emps.find_in_batches(batch_size: 20) do |group|
-      emails = group.map(&:email)
-      mail(to: emails, subject: 'Birthday Invitation')
-      sleep(5)
-  end
+      group.each { |emp| mail(to: emp.email, subject: 'Birthday Invitation'); sleep 2;}
+      # group.each { |emp| mail(to: emp.email, subject: 'Birthday Invitation')}
+      sleep 5
+    end
 
-  end
-
+end
 
 # def birthday_email
 #   date = Date.today 

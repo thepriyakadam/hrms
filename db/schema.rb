@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170320062722) do
+ActiveRecord::Schema.define(version: 20170321050344) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -3167,8 +3167,12 @@ ActiveRecord::Schema.define(version: 20170320062722) do
     t.boolean  "is_debit"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.integer  "company_id"
+    t.integer  "company_location_id"
   end
 
+  add_index "salary_map_saps", ["company_id"], name: "index_salary_map_saps_on_company_id"
+  add_index "salary_map_saps", ["company_location_id"], name: "index_salary_map_saps_on_company_location_id"
   add_index "salary_map_saps", ["salary_component_id"], name: "index_salary_map_saps_on_salary_component_id"
 
   create_table "salary_templates", force: :cascade do |t|

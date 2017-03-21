@@ -5,18 +5,25 @@ class SalaryslipComponentsController < ApplicationController
     # byebug
     @month = params[:salaryslip_component][:month]
     @year = params[:salaryslip_component][:year]
-    @salary_components = SalaryComponent.all
+    @company = params[:salaryslip_component][:company_id]
+    @salary_map_saps = SalaryMapSap.all
+    # @salary_components = SalaryComponent.all
     # @salaryslip_components = SalaryslipComponent.limit(50)
-    @salaryslips = Salaryslip.where(month: @month,year: @year)
+    if @company == ""
+       @salaryslips = Salaryslip.where(month: @month,year: @year)
+    else
+       @employees = Employee.where(company_id: @company.to_i)
+       @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: @employees)
+    end
     # @salaryslips_1 = Salaryslip.where(month: @month,year: @year)limit(1).present?
-    if @salaryslips.present?
+    if @salaryslips.count > 0
       respond_to do |format|
       format.xml { send_data render_to_string(:index), :filename => 'mydoc.xml', :type=>"application/xml", :disposition => 'attachment' }
-      # redirect_to root_url
-      flash[:alert] = "Salaryslip  processed"
       end
     else
-    flash[:error] = "Salaryslip not yet processed"
+    # byebug
+    flash[:alert] = "Salaryslip not yet processed or present"
+    redirect_to new_salaryslip_component_path
     end
   end
     # else

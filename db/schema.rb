@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170320090601) do
+ActiveRecord::Schema.define(version: 20170321071817) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -966,6 +966,19 @@ ActiveRecord::Schema.define(version: 20170320090601) do
   add_index "employee_goals", ["goal_perspective_id"], name: "index_employee_goals_on_goal_perspective_id"
   add_index "employee_goals", ["period_id"], name: "index_employee_goals_on_period_id"
 
+  create_table "employee_gps_histories", force: :cascade do |t|
+    t.integer  "member_id"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "location"
+    t.date     "from_date"
+    t.date     "to_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "employee_gps_histories", ["member_id"], name: "index_employee_gps_histories_on_member_id"
+
   create_table "employee_grades", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
@@ -1019,6 +1032,7 @@ ActiveRecord::Schema.define(version: 20170320090601) do
     t.boolean  "first_half"
     t.boolean  "last_half"
     t.boolean  "half_day_present",                           default: true
+    t.boolean  "present_status"
   end
 
   add_index "employee_leav_requests", ["employee_id"], name: "index_employee_leav_requests_on_employee_id"
@@ -2526,6 +2540,7 @@ ActiveRecord::Schema.define(version: 20170320090601) do
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.boolean  "half_day_present",   default: true
+    t.boolean  "present_status"
   end
 
   add_index "on_duty_requests", ["employee_id"], name: "index_on_duty_requests_on_employee_id"

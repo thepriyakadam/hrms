@@ -42,6 +42,7 @@ class EmployeeLeavRequestsController < ApplicationController
       if params[:flag] == "Full/Half"
         @employee_leav_request.last_half = params[:common][:last_half]
         @employee_leav_request.first_half = params[:common][:first_half]
+        @employee_leav_request.present_status = params[:common][:present_status]
         @checkbox = true
       else
         @checkbox = false
@@ -200,12 +201,25 @@ class EmployeeLeavRequestsController < ApplicationController
             end #@leave_category.is_balance == true
         end #monthly_count > @leav_category.monthly_leave.to_f
     end #@employee_leav_request.end_date == nil 
-        
+
+      if @employee_leav_request.id != nil
         if @employee_leav_request.leave_type == 'Full/Half'
           if @employee_leav_request.first_half == false && @employee_leav_request.last_half == false
             @employee_leav_request.update(first_half: false,last_half: true)
           end
         end
+
+        if @employee_leav_request.leave_type == 'Half Day'
+          if @employee_leav_request.first_half == true && @employee_leav_request.last_half == true
+            @employee_leav_request.update(first_half: true,last_half: false)
+          elsif @employee_leav_request.first_half == false && @employee_leav_request.last_half == false
+            @employee_leav_request.update(first_half: true,last_half: false)
+          else @employee_leav_request.first_half == true || @employee_leav_request.last_half == true
+            @employee_leav_request.save
+          end
+        end
+      else
+      end
   end
 
   def update
@@ -608,6 +622,6 @@ class EmployeeLeavRequestsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_leav_request_params
-    params.require(:employee_leav_request).permit(:half_day_present,:first_half,:last_half,:current_status,:current_status1,:employee_id, :leav_category_id, :leave_type, :date_range, :start_date, :end_date, :reason)
+    params.require(:employee_leav_request).permit(:present_status,:first_half,:last_half,:current_status,:current_status1,:employee_id, :leav_category_id, :leave_type, :date_range, :start_date, :end_date, :reason)
   end
 end

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :employee_gps_histories
   resources :gratuities
   resources :gratuity_masters do
     collection do

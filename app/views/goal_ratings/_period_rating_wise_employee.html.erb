@@ -20,7 +20,7 @@
         <% @goal_bunches.each do |e| %>
         <tr>
         <td><%= e.employee.manual_employee_code %></td>
-        <td><%= e.employee.first_name %> <%= e.employee.middle_name %> <%= e.employee.last_name %> </td>
+        <td><%= full_name(e.employee) %></td>
         <td><%= e.appraisee_rating_id %></td> 
         <td><%= e.appraiser_rating %></td>
         <td><%= e.reviewer_rating.try(:value) %></td>

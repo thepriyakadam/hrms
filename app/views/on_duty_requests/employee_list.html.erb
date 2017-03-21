@@ -18,7 +18,7 @@
         <% @employees.each do |employee| %>
           <tr>
             <td><%= employee.manual_employee_code %></td>
-            <td><%= employee.try(:first_name) %> <%= employee.try(:middle_name) %> <%= employee.try(:last_name).to_s %></td>
+            <td><%= full_name(employee) %></td>
             <td><%= employee.try(:contact_no) %></td>
             <td><%= employee.joining_detail.try(:employee_designation).try(:name) %></td>
             <td>

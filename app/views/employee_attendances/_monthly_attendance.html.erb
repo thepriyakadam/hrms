@@ -38,7 +38,7 @@
             <%= hidden_field e.employee_id, 'nonpay_leave', value: workingday[1] %>
             <%= hidden_field e.employee_id, 'pay_leave', value: workingday[0] %>
             <%= hidden_field e.employee_id, 'gatepass', value: workingday[3] + workingday[4] %>
-            <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count(exist) + workingday[4] %>
+            <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count(exist) + workingday[4] + workingday[5] %>
             <%= hidden_field e.employee_id, 'holiday_in_month', value: holiday_in_month %>
             <%= hidden_field e.employee_id, 'week_off_day', value: week_off_day %>
 

@@ -339,7 +339,6 @@ class WorkingdaysController < ApplicationController
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
         @workingday = Salaryslip.where(month: @month,year: @year,employee_id: @employees).pluck(:workingday_id)
         @workingdays = Workingday.where(month_name: @month,year: @year.to_s,employee_id: @employees).where.not(id: @workingday)
-
       end  
     end    
   end

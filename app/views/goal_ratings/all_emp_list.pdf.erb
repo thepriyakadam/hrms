@@ -25,7 +25,7 @@ div.nobreak{ page-break-inside: avoid;
 	      <thead>
 	      <tr><th colspan="7"><center>Employee Detail</center></th></tr>
 	        <tr>
-	          <th>Employee ID</th>
+	          <th>ID</th>
 	          <th>Name</th>
 	          <th>Age</th>
 	          <th>Department</th>
@@ -37,7 +37,7 @@ div.nobreak{ page-break-inside: avoid;
 	      <tbody>
 	        <tr>
 	          <td><%= t.employee.manual_employee_code %></td> 
-	          <td><%= t.employee.first_name %></td>
+	          <td><%= full_name(t.employee) %></td>
 	          <td><%=  %></td>
 	          <td><%= t.employee.department.try(:name) %></td>
 	          <td><%= joining_detail.joining_date %></td>

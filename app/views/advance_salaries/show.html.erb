@@ -10,7 +10,7 @@
       <td><%= @advance_salary.employee.try(:manual_employee_code) %></td>
 
       <th><strong>Employee Name</strong></th>
-      <td> <%= @advance_salary.employee.first_name %> <%= @advance_salary.employee.middle_name %> <%= @advance_salary.employee.last_name %></td>
+      <td> <%= full_name(@advance_salary.employee) %></td>
     </tr>
     <tr>
       <th><strong>Advance Type</strong></th>

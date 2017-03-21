@@ -143,7 +143,7 @@ class EmployeesController < ApplicationController
   # POST /employees.json
   def create
     @employee = Employee.new(employee_params)
-    @employee_type = EmployeeType.find_by(name: "Probationary")
+    @employee_type = EmployeeType.find_by(name: "Probation")
     @employees = Employee.where(employee_type_id: @employee_type.id)
     @department = Department.find(@employee.department_id)
     authorize! :create, @employee
@@ -153,7 +153,7 @@ class EmployeesController < ApplicationController
         @employee.update(company_location_id: @department.company_location_id,company_id: @department.company_location.company_id)
         @employees.each do |e|
           if e.joining_detail.confirmation_date != nil && e.joining_detail.confirmation_date <= Date.today
-            employee_type = EmployeeType.find_by(name: "Confirmed")
+            employee_type = EmployeeType.find_by(name: "Permanent")
             e.update(employee_type_id: employee_type.id)
           end
         end
@@ -165,7 +165,6 @@ class EmployeesController < ApplicationController
 
 
   def display_emp_code_master
-    # byebug
     @emp1= params[:id]
     @emp_master_code = EmployeeCodeMaster.where(id: @emp1,is_active: true).take
     @last = @emp_master_code.last_range.succ
@@ -173,18 +172,25 @@ class EmployeesController < ApplicationController
 
   # PATCH/PUT /employees/1
   # PATCH/PUT /employees/1.json
-  def update
-     respond_to do |format|
-      if @employee.update(employee_params)
-        Member.find_by(employee_id: @employee.id).update(company_id: employee_params["company_id"],company_location_id:employee_params["company_location_id"],department_id:employee_params["department_id"] )
-        format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
-        format.json { render :show, status: :ok, location: @employee }
-      else
-        format.html { render :edit }
-        format.json { render json: @employee.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+   def update
+    respond_to do |format|
+     if @employee.update(employee_params)
+       @emp = @employee.id
+       @member = Member.find_by(employee_id: @emp)
+       if @member.nil?
+         format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
+         format.json { render :show, status: :ok, location: @employee }
+       else
+         Member.find_by(employee_id: @employee.id).update(company_id: employee_params["company_id"],company_location_id:employee_params["company_location_id"],department_id:employee_params["department_id"] )
+         format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
+         format.json { render :show, status: :ok, location: @employee }
+       end
+     else
+       format.html { render :edit }
+       format.json { render json: @employee.errors, status: :unprocessable_entity }
+     end
+   end
+ end
 
   # DELETE /employees/1
   # DELETE /employees/1.json

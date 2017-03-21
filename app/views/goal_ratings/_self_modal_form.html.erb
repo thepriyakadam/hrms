@@ -1,5 +1,9 @@
 <div class="modal-dialog">
   <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h5 class="modal-title"><center> Update Comment & Rating </center></h5>
+    </div>
     <div class="modal-body">
 
       <%= bootstrap_form_for @goal_rating,url:{action: "update_self_modal",goal_rating_id:@goal_rating.id} do |f| %>
@@ -19,6 +23,8 @@
         </div>
       <% end %>
      
-    </div>
-  </div>
-</div>
+  
+      </div>
+    <div class="modal-footer"></div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

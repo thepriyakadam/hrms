@@ -4,9 +4,8 @@ class EmployeeWeekOffsController < ApplicationController
   # GET /employee_week_offs
   # GET /employee_week_offs.json
   def index
-    @employee_week_offs = EmployeeWeekOff.all
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="AttendanceSetup"
+    session[:active_tab1] ="WeekoffSetup"
   end
 
   # GET /employee_week_offs/1
@@ -63,12 +62,148 @@ class EmployeeWeekOffsController < ApplicationController
     end
   end
 
+  def employee_week_off_list
+    from_date = params[:employee_week_off][:from_date]
+    to_date = params[:employee_week_off][:to_date]
+    employee = params[:employee_week_off][:employee_id]
+    @employee_week_offs = EmployeeWeekOff.where(date: from_date.to_date..to_date.to_date,employee_id: employee)
+  end
+
   def revert_week_off
     @employee_week_off = EmployeeWeekOff.find(params[:format])
     EmployeeAttendance.where(employee_id: @employee_week_off.employee_id,day: @employee_week_off.date).destroy_all
     @employee_week_off.destroy
     flash[:notice] = "Revert successfully"
     redirect_to employee_week_offs_path
+  end
+
+  def edit_week_off_modal
+    @employee_week_off = EmployeeWeekOff.find(params[:format])
+  end
+
+  def edit_week_off
+    date = params[:employee_week_off][:date]
+    @date = date.to_date
+    day = @date.strftime('%a')
+    employee_week_off_id = params[:employee_week_off_id]
+    @employee_week_off = EmployeeWeekOff.find_by(id: employee_week_off_id)
+    @employee_attendance = EmployeeAttendance.where(employee_id: @employee_week_off.employee_id,day: @employee_week_off.date).take
+    
+      if @employee_week_off.is_present(@date,@employee_week_off.employee_id)
+        @emp_atten = EmployeeAttendance.where(employee_id: @employee_week_off.employee_id,day: @date).take
+        if @emp_atten.is_confirm == false
+          if @emp_atten.employee_leav_request_id == nil && @emp_atten.on_duty_request_id == nil
+            @emp_atten.update(present: "W")
+            @employee_week_off.update(day: day,date: @date)
+            @employee_attendance.destroy
+            flash[:notice] = "Updated successfully"
+          else
+            flash[:alert] = "Attendance Available!"
+          end
+        else
+          flash[:alert] = "Attendance Already Processed!!"
+        end
+      else
+        EmployeeAttendance.create(employee_id: @employee_week_off.employee_id,day: @date,present: "W",department_id: @employee_week_off.try(:employee).try(:department_id)) 
+        @employee_week_off.update(day: day,date: @date)
+        @employee_attendance.destroy
+        flash[:notice] = "Updated successfully"
+      end
+      redirect_to employee_week_offs_path
+  end
+
+  def date_wise_week_off
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="WeekoffSetup"
+  end
+
+  def show_date_wise_weekoff
+    @from_date = params[:employee][:from_date]
+    @to_date = params[:employee][:to_date]
+    company = params[:employee][:company_id]
+    location = params[:employee][:company_location_id]
+    department = params[:employee][:department_id]
+
+      if current_user.class == Group
+        if company == ""
+          @employees = Employee.where(status: 'Active').pluck(:id)
+          @employee_week_offs = EmployeeWeekOff.where(date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+        elsif location == ""
+          @employees = Employee.where(company_id: company.to_i).pluck(:id)
+          @employee_week_offs = EmployeeWeekOff.where(date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+        elsif department == ""
+          @employees = Employee.where(company_location_id: location.to_i).pluck(:id)
+          @employee_week_offs = EmployeeWeekOff.where(date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+        else
+          @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+          @employee_week_offs = EmployeeWeekOff.where(date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+        end
+      elsif current_user.class == Member
+        if current_user.role.name == 'GroupAdmin'
+          if company == ""
+            @employees = Employee.where(status: 'Active').pluck(:id)
+            @employee_week_offs = EmployeeWeekOff.where(date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+          elsif location == ""
+            @employees = Employee.where(company_id: company.to_i).pluck(:id)
+            @employee_week_offs = EmployeeWeekOff.where(date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+          elsif department == ""
+            @employees = Employee.where(company_location_id: location.to_i).pluck(:id)
+            @employee_week_offs = EmployeeWeekOff.where(date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+          else
+            @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+            @employee_week_offs = EmployeeWeekOff.where(date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+          end
+        elsif current_user.role.name == 'Admin'
+          if company == ""
+            @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+            @employee_week_offs = EmployeeWeekOff.where(date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+          elsif location == ""
+            @employees = Employee.where(company_id: company.to_i).pluck(:id)
+            @employee_week_offs = EmployeeWeekOff.where(date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+          elsif department == ""
+            @employees = Employee.where(company_location_id: location.to_i).pluck(:id)
+            @employee_week_offs = EmployeeWeekOff.where(date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+          else
+            @employees = Employee.where(company_id: company.to_i,company_location_id: @location.to_i,department_id: department.to_i).pluck(:id) 
+            @employee_week_offs = EmployeeWeekOff.where(date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+          end
+          elsif current_user.role.name == 'Branch'
+            if company == "" || location == ""
+            @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+            @employee_week_offs = EmployeeWeekOff.where(date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+           elsif department == ""
+            @employees = Employee.where(company_location_id: location.to_i).pluck(:id)
+            @employee_week_offs = EmployeeWeekOff.where(date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+            else 
+            @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+            @employee_week_offs = EmployeeWeekOff.where(date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+          end
+          elsif current_user.role.name == 'HOD'
+            if company == "" || location == "" || department == ""
+            @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+            @employee_week_offs = EmployeeWeekOff.where(date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+          else 
+            @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+            @employee_week_offs = EmployeeWeekOff.where(date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+          end
+        elsif current_user.role.name == 'Superviser'
+        elsif current_user.role.name == 'Employee'
+        end
+      # end#ifnil
+    end
+
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_week_offs/date_wise_weekoff.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'employee_week_off',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_week_offs/date_wise_weekoff.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
+    end
   end
 
   private

@@ -49,7 +49,7 @@ class LeaveStatusRecordsController < ApplicationController
           @employee_leav_request.manage_coff(@employee_leav_request)
           @employee_leav_request.create_attendance
           LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FinalApproved")
-          LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
+          #LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
           a=@employee_leav_request.first_reporter_id
           b=@employee_leav_request.second_reporter_id
           if a == current_user.employee_id || b == current_user.employee_id

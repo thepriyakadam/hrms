@@ -22,7 +22,7 @@
             <% @pending_employee_leav_requests.try(:each) do |employee_leav_request| %>
               <tr>
                 <td><%= employee_leav_request.employee.try(:manual_employee_code) %></td>
-                <td><%= employee_leav_request.employee.try(:first_name) %> <%= employee_leav_request.employee.try(:middle_name) %> <%=employee_leav_request.employee.try(:last_name) %></td>
+                <td><%= full_name(employee_leav_request.employee) %></td>
                 <td><%= employee_leav_request.leav_category.try(:name) %></td>
                 <td><%= employee_leav_request.leave_count %></td>
                 <td>
@@ -51,7 +51,7 @@
             <% @first_approved_employee_leav_requests.try(:each) do |employee_leav_request| %>
               <tr>
                 <td><%= employee_leav_request.employee.try(:manual_employee_code) %></td>
-                <td><%= employee_leav_request.employee.try(:first_name) %> <%= employee_leav_request.employee.try(:middle_name) %> <%=employee_leav_request.employee.try(:last_name) %></td>
+                <td><%= full_name(employee_leav_request.employee) %></td>
                 <td><%= employee_leav_request.leav_category.try(:name) %></td>
                 <td><%= employee_leav_request.leave_count %></td>
                 <td>

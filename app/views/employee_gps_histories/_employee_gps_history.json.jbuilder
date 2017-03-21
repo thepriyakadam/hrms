@@ -1,0 +1,2 @@
+json.extract! employee_gps_history, :id, :member_id, :latitude, :longitude, :location, :from_date, :to_date, :created_at, :updated_at
+json.url employee_gps_history_url(employee_gps_history, format: :json)

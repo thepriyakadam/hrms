@@ -2,17 +2,20 @@ class SalaryslipComponentsController < ApplicationController
   skip_before_filter :authenticate!
 
   def index
-    # byebug
     @month = params[:salaryslip_component][:month]
     @year = params[:salaryslip_component][:year]
     @company = params[:salaryslip_component][:company_id]
+    @location = params[:food_deduction][:company_location_id]
     @salary_map_saps = SalaryMapSap.all
     # @salary_components = SalaryComponent.all
     # @salaryslip_components = SalaryslipComponent.limit(50)
     if @company == ""
        @salaryslips = Salaryslip.where(month: @month,year: @year)
+    elsif @location == ""
+        @employees = Employee.where(company_id: @company.to_i)
+       @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: @employees)
     else
-       @employees = Employee.where(company_id: @company.to_i)
+       @employees = Employee.where(company_id: @company.to_i,company_location_id: @location)
        @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: @employees)
     end
     # @salaryslips_1 = Salaryslip.where(month: @month,year: @year)limit(1).present?

@@ -1995,6 +1995,9 @@ end
       post :show_employee_list
       get :show_all_record
       post :show_all_record
+      get :member_gps_form
+      post :update_gps
+      get :employee_gps_setting_list
     end
     member do
       get :edit_manager

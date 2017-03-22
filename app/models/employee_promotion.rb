@@ -4,6 +4,7 @@ class EmployeePromotion < ActiveRecord::Base
   belongs_to :employee_designation
   belongs_to :employee_grade
   belongs_to :employee_category
+  has_many :promotion_histories
   # validates :employee_id, presence:true
   # validates :department_id,presence:true
   # validates :employee_designation_id,presence:true

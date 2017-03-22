@@ -24,8 +24,8 @@ class InterviewRoundsController < ApplicationController
   end
 
   # GET /interview_rounds/1/edit
-  def edit
-  end
+  # def edit
+  # end
 
   # POST /interview_rounds
   # POST /interview_rounds.json
@@ -75,12 +75,34 @@ class InterviewRoundsController < ApplicationController
   # PATCH/PUT /interview_rounds/1
   # PATCH/PUT /interview_rounds/1.json
 
-  def update
-    @interview_round.update(interview_round_params)
-    InterviewRoundMailer.send_email_to_interviewer(@interview_round).deliver_now
-    InterviewRoundMailer.send_email_to_candidate(@interview_round).deliver_now
-    @interview_rounds = InterviewRound.all
-    @interview_round = InterviewRound.new
+  # def update
+  #   @interview_round.update(interview_round_params)
+  #   InterviewRoundMailer.send_email_to_interviewer(@interview_round).deliver_now
+  #   InterviewRoundMailer.send_email_to_candidate(@interview_round).deliver_now
+  #   @interview_rounds = InterviewRound.all
+  #   @interview_round = InterviewRound.new
+  # end
+
+
+  def edit
+    @interview_schedule = InterviewSchedule.find(@interview_round.interview_schedule_id)
+    # # @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
+    # @interview_schedules = InterviewSchedule.where(interview_schedule_id: @interview_schedule.id)
+  end
+
+
+    def update
+      @interview_schedule = InterviewSchedule.find(@interview_round.interview_schedule_id)
+
+      if @interview_round.update(interview_round_params)
+        @interview_rounds =  @interview_schedule.interview_rounds
+        # c1 = @daily_bill_details.sum(:travel_expence).to_i
+        # TravelRequest.where(id: @travel_request.id).update_all(expense: c1)
+        flash[:notice] = "Updated successfully"
+      else
+        flash[:alert] = "not updated"
+      end
+      redirect_to new_interview_round_path(interview_schedule_id: @interview_schedule.id)
   end
 
   # DELETE /interview_rounds/1

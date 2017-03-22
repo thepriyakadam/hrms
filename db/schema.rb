@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170320065646) do
+ActiveRecord::Schema.define(version: 20170321071817) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -966,6 +966,19 @@ ActiveRecord::Schema.define(version: 20170320065646) do
   add_index "employee_goals", ["goal_perspective_id"], name: "index_employee_goals_on_goal_perspective_id"
   add_index "employee_goals", ["period_id"], name: "index_employee_goals_on_period_id"
 
+  create_table "employee_gps_histories", force: :cascade do |t|
+    t.integer  "member_id"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "location"
+    t.date     "from_date"
+    t.date     "to_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "employee_gps_histories", ["member_id"], name: "index_employee_gps_histories_on_member_id"
+
   create_table "employee_grades", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
@@ -1018,6 +1031,7 @@ ActiveRecord::Schema.define(version: 20170320065646) do
     t.string   "current_status1"
     t.boolean  "first_half"
     t.boolean  "last_half"
+    t.boolean  "present_status"
   end
 
   add_index "employee_leav_requests", ["employee_id"], name: "index_employee_leav_requests_on_employee_id"
@@ -1131,17 +1145,17 @@ ActiveRecord::Schema.define(version: 20170320065646) do
     t.integer  "reporting_master_id"
     t.string   "resign_status"
     t.boolean  "is_stop_pay_request"
-    t.integer  "second_reporter_id"
-    t.integer  "final_reporter_id"
+    t.datetime "application_date"
     t.boolean  "is_pending"
+    t.boolean  "is_cancelled"
     t.boolean  "is_first_approved"
     t.boolean  "is_second_approved"
-    t.boolean  "is_final_approved"
-    t.boolean  "is_cancelled"
     t.boolean  "is_first_rejected"
     t.boolean  "is_second_rejected"
+    t.integer  "second_reporter_id"
+    t.integer  "final_reporter_id"
+    t.boolean  "is_final_approved"
     t.boolean  "is_final_rejected"
-    t.datetime "application_date"
   end
 
   add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id"
@@ -1872,7 +1886,7 @@ ActiveRecord::Schema.define(version: 20170320065646) do
 
   create_table "interview_decisions", force: :cascade do |t|
     t.string   "code"
-    t.string   "name"
+    t.integer  "name"
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -2524,6 +2538,7 @@ ActiveRecord::Schema.define(version: 20170320065646) do
     t.boolean  "is_second_rejected"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.boolean  "present_status"
   end
 
   add_index "on_duty_requests", ["employee_id"], name: "index_on_duty_requests_on_employee_id"
@@ -3180,8 +3195,12 @@ ActiveRecord::Schema.define(version: 20170320065646) do
     t.boolean  "is_debit"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.integer  "company_id"
+    t.integer  "company_location_id"
   end
 
+  add_index "salary_map_saps", ["company_id"], name: "index_salary_map_saps_on_company_id"
+  add_index "salary_map_saps", ["company_location_id"], name: "index_salary_map_saps_on_company_location_id"
   add_index "salary_map_saps", ["salary_component_id"], name: "index_salary_map_saps_on_salary_component_id"
 
   create_table "salary_templates", force: :cascade do |t|
@@ -3723,12 +3742,23 @@ ActiveRecord::Schema.define(version: 20170320065646) do
     t.decimal  "payable_day"
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
+    t.decimal  "lwp_leave"
+    t.decimal  "cl_leave"
+    t.decimal  "el_leave"
+    t.decimal  "esic_leave"
+    t.decimal  "coff_leave"
+    t.decimal  "advance_leave"
+    t.decimal  "cl_balance"
+    t.decimal  "el_balance"
+    t.decimal  "coff_balance"
+    t.decimal  "advance_balance"
     t.boolean  "is_confirm"
     t.decimal  "pay_leave"
     t.decimal  "nonpay_leave",            precision: 10, scale: 2
     t.decimal  "gatepass"
     t.decimal  "calculated_payable_days"
     t.decimal  "ot_hours"
+    t.decimal  "od_leave"
     t.boolean  "paid"
     t.boolean  "full_and_final"
     t.decimal  "od_day"

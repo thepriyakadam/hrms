@@ -1,0 +1,1 @@
+json.array! @employee_gps_histories, partial: 'employee_gps_histories/employee_gps_history', as: :employee_gps_history

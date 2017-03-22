@@ -34,6 +34,7 @@ class OnDutyRequestsController < ApplicationController
       if params[:flag] == "Full/Half"
         @on_duty_request.last_half = params[:common][:last_half]
         @on_duty_request.first_half = params[:common][:first_half]
+        @on_duty_request.present_status = params[:common][:present_status]
         @checkbox = true
       else
         @checkbox = false
@@ -41,6 +42,20 @@ class OnDutyRequestsController < ApplicationController
 
     if @on_duty_request.is_available?
       flash[:alert] = "Your Request already has been sent"
+      if current_user.employee_id == @on_duty_request.employee_id
+        redirect_to new_on_duty_request_path
+      else
+        redirect_to employee_list_on_duty_requests_path
+      end
+    elsif @on_duty_request.end_date == nil 
+      flash[:alert] = "please Fill all mendatory fields"
+      if current_user.employee_id == @on_duty_request.employee_id
+        redirect_to new_on_duty_request_path
+      else
+        redirect_to employee_list_on_duty_requests_path
+      end
+    elsif @on_duty_request.is_salary_processed?
+      flash[:alert] = "Salary Processed for this month"
       if current_user.employee_id == @on_duty_request.employee_id
         redirect_to new_on_duty_request_path
       else
@@ -67,7 +82,7 @@ class OnDutyRequestsController < ApplicationController
           elsif @on_duty_request.first_half == true || @on_duty_request.last_half == true
             @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f + 0.5
           else
-            @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f + 1
+            @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f + 0.5
           end  
         elsif @on_duty_request.leave_type == 'Half Day'
           if @on_duty_request.first_half == true || @on_duty_request.last_half == true
@@ -80,25 +95,34 @@ class OnDutyRequestsController < ApplicationController
         end
         @on_duty_request.save
 
-        if @on_duty_request.leave_type == 'Half Day'
-          if @on_duty_request.first_half == true && @on_duty_request.last_half == true
-            @on_duty_request.update(first_half: true,last_half: false)
-          elsif @on_duty_request.first_half == false && @on_duty_request.last_half == false
-            @on_duty_request.update(first_half: true,last_half: false)
-          else @on_duty_request.first_half == true || @on_duty_request.last_half == true
-            @on_duty_request.save
-          end
-        end
+            if @on_duty_request.leave_type == 'Half Day'
+              if @on_duty_request.first_half == true && @on_duty_request.last_half == true
+                @on_duty_request.update(first_half: false,last_half: true)
+              elsif @on_duty_request.first_half == false && @on_duty_request.last_half == false
+                @on_duty_request.update(first_half: false,last_half: true)
+              else @on_duty_request.first_half == true || @on_duty_request.last_half == true
+                @on_duty_request.save
+              end
+            end
         for i in @on_duty_request.start_date.to_date..@on_duty_request.end_date.to_date
           OdRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',day: i)
         end
           OdStatusRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',change_date: Date.today)
 
           if @employee.manager.email.nil? or @employee.manager.email == ""
-              flash[:notice] = "Send request without email."
+            flash[:notice] = "Send request without email."
+          else
+            flash[:notice] = 'OD Request sent successfully.'
+            OdRequestMailer.pending(@on_duty_request).deliver_now
+          end
+          
+            if @on_duty_request.id != nil
+              if @on_duty_request.leave_type == 'Full/Half'
+                if @on_duty_request.first_half == false && @on_duty_request.last_half == false
+                  @on_duty_request.update(first_half: false,last_half: true)
+                end
+              end
             else
-              flash[:notice] = 'OD Request sent successfully.'
-              OdRequestMailer.pending(@on_duty_request).deliver_now
             end
 
         flash[:notice] = "Request Created Successfully"
@@ -615,6 +639,6 @@ class OnDutyRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def on_duty_request_params
-      params.require(:on_duty_request).permit(:employee_id, :leave_type, :start_date, :end_date, :no_of_day, :reason, :first_reporter_id, :second_reporter_id, :first_half, :last_half, :current_status, :is_pending, :is_cancelled, :is_first_approved, :is_second_approved, :is_first_rejected, :is_second_rejected)
+      params.require(:on_duty_request).permit(:present_status,:employee_id, :leave_type, :start_date, :end_date, :no_of_day, :reason, :first_reporter_id, :second_reporter_id, :first_half, :last_half, :current_status, :is_pending, :is_cancelled, :is_first_approved, :is_second_approved, :is_first_rejected, :is_second_rejected)
     end
 end

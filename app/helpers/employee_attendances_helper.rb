@@ -45,7 +45,7 @@ module EmployeeAttendancesHelper
   end
 
   def present_day_count(exist)
-    exist.select {|k,v| v == "P" }.count + (exist.select {|k,v| v == "P/2" }.count)/2.to_f + (exist.select {|k,v| v == "P/OD" }.count)/2.to_f
+    exist.select {|k,v| v == "P" }.count + (exist.select {|k,v| v == "P/2" }.count)/2.to_f + (exist.select {|k,v| v == "P/OD" }.count)/2.to_f + (exist.select {|k,v| v == "OD/P" }.count)/2.to_f
   end
 
   def holiday_in_month_count(exist)
@@ -60,38 +60,32 @@ module EmployeeAttendancesHelper
     exist.select {|k,v| v == "A" || v == "" }.count + (exist.select {|k,v| v == "P/2" }.count)/2.to_f
   end
 
-  # def payable_day_count(exist)
-  #   exist.select {|k,v| v == "P" }.count
-  # end
-
- 
-
   def cl_leave_count(exist)
-    exist.select {|k,v| v == "CL" }.count + (exist.select {|k,v| v == "P/CL" }.count)/2.to_f 
+    exist.select {|k,v| v == "CL" }.count + (exist.select {|k,v| v == "P/CL" }.count)/2.to_f + (exist.select {|k,v| v == "CL/P" }.count)/2.to_f
   end
 
   def el_leave_count(exist)
-    exist.select {|k,v| v == "EL" }.count + (exist.select {|k,v| v == "P/EL" }.count)/2.to_f 
+    exist.select {|k,v| v == "EL" }.count + (exist.select {|k,v| v == "P/EL" }.count)/2.to_f + (exist.select {|k,v| v == "EL/P" }.count)/2.to_f
   end
 
   def esic_leave_count(exist)
-    exist.select {|k,v| v == "ESIC" }.count + (exist.select {|k,v| v == "P/ESIC" }.count)/2.to_f 
+    exist.select {|k,v| v == "ESIC" }.count + (exist.select {|k,v| v == "P/ESIC" }.count)/2.to_f + (exist.select {|k,v| v == "ESIC/P" }.count)/2.to_f
   end
 
   def lwp_leave_count(exist)
-    exist.select {|k,v| v == "LWP" }.count + (exist.select {|k,v| v == "P/LWP" }.count)/2.to_f 
+    exist.select {|k,v| v == "LWP" }.count + (exist.select {|k,v| v == "P/LWP" }.count)/2.to_f + (exist.select {|k,v| v == "LWP/P" }.count)/2.to_f
   end
 
   def advance_leave_count(exist)
-    exist.select {|k,v| v == "AL" }.count + (exist.select {|k,v| v == "P/AL" }.count)/2.to_f 
+    exist.select {|k,v| v == "AL" }.count + (exist.select {|k,v| v == "P/AL" }.count)/2.to_f + (exist.select {|k,v| v == "AL/P" }.count)/2.to_f
   end
 
   def coff_leave_count(exist)
-    exist.select {|k,v| v == "C.Off" }.count + (exist.select {|k,v| v == "P/C.Off" }.count)/2.to_f 
+    exist.select {|k,v| v == "C.Off" }.count + (exist.select {|k,v| v == "P/C.Off" }.count)/2.to_f + (exist.select {|k,v| v == "C.Off/P" }.count)/2.to_f
   end
 
   def od_day_count(exist)
-    exist.select {|k,v| v == "OD" }.count + (exist.select {|k,v| v == "P/OD" }.count)/2.to_f 
+    exist.select {|k,v| v == "OD" }.count + (exist.select {|k,v| v == "P/OD" }.count)/2.to_f + (exist.select {|k,v| v == "OD/P" }.count)/2.to_f
   end
 
 
@@ -107,42 +101,53 @@ module EmployeeAttendancesHelper
     gate_pas = 0
     gatepass = 0
     gatepas = 0
+    absent_day = 0
     attendances.each do |a|
       if a.employee_leav_request_id != nil
-      if a.employee_leav_request.leave_type == "Full Day"
-        if a.employee_leav_request.leav_category.is_payble
-          pay_leave = pay_leave + 1
+        if a.employee_leav_request.leave_type == "Full Day"
+          if a.employee_leav_request.leav_category.is_payble
+            pay_leave = pay_leave + 1
+          else
+            non_pay_leave = non_pay_leave + 1
+          end
         else
-          non_pay_leave = non_pay_leave + 1
+          if a.employee_leav_request.leav_category.is_payble
+            if a.employee_leav_request.present_status == false
+              pay_leave = pay_leave + 0.5
+              absent_day = absent_day + 0.5
+            else
+              pay_leave = pay_leave + 0.5
+              present_day = present_day + 0.5
+            end
+          else
+            if a.employee_leav_request.present_status == false
+              non_pay_leave = non_pay_leave + 0.5
+              absent_day = absent_day + 0.5
+            else
+               non_pay_leave = non_pay_leave + 0.5
+              present_day = present_day + 0.5
+            end
+          end
+        end 
+      else #nil
+        if a.present == "PG"
+          if gatepass <= 2
+            gate_pass = gate_pass + 0.5
+            present_day = present_day + 0.5
+            gatepass = gatepass + 2
+          else
+            gate_pas = gate_pas + 0.5
+            present_day = present_day + 0.5
+          end
         end
-      else
-        if a.employee_leav_request.leav_category.is_payble
-          pay_leave = pay_leave + 0.5
-          present_day = present_day + 0.5
-        else
-          non_pay_leave = non_pay_leave + 0.5
-          present_day = present_day + 0.5
-        end
-      end 
-    else #nil
-
-      if a.present == "PG"
-       if gatepass <= 2
-        gate_pass = gate_pass + 0.5
-        present_day = present_day + 0.5
-        gatepass = gatepass + 2
-       else
-        gate_pas = gate_pas + 0.5
-        present_day = present_day + 0.5
-       end
-      end
-    end#
-    end
+      end#
+    end#DO
     arr << pay_leave
     arr << non_pay_leave
     arr << present_day
     arr << gate_pass
     arr << gate_pas
+    arr << absent_day
     arr
   end
 

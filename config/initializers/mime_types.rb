@@ -5,5 +5,6 @@
 
 Mime::Type.register 'application/xls', :xls
 Mime::Type.register "application/axlsx", :axlsx
-
+Mime::Type.register "txt", :txt
+# Mime::Type.register "text/markdown", :markdown
 #Mime::Type.register 'application/pdf', :pdf

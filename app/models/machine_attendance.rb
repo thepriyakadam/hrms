@@ -18,6 +18,15 @@ class MachineAttendance < ActiveRecord::Base
     end
   end
 
+  def self.to_txt(options = {})
+    TEXT.generate(options) do |txt|
+      txt << column_names
+      all.each do |machine_attendance|
+        txt << machine_attendance.attributes.values_at(*column_names)
+      end
+    end
+  end
+
   def self.import(file)
     spreadsheet = open_spreadsheet(file)
     header = spreadsheet.row(1)
@@ -34,6 +43,7 @@ class MachineAttendance < ActiveRecord::Base
     when '.csv' then Roo::CSV.new(file.path, file_warning: :ignore)
     when '.xls' then Roo::Excel.new(file.path, file_warning: :ignore)
     when '.xlsx' then Roo::Excelx.new(file.path, file_warning: :ignore)
+    when '.txt' then Roo::TEXT.new(file.path, file_warning: :ignore)
     else raise "Unknown file type: #{file.original_filename}"
     end
   end

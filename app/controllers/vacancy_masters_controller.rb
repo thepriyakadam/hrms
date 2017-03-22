@@ -58,19 +58,28 @@ class VacancyMastersController < ApplicationController
 
   def create
     @vacancy_master = VacancyMaster.new(vacancy_master_params)
-    # @vacancy_master.current_status = "Pending"
     a=current_user.employee_id
-    emp = Employee.where(id: a).take
-    if emp.try(:manager_id).nil?
+    employee = Employee.where(id: a).take
+    # if @vacancy_master.is_there?
+    #   flash[:alert] = "Your Request already has been sent"
+    #   redirect_to new_vacancy_master_path
+    #  else
+    if employee.try(:manager_id).nil?
         flash[:alert] = "Reporting Manager not set please set Reporting Manager"
         redirect_to new_vacancy_master_path
       else
-    respond_to do |format|
+        @vacancy_master.current_status = "Pending"
+        @vacancy_master.reporting_master_id = employee.manager_id
+        dept_id = params[:employee][:department_id]
+        @vacancy_master.department_id = dept_id.to_i
+        respond_to do |format|
       if @vacancy_master.save
         # byebug
-        VacancyMaster.where(id: @vacancy_master.id).update_all(reporting_master_id: emp.manager_id,current_status: "Pending")
+        # VacancyMaster.where(id: @vacancy_master.id).update_all(reporting_master_id: emp.manager_id,current_status: "Pending")
         ReportingMastersVacancyMaster.create(reporting_master_id: current_user.employee_id, vacancy_master_id: @vacancy_master.id,vacancy_status: "Pending")
-
+        for i in 1..@vacancy_master.no_of_position.to_i
+          ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id, employee_id: @vacancy_master.employee_id, open_date: @vacancy_master.vacancy_post_date, fulfillment_date: @vacancy_master.vacancy_fullfillment_date,status: "Pending", employee_designation_id: @vacancy_master.employee_designation_id, vacancy_name: @vacancy_master.vacancy_name)
+        end
         # client = Twilio::REST::Client.new(TWILIO_CONFIG['sid'], TWILIO_CONFIG['token'])
       
       # Create and send an SMS message
@@ -105,6 +114,7 @@ class VacancyMastersController < ApplicationController
     end
   end
 end
+# end
 
   # PATCH/PUT /vacancy_masters/1
   # PATCH/PUT /vacancy_masters/1.json
@@ -150,7 +160,9 @@ end
      # @reporting_master = ReportingMaster.find(@vacancy_master.reporting_master_id)
      # @employee = Employee.find(@reporting_master.employee_id)
      # @vacancy_masters = VacancyMaster.where(reporting_master_id: reporting_masters)
-     @vacancy_masters = VacancyMaster.where(id: @vacancy_master.id)
+     # @vacancy_masters = VacancyMaster.where(employee_id: current_user.employee_id) #new code
+     # @vacancy_masters = VacancyMaster.where(id: @vacancy_master.id)
+     @vacancy_masters = VacancyMaster.where(employee_id: @vacancy_master.employee_id)
   end
 
   def vacancy_history
@@ -262,7 +274,7 @@ end
     flash[:notice] = 'Vacancy Request Approved Successfully'
     redirect_to vacancy_history_vacancy_masters_path
     else
-    reporting_master = @training_request.reporting_master_id #new code
+    reporting_master = @vacancy_master.reporting_master_id #new code
      employee = Employee.where(id: reporting_master).take #new code
      first_manager_id = employee.manager_id #new code
      second_manager_id = employee.manager_2_id #new code
@@ -303,6 +315,7 @@ end
     @vacancy_master = VacancyMaster.find(params[:format])
     @vacancy_master.update(current_status: "FinalApproved",reporting_master_id: current_user.employee_id)
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id,reporting_master_id: current_user.employee_id,vacancy_status: "FinalApproved")
+    ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id).update_all(status: "FinalApproved")
     if @vacancy_master.current_status == "FinalApproved"
       flash[:notice] = 'Vacancy Request Approved Successfully'
       redirect_to final_approval_vacancy_list_vacancy_masters_path
@@ -345,8 +358,8 @@ end
   end
 
   def particular_vacancy_request_list_history
-    @vacancy_request_history = VacancyRequestHistory.find(params[:format])
-    @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_history_id: @vacancy_request_history.id)
+    @vacancy_master = VacancyMaster.find(params[:format])
+    @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
     session[:active_tab] ="recruitment"
   end
 
@@ -360,20 +373,82 @@ end
   def is_closed
       @particular_vacancy_request =  ParticularVacancyRequest.find(params[:format])
       @particular_vacancy_request.update(is_complete: true)
+      @selected_resume = SelectedResume.where(vacancy_master_id: @particular_vacancy_request.vacancy_master_id).take
+      @interview_schedule = InterviewSchedule.where(selected_resume_id: @selected_resume.id).take
+      @vacancy_master = VacancyMaster.where(id: @particular_vacancy_request.vacancy_master_id).take
+      InterviewSchedule.where(id: @interview_schedule.id).update_all(is_confirmed: true)
+      
+      @particular_vacancy_request_1 = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id,is_complete: true).count
+      @particular_vacancy_request_2 = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id,is_complete: nil).count
+       if @interview_rounds_2 == 0 && @interview_rounds_1 > 0
+          VacancyMaster.where(id: @vacancy_master.id).update_all(is_confirmed: true)
+       else
+       end
+
       flash[:notice] = "Vacancy Request Closed Successfully"
       redirect_to vacancy_masters_path
   end
 
   def vacancy_resume
       # @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Approved","Edit And Approved")
-      @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"FinalApproved")
+      # @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"FinalApproved")
+
+      if current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved")
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        # @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"FinalApproved")
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+      else current_user.role.name == 'Employee'
+        @vacancy_masters = VacancyMaster.where(employee_id: current_user.employee_id,current_status: "FinalApproved")
+        redirect_to home_index_path
+      end
+    else
+      @employees = Employee.all
+    end
       session[:active_tab] ="recruitment"
       session[:active_tab1] ="interview_sched"
   end
 
   def vacancy_profile
     # @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Approved","Edit And Approved")
-    @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"FinalApproved")
+    # @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"FinalApproved")
+
+    if current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved")
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        # @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"FinalApproved")
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+      else current_user.role.name == 'Employee'
+        @vacancy_masters = VacancyMaster.where(employee_id: current_user.employee_id,current_status: "FinalApproved")
+        redirect_to home_index_path
+      end
+    else
+      @employees = Employee.all
+    end
     session[:active_tab] ="recruitment"
     session[:active_tab1] ="interview_sched"
   end
@@ -391,6 +466,38 @@ end
       @particular_vacancy_request.update(closed_date: Time.zone.now.to_date,is_complete: true,candidate_name: @candidate_name)
       flash[:notice] = "Candidate Confirmed & Vacancy Closed Successfully"
       redirect_to approved_vacancy_request_history_list_vacancy_masters_path
+  end
+
+  def confirm_interview_schedule_list
+     @interview_schedules = InterviewSchedule.where(is_confirm: true)
+     session[:active_tab] ="recruitment"
+     session[:active_tab1] ="interview_sched"
+  end
+
+  def confirm_vacancy
+    @interview_schedule = InterviewSchedule.find(params[:format])
+    @selected_resume = SelectedResume.where(id: @interview_schedule.selected_resume_id).take
+    @vacancy_master = VacancyMaster.where(id: @selected_resume.vacancy_master_id).take
+    @interview_analyses = InterviewAnalysis.where(interview_schedule_id: @interview_schedule.id)
+    @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id)
+  end
+
+  def confirm_candidate_1
+     @interview_schedule = InterviewSchedule.find(params[:format])
+     InterviewSchedule.where(id: @interview_schedule.id).update_all(is_confirmed: true)
+     @selected_resume = SelectedResume.where(id: @interview_schedule.selected_resume_id).take
+     @vacancy_master = VacancyMaster.where(id: @selected_resume.vacancy_master_id).take
+     a=ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id,is_complete: nil).first
+     ParticularVacancyRequest.where(id: a.id).update_all(is_complete: true,candidate_name: @interview_schedule.candidate_name,closed_date: Time.zone.now.to_date)
+
+     @particular_vacancy_request_1 = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id,is_complete: true).count
+     @particular_vacancy_request_2 = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id,is_complete: nil).count
+       if @particular_vacancy_request_2 == 0 && @particular_vacancy_request_1 > 0
+          VacancyMaster.where(id: @vacancy_master.id).update_all(is_confirmed: true)
+       else
+       end
+     flash[:notice] = "Candidate Confirmed & Vacancy Closed Successfully"
+    redirect_to confirm_interview_schedule_list_vacancy_masters_path
   end
 
   def modal3
@@ -445,9 +552,35 @@ end
 
 
   def approved_vacancy_request_history_list
-     @vacancy_request_histories = VacancyRequestHistory.where("employee_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Approved","Edit And Approved")
+    
+     # @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"FinalApproved")
+
+     if current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved")
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        # @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"FinalApproved")
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+      else current_user.role.name == 'Employee'
+        @vacancy_masters = VacancyMaster.where(employee_id: current_user.employee_id,current_status: "FinalApproved")
+        redirect_to home_index_path
+      end
+    else
+      @employees = Employee.all
+    end
      session[:active_tab] ="recruitment"
-     session[:active_tab1] ="particular_vacancy"
+    session[:active_tab1] ="interview_sched"
   end
 
   def vacancy_history_list
@@ -470,6 +603,7 @@ end
     # @employee = Employee.find(@reporting_master.employee_id)
     # @vacancy_master1 = VacancyMaster.where(id: @vacancy_master.id)
     @reporting_masters_vacancy_masters = ReportingMastersVacancyMaster.where(vacancy_master_id: @vacancy_master.id)
+    # @reporting_masters_vacancy_masters = ReportingMastersVacancyMaster.where(vacancy_master_id: @vacancy_master.id).order("id ASC")
   end
 
   def vac_history
@@ -501,6 +635,6 @@ end
 
   # Never trust param eters from the scary internet, only allow the white list through.
   def vacancy_master_params
-    params.require(:vacancy_master).permit(:employee_designation_id,:justification,:employee_id,:current_status,:experience,:degree_1_id,:degree_2_id,:reporting_master_id,:keyword,:other_organization, :department_id, :degree_id, :company_location_id, :vacancy_name, :no_of_position, :description, :vacancy_post_date, :budget)
+    params.require(:vacancy_master).permit(:employee_designation_id,:justification,:employee_id,:vacancy_code,:vacancy_fullfillment_date,:is_confirmed,:current_status,:experience,:degree_1_id,:degree_2_id,:reporting_master_id,:keyword,:other_organization, :department_id, :degree_id, :company_location_id, :vacancy_name, :no_of_position, :description, :vacancy_post_date, :budget)
   end
 end

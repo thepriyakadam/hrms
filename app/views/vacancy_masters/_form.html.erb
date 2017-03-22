@@ -6,6 +6,7 @@
   <div class="box-body">
   <%= bootstrap_form_for(@vacancy_master,html: {id: 'vacancy_master'}) do |f| %>
   <%= f.hidden_field :employee_id, :value => current_user.employee_id %>
+  <%= f.hidden_field :vacancy_post_date, value: Date.today %>
       <div class="row">
 
        <div class="col-sm-3">
@@ -22,31 +23,28 @@
         </div>
 
         <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
            <%= f.text_field :vacancy_name,label: 'Vacancy Name'%>
           </div>
         </div>
 
           <div class="col-sm-3">
           <div class="field">
-            <div class="form-group required">
-              <%= f.select :company_location_id, role_location_list,{label: 'Location',include_blank: " Select Location"} %>
-            </div>
+              <%=f.select :company_location_id, role_location_list,{include_blank: "Select Company Location"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_department',a,function(response){});"}%>
           </div>
         </div> 
         </div>
 
       <div class="row">
-
          <div class="col-sm-3">
-          <div class="field">
-            <div class="form-group required">
-              <%= f.select :department_id, all_department_type_list2,{label: 'Department',include_blank: " Select Department"} %>
+         <div class="field">
+            <div class="input-group">
+              <div id="department">
+                <%= render 'employees/department_dropdown' %> 
+            </div> 
             </div>
-          </div>
-        </div> 
-
-     
+            </div>
+            </div>
       
         <div class="col-sm-3">
           <div class="form-group required">
@@ -66,7 +64,7 @@
              <%= f.text_field :budget,label: 'Budget'%>
           </div>
         </div> 
-          </div>
+        </div>
 
       <div class="row">
 
@@ -78,7 +76,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-               <%= f.text_field :vacancy_post_date, label: 'Vacancy Fulfillment Date', class: 'birth_date'%>
+               <%= f.text_field :vacancy_fullfillment_date, label: 'Vacancy Fulfillment Date', class: 'birth_date'%>
             </div>
           </div>
         </div>      
@@ -90,7 +88,7 @@
         </div>  
 
         <div class="col-sm-3">
-          <label>Qualification 1</label>
+          <label>Qualification I</label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
@@ -102,7 +100,7 @@
         </div>
 
         <div class="col-sm-3">
-          <label>Qualification 2</label>
+          <label>Qualification II</label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
@@ -117,7 +115,7 @@
       <div class="row">
 
         <div class="col-sm-3">
-          <label>Qualification 3</label>
+          <label>Qualification III</label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
@@ -164,7 +162,9 @@
     </div>
   </div>
 <% end %>
-<script>
+
+
+<script type="text/javascript">
 // $(function(){
 //   $.validator.addMethod("numbersOnly", function (value, element) {
 //     return this.optional(element) || /^[0-9]+$/i.test(value);
@@ -172,47 +172,31 @@
 
 $("#vacancy_master").validate({
     rules: {
-      "vacancy_master[company_location_id]":{
-        required: true
-      },
-      "vacancy_master[other_organization]":{
-        required: true
-      },
-      "vacancy_master[no_of_position]":{
-        required: true,
-        numbersOnly: true
-      },
       "vacancy_master[employee_designation_id]":{
         required: true
       },
-      "vacancy_master[department_id]":{
+      "vacancy_master[vacancy_name]":{
         required: true
       },
-      "vacancy_master[vacancy_post_date]":{
+      "vacancy_master[no_of_position]":{
+        required: true
+      },
+      "vacancy_master[vacancy_fullfillment_date]":{
         required: true
       }
     },
     messages: {
       "vacancy_master[company_location_id]":{
-        required: "Please Specify Location Name"
+        required: "Please Select Job Title"
       },
-      "vacancy_master[other_organization]":{
-        required: "Please Specify Organization Name"
+      "vacancy_master[vacancy_name]":{
+        required: "Please Specify Vacancy Name"
       },
       "vacancy_master[no_of_position]":{
         required: "Please Specify No. of Positions"
       },
-      "vacancy_master[employee_designation_id]":{
-        required: "Please Specify Job Title"
-      },
-      "vacancy_master[department_id]":{
-        required: "Please Specify Department Name"
-      },
-      "vacancy_master[vacancy_post_date]":{
-        required: "Please Specify Vacancy Post Date"
-      },
-      "vacancy_master[vacancy_post_date]":{
-        required: "Please Specify Vacancy Post Date"
+      "vacancy_master[vacancy_fullfillment_date]":{
+        required: "Please Specify Vacancy Fulfillment Date"
       }
     },
     errorPlacement: function(error, element) {

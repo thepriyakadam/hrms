@@ -23,7 +23,7 @@
   
     <tr>
       <th>Sr.No.</th>
-      <th>Employee ID</th>
+      <th>ID</th>
       <th>Employee Name</th>
       <th>Leave Type</th>
       <th>No. Of Days</th>
@@ -32,7 +32,7 @@
       <th>Status</th>
     </tr>
 
- <% @on_duty_requests.each do |on_duty_request| %>
+    <% @on_duty_requests.each do |on_duty_request| %>
       <tr>
       <td><%= i = i+1 %></td>
         <td><%= on_duty_request.employee.try(:manual_employee_code) %></td>

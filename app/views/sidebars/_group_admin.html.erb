@@ -215,6 +215,7 @@
       <li><a href="/reporting_masters/update_reporting_manager"><i class="fa fa-tags"></i> Replace Manager </a></li>
       <li><a href="/employees/member_list_for_update_password"><i class="fa fa-tags"></i> Reset Password </a></li>
       <li><a href="/employees/destroy_employee"><i class="fa fa-tags"></i> Destroy Employee </a></li>
+      <li><a href="/employees/employee_gps_setting_list"><i class="fa fa-tags"></i> Set GPS </a></li>
       <!-- <li><a href="/employees/employee_list_for_revert"><i class="fa fa-tags"></i> Revert </a></li> -->
       <!-- <li><a href="/employees/transfer_employee_list"><i class="fa fa-tags"></i>Transfer Employee</a></li> -->
     </ul>
@@ -335,14 +336,23 @@
         <i class="fa fa-edit"></i> Attendance Setup <i class="fa fa-angle-left pull-right"></i>
       </a>
       <ul class="treeview-menu">
-       <li><a href="/shift_masters/new"><i class="fa fa-tags"> </i>Shift Master</a></li>
-       <li><a href="/company_time_masters/new"><i class="fa fa-tags"> </i>Time Master</a></li>
-       <li><a href="/machine_attendances/new"><i class="fa fa-tags"> </i>Machine Attendances</a></li>
+       <li><a href="/shift_masters/new"><i class="fa fa-tags"> </i> Shift Master</a></li>
+       <li><a href="/company_time_masters/new"><i class="fa fa-tags"> </i> Time Master</a></li>
+       <li><a href="/machine_attendances/new"><i class="fa fa-tags"> </i> Machine Attendances</a></li>
+       <li><a href="/machine_attendances/import_machine_attendance"><i class="fa fa-tags"></i> Machine Data Upload</a></li>
+     </ul>
+      </li> 
+
+       <li class="treeview" id="WeekoffSetup">
+      <a href="#">
+      <i class="fa fa-edit"></i> Week Off / Holiday <i class="fa fa-angle-left pull-right"></i>
+      </a>
+      <ul class="treeview-menu">
        <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
        <li><a href="/week_off_masters/new"><i class="fa fa-tags"></i> Week Off Setup </a></li>
        <li><a href="/week_off_masters/week_off_list"><i class="fa fa-tags"></i> Confirm Week Off </a></li>
        <li><a href="/employee_week_offs"><i class="fa fa-tags"></i> Revert Week Off</a></li>
-       <li><a href="/machine_attendances/import_machine_attendance"><i class="fa fa-tags"></i> Machine Data Upload</a></li>
+       <li><a href="/employee_week_offs/date_wise_week_off"><i class="fa fa-tags"></i> Week Off Report </a></li>
      </ul>
       </li> 
 
@@ -355,7 +365,7 @@
        <li><a href="/employee_attendances/revert_attendance_employeewise"><i class="fa fa-tags"></i> Revert Employee Wise </a></li>
        <li><a href="/employee_attendances/revert_attendance"><i class="fa fa-tags"></i> Revert Unit Wise </a></li>
        <li><a href="/employee_attendances"><i class="fa fa-tags"></i> Confirm Attendance  </a></li>
-       <li><a href="/workingdays/revert_workingday"><i class="fa fa-tags"> </i>Revert Workingday</a></li>
+       <li><a href="/workingdays/revert_workingday"><i class="fa fa-tags"> </i> Revert Workingday</a></li>
      <!-- <li><a href="/workingdays/search_month_year"><i class="fa fa-tags"> </i>Attendace Update(Auto) </a></li> -->
      <!--  <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
       <li><a href="/company_shifts/new"><i class="fa fa-tags"></i> Shifts Maintenance </a></li>
@@ -755,8 +765,8 @@
         <li><a href="/vacancy_masters"><i class="fa fa-tags"></i> Vacancy Status </a></li>
         <!-- <li><a href="/vacancy_masters/approved_vacancy_request_history_list"><i class="fa fa-tags"></i> Approved Vacancy List </a></li> -->
         <!-- <li><a href="/vacancy_masters/approved_vacancy_list"><i class="fa fa-tags"></i> Approved Vacancy List </a></li> -->
-        <li><a href="/vacancy_masters/vac_history"><i class="fa fa-tags"></i> Vacancy History </a></li>
-         
+<!--         <li><a href="/vacancy_masters/vac_history"><i class="fa fa-tags"></i> Vacancy History </a></li>
+ -->         
 <!--          <li><a href="/interview_schedules"><i class="fa fa-tags"></i> Interview Schedule List</a></li>
  -->        </ul>
       </li>
@@ -768,6 +778,8 @@
         <li><a href="/interview_schedules"><i class="fa fa-tags"></i> Interview Round </a></li>
         <!-- <li><a href="/interview_schedules/interviewee_list"><i class="fa fa-tags"></i> Interviewee List </a></li> -->
         <li><a href="/interview_schedules/interview_round_list"><i class="fa fa-tags"></i> Interviewee List </a></li>
+        <li><a href="/vacancy_masters/confirm_interview_schedule_list"><i class="fa fa-tags"></i> Confirm Candidate </a></li>
+        <li><a href="/vacancy_masters/approved_vacancy_request_history_list"><i class="fa fa-tags"></i> Position Status </a></li>
         <li><a href="/interview_schedules/all_interview_schedule_list"><i class="fa fa-tags"></i> Report </a></li>
         </ul>
       </li>   
@@ -776,8 +788,8 @@
         <ul class="treeview-menu">
         <li><a href="/selected_resumes/new1"><i class="fa fa-tags"></i> Candidate Profile </a></li>
         <li><a href="/selected_resumes/all_resume_list"><i class="fa fa-tags"></i> Resume Shortlist </a></li>
-        <li><a href="/interview_schedules/new1"><i class="fa fa-tags"></i> Interview Schedule </a></li>
-        </ul>
+<!--         <li><a href="/interview_schedules/new1"><i class="fa fa-tags"></i> Interview Schedule </a></li>
+ -->        </ul>
       </li>   
        <li id="candidate_regist">
         <a href="/capture_resumes/new"><i class="fa fa-edit"></i>Candidate Registration <i></i></a>

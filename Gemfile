@@ -16,7 +16,7 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 
 gem 'whenever', '~> 0.9.4',:require => false
-
+gem 'geocoder'
 gem 'therubyracer', platforms: :ruby
 gem 'query_report'
 gem 'kaminari', '~> 0.16.3'
@@ -44,7 +44,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'thin', '~> 1.6', '>= 1.6.4'
 
-gem 'bundler', '~> 1.11', '>= 1.11.2'
+gem 'bundler'
 
 # for pdf generation
 gem 'prawn', '~> 1.3.0'
@@ -141,3 +141,4 @@ gem "axlsx_rails"
 
 #Chart
 gem "chartkick"
+gem 'pry'

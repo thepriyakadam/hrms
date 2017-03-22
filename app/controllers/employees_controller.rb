@@ -143,7 +143,7 @@ class EmployeesController < ApplicationController
   # POST /employees.json
   def create
     @employee = Employee.new(employee_params)
-    @employee_type = EmployeeType.find_by(name: "Probationary")
+    @employee_type = EmployeeType.find_by(name: "Probation")
     @employees = Employee.where(employee_type_id: @employee_type.id)
     @department = Department.find(@employee.department_id)
     authorize! :create, @employee
@@ -152,7 +152,7 @@ class EmployeesController < ApplicationController
         @employee.update(company_location_id: @department.company_location_id,company_id: @department.company_location.company_id)
         @employees.each do |e|
           if e.joining_detail.confirmation_date != nil && e.joining_detail.confirmation_date <= Date.today
-            employee_type = EmployeeType.find_by(name: "Confirmed")
+            employee_type = EmployeeType.find_by(name: "Permanent")
             e.update(employee_type_id: employee_type.id)
           end
         end
@@ -164,7 +164,6 @@ class EmployeesController < ApplicationController
 
 
   def display_emp_code_master
-    # byebug
     @emp1= params[:id]
     @emp_master_code = EmployeeCodeMaster.where(id: @emp1,is_active: true).take
     @last = @emp_master_code.last_range.succ
@@ -172,18 +171,25 @@ class EmployeesController < ApplicationController
 
   # PATCH/PUT /employees/1
   # PATCH/PUT /employees/1.json
-  def update
-     respond_to do |format|
-      if @employee.update(employee_params)
-        Member.find_by(employee_id: @employee.id).update(company_id: employee_params["company_id"],company_location_id:employee_params["company_location_id"],department_id:employee_params["department_id"] )
-        format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
-        format.json { render :show, status: :ok, location: @employee }
-      else
-        format.html { render :edit }
-        format.json { render json: @employee.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+   def update
+    respond_to do |format|
+     if @employee.update(employee_params)
+       @emp = @employee.id
+       @member = Member.find_by(employee_id: @emp)
+       if @member.nil?
+         format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
+         format.json { render :show, status: :ok, location: @employee }
+       else
+         Member.find_by(employee_id: @employee.id).update(company_id: employee_params["company_id"],company_location_id:employee_params["company_location_id"],department_id:employee_params["department_id"] )
+         format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
+         format.json { render :show, status: :ok, location: @employee }
+       end
+     else
+       format.html { render :edit }
+       format.json { render json: @employee.errors, status: :unprocessable_entity }
+     end
+   end
+ end
 
   # DELETE /employees/1
   # DELETE /employees/1.json
@@ -1126,6 +1132,33 @@ def show_all_record
             :show_as_html => params[:debug].present?
       end
     end
+  end
+
+  def employee_gps_setting_list
+    @employees = Employee.where(status: "Active")
+    @members = Member.where(employee_id: @employees)
+    session[:active_tab] ="UserAdministration"
+  end
+
+  def member_gps_form
+     @member = Member.find(params[:format])
+  end
+
+  def update_gps
+    # byebug
+    # Member.find(params[:id])
+    @emp = params[:member][:employee_id]
+    @latitude = params[:member][:latitude]
+    @longitude = params[:member][:longitude]
+    @location = params[:member][:location]
+    @gps = params[:member][:is_gps]
+    Member.where(employee_id: @emp).update_all(latitude: @latitude,longitude: @longitude,location: @location,is_gps: true)
+    member=Member.where(employee_id: @emp).take
+    EmployeeGpsHistory.create(member_id: member.id,latitude: @latitude,longitude: @longitude,location: @location,from_date: Date.today)
+    @gps_history = EmployeeGpsHistory.where(member_id: member.id).last(2).first
+    EmployeeGpsHistory.where(id: @gps_history.id).update_all(to_date: @mngr.effective_from)
+    flash[:notice] = "GPS Setting Saved Successfully"
+    redirect_to employee_gps_setting_list_employees_path
   end
 
 

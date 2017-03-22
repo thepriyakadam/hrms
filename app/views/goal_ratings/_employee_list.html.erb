@@ -15,7 +15,7 @@
 		    <tr>
 		      <td><%= check_box_tag "goal_rating_ids[]", e.appraisee_id %></td>
 		      <td><%= e.goal_bunch.employee.try(:manual_employee_code) %></td> 
-		      <td><%= e.appraisee.try(:first_name) %> <%= e.appraisee.try(:middle_name) %> <%= e.appraisee.try(:last_name) %></td>
+		      <td><%= full_name(e.appraisee) %></td>
 		      <td><%= e.goal_bunch.try(:appraisee_rating).try(:value) %></td>
 		      <td><%= e.goal_bunch.try(:appraiser_rating) %></td>
 		      <td><%= e.goal_bunch.try(:reviewer_rating).try(:value) %></td>

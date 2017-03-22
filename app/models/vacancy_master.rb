@@ -1,5 +1,5 @@
 class VacancyMaster < ActiveRecord::Base
-  # protokoll :employee_code, pattern: 'VAC#####'
+  protokoll :vacancy_code, pattern: 'VAC#######'
   belongs_to :department
   belongs_to :employee_designation
   belongs_to :company_location
@@ -21,8 +21,9 @@ class VacancyMaster < ActiveRecord::Base
   belongs_to :degree_2, class_name: 'Degree'
 
   validates :employee_designation_id, presence: true
+  validates :vacancy_name, presence: true
   validates :no_of_position, presence: true
-  validates :vacancy_post_date, presence: true
+  validates :vacancy_fullfillment_date, presence: true
   # validates :reporting_master_id, presence: true
 
   def self.to_csv(options = {})
@@ -52,6 +53,22 @@ class VacancyMaster < ActiveRecord::Base
     when '.xlsx' then Roo::Excelx.new(file.path, file_warning: :ignore)
     else raise "Unknown file type: #{file.original_filename}"
     end
+  end
+
+
+  def is_there?
+    flag = 0
+    flag1 = 0
+    flag2 = 0
+    flag3 = 0
+      flag = VacancyMaster.exists?(employee_id: self.employee_id,current_status: 'Pending') ||
+      flag1 = VacancyMaster.exists?(employee_id: self.employee_id,current_status: 'FirstApproved') ||
+      flag2 = VacancyMaster.exists?(employee_id: self.employee_id,current_status: 'SecondApproved') ||
+      flag3 = VacancyMaster.exists?(employee_id: self.employee_id,current_status: 'FinalApproved')
+    flag
+    flag1
+    flag2
+    flag3
   end
 
   def accessible_attributes

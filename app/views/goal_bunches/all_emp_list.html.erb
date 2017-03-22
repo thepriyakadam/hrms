@@ -26,7 +26,7 @@
         <tr><th colspan="8"><center>Employee Detail</center></th></tr>
           <tr>
             <th>Sr.No</th>
-            <th>Employee ID</th>
+            <th>ID</th>
             <th>Name</th>
             <th>Age</th>
             <th>Department</th>
@@ -244,17 +244,17 @@
           <tr><th colspan="2"><center>Detail</center></th><th>Sign</th></tr>
             <tr>
               <th>Appraisee Name</th>
-              <td><%= goal_bunch.employee.try(:first_name) %> <%= goal_bunch.employee.try(:middle_name) %> <%= goal_bunch.employee.try(:last_name) %></td>
+              <td><%= full_name(goal_bunch.employee) %></td>
               <td></td>
             </tr>
             <tr>
               <th>Appraiser Name</th>
-              <td><%= goal_bunch.employee.manager.try(:first_name) %> <%= goal_bunch.employee.manager.try(:middle_name) %> <%= goal_bunch.employee.manager.try(:last_name) %></td>
+              <td><%= full_name(goal_bunch.employee.try(:manager)) %></td>
               <td></td>
             </tr>
             <tr>
               <th>Reviewer Name</th>
-              <td><%= goal_bunch.employee.manager_2.try(:first_name) %> <%= goal_bunch.employee.manager_2.try(:middle_name) %> <%= goal_bunch.employee.manager_2.try(:last_name) %></td>
+              <td><%= full_name(goal_bunch.employee.try(:manager_2)) %></td>
               <td></td>
             </tr>
             <tr>

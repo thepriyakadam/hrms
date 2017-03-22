@@ -14,10 +14,11 @@
 <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
  <thead>
     <tr>
-      <th>Employee ID</th>
+      <th>ID</th>
       <th>Employee Name</th>
       <th>Leave Date</th>
       <th>Leave Category</th>
+       <th>Day</th>
       <th>Cancel After Approve</th>
     </tr>
   </thead>
@@ -29,6 +30,7 @@
         <td><%= full_name(particular_leave_record.employee) %></td>
         <td><%= particular_leave_record.leave_date.to_date %></td>
         <td><%= particular_leave_record.leav_category.try(:name) %></td>
+         <td><%= particular_leave_record.try(:is_full) %></td>
         <td><%= particular_leave_record.is_cancel_after_approve %></td>
       </tr>
     <% end %>

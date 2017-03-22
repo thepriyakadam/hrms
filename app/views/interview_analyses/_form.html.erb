@@ -2,21 +2,26 @@
   <div class="box-body">
   <%= bootstrap_form_for(@interview_analysis,html: {id: 'interview_analysis'},interview_round_id: @interview_round.id) do |f| %>
   <%= f.hidden_field :interview_round_id,value:@interview_round.id  %>
+  <% @interview_rounds_1 = InterviewRound.where(id: @interview_round.id,is_confirm: true).count
+           @interview_rounds_2 = InterviewRound.where(id: @interview_round.id,is_confirm: nil).count  %>
+      <% if @interview_rounds_2 == 0 && @interview_rounds_1 > 0 %>
+     <%else%>
+
       <div class="row">
 
-      <div class="col-sm-3">
+      <div class="col-sm-2">
         <label>Attributes</label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
                 <%= link_to "", new_interview_evalution_path,class: "fa fa-plus fa-success",:target => "_blank" %>
               </div>
-               <%= f.select :interview_evalution_id, all_interview_evaluation, {hide_label: true,include_blank: " Select Evaluation Criteria"} %>
+               <%= f.select :interview_evalution_id, all_interview_evaluation, {hide_label: true,include_blank: " Select Attributes"} %>
             </div>
           </div>
       </div>
 
-       <div class="col-sm-3">
+       <div class="col-sm-2">
         <label>Skillset</label>
           <div class="field">
             <div class="input-group">
@@ -28,7 +33,7 @@
           </div>
       </div>
 
-       <div class="col-sm-3">
+       <div class="col-sm-2">
         <label>Evaluation</label>
           <div class="form-group required">
             <div class="input-group">
@@ -40,21 +45,19 @@
           </div>
       </div>
 
-      <div class="col-sm-3">
+      <div class="col-sm-4">
         <div class="form-group required">
          <%= f.text_field :comment ,label:"Remarks" %>
         </div>
       </div>
-      </div>
-
-      <div class="row">
-      <div class="col-sm-3">
-        <div class="actions">
+       <div class="col-sm-2" style="padding-top: 20px">
+        <div class="actions"> 
           <%= f.submit "Create Evaluation" ,class: 'btn btn-sm btn-primary' %>
         </div>
       </div>
+      </div>
     </div>
-    </div>
+<% end %>
 <% end %>
 
 <script>
@@ -69,10 +72,10 @@ $("#interview_analysis").validate({
     },
     messages: {
       "interview_analysis[interview_evalution_id]":{
-        required: "Please specify Evaluation Criteria"
+        required: "Please specify Attributes"
       },
       "interview_analysis[comment]":{
-        required: "Please specify Comment"
+        required: "Please specify Remarks"
       }
     },
     errorPlacement: function(error, element) {

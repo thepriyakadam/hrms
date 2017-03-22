@@ -21,7 +21,7 @@
             <% @pending_on_duty_requests.try(:each) do |on_duty_request| %>
               <tr>
                 <td><%= on_duty_request.employee.try(:manual_employee_code) %></td>
-                <td><%= on_duty_request.employee.try(:first_name) %> <%= on_duty_request.employee.try(:middle_name) %> <%=on_duty_request.employee.try(:last_name) %></td>
+                <td><%= full_name(on_duty_request.employee) %></td>
                 <td><%= on_duty_request.no_of_day %></td>
                 <td>
                   <%= link_to 'View Detail', employee_od_request_detail_on_duty_requests_path(on_duty_request),class: 'btn btn-sm btn-info' %>

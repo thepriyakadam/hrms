@@ -19,12 +19,12 @@
       <tbody>
         <% @goal_bunches.each do |g| %>
         <tr>
-         <td> <%= g.period.try(:name) %></td>
-        <td> From: <%= g.period.try(:from) %> To: <%= g.period.try(:to) %> </td>
-        <td> <%= g.employee.try(:first_name) %> <%= g.employee.try(:middle_name) %> <%= g.employee.try(:last_name) %>  </td>
-        <td> <%= g.employee.manager.try(:first_name) %> <%= g.employee.manager.try(:middle_name) %> <%= g.employee.manager.try(:last_name) %>  </td>
-        <td> <%= g.employee.manager_2.try(:first_name) %> <%= g.employee.manager_2.try(:middle_name) %> <%= g.employee.manager_2.try(:last_name) %>  </td>
-        <td><%= link_to 'Employee Detail', final_detail_goal_bunches_path(id: g,emp_id: g.employee_id) ,class: 'btn btn-xs btn-info' %></td>
+          <td><%= g.period.try(:name) %></td>
+          <td>From: <%= g.period.try(:from) %> To: <%= g.period.try(:to) %> </td>
+          <td><%= full_name(g.employee) %></td>
+          <td><%= g.employee.manager.try(:first_name) %> <%= g.employee.manager.try(:middle_name) %> <%= g.employee.manager.try(:last_name) %>  </td>
+          <td><%= g.employee.manager_2.try(:first_name) %> <%= g.employee.manager_2.try(:middle_name) %> <%= g.employee.manager_2.try(:last_name) %>  </td>
+          <td><%= link_to 'Employee Detail', final_detail_goal_bunches_path(id: g,emp_id: g.employee_id) ,class: 'btn btn-xs btn-info' %></td>
         </tr>
         <% end %>
       </tbody>

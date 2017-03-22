@@ -6,6 +6,8 @@
 <div>
   <%= render 'show_vacancy_detail' %>
 </div>
+<% if @vacancy_master.is_confirmed == true %>
+<% else %>
 <div class="row">
 
  <div class="col-sm-3">
@@ -107,6 +109,7 @@
   </div>
 <% end %>
 </div>
+<% end %>
 <script>
 $("#selected_resume").validate({
     rules: {

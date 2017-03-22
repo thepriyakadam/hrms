@@ -22,14 +22,18 @@
 
 <tr> 
   <th><strong>Location</strong></th>
-  <td><%= @interview_schedule.location %></td>
-
-
-  <th></th>
-  <td></td>
+  <td ><%= @interview_schedule.location %></td>
+  <th><strong></strong></th>
+  <td ><%=%></td>
 </tr>
 
-</table>
+<tr>
+  <th><strong>Address</strong></th>
+  <td colspan="3"><%= @interview_schedule.address %></td>
+  
+</tr>
+
+</table><br>
 <%= link_to 'Back', interview_schedules_path , class: 'btn btn-sm btn-default fa fa-arrow-left'  %>
 </div>
 </div>

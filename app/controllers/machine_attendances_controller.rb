@@ -520,10 +520,12 @@ class MachineAttendancesController < ApplicationController
 	def import_machine_attendance
 		@machine_attendances = MachineAttendance.all
 		respond_to do |format|
-		format.html
 		format.csv { send_data @machine_attendances.to_csv }
+		format.html { send_data @machine_attendances,
+  :type => 'text',
+  :disposition => "attachment" }
 		format.xls
-	 end
+	    end
 	 session[:active_tab] ="TimeManagement"
      session[:active_tab1] ="AttendanceSetup"
 	end

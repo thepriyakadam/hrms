@@ -147,6 +147,19 @@ class Employee < ActiveRecord::Base
     end
   end
 
+  def self.to_txt
+    # attributes = %w{employee_id day in out shift_master_id is_proceed present user_id}
+    attributes = %w{id first_name middle_name last_name status}
+
+    CSV.generate(:col_sep => "#~#") do |txt|
+      txt << attributes
+
+      all.each do |employee|
+        txt << attributes.map{ |attr| employee.send(attr) }
+      end
+    end
+  end
+
   def add_department
     department = Department.find(department_id)
     company_location = department.company_location

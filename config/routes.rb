@@ -1128,6 +1128,7 @@ end
       get :modal_schedule_list
       post :update_interview_schedule
       patch :create_new
+      get :show_interview_round_list
     end
   end
   resources :vacancy_masters do
@@ -1994,6 +1995,9 @@ end
       post :show_employee_list
       get :show_all_record
       post :show_all_record
+      get :member_gps_form
+      post :update_gps
+      get :employee_gps_setting_list
     end
     member do
       get :edit_manager

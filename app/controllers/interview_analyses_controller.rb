@@ -19,12 +19,28 @@ class InterviewAnalysesController < ApplicationController
     # @interview_schedule = InterviewSchedule.find(params[:abc])
     # byebug
     @interview_round = InterviewRound.find(params[:interview_round_id])
-    # @interview_analyses = InterviewAnalysis.where(interview_round_id: @interview_round.id)
+    @interview_rounds = InterviewRound.where(id: @interview_round)
     @interview_analyses = InterviewAnalysis.where(interview_round_id: @interview_round.id)
+    # @interview_analyses = InterviewAnalysis.where(interview_round_id: @interview_round.id)
+
+    @interview_schedule = InterviewSchedule.where(id: @interview_round.interview_schedule_id).take
+    # @selected_resume = SelectedResume.where(id: @interview_schedule.selected_resume_id).take
+    # @vacancy_master = VacancyMaster.where(id: @selected_resume.vacancy_master_id).take
+  end
+
+  def confirm_vacancy
+    @interview_schedule = InterviewSchedule.find(params[:format])
+    @selected_resume = SelectedResume.where(id: @interview_schedule.selected_resume_id).take
+    @vacancy_master = VacancyMaster.where(id: @selected_resume.vacancy_master_id).take
+    @interview_analyses = InterviewAnalysis.where(interview_schedule_id: @interview_schedule.id)
+    @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id)
   end
 
   # GET /interview_analyses/1/edit
   def edit
+    @interview_round = InterviewRound.find(@interview_analysis.interview_round_id)
+    # @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
+    @interview_rounds = InterviewRound.where(interview_round_id: @interview_round.id)
   end
 
   # POST /interview_analyses
@@ -58,11 +74,25 @@ class InterviewAnalysesController < ApplicationController
   #   end
   # end
 
+    # def update
+    #   @interview_analysis.update(interview_analysis_params)
+    #   @interview_analyses = InterviewAnalysis.all
+    #   @interview_analysis = InterviewAnalysis.new
+    # end
+
     def update
-      @interview_analysis.update(interview_analysis_params)
-      @interview_analyses = InterviewAnalysis.all
-      @interview_analysis = InterviewAnalysis.new
-    end
+      @interview_round = InterviewRound.find(@interview_analysis.interview_round_id)
+
+      if @interview_analysis.update(interview_analysis_params)
+        @interview_analyses =  @interview_round.interview_analyses
+        # c1 = @daily_bill_details.sum(:travel_expence).to_i
+        # TravelRequest.where(id: @travel_request.id).update_all(expense: c1)
+        flash[:notice] = "Updated successfully"
+      else
+        flash[:alert] = "not updated"
+      end
+      redirect_to new_interview_analysis_path(interview_round_id: @interview_round.id)
+  end
 
     # DELETE /interview_analyses/1
     # DELETE /interview_analyses/1.json

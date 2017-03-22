@@ -18,6 +18,8 @@
 	<%= select :employee_leav_request,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},class: "form-control"%>
 <% elsif @form == 'particular_leave_record' %>
 	<%= select :particular_leave_record,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},class: "form-control"%>
+<% elsif @form == 'employee' %>
+	<%= select :vacancy_master,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},class: "form-control"%>
 <% elsif @form == 'due_detail' %>
 	<%= select :due_detail,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},class: "form-control"%>
 <%else %>

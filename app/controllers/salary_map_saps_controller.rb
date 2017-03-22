@@ -64,6 +64,6 @@ class SalaryMapSapsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def salary_map_sap_params
-      params.require(:salary_map_sap).permit(:salary_component_id, :account_code, :is_debit)
+      params.require(:salary_map_sap).permit(:salary_component_id, :company_id,:company_location_id,:account_code, :is_debit)
     end
 end

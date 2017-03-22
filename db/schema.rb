@@ -1016,8 +1016,8 @@ ActiveRecord::Schema.define(version: 20170321071817) do
     t.string   "date_range"
     t.integer  "no_of_day"
     t.decimal  "leave_count",        precision: 5, scale: 1
-    t.datetime "created_at",                                                null: false
-    t.datetime "updated_at",                                                null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
     t.string   "reason"
     t.boolean  "is_pending"
     t.boolean  "is_cancelled"
@@ -1031,7 +1031,6 @@ ActiveRecord::Schema.define(version: 20170321071817) do
     t.string   "current_status1"
     t.boolean  "first_half"
     t.boolean  "last_half"
-    t.boolean  "half_day_present",                           default: true
     t.boolean  "present_status"
   end
 
@@ -1146,17 +1145,17 @@ ActiveRecord::Schema.define(version: 20170321071817) do
     t.integer  "reporting_master_id"
     t.string   "resign_status"
     t.boolean  "is_stop_pay_request"
-    t.integer  "second_reporter_id"
-    t.integer  "final_reporter_id"
+    t.datetime "application_date"
     t.boolean  "is_pending"
+    t.boolean  "is_cancelled"
     t.boolean  "is_first_approved"
     t.boolean  "is_second_approved"
-    t.boolean  "is_final_approved"
-    t.boolean  "is_cancelled"
     t.boolean  "is_first_rejected"
     t.boolean  "is_second_rejected"
+    t.integer  "second_reporter_id"
+    t.integer  "final_reporter_id"
+    t.boolean  "is_final_approved"
     t.boolean  "is_final_rejected"
-    t.datetime "application_date"
   end
 
   add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id"
@@ -1887,7 +1886,7 @@ ActiveRecord::Schema.define(version: 20170321071817) do
 
   create_table "interview_decisions", force: :cascade do |t|
     t.string   "code"
-    t.string   "name"
+    t.integer  "name"
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -2537,9 +2536,8 @@ ActiveRecord::Schema.define(version: 20170321071817) do
     t.boolean  "is_second_approved"
     t.boolean  "is_first_rejected"
     t.boolean  "is_second_rejected"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.boolean  "half_day_present",   default: true
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.boolean  "present_status"
   end
 
@@ -3197,8 +3195,12 @@ ActiveRecord::Schema.define(version: 20170321071817) do
     t.boolean  "is_debit"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.integer  "company_id"
+    t.integer  "company_location_id"
   end
 
+  add_index "salary_map_saps", ["company_id"], name: "index_salary_map_saps_on_company_id"
+  add_index "salary_map_saps", ["company_location_id"], name: "index_salary_map_saps_on_company_location_id"
   add_index "salary_map_saps", ["salary_component_id"], name: "index_salary_map_saps_on_salary_component_id"
 
   create_table "salary_templates", force: :cascade do |t|

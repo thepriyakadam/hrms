@@ -9,6 +9,7 @@ class Company < ActiveRecord::Base
   has_many :company_locations, dependent: :destroy
   has_many :employee_transfers
   has_many :employees
+  has_many :salary_map_saps
 
   validates :manual_company_code, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true

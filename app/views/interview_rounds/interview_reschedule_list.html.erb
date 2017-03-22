@@ -3,7 +3,7 @@
   <h6 class="box-title">Interview Reschedule History of : <%= @interview_round.interview_schedule.try(:candidate_name) %></h6>   
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <table id="example" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
         <th>Sr.No</th>
@@ -31,3 +31,9 @@
   <!-- <= link_to 'Back', new_interview_round_path(interview_schedule_id: @interview_schedule.try(:id)),class: 'btn btn-default btn-sm fa fa-arrow-left' %> -->
  </div>
 </div>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>

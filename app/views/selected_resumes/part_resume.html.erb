@@ -2,7 +2,7 @@
   <div class="box-header">
     <h3 class="box-title">Particular Resume List</h3>
 <div class="box-body">
-<table class="table table-bordered table-hover table-condensed example3">
+<table id="example" class="table table-bordered table-hover table-condensed example3">
   <thead>
     <tr>
       <th>Name</th>
@@ -39,14 +39,14 @@
             <small class="label label-default">Not Yet Shortlisted</small>
             <% end %>
         </td>
-       <td>
+        <td>
          <% if selected_resume.avatar_file_name == nil %>
            <small class="label label-default">Resume Not Available</small>
              <% else %>
              <center><%= link_to '',download_resume_path(id: selected_resume.id),class: 'btn btn-xs fa fa-download' %>
              <% end %></center>
-          </td>
-          <td>
+        </td>
+        <td>
           <% if selected_resume.passport_photo_file_name == nil %>
               <small class="label label-default">Not Available</small>
               <% else %>
@@ -60,11 +60,17 @@
       </tr>
     <% end %>
   </tbody>
-</table><br>
+</table>
 <%= link_to 'Back', vacancy_profile_vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
  </div>
  </div>
  </div>
+
+ <script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
 
 
 

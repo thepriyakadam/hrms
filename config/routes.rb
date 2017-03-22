@@ -135,6 +135,7 @@ Rails.application.routes.draw do
       post :edit_machine_attendance
       get :machine_attendance_xls
       get :machine_attendance_pdf
+      get :import_machine_attendance_to_txt
     end
   end
   resources :company_time_masters do

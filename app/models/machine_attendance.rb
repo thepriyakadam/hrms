@@ -18,11 +18,14 @@ class MachineAttendance < ActiveRecord::Base
     end
   end
 
-  def self.to_txt(options = {})
-    TEXT.generate(options) do |txt|
-      txt << column_names
-      all.each do |machine_attendance|
-        txt << machine_attendance.attributes.values_at(*column_names)
+  def self.to_txt
+    # attributes = %w{employee_id day in out shift_master_id is_proceed present user_id}
+    attributes = %w{employee_id first_name middle_name last_name status}
+
+    CSV.generate(:col_sep => "#") do |csv|
+      csv << attributes
+      all.each do |employee|
+        csv << attributes.map{ |attr| employee.send(attr) }
       end
     end
   end
@@ -43,7 +46,6 @@ class MachineAttendance < ActiveRecord::Base
     when '.csv' then Roo::CSV.new(file.path, file_warning: :ignore)
     when '.xls' then Roo::Excel.new(file.path, file_warning: :ignore)
     when '.xlsx' then Roo::Excelx.new(file.path, file_warning: :ignore)
-    when '.txt' then Roo::TEXT.new(file.path, file_warning: :ignore)
     else raise "Unknown file type: #{file.original_filename}"
     end
   end

@@ -4,7 +4,7 @@
     <h3 class="box-title"> Leave Request </h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-  <% binding.pry %>
+  
     <%= bootstrap_form_for(@employee_leav_request,html: {id: 'employee_leav_request'}) do |f| %>
      <%= f.hidden_field :employee_id, value: @employee.id %>
     <div class="row">

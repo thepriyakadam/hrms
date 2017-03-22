@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170316103340) do
+ActiveRecord::Schema.define(version: 20170321084647) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2809,6 +2809,28 @@ ActiveRecord::Schema.define(version: 20170316103340) do
     t.datetime "updated_at",  null: false
     t.boolean  "is_confirm"
   end
+
+  create_table "promotion_histories", force: :cascade do |t|
+    t.integer  "employee_promotion_id"
+    t.integer  "employee_id"
+    t.integer  "department_id"
+    t.integer  "employee_designation_id"
+    t.integer  "employee_grade_id"
+    t.integer  "employee_category_id"
+    t.string   "employee_ctc"
+    t.text     "justification"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "promotion_histories", ["department_id"], name: "index_promotion_histories_on_department_id"
+  add_index "promotion_histories", ["employee_category_id"], name: "index_promotion_histories_on_employee_category_id"
+  add_index "promotion_histories", ["employee_designation_id"], name: "index_promotion_histories_on_employee_designation_id"
+  add_index "promotion_histories", ["employee_grade_id"], name: "index_promotion_histories_on_employee_grade_id"
+  add_index "promotion_histories", ["employee_id"], name: "index_promotion_histories_on_employee_id"
+  add_index "promotion_histories", ["employee_promotion_id"], name: "index_promotion_histories_on_employee_promotion_id"
 
   create_table "qualifications", force: :cascade do |t|
     t.integer  "employee_id"

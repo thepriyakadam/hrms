@@ -58,6 +58,7 @@ class Employee < ActiveRecord::Base
   has_many :manager_histories
   has_many :due_employee_details
   has_many :employee_promotions
+  has_many :promotion_histories
   has_many :leave_records
   has_many :travel_request_histories
   has_many :issue_tracker_members

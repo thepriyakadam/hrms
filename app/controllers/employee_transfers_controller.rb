@@ -169,6 +169,8 @@ end
     @employee_transfer = EmployeeTransfer.find(params[:format])
     @employee_transfers = EmployeeTransfer.where(employee_id: @employee_transfer.employee_id).order("id DESC")
     @reporting_employee_transfer = ReportingEmployeeTransfer.where(status: @employee_transfer.id)
+    @employee = Employee.find_by_id(@employee_transfer.employee_id)
+    @joining_detail= JoiningDetail.find_by_employee_id(@employee)
      
   end
 
@@ -176,6 +178,8 @@ end
       @employee_transfer = EmployeeTransfer.find(params[:format])
       @employee_transfers = EmployeeTransfer.where(employee_id: @employee_transfer.employee_id).order("id DESC")
       @reporting_employee_transfer = ReportingEmployeeTransfer.where(status: @employee_transfer.id) 
+      @employee = Employee.find_by_id(@employee_transfer.employee_id)
+      @joining_detail= JoiningDetail.find_by_employee_id(@employee)
    end
 
   

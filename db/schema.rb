@@ -1016,8 +1016,8 @@ ActiveRecord::Schema.define(version: 20170321071817) do
     t.string   "date_range"
     t.integer  "no_of_day"
     t.decimal  "leave_count",        precision: 5, scale: 1
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
     t.string   "reason"
     t.boolean  "is_pending"
     t.boolean  "is_cancelled"
@@ -1031,6 +1031,7 @@ ActiveRecord::Schema.define(version: 20170321071817) do
     t.string   "current_status1"
     t.boolean  "first_half"
     t.boolean  "last_half"
+    t.boolean  "half_day_present",                           default: true
     t.boolean  "present_status"
   end
 
@@ -1145,17 +1146,17 @@ ActiveRecord::Schema.define(version: 20170321071817) do
     t.integer  "reporting_master_id"
     t.string   "resign_status"
     t.boolean  "is_stop_pay_request"
-    t.datetime "application_date"
-    t.boolean  "is_pending"
-    t.boolean  "is_cancelled"
-    t.boolean  "is_first_approved"
-    t.boolean  "is_second_approved"
-    t.boolean  "is_first_rejected"
-    t.boolean  "is_second_rejected"
     t.integer  "second_reporter_id"
     t.integer  "final_reporter_id"
+    t.boolean  "is_pending"
+    t.boolean  "is_first_approved"
+    t.boolean  "is_second_approved"
     t.boolean  "is_final_approved"
+    t.boolean  "is_cancelled"
+    t.boolean  "is_first_rejected"
+    t.boolean  "is_second_rejected"
     t.boolean  "is_final_rejected"
+    t.datetime "application_date"
   end
 
   add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id"
@@ -2536,8 +2537,9 @@ ActiveRecord::Schema.define(version: 20170321071817) do
     t.boolean  "is_second_approved"
     t.boolean  "is_first_rejected"
     t.boolean  "is_second_rejected"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.boolean  "half_day_present",   default: true
     t.boolean  "present_status"
   end
 

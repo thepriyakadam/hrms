@@ -143,23 +143,11 @@ module EmployeeAttendancesHelper
           end
         end 
       else #nil
-        # if a.present == "PG"
-        #   if gatepass <= 2
-        #     gate_pass = gate_pass + 0.5
-        #     present_day = present_day + 0.5
-        #     gatepass = gatepass + 2
-        #   else
-        #     gate_pas = gate_pas + 0.5
-        #     present_day = present_day + 0.5
-        #   end
-        # end
       end#
     end#DO
     arr << pay_leave
     arr << non_pay_leave
     arr << present_day
-    # arr << gate_pass
-    # arr << gate_pas
     arr << absent_day
     arr
   end

@@ -1016,8 +1016,8 @@ ActiveRecord::Schema.define(version: 20170321084647) do
     t.string   "date_range"
     t.integer  "no_of_day"
     t.decimal  "leave_count",        precision: 5, scale: 1
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
     t.string   "reason"
     t.boolean  "is_pending"
     t.boolean  "is_cancelled"
@@ -1031,6 +1031,7 @@ ActiveRecord::Schema.define(version: 20170321084647) do
     t.string   "current_status1"
     t.boolean  "first_half"
     t.boolean  "last_half"
+    t.boolean  "half_day_present",                           default: true
     t.boolean  "present_status"
   end
 
@@ -2536,8 +2537,9 @@ ActiveRecord::Schema.define(version: 20170321084647) do
     t.boolean  "is_second_approved"
     t.boolean  "is_first_rejected"
     t.boolean  "is_second_rejected"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.boolean  "half_day_present",   default: true
     t.boolean  "present_status"
   end
 

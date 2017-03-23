@@ -149,7 +149,7 @@ class Employee < ActiveRecord::Base
 
   def self.to_txt
     # attributes = %w{employee_id day in out shift_master_id is_proceed present user_id}
-    attributes = %w{id first_name middle_name last_name status}
+    attributes = %w{id first_name middle_name last_name status name}
 
     CSV.generate(:col_sep => "#~#") do |txt|
       txt << attributes
@@ -159,6 +159,10 @@ class Employee < ActiveRecord::Base
       end
     end
   end
+
+   def name
+       "#{self.department.try(:name)}"
+    end
 
   def add_department
     department = Department.find(department_id)

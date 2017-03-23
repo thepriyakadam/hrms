@@ -54,4 +54,16 @@ class LeaveRequestMailer < ApplicationMailer
     email = @manager.try(:email)
     mail(to: email, subject: 'Leave Cancelled By Employee')
   end
+
+  def pending_mail_to_first_reporter
+     @employee_leav_requests = EmployeeLeavRequest.where.not(first_reporter_id: nil).where(current_status: "Pending").pluck(:first_reporter_id)
+     # @employee_leav_requests_1 = EmployeeLeavRequest.where.not(first_reporter_id: nil).where(current_status: "Pending").group(:first_reporter_id)
+     # @employee_leav_requests_1.each do |el|
+     #  el.id
+     # end
+     @employees = Employee.where(id: @employee_leav_requests).pluck(:email)
+     mail(to: @employees, subject: 'Pending Leave Request')
+
+  end
+
 end

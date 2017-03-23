@@ -1571,6 +1571,7 @@ end
       get :monthly_deduction_report
       post :monthly_deduction
       get :monthly_deduction
+      get :export_pf_report_to_text
     end
   end
 

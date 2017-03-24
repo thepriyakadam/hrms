@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170321071817) do
+ActiveRecord::Schema.define(version: 20170321084647) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2832,6 +2832,28 @@ ActiveRecord::Schema.define(version: 20170321071817) do
     t.boolean  "is_confirm"
   end
 
+  create_table "promotion_histories", force: :cascade do |t|
+    t.integer  "employee_promotion_id"
+    t.integer  "employee_id"
+    t.integer  "department_id"
+    t.integer  "employee_designation_id"
+    t.integer  "employee_grade_id"
+    t.integer  "employee_category_id"
+    t.string   "employee_ctc"
+    t.text     "justification"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "promotion_histories", ["department_id"], name: "index_promotion_histories_on_department_id"
+  add_index "promotion_histories", ["employee_category_id"], name: "index_promotion_histories_on_employee_category_id"
+  add_index "promotion_histories", ["employee_designation_id"], name: "index_promotion_histories_on_employee_designation_id"
+  add_index "promotion_histories", ["employee_grade_id"], name: "index_promotion_histories_on_employee_grade_id"
+  add_index "promotion_histories", ["employee_id"], name: "index_promotion_histories_on_employee_id"
+  add_index "promotion_histories", ["employee_promotion_id"], name: "index_promotion_histories_on_employee_promotion_id"
+
   create_table "qualifications", force: :cascade do |t|
     t.integer  "employee_id"
     t.integer  "degree_id"
@@ -3742,23 +3764,12 @@ ActiveRecord::Schema.define(version: 20170321071817) do
     t.decimal  "payable_day"
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
-    t.decimal  "lwp_leave"
-    t.decimal  "cl_leave"
-    t.decimal  "el_leave"
-    t.decimal  "esic_leave"
-    t.decimal  "coff_leave"
-    t.decimal  "advance_leave"
-    t.decimal  "cl_balance"
-    t.decimal  "el_balance"
-    t.decimal  "coff_balance"
-    t.decimal  "advance_balance"
     t.boolean  "is_confirm"
     t.decimal  "pay_leave"
     t.decimal  "nonpay_leave",            precision: 10, scale: 2
     t.decimal  "gatepass"
     t.decimal  "calculated_payable_days"
     t.decimal  "ot_hours"
-    t.decimal  "od_leave"
     t.boolean  "paid"
     t.boolean  "full_and_final"
     t.decimal  "od_day"

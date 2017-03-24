@@ -149,7 +149,6 @@ class EmployeesController < ApplicationController
     authorize! :create, @employee
       if @employee.save
         @emp1=params[:employee][:employee_code_master_id]
-        EmployeeCodeMaster.where(id: @emp1).update_all(last_range: @employee.manual_employee_code)
         @employee.update(company_location_id: @department.company_location_id,company_id: @department.company_location.company_id)
         @employees.each do |e|
           if e.joining_detail.confirmation_date != nil && e.joining_detail.confirmation_date <= Date.today
@@ -1157,7 +1156,7 @@ def show_all_record
     member=Member.where(employee_id: @emp).take
     EmployeeGpsHistory.create(member_id: member.id,latitude: @latitude,longitude: @longitude,location: @location,from_date: Date.today)
     @gps_history = EmployeeGpsHistory.where(member_id: member.id).last(2).first
-    EmployeeGpsHistory.where(id: @gps_history.id).update_all(to_date: @mngr.effective_from)
+    EmployeeGpsHistory.where(id: @gps_history.id).update_all(to_date: @gps_history.from_date)
     flash[:notice] = "GPS Setting Saved Successfully"
     redirect_to employee_gps_setting_list_employees_path
   end

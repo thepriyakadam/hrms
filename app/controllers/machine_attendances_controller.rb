@@ -518,16 +518,30 @@ class MachineAttendancesController < ApplicationController
 
 
 	def import_machine_attendance
+		# @content = "Hello World"
 		@machine_attendances = MachineAttendance.all
+		# @employees = Employee.all
 		respond_to do |format|
+		format.html
+		# format.html { send_data @machine_attendances,
+  # :type => 'text',
+  # :disposition => "attachment; filename=your_file_name.txt" }
 		format.csv { send_data @machine_attendances.to_csv }
-		format.html { send_data @machine_attendances,
-  :type => 'text',
-  :disposition => "attachment" }
+		# format.csv { send_data @employees.to_txt }
 		format.xls
 	    end
-	 session[:active_tab] ="TimeManagement"
+	   session[:active_tab] ="TimeManagement"
      session[:active_tab1] ="AttendanceSetup"
+	end
+
+	def import_machine_attendance_to_txt
+		# @content = "Hello World"
+		# @machine_attendances = MachineAttendance.all
+		@employees = Employee.all
+		respond_to do |format|
+		format.html
+		format.csv { send_data @employees.to_txt,filename: "employees-#{Date.today}.txt" }
+	    end
 	end
 
 	def import

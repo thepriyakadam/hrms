@@ -9,6 +9,7 @@ class Department < ActiveRecord::Base
   has_many :shift_rotations
   has_many :vacancy_request_histories
   has_many :employee_promotions
+  has_many :promotion_histories
   has_many :accident_records
   has_many :rewards_allocations
   has_many :travel_request_histories

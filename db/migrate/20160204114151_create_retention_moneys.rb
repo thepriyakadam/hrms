@@ -5,6 +5,7 @@ class CreateRetentionMoneys < ActiveRecord::Migration
       t.decimal :amount, :decimal, precision: 15, scale: 2
       t.string :no_of_month
       t.string :description
+      t.boolean :is_confirm
 
       t.timestamps null: false
     end

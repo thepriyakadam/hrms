@@ -7,6 +7,7 @@ class CreateOvertimeMasters < ActiveRecord::Migration
       t.decimal :ot_rate, precision: 15, scale: 2, default: 0
       t.boolean :is_esic
       t.boolean :status
+      t.boolean :is_confirm
 
       t.timestamps null: false
     end

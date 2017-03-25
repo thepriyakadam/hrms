@@ -5,6 +5,7 @@ class CreateSalaryComponents < ActiveRecord::Migration
       t.string :is_deducted
       t.string :code
       t.string :description
+      t.boolean :is_confirm
 
       t.timestamps null: false
     end

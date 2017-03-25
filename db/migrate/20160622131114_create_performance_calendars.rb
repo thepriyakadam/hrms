@@ -5,6 +5,7 @@ class CreatePerformanceCalendars < ActiveRecord::Migration
       t.references :performance_activity, index: true, foreign_key: true
       t.date :start_date
       t.date :end_date
+      t.boolean :is_confirm
 
       t.timestamps null: false
     end

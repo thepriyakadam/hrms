@@ -1,10 +1,10 @@
 
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Employee Performance Detail</h3>
+    <h3 class="box-title">Employee Performance Detail.</h3>
     <div class="pull-right">
-      <%= link_to 'Print Report', print_employee_wise_goal_ratings_path(format: 'pdf',emp_id:@emp1.id,id: @goal_bunch),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
-      <%= link_to " Print excel ",detail_employee_wise_xls_goal_ratings_path(format: "xls",emp_id:@emp1.id,id: @goal_bunch), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+      <%= link_to 'Print Report', detail_employee_wise_goal_ratings_path(format: 'pdf',employee_id: params[:employee_id],goal_bunch_ids: params[:goal_bunch_ids]),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+      <%= link_to " Print excel ",detail_employee_wise_goal_ratings_path(format: "xls",employee_id: params[:employee_id],goal_bunch_ids: params[:goal_bunch_ids]), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
     </div>
   </div><!-- /.box-header -->
   <div class="box box-default">
@@ -39,7 +39,6 @@
       </table>
       <br>
 
-    
       <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
           <thead>
           <tr><th colspan="4"><center>Previous Experience</center></th></tr>
@@ -201,7 +200,7 @@
     <center><p class="text-warning"> No Goal Bunch Available </p></center> 
     <% else %>
 
-       <% goal_bunch = GoalBunch.find_by_employee_id(@emp1.id)%>
+       <% goal_bunch = GoalBunch.find_by(id: e.id)%>
        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
         <tbody>
           <tr><th colspan="2"><center>Overall Performance Detail</center></th></tr>
@@ -211,7 +210,7 @@
             </tr>
             <tr>
               <th>Self Rating</th>
-              <td><%= goal_bunch.try(:appraisee_rating_id) %></td>
+              <td><% @a = goal_bunch.try(:appraisee_rating_id).to_f %> <%= @a.round(2) %></td>
             </tr>
             <tr>
               <th>Appraiser Comment</th>

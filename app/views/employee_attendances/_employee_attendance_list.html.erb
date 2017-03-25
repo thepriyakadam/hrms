@@ -19,7 +19,7 @@
               <td><%= e.day.strftime("%B %Y") %></td>
               <% sorted_exists = calculate_attendance(@date, exist, e)%>
               <% sorted_exists.each do |k,v|%>
-                <td><%= v %></td>
+              <td><%= v %></td>
               <%end%>
             </tr> 
             

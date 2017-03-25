@@ -199,7 +199,7 @@
         </tr>
         <tr>
           <th>Self Rating</th>
-          <td><%= goal_bunch.try(:appraisee_rating_id) %></td>
+          <td><% @a = goal_bunch.try(:appraisee_rating_id).to_f %><%= @a.round(2) %></td>
         </tr>
         <tr>
           <th>Appraiser Comment</th>

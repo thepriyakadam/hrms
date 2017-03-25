@@ -435,52 +435,36 @@ class GoalRatingsController < ApplicationController
 
   def detail_employee_wise
     @emp1 = Employee.find(params[:employee_id])
-    @employee_ids = params[:employee_ids]
-    if @employee_ids.nil?
-      flash[:alert] = "Please Select the Checkbox"
-      @employees = []
-      redirect_to employee_wise_goal_goal_ratings_path
-    else
-      @employees = []
-      @employee_ids.each do |p|
-        @employees = GoalBunch.where(employee_id: p)
-        #@employees << emp
-        @goal_bunch = GoalBunch.find_by_employee_id(p)
-      end
-    end
+    @goal_bunch_ids = params[:goal_bunch_ids]
+
      @joining_detail = JoiningDetail.find_by_employee_id(@emp1.id)
      @experiences = Experience.where(employee_id: @emp1.id)
      @qualifications = Qualification.where(employee_id: @emp1.id)
      @employee_promotions = EmployeePromotion.where(employee_id: @emp1.id)
-  end
 
-  def print_employee_wise
-    @employee = Employee.find(params[:emp_id])
-    @employees = GoalBunch.where(employee_id: @employee.id)
-    @employee_promotions = EmployeePromotion.where(employee_id: @employee.id)
-    @qualifications = Qualification.where(employee_id: @employee.id)
-    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
-    @experiences = Experience.where(employee_id: @employee.id)
-    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
-    
-    respond_to do |format|
-    format.json
-      format.pdf do
-      render pdf: 'goal_rating',
-            layout: 'pdf.html',
-            orientation: 'Landscape',
-            template: 'goal_ratings/print_employee_wise.pdf.erb',
-            show_as_html: params[:debug].present?,
-            margin:  { top:1,bottom:1,left:1,right:1 }
+    if @goal_bunch_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      @employees = []
+    else
+      @employees = []
+      @goal_bunch_ids.each do |g|
+        @goal_bunch = GoalBunch.find_by(id: g)
+        @employees = GoalBunch.where(id: g,employee_id: @goal_bunch.employee_id)
       end
     end
-  end
-
-  def detail_employee_wise_xls
-    @employee = Employee.find(params[:emp_id])
-    @employees = Employee.where(id: @employee.id)
-    respond_to do |format|
-      format.xls {render template: 'goal_ratings/detail_employee_wise.xls.erb'}
+    
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'goal_ratings/detail_employee_wise.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'detail_employee_wise',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'goal_ratings/print_employee_wise.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
     end
   end
 

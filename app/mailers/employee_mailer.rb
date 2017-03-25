@@ -57,8 +57,7 @@ def birthday_invitation
       group.each { |emp| mail(to: emp.email, subject: 'Birthday Invitation'); sleep 2;}
       # group.each { |emp| mail(to: emp.email, subject: 'Birthday Invitation')}
       sleep 5
-    end
-
+  end
 end
 
 # def birthday_email

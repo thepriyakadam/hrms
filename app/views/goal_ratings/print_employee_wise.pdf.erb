@@ -23,10 +23,10 @@
   </thead>
   <tbody>
     <tr>
-      <td><%= @employee.manual_employee_code %></td> 
-      <td><%= full_name(@employee) %></td>
+      <td><%= @emp1.manual_employee_code %></td> 
+      <td><%= full_name(@emp1) %></td>
       <td><%=  %></td>
-      <td><%= @employee.department.try(:name) %></td>
+      <td><%= @emp1.department.try(:name) %></td>
       <td><%= @joining_detail.joining_date %></td>
       <td><%= @joining_detail.employee_grade.try(:name) %></td>
       <td><%= @joining_detail.employee_designation.try(:name) %></td>
@@ -203,7 +203,7 @@
         </tr>
         <tr>
           <td><strong> Self Rating </strong></td>
-          <td><%= goal_bunch.try(:appraisee_rating_id) %></td>
+          <td><%@a = goal_bunch.try(:appraisee_rating_id).to_f %><%= @a.round(2) %></td>
         </tr>
         <tr>
           <td><strong> Appraiser Comment </strong></td>

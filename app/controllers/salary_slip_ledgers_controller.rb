@@ -351,6 +351,165 @@ class SalarySlipLedgersController < ApplicationController
     end
   end
 
+    def export_pf_report_to_text
+      @month = params[:pf_detail] ? params[:pf_detail][:month] : params[:month]
+      @year = params[:pf_detail] ? params[:pf_detail][:year] : params[:year]
+      @company = params[:pf_detail] ? params[:pf_detail][:company_id] : params[:company_id]
+      @location = params[:food_deduction] ? params[:food_deduction][:company_location_id] : params[:company_location_id]
+      if current_user.class == Group
+         if @company == ""
+          @salaryslips1 = Salaryslip.where('month = ? and year = ?', @month, @year).pluck(:id)
+          @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1,other_component_name: "PF").pluck(:salaryslip_id)
+          @salaryslips = Salaryslip.where(id:  @salaryslip_components)
+          respond_to do |format|
+            format.html
+            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+          end
+        elsif @location == ""
+          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @salaryslips1 = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees).pluck(:id)
+          @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1,other_component_name: "PF").pluck(:salaryslip_id)
+          @salaryslips = Salaryslip.where(id:  @salaryslip_components)
+          respond_to do |format|
+            format.html
+            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+          end
+        else
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+          @salaryslips1 = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees).pluck(:id)
+          @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1,other_component_name: "PF").pluck(:salaryslip_id)
+          @salaryslips = Salaryslip.where(id:  @salaryslip_components)
+          respond_to do |format|
+            format.html
+            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+          end
+        end
+      elsif current_user.class == Member
+        if current_user.role.name == 'GroupAdmin'
+          if @company == ""
+            @salaryslips1 = Salaryslip.where('month = ? and year = ?', @month, @year).pluck(:id)
+            @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1,other_component_name: "PF").pluck(:salaryslip_id)
+            @salaryslips = Salaryslip.where(id:  @salaryslip_components)
+            respond_to do |format|
+            format.html
+            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+          end
+          elsif @location == ""
+            @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+            @salaryslips1 = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees).pluck(:id)
+            @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1,other_component_name: "PF").pluck(:salaryslip_id)
+            @salaryslips = Salaryslip.where(id:  @salaryslip_components)
+            respond_to do |format|
+            format.html
+            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+          end
+          else
+            @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+            @salaryslips1 = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees).pluck(:id)
+            @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1,other_component_name: "PF").pluck(:salaryslip_id)
+            @salaryslips = Salaryslip.where(id:  @salaryslip_components)
+            respond_to do |format|
+            format.html
+            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+          end
+          end
+        elsif current_user.role.name == 'Admin'
+          if @company == ""
+            @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+            @salaryslips1 = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees).pluck(:id)
+            @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1,other_component_name: "PF").pluck(:salaryslip_id)
+            @salaryslips = Salaryslip.where(id:  @salaryslip_components)
+            respond_to do |format|
+            format.html
+            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+          end
+          elsif @location == ""
+            @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+            @salaryslips1 = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees).pluck(:id)
+            @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1,other_component_name: "PF").pluck(:salaryslip_id)
+            @salaryslips = Salaryslip.where(id:  @salaryslip_components)
+            respond_to do |format|
+            format.html
+            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+          end
+          else
+            @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+            @salaryslips1 = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees).pluck(:id)
+            @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1,other_component_name: "PF").pluck(:salaryslip_id)
+            @salaryslips = Salaryslip.where(id:  @salaryslip_components)
+            respond_to do |format|
+            format.html
+            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+          end
+          end
+        elsif current_user.role.name == 'Branch'
+          if @company == "" || @location == ""
+            @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+            @salaryslips1 = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees).pluck(:id)
+            @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1,other_component_name: "PF").pluck(:salaryslip_id)
+            @salaryslips = Salaryslip.where(id:  @salaryslip_components)
+            respond_to do |format|
+            format.html
+            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+          end
+          else
+            @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+            @salaryslips1 = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees).pluck(:id)
+            @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1,other_component_name: "PF").pluck(:salaryslip_id)
+            @salaryslips = Salaryslip.where(id:  @salaryslip_components)
+            respond_to do |format|
+            format.html
+            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+          end
+          end
+        elsif current_user.role.name == 'HOD'
+          if @company == "" || @location == ""
+            @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+            @salaryslips1 = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees).pluck(:id)
+            @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1,other_component_name: "PF").pluck(:salaryslip_id)
+            @salaryslips = Salaryslip.where(id:  @salaryslip_components)
+            respond_to do |format|
+            format.html
+            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+          end
+          else
+            @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+            @salaryslips1 = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees).pluck(:id)
+            @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1,other_component_name: "PF").pluck(:salaryslip_id)
+            @salaryslips = Salaryslip.where(id:  @salaryslip_components)
+            respond_to do |format|
+            format.html
+            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+          end
+          end
+        elsif current_user.role.name == 'Superviser'
+          if @company == "" || @location == ""
+            @emp = Employee.find(current_user.employee_id)
+            @employees = @emp.subordinates
+            @salaryslips1 = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees).pluck(:id)
+            @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1,other_component_name: "PF").pluck(:salaryslip_id)
+            @salaryslips = Salaryslip.where(id:  @salaryslip_components)
+            respond_to do |format|
+            format.html
+            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+          end
+          else
+            @emp = Employee.find(current_user.employee_id)
+            @employees = @emp.subordinates
+            @salaryslips1 = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees).pluck(:id)
+            @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1,other_component_name: "PF").pluck(:salaryslip_id)
+            @salaryslips = Salaryslip.where(id:  @salaryslip_components)
+            respond_to do |format|
+            format.html
+            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+          end
+          end
+        elsif current_user.role.name == 'Employee'
+        end
+      end
+    end
+
+
   def esic_report
     session[:active_tab] ="PayrollManagement"
    session[:active_tab1] ="SalaryProcess"

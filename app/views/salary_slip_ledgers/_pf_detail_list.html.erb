@@ -57,7 +57,8 @@
     </tbody>
   </table>
   </div>
-  <%= link_to " Excel Report ",dynamic_report_salary_slip_ledgers_path(month: params[:pf_detail][:month], year: params[:pf_detail][:year],company_id: params[:pf_detail][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <%= link_to " Excel Report ",dynamic_report_salary_slip_ledgers_path(month: params[:pf_detail][:month], year: params[:pf_detail][:year],company_id: params[:pf_detail][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %> |
+  <%= link_to " Text Report", export_pf_report_to_text_salary_slip_ledgers_path(month: params[:pf_detail][:month], year: params[:pf_detail][:year],company_id: params[:pf_detail][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "csv"), class: "btn btn-xl btn-primary fa fa-file-text-o" %> |
   <%= link_to " PDF Report ",dynamic_report_salary_slip_ledgers_path(month: params[:pf_detail][:month], year: params[:pf_detail][:year],company_id: params[:pf_detail][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>
 

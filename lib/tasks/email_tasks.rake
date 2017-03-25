@@ -25,4 +25,10 @@ namespace :task_namespace do
     EmployeeMailer.birthday_invitation.deliver!
     # rake db:migrate
   end
+
+  task :pending_request_mail => :environment do
+    # call Listing method to send mail
+    LeaveRequestMailer.pending_mail_to_first_reporter.deliver!
+    # rake db:migrate
+  end
 end

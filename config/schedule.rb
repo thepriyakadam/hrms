@@ -6,3 +6,8 @@ every :day, :at => '12:05am' do
   rake 'task_namespace:birthday_mail' , :environment => 'development',   :output => 'log/birthday_mail.log'
   # rake 'task_namespace:birthday_invitation_mail' , :environment => 'development',   :output => 'log/birthday_invitation_mail.log'
 end
+
+# every :day, :at => '06:28pm' do
+#   rake 'task_namespace:pending_request_mail' , :environment => 'development',   :output => 'log/pending_request_mail.log'
+#   # rake 'task_namespace:birthday_invitation_mail' , :environment => 'development',   :output => 'log/birthday_invitation_mail.log'
+# end

@@ -1,7 +1,6 @@
 class CreateGoalBunches < ActiveRecord::Migration
   def change
     create_table :goal_bunches do |t|
-      t.references :period, index: true, foreign_key: true
       t.references :employee, index: true, foreign_key: true
       t.boolean :goal_confirm
       t.references :appraisee, index: true, foreign_key: true

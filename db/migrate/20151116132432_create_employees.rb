@@ -9,6 +9,7 @@ class CreateEmployees < ActiveRecord::Migration
       t.string :middle_name
       t.string :last_name
       t.date :date_of_birth
+      t.string :gender
       t.string :contact_no
       t.string :optinal_contact_no
       t.string :email
@@ -23,16 +24,19 @@ class CreateEmployees < ActiveRecord::Migration
       t.string :pan_no
       t.string :licence_no
       t.string :marital_status
-      t.references :nationality, index: true, foreign_key: true
       t.references :blood_group, index: true, foreign_key: true
+      t.references :employee_type, index: true, foreign_key: true
+      t.references :nationality, index: true, foreign_key: true
+      t.references :religion, index: true, foreign_key: true
       t.string :handicap
       t.string :handicap_type
       t.string :status
-      t.references :employee_type, index: true, foreign_key: true
-      t.string :gender
       t.references :manager, index: true
+      t.references :manager_2, index: true, foreign_key: true
       t.references :department, index: true, foreign_key: true
-      t.references :religion, index: true, foreign_key: true
+      t.references :company_location, index: true, foreign_key: true
+      t.references :company, index: true, foreign_key: true
+      
   
 
       t.timestamps null: false

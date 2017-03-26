@@ -4,6 +4,7 @@ class CreateIssueMasters < ActiveRecord::Migration
       t.references :issue_tracker_group, index: true, foreign_key: true
       t.references :issue_type, index: true, foreign_key: true
       t.string :name
+      t.string :role
       t.string :description
       t.boolean :status
       t.boolean :is_confirm

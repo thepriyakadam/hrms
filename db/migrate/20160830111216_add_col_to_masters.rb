@@ -24,7 +24,7 @@ class AddColToMasters < ActiveRecord::Migration
 			add_column :reserved_categories, :is_confirm, :boolean
 			add_column :religions, :is_confirm, :boolean
 			add_column :relation_masters, :is_confirm, :boolean
-			add_column :blood_groups, :is_confirm, :boolean
+			
 			add_column :nomination_masters, :is_confirm, :boolean
 			add_column :illness_types, :is_confirm, :boolean
 			add_column :degrees, :is_confirm, :boolean

@@ -7,9 +7,5 @@ class CreateShiftRotations < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-
-    remove_column :employee_shifts, :to_date, :date
-    remove_column :employee_shifts, :from_date, :date
-    remove_column :employee_shifts, :company_shift_id, :integer
   end
 end

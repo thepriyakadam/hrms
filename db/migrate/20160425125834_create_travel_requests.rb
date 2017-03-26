@@ -2,7 +2,6 @@ class CreateTravelRequests < ActiveRecord::Migration
   def change
     create_table :travel_requests do |t|
       t.references :employee, index: true, foreign_key: true
-      t.references :reporting_manager, index: true, foreign_key: true
       t.date :application_date
       t.date :traveling_date
       t.text :tour_purpose

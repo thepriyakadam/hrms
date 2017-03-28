@@ -36,9 +36,8 @@ class CreateEmployees < ActiveRecord::Migration
       t.references :department, index: true, foreign_key: true
       t.references :company_location, index: true, foreign_key: true
       t.references :company, index: true, foreign_key: true
-      
-  
-
+      t.references :punch_card, index: true, foreign_key: true
+    
       t.timestamps null: false
     end
     add_reference :members, :employee, index: true, foreign_key: true

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170321084647) do
+ActiveRecord::Schema.define(version: 20170327102041) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -3784,6 +3784,7 @@ ActiveRecord::Schema.define(version: 20170321084647) do
     t.boolean  "paid"
     t.boolean  "full_and_final"
     t.decimal  "od_day"
+    t.decimal  "nonpayable_day"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

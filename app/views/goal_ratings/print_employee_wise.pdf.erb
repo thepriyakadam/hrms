@@ -1,8 +1,29 @@
 <style type="text/css">
  .page-break { display:block; clear:both; page-break-after:always; }
+ tr {
+    page-break-inside: avoid;
+}
+th {
+    page-break-inside: avoid;
+}
 </style>
 <% i=0%>
-<div class = "page-break">
+
+    <table style="border-collapse: collapse; font-size:8pt;" border=1 width=1200 cellpadding="5">
+      <thead>
+        <tr>
+        <td colspan="7"><center> 
+          <% if @emp1.company_location.company.company_logo == nil %>
+          <% else %>
+            <center> <%= wicked_pdf_image_tag @emp1.company_location.company.company_logo.url, :size => "90x50" %></center>
+          <%end%> 
+            <strong><%=@emp1.company_location.company.try(:description)%></strong> <br> <%= @emp1.company_location.company.try(:address)%></center>
+        </td>
+      </tr> 
+      </thead>
+    </table>
+
+
 <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="5">       
   <thead>
   <tr>
@@ -108,7 +129,6 @@
   </table>
   <br>
   </div>
-  <div class = "page-break">
 
 
     <% @goal_bunch_ids.each do |e| %>

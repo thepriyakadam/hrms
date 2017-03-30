@@ -35,34 +35,22 @@
         <Cell ss:Index="22"><Data ss:Type="String">As Per Minimum Wages</Data></Cell>
         <Cell ss:Index="23"><Data ss:Type="String">Eligible For Reward</Data></Cell>
 
-        <Cell ss:Index="24"><Data ss:Type="String">Appraisee Rating 1</Data></Cell>
-        <Cell ss:Index="25"><Data ss:Type="String">Appraiser Rating 1</Data></Cell>
-        <Cell ss:Index="26"><Data ss:Type="String">Reviewer Rating 1</Data></Cell>
-        <Cell ss:Index="27"><Data ss:Type="String">Overall Rating 1</Data></Cell>
-        <Cell ss:Index="28"><Data ss:Type="String">Appraisee Rating 2</Data></Cell>
-        <Cell ss:Index="29"><Data ss:Type="String">Appraiser Rating 2 </Data></Cell>
-        <Cell ss:Index="30"><Data ss:Type="String">Reviewer Rating 2 </Data></Cell>
-        <Cell ss:Index="31"><Data ss:Type="String">Overall Rating 2 </Data></Cell>
+        <Cell ss:Index="24"><Data ss:Type="String">Appraisee Rating </Data></Cell>
+        <Cell ss:Index="25"><Data ss:Type="String">Appraiser Rating </Data></Cell>
+        <Cell ss:Index="26"><Data ss:Type="String">Reviewer Rating </Data></Cell>
+        <Cell ss:Index="27"><Data ss:Type="String">Overall Rating </Data></Cell>
 
-        <Cell ss:Index="32"><Data ss:Type="String">Last Promotion</Data></Cell>
+        <Cell ss:Index="28"><Data ss:Type="String">Last Promotion</Data></Cell>
 
-        <Cell ss:Index="33"><Data ss:Type="String">Increment 1</Data></Cell>
-        <Cell ss:Index="34"><Data ss:Type="String">Promotion 1</Data></Cell>
-        <Cell ss:Index="35"><Data ss:Type="String">Revised Designation 1</Data></Cell>
-        <Cell ss:Index="36"><Data ss:Type="String">Revised CTC 1</Data></Cell>
-        <Cell ss:Index="37"><Data ss:Type="String">Increment 2 </Data></Cell>
-        <Cell ss:Index="38"><Data ss:Type="String">Promotion 2 </Data></Cell>
-        <Cell ss:Index="39"><Data ss:Type="String">Revised Designation 2 </Data></Cell>
-        <Cell ss:Index="40"><Data ss:Type="String">Revised CTC 2 </Data></Cell>
+        <Cell ss:Index="29"><Data ss:Type="String">Increment </Data></Cell>
+        <Cell ss:Index="30"><Data ss:Type="String">Promotion </Data></Cell>
+        <Cell ss:Index="31"><Data ss:Type="String">Revised Designation </Data></Cell>
+        <Cell ss:Index="32"><Data ss:Type="String">Revised CTC </Data></Cell>
   
-        <Cell ss:Index="41"><Data ss:Type="String">Final Increment 1</Data></Cell>
-        <Cell ss:Index="42"><Data ss:Type="String">Promotion 1</Data></Cell>
-        <Cell ss:Index="43"><Data ss:Type="String">Revised CTC 1</Data></Cell>
-        <Cell ss:Index="44"><Data ss:Type="String">PI Bonus 1</Data></Cell>
-        <Cell ss:Index="45"><Data ss:Type="String">Final Increment 2 </Data></Cell>
-        <Cell ss:Index="46"><Data ss:Type="String">Promotion 2 </Data></Cell>
-        <Cell ss:Index="47"><Data ss:Type="String">Revised CTC 2 </Data></Cell>
-        <Cell ss:Index="48"><Data ss:Type="String">PI Bonus 2</Data></Cell>
+        <Cell ss:Index="33"><Data ss:Type="String">Final Increment </Data></Cell>
+        <Cell ss:Index="34"><Data ss:Type="String">Promotion </Data></Cell>
+        <Cell ss:Index="35"><Data ss:Type="String">Revised CTC </Data></Cell>
+        <Cell ss:Index="36"><Data ss:Type="String">PI Bonus </Data></Cell>
 
       </Row>
 
@@ -89,8 +77,7 @@
         <% @employee_salary_templates2 = @employee_template2.try(:employee_salary_templates) %>
         <% @employee_salary_templates3 = @employee_template3.try(:employee_salary_templates) %>
 
-        <% @goal_bunch1 = GoalBunch.where(employee_id: e).last(3).first %>
-        <% @goal_bunch2 = GoalBunch.where(employee_id: e).last(3).second %>
+        <% @goal_bunch = GoalBunch.where(employee_id: e).last  %>
        <Row>
           <Cell ss:Index="1"><Data ss:Type="String"><%= i = i+1 %></Data></Cell>
           <Cell ss:Index="2"><Data ss:Type="String"><%= @employee.try(:manual_employee_code) %></Data></Cell>
@@ -150,37 +137,24 @@
           <Cell ss:Index="23"><Data ss:Type="String"></Data></Cell>
           
 
-          <Cell ss:Index="24"><Data ss:Type="String"><%= @goal_bunch1.try(:appraisee_rating_id).to_f.round(2)%></Data></Cell>
-          <Cell ss:Index="25"><Data ss:Type="String"><%= @goal_bunch1.try(:appraiser_rating) %></Data></Cell>
-          <Cell ss:Index="26"><Data ss:Type="String"><%= @goal_bunch1.try(:reviewer_rating_id) %></Data></Cell>
-          <Cell ss:Index="27"><Data ss:Type="String"><%= @goal_bunch1.try(:final_rating_id) %></Data></Cell>
+          <Cell ss:Index="24"><Data ss:Type="String"><%= @goal_bunch.try(:appraisee_rating_id).to_f.round(2)%></Data></Cell>
+          <Cell ss:Index="25"><Data ss:Type="String"><%= @goal_bunch.try(:appraiser_rating) %></Data></Cell>
+          <Cell ss:Index="26"><Data ss:Type="String"><%= @goal_bunch.try(:reviewer_rating_id) %></Data></Cell>
+          <Cell ss:Index="27"><Data ss:Type="String"><%= @goal_bunch.try(:final_rating_id) %></Data></Cell>
 
-          <Cell ss:Index="28"><Data ss:Type="String"><%= @goal_bunch2.try(:appraisee_rating_id).to_f.round(2)%></Data></Cell>
-          <Cell ss:Index="29"><Data ss:Type="String"><%= @goal_bunch2.try(:appraiser_rating) %></Data></Cell>
-          <Cell ss:Index="30"><Data ss:Type="String"><%= @goal_bunch2.try(:reviewer_rating_id) %></Data></Cell>
-          <Cell ss:Index="31"><Data ss:Type="String"><%= @goal_bunch2.try(:final_rating_id) %></Data></Cell>
+          <Cell ss:Index="28"><Data ss:Type="String"><%= @employee_promotion_last.try(:effective_from)%></Data></Cell>
 
+          <Cell ss:Index="29"><Data ss:Type="String"><%= @goal_bunch.try(:r_increment) %></Data></Cell>
+          <Cell ss:Index="30"><Data ss:Type="String"><%= @goal_bunch.try(:r_promotion) %></Data></Cell>
+          <Cell ss:Index="31"><Data ss:Type="String"><%= @goal_bunch.try(:r_designation).try(:name) %></Data></Cell>
+          <Cell ss:Index="32"><Data ss:Type="String"><%= @goal_bunch.try(:r_ctc) %></Data></Cell>
+          
 
-          <Cell ss:Index="32"><Data ss:Type="String"><%= @employee_promotion_last.try(:effective_from)%></Data></Cell>
-
-
-          <Cell ss:Index="33"><Data ss:Type="String"><%= @goal_bunch1.try(:r_increment) %></Data></Cell>
-          <Cell ss:Index="34"><Data ss:Type="String"><%= @goal_bunch1.try(:r_promotion) %></Data></Cell>
-          <Cell ss:Index="35"><Data ss:Type="String"><%= @goal_bunch1.try(:r_designation).try(:name) %></Data></Cell>
-          <Cell ss:Index="36"><Data ss:Type="String"><%= @goal_bunch1.try(:r_ctc) %></Data></Cell>
-          <Cell ss:Index="37"><Data ss:Type="String"><%= @goal_bunch2.try(:r_increment) %></Data></Cell>
-          <Cell ss:Index="38"><Data ss:Type="String"><%= @goal_bunch2.try(:r_promotion) %></Data></Cell>
-          <Cell ss:Index="39"><Data ss:Type="String"><%= @goal_bunch2.try(:r_designation).try(:name) %></Data></Cell>
-          <Cell ss:Index="40"><Data ss:Type="String"><%= @goal_bunch2.try(:r_ctc) %></Data></Cell>
-
-          <Cell ss:Index="41"><Data ss:Type="String"><%= @goal_bunch1.try(:f_increment) %></Data></Cell>
-          <Cell ss:Index="42"><Data ss:Type="String"><%= @goal_bunch1.try(:f_promotion) %></Data></Cell>
-          <Cell ss:Index="43"><Data ss:Type="String"><%= @goal_bunch1.try(:f_ctc) %></Data></Cell>
-          <Cell ss:Index="44"><Data ss:Type="String"></Data></Cell>
-          <Cell ss:Index="45"><Data ss:Type="String"><%= @goal_bunch2.try(:f_increment) %></Data></Cell>
-          <Cell ss:Index="46"><Data ss:Type="String"><%= @goal_bunch2.try(:f_promotion) %></Data></Cell>
-          <Cell ss:Index="47"><Data ss:Type="String"><%= @goal_bunch2.try(:f_ctc) %></Data></Cell>
-          <Cell ss:Index="48"><Data ss:Type="String"></Data></Cell>
+          <Cell ss:Index="33"><Data ss:Type="String"><%= @goal_bunch.try(:f_increment) %></Data></Cell>
+          <Cell ss:Index="34"><Data ss:Type="String"><%= @goal_bunch.try(:f_promotion) %></Data></Cell>
+          <Cell ss:Index="35"><Data ss:Type="String"><%= @goal_bunch.try(:f_ctc) %></Data></Cell>
+          <Cell ss:Index="36"><Data ss:Type="String"></Data></Cell>
+          
        </Row>
       <% end %>
     </Table>

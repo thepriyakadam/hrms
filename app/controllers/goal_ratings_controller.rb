@@ -408,6 +408,7 @@ class GoalRatingsController < ApplicationController
       emp = GoalBunch.find(g)
       @goal_bunches << emp
       @goal_bunch = GoalBunch.find(g)
+      @employee = Employee.find_by(id: @goal_bunch.employee_id)
       end
 
     respond_to do |format|

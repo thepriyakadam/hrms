@@ -292,7 +292,7 @@ class SalaryslipsController < ApplicationController
         employee_ids.try(:each) do |eid|
           @instalment_array = []
           @salaryslip_component_array = []
-          
+
           @employee = Employee.find_by(id: eid)
           working_day = Workingday.where(employee_id: eid, month_name: @month, year: @year).take
        if @employee.joining_detail.basis_of_time == true
@@ -317,8 +317,7 @@ class SalaryslipsController < ApplicationController
               addable_calculated_amount = 0
             else
               # @working_day = working_day.try(:calculated_payable_days).to_f
-              # byebug
-        
+              
               addable_calculated_amount = addable_actual_amount / working_day.day_in_month * working_day.calculated_payable_days
             end
             addable_total_actual_amount += addable_actual_amount

@@ -4,7 +4,7 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <%= form_for :employee_templates, url: { action: 'show_all_record'} do |f| %>
-    <table id="example6" class="table table-bordered table-hover table-condensed">
+    <table id="example4" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
           <th><input type="checkbox" id="selectAll" value="selectAll"></th>
@@ -12,11 +12,67 @@
           <th>Employee Name</th>
           <th>Department</th>
           <th>Designation</th>
+          <th>Age</th>
+          <th>Degree</th>
+          <th>Year Of Passing</th>
+          <th>Marks</th>
+          <th>Date Of Joining</th>
+          <th>Joining Designation</th>
+          <th>Current Cadre</th>
+          <th>Current Designation</th>
+          <th>Proposed Designation</th>
+          <th>Proposed Cadre</th>
+          <th>Past Experience(in year)</th>
+          <th>Joining CTC</th>
+          <th>CTC 1</th>
+          <th>CTC 2</th>
+          <th>CTC 3</th>
+          <th>Last Salary Revision</th>
+          <th>Current CTC</th>
+          <th>As Per Minimum Wages</th>
+          <th>Eligible For Reward</th>
+          <th>Appraisee Rating</th>
+          <th>Appraiser Rating</th>
+          <th>Reviewer Rating</th>
+          <th>Overall Rating</th>
+
+          <th>Last Promotion</th>
+          <th>Increment</th>
+          <th>Promotion</th>
+          <th>Revised Designation</th>
+          <th>Revised CTC</th>
+
+          <th>Final Increment</th>
+          <th>Promotion</th>
+          <th>Revised CTC</th>
+          <th>PI Bonus</th>
         </tr>
       </thead>
 
       <tbody>
-        <% @employees.each do |employee| %>
+        <% @employees.each do |e| %>
+
+        <% @qualification = Qualification.where(employee_id: e.id).last %>
+
+        <% @joining_detail = JoiningDetail.find_by(employee_id: e.id) %>
+        <% @employee_promotion = EmployeePromotion.where(employee_id: e.id).first %>
+        <% @employee_promotion_last = EmployeePromotion.where(employee_id: e.id).last %>
+
+        <% @current_template = EmployeeTemplate.where(employee_id: e.id,is_active: true).take %>
+        <% @first_template = EmployeeTemplate.where(employee_id: e.id).first %>
+        <% @last_template = EmployeeTemplate.where(employee_id: e.id).last %>
+        <% @experience = Experience.where(employee_id: e.id) %>
+        <% @current_employee_salary_templates = @current_template.try(:employee_salary_templates) %>
+        <% @first_employee_salary_templates = @first_template.try(:employee_salary_templates) %>
+
+        <% @employee_template1 = EmployeeTemplate.where(employee_id: e).last(3).first %>
+        <% @employee_template2 = EmployeeTemplate.where(employee_id: e).last(3).second %>
+        <% @employee_template3 = EmployeeTemplate.where(employee_id: e).last(3).third %>
+        <% @employee_salary_templates1 = @employee_template1.try(:employee_salary_templates) %>
+        <% @employee_salary_templates2 = @employee_template2.try(:employee_salary_templates) %>
+        <% @employee_salary_templates3 = @employee_template3.try(:employee_salary_templates) %>
+
+        <% @goal_bunch = GoalBunch.where(employee_id: e).last  %>
           <tr>
             <td><%= check_box_tag "employee_ids[]", employee.id %></td>
             <td><%= employee.try(:manual_employee_code) %></td>
@@ -36,8 +92,9 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#example6').DataTable( {
+    $('#example4').DataTable( {
         "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+        "scrollX": true
     } );
 } );
 

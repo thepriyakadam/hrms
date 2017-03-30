@@ -10,20 +10,20 @@
       <td><%= full_name(@employee_promotion.employee) %></td>
     
       <th><strong>Department</strong></th>
-      <td><%= @employee_promotion.employee_department %></td>
+      <td><%= @employee_promotion.department.try(:name) %></td>
     </tr>
 
     <tr>
       <th><strong>Employee Designation</strong></th>
-      <td><%= @employee_promotion.designation %></td>
+      <td><%= @employee_promotion.employee_designation.try(:name) %></td>
   
       <th><strong>Employee Grade</strong></th>
-      <td><%= @employee_promotion.grade %></td>
+      <td><%= @employee_promotion.employee_grade.try(:name) %></td>
     </tr>
 
     <tr>
       <th><strong>Employee Category</strong></th>
-      <td><%= @employee_promotion.category %></td>
+      <td><%= @employee_promotion.employee_category.try(:name) %></td>
 
       <th><strong>Employee CTC</strong></th>
       <td><%= @employee_promotion.employee_ctc %></td>

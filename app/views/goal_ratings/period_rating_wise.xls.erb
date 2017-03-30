@@ -13,7 +13,7 @@
         <Cell ss:Index="4"><Data ss:Type="String">Appraisee Rating</Data></Cell> 
         <Cell ss:Index="5"><Data ss:Type="String">Appraiser Rating</Data></Cell> 
         <Cell ss:Index="6"><Data ss:Type="String">Reviewer Rating</Data></Cell> 
-        <Cell ss:Index="7"><Data ss:Type="String">Reviewer Rating</Data></Cell> 
+        <Cell ss:Index="7"><Data ss:Type="String">Final Rating</Data></Cell> 
         </Row>
 
         <% i = 0 %>
@@ -24,7 +24,7 @@
           <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
           <Cell ss:Index="2"><Data ss:Type="String"><%= employee.try(:manual_employee_code) %></Data></Cell>
           <Cell ss:Index="3"><Data ss:Type="String"><%= full_name(employee) %></Data></Cell>
-          <Cell ss:Index="4"><Data ss:Type="String"><%= g.appraisee_rating_id %></Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="String"><% @a = g.appraisee_rating_id.to_f %><%= @a.round(2) %></Data></Cell>
           <Cell ss:Index="5"><Data ss:Type="String"><%= g.appraiser_rating %></Data></Cell>
           <Cell ss:Index="6"><Data ss:Type="String"><%= g.reviewer_rating.try(:value) %></Data></Cell>
           <Cell ss:Index="7"><Data ss:Type="String"><%= g.final_rating.try(:value) %></Data></Cell>

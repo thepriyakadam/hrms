@@ -75,6 +75,8 @@ class AdvanceSalariesController < ApplicationController
   def search_by_advance_date
     reporter(@advance_salaries, template_class: PdfReportTemplate) do
       filter :advance_date, type: :date
+      column :id, sortable: true
+      column(:advance_type, sortable: true) { |advance_salary| advance_salary.advance_type.try(:name) }
       column(:manual_employee_code, sortable: true) { |advance_salary| advance_salary.employee.try(:manual_employee_code) }
       column(:first_name, sortable: true) { |advance_salary| full_name(advance_salary.employee) }
       column :advance_date, sortable: true, pdf: { width: 65 }

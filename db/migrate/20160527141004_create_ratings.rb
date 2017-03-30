@@ -3,6 +3,7 @@ class CreateRatings < ActiveRecord::Migration
     create_table :ratings do |t|
       t.string :value
       t.text :discription
+      t.boolean :is_confirm
 
       t.timestamps null: false
     end

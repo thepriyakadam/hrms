@@ -339,7 +339,6 @@ class WorkingdaysController < ApplicationController
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
         @workingday = Salaryslip.where(month: @month,year: @year,employee_id: @employees).pluck(:workingday_id)
         @workingdays = Workingday.where(month_name: @month,year: @year.to_s,employee_id: @employees).where.not(id: @workingday)
-
       end  
     end    
   end
@@ -391,6 +390,6 @@ class WorkingdaysController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def workingday_params
-    params.require(:workingday).permit(:gatepass,:employee_id, :month_name, :year, :day_in_month, :present_day, :total_leave, :holiday_in_month, :week_off_day, :absent_day, :payable_day)
+    params.require(:workingday).permit(:nonpayable_day,:gatepass,:employee_id, :month_name, :year, :day_in_month, :present_day, :total_leave, :holiday_in_month, :week_off_day, :absent_day, :payable_day)
   end
 end

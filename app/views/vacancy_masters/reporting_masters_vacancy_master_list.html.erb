@@ -9,63 +9,79 @@
 
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <tr>
-      <th colspan="4"><center>Vacancy Request of : <%= @vacancy_master.employee.try(:manual_employee_code) %> <%= @vacancy_master.employee.try(:first_name) %> <%= @vacancy_master.employee.try(:middle_name) %> <%= @vacancy_master.employee.try(:last_name) %></center></th>
+      <th colspan="4"><center>Vacancy Request of : <%= @vacancy_master.employee.try(:manual_employee_code) %> <%= @vacancy_master.employee.try(:prefix) %> <%= @vacancy_master.employee.try(:first_name) %> <%= @vacancy_master.employee.try(:middle_name) %> <%= @vacancy_master.employee.try(:last_name) %></center></th>
     </tr>
   <tr>
   <th><strong>Vacancy Code</strong></th>
   <td><%= @vacancy_master.vacancy_code %></td>
    <th><strong>Request To</strong></th>
-  <td><!-- <= @employee.try(:first_name) %> <= @employee.try(:middle_name) %> <= @employee.try(:last_name) %> --> </td>
+  <!-- <td><= @employee.try(:first_name) %> <= @employee.try(:middle_name) %> <= @employee.try(:last_name) %> </td> -->
+  <td><% emp=Employee.where(id: @vacancy_master.reporting_master_id).take %>
+      <%= emp.try(:manual_employee_code) %> - <%= emp.try(:prefix) %> <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %> </td>
   </tr>
 
   <tr>
   <th><strong>Organization</strong></th>
   <td><%= @vacancy_master.other_organization %></td>
-   <th><strong>Job Title</strong></th>
-  <td><%= @vacancy_master.employee_designation.name %></td>
+  <th><strong>Application Date</strong></th>
+  <td><%= @vacancy_master.vacancy_post_date %></td>
+   
   </tr>
 
   <tr>
+  <th><strong>Job Title</strong></th>
+  <td><%= @vacancy_master.employee_designation.name %></td>
   <th><strong>Vacancy Name</strong></th>
   <td><%= @vacancy_master.vacancy_name %></td>
-  <th><strong>Location</strong></th>
-  <td><%= @vacancy_master.company_location.try(:name) %></td>
+  
   </tr>
 
-<tr> 
+<tr>
+  <th><strong>Location</strong></th>
+  <td><%= @vacancy_master.company_location.try(:name) %></td>
   <th><strong>Department</strong></th>
-  <td><%= @vacancy_master.department.name %></td>
-  <th><strong>No. of Positions</strong></th>
-  <td><%= @vacancy_master.no_of_position %></td>
+  <td><%= @vacancy_master.try(:department).try(:name) %></td>
+  
 </tr>
 
-<tr>  
+<tr>
+  <th><strong>No. of Positions</strong></th>
+  <td><%= @vacancy_master.no_of_position %></td>  
   <th><strong>Experience</strong></th>
   <td><%= @vacancy_master.experience %></td>
+  
+</tr>
+<tr>
+
+ <tr>
   <th><strong>Budget</strong></th>
   <td><%= @vacancy_master.budget %></td>
-</tr>
-<tr>
-
- <tr>
    <th><strong>Fulfillment Date</strong></th>
   <td><%= @vacancy_master.vacancy_post_date %></td>
-  <th><strong>Keyword</strong></th>
-  <td><%= @vacancy_master.keyword %></td>
+  
 </tr>
 
 <tr>
+  <th><strong>Keyword</strong></th>
+  <td><%= @vacancy_master.keyword %></td>
   <th><strong>Organization</strong></th>
   <td><%= @vacancy_master.other_organization %></td>
-  <th><strong>Qualification 1</strong></th>
-  <td><%= @vacancy_master.degree.try(:name) %></td>
+  
 </tr>
 
  <tr>
-  <th><strong>Qualification 2</strong></th>
+ <th><strong>Qualification I</strong></th>
+  <td><%= @vacancy_master.degree.try(:name) %></td>
+  <th><strong>Qualification II</strong></th>
   <td><%= @vacancy_master.degree_1.try(:name) %></td>
-  <th><strong>Qualification 3</strong></th>
+  
+</tr>
+
+<tr>
+<th><strong>Qualification III</strong></th>
   <td><%= @vacancy_master.degree_2.try(:name) %></td>
+  <th><strong>Current Status</strong></th>
+  <td><%= @vacancy_master.current_status %></td>
 </tr>
 
 <tr>
@@ -98,10 +114,10 @@
   <tbody>
     <% @reporting_masters_vacancy_masters.each do |reporting_masters_vacancy_master| %>
        <tr>     
-                <td><%= reporting_masters_vacancy_master.reporting_master_id %></td>
-                <td><% a=reporting_masters_vacancy_master.reporting_master_id
+                <% a=reporting_masters_vacancy_master.reporting_master_id
                 emp=Employee.where(id: a).take %>
-                  <%= emp.try(:first_name)%> <%= emp.try(:middle_name)%> <%= emp.try(:last_name)%>
+                <td><%= emp.manual_employee_code %></td>
+                <td><%= emp.try(:prefix) %> <%= emp.try(:first_name)%> <%= emp.try(:middle_name)%> <%= emp.try(:last_name)%>
                 </td>
                 <td><%= reporting_masters_vacancy_master.created_at.to_date %></td>
                 <td><%= reporting_masters_vacancy_master.created_at %></td>

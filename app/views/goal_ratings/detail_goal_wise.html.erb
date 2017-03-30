@@ -202,7 +202,7 @@
     <center><p class="text-warning"> No Goal Bunch Available </p></center> 
     <% else %>
 
-       <% goal_bunch = GoalBunch.find_by_employee_id(e.employee_id)%>
+       <% goal_bunch = GoalBunch.find_by(id: e.id)%>
        
       <table id="example" class="table table-bordered table-hover table-condensed">
         <tbody>
@@ -213,7 +213,7 @@
             </tr>
             <tr>
               <th>Self Rating</th>
-              <td><%= goal_bunch.try(:appraisee_rating_id) %></td>
+              <td><% @a = goal_bunch.try(:appraisee_rating_id).to_f %><%= @a.round(2) %></td>
             </tr>
             <tr>
               <th>Appraiser Comment</th>

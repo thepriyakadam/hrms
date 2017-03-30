@@ -65,7 +65,9 @@
 </table>
 
 <%= image_tag @selected_resume.passport_photo.url, :size => "100x100" %><br><br>
-<br>
+<!-- <debugger%>
+<iframe src=<= @selected_resume.avatar.url %> width="600" height="780" style="border: none;"> </iframe> -->
+<!--<iframe src="#{@selected_resume.avatar.url}" style= "width: 600px; height:780px; border: none;">-->
 <%= link_to 'Back', all_resume_list_selected_resumes_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 </div>
 </div>

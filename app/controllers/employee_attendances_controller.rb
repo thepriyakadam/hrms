@@ -78,6 +78,8 @@ class EmployeeAttendancesController < ApplicationController
           @employees = Employee.where(status: "Active",company_id: current_user.company_location.company_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
         elsif current_user.role.name == 'Branch'
           @employees = Employee.where(status: "Active",company_location_id: current_user.company_location_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
+        elsif current_user.role.name == 'Employee'
+          @employees = Employee.where(status: "Active",id: current_user.employee_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
         elsif
         @employees = Employee.where(status: "Active").filter_by_date_and_costcenter(@date, @costcenter, current_user)
         #@employees = Employee.filter_by_date_costcenter_and_department(@date, @costcenter, @department, current_user)

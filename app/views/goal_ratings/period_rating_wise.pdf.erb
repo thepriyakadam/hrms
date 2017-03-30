@@ -1,7 +1,27 @@
 <style type="text/css">
  .page-break { display:block; clear:both; page-break-after:always; }
+ tr {
+    page-break-inside: avoid;
+}
+th {
+    page-break-inside: avoid;
+}
 </style>
-  <div class = "page-break">
+
+    <table style="border-collapse: collapse; font-size:8pt;" border=1 width=1200 cellpadding="5">
+      <thead>
+        <tr>
+        <td colspan="7"><center> 
+          <% if current_user.employee.company_location.company.company_logo == nil %>
+          <% else %>
+            <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+          <%end%> 
+            <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+        </td>
+      </tr> 
+      </thead>
+    </table>
+
      <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="5"> 
         <thead>
         <tr>
@@ -21,7 +41,7 @@
           <tr>
           <td><%= e.employee.manual_employee_code %></td>
           <td><%= full_name(e.employee) %></td>
-          <td><%= e.appraisee_rating_id %></td> 
+          <td><% @a = e.appraisee_rating_id.to_f %><%= @a.round(2) %></td> 
           <td><%= e.appraiser_rating %></td>
           <td><%= e.reviewer_rating.try(:value) %></td>
           <td><%= e.final_rating.try(:value) %></td>

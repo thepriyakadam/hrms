@@ -4,6 +4,7 @@ class CreateDegrees < ActiveRecord::Migration
       t.string :code
       t.string :name
       t.string :description
+      t.boolean :is_confirm
 
       t.timestamps null: false
     end

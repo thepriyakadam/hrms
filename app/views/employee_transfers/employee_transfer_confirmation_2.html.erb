@@ -1,6 +1,6 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Transfer Approval</h3>
+    <h3 class="box-title">Employee Transfer Request Approval</h3>
     <div class="pull-right"></div>
   </div><!-- /.box-header -->
   <div class="box-body">
@@ -14,12 +14,12 @@
             <tr>
               <th>ID</th>
               <th>Employee Name</th>
-              <th>Employee Designation</th>
+              <th>Designation</th>
               <th>Employee Category</th>
               <th>Company</th>
               <th>Company Location</th>
               <th>Department</th>
-              <th>Justification</th>
+              <th>Status</th>
             </tr>
           </thead>
 
@@ -34,18 +34,33 @@
                 <th><font color='green'><%= employee_transfer.employee_company %></th></font>
                 <th><font color='green'><%= employee_transfer.employee_company_location %></th></font>
                 <th><font color='green'><%= employee_transfer.employee_department %></th></font>
-                 <th><font color='green'><%= employee_transfer.justification %></th></font>
 
                 <%else%>
             <td><%= employee_transfer.employee.try(:manual_employee_code) %></td>
-             <td><%= full_name(employee_transfer.employee) %></td>
+            <td><%= full_name(employee_transfer.employee) %></td>
             <td><%= employee_transfer.designation %></td>
             <td><%= employee_transfer.category %></td>
             <td><%= employee_transfer.employee_company %></td>
             <td><%= employee_transfer.employee_company_location %></td>  
             <td><%= employee_transfer.employee_department %></td>
-            <td><%= employee_transfer.justification %></td>
              <% end %>
+              <td>
+                  <% employee_transfer.reporting_employee_transfers.try(:each) do |r| %>
+                    <% case r.status %>
+                      <% when "Pending" %>
+                        <small class="label label-default">Pending</small>
+                      <% when "FirstApproved" %>
+                        <small class="label label-primary">FirstApproved</small>
+                      <% when "FinalApproved" %>
+                        <small class="label label-success">FinalApproved</small>
+                      <% when "Rejected" %>
+                        <small class="label label-danger">Rejected</small>
+                      <% when "Approved & Send Next" %>
+                        <small class="label label-warning">Approved & Send Next</small>
+                      <% else %>
+                    <%end%>
+                  <%end%>
+                </td> 
           </tr>
         <% end %>
       </tbody>
@@ -53,7 +68,7 @@
 
      <table id="example1" class="table table-bordered table-hover table-condensed">
 <tbody>
-            <tr><td colspan="4"><font color='red'><center><b>Previous Detail's of Employee</b></center></font></td></tr>
+            <tr><td colspan="4"><font color='red'><center>Previous Detail's of Employee</center></font></td></tr>
             <tr><th> ID </th>
               <td><%= @employee_transfer.try(:employee).try(:manual_employee_code) %></td>
               <th>Employee Name</th>
@@ -62,33 +77,29 @@
 
             <tr>
               <th>Employee Designation</th>
-              <td><%= @employee.joining_detail.employee_designation.try(:name) %></td>
+              <td><%= @employee_transfer.employee.joining_detail.employee_designation.try(:name) %></td>
               <th>Employee Category</th>
-              <td><%= @employee.joining_detail.employee_category.try(:name) %></td>
+              <td><%= @employee_transfer.employee.joining_detail.employee_category.try(:name) %></td>
             </tr>
 
             <tr>
               <th>Company</th>
-              <td><%= @employee.company.try(:name) %></td>
+              <td><%= @employee_transfer.employee.company.try(:name) %></td>
               <th>Company Location</th>
-              <td><%= @employee.company_location.try(:name) %></td>
+              <td><%= @employee_transfer.employee.company_location.try(:name) %></td>
             </tr>
 
             <tr>
               <th>Department</th>
-              <td colspan="3"><%= @employee.department.try(:name) %></td>
+              <td colspan="3"><%= @employee_transfer.employee.department.try(:name) %></td>
             </tr>
 
 </tbody>
     </table>
 
-  <div class="row">
-    <div class="col-sm-12"><strong> <font color='green'>Note - * Row is the latest row to approve/reject </font></strong></div>
-  </div><br>
-
 <table id="example1" class="table table-bordered table-hover table-condensed">
   <tbody>
-    <tr><td colspan="4"><font color='red'><center><b>Current Transfer Detail's of Employee</b></center></font></td></tr>
+    <tr><td colspan="4"><font color='red'><center>Current Transfer Detail's of Employee</center></font></td></tr>
       <tr>
         <th> ID </th>
         <td><%= @employee_transfer.try(:employee).try(:manual_employee_code) %></td>
@@ -99,7 +110,7 @@
     <tr>
       <th>Request To</th>
       <td><% emp=Employee.where(id: @employee_transfer.reporting_master_id).take %>
-          <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
+          <%= emp.try(:prefix) %> <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
       <th>Employee Designation</th>
       <td><%= @employee_transfer.designation %></td>
     </tr>

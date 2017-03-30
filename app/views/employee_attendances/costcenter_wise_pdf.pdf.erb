@@ -1,138 +1,102 @@
        <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1100 cellpadding="20"> 
-       <% s = 0 %>
         <thead>
           <tr>
-            <th>Sr. No.</th>
             <th>ID</th>
             <th>Name</th>
             <th>Cost Center</th>
             <% for i in 1..@day %>
               <th><%= i %></th>
             <%end%>
-            <th colspan="13"> Total </th>
+            <th colspan="14"> Total </th>
           </tr>
           <tr>
-
-            <th colspan="4">Day</th>
-            
+            <th colspan="3">Day</th>
               <% @start_date.step(@end_date).each do |l| %>
                 <th><%= l.strftime("%a") %></th>
               <%end%>
-            <th>P</th>
-            <th>A</th>
-            <th>W</th>
-            <th>H</th>
-            <th>EL</th>
-            <th>CL</th>
-            <th>C.Off</th>
-            <th>AL</th>
-            <th>OD</th>
-            <th>LWP</th>
-            <th>ESIC</th>
-            <th>Payble Days</th>
-            <th>GP</th>
+            
+              <th>P</th>
+              <th>W</th>
+              <th>H</th>
+              <th>EL</th>
+              <th>CL</th>
+              <th>C.Off</th>
+              <th>AL</th>
+              <th>OD</th>
+              <th>GP</th>
+              <th>A</th>
+              <th>LWP</th>
+              <th>ESIC</th>
+             
+              <th>Payable Day</th>
+              <th>Non Payable Day</th>
           </tr>
         </thead>
         <tbody>
-          <% exist = {} %>
+
+         <% exist = {} %>
           <% @employees.each do |e| %>
- 
             <tr>
-              <td><%= s = s + 1 %></td>
-              <td><%= e.employee.manual_employee_code %></td>
+            <td><%= e.employee.try(:manual_employee_code) %></td>
               <td><%= full_name(e.employee) %></td>
               <td><%= e.employee.try(:joining_detail).try(:cost_center).try(:name) %></td>
               <% sorted_exists = calculate_attendance(@date, exist, e)%>
               <% sorted_exists.each do |k,v|%>
                 <td><%= v %></td>
-              <%end%>
+              <% end %>
+            
+            <% holiday_in_month = holiday_in_month_count(exist) %>
+            <% week_off_day = week_off_day_count(exist) %>
+            <% od_day = od_day_count(exist) %>
+            <% present_count = present_count(exist) %>
+            <% absent_count = absent_count(exist) %>
+            <% el_leave_count = el_leave_count(exist) %>
+            <% cl_leave_count = cl_leave_count(exist) %>
+            <% coff_leave_count = coff_leave_count(exist) %>
+            <% advance_leave_count = advance_leave_count(exist) %>
+            <% lwp_leave_count = lwp_leave_count(exist) %>
+            <% esic_leave_count = esic_leave_count(exist) %>
+            <% gatepass_count = gatepass_count(exist) %>
+
+            <% if gatepass_count <=2 %>
+              <% gatepass_value = gatepass_count %>
+            <% else %>
+              <% gatepass_nonpay = gatepass_count - 2 %>
+              <% gatepas_value = gatepass_nonpay.to_f/2 %>
+              <% gatepass_value = gatepass_count.to_f - gatepass_nonpay.to_f %>
+            <% end %>
+
+              <td><%= present_count.to_f %></td>
+              <td><%= week_off_day %></td>
+              <td><%= holiday_in_month %></td>
+              <td><%= el_leave_count %></td>
+              <td><%= cl_leave_count %></td>
+              <td><%= coff_leave_count %></td>
+              <td><%= advance_leave_count %></td>
+              <td><%= od_day %></td>
+              <td><%= gatepass_count %></td>
+
+              <td><%= absent_count.to_f + gatepas_value.to_f %></td> 
+              <td><%= lwp_leave_count %></td>
+              <td><%= esic_leave_count %></td>
               
-              <% abs = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "A") %>
-              <% pre = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id,"P") %>
-              <% wd = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "W") %>
-              <% h = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "H") %>
-              <% el = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "EL") %>
-              <% cl = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "CL") %>
-              <% lwp = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "LWP") %>
-              <% esic = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "ESIC") %>
-              <% coff = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "C.Off") %>
-              <% al = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "AL") %>
-              <% od = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "OD") %>
-              <% gp = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "PG") %>
-              <% phalf = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/2") %>
-              <% pcl = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/CL") %>
-              <% pel = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/EL") %>
-              <% pal = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/AL") %>
-              <% pcoff = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/C.Off") %>
-              <% plwp = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/LWP") %>
-              <% pesic = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/ESIC") %>
-              <% pod = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/OD") %>
-              <% a = gp.count %>
-
-              <td>
-                <% if a.to_f <= 2 %>
-                  <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pal.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f + a.to_f %>
-                  <%= ap %>
-                <% else %>
-                  <% @a = a.to_f - 2 %>
-                  <% @b = @a.to_f/2 %>
-                    <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pal.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f + @b.to_f + 2 %>
-                    <%= ap %>
-                  <% end %>
-              </td>
-
-              <td>
-                <% if a.to_f <= 2 %>
-                  <% ab = abs.count + (phalf.count)/2.to_f  %>
-                  <%= ab %>
-                <% else %>
-                  <% @a = a.to_f - 2 %>
-                  <% @b = @a.to_f/2 %>
-                  <% ab = abs.count + (phalf.count)/2.to_f + @b.to_f %>
-                  <%= ab %>
-                <% end %>
-              </td>
-
-              <td><%= wd.count %></td>
-              <td><%= h.count %></td>
-              <td>
-                <% ael = el.count + (pel.count)/2.to_f %>
-                <%= ael %>
-              </td>
-              <td>
-                <% acl = cl.count + (pcl.count)/2.to_f %>
-                <%= acl %>
-              </td>
-              <td>
-                <% acoff = coff.count + (pcoff.count)/2.to_f %>
-                <%= acoff %>
-              </td>
-              <td>
-                <% aal = al.count + (pal.count)/2.to_f %>
-                <%= aal %>
-              </td>
-              <td>
-                <% aod = od.count + (pod.count)/2.to_f %>
-                <%= aod %>
-              </td>
-              <td>
-                <% alwp= lwp.count + (plwp.count)/2.to_f %>
-                <%= alwp %>
-              </td>
-              <td>
-                <% aesic = esic.count + (pesic.count)/2.to_f %>
-                <%= aesic %>
-              </td>
-              <td>
                 <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
-                  <%= ap + h.count + ael + acl + acoff + aal + aod %>
+                  <% payable_day = present_count.to_f  + od_day.to_f + holiday_in_month.to_f + cl_leave_count.to_f + el_leave_count.to_f + advance_leave_count.to_f + gatepas_value.to_f + gatepass_value.to_f %>
                 <% else %>
-                  <%= ap + wd.count + h.count + ael + acl + acoff + aal + aod %>
+                  <% payable_day = present_count.to_f  + od_day.to_f + holiday_in_month.to_f + week_off_day.to_f + cl_leave_count.to_f + el_leave_count.to_f + advance_leave_count.to_f + gatepas_value.to_f + gatepass_value.to_f %>
                 <% end %>
-              </td>
-              <td><%= gp.count %></td>
-            </tr> 
+
+                <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+                  <% nonpayable_day = absent_count.to_f+ gatepas_value.to_f + lwp_leave_count.to_f + esic_leave_count.to_f + coff_leave_count.to_f + week_off_day.to_f %>
+                <% else %>
+                  <% nonpayable_day = absent_count.to_f+ gatepas_value.to_f + lwp_leave_count.to_f + esic_leave_count.to_f + coff_leave_count.to_f  %>
+                <% end %>
+
+              <td><%= payable_day %></td>
+              <td><%= nonpayable_day %></td>
+            </tr>           
             <% exist.clear %>
+
           <%end%>
         </tbody>
       </table>

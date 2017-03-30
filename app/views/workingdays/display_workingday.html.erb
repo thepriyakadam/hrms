@@ -16,6 +16,7 @@
           <th>Non Pay Leave</th>
           <th>Absent</th>
           <th>Payable Day</th>
+          <th>Non Payable Day</th>
           <th>Days In Month</th>
         </tr>
       </thead>
@@ -28,12 +29,13 @@
             <td><%= workingday.present_day %></td>
             <td><%= workingday.holiday_in_month %></td>
             <td><%= workingday.week_off_day %></td>
-            <td><%= workingday.od_leave %></td>
+            <td><%= workingday.od_day %></td>
             <td><%= workingday.gatepass %></td>
             <td><%= workingday.pay_leave %></td>
             <td><%= workingday.nonpay_leave %></td>
             <td><%= workingday.absent_day %></td>
             <th><%= workingday.payable_day %></th>
+            <th><%= workingday.nonpayable_day %></th>
             <td><%= workingday.day_in_month %></td>
           </tr>
       <% end %>

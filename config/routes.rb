@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :employee_gps_histories
   resources :gratuities
   resources :gratuity_masters do
     collection do
@@ -69,6 +70,9 @@ Rails.application.routes.draw do
       get :date_wise_week_off
       post :show_date_wise_weekoff
       get :show_date_wise_weekoff
+      get :revert_selective
+      post :show_employee_list
+      post :revert_selective_week_off
     end
   end
   resources :late_mark_masters do
@@ -134,6 +138,7 @@ Rails.application.routes.draw do
       post :edit_machine_attendance
       get :machine_attendance_xls
       get :machine_attendance_pdf
+      get :import_machine_attendance_to_txt
     end
   end
   resources :company_time_masters do
@@ -629,6 +634,7 @@ end
       get :period_rating_wise_pdf
       get :period_rating_wise_xls
       get :increment_index_report
+      get :detail_employee_wise
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -1127,6 +1133,7 @@ end
       get :modal_schedule_list
       post :update_interview_schedule
       patch :create_new
+      get :show_interview_round_list
     end
   end
   resources :vacancy_masters do
@@ -1568,6 +1575,7 @@ end
       get :monthly_deduction_report
       post :monthly_deduction
       get :monthly_deduction
+      get :export_pf_report_to_text
     end
   end
 
@@ -1993,6 +2001,11 @@ end
       post :show_employee_list
       get :show_all_record
       post :show_all_record
+      get :member_gps_form
+      post :update_gps
+      get :employee_gps_setting_list
+      post :display_employee_details
+      get :employee_detail_form
     end
     member do
       get :edit_manager

@@ -7,6 +7,7 @@
     <tr>
       <th>Sr.No</th>
       <th>Candidate Name</th>
+      <th>Email</th>
       <th>Job Title</th>
       <th>Location</th>
       <th>Action</th>
@@ -19,6 +20,7 @@
       <tr>
         <td><%= i=i+1 %></td>
         <td><%= interview_schedule.candidate_name %></td>
+        <td><%= interview_schedule.email_id %></td>
         <td><!-- < interview_sched=InterviewSchedule.where(id: interview_schedule).take
         resume = SelectedResume.where(id: interview_sched.selected_resume_id).take
         vacancy = VacancyMaster.where(id: resume.vacancy_master_id).take %> -->

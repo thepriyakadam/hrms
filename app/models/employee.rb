@@ -58,6 +58,7 @@ class Employee < ActiveRecord::Base
   has_many :manager_histories
   has_many :due_employee_details
   has_many :employee_promotions
+  has_many :promotion_histories
   has_many :leave_records
   has_many :travel_request_histories
   has_many :issue_tracker_members
@@ -146,6 +147,23 @@ class Employee < ActiveRecord::Base
       errors.add :pan_no, 'Please specify Correct Pan Card Number'
     end
   end
+
+  def self.to_txt
+    # attributes = %w{employee_id day in out shift_master_id is_proceed present user_id}
+    attributes = %w{id first_name middle_name last_name status name}
+
+    CSV.generate(:col_sep => "#~#") do |txt|
+      txt << attributes
+
+      all.each do |employee|
+        txt << attributes.map{ |attr| employee.send(attr) }
+      end
+    end
+  end
+
+   def name
+       "#{self.department.try(:name)}"
+    end
 
   def add_department
     department = Department.find(department_id)

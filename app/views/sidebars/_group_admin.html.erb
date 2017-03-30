@@ -215,6 +215,7 @@
       <li><a href="/reporting_masters/update_reporting_manager"><i class="fa fa-tags"></i> Replace Manager </a></li>
       <li><a href="/employees/member_list_for_update_password"><i class="fa fa-tags"></i> Reset Password </a></li>
       <li><a href="/employees/destroy_employee"><i class="fa fa-tags"></i> Destroy Employee </a></li>
+      <li><a href="/employees/employee_gps_setting_list"><i class="fa fa-tags"></i> Set GPS </a></li>
       <!-- <li><a href="/employees/employee_list_for_revert"><i class="fa fa-tags"></i> Revert </a></li> -->
       <!-- <li><a href="/employees/transfer_employee_list"><i class="fa fa-tags"></i>Transfer Employee</a></li> -->
     </ul>
@@ -229,11 +230,13 @@
       <li><a href="/employee_leav_requests"><i class="fa fa-tags"></i> Leave Request </a></li>
       <li><a href="/on_duty_requests"><i class="fa fa-tags"></i> OD Request </a></li>
       <li><a href="/self_services/employee_template"><i class="fa fa-tags"> </i> Salary Structure </a></li>
+       <li><a href="/employee_attendances/new"><i class="fa fa-tags"></i> Add Attendance </a></li>
       <li><a href="/employee_attendances/loginwise_attendance_form"><i class="fa fa-tags"></i>Attendance </a></li> 
       <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i> Salary Slip </a></li>
        <li><a href="/training_plans/trainee_list"><i class="fa fa-tags"></i>Training Feedback </a></li>
      <!--  <li><a href="/self_services/advance"><i class="fa fa-tags"></i> Advance & Installment </a></li>-->
       <li><a href="/self_services/employee_resignation"><i class="fa fa-tags"></i> Employee Resignation </a></li>
+      <li><a href="/self_services/employee_transfer"><i class="fa fa-tags"></i> Transfer Request </a></li>
      <!-- <li><a href="/self_services/resignation_history"><i class="fa fa-tags"></i> Resignation History </a></li>
       <li><a href="/employee_daily_activities/new"><i class="fa fa-tags"></i> Daily Activity </a></li>
             
@@ -282,7 +285,7 @@
        </ul>
       </li> 
       <li class="treeview" id="LeaveProcess">
-        <a href="#"><i class="fa fa-edit"></i> Leave Process  <i class="fa fa-angle-left pull-right"></i></a>
+        <a href="#"><i class="fa fa-edit"></i> Leave Process <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/employee_leav_requests/employee_list"><i class="fa fa-tags"></i>Leave Request</a></li>
         <li><a href="/employee_leav_requests/approved_or_rejected_leave_request"><i class="fa fa-tags"></i>Leave Approval</a></li>
@@ -292,7 +295,7 @@
 
 
       <li class="treeview" id="LeaveReports">
-        <a href="#"><i class="fa fa-edit"></i> Leave Reports  <i class="fa fa-angle-left pull-right"></i></a>
+        <a href="#"><i class="fa fa-edit"></i> Leave Reports <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/employee_leav_requests/leave_request_report"><i class="fa fa-tags"></i>Leave Request </a></li>
         <li><a href="/employee_leav_requests/leave_req_status_report"><i class="fa fa-tags"></i>Status Wise Leave</a></li>
@@ -303,7 +306,7 @@
       </li>  
 
       <li class="treeview" id="ODProcess">
-        <a href="#"><i class="fa fa-edit"></i> On Duty Process  <i class="fa fa-angle-left pull-right"></i></a>
+        <a href="#"><i class="fa fa-edit"></i> On Duty Process <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/on_duty_requests/employee_list"><i class="fa fa-tags"></i>OD Request</a></li>
         <li><a href="/on_duty_requests/request_approval_list"><i class="fa fa-tags"></i>OD Approval</a></li>
@@ -349,7 +352,8 @@
        <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
        <li><a href="/week_off_masters/new"><i class="fa fa-tags"></i> Week Off Setup </a></li>
        <li><a href="/week_off_masters/week_off_list"><i class="fa fa-tags"></i> Confirm Week Off </a></li>
-       <li><a href="/employee_week_offs"><i class="fa fa-tags"></i> Revert Week Off</a></li>
+       <li><a href="/employee_week_offs"><i class="fa fa-tags"></i> Revert Employee Wise</a></li>
+       <li><a href="/employee_week_offs/revert_selective"><i class="fa fa-tags"></i> Revert Date Wise</a></li>
        <li><a href="/employee_week_offs/date_wise_week_off"><i class="fa fa-tags"></i> Week Off Report </a></li>
      </ul>
       </li> 
@@ -690,6 +694,7 @@
       <i class="ionicons ion-ios-time"></i><span> Promotion Management </span> <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
+       <li><a href="/employee_promotions"><i class="fa fa-tags"></i> Employee Promotion </a></li>
        <li><a href="/employee_promotions/employee_list"><i class="fa fa-tags"></i> Promotion History </a></li>
     </ul>
    </li>
@@ -702,6 +707,7 @@
        <li><a href="/employee_transfers/new"><i class="fa fa-tags"></i> Transfer Request </a></li>
        <li><a href="/employee_transfers/transfer_request"><i class="fa fa-tags"></i> Approve/Reject Request </a></li>
        <li><a href="/employee_transfers/final_approval_transfer_list"><i class="fa fa-tags"></i> Final Approval  </a></li>
+       <li><a href="/employee_transfers/transfer_employee_name_report"><i class="fa fa-tags"></i> Employee Report  </a></li>
     </ul>
    </li>
 

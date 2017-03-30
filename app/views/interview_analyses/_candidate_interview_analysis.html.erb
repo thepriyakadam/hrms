@@ -1,4 +1,7 @@
 <%= form_for :interview_analyses, url: { action: 'print_interview_analysis_list',format: 'pdf',interview_round_id: @interview_round.id},:html => {:target => '_blank'} do |f| %>
+
+
+
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
@@ -7,38 +10,53 @@
       <th>Skillset</th>
       <th>Evaluation</th>
       <th>Remarks</th>
-      <!-- th>Action</th> -->
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
     <% @interview_analyses.each do |interview_analysis| %>
       <tr> 
 <!--         <td><= interview_analysis.interview_round.employee.try(:first_name) %> <= interview_analysis.interview_round.employee.try(:middle_name) %> <= interview_analysis.interview_round.employee.try(:last_name) %></td>
- -->        <td><%= interview_analysis.interview_evalution.try(:name) %></td>
+ -->    <td><%= interview_analysis.interview_evalution.try(:name) %></td>
         <td><%= interview_analysis.interview_attribute.try(:name) %></td>
         <td><%= interview_analysis.interview_decision.try(:name) %></td>
         <td><%= interview_analysis.comment %></td>
         <!-- <td> -->
-          <!--<= link_to '', edit_interview_analysis_path(interview_analysis),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>-->
+        <td>
+         <% interview_round_1 = InterviewRound.where(id: @interview_round.id).take %>
+            <% if interview_round_1.is_confirm == true %>
+            <% else %>
+              <%= link_to '', edit_interview_analysis_path(interview_analysis),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <% end %>
+        </td>
           <!--<= link_to '',  interview_analysis, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-danger btn-xs fa fa-close',remote:true %>-->
         <!-- </td> -->
       </tr> 
     <% end %>
+    <!--  <tr>
+       <th colspan="2">Total Score</th>
+       <th colspan="2">< interv_analy = InterviewAnalysis.where(interview_round_id: interview_round).pluck(:interview_decision_id)
+        interv_dec = InterviewDecision.where(id: interv_analy).pluck(:name).map {|i| i.to_i} %>
+        <= interv_dec.sum %>
+       </th>
+      </tr> -->
     <tr>
         <th colspan="2">Total Score</th>
-        <th colspan="2"><% interv_analy = InterviewAnalysis.where(interview_round_id: @interview_round.id).pluck(:interview_decision_id)
-        interv_dec = InterviewDecision.where(id: interv_analy).pluck(:name).map {|i| i.to_i} %><%= interv_dec.sum %></th>
+        <!-- <debugger%> -->
+        <th colspan="3"><% interv_analy = InterviewAnalysis.where(interview_round_id: @interview_round.id).pluck(:interview_decision_id)
+        interv_dec = InterviewDecision.where(id: interv_analy) %><%= interv_dec.sum(:name) %></th>
     </tr>
   </tbody>
 </table>
+
 <div class="col-sm-6">
 <% interview_round_1 = InterviewRound.where(id: @interview_round.id).take %>
   <% if interview_round_1.is_confirm == true %>
-    <%= f.submit "Print",class: "btn btn-xl btn-info fa fa-print" %> |
+   <!--  <= f.submit "Print",class: "btn btn-xl btn-info fa fa-print" %> | -->
   <%= link_to 'Back', interview_round_list_interview_schedules_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
   <% else %>
   <%= link_to 'Confirm Evaluation',confirm_interview_analysis_interview_analyses_path(interview_round_id: @interview_round.id),data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> |
-  <%= f.submit "Print",class: "btn btn-xl btn-info fa fa-print" %> |
+ <!--  <= f.submit "Print",class: "btn btn-xl btn-info fa fa-print" %> | -->
   <%= link_to 'Back', interview_round_list_interview_schedules_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
   <% end %>
 </div>

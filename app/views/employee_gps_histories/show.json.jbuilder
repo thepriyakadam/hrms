@@ -1,0 +1,1 @@
+json.partial! "employee_gps_histories/employee_gps_history", employee_gps_history: @employee_gps_history

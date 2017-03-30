@@ -206,6 +206,100 @@ class EmployeeWeekOffsController < ApplicationController
     end
   end
 
+  def revert_selective
+  end
+
+  def show_employee_list
+    from_date = params[:employee][:from_date]
+    to_date = params[:employee][:to_date]
+    company = params[:employee][:company_id]
+    location = params[:employee][:company_location_id]
+    department = params[:employee][:department_id]
+
+    if current_user.class == Group
+      if company == ""
+        @employees = Employee.where(status: 'Active').pluck(:id)
+        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
+      elsif location == ""
+        @employees = Employee.where(company_id: company.to_i).pluck(:id)
+        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
+      elsif department == ""
+        @employees = Employee.where(company_location_id: location.to_i).pluck(:id)
+        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
+      else
+        @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
+      end
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        if company == ""
+          @employees = Employee.where(status: 'Active').pluck(:id)
+        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
+        elsif location == ""
+          @employees = Employee.where(company_id: company.to_i).pluck(:id)
+        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
+        elsif department == ""
+          @employees = Employee.where(company_location_id: location.to_i).pluck(:id)
+        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
+        else
+          @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
+        end
+      elsif current_user.role.name == 'Admin'
+        if company == ""
+          @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
+        elsif location == ""
+          @employees = Employee.where(company_id: company.to_i).pluck(:id)
+        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
+        elsif department == ""
+          @employees = Employee.where(company_location_id: location.to_i).pluck(:id)
+        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
+        else
+          @employees = Employee.where(company_id: company.to_i,company_location_id: @location.to_i,department_id: department.to_i).pluck(:id)
+        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
+        end
+      elsif current_user.role.name == 'Branch'
+        if company == "" || location == ""
+          @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
+        elsif department == ""
+          @employees = Employee.where(company_location_id: location.to_i).pluck(:id)
+        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
+        else 
+          @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
+        end
+      elsif current_user.role.name == 'HOD'
+        if company == "" || location == "" || department == ""
+          @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
+        else 
+          @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
+        end
+      elsif current_user.role.name == 'Superviser'
+      elsif current_user.role.name == 'Employee'
+      end
+    end
+    
+  end#def
+
+  def revert_selective_week_off
+    @employee_week_off_ids = params[:employee_week_off_ids]
+    if @employee_week_off_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+    else
+      @employee_week_off_ids.each do |eid|
+        @emp_week_off = EmployeeWeekOff.find_by_id(eid)
+        EmployeeAttendance.where(employee_id: @emp_week_off.employee_id,day: @emp_week_off.date).destroy_all 
+        @emp_week_off.destroy
+        flash[:notice] = "Revert successfully"
+      end
+    end
+    redirect_to revert_selective_employee_week_offs_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_week_off

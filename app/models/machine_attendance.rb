@@ -18,6 +18,18 @@ class MachineAttendance < ActiveRecord::Base
     end
   end
 
+  def self.to_txt
+    # attributes = %w{employee_id day in out shift_master_id is_proceed present user_id}
+    attributes = %w{employee_id first_name middle_name last_name status}
+
+    CSV.generate(:col_sep => "#") do |csv|
+      csv << attributes
+      all.each do |employee|
+        csv << attributes.map{ |attr| employee.send(attr) }
+      end
+    end
+  end
+
   def self.import(file)
     spreadsheet = open_spreadsheet(file)
     header = spreadsheet.row(1)

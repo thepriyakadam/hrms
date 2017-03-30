@@ -62,6 +62,9 @@
 <script>
 $("#employee_transfer").validate({
     rules: {
+       "employee_transfer[employee_id]":{
+        required: true,
+      },
       "employee_transfer[designation]":{
         required: true,
       },
@@ -79,6 +82,9 @@ $("#employee_transfer").validate({
       }
     },
     messages: {
+       "employee_transfer[employee_id]":{
+        required: "Please Select Employee",
+      },
       "employee_transfer[designation]":{
         required: "Please Specify Designation",
       },

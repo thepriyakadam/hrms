@@ -1161,6 +1161,14 @@ def show_all_record
     redirect_to employee_gps_setting_list_employees_path
   end
 
+  def display_employee_details
+     @emp = params[:employee][:id]
+     @employee = Employee.where(id: @emp).take
+     @families = Family.where(employee_id: @emp)
+     @qualifications = Qualification.where(employee_id: @emp)
+     @skillsets = Skillset.where(employee_id: @emp)
+  end
+
 
   # def destroy_details
   #   @employee = Employee.find(params[:emp_id])

@@ -5,6 +5,7 @@ class CreateAttributeMasters < ActiveRecord::Migration
       t.string :name
       t.text :definition
       t.boolean :status
+      t.boolean :is_confirm
 
       t.timestamps null: false
     end

@@ -1,0 +1,51 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Details</h3>
+  </div>
+  <%= bootstrap_form_for :employee, url: { action: 'display_employee_details'},html: {id: 'employee'},remote:true do |f| %>
+  <div class="box-body">
+
+      <div class="row">
+       <div class="col-sm-3">
+      <div class="form-group required">
+        <%= select :employee,:id, all_employee_list, {label: "Employee",include_blank: "Select Employee"},{:class=>"select2",:style=>"width: 100%;",:tabindex=>"-1"} %>
+      </div>
+         </div>
+
+      <div class="col-sm-3">
+        <div class="actions">
+         <%= f.submit "Submit", class: "btn btn-sm btn-primary", id: "emp_detail" %> 
+         </div>
+        </div>
+      </div>
+      <br><br>
+      <div id="employee_det"></div>
+    </div>
+  <%end%>
+</div>
+
+<script type="text/javascript">
+  $("#emp_detail").click(function(){
+    $('.ajax-progress').show();
+    $("#food_deduction").submit();
+  })
+</script>
+
+<script>
+$("#employee").validate({
+    rules: {
+      "employee[id]":{
+        required: true,
+      }
+    },
+    messages: {
+      "employee[id]":{
+        required: "Please Select Employee",
+      } 
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

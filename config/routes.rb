@@ -1575,6 +1575,7 @@ end
       get :monthly_deduction_report
       post :monthly_deduction
       get :monthly_deduction
+      get :export_pf_report_to_text
     end
   end
 
@@ -2003,6 +2004,8 @@ end
       get :member_gps_form
       post :update_gps
       get :employee_gps_setting_list
+      post :display_employee_details
+      get :employee_detail_form
     end
     member do
       get :edit_manager

@@ -5,6 +5,7 @@ class CreateTrainingTopicMasters < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.boolean :status
+      t.boolean :is_confirm
 
       t.timestamps null: false
     end

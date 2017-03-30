@@ -41,20 +41,20 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
 # # Root url
-  config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
+  # config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
 
 
-  # config.domain = 'lvh.me'
-  # config.action_mailer.perform_deliveries = true,
-  ActionMailer::Base.delivery_method = :smtp
-  ActionMailer::Base.smtp_settings = {
-    address: 'mail.bhandarigroup.in',
-    port: 25,
-    domain: '192.168.0.62',
-    user_name: 'hrmsdws-bhandarigroup',
-    password: 'hrms1234',
-    authentication: :plain
-  }
+  # # config.domain = 'lvh.me'
+  # # config.action_mailer.perform_deliveries = true,
+  # ActionMailer::Base.delivery_method = :smtp
+  # ActionMailer::Base.smtp_settings = {
+  #   address: 'mail.bhandarigroup.in',
+  #   port: 25,
+  #   domain: '192.168.0.62',
+  #   user_name: 'hrmsdws-bhandarigroup',
+  #   password: 'hrms1234',
+  #   authentication: :plain
+  # }
   
 
 
@@ -82,19 +82,19 @@ Rails.application.configure do
   #   openssl_verify_mode: 'none'
   # }
 
-#  # Root url
-#   config.action_mailer.default_url_options = { host: 'mail.amaazia.com', port: 3000 }
-#   # config.domain = 'lvh.me'
-#   # config.action_mailer.perform_deliveries = true,
-#   ActionMailer::Base.delivery_method = :smtp
+ # Root url
+  config.action_mailer.default_url_options = { host: 'mail.amaazia.com', port: 3000 }
+  # config.domain = 'lvh.me'
+  # config.action_mailer.perform_deliveries = true,
+  ActionMailer::Base.delivery_method = :smtp
 
-#   ActionMailer::Base.smtp_settings = {
-#     :address => "mail.amaazia.com",
-#     :port => 465,
-#     :user_name => "ranna.p@amaazia.com",
-#     :password => "ranna@123",
-#     :authentication => 'plain',
-# }
+  ActionMailer::Base.smtp_settings = {
+    :address => "mail.amaazia.com",
+    :port => 465,
+    :user_name => "ranna.p@amaazia.com",
+    :password => "ranna@123",
+    :authentication => 'plain',
+}
 
  # # Root url
   # config.action_mailer.default_url_options = { host: 'imap.gmail.com', port: 3000 }

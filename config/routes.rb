@@ -70,6 +70,9 @@ Rails.application.routes.draw do
       get :date_wise_week_off
       post :show_date_wise_weekoff
       get :show_date_wise_weekoff
+      get :revert_selective
+      post :show_employee_list
+      post :revert_selective_week_off
     end
   end
   resources :late_mark_masters do
@@ -631,6 +634,7 @@ end
       get :period_rating_wise_pdf
       get :period_rating_wise_xls
       get :increment_index_report
+      get :detail_employee_wise
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -2000,6 +2004,8 @@ end
       get :member_gps_form
       post :update_gps
       get :employee_gps_setting_list
+      post :display_employee_details
+      get :employee_detail_form
     end
     member do
       get :edit_manager

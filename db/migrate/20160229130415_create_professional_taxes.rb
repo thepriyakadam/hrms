@@ -7,6 +7,7 @@ class CreateProfessionalTaxes < ActiveRecord::Migration
       t.decimal :pt_amount, precision: 15, scale: 2, default: 0
       t.decimal :for_months, precision: 15, scale: 2, default: 0
       t.decimal :march_month, precision: 15, scale: 2, default: 0
+      t.boolean :is_confirm
 
       t.timestamps null: false
     end

@@ -5,6 +5,7 @@ class CreateBonusMasters < ActiveRecord::Migration
       t.decimal :limit_amount, precision: 15, scale: 2, default: 0
       t.decimal :bonus_persentage, precision: 15, scale: 2, default: 0
       t.boolean :status
+      t.boolean :is_confirm
 
       t.timestamps null: false
     end

@@ -21,7 +21,7 @@
         <tr>
         <td><%= e.employee.manual_employee_code %></td>
         <td><%= full_name(e.employee) %></td>
-        <td><%= e.appraisee_rating_id %></td> 
+        <td><% @a = e.appraisee_rating_id.to_f %><%= @a.round(2) %></td> 
         <td><%= e.appraiser_rating %></td>
         <td><%= e.reviewer_rating.try(:value) %></td>
         <td><%= e.final_rating.try(:value) %>

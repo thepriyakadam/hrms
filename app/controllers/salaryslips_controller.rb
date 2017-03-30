@@ -292,7 +292,7 @@ class SalaryslipsController < ApplicationController
         employee_ids.try(:each) do |eid|
           @instalment_array = []
           @salaryslip_component_array = []
-          @employee = Employee.find(eid)
+          @employee = Employee.find_by(id: eid)
           working_day = Workingday.where(employee_id: eid, month_name: @month, year: @year).take
        if @employee.joining_detail.basis_of_time == true
           current_template = EmployeeTemplate.where('employee_id = ? and is_active = ?', @employee.id, true).take

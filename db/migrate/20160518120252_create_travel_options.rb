@@ -4,6 +4,7 @@ class CreateTravelOptions < ActiveRecord::Migration
       t.string :code
       t.string :name
       t.text :discription
+      t.boolean :is_confirm
 
       t.timestamps null: false
     end

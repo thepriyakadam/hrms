@@ -16,6 +16,7 @@
           <th>Non Pay Leave</th>
           <th>Absent</th>
           <th>Payable Day</th>
+          <th>Non Payable Day</th>
           <th>Days In Month</th>
         </tr>
       </thead>
@@ -34,6 +35,7 @@
             <td><%= workingday.nonpay_leave %></td>
             <td><%= workingday.absent_day %></td>
             <th><%= workingday.payable_day %></th>
+            <th><%= workingday.nonpayable_day %></th>
             <td><%= workingday.day_in_month %></td>
           </tr>
       <% end %>

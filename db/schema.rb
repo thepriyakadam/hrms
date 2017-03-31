@@ -1111,7 +1111,6 @@ ActiveRecord::Schema.define(version: 20170327102041) do
     t.date     "effective_to"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "current"
     t.string   "designation"
     t.string   "grade"
     t.string   "category"
@@ -1348,7 +1347,6 @@ ActiveRecord::Schema.define(version: 20170327102041) do
     t.integer  "passport_photo_file_size"
     t.datetime "passport_photo_updated_at"
     t.string   "punch_card_id"
-    t.string   "prefix"
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"

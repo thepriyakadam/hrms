@@ -2006,6 +2006,7 @@ end
       get :employee_gps_setting_list
       post :display_employee_details
       get :employee_detail_form
+      get :employee_record_pdf
     end
     member do
       get :edit_manager

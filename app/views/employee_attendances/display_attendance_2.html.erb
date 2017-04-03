@@ -8,7 +8,7 @@
               <% for i in 1..@day %>
                 <th><%= i %></th>
               <%end%>
-          <th colspan="14"><center> Total </center></th>
+          <th colspan="13"><center> Total </center></th>
           </tr>
           <tr>
             <th colspan="2">Day</th>
@@ -30,7 +30,7 @@
               <th>ESIC</th>
              
               <th>Payable Day</th>
-              <th>Non Payable Day</th>
+              <!-- <th>Non Payable Day</th> -->
           </tr>
         </thead>
         <tbody>
@@ -92,7 +92,7 @@
                 <% end %>
 
               <td><%= payable_day %></td>
-              <td><%= nonpayable_day %></td>
+              <!-- <td><= nonpayable_day %></td> -->
             </tr>           
             <% exist.clear %>
 

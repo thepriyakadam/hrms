@@ -337,14 +337,12 @@ class SalaryslipsController < ApplicationController
             end
             @salaryslip_component_array << @addable_salaryslip_item
         end
-        
 
           deducted_actual_amount = 0
           deducted_calculated_amount = 0
           deducted_total_actual_amount = 0
           deducted_total_calculated_amount = 0
          
-
           @advance_salaries = AdvanceSalary.where(employee_id: @employee.id)
           @advance_salaries.try(:each) do |a|
             @instalments = a.instalments
@@ -639,7 +637,7 @@ class SalaryslipsController < ApplicationController
             deducted_calculated_amount = 0
             deducted_actual_amount = 0
             @instalment_array.each do |ia|
-              deducted_actual_amount = deducted_actual_amount + ia.advance_salary.instalment_amount
+              deducted_actual_amount = deducted_actual_amount + ia.instalment_amount
               # deducted_calculated_amount = deducted_calculated_amount + deducted_actual_amount         
             end
             @salary_component = SalaryComponent.find_by(name: "Advance")
@@ -1201,7 +1199,7 @@ class SalaryslipsController < ApplicationController
             deducted_calculated_amount = 0
             deducted_actual_amount = 0
             @instalment_array.each do |ia|
-              deducted_actual_amount = deducted_actual_amount + ia.advance_salary.instalment_amount
+              deducted_actual_amount = deducted_actual_amount + ia.instalment_amount
               # deducted_calculated_amount = deducted_calculated_amount + deducted_actual_amount         
               Instalment.find(ia).update(is_complete: true)
             end

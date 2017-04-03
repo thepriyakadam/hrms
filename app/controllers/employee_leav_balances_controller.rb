@@ -48,7 +48,7 @@ class EmployeeLeavBalancesController < ApplicationController
 
   # POST /employee_leav_balances
   # POST /employee_leav_balances.json
-  def create
+def create
     @employee_leav_balance = EmployeeLeavBalance.new(employee_leav_balance_params)
 
     @employee_ids = params[:employee_ids]

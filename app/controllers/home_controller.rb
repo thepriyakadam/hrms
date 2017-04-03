@@ -1,5 +1,7 @@
 class HomeController < ApplicationController
   # load_and_authorize_resource
+  require 'date'
+
   def index
     @circulars = Circular.where(is_active: true)
     @company_policies = CompanyPolicy.all

@@ -9,8 +9,8 @@ class SalaryReport
         
 
   def self.collect_data(e, j, sl)
-    addable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: false, is_arrear: nil)
-    deductable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: true, is_arrear: nil)
+    addable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: false)
+    deductable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: true)
 
     wd = Workingday.find(sl.workingday_id)
     sr = SalaryReport.new
@@ -420,8 +420,8 @@ class SalaryReport
   end
 
   def self.collect_monthly_ctc(e, sl)
-    addable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: false, is_arrear: nil)
-    deductable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: true, is_arrear: nil)
+    addable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: false)
+    deductable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: true)
     j = JoiningDetail.find_by_employee_id(e.id)
 
     wd = Workingday.find(sl.workingday_id)

@@ -1095,7 +1095,7 @@ class SalarySlipLedgersController < ApplicationController
     @start_date = params[:start_date].to_date
     @end_date = params[:end_date].to_date
     @employee = params[:employee_id]
-    @salaryslips = Salaryslip.where(employee_id: params[:employee_id], month_year: @start_date..@end_date)
+    @salaryslips = Salaryslip.where(employee_id: params[:employee_id], month_year: @start_date.to_date..@end_date.to_date)
     @salaryslips.try(:each) do |s|
       employee = Employee.find(s.employee_id)
       joining = JoiningDetail.find_by_employee_id(employee.id)

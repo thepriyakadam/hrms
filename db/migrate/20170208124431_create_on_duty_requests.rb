@@ -9,6 +9,7 @@ class CreateOnDutyRequests < ActiveRecord::Migration
       t.text :reason 
       t.boolean :first_half
       t.boolean :last_half
+      t.boolean :present_status
       t.references :first_reporter, index: true, foreign_key: true
       t.references :second_reporter, index: true, foreign_key: true
       t.integer :current_status

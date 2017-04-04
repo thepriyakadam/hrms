@@ -20,7 +20,7 @@ class CreateFamilies < ActiveRecord::Migration
       t.date :passport_expiry_date
       t.string :medical_claim
       t.string :marital
-      t.string :blood_group
+      t.references :blood_group, index: true, foreign_key: true
       t.string :is_handicap
       t.string :handicap_type
       t.string :profession

@@ -86,7 +86,7 @@ group :development do
 	# Access an IRB console on exception pages or by using <%= console %> in views
 	gem 'web-console', '~> 2.0'
 	# Rails console table print
-	# gem 'table_print'
+   gem 'table_print'
 	gem 'wirble'
 	gem 'hirb'
 	# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

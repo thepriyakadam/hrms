@@ -282,7 +282,6 @@ class SalaryslipsController < ApplicationController
     employee_ids = params[:employee_ids]
     @month = params[:month]
     @year = params[:year]
-    @instalment_array = []
     if employee_ids.nil? || employee_ids.empty?
       flash[:alert] = 'Please select employees.'
       redirect_to select_month_year_form_salaryslips_path
@@ -338,20 +337,19 @@ class SalaryslipsController < ApplicationController
             end
             @salaryslip_component_array << @addable_salaryslip_item
         end
-        
 
           deducted_actual_amount = 0
           deducted_calculated_amount = 0
           deducted_total_actual_amount = 0
           deducted_total_calculated_amount = 0
-
+         
           @advance_salaries = AdvanceSalary.where(employee_id: @employee.id)
           @advance_salaries.try(:each) do |a|
             @instalments = a.instalments
             @instalments.try(:each) do |i|
               unless i.instalment_date.nil?
-                i.update(is_complete: true)
                 if i.try(:instalment_date).strftime('%B') == params['month'] && i.try(:instalment_date).strftime('%Y') == params['year']
+                  i.update(is_complete: true)
                   @instalment_array << i
                 end
               end
@@ -639,9 +637,8 @@ class SalaryslipsController < ApplicationController
             deducted_calculated_amount = 0
             deducted_actual_amount = 0
             @instalment_array.each do |ia|
-              deducted_actual_amount = deducted_actual_amount + ia.advance_salary.instalment_amount
+              deducted_actual_amount = deducted_actual_amount + ia.instalment_amount
               # deducted_calculated_amount = deducted_calculated_amount + deducted_actual_amount         
-              Instalment.find(ia).update(is_complete: true)
             end
             @salary_component = SalaryComponent.find_by(name: "Advance")
             SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_actual_amount, is_deducted: true, other_component_name: 'Advance',salary_component_id: @salary_component.id)
@@ -887,22 +884,24 @@ class SalaryslipsController < ApplicationController
           deducted_calculated_amount = 0
           deducted_total_actual_amount = 0
           deducted_total_calculated_amount = 0
+          
 
           @advance_salaries = AdvanceSalary.where(employee_id: @employee.id)
           @advance_salaries.try(:each) do |a|
             @instalments = a.instalments
             @instalments.try(:each) do |i|
               unless i.instalment_date.nil?
-                i.update(is_complete: true)
+               
                 if i.try(:instalment_date).strftime('%B') == params['month'] && i.try(:instalment_date).strftime('%Y') == params['year']
+                   i.update(is_complete: true)
                   @instalment_array << i
                 end
               end
             end
           end
-
           @instalment_array.try(:each) do |ia|
-            deducted_actual_amount = ia.advance_salary.instalment_amount
+          
+            deducted_actual_amount = ia.instalment_amount
             deducted_calculated_amount = deducted_actual_amount
             deducted_total_actual_amount += deducted_actual_amount
             deducted_total_calculated_amount += deducted_calculated_amount
@@ -1200,7 +1199,7 @@ class SalaryslipsController < ApplicationController
             deducted_calculated_amount = 0
             deducted_actual_amount = 0
             @instalment_array.each do |ia|
-              deducted_actual_amount = deducted_actual_amount + ia.advance_salary.instalment_amount
+              deducted_actual_amount = deducted_actual_amount + ia.instalment_amount
               # deducted_calculated_amount = deducted_calculated_amount + deducted_actual_amount         
               Instalment.find(ia).update(is_complete: true)
             end

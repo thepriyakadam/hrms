@@ -1108,12 +1108,12 @@ def show_all_record
   if @employee_ids.nil?
     flash[:alert] = "Please Select the checkbox"
     @employees = []
-    redirect_to show_all_record_employee_templates_path
+    redirect_to employee_report_employees_path
+    
   else
     @employee_ids.each do |e|
       @employee = Employee.find_by(id: e)
     end
-  end
     respond_to do |f|
       f.js
       f.xls {render template: 'employees/employee_record.xls.erb'}
@@ -1122,7 +1122,7 @@ def show_all_record
         render pdf: 'show_all_record',
         layout: 'pdf.html',
         orientation: 'Landscape',
-        template: 'employees/employee_record.pdf.erb',
+        template: 'employees/employee_record_pdf.pdf.erb',
         :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)
@@ -1131,7 +1131,21 @@ def show_all_record
                           :right  => 10},
             :show_as_html => params[:debug].present?
       end
+      # f.pdf do
+      #   render pdf: 'show_all_record',
+      #   layout: 'pdf.html',
+      #   orientation: 'Landscape',
+      #   template: 'employees/employee_record.pdf.erb',
+      #   :page_height      => 1000,
+      #       :dpi              => '300',
+      #       :margin           => {:top    => 10, # default 10 (mm)
+      #                     :bottom => 10,
+      #                     :left   => 10,
+      #                     :right  => 10},
+      #       :show_as_html => params[:debug].present?
+      # end
     end
+  end#if
   end
 
   def employee_gps_setting_list

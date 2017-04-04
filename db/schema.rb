@@ -3675,6 +3675,7 @@ ActiveRecord::Schema.define(version: 20170327102041) do
     t.boolean  "paid"
     t.boolean  "full_and_final"
     t.decimal  "od_day",                              precision: 10
+    t.decimal  "nonpayable_day",                      precision: 10
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id", using: :btree

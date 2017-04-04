@@ -37,9 +37,9 @@
           <Cell ss:Index="5"><Data ss:Type="String"><%= travel_request.employee.try(:last_name ) %></Data></Cell>
           <Cell ss:Index="6"><Data ss:Type="String"><%= travel_request.application_date.to_date %></Data></Cell>
           <Cell ss:Index="7"><Data ss:Type="String"><%= travel_request.traveling_date.to_date %></Data></Cell>
-          <Cell ss:Index="8"><Data ss:Type="String"><%= travel_request.reporting_master.employee.try(:first_name) %></Data></Cell>
-          <Cell ss:Index="9"><Data ss:Type="String"><%= travel_request.reporting_master.employee.try(:middle_name ) %></Data></Cell>
-          <Cell ss:Index="10"><Data ss:Type="String"><%= travel_request.reporting_master.employee.try(:last_name ) %></Data></Cell>
+          <Cell ss:Index="8"><Data ss:Type="String"><%= travel_request.reporting_master.try(:employee).try(:first_name) %></Data></Cell>
+          <Cell ss:Index="9"><Data ss:Type="String"><%= travel_request.reporting_master.try(:employee).try(:middle_name ) %></Data></Cell>
+          <Cell ss:Index="10"><Data ss:Type="String"><%= travel_request.reporting_master.try(:employee).try(:last_name ) %></Data></Cell>
           <Cell ss:Index="11"><Data ss:Type="String"><%= travel_request.place %></Data></Cell>
           <Cell ss:Index="12"><Data ss:Type="String"><%= travel_request.tour_purpose %></Data></Cell>
           <Cell ss:Index="13"><Data ss:Type="String"><%= travel_request.try(:travel_option).try(:name) %></Data></Cell>

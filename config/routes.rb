@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :slabs do
+    collection do
+      get :employee_list
+      get :apply_tds
+    end
+  end
   resources :employee_gps_histories
   resources :gratuities
   resources :gratuity_masters do

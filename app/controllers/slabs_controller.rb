@@ -60,7 +60,9 @@ class SlabsController < ApplicationController
 
     if @next_slab.nil?
       texable_amount = @next_slab.texable_amount
-    
+    elsif @previous_slab.nil?
+      texable_amount = @next_slab.try(:to).to_d - params_value.to_d
+      @slab.update(texable_amount: params_value)
     else
       texable_amount = @next_slab.try(:to).to_d - params_value.to_d
     end

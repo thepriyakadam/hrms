@@ -708,6 +708,7 @@ end
       get :reviewer_detail_for_print
       get :period_for_multiple
       post :create_multiple_bunch
+      get :revert_goal
     end
   end
   resources :goal_perspectives do

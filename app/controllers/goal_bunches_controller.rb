@@ -86,6 +86,15 @@ class GoalBunchesController < ApplicationController
     end 
   end
 
+  def revert_goal
+    @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
+    @period = Period.find(params[:period_id])
+    @goal_bunch = GoalBunch.find_by(id: @goal_bunch_id)
+    @goal_bunch.update(goal_confirm: nil)
+      flash[:alert] = "Goal Rejected Successfully"
+      redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
+  end
+
   def create_multiple_bunch
    @goal_bunch = GoalBunch.new(goal_bunch_params)
     if @goal_bunch.save

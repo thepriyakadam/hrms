@@ -93,7 +93,8 @@ class SlabsController < ApplicationController
     @ctc = @employee_salary_templates.sum(:annual_amount)
     @slabs = Slab.all
       slab_value = 0
-
+      last_value1 = 0
+      
     @slabs.each do |s|
       if @ctc.to_d >= s.from.to_d && @ctc.to_d <= s.to.to_d
         @value = @ctc.to_d - s.texable_amount.to_d
@@ -108,6 +109,7 @@ class SlabsController < ApplicationController
       slab_value
       last_value1
     end
+    byebug
     last_value1
     slab_value
     redirect_to employee_list_slabs_path

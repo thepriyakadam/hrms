@@ -52,6 +52,20 @@ class SlabsController < ApplicationController
   # PATCH/PUT /slabs/1.json
   def update
     @slab.update(slab_params)
+    params_value = slab_params["to"]
+    @next_id = @slab.id.to_i + 1
+    @previous_id = @slab.id.to_i - 1
+    @next_slab = Slab.find_by(id: @next_id)
+    @previous_slab = Slab.find_by(id: @previous_id)
+
+    if @next_slab.nil?
+      texable_amount = @next_slab.texable_amount
+    
+    else
+      texable_amount = @next_slab.try(:to).to_d - params_value.to_d
+    end
+    @next_slab.update(texable_amount: texable_amount)
+
     @slab = Slab.new
     @slabs = Slab.all
   end
@@ -94,24 +108,25 @@ class SlabsController < ApplicationController
     @slabs = Slab.all
       slab_value = 0
       last_value1 = 0
-      
+      texable = 0
+
     @slabs.each do |s|
       if @ctc.to_d >= s.from.to_d && @ctc.to_d <= s.to.to_d
-        @value = @ctc.to_d - s.texable_amount.to_d
+        @value = @ctc.to_d - texable.to_d
         last_value = (@value * s.percentage) / 100
         last_value1 = slab_value + last_value
-        #final = last_value + previous_value
         flash[:notice] = "Successfully created!"
       else
+        texable = texable + s.texable_amount
         value = (s.texable_amount * s.percentage) / 100
         slab_value = slab_value + value
       end
-      slab_value
-      last_value1
     end
-    byebug
     last_value1
     slab_value
+    monthly = last_value1.to_d / 12
+
+    TexableAmount.create(employee_id: employee.id,yearly: last_value1,monthly: monthly.round(2))
     redirect_to employee_list_slabs_path
   end
 

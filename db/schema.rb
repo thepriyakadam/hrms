@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170327102041) do
+ActiveRecord::Schema.define(version: 20170405090450) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1111,6 +1111,7 @@ ActiveRecord::Schema.define(version: 20170327102041) do
     t.date     "effective_to"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.boolean  "current"
     t.string   "designation"
     t.string   "grade"
     t.string   "category"
@@ -1228,6 +1229,7 @@ ActiveRecord::Schema.define(version: 20170327102041) do
     t.date     "end_date"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
+    t.decimal  "gross_salary"
   end
 
   add_index "employee_templates", ["employee_id"], name: "index_employee_templates_on_employee_id"
@@ -1347,6 +1349,7 @@ ActiveRecord::Schema.define(version: 20170327102041) do
     t.integer  "passport_photo_file_size"
     t.datetime "passport_photo_updated_at"
     t.string   "punch_card_id"
+    t.string   "prefix"
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"
@@ -3346,6 +3349,16 @@ ActiveRecord::Schema.define(version: 20170327102041) do
 
   add_index "skillsets", ["employee_id"], name: "index_skillsets_on_employee_id"
 
+  create_table "slabs", force: :cascade do |t|
+    t.decimal  "from"
+    t.decimal  "to"
+    t.decimal  "texable_amount"
+    t.decimal  "percentage"
+    t.boolean  "status"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "slip_informations", force: :cascade do |t|
     t.integer  "salaryslip_id"
     t.integer  "cost_center_id"
@@ -3387,6 +3400,18 @@ ActiveRecord::Schema.define(version: 20170327102041) do
   end
 
   add_index "states", ["country_id"], name: "index_states_on_country_id"
+
+  create_table "texable_amounts", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.decimal  "yearly"
+    t.decimal  "monthly"
+    t.decimal  "remaining_amount"
+    t.boolean  "is_paid"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "texable_amounts", ["employee_id"], name: "index_texable_amounts_on_employee_id"
 
   create_table "trainee_requests", force: :cascade do |t|
     t.integer  "training_request_id"

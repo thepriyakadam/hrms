@@ -21,8 +21,8 @@
         <Cell ss:Index="11"><Data ss:Type="String">Non Payable Leave </Data></Cell>
         <Cell ss:Index="12"><Data ss:Type="String">Absent </Data></Cell>
         <Cell ss:Index="13"><Data ss:Type="String">Payable Day </Data></Cell>
-        <Cell ss:Index="14"><Data ss:Type="String">Non Payable Day </Data></Cell>
-        <Cell ss:Index="15"><Data ss:Type="String">Days In Month </Data></Cell>
+       <!--  <Cell ss:Index="14"><Data ss:Type="String">Non Payable Day </Data></Cell> -->
+        <Cell ss:Index="14"><Data ss:Type="String">Days In Month </Data></Cell>
       </Row>
 
       <% @workingdays.each do |workingday| %>
@@ -41,8 +41,8 @@
           <Cell ss:Index="11"><Data ss:Type="Number"><%= workingday.nonpay_leave %></Data></Cell>
           <Cell ss:Index="12"><Data ss:Type="Number"><%= workingday.absent_day %></Data></Cell>
           <Cell ss:Index="13"><Data ss:Type="Number"><%= workingday.payable_day %></Data></Cell>
-          <Cell ss:Index="14"><Data ss:Type="Number"><%= workingday.nonpayable_day %></Data></Cell>
-          <Cell ss:Index="15"><Data ss:Type="Number"><%= workingday.day_in_month %></Data></Cell>
+          <!-- <Cell ss:Index="14"><Data ss:Type="Number"><%= workingday.nonpayable_day %></Data></Cell> -->
+          <Cell ss:Index="14"><Data ss:Type="Number"><%= workingday.day_in_month %></Data></Cell>
         </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

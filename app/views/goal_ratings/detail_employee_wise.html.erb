@@ -5,6 +5,7 @@
     <div class="pull-right">
       <%= link_to 'Print Report', detail_employee_wise_goal_ratings_path(format: 'pdf',employee_id: params[:employee_id],goal_bunch_ids: params[:goal_bunch_ids]),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
       <%= link_to " Print excel ",detail_employee_wise_goal_ratings_path(format: "xls",employee_id: params[:employee_id],goal_bunch_ids: params[:goal_bunch_ids]), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+      <%= link_to 'Back',employee_wise_goal_goal_ratings_path, class: 'btn btn-sm btn-default fa fa-arrow-left' %>
     </div>
   </div><!-- /.box-header -->
   <div class="box box-default">

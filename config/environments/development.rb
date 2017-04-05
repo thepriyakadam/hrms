@@ -66,8 +66,11 @@ Rails.application.configure do
 #     :password => "amaazia@123",
 #     :authentication => 'plain',
 # }
+
  # Root url
   config.action_mailer.default_url_options = { host: 'mail.bhandarigroup.in', port: 3000 }
+
+
   # config.domain = 'lvh.me'
   # config.action_mailer.perform_deliveries = true,
   ActionMailer::Base.delivery_method = :smtp

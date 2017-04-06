@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170405090450) do
+ActiveRecord::Schema.define(version: 20170405090451) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -3412,6 +3412,17 @@ ActiveRecord::Schema.define(version: 20170405090450) do
   end
 
   add_index "texable_amounts", ["employee_id"], name: "index_texable_amounts_on_employee_id"
+
+  create_table "texable_monthly_deductions", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "salayslip_id"
+    t.decimal  "texable_deducted_amount"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "texable_monthly_deductions", ["employee_id"], name: "index_texable_monthly_deductions_on_employee_id"
+  add_index "texable_monthly_deductions", ["salayslip_id"], name: "index_texable_monthly_deductions_on_salayslip_id"
 
   create_table "trainee_requests", force: :cascade do |t|
     t.integer  "training_request_id"

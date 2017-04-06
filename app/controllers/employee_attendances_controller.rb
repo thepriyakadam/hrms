@@ -418,7 +418,7 @@ class EmployeeAttendancesController < ApplicationController
       else
         @employee_attendance_ids.each do |eid|
           @employee_attendance = EmployeeAttendance.find(eid)
-          EmployeeAttendance.where(id: eid).destroy_all
+          EmployeeAttendance.where(id: eid,employee_leav_request_id: nil,on_duty_request_id: nil).destroy_all
         end
         flash[:notice] = "Revert successfully"
         redirect_to revert_attendance_employeewise_employee_attendances_path

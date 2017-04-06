@@ -3,7 +3,7 @@
 <table style="border-collapse: collapse; font-size:30pt;" border=1 width=1000 cellpadding="19">
   <thead>
     <tr>
-      <th colspan="52">
+      <th colspan="53">
         <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
         <center><small><%= Bank.find(@bank).name unless @bank.nil?  or @bank.blank? %>
         <%= CostCenter.find(@cost_center).name unless @cost_center.blank? or @cost_center.nil? or @cost_center.empty? %>
@@ -13,7 +13,7 @@
     </tr>
     <tr>
       <th colspan="13"><center> SALARY DETAILS</center></th>
-      <th colspan="12"><center> WORKING DAYS</center></th>
+      <th colspan="13"><center> WORKING DAYS</center></th>
       <th colspan="13"><center> EARNED SALARY</center></th>
       <th colspan="12"><center>DEDUCTION</center></th>
       <th><center> NET </center></th>
@@ -50,6 +50,7 @@
       <th>LWP</th>
       <th>HD</th>
       <th>AD</th>
+      <th>GP</th>
       <th>Payable</th>
     
       <th>Basic</th>
@@ -130,6 +131,7 @@
         <td><%= r.try(:lwp_leave) %></td>
         <td><%= r.try(:holiday) %></td>
         <td><%= r.try(:absent_day) %></td>
+        <td><%= r.try(:gatepass) %></td>
         <td><%= r.try(:payable_day) %></td>
        
         <td><%= r.try(:earned_basic).try(:round) %></td>
@@ -165,7 +167,7 @@
       </tr>
     <% end %>
     <tr>
-      <td colspan="52"><strong>Total</strong></td>
+      <td colspan="53"><strong>Total</strong></td>
     </tr>
 
     <tr>      
@@ -194,6 +196,7 @@
       <td><%= @sum.lwp_leave %></td>
       <td><%= @sum.holiday %></td>
       <td><%= @sum.absent_day %></td>
+      <td><%= @sum.gatepass %></td>
       <td><%= @sum.payable_day %></td>
       
 

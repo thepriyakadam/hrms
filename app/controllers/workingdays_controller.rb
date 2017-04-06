@@ -4,7 +4,7 @@ class WorkingdaysController < ApplicationController
   include QueryReport::Helper  # need to include it
   def index
     @workingdays = Workingday.group(:year)
-   session[:active_tab] ="TimeManagement"
+    session[:active_tab] ="TimeManagement"
     session[:active_tab1] ="Report"
   end
 

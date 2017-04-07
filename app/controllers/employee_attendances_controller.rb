@@ -141,7 +141,8 @@ class EmployeeAttendancesController < ApplicationController
 
   def show_employee
     @costcenter_id =params[:salary][:costcenter_id]
-    @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id).pluck(:employee_id)
+    @employees = Employee.where(status: 'Active').pluck(:id)
+    @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id,employee_id: @employees).pluck(:employee_id)
     #@department_id = params[:salary][:department_id]
     @day = params[:salary][:day]
     @present = params[:salary][:present]
@@ -194,12 +195,13 @@ class EmployeeAttendancesController < ApplicationController
     @end_date = @date.end_of_month
     if current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
-         @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+        @emp = Employee.where(status: 'Active')
+         @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
       elsif current_user.role.name == 'Admin'
-        @emp = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        @emp = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
         @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)   
       elsif current_user.role.name == 'Branch'
-        @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @emp = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
         @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
       end
     end

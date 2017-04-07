@@ -371,7 +371,8 @@ class EmployeeAttendancesController < ApplicationController
   def show_costcenter_wise_attendance
     @year, @month = params[:year], params[:month]
     @costcenter_id =params[:costcenter]
-    @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id).pluck(:employee_id)
+    @employees = Employee.where(status: 'Active').pluck(:id)
+    @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id,employee_id: @employees).pluck(:employee_id)
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
     @start_date = @date

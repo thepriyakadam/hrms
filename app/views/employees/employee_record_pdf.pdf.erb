@@ -1,0 +1,158 @@
+<style type="text/css">
+ .page-break { display:block; clear:both; page-break-after:always; }
+</style>
+
+<div class="box box-default">
+  <div class="box-body">
+
+   <table style="border-collapse: collapse; font-size:8pt;" border=1 width=1200 cellpadding="5">
+      <thead>
+        <tr>
+        <td colspan="36"><center> 
+          <% if current_user.employee.company_location.company.company_logo == nil %>
+          <% else %>
+            <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+          <%end%> 
+            <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+        </td>
+      </tr> 
+      </thead>
+   
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Department</th>
+          <th>Designation</th>
+          <th>Age</th>
+          <th>Degree</th>
+          <th>Year Of Passing</th>
+          <th>Marks</th>
+          <th>Date Of Joining</th>
+          <th>Joining Designation</th>
+          <th>Current Cadre</th>
+          <th>Current Designation</th>
+          <th>Proposed Designation</th>
+          <th>Proposed Cadre</th>
+          <th>Past Experience(in year)</th>
+          <th>Joining CTC</th>
+          <th>CTC 1</th>
+          <th>CTC 2</th>
+          <th>CTC 3</th>
+          <th>Last Salary Revision</th>
+          <th>Current CTC</th>
+          <th>As Per Minimum Wages</th>
+          <th>Eligible For Reward</th>
+          <th>Appraisee Rating</th>
+          <th>Appraiser Rating</th>
+          <th>Reviewer Rating</th>
+          <th>Overall Rating</th>
+
+          <th>Last Promotion</th>
+          <th>Increment</th>
+          <th>Promotion</th>
+          <th>Revised Designation</th>
+          <th>Revised CTC</th>
+
+          <th>Final Increment</th>
+          <th>Promotion</th>
+          <th>Revised CTC</th>
+          <th>PI Bonus</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @employee_ids.each do |e| %>
+        <% employee = Employee.find_by(id: e) %>
+        <% @qualification = Qualification.where(employee_id: employee.id).last %>
+
+        <% @joining_detail = JoiningDetail.find_by(employee_id: employee.id) %>
+        <% @employee_promotion = EmployeePromotion.where(employee_id: employee.id).first %>
+        <% @employee_promotion_last = EmployeePromotion.where(employee_id: employee.id).last %>
+
+        <% @current_template = EmployeeTemplate.where(employee_id: employee.id,is_active: true).take %>
+        <% @first_template = EmployeeTemplate.where(employee_id: employee.id).first %>
+        <% @last_template = EmployeeTemplate.where(employee_id: employee.id).last %>
+        <% @experience = Experience.where(employee_id: employee.id) %>
+        <% @current_employee_salary_templates = @current_template.try(:employee_salary_templates) %>
+        <% @first_employee_salary_templates = @first_template.try(:employee_salary_templates) %>
+
+        <% @employee_template1 = EmployeeTemplate.where(employee_id: employee.id).last(3).first %>
+        <% @employee_template2 = EmployeeTemplate.where(employee_id: employee.id).last(3).second %>
+        <% @employee_template3 = EmployeeTemplate.where(employee_id: employee.id).last(3).third %>
+        <% @employee_salary_templates1 = @employee_template1.try(:employee_salary_templates) %>
+        <% @employee_salary_templates2 = @employee_template2.try(:employee_salary_templates) %>
+        <% @employee_salary_templates3 = @employee_template3.try(:employee_salary_templates) %>
+
+        <% @goal_bunch = GoalBunch.where(employee_id: employee.id).last  %>
+          <tr>
+            <td><%= employee.try(:manual_employee_code) %></td>
+            <td><%= employee.try(:first_name) %> <%= employee.try(:middle_name) %> <%= employee.try(:last_name) %> </td>
+            <td><%= employee.try(:company_location).try(:name) %> - <%= employee.try(:department).try(:name) %> </td>
+            <td><%= employee.try(:joining_detail).try(:employee_designation).try(:name) %> </td>
+            <td><%= %></td>
+            <td><%= @qualification.try(:degree).try(:name) %></td>
+            <td><%= @qualification.try(:year).try(:name)%></td>
+            <td><%= @qualification.try(:marks) %></td>
+            <td><%= @joining_detail.try(:joining_date) %></td>
+            <td><%= @employee_promotion.try(:employee_designation).try(:name) %></td>
+            <td><%= %></td>
+            <td><%= @joining_detail.try(:employee_designation).try(:name) %></td>
+            <td><%= @goal_bunch.try(:r_designation).try(:name) %></td>
+            <td><%= %></td>
+            <td><%= @experience.sum(:no_of_year) %></td>
+
+            <%if @first_employee_salary_templates == nil %>
+              <td><%= %></td>
+            <% else %>
+              <td><%=  @first_employee_salary_templates.sum(:annual_amount) %></td>
+            <% end %>
+
+            <%if @employee_salary_templates1 == nil %>
+              <td><%= %></td>
+            <% else %>
+              <td><%= @employee_salary_templates1.sum(:annual_amount) %></td>
+            <% end %>
+
+            <%if @employee_salary_templates2 == nil %>
+              <td><%= %></td>
+            <% else %>
+              <td><%= @employee_salary_templates2.sum(:annual_amount) %></td>
+            <% end %>
+
+            <%if @employee_salary_templates3 == nil %>
+              <td><%= %></td>
+            <% else %>
+              <td><%= @employee_salary_templates3.sum(:annual_amount) %></td>
+            <% end %>
+
+            <td><%= @last_template.try(:start_date) %></td>
+
+            <%if @current_employee_salary_templates == nil %>
+              <td><%= %></td>
+            <% else %>
+              <td><%= @current_employee_salary_templates.sum(:annual_amount) %></td>
+            <% end %>
+
+            <td><%= %></td>
+            <td><%= %></td>
+
+            <td><%= @goal_bunch.try(:appraisee_rating_id).to_f.round(2) %></td>
+            <td><%= @goal_bunch.try(:appraiser_rating) %></td>
+            <td><%= @goal_bunch.try(:reviewer_rating_id) %></td>
+            <td><%= @goal_bunch.try(:final_rating_id) %></td>
+            <td><%= @employee_promotion_last.try(:effective_from) %></td>
+            <td><%= @goal_bunch.try(:r_increment) %></td>
+            <td><%= @goal_bunch.try(:r_promotion) %></td>
+            <td><%= @goal_bunch.try(:r_designation).try(:name) %></td>
+            <td><%= @goal_bunch.try(:r_ctc) %></td>
+            <td><%= @goal_bunch.try(:f_increment) %></td>
+            <td><%= @goal_bunch.try(:f_promotion) %></td>
+            <td><%= @goal_bunch.try(:f_ctc) %></td>
+            <td><%= %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

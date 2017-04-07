@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :visitor_details
   resources :employee_gps_histories
   resources :gratuities
   resources :gratuity_masters do
@@ -2004,6 +2005,9 @@ end
       get :member_gps_form
       post :update_gps
       get :employee_gps_setting_list
+      post :display_employee_details
+      get :employee_detail_form
+      get :employee_record_pdf
     end
     member do
       get :edit_manager

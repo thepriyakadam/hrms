@@ -76,28 +76,28 @@ class FoodDeductionsController < ApplicationController
     @month = params[:month]
     date = Date.new(@year.to_i, Workingday.months[@month])
     if current_user.class == Group
-      @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
+      @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
     else
       if current_user.role.name == 'GroupAdmin'
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?",date.strftime('%m/%Y'))
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?",date.strftime('%m/%Y'))
       elsif current_user.role.name == 'Admin'
         @employees = Employee.where(company_id: current_user.company_location.company_id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'HOD'
         @employees = Employee.where(department_id: current_user.department_id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
         @employees = @emp.subordinates
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Employee'
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
       else current_user.role.name == 'AccountAdmin'
         @employees = Employee.where(company_id: current_user.company_location.company_id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)  
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)  
       end
     end
   end
@@ -107,29 +107,29 @@ class FoodDeductionsController < ApplicationController
     @month = params[:month]
     date = Date.new(@year.to_i, Workingday.months[@month])
     if current_user.class == Group
-      @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
+      @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
     else
       if current_user.role.name == 'GroupAdmin'
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?",date.strftime('%m/%Y'))
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?",date.strftime('%m/%Y'))
 
       elsif current_user.role.name == 'Admin'
         @employees = Employee.where(company_id: current_user.company_location.company_id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'HOD'
         @employees = Employee.where(department_id: current_user.department_id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
         @employees = @emp.subordinates
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Employee'
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
       else current_user.role.name == 'AccountAdmin'
         @employees = Employee.where(company_id: current_user.company_location.company_id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)  
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)  
       end
     end
   end
@@ -139,29 +139,28 @@ class FoodDeductionsController < ApplicationController
     @month = params[:month]
     date = Date.new(@year.to_i, Workingday.months[@month])
     if current_user.class == Group
-      @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
+      @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
     else
       if current_user.role.name == 'GroupAdmin'
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?",date.strftime('%m/%Y'))
-
+      @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
       elsif current_user.role.name == 'Admin'
         @employees = Employee.where(company_id: current_user.company_location.company_id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'HOD'
         @employees = Employee.where(department_id: current_user.department_id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
         @employees = @emp.subordinates
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Employee'
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
       else current_user.role.name == 'AccountAdmin'
         @employees = Employee.where(company_id: current_user.company_location.company_id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)  
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)  
       end
     end
     respond_to do |format|
@@ -174,28 +173,28 @@ class FoodDeductionsController < ApplicationController
     @month = params[:month]
     date = Date.new(@year.to_i, Workingday.months[@month])
     if current_user.class == Group
-      @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
+      @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
     else
       if current_user.role.name == 'GroupAdmin'
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?",date.strftime('%m/%Y'))
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?",date.strftime('%m/%Y'))
       elsif current_user.role.name == 'Admin'
         @employees = Employee.where(company_id: current_user.company_location.company_id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'HOD'
         @employees = Employee.where(department_id: current_user.department_id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
         @employees = @emp.subordinates
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Employee'
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
       else current_user.role.name == 'AccountAdmin'
         @employees = Employee.where(company_id: current_user.company_location.company_id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)  
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)  
       end
     end
     respond_to do |format|
@@ -224,6 +223,7 @@ class FoodDeductionsController < ApplicationController
   end
 
   def dynamic_report
+    # byebug
     @month = params[:food_deduction][:month]
     @year = params[:food_deduction][:year]
     @company = params[:food_deduction][:company_id]
@@ -233,47 +233,47 @@ class FoodDeductionsController < ApplicationController
     if current_user.class == Group
       if @location == ""
         @employees = Employee.where(company_id: @company.to_i).pluck(:id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif @company == ""
         @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       else 
         @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       end
     elsif current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
        if @location == ""
         @employees = Employee.where(company_id: @company.to_i).pluck(:id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif @company == ""
         @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       else 
         @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       end
      elsif current_user.role.name == 'Admin'
        if @location == ""
         @employees = Employee.where(company_id: @company.to_i).pluck(:id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif @company == ""
         @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       else 
         @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       end
       elsif current_user.role.name == 'Branch'
        if @location == ""
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif @company == ""
         @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       else 
         @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
-        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @food_deductions = FoodDeduction.where("DATE_FORMAT('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       end
       elsif current_user.role.name == 'HOD'
         @salaryslips = Salaryslip.where(department_id: current_user.department_id)

@@ -1,0 +1,96 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Visitor Details</h3>
+    <div class="box-body">
+      <%= bootstrap_form_for(@visitor_detail,html: {id: 'visitor_detail'}) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :name, label: 'Name', class: 'visitor_detail' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :age, label: 'Age', class: 'visitor_detail' %>
+          </div>
+        </div>
+    
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :contact_no,label: 'Contact No.', class: 'visitor_detail'%>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :email_id,label: 'Email ID', class: 'visitor_detail'%>
+          </div>
+        </div>
+        </div>
+         <div class="row">
+         <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :id_proof,label: 'ID Proof', class: 'visitor_detail'%>
+          </div>
+        </div>
+       
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :from,label: 'From', class: 'visitor_detail'%>
+          </div>
+        </div>
+         <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.select :meet_to_id, all_active_employee_with_code, {include_blank: "Select Person"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
+          </div>
+        </div>
+         <div class="col-sm-3">
+        <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <label>Entry Time</label>
+          <div class="input-group">
+            <%= f.text_field :in_time,hide_label:true,class: 'form-control timepicker' %>
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+      </div>
+        </div>
+        <div class="row">
+       <div class="col-sm-3">
+        <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <label>Exit Time</label>
+          <div class="input-group">
+            <%= f.text_field :out_time,hide_label:true,class: 'form-control timepicker' %>
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+      </div>
+      <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.select :authorized_by_id, all_active_employee_with_code, {include_blank: "Select Person"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_area :purpose,label: 'Purpose ', class: 'visitor_detail'%>
+          </div>
+        </div>
+        
+        </div>
+      <div class="row">
+        <div class="actions">
+          <%= f.submit'Create Visitor Details', :class => class_name, data: { disable_with: data_info } %> | <%= link_to 'Back', visitor_details_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
+          <!--  <= link_to 'Back',employee_list_employee_transfers_path,class: 'btn btn-default btn-sm fa fa-arrow-left'%> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <% end %>

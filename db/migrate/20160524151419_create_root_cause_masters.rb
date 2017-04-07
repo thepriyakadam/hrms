@@ -4,6 +4,7 @@ class CreateRootCauseMasters < ActiveRecord::Migration
       t.integer :code
       t.string :name
       t.text :description
+      t.boolean :is_confirm
 
       t.timestamps null: false
     end

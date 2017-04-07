@@ -1,8 +1,9 @@
 <div class="box box-default">
   <div class="box-body">
      <div class="pull-right">
-        <%= link_to 'PDF Report', show_all_record_employees_path(format: 'pdf',employee_ids: @employee_ids ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+        <!-- < link_to 'PDF Report', show_all_record_employees_path(format: 'pdf',employee_ids: @employee_ids ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %> -->
         <%= link_to "Excel Report",show_all_record_employees_path(format: "xls",employee_ids: @employee_ids ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+        <%= link_to 'PDF Report', show_all_record_employees_path(format: 'pdf',employee_ids: @employee_ids ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
         <%= link_to 'Back',employee_report_employees_path,class: 'btn btn-sm btn-default fa fa-arrow-left'%>
       </div>
       <br><br>
@@ -29,14 +30,14 @@
             <th>Year Of Passing</th>
             <th colspan="2">Marks</th>
           </tr>
-          <% @qualifications = Qualification.where(employee_id: e) %>
-          <% @qualifications.each do |q|  %>
+          <% @qualification = Qualification.where(employee_id: e).last %>
+          
             <tr>
-              <td colspan="2"><%= q.try(:degree).try(:name) %></td>
-              <td><%= q.try(:year).try(:name) %></td>
-              <td colspan="2"><%= q.try(:marks) %></td>
+              <td colspan="2"><%= @qualification.try(:degree).try(:name) %></td>
+              <td><%= @qualification.try(:year).try(:name) %></td>
+              <td colspan="2"><%= @qualification.try(:marks) %></td>
             </tr> 
-          <% end %>
+          
           <tr><th colspan="5"><center>Joining Detail</center></th></tr>
           <tr>
             <th>Joining Date</th>

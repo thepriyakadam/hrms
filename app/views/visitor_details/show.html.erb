@@ -1,0 +1,58 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Visitor Details</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+
+
+<tr>
+  <td><strong>Name</strong></td>
+  <td><%= @visitor_detail.name %></td>
+  
+  <td><strong>Age</strong></td>
+    <td><%= @visitor_detail.age %></td>
+  </tr>
+
+<tr>
+  <td><strong>Contact No.</strong></td>
+  <td><%= @visitor_detail.contact_no %></td>
+
+  <td><strong>Email ID</strong></td>
+  <td><%= @visitor_detail.email_id %></td>
+</tr>
+
+<tr>
+  <td><strong>ID Proof</strong></td>
+  <td><%= @visitor_detail.id_proof %></td>
+
+  <td><strong>From</strong></td>
+  <td><%= @visitor_detail.from %></td>
+</tr>
+
+<tr>
+  <td><strong>Meet To</strong></td>
+  <td><%= full_name(@visitor_detail.meet_to) %></td>
+
+  <td><strong>Entry Time</strong></td>
+  <td><%= @visitor_detail.in_time %></td>
+</tr>
+
+<tr>
+  <td><strong>Exit Time</strong></td>
+  <td><%= @visitor_detail.out_time %></td>
+
+  <td><strong>Purpose</strong></td>
+  <td><%= @visitor_detail.purpose %></td>
+</tr>
+
+<tr>
+  <td colspan="3"><strong>Authorized By</strong></td>
+  <td><%= full_name(@visitor_detail.authorized_by) %></td>
+</tr>
+</table>
+</div>
+</div>
+
+<%= link_to 'Edit', edit_visitor_detail_path(@visitor_detail) %> |
+<%= link_to 'Back', visitor_details_path %>

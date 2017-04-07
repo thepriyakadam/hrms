@@ -7,6 +7,7 @@ class CreateVisitorDetails < ActiveRecord::Migration
       t.string :email_id
       t.string :id_proof
       t.string :from
+      t.string :employee, index: true, foreign_key: true
       t.references :meet_to, index: true, foreign_key: true
       t.time :in_time
       t.time :out_time

@@ -1,0 +1,66 @@
+ <div class="box-body">
+<div style="width: 400px; height: 400px;
+ font-size: 9px;
+          padding: 5px;
+          border: 1px solid gray;">
+     <table style="border-collapse: collapse; font-size:9px;" border=1 width=400 cellpadding="5">
+ <tr><th colspan="2"><center>Visitor Card</center></th></tr>
+  <tr><td colspan="2">
+  <% if @visitor_detail.employee.company_location.company.company_logo == nil %>
+      <% else %>
+        <center> <%= wicked_pdf_image_tag @visitor_detail.employee.company_location.company.company_logo.url, :size => "60x40" %></center>
+        <%end%>
+        <center><strong><%= @visitor_detail.employee.company_location.company.try(:description) %></strong> <br>
+        <%= @visitor_detail.employee.company_location.company.try(:address) %><br> 
+        <%= @visitor_detail.employee.company_location.try(:name) %></center> </td></tr>
+
+
+<tr><td colspan="2">
+
+    <center> <%= wicked_pdf_image_tag @visitor_detail.avatar.url, :size => "70x70" %></center>
+  
+    </td>
+</tr>
+ 
+<tr>
+<td><b>Name : </strong> <%= @visitor_detail.name %> </td>
+<td><b>Age : </strong> <%= @visitor_detail.age %></td>
+</tr>
+
+<tr>
+  <td><b>Contact No. : </b> <%= @visitor_detail.contact_no %> </td>
+
+  <td><b>Email ID : </b> <%= @visitor_detail.email_id %></td> </tr>
+
+ <tr> 
+ <td><b>ID Proof : </b> <%= @visitor_detail.id_proof %> </td>
+
+ <td><b>From : </b> <%= @visitor_detail.from %> </td>
+ </tr>
+
+<tr>
+
+ <td><b>Entry Time : </b> <%= @visitor_detail.in_time %> </td>
+
+  <td><b>Exit Time : </b> <%= @visitor_detail.out_time %> </td>
+ </tr>
+
+<tr>
+
+<td> <b>Meet To  : </b> <%= full_name(@visitor_detail.employee) %> </td>
+
+
+ <td><b>Purpose : </b> <%= @visitor_detail.purpose %> </td>
+</tr>
+
+<tr><td colspan="2">
+ _____________<br><br>
+
+(Name of signing authority)
+</td>
+</tr>
+</table>
+
+</div>
+
+</div>

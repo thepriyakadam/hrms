@@ -31,28 +31,31 @@
 </tr>
 
 <tr>
-  <td><strong>Meet To</strong></td>
-  <td><%= full_name(@visitor_detail.meet_to) %></td>
 
   <td><strong>Entry Time</strong></td>
   <td><%= @visitor_detail.in_time %></td>
+  
+    <td><strong>Exit Time</strong></td>
+  <td><%= @visitor_detail.out_time %></td>
 </tr>
 
 <tr>
-  <td><strong>Exit Time</strong></td>
-  <td><%= @visitor_detail.out_time %></td>
+
+  <td><strong>Meet To</strong></td>
+  <td><%= full_name(@visitor_detail.employee) %></td>
 
   <td><strong>Purpose</strong></td>
   <td><%= @visitor_detail.purpose %></td>
 </tr>
 
-<tr>
+<!-- <tr>
   <td colspan="3"><strong>Authorized By</strong></td>
   <td><%= full_name(@visitor_detail.authorized_by) %></td>
-</tr>
-</table>
-</div>
+</tr> -->
+</table> <br>
+
+ <%= link_to 'Edit', edit_visitor_detail_path(@visitor_detail),class: 'btn btn-sm btn-success fa fa-edit' %> |
+    <%= link_to 'Back', visitor_details_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
 </div>
 
-<%= link_to 'Edit', edit_visitor_detail_path(@visitor_detail) %> |
-<%= link_to 'Back', visitor_details_path %>
+</div>

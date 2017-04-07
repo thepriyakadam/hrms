@@ -983,18 +983,18 @@ class SalaryslipsController < ApplicationController
 
 
   #texable 
-        @texable_amount = TexableAmount.find_by(employee_id: @employee.id)
-        @salaryslip = Salaryslip.where(employee_id: @employee.id,month: @month,year: @year).take
-          TexableMonthlyDeduction.new do |tmd|
-            tmd.employee_id = @employee.id
-            tmd.salayslip_id = @salaryslip.id
-            tmd.texable_deducted_amount = @texable_amount.try(:monthly).to_f
+        # @texable_amount = TexableAmount.find_by(employee_id: @employee.id)
+        # @salaryslip = Salaryslip.where(employee_id: @employee.id,month: @month,year: @year).take
+        #   TexableMonthlyDeduction.new do |tmd|
+        #     tmd.employee_id = @employee.id
+        #     tmd.salayslip_id = @salaryslip.id
+        #     tmd.texable_deducted_amount = @texable_amount.try(:monthly).to_f
             
-            tmd.save!
-          end
-          @texable_monthly_deduction = TexableMonthlyDeduction.where(employee_id: @employee.id,salayslip_id: @salaryslip.id).take
-          @salary_component = SalaryComponent.find_by(name: "Income Tax 1") 
-          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @texable_monthly_deduction.texable_deducted_amount, calculated_amount: @texable_monthly_deduction.texable_deducted_amount, is_deducted: true, other_component_name: 'Income Tax 1',salary_component_id: @salary_component.id)
+        #     tmd.save!
+        #   end
+        #   @texable_monthly_deduction = TexableMonthlyDeduction.where(employee_id: @employee.id,salayslip_id: @salaryslip.id).take
+        #   @salary_component = SalaryComponent.find_by(name: "Income Tax 1") 
+        #   SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @texable_monthly_deduction.texable_deducted_amount, calculated_amount: @texable_monthly_deduction.texable_deducted_amount, is_deducted: true, other_component_name: 'Income Tax 1',salary_component_id: @salary_component.id)
 
 
 

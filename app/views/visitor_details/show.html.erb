@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @visitor_detail.name %>
+</p>
+
+<p>
+  <strong>Age:</strong>
+  <%= @visitor_detail.age %>
+</p>
+
+<p>
+  <strong>Contact no:</strong>
+  <%= @visitor_detail.contact_no %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @visitor_detail.email_id %>
+</p>
+
+<p>
+  <strong>Id proof:</strong>
+  <%= @visitor_detail.id_proof %>
+</p>
+
+<p>
+  <strong>From:</strong>
+  <%= @visitor_detail.from %>
+</p>
+
+<p>
+  <strong>Meet to:</strong>
+  <%= @visitor_detail.meet_to %>
+</p>
+
+<p>
+  <strong>In time:</strong>
+  <%= @visitor_detail.in_time %>
+</p>
+
+<p>
+  <strong>Out time:</strong>
+  <%= @visitor_detail.out_time %>
+</p>
+
+<p>
+  <strong>Purpose:</strong>
+  <%= @visitor_detail.purpose %>
+</p>
+
+<p>
+  <strong>Authorized by:</strong>
+  <%= @visitor_detail.authorized_by %>
+</p>
+
+<%= link_to 'Edit', edit_visitor_detail_path(@visitor_detail) %> |
+<%= link_to 'Back', visitor_details_path %>

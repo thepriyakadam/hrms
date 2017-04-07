@@ -1,0 +1,179 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Visitor Details</h3>
+    <div class="box-body">
+      <%= bootstrap_form_for(@visitor_detail,html: {id: 'visitor_detail'}) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :name, label: 'Name', class: 'visitor_detail' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :age, label: 'Age', class: 'visitor_detail' %>
+          </div>
+        </div>
+    
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :contact_no,label: 'Contact No.', class: 'visitor_detail'%>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :email_id,label: 'Email ID', class: 'visitor_detail'%>
+          </div>
+        </div>
+        </div>
+         <div class="row">
+         <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :employee_company_location,label: 'Company Location', class: 'employee_transfer'%>
+          </div>
+        </div>
+       
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :employee_department,label: 'Department', class: 'employee_transfer'%>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="field">
+            <%= f.text_field :justification %>
+          </div>
+          </div>
+        </div>
+ 
+      <div class="row">
+        <div class="actions">
+          <%= f.submit'Create Employee Transfer', :class => class_name, data: { disable_with: data_info } %> | <%= link_to 'Back', employee_transfers_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
+          <!--  <= link_to 'Back',employee_list_employee_transfers_path,class: 'btn btn-default btn-sm fa fa-arrow-left'%> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <% end %>
+
+
+
+
+
+
+
+  <%= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%= form_for(@visitor_detail) do |f| %>
+  <% if @visitor_detail.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@visitor_detail.errors.count, "error") %> prohibited this visitor_detail from being saved:</h2>
+
+      <ul>
+      <% @visitor_detail.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :age %><br>
+    <%= f.text_field :age %>
+  </div>
+  <div class="field">
+    <%= f.label :contact_no %><br>
+    <%= f.text_field :contact_no %>
+  </div>
+  <div class="field">
+    <%= f.label :email_id %><br>
+    <%= f.text_field :email_id %>
+  </div>
+  <div class="field">
+    <%= f.label :id_proof %><br>
+    <%= f.text_field :id_proof %>
+  </div>
+  <div class="field">
+    <%= f.label :from %><br>
+    <%= f.text_field :from %>
+  </div>
+  <div class="field">
+    <%= f.label :meet_to_id %><br>
+    <%= f.text_field :meet_to_id %>
+  </div>
+  <div class="field">
+    <%= f.label :in_time %><br>
+    <%= f.time_select :in_time %>
+  </div>
+  <div class="field">
+    <%= f.label :out_time %><br>
+    <%= f.time_select :out_time %>
+  </div>
+  <div class="field">
+    <%= f.label :purpose %><br>
+    <%= f.text_area :purpose %>
+  </div>
+  <div class="field">
+    <%= f.label :authorized_by_id %><br>
+    <%= f.text_field :authorized_by_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

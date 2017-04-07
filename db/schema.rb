@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170327102041) do
+ActiveRecord::Schema.define(version: 20170407050053) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -187,6 +187,11 @@ ActiveRecord::Schema.define(version: 20170327102041) do
   end
 
   create_table "attributes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "authorized_bies", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -2302,6 +2307,11 @@ ActiveRecord::Schema.define(version: 20170327102041) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "meet_tos", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "members", force: :cascade do |t|
     t.string   "manual_member_code",     limit: 255
     t.integer  "role_id",                limit: 4
@@ -3604,6 +3614,25 @@ ActiveRecord::Schema.define(version: 20170327102041) do
   add_index "vacancy_request_histories", ["reporting_master_id"], name: "index_vacancy_request_histories_on_reporting_master_id", using: :btree
   add_index "vacancy_request_histories", ["vacancy_master_id"], name: "index_vacancy_request_histories_on_vacancy_master_id", using: :btree
 
+  create_table "visitor_details", force: :cascade do |t|
+    t.string   "name",             limit: 255
+    t.string   "age",              limit: 255
+    t.string   "contact_no",       limit: 255
+    t.string   "email_id",         limit: 255
+    t.string   "id_proof",         limit: 255
+    t.string   "from",             limit: 255
+    t.integer  "meet_to_id",       limit: 4
+    t.time     "in_time"
+    t.time     "out_time"
+    t.text     "purpose",          limit: 65535
+    t.integer  "authorized_by_id", limit: 4
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "visitor_details", ["authorized_by_id"], name: "index_visitor_details_on_authorized_by_id", using: :btree
+  add_index "visitor_details", ["meet_to_id"], name: "index_visitor_details_on_meet_to_id", using: :btree
+
   create_table "week_off_masters", force: :cascade do |t|
     t.integer  "employee_id", limit: 4
     t.string   "day",         limit: 255
@@ -3696,4 +3725,6 @@ ActiveRecord::Schema.define(version: 20170327102041) do
   add_foreign_key "promotion_histories", "employees"
   add_foreign_key "salary_map_saps", "companies"
   add_foreign_key "salary_map_saps", "company_locations"
+  add_foreign_key "visitor_details", "authorized_bies"
+  add_foreign_key "visitor_details", "meet_tos"
 end

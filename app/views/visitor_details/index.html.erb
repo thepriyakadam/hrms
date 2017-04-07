@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Visitor Details</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Contact no</th>
+      <th>Email</th>
+      <th>Id proof</th>
+      <th>From</th>
+      <th>Meet to</th>
+      <th>In time</th>
+      <th>Out time</th>
+      <th>Purpose</th>
+      <th>Authorized by</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @visitor_details.each do |visitor_detail| %>
+      <tr>
+        <td><%= visitor_detail.name %></td>
+        <td><%= visitor_detail.age %></td>
+        <td><%= visitor_detail.contact_no %></td>
+        <td><%= visitor_detail.email_id %></td>
+        <td><%= visitor_detail.id_proof %></td>
+        <td><%= visitor_detail.from %></td>
+        <td><%= visitor_detail.meet_to %></td>
+        <td><%= visitor_detail.in_time %></td>
+        <td><%= visitor_detail.out_time %></td>
+        <td><%= visitor_detail.purpose %></td>
+        <td><%= visitor_detail.authorized_by %></td>
+        <td><%= link_to 'Show', visitor_detail %></td>
+        <td><%= link_to 'Edit', edit_visitor_detail_path(visitor_detail) %></td>
+        <td><%= link_to 'Destroy', visitor_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Visitor detail', new_visitor_detail_path %>

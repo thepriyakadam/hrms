@@ -1,59 +1,58 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Visitor Details</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
 
-<p>
-  <strong>Name:</strong>
-  <%= @visitor_detail.name %>
-</p>
 
-<p>
-  <strong>Age:</strong>
-  <%= @visitor_detail.age %>
-</p>
+<tr>
+  <td><strong>Name</strong></td>
+  <td><%= @visitor_detail.name %></td>
+  
+  <td><strong>Age</strong></td>
+    <td><%= @visitor_detail.age %></td>
+  </tr>
 
-<p>
-  <strong>Contact no:</strong>
-  <%= @visitor_detail.contact_no %>
-</p>
+<tr>
+  <td><strong>Contact No.</strong></td>
+  <td><%= @visitor_detail.contact_no %></td>
 
-<p>
-  <strong>Email:</strong>
-  <%= @visitor_detail.email_id %>
-</p>
+  <td><strong>Email ID</strong></td>
+  <td><%= @visitor_detail.email_id %></td>
+</tr>
 
-<p>
-  <strong>Id proof:</strong>
-  <%= @visitor_detail.id_proof %>
-</p>
+<tr>
+  <td><strong>ID Proof</strong></td>
+  <td><%= @visitor_detail.id_proof %></td>
 
-<p>
-  <strong>From:</strong>
-  <%= @visitor_detail.from %>
-</p>
+  <td><strong>From</strong></td>
+  <td><%= @visitor_detail.from %></td>
+</tr>
 
-<p>
-  <strong>Meet to:</strong>
-  <%= @visitor_detail.meet_to %>
-</p>
+<tr>
+  <td><strong>Meet To</strong></td>
+  <td><%= full_name(@visitor_detail.meet_to) %></td>
 
-<p>
-  <strong>In time:</strong>
-  <%= @visitor_detail.in_time %>
-</p>
+  <td><strong>Entry Time</strong></td>
+  <td><%= @visitor_detail.in_time %></td>
+</tr>
 
-<p>
-  <strong>Out time:</strong>
-  <%= @visitor_detail.out_time %>
-</p>
+<tr>
+  <td><strong>Exit Time</strong></td>
+  <td><%= @visitor_detail.out_time %></td>
 
-<p>
-  <strong>Purpose:</strong>
-  <%= @visitor_detail.purpose %>
-</p>
+  <td><strong>Purpose</strong></td>
+  <td><%= @visitor_detail.purpose %></td>
+</tr>
 
-<p>
-  <strong>Authorized by:</strong>
-  <%= @visitor_detail.authorized_by %>
-</p>
+<tr>
+  <td colspan="3"><strong>Authorized By</strong></td>
+  <td><%= full_name(@visitor_detail.authorized_by) %></td>
+</tr>
+</table>
+</div>
+</div>
 
 <%= link_to 'Edit', edit_visitor_detail_path(@visitor_detail) %> |
 <%= link_to 'Back', visitor_details_path %>

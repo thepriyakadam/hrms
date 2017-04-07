@@ -982,7 +982,7 @@ class SalaryslipsController < ApplicationController
             end
 
 
-  #texable 
+  #Texable 
         @texable_amount = TexableAmount.find_by(employee_id: @employee.id)
         @salaryslip = Salaryslip.where(employee_id: @employee.id,month: @month,year: @year).take
           TexableMonthlyDeduction.new do |tmd|

@@ -23,6 +23,7 @@
             <th>Designation</th>
             <th>Cost Center</th>
             <th>Contact No.</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
@@ -35,6 +36,7 @@
               <td><%= e.try(:joining_detail).try(:employee_designation).try(:name) %></td>
               <td><%= e.try(:joining_detail).try(:cost_center).try(:name) %></td>
               <td><%= e.contact_no %></td>
+              <td><%= e.status %></td>
               <%= f.hidden_field :department_id, value: e.department_id %>
             </tr>
           <% end %>

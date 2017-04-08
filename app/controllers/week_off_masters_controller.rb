@@ -63,12 +63,13 @@ class WeekOffMastersController < ApplicationController
   
   def week_off_list
     if current_user.role.name == 'GroupAdmin' 
-      @week_off_masters = WeekOffMaster.where(is_send: nil)
+      @employees = Employee.where(status: 'Active')
+      @week_off_masters = WeekOffMaster.where(is_send: nil).where(employee_id: @employees)
     elsif current_user.role.name == 'Admin'
-      @employees = Employee.where(company_id: current_user.company_location.company_id)
+      @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id)
       @week_off_masters = WeekOffMaster.where(is_send: nil).where(employee_id: @employees)
     elsif current_user.role.name == 'Branch'
-      @employees = Employee.where(company_location_id: current_user.company_location_id)
+      @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id)
       @week_off_masters = WeekOffMaster.where(is_send: nil).where(employee_id: @employees)
     end
     session[:active_tab] ="TimeManagement"
@@ -90,12 +91,12 @@ class WeekOffMastersController < ApplicationController
         @employees = Employee.where.not(id: @emp_id)      
       elsif current_user.role.name == 'Admin'
         @emp_id = WeekOffMaster.where(from: @from.to_date,to: @to.to_date).pluck(:employee_id)
-        @employees = Employee.where(company_id: current_user.company_location.company_id).where.not(id: @emp_id)
+        @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).where.not(id: @emp_id)
       elsif current_user.role.name == 'Branch'
         @emp_id = WeekOffMaster.where(from: @from.to_date,to: @to.to_date).pluck(:employee_id)
-        @employees = Employee.where(company_location_id: current_user.company_location_id).where.not(id: @emp_id)
+        @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).where.not(id: @emp_id)
       else
-        @employees = Employee.all
+        @employees = Employee.where(status: 'Active')
       end
     end
   end

@@ -86,13 +86,13 @@ class WorkingdaysController < ApplicationController
         @employees = Employee.where(status: 'Active').pluck(:id)
         @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
       elsif location == ""
-        @employees = Employee.where(company_id: company.to_i).pluck(:id)
+        @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
         @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
       elsif department == ""
-        @employees = Employee.where(company_location_id: location.to_i).pluck(:id)
+        @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
         @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
       else
-        @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+        @employees = Employee.where(status: 'Active',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
         @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
       end
     elsif current_user.class == Member
@@ -101,46 +101,46 @@ class WorkingdaysController < ApplicationController
           @employees = Employee.where(status: 'Active').pluck(:id)
           @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
         elsif location == ""
-          @employees = Employee.where(company_id: company.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
           @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
         elsif department == ""
-          @employees = Employee.where(company_location_id: location.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
           @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
         else
-          @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
           @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
         end
         elsif current_user.role.name == 'Admin'
          if company == ""
-          @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
           @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
         elsif location == ""
-          @employees = Employee.where(company_id: company.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
           @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
         elsif department == ""
-          @employees = Employee.where(company_location_id: location.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
           @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
         else
-          @employees = Employee.where(company_id: company.to_i,company_location_id: @location.to_i,department_id: department.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: company.to_i,company_location_id: @location.to_i,department_id: department.to_i).pluck(:id)
           @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
         end
         elsif current_user.role.name == 'Branch'
           if company == "" || location == ""
-          @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
           @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
          elsif department == ""
-          @employees = Employee.where(company_location_id: location.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
           @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
           else 
-          @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
           @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
         end
         elsif current_user.role.name == 'HOD'
           if company == "" || location == "" || department == ""
-          @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+          @employees = Employee.where(status: 'Active',department_id: current_user.department_id).pluck(:id)
           @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
         else 
-          @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
           @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
         end
       elsif current_user.role.name == 'Superviser'
@@ -325,18 +325,20 @@ class WorkingdaysController < ApplicationController
     @month = params[:month]
     @year = params[:year]
     if current_user.class == Group
-      @workingday = Salaryslip.where(month: @month,year: @year).pluck(:workingday_id)
-      @workingdays = Workingday.where(month_name: @month, year: @year.to_s)
+        @employees = Employee.where(status: 'Active').pluck(:id)
+      @workingday = Salaryslip.where(month: @month,year: @year,employee_id: @employees).pluck(:workingday_id)
+      @workingdays = Workingday.where(month_name: @month, year: @year.to_s,employee_id: @employees).where.not(id: @workingday)
     elsif current_user.class == Member
       if current_user.role.name == "GroupAdmin"
-        @workingday = Salaryslip.where(month: @month,year: @year).pluck(:workingday_id)
-        @workingdays = Workingday.where(month_name: @month, year: @year.to_s).where.not(id: @workingday)
+        @employees = Employee.where(status: 'Active').pluck(:id)
+        @workingday = Salaryslip.where(month: @month,year: @year,employee_id: @employees).pluck(:workingday_id)
+        @workingdays = Workingday.where(month_name: @month, year: @year.to_s,employee_id: @employees).where.not(id: @workingday)
       elsif current_user.role.name == "Admin"
-        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-        @workingday = Salaryslip.where(month: @month,year: @year,employee_id: @employee).pluck(:workingday_id)
+        @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
+        @workingday = Salaryslip.where(month: @month,year: @year,employee_id: @employees).pluck(:workingday_id)
         @workingdays = Workingday.where(month_name: @month, year: @year.to_s,employee_id: @employees).where.not(id: @workingday)
       elsif current_user.role.name == "Branch"
-        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
         @workingday = Salaryslip.where(month: @month,year: @year,employee_id: @employees).pluck(:workingday_id)
         @workingdays = Workingday.where(month_name: @month,year: @year.to_s,employee_id: @employees).where.not(id: @workingday)
       end  

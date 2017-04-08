@@ -8,6 +8,7 @@ class Salaryslip < ActiveRecord::Base
   has_many :salaryslip_components
   has_many :leave_details
   has_many :slip_informations
+  has_many :texable_monthly_deductions
   validates :employee_id, uniqueness: { scope: [:workingday_id] }
 
   # def self.to_text

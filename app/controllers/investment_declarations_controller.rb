@@ -33,9 +33,9 @@ class InvestmentDeclarationsController < ApplicationController
      @investment_declarations = InvestmentDeclaration.all
       if @investment_declaration.save
         @investment_declaration = InvestmentDeclaration.new
+        flash[:notice] = 'Investment Declaration is saved Successfully'
       end
-      redirect_to new_investment_declaration_path
-      flash[:notice] = 'Investment Declaration is saved Successfully'   
+      redirect_to new_investment_declaration_path   
   end
 
   # PATCH/PUT /investment_declarations/1

@@ -76,6 +76,9 @@ class Employee < ActiveRecord::Base
   has_many :authorized_bies, class_name: 'Employee',
                           foreign_key: 'authorized_by_id'
 
+
+  has_many :texable_monthly_deductions
+  
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',
                           foreign_key: 'manager_id'

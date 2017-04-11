@@ -15,6 +15,7 @@ class VisitorDetailsController < ApplicationController
   # GET /visitor_details/new
   def new
     @visitor_detail = VisitorDetail.new
+    session[:active_tab] = "InformationManagement"
   end
 
   # GET /visitor_details/1/edit
@@ -24,12 +25,14 @@ class VisitorDetailsController < ApplicationController
   # POST /visitor_details
   # POST /visitor_details.json
   def create
+     # byebug
     @visitor_detail = VisitorDetail.new(visitor_detail_params)
 
     respond_to do |format|
       if @visitor_detail.save
         format.html { redirect_to @visitor_detail, notice: 'Visitor detail was successfully created.' }
         format.json { render :show, status: :created, location: @visitor_detail }
+        # redirect_to visitor_details_path
       else
         format.html { render :new }
         format.json { render json: @visitor_detail.errors, status: :unprocessable_entity }
@@ -98,6 +101,42 @@ class VisitorDetailsController < ApplicationController
         :show_as_html => params[:debug].present?
      end
     end
+  end
+
+  def visitor_date_report
+    session[:active_tab] = "InformationManagement"
+  end
+
+  def print_visitor_report
+    @from = params[:salary] ? params[:salary][:from_date] : params[:from_date] 
+    @to = params[:salary] ? params[:salary][:to_date] : params[:to_date]
+    @visitor_details = VisitorDetail.where(visiting_date:  @from.to_date..@to.to_date)
+
+     respond_to do |format|
+     format.js
+     format.xls {render template: 'visitor_details/visiting_date_report_xls.xls.erb'}
+     format.html
+     format.pdf do
+      render pdf: 'visiting_date_report_pdf',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'visitor_details/visiting_date_report_pdf.pdf.erb',
+            # show_as_html: params[:debug].present?,
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+        end
+      end
+  end
+
+  def visitor_list
+    @visitor_details = VisitorDetail.where(employee_id: current_user.employee_id)
+    
   end
 
   private

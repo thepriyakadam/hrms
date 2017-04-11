@@ -4,6 +4,10 @@ Rails.application.routes.draw do
     collection do
       get :display_visiting_card
       get :print_visitor_card
+      get :visitor_date_report
+      post :print_visitor_report
+      get :print_visitor_report
+      get :visitor_list
     end
   end
   resources :employee_gps_histories

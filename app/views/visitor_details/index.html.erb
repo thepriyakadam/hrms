@@ -17,7 +17,6 @@
       <th>From</th>
       <th>Meet To</th>
       <th>Entry Time</th>
-      <th>Exit Time</th>
       <th>Download Image</th>
       <th>Action</th>
     </tr>
@@ -32,7 +31,6 @@
         <td><%= visitor_detail.from %></td>
         <td><%= full_name(visitor_detail.employee) %></td>
         <td><%= visitor_detail.in_time %></td>
-        <td><%= visitor_detail.out_time %></td>
         <td>
            <% if visitor_detail.avatar_file_name == nil %>
            <small class="label label-default">Picture Not Available</small>

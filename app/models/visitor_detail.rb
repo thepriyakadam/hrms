@@ -7,8 +7,7 @@ class VisitorDetail < ActiveRecord::Base
   validates :contact_no, presence: true
   validates :id_proof, presence: true
   validates :employee_id, presence: true
-  validates :in_time, presence: true
-  validates :out_time, presence: true
+ 
 
   
   has_attached_file :avatar, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'missing.png'

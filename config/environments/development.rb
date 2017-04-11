@@ -42,7 +42,7 @@ Rails.application.configure do
 
 # # Root url
   config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
-
+  
 # # # Root url
 #   config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
 

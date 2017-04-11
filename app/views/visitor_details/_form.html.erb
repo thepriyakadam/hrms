@@ -3,6 +3,8 @@
     <h3 class="box-title">Visitor Details</h3>
     <div class="box-body">
       <%= bootstrap_form_for(@visitor_detail,html: {id: 'visitor_detail'}) do |f| %>
+       <%= f.hidden_field :visiting_date, value: Time.zone.now.to_date %>
+
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
@@ -22,7 +24,7 @@
         </div>
 
         <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
             <%= f.text_field :email_id,label: 'Email ID', class: 'visitor_detail'%>
           </div>
         </div>
@@ -35,18 +37,19 @@
         </div>
        
         <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
             <%= f.text_field :from,label: 'From', class: 'visitor_detail'%>
           </div>
         </div>
          <div class="col-sm-3">
-          <div class="form-group required">
-           <%= f.select :meet_to_id, all_active_employee_with_code, {include_blank: "Select Person"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
+           <div class="form-group required">
+         <label>Meet To</label>
+           <%= f.select :employee_id,all_active_employee_with_code, {hide_label:true,include_blank: "Select Person"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
           </div>
         </div>
          <div class="col-sm-3">
         <div class="bootstrap-timepicker">
-        <div class="form-group">
+        <div class="form-group required">
           <label>Entry Time</label>
           <div class="input-group">
             <%= f.text_field :in_time,hide_label:true,class: 'form-control timepicker' %>
@@ -59,29 +62,21 @@
       </div>
         </div>
         <div class="row">
-       <div class="col-sm-3">
-        <div class="bootstrap-timepicker">
-        <div class="form-group">
-          <label>Exit Time</label>
-          <div class="input-group">
-            <%= f.text_field :out_time,hide_label:true,class: 'form-control timepicker' %>
-            <div class="input-group-addon">
-              <i class="fa fa-clock-o"></i>
-            </div>
-          </div><!-- /.input group -->
-        </div><!-- /.form group -->
-      </div>
-      </div>
-      <div class="col-sm-3">
+     <!--  <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.select :authorized_by_id, all_active_employee_with_code, {include_blank: "Select Person"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
+           <= f.select :authorized_by_id, all_active_employee_with_code, {include_blank: "Select Person"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
           </div>
-        </div>
+        </div> -->
         <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
             <%= f.text_area :purpose,label: 'Purpose ', class: 'visitor_detail'%>
           </div>
         </div>
+        <div class="col-sm-3">
+    <div class="field">
+      <%= f.file_field :avatar,label: 'Picture' %>
+    </div>
+   </div>
         
         </div>
       <div class="row">
@@ -94,3 +89,59 @@
   </div>
 </div>
   <% end %>
+
+
+<script type="text/javascript">
+$("#visitor_detail").validate({
+    rules: {
+      "visitor_detail[name]":{
+        required: true
+      },
+      "visitor_detail[age]":{
+        required: true
+      },
+      "visitor_detail[contact_no]":{
+        required: true
+      },
+      "visitor_detail[id_proof]":{
+        required: true
+      },
+      "visitor_detail[employee_id]":{
+        required: true
+      },
+      "visitor_detail[in_time]":{
+        required: true
+      },
+      "visitor_detail[out_time]":{
+        required: true
+      }
+    },
+    messages: {
+      "visitor_detail[name]":{
+        required: "Please Specify Name"
+      },
+      "visitor_detail[age]":{
+        required: "Please Specify Age"
+      },
+      "visitor_detail[contact_no]":{
+        required: "Please Specify Contact No."
+      },
+      "visitor_detail[id_proof]":{
+        required: "Please Specify ID Proof"
+      },
+      "visitor_detail[employee_id]":{
+        required: "Please Select Meeting Person"
+      },
+      "visitor_detail[in_time]":{
+        required: "Please Specify Entry Time"
+      },
+      "visitor_detail[out_time]":{
+        required: "Please Specify Exit Time"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+});
+</script>

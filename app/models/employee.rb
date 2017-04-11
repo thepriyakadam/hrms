@@ -72,9 +72,10 @@ class Employee < ActiveRecord::Base
   has_many :on_duty_requests
   has_many :gratuity
   has_many :meet_tos, class_name: 'Employee',
-                     foreign_key: 'meet_to_id'
+                     foreign_key: 'meet_to'
   has_many :authorized_bies, class_name: 'Employee',
-                          foreign_key: 'authorized_by_id'
+                          foreign_key: 'authorized_by'
+  has_many :visitor_details
 
 
   has_many :texable_monthly_deductions

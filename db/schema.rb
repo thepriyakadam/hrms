@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170407050053) do
+ActiveRecord::Schema.define(version: 20170407121939) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -3531,19 +3531,24 @@ ActiveRecord::Schema.define(version: 20170407050053) do
   add_index "vacancy_request_histories", ["vacancy_master_id"], name: "index_vacancy_request_histories_on_vacancy_master_id", using: :btree
 
   create_table "visitor_details", force: :cascade do |t|
-    t.string   "name",             limit: 255
-    t.string   "age",              limit: 255
-    t.string   "contact_no",       limit: 255
-    t.string   "email_id",         limit: 255
-    t.string   "id_proof",         limit: 255
-    t.string   "from",             limit: 255
-    t.integer  "meet_to_id",       limit: 4
+    t.string   "name",                limit: 255
+    t.string   "age",                 limit: 255
+    t.string   "contact_no",          limit: 255
+    t.string   "email_id",            limit: 255
+    t.string   "id_proof",            limit: 255
+    t.string   "from",                limit: 255
+    t.integer  "meet_to_id",          limit: 4
     t.time     "in_time"
     t.time     "out_time"
-    t.text     "purpose",          limit: 65535
-    t.integer  "authorized_by_id", limit: 4
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.text     "purpose",             limit: 65535
+    t.integer  "authorized_by_id",    limit: 4
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.string   "avatar_file_name",    limit: 255
+    t.string   "avatar_content_type", limit: 255
+    t.integer  "avatar_file_size",    limit: 4
+    t.datetime "avatar_updated_at"
+    t.date     "visiting_date"
   end
 
   add_index "visitor_details", ["authorized_by_id"], name: "index_visitor_details_on_authorized_by_id", using: :btree

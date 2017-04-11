@@ -1,0 +1,93 @@
+<div class="box box-default">
+
+
+<div class="box-header with-border">
+ <h3 class="box-title"> Visitor Card </h3>
+     <div class="pull-right">
+   <%= link_to "Print Card",print_visitor_card_visitor_details_path(id: @visitor_detail.id,format: "pdf") ,class: 'btn btn-primary btn-sm ',:target => "_blank"%> 
+  </div>
+
+</div>
+<!-- <div class="pull-right">
+
+   </div> -->
+  <div class="box-body">
+
+<div style="width: 400px; height: 400px;
+ font-size: 10px;
+          padding: 5px;
+          border: 2px solid gray;
+
+    margin-right: 150px;
+    margin-left: 300px;">
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <tr><th colspan="2"><center>Visitor Card</center></th></tr>
+  <tr><td colspan="2">
+  <% if @visitor_detail.employee.company_location.company.company_logo == nil %>
+      <% else %>
+        <center> <%= image_tag @visitor_detail.employee.company_location.company.company_logo.url, :size => "60x40" %></center>
+        <%end%>
+        <center><strong><%= @visitor_detail.employee.company_location.company.try(:description) %></strong> <br>
+        <%= @visitor_detail.employee.company_location.company.try(:address) %><br> 
+        <%= @visitor_detail.employee.company_location.try(:name) %></center> </td></tr>
+     
+
+
+<tr><td colspan="2">
+<div class="row">
+  <div class="col-sm-4">
+     
+  </div>
+   <div class="col-sm-4">
+     <%= image_tag @visitor_detail.avatar.url, :size => "70x70" %>
+  </div>
+   <div class="col-sm-4">
+     
+  </div>
+    
+  </div></td>
+</tr>
+ 
+<tr>
+<td><strong>Name : </strong> <%= @visitor_detail.name %> </td>
+<td><strong>Age : </strong> <%= @visitor_detail.age %></td>
+</tr>
+
+<tr>
+  <td><strong>Contact No. : </strong> <%= @visitor_detail.contact_no %> </td>
+
+  <td><strong>Email ID : </strong> <%= @visitor_detail.email_id %></td> </tr>
+
+ <tr> 
+ <td><strong>ID Proof : </strong> <%= @visitor_detail.id_proof %> </td>
+
+ <td><strong>From : </strong> <%= @visitor_detail.from %> </td>
+ </tr>
+
+<tr>
+
+ <td><strong>Entry Time : </strong> <%= @visitor_detail.in_time %> </td>
+  <td><strong>Exit Time : </strong> <%= @visitor_detail.out_time %> </td>
+
+ </tr>
+
+<tr>
+ <td> <strong>Meet To  : </strong> <%= full_name(@visitor_detail.employee) %> </td>
+
+ <td><strong>Purpose : </strong> <%= @visitor_detail.purpose %> </td>
+</tr>
+
+<tr><td colspan="2">
+ _____________<br>
+
+(Name of signing authority)
+</td>
+</tr>
+</table>
+
+</div>
+
+</div>
+<!-- = link_to "Print",service_certificate_certificates_path(employee_id: @employee.id, certificate: @certificate,format: "pdf"),:target => "_blank"%> -->
+
+</div>

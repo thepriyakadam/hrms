@@ -96,19 +96,19 @@ class AdvanceSalariesController < ApplicationController
       if current_user.role.name == 'GroupAdmin' 
         @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y'))
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
         @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Branch'
-        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
         @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'HOD'
-        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+        @employees = Employee.where(status: 'Active',department_id: current_user.department_id).pluck(:id)
         @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'AccountAdmin'
-        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
         @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Account'
-        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
         @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Employee'
         @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
@@ -134,11 +134,11 @@ class AdvanceSalariesController < ApplicationController
         @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).take
         @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y'))
       elsif @location == ""
-        @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+        @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
         @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
         @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       else
-        @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+        @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
         @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
         @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       end
@@ -148,45 +148,45 @@ class AdvanceSalariesController < ApplicationController
           @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).take
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y'))
         elsif @location == ""
-          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         else
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Admin'
         if @company == ""
-          @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         elsif @location == ""
-          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         else
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Branch'
         if @company == "" || @location == ""
-          @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         else
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'HOD'
         if @company == "" || @location == ""
-          @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+          @employees = Employee.where(status: 'Active',department_id: current_user.department_id).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         else
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         end
@@ -269,11 +269,11 @@ class AdvanceSalariesController < ApplicationController
         @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).take
         @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y'))
       elsif @location == ""
-        @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+        @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
         @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
         @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       else
-        @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+        @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
         @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
         @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       end
@@ -283,45 +283,45 @@ class AdvanceSalariesController < ApplicationController
           @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).take
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y'))
         elsif @location == ""
-          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         else
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Admin'
         if @company == ""
-          @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         elsif @location == ""
-          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         else
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Branch'
         if @company == "" || @location == ""
-          @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         else
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'HOD'
         if @company == "" || @location == ""
-          @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+          @employees = Employee.where(status: 'Active',department_id: current_user.department_id).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         else
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         end
@@ -374,11 +374,11 @@ class AdvanceSalariesController < ApplicationController
         @advance_salary_id = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year).take
         @advance_salaries = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year)
       elsif @location == ""
-        @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+        @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
         @advance_salary_id = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year).where(employee_id: @employees).take
         @advance_salaries = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year).where(employee_id: @employees)
       else
-        @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+        @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
         @advance_salary_id = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year).where(employee_id: @employees).take
         @advance_salaries = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year).where(employee_id: @employees)
       end
@@ -388,45 +388,45 @@ class AdvanceSalariesController < ApplicationController
           @advance_salary_id = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year).take
           @advance_salaries = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year)
         elsif @location == ""
-          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year).where(employee_id: @employees)
         else
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Admin'
         if @company == ""
-          @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year).where(employee_id: @employees)
         elsif @location == ""
-          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year).where(employee_id: @employees)
         else
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Branch'
         if @company == "" || @location == ""
-          @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%Y', advance_date) = ?",@year).where(employee_id: @employees)
         else
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%Y', advance_date) = ?",@year).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'HOD'
         if @company == "" || @location == ""
-          @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+          @employees = Employee.where(status: 'Active',department_id: current_user.department_id).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%Y', advance_date) = ?",@year).where(employee_id: @employees)
         else
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
           @advance_salary_id = AdvanceSalary.where("strftime('%Y', advance_date) = ?", @year).where(employee_id: @employees).take
           @advance_salaries = AdvanceSalary.where("strftime('%Y', advance_date) = ?",@year).where(employee_id: @employees)
         end

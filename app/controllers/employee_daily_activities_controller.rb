@@ -64,11 +64,11 @@ include QueryReport::Helper
       if current_user.role.name == 'GroupAdmin'
         @employees = Employee.all
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(Company_id: current_user.company_location.company_id)
+        @employees = Employee.where(status: 'Active',Company_id: current_user.company_location.company_id)
       elsif current_user.role.name == 'Branch'
-        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'HOD'
-        @employees = Employee.where(department_id: current_user.department_id)
+        @employees = Employee.where(status: 'Active',department_id: current_user.department_id)
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
         @employees = @emp.subordinates

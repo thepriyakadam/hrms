@@ -53,7 +53,7 @@ class HolidaysController < ApplicationController
           EmployeeAttendance.create(employee_id: e.id, day: holiday.holiday_date, present: "H", department_id: e.department_id, is_confirm: false, count: 1)
         else
           @date = holiday.holiday_date
-          @emp_attendances = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND present = ?", @date.strftime('%m/%Y'), "H")
+          @emp_attendances = EmployeeAttendance.where("DATE_FORMAT('%m/%Y', day) = ? AND present = ?", @date.strftime('%m/%Y'), "H")
           @emp_attendances.each do |e|
             date = e.day.to_datetime
             yd = (date-1).strftime('%Y-%m-%d')

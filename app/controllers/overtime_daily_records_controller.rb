@@ -4,7 +4,7 @@ class OvertimeDailyRecordsController < ApplicationController
   # GET /overtime_daily_records
   # GET /overtime_daily_records.json
   def index
-    @overtime_daily_records = OvertimeDailyRecord.group("strftime('%Y',ot_daily_date)")
+    @overtime_daily_records = OvertimeDailyRecord.group("DATE_FORMAT('%Y',ot_daily_date)")
     session[:active_tab] ="PayrollManagement"
     session[:active_tab1] ="Overtime"
   end
@@ -75,24 +75,24 @@ class OvertimeDailyRecordsController < ApplicationController
     @month = params[:month]
     date = Date.new(@year.to_i, Workingday.months[@month])
    if current_user.class == Group
-       @overtime_daily_records = OvertimeDailyRecord.where("strftime('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y'))
+       @overtime_daily_records = OvertimeDailyRecord.where("DATE_FORMAT('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y'))
     else
       if current_user.role.name == "GroupAdmin"
-        @overtime_daily_records = OvertimeDailyRecord.where("strftime('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y'))
+        @overtime_daily_records = OvertimeDailyRecord.where("DATE_FORMAT('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y'))
       elsif current_user.role.name == "Admin"
         @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-        @overtime_daily_records = OvertimeDailyRecord.where("strftime('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @overtime_daily_records = OvertimeDailyRecord.where("DATE_FORMAT('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == "Branch"
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @overtime_daily_records = OvertimeDailyRecord.where("strftime('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @overtime_daily_records = OvertimeDailyRecord.where("DATE_FORMAT('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == "Employee"
-        @overtime_daily_records = OvertimeDailyRecord.where("strftime('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+        @overtime_daily_records = OvertimeDailyRecord.where("DATE_FORMAT('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
       elsif current_user.role.name == "AccountAdmin"
         @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-        @overtime_daily_records = OvertimeDailyRecord.where("strftime('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @overtime_daily_records = OvertimeDailyRecord.where("DATE_FORMAT('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == "Account"
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @overtime_daily_records = OvertimeDailyRecord.where("strftime('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @overtime_daily_records = OvertimeDailyRecord.where("DATE_FORMAT('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       end
     end
   end

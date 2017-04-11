@@ -114,14 +114,34 @@ class EmployeeLeavRequestsController < ApplicationController
             @leave_category = LeavCategory.where(id: @employee_leav_request.leav_category_id,is_active: true).take
             if @leave_category.is_balance == true
               if @emp_leave_bal.nil?
-                @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
-                flash.now[:alert] = 'Leave balance not set- contact to admin.'
-                render :new
-      
+               
+                  @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
+                  flash.now[:alert] = 'Leave balance not set- contact to admin.'
+                  render :new
+
               elsif @employee_leav_request.leave_count.to_f > @emp_leave_bal.try(:no_of_leave).to_f
                 @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
                 flash.now[:alert] = 'Not Allowed. You exceed the leave limit.'
                 render :new
+
+              elsif @employee_leav_request.start_date.to_date < @emp_leave_bal.from_date.to_date
+              
+                @emp_leave_bal1 =  EmployeeLeavBalance.where(employee_id: @employee.id,leav_category_id: @employee_leav_request.leav_category_id,is_active: false).last
+                if @employee_leav_request.leave_count.to_f > @emp_leave_bal1.try(:no_of_leave).to_f
+                  flash[:alert] = 'You Have No Balance For This Date'
+                else
+                  @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
+                  @employee_leav_request.save
+                  @employee_leav_request.leave_record_create(@employee_leav_request)
+                  @employee_leav_request.minus_leave(@employee_leav_request)
+                  if @employee.manager.email.nil? || @employee.manager.email == ''
+                    flash[:notice] = 'Send request without email.'
+                  else
+                    flash[:notice] = 'Leave Request sent successfully..'
+                    LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                  end
+                end
+                  redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
 
               elsif @leav_category.from.nil? or @leav_category.to.nil?
                 @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
@@ -164,6 +184,7 @@ class EmployeeLeavRequestsController < ApplicationController
                 else
                   render :new
                 end
+
 
               else
                 @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
@@ -244,11 +265,11 @@ class EmployeeLeavRequestsController < ApplicationController
 
   def approved_or_rejected_leave_request
     if current_user.class == Group
-      @pending_employee_leav_requests = EmployeeLeavRequest.where(is_pending: true, is_first_approved: nil, is_first_rejected: nil, is_cancelled: nil)
-      @first_approved_employee_leav_requests = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil)
+      @pending_employee_leav_requests = EmployeeLeavRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false)
+      @first_approved_employee_leav_requests = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false)
     else
-      @pending_employee_leav_requests = EmployeeLeavRequest.where(is_pending: true, is_first_approved: nil, is_first_rejected: nil, is_cancelled: nil, first_reporter_id: current_user.employee_id)
-      @first_approved_employee_leav_requests = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil, second_reporter_id: current_user.employee_id)
+      @pending_employee_leav_requests = EmployeeLeavRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false, first_reporter_id: current_user.employee_id)
+      @first_approved_employee_leav_requests = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false, second_reporter_id: current_user.employee_id)
     end
     # @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
     session[:active_tab] ="LeaveManagement"
@@ -257,12 +278,12 @@ class EmployeeLeavRequestsController < ApplicationController
 
   def all_leave_request_list
     if current_user.class == Group
-      @first_level_request_lists = EmployeeLeavRequest.where(is_pending: true, is_first_approved: nil, is_first_rejected: nil, is_cancelled: nil)
-      @second_level_request_lists = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil)
+      @first_level_request_lists = EmployeeLeavRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false)
+      @second_level_request_lists = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false)
     else
-      @first_level_request_lists = EmployeeLeavRequest.where(is_pending: true, is_first_approved: nil, is_first_rejected: nil, is_cancelled: nil)
-      @emp_leav_req = EmployeeLeavRequest.where.not(second_reporter_id: nil).pluck(:second_reporter_id)
-      @second_level_request_lists = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil,second_reporter_id: @emp_leav_req)
+      @first_level_request_lists = EmployeeLeavRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false)
+      @emp_leav_req = EmployeeLeavRequest.where.not(second_reporter_id: false).pluck(:second_reporter_id)
+      @second_level_request_lists = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,second_reporter_id: @emp_leav_req)
     end
     # @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
     session[:active_tab] ="LeaveManagement"

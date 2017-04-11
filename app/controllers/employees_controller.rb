@@ -55,7 +55,7 @@ class EmployeesController < ApplicationController
 
   def birthday_email
     date = Date.today
-    @employees = Employee.where("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m'))
+    @employees = Employee.where("DATE_FORMAT('%d/%m', date_of_birth) = ?", date.strftime('%d/%m'))
     if @employees.empty?
     else
       @employees.each do |e|
@@ -68,7 +68,7 @@ class EmployeesController < ApplicationController
 
   def birthday_invitation
     date = Date.today 
-    @employees = Employee.where.not("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m'))
+    @employees = Employee.where.not("DATE_FORMAT('%d/%m', date_of_birth) = ?", date.strftime('%d/%m'))
     if @employees.empty?
     else
     @employees.each do |employee|    
@@ -1108,12 +1108,12 @@ def show_all_record
   if @employee_ids.nil?
     flash[:alert] = "Please Select the checkbox"
     @employees = []
-    redirect_to show_all_record_employee_templates_path
+    redirect_to employee_report_employees_path
+    
   else
     @employee_ids.each do |e|
       @employee = Employee.find_by(id: e)
     end
-  end
     respond_to do |f|
       f.js
       f.xls {render template: 'employees/employee_record.xls.erb'}
@@ -1122,7 +1122,7 @@ def show_all_record
         render pdf: 'show_all_record',
         layout: 'pdf.html',
         orientation: 'Landscape',
-        template: 'employees/employee_record.pdf.erb',
+        template: 'employees/employee_record_pdf.pdf.erb',
         :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)
@@ -1131,7 +1131,21 @@ def show_all_record
                           :right  => 10},
             :show_as_html => params[:debug].present?
       end
+      # f.pdf do
+      #   render pdf: 'show_all_record',
+      #   layout: 'pdf.html',
+      #   orientation: 'Landscape',
+      #   template: 'employees/employee_record.pdf.erb',
+      #   :page_height      => 1000,
+      #       :dpi              => '300',
+      #       :margin           => {:top    => 10, # default 10 (mm)
+      #                     :bottom => 10,
+      #                     :left   => 10,
+      #                     :right  => 10},
+      #       :show_as_html => params[:debug].present?
+      # end
     end
+  end#if
   end
 
   def employee_gps_setting_list
@@ -1159,6 +1173,14 @@ def show_all_record
     EmployeeGpsHistory.where(id: @gps_history.id).update_all(to_date: @gps_history.from_date)
     flash[:notice] = "GPS Setting Saved Successfully"
     redirect_to employee_gps_setting_list_employees_path
+  end
+
+  def display_employee_details
+     @emp = params[:employee][:id]
+     @employee = Employee.where(id: @emp).take
+     @families = Family.where(employee_id: @emp)
+     @qualifications = Qualification.where(employee_id: @emp)
+     @skillsets = Skillset.where(employee_id: @emp)
   end
 
 

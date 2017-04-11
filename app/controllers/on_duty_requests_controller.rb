@@ -173,11 +173,11 @@ class OnDutyRequestsController < ApplicationController
     @employees_ind = @emp.indirect_subordinates
     
     if current_user.class == Group
-      @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: nil, is_first_rejected: nil, is_cancelled: nil,employee_id: @employees)
-      @first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil,employee_id: @employees_ind)
+      @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: false, is_first_rejected: false, is_cancelled: false,employee_id: @employees)
+      @first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,employee_id: @employees_ind)
     else
-      @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: nil, is_first_rejected: nil, is_cancelled: nil,employee_id: @employees)
-      @first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil,employee_id: @employees_ind)
+      @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: false, is_first_rejected: false, is_cancelled: false,employee_id: @employees)
+      @first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,employee_id: @employees_ind)
     end
     
     session[:active_tab] ="LeaveManagement"
@@ -231,12 +231,12 @@ class OnDutyRequestsController < ApplicationController
 
   def od_request_list
     if current_user.class == Group
-      @first_level_request_lists = OnDutyRequest.where(is_pending: true, is_first_approved: nil, is_first_rejected: nil, is_cancelled: nil)
-      @second_level_request_lists = OnDutyRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil)
+      @first_level_request_lists = OnDutyRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false)
+      @second_level_request_lists = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false)
     else
-      @first_level_request_lists = OnDutyRequest.where(is_pending: true, is_first_approved: nil, is_first_rejected: nil, is_cancelled: nil)
+      @first_level_request_lists = OnDutyRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false)
       @on_duty_request = OnDutyRequest.where.not(second_reporter_id: nil).pluck(:second_reporter_id)
-      @second_level_request_lists = OnDutyRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil,second_reporter_id: @on_duty_request)
+      @second_level_request_lists = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,second_reporter_id: @on_duty_request)
     end
     session[:active_tab] ="LeaveManagement"
     session[:active_tab1] ="ODProcess"

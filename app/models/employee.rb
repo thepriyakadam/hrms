@@ -71,7 +71,12 @@ class Employee < ActiveRecord::Base
   has_many :machine_attendances
   has_many :on_duty_requests
   has_many :gratuity
-  
+  has_many :meet_tos, class_name: 'Employee',
+                     foreign_key: 'meet_to'
+  has_many :authorized_bies, class_name: 'Employee',
+                          foreign_key: 'authorized_by'
+  has_many :visitor_details
+
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',
                           foreign_key: 'manager_id'

@@ -138,7 +138,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
 
   def manage_coff(request)
     if request.leav_category.name == 'Compensatory Off'
-      c_offs = LeaveCOff.where(employee_id: request.employee_id, is_taken: false, is_expire: nil).order('c_off_date asc')
+      c_offs = LeaveCOff.where(employee_id: request.employee_id, is_taken: false, is_expire: false).order('c_off_date asc')
       c_offs.each do |c|
         if request.leave_count == 0
         elsif request.leave_count == 0.5
@@ -399,10 +399,10 @@ class EmployeeLeavRequest < ActiveRecord::Base
     end_month = self.end_date.strftime("%B")
     for i in self.start_date.to_datetime..self.end_date.to_datetime
       if start_month == end_month
-        count = ParticularLeaveRecord.where("employee_id = ? AND strftime('%m/%Y', leave_date) = ? AND leav_category_id = ?" ,  self.employee_id,i.strftime('%m/%y'),self.leav_category_id)
+        count = ParticularLeaveRecord.where("employee_id = ? AND DATE_FORMAT('%m/%Y', leave_date) = ? AND leav_category_id = ?" ,  self.employee_id,i.strftime('%m/%y'),self.leav_category_id)
         count_1 = count_1 + 1
       else
-        count = ParticularLeaveRecord.where("employee_id = ? AND strftime('%m/%Y', leave_date) = ? AND leav_category_id = ?" ,  self.employee_id,i.strftime('%m/%y'),self.leav_category_id)
+        count = ParticularLeaveRecord.where("employee_id = ? AND DATE_FORMAT('%m/%Y', leave_date) = ? AND leav_category_id = ?" ,  self.employee_id,i.strftime('%m/%y'),self.leav_category_id)
         count_2 = count_2 + 1
       end
     end
@@ -464,7 +464,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
         start_month = self.start_date.strftime("%B")
         end_month = self.end_date.strftime("%B")
         if start_month == end_month
-          @lr = LeaveRecord.where("employee_id = ? AND strftime('%m/%Y', day) = ? AND leav_category_id = ?" ,  self.employee_id,i.strftime('%m/%Y'),self.leav_category_id).where.not(status: 'Cancelled').where.not(status: 'Rejected')
+          @lr = LeaveRecord.where("employee_id = ? AND DATE_FORMAT('%m/%Y', day) = ? AND leav_category_id = ?" ,  self.employee_id,i.strftime('%m/%Y'),self.leav_category_id).where.not(status: 'Cancelled').where.not(status: 'Rejected')
           a = 0
           @lr.each do |l|
             a = a + l.count
@@ -487,14 +487,14 @@ class EmployeeLeavRequest < ActiveRecord::Base
               elr_1
               elr_2
 
-          @lr_1 = LeaveRecord.where("employee_id = ? AND strftime('%m/%Y', day) = ? AND leav_category_id = ?" ,  self.employee_id,@start_date.strftime('%m/%Y'),self.leav_category_id).where.not(status: 'Cancelled').where.not(status: 'Rejected')
+          @lr_1 = LeaveRecord.where("employee_id = ? AND DATE_FORMAT('%m/%Y', day) = ? AND leav_category_id = ?" ,  self.employee_id,@start_date.strftime('%m/%Y'),self.leav_category_id).where.not(status: 'Cancelled').where.not(status: 'Rejected')
           a = 0
           @lr_1.each do |l|
             a = a + l.count
           end#do
            @count1 = a.to_f + elr_1.to_f
 
-          @lr_2 = LeaveRecord.where("employee_id = ? AND strftime('%m/%Y', day) = ? AND leav_category_id = ?" ,  self.employee_id,@end_date.strftime('%m/%Y'),self.leav_category_id).where.not(status: 'Cancelled').where.not(status: 'Rejected')
+          @lr_2 = LeaveRecord.where("employee_id = ? AND DATE_FORMAT('%m/%Y', day) = ? AND leav_category_id = ?" ,  self.employee_id,@end_date.strftime('%m/%Y'),self.leav_category_id).where.not(status: 'Cancelled').where.not(status: 'Rejected')
           b = 0
           @lr_2.each do |l|
             b = b + l.count

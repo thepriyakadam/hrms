@@ -141,8 +141,8 @@ end
   # end
 
   def resignation_history
-    @pending_resignation_requests = EmployeeResignation.where(is_pending: true, is_first_approved: nil,is_first_rejected: nil, is_cancelled: nil,reporting_master_id: current_user.employee_id)
-    @first_approved_resignation_requests = EmployeeResignation.where(is_first_approved: true, is_second_approved: nil,is_second_rejected: nil, is_cancelled: nil,second_reporter_id: current_user.employee_id)
+    @pending_resignation_requests = EmployeeResignation.where(is_pending: true, is_first_approved: false,is_first_rejected: false, is_cancelled: false,reporting_master_id: current_user.employee_id)
+    @first_approved_resignation_requests = EmployeeResignation.where(is_first_approved: true, is_second_approved: false,is_second_rejected: false, is_cancelled: false,second_reporter_id: current_user.employee_id)
     session[:active_tab] ="employee_resignation"
     session[:active_tab1] ="resignation"
   end
@@ -191,11 +191,11 @@ end
   def first_approve
     @employee_resignation = EmployeeResignation.find(params[:format])
     if @employee_resignation.employee.manager_2_id.nil?
-      @employee_resignation.update(is_pending:nil,is_first_approved: true,is_second_approved: true,resign_status: "SecondApproved")
+      @employee_resignation.update(is_pending:false,is_first_approved: true,is_second_approved: true,resign_status: "SecondApproved")
       ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "SecondApproved",change_date: Date.today)
       EmployeeResignationMailer.no_second_reporter_approval_email_to_employee(@employee_resignation).deliver_now
     else
-       @employee_resignation.update(is_pending:nil,is_first_approved: true,second_reporter_id: @employee_resignation.employee.manager_2_id,resign_status: "FirstApproved")
+       @employee_resignation.update(is_pending:false,is_first_approved: true,second_reporter_id: @employee_resignation.employee.manager_2_id,resign_status: "FirstApproved")
       ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "FirstApproved",change_date: Date.today)
       EmployeeResignationMailer.first_level_approval_email_to_employee(@employee_resignation).deliver_now
       EmployeeResignationMailer.second_level_request_email_to_reporting_manager(@employee_resignation).deliver_now
@@ -231,11 +231,11 @@ end
   def first_reject
     @employee_resignation = EmployeeResignation.find(params[:format])
     if @employee_resignation.employee.manager_2_id.nil?
-      @employee_resignation.update(is_pending:nil,is_first_rejected: true,is_final_rejected: true,resign_status: "Rejected")
+      @employee_resignation.update(is_pending:false,is_first_rejected: true,is_final_rejected: true,resign_status: "Rejected")
       ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Rejected",change_date: Date.today)
       EmployeeResignationMailer.no_second_reporter_reject_email_to_employee(@employee_resignation).deliver_now
     else
-       @employee_resignation.update(is_pending:nil,is_first_rejected: true,second_reporter_id: @employee_resignation.employee.manager_2_id,resign_status: "FirstRejected")
+       @employee_resignation.update(is_pending:false,is_first_rejected: true,second_reporter_id: @employee_resignation.employee.manager_2_id,resign_status: "FirstRejected")
       ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "FirstRejected",change_date: Date.today)
       EmployeeResignationMailer.first_reject_email_to_employee(@employee_resignation).deliver_now
     end

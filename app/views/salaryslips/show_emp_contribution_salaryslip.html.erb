@@ -11,8 +11,13 @@
       <thead>
         <tr>
           <td colspan="7">
+           <% if @employee.company_location.company.company_logo == nil %>
+      <% else %>
+        <center> <%= image_tag @employee.company_location.company.company_logo.url, :size => "180x90" %></center>
+        <%end%> <br>
+            <center><strong><%= @employee.company_location.company.try(:description)%> </strong> <br> <%= @employee.company_location.try(:address)%> - <%= @employee.company_location.try(:name)%>.</center>
           </td>           
-            <center><strong><%= @employee.company_location.company.try(:description)%> </strong><%= @employee.company_location.try(:address)%> - <%= @employee.company_location.try(:name)%>.</center>
+          
           </td>           
         </tr>
         <tr>

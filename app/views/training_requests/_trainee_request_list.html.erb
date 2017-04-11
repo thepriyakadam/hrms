@@ -9,11 +9,8 @@
     div><br> --> 
     <div class="box-header with-border">
   </div>
-<<<<<<< HEAD
-   <%= bootstrap_form_for :employee,url:{action:"selected_employee_training_list"},html: {id: 'employee'} do |f| %>
-=======
+
    <%= bootstrap_form_for :employee,url:{action:"selected_employee_training_list",id: @training_request.id},html: {id: 'employee'} do |f| %>
->>>>>>> d22b11f13f724087e348b7f12b403bd2c8080ead
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>

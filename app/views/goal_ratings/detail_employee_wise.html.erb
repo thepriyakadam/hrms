@@ -5,6 +5,7 @@
     <div class="pull-right">
       <%= link_to 'Print Report', detail_employee_wise_goal_ratings_path(format: 'pdf',employee_id: params[:employee_id],goal_bunch_ids: params[:goal_bunch_ids]),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
       <%= link_to " Print excel ",detail_employee_wise_goal_ratings_path(format: "xls",employee_id: params[:employee_id],goal_bunch_ids: params[:goal_bunch_ids]), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+      <%= link_to 'Back',employee_wise_goal_goal_ratings_path, class: 'btn btn-sm btn-default fa fa-arrow-left' %>
     </div>
   </div><!-- /.box-header -->
   <div class="box box-default">
@@ -114,22 +115,23 @@
       </table>
       <br>
 
-    <% @employees.each do |e| %>
-    <% employee = Employee.find(e.employee_id) %>
-    <% @joining_detail = JoiningDetail.find_by_employee_id(e.employee_id) %>
-    <% @experiences = Experience.where(employee_id: e.employee_id) %>
-    <% @qualifications = Qualification.where(employee_id: e.employee_id) %>
-    <% @employee_promotions = EmployeePromotion.where(employee_id: e.employee_id) %>
-    <% @goal_ratings = GoalRating.where(appraisee_id: e.employee_id, goal_bunch_id: e.id, goal_type: 'Goal') %>
-    <% @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", e.id ,'Attribute') %>
-    <% @goal_bunches = GoalBunch.where(employee_id: e.employee_id, id: e.id).group(:employee_id) %>
+    <% @goal_bunch_ids.each do |e| %>
+    <% goal_bunch = GoalBunch.find_by(id: e) %>
+    <% employee = Employee.find(goal_bunch.employee_id) %>
+    <% @joining_detail = JoiningDetail.find_by_employee_id(goal_bunch.employee_id) %>
+    <% @experiences = Experience.where(employee_id: goal_bunch.employee_id) %>
+    <% @qualifications = Qualification.where(employee_id: goal_bunch.employee_id) %>
+    <% @employee_promotions = EmployeePromotion.where(employee_id: goal_bunch.employee_id) %>
+    <% @goal_ratings = GoalRating.where(appraisee_id: goal_bunch.employee_id, goal_bunch_id: goal_bunch.id, goal_type: 'Goal') %>
+    <% @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", goal_bunch.id ,'Attribute') %>
+    <% @goal_bunches = GoalBunch.where(employee_id: goal_bunch.employee_id, id: goal_bunch.id).group(:employee_id) %>
 
       <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
         <thead>
         <tr>
         <% i=i+1%>
         <th><%= i %></th>
-        <th colspan="9"><center>Performance Report for Period: <%= e.period.name %> From: <%= e.period.from %> To: <%= e.period.to %></center></th></tr>
+        <th colspan="9"><center>Performance Report for Period: <%= goal_bunch.period.name %> From: <%= goal_bunch.period.from %> To: <%= goal_bunch.period.to %></center></th></tr>
         <tr><th colspan="10"><center>Goals</center></th></tr>
           <tr>
             <th>Goal Perspective</th>
@@ -200,7 +202,7 @@
     <center><p class="text-warning"> No Goal Bunch Available </p></center> 
     <% else %>
 
-       <% goal_bunch = GoalBunch.find_by(id: e.id)%>
+       <% goal_bunch = GoalBunch.find_by(id: goal_bunch.id)%>
        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
         <tbody>
           <tr><th colspan="2"><center>Overall Performance Detail</center></th></tr>

@@ -77,7 +77,7 @@ class DueActionsController < ApplicationController
         #  DueEmployeeDetail.where(id: @due_action.due_employee_detail_id).update_all(is_confirmed: true)
         # else
         # end
-        a=DueAction.where(due_employee_detail_id: @due_action.due_employee_detail_id,is_confirm: nil)
+        a=DueAction.where(due_employee_detail_id: @due_action.due_employee_detail_id,is_confirm: false)
         if a.present?
         else
           DueEmployeeDetail.where(id: @due_action.due_employee_detail_id).update_all(is_confirmed: true)

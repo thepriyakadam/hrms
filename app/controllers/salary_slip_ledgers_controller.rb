@@ -363,7 +363,7 @@ class SalarySlipLedgersController < ApplicationController
           @salaryslips = Salaryslip.where(id:  @salaryslip_components)
           respond_to do |format|
             format.html
-            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+            # format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
           end
         elsif @location == ""
           @employees = Employee.where(company_id: @company.to_i).pluck(:id)
@@ -372,7 +372,7 @@ class SalarySlipLedgersController < ApplicationController
           @salaryslips = Salaryslip.where(id:  @salaryslip_components)
           respond_to do |format|
             format.html
-            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+            # format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
           end
         else
           @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
@@ -381,7 +381,7 @@ class SalarySlipLedgersController < ApplicationController
           @salaryslips = Salaryslip.where(id:  @salaryslip_components)
           respond_to do |format|
             format.html
-            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+            # format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
           end
         end
       elsif current_user.class == Member
@@ -392,7 +392,7 @@ class SalarySlipLedgersController < ApplicationController
             @salaryslips = Salaryslip.where(id:  @salaryslip_components)
             respond_to do |format|
             format.html
-            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+            # format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
           end
           elsif @location == ""
             @employees = Employee.where(company_id: @company.to_i).pluck(:id)
@@ -401,7 +401,7 @@ class SalarySlipLedgersController < ApplicationController
             @salaryslips = Salaryslip.where(id:  @salaryslip_components)
             respond_to do |format|
             format.html
-            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+            # format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
           end
           else
             @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
@@ -410,7 +410,7 @@ class SalarySlipLedgersController < ApplicationController
             @salaryslips = Salaryslip.where(id:  @salaryslip_components)
             respond_to do |format|
             format.html
-            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+            # format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
           end
           end
         elsif current_user.role.name == 'Admin'
@@ -421,7 +421,7 @@ class SalarySlipLedgersController < ApplicationController
             @salaryslips = Salaryslip.where(id:  @salaryslip_components)
             respond_to do |format|
             format.html
-            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+            # format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
           end
           elsif @location == ""
             @employees = Employee.where(company_id: @company.to_i).pluck(:id)
@@ -430,7 +430,7 @@ class SalarySlipLedgersController < ApplicationController
             @salaryslips = Salaryslip.where(id:  @salaryslip_components)
             respond_to do |format|
             format.html
-            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+            # format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
           end
           else
             @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
@@ -439,7 +439,7 @@ class SalarySlipLedgersController < ApplicationController
             @salaryslips = Salaryslip.where(id:  @salaryslip_components)
             respond_to do |format|
             format.html
-            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+            # format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
           end
           end
         elsif current_user.role.name == 'Branch'
@@ -450,7 +450,7 @@ class SalarySlipLedgersController < ApplicationController
             @salaryslips = Salaryslip.where(id:  @salaryslip_components)
             respond_to do |format|
             format.html
-            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+            # format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
           end
           else
             @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
@@ -459,7 +459,7 @@ class SalarySlipLedgersController < ApplicationController
             @salaryslips = Salaryslip.where(id:  @salaryslip_components)
             respond_to do |format|
             format.html
-            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+            # format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
           end
           end
         elsif current_user.role.name == 'HOD'
@@ -470,7 +470,7 @@ class SalarySlipLedgersController < ApplicationController
             @salaryslips = Salaryslip.where(id:  @salaryslip_components)
             respond_to do |format|
             format.html
-            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+            # format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
           end
           else
             @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
@@ -479,7 +479,7 @@ class SalarySlipLedgersController < ApplicationController
             @salaryslips = Salaryslip.where(id:  @salaryslip_components)
             respond_to do |format|
             format.html
-            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+            # format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
           end
           end
         elsif current_user.role.name == 'Superviser'
@@ -491,7 +491,7 @@ class SalarySlipLedgersController < ApplicationController
             @salaryslips = Salaryslip.where(id:  @salaryslip_components)
             respond_to do |format|
             format.html
-            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+            # format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
           end
           else
             @emp = Employee.find(current_user.employee_id)
@@ -501,7 +501,7 @@ class SalarySlipLedgersController < ApplicationController
             @salaryslips = Salaryslip.where(id:  @salaryslip_components)
             respond_to do |format|
             format.html
-            format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+            # format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
           end
           end
         elsif current_user.role.name == 'Employee'
@@ -1095,7 +1095,7 @@ class SalarySlipLedgersController < ApplicationController
     @start_date = params[:start_date].to_date
     @end_date = params[:end_date].to_date
     @employee = params[:employee_id]
-    @salaryslips = Salaryslip.where(employee_id: params[:employee_id], month_year: @start_date..@end_date)
+    @salaryslips = Salaryslip.where(employee_id: params[:employee_id], month_year: @start_date.to_date..@end_date.to_date)
     @salaryslips.try(:each) do |s|
       employee = Employee.find(s.employee_id)
       joining = JoiningDetail.find_by_employee_id(employee.id)

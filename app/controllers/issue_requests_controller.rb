@@ -114,7 +114,7 @@ class IssueRequestsController < ApplicationController
   def lock_request_list 
     if @issue_tracker_member = IssueTrackerMember.where(employee_id: current_user.employee_id)
     if @issue_tracker_member_id = IssueTrackerMember.find_by(employee_id: current_user.employee_id)
-    @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member_id.issue_tracker_group_id,status: nil)   
+    @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member_id.issue_tracker_group_id,status: false)   
     else
       redirect_to issue_requests_path
       # flash[:alert] = "This Member Is Not Present In Member List To Solve Support "
@@ -156,7 +156,7 @@ class IssueRequestsController < ApplicationController
 
   def unlock_request
     @issue_request = IssueRequest.find(params[:format])
-    @issue_request.update(issue_tracker_member_id: nil,status: nil)
+    @issue_request.update(issue_tracker_member_id: nil,status: false)
     @issue_locker = IssueLocker.where(issue_request_id: @issue_request.id).take
     IssueLocker.where(issue_request_id: @issue_request.id).update_all(status: false)
     IssueLockerHistory.create(issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_locker_id: @issue_locker.id,issue_request_id: @issue_request.id,status: false)

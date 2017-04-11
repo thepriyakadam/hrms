@@ -16,7 +16,12 @@
       </div>
       <div class="col-sm-3">
         <div class="field">
-           <%= select :salary, :costcenter, all_cost_center,{include_blank: 'Select Cost Center'},{onchange:"var a={costcenter:$(this).val(),year:$('#salary_year').val(),month:$('#salary_month_name').val()};$('.ajax-progress').show(); $.get('/employee_attendances/show_costcenter_wise_attendance',a,function(response){});",class: 'form-control'} %>
+          <%= select :salary,:status, ['Active','Inactive','All'],{label: 'Select Status',include_blank: " Select"}, class: "form-control" %>
+         </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="field">
+           <%= select :salary, :costcenter, all_cost_center,{include_blank: 'Select Cost Center'},{onchange:"var a={costcenter:$(this).val(),year:$('#salary_year').val(),month:$('#salary_month_name').val(),status:$('#salary_status').val()};$('.ajax-progress').show(); $.get('/employee_attendances/show_costcenter_wise_attendance',a,function(response){});",class: 'form-control'} %>
         </div>
       </div>
     </div><br>

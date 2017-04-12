@@ -107,16 +107,13 @@ class GoalBunchesController < ApplicationController
     end
   end
 
-
   def period_for_multiple
     @goal_bunches = GoalBunch.all
   end
 
   def subordinate_list
     @periods = Period.where(status: true).group(:id)
-    #@goal_bunch = GoalBunch.where(period_id: @periods)
     @goal_bunches = GoalBunch.where(goal_confirm: true).group(:period_id)
-    
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_cycle"
   end
@@ -142,10 +139,8 @@ class GoalBunchesController < ApplicationController
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
-
     @goal_ratings = GoalRating.where(appraisee_id: @employee.id,goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal')
     @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ? AND appraisee_id = ?", @goal_bunch_id.id ,'Attribute',@employee.id)
-
     @employee_promotions = EmployeePromotion.where(employee_id: @employee.id)
   end
 

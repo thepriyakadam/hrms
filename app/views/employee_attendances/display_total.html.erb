@@ -113,9 +113,9 @@
         </tbody>
       </table>
 
-      <%= link_to " Excel Report ",display_total_employee_attendances_path(:employee => {:month => params[:employee][:month],:year => params[:employee][:year],:company_id => params[:employee][:company_id],:company_location_id => params[:employee][:company_location_id],:department_id => params[:employee][:department_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%= link_to " Excel Report ",display_total_employee_attendances_path(:employee => {:month => params[:employee][:month],:year => params[:employee][:year],:company_id => params[:employee][:company_id],:company_location_id => params[:employee][:company_location_id],:department_id => params[:employee][:department_id],:status => params[:employee][:status]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
       
-       <%= link_to " Print Report ",display_total_employee_attendances_path(:employee => {:month => params[:employee][:month],:year => params[:employee][:year],:company_id => params[:employee][:company_id],:company_location_id => params[:employee][:company_location_id],:department_id => params[:employee][:department_id]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+       <%= link_to " Print Report ",display_total_employee_attendances_path(:employee => {:month => params[:employee][:month],:year => params[:employee][:year],:company_id => params[:employee][:company_id],:company_location_id => params[:employee][:company_location_id],:department_id => params[:employee][:department_id],:status => params[:employee][:status]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
   </div>
 </div>
 

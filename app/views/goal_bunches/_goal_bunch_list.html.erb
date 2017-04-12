@@ -20,7 +20,7 @@
         <td>
            <!-- link_to '', edit_goal_bunch_path(goal_bunch),class: 'btn btn-xs btn-success fa fa-edit',remote:true %> -->
             <!-- link_to '', modal_period_goal_bunches_path(goal_bunch),class: 'btn btn-xs btn-success fa fa-edit',remote:true %> -->
-          <% if goal_bunch.goal_confirm == true %>
+          <% if goal_bunch.goal_approval == true %>
             <small class="label label-info">Goal Created</small>
           <% else %>
             <% if goal_bunch.employee_id == current_user.employee_id %>

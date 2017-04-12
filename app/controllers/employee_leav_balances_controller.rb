@@ -14,13 +14,13 @@ class EmployeeLeavBalancesController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         @employee_leav_balances = EmployeeLeavBalance.all
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_location.company_id)
+        @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id)
         @employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employees)
       elsif current_user.role.name == 'Branch'
-        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id)
         @employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employees)
       elsif current_user.role.name == 'HOD'
-        @employees = Employee.where(department_id: current_user.department_id)
+        @employees = Employee.where(status: 'Active',department_id: current_user.department_id)
         @employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employees)
       elsif current_user.role.name == 'Employee'
         @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)

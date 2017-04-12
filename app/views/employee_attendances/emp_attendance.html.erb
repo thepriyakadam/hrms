@@ -41,6 +41,15 @@
           </div>
         </div>
 
+        <div class="col-sm-2">
+          <label>Status</label>
+          <div class="field">
+            <%= select :employee,:status, ['Active','Inactive','All'],{label: 'Select Status',include_blank: " Select"}, class: "form-control" %>
+         </div>
+        </div>
+      </div>
+
+      <div class="row">
         <div class="col-sm-2" style="padding-top:20px;">
           <%= f.submit "Show Employee List",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %>
         </div>

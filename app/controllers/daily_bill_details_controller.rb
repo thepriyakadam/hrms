@@ -372,7 +372,7 @@ class DailyBillDetailsController < ApplicationController
       @company = params[:employee] ? params[:employee][:company_id] : params[:company_id]
       @company_location = params[:employee] ? params[:employee][:company_location_id] : params[:company_location_id]
       @department = params[:employee] ? params[:employee][:department_id] : params[:department_id]
-      @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
       @travel_requests = TravelRequest.where(employee_id: @employees)
       @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
       @detail = DailyBillDetail.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department)
@@ -380,15 +380,15 @@ class DailyBillDetailsController < ApplicationController
 
 if current_user.class == Group
       if @company_location == ""
-          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
           @travel_requests = TravelRequest.where(employee_id: @employees)
           @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
       elsif  @department == ""
-          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
            @travel_requests = TravelRequest.where(employee_id: @employees)
           @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
         else
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i).pluck(:id)
            @travel_requests = TravelRequest.where(employee_id: @employees)
           @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
       end
@@ -396,46 +396,46 @@ if current_user.class == Group
       elsif current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
          if @company_location == ""
-          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
            @travel_requests = TravelRequest.where(employee_id: @employees)
           @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
     
         elsif  @department == ""
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i).pluck(:id)
            @travel_requests = TravelRequest.where(employee_id: @employees)
           @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
     
         else 
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i).pluck(:id)
            @travel_requests = TravelRequest.where(employee_id: @employees)
           @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
     
         end
  elsif current_user.role.name == 'Admin'
          if @company_location == ""
-          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
            @travel_requests = TravelRequest.where(employee_id: @employees)
           @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
         elsif @company == ""
-          @employees = Employee.where(company_location_id: @company_location.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_location_id: @company_location.to_i).pluck(:id)
            @travel_requests = TravelRequest.where(employee_id: @employees)
           @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
         else 
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
            @travel_requests = TravelRequest.where(employee_id: @employees)
           @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
         end
 elsif current_user.role.name == 'Branch'
          if @company_location == ""
-          @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
            @travel_requests = TravelRequest.where(employee_id: @employees)
           @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
         elsif @company == ""
-          @employees = Employee.where(company_location_id: @company_location.to_i).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_location_id: @company_location.to_i).pluck(:id)
            @travel_requests = TravelRequest.where(employee_id: @employees)
           @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
         else 
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
            @travel_requests = TravelRequest.where(employee_id: @employees)
           @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
         end

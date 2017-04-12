@@ -879,19 +879,19 @@ puts "#{i} State inserted.-----------------------------------------------"
 i = i+1
 end
 
-puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/hrms1.xls")
-ex.default_sheet = ex.sheets[24]
-i=1
-2.upto(22) do |line|
-EmployeeDesignation.new do |ec|
-  ec.code = ex.cell(line,'A')
-  ec.name = ex.cell(line,'B')
-  ec.save!
-end
-puts "#{i} State inserted.-----------------------------------------------"
-i = i+1
-end
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
+# ex.default_sheet = ex.sheets[24]
+# i=1
+# 2.upto(22) do |line|
+# EmployeeDesignation.new do |ec|
+#   ec.code = ex.cell(line,'A')
+#   ec.name = ex.cell(line,'B')
+#   ec.save!
+# end
+# puts "#{i} State inserted.-----------------------------------------------"
+# i = i+1
+# end
 
 puts "Starting ..."
 ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")

@@ -84,7 +84,7 @@ class EmployeeAttendancesController < ApplicationController
         @employees = Employee.where(status: "Active").filter_by_date_and_costcenter(@date, @costcenter, current_user)
         #@employees = Employee.filter_by_date_costcenter_and_department(@date, @costcenter, @department, current_user)
         end
-      @emp_attendances = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND present = ?", @date.strftime('%m/%Y'), "W")
+      @emp_attendances = EmployeeAttendance.where("DATE_FORMAT('%m/%Y', day) = ? AND present = ?", @date.strftime('%m/%Y'), "W")
         @emp_attendances.each do |e|
           date = e.day.to_datetime
           yd = (date-1).strftime('%Y-%m-%d')
@@ -131,7 +131,7 @@ class EmployeeAttendancesController < ApplicationController
     @department = params[:department_id]
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+    @employees = EmployeeAttendance.where("DATE_FORMAT('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
   end
 
   def revert_attendance
@@ -175,14 +175,14 @@ class EmployeeAttendancesController < ApplicationController
     @department = params[:salary][:department_id]
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND department_id = ?", @date.strftime('%m/%Y'),@department).group(:employee_id)
+    @employees = EmployeeAttendance.where("DATE_FORMAT('%m/%Y', day) = ? AND department_id = ?", @date.strftime('%m/%Y'),@department).group(:employee_id)
   end
 
   def monthly_attendance
     @year, @month = params[:year], params[:month]
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+    @employees = EmployeeAttendance.where("DATE_FORMAT('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
   end
 
   def display_attendance_1
@@ -445,8 +445,8 @@ class EmployeeAttendancesController < ApplicationController
       @emp1.try(:each) do |x| 
           emp_attend=EmployeeAttendance.where(employee_id: x,month_name: b.month_name)
           
-          EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
-          EmployeeWeekOff.where("strftime('%m/%Y', date) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
+          EmployeeAttendance.where("DATE_FORMAT('%m/%Y', day) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
+          EmployeeWeekOff.where("DATE_FORMAT('%m/%Y', date) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
         
           d=Workingday.where(employee_id: x)
           d.each do |f|
@@ -509,7 +509,7 @@ class EmployeeAttendancesController < ApplicationController
     @day = @date.end_of_month.day
     @start_date = @date
     @end_date = @date.end_of_month
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).where(employee_id: @costcenter).group(:employee_id)
+    @employees = EmployeeAttendance.where("DATE_FORMAT('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).where(employee_id: @costcenter).group(:employee_id)
     
     #@employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
     respond_to do |f|
@@ -536,8 +536,8 @@ class EmployeeAttendancesController < ApplicationController
     @month = params[:salary][:month]
     @year = params[:salary][:year]
     @date = Date.new(@year.to_i, Workingday.months[@month])
-    @employee_attendance_id = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and employee_id = ? and is_confirm = ?", @date.strftime('%m/%Y'),@employee_id,false).take
-    @employee_attendances = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and employee_id = ? and is_confirm = ?", @date.strftime('%m/%Y'),@employee_id,false)
+    @employee_attendance_id = EmployeeAttendance.where("DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and is_confirm = ?", @date.strftime('%m/%Y'),@employee_id,false).take
+    @employee_attendances = EmployeeAttendance.where("DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and is_confirm = ?", @date.strftime('%m/%Y'),@employee_id,false)
   end
 
   def destroy_attendance_employeewise
@@ -564,7 +564,7 @@ class EmployeeAttendancesController < ApplicationController
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
     # @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: current_user.employee_id).group(:employee_id)
+    @employees = EmployeeAttendance.where("DATE_FORMAT('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: current_user.employee_id).group(:employee_id)
     # @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
   end
 
@@ -574,7 +574,7 @@ class EmployeeAttendancesController < ApplicationController
     @year = @employees1.day.strftime("%Y")
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: current_user.employee_id).group(:employee_id)
+    @employees = EmployeeAttendance.where("DATE_FORMAT('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: current_user.employee_id).group(:employee_id)
   end
 
   def attendance_report
@@ -582,7 +582,7 @@ class EmployeeAttendancesController < ApplicationController
     @year = params[:employee_attendance][:year]
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+    @employees = EmployeeAttendance.where("DATE_FORMAT('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
   end
 
   def confirm_attendance
@@ -590,7 +590,7 @@ class EmployeeAttendancesController < ApplicationController
     @year = params[:employee_attendance][:year]
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+    @employees = EmployeeAttendance.where("DATE_FORMAT('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
   end
 
   def create_attendance_1
@@ -608,7 +608,7 @@ class EmployeeAttendancesController < ApplicationController
     @year = params[:year]
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+    @employees = EmployeeAttendance.where("DATE_FORMAT('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
   end
   
   def calculate_attendance

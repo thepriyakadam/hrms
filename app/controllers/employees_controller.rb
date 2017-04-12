@@ -55,7 +55,7 @@ class EmployeesController < ApplicationController
 
   def birthday_email
     date = Date.today
-    @employees = Employee.where("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m'))
+    @employees = Employee.where("DATE_FORMAT('%d/%m', date_of_birth) = ?", date.strftime('%d/%m'))
     if @employees.empty?
     else
       @employees.each do |e|
@@ -68,7 +68,7 @@ class EmployeesController < ApplicationController
 
   def birthday_invitation
     date = Date.today 
-    @employees = Employee.where.not("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m'))
+    @employees = Employee.where.not("DATE_FORMAT('%d/%m', date_of_birth) = ?", date.strftime('%d/%m'))
     if @employees.empty?
     else
     @employees.each do |employee|    

@@ -72,9 +72,6 @@ $("#food_deduction").validate({
       },
       "food_deduction[year]":{
         required: true,
-      },
-      "food_deduction[company_id]":{
-        required: true,
       }
     },
     messages: {
@@ -83,10 +80,7 @@ $("#food_deduction").validate({
       },
       "food_deduction[year]":{
         required: "Please select Year",
-      },
-      "food_deduction[company_id]":{
-        required: "Please select Company",
-      }   
+      } 
     },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})

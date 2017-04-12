@@ -219,7 +219,7 @@ class EmployeeWeekOffsController < ApplicationController
     if current_user.class == Group
       if company == ""
         @employees = Employee.where(status: 'Active').pluck(:id)
-        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
+        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: false)
       elsif location == ""
         @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
@@ -234,7 +234,7 @@ class EmployeeWeekOffsController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         if company == ""
           @employees = Employee.where(status: 'Active').pluck(:id)
-        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
+        @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: false)
         elsif location == ""
           @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)

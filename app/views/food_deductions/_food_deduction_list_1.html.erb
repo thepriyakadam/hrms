@@ -20,7 +20,7 @@
     </thead>
 
     <tbody>
-      <% @food_deductions.try(:each) do |food_deduction| %>
+      <% @food_deductions.each do |food_deduction| %>
         <tr>
           <td><%= food_deduction.employee.try(:manual_employee_code) %></td>
           <td><%= full_name(food_deduction.try(:employee)) %></td>

@@ -44,8 +44,8 @@ class SalaryslipsController < ApplicationController
   def show_salaryslip
     @instalment_array = []
     @salaryslip = Salaryslip.find(params[:format])
-    @addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, @salaryslip.id).where(is_arrear: nil)
-    @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id).where(is_arrear: nil)
+    @addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, @salaryslip.id)
+    @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id)
     @working_day = Workingday.find(@salaryslip.workingday_id)
     @employee = Employee.find(@salaryslip.employee_id)
     @leave_details = LeaveDetail.where(salaryslip_id: @salaryslip.id)
@@ -67,8 +67,8 @@ class SalaryslipsController < ApplicationController
   def show_salaryslip_rg
     @instalment_array = []
     @salaryslip = Salaryslip.find(params[:format])
-    @addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, @salaryslip.id).where(is_arrear: nil)
-    @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id).where(is_arrear: nil)
+    @addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, @salaryslip.id)
+    @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id)
     @working_day = Workingday.find(@salaryslip.workingday_id)
     @employee = Employee.find(@salaryslip.employee_id)
     # @employee_leav_balance = EmployeeLeavBalance.find_by()
@@ -88,8 +88,8 @@ class SalaryslipsController < ApplicationController
   def show_salaryslip_formate_3
     @instalment_array = []
     @salaryslip = Salaryslip.find(params[:format])
-    @addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, @salaryslip.id).where(is_arrear: nil)
-    @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id).where(is_arrear: nil)
+    @addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, @salaryslip.id)
+    @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id)
     @working_day = Workingday.find(@salaryslip.workingday_id)
     @employee = Employee.find(@salaryslip.employee_id)
     # @employee_leav_balance = EmployeeLeavBalance.find_by()
@@ -98,12 +98,33 @@ class SalaryslipsController < ApplicationController
       @instalments = @advance_salary.instalments
       @instalments.try(:each) do |i|
         unless i.instalment_date.nil?
-          if i.try(:instalment_date).strftime('%B') == params['month'] && i.try(:instalment_date).strftime('%Y') == params['year']
+          if i.try(:instalment_date).DATEFORMAT('%B') == params['month'] && i.try(:instalment_date).DATEFORMAT('%Y') == params['year']
             @instalment_array << i
           end
         end
       end
     end
+  end
+
+   def print_salary_slip_formate_3
+     @instalment_array = []
+    @salaryslip = Salaryslip.find(params[:id])
+    @addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, @salaryslip.id)
+    @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id)
+    @working_day = Workingday.find(@salaryslip.workingday_id)
+    @employee = Employee.find(@salaryslip.employee_id)
+    @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: 'print_salary_slip_formate_3',
+              layout: 'pdf.html',
+              :orientation      => 'Landscape', # default , Landscape
+              template: 'salaryslips/print_salary_slip_formate_3.pdf.erb',
+              :show_as_html => params[:debug].present?
+      end
+    end
+    
   end
 
 
@@ -127,8 +148,8 @@ class SalaryslipsController < ApplicationController
     @salaryslip = Salaryslip.find(params[:format])
     @sal_slip_date = Salaryslip.where(id: @salaryslip.id).pluck(:month_year)
     @emp_contribution = EmployerContribution.where(employee_id: @salaryslip.employee_id,date: @sal_slip_date).take
-    @addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, @salaryslip.id).where(is_arrear: nil)
-    @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id).where(is_arrear: nil)
+    @addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, @salaryslip.id)
+    @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id)
     @working_day = Workingday.find(@salaryslip.workingday_id)
     @employee = Employee.find(@salaryslip.employee_id)
     # @employee_leav_balance = EmployeeLeavBalance.find_by()
@@ -150,8 +171,8 @@ class SalaryslipsController < ApplicationController
     @salaryslip = Salaryslip.find(params[:id])
     @sal_slip_date = Salaryslip.where(id: @salaryslip.id).pluck(:month_year)
     @emp_contribution = EmployerContribution.where(employee_id: @salaryslip.employee_id,date: @sal_slip_date).take
-    @addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, @salaryslip.id).where(is_arrear: nil)
-    @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id).where(is_arrear: nil)
+    @addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, @salaryslip.id)
+    @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id)
     @working_day = Workingday.find(@salaryslip.workingday_id)
     @employee = Employee.find(@salaryslip.employee_id)
     # @employee_leav_balance = EmployeeLeavBalance.find_by()
@@ -224,26 +245,7 @@ class SalaryslipsController < ApplicationController
     end
   end
 
-  def print_salary_slip_formate_3
-     @instalment_array = []
-    @salaryslip = Salaryslip.find(params[:id])
-    @addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, @salaryslip.id)
-    @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id)
-    @working_day = Workingday.find(@salaryslip.workingday_id)
-    @employee = Employee.find(@salaryslip.employee_id)
-    @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
-    respond_to do |format|
-      format.html
-      format.pdf do
-        render pdf: 'print_salary_slip_formate_3',
-              layout: 'pdf.html',
-              :orientation      => 'Landscape', # default , Landscape
-              template: 'salaryslips/print_salary_slip_formate_3.pdf.erb',
-              :show_as_html => params[:debug].present?
-      end
-    end
-    
-  end
+ 
  
   def select_month_year_form
     session[:active_tab] ="PayrollManagement"
@@ -1881,11 +1883,11 @@ end
     else
       @salaryslip_ids.each do |sid|
         @salaryslip = Salaryslip.find(sid)
-        @bonus_employees = BonusEmployee.where("strftime('%m/%Y', bonus_date) = ? and employee_id = ?", date.strftime('%m/%Y'), @salaryslip.employee_id)        
-        Instalment.where("strftime('%m/%Y' , instalment_date) = ? ", date.strftime('%m/%Y')).update_all(is_complete: false) 
-        MonthlyExpence.where("strftime('%m/%Y' , expence_date) = ? ", date.strftime('%m/%Y')).update_all(is_paid: false) 
-        FoodDeduction.where("strftime('%m/%Y' , food_date) = ? ", date.strftime('%m/%Y')).update_all(is_paid: false) 
-        MonthlyArrear.where("strftime('%m/%Y' , day) = ? ", date.strftime('%m/%Y')).update_all(is_paid: false) 
+        @bonus_employees = BonusEmployee.where("DATE_FORMAT('%m/%Y', bonus_date) = ? and employee_id = ?", date.strftime('%m/%Y'), @salaryslip.employee_id)        
+        Instalment.where("DATE_FORMAT('%m/%Y' , instalment_date) = ? ", date.strftime('%m/%Y')).update_all(is_complete: false) 
+        MonthlyExpence.where("DATE_FORMAT('%m/%Y' , expence_date) = ? ", date.strftime('%m/%Y')).update_all(is_paid: false) 
+        FoodDeduction.where("DATE_FORMAT('%m/%Y' , food_date) = ? ", date.strftime('%m/%Y')).update_all(is_paid: false) 
+        MonthlyArrear.where("DATE_FORMAT('%m/%Y' , day) = ? ", date.strftime('%m/%Y')).update_all(is_paid: false) 
         @bonus_employees.destroy_all
         SalaryslipComponent.where(salaryslip_id: @salaryslip.id).destroy_all
         TexableMonthlyDeduction.where(salayslip_id: @salaryslip.id).destroy_all
@@ -1895,8 +1897,8 @@ end
         @workingdays = Workingday.where(employee_id: @salaryslip.employee_id, month_name: date.strftime("%B"), year: date.strftime("%Y"))
         @workingdays.destroy_all
         EmployerContribution.where(employee_id: @salaryslip.employee_id,date: @salaryslip.month_year).destroy_all
-        EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ? ", date.strftime('%m/%Y'),@salaryslip.employee_id).update_all(is_confirm: false)
-        EmployeeWeekOff.where("strftime('%m/%Y', date) = ? AND employee_id = ? ", date.strftime('%m/%Y'),@salaryslip.employee_id).update_all(is_confirm: false)
+        EmployeeAttendance.where("DATE_FORMAT('%m/%Y', day) = ? AND employee_id = ? ", date.strftime('%m/%Y'),@salaryslip.employee_id).update_all(is_confirm: false)
+        EmployeeWeekOff.where("DATE_FORMAT('%m/%Y', date) = ? AND employee_id = ? ", date.strftime('%m/%Y'),@salaryslip.employee_id).update_all(is_confirm: false)
       end
       flash[:notice] = "Revert successfully"
       redirect_to revert_salary_salaryslips_path

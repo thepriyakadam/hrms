@@ -10,7 +10,7 @@
 
     <strong>This is to inform you that following employees has an Birthday Today,Kindly plan a Surprise party.</strong><br><br>
     <%date = Date.today
-     @employees_bday = Employee.where("status = ? AND strftime('%d/%m', date_of_birth) = ?", "Active" , date.strftime('%d/%m')) %>
+     @employees_bday = Employee.where("status = ? AND DATE_FORMAT('%d/%m', date_of_birth) = ?", "Active" , date.strftime('%d/%m')) %>
      <% i=0 %>
     <% @employees_bday.each do |e| %>
    

@@ -1,5 +1,16 @@
 Rails.application.routes.draw do
 
+  resources :visitor_details do
+    collection do
+      get :display_visiting_card
+      get :print_visitor_card
+      get :visitor_date_report
+      post :print_visitor_report
+      get :print_visitor_report
+      get :visitor_list
+    end
+  end
+
   resources :slabs do
     collection do
       get :employee_list
@@ -1279,6 +1290,8 @@ end
   match 'issue_requests/:id/download_screenshot_image/:id' => 'issue_requests#download_screenshot_image', :via => [:get], :as => :download_screenshot_image
   match 'issue_requests/:id/download_screenshot/:id' => 'issue_requests#download_screenshot', :via => [:get], :as => :download_screenshot
   match 'companies/:id/download_company_logo/:id' => 'companies#download_company_logo', :via => [:get], :as => :download_company_logo
+
+  match 'visitor_details/:id/download_person_image/:id' => 'visitor_details#download_person_image', :via => [:get], :as => :download_person_image
   # get '/screenshot', to: 'issue_requests#download_screenshot', as: 'download_screenshot'
   # get '/download', to: 'issue_requests#download_screenshot_image', as: 'download_screenshot_image'
 

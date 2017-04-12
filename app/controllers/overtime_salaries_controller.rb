@@ -105,7 +105,7 @@ class OvertimeSalariesController < ApplicationController
     @month = params[:month]
     @year = params[:year]
     date = Date.new(@year.to_i, Workingday.months[@month])
-    @employees = OvertimeDailyRecord.where("strftime('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y')).group(:employee_id)
+    @employees = OvertimeDailyRecord.where("DATE_FORMAT('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y')).group(:employee_id)
   end
 
   def calculate_amount
@@ -180,31 +180,32 @@ class OvertimeSalariesController < ApplicationController
   end
 
   def overtimes
+    # byebug
     @year = params[:year]
     @month = params[:month]
     date = Date.new(@year.to_i, Workingday.months[@month])
    if current_user.class == Group
-       @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y'))
+       @overtime_salaries = OvertimeSalary.where("DATE_FORMAT('%m/%Y', ot_date) = ?", date.strftime('%m/%Y'))
     else
       if current_user.role.name == "GroupAdmin" 
-         @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y'))
+         @overtime_salaries = OvertimeSalary.where("DATE_FORMAT('%m/%Y', ot_date) = ?", date.strftime('%m/%Y'))
       elsif current_user.role.name == "Admin"
         @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-         @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+         @overtime_salaries = OvertimeSalary.where("DATE_FORMAT('%m/%Y', ot_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == "Branch"
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-         @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+         @overtime_salaries = OvertimeSalary.where("DATE_FORMAT('%m/%Y', ot_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == "HOD"
         @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
-         @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+         @overtime_salaries = OvertimeSalary.where("DATE_FORMAT('%m/%Y', ot_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == "AccountAdmin"
         @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-         @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+         @overtime_salaries = OvertimeSalary.where("DATE_FORMAT('%m/%Y', ot_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == "Admin"
          @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-         @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+         @overtime_salaries = OvertimeSalary.where("DATE_FORMAT('%m/%Y', ot_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == "Employee"
-         @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+         @overtime_salaries = OvertimeSalary.where("DATE_FORMAT('%m/%Y', ot_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
       end
     end
   end
@@ -222,7 +223,7 @@ class OvertimeSalariesController < ApplicationController
     @month = params[:month]
     @year = params[:year]
     date = Date.new(@year.to_i,Workingday.months[@month])
-    @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y' , ot_date) = ? ", date.strftime('%m/%Y'))
+    @overtime_salaries = OvertimeSalary.where("DATE_FORMAT('%m/%Y' , ot_date) = ? ", date.strftime('%m/%Y'))
    
   end
 
@@ -230,7 +231,7 @@ class OvertimeSalariesController < ApplicationController
     @month = params[:month]
     @year = params[:year]
     date = Date.new(@year.to_i,Workingday.months[@month])
-    @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y' , ot_date) = ? ", date.strftime('%m/%Y'))
+    @overtime_salaries = OvertimeSalary.where("DATE_FORMAT('%m/%Y' , ot_date) = ? ", date.strftime('%m/%Y'))
     
     @overtime_salaries_id = params[:overtime_salaries_id]
 

@@ -106,7 +106,7 @@ module EmployeeAttendancesHelper
     arr = []
     #attendances = EmployeeAttendance.where("strftime('%m/%Y',day) = ?", date.strftime('%m/%Y')).where(employee_id: employee.employee_id).where.not(employee_leav_request_id: nil) || (EmployeeAttendance.where(present: "PG"))    
       
-    attendances = EmployeeAttendance.where("strftime('%m/%Y',day) = ? AND employee_id = ?",date.strftime('%m/%Y'),employee.employee_id)
+    attendances = EmployeeAttendance.where("DATE_FORMAT('%m/%Y',day) = ? AND employee_id = ?",date.strftime('%m/%Y'),employee.employee_id)
     pay_leave = 0
     non_pay_leave = 0
     present_day = 0

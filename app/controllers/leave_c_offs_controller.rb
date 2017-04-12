@@ -54,14 +54,14 @@ class LeaveCOffsController < ApplicationController
           @leave_c_off.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
         else
         end
-        @c_off = LeaveCOff.where(is_expire: nil,expiry_status: true)
+        @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
 
         if leav_category.nil?
         else
           is_exist = EmployeeLeavBalance.exists?(employee_id: @leave_c_off.employee_id, leav_category_id: leav_category.id)
           if is_exist
             @employee_leave_balance = EmployeeLeavBalance.where(employee_id: @leave_c_off.employee_id, leav_category_id: leav_category.id).take
-             @c_off = LeaveCOff.where(is_expire: nil,expiry_status: true)
+             @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
              
             if @leave_c_off.c_off_type == 'Full Day'
               @employee_leave_balance.total_leave = @employee_leave_balance.total_leave.to_f + 1
@@ -105,7 +105,7 @@ class LeaveCOffsController < ApplicationController
               else
               end
               b.is_active = true
-              @c_off = LeaveCOff.where(is_expire: nil,expiry_status: true)
+              @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
 
               if @leave_c_off.c_off_type == "Full Day"
                 b.no_of_leave = 1
@@ -199,10 +199,10 @@ class LeaveCOffsController < ApplicationController
 
     if @leave_c_off.c_off_type == 'Full Day'
   
-      @leave_c_off.update(expiry_date: nil,is_expire: nil,leave_count: 1,expiry_status: nil,c_off_expire_day: nil)
+      @leave_c_off.update(expiry_date: nil,is_expire: false,leave_count: 1,expiry_status: false,c_off_expire_day: nil)
       @emp_leav_bal1.update(no_of_leave: @no_of_leav.to_f + 1 )
     elsif @leave_c_off.c_off_type == 'Half Day'
-      @leave_c_off.update(expiry_date: nil,is_expire: nil,leave_count: 0.5,expiry_status: nil,c_off_expire_day: nil)
+      @leave_c_off.update(expiry_date: nil,is_expire: false,leave_count: 0.5,expiry_status: false,c_off_expire_day: nil)
       @emp_leav_bal1.update(no_of_leave: @no_of_leav.to_f + 0.5)
     end
     flash[:notice] = "Created successfully"

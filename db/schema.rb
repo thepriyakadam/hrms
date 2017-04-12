@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170407121939) do
+ActiveRecord::Schema.define(version: 20170412064643) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1470,6 +1470,7 @@ ActiveRecord::Schema.define(version: 20170407121939) do
     t.integer  "f_designation_id",        limit: 4
     t.decimal  "f_ctc",                                 precision: 10
     t.string   "appraisee_rating_id",     limit: 255
+    t.boolean  "goal_approval"
   end
 
   add_index "goal_bunches", ["appraisee_id"], name: "index_goal_bunches_on_appraisee_id", using: :btree

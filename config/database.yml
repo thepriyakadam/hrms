@@ -45,7 +45,7 @@
 # #
 # #   production:
 # #     url: <%= ENV['DATABASE_URL'] %>
-# #
+# #`
 # production:
 #   <<: *default
 #   database: hrms_production
@@ -82,6 +82,7 @@ production:
 #   adapter: sqlite3
 #   pool: 5
 #   timeout: 5000
+
 
 # development:
 #   <<: *default

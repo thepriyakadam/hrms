@@ -8,6 +8,14 @@ Rails.application.routes.draw do
       post :print_visitor_report
       get :print_visitor_report
       get :visitor_list
+
+    end
+  end
+
+  resources :slabs do
+    collection do
+      get :employee_list
+      get :apply_tds
     end
   end
   resources :employee_gps_histories

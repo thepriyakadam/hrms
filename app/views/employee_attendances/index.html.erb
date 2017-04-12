@@ -19,6 +19,12 @@
            </div>
         </div>
 
+         <div class="col-sm-2">
+          <div class="field">
+            <%= select :employee_attendance,:status, ['Active','Inactive','All'],{label: 'Select Status',include_blank: "Select Status"}, class: "form-control" %>
+         </div>
+        </div>
+
          <div class="col-sm-3">
           <div class="actions">
             <%= f.submit "Display Report", class: "btn btn-sm btn-primary",id: "buttonCtc" %>

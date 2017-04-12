@@ -71,11 +71,12 @@
         calculate_annual_salary();
         calculate_percentage_on_month();
         calculate_children_component();
+        // calculate_sum();
         //calculate_difference();
         // calculate_children_monthly_and_annual_salary();
         $('#error<%=item.try(:salary_component_id)%>').html("<p>You are typing</p>")
       });
-      $('#annual_amount_<%=item.try(:salary_component_id)%>').on('input', function() {
+      $('#annual_amoun_<%=item.try(:salary_component_id)%>').on('input', function() {
         calculate_monthly_salary();
         calculate_percentage_on_annual();
       });
@@ -99,8 +100,10 @@
             for (i = 0; i < child.length; i++) {
               var child_percentage = parseFloat($('#percentage_'+child[i]).val());
               var ans = ((child_percentage * monthly_amount)/100).toFixed(2);
+              var sum_1 = (monthly_amount+1).toFixed(2);
               $('#monthly_amount_'+child[i]).val(ans);
               $('#annual_amount_'+child[i]).val((ans*12).toFixed(2));
+              $('#abc_'+child[i]).val((sum_1).toFixed(2));
             }
           }
       }
@@ -116,6 +119,8 @@
         }
         $('#annual_amount_<%= item.try(:salary_component_id) %>').val(annual_amount);
       }
+
+
       function calculate_monthly_salary(){
         var annual_amount = parseFloat($('#annual_amount_<%= item.try(:salary_component_id) %>').val()); 
         

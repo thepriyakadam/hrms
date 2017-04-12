@@ -22,6 +22,9 @@ class EmployeeLeavRequest < ActiveRecord::Base
     flag = 0
     for i in self.start_date.to_date..self.end_date.to_date
       flag = Workingday.exists?(year: i.year,month_name: i.strftime("%B"), employee_id: self.employee_id)
+      if flag == true
+        break
+      end
     end
     flag
   end

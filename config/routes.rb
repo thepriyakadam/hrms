@@ -8,6 +8,11 @@ Rails.application.routes.draw do
       post :print_visitor_report
       get :print_visitor_report
       get :visitor_list
+
+  resources :slabs do
+    collection do
+      get :employee_list
+      get :apply_tds
     end
   end
   resources :employee_gps_histories
@@ -712,6 +717,7 @@ end
       get :reviewer_detail_for_print
       get :period_for_multiple
       post :create_multiple_bunch
+      get :revert_goal
     end
   end
   resources :goal_perspectives do

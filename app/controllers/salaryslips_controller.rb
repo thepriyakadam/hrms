@@ -420,6 +420,7 @@ class SalaryslipsController < ApplicationController
             sa.save!
           end
 
+
           formula_item_actual_amount = 0
           formula_item_calculated_amount = 0
           formula_total_actual_amount = 0
@@ -982,6 +983,23 @@ class SalaryslipsController < ApplicationController
               end
             end
 
+
+  #texable 
+        # @texable_amount = TexableAmount.find_by(employee_id: @employee.id)
+        # @salaryslip = Salaryslip.where(employee_id: @employee.id,month: @month,year: @year).take
+        #   TexableMonthlyDeduction.new do |tmd|
+        #     tmd.employee_id = @employee.id
+        #     tmd.salayslip_id = @salaryslip.id
+        #     tmd.texable_deducted_amount = @texable_amount.try(:monthly).to_f
+            
+        #     tmd.save!
+        #   end
+        #   @texable_monthly_deduction = TexableMonthlyDeduction.where(employee_id: @employee.id,salayslip_id: @salaryslip.id).take
+        #   @salary_component = SalaryComponent.find_by(name: "Income Tax 1") 
+        #   SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @texable_monthly_deduction.texable_deducted_amount, calculated_amount: @texable_monthly_deduction.texable_deducted_amount, is_deducted: true, other_component_name: 'Income Tax 1',salary_component_id: @salary_component.id)
+
+
+
           formula_item_actual_amount = 0
           formula_item_calculated_amount = 0
           formula_total_actual_amount = 0
@@ -1414,6 +1432,7 @@ class SalaryslipsController < ApplicationController
 
         end # employee_ids loop
       end
+
       flash[:notice] = 'All Salary processed.'
       redirect_to select_month_year_form_salaryslips_path
     end # if for employee_ids.nil?
@@ -1848,7 +1867,7 @@ end
         @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees,is_confirm: nil)
       elsif current_user.role.name == "Branch"
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees)
+        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees,is_confirm: nil)
       end  
     end    
   end
@@ -1871,6 +1890,7 @@ end
         MonthlyArrear.where("DATE_FORMAT('%m/%Y' , day) = ? ", date.strftime('%m/%Y')).update_all(is_paid: false) 
         @bonus_employees.destroy_all
         SalaryslipComponent.where(salaryslip_id: @salaryslip.id).destroy_all
+        TexableMonthlyDeduction.where(salayslip_id: @salaryslip.id).destroy_all
         SlipInformation.where(salaryslip_id: @salaryslip.id).destroy_all
         LeaveDetail.where(salaryslip_id: @salaryslip.id).destroy_all
         @salaryslip.destroy

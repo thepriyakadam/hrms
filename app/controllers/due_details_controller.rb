@@ -124,7 +124,6 @@ class DueDetailsController < ApplicationController
   end
 
   def employee_due_detail_history
-    # byebug
     @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
     # @due_employee_details = DueEmployeeDetail.where(reporting_master_id: @reporting_masters)
     @due_employee_details = DueEmployeeDetail.where(reporting_master_id: @reporting_masters,is_proceed: true)

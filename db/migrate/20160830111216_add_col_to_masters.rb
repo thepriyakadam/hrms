@@ -58,6 +58,5 @@ class AddColToMasters < ActiveRecord::Migration
 			# add_column :project_masters, :is_confirm, :boolean
 			# add_column :leav_categories, :is_confirm, :boolean
 			# add_column :salary_components, :is_confirm, :boolean
-
   end
 end

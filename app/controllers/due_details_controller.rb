@@ -140,7 +140,7 @@ class DueDetailsController < ApplicationController
   end
 
   def all_employee_due_detail
-     @due_employee_details = DueEmployeeDetail.where(is_confirmed: nil)
+     @due_employee_details = DueEmployeeDetail.where(is_confirmed: false)
      session[:active_tab] = "resignationmanagement"
      session[:active_tab1] ="no_due_mgmt"
   end

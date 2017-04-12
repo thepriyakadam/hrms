@@ -109,7 +109,7 @@
     </tbody>
   </table>
 
-  <% if @goal_bunch_id.goal_confirm == false %>
+  <% if @goal_bunch_id.goal_confirm == true %>
 
       <table class="table table-bordered table-hover table-condensed">
           <thead>
@@ -133,7 +133,7 @@
                 <td><%= goal_rating.goal_weightage %></td>
                 <td><%= goal_rating.aligned %></td>
                 <td>
-                  <% if goal_rating.goal_bunch.goal_confirm == true %>
+                  <% if goal_rating.goal_bunch.goal_approval == true %>
                     <small class="label label-info">Confirmed</small>
                   <% else %>
                     <%= link_to '', goal_modal_goal_ratings_path(goal_rating_id: goal_rating,period_id: @period.id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
@@ -166,7 +166,7 @@
                 <td><%= goal_rating.goal_weightage %></td> 
                 <td><%= goal_rating.aligned %></td>
                 <td>
-                  <% if goal_rating.goal_bunch.goal_confirm == true %>
+                  <% if goal_rating.goal_bunch.goal_approval == true %>
                     <small class="label label-info">Confirmed</small>
                   <% else %>
                     <%= link_to '', goal_modal_goal_ratings_path(goal_rating_id: goal_rating,period_id: @period.id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>

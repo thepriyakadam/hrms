@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170405090451) do
+ActiveRecord::Schema.define(version: 20170412064643) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1593,6 +1593,7 @@ ActiveRecord::Schema.define(version: 20170405090451) do
     t.integer  "f_designation_id"
     t.decimal  "f_ctc"
     t.string   "appraisee_rating_id"
+    t.boolean  "goal_approval"
   end
 
   add_index "goal_bunches", ["appraisee_id"], name: "index_goal_bunches_on_appraisee_id"
@@ -1685,6 +1686,7 @@ ActiveRecord::Schema.define(version: 20170405090451) do
     t.boolean  "is_hide"
     t.integer  "period_id"
     t.integer  "appraisee_rating_id"
+    t.boolean  "goal_approval"
   end
 
   add_index "goal_ratings", ["appraisee_id"], name: "index_goal_ratings_on_appraisee_id"

@@ -621,7 +621,6 @@ CREATE TABLE `bonus_employers` (
   `limit_amount` decimal(10,0) DEFAULT NULL,
   `percentage` decimal(10,0) DEFAULT NULL,
   `effective_from` date DEFAULT NULL,
-  `effective_to` date DEFAULT NULL,
   `is_active` tinyint(1) DEFAULT NULL,
   `is_confirm` tinyint(1) DEFAULT NULL,
   `created_at` datetime NOT NULL,

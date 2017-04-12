@@ -8,6 +8,8 @@ Rails.application.routes.draw do
       post :print_visitor_report
       get :print_visitor_report
       get :visitor_list
+    end
+  end
 
   resources :slabs do
     collection do

@@ -30,20 +30,17 @@
               <td><%= e.employee.manual_employee_code %></td>
               <td><%= full_name(e.employee) %></td>
               <td><%= e.employee.joining_detail.try(:cost_center).try(:name) %></td>
-
               <% sorted_exists = calculate_attendance(@date, exist, e)%>
               <% sorted_exists.each do |k,v|%>
                 <td><%= v %></td>
               <%end%>
             </tr>
-             
             <% absent_day_count = absent_day_count(exist) %>
             <% present_day = present_day_count(exist) %>
             <% holiday_in_month = holiday_in_month_count(exist) %>
             <% week_off_day = week_off_day_count(exist) %>
             <% od_day = od_day_count(exist) %>
             <% gatepass = gatepass_count(exist) %>
-
             <% workingday = [] %>
             <% workingday = create_leave(@date, e) %>
             <%= hidden_field_tag "attendances[]", e.id %>
@@ -57,10 +54,8 @@
             <%= hidden_field e.employee_id, 'nonpay_leave', value: workingday[1] %>
             <%= hidden_field e.employee_id, 'pay_leave', value: workingday[0] %>
             <%= hidden_field e.employee_id, 'gatepass', value: gatepass_count(exist) %>
-            
             <%= hidden_field e.employee_id, 'holiday_in_month', value: holiday_in_month %>
             <%= hidden_field e.employee_id, 'week_off_day', value: week_off_day %>
-
 
             <% if gatepass <= 2 %>
               <% gatepass_value = gatepass.to_f %>

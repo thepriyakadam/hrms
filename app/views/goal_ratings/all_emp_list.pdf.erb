@@ -38,7 +38,7 @@ div.nobreak{ page-break-inside: avoid;
 	        <tr>
 	          <td><%= t.employee.manual_employee_code %></td> 
 	          <td><%= full_name(t.employee) %></td>
-	          <td><%=  %></td>
+	          <td><% day = Date.today - t.employee.try(:date_of_birth).to_date %><% d = day.to_i/365 %><%= d %></td>
 	          <td><%= t.employee.department.try(:name) %></td>
 	          <td><%= joining_detail.joining_date %></td>
 	          <td><%= joining_detail.employee_grade.try(:name) %></td>

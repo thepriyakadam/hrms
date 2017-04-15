@@ -3,8 +3,8 @@
   <div class="box-header">
     <h3 class="box-title">Department Wise Employee List</h3>
   </div>
-   <%= bootstrap_form_for(:salary, url: { action: 'department_wise_emp',year: @year,month: @month}, remote: true) do |f| %>
-  <div class="box-body">
+  <%= bootstrap_form_for(:salary, url: { action: 'department_wise_emp',year: @year,month: @month}, remote: true) do |f| %>
+    <div class="box-body">
       <div class="row">
         <div class="col-sm-3">
           <label>Department </label>
@@ -18,9 +18,8 @@
           </div>
         </div>
       </div><br>
-
-    <div id="all_employee"></div>
-  </div>
+      <div id="all_employee"></div>
+    </div>
+  <% end %>
 </div>
-<% end %>
 

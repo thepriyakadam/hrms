@@ -912,7 +912,6 @@ ActiveRecord::Schema.define(version: 20170412064643) do
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
-    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
@@ -3232,17 +3231,6 @@ ActiveRecord::Schema.define(version: 20170412064643) do
 
   add_index "texable_amounts", ["employee_id"], name: "index_texable_amounts_on_employee_id", using: :btree
 
-  create_table "texable_monthly_deductions", force: :cascade do |t|
-    t.integer  "employee_id",             limit: 4
-    t.integer  "salayslip_id",            limit: 4
-    t.decimal  "texable_deducted_amount",           precision: 10
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
-  end
-
-  add_index "texable_monthly_deductions", ["employee_id"], name: "index_texable_monthly_deductions_on_employee_id", using: :btree
-  add_index "texable_monthly_deductions", ["salayslip_id"], name: "index_texable_monthly_deductions_on_salayslip_id", using: :btree
-
   create_table "trainee_requests", force: :cascade do |t|
     t.integer  "training_request_id",      limit: 4
     t.integer  "employee_id",              limit: 4
@@ -3988,7 +3976,6 @@ ActiveRecord::Schema.define(version: 20170412064643) do
   add_foreign_key "society_member_ships", "employees"
   add_foreign_key "states", "countries"
   add_foreign_key "texable_amounts", "employees"
-  add_foreign_key "texable_monthly_deductions", "employees"
   add_foreign_key "trainee_requests", "employees"
   add_foreign_key "trainee_requests", "reporting_masters"
   add_foreign_key "trainee_requests", "training_requests"

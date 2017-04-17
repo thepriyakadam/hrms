@@ -1,7 +1,7 @@
 class ManagerSelfServicesController < ApplicationController
 	def subordinate_list
     @periods = Period.where(status: true).group(:id)
-    @goal_bunches = GoalBunch.where(goal_confirm: false).group(:period_id)
+    @goal_bunches = GoalBunch.where(goal_confirm: true).group(:period_id)
     session[:active_tab] ="ManagerSelfService"
   end
 

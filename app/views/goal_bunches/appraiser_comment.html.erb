@@ -334,7 +334,7 @@
     </table>
     
     <% unless @goal_bunch.nil? %>
-    <% if @goal_bunch.appraiser_comment == nil or @goal_bunch.appraiser_confirm != nil %>
+    <% if @goal_bunch.appraiser_comment == false or @goal_bunch.appraiser_confirm != false %>
        <%= link_to 'Back',period_list_appraiser_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
       <% else %>
         <div class="row">

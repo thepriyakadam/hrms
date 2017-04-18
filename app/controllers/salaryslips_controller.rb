@@ -1146,7 +1146,7 @@ class SalaryslipsController < ApplicationController
             if @total.between?(s.min_amount, s.max_amount) && @month != "March" && @employee.company_location_id == s.company_location_id
               @salary_component = SalaryComponent.find_by(name: "Professional Tax")
               SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.for_month, calculated_amount: s.for_month, is_deducted: true, other_component_name: 'Professional Tax',salary_component_id: @salary_component.id)
-            elsif @month == 'March' && @total_actual.between?(s.min_amount, s.max_amount) && @employee.company_location_id == s.company_location_id
+            elsif @month == 'March' && @total.between?(s.min_amount, s.max_amount) && @employee.company_location_id == s.company_location_id
               @salary_component = SalaryComponent.find_by(name: "Professional Tax")
               SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.march_amount, calculated_amount: s.march_amount, is_deducted: true, other_component_name: 'Professional Tax',salary_component_id: @salary_component.id)
             end
@@ -1883,11 +1883,11 @@ end
     else
       @salaryslip_ids.each do |sid|
         @salaryslip = Salaryslip.find(sid)
-        @bonus_employees = BonusEmployee.where("DATE_FORMAT('%m/%Y', bonus_date) = ? and employee_id = ?", date.strftime('%m/%Y'), @salaryslip.employee_id)        
-        Instalment.where("DATE_FORMAT('%m/%Y' , instalment_date) = ? ", date.strftime('%m/%Y')).update_all(is_complete: false) 
-        MonthlyExpence.where("DATE_FORMAT('%m/%Y' , expence_date) = ? ", date.strftime('%m/%Y')).update_all(is_paid: false) 
-        FoodDeduction.where("DATE_FORMAT('%m/%Y' , food_date) = ? ", date.strftime('%m/%Y')).update_all(is_paid: false) 
-        MonthlyArrear.where("DATE_FORMAT('%m/%Y' , day) = ? ", date.strftime('%m/%Y')).update_all(is_paid: false) 
+        @bonus_employees = BonusEmployee.where("DATE_FORMAT(bonus_date , '%m/%Y') = ? and employee_id = ?", date.strftime('%m/%Y'), @salaryslip.employee_id)        
+        Instalment.where("DATE_FORMAT( instalment_date , '%m/%Y') = ? ", date.strftime('%m/%Y')).update_all(is_complete: false) 
+        MonthlyExpence.where("DATE_FORMAT(expence_date , '%m/%Y') = ? ", date.strftime('%m/%Y')).update_all(is_paid: false) 
+        FoodDeduction.where("DATE_FORMAT( food_date , '%m/%Y') = ? ", date.strftime('%m/%Y')).update_all(is_paid: false) 
+        MonthlyArrear.where("DATE_FORMAT( day , '%m/%Y') = ? ", date.strftime('%m/%Y')).update_all(is_paid: false) 
         @bonus_employees.destroy_all
         SalaryslipComponent.where(salaryslip_id: @salaryslip.id).destroy_all
         TexableMonthlyDeduction.where(salayslip_id: @salaryslip.id).destroy_all
@@ -1897,8 +1897,8 @@ end
         @workingdays = Workingday.where(employee_id: @salaryslip.employee_id, month_name: date.strftime("%B"), year: date.strftime("%Y"))
         @workingdays.destroy_all
         EmployerContribution.where(employee_id: @salaryslip.employee_id,date: @salaryslip.month_year).destroy_all
-        EmployeeAttendance.where("DATE_FORMAT('%m/%Y', day) = ? AND employee_id = ? ", date.strftime('%m/%Y'),@salaryslip.employee_id).update_all(is_confirm: false)
-        EmployeeWeekOff.where("DATE_FORMAT('%m/%Y', date) = ? AND employee_id = ? ", date.strftime('%m/%Y'),@salaryslip.employee_id).update_all(is_confirm: false)
+        EmployeeAttendance.where("DATE_FORMAT(day , '%m/%Y') = ? AND employee_id = ? ", date.strftime('%m/%Y'),@salaryslip.employee_id).update_all(is_confirm: false)
+        EmployeeWeekOff.where("DATE_FORMAT(date , '%m/%Y') = ? AND employee_id = ? ", date.strftime('%m/%Y'),@salaryslip.employee_id).update_all(is_confirm: false)
       end
       flash[:notice] = "Revert successfully"
       redirect_to revert_salary_salaryslips_path

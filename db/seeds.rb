@@ -1716,18 +1716,18 @@ require 'roo'
 #  end
 # end
 
-# VacancyMaster.destroy_all
-# ReportingMastersVacancyMaster.destroy_all
-# ParticularVacancyRequest.destroy_all
-# InterviewSchedule.destroy_all
-# InterviewRoundReschedule.destroy_all
-# InterviewAnalysis.destroy_all
-# InterviewType.destroy_all
-# InterviewRound.destroy_all
-# SelectedResume.destroy_all
-# InterviewAttribute.destroy_all
-# InterviewDecision.destroy_all
-# InterviewEvalution.destroy_all
+VacancyMaster.destroy_all
+ReportingMastersVacancyMaster.destroy_all
+ParticularVacancyRequest.destroy_all
+InterviewSchedule.destroy_all
+InterviewRoundReschedule.destroy_all
+InterviewAnalysis.destroy_all
+InterviewType.destroy_all
+InterviewRound.destroy_all
+SelectedResume.destroy_all
+InterviewAttribute.destroy_all
+InterviewDecision.destroy_all
+InterviewEvalution.destroy_all
 
 
 # ex = Roo::Excel.new("#{Rails.root}/public/HRMSONE EMPLOYEE BANK DATA.xls")

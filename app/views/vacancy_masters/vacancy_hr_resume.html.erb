@@ -1,6 +1,6 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Job Profile</h3>
+    <h3 class="box-title">Vacancy List for Shortlisting</h3>
     <div class="pull-right"></div>
   </div><!-- /.box-header -->
   <div class="box-body">
@@ -42,11 +42,7 @@
                 </td>
                 <td>
                   <%= link_to '', vacancy_master,class: 'btn btn-xs btn-default fa fa-eye' %>
-                  <% if vacancy_master.is_confirmed == true %>
-                  <%= link_to 'View Resume',new_selected_resume_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-info' %>
-                  <% else %>
-                  <%= link_to 'Add Resume',new_selected_resume_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-primary' %>
-                  <% end %>
+                  <%= link_to 'Shortlist Resume',hr_resume_vacancy_masters_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-primary' %>
                 </td>
               </tr>
             <% end %>

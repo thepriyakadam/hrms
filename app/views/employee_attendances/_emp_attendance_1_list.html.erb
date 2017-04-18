@@ -17,7 +17,6 @@
                 <td><%= v %></td>
               <%end%>
             </tr> 
-            
             <% absent_day_count = absent_day_count(exist) %>
             <% present_day = present_day_count(exist) %>
             <% holiday_in_month = holiday_in_month_count(exist) %>
@@ -38,10 +37,8 @@
             <%= hidden_field e.employee_id, 'nonpay_leave', value: workingday[1] %>
             <%= hidden_field e.employee_id, 'pay_leave', value: workingday[0] %>
             <%= hidden_field e.employee_id, 'gatepass', value: gatepass_count(exist) %>
-            
             <%= hidden_field e.employee_id, 'holiday_in_month', value: holiday_in_month %>
             <%= hidden_field e.employee_id, 'week_off_day', value: week_off_day %>
-
 
             <% if gatepass <= 2 %>
               <% gatepass_value = gatepass.to_f %>
@@ -64,7 +61,6 @@
               <% else %>
                 <%= hidden_field e.employee_id, 'nonpayable_day', value: absent_day_count.to_f+ gatepas_value.to_f  + workingday[1] + workingday[3]  %>
               <% end %> 
-
             <% exist.clear %>
           <%end%>
         </tbody>

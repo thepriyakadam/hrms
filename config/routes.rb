@@ -1637,6 +1637,8 @@ end
       post :revert_all_workingday
       get :search_by_month_year
       post :month_year_wise_record
+      get :date_report
+      post :print_date_report
     end
   end
 

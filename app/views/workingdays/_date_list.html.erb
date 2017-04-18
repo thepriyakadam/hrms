@@ -1,0 +1,29 @@
+
+<div class="box-body">
+ 
+  <table id="example" class="table table-bordered table-hover table-condensed">
+   <tr><td colspan="3"><center><strong><%= @workingdays.first.employee.company_location.company.try(:description) %></strong> <br>
+        <%= @workingdays.first.employee.company_location.company.try(:address) %><br></center></td></tr>
+        <tr>
+         <td>ID : <%= @workingdays.first.employee.try(:manual_employee_code) %></td>
+        <td>Name : <%= full_name(@workingdays.first.employee) %> </td>
+       
+        <td>Department : <%= @workingdays.first.employee.department.try(:name) %> </td>
+        </tr>
+        
+    
+  <tr>
+  <th>Month Name</th>
+  <th>Month Year</th>
+  <th>Present Day</th>
+  <tbody>
+  
+ <% @workingdays.each do |workingday| %>
+   <tr>
+   <td><%= workingday.month_name %></td>
+   <td><%= workingday.year %></td>
+  <td><%= workingday.present_day %></td>
+  </tr>
+   <% end %>
+</tbody>
+</table>

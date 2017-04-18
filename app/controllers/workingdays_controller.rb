@@ -486,6 +486,14 @@ class WorkingdaysController < ApplicationController
     @d2 = @date2.strftime('%B/%Y')
   end
 
+  def print_date_report
+    # byebug
+    @from = params[:salary][:from_date]
+    @to = params[:salary][:to_date]
+    @employee = params[:salary][:employee_id]
+    @workingdays = Workingday.where(date: @from.to_date..@to.to_date,employee_id: @employee)
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

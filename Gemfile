@@ -18,6 +18,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'whenever', '~> 0.9.4',:require => false
 gem 'geocoder'
 gem 'therubyracer', platforms: :ruby
+
 gem 'query_report'
 gem 'kaminari', '~> 0.16.3'
 gem 'coderay'
@@ -39,6 +40,8 @@ gem 'jquery-rails'
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
+gem 'json', '~> 1.8', '>= 1.8.3'
+# gem 'activesupport', '~> 4.2', '>= 4.2.8'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 

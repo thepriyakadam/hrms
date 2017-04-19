@@ -1639,6 +1639,7 @@ end
       post :month_year_wise_record
       get :date_report
       post :print_date_report
+      get :print_date_report
     end
   end
 

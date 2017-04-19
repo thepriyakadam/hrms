@@ -1194,6 +1194,11 @@ end
       get :confirm_interview_schedule_list
       get :confirm_vacancy
       get :confirm_candidate_1
+      get :vacancy_shortlisted_list
+      get :shortlisted_resume
+      get :vacancy_hr_resume
+      get :hr_resume
+      post :shortlist_for_interview
     end
   end
   resources :leave_c_offs do

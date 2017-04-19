@@ -146,7 +146,7 @@ class InterviewSchedulesController < ApplicationController
     @interview_schedule = InterviewSchedule.find_by_employee_id(params[:id])
     @employee = Employee.find(@interview_schedule.employee_id)
     date = Date.today
-    @employees = Employee.where("DATE_FORMAT('%d/%m', date_of_birth) = ?", date.strftime('%d/%m'))
+    @employees = Employee.where("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m'))
     if @employees.empty?
     else
     @employees.each do |e|

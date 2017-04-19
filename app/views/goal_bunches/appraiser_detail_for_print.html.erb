@@ -30,7 +30,13 @@
         <tr>
           <td><%= a.manual_employee_code %></td> 
           <td><%= full_name(a) %></td>
-          <td><% day = Date.today - a.try(:date_of_birth).to_date %><% d = day.to_i/365 %><%= d %></td>
+          <td>
+            <% if a.date_of_birth == nil %>
+              <%= %>
+            <% else %>
+              <% day = Date.today - a.try(:date_of_birth).to_date %><% d = day.to_i/365 %><%= d %>
+            <% end %>
+          </td>
           <td><%= a.department.name %></td>
           <td><%= @joining_detail.joining_date %></td>
           <td><%= @joining_detail.employee_grade.name %></td>

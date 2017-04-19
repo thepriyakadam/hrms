@@ -1285,7 +1285,7 @@ require 'roo'
  i = 1
  ActiveRecord::Base.transaction do
 
- 1.upto(166) do |line| # siya Feb 201
+ 1.upto(158) do |line| # siya Feb 201
    puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
    @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
    unless @employee.nil?
@@ -1544,83 +1544,83 @@ require 'roo'
 # end
 
 
-ex = Roo::Excel.new("#{Rails.root}/public/employee_qualification.xls")
-ex.default_sheet = ex.sheets[0] #siya feb
-i = 1
-ActiveRecord::Base.transaction do
-2.upto(154) do |line| # siya Feb 2016
- puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
- @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+# ex = Roo::Excel.new("#{Rails.root}/public/employee_qualification.xls")
+# ex.default_sheet = ex.sheets[0] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(154) do |line| # siya Feb 2016
+#  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 
-   Qualification.new do |qual|
-   	qual.employee_id = @employee.id
-   	puts "#{i} Employee inserted.-----------------------------------------------"
+#    Qualification.new do |qual|
+#    	qual.employee_id = @employee.id
+#    	puts "#{i} Employee inserted.-----------------------------------------------"
 
-   	@qualification_level = DegreeType.find_by_name(ex.cell(line,'B'))
-   	qual.degree_type_id = @qualification_level.id
-   	puts "#{i} Qualification Level inserted.-----------------------------------------------"
+#    	@qualification_level = DegreeType.find_by_name(ex.cell(line,'B'))
+#    	qual.degree_type_id = @qualification_level.id
+#    	puts "#{i} Qualification Level inserted.-----------------------------------------------"
 
-   	@qualification = Degree.find_by_name(ex.cell(line,'C'))
-   	qual.degree_id = @qualification.id
-   	puts "#{i} Qualification inserted.-----------------------------------------------"
+#    	@qualification = Degree.find_by_name(ex.cell(line,'C'))
+#    	qual.degree_id = @qualification.id
+#    	puts "#{i} Qualification inserted.-----------------------------------------------"
 
-   	@qualification_specialization = DegreeStream.find_by_name(ex.cell(line,'D'))
-   	qual.degree_stream_id = @qualification_specialization.id
-   	puts "#{i} Qualification Specialization inserted.-----------------------------------------------"
+#    	@qualification_specialization = DegreeStream.find_by_name(ex.cell(line,'D'))
+#    	qual.degree_stream_id = @qualification_specialization.id
+#    	puts "#{i} Qualification Specialization inserted.-----------------------------------------------"
 
-   	qual.marks = ex.cell(line,'E')
-   	puts "#{i} Marks inserted.-----------------------------------------------"
+#    	qual.marks = ex.cell(line,'E')
+#    	puts "#{i} Marks inserted.-----------------------------------------------"
 
-   	@passout_year = Year.find_by_name(ex.cell(line,'F'))
-   	qual.year_id = @passout_year.id
-   	puts "#{i} Passout Year inserted.-----------------------------------------------"
+#    	@passout_year = Year.find_by_name(ex.cell(line,'F'))
+#    	qual.year_id = @passout_year.id
+#    	puts "#{i} Passout Year inserted.-----------------------------------------------"
 
-   	qual.college = ex.cell(line,'G')
-   	puts "#{i} College inserted.-----------------------------------------------"
+#    	qual.college = ex.cell(line,'G')
+#    	puts "#{i} College inserted.-----------------------------------------------"
 
-   	@university = University.find_by_name(ex.cell(line,'H'))
-   	qual.university_id = @university.id
-   	puts "#{i} Passout Year inserted.-----------------------------------------------"
+#    	@university = University.find_by_name(ex.cell(line,'H'))
+#    	qual.university_id = @university.id
+#    	puts "#{i} Passout Year inserted.-----------------------------------------------"
 
    	
-    qual.save!
-   end
-   puts "#{i} Record inserted.-----------------------------------------------"
-   i += 1
- end
- end
+#     qual.save!
+#    end
+#    puts "#{i} Record inserted.-----------------------------------------------"
+#    i += 1
+#  end
+#  end
 
 
-ex = Roo::Excel.new("#{Rails.root}/public/employee_experience.xls")
-ex.default_sheet = ex.sheets[0] #siya feb
-i = 1
-ActiveRecord::Base.transaction do
-2.upto(93) do |line| # siya Feb 2016
- puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
- @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+# ex = Roo::Excel.new("#{Rails.root}/public/employee_experience.xls")
+# ex.default_sheet = ex.sheets[0] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(93) do |line| # siya Feb 2016
+#  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 
-   Experience.new do |exp|
-   	exp.employee_id = @employee.id
-   	puts "#{i} Employee inserted.-----------------------------------------------"
+#    Experience.new do |exp|
+#    	exp.employee_id = @employee.id
+#    	puts "#{i} Employee inserted.-----------------------------------------------"
 
-   	exp.company_name = ex.cell(line,'B')
-   	puts "#{i} Company Name inserted.-----------------------------------------------"
+#    	exp.company_name = ex.cell(line,'B')
+#    	puts "#{i} Company Name inserted.-----------------------------------------------"
 
-    exp.designation = ex.cell(line,'C')
-   	puts "#{i} Designation inserted.-----------------------------------------------"
+#     exp.designation = ex.cell(line,'C')
+#    	puts "#{i} Designation inserted.-----------------------------------------------"
 
-   	exp.no_of_year = ex.cell(line,'D')
-   	puts "#{i} No of Year inserted.-----------------------------------------------"
+#    	exp.no_of_year = ex.cell(line,'D')
+#    	puts "#{i} No of Year inserted.-----------------------------------------------"
 
-   	exp.ctc = ex.cell(line,'E')
-   	puts "#{i} CTC inserted.-----------------------------------------------"
+#    	exp.ctc = ex.cell(line,'E')
+#    	puts "#{i} CTC inserted.-----------------------------------------------"
 
-    exp.save!
-   end
-   puts "#{i} Record inserted.-----------------------------------------------"
-   i += 1
- end
- end
+#     exp.save!
+#    end
+#    puts "#{i} Record inserted.-----------------------------------------------"
+#    i += 1
+#  end
+#  end
 
 
 

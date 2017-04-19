@@ -541,6 +541,8 @@ end
       get :show_from_and_to_date
       get :from_date_wise_xls
       get :from_date_wise_pdf
+      get :datewise_attendance
+      post :show_datewise_attendance
     end
   end
   resources :salary_comp_mappings

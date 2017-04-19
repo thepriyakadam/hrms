@@ -30,13 +30,18 @@
       <td><%= @joining_detail.joining_date %></td>
       <td><%= @joining_detail.employee_grade.name %></td>
       <td><%= @joining_detail.employee_designation.name %></td>
-      <td><% day = Date.today - @joining_detail.joining_date.to_date %><% d = day.to_f/365 %><% int = d.to_i %><% remaining = d.to_f - int.to_f %><% day1 = remaining.to_f * 365 %><% day2 = day1.to_f/30 %>
+      <td>
+        <% if @joining_detail.joining_date == nil %>
+          <%= %>
+        <% else %>
+          <% day = Date.today - @joining_detail.joining_date.to_date %><% d = day.to_f/365 %><% int = d.to_i %><% remaining = d.to_f - int.to_f %><% day1 = remaining.to_f * 365 %><% day2 = day1.to_f/30 %>
           <% if int.to_i > 0 %>
             <%= int.to_i %>.<%= day2.to_i %> <%= "year" %>
           <% else %>
             <%= day2.to_i %><%= "month" %>
           <% end %>
-        </td>
+        <% end %>
+      </td>
     </tr>
     <% end %>
   </tbody>

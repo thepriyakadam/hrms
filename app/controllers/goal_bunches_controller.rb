@@ -423,12 +423,10 @@ class GoalBunchesController < ApplicationController
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
 
     @employee_promotions = EmployeePromotion.where(employee_id: current_user.employee_id)
-    #@goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id.id)
     @goal_ratings = GoalRating.where(appraisee_id: @employee.id,goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal')
     @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch_id.id ,'Attribute')
     @goal_bunches = GoalBunch.find_by(id: @goal_bunch_id.id)
-    @goal_bunch = GoalBunch.find_by_employee_id(@employee.id)
-    #@goal_bunch = GoalBunch.where(employee_id: @employee.id,id: @goal_bunch_id.id)
+    @goal_bunch = GoalBunch.find_by(id: @goal_bunch_id.id)
   end
 
   def final_create

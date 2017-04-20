@@ -4,40 +4,55 @@
           padding: 10px;
           border: 5px solid gray;
           margin: 10;">
-    <div style="float:left;"><b>Personel Information</b> </div><br><br>
+    <div style="float:left;"></div>
+<div class="box-header">
+   <center> <h3 class="box-title">Employee Information</h3></center>
+    <div class="pull-left">
+    <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+    </div>
+  </div><!-- /.box-header -->
+    <!-- <center><b>PERSONAL </b><br><br></center> -->
 
-<!--       <b><center>TO WHOM IT MAY CONCERN</center></b><br><br>
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <td colspan="2"><b>Name :</b> <%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td></tr>
+
+          <tr><td colspan="2"><b>Address : </b><%= @employee.permanent_address %></td></tr>
+         <tr> <td><b>Contact No. :</b> <%= @employee.contact_no %></td>
+          <td><b>Email :</b> <%= @employee.email %></td></tr>
+
+         <tr> <td colspan="2"><b>DOB : </b><%= @employee.date_of_birth %></td></tr>
+        </tr>
+      </tbody>
+
+ </table>
+
+<!--       <div style="float:left;">Family Background -  </div><br><br>
  -->
-      <p><b>Name:</b> <%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></p>
-      <p><b>Address:</b> <%= @employee.permanent_address %></p>
-      <p><b>Contact No:</b> <%= @employee.contact_no %> <b>E-mail:</b> <%= @employee.email %></p>
-      <p><b>Date Of Birth:</b> <%= @employee.date_of_birth %> <b>Blood Group:</b> <%= @employee.blood_group.try(:name) %> <b>Maritial Status:<b> <%= @employee.marital_status %></p>
-
-      <div style="float:left;">Family Background -  </div><br><br>
-
-      <table id="example2" class="table table-bordered table-hover table-condensed">
+  <table id="example2" class="table table-bordered table-hover table-condensed">
     <thead>
-       <tr><th colspan="4"><center><font color='#0077b3'>Family Background</font></center> </th></tr>
+       <tr><th colspan="4"><center><font color='#0077b3'>Experience Detail</font></center> </th></tr>
       <tr>
-        <th>Sr.No</th>
-        <th>Family  member's name</th>
-        <th>Relationship with employeee</th>
-        <th>Occupation</th>
+        <th>No. of Year</th>
+        <th>Company Name</th>
+        <th>Designation</th>
+        <th>CTC</th>
       </tr>
     </thead>
   <tbody>
-  <% i=0 %>
-    <% @families.each do |family| %>
+    <% @experiences.each do |e| %>
       <tr>
-        <td><%= i=i+1 %></td>
-        <td><%= family.f_name %></td>
-        <td><%= family.relation %></td>
-        <td><%= family.profession %></td>
+        <td><%= e.no_of_year %></td>
+        <td><%= e.company_name %></td>
+        <td><%= e.designation %></td>
+        <td><%= e.ctc %></td>
       </tr>
       <% end %>
     </tbody>
   </table><br>
 
+   
   <table id="example2" class="table table-bordered table-hover table-condensed">
     <thead>
     <tr><th colspan="5"><center><font color='#0077b3'>Education</font></center> </th></tr>
@@ -84,10 +99,32 @@
     </tbody>
   </table><br>
 
+     <table id="example2" class="table table-bordered table-hover table-condensed">
+    <thead>
+       <tr><th colspan="4"><center><font color='#0077b3'>Family Background</font></center> </th></tr>
+      <tr>
+        <th>Family  member's name</th>
+        <th>Relationship with employeee</th>
+        <th>Occupation</th>
+      </tr>
+    </thead>
+  <tbody>
+    <% @families.each do |family| %>
+      <tr>
+        <td><%= family.f_name %></td>
+        <td><%= family.relation %></td>
+        <td><%= family.profession %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table><br>
+
+
 
 
   
    <!--   <= link_to " Print Certificate ", showing_joining_date_print_certificate_path(@employee,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>   -->
 </div>
 </p></p>
-</div></div>  </div>
+</div></div>  
+</div>

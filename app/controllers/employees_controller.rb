@@ -1182,6 +1182,7 @@ def show_all_record
      @families = Family.where(employee_id: @emp)
      @qualifications = Qualification.where(employee_id: @emp)
      @skillsets = Skillset.where(employee_id: @emp)
+     @experiences = Experience.where(employee_id: @emp)
   end
 
 

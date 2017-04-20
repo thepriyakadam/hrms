@@ -471,6 +471,15 @@ class WorkingdaysController < ApplicationController
     end
   end
 
+  def revert_workingday_datewise
+  end
+
+  def show_employee_datewise
+  end
+
+  def revert_workingday_datewise
+  end
+
   def search_by_month_year
   end
 

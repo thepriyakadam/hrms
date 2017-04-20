@@ -543,6 +543,7 @@ end
       get :from_date_wise_pdf
       get :datewise_attendance
       post :show_datewise_attendance
+      post :create_attendance_datewise
     end
   end
   resources :salary_comp_mappings

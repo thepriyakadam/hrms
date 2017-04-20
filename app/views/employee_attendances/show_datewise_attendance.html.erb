@@ -1,112 +1,106 @@
 <div class="box">
-  <div class="box-body">
-      <table id="example6" class="table table-bordered table-hover table-condensed">
-        <thead>
-          <tr>
+  <div class="box-header">
+    <h5><center>Attendance <%= @from.to_date%> to <%= @to.to_date%></center></h5>
+ <div class="box-body">
+<%= bootstrap_form_for :temp, url: {action: "create_attendance_datewise", from: @from.to_date, to: @to.to_date} do |f| %>
+    <table class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="selectAll" value="selectAll"></th>
           <th>ID</th>
-            <th>Name</th>
-              <% for i in @from.to_date..@to.to_date %>
-                <th><%= i %></th>
-              <%end%>
-          <th colspan="13"><center> Total </center></th>
-          </tr>
-          <tr>
-            <th colspan="2">Day</th>
-              <% @from.to_date.step(@to.to_date).each do |l| %>
-                <th><%= l.strftime("%a") %></th>
-              <%end%>
-             
-              <th>P</th>
-              <th>W</th>
-              <th>H</th>
-              <th>EL</th>
-              <th>CL</th>
-              <th>C.Off</th>
-              <th>AL</th>
-              <th>OD</th>
-               <th>GP</th>
-               <th>A</th>
-              <th>LWP</th>
-              <th>ESIC</th>
-              <th>Payable Day</th>
-              <!-- <th>Non Payable Day</th> -->
-          </tr>
-        </thead>
-        <tbody>
-          <% exist = {} %>
-          <% @employee_attendances.each do |e| %>
-            <tr>
-            <td><%= e.employee.try(:manual_employee_code) %></td>
-              <td><%= full_name(e.employee) %></td>
-              <% sorted_exists = calculate_attendance_datewise(@from,@to, exist, e)%>
-              <% sorted_exists.each do |k,v|%>
-                <td><%= v %></td>
-              <% end %>
-            
-            <% holiday_in_month = holiday_in_month_count(exist) %>
-            <% week_off_day = week_off_day_count(exist) %>
-            <% od_day = od_day_count(exist) %>
-            <% present_count = present_count(exist) %>
-            <% absent_count = absent_count(exist) %>
-            <% el_leave_count = el_leave_count(exist) %>
-            <% cl_leave_count = cl_leave_count(exist) %>
-            <% coff_leave_count = coff_leave_count(exist) %>
-            <% advance_leave_count = advance_leave_count(exist) %>
-            <% lwp_leave_count = lwp_leave_count(exist) %>
-            <% esic_leave_count = esic_leave_count(exist) %>
-            <% gatepass_count = gatepass_count(exist) %>
-
-            <% if gatepass_count <=2 %>
-              <% gatepass_value = gatepass_count %>
-            <% else %>
-              <% gatepass_nonpay = gatepass_count - 2 %>
-              <% gatepas_value = gatepass_nonpay.to_f/2 %>
-              <% gatepass_value = gatepass_count.to_f - gatepass_nonpay.to_f %>
-            <% end %>
-
-              <td><%= present_count.to_f %></td>
-              <td><%= week_off_day %></td>
-              <td><%= holiday_in_month %></td>
-              <td><%= el_leave_count %></td>
-              <td><%= cl_leave_count %></td>
-              <td><%= coff_leave_count %></td>
-              <td><%= advance_leave_count %></td>
-              <td><%= od_day %></td>
-              <td><%= gatepass_count %></td>
-
-              <td><%= absent_count.to_f + gatepas_value.to_f %></td> 
-              <td><%= lwp_leave_count %></td>
-              <td><%= esic_leave_count %></td>
-              
-                <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
-                  <% payable_day = present_count.to_f  + od_day.to_f + holiday_in_month.to_f + cl_leave_count.to_f + el_leave_count.to_f + advance_leave_count.to_f + gatepas_value.to_f + gatepass_value.to_f + coff_leave_count.to_f %>
-                <% else %>
-                  <% payable_day = present_count.to_f  + od_day.to_f + holiday_in_month.to_f + week_off_day.to_f + cl_leave_count.to_f + el_leave_count.to_f + advance_leave_count.to_f + gatepas_value.to_f + gatepass_value.to_f + coff_leave_count.to_f %>
-                <% end %>
-              <td><%= payable_day %></td>
-
-                <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
-                  <% nonpayable_day = absent_count.to_f+ gatepas_value.to_f + lwp_leave_count.to_f + esic_leave_count.to_f + week_off_day.to_f %>
-                <% else %>
-                  <% nonpayable_day = absent_count.to_f+ gatepas_value.to_f + lwp_leave_count.to_f + esic_leave_count.to_f  %>
-                <% end %>
-
-              <td><%= payable_day %></td>
-            </tr>           
-            <% exist.clear %>
-
+          <% for i in @from.to_date..@to.to_date %>
+            <th><%= i.strftime("%d") %></th>
           <%end%>
-        </tbody>
-      </table>
+        </tr>
+      </thead>
+      <tbody>
+        <% exist = {} %>
+        <% @employee_attendances.each do |e| %>
+          <tr>
+            <td><%= check_box_tag "employees[]", e.employee_id unless e.is_confirm %></td>
+            <td><%= e.employee.manual_employee_code %></td>
+            <% sorted_exists = calculate_attendance_datewise(@from,@to, exist, e)%>
+            <% sorted_exists.each do |k,v|%>
+              <td><%= v %></td>
+            <%end%>
+          </tr> 
+          <% absent_day_count = absent_day_count(exist) %>
+          <% present_day = present_day_count(exist) %>
+          <% holiday_in_month = holiday_in_month_count(exist) %>
+          <% week_off_day = week_off_day_count(exist) %>
+          <% od_day = od_day_count(exist) %>
+          <% gatepass = gatepass_count(exist) %>
+          <% el_leave_count = el_leave_count(exist) %>
+          <% cl_leave_count = cl_leave_count(exist) %>
+          <% esic_leave_count = esic_leave_count(exist) %>
+          <% lwp_leave_count = lwp_leave_count(exist) %>
+          <% advance_leave_count = advance_leave_count(exist) %>
+          <% coff_leave_count = coff_leave_count(exist) %>
+          <% od_day_count = od_day_count(exist) %>
+          <% workingday = [] %>
+          <% workingday = create_leave_datewise(@from,@to, e) %>
+          <%= hidden_field_tag "attendances[]", e.id %>
+          <%= hidden_field e.employee_id, 'employee_id', value: e.employee_id %>
+          <%= hidden_field e.employee_id, 'month_name', value: @to.to_date.strftime("%B") %>
+          <%= hidden_field e.employee_id, 'year', value: @to.to_date.strftime("%Y") %>
+          <!-- <= hidden_field e.employee_id, 'day_in_month', value: count_day(@day,e.employee_id) %> -->
+          <%= hidden_field e.employee_id, 'present_day', value: present_day + workingday[2] %>
+          <%= hidden_field e.employee_id, 'od_day', value: od_day %>
+          <%= hidden_field e.employee_id, 'total_leave', value: workingday[0] + workingday[1] %>
+          <%= hidden_field e.employee_id, 'nonpay_leave', value: workingday[1] %>
+          <%= hidden_field e.employee_id, 'pay_leave', value: workingday[0] %>
+          <%= hidden_field e.employee_id, 'gatepass', value: gatepass_count(exist) %>
+          <%= hidden_field e.employee_id, 'lwp_leave', value: lwp_leave_count(exist) %>
+          <%= hidden_field e.employee_id, 'cl_leave', value: cl_leave_count(exist) %>
+          <%= hidden_field e.employee_id, 'el_leave', value: el_leave_count(exist) %>
+           <%= hidden_field e.employee_id, 'od_leave', value: od_day_count(exist) %>
+          <%= hidden_field e.employee_id, 'esic_leave', value: esic_leave_count(exist) %>
+          <%= hidden_field e.employee_id, 'coff_leave', value: coff_leave_count(exist) %>
+          <%= hidden_field e.employee_id, 'advance_leave', value: advance_leave_count(exist) %>
+          <%= hidden_field e.employee_id, 'holiday_in_month', value: holiday_in_month %>
+          <%= hidden_field e.employee_id, 'week_off_day', value: week_off_day %>
+
+          <% if gatepass <= 2 %>
+            <% gatepass_value = gatepass.to_f %>
+          <% else %>
+            <% gatepass_value1 = gatepass.to_f - 2 %>
+            <% gatepas_value = gatepass_value1.to_f/2 %>
+            <% gatepass_value = gatepass.to_f - gatepass_value1.to_f %>
+          <% end %>
+
+            <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count.to_f + workingday[3] + gatepas_value.to_f %>
+
+            <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+              <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + workingday[0] + workingday[2] + od_day.to_f + gatepas_value.to_f + gatepass_value.to_f %>
+            <% else %>
+              <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[0] + workingday[2] + od_day.to_f + gatepas_value.to_f + gatepass_value.to_f %>
+            <% end %>  
+            
+            <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+              <%= hidden_field e.employee_id, 'nonpayable_day', value: absent_day_count.to_f+ gatepas_value.to_f  + workingday[1] + workingday[3] + week_off_day.to_f  %>
+            <% else %>
+              <%= hidden_field e.employee_id, 'nonpayable_day', value: absent_day_count.to_f+ gatepas_value.to_f  + workingday[1] + workingday[3]  %>
+            <% end %> 
+          <% exist.clear %>
+        <%end%>
+      </tbody>
+    </table>
+    <%= f.submit "Confirm attendance", class: "btn btn-sm btn-primary" %>
+  <% end %>
+  </div>
   </div>
 </div>
-  <!-- </div>
-</div> -->
-
 <script type="text/javascript">
-$(document).ready(function() {
-    $('#example6').DataTable( {
-        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
-    } );
-} );
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;
+      });
+    }
+    else {
+      $(':checkbox').each(function() {
+        this.checked = false;
+      });
+    }
+  });
 </script>

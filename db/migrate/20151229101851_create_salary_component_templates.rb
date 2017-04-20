@@ -14,7 +14,7 @@ class CreateSalaryComponentTemplates < ActiveRecord::Migration
       t.decimal :max_amount, precision: 15, scale: 2
       t.decimal :monthly_amount, precision: 15, scale: 2
       t.decimal :annual_amount, precision: 15, scale: 2
-
+      t.references :parent, index: true, foreign_key: true
       t.timestamps null: false
     end
   end

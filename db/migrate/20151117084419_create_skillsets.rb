@@ -3,8 +3,9 @@ class CreateSkillsets < ActiveRecord::Migration
     create_table :skillsets do |t|
       t.references :employee, index: true, foreign_key: true
       t.string :name
-      t.string :description
       t.string :skill_level
+      t.string :description
+      
 
       t.timestamps null: false
     end

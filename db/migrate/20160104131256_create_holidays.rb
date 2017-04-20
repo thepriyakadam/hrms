@@ -5,6 +5,7 @@ class CreateHolidays < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.date :holiday_date
+      t.boolean :isweekend
 
       t.timestamps null: false
     end

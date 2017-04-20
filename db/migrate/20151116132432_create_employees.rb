@@ -8,18 +8,18 @@ class CreateEmployees < ActiveRecord::Migration
       t.string :first_name
       t.string :middle_name
       t.string :last_name
-      t.date :date_of_birth
+      t.date   :date_of_birth
       t.string :gender
       t.string :contact_no
       t.string :optinal_contact_no
       t.string :email
-      t.text :permanent_address
+      t.text   :permanent_address
       t.references :country, index: true, foreign_key: true
       t.references :state, index: true, foreign_key: true
       t.references :district, index: true, foreign_key: true
       t.string :city
       t.integer :pin_code
-      t.text :current_address
+      t.text    :current_address
       t.string :adhar_no
       t.string :pan_no
       t.string :licence_no
@@ -33,9 +33,9 @@ class CreateEmployees < ActiveRecord::Migration
       t.string :status
       t.references :manager, index: true
       t.references :manager_2, index: true, foreign_key: true
-      t.references :department, index: true, foreign_key: true
-      t.references :company_location, index: true, foreign_key: true
       t.references :company, index: true, foreign_key: true
+      t.references :company_location, index: true, foreign_key: true
+      t.references :department, index: true, foreign_key: true
       t.references :punch_card, index: true, foreign_key: true
     
       t.timestamps null: false

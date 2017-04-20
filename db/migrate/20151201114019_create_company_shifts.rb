@@ -4,8 +4,8 @@ class CreateCompanyShifts < ActiveRecord::Migration
       t.string :code
       t.string :name
       t.string :description
-      t.string :in_time
-      t.string :out_time
+      t.time :in_time
+      t.time :out_time
 
       t.timestamps null: false
     end

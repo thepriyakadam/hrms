@@ -4,7 +4,7 @@ class CreateSocietyMemberShips < ActiveRecord::Migration
       t.boolean :is_society_member
       t.decimal :amount, precision: 15, scale: 2, default: 0
       t.references :employee, index: true, foreign_key: true
-
+      t.date :start_date
       t.timestamps null: false
     end
   end

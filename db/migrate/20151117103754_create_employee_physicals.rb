@@ -5,6 +5,7 @@ class CreateEmployeePhysicals < ActiveRecord::Migration
       t.string :height
       t.string :weight
       t.string :size
+      t.string :trouser_size
 
       t.timestamps null: false
     end

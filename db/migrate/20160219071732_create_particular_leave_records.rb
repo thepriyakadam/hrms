@@ -6,7 +6,7 @@ class CreateParticularLeaveRecords < ActiveRecord::Migration
       t.references :leav_category, index: true, foreign_key: true
       t.datetime :leave_date
       t.boolean :is_full
-
+      t.boolean :is_cancel_after_approve
       t.timestamps null: false
     end
   end

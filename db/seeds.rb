@@ -1280,30 +1280,28 @@ require 'roo'
  # end
 
 
- ex = Roo::Excel.new("#{Rails.root}/public/rgwdj.xls")
- ex.default_sheet = ex.sheets[5] #siya feb
- i = 1
- ActiveRecord::Base.transaction do
+ # ex = Roo::Excel.new("#{Rails.root}/public/rgwdj.xls")
+ # ex.default_sheet = ex.sheets[6] #siya feb
+ # i = 1
+ # ActiveRecord::Base.transaction do
 
- 1.upto(166) do |line| # siya Feb 201
-   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-   unless @employee.nil?
-
-
-     Workingday.new do |w|
-       w.employee_id = @employee.id
-       w.month_name = ex.cell(line, 'B')
-       w.year = ex.cell(line, 'C').to_i
-       w.day_in_month = ex.cell(line, 'D')
-       w.payable_day = ex.cell(line, 'E')
-       w.save!
-     end
-     puts "#{i} Record inserted.-----------------------------------------------"
-     i += 1
-   end
-   end
- end
+ # 2.upto(7) do |line| # siya Feb 201
+ #   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+ #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+ #   unless @employee.nil?
+ #     Workingday.new do |w|
+ #       w.employee_id = @employee.id
+ #       w.month_name = ex.cell(line, 'B')
+ #       w.year = ex.cell(line, 'C').to_i
+ #       w.day_in_month = ex.cell(line, 'D')
+ #       w.payable_day = ex.cell(line, 'E')
+ #       w.save!
+ #     end
+ #     puts "#{i} Record inserted.-----------------------------------------------"
+ #     i += 1
+ #   end
+ #   end
+ # end
 
  # ex = Roo::Excel.new("#{Rails.root}/public/rgwdj.xls")
  # ex.default_sheet = ex.sheets[3] #siya feb
@@ -1591,11 +1589,12 @@ require 'roo'
 #  end
 
 
-# ex = Roo::Excel.new("#{Rails.root}/public/employee_experience.xls")
-# ex.default_sheet = ex.sheets[0] #siya feb
+
+# ex = Roo::Excel.new("#{Rails.root}/public/passout_year.xls")
+# ex.default_sheet = ex.sheets[3] #siya feb
 # i = 1
 # ActiveRecord::Base.transaction do
-# 2.upto(93) do |line| # siya Feb 2016
+# 2.upto(154) do |line| # siya Feb 2016\
 #  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
 #  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 

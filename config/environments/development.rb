@@ -95,31 +95,32 @@ Rails.application.configure do
  #  }
 
  # Root url
-#   config.action_mailer.default_url_options = { host: 'mail.rajgreen.co.in', port: 3000 }
-#   # config.domain = 'lvh.me'
-#   # config.action_mailer.perform_deliveries = true,
-#   ActionMailer::Base.delivery_method = :smtp
-#   ActionMailer::Base.smtp_settings = {
-#     :address => "mail.rajgreen.co.in",
-#     :port => 25,
-#     :user_name => "hrms@rajgreen.co.in",
-#     :password => "amaazia@123",
-#     :authentication => 'plain',
-# }
+  config.action_mailer.default_url_options = { host: 'gator4134.hostgator.com', port: 3000 }
+  # config.domain = 'lvh.me'
+  # config.action_mailer.perform_deliveries = true,
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+    :address => "mail.amaazia.co.in",
+    :domain => "gator4134.hostgator.com",
+    :port => 465,
+    :user_name => "hrms@rajgreen.co.in",
+    :password => "amaazia@123",
+    :authentication => 'plain',
+}
 
-  # config.action_mailer.perform_deliveries = true
-  # config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options = { host: ENV['gator4134.hostgator.com'] }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    user_name:      ENV[' hrms@rajgreen.com'],
-    password:       ENV['amaazia@123'],
-    domain:         ENV['gator4134.hostgator.com'],
-    address:       'smtp.gmail.com',
-    port:          '465',
-    # authentication: :plain,
-    enable_starttls_auto: true
-  }
+  # # config.action_mailer.perform_deliveries = true
+  # # config.action_mailer.raise_delivery_errors = true
+  # config.action_mailer.default_url_options = { host: ENV['gator4134.hostgator.com'] }
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   user_name:      ENV[' hrms@rajgreen.co.in'],
+  #   password:       ENV['amaazia@123'],
+  #   domain:         ENV['gator4134.hostgator.com'],
+  #   address:       'mail.rajgreen.co.in',
+  #   port:          '465',
+  #   # authentication: :plain,
+  #   enable_starttls_auto: true
+  # }
  # # Root url
  #  config.action_mailer.default_url_options = { host: 'mail.bhandarigroup.in', port: 3000 }
  #  # config.domain = 'lvh.me'

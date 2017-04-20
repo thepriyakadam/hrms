@@ -6,12 +6,15 @@ class CreateFamilies < ActiveRecord::Migration
       t.string :f_name
       t.string :m_name
       t.string :l_name
+      t.string :gender
       t.date :date_of_birth
       t.integer :age
       t.string :contact_no
       t.string :email
       t.text :current_address
+      t.string :marital
       t.string :relation
+      t.string :profession
       t.string :adhar_no
       t.string :pan_no
       t.string :have_passport
@@ -19,11 +22,11 @@ class CreateFamilies < ActiveRecord::Migration
       t.date :passport_issue_date
       t.date :passport_expiry_date
       t.string :medical_claim
-      t.string :marital
+      
       t.references :blood_group, index: true, foreign_key: true
       t.string :is_handicap
       t.string :handicap_type
-      t.string :profession
+      
       t.references :religion, index: true, foreign_key: true
 
 

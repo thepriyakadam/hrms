@@ -1281,16 +1281,14 @@ end
 
 
  ex = Roo::Excel.new("#{Rails.root}/public/rgwdj.xls")
- ex.default_sheet = ex.sheets[5] #siya feb
+ ex.default_sheet = ex.sheets[6] #siya feb
  i = 1
  ActiveRecord::Base.transaction do
 
- 1.upto(166) do |line| # siya Feb 201
+ 2.upto(7) do |line| # siya Feb 201
    puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
    @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
    unless @employee.nil?
-
-
      Workingday.new do |w|
        w.employee_id = @employee.id
        w.month_name = ex.cell(line, 'B')

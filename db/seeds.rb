@@ -1280,28 +1280,28 @@ end
  # end
 
 
- ex = Roo::Excel.new("#{Rails.root}/public/rgwdj.xls")
- ex.default_sheet = ex.sheets[6] #siya feb
- i = 1
- ActiveRecord::Base.transaction do
+ # ex = Roo::Excel.new("#{Rails.root}/public/rgwdj.xls")
+ # ex.default_sheet = ex.sheets[6] #siya feb
+ # i = 1
+ # ActiveRecord::Base.transaction do
 
- 2.upto(7) do |line| # siya Feb 201
-   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-   unless @employee.nil?
-     Workingday.new do |w|
-       w.employee_id = @employee.id
-       w.month_name = ex.cell(line, 'B')
-       w.year = ex.cell(line, 'C').to_i
-       w.day_in_month = ex.cell(line, 'D')
-       w.payable_day = ex.cell(line, 'E')
-       w.save!
-     end
-     puts "#{i} Record inserted.-----------------------------------------------"
-     i += 1
-   end
-   end
- end
+ # 2.upto(7) do |line| # siya Feb 201
+ #   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+ #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+ #   unless @employee.nil?
+ #     Workingday.new do |w|
+ #       w.employee_id = @employee.id
+ #       w.month_name = ex.cell(line, 'B')
+ #       w.year = ex.cell(line, 'C').to_i
+ #       w.day_in_month = ex.cell(line, 'D')
+ #       w.payable_day = ex.cell(line, 'E')
+ #       w.save!
+ #     end
+ #     puts "#{i} Record inserted.-----------------------------------------------"
+ #     i += 1
+ #   end
+ #   end
+ # end
 
  # ex = Roo::Excel.new("#{Rails.root}/public/rgwdj.xls")
  # ex.default_sheet = ex.sheets[3] #siya feb
@@ -1590,36 +1590,36 @@ end
 # end
 
 
-ex = Roo::Excel.new("#{Rails.root}/public/passout_year.xls")
-ex.default_sheet = ex.sheets[3] #siya feb
-i = 1
-ActiveRecord::Base.transaction do
-2.upto(154) do |line| # siya Feb 2016
- puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
- @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+# ex = Roo::Excel.new("#{Rails.root}/public/passout_year.xls")
+# ex.default_sheet = ex.sheets[3] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(154) do |line| # siya Feb 2016
+#  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 
-   Experience.new do |exp|
-   	exp.employee_id = @employee.id
-   	puts "#{i} Employee inserted.-----------------------------------------------"
+#    Experience.new do |exp|
+#    	exp.employee_id = @employee.id
+#    	puts "#{i} Employee inserted.-----------------------------------------------"
 
-   	exp.company_name = ex.cell(line,'B')
-   	puts "#{i} Company Name inserted.-----------------------------------------------"
+#    	exp.company_name = ex.cell(line,'B')
+#    	puts "#{i} Company Name inserted.-----------------------------------------------"
 
-    exp.designation = ex.cell(line,'C')
-   	puts "#{i} Designation inserted.-----------------------------------------------"
+#     exp.designation = ex.cell(line,'C')
+#    	puts "#{i} Designation inserted.-----------------------------------------------"
 
-   	exp.no_of_year = ex.cell(line,'D')
-   	puts "#{i} No of Year inserted.-----------------------------------------------"
+#    	exp.no_of_year = ex.cell(line,'D')
+#    	puts "#{i} No of Year inserted.-----------------------------------------------"
 
-   	exp.ctc = ex.cell(line,'E')
-   	puts "#{i} CTC inserted.-----------------------------------------------"
+#    	exp.ctc = ex.cell(line,'E')
+#    	puts "#{i} CTC inserted.-----------------------------------------------"
 
-    exp.save!
-   end
-   puts "#{i} Record inserted.-----------------------------------------------"
-   i += 1
- end
- end
+#     exp.save!
+#    end
+#    puts "#{i} Record inserted.-----------------------------------------------"
+#    i += 1
+#  end
+#  end
 
 
 

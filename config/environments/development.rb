@@ -101,7 +101,7 @@ Rails.application.configure do
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
     :address => "mail.amaazia.co.in",
-    :domain => "gator4134.hostgator.com"
+    :domain => "gator4134.hostgator.com",
     :port => 465,
     :user_name => "hrms@rajgreen.co.in",
     :password => "amaazia@123",

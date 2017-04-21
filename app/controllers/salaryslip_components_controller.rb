@@ -6,17 +6,19 @@ class SalaryslipComponentsController < ApplicationController
     @year = params[:salaryslip_component][:year]
     @company = params[:salaryslip_component][:company_id]
     @location = params[:food_deduction][:company_location_id]
-    @salary_map_saps = SalaryMapSap.all
+    @salary_map_saps = SalaryMapSap.where(company_id: @company,company_location_id: @location)
     # @salary_components = SalaryComponent.all
     # @salaryslip_components = SalaryslipComponent.limit(50)
     if @company == ""
        @salaryslips = Salaryslip.where(month: @month,year: @year)
     elsif @location == ""
         @employees = Employee.where(company_id: @company.to_i)
-       @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: @employees)
+        @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: 4605)
+       # @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: @employees)
     else
        @employees = Employee.where(company_id: @company.to_i,company_location_id: @location)
-       @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: @employees)
+       @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: 4605)
+       # @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: @employees)
     end
     # @salaryslips_1 = Salaryslip.where(month: @month,year: @year)limit(1).present?
     if @salaryslips.count > 0
@@ -29,10 +31,6 @@ class SalaryslipComponentsController < ApplicationController
     redirect_to new_salaryslip_component_path
     end
   end
-    # else
-    # flash[:danger] = "Salaryslip not yet processed"
-    # end
-    # # @maps = SalaryMapSap.all
 
 
   # def index

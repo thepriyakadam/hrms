@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170412064643) do
+ActiveRecord::Schema.define(version: 20170413072802) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -2775,8 +2775,9 @@ ActiveRecord::Schema.define(version: 20170412064643) do
   create_table "reporting_masters_vacancy_masters", force: :cascade do |t|
     t.integer  "vacancy_master_id",   limit: 4
     t.integer  "reporting_master_id", limit: 4
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.string   "vacancy_status",      limit: 255
   end
 
   add_index "reporting_masters_vacancy_masters", ["reporting_master_id"], name: "index_reporting_masters_vacancy_masters_on_reporting_master_id", using: :btree
@@ -3093,6 +3094,7 @@ ActiveRecord::Schema.define(version: 20170412064643) do
     t.string   "offer_letter_status",         limit: 255
     t.string   "job_title",                   limit: 255
     t.string   "status",                      limit: 255
+    t.boolean  "shortlist_for_interview"
   end
 
   add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id", using: :btree

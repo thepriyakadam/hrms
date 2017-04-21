@@ -80,18 +80,18 @@
 
         
         <!--<= link_to '', selected_resume, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>-->
-        <% if selected_resume.status == "Interview Scheduled" %>
+        <% if selected_resume.status == "Shortlisted" %>
         <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
         <% else %>
         <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
         <%= link_to '',modal_profile_update_selected_resumes_path(selected_resume,vacancy_master_id: @vacancy_master.id),class: 'btn btn btn-xs btn-success fa fa-edit',remote: true %>
         <% end %>
-           <% if selected_resume.status == "Shortlisted" %>
-          <%= link_to ' Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>
-          <% elsif selected_resume.status == "Interview Rescheduled" %>
-          <%= link_to ' Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>
-          <% else %>
-          <% end %>
+           <!-- < if selected_resume.status == "Shortlisted" %>
+          <= link_to ' Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>
+          < elsif selected_resume.status == "Interview Rescheduled" %>
+          <= link_to ' Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>
+          < else %>
+          < end %> -->
           
         </td>
       </tr>

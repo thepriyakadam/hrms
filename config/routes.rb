@@ -541,6 +541,9 @@ end
       get :show_from_and_to_date
       get :from_date_wise_xls
       get :from_date_wise_pdf
+      get :datewise_attendance
+      post :show_datewise_attendance
+      post :create_attendance_datewise
     end
   end
   resources :salary_comp_mappings
@@ -1194,6 +1197,11 @@ end
       get :confirm_interview_schedule_list
       get :confirm_vacancy
       get :confirm_candidate_1
+      get :vacancy_shortlisted_list
+      get :shortlisted_resume
+      get :vacancy_hr_resume
+      get :hr_resume
+      post :shortlist_for_interview
     end
   end
   resources :leave_c_offs do

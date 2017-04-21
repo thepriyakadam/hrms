@@ -1183,6 +1183,7 @@ def show_all_record
      @qualifications = Qualification.where(employee_id: @emp)
      @skillsets = Skillset.where(employee_id: @emp)
      @experiences = Experience.where(employee_id: @emp)
+     @certifications = Certification.where(employee_id: @emp)
   end
 
 

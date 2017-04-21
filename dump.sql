@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.5.54, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: hrms_development
+-- Host: localhost    Database: hrms_development.sqlite3
 -- ------------------------------------------------------
 -- Server version	5.5.54-0ubuntu0.14.04.1
 

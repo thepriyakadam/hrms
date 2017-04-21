@@ -113,6 +113,21 @@ ActiveRecord::Schema.define(version: 20170413072802) do
     t.boolean  "is_confirm"
   end
 
+  create_table "appraisees", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "appraiser_ratings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "appraisers", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "asset_types", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
@@ -169,6 +184,11 @@ ActiveRecord::Schema.define(version: 20170413072802) do
     t.boolean  "attribute_weightage"
     t.string   "from",                limit: 255
     t.string   "to",                  limit: 255
+  end
+
+  create_table "attributes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "authorized_bies", force: :cascade do |t|
@@ -341,6 +361,11 @@ ActiveRecord::Schema.define(version: 20170413072802) do
 
   add_index "certifications", ["employee_id"], name: "index_certifications_on_employee_id", using: :btree
   add_index "certifications", ["year_id"], name: "index_certifications_on_year_id", using: :btree
+
+  create_table "change_status_employees", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "circulars", force: :cascade do |t|
     t.date     "date"
@@ -609,6 +634,16 @@ ActiveRecord::Schema.define(version: 20170413072802) do
     t.text     "name",       limit: 65535
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+  end
+
+  create_table "degree_1s", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "degree_2s", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "degree_streams", force: :cascade do |t|
@@ -1379,6 +1414,11 @@ ActiveRecord::Schema.define(version: 20170413072802) do
 
   add_index "experiences", ["employee_id"], name: "index_experiences_on_employee_id", using: :btree
 
+  create_table "f_designations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "families", force: :cascade do |t|
     t.integer  "employee_id",          limit: 4
     t.string   "no_of_member",         limit: 255
@@ -1412,6 +1452,26 @@ ActiveRecord::Schema.define(version: 20170413072802) do
   add_index "families", ["blood_group_id"], name: "index_families_on_blood_group_id", using: :btree
   add_index "families", ["employee_id"], name: "index_families_on_employee_id", using: :btree
   add_index "families", ["religion_id"], name: "index_families_on_religion_id", using: :btree
+
+  create_table "final_ratings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "final_reporters", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "finals", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "first_reporters", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "food_coupan_masters", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1537,6 +1597,11 @@ ActiveRecord::Schema.define(version: 20170413072802) do
   add_index "goal_ratings", ["period_id"], name: "index_goal_ratings_on_period_id", using: :btree
   add_index "goal_ratings", ["reviewer_id"], name: "index_goal_ratings_on_reviewer_id", using: :btree
   add_index "goal_ratings", ["training_topic_master_id"], name: "index_goal_ratings_on_training_topic_master_id", using: :btree
+
+  create_table "goal_setters", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "gratuities", force: :cascade do |t|
     t.integer  "employee_id",        limit: 4
@@ -2221,6 +2286,11 @@ ActiveRecord::Schema.define(version: 20170413072802) do
   add_index "machine_attendances", ["shift_master_id"], name: "index_machine_attendances_on_shift_master_id", using: :btree
   add_index "machine_attendances", ["user_id"], name: "index_machine_attendances_on_user_id", using: :btree
 
+  create_table "manager_2s", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "manager_histories", force: :cascade do |t|
     t.integer  "employee_id",    limit: 4
     t.integer  "manager_id",     limit: 4
@@ -2234,6 +2304,11 @@ ActiveRecord::Schema.define(version: 20170413072802) do
   add_index "manager_histories", ["employee_id"], name: "index_manager_histories_on_employee_id", using: :btree
   add_index "manager_histories", ["manager_2_id"], name: "index_manager_histories_on_manager_2_id", using: :btree
   add_index "manager_histories", ["manager_id"], name: "index_manager_histories_on_manager_id", using: :btree
+
+  create_table "managers", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "meet_tos", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -2467,6 +2542,16 @@ ActiveRecord::Schema.define(version: 20170413072802) do
 
   add_index "overtime_salaries", ["employee_id"], name: "index_overtime_salaries_on_employee_id", using: :btree
 
+  create_table "parent_salary_components", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "parents", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "particular_leave_records", force: :cascade do |t|
     t.integer  "employee_id",              limit: 4
     t.integer  "employee_leav_request_id", limit: 4
@@ -2657,6 +2742,11 @@ ActiveRecord::Schema.define(version: 20170413072802) do
   add_index "promotion_histories", ["employee_id"], name: "index_promotion_histories_on_employee_id", using: :btree
   add_index "promotion_histories", ["employee_promotion_id"], name: "index_promotion_histories_on_employee_promotion_id", using: :btree
 
+  create_table "punch_cards", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "qualifications", force: :cascade do |t|
     t.integer  "employee_id",      limit: 4
     t.integer  "degree_id",        limit: 4
@@ -2685,6 +2775,11 @@ ActiveRecord::Schema.define(version: 20170413072802) do
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
     t.boolean  "is_confirm"
+  end
+
+  create_table "r_designations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "ratings", force: :cascade do |t|
@@ -2721,6 +2816,11 @@ ActiveRecord::Schema.define(version: 20170413072802) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.boolean  "is_confirm"
+  end
+
+  create_table "replacements", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "reporting_employee_transfers", force: :cascade do |t|
@@ -2864,6 +2964,16 @@ ActiveRecord::Schema.define(version: 20170413072802) do
     t.string   "base_component", limit: 255
     t.boolean  "is_active"
     t.string   "is_persent",     limit: 255
+  end
+
+  create_table "reviewer_ratings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reviewers", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "reward_owners", force: :cascade do |t|
@@ -3065,6 +3175,11 @@ ActiveRecord::Schema.define(version: 20170413072802) do
   add_index "salaryslips", ["employee_template_id"], name: "index_salaryslips_on_employee_template_id", using: :btree
   add_index "salaryslips", ["salary_template_id"], name: "index_salaryslips_on_salary_template_id", using: :btree
   add_index "salaryslips", ["workingday_id"], name: "index_salaryslips_on_workingday_id", using: :btree
+
+  create_table "second_reporters", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "sections", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -3460,6 +3575,11 @@ ActiveRecord::Schema.define(version: 20170413072802) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.boolean  "is_confirm"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "vacancy_masters", force: :cascade do |t|

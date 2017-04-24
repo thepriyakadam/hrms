@@ -31,7 +31,7 @@
          <td>
           <% if trainee_request.is_complete == nil %>
           <% else %>
-            <%= check_box_tag "employee_ids[]", trainee_request %>
+            <%= check_box_tag "trainee_request_ids[]", trainee_request.id %>
           <% end %>
         </td>
         <td><%= trainee_request.employee.try(:manual_employee_code) %></td>

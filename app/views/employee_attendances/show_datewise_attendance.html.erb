@@ -43,6 +43,8 @@
           <%= hidden_field e.employee_id, 'employee_id', value: e.employee_id %>
           <%= hidden_field e.employee_id, 'month_name', value: @to.to_date.strftime("%B") %>
           <%= hidden_field e.employee_id, 'year', value: @to.to_date.strftime("%Y") %>
+          <%= hidden_field e.employee_id, 'from', value: @from.to_date %>
+          <%= hidden_field e.employee_id, 'to', value: @to.to_date %>
           <!-- <= hidden_field e.employee_id, 'day_in_month', value: count_day(@day,e.employee_id) %> -->
           <%= hidden_field e.employee_id, 'present_day', value: present_day + workingday[2] %>
           <%= hidden_field e.employee_id, 'od_day', value: od_day %>
@@ -85,7 +87,9 @@
         <%end%>
       </tbody>
     </table>
-    <%= f.submit "Confirm attendance", class: "btn btn-sm btn-primary" %>
+    <%= f.submit "Confirm attendance", class: "btn btn-sm btn-primary" %> | 
+    <%= link_to 'Back', datewise_attendance_employee_attendances_path,class: 'btn btn-default btn-xs' %>
+
   <% end %>
   </div>
   </div>

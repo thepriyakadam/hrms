@@ -427,6 +427,8 @@ class EmployeeAttendancesController < ApplicationController
   end
   
   def datewise_attendance
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Attendance"
   end
 
   def show_datewise_attendance
@@ -652,8 +654,8 @@ class EmployeeAttendancesController < ApplicationController
       @emp1.try(:each) do |x| 
           emp_attend=EmployeeAttendance.where(employee_id: x,month_name: b.month_name)
           
-          EmployeeAttendance.where("DATE_FORMAT('%m/%Y', day) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
-          EmployeeWeekOff.where("DATE_FORMAT('%m/%Y', date) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
+          EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
+          EmployeeWeekOff.where("DATE_FORMAT(date,'%m/%Y') = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
         
           d=Workingday.where(employee_id: x)
           d.each do |f|

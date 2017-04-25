@@ -1005,33 +1005,33 @@ require 'roo'
 #  end
 # EmployeeDesignation.destroy_all
 
-puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/employee designation.xls")
-ex.default_sheet = ex.sheets[0]
-i=1
-1.upto(31) do |line|
-EmployeeDesignation.new do |pm|
-  pm.code = ex.cell(line,'A')
-  pm.name = ex.cell(line,'B')
-  pm.description = ex.cell(line,'C')
-  pm.save!
-end
-puts "#{i} Employee Designation inserted.-----------------------------------------------"
-i = i+1
-end
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/employee designation.xls")
+# ex.default_sheet = ex.sheets[0]
+# i=1
+# 1.upto(31) do |line|
+# EmployeeDesignation.new do |pm|
+#   pm.code = ex.cell(line,'A')
+#   pm.name = ex.cell(line,'B')
+#   pm.description = ex.cell(line,'C')
+#   pm.save!
+# end
+# puts "#{i} Employee Designation inserted.-----------------------------------------------"
+# i = i+1
+# end
 
-ex = Roo::Excel.new("#{Rails.root}/public/updateempdesignation.xls")
-ex.default_sheet = ex.sheets[0] #siya feb
-i = 1
-ActiveRecord::Base.transaction do
+# ex = Roo::Excel.new("#{Rails.root}/public/updateempdesignation.xls")
+# ex.default_sheet = ex.sheets[0] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
 
-1.upto(50) do |line| # siya Feb 2016
-  puts "Starting Record --------------------------------------------------#{ex.cell(line,'A').to_i}"
-  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-  JoiningDetail.where(employee_id: @employee.id).update_all(employee_designation_id: ex.cell(line, 'B').to_i) 
-  puts "#{i} Record inserted.---------------------------------------------#{ex.cell(line, 'B').to_i}"
-  end
-end
+# 1.upto(50) do |line| # siya Feb 2016
+#   puts "Starting Record --------------------------------------------------#{ex.cell(line,'A').to_i}"
+#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+#   JoiningDetail.where(employee_id: @employee.id).update_all(employee_designation_id: ex.cell(line, 'B').to_i) 
+#   puts "#{i} Record inserted.---------------------------------------------#{ex.cell(line, 'B').to_i}"
+#   end
+# end
 
 # ex = Roo::Excel.new("#{Rails.root}/public/sasi_dec_attendance_recent.xls")
 # ex.default_sheet = ex.sheets[0] #siya feb
@@ -1522,24 +1522,24 @@ end
 # end
 
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/rgl.xls")
-# ex.default_sheet = ex.sheets[1] 
-# i=1
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/empleavebalance.xls")
+ex.default_sheet = ex.sheets[0] 
+i=1
 
-# 2.upto(53) do |line|
-# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-# EmployeeLeavBalance.new do |j|
-#   j.employee_id = @employee.id unless @employee.nil?
-#   j.leav_category_id = ex.cell(line,'B')
-#   j.no_of_leave = ex.cell(line,'C')
-#   j.total_leave = ex.cell(line,'D')
-#   j.is_active = ex.cell(line,'E')
-#   j.save!
-# end
-# puts "#{i} Record inserted.-----------------------------------------------"
-# i = i+1
-# end
+2.upto(142) do |line|
+@employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+EmployeeLeavBalance.new do |j|
+  j.employee_id = @employee.id unless @employee.nil?
+  j.leav_category_id = ex.cell(line,'B')
+  j.no_of_leave = ex.cell(line,'C')
+  j.total_leave = ex.cell(line,'D')
+  j.is_active = ex.cell(line,'E')
+  j.save!
+end
+puts "#{i} Record inserted.-----------------------------------------------"
+i = i+1
+end
 
 
 

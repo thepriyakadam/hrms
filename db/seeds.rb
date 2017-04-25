@@ -1003,40 +1003,35 @@ require 'roo'
 #  i += 1
 #  end
 #  end
-EmployeeDesignation.destroy_all
+# EmployeeDesignation.destroy_all
 
-puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/employee designation.xls")
-ex.default_sheet = ex.sheets[0]
-i=1
-1.upto(31) do |line|
-EmployeeDesignation.new do |pm|
-  pm.code = ex.cell(line,'A')
-  pm.name = ex.cell(line,'B')
-  pm.description = ex.cell(line,'C')
-  pm.save!
-end
-puts "#{i} Employee Designation inserted.-----------------------------------------------"
-i = i+1
-end
-
-
-# ex = Roo::Excel.new("#{Rails.root}/public/rgeejd.xls")
-# ex.default_sheet = ex.sheets[3] #siya feb
-# i = 1
-# ActiveRecord::Base.transaction do
-
-# 1.upto(27) do |line| # siya Feb 2016
-#   puts "Starting Record --------------------------------------------------#{ex.cell(line,'A')}"
-#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
-
-#   @designation = EmployeeDesignation.find_by_name(ex.cell(line,'B'))
-#   JoiningDetail.where(id: @employee.id).update_all(employee_uan_no: ex.cell(line, 'B'))
-#    j.employee_designation_id = @designation.id unless @designation.nil?
-  
-#   puts "#{i} Record inserted.---------------------------------------------#{ex.cell(line, 'B')}"
-#   end
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/employee designation.xls")
+# ex.default_sheet = ex.sheets[0]
+# i=1
+# 1.upto(31) do |line|
+# EmployeeDesignation.new do |pm|
+#   pm.code = ex.cell(line,'A')
+#   pm.name = ex.cell(line,'B')
+#   pm.description = ex.cell(line,'C')
+#   pm.save!
 # end
+# puts "#{i} Employee Designation inserted.-----------------------------------------------"
+# i = i+1
+# end
+
+ex = Roo::Excel.new("#{Rails.root}/public/updateempdesignation.xls")
+ex.default_sheet = ex.sheets[0] #siya feb
+i = 1
+ActiveRecord::Base.transaction do
+
+1.upto(50) do |line| # siya Feb 2016
+  puts "Starting Record --------------------------------------------------#{ex.cell(line,'A').to_i}"
+  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+  JoiningDetail.where(employee_id: @employee.id).update_all(employee_designation_id: ex.cell(line, 'B').to_i) 
+  puts "#{i} Record inserted.---------------------------------------------#{ex.cell(line, 'B').to_i}"
+  end
+end
 
 # ex = Roo::Excel.new("#{Rails.root}/public/sasi_dec_attendance_recent.xls")
 # ex.default_sheet = ex.sheets[0] #siya feb

@@ -1005,20 +1005,20 @@ require 'roo'
 #  end
 # EmployeeDesignation.destroy_all
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/employee designation.xls")
-# ex.default_sheet = ex.sheets[0]
-# i=1
-# 1.upto(31) do |line|
-# EmployeeDesignation.new do |pm|
-#   pm.code = ex.cell(line,'A')
-#   pm.name = ex.cell(line,'B')
-#   pm.description = ex.cell(line,'C')
-#   pm.save!
-# end
-# puts "#{i} Employee Designation inserted.-----------------------------------------------"
-# i = i+1
-# end
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/employee designation.xls")
+ex.default_sheet = ex.sheets[0]
+i=1
+1.upto(31) do |line|
+EmployeeDesignation.new do |pm|
+  pm.code = ex.cell(line,'A')
+  pm.name = ex.cell(line,'B')
+  pm.description = ex.cell(line,'C')
+  pm.save!
+end
+puts "#{i} Employee Designation inserted.-----------------------------------------------"
+i = i+1
+end
 
 ex = Roo::Excel.new("#{Rails.root}/public/updateempdesignation.xls")
 ex.default_sheet = ex.sheets[0] #siya feb

@@ -45,6 +45,7 @@ class TravelRequestsController < ApplicationController
     @travel_request = TravelRequest.new
     session[:active_tab] = "TravelManagemnt"
     session[:active_tab1] = "travelrequestprocess"
+    @employee = Employee.find(current_user.employee_id)
   end
 
   # GET /travel_requests/1/edit
@@ -54,6 +55,7 @@ class TravelRequestsController < ApplicationController
   # POST /travel_requests
   # POST /travel_requests.json
   def create
+    # byebug
     @travel_request = TravelRequest.new(travel_request_params)
     @travel_request.current_status = "Pending"
     

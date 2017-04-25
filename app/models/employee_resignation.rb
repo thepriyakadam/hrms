@@ -45,5 +45,4 @@ class EmployeeResignation < ActiveRecord::Base
     flag2
     flag3
   end
-
 end

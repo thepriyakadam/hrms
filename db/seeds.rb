@@ -1615,7 +1615,3 @@ ex = Roo::Excel.new("#{Rails.root}/public/rgfdf.xls")
 #  end
 #  end
 # end
-
-
-
-

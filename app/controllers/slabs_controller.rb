@@ -55,6 +55,7 @@ class SlabsController < ApplicationController
   def update
     @slab.update(slab_params)
     params_value = slab_params["to"]
+    
     @next_id = @slab.id.to_i + 1
     @previous_id = @slab.id.to_i - 1
     @next_slab = Slab.find_by(id: @next_id)

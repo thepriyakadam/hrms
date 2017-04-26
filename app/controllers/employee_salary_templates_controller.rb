@@ -184,6 +184,32 @@ class EmployeeSalaryTemplatesController < ApplicationController
     @employee_template = EmployeeTemplate.where('employee_id = ? and is_active = ?', @employee.id, true).take
   end
 
+  def employee_list
+    @employees = Employee.where(status: 'Active')
+  end
+
+  def show_current_template
+    
+    @employee_ids = params[:employee_ids]
+      if @employee_ids.nil?
+        flash[:alert] = "Please Select the Checkbox"
+      redirect_to employee_list_employee_salary_templates_path
+      else
+        @employee_ids.each do |eid|
+        # basic_id = SalaryComponent.find_by(name: "Basic")
+        # hra_id = SalaryComponent.find_by(name: "HRA")
+        # basic = EmployeeSalaryTemplate.where(employee_id: eid,salary_component_id: basic_id.id).take
+        # @basic = basic.monthly_amount
+        # hra = EmployeeSalaryTemplate.where(employee_id: eid,salary_component_id: hra_id.id).take
+        # @hra = hra.monthly_amount
+        # @employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: eid)
+        end
+      end
+       respond_to do |format|
+      format.xls {render template: 'employee_salary_templates/current_template.xls.erb'}
+      end
+  end
+
   private
 
   def employee_salary_template_params

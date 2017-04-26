@@ -1696,6 +1696,8 @@ end
       post :save_data
       post :is_confirm_employee_template
       get :current_template
+      get :employee_list
+      post :show_current_template
     end
   end
 

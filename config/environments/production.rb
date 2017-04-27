@@ -48,22 +48,40 @@ Rails.application.configure do
     # when problems arise.
     config.log_level = :debug
 
-    config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
+   #  config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
   
   
-   # config.domain = 'lvh.me'
-   # config.action_mailer.perform_deliveries = true,
-   ActionMailer::Base.delivery_method = :smtp
-   ActionMailer::Base.smtp_settings = {
-   address: 'mail.bhandarigroup.in',
-   port: 465,
-   domain: '192.168.0.62',
-   user_name: 'hrmsdws-bhandarigroup',
-   password: 'hrms1234',
-   authentication: :plain,
-   enable_starttls_auto: true
-   #openssl_verify_mode: 'none'
-   }
+   # # config.domain = 'lvh.me'
+   # # config.action_mailer.perform_deliveries = true,
+   # ActionMailer::Base.delivery_method = :smtp
+   # ActionMailer::Base.smtp_settings = {
+   # address: 'mail.bhandarigroup.in',
+   # port: 465,
+   # domain: '192.168.0.62',
+   # user_name: 'hrmsdws-bhandarigroup',
+   # password: 'hrms1234',
+   # authentication: :plain,
+   # enable_starttls_auto: true
+   # #openssl_verify_mode: 'none'
+   # }
+
+  #   config.action_mailer.default_url_options = { host: 'mail.amaazia.com', port: 3000 }
+  
+  
+  #  # config.domain = 'lvh.me'
+  #  # config.action_mailer.perform_deliveries = true,
+  #  ActionMailer::Base.delivery_method = :smtp
+  #  ActionMailer::Base.smtp_settings = {
+  #  address:  "mail.amaazia.com",
+  #  port: 465,
+  #  domain: 'mail.amaazia.com',
+  #  user_name:  "ranna.p@amaazia.com",
+  # password: 'amaazia@123',
+  #  authentication: :plain,
+  #  enable_starttls_auto: true,
+  #  openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+  #  #openssl_verify_mode: 'none'
+  #  }
   
     # Prepend all log lines with the following tags.
     # config.log_tags = [ :subdomain, :uuid ]

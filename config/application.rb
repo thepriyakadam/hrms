@@ -13,20 +13,7 @@ Bundler.require(*Rails.groups)
 module Hrms
   class Application < Rails::Application
     config.middleware.use 'Apartment::Elevators::Subdomain'
-    # config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
-  
-  
-    #  # config.domain = 'lvh.me'
-    #  # config.action_mailer.perform_deliveries = true,
-    #  ActionMailer::Base.delivery_method = :smtp
-    #  ActionMailer::Base.smtp_settings = {
-    #  address: 'mail.bhandarigroup.in',
-    #  port: 25,
-    #  domain: '192.168.0.62',
-    #  user_name: 'hrmsdws-bhandarigroup',
-    #  password: 'hrms1234',
-    #  authentication: :plain
-    #  }
+   
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

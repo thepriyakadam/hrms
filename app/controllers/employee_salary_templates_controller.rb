@@ -91,8 +91,9 @@ class EmployeeSalaryTemplatesController < ApplicationController
 
         @employee_arrear = EmployeeArrear.create_object(@employee_id, increement_date)
         @employee_arrear = EmployeeArrear.build_objects(arrears_array, params, @employee_arrear)
+        @employee_template.save
         if @employee_arrear.save
-          @employee_template.save
+          # @employee_template.save
           flash[:notice] = 'Employee template created successfully.'
         else
           flash[:alert] = 'Same template cannot assigned.'

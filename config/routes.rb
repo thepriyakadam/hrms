@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :payroll_periods
   resources :visitor_details do
     collection do
       get :display_visiting_card
@@ -1698,6 +1699,7 @@ end
       get :current_template
       get :employee_list
       post :show_current_template
+      get :current_template
     end
   end
 

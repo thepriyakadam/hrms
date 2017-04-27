@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170405090451) do
+ActiveRecord::Schema.define(version: 20170427043450) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -303,12 +303,16 @@ ActiveRecord::Schema.define(version: 20170405090451) do
   create_table "capture_resumes", force: :cascade do |t|
     t.string   "name_of_candidate",           limit: 255
     t.string   "contact_no",                  limit: 255
+    t.string   "contact_no2",                 limit: 255
     t.string   "post_applied",                limit: 255
     t.string   "mode_of_application",         limit: 255
     t.date     "date_of_application"
     t.string   "url",                         limit: 255
     t.string   "fax",                         limit: 255
     t.text     "street",                      limit: 65535
+    t.integer  "country_id",                  limit: 4
+    t.integer  "state_id",                    limit: 4
+    t.integer  "district_id",                 limit: 4
     t.string   "city",                        limit: 255
     t.string   "zip_code",                    limit: 255
     t.string   "current_job_title",           limit: 255
@@ -316,8 +320,10 @@ ActiveRecord::Schema.define(version: 20170405090451) do
     t.string   "skill_set",                   limit: 255
     t.string   "additional_info",             limit: 255
     t.string   "email",                       limit: 255
+    t.string   "email2",                      limit: 255
     t.string   "skype_id",                    limit: 255
     t.string   "twitter",                     limit: 255
+    t.string   "linkedin",                    limit: 255
     t.decimal  "current_salary",                            precision: 10
     t.decimal  "expected_salary",                           precision: 10
     t.string   "current_location",            limit: 255
@@ -327,24 +333,18 @@ ActiveRecord::Schema.define(version: 20170405090451) do
     t.string   "reason",                      limit: 255
     t.string   "work_experience",             limit: 255
     t.string   "candidate_call_status",       limit: 255
+    t.integer  "vacancy_master_id",           limit: 4
+    t.integer  "degree_id",                   limit: 4
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
     t.string   "avatar_file_name",            limit: 255
     t.string   "avatar_content_type",         limit: 255
     t.integer  "avatar_file_size",            limit: 4
     t.datetime "avatar_updated_at"
-    t.integer  "country_id",                  limit: 4
-    t.integer  "state_id",                    limit: 4
-    t.integer  "district_id",                 limit: 4
     t.string   "passport_photo_file_name",    limit: 255
     t.string   "passport_photo_content_type", limit: 255
     t.integer  "passport_photo_file_size",    limit: 4
     t.datetime "passport_photo_updated_at"
-    t.string   "contact_no2",                 limit: 255
-    t.string   "email2",                      limit: 255
-    t.string   "linkedin",                    limit: 255
-    t.integer  "vacancy_master_id",           limit: 4
-    t.integer  "degree_id",                   limit: 4
     t.string   "job_title",                   limit: 255
     t.integer  "employee_designation_id",     limit: 4
   end
@@ -1674,6 +1674,7 @@ ActiveRecord::Schema.define(version: 20170405090451) do
     t.integer  "f_designation_id",        limit: 4
     t.decimal  "f_ctc",                                 precision: 10
     t.string   "appraisee_rating_id",     limit: 255
+    t.boolean  "goal_approval"
   end
 
   add_index "goal_bunches", ["appraisee_id"], name: "index_goal_bunches_on_appraisee_id", using: :btree
@@ -1844,7 +1845,7 @@ ActiveRecord::Schema.define(version: 20170405090451) do
     t.date     "holiday_date"
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
-    t.boolean  "is_taken"
+    t.boolean  "isweekend"
     t.boolean  "is_send",                    default: false
   end
 
@@ -2035,14 +2036,14 @@ ActiveRecord::Schema.define(version: 20170405090451) do
   add_index "interview_rounds", ["interview_type_id"], name: "index_interview_rounds_on_interview_type_id", using: :btree
 
   create_table "interview_schedules", force: :cascade do |t|
+    t.integer  "employee_id",        limit: 4
+    t.string   "email_id",           limit: 255
     t.string   "candidate_name",     limit: 255
     t.date     "interview_date"
     t.string   "location",           limit: 255
     t.string   "post_title",         limit: 255
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
-    t.string   "email_id",           limit: 255
-    t.integer  "employee_id",        limit: 4
     t.boolean  "is_confirm"
     t.integer  "selected_resume_id", limit: 4
     t.string   "job_title",          limit: 255
@@ -2274,7 +2275,6 @@ ActiveRecord::Schema.define(version: 20170405090451) do
     t.boolean  "is_society_member"
     t.date     "retirement_date"
     t.integer  "reserved_category_id",    limit: 4
-    t.boolean  "is_da"
     t.boolean  "is_employeer_pf"
     t.boolean  "is_employeer_esic"
     t.boolean  "is_insurance"
@@ -2769,11 +2769,11 @@ ActiveRecord::Schema.define(version: 20170405090451) do
   create_table "particular_leave_records", force: :cascade do |t|
     t.integer  "employee_id",              limit: 4
     t.integer  "employee_leav_request_id", limit: 4
+    t.integer  "leav_category_id",         limit: 4
     t.datetime "leave_date"
     t.boolean  "is_full"
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
-    t.integer  "leav_category_id",         limit: 4
     t.boolean  "is_cancel_after_approve"
   end
 
@@ -2838,6 +2838,14 @@ ActiveRecord::Schema.define(version: 20170405090451) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.string   "company_hrs",    limit: 255
+  end
+
+  create_table "payroll_periods", force: :cascade do |t|
+    t.date     "from"
+    t.date     "to"
+    t.boolean  "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "performance_activities", force: :cascade do |t|
@@ -3124,9 +3132,8 @@ ActiveRecord::Schema.define(version: 20170405090451) do
   create_table "reporting_masters_vacancy_masters", force: :cascade do |t|
     t.integer  "vacancy_master_id",   limit: 4
     t.integer  "reporting_master_id", limit: 4
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.string   "vacancy_status",      limit: 255
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   add_index "reporting_masters_vacancy_masters", ["reporting_master_id"], name: "index_reporting_masters_vacancy_masters_on_reporting_master_id", using: :btree
@@ -3827,23 +3834,22 @@ ActiveRecord::Schema.define(version: 20170405090451) do
     t.text     "description",               limit: 65535
     t.date     "vacancy_post_date"
     t.string   "budget",                    limit: 255
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
     t.integer  "department_id",             limit: 4
-    t.integer  "employee_designation_id",   limit: 4
     t.integer  "company_location_id",       limit: 4
+    t.integer  "employee_designation_id",   limit: 4
     t.integer  "degree_id",                 limit: 4
-    t.string   "experience",                limit: 255
-    t.string   "keyword",                   limit: 255
-    t.string   "others",                    limit: 255
-    t.string   "other_organization",        limit: 255
-    t.string   "industry",                  limit: 255
     t.integer  "degree_1_id",               limit: 4
     t.integer  "degree_2_id",               limit: 4
     t.integer  "reporting_master_id",       limit: 4
-    t.string   "current_status",            limit: 255
     t.integer  "employee_id",               limit: 4
+    t.string   "other_organization",        limit: 255
+    t.string   "industry",                  limit: 255
+    t.string   "current_status",            limit: 255
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.text     "justification",             limit: 65535
+    t.string   "experience",                limit: 255
+    t.text     "keyword",                   limit: 65535
     t.date     "vacancy_fullfillment_date"
     t.boolean  "is_confirmed"
     t.string   "vacancy_code",              limit: 255

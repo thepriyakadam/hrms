@@ -42,6 +42,8 @@ Rails.application.configure do
 
 # # Root url
   config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
+
+
   # config.domain = 'lvh.me'
   # config.action_mailer.perform_deliveries = true,
   ActionMailer::Base.delivery_method = :smtp
@@ -53,22 +55,10 @@ Rails.application.configure do
     password: 'hrms1234',
     authentication: :plain
   }
-# # Root url
-  # config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
-
-
-  # # config.domain = 'lvh.me'
-  # # config.action_mailer.perform_deliveries = true,
-  # ActionMailer::Base.delivery_method = :smtp
-  # ActionMailer::Base.smtp_settings = {
-  #   address: 'mail.bhandarigroup.in',
-  #   port: 25,
-  #   domain: '192.168.0.62',
-  #   user_name: 'hrmsdws-bhandarigroup',
-  #   password: 'hrms1234',
-  #   authentication: :plain
-  # }
   
+
+
+
 #   ActionMailer::Base.smtp_settings = {
 #     :address => "mail.rajgreen.co.in",
 #     :port => 25,
@@ -77,51 +67,9 @@ Rails.application.configure do
 #     :authentication => 'plain',
 # }
 
- # Root url
-  # config.action_mailer.default_url_options = { host: 'gator4134.hostgator.com', port: 3000 }
- 
-  # # config.domain = 'lvh.me'
-  # # config.action_mailer.perform_deliveries = true,
-  # ActionMailer::Base.delivery_method = :smtp
-
-  # ActionMailer::Base.smtp_settings = {
-  # address:             'gator4134.hostgator.com',
-  # port:                 465,
-  # user_name:            'hrms@rajgreen.co.in',
-  # password:             'amaazia@123',
-  # authentication:       'plain',
-  # enable_starttls_auto: true
-  # }
-
-#  # Root url
-#   config.action_mailer.default_url_options = { host: 'mail.rajgreen.co.in', port: 3000 }
-#   # config.domain = 'lvh.me'
-#   # config.action_mailer.perform_deliveries = true,
-#   ActionMailer::Base.delivery_method = :smtp
-#   ActionMailer::Base.smtp_settings = {
-#     :address => "hrms@rajgreen.co.in",
-#     :domain => "mail.rajgreen.co.in",
-#     :port => 25,
-#     :user_name => "hrms@rajgreen.co.in",
-#     :password => "amaazia@123",
-#     :authentication => 'plain',
-# }
-
-  # # config.action_mailer.perform_deliveries = true
-  # # config.action_mailer.raise_delivery_errors = true
-  # config.action_mailer.default_url_options = { host: ENV['gator4134.hostgator.com'] }
-  # config.action_mailer.delivery_method = :smtp
-  # config.action_mailer.smtp_settings = {
-  #   user_name:      ENV[' hrms@rajgreen.co.in'],
-  #   password:       ENV['amaazia@123'],
-  #   domain:         ENV['gator4134.hostgator.com'],
-  #   address:       'mail.rajgreen.co.in',
-  #   port:          '465',
-  #   # authentication: :plain,
-  #   enable_starttls_auto: true
-  # }
  # # Root url
  #  config.action_mailer.default_url_options = { host: 'mail.bhandarigroup.in', port: 3000 }
+ 
  #  # config.domain = 'lvh.me'
  #  # config.action_mailer.perform_deliveries = true,
  #  ActionMailer::Base.delivery_method = :smtp
@@ -136,7 +84,7 @@ Rails.application.configure do
  #    openssl_verify_mode: 'none'
  #  }
 
-#  # Root url
+ # Root url
 #   config.action_mailer.default_url_options = { host: 'mail.amaazia.com', port: 3000 }
 #   # config.domain = 'lvh.me'
 #   # config.action_mailer.perform_deliveries = true,

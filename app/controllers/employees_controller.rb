@@ -273,7 +273,7 @@ class EmployeesController < ApplicationController
             manager_2 = @reporting_master2.try(:employee_id)
             employee.update_attributes(manager_id: manager_1, manager_2_id: manager_2)
 
-            # ManagerHistory.create(employee_id: employee.id,manager_id: manager_1,manager_2_id: manager_2,effective_from: params["login"]["effec_date"])
+            ManagerHistory.create(employee_id: employee.id,manager_id: manager_1,manager_2_id: manager_2,effective_from: params["login"]["effec_date"])
             
             flash[:notice] = "Employee assigned successfully."
             redirect_to assign_role_employees_path

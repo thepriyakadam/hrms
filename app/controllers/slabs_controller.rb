@@ -99,7 +99,7 @@ class SlabsController < ApplicationController
         redirect_to home_index_path
       end
     else
-      @employees = Employee.all
+    @employees = Employee.all
     end
    session[:active_tab] ="PayrollManagement"
    session[:active_tab1] = "IncomeTax"

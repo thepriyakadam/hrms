@@ -45,29 +45,60 @@
    config.action_mailer.raise_delivery_errors = true
    config.action_mailer.perform_deliveries = true
 
+
    #config.action_mailer.raise_delivery_errors = true 
 
    #config.action_mailer.perform_deliveries = true
   
-  # # Root url
-   config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
+  # Root url
+   # config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
+  
+  
+   # # config.domain = 'lvh.me'
+   # # config.action_mailer.perform_deliveries = true,
+   # ActionMailer::Base.delivery_method = :smtp
+   # ActionMailer::Base.smtp_settings = {
+   # address: 'mail.bhandarigroup.in',
+   # port: 587,
+   # domain: '192.168.0.62',
+   # user_name: 'hrmsdws-bhandarigroup',
+   # password: 'hrms1234',
+   # authentication: :plain,
+   # enable_starttls_auto: true,
+   # openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+   # #openssl_verify_mode: 'none'
+   # }
+
+   config.action_mailer.default_url_options = { host: 'http://amaazia.co.in', port: 2095 }
   
   
    # config.domain = 'lvh.me'
    # config.action_mailer.perform_deliveries = true,
    ActionMailer::Base.delivery_method = :smtp
    ActionMailer::Base.smtp_settings = {
-   address: 'mail.bhandarigroup.in',
-   port: 587,
-   domain: '192.168.0.62',
-   user_name: 'hrmsdws-bhandarigroup',
-   password: 'hrms1234',
+   address: 'amaazia.co.in',
+   port: 25,
+   domain: 'amaazia.co.in',
+   user_name: 'hrms@rajgreen.co.in',
+   password: 'amaazia@123',
    authentication: :plain,
    enable_starttls_auto: true,
    openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
-   #openssl_verify_mode: 'none'
+   # openssl_verify_mode: 'none'
    }
 
+
+# config.action_mailer.delivery_method = :smtp
+
+#   config.action_mailer.smtp_settings = {
+#        :address => "smtp.gmail.com",
+#        :port => 25,
+#        :domain => "gmail.com",
+#        :user_name => "vish.hake04@gmail.com",
+#        :password => "vish9604331394"
+#        :authentication => "plain",
+#        :enable_starttls_auto => true
+#   }
 
 
   # ActionMailer::Base.smtp_settings = {

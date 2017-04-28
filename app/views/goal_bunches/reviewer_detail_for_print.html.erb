@@ -12,7 +12,7 @@
 
     <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">    
       <thead>
-      <tr><th colspan="7"><center>Employee Detail</center></th></tr>
+      <tr><th colspan="8"><center>Employee Detail</center></th></tr>
         <tr>
             <th>ID</th>
             <th>Name</th>
@@ -21,6 +21,7 @@
             <th>Date Of Joining</th>
             <th>Grade</th>
             <th>Current Designation</th> 
+            <th>Current Experience</th>
           </tr>
         </thead>
         <tbody>
@@ -28,11 +29,29 @@
           <tr>
             <td><%= a.manual_employee_code %></td> 
             <td><%= full_name(a) %></td>
-            <td><% day = Date.today - a.try(:date_of_birth).to_date %><% d = day.to_i/365 %><%= d %></td>
+            <td>
+              <% if a.date_of_birth == nil %>
+                <%= %>
+              <% else %>
+                <% day = Date.today - a.try(:date_of_birth).to_date %><% d = day.to_i/365 %><%= d %>
+              <% end %>
+            </td>
             <td><%= a.department.name %></td>
             <td><%= @joining_detail.joining_date %></td>
             <td><%= @joining_detail.employee_grade.name %></td>
             <td><%= @joining_detail.employee_designation.name %></td>
+            <td>
+              <% if @joining_detail.joining_date == nil %>
+                <%= %>
+              <% else %>
+                <% day = Date.today - @joining_detail.joining_date.to_date %><% d = day.to_f/365 %><% int = d.to_i %><% remaining = d.to_f - int.to_f %><% day1 = remaining.to_f * 365 %><% day2 = day1.to_f/30 %>
+                <% if int.to_i > 0 %>
+                  <%= int.to_i %>.<%= day2.to_i %> <%= "year" %>
+                <% else %>
+                  <%= day2.to_i %><%= "month" %>
+                <% end %>
+              <% end %>
+          </td>
           </tr>
           <% end %>
         </tbody>

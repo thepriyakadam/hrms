@@ -145,7 +145,7 @@ class InterviewAnalysesController < ApplicationController
     # end
 
     @interview_rounds_1 = InterviewRound.where(interview_schedule_id: @interview_round.interview_schedule_id,is_confirm: true).count
-    @interview_rounds_2 = InterviewRound.where(interview_schedule_id: @interview_round.interview_schedule_id,is_confirm: nil).count
+    @interview_rounds_2 = InterviewRound.where(interview_schedule_id: @interview_round.interview_schedule_id,is_confirm: false).count
      if @interview_rounds_2 == 0 && @interview_rounds_1 > 0
         InterviewSchedule.where(id: @interview_round.interview_schedule.id).update_all(is_confirm: true)
      else

@@ -5,7 +5,7 @@ class CreateGoalRatings < ActiveRecord::Migration
       t.references :goal_perspective, index: true, foreign_key: true
       t.integer :goal_weightage
       t.string :goal_measure
-      t.string :target
+      t.text :target
       t.string :aligned
       t.references :goal_setter, index: true, foreign_key: true
       t.references :appraisee, index: true, foreign_key: true

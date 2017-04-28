@@ -1,3 +1,4 @@
+
 <div class="box">
   <div class="box-header">
     <h3 class="box-title">Vacancy Confirmation List</h3>
@@ -62,11 +63,11 @@
            </tr>
            <tr>
               <th>Manager 1 </th>
-              <td><%= employ_1.try(:manager).try(:manual_employee_code) %> - <%= employ_1.try(:manager).try(:first_name) %> <%= employ_1.try(:manager).try(:middle_name) %> <%= employ_1.try(:manager).try(:last_name) %></td>
+              <td><%= employ_1.try(:manager).try(:manual_employee_code) %> - <% employ_1.try(:manager).try(:first_name) %> <%= employ_1.try(:manager).try(:middle_name) %> <%= employ_1.try(:manager).try(:last_name) %></td>
             </tr>
             <tr>
               <th>Manager 2 </th>
-              <td><%= employ_1.try(:manager_2).try(:manual_employee_code) %> - <%= employ_1.try(:manager_2).try(:first_name) %> <%= employ_1.try(:manager_2).try(:middle_name) %> <%= employ_1.try(:manager_2).try(:last_name) %></td>
+              <td><%= employ_1.try(:manager_2).try(:manual_employee_code) %> - <% employ_1.try(:manager_2).try(:first_name) %> <%= employ_1.try(:manager_2).try(:middle_name) %> <%= employ_1.try(:manager_2).try(:last_name) %></td>
             </tr>
            </thead>
          </table>
@@ -166,7 +167,8 @@
     <div id="myModal3" class="modal fade"></div>
     <% if @vacancy_master.employee.manager_id.present? && @vacancy_master.employee.manager_2_id.present? && @vacancy_master.current_status == "Pending" %>
       <%= link_to 'Approve',first_approve_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-primary fa fa-check',data: { confirm: 'Are you sure?' } %> |
-      <%= link_to 'Reject',reject_vacancy_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Reject',reject_vacancy_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %> |
+      <%= link_to 'Approve & Send next',approve_and_send_next_vacancy_masters_path(@vacancy_master.id),class: 'btn btn btn-sm btn-success',data: { confirm: 'Are you sure?' } %> 
 
     <% elsif @vacancy_master.employee.manager_id.present? && @vacancy_master.employee.manager_2_id.present? && @vacancy_master.current_status == "FirstApproved" %>
       <%= link_to 'Approve',first_approve_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-primary fa fa-check',data: { confirm: 'Are you sure?' } %> |
@@ -175,7 +177,8 @@
 
     <% elsif @vacancy_master.employee.manager_id.present? && @vacancy_master.employee.manager_2_id.nil? && @vacancy_master.current_status == "Pending" %>
       <%= link_to 'Approve',approve_vacancy_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %> |
-      <%= link_to 'Reject',reject_vacancy_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Reject',reject_vacancy_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %> |
+       <%= link_to 'Approve & Send next',approve_and_send_next_vacancy_masters_path(@vacancy_master.id),class: 'btn btn btn-sm btn-success',data: { confirm: 'Are you sure?' } %> 
     <% end %>
     
     <% if @vacancy_master.current_status == "Approved & Send Next"  %>
@@ -205,6 +208,3 @@ $(document).ready(function() {
     $('#example').DataTable();
 } );
 </script>
-
-
-

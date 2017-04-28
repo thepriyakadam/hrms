@@ -195,7 +195,7 @@ class GoalRatingsController < ApplicationController
     if sum == 100
       @emp = Employee.find(current_user.employee_id)
       GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
-      @gol_bunch = GoalBunch.find_by(id: @goal_bunch.id).update(goal_confirm: true)
+      @gol_bunch = GoalBunch.find_by(id: @goal_bunch.id).update(goal_confirm: true,appraiser_confirm: false,goal_approval: false)
       flash[:notice] = "Mail Sent Successfully"
       redirect_to new_goal_bunch_path
     else
@@ -527,7 +527,7 @@ class GoalRatingsController < ApplicationController
     @training_topic_master_id = params[:training_topic_master_id]
     @period_id = params[:period_id]
     # @goal_ratings = GoalRating.where(goal_bunch_id: ids,training_topic_master_id: @training_topic_master_id).where(is_assigned: nil)
-    @goal_ratings = GoalRating.where(goal_bunch_id: ids,training_topic_master_id: @training_topic_master_id).where(is_hide: nil)
+    @goal_ratings = GoalRating.where(goal_bunch_id: ids,training_topic_master_id: @training_topic_master_id).where(is_hide: false)
   end
 
   def send_request_for_training

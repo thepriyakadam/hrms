@@ -7,7 +7,6 @@ class CreateEmployeeNominations < ActiveRecord::Migration
       t.boolean :mental_illness
       t.boolean :minor
       t.string :guardian_name
-      t.references :relation, index: true, foreign_key: true
       t.boolean :same_address
       t.text :address
       t.string :city

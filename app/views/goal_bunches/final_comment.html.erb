@@ -2,7 +2,7 @@
   <div class="box-body">
    <table class="table table-bordered table-hover table-condensed">     
       <thead>
-        <tr><th colspan="7"><center>Employee Details</center></th></tr>
+        <tr><th colspan="8"><center>Employee Details</center></th></tr>
         <tr>
           <th>ID</th>
           <th>Name</th>
@@ -11,6 +11,7 @@
           <th>Date Of Joining</th>
           <th>Grade</th>
           <th>Current Designation</th> 
+          <th>Current Experience</th>
         </tr>
       </thead>
       <tbody>
@@ -18,11 +19,29 @@
         <tr>
           <td><%= a.manual_employee_code %></td> 
           <td><%= full_name(a) %></td>
-          <td><% day = Date.today - a.try(:date_of_birth).to_date %><% d = day.to_i/365 %><%= d %></td>
+          <td>
+            <% if a.date_of_birth == nil %>
+              <%= %>
+            <% else %>
+              <% day = Date.today - a.try(:date_of_birth).to_date %><% d = day.to_i/365 %><%= d %>
+            <% end %>
+          </td>
           <td><%= a.department.try(:name) %></td>
           <td><%= @joining_detail.joining_date %></td>
-          <td><%= @joining_detail.employee_grade.name %></td>
-          <td><%= @joining_detail.employee_designation.name %></td>
+          <td><%= @joining_detail.employee_grade.try(:name) %></td>
+          <td><%= @joining_detail.employee_designation.try(:name) %></td>
+          <td>
+            <% if @joining_detail.joining_date == nil %>
+              <%= %>
+            <% else %>
+              <% day = Date.today - @joining_detail.joining_date.to_date %><% d = day.to_f/365 %><% int = d.to_i %><% remaining = d.to_f - int.to_f %><% day1 = remaining.to_f * 365 %><% day2 = day1.to_f/30 %>
+              <% if int.to_i > 0 %>
+                <%= int.to_i %>.<%= day2.to_i %> <%= "year" %>
+              <% else %>
+                <%= day2.to_i %><%= "month" %>
+              <% end %>
+            <% end %>
+          </td>
         </tr>
         <% end %>
       </tbody>
@@ -214,7 +233,7 @@
   <% if @goal_bunch.final_comment == nil %>
       <% if @goal_bunch.employee.manager_2_id == nil %>
      
-          <%= bootstrap_form_for(@goal_bunch,html: {id: 'goal_bunch'},url:{action: "final_create",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id,period_id: @period.id}) do |f| %>
+        <%= bootstrap_form_for(@goal_bunch,html: {id: 'goal_bunch'},url:{action: "final_create",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id,period_id: @period.id}) do |f| %>
           <%= hidden_field_tag :final_id, {},value: current_user.employee_id %>
 
           <div class="row">
@@ -270,7 +289,7 @@
 
           <% end %> <!-- <h5><center>Reviewer Comment not Confirmed</center></h5> -->
 
-      <% else %>
+      <% else %> <!-- manager2 available -->
           <% if @goal_bunch.reviewer_confirm == true %>
 
               <%= bootstrap_form_for(@goal_bunch,html: {id: 'goal_bunch'},url:{action: "final_create",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id,period_id: @period.id}) do |f| %>
@@ -460,7 +479,7 @@
              <div class="row">
               <div class="col-sm-3">
                 <div class="actions">
-                  <% if @goal_bunch.final_comment == nil  or @goal_bunch.final_confirm != nil %>
+                  <% if @goal_bunch.final_comment == nil  or @goal_bunch.final_confirm == true %>
                     <%= link_to 'Back',period_list_final_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
                   <% else %>
                     <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>

@@ -24,6 +24,37 @@ class SalaryMapSapsController < ApplicationController
 
   # POST /salary_map_saps
   # POST /salary_map_saps.json
+
+  # def create
+  #   @salary_map_sap = SalaryMapSap.new(salary_map_sap_params)
+  #   @salary_map_saps = SalaryMapSap.all
+  #   respond_to do |format|
+  #     if @salary_map_sap.save
+  #       @salary_map_sap = SalaryMapSap.new
+  #       format.js { @flag = true }
+  #     else
+  #       format.js { @flag = false }
+  #     end
+  #   end
+  # end
+
+
+  #  def create
+  #   @salary_map_sap = SalaryMapSap.new(salary_map_sap_params)
+  #   @salary_map_saps = SalaryMapSap.all
+     
+  #   respond_to do |format|
+  #     if @salary_map_sap.save
+  #        @salary_map_sap = SalaryMapSap.new
+  #        @company_location = params[:food_deduction][:company_location_id]
+  #        @salary_map_sap.update(company_location_id: @company_location)
+  #       format.js { @flag = true }
+  #     else
+  #       format.js { @flag = false }
+  #     end
+  #   end
+  # end
+
   def create
     @salary_map_sap = SalaryMapSap.new(salary_map_sap_params)
     @salary_map_saps = SalaryMapSap.all

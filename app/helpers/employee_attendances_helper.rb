@@ -15,6 +15,22 @@ module EmployeeAttendancesHelper
     Hash[exist.sort]
 	end
 
+  def calculate_attendance_datewise(from,to, exist, e)
+    start_date = from.to_date
+    end_date = to.to_date
+    start_date.step(end_date).each do |d|
+      attendance_record = EmployeeAttendance.where(day: d, employee_id: e.employee_id).take
+      unless attendance_record.nil?
+        exist[d] = attendance_record.present
+      end
+
+      unless exist.key?(d)
+        exist[d] = ""
+      end
+    end
+    Hash[exist.sort]
+  end
+
   # def total_attendance(date, exist, e)
   #   start_date = date.beginning_of_month
   #   end_date = date.end_of_month
@@ -98,6 +114,14 @@ module EmployeeAttendancesHelper
     exist.select {|k,v| v == "OD" }.count + (exist.select {|k,v| v == "P/OD" }.count)/2.to_f + (exist.select {|k,v| v == "OD/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/OD" }.count)/2.to_f + (exist.select {|k,v| v == "OD/A" }.count)/2.to_f
   end
 
+  def pl_leave_count(exist)
+    exist.select {|k,v| v == "PL" }.count + (exist.select {|k,v| v == "P/PL" }.count)/2.to_f + (exist.select {|k,v| v == "PL/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/PL" }.count)/2.to_f + (exist.select {|k,v| v == "PL/A" }.count)/2.to_f
+  end
+
+  def sl_leave_count(exist)
+    exist.select {|k,v| v == "SL" }.count + (exist.select {|k,v| v == "P/SL" }.count)/2.to_f + (exist.select {|k,v| v == "SL/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/SL" }.count)/2.to_f + (exist.select {|k,v| v == "SL/A" }.count)/2.to_f
+  end
+
   def gatepass_count(exist)
     exist.select {|k,v| v == "PG" }.count
   end
@@ -106,7 +130,57 @@ module EmployeeAttendancesHelper
     arr = []
     #attendances = EmployeeAttendance.where("strftime('%m/%Y',day) = ?", date.strftime('%m/%Y')).where(employee_id: employee.employee_id).where.not(employee_leav_request_id: nil) || (EmployeeAttendance.where(present: "PG"))    
       
-    attendances = EmployeeAttendance.where("strftime('%m/%Y',day) = ? AND employee_id = ?",date.strftime('%m/%Y'),employee.employee_id)
+    attendances = EmployeeAttendance.where("DATE_FORMAT('%m/%Y',day) = ? AND employee_id = ?",date.strftime('%m/%Y'),employee.employee_id)
+    pay_leave = 0
+    non_pay_leave = 0
+    present_day = 0
+    gate_pass = 0
+    gate_pas = 0
+    gatepass = 0
+    gatepas = 0
+    absent_day = 0
+    attendances.each do |a|
+      if a.employee_leav_request_id != nil
+        if a.count == 1.0
+          if a.employee_leav_request.leav_category.is_payble
+            pay_leave = pay_leave + 1
+          else
+            non_pay_leave = non_pay_leave + 1
+          end
+        else
+          if a.employee_leav_request.leav_category.is_payble
+            if a.employee_leav_request.present_status == false
+              pay_leave = pay_leave + 0.5
+              absent_day = absent_day + 0.5
+            else
+              pay_leave = pay_leave + 0.5
+              present_day = present_day + 0.5
+            end
+          else
+            if a.employee_leav_request.present_status == false
+              non_pay_leave = non_pay_leave + 0.5
+              absent_day = absent_day + 0.5
+            else
+               non_pay_leave = non_pay_leave + 0.5
+              present_day = present_day + 0.5
+            end
+          end
+        end 
+      else #nil
+      end#
+    end#DO
+    arr << pay_leave
+    arr << non_pay_leave
+    arr << present_day
+    arr << absent_day
+    arr
+  end
+
+  def create_leave_datewise(from,to,employee)
+    arr = []
+    #attendances = EmployeeAttendance.where("strftime('%m/%Y',day) = ?", date.strftime('%m/%Y')).where(employee_id: employee.employee_id).where.not(employee_leav_request_id: nil) || (EmployeeAttendance.where(present: "PG"))    
+      
+    attendances = EmployeeAttendance.where(day: from.to_date..to.to_date,employee_id: employee.employee_id)
     pay_leave = 0
     non_pay_leave = 0
     present_day = 0

@@ -1,0 +1,1 @@
+json.array! @visitor_details, partial: 'visitor_details/visitor_detail', as: :visitor_detail

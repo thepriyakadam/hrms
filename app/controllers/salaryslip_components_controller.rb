@@ -13,12 +13,21 @@ class SalaryslipComponentsController < ApplicationController
        @salaryslips = Salaryslip.where(month: @month,year: @year)
     elsif @location == ""
         @employees = Employee.where(company_id: @company.to_i)
+<<<<<<< HEAD
         @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: 4605)
        # @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: @employees)
     else
        @employees = Employee.where(company_id: @company.to_i,company_location_id: @location)
        @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: 4605)
        # @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: @employees)
+=======
+        # @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: 68)
+       @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: @employees)
+    else
+       @employees = Employee.where(company_id: @company.to_i,company_location_id: @location)
+       # @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: 68)
+       @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: @employees)
+>>>>>>> 553645c5b24570c4698d6d46f2e3ad56f44d441e
     end
     # @salaryslips_1 = Salaryslip.where(month: @month,year: @year)limit(1).present?
     if @salaryslips.count > 0

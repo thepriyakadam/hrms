@@ -20,7 +20,7 @@
               <td><%= e.try(:joining_detail).try(:employee_designation).try(:name) %></td>
               <td><%= e.try(:joining_detail).try(:cost_center).try(:name) %></td>
               <td>
-                <%= link_to 'Slab', apply_tds_slabs_path(employee_id: e.id),class: 'btn btn-primary btn-xs' %> 
+                <%= link_to 'Action', apply_tds_slabs_path(employee_id: e.id),class: 'btn btn-primary btn-xs' %> 
               </td>
             </tr>
           <% end %>

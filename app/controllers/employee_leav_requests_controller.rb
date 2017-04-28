@@ -203,7 +203,7 @@ class EmployeeLeavRequestsController < ApplicationController
                 end
               end#bal.nil?
             else #is_balance == true
-               @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
+               # @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
                 if @employee_leav_request.save
       #leave_record
               @employee_leav_request.leave_record_create(@employee_leav_request)

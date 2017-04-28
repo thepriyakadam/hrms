@@ -96,10 +96,11 @@ class LeaveCOffsController < ApplicationController
                 end
               end
             end
-          else
+          else #is_exist
             @employee_leave_balance = EmployeeLeavBalance.new do |b|
               b.employee_id = @leave_c_off.employee_id
               b.leav_category_id = leav_category.id
+
               if @leave_c_off.expiry_status == true
                 b.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
               else
@@ -118,7 +119,7 @@ class LeaveCOffsController < ApplicationController
                 @leave_c_off.leave_count = 0.5
                 puts @leave_c_off.leave_count
               end
-            end
+            end #do
               @c_off.each do |l|
                 if l.try(:expiry_date).to_date < Date.today
                   @employee_leave_balance = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take  
@@ -128,8 +129,8 @@ class LeaveCOffsController < ApplicationController
                 else
                   @employee_leave_balance.save
                 end
-              end
-          end
+              end #do
+          end #is_exist
           ActiveRecord::Base.transaction do
             @leave_c_off.save
             @employee_leave_balance.save

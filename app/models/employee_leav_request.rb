@@ -10,8 +10,16 @@ class EmployeeLeavRequest < ActiveRecord::Base
   has_many :employee_attendances
   has_many :leave_records
 
+
+  # belongs_to :first_reporter, class_name: 'Employee', foreign_key: 'first_reporter_id'
+  # belongs_to :second_reporter, class_name: 'Employee', foreign_key: 'second_reporter_id'
+
   belongs_to :first_reporter, class_name: 'Employee'
   belongs_to :second_reporter, class_name: 'Employee'
+
+  # belongs_to :first_reporter, :class_name => "Employee", :foreign_key => :first_reporter_id
+  # belongs_to :second_reporter, :class_name => "Employee", :foreign_key => :second_reporter_id
+
 
   #validates :date_range, uniqueness: { scope: [:date_range, :employee_id] }
 

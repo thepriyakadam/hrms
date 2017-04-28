@@ -28,8 +28,8 @@
       </td>
       <td><%= a.department.try(:name) %></td>
       <td><%= @joining_detail.joining_date %></td>
-      <td><%= @joining_detail.employee_grade.name %></td>
-      <td><%= @joining_detail.employee_designation.name %></td>
+      <td><%= @joining_detail.employee_grade.try(:name) %></td>
+      <td><%= @joining_detail.employee_designation.try(:name) %></td>
       <td>
         <% if @joining_detail.joining_date == nil %>
           <%= %>

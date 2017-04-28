@@ -439,8 +439,9 @@ class EmployeeAttendancesController < ApplicationController
     department = params[:employee][:department_id]
     from = @from.to_date
     to = @to.to_date
+    payroll_period = PayrollPeriod.where(status: true).take
 
-    if from.strftime("%d") == "26" && to.strftime("%d") == "25"
+    if from == payroll_period.from.to_date && to == payroll_period.to.to_date
       if current_user.class == Group
         if company == ""
           if status == 'Active'

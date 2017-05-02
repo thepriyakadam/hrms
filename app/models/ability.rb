@@ -31,8 +31,10 @@ class Ability
         can :manage, [GoalBunch, GoalRating]
         can :manage, [TravelRequest, DailyBillDetail]
         can :manage, [OnDutyRequest, ParticularOdRecord]
+        can :read, [EmployeeTemplate, EmployeeSalaryTemplate]
       elsif user.role.name == 'Supervisor'
         can :read, Employee
+        can :read, [EmployeeTemplate, EmployeeSalaryTemplate]
         can :manage, EmployeeLeavRequest
         can :manage, [GoalBunch, GoalRating]
         can :manage, [TravelRequest, DailyBillDetail]

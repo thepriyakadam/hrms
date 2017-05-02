@@ -975,7 +975,7 @@ require 'roo'
 #  end
 #  end
 
-ex = Roo::Excel.new("#{Rails.root}/public/updateemppf.xls")
+ex = Roo::Excel.new("#{Rails.root}/public/employee bank details.xls")
 ex.default_sheet = ex.sheets[1] #siya feb
 i = 1
 ActiveRecord::Base.transaction do
@@ -984,7 +984,8 @@ ActiveRecord::Base.transaction do
  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
  puts "#{i} Record inserting.----------------------------"
  # Employee.where(id: @employee.id).update_all(manual_employee_code: ex.cell(line,'B'))
- JoiningDetail.where(employee_id: @employee.id).update_all(employee_pf_no: ex.cell(line, 'C'),employee_uan_no: ex.cell(line, 'B').to_i,employee_efic_no: ex.cell(line, 'D'),select_pf: ex.cell(line, 'E'),have_esic: ex.cell(line, 'F'),is_employeer_pf: ex.cell(line, 'G'),is_employeer_esic: ex.cell(line, 'H'))
+ # JoiningDetail.where(employee_id: @employee.id).update_all(employee_pf_no: ex.cell(line, 'C'),employee_uan_no: ex.cell(line, 'B').to_i,employee_efic_no: ex.cell(line, 'D'),select_pf: ex.cell(line, 'E'),have_esic: ex.cell(line, 'F'),is_employeer_pf: ex.cell(line, 'G'),is_employeer_esic: ex.cell(line, 'H'))
+  EmployeeBankDetail.where(employee_id: @employee.id).update_all(account_no: ex.cell(line,'B').to_i , bank_name: ex.cell(line,'C') , branch_name: ex.cell(line,'D'),contact_no: ex.cell(line,'E').to_i,micr_code: ex.cell(line,'F').to_i,branch_code: ex.cell(line,'G').to_i,ifsc_code: ex.cell(line,'H'),bank_id: ex.cell(line, 'I').to_i)
  puts "#{i} Record inserted.-----------------------------------------------"
  i += 1
  end

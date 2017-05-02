@@ -41,25 +41,24 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
 # # Root url
-  config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
+  # config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
 
 
-  # config.domain = 'lvh.me'
-  # config.action_mailer.perform_deliveries = true,
-  ActionMailer::Base.delivery_method = :smtp
-  ActionMailer::Base.smtp_settings = {
-    address: 'mail.bhandarigroup.in',
-    port: 25,
-    domain: '192.168.0.62',
-    user_name: 'hrmsdws-bhandarigroup',
-    password: 'hrms1234',
-    authentication: :plain
-  }
+  # # config.domain = 'lvh.me'
+  # # config.action_mailer.perform_deliveries = true,
+  # ActionMailer::Base.delivery_method = :smtp
+  # ActionMailer::Base.smtp_settings = {
+  #   address: 'mail.bhandarigroup.in',
+  #   port: 25,
+  #   domain: '192.168.0.62',
+  #   user_name: 'hrmsdws-bhandarigroup',
+  #   password: 'hrms1234',
+  #   authentication: :plain
+  # }
   
 
 
 
-<<<<<<< HEAD
  # Root url
   config.action_mailer.default_url_options = { host: 'mail.rajgreen.co.in', port: 3000 }
   # config.domain = 'lvh.me'
@@ -72,7 +71,7 @@ Rails.application.configure do
     :password => "amaazia@123",
     :authentication => 'plain',
 }
-=======
+
 #   ActionMailer::Base.smtp_settings = {
 #     :address => "mail.rajgreen.co.in",
 #     :port => 25,
@@ -80,7 +79,7 @@ Rails.application.configure do
 #     :password => "amaazia@123",
 #     :authentication => 'plain',
 # }
->>>>>>> 2fc7e423be89f4b223d9c3eacbe966aad4d33839
+
 
  # # Root url
  #  config.action_mailer.default_url_options = { host: 'mail.bhandarigroup.in', port: 3000 }

@@ -984,7 +984,7 @@ ActiveRecord::Base.transaction do
  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
  puts "#{i} Record inserting.----------------------------"
  # Employee.where(id: @employee.id).update_all(manual_employee_code: ex.cell(line,'B'))
- JoiningDetail.where(employee_id: @employee.id).update_all(employee_pf_no: ex.cell(line, 'G'),employee_uan_no: ex.cell(line, 'F'),employee_efic_no: ex.cell(line, 'H'),select_pf: ex.cell(line, 'I'),have_esic: ex.cell(line, 'J'),is_employeer_pf: ex.cell(line, 'K'),is_employeer_esic: ex.cell(line, 'L'))
+ JoiningDetail.where(employee_id: @employee.id).update_all(employee_pf_no: ex.cell(line, 'C'),employee_uan_no: ex.cell(line, 'B').to_i,employee_efic_no: ex.cell(line, 'D'),select_pf: ex.cell(line, 'E'),have_esic: ex.cell(line, 'F'),is_employeer_pf: ex.cell(line, 'G'),is_employeer_esic: ex.cell(line, 'H'))
  puts "#{i} Record inserted.-----------------------------------------------"
  i += 1
  end

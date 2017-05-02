@@ -86,6 +86,12 @@ class EmployeeLeavRequestsController < ApplicationController
       else
         @employee_leav_request.leave_count = 0.5
       end
+        @employee_leav_request.is_cancelled = false
+        @employee_leav_request.is_first_approved = false
+        @employee_leav_request.is_first_rejected = false
+        @employee_leav_request.is_second_approved = false
+        @employee_leav_request.is_second_rejected = false
+
         @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ? AND is_active = ?', @employee.id, @employee_leav_request.leav_category_id,true).take
         type = LeavCategory.find(@employee_leav_request.leav_category_id).is_payble 
 #leave_limit

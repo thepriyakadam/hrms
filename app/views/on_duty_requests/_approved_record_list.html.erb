@@ -13,6 +13,7 @@
 			      <th>Employee Name</th>
 			      <th>Department</th>
 			      <th>Leave Date</th>
+			      <th>Reason</th>
 			      <th>Cancel After Approve</th>
 			    </tr>
 			  </thead>
@@ -24,6 +25,7 @@
 			        <td><%= full_name(particular_od_record.employee) %></td>
 			         <td><%= particular_od_record.employee.department.try(:name) %></td>
 			        <td><%= particular_od_record.leave_date.to_date %></td>
+			        <td><%= particular_od_record.on_duty_request.try(:reason) %></td>
 			        <td><%= particular_od_record.is_cancel_after_approve %></td>
 			      </tr>
 			    <% end %>

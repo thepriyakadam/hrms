@@ -93,6 +93,13 @@ class OnDutyRequestsController < ApplicationController
             @on_duty_request.no_of_day = @on_duty_request.no_of_day.to_f + 0.5
           end
         end
+
+        @on_duty_request.is_cancelled = false
+        @on_duty_request.is_first_approved = false
+        @on_duty_request.is_first_rejected = false
+        @on_duty_request.is_second_approved = false
+        @on_duty_request.is_second_rejected = false
+
         @on_duty_request.save
 
             if @on_duty_request.leave_type == 'Half Day'

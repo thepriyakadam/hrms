@@ -461,10 +461,8 @@ class WorkingdaysController < ApplicationController
         @workingday = Workingday.find(wid)
         @workingdays = Workingday.where(employee_id: @workingday.employee_id, month_name: date.strftime("%B"), year: date.strftime("%Y"))
         @workingdays.destroy_all
-
         EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ? AND employee_id = ? ", date.strftime('%m/%Y'),@workingday.employee_id).update_all(is_confirm: false)
         EmployeeWeekOff.where("DATE_FORMAT(date,'%m/%Y') = ? AND employee_id = ? ", date.strftime('%m/%Y'),@workingday.employee_id).update_all(is_confirm: false)
-        
       end
       flash[:notice] = "Revert successfully"
       redirect_to revert_workingday_workingdays_path
@@ -472,12 +470,54 @@ class WorkingdaysController < ApplicationController
   end
 
   def revert_workingday_datewise
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Attendance"
   end
 
   def show_employee_datewise
+    @from = params[:from]
+    @to = params[:to]
+    if current_user.class == Group
+      @employees = Employee.where(status: 'Active').pluck(:id)
+      @workingday = Salaryslip.where(month_year: @from.to_date..@to.to_date,employee_id: @employees).pluck(:workingday_id)
+      @workingdays = Workingday.where(from: @from.to_date,to:@to.to_date,employee_id: @employees).where.not(id: @workingday)
+    elsif current_user.class == Member
+      if current_user.role.name == "GroupAdmin"
+        @employees = Employee.where(status: 'Active').pluck(:id)
+        @workingday = Salaryslip.where(month_year: @from.to_date..@to.to_date,employee_id: @employees).pluck(:workingday_id)
+        @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees).where.not(id: @workingday)
+      elsif current_user.role.name == "Admin"
+        @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
+        @workingday = Salaryslip.where(month_year: @from.to_date..@to.to_date,employee_id: @employees).pluck(:workingday_id)
+        @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees).where.not(id: @workingday)
+      elsif current_user.role.name == "Branch"
+        @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
+        @workingday = Salaryslip.where(month_year: @from.to_date..@to.to_date,employee_id: @employees).pluck(:workingday_id)
+        @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees).where.not(id: @workingday)
+      end  
+    end    
   end
 
-  def revert_workingday_datewise
+  def revert_workingday
+     @from = params[:from]
+    @to = params[:to]
+    @workingday_ids = params[:workingday_ids]
+    if @workingday_ids.nil?
+      flash[:alert] = "Please Select Employees"
+      redirect_to revert_workingday_datewise_workingdays_path
+    else
+      @workingday_ids.each do |wid|
+        @workingday = Workingday.find(wid)
+        @workingdays = Workingday.where(employee_id: @workingday.employee_id, from: @from.to_date, to: @to.to_date)
+        @workingdays.destroy_all
+
+        EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @workingday.employee_id).update_all(is_confirm: false)
+        EmployeeWeekOff.where(day: @from.to_date..@to.to_date,employee_id: @workingday.employee_id).update_all(is_confirm: false)
+        
+      end
+      flash[:notice] = "Revert successfully"
+      redirect_to revert_workingday_datewise_workingdays_path
+    end
   end
 
   def search_by_month_year

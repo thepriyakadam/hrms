@@ -1,4 +1,4 @@
-class EmployeesController < ApplicationController
+ class EmployeesController < ApplicationController
   before_action :set_employee, only: [:show, :edit, :update, :destroy, :ajax_joining_detail, :ajax_bank_detail, :ajax_qualification_detail, :ajax_new_qualification, :ajax_experience_detail, :ajax_new_experience, :ajax_skillset_detail, :ajax_new_skillset, :ajax_certification_detail, :ajax_new_certification, :ajax_award_detail, :ajax_new_award, :ajax_physical_detail, :ajax_family_detail, :ajax_new_family]
   # load_and_authorize_resource
   # GET /employees
@@ -269,9 +269,9 @@ class EmployeesController < ApplicationController
             @reporting_master1 = ReportingMaster.find_by(id: @manager1)
             @reporting_master2 = ReportingMaster.find_by(id: @manager2)
 
-            manager_1 = @reporting_master1.employee_id
-            manager_2 = @reporting_master2.try(:employee_id)
-            employee.update_attributes(manager_id: manager_1, manager_2_id: manager_2)
+            #manager_1 = @reporting_master1.employee_id
+            #manager_2 = @reporting_master2.try(:employee_id)
+            employee.update_attributes(manager_id: @reporting_master1.employee_id, manager_2_id: @reporting_master2.try(:employee_id))
 
             ManagerHistory.create(employee_id: employee.id,manager_id: manager_1,manager_2_id: manager_2,effective_from: params["login"]["effec_date"])
             

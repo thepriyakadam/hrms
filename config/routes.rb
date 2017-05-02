@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :payroll_periods
   resources :visitor_details do
     collection do
       get :display_visiting_card
@@ -1658,6 +1659,9 @@ end
       post :revert_all_workingday
       get :search_by_month_year
       post :month_year_wise_record
+      get :revert_workingday_datewise
+      get :show_employee_datewise
+      post :revert_workingday
     end
   end
 

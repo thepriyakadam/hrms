@@ -23,7 +23,7 @@
         </td>
         <td>
           <% @induction_activity = InductionActivity.where(induction_master_id: induction_master).take %>
-          <% if @induction_activity.is_confirm == true %>
+          <% if @induction_activity.try(:is_confirm) == true %>
           <%= link_to ' View Induction Activity',new_induction_activity_path(induction_master_id: induction_master),class: 'btn btn-xs btn-info' %>
           <% else %>
           <%= link_to ' Assign Induction Activity',new_induction_activity_path(induction_master_id: induction_master),class: 'btn btn-xs btn-primary' %>

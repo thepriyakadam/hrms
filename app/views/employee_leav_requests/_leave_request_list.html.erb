@@ -45,7 +45,7 @@
             <%= link_to '', cancel_leave_status_record_path(employee_leav_request), data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-trash' %>
           <% elsif employee_leav_request.current_status == "Cancelled" %>
             
-          <% else %>
+          <% elsif employee_leav_request.current_status != "Rejected" %>
             <%= link_to 'Revert',show_leave_record_particular_leave_records_path(employee_leav_request), class: 'btn btn-danger btn-xs' %>
           <% end %>
         </td>

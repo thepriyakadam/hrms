@@ -49,7 +49,7 @@ class LeaveCOffsController < ApplicationController
     else
         @leave_c_off = LeaveCOff.new(leave_c_off_params)
         @leave_c_offs = LeaveCOff.all
-        leav_category = LeavCategory.find_by_name('Compensatory Off')
+        leav_category = LeavCategory.find_by_name('C.Off')
         if @leave_c_off.expiry_status == true
           @leave_c_off.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
         else
@@ -105,6 +105,8 @@ class LeaveCOffsController < ApplicationController
                 b.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
               else
               end
+              
+              b.from_date = b.expiry_date
               b.is_active = true
               @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
 
@@ -156,7 +158,7 @@ class LeaveCOffsController < ApplicationController
   # DELETE /leave_c_offs/1.json
   def destroy
     @leave_c_offs = LeaveCOff.all
-    leav_category = LeavCategory.find_by_name('Compensatory Off')
+    leav_category = LeavCategory.find_by_name('C.Off')
     @employee_leave_balance = EmployeeLeavBalance.where(employee_id: @leave_c_off.employee_id,leav_category_id: leav_category.id).take
     
     if @leave_c_off.c_off_type == 'Full Day'

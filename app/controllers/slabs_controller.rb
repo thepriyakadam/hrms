@@ -114,7 +114,7 @@ class SlabsController < ApplicationController
       flash[:alert] = "Template Not Available for this Employee!"
     else
       @employee_salary_templates = @current_template.employee_salary_templates
-      
+  
       @ctc = @employee_salary_templates.sum(:annual_amount)
       @slabs = Slab.all
         slab_value = 0

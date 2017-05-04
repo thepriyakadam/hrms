@@ -62,14 +62,16 @@ class SlabsController < ApplicationController
     @previous_slab = Slab.find_by(id: @previous_id)
 
     if @next_slab.nil?
-      texable_amount = @next_slab.texable_amount
+      @slab.update(texable_amount: params_value.to_d - @previous_slab.try(:to).to_d)
     elsif @previous_slab.nil?
       texable_amount = @next_slab.try(:to).to_d - params_value.to_d
       @slab.update(texable_amount: params_value)
+      @next_slab.update(texable_amount: texable_amount)
     else
       texable_amount = @next_slab.try(:to).to_d - params_value.to_d
+      @slab.update(texable_amount: params_value.to_d - @previous_slab.try(:to).to_d)
+      @next_slab.update(texable_amount: texable_amount)
     end
-    @next_slab.update(texable_amount: texable_amount)
 
     @slab = Slab.new
     @slabs = Slab.all

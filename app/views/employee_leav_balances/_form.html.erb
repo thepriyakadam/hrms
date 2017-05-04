@@ -141,12 +141,24 @@ $(function () {
       "employee_leav_balance[no_of_leave]":{
         required: true,
         maxlength: 20,
+      },
+      "employee_leav_balance[from_date]":{
+        required: true,
+      },
+      "employee_leav_balance[to_date]":{
+        required: true,
       }
     },
     messages: {
       "employee_leav_balance[no_of_leave]":{
         required: "Please specify No. Of leaves",
         maxlength: "No. Of leaves allows upto 20 characters"
+      },
+      "employee_leav_balance[from_date]":{
+        required: "Please Specify From Date",
+      },
+       "employee_leav_balance[to_date]":{
+        required: "Please Specify To Date",
       }
       
     },

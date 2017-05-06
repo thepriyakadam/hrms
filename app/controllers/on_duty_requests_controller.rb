@@ -30,6 +30,9 @@ class OnDutyRequestsController < ApplicationController
   # POST /on_duty_requests.json
   def create
     @on_duty_request = OnDutyRequest.new(on_duty_request_params)
+    start_date = params['on_duty_request']['start_date']
+    end_date = params['on_duty_request']['end_date']
+
     @employee = Employee.find(@on_duty_request.employee_id)
       if params[:flag] == "Full/Half"
         @on_duty_request.last_half = params[:common][:last_half]
@@ -40,6 +43,9 @@ class OnDutyRequestsController < ApplicationController
         @checkbox = false
       end
 
+  payroll_period = PayrollPeriod.where(status: true).take 
+  if  start_date.to_date >= payroll_period.from.to_date && end_date.to_date <= payroll_period.to.to_date
+    
     if @on_duty_request.is_available?
       flash[:alert] = "Your Request already has been sent"
       if current_user.employee_id == @on_duty_request.employee_id
@@ -140,6 +146,15 @@ class OnDutyRequestsController < ApplicationController
         end
       end #manager_id nil
     end #is_available
+  else #start_date == payroll_period.from.to_date
+    if current_user.employee_id == @on_duty_request.employee_id
+      flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+      redirect_to on_duty_requests_path
+    else
+      flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+      redirect_to employee_list_on_duty_requests_path
+    end
+  end
   end
 
   # PATCH/PUT /on_duty_requests/1

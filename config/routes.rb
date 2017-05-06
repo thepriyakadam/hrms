@@ -545,6 +545,9 @@ end
       get :datewise_attendance
       post :show_datewise_attendance
       post :create_attendance_datewise
+
+      get :manager_attendance_form
+      get :display_attendance_for_manager
     end
   end
   resources :salary_comp_mappings

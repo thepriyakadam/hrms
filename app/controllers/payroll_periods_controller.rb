@@ -16,6 +16,8 @@ class PayrollPeriodsController < ApplicationController
   def new
     @payroll_period = PayrollPeriod.new
     @payroll_periods = PayrollPeriod.all
+    session[:active_tab] ="GlobalSetup"
+    session[:active_tab1] ="PayrollComponent"
   end
 
   # GET /payroll_periods/1/edit

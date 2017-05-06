@@ -1454,6 +1454,37 @@ class EmployeeAttendancesController < ApplicationController
 
   end
 
+  def manager_attendance_form
+    session[:active_tab] ="ManagerSelfService"
+  end
+
+  def display_attendance_for_manager
+    @month = params[:month].to_s
+    @year = params[:year].to_s
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+
+    if current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @employee = Employee.where(status: 'Active').pluck(:id)
+        @employees = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ?", @date.strftime('%m/%Y')).where(employee_id: @employee).group(:employee_id)
+      elsif current_user.role.name == 'Admin'
+        @employee = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
+        @employees = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ?", @date.strftime('%m/%Y')).where(employee_id: @employee).group(:employee_id)
+      elsif current_user.role.name == 'Branch'
+        @employee = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
+        @employees = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ?", @date.strftime('%m/%Y')).where(employee_id: @employee).group(:employee_id)
+      elsif current_user.role.name == 'HOD'
+        @employee = Employee.where(status: 'Active',department_id: current_user.department_id).pluck(:id)
+        @employees = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ?", @date.strftime('%m/%Y')).where(employee_id: @employee).group(:employee_id)
+      elsif current_user.role.name == 'Superviser'
+      elsif current_user.role.name == 'Employee'
+      end
+    else
+      @employee = Employee.where(status: 'Active').pluck(:id)
+      @employees = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ?", @date.strftime('%m/%Y')).where(employee_id: @employee).group(:employee_id)
+    end
+  end
 
 #   def from_date_wise_xls
 #     @start = params[:day]

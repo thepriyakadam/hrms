@@ -65,8 +65,8 @@ class PayrollOvertimeMastersController < ApplicationController
     end
     @payroll_overtime_master.base_component = str
     @payroll_overtime_master.update(payroll_overtime_master_params)
-    @payroll_overtime_masters = PfEmployer.all
-    @payroll_overtime_master = PfEmployer.new
+    @payroll_overtime_masters = PayrollOvertimeMaster.all
+    @payroll_overtime_master = PayrollOvertimeMaster.new
 
   end
 

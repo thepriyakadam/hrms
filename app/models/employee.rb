@@ -76,6 +76,7 @@ class Employee < ActiveRecord::Base
   has_many :on_duty_requests
   has_many :gratuity
   has_many :texable_monthly_deductions
+  has_many :advance_salaries
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',
                           foreign_key: 'manager_id'

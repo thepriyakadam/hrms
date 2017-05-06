@@ -182,7 +182,6 @@ end
     @training_requests = TrainingRequest.where(id: @training_request.id).take
   end
 
-
  def first_approve
     # byebug
     @training_request = TrainingRequest.find(params[:format])

@@ -1825,5 +1825,3 @@ ActiveRecord::Base.transaction do
 #    puts "#{i} Record inserted.------#{ex.cell(line,'B')}--------------------#{ex.cell(line,'C')}--------------"
 #    i += 1
 #  end
-#  # end
-# end

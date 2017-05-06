@@ -91,8 +91,9 @@ class EmployeeSalaryTemplatesController < ApplicationController
 
         @employee_arrear = EmployeeArrear.create_object(@employee_id, increement_date)
         @employee_arrear = EmployeeArrear.build_objects(arrears_array, params, @employee_arrear)
+        @employee_template.save
         if @employee_arrear.save
-          @employee_template.save
+          # @employee_template.save
           flash[:notice] = 'Employee template created successfully.'
         else
           flash[:alert] = 'Same template cannot assigned.'
@@ -182,6 +183,32 @@ class EmployeeSalaryTemplatesController < ApplicationController
   def new
     @employee = Employee.find(params[:id])
     @employee_template = EmployeeTemplate.where('employee_id = ? and is_active = ?', @employee.id, true).take
+  end
+
+   def employee_list
+    @employees = Employee.where(status: 'Active')
+   
+   session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "CTCReport"
+  end
+
+  def show_current_template
+    @employee_ids = params[:employee_ids]
+      if @employee_ids.nil?
+        flash[:alert] = "Please Select the Checkbox"
+      redirect_to employee_list_employee_salary_templates_path
+      else
+        @employee_ids.each do |eid|
+        end
+      end 
+  end
+
+  def current_template
+    @employee_ids = params[:employee_ids]
+    respond_to do |format|
+      format.xls {render template: 'employee_salary_templates/current_template.xls.erb'}
+      end
   end
 
   private

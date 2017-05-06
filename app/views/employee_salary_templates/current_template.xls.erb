@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Sr. No.</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">ID</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Employee Name</Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">Basic</Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String">HRA</Data></Cell>  
+        <Cell ss:Index="6"><Data ss:Type="String">Special Allowance</Data></Cell> 
+        <Cell ss:Index="7"><Data ss:Type="String">Convenience Allowance</Data></Cell> 
+        <Cell ss:Index="8"><Data ss:Type="String">Other Allowance</Data></Cell> 
+        <Cell ss:Index="9"><Data ss:Type="String">Washing Allowance</Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String">DA</Data></Cell> 
+        <Cell ss:Index="11"><Data ss:Type="String">Driver Allow</Data></Cell>
+        <Cell ss:Index="12"><Data ss:Type="String">Medi Allow</Data></Cell>
+        <Cell ss:Index="13"><Data ss:Type="String">Child Edu Allow</Data></Cell>
+        <Cell ss:Index="14"><Data ss:Type="String">MRA</Data></Cell>
+      </Row>
+
+        <% i = 0 %>
+        <% @employee_ids.each do |e|  %>
+        <% employee = Employee.find_by(id: e) %>
+        <% employee_template = EmployeeTemplate.where(employee_id: e,is_active: true).take %>
+        <!-- < employee_salary_template = EmployeeSalaryTemplate.find_by(employee_template_id: employee_template) %> -->
+        <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= employee.try(:manual_employee_code) %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= full_name(employee) %></Data></Cell>
+
+           <% @template_items = employee_template.try(:employee_salary_templates) %>
+
+            <% @template_items.try(:each) do |item| %>
+              <% case item.salary_component.try(:name) %>
+                <% when "Basic" %>
+                  <Cell ss:Index="4"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
+                <% when "HRA" %>
+                  <Cell ss:Index="5"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
+                <% when "Special Allowance" %>
+                  <Cell ss:Index="6"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
+                <% when "Convenience Allowance" %>
+                  <Cell ss:Index="7"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
+                <% when "Other Allowance" %>
+                  <Cell ss:Index="8"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
+                <% when "Washing Allowance" %>
+                  <Cell ss:Index="9"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
+                <% when "DA" %>
+                  <Cell ss:Index="10"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
+                 <% when "Driver Allowance" %>
+                  <Cell ss:Index="11"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
+                <% when "Medical Allowance" %>
+                  <Cell ss:Index="12"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
+                <% when "Children Education Allowance" %>
+                  <Cell ss:Index="13"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
+                <% when "Rembursement of Medical Allowence" %>
+                  <Cell ss:Index="14"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
+               
+              <% end %> 
+            <% end %>
+          </Row><!-- Row -->
+        <% end %><!-- slip -->
+      </Table>
+    </Worksheet>
+  </Workbook>

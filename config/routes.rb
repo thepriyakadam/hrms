@@ -1662,6 +1662,9 @@ end
       post :revert_all_workingday
       get :search_by_month_year
       post :month_year_wise_record
+      get :date_report
+      post :print_date_report
+      get :print_date_report
       get :revert_workingday_datewise
       get :show_employee_datewise
       post :revert_workingday
@@ -1699,6 +1702,9 @@ end
       get :find_employee_for_salary
       post :save_data
       post :is_confirm_employee_template
+      get :current_template
+      get :employee_list
+      post :show_current_template
       get :current_template
     end
   end

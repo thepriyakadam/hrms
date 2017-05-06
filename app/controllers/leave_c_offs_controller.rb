@@ -41,6 +41,7 @@ class LeaveCOffsController < ApplicationController
 
   # POST /leave_c_offs
   # POST /leave_c_offs.json
+  
   def create
     @leave_c_off = LeaveCOff.new(leave_c_off_params)
     if @leave_c_off.is_present?

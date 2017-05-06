@@ -6,6 +6,8 @@ gem 'rails', '4.2.4'
 gem 'mysql2', '~> 0.3.18'
 # gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
 
+gem 'ruby-graphviz', '~> 1.2', '>= 1.2.2'
+
 gem 'twilio-ruby', '~> 4.11', '>= 4.11.1'
 
 gem 'sass-rails', '~> 5.0'

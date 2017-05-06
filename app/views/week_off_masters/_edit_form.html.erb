@@ -6,8 +6,6 @@
     </div>
     <div class="modal-body">
 
-
-
       <%= bootstrap_form_for :week_off_master,url:{action:"update_week_off",week_off_master_id: @week_off_master.id},html: {id: 'week_off_master'} do |f| %>
         <div class="row">
           <div class="col-sm-3">
@@ -21,7 +19,7 @@
               			<div class="input-group-addon">
                 		<i class="fa fa-calendar"></i>
               			</div>
-                		<%= f.text_field :from, label: "From", class: 'week_off_date form-control'%>
+                		<%= f.date_field :from, label: "From", class: 'week_off_date form-control'%>
             		</div>
           		</div>
         	 </div>
@@ -31,7 +29,7 @@
               	<div class="input-group-addon">
                 	<i class="fa fa-calendar"></i>
               	</div>
-                	<%= f.text_field :to, label: "To", class: 'week_off_date form-control'%>
+                	<%= f.date_field :to, label: "To", class: 'week_off_date form-control'%>
             	</div>
           	</div>
         	</div>

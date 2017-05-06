@@ -47,7 +47,7 @@ class EmployeeLeavRequestsController < ApplicationController
         @checkbox = false
       end
   payroll_period = PayrollPeriod.where(status: true).take 
-  # if  (start_date >= payroll_period.from.to_date && <= payroll_period.to.to_date) && (end_date >= payroll_period.from.to_date && <= payroll_period.to.to_date)
+  if  start_date.to_date >= payroll_period.from.to_date && end_date.to_date <= payroll_period.to.to_date
   # if start_date == payroll_period.from.to_date..payroll_period.to.to_date && end_date == payroll_period.from.to_date..payroll_period.to.to_date
 
     if @employee_leav_request.end_date == nil 
@@ -250,10 +250,10 @@ class EmployeeLeavRequestsController < ApplicationController
         end
       else
       end
-  # else #start_date == payroll_period.from.to_date
-  #   flash[:alert] = "Please select correct date (i.e. 26 to 25)"
-  #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-  # end
+  else #start_date == payroll_period.from.to_date
+    flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+    redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+  end
   end
 
   def update

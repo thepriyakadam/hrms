@@ -61,8 +61,8 @@ class InterviewRoundsController < ApplicationController
     @interview_round = InterviewRound.new(interview_round_params)
     @interview_rounds = InterviewRound.all
       if @interview_round.save
-        InterviewRoundMailer.send_email_to_interviewer(@interview_round).deliver_now
-        InterviewRoundMailer.send_email_to_candidate(@interview_round).deliver_now
+        # InterviewRoundMailer.send_email_to_interviewer(@interview_round).deliver_now
+        # InterviewRoundMailer.send_email_to_candidate(@interview_round).deliver_now
         @interview_round = InterviewRound.new
         flash[:notice] = 'Interview Round saved Successfully.'
       end

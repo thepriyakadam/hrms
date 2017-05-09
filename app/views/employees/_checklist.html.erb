@@ -1,0 +1,40 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+  <div class="row">
+  <div class="col-sm-1">
+      <%= image_tag @employee_jc_list.first.try(:employee).try(:passport_photo).try(:url), :size => "70x70" %>
+  </div>
+    <div class="col-sm-6">
+     <font color='#0077b3'>
+        ID : <%= @employee_jc_list.first.try(:employee).try(:manual_employee_code) %><br>
+        Name : <%= @employee_jc_list.first.try(:employee).try(:first_name) %> <%= @employee_jc_list.first.try(:employee).try(:middle_name) %> <%= @employee_jc_list.first.try(:employee).try(:last_name) %><br>
+        Email : <%= @employee_jc_list.first.employee.try(:email) %></font>
+    </div>
+  </div>
+  </div>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr> 
+      <th>Document</th>
+      <th>Confirm By</th>
+      <th>Action</th>
+ </tr>
+ </thead>
+  <tbody>
+    <% @employee_jc_list.each do |employee_jc_list| %>
+      <tr>
+
+        <td><%= employee_jc_list.joining_checklist_master.try(:name)%></td>
+        <td><%= employee_jc_list.admin_id %></td>
+        <td>
+        <% if employee_jc_list.status == true %>
+        <small class= "label label-primary">Confirmed</small>
+            <% else %>
+             <%= link_to '', is_confirm_employees_path(employee_jc_list: employee_jc_list,employee_id: employee_jc_list.employee_id),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+            <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>

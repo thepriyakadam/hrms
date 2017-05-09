@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :employee_jc_lists
+  resources :joining_checklist_masters
   resources :payroll_periods
   resources :visitor_details do
     collection do
@@ -2048,6 +2050,8 @@ end
       post :display_employee_details
       get :employee_detail_form
       get :employee_record_pdf
+      get :joining_checklist
+      get :is_confirm
     end
     member do
       get :edit_manager

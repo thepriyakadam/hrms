@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170508073310) do
+ActiveRecord::Schema.define(version: 20170508144515) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1042,6 +1042,18 @@ ActiveRecord::Schema.define(version: 20170508073310) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
+
+  create_table "employee_jc_lists", force: :cascade do |t|
+    t.integer  "joining_checklist_master_id", limit: 4
+    t.integer  "employee_id",                 limit: 4
+    t.integer  "admin_id",                    limit: 4
+    t.boolean  "status",                                default: false
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
+  end
+
+  add_index "employee_jc_lists", ["employee_id"], name: "index_employee_jc_lists_on_employee_id", using: :btree
+  add_index "employee_jc_lists", ["joining_checklist_master_id"], name: "index_employee_jc_lists_on_joining_checklist_master_id", using: :btree
 
   create_table "employee_leav_balances", force: :cascade do |t|
     t.integer  "employee_id",      limit: 4
@@ -2221,6 +2233,15 @@ ActiveRecord::Schema.define(version: 20170508073310) do
     t.boolean  "is_confirm"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "joining_checklist_masters", force: :cascade do |t|
+    t.string   "code",        limit: 255
+    t.string   "name",        limit: 255
+    t.text     "description", limit: 65535
+    t.boolean  "status",                    default: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
   end
 
   create_table "joining_details", force: :cascade do |t|
@@ -4010,6 +4031,8 @@ ActiveRecord::Schema.define(version: 20170508073310) do
   add_foreign_key "employee_daily_activities", "project_masters"
   add_foreign_key "employee_documents", "employees"
   add_foreign_key "employee_gps_histories", "members"
+  add_foreign_key "employee_jc_lists", "employees"
+  add_foreign_key "employee_jc_lists", "joining_checklist_masters"
   add_foreign_key "employee_leav_balances", "company_leavs"
   add_foreign_key "employee_leav_balances", "employees"
   add_foreign_key "employee_leav_balances", "leav_categories"

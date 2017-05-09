@@ -157,10 +157,28 @@
             e.update(employee_type_id: employee_type.id)
           end
         end
+        @joining_checklist_master = JoiningChecklistMaster.where(status: true)
+        @joining_checklist_master.each do |jc|
+        EmployeeJcList.create(joining_checklist_master_id: jc.id,employee_id: @employee.id,status: false)
+        end
         redirect_to @employee    
       else
         render :new
       end
+  end
+
+  def joining_checklist
+    # byebug
+    @employee_jc_list = EmployeeJcList.all
+     @employee = EmployeeJcList.where(employee_id: current_user.employee_id)
+  end
+
+  def is_confirm
+    @employee_jc_list = EmployeeJcList.find(params[:employee_jc_list])
+    @employee_id = Employee.find(params[:employee_id])
+    EmployeeJcList.find(@employee_jc_list.id).update(status: true,admin_id: current_user.employee_id)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to employees_path(@employee_id)
   end
 
 

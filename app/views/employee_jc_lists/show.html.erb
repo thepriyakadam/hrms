@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Joining checklist master:</strong>
+  <%= @employee_jc_list.joining_checklist_master %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @employee_jc_list.employee %>
+</p>
+
+<p>
+  <strong>Admin:</strong>
+  <%= @employee_jc_list.admin %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @employee_jc_list.status %>
+</p>
+
+<%= link_to 'Edit', edit_employee_jc_list_path(@employee_jc_list) %> |
+<%= link_to 'Back', employee_jc_lists_path %>

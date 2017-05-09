@@ -1,0 +1,1 @@
+json.partial! "joining_checklist_masters/joining_checklist_master", joining_checklist_master: @joining_checklist_master

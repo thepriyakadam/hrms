@@ -1525,6 +1525,41 @@ class EmployeeAttendancesController < ApplicationController
 #     end
 # end
 
+def import
+  file = params[:file]
+  if file.nil?
+    flash[:alert] = "Please Select File!"
+  redirect_to import_employee_attendance_employee_attendances_path
+  else
+  EmployeeAttendance.import(params[:file])
+  redirect_to import_employee_attendance_employee_attendances_path, notice: "File imported."
+  end
+end
+
+def import_employee_attendance
+  @employee_attendances = EmployeeAttendance.all
+  respond_to do |format|
+    format.html
+    # format.html { send_data @machine_attendances,
+    # :type => 'text',
+    # :disposition => "attachment; filename=your_file_name.txt" }
+    format.csv { send_data @employee_attendances.to_csv }
+    format.xls
+  end
+   session[:active_tab] ="TimeManagement"
+   session[:active_tab1] ="AttendanceSetup"
+end
+
+  def import_employee_attendance_to_txt
+    # @content = "Hello World"
+    # @machine_attendances = MachineAttendance.all
+    @employees = Employee.all
+    respond_to do |format|
+    format.html
+    format.csv { send_data @employees.to_txt,filename: "employees-#{Date.today}.txt" }
+      end
+  end
+
 def search_by_date
   @employee_attendances = EmployeeAttendance.all
     reporter(@employee_attendances, template_class: PdfReportTemplate) do

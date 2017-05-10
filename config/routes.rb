@@ -1233,6 +1233,8 @@ end
       get :show_resignation_detail
       get :employee_transfer
       get :travel_request
+      get :employee_attendance
+      post :show_self_datewise_attendance
     end
   end
 

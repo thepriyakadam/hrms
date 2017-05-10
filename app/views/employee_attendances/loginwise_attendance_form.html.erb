@@ -17,6 +17,7 @@
             <%= select :employee_attendance,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, {onchange:"var a={department_id:$(this).val(),month:$('#employee_attendance_month').val(),year:$('#employee_attendance_year').val()};$('.ajax-progress').show(); $.get('/employee_attendances/display_employee_attendance_list',a,function(response){});",class: 'form-control'} %>
            </div>
         </div>
+
         </div>
      </div>
    <div id="employee_attendance_li"></div>

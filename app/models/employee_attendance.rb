@@ -35,6 +35,49 @@ class EmployeeAttendance < ActiveRecord::Base
     Employee.where(id: finals)
   end
   
+   def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << column_names
+      all.each do |employee_attendance|
+        csv << employee_attendance.attributes.values_at(*column_names)
+      end
+    end
+  end
+
+  def self.to_txt
+    # attributes = %w{employee_id day in out shift_master_id is_proceed present user_id}
+    attributes = %w{employee_id day in_time out_time present}
+
+    CSV.generate(:col_sep => "#") do |csv|
+      csv << attributes
+      all.each do |employee|
+        csv << attributes.map{ |attr| employee.send(attr) }
+      end
+    end
+  end
+
+  def self.import(file)
+    #allowed_attributes = ["employee_id","day","in_time","out_time","present"]
+     #if file.columnname("employee_id","day","in_time","out_time","present")
+        spreadsheet = open_spreadsheet(file)
+        header = spreadsheet.row(1)
+        (2..spreadsheet.last_row).each do |i|
+          row = Hash[[header, spreadsheet.row(i)].transpose]
+          employee_attendance = find_by_id(row['id']) || new
+          employee_attendance.attributes = row.to_hash.slice(*row.to_hash.keys)
+          employee_attendance.save!
+        end
+  end
+
+  def self.open_spreadsheet(file)
+    case File.extname(file.original_filename)
+    when '.csv' then Roo::CSV.new(file.path, file_warning: :ignore)
+    when '.xls' then Roo::Excel.new(file.path, file_warning: :ignore)
+    when '.xlsx' then Roo::Excelx.new(file.path, file_warning: :ignore)
+    else raise "Unknown file type: #{file.original_filename}"
+    end
+  end
+
   private
 
   def self.filter_by_date_costcenter_and_department(date, costcenter, department, current_user)

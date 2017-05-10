@@ -27,12 +27,16 @@ class Ability
         can :manage, :all
       elsif user.role.name == 'HOD'
         can :read, Employee
+        can :read, [JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family]
         can :manage, [EmployeeLeavRequest, ParticularLeaveRecord]
         can :manage, [GoalBunch, GoalRating]
         can :manage, [TravelRequest, DailyBillDetail]
         can :manage, [OnDutyRequest, ParticularOdRecord]
+        can :read, [EmployeeTemplate, EmployeeSalaryTemplate]
       elsif user.role.name == 'Supervisor'
         can :read, Employee
+        can :read, [JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family]
+        can :read, [EmployeeTemplate, EmployeeSalaryTemplate]
         can :manage, EmployeeLeavRequest
         can :manage, [GoalBunch, GoalRating]
         can :manage, [TravelRequest, DailyBillDetail]

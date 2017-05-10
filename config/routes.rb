@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   resources :employee_jc_lists
   resources :joining_checklist_masters
+  resources :employee_gps
   resources :payroll_periods
   resources :visitor_details do
     collection do
@@ -18,6 +19,7 @@ Rails.application.routes.draw do
     collection do
       get :employee_list
       get :apply_tds
+      get :deduction_list
     end
   end
   resources :employee_gps_histories
@@ -66,6 +68,8 @@ Rails.application.routes.draw do
       get :final_approval_training_list
       get :resignation_history
       get :final_approval_emp_resignation_list
+      get :employee_attendance
+      post :show_datewise_attendance
     end
   end
 
@@ -550,6 +554,10 @@ end
 
       get :manager_attendance_form
       get :display_attendance_for_manager
+
+      post :import
+      get :import_employee_attendance
+      get :import_employee_attendance_to_txt
     end
   end
   resources :salary_comp_mappings
@@ -1229,6 +1237,8 @@ end
       get :show_resignation_detail
       get :employee_transfer
       get :travel_request
+      get :employee_attendance
+      post :show_self_datewise_attendance
     end
   end
 

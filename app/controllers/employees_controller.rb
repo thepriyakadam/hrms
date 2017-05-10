@@ -167,18 +167,12 @@
       end
   end
 
-  def joining_checklist
-    # byebug
-    @employee_jc_list = EmployeeJcList.all
-     @employee = EmployeeJcList.where(employee_id: current_user.employee_id)
-  end
-
   def is_confirm
     @employee_jc_list = EmployeeJcList.find(params[:employee_jc_list])
     @employee_id = Employee.find(params[:employee_id])
     EmployeeJcList.find(@employee_jc_list.id).update(status: true,admin_id: current_user.employee_id)
     flash[:notice] = "Confirmed Successfully"
-    redirect_to employees_path(@employee_id)
+    redirect_to request.referrer
   end
 
 
@@ -415,6 +409,11 @@
     @employee = Employee.find(params[:id])
     #@employee_documents = EmployeeDocument.all
   end
+
+  def joining_checklist
+     @employee = Employee.find(params[:id])
+     # @employee1 = Employee.where(employee_id: current_user.employee_id)
+end
 
   def manager
     @employees = Employee.where.not(manager_id: nil)

@@ -1997,6 +1997,7 @@ end
       get :ajax_setup_payroll
       get :ajax_new_assigned_asset
       get :ajax_assigned_asset_detail
+      get :joining_checklist
       get :manager
       get :transfer_form
       post :transfer_employee
@@ -2050,7 +2051,6 @@ end
       post :display_employee_details
       get :employee_detail_form
       get :employee_record_pdf
-      get :joining_checklist
       get :is_confirm
     end
     member do

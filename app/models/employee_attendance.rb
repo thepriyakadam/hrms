@@ -4,7 +4,11 @@ class EmployeeAttendance < ActiveRecord::Base
   belongs_to :machine_attendance
   belongs_to :company_time_master
   validates :day, uniqueness: { scope: [:employee_id] }
-
+  #attr_accessible :employee_id, :day, :present, :in_time, :out_time
+  # extend ActiveModel::Naming
+  # include ActiveModel::Conversion
+  # include ActiveModel::Validations
+  # attr_accessor :file
 
   def self.collect_rolewise(current_user)
     if current_user.class == Group

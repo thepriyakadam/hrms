@@ -143,6 +143,10 @@ class SlabsController < ApplicationController
     redirect_to employee_list_slabs_path
   end
 
+  def deduction_list
+    @texable_amounts = TexableAmount.all
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_slab

@@ -110,10 +110,6 @@ class WeekOffMastersController < ApplicationController
     to = params[:week_off_masters][:to]
     is_active = params[:week_off_masters][:is_active]
     is_prefix = params[:week_off_masters][:is_prefix]
-
-    payroll_period = PayrollPeriod.where(status: true).take 
-    if  from.to_date >= payroll_period.from.to_date && to.to_date <= payroll_period.to.to_date
-
       if @employee_ids.nil?
         flash[:alert] = "Please Select the Checkbox"
       else
@@ -122,10 +118,6 @@ class WeekOffMastersController < ApplicationController
           flash[:notice] = "Created successfully"
         end
       end
-
-    else #start_date == payroll_period.from.to_date
-      flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
-    end
     redirect_to new_week_off_master_path
   end
 

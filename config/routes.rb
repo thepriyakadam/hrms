@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :employee_gps
   resources :payroll_periods
   resources :visitor_details do
     collection do
@@ -16,6 +17,7 @@ Rails.application.routes.draw do
     collection do
       get :employee_list
       get :apply_tds
+      get :deduction_list
     end
   end
   resources :employee_gps_histories
@@ -548,6 +550,10 @@ end
 
       get :manager_attendance_form
       get :display_attendance_for_manager
+
+      post :import
+      get :import_employee_attendance
+      get :import_employee_attendance_to_txt
     end
   end
   resources :salary_comp_mappings

@@ -17,7 +17,7 @@
     <tbody>
       <% @overtime_daily_records.each do |os| %>
         <tr>
-          <% year = os.ot_daily_date.DATE_FORMAT("%Y")%>
+          <% year = os.ot_daily_date.strftime("%Y")%>
           <td><%= year %></td>
           <td>
             <%= link_to 'January',employees_overtime_daily_records_path(year: year, month: "January") , class: 'btn btn-xs btn-primary' %>

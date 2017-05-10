@@ -45,6 +45,7 @@ class TravelRequestsController < ApplicationController
     @travel_request = TravelRequest.new
     session[:active_tab] = "TravelManagemnt"
     session[:active_tab1] = "travelrequestprocess"
+    @employee = Employee.find(current_user.employee_id)
   end
 
   # GET /travel_requests/1/edit
@@ -54,6 +55,7 @@ class TravelRequestsController < ApplicationController
   # POST /travel_requests
   # POST /travel_requests.json
   def create
+    # byebug
     @travel_request = TravelRequest.new(travel_request_params)
     @travel_request.current_status = "Pending"
     
@@ -235,10 +237,10 @@ end
         flash[:notice] = 'Travel Request Sent to Higher Authority for Approval'
         redirect_to travel_history_travel_requests_path
      elsif employee.manager_2_id.nil?
-           @travel_request.update(reporting_master_id: first_manager_id,current_status: "Approved & Send Next")
-           ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id,reporting_master_id: current_user.employee_id,travel_status: "Approved & Send Next")
-           flash[:notice] = 'Travel Request Approved Successfully'
-           redirect_to travel_history_travel_requests_path
+        @travel_request.update(reporting_master_id: first_manager_id,current_status: "Approved & Send Next")
+        ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id,reporting_master_id: current_user.employee_id,travel_status: "Approved & Send Next")
+        flash[:notice] = 'Travel Request Approved Successfully'
+        redirect_to travel_history_travel_requests_path
      end
   end
 

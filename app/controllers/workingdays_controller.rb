@@ -535,6 +535,41 @@ class WorkingdaysController < ApplicationController
     @d2 = @date2.strftime('%B/%Y')
   end
 
+  def date_report
+   session[:active_tab] = "TimeManagement" 
+   session[:active_tab1] = "Report"
+  end
+
+  def print_date_report
+    # byebug
+    @from = params[:salary] ? params[:salary][:from_date] : params[:from_date]
+    @to = params[:salary] ? params[:salary][:to_date] : params[:to_date]
+    @employee = params[:salary] ? params[:salary][:employee_id] : params[:employee_id]
+    @from_date = @from.to_date
+    @to_date = @to.to_date
+    @workingdays = Workingday.where(date: @from.to_date..@to.to_date,employee_id: @employee)
+
+      respond_to do |format|
+      format.js
+      format.xls {render template: 'workingdays/date_report_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'date_report_pdf',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'workingdays/date_report_pdf.pdf.erb',
+              # show_as_html: params[:debug].present?,
+              :page_height      => 1000,
+              :dpi              => '300',
+              :margin           => {:top    => 10, # default 10 (mm)
+                            :bottom => 10,
+                            :left   => 20,
+                            :right  => 20},
+              :show_as_html => params[:debug].present?
+          end
+        end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

@@ -73,15 +73,20 @@ class EmployeeAttendancesController < ApplicationController
     @costcenter, @date = params[:salary][:name], params[:salary][:day].to_date
       if current_user.class == Member
         if current_user.role.name == 'GroupAdmin'
-          @employees = Employee.where(status: "Active").filter_by_date_and_costcenter(@date, @costcenter, current_user)
+          joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
+          @employees = Employee.where(status: "Active",id: joining_detail).filter_by_date_and_costcenter(@date, @costcenter, current_user)
         elsif current_user.role.name == 'Admin'
-          @employees = Employee.where(status: "Active",company_id: current_user.company_location.company_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
+          joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
+          @employees = Employee.where(status: "Active",company_id: current_user.company_location.company_id,id: joining_detail).filter_by_date_and_costcenter(@date, @costcenter, current_user)
         elsif current_user.role.name == 'Branch'
-          @employees = Employee.where(status: "Active",company_location_id: current_user.company_location_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
+          joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
+          @employees = Employee.where(status: "Active",company_location_id: current_user.company_location_id,id: joining_detail).filter_by_date_and_costcenter(@date, @costcenter, current_user)
         elsif current_user.role.name == 'Employee'
-          @employees = Employee.where(status: "Active",id: current_user.employee_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
+          joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
+          @employees = Employee.where(status: "Active",id: current_user.employee_id,id: joining_detail).filter_by_date_and_costcenter(@date, @costcenter, current_user)
         elsif
-        @employees = Employee.where(status: "Active").filter_by_date_and_costcenter(@date, @costcenter, current_user)
+          joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
+        @employees = Employee.where(status: "Active",id: joining_detail).filter_by_date_and_costcenter(@date, @costcenter, current_user)
         #@employees = Employee.filter_by_date_costcenter_and_department(@date, @costcenter, @department, current_user)
         end
       @emp_attendances = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ? AND present = ?", @date.strftime('%m/%Y'), "W")
@@ -1454,6 +1459,37 @@ class EmployeeAttendancesController < ApplicationController
 
   end
 
+  def manager_attendance_form
+    session[:active_tab] ="ManagerSelfService"
+  end
+
+  def display_attendance_for_manager
+    @month = params[:month].to_s
+    @year = params[:year].to_s
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+
+    if current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @employee = Employee.where(status: 'Active').pluck(:id)
+        @employees = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ?", @date.strftime('%m/%Y')).where(employee_id: @employee).group(:employee_id)
+      elsif current_user.role.name == 'Admin'
+        @employee = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
+        @employees = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ?", @date.strftime('%m/%Y')).where(employee_id: @employee).group(:employee_id)
+      elsif current_user.role.name == 'Branch'
+        @employee = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
+        @employees = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ?", @date.strftime('%m/%Y')).where(employee_id: @employee).group(:employee_id)
+      elsif current_user.role.name == 'HOD'
+        @employee = Employee.where(status: 'Active',department_id: current_user.department_id).pluck(:id)
+        @employees = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ?", @date.strftime('%m/%Y')).where(employee_id: @employee).group(:employee_id)
+      elsif current_user.role.name == 'Superviser'
+      elsif current_user.role.name == 'Employee'
+      end
+    else
+      @employee = Employee.where(status: 'Active').pluck(:id)
+      @employees = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ?", @date.strftime('%m/%Y')).where(employee_id: @employee).group(:employee_id)
+    end
+  end
 
 #   def from_date_wise_xls
 #     @start = params[:day]

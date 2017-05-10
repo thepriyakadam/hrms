@@ -1839,5 +1839,3 @@ end
 #    puts "#{i} Record inserted.------#{ex.cell(line,'B')}--------------------#{ex.cell(line,'C')}--------------"
 #    i += 1
 #  end
-#  # end
-# end

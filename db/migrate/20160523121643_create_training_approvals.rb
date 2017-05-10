@@ -11,7 +11,6 @@ class CreateTrainingApprovals < ActiveRecord::Migration
       t.string :no_of_employee
       t.text :description
       t.text :justification
-
       t.timestamps null: false
     end
   end

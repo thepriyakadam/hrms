@@ -66,9 +66,8 @@ class SalaryMapSapsController < ApplicationController
       flash[:notice] = 'Salary Map Sap saved Successfully.'   
   end
 
-  # PATCH/PUT /salary_map_saps/1
-  # PATCH/PUT /salary_map_saps/1.json
-  def update
+
+def update
     if @salary_map_sap.update(salary_map_sap_params)
       @company_location = params[:food_deduction][:company_location_id]
       @salary_map_sap.update(company_location_id: @company_location)

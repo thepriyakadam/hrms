@@ -79,10 +79,9 @@
     </tr>
         <tr>
         <th>Sr.No</th>
-        <th>Approver ID</th>
-        <th>Approver Name</th>
+        <th>Employee ID</th>
+        <th>Employee Name</th>
         <th>Travel Request Status</th>
-        
         <th>Expence Claim Status</th>
        </tr>
       </thead>
@@ -94,7 +93,7 @@
             <td><%= i=i+1 %></td>
             <% b=a.reporting_master_id
                 emp=Employee.where(id: b).take %>
-            <td><%= emp.manual_employee_code%></td>
+            <td><%= emp.try(:manual_employee_code)%></td>
             <td><%= emp.try(:first_name)%> <%= emp.try(:middle_name)%> <%= emp.try(:last_name)%></td>
             <td><%= a.travel_status %></td>
             <td>

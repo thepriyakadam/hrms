@@ -1,0 +1,155 @@
+<div class="box box-default">
+<div class="box-header with-border">
+    <h3 class="box-title">Capture Resume Details</h3>
+  </div><!-- /.box-header -->
+ <div class="box-body">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
+      <tr> 
+        <th colspan="2"></th>
+        <th colspan="2"></th>
+      </tr>
+  
+      <tr>
+        <th><strong>Name of candidate:</strong></th>
+        <td><%= @capture_resume.name_of_candidate %></td>
+
+        <th><strong>Contact no 1:</strong></th>
+        <td><%= @capture_resume.contact_no %></td>
+      </tr>
+
+       <tr>
+        <th><strong>Contact no 2:</strong></th>
+        <td><%= @capture_resume.contact_no2 %></td>
+
+        <th><strong>Post applied:</strong></th>
+        <td><%= @capture_resume.post_applied %></td>
+      </tr>
+
+
+      <tr>
+        <th><strong>Mode of application:</strong></th>
+        <td><%= @capture_resume.mode_of_application %></td>
+
+        <th><strong>Date Of Application:</strong></th>
+        <td><%= @capture_resume.date_of_application %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Url:</strong></th>
+        <td><%= @capture_resume.url %></td>
+
+        <th><strong>Fax:</strong></th>
+        <td><%= @capture_resume.fax %></td>
+      </tr>
+
+       <tr>
+        <th><strong>Educational Qualification:</strong></th>
+        <td><%= @capture_resume.degree.try(:name) %></td>
+
+        <th><strong>Resume File Name</strong></th>
+        <td><%= @capture_resume.avatar_file_name %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Photo File Name:</strong></th>
+        <td><%= @capture_resume.passport_photo_file_name %></td>
+
+        <th><strong>Street:</strong></th>
+        <td><%= @capture_resume.street %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Country</strong></th>
+        <td><%= @capture_resume.country.try(:name) %></td>
+
+        <th><strong>State</strong></th>
+        <td><%= @capture_resume.state.try(:name) %></td>
+      </tr>
+      
+      <tr>
+        <th><strong>District</strong></th>
+        <td><%= @capture_resume.district.try(:name) %></td>
+
+        <th><strong>City:</strong></th>
+        <td><%= @capture_resume.city %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Zip code:</strong></th>
+        <td> <%= @capture_resume.zip_code %></td>
+
+         <th><strong>Current job title:</strong></th>
+        <td><%= @capture_resume.current_job_title %></td>
+      </tr>
+  
+      <tr>
+        <th><strong>Current employeer:</strong></th>
+        <td><%= @capture_resume.current_employeer %></td>
+
+        <th><strong>Skill set:</strong></th>
+        <td><%= @capture_resume.skill_set %></td>
+      </tr>
+
+      <tr>
+        <th> <strong>Additional info:</strong></th>
+        <td><%= @capture_resume.additional_info %></td>
+
+         <th><strong>Email 1:</strong></th>
+         <td><%= @capture_resume.email %></td>
+      </tr>
+
+      <tr>
+         <th> <strong>Email 2:</strong></th>
+         <td><%= @capture_resume.email2 %></td> 
+
+          <th><strong>Twitter:</strong></th>
+        <td><%= @capture_resume.twitter %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Linkedin:</strong></th>
+        <td><%= @capture_resume.linkedin %></td>
+
+        <th><strong>Current CTC:</strong></th>
+        <td><%= @capture_resume.current_salary %></td>
+        </tr>
+
+      <tr>
+        <th><strong>Current CTC:</strong></th>
+        <td><%= @capture_resume.current_salary %></td>
+         
+          <th><strong>Current location:</strong></th>
+        <td><%= @capture_resume.current_location %></td>
+      </tr>
+
+      <tr>
+        <th> <strong>Notice period:</strong></th>
+        <td><%= @capture_resume.notice_period %></td>
+
+        <th><strong>Reason for leaving:</strong></th>
+        <td><%= @capture_resume.reason %></td>
+
+       <!--  <th><strong>Interview date:</strong></th>
+        <td><%= @capture_resume.interview_date %></td> -->
+      </tr>
+
+      <!-- <tr> -->
+        <!-- <th><strong>Interview time:</strong></th>
+        <td><%= @capture_resume.interview_time %></td> -->
+
+        
+    <!--   </tr> -->
+
+      <tr>
+        <th><strong>Work experience:</strong></th>
+        <td><%= @capture_resume.work_experience %></td>
+
+        <th><strong>Candidate call status:</strong></th>
+        <td><%= @capture_resume.candidate_call_status %></td>
+      </tr>
+
+</table>
+<%= link_to 'Edit', edit_capture_resume_path(@capture_resume),class: 'btn btn-success btn-sm fa fa-edit' %> |
+<%= link_to 'Back', capture_resumes_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+</div>
+</div>

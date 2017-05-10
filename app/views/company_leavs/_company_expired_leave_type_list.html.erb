@@ -1,0 +1,20 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Employee Grade</th>
+      <th>Leave Type</th>
+      <th>No. of leave days</th>
+      <th>Expire Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @expired_leavs.each do |company_leav| %>
+      <tr>
+        <td><%= company_leav.employee_grade.try(:name) %></td>
+        <td><%= company_leav.leav_category.try(:name) %></td>
+        <td><%= company_leav.no_of_leave %></td>
+        <td><%= company_leav.expiry_date %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

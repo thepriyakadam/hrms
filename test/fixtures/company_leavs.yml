@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_grade_id: 
+  no_of_leave: MyString
+  expire_date: 2015-11-24
+
+two:
+  employee_grade_id: 
+  no_of_leave: MyString
+  expire_date: 2015-11-24

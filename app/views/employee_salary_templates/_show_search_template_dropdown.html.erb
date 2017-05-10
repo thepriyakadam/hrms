@@ -1,0 +1,6 @@
+<div class="row">
+	<div class="col-sm-3">
+		<%=select :salary,:template, all_salary_template,{include_blank: "Please Select Template"},{onchange:"var a={id:$(this).val(),employee_id : '#{@employee.id}'}; $.get('/employee_salary_templates/find_template',a,function(response){});",class: 'form-control'}%>
+	</div>	
+</div>
+       

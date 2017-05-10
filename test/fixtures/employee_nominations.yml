@@ -1,0 +1,39 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nominational_master_id: 
+  family_id: 
+  nomination: 9.99
+  mental_illness: false
+  minor: false
+  guardian_name: MyString
+  relation_id: 
+  same_address: false
+  address: MyText
+  city: MyString
+  district_id: 
+  state_id: 
+  contry_id: 
+  pin_code: 1
+  phone_no: 1
+  mobile_no: 1
+  email: MyString
+
+two:
+  nominational_master_id: 
+  family_id: 
+  nomination: 9.99
+  mental_illness: false
+  minor: false
+  guardian_name: MyString
+  relation_id: 
+  same_address: false
+  address: MyText
+  city: MyString
+  district_id: 
+  state_id: 
+  contry_id: 
+  pin_code: 1
+  phone_no: 1
+  mobile_no: 1
+  email: MyString

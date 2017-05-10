@@ -1,0 +1,37 @@
+<%= bootstrap_form_for @employee_salary_template do |f| %>
+  <div class="row">
+    <div class="col-xs-3">
+      <%= f.label @employee_salary_template.salary_component.name %>
+    </div>
+    <div class="col-xs-3">
+      <%= f.text_field :monthly_amount,hide_label:true, placeholder: "Monthly Amount" %>  
+    </div>
+    <div class="col-xs-3">
+      <%= f.text_field :annual_amount,hide_label:true, placeholder: "Monthly Amount", readonly: true %>  
+    </div>
+    <div class="col-xs-2">
+      <%= f.submit "Update", class: 'btn btn-success btn-sm' %>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(function(){
+    $("#employee_salary_template_monthly_amount").on("input", function(){
+      calculate_annual_amount();
+    });
+
+    function calculate_annual_amount(){
+      var monthly_amount = parseFloat($('#employee_salary_template_monthly_amount').val()); 
+      
+      var annual_amount = "";
+      if(isNaN(monthly_amount)){
+        annual_amount = " ";
+      }
+      else {
+        annual_amount = (monthly_amount*12).toFixed(2);
+      }
+      $('#employee_salary_template_annual_amount').val(annual_amount);
+    }
+  });
+</script>

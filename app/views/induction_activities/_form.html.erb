@@ -1,0 +1,136 @@
+<%= bootstrap_form_for(@induction_activity,html: {id: "induction_activity"},induction_master_id: @induction_master.id) do |f| %>
+<%= f.hidden_field :induction_master_id,value:@induction_master.id  %>
+<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+<!-- 
+  Template No:<td><%= @induction_master.code %></td>
+  Description:<td><%= @induction_master.description %></td> -->
+  <% @induction_activity = InductionActivity.where(induction_master_id: @induction_master.id).take %>
+  <% if @induction_activity.try(:is_confirm) == true %>
+  <%else%>
+  <div class="row">
+      <div class="col-sm-3">
+          <div class="form group-required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :activity_date,label: "Day",class: 'activity_date'%>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+             <%= f.text_field :from,label: "From",class: 'form-control timepicker' %>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+            <%= f.text_field :to,label: "To",class: 'form-control timepicker' %>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+    </div>
+    <!-- <div class="col-sm-3">
+      <div class="form-group required">
+        <= f.select :employee_id,all_employee_list,{label: "Contact Person",include_blank: " Select Contact Person"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+      </div>
+    </div> -->
+
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :facilitator_1,label: "Facilitator 1&Presenter" %>
+      </div>
+    </div>
+  </div>
+
+    <div class="row">
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :facilitator_2,label: "Facilitator 2&Presenter" %>
+      </div>
+    </div>
+     <div class="col-sm-9">
+      <div class="field">
+        <%= f.text_field :program_agenda,placeholder: 'Eg: Program Agenda',label: "Program Agenda" %>
+      </div>
+    </div>
+  </div>
+<!-- <div class="row">
+  <div class="col-sm-3">
+    <div class="field">
+      < f.file_field :avatar,label: 'Document Upload' %>
+    </div>
+ </div>
+ </div> --><br>
+ 
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Induction Activity", class: 'btn btn-primary btn-sm' %>
+      </div>
+    </div>
+  </div>
+<% end %><br>
+<% end %>
+
+<script type="text/javascript">
+  $(function(){
+    $('.activity_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-5:+2',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+
+<script>
+$("#induction_activity").validate({
+    rules: {
+      "induction_activity[activity_date]":{
+        required: true
+              },
+      "induction_activity[from]":{
+        required: true
+      },
+      "induction_activity[to]":{
+        required: true
+      },
+      "induction_activity[facilitator_1]":{
+        required: true
+      }
+    },
+    messages: {
+      "induction_activity[activity_date]":{
+        required: "Please specify Activity"
+      },
+      "induction_activity[from]":{
+        required: "Please specify Day"
+      },
+      "induction_activity[to]":{
+        required: "Please specify duration"
+      },
+      "induction_activity[facilitator_1]":{
+        required: "Please specify Facilitator"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

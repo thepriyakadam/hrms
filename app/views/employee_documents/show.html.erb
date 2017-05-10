@@ -1,0 +1,36 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Document Details</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
+
+    <tr>
+      <th><strong>Document Name:</strong></th>
+      <td> <%= @employee_document.name %></td>
+
+      <th> <strong>Document:</strong></th>
+      <td> <%= @employee_document.document_file_name %></td>
+    </tr>
+
+     <tr>
+      <th><strong>Photo:</strong></th>
+      <td> <%= @employee_document.image_file_name %></td>
+
+      <th> <strong>Status:</strong></th>
+      <td> <%= @employee_document.status %></td>
+    </tr>
+    
+ </table>
+    <%= image_tag @employee_document.image.url, :size => "100x100" %><br><br>
+
+    <%= link_to 'Edit', edit_employee_document_path(@employee_document),class: 'btn btn-success btn-sm fa fa-edit' %> 
+
+    <%= link_to 'Back', employees_path, class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+ 

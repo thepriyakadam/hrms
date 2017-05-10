@@ -1,0 +1,49 @@
+<div class="box-body">
+
+<div style="width: 420px; height: 500px;
+    padding: 10px;
+    border: 5px solid gray;
+    margin: 0;">
+  <div style="float:right;">Date - <%= Time.zone.now.to_date %> </div><br><br>
+
+  <b><center>SERVICE CERTIFICATE</center></b><br><br>
+  <table id="example2" class="table table-bordered table-hover table-condensed'">
+  <tr>
+  <th> Name </th> 
+  <td> <%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %> </td>
+  </tr>
+
+  <tr>
+  <th>Father's Name </th>
+  <td></td>
+  </tr>
+
+   <tr>
+   <th>Department</th> <td><%= @employee.try(:department).try(:name) %> </td>
+   </tr>
+
+    <tr>
+   <th>Designation </th> <td> <%= @employee.joining_detail.employee_designation.try(:name) %> </td>
+   </tr>
+
+    <tr>
+   <th> Date of Joining </th> <td> <%= @employee.joining_detail.joining_date %> </td></tr>
+
+    <tr>
+   <th>Date Of Leaving </th><td> <%= @employee_resignation.try(:resignation_date) %></td></tr>
+
+   <tr>
+   <th>Reason For Leaving</th><td> </td></tr>
+
+    <tr>
+   <th>PF No.</th><td> <%= @employee.joining_detail.try(:employee_pf_no) %></td></tr>
+   </table>
+
+
+  <p>For <b> <%= current_user.employee.company_location.company.try(:description) %> </b></p>
+
+  <P>HR</P>
+
+
+</div>
+</div>

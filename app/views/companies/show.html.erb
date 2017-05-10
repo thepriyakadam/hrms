@@ -1,84 +1,104 @@
-<p id="notice"><%= notice %></p>
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Company Details</h3>
+    <div class="box-tools pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
 
-<p>
-  <strong>Name:</strong>
-  <%= @company.name %>
-</p>
+    <tr>
+      <th>Company Code</th>
+      <td><%=@company.manual_company_code%></td>
 
-<p>
-  <strong>Company type:</strong>
-  <%= @company.company_type.name %>
-</p>
+      <th>Name</th>
+      <td><%= @company.name %></td>
+    </tr>
+    <tr>
+        <th>Company Full Name</th>
+        <td><%= @company.description %></td>
 
-<p>
-  <strong>Registration no:</strong>
-  <%= @company.registration_no %>
-</p>
+        <th>Company Type</th>
+        <td><%= @company.company_type.try(:name) %></td>
+    </tr>
 
-<p>
-  <strong>Pan card no:</strong>
-  <%= @company.pan_card_no %>
-</p>
+      <tr>
+        <th>Registration No</th>
+        <td><%= @company.registration_no %></td>
 
-<p>
-  <strong>Tax no:</strong>
-  <%= @company.tax_no %>
-</p>
+        <th>PAN Card No</th>
+        <td><%= @company.pan_card_no %></td>
+      </tr>
 
-<p>
-  <strong>Professional tax no:</strong>
-  <%= @company.professional_tax_no %>
-</p>
+      <tr>
+        <th>Tax No</th>
+        <td><%= @company.tax_no %></td>
 
-<p>
-  <strong>Address:</strong>
-  <%= @company.address %>
-</p>
+        <th>Professional Tax No</th>
+        <td><%= @company.professional_tax_no %></td>
+      </tr>
 
-<p>
-  <strong>City:</strong>
-  <%= @company.city %>
-</p>
+      <tr>
+        <th>Address</th>
+        <td colspan="3"><%= @company.address %></td>
 
-<p>
-  <strong>District:</strong>
-  <%= @company.district %>
-</p>
+      </tr>
+      <tr>
 
-<p>
-  <strong>Pin code:</strong>
-  <%= @company.pin_code %>
-</p>
+        <th>City</th>
+        <td><%= @company.city %></td>
 
-<p>
-  <strong>State:</strong>
-  <%= @company.state %>
-</p>
 
-<p>
-  <strong>Email:</strong>
-  <%= @company.email %>
-</p>
+        <th>State</th>
+        <td><%= @company.state.try(:name) %></td>
 
-<p>
-  <strong>Contact no:</strong>
-  <%= @company.contact_no %>
-</p>
+      </tr>
 
-<p>
-  <strong>Web site:</strong>
-  <%= @company.web_site %>
-</p>
+      <tr>
 
-<p>
-  <strong>Starting date:</strong>
-  <%= @company.starting_date %>
-</p>
+        <th>District</th>
+        <td><%= @company.district.try(:name) %></td>
 
-<p>
-  <strong>Ceo name:</strong>
-  <%= @company.ceo_name %>
-</p>
+         <th>Country</th>
+        <td><%= @company.country.try(:name) %></td>
 
-<%= link_to 'Edit', edit_company_path(@company) %> |
-<%= link_to 'Back', companies_path %>
+      </tr>
+
+      <tr>
+
+        <th>Pin Code</th>
+        <td><%= @company.pin_code %></td>
+
+        <th>Starting Date</th>
+        <td><%= @company.starting_date %></td>
+      </tr>
+
+      <tr>
+        <th>Contact No</th>
+        <td><%= @company.contact_no %></td>
+
+        <th>Email</th>
+        <td><%= @company.email %></td>
+      </tr>
+      <tr>
+        <th>Website</th>
+        <td><%= @company.web_site %></td>
+        <th>Company Logo</th>
+        <td>
+          <% if @company.company_logo_file_name == nil %>
+              <small class="label label-default">Not Available</small>
+              <% else %>
+              <!-- <center><= link_to '',download_company_logo_path(@company),class: 'btn btn-xs fa fa-picture-o' %></center> -->
+              <%= image_tag @company.company_logo.url, :size => "130x50" %><br><br>
+              <%end %>
+        </td>
+      </tr>
+    </table> 
+    
+<br>
+
+    <%= link_to 'Edit', edit_company_path(@company),class: 'btn btn-success btn-sm fa fa-edit' %> 
+    <%= link_to 'Back', companies_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

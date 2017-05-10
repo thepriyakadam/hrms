@@ -1,0 +1,67 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Induction Activity Detail</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr>
+      <td colspan="6">
+        <center>
+            <% if current_user.employee.company_location.company.company_logo == nil %>
+          <% else %>
+            <center> <%= image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+            <%end%>
+          <%= current_user.employee.company_location.company.description %><br>
+          <%= current_user.employee.company_location.company.address %><br>
+       </center><br>
+      </td>
+    </tr>
+   
+   <tr>
+     <td colspan="2"><strong>ID : </strong> <%= @induction_detail.employee.manual_employee_code %></td>
+      
+      <td colspan="2"><strong>Employee : </strong><%= @induction_detail.employee.try(:first_name) %> <%= @induction_detail.employee.try(:middle_name) %> <%= @induction_detail.employee.try(:last_name) %></td>
+
+      <td colspan="2"><strong>Contact No : </strong><%= @induction_detail.employee.contact_no %></td>
+    </tr>
+    <tr>
+      <td colspan="2"><strong>Department : </strong><%= @induction_detail.employee.company_location.try(:name) %> - <%= @induction_detail.employee.department.try(:name) %></td>
+
+      <td colspan="2"> <strong>Designation : </strong> <%= @induction_detail.employee.joining_detail.try(:employee_designation).try(:name)%></td>
+
+       <td colspan="2"><strong>Date Of Joining : </strong><%= @induction_detail.employee.joining_detail.joining_date %></td>
+    </tr>
+     <tr><th colspan="6"><center>Induction Activity</center></th></tr>
+    <tr>
+      <th>Sr.No</th>
+      <th>Day</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Duration</th>
+      <th>Facilitator&Presenter</th>
+    </tr>
+
+  <tbody>
+  <% i = 0 %>
+    <% @induction_activities.each do |induction_activity| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= induction_activity.activity_date %></td>
+        <td><%= induction_activity.from %></td>
+        <td><%= induction_activity.to %></td>
+        <td><%= induction_activity.duration %></td>
+        <td><%= induction_activity.facilitator_1 %> , 
+        <%= induction_activity.facilitator_2 %></td>
+      </tr>
+      <tr>
+      <td></td>
+      <td colspan="5"><strong>Program Agenda : </strong> <%= induction_activity.program_agenda %></td>
+      </tr>
+      <% end %>
+  </tbody>
+</table><br>
+<%= link_to " Print",print_induction_details_induction_details_path(id: @induction_detail.id, format: "pdf"), class: "btn btn-xl btn-primary fa fa-print",:target => "_blank" %> | 
+<%= link_to 'Back', all_induction_detail_list_induction_details_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+</div>
+
+  </div><br>

@@ -1,0 +1,96 @@
+<div class="box">
+  <div class="box-header">
+    <div class="pull-right">
+      <%= link_to "New OD Request", new_on_duty_request_path, class: 'btn btn-sm btn-primary' %> 
+    </div>
+    <br><br>
+    <div class="box-body">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="field">
+         <table class="table table-bordered table-hover table-condensed'">
+           <thead>
+           <tr><th colspan="2"><center> OD Process </center></th></tr>
+           <tr>
+             <th>Employee </th>
+             <td><%= @employee.manual_employee_code %> - <%= full_name(@employee) %></td>
+           </tr>
+           <tr>
+              <th>Manager 1 </th>
+              <td><%= @employee.manager.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager)) %></td>
+            </tr>
+            <tr>
+              <th>Manager 2 </th>
+              <td><%= @employee.manager_2.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager_2)) %></td>
+            </tr>
+           </thead>
+         </table>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="box-body">
+      <table id="example" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>OD Type</th>
+            <th>From Date</th>
+            <th>To Date</th>
+            <th>No of Day</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @on_duty_requests.each do |on_duty_request| %>
+            <tr>
+              <td><%= on_duty_request.leave_type %></td>
+              <td><%= on_duty_request.start_date.to_date %></td>
+              <td><%= on_duty_request.end_date.to_date %></td>
+              <td><%= on_duty_request.no_of_day %></td>
+              <td><%= on_duty_request.reason %></td>
+              <td>
+                 <% on_duty_request.od_status_records.try(:each) do |o| %>
+                    <% case o.status %>
+                      <% when "Pending" %>
+                        <small class="label label-default">Pending</small>
+                      <% when "FirstApproved" %>
+                        <small class="label label-primary">FirstApproved</small>
+                      <% when "FinalApproved" %>
+                        <small class="label label-success">FinalApproved</small>
+                      <% when "Rejected" %>
+                        <small class="label label-danger">Rejected</small>
+                      <% when "Cancelled" %>
+                        <small class="label label-warning">Cancelled</small>
+                      <% else %>
+                        <small class="label label-info">Else</small>
+                    <%end%>
+                  <%end%>
+              </td>
+              <td>
+                <%= link_to '', on_duty_request, class: 'btn btn-default btn-xs fa fa-eye' %>
+                <% if on_duty_request.current_status == "Pending" %>
+                  <%= link_to '', cancel_od_status_record_path(on_duty_request), data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-trash' %>
+                <% elsif on_duty_request.current_status == "FinalApproved" %>
+                  <%= link_to 'Revert',show_od_record_on_duty_requests_path(on_duty_request), class: 'btn btn-danger btn-xs' %>
+                <% else %>
+                 
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

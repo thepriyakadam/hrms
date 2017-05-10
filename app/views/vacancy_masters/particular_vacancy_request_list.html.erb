@@ -1,0 +1,75 @@
+<div class="box">
+  <div class="box-header with-border">
+  <h6 class="box-title"> Employee Name: <%= full_name(@particular_vacancy_requests.first.employee) %></h6>
+    <div class="pull-right"></div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div class="row">
+      <div class="col-sm-12">
+        <table id="example" class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+              <th>Sr.No</th>
+              <th>Vacancy ID</th>
+              <th>Job Title</th>
+              <th>Open Date</th>
+              <th>Closed Date</th>
+              <th>Fulfillment Date</th>
+              <th>Candidate Name</th>
+              <th>Vacancy Request Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+          <% i = 0 %>
+            <% @particular_vacancy_requests.each do |particular_vacancy_request| %>
+              <tr>
+                <td><%= i=i+1 %></td>
+                <td><%= particular_vacancy_request.vacancy_master_id %></td>
+                <td><%= particular_vacancy_request.vacancy_name %></td>
+                <td><%= particular_vacancy_request.open_date %></td>
+                <td><%= particular_vacancy_request.closed_date %></td>
+                <td><%= particular_vacancy_request.fulfillment_date %></td>
+                <td><%= particular_vacancy_request.candidate_name %></td>
+                <td>
+                  <% if particular_vacancy_request.status == "Pending" %>
+                    <small class="label label-default">Pending</small>
+                   <% elsif particular_vacancy_request.status == "Approved" %>
+                    <small class="label label-primary">Approved</small>
+                   <% elsif particular_vacancy_request.status == "Reject" %>
+                    <small class="label label-danger">Reject</small>
+                    <% elsif particular_vacancy_request.status == "Approved & Send Next" %>
+                    <small class="label label-info">Approved & Send Next</small>
+                    <% elsif particular_vacancy_request.status == "Cancelled" %>
+                    <small class="label label-warning">Cancelled</small>
+                    <% else %>
+                     <small class="label label-success">Revert</small>
+                   <% end %>
+                </td>
+                <td>
+                <% if particular_vacancy_request.status == 'Approved' %>
+                  <% if particular_vacancy_request.is_complete == true %>
+                  <small class="label label-default">Vacancy Completed</small>
+                  <% else %>
+                  <div id="myModal2" class="modal fade"></div>
+                  <%= link_to ' Confirm Candidates',modal2_vacancy_masters_path(particular_vacancy_request),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>
+                  <!-- link_to ' Close',is_closed_vacancy_masters_path(particular_vacancy_request),class: 'btn btn-xs btn-danger' %>-->
+                  <% end %>
+              <% end %>
+               </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+   </div>
+  </div>
+
+<%= link_to 'Back', approved_vacancy_list_vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>

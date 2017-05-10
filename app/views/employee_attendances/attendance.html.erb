@@ -1,0 +1,25 @@
+
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Department Wise Employee List</h3>
+  </div>
+  <%= bootstrap_form_for(:salary, url: { action: 'department_wise_emp',year: @year,month: @month}, remote: true) do |f| %>
+    <div class="box-body">
+      <div class="row">
+        <div class="col-sm-3">
+          <label>Department </label>
+          <div class="field">
+            <%= select :salary,:department_id, all_department_type_list1, {include_blank: "Select Department"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+          </div>
+        </div>
+        <div class="col-sm-3" style="padding-top:20px;">
+          <div class="actions">
+            <%= f.submit "Employees Attendance" ,class: 'btn btn-primary btn-sm' %>
+          </div>
+        </div>
+      </div><br>
+      <div id="all_employee"></div>
+    </div>
+  <% end %>
+</div>
+

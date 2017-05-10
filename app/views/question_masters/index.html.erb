@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Question Masters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @question_masters.each do |question_master| %>
+      <tr>
+        <td><%= question_master.code %></td>
+        <td><%= question_master.name %></td>
+        <td><%= question_master.description %></td>
+        <td><%= link_to 'Show', question_master %></td>
+        <td><%= link_to 'Edit', edit_question_master_path(question_master) %></td>
+        <td><%= link_to 'Destroy', question_master, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Question master', new_question_master_path %>

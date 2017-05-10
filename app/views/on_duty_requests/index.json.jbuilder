@@ -1,0 +1,1 @@
+json.array! @on_duty_requests, partial: 'on_duty_requests/on_duty_request', as: :on_duty_request

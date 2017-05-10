@@ -1,0 +1,136 @@
+ 
+<div class="box-body">
+<%= bootstrap_form_for(@selected_resume,html: {id: "selected_resume"},vacancy_master_id: @vacancy_master.id) do |f| %>
+<%= f.hidden_field :vacancy_master_id,value:@vacancy_master.id  %>
+<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+<div>
+  <%= render 'show_vacancy_detail' %>
+</div>
+<% if @vacancy_master.is_confirmed == true %>
+<% else %>
+<div class="row">
+
+ <div class="col-sm-3">
+    <div class="form-group required">
+      <%= f.text_field :name,label: 'Name' %>
+    </div>
+  </div>
+
+<div class="col-sm-3">
+    <div class="form-group required">
+    <%= f.text_field :job_title,value: @vacancy_master.vacancy_name,readonly: true, label: 'Job Title' %>
+    </div>
+  </div>
+
+  <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :skillset,label: 'Skillset' %>
+      </div>
+  </div>
+
+  <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+          </div>
+          <%= f.select :degree_id, all_degree_list,{include_blank: " Select Qualification",label: "Educational Qualification"} %>
+        </div>
+      </div>
+    </div>
+
+   
+   
+ 
+
+</div>
+
+<div class="row">
+
+<div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :ctc, label: 'Expected CTC' %>
+    </div>
+  </div>
+
+
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :experience, label: 'Experience' %>
+    </div>
+  </div>
+
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :notice_period, label: 'Notice Period' %>
+    </div>
+  </div>
+
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :contact_no,label: 'Contact No.' %>
+    </div>
+  </div>
+
+ 
+
+ 
+
+</div>
+<div class="row">
+
+ <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :email_id, label: 'Email Id' %>
+    </div>
+  </div>
+
+
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.file_field :avatar,label: 'Resume Upload(only docx,pdf)' %>
+    </div>
+ </div>
+
+ <div class="col-sm-3">
+      <div class="field">
+        <%= f.file_field :passport_photo,label: 'Photo Upload(only jpeg,jpg,png)' %>
+      </div>
+    </div>
+
+  
+</div>
+<div class="row">
+<div class="col-sm-3">
+    <div class="actions">
+      <%= f.submit "Create", class: "btn btn-primary btn-sm" %>
+    </div>
+  </div>
+  </div>
+<% end %>
+</div>
+<% end %>
+<script>
+$("#selected_resume").validate({
+    rules: {
+      "selected_resume[skillset]":{
+        required: true
+              },
+      "selected_resume[degree_id]":{
+        required: true
+      }
+    },
+    messages: {
+      "selected_resume[skillset]":{
+        required: "Please specify Skillset"
+      },
+      "selected_resume[degree_id]":{
+        required: "Please specify Qualification"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

@@ -1,0 +1,114 @@
+<%= bootstrap_form_for(@esic_master,html: {id: 'esic_master'},remote:true) do |f| %>
+
+<div class="row">
+ 
+ <div class="col-sm-3">
+      <label>Base Component</label>
+      <div class="form-group required">
+        <%=select_tag("components[]",options_for_select(SalaryComponent.where(is_base: true).collect {|ff| [ff.name, ff.id] }),{:multiple=>true,:id => "batches",class: "form-control"})%>
+      </div>
+    </div>
+
+
+    <div class="col-sm-3">
+      <div class="form-group required">       
+        <%= f.select :esic,[['Yes','true'],['No','false']],{label: 'ESIC',include_blank: "Select ESIC Option"} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :percentage %>
+      </div>
+    </div>
+
+
+    
+    <div class="col-sm-3">
+     <div class="form-group required">
+      <label>From Date</label>
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+            <%= f.text_field :date_effective,hide_label: true, class: 'effective_date'%>
+        </div>
+      </div>
+    </div>
+
+   
+</div>
+
+<div class="row">
+  <div class="col-sm-3">
+     <div class="form-group required">
+      <label>To Date</label>
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+            <%= f.text_field :to_date,hide_label: true, class: 'effective_date'%>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-2">
+      <div class="field">
+        <%= f.text_field :max_limit %>
+      </div>
+    </div>   
+  <div class="col-sm-1">
+      <label>Status </label>
+      <div class="field">
+        <%= f.check_box :is_active, label: 'Active'%>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+    <label></label>
+      <div class="actions">
+        <%= f.submit"Create ESIC Master", :class => class_name, data: { disable_with: data_info }%>
+      </div>
+    </div>
+  </div>
+<% end %>
+<br>
+
+<script type="text/javascript">
+  $(function(){
+    $('.effective_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+  });
+
+  $(function() {
+    $('#batches').multiselect({
+    includeSelectAllOption: true,
+    maxHeight: 200
+    });
+  });
+
+   $("#esic_master").validate({
+  rules: {
+    "esic_master[date_effective]":{
+      required: true
+    },
+    "esic_master[esic]":{
+      required: true
+    },
+    "esic_master[percentage]":{
+      required: true
+    },
+    "esic_master[max_limit]":{
+      required: true
+    }
+  },
+  
+  errorPlacement: function(error, element) {
+   error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+   error.insertAfter(element.parent(element));
+  }
+});
+</script>

@@ -1,0 +1,37 @@
+<div class="box-header with-border">
+</div><!-- /.box-header --><!-- 
+<div class="box-body"></div> -->
+<table id="example1" class="table table-bordered table-hover table-condensed">
+ <thead>
+    <tr>
+      <th>Percentage</th>
+      <th>Effective From</th>
+      <th>Effective To</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <% @esic_employers.each do |esic_employer| %>
+      <tr>
+        <td><%= esic_employer.percentage %></td>
+        <td><%= esic_employer.effective_from %></td>
+        <td><%= esic_employer.effective_to %></td>
+        <td><%= esic_employer.is_active ? "Active" : "Inactive" %></td>
+        <td>
+          <% if esic_employer.is_confirm == true %>
+            <small class= "label label-primary">Confirmed</small>
+            <%= link_to '', esic_employer ,class: 'btn btn-xs btn-default fa fa-eye' %>
+            <%= link_to '', edit_esic_employer_path(esic_employer) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+          <% else %>
+            <%= link_to '', edit_esic_employer_path(esic_employer) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+            <%= link_to '',  esic_employer, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+            <%= link_to '', is_confirm_esic_employers_path(esic_employer: esic_employer),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+            <%= link_to '', esic_employer ,class: 'btn btn-xs btn-default fa fa-eye' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

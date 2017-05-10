@@ -1,0 +1,6 @@
+<%if @flag == true %>
+  $("#form").html("<%= j render 'form' %>");
+  $("#interview_attribute_li").html("<%= j render 'interview_attribute_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

@@ -1,0 +1,54 @@
+<%= bootstrap_form_for(@reward_recognition,html: {id: 'reward_recognition'}) do |f| %>
+  <div class="row">
+   
+    <div class="col-sm-3">
+        <label>Reward Type</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_reward_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :reward_type_id, all_reward_type, {hide_label: true,include_blank: " Select Reward Type"} %>
+            </div>
+          </div>
+      </div>
+
+     <div class="col-sm-3">
+      <div class="field">
+       <%= f.select :r_type, ['Reward','Recognition'],{label: 'Type',include_blank: " Select Type"} %>
+      </div>
+    </div>
+
+     <div class="col-sm-3">
+        <label>Reward Owner</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_reward_owner_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :reward_owner_id, all_reward_owner, {hide_label: true,include_blank: " Select Reward Owner"} %>
+            </div>
+          </div>
+      </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_area :cost_unit,label: 'Description',placeholder: 'Decription' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :communication,label: 'Communication',placeholder: 'Communication' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit'Create Reward Recognition', :class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+<% end %>
+

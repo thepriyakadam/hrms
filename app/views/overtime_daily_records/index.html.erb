@@ -1,0 +1,42 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title"> Overtime Record List</h3>
+    <div class="pull-right">
+      <%= link_to "Overtime Daily Record", new_overtime_daily_record_path, class: 'btn btn-sm btn-primary' %> 
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <div id="comments">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Year</th>
+        <th>Months</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @overtime_daily_records.each do |os| %>
+        <tr>
+          <% year = os.ot_daily_date.strftime("%Y")%>
+          <td><%= year %></td>
+          <td>
+            <%= link_to 'January',employees_overtime_daily_records_path(year: year, month: "January") , class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'February',employees_overtime_daily_records_path(year: year, month: "February") , class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'March',employees_overtime_daily_records_path(year: year, month: "March") , class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'April',employees_overtime_daily_records_path(year: year, month: "April") , class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'May',employees_overtime_daily_records_path(year: year, month: "May") , class: 'btn btn-xs btn-success' %>
+            <%= link_to 'June',employees_overtime_daily_records_path(year: year, month: "June") , class: 'btn btn-xs btn-success' %>
+            <%= link_to 'July',employees_overtime_daily_records_path(year: year, month: "July") , class: 'btn btn-xs btn-success' %>
+            <%= link_to 'August',employees_overtime_daily_records_path(year: year, month: "August") , class: 'btn btn-xs btn-success' %>
+            <%= link_to 'September',employees_overtime_daily_records_path(year: year, month: "September") , class: 'btn btn-xs btn-danger' %>
+            <%= link_to 'October',employees_overtime_daily_records_path(year: year, month: "October") , class: 'btn btn-xs btn-danger' %>
+            <%= link_to 'November',employees_overtime_daily_records_path(year: year, month: "November") , class: 'btn btn-xs btn-danger' %>
+            <%= link_to 'December',employees_overtime_daily_records_path(year: year, month: "December") , class: 'btn btn-xs btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>

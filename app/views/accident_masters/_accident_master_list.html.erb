@@ -1,0 +1,23 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @accident_masters.each do |accident_master| %>
+      <tr>
+        <td><%= accident_master.code %></td>
+        <td><%= accident_master.name %></td>
+        <td><%= accident_master.description %></td>
+        <td>
+          <%= link_to '', edit_accident_master_path(accident_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <%= link_to '',  accident_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,51 @@
+<%= bootstrap_form_for(@leaving_reason,html: {id: 'leaving_reason'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Code' %>
+      </div>
+    </div> 
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Leaving Reason' %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+
+<script>
+$("#leaving_reason").validate({
+    rules: {
+      "leaving_reason[code]":{
+        required: true,
+      },
+      "leaving_reason[name]":{
+        required: true,
+      },
+       },
+    messages: {
+      "leaving_reason[code]":{
+        required: "Please Specify Code",
+      },
+       "leaving_reason[name]":{
+        required: "Please Specify Reason",
+      },
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

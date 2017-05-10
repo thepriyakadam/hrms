@@ -1,0 +1,24 @@
+<table id="example2" class="table table-bordered table-hover table-condensed'">
+  <thead>
+    <tr>  
+      <th>Name</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @degree_types.each do |degree_type| %>
+      <tr>
+        <td><%= degree_type.name %></td>
+        <td>
+          <% if degree_type.is_confirm == true %>
+            <small class= "label label-primary">Confirmed</small>
+          <% else %>
+            <%= link_to '', edit_degree_type_path(degree_type),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+            <%= link_to '',  degree_type, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+            <%= link_to '', is_confirm_degree_types_path(degree_type: degree_type),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

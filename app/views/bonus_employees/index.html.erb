@@ -1,0 +1,76 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Bonus</h3>
+    <div class="pull-right">
+      <%= link_to 'Create Bonus', new_bonus_employee_path, class: 'btn btn-sm btn-primary' %>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div class="row">
+      <div class="col-sm-3"><input type="text" id="min" name="min"></div>
+      <div class="col-sm-3"><input type="text" id="max" name="max"></div>
+    </div>
+    <table id="example1" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Employee</th>
+          <th>Bonus date</th>
+          <th>Amount</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @bonus_employees.each do |bonus_employee| %>
+          <tr>
+            <td><%= full_name(bonus_employee.employee) %></td>
+            <td><%= bonus_employee.bonus_date %></td>
+            <td><%= bonus_employee.amount %></td>
+            <td><%= link_to '', edit_bonus_employee_path(bonus_employee),class: 'btn btn-xs btn-success fa fa-edit' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script type="text/javascript">
+ $.fn.dataTableExt.afnFiltering.push(
+  function( oSettings, aData, iDataIndex ) {
+    var iFini = document.getElementById('min').value;
+    var iFfin = document.getElementById('max').value;
+    var iStartDateCol = 1;
+    var iEndDateCol = 1;
+
+    iFini=iFini.substring(6,10) + iFini.substring(3,5)+ iFini.substring(0,2);
+    iFfin=iFfin.substring(6,10) + iFfin.substring(3,5)+ iFfin.substring(0,2);
+
+    var datofini=aData[iStartDateCol].substring(6,10) + aData[iStartDateCol].substring(3,5)+ aData[iStartDateCol].substring(0,2);
+    var datoffin=aData[iEndDateCol].substring(6,10) + aData[iEndDateCol].substring(3,5)+ aData[iEndDateCol].substring(0,2);
+
+    if ( iFini === "" && iFfin === "" )
+    {
+        return true;
+    }
+    else if ( iFini <= datofini && iFfin === "")
+    {
+        return true;
+    }
+    else if ( iFfin >= datoffin && iFini === "")
+    {
+        return true;
+    }
+    else if (iFini <= datofini && iFfin >= datoffin)
+    {
+        return true;
+    }
+    return false;
+  }
+);
+$(document).ready(function() {
+  var table = $('#example1').DataTable();
+  // Add event listeners to the two range filtering inputs
+  $('#min').keyup( function() { table.draw(); } );
+  $('#max').keyup( function() { table.draw(); } );
+});
+</script>

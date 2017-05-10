@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  from: MyString
+  to: MyString
+  late_mark: MyString
+  is_active: false
+  is_confirm: false
+
+two:
+  from: MyString
+  to: MyString
+  late_mark: MyString
+  is_active: false
+  is_confirm: false

@@ -1,0 +1,28 @@
+<table  id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>From</th>
+      <th>To</th>
+      <th>Texable amount</th>
+      <th>Percentage</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @slabs.each do |slab| %>
+      <tr>
+        <td><%= slab.from %></td>
+        <td><%= slab.to %></td>
+        <td><%= slab.texable_amount %></td>
+        <td><%= slab.percentage %></td>
+        <td><%= slab.status ? "Active" : "Inactive" %></td>
+        <td>
+          <%= link_to '', edit_slab_path(slab),class: 'btn btn-success btn-xs fa fa-edit',remote:true %> 
+          <%= link_to '',  slab, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

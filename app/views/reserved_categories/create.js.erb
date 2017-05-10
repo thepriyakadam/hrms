@@ -1,0 +1,6 @@
+<%if @flag == true %>
+$("#form").html("<%= j render 'form' %>");
+$("#reserved_category_li").html("<%= j render 'reserved_category_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

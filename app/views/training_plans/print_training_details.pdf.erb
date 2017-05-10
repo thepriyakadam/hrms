@@ -1,0 +1,75 @@
+   
+    <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
+    <tr>
+      <td colspan="4">
+        <center>
+            <% if current_user.employee.company_location.company.company_logo == nil %>
+          <% else %>
+            <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+            <%end%>
+          <%= current_user.employee.company_location.company.description %><br>
+          <%= current_user.employee.company_location.company.address %><br>
+       </center><br>
+      </td>
+    </tr>
+      <tr>
+        <th><strong> Training Date </strong></th>
+        <td> <%= @training_plan.training_date %></td>
+      
+        <th><strong> Training Topic  </strong></th>
+        <td> <%= @training_plan.training_topic_master.try(:name) %></td>
+      </tr>
+
+      <tr>
+        <th><strong> No of Employee </strong></th>
+        <td> <%= @training_plan.no_of_employee %></td>
+
+        <th><strong> Place </strong></th>
+        <td> <%= @training_plan.place %></td>
+      </tr>
+      <tr>
+        <th><strong>No of Days:</strong></th>
+        <td><%= @training_plan.no_of_days %></td>
+
+        <th><strong> Time(In Hrs) </strong></th>
+        <td> <%= @training_plan.no_of_hrs %></td>
+      </tr>
+      <tr>
+        <th><strong> Trainer / Faculty</strong></th>
+        <td> <%= @training_plan.trainer_name %></td>
+
+        <th><strong>About Trainer:</strong></th>
+        <td><%= @training_plan.about_trainer %></td>
+      </tr>
+      <tr>
+       <th><strong>Contact No:</strong></th>
+        <td><%= @training_plan.trainer_num %></td>
+
+        <th><strong> Sign </strong></th>
+        <td><%= %></td>
+      </tr>
+      <tr><td colspan="4"></td></tr>
+    </table>
+
+<table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
+    <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>ID</th>
+      <th>Employee Name</th>
+      <th>Contact No</th>
+      <th>Signature</th>
+  </thead>
+  <tbody>
+  <% i = 0 %>
+   <% @trainees.each do |trainee| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= trainee.employee.try(:manual_employee_code) %></td>
+        <td><%= trainee.employee.try(:first_name) %> <%= trainee.employee.try(:middle_name) %> <%=trainee.employee.try(:last_name) %></td>
+         <td><%= trainee.employee.try(:contact_no) %></td>
+        <td></td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>

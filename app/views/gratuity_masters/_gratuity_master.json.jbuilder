@@ -1,0 +1,2 @@
+json.extract! gratuity_master, :id, :no_of_year, :base_component, :day_in_month, :payable_day, :is_active, :is_confirm, :created_at, :updated_at
+json.url gratuity_master_url(gratuity_master, format: :json)

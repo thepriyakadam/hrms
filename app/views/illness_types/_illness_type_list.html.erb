@@ -1,0 +1,28 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @illness_types.each do |illness_type| %>
+      <tr>
+        <td><%= illness_type.code %></td>
+        <td><%= illness_type.name %></td>
+        <td><%= illness_type.description %></td>
+        <td>
+          <% if illness_type.is_confirm == true %>
+            <small class= "label label-primary">Confirmed</small>
+          <% else %>
+            <%= link_to '', edit_illness_type_path(illness_type),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  illness_type, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+            <%= link_to '', is_confirm_illness_types_path(illness_type: illness_type),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

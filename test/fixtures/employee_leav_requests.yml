@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 
+  leav_category_id: 
+  leave_type: MyString
+  satrt_date: 2015-11-24 11:36:48
+  end_date: 2015-11-24 11:36:48
+
+two:
+  employee_id: 
+  leav_category_id: 
+  leave_type: MyString
+  satrt_date: 2015-11-24 11:36:48
+  end_date: 2015-11-24 11:36:48

@@ -1,0 +1,36 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Assign Salary Template To Employee</h3>
+    <div class="box-tools pull-right">
+      <%= link_to 'Back', fresh_template_employee_templates_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table class="table table-bordered table-hover">
+      <tr>
+        <th>Employee ID</th>
+        <th>Employee Name</th>
+      </tr>
+      <tr>
+        <td><%= @employee.manual_employee_code %></td>
+        <td><%= full_name(@employee) %></td>
+      </tr>
+    </table><br>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <%=select :salary,:template, all_salary_template,{include_blank: "Please Select Template"},{onchange:"var a={salary_template_id:$(this).val(),employee_id : '#{@employee.id}'}; $.get('/employee_templates/assign_new_template',a,function(response){});",class: 'form-control'}%>
+      </div>  
+    </div>
+
+    <div id="message">
+      
+    </div>
+
+    <div id="template">
+      
+    </div>
+    <!-- <button id="btnAdd">Add</button> -->
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

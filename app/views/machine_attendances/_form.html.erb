@@ -1,0 +1,95 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Machine Attendance</h3>
+    </div>
+<div class="box-body">
+<%= bootstrap_form_for MachineAttendance.new,url:{action:'save_machine_attendance'},html: {id: 'machine_attendance'} do |f| %>
+  <div class="row">
+  <label></label>
+    <div class="col-sm-3">
+     <!-- <= f.select :employee_id,all_employee_list, {include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %> -->
+     <%= f.select :employee_id,all_employee_list,{include_blank: " Select Employees"}, class: "form-control" %>
+  </div>
+  <div class="col-sm-3">
+      <label></label>
+      <div class="form-group required">
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="fa fa-calendar"></i>
+        </div>
+        <%= f.text_field :day,hide_label: true,class: 'joining_date form-control',placeholder: 'Date'%>
+      </div>
+    </div>
+  </div>
+  
+    <div class="col-sm-2">
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <label>Out Max Time</label>
+          <div class="input-group">
+            <%= f.text_field :in,hide_label: true, placeholder: 'In Time',class: 'form-control timepicker' %>
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <label>Out Time</label>
+          <div class="input-group">
+            <%= f.text_field :out,hide_label: true, placeholder: 'Out Time',class: 'form-control timepicker' %>
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+    </div>
+    <div class="col-sm-2">
+    <%= f.select :shift_master_id,all_shift_type,{include_blank: " Select Shift",label: "Shift"}, class: "form-control" %>
+    </div>
+    </div>
+
+    <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :present , label: 'Present' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+    <label></label>
+      <div class="actions">
+        <%= f.submit "Create Machine Attendance" ,class: 'btn btn-sm btn-primary' %>
+      </div>
+    </div>
+  </div><br>
+</div>
+</div>
+<% end %>
+
+<%= render 'machine_attendance_list' %>
+
+<script type="text/javascript">
+  $(function(){
+    $('.joining_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:-0',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker10').datetimepicker();
+    });
+ </script>
+
+ <script type="text/javascript">
+    $(function () {
+        $('#datetimepicker11').datetimepicker();
+    });
+ </script>

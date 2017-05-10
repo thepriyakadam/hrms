@@ -1,0 +1,32 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Name</th>
+     <!--  <th>Email ID</th> -->
+      <th>Contact number</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <% @issue_tracker_groups.each do |issue_tracker_group| %>
+      <tr>
+        <td><%= issue_tracker_group.name %></td>
+       <!--  <td><%= issue_tracker_group.email %></td>  -->
+        <td><%= issue_tracker_group.contact_number %></td>
+        <td><%= issue_tracker_group.status ? "Active" : "Inactive"%></td>
+          <td>
+           <% if issue_tracker_group.is_confirm == true %>
+            <small class= "label label-primary">Confirmed</small>
+             <%= link_to '', edit_issue_tracker_group_path(issue_tracker_group),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <% else %>
+            <%= link_to '',  issue_tracker_group, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+          <%= link_to '', is_confirm_issue_tracker_groups_path(issue_tracker_group: issue_tracker_group),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+           <%= link_to '', edit_issue_tracker_group_path(issue_tracker_group),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+           <% end %>
+          </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

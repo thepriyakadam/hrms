@@ -1,24 +1,33 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Awards of Employee</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
 
-<p>
-  <strong>Employee:</strong>
-  <%= @award.employee %>
-</p>
+    <tr>
+    	<th><strong>Employee:</strong></th>
+    	<td><%= @award.employee %></td>
 
-<p>
-  <strong>Award name:</strong>
-  <%= @award.award_name %>
-</p>
+    	<th><strong>Award name:</strong></th>
+    	<td><%= @award.award_name %></td>
+    </tr>
 
-<p>
-  <strong>Year:</strong>
-  <%= @award.year %>
-</p>
+     <tr>
+    	<th> <strong>Year:</strong></th>
+    	<td><%= @year.name %></td>
 
-<p>
-  <strong>Award from:</strong>
-  <%= @award.award_from %>
-</p>
+    	<th> <strong>Award from:</strong></th>
+    	<td> <%= @award.award_from %></td>
+    </tr>
 
-<%= link_to 'Edit', edit_award_path(@award) %> |
-<%= link_to 'Back', awards_path %>
+    </table>
+
+    <%= link_to 'Edit', edit_award_path(@award),class: 'btn btn-success fa fa-edit btn-sm' %> |
+    <%= link_to 'Back', awards_path,class: 'btn btn-default fa fa-arrow-left btn-sm' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

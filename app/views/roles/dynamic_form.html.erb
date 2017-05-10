@@ -1,0 +1,6 @@
+<%= bootstrap_form_for :element do |f| %>
+	<% @roles.each do |r| %>
+		<%= f.text_field "#{r.name}" %>
+	<% end %>
+	<%= f.submit %>
+<% end %>

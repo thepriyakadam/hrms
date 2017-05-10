@@ -1,0 +1,41 @@
+<%=form_for :excel, url: load_excel_excel_uploads_path,html: {multipart: true} do |f|%>
+<div class="row">
+  <label class="box col-md-3">Select Spreadsheet File</label>
+  <div class="box col-md-3"><%= file_field 'upload', 'spreadsheet' %></div>
+</div>
+<div class="row">
+  <div class="box col-md-10">
+    <%=f.submit "Upload Activities"%>
+  </div>
+</div>
+<%end%>
+
+<%= form_for(@excel_upload) do |f| %>
+  <% if @excel_upload.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@excel_upload.errors.count, "error") %> prohibited this excel_upload from being saved:</h2>
+
+      <ul>
+      <% @excel_upload.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :code %><br>
+    <%= f.text_field :code %>
+  </div>
+  <div class="field">
+    <%= f.label :file_name %><br>
+    <%= f.text_field :file_name %>
+  </div>
+  <div class="field">
+    <%= f.label :size %><br>
+    <%= f.text_field :size %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

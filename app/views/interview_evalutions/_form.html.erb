@@ -1,0 +1,50 @@
+<%= bootstrap_form_for(@interview_evalution,html: {id: 'interview_evalution'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: ' Evaluation Criteria Code' %>
+      </div>
+    </div> 
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: ' Evaluation Criteria Type' %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Evaluation Criteria " ,class: 'btn btn-sm btn-primary' %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+$("#interview_evalution").validate({
+    rules: {
+      "interview_evalution[code]":{
+        required: true
+              },
+      "interview_evalution[name]":{
+        required: true
+      }
+    },
+    messages: {
+      "interview_evalution[code]":{
+        required: "Please Specify Code"
+      },
+      "interview_evalution[name]":{
+        required: "Please specify Name"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

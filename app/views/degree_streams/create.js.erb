@@ -1,0 +1,6 @@
+<%if @flag == true %>
+$("#form").html("<%= j render 'form' %>");
+$("#degree_stream_li").html("<%= j render 'degree_stream_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

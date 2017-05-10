@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Investment Heads</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Section</th>
+      <th>Description</th>
+      <th>Limit</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @investment_heads.each do |investment_head| %>
+      <tr>
+        <td><%= investment_head.section %></td>
+        <td><%= investment_head.description %></td>
+        <td><%= investment_head.limit %></td>
+        <td><%= link_to 'Show', investment_head %></td>
+        <td><%= link_to 'Edit', edit_investment_head_path(investment_head) %></td>
+        <td><%= link_to 'Destroy', investment_head, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Investment head', new_investment_head_path %>

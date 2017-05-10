@@ -1,0 +1,58 @@
+<div class="box">
+  <div class="box-header">
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+   <div class="row">
+      <div class="col-sm-6">
+        <div class="field">
+         <table class="table table-bordered table-hover table-condensed'">
+           <thead>
+           <tr>
+          <!--  < binding.pry %> -->
+           <th colspan="2"><center> Leave Process </center></th>
+           </tr>
+           <tr>
+           <th> Employee </th>
+           <td><%= @employee.manual_employee_code %> - <%= full_name(@employee) %></td>
+           </tr>
+           <tr>
+              <th>Manager 1 </th>
+              <td><%= @employee.manager.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager)) %></td>
+            </tr>
+            <tr>
+              <th>Manager 2 </th>
+              <td><%= @employee.manager_2.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager_2)) %></td>
+            </tr>
+           </thead>
+         </table>
+        </div>
+      </div>
+    <div class="col-sm-6">
+    <div class="field">
+  <table class="table table-bordered table-hover table-condensed'">
+           <thead>
+           <tr><th colspan="2"><center> Leave Balance </center></th></tr>
+            <tr>
+              <th>Leave Type</th>
+              <th>Leave Available</th>
+            </tr>
+           </thead>
+          <% @total_leaves.where(is_active: true).each do |l| %>
+            <tr>
+              <td><%= l.leav_category.try(:name) %></td>
+              <td><%= l.no_of_leave %></td>
+            </tr>
+          <% end %>
+          </table>
+          </div>
+          </div>
+    </div>
+
+  <div id="leave_request">
+    <%= render 'leave_request_list' %>
+  </div>
+
+<%= link_to 'Back', employee_list_employee_leav_requests_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+</div>
+</div>

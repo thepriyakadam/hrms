@@ -5,31 +5,30 @@ class CreateFamilies < ActiveRecord::Migration
       t.string :no_of_member
       t.string :f_name
       t.string :m_name
-      t.string :m_name
       t.string :l_name
+      t.string :gender
       t.date :date_of_birth
       t.integer :age
       t.string :contact_no
-      t.string :phone_no
       t.string :email
-      t.string :permanent_address
-      t.string :city
-      t.string :dist
-      t.string :state
-      t.integer :pin_code
-      t.string :current_address
+      t.text :current_address
+      t.string :marital
       t.string :relation
+      t.string :profession
       t.string :adhar_no
       t.string :pan_no
+      t.string :have_passport
       t.string :passport_no
+      t.date :passport_issue_date
+      t.date :passport_expiry_date
       t.string :medical_claim
-      t.string :marital
-      t.string :status
-      t.references :nationality, index: true, foreign_key: true
-      t.string :blood_group
-      t.string :religion
-      t.string :phandicap
-      t.string :profession
+      
+      t.references :blood_group, index: true, foreign_key: true
+      t.string :is_handicap
+      t.string :handicap_type
+      
+      t.references :religion, index: true, foreign_key: true
+
 
       t.timestamps null: false
     end

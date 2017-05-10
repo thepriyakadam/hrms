@@ -1,0 +1,96 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Bank Details</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for(@employee_bank_detail,html: {id: 'employee_bank_detail'},remote:true) do |f| %>
+      <%= f.hidden_field :employee_id, value: @employee.id %>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :account_no,label: 'Account No' %>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+                <%= f.select :bank_id, all_banks,{include_blank: " Select Bank"} %>
+           </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+                <%= f.text_field :branch_name,label: 'Branch Name' %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :address,label: 'Bank Address' %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :contact_no,label: 'Contact No' %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :micr_code,label: 'MICR Code' %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :branch_code,label: 'Branch Code' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :ifsc_code,label: 'IFSC Code' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="actions">
+            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+            <% if params['controller'] == 'employee_bank_details' and params['action'] == 'edit' %>
+              <%= link_to 'Back',ajax_bank_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-default', remote:true%>
+            <%end%>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script>
+$("#employee_bank_detail").validate({
+    rules: {
+      "employee_bank_detail[bank_id]":{
+        required: true,
+      },
+      "employee_bank_detail[account_no]":{
+        required: true
+      }
+    },
+    messages: {
+      "employee_bank_detail[bank_id]":{
+        required: "Please specify Bank Name "
+      },
+      "employee_bank_detail[account_no]":{
+        required: "Please Select Account No"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+   </script>

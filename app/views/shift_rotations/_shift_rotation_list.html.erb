@@ -1,0 +1,25 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr> 
+      <th>Company Shift</th>
+      <th>Department Name</th>
+      <th>Start date</th>
+      <th>End date</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @shift_rotations.each do |shift_rotation| %>
+      <tr>
+        <td><%= shift_rotation.company_shift.try(:name) %></td>
+        <td><%= shift_rotation.department.try(:name) %></td>
+        <td><%= shift_rotation.start_date %></td>
+        <td><%= shift_rotation.end_date %></td>
+        <td>
+          <%= link_to '', edit_shift_rotation_path(shift_rotation),class: 'btn btn-sm btn-success fa fa-edit',remote:true %>
+          <%= link_to '', shift_rotation, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-sm btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

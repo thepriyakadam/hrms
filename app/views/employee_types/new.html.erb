@@ -1,5 +1,15 @@
-<h1>New Employee Type</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', employee_types_path %>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employment Type</h3>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="employee_list">
+			<%= render 'employee_type_list' %>
+		</div>
+		
+	</div><!-- /.box-body -->
+</div><!-- /.box -->

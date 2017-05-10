@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Support ID </Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Support</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Support Raised By </Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">Support Date</Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String">Root Cause</Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String">Description </Data></Cell>
+        <Cell ss:Index="7"><Data ss:Type="String">Priority </Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String">Support Solved By </Data></Cell>
+        <Cell ss:Index="9"><Data ss:Type="String">Solved</Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String">Confirm</Data></Cell>
+        <Cell ss:Index="11"><Data ss:Type="String">Effort Time</Data></Cell>
+        <Cell ss:Index="12"><Data ss:Type="String">Comment</Data></Cell>
+        <Cell ss:Index="12"><Data ss:Type="String">Support Locker ID</Data></Cell>
+        <Cell ss:Index="12"><Data ss:Type="String">Lock Date</Data></Cell>
+        <Cell ss:Index="12"><Data ss:Type="String">Lock Time</Data></Cell>
+      </Row>
+
+        <% @issue_requests.each do |issue_request| %>
+        <% @issue_locker_histories.each do |issue_locker_history| %>
+      <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= issue_request.id  %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= issue_request.issue_master.try(:name) %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= full_name(issue_request.employee) %></Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="String"><%= issue_request.date %></Data></Cell>
+          <Cell ss:Index="5"><Data ss:Type="String"><%= issue_request.issue_root_cause.try(:name) %></Data></Cell>
+          <Cell ss:Index="6"><Data ss:Type="String"><%= issue_request.description %></Data></Cell>
+          <Cell ss:Index="7"><Data ss:Type="String"><%= issue_request.issue_priority %></Data></Cell>
+          <Cell ss:Index="8"><Data ss:Type="String"><%= full_name(issue_request.issue_tracker_member.employee) %></Data></Cell>
+          <Cell ss:Index="9"><Data ss:Type="String"><%= issue_request.status %></Data></Cell>
+          <Cell ss:Index="10"><Data ss:Type="String"><%=issue_request.is_complete %></Data></Cell>
+          <Cell ss:Index="11"><Data ss:Type="String"><%=issue_request.effort_time %></Data></Cell>
+          <Cell ss:Index="12"><Data ss:Type="String"><%=issue_request.comment %></Data></Cell>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= issue_locker_history.issue_locker_id  %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= issue_locker_history.lock_date%></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= issue_locker_history.lock_time %></Data></Cell>
+      </Row>
+         <!-- Row -->
+      <% end %>
+      <% end %><!-- slip -->
+    </Table>
+  </Worksheet>
+</Workbook>

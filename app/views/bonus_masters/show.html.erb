@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Is bouns:</strong>
+  <%= @bonus_master.is_bouns %>
+</p>
+
+<p>
+  <strong>Limit amount:</strong>
+  <%= @bonus_master.limit_amount %>
+</p>
+
+<p>
+  <strong>Bonus persentage:</strong>
+  <%= @bonus_master.bonus_persentage %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @bonus_master.status %>
+</p>
+
+<%= link_to 'Edit', edit_bonus_master_path(@bonus_master) %> |
+<%= link_to 'Back', bonus_masters_path %>

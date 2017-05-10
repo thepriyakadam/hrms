@@ -1,0 +1,56 @@
+<% i = 0 %>
+<table id="example1" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>Employee ID</th>
+      <th>Employee Name</th>
+      <th>Department</th>
+
+      <th>Basic</th>
+      <th>DA</th>
+      <th>HRA</th>
+
+      <th>Conv</th>
+      <th>O.Allow</th>
+      <th>S.Allow</th>
+      <th>Wsh.Allow</th>
+      
+      <th>PF </th>
+      <th>ESIC </th>
+      <th>Bonus </th>
+      <th>CTC Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reports.each do |r| %>
+      <tr>
+        <% sum = 0 %>
+        <td><%= i = i+1 %></td>
+        <td><%= r.try(:code) %></td>
+        <td><%= r.try(:employee_name) %></td>
+        <td><%= r.try(:department_name) %></td>
+        
+        <td><%= r.try(:actual_basic) %><% sum += r.try(:actual_basic).to_i %></td>
+        <td><%= r.try(:actual_da) %><% sum += r.try(:actual_da).to_i %></td>
+        <td><%= r.try(:actual_hra) %><% sum += r.try(:actual_hra).to_i %></td>
+
+        <td><%= r.try(:actual_convenience) %><% sum += r.try(:actual_convenience).to_i %></td>
+        <td><%= r.try(:actual_other) %><% sum += r.try(:actual_other).to_i %></td>
+        <td><%= r.try(:actual_special) %><% sum += r.try(:actual_special).to_i %></td>
+        <td><%= r.try(:actual_washing) %><% sum += r.try(:actual_washing).to_i %></td>
+
+        <td><%= r.try(:pf_ctc) %><% sum += r.try(:pf_ctc).to_i %></td>
+        <td><%= r.try(:esic_ctc) %><% sum += r.try(:esic_ctc).to_i %></td>
+        <td><%= r.try(:bonus_ctc) %><% sum += r.try(:bonus_ctc).to_i %></td>
+
+        <td><%= sum %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="col-sm-6">
+  <%= link_to " PDF Report ",show_monthly_ctc_salary_slip_ledgers_path(salary: {month: @month, year: @year, department_id: @department }, format: "pdf"), method: :post, class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+  <%= link_to " Excel Report ",show_monthly_ctc_salary_slip_ledgers_path(salary: {month: @month, year: @year, department_id: @department }, format: "xls"), method: :post, class: "btn btn-xl btn-success fa fa-print" %>
+</div>

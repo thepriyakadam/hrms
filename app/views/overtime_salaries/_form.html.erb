@@ -1,0 +1,114 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Create Overtime Salary</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= bootstrap_form_for(@overtime_salary,html: {id: 'overtime_salary'}) do |f| %>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+            <%= f.select :employee_id, employee_list_by_company_location, {label: 'Employee',include_blank: " Select Employee"},{onchange:"var a={employee_id:$(this).val()}; $.get('/overtime_salaries/collect_basic',a,function(response){});",:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
+           </div>
+          </div>
+          <div class="col-sm-3">
+            <div id="basic_amount"></div>
+          </div>
+        </div>
+
+      <div class="row">
+      <div class="col-sm-3">
+      <label>Overtime Date </label>
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+             <%= f.text_field :ot_date,hide_label:true, class: 'ot_date'%>
+          </div>
+        </div>
+      </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+             <%= f.text_field :ot_hrs,label:"OT Hrs"%>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :ot_amount,label:"OT Amount", readonly: true %>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :ot_esic_amount,label:"ESIC Amount", readonly: true %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+             <%= f.text_field :total_amount,placeholder: "OT Amount", readonly: true %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+         <div class="col-sm-5">
+          <div class="actions">
+            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+          </div>
+          </div>
+      <% end %>
+      </div>
+        </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script type="text/javascript">
+  $(function(){
+    $('.ot_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+  });
+
+  $(function(){
+    $('#overtime_salary_ot_hrs').on('input', function(){
+      calculate_wages_and_ot_amount();
+    });
+
+    function calculate_wages_and_ot_amount(){
+      var ot_hrs = parseFloat($('#overtime_salary_ot_hrs').val());
+      var basic_amount = parseFloat($('#overtime_salary_basic_amount').val());
+      var day = <%= @overtime_master.day %>
+      var company_hrs = <%= @overtime_master.company_hrs %>
+      var ot_rate = <%= @overtime_master.ot_rate %>
+      var percentage = <%= @esic_master.percentage %>
+      var is_esic = <%= @esic_master.esic %>
+      var total_amount = 0
+
+      var basic_amount_by_day = (basic_amount / day).toFixed(2);
+      var basic_amount_by_day_by_company_hrs = (basic_amount_by_day / company_hrs).toFixed(2);
+      var wages = (basic_amount_by_day_by_company_hrs * ot_rate).toFixed(2);
+      var ot_amount = (wages * ot_hrs).toFixed(2);
+
+      var ot_esic_amount = (ot_amount / 100 * percentage).toFixed(2);
+
+      if (is_esic) {
+        total_amount = ot_amount - ot_esic_amount
+      }
+      else{
+        total_amount = ot_amount
+      }
+
+      //$('#overtime_daily_record_ot_rate').val(wages);
+      $('#overtime_salary_ot_amount').val(ot_amount);
+      $('#overtime_salary_ot_esic_amount').val(ot_esic_amount);
+      $('#overtime_salary_total_amount').val(total_amount);
+    }
+  });
+  
+  $(document).ready(function() {
+    $(".select2").select2();
+  });
+</script>

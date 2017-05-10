@@ -1,0 +1,28 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Shift List</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Name</th>
+      <th>Shift</th>
+      <th>From Date</th>
+      <th>To Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @employee_shifts.each do |employee_shift| %>
+      <tr>
+        <td><%= employee_shift.employee.try(:first_name) %></td>
+        <td><%= employee_shift.company_shift.try(:name) %></td>
+        <td><%= employee_shift.from_date %></td>
+        <td><%= employee_shift.to_date %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+ <%= link_to 'Back', employee_shifts_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+</div>
+</div>

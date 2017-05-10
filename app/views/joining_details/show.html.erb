@@ -1,74 +1,61 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Employee:</strong>
-  <%= @joining_detail.employee %>
-</p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Joining Dtails</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    
+    <tr>
+      <th><strong>Employee:</strong></th>
+      <td><%= @joining_detail.employee.first_name %></td>
 
-<p>
-  <strong>Joining date:</strong>
-  <%= @joining_detail.joining_date %>
-</p>
+      <th> <strong>Joining date:</strong></th>
+      <td><%= @joining_detail.joining_date %></td>
+    </tr>
 
-<p>
-  <strong>Reffernce from:</strong>
-  <%= @joining_detail.reffernce_from %>
-</p>
+    <tr>
+      <th><strong>Reference from:</strong></th>
+      <td><%= @joining_detail.reference_from %></td>
 
-<p>
-  <strong>Admin hr:</strong>
-  <%= @joining_detail.admin_hr %>
-</p>
+      <th> <strong>Admin Interviewer:</strong></th>
+      <td> <%= @joining_detail.admin_hr %></td>
+    </tr>
 
-<p>
-  <strong>Tech hr:</strong>
-  <%= @joining_detail.tech_hr %>
-</p>
+    <tr>
+      <th><strong>Technical Interviewer:</strong></th>
+      <td><%= @joining_detail.tech_hr %></td>
 
-<p>
-  <strong>Designation:</strong>
-  <%= @joining_detail.designation %>
-</p>
+      <th><strong>Designation:</strong></th>
+      <td><%= @joining_detail.employee_designation.name %></td>
+    </tr>
 
-<p>
-  <strong>Ctc:</strong>
-  <%= @joining_detail.ctc %>
-</p>
+    <tr>
+      <th><strong>Employee grade:</strong></th>
+      <td><%= @joining_detail.employee_grade.name %></td>
 
-<p>
-  <strong>Account no:</strong>
-  <%= @joining_detail.account_no %>
-</p>
+      <th> <strong>Confirmation date:</strong></th>
+      <td><%= @joining_detail.confirmation_date %></td>
+    </tr>
 
-<p>
-  <strong>Employee grade:</strong>
-  <%= @joining_detail.employee_grade %>
-</p>
+    <tr>
+     <th><strong>Medical Insurance</strong></th>
+      <td> <%= @joining_detail.medical_schem %></td>
 
-<p>
-  <strong>Confirmation date:</strong>
-  <%= @joining_detail.confirmation_date %>
-</p>
+      <th><strong>Probation period:</strong></th>
+      <td><%= @joining_detail.probation_period %></td>
+    </tr>
 
-<p>
-  <strong>Status:</strong>
-  <%= @joining_detail.status %>
-</p>
+    <tr>
+      <th><strong>Notice period:</strong></th>
+      <td><%= @joining_detail.notice_period %></td>
+      <th></th>
+      <td></td>
+    </tr>
+ </table>
 
-<p>
-  <strong>Probation period:</strong>
-  <%= @joining_detail.probation_period %>
-</p>
+  <%= link_to 'Edit',  edit_joining_detail_path(@joining_detail),class: 'btn btn-sm btn-success fa fa-edit' %> |
+    <%= link_to 'Back', employee_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
 
-<p>
-  <strong>Notice period:</strong>
-  <%= @joining_detail.notice_period %>
-</p>
-
-<p>
-  <strong>Medical schem:</strong>
-  <%= @joining_detail.medical_schem %>
-</p>
-
-<%= link_to 'Edit', edit_joining_detail_path(@joining_detail) %> |
-<%= link_to 'Back', joining_details_path %>

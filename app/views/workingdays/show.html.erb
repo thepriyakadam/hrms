@@ -1,0 +1,79 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Working Day</h3>
+    <div class="box-tools pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+
+    <tr>
+    <th> <strong>Employee ID</strong></th>
+    <td><%= @workingday.employee.try(:manual_employee_code) %></td>
+
+    <th><strong>Employee Name</strong></th>
+    <td><%= @workingday.employee.try(:first_name) %><%= @workingday.employee.try(:middle_name) %><%= @workingday.employee.try(:last_name) %></td>
+    </tr>
+    <tr>
+
+    <th> <strong>Month Name</strong></th>
+    <td><%= @workingday.month_name %></td>
+    
+    
+    <th> <strong>Year</strong></th>
+    <td><%= @workingday.year %></td>
+    </tr>
+    <tr>
+    <th><strong>Day In Month</strong></th>
+    <td><%= @workingday.day_in_month %></td>
+   
+    <th><strong>Present Day</strong></th>
+    <td><%= @workingday.present_day %></td>
+    </tr>
+
+    <tr>
+    <th><strong>LWP Leave</strong></th>
+    <td><%= @workingday.lwp_leave %></td>
+   
+    <th><strong>CL</strong></th>
+    <td><%= @workingday.cl_leave %></td>
+    </tr>
+
+    <tr>
+    <th><strong>EL</strong></th>
+    <td><%= @workingday.el_leave %></td>
+   
+    <th><strong>ESIC Leave</strong></th>
+    <td><%= @workingday.esic_leave %></td>
+    </tr>
+    
+    <tr>
+    <th><strong>C.OFF Leave</strong></th>
+    <td><%= @workingday.coff_leave %></td>
+
+    <th><strong>Total Leave</strong></th>
+    <td><%= @workingday.total_leave %></td>
+    </tr>
+
+    <tr>
+    <th> <strong>Holiday in Month</strong></th>
+    <td><%= @workingday.holiday_in_month %></td>
+   
+    <th> <strong>Week off Day</strong></th>
+    <td><%= @workingday.week_off_day %></td>
+    </tr>
+    
+    <tr>
+    <th> <strong>Absent Day</strong></th>
+    <td><%= @workingday.absent_day %></td>
+   
+    <th><strong>Payable Day</strong></th>
+    <td><%= @workingday.payable_day %></td>
+    </tr>
+    </table>
+
+    <%= link_to 'Edit', edit_workingday_path(@workingday),class: 'btn btn-success btn-sm fa fa-edit' %> |
+    <%= link_to 'Back', workingdays_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

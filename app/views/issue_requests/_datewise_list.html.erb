@@ -1,0 +1,53 @@
+ <div class="box-header">
+    <div class="pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <div id="comments">
+    <table id="example1" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr><td colspan="12"><center><strong><%= current_user.employee.company_location.company.try(:description) %></strong> <br>
+        <%= current_user.employee.company_location.company.try(:address) %><br> <%= current_user.employee.department.try(:name) %> -
+        <%= current_user.employee.company_location.try(:name) %></center> </td></tr>
+      <tr>
+        <th>Support ID</th>
+        <th>Support</th>
+        <th>Support Raised By</th>
+        <th>Support Date</th>
+        <th>Root Cause</th>
+        <th>Description</th>
+        <th>Priority </th>
+        <th>Support Solved By</th>
+        <th>Solved</th>
+        <th>Confirm</th>
+        <th>Effort Time</th>
+        <th>Comment</th>
+      </tr>
+    </thead>
+
+    <tbody>
+     <% @issue_requests.each do |issue_request| %>
+        <tr>
+        <td><%= issue_request.id %></td>
+          <td><%= issue_request.issue_master.try(:name) %></td>
+          <td><%= full_name(issue_request.try(:employee)) %></td>
+          <td><%= issue_request.date %></td>
+          <td><%= issue_request.issue_root_cause.try(:name) %></td>
+          <td><%= issue_request.description %></td>
+          <td><%= issue_request.issue_priority %></td>
+          <td><%= full_name(issue_request.issue_tracker_member.try(:employee)) %></td>
+          <td><%= issue_request.status %></td>
+           <td><%= issue_request.is_complete %></td>
+          <td><%= issue_request.effort_time %></td>
+          <td><%= issue_request.comment %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    </table>
+    </div>
+   <%= link_to " Excel Report ",datewise_report_xls_issue_requests_path(date: @date , format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+   <%= link_to " Print Support PDF ",datewise_report_pdf_issue_requests_path(date: @date , format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+    </div>
+
+
+        

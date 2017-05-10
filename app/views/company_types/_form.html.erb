@@ -1,32 +1,15 @@
-<%= bootstrap_form_for(@company_type) do |f| %>
-  <% if @company_type.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@company_type.errors.count, "error") %> prohibited this company_type from being saved:</h2>
-
-      <ul>
-      <% @company_type.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+<%= bootstrap_form_for(@company_type,html: {id: 'company_type'},remote:true) do |f| %>
   <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :name %>
-       </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Company Type' %>
+      </div>
     </div>
-  </div>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="actions">
-    <%= f.submit %>
-       </div>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Company Type" ,:class => class_name, data: { disable_with: data_info } %>
+      </div>
     </div>
   </div>
 <% end %>

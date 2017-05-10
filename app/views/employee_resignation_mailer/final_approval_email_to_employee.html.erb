@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+     <h4>Final Level Approval</h4>
+    <p> 
+      Dear, <%= @employee.prefix %><%= @employee.first_name.to_s %> <%= @employee.last_name.to_s %> <%= @employee.middle_name.to_s %><br><br>
+      Your Resignation Request has been Finally Approved by, <%= @reporting_master.prefix %><%= @reporting_master.first_name.to_s %> <%= @reporting_master.last_name.to_s %> <%= @reporting_master.middle_name.to_s %>
+        With Regards,<br><br>
+        BFTL HR
+     </p>
+  </body>
+</html>

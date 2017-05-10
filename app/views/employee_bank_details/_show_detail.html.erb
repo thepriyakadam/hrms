@@ -1,0 +1,61 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+ <div class="row">
+  <div class="col-sm-1">
+      <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+  </div>
+    <div class="col-sm-6">
+     <font color='#0077b3'> 
+        ID : <%= @employee_bank_detail.try(:employee).try(:manual_employee_code) %><br>
+        Name : <%= @employee_bank_detail.try(:employee).try(:first_name) %> <%= @employee_bank_detail.try(:employee).try(:middle_name) %> <%= @employee_bank_detail.try(:employee).try(:last_name) %><br>
+        Email : <%= @employee_bank_detail.employee.try(:email) %></font>
+    </div>
+  </div>
+
+
+    <div class="box-tools pull-right">
+      <%= link_to 'Edit', edit_employee_bank_detail_path(@employee_bank_detail),class: 'btn btn-sm btn-success fa fa-edit', remote:true %>
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    
+    <table id="example2" class="table table-bordered table-hover table-condensed'">
+     <tr>
+      <th colspan="4"><center><font color='#0077b3'>Bank Detail </font></center></th>
+    </tr>
+
+    <tr>
+      <th> <strong>Account No</strong></th>
+      <td><%= @employee_bank_detail.account_no %></td>
+        <th><strong>Bank Name</strong></th>
+      <td><%= @employee_bank_detail.bank.try(:name) %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Branch Name</strong></th>
+      <td><%= @employee_bank_detail.branch_name %></td>
+       <th><strong>Address</strong></th>
+      <td> <%= @employee_bank_detail.address %></td>
+
+    </tr>
+
+    <tr>
+      <th><strong>Contact No</strong></th>
+      <td> <%= @employee_bank_detail.contact_no %></td>
+        <th><strong>MICR Code</strong></th>
+      <td><%= @employee_bank_detail.micr_code %></td>
+    </tr>
+
+    <tr>
+    
+      <th><strong>Branch Code</strong></th>
+      <td> <%= @employee_bank_detail.branch_code %></td>
+       <th><strong>IFSC Code</strong></th>
+      <td><%= @employee_bank_detail.ifsc_code %></td>
+    </tr>
+    </table><br/>
+  </div><!-- /.box -->
+</div>
+
+

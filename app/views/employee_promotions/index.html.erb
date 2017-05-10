@@ -1,0 +1,42 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Promotion </h3>
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example6" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Employee ID</th>
+        <th>Employee Name</th>
+        <th>Department</th>
+        <th>Designation</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @employee_promotions.each do |employee_promotion| %>
+        <tr>
+          <td><%= employee_promotion.employee.try(:manual_employee_code) %></td>
+          <td><%= employee_promotion.employee.try(:first_name) %> <%= employee_promotion.employee.try(:middle_name) %> <%= employee_promotion.employee.try(:last_name) %></td>
+          <td><%= employee_promotion.employee.try(:company_location).try(:name) %> - <%= employee_promotion.employee.try(:department).try(:name) %></td>
+          <td><%= employee_promotion.employee_designation.try(:name) %></td>
+          <td>
+           <%= link_to 'Employee Promotion', edit_employee_promotion_path(employee_promotion),class: 'btn btn-primary btn-xs' %>
+            <%= link_to '', employee_promotion,class: 'btn btn-default btn-xs fa fa-eye' %>
+
+          </td> 
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+  </div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

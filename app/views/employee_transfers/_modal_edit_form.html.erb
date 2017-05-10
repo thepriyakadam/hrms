@@ -1,0 +1,53 @@
+<div class="modal-dialog" style="height:1000px; max-height:100px; width:1000px; max-width:1400px;">
+  <div class="modal-content">
+		<div class="modal-body" >
+			<%= bootstrap_form_for @employee_transfer,url:{action:"update_transfer_details",emp_transfer_id:@employee_transfer.id} do |f| %>
+      <%= f.hidden_field :employee_transfer_id, value: @employee_transfer.id %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :employee_designation_id,all_employee_designation,{include_blank: 'Select Designation',label: 'Employee Designation'}  %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :employee_category_id,all_employee_category,{include_blank: 'Select Category',label: 'Employee Category'} %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :company_id, all_company,{label: 'Company Select',include_blank: " Select Company"} %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :company_location_id, all_company_with_location,{label: 'Department Location',include_blank: " Select Department Location"} %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :department_id, all_department ,{include_blank: 'Select Department',label: 'Department'} %>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="field">
+            <%= f.text_area :justification %>
+          </div>
+        </div>
+
+      	<div class="col-sm-3" style="padding-top:30px;">
+          <%= f.submit'Update Employee Transfer', class: 'btn btn-sm btn-warning fa fa-modx' %> 
+        </div>
+      </div>
+
+  	<% end %>
+    </div>
+ 	</div>
+</div>

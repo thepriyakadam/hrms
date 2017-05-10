@@ -1,0 +1,1 @@
+json.extract! @employee_transfer, :id, :employee_id, :reporting_master_id, :employee_designation_id, :employee_category_id, :company_id, :company_location_id, :department_id, :justification, :created_at, :updated_at

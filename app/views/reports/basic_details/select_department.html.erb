@@ -1,0 +1,27 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Department Wise Report</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  
+    <%= bootstrap_form_for(:salary, url: { action: 'list_of_employee'},remote: true) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= select :salary, :company_location_id, all_company_location,{label: 'Location',include_blank: " Select Location"},{class: "form-control"} %>
+          </div>
+        </div>
+  
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Submit", class: "btn btn-sm btn-warning", id: "buttonCtc" %>
+          </div>
+        </div>
+      </div><br>
+    <% end %>
+    
+<div id="emp_li">
+  
+</div>    
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

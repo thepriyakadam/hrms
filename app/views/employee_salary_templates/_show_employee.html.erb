@@ -1,0 +1,14 @@
+<table class="table table-bordered table-hover">
+<th>Employee ID</th>
+<th>Employee Name</th>
+<th>Employee Designation</th>
+<th>Employee Contact</th>
+<th>Current Template</th>
+  <tr>
+  	<td><%= @employee.manual_employee_code %></td>
+  	<td><%= @employee.first_name+' '+@employee.last_name %></td>
+  	<td><%= @employee.joining_detail.try(:contact_no) %></td>
+    <td><%= @employee.contact_no %></td>
+    <td><%= EmployeeTemplate.where("employee_id = ? and is_active = ?",@employee.id,true).try(:take).try(:salary_template).try(:code) %></td>
+  </tr>
+</table>

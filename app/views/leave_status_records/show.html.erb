@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee leav request:</strong>
+  <%= @leave_status_record.employee_leav_request %>
+</p>
+
+<p>
+  <strong>Change status employee:</strong>
+  <%= @leave_status_record.change_status_employee %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @leave_status_record.status %>
+</p>
+
+<p>
+  <strong>Change date:</strong>
+  <%= @leave_status_record.change_date %>
+</p>
+
+<%= link_to 'Edit', edit_leave_status_record_path(@leave_status_record) %> |
+<%= link_to 'Back', leave_status_records_path %>

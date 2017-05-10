@@ -1,0 +1,17 @@
+<% unless @flag %>
+	<% unless DueTemplate.exists?(id: @due_template.id) %>
+	    $("#due_template_li").html("<%= j render 'due_template_list' %>")
+	    $("#due_detail_li").html("<%= j render 'all_due_detail' %>")
+	<% else %>
+		$("#message").html("<center><p class='text-red'>Topic already assign you can update it.</p></center>")
+		$("#due_template_li").html("<%= j render 'due_template_list' %>")
+		$("#due_detail_li").html("<%= j render 'all_due_detail' %>")
+	<% end %>
+<% else %>
+	
+<% end %>
+
+
+
+
+

@@ -1546,8 +1546,8 @@ def import_employee_attendance
     format.csv { send_data @employee_attendances.to_csv }
     format.xls
   end
-   session[:active_tab] ="TimeManagement"
-   session[:active_tab1] ="AttendanceSetup"
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Attendance"
 end
 
   def import_employee_attendance_to_txt

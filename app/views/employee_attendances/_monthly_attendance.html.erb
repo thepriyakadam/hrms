@@ -1,72 +1,88 @@
 <%= bootstrap_form_for :temp, url: {action: "create_attendance", month: @month, year: @year} do |f| %>
-      <table class="table table-bordered table-hover table-condensed">
-        <thead>
-          <tr>
-            <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-            <th>ID</th>
-            <% for i in 1..@day %>
-              <th><%= i %></th>
-            <%end%>
-          </tr>
-        </thead>
-        <tbody>
-          <% exist = {} %>
-          <% @employees.each do |e| %>
-            <tr>
-              <td><%= check_box_tag "employees[]", e.employee_id unless e.is_confirm %></td>
-              <td><%= e.employee.manual_employee_code %></td>
-              <% sorted_exists = calculate_attendance(@date, exist, e)%>
-              <% sorted_exists.each do |k,v|%>
-                <td><%= v %></td>
-              <%end%>
-            </tr> 
-            
-            <% absent_day = absent_day_count(exist) %>
-            <% present_day = present_day_count(exist) %>
-            <% holiday_in_month = holiday_in_month_count(exist) %>
-            <% week_off_day = week_off_day_count(exist) %>
-            <% od_day = od_day_count(exist) %>
-            <% gatepass = gatepass_count(exist) %>
-
-            <% workingday = [] %>
-            <% workingday = create_leave(@date, e) %>
-            <%= hidden_field_tag "attendances[]", e.id %>
-            <%= hidden_field e.employee_id, 'employee_id', value: e.employee_id %>
-            <%= hidden_field e.employee_id, 'month_name', value: @date.strftime("%B") %>
-            <%= hidden_field e.employee_id, 'year', value: @date.strftime("%Y") %>
-            <%= hidden_field e.employee_id, 'day_in_month', value: count_day(@day,e.employee_id) %>
-            <%= hidden_field e.employee_id, 'present_day', value: present_day + workingday[2] %>
-            <%= hidden_field e.employee_id, 'od_day', value: od_day %>
-            <%= hidden_field e.employee_id, 'total_leave', value: workingday[0] + workingday[1] %>
-            <%= hidden_field e.employee_id, 'nonpay_leave', value: workingday[1] %>
-            <%= hidden_field e.employee_id, 'pay_leave', value: workingday[0] %>
-            <%= hidden_field e.employee_id, 'gatepass', value: gatepass_count(exist) %>
-            
-            <%= hidden_field e.employee_id, 'holiday_in_month', value: holiday_in_month %>
-            <%= hidden_field e.employee_id, 'week_off_day', value: week_off_day %>
-
-
-            <% if gatepass <= 2 %>
-              <% gatepass_value = gatepass.to_f %>
-            <% else %>
-              <% gatepass_value1 = gatepass.to_f - 2 %>
-              <% gatepas_value = gatepass_value1.to_f/2 %>
-              <% gatepass_value = gatepass.to_f - gatepass_value1.to_f %>
-            <% end %>
-
-              <%= hidden_field e.employee_id, 'absent_day', value: absent_day.to_f + workingday[3] + gatepas_value.to_f %>
-
-              <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
-                <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + workingday[0] + workingday[2] + od_day.to_f + gatepas_value.to_f + gatepass_value.to_f %>
-              <% else %>
-                <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[0] + workingday[2] + od_day.to_f + gatepas_value.to_f + gatepass_value.to_f %>
-              <% end %>            
-            <% exist.clear %>
+    <table class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+          <th>ID</th>
+          <% for i in 1..@day %>
+            <th><%= i %></th>
           <%end%>
-        </tbody>
-      </table>
-      <%= f.submit "Confirm Workingdays", class: "btn btn-sm btn-primary" %>
-    <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% exist = {} %>
+        <% @employees.each do |e| %>
+          <tr>
+            <td><%= check_box_tag "employees[]", e.employee_id unless e.is_confirm %></td>
+            <td><%= e.employee.manual_employee_code %></td>
+            <% sorted_exists = calculate_attendance(@date, exist, e)%>
+            <% sorted_exists.each do |k,v|%>
+              <td><%= v %></td>
+            <%end%>
+          </tr> 
+          <% absent_day_count = absent_day_count(exist) %>
+          <% present_day = present_day_count(exist) %>
+          <% holiday_in_month = holiday_in_month_count(exist) %>
+          <% week_off_day = week_off_day_count(exist) %>
+          <% od_day = od_day_count(exist) %>
+          <% gatepass = gatepass_count(exist) %>
+          <% el_leave_count = el_leave_count(exist) %>
+          <% cl_leave_count = cl_leave_count(exist) %>
+          <% esic_leave_count = esic_leave_count(exist) %>
+          <% lwp_leave_count = lwp_leave_count(exist) %>
+          <% advance_leave_count = advance_leave_count(exist) %>
+          <% coff_leave_count = coff_leave_count(exist) %>
+          <% od_day_count = od_day_count(exist) %>
+          <% workingday = [] %>
+          <% workingday = create_leave(@date, e) %>
+          <%= hidden_field_tag "attendances[]", e.id %>
+          <%= hidden_field e.employee_id, 'employee_id', value: e.employee_id %>
+          <%= hidden_field e.employee_id, 'month_name', value: @date.strftime("%B") %>
+          <%= hidden_field e.employee_id, 'year', value: @date.strftime("%Y") %>
+          <%= hidden_field e.employee_id, 'day_in_month', value: count_day(@day,e.employee_id) %>
+          <%= hidden_field e.employee_id, 'present_day', value: present_day + workingday[2] %>
+          <%= hidden_field e.employee_id, 'od_day', value: od_day %>
+          <%= hidden_field e.employee_id, 'total_leave', value: workingday[0] + workingday[1] %>
+          <%= hidden_field e.employee_id, 'nonpay_leave', value: workingday[1] %>
+          <%= hidden_field e.employee_id, 'pay_leave', value: workingday[0] %>
+          <%= hidden_field e.employee_id, 'gatepass', value: gatepass_count(exist) %>
+          <%= hidden_field e.employee_id, 'lwp_leave', value: lwp_leave_count(exist) %>
+          <%= hidden_field e.employee_id, 'cl_leave', value: cl_leave_count(exist) %>
+          <%= hidden_field e.employee_id, 'el_leave', value: el_leave_count(exist) %>
+           <%= hidden_field e.employee_id, 'od_leave', value: od_day_count(exist) %>
+          <%= hidden_field e.employee_id, 'esic_leave', value: esic_leave_count(exist) %>
+          <%= hidden_field e.employee_id, 'coff_leave', value: coff_leave_count(exist) %>
+          <%= hidden_field e.employee_id, 'advance_leave', value: advance_leave_count(exist) %>
+          <%= hidden_field e.employee_id, 'holiday_in_month', value: holiday_in_month %>
+          <%= hidden_field e.employee_id, 'week_off_day', value: week_off_day %>
+
+          <% if gatepass <= 2 %>
+            <% gatepass_value = gatepass.to_f %>
+          <% else %>
+            <% gatepass_value1 = gatepass.to_f - 2 %>
+            <% gatepas_value = gatepass_value1.to_f/2 %>
+            <% gatepass_value = gatepass.to_f - gatepass_value1.to_f %>
+          <% end %>
+
+            <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count.to_f + workingday[3] + gatepas_value.to_f %>
+
+            <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+              <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + workingday[0] + workingday[2] + od_day.to_f + gatepas_value.to_f + gatepass_value.to_f %>
+            <% else %>
+              <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[0] + workingday[2] + od_day.to_f + gatepas_value.to_f + gatepass_value.to_f %>
+            <% end %>  
+            
+            <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+              <%= hidden_field e.employee_id, 'nonpayable_day', value: absent_day_count.to_f+ gatepas_value.to_f  + workingday[1] + workingday[3] + week_off_day.to_f  %>
+            <% else %>
+              <%= hidden_field e.employee_id, 'nonpayable_day', value: absent_day_count.to_f+ gatepas_value.to_f  + workingday[1] + workingday[3]  %>
+            <% end %> 
+          <% exist.clear %>
+        <%end%>
+      </tbody>
+    </table>
+    <%= f.submit "Confirm Workingdays", class: "btn btn-sm btn-primary" %>
+  <% end %>
   <!-- </div>
 </div> -->
 

@@ -32,7 +32,7 @@
               <%end%>
             </tr> 
            
-            <% absent_day = absent_day_count(exist) %>
+            <% absent_day_count = absent_day_count(exist) %>
             <% present_day = present_day_count(exist) %>
             <% holiday_in_month = holiday_in_month_count(exist) %>
             <% week_off_day = week_off_day_count(exist) %>
@@ -52,10 +52,8 @@
             <%= hidden_field e.employee_id, 'nonpay_leave', value: workingday[1] %>
             <%= hidden_field e.employee_id, 'pay_leave', value: workingday[0] %>
             <%= hidden_field e.employee_id, 'gatepass', value: gatepass_count(exist) %>
-            
             <%= hidden_field e.employee_id, 'holiday_in_month', value: holiday_in_month %>
             <%= hidden_field e.employee_id, 'week_off_day', value: week_off_day %>
-
 
             <% if gatepass <= 2 %>
               <% gatepass_value = gatepass.to_f %>
@@ -65,23 +63,27 @@
               <% gatepass_value = gatepass.to_f - gatepass_value1.to_f %>
             <% end %>
 
-              <%= hidden_field e.employee_id, 'absent_day', value: absent_day.to_f + workingday[3] + gatepas_value.to_f %>
+              <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count.to_f + workingday[3] + gatepas_value.to_f %>
 
               <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
                 <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + workingday[0] + workingday[2] + od_day.to_f + gatepas_value.to_f + gatepass_value.to_f %>
               <% else %>
                 <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[0] + workingday[2] + od_day.to_f + gatepas_value.to_f + gatepass_value.to_f %>
-              <% end %>            
+              <% end %>
+
+              <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+                <%= hidden_field e.employee_id, 'nonpayable_day', value: absent_day_count.to_f + gatepas_value.to_f + workingday[1] + workingday[3] + week_off_day.to_f %>
+              <% else %>
+                <%= hidden_field e.employee_id, 'nonpayable_day', value: absent_day_count.to_f + gatepas_value.to_f + workingday[1] + workingday[3] %>
+              <% end %>
+
             <% exist.clear %>
           <%end%>
         </tbody>
       </table>
       <%= f.submit "Confirm Workingdays", class: "btn btn-sm btn-primary" %>
-
       <%= link_to " Print Attendance Slip ",employee_slip_employee_attendances_path(month: @month, year: @year, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
-
       <%= link_to " Excel Report ",employee_slip_xls_employee_attendances_path(month: @month, year: @year, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-
     <% end %>
   </div>
 </div>

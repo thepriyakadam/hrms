@@ -6,7 +6,7 @@
             <% for i in 1..@day %>
               <th><%= i %></th>
             <%end%>
-            <th colspan="14"> Total </th>
+            <th colspan="13"> Total </th>
           </tr>
           <tr>
             <th colspan="2">Day</th>
@@ -22,11 +22,10 @@
               <th>C.Off</th>
               <th>AL</th>
               <th>OD</th>
-               <th>GP</th>
-               <th>A</th>
+              <th>GP</th>
+              <th>A</th>
               <th>LWP</th>
               <th>ESIC</th>
-             
               <th>Payable Day</th>
           </tr>
         </thead>
@@ -78,11 +77,19 @@
               <td><%= esic_leave_count %></td>
               
                 <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
-                  <% payable_day = present_count.to_f  + od_day.to_f + holiday_in_month.to_f + cl_leave_count.to_f + el_leave_count.to_f + advance_leave_count.to_f + gatepas_value.to_f + gatepass_value.to_f %>
+                  <% payable_day = present_count.to_f  + od_day.to_f + holiday_in_month.to_f + cl_leave_count.to_f + el_leave_count.to_f + advance_leave_count.to_f + gatepas_value.to_f + gatepass_value.to_f + coff_leave_count.to_f %>
                 <% else %>
-                  <% payable_day = present_count.to_f  + od_day.to_f + holiday_in_month.to_f + week_off_day.to_f + cl_leave_count.to_f + el_leave_count.to_f + advance_leave_count.to_f + gatepas_value.to_f + gatepass_value.to_f %>
+                  <% payable_day = present_count.to_f  + od_day.to_f + holiday_in_month.to_f + week_off_day.to_f + cl_leave_count.to_f + el_leave_count.to_f + advance_leave_count.to_f + gatepas_value.to_f + gatepass_value.to_f + coff_leave_count.to_f %>
                 <% end %>
+                
+                <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+                  <% nonpayable_day = absent_count.to_f+ gatepas_value.to_f + lwp_leave_count.to_f + esic_leave_count.to_f + week_off_day.to_f %>
+                <% else %>
+                  <% nonpayable_day = absent_count.to_f+ gatepas_value.to_f + lwp_leave_count.to_f + esic_leave_count.to_f %>
+                <% end %>
+
               <td><%= payable_day %></td>
+              <!-- <td><= nonpayable_day %></td> -->
             </tr>           
             <% exist.clear %>
           <%end%>

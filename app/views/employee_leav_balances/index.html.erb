@@ -21,7 +21,7 @@
   </thead>
 
   <tbody>
-    <% @employee_leav_balances.each do |employee_leav_balance| %>
+    <% @employee_leav_balances.where(is_active: true).each do |employee_leav_balance| %>
       <tr>
         <td><%= employee_leav_balance.employee.try(:manual_employee_code) %></td>
         <td><%= full_name(employee_leav_balance.employee)%></td>

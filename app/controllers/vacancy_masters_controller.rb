@@ -483,12 +483,13 @@ end
   end
 
   def confirm_candidate_1
+    # byebug
      @interview_schedule = InterviewSchedule.find(params[:format])
      InterviewSchedule.where(id: @interview_schedule.id).update_all(is_confirmed: true)
      @selected_resume = SelectedResume.where(id: @interview_schedule.selected_resume_id).take
      @vacancy_master = VacancyMaster.where(id: @selected_resume.vacancy_master_id).take
-     a=ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id,is_complete: nil).first
-     ParticularVacancyRequest.where(id: a.id).update_all(is_complete: true,candidate_name: @interview_schedule.candidate_name,closed_date: Time.zone.now.to_date)
+     # a=ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id,is_complete: nil).first
+     # ParticularVacancyRequest.where(id: a.id).update_all(is_complete: true,candidate_name: @interview_schedule.candidate_name,closed_date: Time.zone.now.to_date)
 
      @particular_vacancy_request_1 = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id,is_complete: true).count
      @particular_vacancy_request_2 = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id,is_complete: nil).count

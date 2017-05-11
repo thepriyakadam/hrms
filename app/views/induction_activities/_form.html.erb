@@ -5,7 +5,7 @@
   Template No:<td><%= @induction_master.code %></td>
   Description:<td><%= @induction_master.description %></td> -->
   <% @induction_activity = InductionActivity.where(induction_master_id: @induction_master.id).take %>
-  <% if @induction_activity.is_confirm == true %>
+  <% if @induction_activity.try(:is_confirm) == true %>
   <%else%>
   <div class="row">
       <div class="col-sm-3">

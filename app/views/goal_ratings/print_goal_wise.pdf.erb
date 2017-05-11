@@ -1,10 +1,31 @@
 <style type="text/css">
 
  .page-break { display:block; clear:both; page-break-after:always; }
-
+tr {
+    page-break-inside: avoid;
+}
+th {
+    page-break-inside: avoid;
+}
 </style>
 <div>
     <% i=0%>
+
+    <table style="border-collapse: collapse; font-size:8pt;" border=1 width=1200 cellpadding="5">
+      <thead>
+        <tr>
+        <td colspan="7"><center> 
+          <% if current_user.employee.company_location.company.company_logo == nil %>
+          <% else %>
+            <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+          <%end%> 
+            <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+        </td>
+      </tr> 
+      </thead>
+    </table>
+
+
   <% @goal_bunches.each do |e| %>
   <% employee = Employee.find(e.employee_id) %>
   <% @joining_detail = JoiningDetail.find_by_employee_id(e.employee_id) %>
@@ -14,14 +35,13 @@
   <% @goal_ratings = GoalRating.where(appraisee_id: e.employee_id, goal_bunch_id: e.id, goal_type: 'Goal') %>
   <% @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", e.id ,'Attribute') %>
   <% @goal_bunches = GoalBunch.where(employee_id: e.employee_id, id: e.id).group(:employee_id) %>
-<div class="page-break">
 <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="5">    
   <thead>
   <tr>
     <% i=i+1%>
     <th><%= i %></th>
     <th colspan="6"><center>Performance Report for Period: <%= @period.name %> From: <%= @period.from %> To: <%= @period.to %></center></th></tr>
-    <tr><th colspan="7"><center><font color='orange'>Employee Performance Detail</font></center></th></tr>
+    <tr><th colspan="7"><center>Employee Performance Detail</center></th></tr>
     <tr>
       <th>ID</th>
       <th>Name</th>
@@ -36,7 +56,7 @@
     <tr>
       <td><%= e.employee.manual_employee_code %></td> 
       <td><%= full_name(e.employee) %></td>
-      <td><%=  %></td>
+      <td><% day = Date.today - e.employee.try(:date_of_birth).to_date %><% d = day.to_i/365 %><%= d %></td>
       <td><%= e.employee.department.try(:name) %></td>
       <td><%= @joining_detail.joining_date %></td>
       <td><%= @joining_detail.employee_grade.try(:name) %></td>

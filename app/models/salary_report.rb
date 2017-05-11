@@ -3,7 +3,7 @@ class SalaryReport
                 :actual_basic, :actual_da, :actual_hra, :actual_convenience, :actual_other, :actual_special, :actual_washing, :actual_total,
                 :earned_basic, :earned_da, :earned_hra, :earned_convenience, :earned_other, :earned_special, :earned_washing, :earned_total,
                 :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, :welfair, :deduction_total, :net_payable, :other_deduction,
-                :total_leave, :cl_leave, :el_leave,:advance_leave,:od_leave,:coff_leave,:esic_leave, :lwp_leave, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff, :month, :year,
+                :total_leave, :cl_leave, :el_leave,:advance_leave,:od_leave,:coff_leave,:esic_leave, :lwp_leave, :gatepass, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff, :month, :year,
                 :pf_ctc, :esic_ctc, :bonus_ctc, :actual_driver, :actual_medical, :actual_child_edu, :actual_mra, :earned_driver, :earned_medical, :earned_child_edu,
                 :earned_mra,:actual_monthly_arrear,:earned_monthly_arrear
         
@@ -121,6 +121,7 @@ class SalaryReport
     sr.absent_day = wd.absent_day
     sr.holiday = wd.holiday_in_month.to_i
     sr.weekoff = wd.week_off_day
+    sr.gatepass = wd.gatepass
     sr
   end
 
@@ -350,6 +351,9 @@ class SalaryReport
 
     array_holiday = reports.collect {|r| r.try(:holiday)}.compact
     @sum.holiday = array_holiday.inject(0){|sum,x| sum + x }
+
+    array_gatepass = reports.collect {|r| r.try(:gatepass)}.compact
+    @sum.gatepass = array_gatepass.inject(0){|sum,x| sum + x }
 
     array_weekoff = reports.collect {|r| r.try(:weekoff)}.compact
     @sum.weekoff = array_weekoff.inject(0){|sum,x| sum + x }

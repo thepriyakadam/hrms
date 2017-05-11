@@ -195,7 +195,7 @@ class GoalRatingsController < ApplicationController
     if sum == 100
       @emp = Employee.find(current_user.employee_id)
       GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
-      @gol_bunch = GoalBunch.find_by(id: @goal_bunch.id).update(goal_confirm: false)
+      @gol_bunch = GoalBunch.find_by(id: @goal_bunch.id).update(goal_confirm: true)
       flash[:notice] = "Mail Sent Successfully"
       redirect_to new_goal_bunch_path
     else
@@ -408,6 +408,7 @@ class GoalRatingsController < ApplicationController
       emp = GoalBunch.find(g)
       @goal_bunches << emp
       @goal_bunch = GoalBunch.find(g)
+      @employee = Employee.find_by(id: @goal_bunch.employee_id)
       end
 
     respond_to do |format|
@@ -437,11 +438,6 @@ class GoalRatingsController < ApplicationController
     @emp1 = Employee.find(params[:employee_id])
     @goal_bunch_ids = params[:goal_bunch_ids]
 
-     @joining_detail = JoiningDetail.find_by_employee_id(@emp1.id)
-     @experiences = Experience.where(employee_id: @emp1.id)
-     @qualifications = Qualification.where(employee_id: @emp1.id)
-     @employee_promotions = EmployeePromotion.where(employee_id: @emp1.id)
-
     if @goal_bunch_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
       @employees = []
@@ -449,10 +445,14 @@ class GoalRatingsController < ApplicationController
       @employees = []
       @goal_bunch_ids.each do |g|
         @goal_bunch = GoalBunch.find_by(id: g)
-        @employees = GoalBunch.where(id: g,employee_id: @goal_bunch.employee_id)
+        #@employees = GoalBunch.where(id: g)
       end
     end
-    
+     @joining_detail = JoiningDetail.find_by_employee_id(@emp1.id)
+     @experiences = Experience.where(employee_id: @emp1.id)
+     @qualifications = Qualification.where(employee_id: @emp1.id)
+     @employee_promotions = EmployeePromotion.where(employee_id: @emp1.id)
+
     respond_to do |f|
       f.js
       f.xls {render template: 'goal_ratings/detail_employee_wise.xls.erb'}

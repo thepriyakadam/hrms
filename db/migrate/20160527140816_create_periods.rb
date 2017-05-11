@@ -5,6 +5,7 @@ class CreatePeriods < ActiveRecord::Migration
       t.date :from
       t.date :to
       t.boolean :status
+      t.boolean :is_confirm
 
       t.timestamps null: false
     end

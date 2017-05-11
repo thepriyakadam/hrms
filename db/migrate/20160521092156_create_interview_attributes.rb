@@ -4,6 +4,7 @@ class CreateInterviewAttributes < ActiveRecord::Migration
       t.string :code
       t.string :name
       t.text :description
+      t.boolean :is_confirm
 
       t.timestamps null: false
     end

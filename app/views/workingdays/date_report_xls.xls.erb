@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Month Name</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Month Year</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Present Day </Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">Absent Day</Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String">Payable Leave</Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String">Payable Day </Data></Cell>
+        <Cell ss:Index="7"><Data ss:Type="String">Non Payable Day </Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String">Day In Month </Data></Cell>
+       
+      </Row>
+
+        <% @workingdays.each do |workingday| %>
+      <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= workingday.month_name %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= workingday.year %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= workingday.present_day %></Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="String"><%= workingday.absent_day %></Data></Cell>
+          <Cell ss:Index="5"><Data ss:Type="String"><%= workingday.pay_leave %></Data></Cell>
+          <Cell ss:Index="6"><Data ss:Type="String"><%= workingday.payable_day %></Data></Cell>
+          <Cell ss:Index="7"><Data ss:Type="String"><%= workingday.nonpay_leave %></Data></Cell>
+          <Cell ss:Index="8"><Data ss:Type="String"><%= workingday.day_in_month %></Data></Cell>
+      </Row>
+         <!-- Row -->
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

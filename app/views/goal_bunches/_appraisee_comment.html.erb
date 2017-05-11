@@ -19,7 +19,7 @@
     <tr>
       <td><%= a.manual_employee_code %></td> 
       <td><%= full_name(a) %></td>
-      <td><%=  %></td>
+      <td><% day = Date.today - a.try(:date_of_birth).to_date %><% d = day.to_i/365 %><%= d%></td>
       <td><%= a.department.try(:name) %></td>
       <td><%= @joining_detail.joining_date %></td>
       <td><%= @joining_detail.employee_grade.name %></td>
@@ -277,7 +277,7 @@
       </tbody>
     </table>
      
-       <% @Overall = (appraisee_attribute_sum + appraisee_goal_sum ) %>
+       <% @Overall = (appraisee_attribute_sum + appraisee_goal_sum ).round(2) %>
 
   <div class="row">
     <div class="col-sm-3">

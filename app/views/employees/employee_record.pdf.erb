@@ -18,8 +18,9 @@
           <tr>
             <% i=i+1 %>
             <td>ID : <%= @employee.manual_employee_code %></td>
-            <td colspan="3">Name : <%= full_name(@employee) %></td>
+            <td colspan="2">Name : <%= full_name(@employee) %></td>
             <td>Department : <%= @employee.try(:department).try(:name) %></td>
+            <td>Age : <% day = Date.today - @employee.try(:date_of_birth).to_date %><% d = day.to_i/365 %><%= d %></td>
           </tr>
 
           <tr><th colspan="5"><center>Qualification Detail</center></th></tr>
@@ -28,14 +29,12 @@
             <th>Year Of Passing</th>
             <th colspan="2">Marks</th>
           </tr>
-          <% @qualifications = Qualification.where(employee_id: e) %>
-          <% @qualifications.each do |q|  %>
+          <% @qualification = Qualification.where(employee_id: e).last %>
             <tr>
-              <td colspan="2"><%= q.try(:degree).try(:name) %></td>
-              <td><%= q.try(:year).try(:name) %></td>
-              <td colspan="2"><%= q.try(:marks) %></td>
+              <td colspan="2"><%= @qualification.try(:degree).try(:name) %></td>
+              <td><%= @qualification.try(:year).try(:name) %></td>
+              <td colspan="2"><%= @qualification.try(:marks) %></td>
             </tr> 
-          <% end %>
           <tr><th colspan="5"><center>Joining Detail</center></th></tr>
           <tr>
             <th>Joining Date</th>

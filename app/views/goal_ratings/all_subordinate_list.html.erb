@@ -31,7 +31,7 @@
           <tr>
             <td><%= e.manual_employee_code %></td> 
             <td><%= full_name(e) %></td>
-            <td><%=  %></td>
+            <td><% day = Date.today - e.try(:date_of_birth).to_date %><% d = day.to_i/365 %><%= d %></td>
             <td><%= e.department.try(:name) %></td>
             <td><%= joining_detail.joining_date %></td>
             <td><%= joining_detail.employee_grade.try(:name) %></td>

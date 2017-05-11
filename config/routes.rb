@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :slabs do
+    collection do
+      get :employee_list
+      get :apply_tds
+    end
+  end
   resources :employee_gps_histories
   resources :gratuities
   resources :gratuity_masters do
@@ -702,6 +708,7 @@ end
       get :reviewer_detail_for_print
       get :period_for_multiple
       post :create_multiple_bunch
+      get :revert_goal
     end
   end
   resources :goal_perspectives do
@@ -1630,6 +1637,9 @@ end
       post :revert_all_workingday
       get :search_by_month_year
       post :month_year_wise_record
+      get :date_report
+      post :print_date_report
+      get :print_date_report
     end
   end
 
@@ -2004,6 +2014,9 @@ end
       get :member_gps_form
       post :update_gps
       get :employee_gps_setting_list
+      post :display_employee_details
+      get :employee_detail_form
+      get :employee_record_pdf
     end
     member do
       get :edit_manager

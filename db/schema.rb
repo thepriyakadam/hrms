@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170321084647) do
+ActiveRecord::Schema.define(version: 20170418111052) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1229,6 +1229,7 @@ ActiveRecord::Schema.define(version: 20170321084647) do
     t.date     "end_date"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
+    t.decimal  "gross_salary"
   end
 
   add_index "employee_templates", ["employee_id"], name: "index_employee_templates_on_employee_id"
@@ -1592,6 +1593,7 @@ ActiveRecord::Schema.define(version: 20170321084647) do
     t.integer  "f_designation_id"
     t.decimal  "f_ctc"
     t.string   "appraisee_rating_id"
+    t.boolean  "goal_approval"
   end
 
   add_index "goal_bunches", ["appraisee_id"], name: "index_goal_bunches_on_appraisee_id"
@@ -3348,6 +3350,16 @@ ActiveRecord::Schema.define(version: 20170321084647) do
 
   add_index "skillsets", ["employee_id"], name: "index_skillsets_on_employee_id"
 
+  create_table "slabs", force: :cascade do |t|
+    t.decimal  "from"
+    t.decimal  "to"
+    t.decimal  "texable_amount"
+    t.decimal  "percentage"
+    t.boolean  "status"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "slip_informations", force: :cascade do |t|
     t.integer  "salaryslip_id"
     t.integer  "cost_center_id"
@@ -3389,6 +3401,29 @@ ActiveRecord::Schema.define(version: 20170321084647) do
   end
 
   add_index "states", ["country_id"], name: "index_states_on_country_id"
+
+  create_table "texable_amounts", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.decimal  "yearly"
+    t.decimal  "monthly"
+    t.decimal  "remaining_amount"
+    t.boolean  "is_paid"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "texable_amounts", ["employee_id"], name: "index_texable_amounts_on_employee_id"
+
+  create_table "texable_monthly_deductions", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "salayslip_id"
+    t.decimal  "texable_deducted_amount"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "texable_monthly_deductions", ["employee_id"], name: "index_texable_monthly_deductions_on_employee_id"
+  add_index "texable_monthly_deductions", ["salayslip_id"], name: "index_texable_monthly_deductions_on_salayslip_id"
 
   create_table "trainee_requests", force: :cascade do |t|
     t.integer  "training_request_id"
@@ -3784,6 +3819,8 @@ ActiveRecord::Schema.define(version: 20170321084647) do
     t.boolean  "paid"
     t.boolean  "full_and_final"
     t.decimal  "od_day"
+    t.decimal  "nonpayable_day"
+    t.date     "date"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

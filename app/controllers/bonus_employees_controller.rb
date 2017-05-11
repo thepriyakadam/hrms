@@ -95,11 +95,11 @@ class BonusEmployeesController < ApplicationController
     # if current_user.class == Member
     # if current_user.role.name == 'Company'
     if @location == ""
-      @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
       @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id).where(employee_id: @employees)
       # @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
     elsif @company == ""
-      @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_location_id: @location.to_i).pluck(:id)
       @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id).where(employee_id: @employees)
       # @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
     # if @company == ""
@@ -107,11 +107,11 @@ class BonusEmployeesController < ApplicationController
     #   @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
     #   @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
     elsif  @location.empty? == true && @company.empty? == true
-      @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
       @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id).where(employee_id: @employees)
       # @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
      else
-      @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
       @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id).where(employee_id: @employees)
       # @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
   #   end
@@ -131,11 +131,11 @@ class BonusEmployeesController < ApplicationController
     # if current_user.class == Member
     # if current_user.role.name == 'Company'
     if @location == ""
-      @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
       @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id).where(employee_id: @employees)
       # @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
     elsif @company == ""
-      @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_location_id: @location.to_i).pluck(:id)
       @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id).where(employee_id: @employees)
       # @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
     # if @company == ""
@@ -143,11 +143,11 @@ class BonusEmployeesController < ApplicationController
     #   @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
     #   @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
     elsif  @location.empty? == true && @company.empty? == true
-      @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
       @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id).where(employee_id: @employees)
       # @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
      else
-      @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
       @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id).where(employee_id: @employees)
       # @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
   #   end
@@ -173,11 +173,11 @@ class BonusEmployeesController < ApplicationController
     # if current_user.class == Member
     # if current_user.role.name == 'Company'
     if @location == ""
-      @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
       # @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id).where(employee_id: @employees)
       @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
     elsif @company == ""
-      @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_location_id: @location.to_i).pluck(:id)
       # @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id).where(employee_id: @employees)
       @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
     # if @company == ""
@@ -185,11 +185,11 @@ class BonusEmployeesController < ApplicationController
     #   @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
     #   @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
     elsif  @location.empty? == true && @company.empty? == true
-      @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
       # @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id).where(employee_id: @employees)
       @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
      else
-      @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
       # @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id).where(employee_id: @employees)
       @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
   #   end
@@ -210,11 +210,11 @@ class BonusEmployeesController < ApplicationController
     # if current_user.role.name == 'Company'
       
     if @location == ""
-      @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
       # @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id).where(employee_id: @employees)
       @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
     elsif @company == ""
-      @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_location_id: @location.to_i).pluck(:id)
       # @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id).where(employee_id: @employees)
       @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
     # if @company == ""
@@ -222,11 +222,11 @@ class BonusEmployeesController < ApplicationController
     #   @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
     #   @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
     elsif  @location.empty? == true && @company.empty? == true
-      @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
       # @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id).where(employee_id: @employees)
       @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
      else
-      @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
       # @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id).where(employee_id: @employees)
       @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
   #   end
@@ -260,11 +260,11 @@ class BonusEmployeesController < ApplicationController
     # if current_user.role.name == 'Company'
 
     if @location == ""
-      @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
       @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id).where(employee_id: @employees)
       @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
     elsif @company == ""
-      @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_location_id: @location.to_i).pluck(:id)
       @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id).where(employee_id: @employees)
       @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
 
@@ -274,11 +274,11 @@ class BonusEmployeesController < ApplicationController
     #   @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
 
     elsif  @location.empty? == true && @company.empty? == true
-      @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
       @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id).where(employee_id: @employees)
       @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
      else
-      @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+      @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
       @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id).where(employee_id: @employees)
       @particular_bonuses = BonusEmployee.where(bonus_date: start_date..end_date).where(employee_id: @employees)
 

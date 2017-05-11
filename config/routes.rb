@@ -1239,6 +1239,9 @@ end
       get :travel_request
       get :employee_attendance
       post :show_self_datewise_attendance
+      get :datewise_attendance_report_xls
+      get :datewise_attendance_report_pdf
+      get :show
     end
   end
 

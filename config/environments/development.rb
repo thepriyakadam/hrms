@@ -72,18 +72,18 @@
    # #openssl_verify_mode: 'none'
    # }
 
-   config.action_mailer.default_url_options = { host: 'http://amaazia.co.in', port: 2095 }
+   config.action_mailer.default_url_options = { host: ' http://mail.redefine.in', port:  995 }
   
   
    # config.domain = 'lvh.me'
    # config.action_mailer.perform_deliveries = true,
    ActionMailer::Base.delivery_method = :smtp
    ActionMailer::Base.smtp_settings = {
-   address: 'amaazia.co.in',
-   port: 25,
-   domain: 'amaazia.co.in',
-   user_name: 'hrms@rajgreen.co.in',
-   password: 'amaazia@123',
+   address: 'mail.redefine.in',
+   port: 465,
+   domain: 'redefine.in',
+   user_name: ' hrms@redefine.in',
+   password: 'Pass!159',
    authentication: :plain,
    enable_starttls_auto: true,
    openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE

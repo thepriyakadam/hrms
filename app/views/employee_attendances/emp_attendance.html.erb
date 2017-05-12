@@ -3,19 +3,31 @@
     <h3 class="box-title"> Employee Attendance</h3>
  <div class="box-body">
   <%= bootstrap_form_for(:employee, url: { action: 'display_attendance_2'},html: {id: "employee"}) do |f| %>
-    <div class="row">
+     <div class="row">
         <div class="col-sm-2">
-        <label>Month</label>
-          <div class="field">
-            <%= select :employee,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
-           </div>
-        </div>
-        <div class="col-sm-2">
-        <label>Year</label>
-          <div class="field">
-            <%= select :employee,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"},class: 'form-control' %>
+          <label>From </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :employee,:from,hide_label: true,class: 'request_date form-control'%>
+            </div>
           </div>
         </div>
+
+        <div class="col-sm-2">
+          <label>To </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :employee,:to,hide_label: true,class: 'request_date form-control'%>
+            </div>
+          </div>
+        </div>
+
         <div class="col-sm-2">
           <label>Company</label>
           <div class="form-group required">
@@ -63,23 +75,32 @@
     $('.ajax-progress').show();
     $("#advance_salary").submit();
   })
+  
+  $(function(){
+    $('.request_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
 </script>
+
 <script>
 $("#employee").validate({
     rules: {
-      "employee[month]":{
+      "employee[from]":{
         required: true,
       },
-      "employee[year]":{
+      "employee[to]":{
         required: true,
       }
        },
     messages: {
-      "employee[month]":{
-        required: "Please Specify Month",
+      "employee[from]":{
+        required: "Please Specify From",
       },
-       "employee[year]":{
-        required: "Please Select Year",
+       "employee[to]":{
+        required: "Please Select To",
       }
        },
     errorPlacement: function(error, element) {

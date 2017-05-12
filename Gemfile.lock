@@ -387,6 +387,7 @@ DEPENDENCIES
   rake (~> 12.0)
   rmagick (~> 2.15.4)
   roo
+  ruby-graphviz (~> 1.2, >= 1.2.2)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   selenium-webdriver (~> 3.0, >= 3.0.5)

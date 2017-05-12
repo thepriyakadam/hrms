@@ -37,7 +37,7 @@
                     <% if vacancy_master.is_confirmed == true %>
                     <small class="label label-primary">Position Closed</small>
                     <% else %>
-                    <small class="label label-default">Position is Vacant</small>
+                    <small class="label label-default">Position Vacant</small>
                     <% end %>
                 </td>
                 <td>
@@ -45,7 +45,7 @@
                   <% if vacancy_master.is_confirmed == true %>
                   <%= link_to 'View Resume',new_selected_resume_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-info' %>
                   <% else %>
-                  <%= link_to 'Add Resume & Shortlist',new_selected_resume_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-primary' %>
+                  <%= link_to 'Add Resume',new_selected_resume_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-primary' %>
                   <% end %>
                 </td>
               </tr>

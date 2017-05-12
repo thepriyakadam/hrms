@@ -9,7 +9,9 @@ class CreateOvertimeSalaries < ActiveRecord::Migration
       t.decimal :attendence_bouns_amount, precision: 15, scale: 2, default: 0
       t.decimal :paid_holiday_amount, precision: 15, scale: 2, default: 0
       t.decimal :net_payble_amount, precision: 15, scale: 2, default: 0
-
+      t.date :ot_date
+      t.decimal :basic_amount, precision: 15, scale: 2, default: 0.0
+      t.decimal :ot_amount, precision: 15, scale: 2, default: 0.0
       t.timestamps null: false
     end
   end

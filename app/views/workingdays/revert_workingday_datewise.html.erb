@@ -1,0 +1,44 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Revert Workingday Datewise</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div class="row">
+        <div class="col-sm-2">
+          <label>From </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :employee,:from,hide_label: true,class: 'request_date form-control'%>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <label>To </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :employee,:to,{hide_label: true,onchange:"var a={to:$(this).val(),from:$('#employee_from').val()};$('.ajax-progress').show(); $.get('/workingdays/show_employee_datewise',a,function(response){});",class: 'request_date form-control'} %>
+            </div>
+          </div>
+        </div>
+      </div><br>
+    <div id="employee_datewise"></div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(function(){
+    $('.request_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

@@ -55,20 +55,23 @@ class SlabsController < ApplicationController
   def update
     @slab.update(slab_params)
     params_value = slab_params["to"]
+    
     @next_id = @slab.id.to_i + 1
     @previous_id = @slab.id.to_i - 1
     @next_slab = Slab.find_by(id: @next_id)
     @previous_slab = Slab.find_by(id: @previous_id)
 
     if @next_slab.nil?
-      texable_amount = @next_slab.texable_amount
+      @slab.update(texable_amount: params_value.to_d - @previous_slab.try(:to).to_d)
     elsif @previous_slab.nil?
       texable_amount = @next_slab.try(:to).to_d - params_value.to_d
       @slab.update(texable_amount: params_value)
+      @next_slab.update(texable_amount: texable_amount)
     else
       texable_amount = @next_slab.try(:to).to_d - params_value.to_d
+      @slab.update(texable_amount: params_value.to_d - @previous_slab.try(:to).to_d)
+      @next_slab.update(texable_amount: texable_amount)
     end
-    @next_slab.update(texable_amount: texable_amount)
 
     @slab = Slab.new
     @slabs = Slab.all
@@ -99,7 +102,7 @@ class SlabsController < ApplicationController
         redirect_to home_index_path
       end
     else
-      @employees = Employee.all
+    @employees = Employee.all
     end
    session[:active_tab] ="PayrollManagement"
    session[:active_tab1] = "IncomeTax"
@@ -113,7 +116,7 @@ class SlabsController < ApplicationController
       flash[:alert] = "Template Not Available for this Employee!"
     else
       @employee_salary_templates = @current_template.employee_salary_templates
-      
+  
       @ctc = @employee_salary_templates.sum(:annual_amount)
       @slabs = Slab.all
         slab_value = 0
@@ -138,6 +141,10 @@ class SlabsController < ApplicationController
       TexableAmount.create(employee_id: employee.id,yearly: last_value1,monthly: monthly.round(2))
     end #if @current_template == nil
     redirect_to employee_list_slabs_path
+  end
+
+  def deduction_list
+    @texable_amounts = TexableAmount.all
   end
 
   private

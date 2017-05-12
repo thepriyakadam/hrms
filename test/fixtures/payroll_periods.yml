@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  from: 2017-05-11
+  to: 2017-05-11
+  status: false
+
+two:
+  from: 2017-05-11
+  to: 2017-05-11
+  status: false

@@ -38,6 +38,7 @@
    config.assets.raise_runtime_errors = true
 
 
+
   
    # Raises error for missing translations
    # config.action_view.raise_on_missing_translations = true
@@ -46,7 +47,9 @@
    config.action_mailer.perform_deliveries = true
 
 
+
    #config.action_mailer.raise_delivery_errors = true 
+
 
    #config.action_mailer.perform_deliveries = true
   
@@ -69,23 +72,42 @@
    # #openssl_verify_mode: 'none'
    # }
 
-   config.action_mailer.default_url_options = { host: 'http://amaazia.co.in', port: 2095 }
+   # config.action_mailer.default_url_options = { host: 'https://mg.mail.yahoo.com', port: 3000}
   
   
-   # config.domain = 'lvh.me'
-   # config.action_mailer.perform_deliveries = true,
-   ActionMailer::Base.delivery_method = :smtp
-   ActionMailer::Base.smtp_settings = {
-   address: 'amaazia.co.in',
-   port: 25,
-   domain: 'amaazia.co.in',
-   user_name: 'hrms@rajgreen.co.in',
-   password: 'amaazia@123',
-   authentication: :plain,
-   enable_starttls_auto: true,
+   # # config.domain = 'lvh.me'
+   # # config.action_mailer.perform_deliveries = true,
+   # ActionMailer::Base.delivery_method = :smtp
+   # ActionMailer::Base.smtp_settings = {
+   # address: 'mail.redefine.in',
+   # port: 465,
+   # domain: 'mail.redefine.in',
+   # user_name: 'hrms@redefine.in',
+   # password: 'Pass!159',
+   # authentication: :plain,
+   # enable_starttls_auto: true,
+   # openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+   # # openssl_verify_mode: 'none'
+   # }
+
+
+  config.action_mailer.default_url_options = { host: 'http://amaazia.co.in', port: 2095 }
+ 
+ 
+  # config.domain = 'lvh.me'
+  # config.action_mailer.perform_deliveries = true,
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+  address: 'amaazia.co.in',
+  port:  587,
+  domain: 'amaazia.co.in',
+  user_name: 'hrms@rajgreen.co.in',
+  password: 'amaazia@123',
+  authentication: :plain,
+  enable_starttls_auto: true,
    openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
    # openssl_verify_mode: 'none'
-   }
+  }
 
 
 # config.action_mailer.delivery_method = :smtp
@@ -99,8 +121,8 @@
 #        :authentication => "plain",
 #        :enable_starttls_auto => true
 #   }
-
-
+# # Root url
+  # config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
   # ActionMailer::Base.smtp_settings = {
   # :address => "mail.rajgreen.co.in",
   # :port => 25,
@@ -108,7 +130,6 @@
   # :password => "amaazia@123",
   # :authentication => 'plain',
   # }
-  
    # # Root url
    # config.action_mailer.default_url_options = { host: 'mail.bhandarigroup.in', port: 3000 }
    
@@ -127,15 +148,15 @@
    # }
   
    # Root url
-  # config.action_mailer.default_url_options = { host: 'mail.amaazia.com', port: 3000 }
+  # config.action_mailer.default_url_options = { host: 'mail.amaazia.co.in', port: 3000 }
   # # config.domain = 'lvh.me'
   # # config.action_mailer.perform_deliveries = true,
   # ActionMailer::Base.delivery_method = :smtp
   
   # ActionMailer::Base.smtp_settings = {
-  # :address => "mail.amaazia.com",
-  # :port => 465,
-  # :user_name => "ranna.p@amaazia.com",
+  # :address => "mail.amaazia.co.in",
+  # :port => 25,
+  # :user_name => "hrms@amaazia.co.in",
   # :password => "ranna@123",
   # :authentication => 'plain',
   # }
@@ -169,6 +190,77 @@
   # enable_starttls_auto: true,
   # user_name: ENV["ranna.p@amaazia.com"],
   # password: ENV["rannahr@1234"]
+
+
+
+
+ # Root url
+#   config.action_mailer.default_url_options = { host: 'mail.rajgreen.co.in', port: 3000 }
+#   # config.domain = 'lvh.me'
+#    config.action_mailer.perform_deliveries = true,
+#   ActionMailer::Base.delivery_method = :smtp
+#   ActionMailer::Base.smtp_settings = {
+#     :address => "mail.rajgreen.co.in",
+#     :port => 465,
+#     :user_name => "hrms@rajgreen.co.in",
+#     :password => "amaazia@123",
+#     :authentication => 'plain',
+# }
+
+#   ActionMailer::Base.smtp_settings = {
+#     :address => "mail.rajgreen.co.in",
+#     :port => 25,
+#     :user_name => "hrms@rajgreen.co.in",
+#     :password => "amaazia@123",
+#     :authentication => 'plain',
+# }
+
+
+ # # Root url
+ #  config.action_mailer.default_url_options = { host: 'mail.bhandarigroup.in', port: 3000 }
+ 
+ #  # config.domain = 'lvh.me'
+ #  # config.action_mailer.perform_deliveries = true,
+ #  ActionMailer::Base.delivery_method = :smtp
+
+ #  ActionMailer::Base.smtp_settings = {
+ #    address: 'mail.bhandarigroup.in',
+ #    port: 25,
+ #    domain: '192.168.0.62',
+ #    user_name: 'hrmsdws-bhandarigroup',
+ #    password: 'hrms1234',
+ #    authentication: :plain,
+ #    openssl_verify_mode: 'none'
+ #  }
+
+ # Root url
+#   config.action_mailer.default_url_options = { host: 'mail.amaazia.com', port: 3000 }
+#   # config.domain = 'lvh.me'
+#   # config.action_mailer.perform_deliveries = true,
+#   ActionMailer::Base.delivery_method = :smtp
+
+#   ActionMailer::Base.smtp_settings = {
+#     :address => "mail.amaazia.com",
+#     :port => 465,
+#     :user_name => "ranna.p@amaazia.com",
+#     :password => "ranna@123",
+#     :authentication => 'plain',
+# }
+
+ # # Root url
+  # config.action_mailer.default_url_options = { host: 'imap.gmail.com', port: 3000 }
+  # # config.domain = 'lvh.me'
+  # # config.action_mailer.perform_deliveries = true,
+  # ActionMailer::Base.delivery_method = :smtp
+
+  # ActionMailer::Base.smtp_settings = {
+  #   address: 'smtp.gmail.com',
+  #   port: 25,
+  #   domain: 'imap.gmail.com',
+  #   authentication: :plain,
+  #   enable_starttls_auto: true,
+  #   user_name: 'ranna.p@amaazia.com',
+  #   password: 'rannahr@123'
   # }
   
   

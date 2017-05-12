@@ -12,9 +12,10 @@ class CreateEmployeeSalaryTemplates < ActiveRecord::Migration
       t.string :base
       t.string :to_be_paid
       t.decimal :max_amount, precision: 15, scale: 2
-      t.decimal :monthly_amount, precision: 15, scale: 2
-      t.decimal :annual_amount, precision: 15, scale: 2
-
+      t.decimal :monthly_amount, precision: 15, scale: 2, default: 0
+      t.decimal :annual_amount, precision: 15, scale: 2, default: 0
+      t.references :employee_template, index: true, foreign_key: true
+    
       t.timestamps null: false
     end
   end

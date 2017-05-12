@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Employee Gps</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>Location</th>
+      <th>From date</th>
+      <th>To date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @employee_gps.each do |employee_gp| %>
+      <tr>
+        <td><%= employee_gp.employee %></td>
+        <td><%= employee_gp.latitude %></td>
+        <td><%= employee_gp.longitude %></td>
+        <td><%= employee_gp.location %></td>
+        <td><%= employee_gp.from_date %></td>
+        <td><%= employee_gp.to_date %></td>
+        <td><%= link_to 'Show', employee_gp %></td>
+        <td><%= link_to 'Edit', edit_employee_gp_path(employee_gp) %></td>
+        <td><%= link_to 'Destroy', employee_gp, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Employee gp', new_employee_gp_path %>

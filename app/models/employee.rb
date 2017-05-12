@@ -27,9 +27,13 @@ class Employee < ActiveRecord::Base
   has_many :qualifications
   has_many :employee_leav_requests
   has_many :reporting_masters, class_name: 'ReportingMaster', foreign_key: 'reporting_master_id'
+  
+  # has_many :first_reporters, :class_name => "EmployeeLeavRequest", :foreign_key => :first_reporter_id
+  # has_many :second_reporters, :class_name => "EmployeeLeavRequest", :foreign_key => :second_reporter_id
+  
   has_many :first_reporters, class_name: 'EmployeeLeavRequest', foreign_key: 'first_reporter_id'
   has_many :second_reporters, class_name: 'EmployeeLeavRequest', foreign_key: 'second_reporter_id'
-  has_many :leave_status_records, class_name: 'LeaveStatusRecord', foreign_key: 'change_status_employee_id'
+  has_many :change_status_employees, class_name: 'LeaveStatusRecord', foreign_key: 'change_status_employee_id'
   has_many :employee_leav_balances
   has_many :overtime_salaries
   has_many :vacancy_request_histories
@@ -75,7 +79,8 @@ class Employee < ActiveRecord::Base
 
 
   has_many :texable_monthly_deductions
- 
+  has_many :advance_salaries
+  has_many :employee_jc_lists
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',
                           foreign_key: 'manager_id'

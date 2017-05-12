@@ -46,6 +46,10 @@ class EmployeeLeavRequestsController < ApplicationController
       else
         @checkbox = false
       end
+  payroll_period = PayrollPeriod.where(status: true).take 
+  if  start_date.to_date >= payroll_period.from.to_date && end_date.to_date <= payroll_period.to.to_date
+  # if start_date == payroll_period.from.to_date..payroll_period.to.to_date && end_date == payroll_period.from.to_date..payroll_period.to.to_date
+
     if @employee_leav_request.end_date == nil 
       flash[:alert] = "please Fill all mendatory fields"
       redirect_to new_employee_leav_request_path
@@ -129,7 +133,7 @@ class EmployeeLeavRequestsController < ApplicationController
                 flash.now[:alert] = 'Not Allowed. You exceed the leave limit.'
                 render :new
 
-              elsif @employee_leav_request.start_date.to_date < @emp_leave_bal.from_date.to_date
+              elsif @employee_leav_request.try(:start_date).try(:to_date) < @emp_leave_bal.try(:from_date).try(:to_date)
               
                 @emp_leave_bal1 =  EmployeeLeavBalance.where(employee_id: @employee.id,leav_category_id: @employee_leav_request.leav_category_id,is_active: false).last
                 if @employee_leav_request.leave_count.to_f > @emp_leave_bal1.try(:no_of_leave).to_f
@@ -209,7 +213,7 @@ class EmployeeLeavRequestsController < ApplicationController
                 end
               end#bal.nil?
             else #is_balance == true
-               @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
+               # @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
                 if @employee_leav_request.save
       #leave_record
               @employee_leav_request.leave_record_create(@employee_leav_request)
@@ -246,6 +250,10 @@ class EmployeeLeavRequestsController < ApplicationController
         end
       else
       end
+  else #start_date == payroll_period.from.to_date
+    flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+    redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+  end
   end
 
   def update

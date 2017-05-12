@@ -11,6 +11,11 @@ class CreateWorkingdays < ActiveRecord::Migration
       t.decimal :week_off_day
       t.decimal :absent_day
       t.decimal :payable_day
+      t.string :lwp_leave
+      t.string :cl_leave
+      t.string :el_leave
+      t.string :esic_leave
+      t.string :coff_leave
 
       t.timestamps null: false
     end

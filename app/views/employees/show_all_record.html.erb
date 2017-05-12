@@ -20,8 +20,9 @@
           <tr>
             <th><%= i=i+1 %></th>
             <td>ID : <%= @employee.manual_employee_code %></td>
-            <td colspan="2">Name : <%= full_name(@employee) %></td>
+            <td>Name : <%= full_name(@employee) %></td>
             <td>Department : <%= @employee.try(:department).try(:name) %></td>
+            <td>Age : <% day = Date.today - @employee.try(:date_of_birth).to_date %><% d = day.to_i/365 %><%= d %></td>
           </tr>
 
           <tr><th colspan="5"><center>Qualification Detail</center></th></tr>

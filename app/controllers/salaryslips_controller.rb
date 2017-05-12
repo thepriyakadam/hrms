@@ -982,8 +982,7 @@ class SalaryslipsController < ApplicationController
                  LeaveDetail.create_leave_detail_information(@salaryslip, elb,leave_count)
               end
             end
-
-
+            
   #texable 
         # @texable_amount = TexableAmount.find_by(employee_id: @employee.id)
         # @salaryslip = Salaryslip.where(employee_id: @employee.id,month: @month,year: @year).take
@@ -997,8 +996,6 @@ class SalaryslipsController < ApplicationController
         #   @texable_monthly_deduction = TexableMonthlyDeduction.where(employee_id: @employee.id,salayslip_id: @salaryslip.id).take
         #   @salary_component = SalaryComponent.find_by(name: "Income Tax 1") 
         #   SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @texable_monthly_deduction.texable_deducted_amount, calculated_amount: @texable_monthly_deduction.texable_deducted_amount, is_deducted: true, other_component_name: 'Income Tax 1',salary_component_id: @salary_component.id)
-
-
 
           formula_item_actual_amount = 0
           formula_item_calculated_amount = 0

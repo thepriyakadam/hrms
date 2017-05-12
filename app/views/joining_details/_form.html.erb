@@ -127,7 +127,18 @@
           </div>
         </div>
       </div>
-
+       <div class="col-sm-3">
+      <label>Leaving Date </label>
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+             <%= f.text_field :leaving_date,hide_label:true, class: 'passport_expiry_date'%>
+          </div>
+        </div>
+      </div>
+     
       <div class="col-sm-3">
         <div class="field">
           <%= f.select :reserved_category_id, all_reserved_category,{label: 'Reserved Category',include_blank: " Select Reserved Category"} %>
@@ -145,7 +156,9 @@
           </div>
         </div>
       </div>
+      </div>
 
+       <div class="row">
       <div class="col-sm-3">
        <div class="field">
          <%= f.select :medical_schem, ['Yes','No'],{label: 'Medical Insurance',include_blank: " Select Medical Insurance"} %>

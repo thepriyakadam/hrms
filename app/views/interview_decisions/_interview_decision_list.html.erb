@@ -11,7 +11,7 @@
     <% @interview_decisions.each do |interview_decision| %>
       <tr>
         <td><%= interview_decision.code %></td>
-        <td><%= interview_decision.name %></td>
+        <td><%= interview_decision.try(:name) %></td>
         <td><%= interview_decision.description %></td>
         <td>
           <% if interview_decision.is_confirm == true %>

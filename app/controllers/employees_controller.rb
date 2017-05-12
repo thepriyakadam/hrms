@@ -1,4 +1,4 @@
-class EmployeesController < ApplicationController
+ class EmployeesController < ApplicationController
   before_action :set_employee, only: [:show, :edit, :update, :destroy, :ajax_joining_detail, :ajax_bank_detail, :ajax_qualification_detail, :ajax_new_qualification, :ajax_experience_detail, :ajax_new_experience, :ajax_skillset_detail, :ajax_new_skillset, :ajax_certification_detail, :ajax_new_certification, :ajax_award_detail, :ajax_new_award, :ajax_physical_detail, :ajax_family_detail, :ajax_new_family]
   # load_and_authorize_resource
   # GET /employees
@@ -157,10 +157,22 @@ class EmployeesController < ApplicationController
             e.update(employee_type_id: employee_type.id)
           end
         end
+        @joining_checklist_master = JoiningChecklistMaster.where(status: true)
+        @joining_checklist_master.each do |jc|
+        EmployeeJcList.create(joining_checklist_master_id: jc.id,employee_id: @employee.id,status: false)
+        end
         redirect_to @employee    
       else
         render :new
       end
+  end
+
+  def is_confirm
+    @employee_jc_list = EmployeeJcList.find(params[:employee_jc_list])
+    @employee_id = Employee.find(params[:employee_id])
+    EmployeeJcList.find(@employee_jc_list.id).update(status: true,admin_id: current_user.employee_id)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to request.referrer
   end
 
 
@@ -269,9 +281,9 @@ class EmployeesController < ApplicationController
             @reporting_master1 = ReportingMaster.find_by(id: @manager1)
             @reporting_master2 = ReportingMaster.find_by(id: @manager2)
 
-            manager_1 = @reporting_master1.employee_id
-            manager_2 = @reporting_master2.try(:employee_id)
-            employee.update_attributes(manager_id: manager_1, manager_2_id: manager_2)
+            #manager_1 = @reporting_master1.employee_id
+            #manager_2 = @reporting_master2.try(:employee_id)
+            employee.update_attributes(manager_id: @reporting_master1.employee_id, manager_2_id: @reporting_master2.try(:employee_id))
 
             ManagerHistory.create(employee_id: employee.id,manager_id: manager_1,manager_2_id: manager_2,effective_from: params["login"]["effec_date"])
             
@@ -397,6 +409,11 @@ class EmployeesController < ApplicationController
     @employee = Employee.find(params[:id])
     #@employee_documents = EmployeeDocument.all
   end
+
+  def joining_checklist
+     @employee = Employee.find(params[:id])
+     # @employee1 = Employee.where(employee_id: current_user.employee_id)
+end
 
   def manager
     @employees = Employee.where.not(manager_id: nil)
@@ -1182,6 +1199,8 @@ def show_all_record
      @families = Family.where(employee_id: @emp)
      @qualifications = Qualification.where(employee_id: @emp)
      @skillsets = Skillset.where(employee_id: @emp)
+     @experiences = Experience.where(employee_id: @emp)
+     @certifications = Certification.where(employee_id: @emp)
   end
 
 

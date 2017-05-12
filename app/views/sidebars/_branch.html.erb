@@ -213,24 +213,23 @@
       <i class="fa fa-user-plus"></i> <span> Employee Self Service </span><i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
-      <li><a href="/self_services/employee"><i class="fa fa-tags"></i> Personal Details </a></li>
+        <li><a href="/self_services/employee"><i class="fa fa-tags"></i> Personal Details </a></li>
       <li><a href="/employee_leav_requests"><i class="fa fa-tags"></i> Leave Request </a></li>
       <li><a href="/on_duty_requests"><i class="fa fa-tags"></i> OD Request </a></li>
       <li><a href="/self_services/employee_template"><i class="fa fa-tags"> </i> Salary Structure </a></li>
-       <li><a href="/employee_attendances/new"><i class="fa fa-tags"></i> Add Attendance </a></li>
-      <li><a href="/employee_attendances/loginwise_attendance_form"><i class="fa fa-tags"></i>Attendance </a></li> 
+      <!-- <li><a href="/employee_attendances/new"><i class="fa fa-tags"></i> Add Attendance </a></li> --><!-- 
+      <li><a href="/employee_attendances/loginwise_attendance_form"><i class="fa fa-tags"></i>Attendance </a></li>  -->
+      <li><a href="/self_services/employee_attendance"><i class="fa fa-tags"></i>Attendance </a></li> 
       <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i> Salary Slip </a></li>
-       <li><a href="/self_services/employee_resignation"><i class="fa fa-tags"></i> Employee Resignation </a></li>
-     <!--  <li><a href="/self_services/advance"><i class="fa fa-tags"></i> Advance & Installment </a></li>
+      <li><a href="/self_services/advance"><i class="fa fa-tags"></i> Advance & Installment </a></li>
       <li><a href="/self_services/employee_resignation"><i class="fa fa-tags"></i> Employee Resignation </a></li>
+      <li><a href="/training_plans/trainee_list"><i class="fa fa-tags"></i> Training Feedback </a></li>
       <li><a href="/self_services/resignation_history"><i class="fa fa-tags"></i> Resignation History </a></li>
-      <li><a href="/employee_daily_activities/new"><i class="fa fa-tags"></i> Daily Activity </a></li>
-            
-     <li><a href="/training_plans/trainee_list"><i class="fa fa-tags"></i> Training Feedback </a></li>
-    <li><a href="/self_services/employee_transfer"><i class="fa fa-tags"></i> Employee Transfer </a></li>
-    <li><a href="/self_services/travel_request"><i class="fa fa-plane"></i> Travel Request </a></li> -->
-    <li><a href="/goal_bunches/new"><i class="fa fa-tags"></i> Goal Setting </a></li>
-    <li><a href="/goal_bunches/period_list_appraisee"><i class="fa fa-tags"></i> Self Evaluation </a></li>
+       <li><a href="/self_services/travel_request"><i class="fa fa-plane"></i> Travel Request </a></li>
+      <li><a href="/goal_bunches/new"><i class="fa fa-tags"></i> Goal Setting </a></li>
+      <li><a href="/goal_bunches/period_list_appraisee"><i class="fa fa-tags"></i> Self Evaluation </a></li>
+    <!-- <li><a href="/self_services/employee_transfer"><i class="fa fa-tags"></i> Employee Transfer </a></li> -->
+    <!-- <li><a href="/employee_daily_activities/new"><i class="fa fa-tags"></i> Daily Activity </a></li> -->
     </ul>
   </li>
 
@@ -240,17 +239,14 @@
     </a>
     <ul class="treeview-menu">
        <li><a href="/manager_self_services/approved_or_rejected_leave_request"><i class="fa fa-tags"></i> Leave Approval </a></li> 
-      <li><a href="/manager_self_services/all_leave_request_list"><i class="fa fa-tags"></i> Admin Leave Approval </a></li>
       <li><a href="/manager_self_services/request_approval_list"><i class="fa fa-tags"></i> OD Approval </a></li>
-      <li><a href="/manager_self_services/od_request_list"><i class="fa fa-tags"></i> Admin OD Approval </a></li>
       <li><a href="/manager_self_services/subordinate_list"><i class="fa fa-tags"></i> Goal Approval </a></li>
       <li><a href="/manager_self_services/appraiser_subordinate"><i class="fa fa-tags"></i> Appraiser Evaluation </a></li>
       <li><a href="/manager_self_services/reviewer_subordinate"><i class="fa fa-tags"></i> Reviewer Evaluation </a></li>
-      <li><a href="/manager_self_services/employee_list"><i class="fa fa-tags"> </i> Final Evaluation </a></li>
       <li><a href="/manager_self_services/training_request_list"><i class="fa fa-tags"></i> Training Approval </a></li>
-      <li><a href="/manager_self_services/final_approval_training_list"><i class="fa fa-tags"></i> Training Final </a></li>
       <li><a href="/manager_self_services/resignation_history"><i class="fa fa-tags"></i> Resignation Approval </a></li>
-      <li><a href="/manager_self_services/final_approval_emp_resignation_list"><i class="fa fa-tags"></i> Resignation Final </a></li>
+      <!-- <li><a href="/employee_attendances/manager_attendance_form"><i class="fa fa-tags"></i>Attendance </a></li> -->
+      <li><a href="/manager_self_services/employee_attendance"><i class="fa fa-tags"></i> Attendance </a></li>
     </ul>
   </li>
   
@@ -351,6 +347,7 @@
        <li><a href="/employee_attendances/revert_attendance"><i class="fa fa-tags"></i> Revert Unit Wise </a></li>
        <li><a href="/employee_attendances"><i class="fa fa-tags"></i> Confirm Attendance  </a></li>
        <li><a href="/workingdays/revert_workingday"><i class="fa fa-tags"> </i> Revert Workingday</a></li>
+       <li><a href="/employee_attendances/import_employee_attendance"><i class="fa fa-tags"></i> Upload Attendance</a></li>
      <!-- <li><a href="/workingdays/search_month_year"><i class="fa fa-tags"> </i>Attendace Update(Auto) </a></li> -->
      <!--  <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
       <li><a href="/company_shifts/new"><i class="fa fa-tags"></i> Shifts Maintenance </a></li>
@@ -419,6 +416,7 @@
           <li id="SalarySetup">
             <a href="#"><i class="fa fa-edit"></i> Salary Setup <i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
+              <li><a href="/payroll_periods/new"><i class="fa fa-tags"></i> Payroll Period </a></li>
               <li><a href="/salary_templates/new"><i class="fa fa-tags"></i>Template</a></li>
               <li><a href="/employee_templates/fresh_template"><i class="fa fa-tags"></i>Break up</a></li>
               <li><a href="/employee_templates"><i class="fa fa-tags"></i>Salary Increment</a></li>
@@ -496,6 +494,7 @@
             <a href="#"><i class="fa fa-edit"></i> CTC Report <i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
              <li><a href="/salaryslips/emp_contibution_salary_list"><i class="fa fa-tags"> </i>CTC Wise Slip </a></li>
+              <li><a href="/employee_salary_templates/employee_list"><i class="fa fa-tags"> </i>Gross Salary Report </a></li>
             </ul>
           </li>
 

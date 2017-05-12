@@ -41,7 +41,7 @@ class TrainingRequestsController < ApplicationController
   def new
     @training_request = TrainingRequest.new
     @employees = Employee.where(department_id: current_user.department_id)
-     session[:active_tab] = "trainingmgmt"
+    session[:active_tab] = "trainingmgmt"
   end
 
   # GET /training_requests/1/edit
@@ -181,7 +181,6 @@ end
     @trainee_requests =TraineeRequest.where(id: @trainee_request_ids,is_complete: true)
     @training_requests = TrainingRequest.where(id: @training_request.id).take
   end
-
 
  def first_approve
     # byebug

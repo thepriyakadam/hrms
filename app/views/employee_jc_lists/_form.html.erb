@@ -1,0 +1,33 @@
+<%= form_for(@employee_jc_list) do |f| %>
+  <% if @employee_jc_list.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@employee_jc_list.errors.count, "error") %> prohibited this employee_jc_list from being saved:</h2>
+
+      <ul>
+      <% @employee_jc_list.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :joining_checklist_master_id %><br>
+    <%= f.text_field :joining_checklist_master_id %>
+  </div>
+  <div class="field">
+    <%= f.label :employee_id %><br>
+    <%= f.text_field :employee_id %>
+  </div>
+  <div class="field">
+    <%= f.label :admin_id %><br>
+    <%= f.text_field :admin_id %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.check_box :status %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

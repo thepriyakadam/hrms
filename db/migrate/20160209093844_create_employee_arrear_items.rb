@@ -5,7 +5,7 @@ class CreateEmployeeArrearItems < ActiveRecord::Migration
       t.references :salary_component, index: true, foreign_key: true
       t.decimal :actual_amount, precision: 15, scale: 2, default: 0
       t.decimal :calculated_amount, precision: 15, scale: 2, default: 0
-
+      t.boolean :is_deducted
       t.timestamps null: false
     end
   end

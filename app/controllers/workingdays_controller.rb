@@ -461,13 +461,62 @@ class WorkingdaysController < ApplicationController
         @workingday = Workingday.find(wid)
         @workingdays = Workingday.where(employee_id: @workingday.employee_id, month_name: date.strftime("%B"), year: date.strftime("%Y"))
         @workingdays.destroy_all
-
-        EmployeeAttendance.where("DATE_FORMAT('%m/%Y', day) = ? AND employee_id = ? ", date.strftime('%m/%Y'),@workingday.employee_id).update_all(is_confirm: false)
-        EmployeeWeekOff.where("DATE_FORMAT('%m/%Y', date) = ? AND employee_id = ? ", date.strftime('%m/%Y'),@workingday.employee_id).update_all(is_confirm: false)
-        
+        EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ? AND employee_id = ? ", date.strftime('%m/%Y'),@workingday.employee_id).update_all(is_confirm: false)
+        EmployeeWeekOff.where("DATE_FORMAT(date,'%m/%Y') = ? AND employee_id = ? ", date.strftime('%m/%Y'),@workingday.employee_id).update_all(is_confirm: false)
       end
       flash[:notice] = "Revert successfully"
       redirect_to revert_workingday_workingdays_path
+    end
+  end
+
+  def revert_workingday_datewise
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Attendance"
+  end
+
+  def show_employee_datewise
+    @from = params[:from]
+    @to = params[:to]
+    if current_user.class == Group
+      @employees = Employee.where(status: 'Active').pluck(:id)
+      @workingday = Salaryslip.where(month_year: @from.to_date..@to.to_date,employee_id: @employees).pluck(:workingday_id)
+      @workingdays = Workingday.where(from: @from.to_date,to:@to.to_date,employee_id: @employees).where.not(id: @workingday)
+    elsif current_user.class == Member
+      if current_user.role.name == "GroupAdmin"
+        @employees = Employee.where(status: 'Active').pluck(:id)
+        @workingday = Salaryslip.where(month_year: @from.to_date..@to.to_date,employee_id: @employees).pluck(:workingday_id)
+        @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees).where.not(id: @workingday)
+      elsif current_user.role.name == "Admin"
+        @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
+        @workingday = Salaryslip.where(month_year: @from.to_date..@to.to_date,employee_id: @employees).pluck(:workingday_id)
+        @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees).where.not(id: @workingday)
+      elsif current_user.role.name == "Branch"
+        @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
+        @workingday = Salaryslip.where(month_year: @from.to_date..@to.to_date,employee_id: @employees).pluck(:workingday_id)
+        @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees).where.not(id: @workingday)
+      end  
+    end    
+  end
+
+  def revert_workingday
+     @from = params[:from]
+    @to = params[:to]
+    @workingday_ids = params[:workingday_ids]
+    if @workingday_ids.nil?
+      flash[:alert] = "Please Select Employees"
+      redirect_to revert_workingday_datewise_workingdays_path
+    else
+      @workingday_ids.each do |wid|
+        @workingday = Workingday.find(wid)
+        @workingdays = Workingday.where(employee_id: @workingday.employee_id, from: @from.to_date, to: @to.to_date)
+        @workingdays.destroy_all
+
+        EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @workingday.employee_id).update_all(is_confirm: false)
+        EmployeeWeekOff.where(day: @from.to_date..@to.to_date,employee_id: @workingday.employee_id).update_all(is_confirm: false)
+        
+      end
+      flash[:notice] = "Revert successfully"
+      redirect_to revert_workingday_datewise_workingdays_path
     end
   end
 
@@ -484,6 +533,41 @@ class WorkingdaysController < ApplicationController
 
     @d1 = @date1.strftime('%B/%Y')
     @d2 = @date2.strftime('%B/%Y')
+  end
+
+  def date_report
+   session[:active_tab] = "TimeManagement" 
+   session[:active_tab1] = "Report"
+  end
+
+  def print_date_report
+    # byebug
+    @from = params[:salary] ? params[:salary][:from_date] : params[:from_date]
+    @to = params[:salary] ? params[:salary][:to_date] : params[:to_date]
+    @employee = params[:salary] ? params[:salary][:employee_id] : params[:employee_id]
+    @from_date = @from.to_date
+    @to_date = @to.to_date
+    @workingdays = Workingday.where(date: @from.to_date..@to.to_date,employee_id: @employee)
+
+      respond_to do |format|
+      format.js
+      format.xls {render template: 'workingdays/date_report_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'date_report_pdf',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'workingdays/date_report_pdf.pdf.erb',
+              # show_as_html: params[:debug].present?,
+              :page_height      => 1000,
+              :dpi              => '300',
+              :margin           => {:top    => 10, # default 10 (mm)
+                            :bottom => 10,
+                            :left   => 20,
+                            :right  => 20},
+              :show_as_html => params[:debug].present?
+          end
+        end
   end
 
   private

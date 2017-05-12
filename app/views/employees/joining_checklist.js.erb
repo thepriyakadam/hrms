@@ -1,0 +1,3 @@
+<%@employee_jc_lists = EmployeeJcList.where('employee_id=?',params[:id])%>
+<% @employee = Employee.find(params[:id]) %>
+$('#info').html("<%= j render 'employee_jc_lists/checklist' %>")

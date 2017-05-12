@@ -1,9 +1,6 @@
 class SelfServicesController < ApplicationController
+  #before_action :set_self_service, only: [:show, :edit, :update, :destroy]
 
-
- def show
- end
- 
   def employee
     @employees = Employee.where(id: current_user.employee_id)
     session[:active_tab] ="EmployeeSelfService"
@@ -73,29 +70,23 @@ class SelfServicesController < ApplicationController
   end
 
   def show_self_datewise_attendance
-    # byebug
     @from = params[:employee][:from]
     @to = params[:employee][:to]
     @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: current_user.employee_id)
     
-    respond_to do |format|
-      format.js
-      format.xls {render template: 'self_services/datewise_attendance_report_xls.xls.erb'}
-      format.html
-      format.pdf do
-        render pdf: 'datewise_attendance_report_pdf',
-              layout: 'pdf.html',
-              orientation: 'Landscape',
-              template: 'self_services/datewise_attendance_report_pdf.pdf.erb',
-              # show_as_html: params[:debug].present?,
-              :page_height      => 1000,
-              :dpi              => '300',
-              :margin           => {:top    => 10, # default 10 (mm)
-                            :bottom => 10,
-                            :left   => 20,
-                            :right  => 20},
-              :show_as_html => params[:debug].present?
-          end
+
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'self_services/datewise_attendance_report_xls.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'self_service',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'self_services/datewise_attendance_report_pdf.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
     end
   end
+
 end

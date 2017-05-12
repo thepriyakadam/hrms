@@ -2,9 +2,9 @@
   <div class="box-header">
     <h3 class="box-title"> Employee Attendance</h3>
  <div class="box-body">
-  <%= bootstrap_form_for(:employee, url: { action: 'display_attendance_2'},html: {id: "employee"}) do |f| %>
-     <div class="row">
-        <div class="col-sm-2">
+  <%= bootstrap_form_for(:employee, url: { action: 'show_self_datewise_attendance'},html: {id: "employee"}) do |f| %>
+    <div class="row">
+        <div class="col-sm-3">
           <label>From </label>
           <div class="form-group required">
             <div class="input-group">
@@ -16,7 +16,7 @@
           </div>
         </div>
 
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <label>To </label>
           <div class="form-group required">
             <div class="input-group">
@@ -28,40 +28,6 @@
           </div>
         </div>
 
-        <div class="col-sm-2">
-          <label>Company</label>
-          <div class="form-group required">
-            <%= f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
-          </div>
-        </div>
-
-        <div class="col-sm-2">
-          <div class="field">
-            <div id="company_location_with_label">
-              <%= render 'employees/company_location_dropdown_with_label' %> 
-          </div>
-          </div>
-        </div>
-
-        <div class="col-sm-2">
-          <div class="field">
-            <div class="input-group">
-              <div id="department">
-                <%= render 'employees/department_dropdown' %> 
-              </div> 
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm-2">
-          <label>Status</label>
-          <div class="field">
-            <%= select :employee,:status, ['Active','Inactive','All'],{label: 'Select Status',include_blank: " Select"}, class: "form-control" %>
-         </div>
-        </div>
-      </div>
-
-      <div class="row">
         <div class="col-sm-2" style="padding-top:20px;">
           <%= f.submit "Show Employee List",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %>
         </div>
@@ -75,7 +41,9 @@
     $('.ajax-progress').show();
     $("#advance_salary").submit();
   })
-  
+</script>
+
+<script type="text/javascript">
   $(function(){
     $('.request_date').datepicker({
     changeYear:true,

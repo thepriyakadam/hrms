@@ -66,6 +66,8 @@ Rails.application.routes.draw do
       get :final_approval_training_list
       get :resignation_history
       get :final_approval_emp_resignation_list
+      get :employee_attendance
+      post :show_datewise_attendance
     end
   end
 
@@ -1233,6 +1235,8 @@ end
       get :show_resignation_detail
       get :employee_transfer
       get :travel_request
+      get :employee_attendance
+      post :show_self_datewise_attendance
     end
   end
 

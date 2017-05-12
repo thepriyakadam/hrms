@@ -73,10 +73,10 @@ class SelfServicesController < ApplicationController
   end
 
   def show_self_datewise_attendance
-    # byebug
     @from = params[:employee][:from]
     @to = params[:employee][:to]
-    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: current_user.employee_id)
+    @employee_id = params[:employee][:employee_id]
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id)
     
     respond_to do |format|
       format.js
@@ -96,6 +96,7 @@ class SelfServicesController < ApplicationController
                             :right  => 20},
               :show_as_html => params[:debug].present?
           end
+         end
+
     end
-  end
 end

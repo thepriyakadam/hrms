@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170502044158) do
+ActiveRecord::Schema.define(version: 20170509105811) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -787,18 +787,14 @@ ActiveRecord::Schema.define(version: 20170502044158) do
   add_index "employee_arrears", ["employee_id"], name: "index_employee_arrears_on_employee_id", using: :btree
 
   create_table "employee_attendances", force: :cascade do |t|
-    t.integer  "employee_id",              limit: 4
     t.date     "day"
     t.string   "present",                  limit: 255
     t.datetime "in_time"
     t.datetime "out_time"
-    t.integer  "machine_attendance_id",    limit: 4
     t.boolean  "is_confirm",                                                    default: false
     t.datetime "created_at",                                                                    null: false
     t.datetime "updated_at",                                                                    null: false
-    t.integer  "department_id",            limit: 4
     t.decimal  "count",                                precision: 5,  scale: 2
-    t.integer  "employee_leav_request_id", limit: 4
     t.integer  "company_time_master_id",   limit: 4
     t.string   "working_hrs",              limit: 255
     t.string   "rest_time",                limit: 255
@@ -806,15 +802,14 @@ ActiveRecord::Schema.define(version: 20170502044158) do
     t.decimal  "overtime_hrs",                         precision: 10
     t.string   "month_name",               limit: 255
     t.decimal  "late_mark",                            precision: 10
+    t.integer  "employee_leav_request_id", limit: 4
     t.integer  "on_duty_request_id",       limit: 4
+    t.integer  "employee_id",              limit: 4
+    t.integer  "department_id",            limit: 4
+    t.integer  "machine_attendance_id",    limit: 4
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id", using: :btree
-  add_index "employee_attendances", ["department_id"], name: "index_employee_attendances_on_department_id", using: :btree
-  add_index "employee_attendances", ["employee_id"], name: "index_employee_attendances_on_employee_id", using: :btree
-  add_index "employee_attendances", ["employee_leav_request_id"], name: "index_employee_attendances_on_employee_leav_request_id", using: :btree
-  add_index "employee_attendances", ["machine_attendance_id"], name: "index_employee_attendances_on_machine_attendance_id", using: :btree
-  add_index "employee_attendances", ["on_duty_request_id"], name: "index_employee_attendances_on_on_duty_request_id", using: :btree
 
   create_table "employee_bank_details", force: :cascade do |t|
     t.integer  "employee_id", limit: 4
@@ -894,18 +889,28 @@ ActiveRecord::Schema.define(version: 20170502044158) do
 
   add_index "employee_documents", ["employee_id"], name: "index_employee_documents_on_employee_id", using: :btree
 
-  create_table "employee_gps_histories", force: :cascade do |t|
-    t.integer  "member_id",  limit: 4
-    t.float    "latitude",   limit: 24
-    t.float    "longitude",  limit: 24
-    t.string   "location",   limit: 255
+  create_table "employee_gps", force: :cascade do |t|
+    t.integer  "employee_id", limit: 4
+    t.float    "latitude",    limit: 24
+    t.float    "longitude",   limit: 24
+    t.string   "location",    limit: 255
     t.date     "from_date"
     t.date     "to_date"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
-  add_index "employee_gps_histories", ["member_id"], name: "index_employee_gps_histories_on_member_id", using: :btree
+  create_table "employee_gps_histories", force: :cascade do |t|
+    t.float    "latitude",       limit: 24
+    t.float    "longitude",      limit: 24
+    t.string   "location",       limit: 255
+    t.date     "from_date"
+    t.date     "to_date"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "employee_id",    limit: 4
+    t.integer  "employee_gp_id", limit: 4
+  end
 
   create_table "employee_grades", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -3057,6 +3062,7 @@ ActiveRecord::Schema.define(version: 20170502044158) do
     t.boolean  "status"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.boolean  "is_confirm"
   end
 
   create_table "selected_resumes", force: :cascade do |t|
@@ -3466,6 +3472,8 @@ ActiveRecord::Schema.define(version: 20170502044158) do
     t.date     "vacancy_fullfillment_date"
     t.boolean  "is_confirmed"
     t.string   "vacancy_code",              limit: 255
+    t.string   "experience",                limit: 255
+    t.string   "keyword",                   limit: 255
   end
 
   add_index "vacancy_masters", ["company_location_id"], name: "index_vacancy_masters_on_company_location_id", using: :btree
@@ -3658,17 +3666,11 @@ ActiveRecord::Schema.define(version: 20170502044158) do
   add_foreign_key "employee_arrear_items", "salary_components"
   add_foreign_key "employee_arrears", "employees"
   add_foreign_key "employee_attendances", "company_time_masters"
-  add_foreign_key "employee_attendances", "departments"
-  add_foreign_key "employee_attendances", "employee_leav_requests"
-  add_foreign_key "employee_attendances", "employees"
-  add_foreign_key "employee_attendances", "machine_attendances"
-  add_foreign_key "employee_attendances", "on_duty_requests"
   add_foreign_key "employee_bank_details", "banks"
   add_foreign_key "employee_bank_details", "employees"
   add_foreign_key "employee_daily_activities", "employees"
   add_foreign_key "employee_daily_activities", "project_masters"
   add_foreign_key "employee_documents", "employees"
-  add_foreign_key "employee_gps_histories", "members"
   add_foreign_key "employee_leav_balances", "company_leavs"
   add_foreign_key "employee_leav_balances", "employees"
   add_foreign_key "employee_leav_balances", "leav_categories"

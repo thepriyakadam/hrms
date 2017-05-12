@@ -1,4 +1,4 @@
-class ApplicationMailer < ActionMailer::Base20170429090052
+class ApplicationMailer < ActionMailer::Base
      # default from: "hrmsdws@bhandarigroup.in"
      default from: "hrms@rajgreen.co.in"
       # default from: "hrmsdws@bhandarigroup.in"

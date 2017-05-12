@@ -1861,7 +1861,7 @@ end
       @salaryslips = Salaryslip.where(month: @month, year: @year.to_s,is_confirm: false)
     elsif current_user.class == Member
       if current_user.role.name == "GroupAdmin"
-        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s,is_confirm: false)
+        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s,is_confirm: nil)
       elsif current_user.role.name == "Admin"
         @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
         @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees,is_confirm: false)
@@ -1913,22 +1913,22 @@ end
   def show_unconfirmed_employee
     @month = params[:month]
     @year = params[:year]
-    @salaryslips = Salaryslip.where(month: @month,year: @year,is_confirm: false)
+    @salaryslips = Salaryslip.where(month: @month,year: @year,is_confirm: nil)
 
     if current_user.class == Group
-      @salaryslips = Salaryslip.where(month: @month,year: @year,is_confirm: false)  
+      @salaryslips = Salaryslip.where(month: @month,year: @year,is_confirm: nil)  
     elsif current_user.class == Member
       if current_user.role.name == "GroupAdmin"
-        @salaryslips = Salaryslip.where(month: @month,year: @year,is_confirm: false)
+        @salaryslips = Salaryslip.where(month: @month,year: @year,is_confirm: nil)
       elsif current_user.role.name == "Admin"
         company_employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-        @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: company_employees,is_confirm: false)
+        @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: company_employees,is_confirm: nil)
       elsif current_user.role.name == "Branch"
         location_employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: location_employees,is_confirm: false)
+        @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: location_employees,is_confirm: nil)
       elsif current_user.role.name == "HOD"
         department_employees = Employee.where(department_id: current_user.company_location_id)
-        @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: department_employees,is_confirm: false)
+        @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: department_employees,is_confirm: nil)
       end
     end
   end

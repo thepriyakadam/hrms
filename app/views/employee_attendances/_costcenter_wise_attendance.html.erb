@@ -1,24 +1,24 @@
-  <div class="box-header">
+<div class="box-header">
     <div class="pull-right">
     <!--   < link_to "Add Employee Attendance", new_employee_attendance_path, class: 'btn btn-primary' %>  -->
     </div>
   </div><!-- /.box-header -->
 
   <div class="box-body">
-    <%= bootstrap_form_for :temp, url: {action: "create_attendance", date: @date} do |f| %>
+    <%= bootstrap_form_for :temp, url: {action: "create_attendance"} do |f| %>
       <table id="example5" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
             <th>ID</th>
             <th>Employee Name</th>
             <th>Cost Center</th>
-            <% for i in 1..@day %>
+            <% for i in @from_date.strftime("%d")..@to_date.strftime("%d") %>
               <th><%= i %></th>
             <%end%>
           </tr>
           <tr>
             <th colspan="3">Day</th>
-              <% @start_date.step(@end_date).each do |l| %>
+              <% @from_date.step(@to_date).each do |l| %>
                 <th><%= l.strftime("%a") %></th>
               <%end%>
           </tr>
@@ -30,7 +30,7 @@
               <td><%= e.employee.manual_employee_code %></td>
               <td><%= full_name(e.employee) %></td>
               <td><%= e.employee.joining_detail.try(:cost_center).try(:name) %></td>
-              <% sorted_exists = calculate_attendance(@date, exist, e)%>
+              <% sorted_exists = calculate_attendance_datewise(@from_date,@to_date, exist, e)%>
               <% sorted_exists.each do |k,v|%>
                 <td><%= v %></td>
               <%end%>
@@ -42,7 +42,7 @@
             <% od_day = od_day_count(exist) %>
             <% gatepass = gatepass_count(exist) %>
             <% workingday = [] %>
-            <% workingday = create_leave(@date, e) %>
+            <% workingday = create_leave_datewise(@from_date,@to_date, e) %>
             <%= hidden_field_tag "attendances[]", e.id %>
             <%= hidden_field e.employee_id, 'employee_id', value: e.employee_id %>
             <%= hidden_field e.employee_id, 'month_name', value: @date.strftime("%B") %>
@@ -83,8 +83,8 @@
           <%end%>
         </tbody>
       </table>
-      <%= link_to " Excel Report ",show_costcenter_wise_attendance_employee_attendances_path(month: params[:month], year: params[:year],costcenter: params[:costcenter], status: params[:status], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-      <%= link_to " PDF Report",show_costcenter_wise_attendance_employee_attendances_path(month: params[:month],costcenter: params[:costcenter], year: params[:year], status: params[:status], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+      <%= link_to " Excel Report ",show_costcenter_wise_attendance_employee_attendances_path(from: params[:from], to: params[:to],costcenter: params[:costcenter], status: params[:status], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%= link_to " PDF Report",show_costcenter_wise_attendance_employee_attendances_path(from: params[:from],costcenter: params[:costcenter], to: params[:to], status: params[:status], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 
     <% end %>
   </div>

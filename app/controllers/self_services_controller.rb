@@ -60,4 +60,16 @@ class SelfServicesController < ApplicationController
     @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
     session[:active_tab] ="EmployeeSelfService"
   end
+
+  def employee_attendance
+    @employee_attendance = EmployeeAttendance.new
+    @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id)
+    session[:active_tab] ="EmployeeSelfService"
+  end
+
+  def show_self_datewise_attendance
+    @from = params[:employee][:from]
+    @to = params[:employee][:to]
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: current_user.employee_id)
+  end
 end

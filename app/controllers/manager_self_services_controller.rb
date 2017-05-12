@@ -93,4 +93,18 @@ class ManagerSelfServicesController < ApplicationController
     session[:active_tab] ="ManagerSelfService"
   end
 
+  def employee_attendance
+    session[:active_tab] ="ManagerSelfService"
+  end
+
+  def show_datewise_attendance
+    @emp = Employee.find(current_user.employee_id)
+    @employees = @emp.subordinates
+    @employees_ind = @emp.indirect_subordinates
+    @employee = @employees + @employees_ind
+
+    @from = params[:employee][:from]
+    @to = params[:employee][:to]
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee)
+  end
 end

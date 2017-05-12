@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170509105811) do
+ActiveRecord::Schema.define(version: 20170511092455) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -2834,6 +2834,14 @@ ActiveRecord::Schema.define(version: 20170509105811) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.string   "company_hrs",    limit: 255
+  end
+
+  create_table "payroll_periods", force: :cascade do |t|
+    t.date     "from"
+    t.date     "to"
+    t.boolean  "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "performance_activities", force: :cascade do |t|

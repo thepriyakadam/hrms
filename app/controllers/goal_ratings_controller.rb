@@ -225,10 +225,10 @@ class GoalRatingsController < ApplicationController
          goal_id_sum_update = @goal_rating.goal_id_sum_update(@goal_rating,weightage)
 
         if @goal.goal_weightage == true
-          @current_weightage = @goal_rating.goal_weightage >= @goal.from && @goal_rating.goal_weightage <= @goal.to
+          @current_weightage = @goal_rating.goal_weightage.to_i >= @goal.from.to_i && @goal_rating.goal_weightage.to_i <= @goal.to.to_i
           if @current_weightage == true
             #@weightage_limit = goal_rating_params["goal_weightage"].to_i >= @goal.from && goal_rating_params["goal_weightage"].to_i <= @goal.to
-            @weightage_limit = goal_id_sum_update >= @goal.from && goal_id_sum_update <= @goal.to
+            @weightage_limit = goal_id_sum_update.to_i >= @goal.from.to_i && goal_id_sum_update.to_i <= @goal.to.to_i
 
             if @weightage_limit == true
                @goal_rating.update(goal_rating_params)
@@ -252,11 +252,13 @@ class GoalRatingsController < ApplicationController
           flash[:notice] = "Updated Successfully !"
           redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id,period_id: @period.id)
         end
+
       elsif @goal_rating.goal_type == "Attribute"
         @attribute = AttributeMaster.find_by(id: @goal_rating.attribute_master_id)
         attribute_id_sum_update = @goal_rating.attribute_id_sum_update(@goal_rating,weightage)
+        
         if @attribute.attribute_weightage == true
-           @current_weightage = @goal_rating.goal_weightage >= @attribute.from && @goal_rating.goal_weightage <= @attribute.to
+           @current_weightage = @goal_rating.goal_weightage.to_i >= @attribute.from.to_i && @goal_rating.goal_weightage.to_i <= @attribute.to.to_i
           if @current_weightage == true
             #@weightage_limit = goal_rating_params["goal_weightage"].to_i >= @attribute.from.to_i && goal_rating_params["goal_weightage"].to_i <= @attribute.to.to_i
             @weightage_limit = attribute_id_sum_update.to_i >= @attribute.from.to_i && attribute_id_sum_update.to_i <= @attribute.to.to_i

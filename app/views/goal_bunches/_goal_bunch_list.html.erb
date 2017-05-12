@@ -15,7 +15,7 @@
         <td><%= goal_bunch.period.try(:name) %></td>
         <td>From: <%= goal_bunch.period.try(:from) %> To: <%= goal_bunch.period.try(:to) %> </td>
         <td><%= full_name(goal_bunch.employee)%></td>
-        <td><%= goal_bunch.employee.manager.try(:first_name) %> <%= goal_bunch.employee.manager.try(:middle_name) %> <%= goal_bunch.employee.manager.try(:last_name) %>  </td>
+        <td><%= full_name(goal_bunch.employee.manager) %></td>
         <td><%= goal_bunch.employee.manager_2.try(:first_name) %> <%= goal_bunch.employee.manager_2.try(:middle_name) %> <%= goal_bunch.employee.manager_2.try(:last_name) %>  </td>
         <td>
            <!-- link_to '', edit_goal_bunch_path(goal_bunch),class: 'btn btn-xs btn-success fa fa-edit',remote:true %> -->

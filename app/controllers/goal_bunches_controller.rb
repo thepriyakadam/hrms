@@ -78,7 +78,7 @@ class GoalBunchesController < ApplicationController
     if sum == 100
       @goal_bunch.update(goal_approval: true)
       flash[:notice] = "Confirmed Successfully" 
-      GoalBunchMailer.send_email_to_appraisee(@goal_bunch).deliver_now
+      #GoalBunchMailer.send_email_to_appraisee(@goal_bunch).deliver_now
       redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
     else
       flash[:alert] = "Goal weightage sum should be 100"
@@ -635,7 +635,7 @@ class GoalBunchesController < ApplicationController
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     GoalBunch.find_by(id: @goal_bunch.id).update(appraisee_confirm: true)
     flash[:notice] = "Confirmed Successfully"
-    GoalBunchMailer.send_email_to_appraiser(@goal_bunch).deliver_now
+    #GoalBunchMailer.send_email_to_appraiser(@goal_bunch).deliver_now
     @employee = Employee.find(params[:emp_id])
 
     redirect_to appraisee_comment_goal_bunches_path(emp_id: @employee.id,id: @goal_bunch.id)
@@ -669,7 +669,7 @@ class GoalBunchesController < ApplicationController
           if @employee.manager_2_id == nil
             flash[:notice] = "No Reviewer Available"
           else
-            GoalBunchMailer.send_email_to_reviewer(@goal_bunch).deliver_now
+            #GoalBunchMailer.send_email_to_reviewer(@goal_bunch).deliver_now
             flash[:notice] = "Appraiser Evaluation Confirmed Email Sent Successfully"
           end
     redirect_to appraiser_comment_goal_bunches_path(emp_id: @employee.id,goal_id: @goal_bunch.id,period_id: @period.id)

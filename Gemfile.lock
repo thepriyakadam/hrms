@@ -169,6 +169,7 @@ GEM
       railties (>= 3.1)
     multi_json (1.12.1)
     multi_test (0.1.2)
+    mysql2 (0.3.21)
     nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
     orm_adapter (0.5.0)
@@ -285,7 +286,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.3.13)
     table_print (1.5.6)
     therubyracer (0.12.3)
       libv8 (~> 3.16.14.15)
@@ -367,6 +367,7 @@ DEPENDENCIES
   kaminari (~> 0.16.3)
   local-subdomain
   mime-types-data (~> 3.2016, >= 3.2016.0521)
+  mysql2 (~> 0.3.18)
   paperclip (~> 4.3, >= 4.3.6)
   pdfkit (~> 0.8.2)
   prawn (~> 1.3.0)
@@ -384,7 +385,6 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   selenium-webdriver (~> 3.0, >= 3.0.5)
   spring
-  sqlite3 (~> 1.3, >= 1.3.13)
   table_print
   therubyracer
   thin (~> 1.6, >= 1.6.4)
@@ -399,3 +399,6 @@ DEPENDENCIES
   wirble
   wkhtmltopdf-binary (~> 0.9.9.3)
   yaml_db
+
+BUNDLED WITH
+   1.12.5

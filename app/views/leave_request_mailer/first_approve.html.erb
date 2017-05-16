@@ -16,7 +16,9 @@
       Employee ID : <%= @leave_request.employee.manual_employee_code %><br>
       Employee Name : <%= @leave_request.employee.first_name.to_s+' '+@leave_request.employee.last_name.to_s %><br>
       From <%= @leave_request.start_date.to_date %>To<%= @leave_request.end_date.to_date%><br>
-      No of Days : <%= @leave_request.leave_count %>
+      No of Days : <%= @leave_request.leave_count %><br>
+      Reason : <%= @leave_request.reason %><br>
+      Click : http://10.10.50.20:3000/
     </p>
   </body>
 </html>

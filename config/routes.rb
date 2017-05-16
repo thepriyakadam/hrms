@@ -558,6 +558,9 @@ end
       post :import
       get :import_employee_attendance
       get :import_employee_attendance_to_txt
+
+      get :self_service_datewise_attendance
+      get :manager_self_service_attendance
     end
   end
   resources :salary_comp_mappings

@@ -1560,6 +1560,65 @@ end
       end
   end
 
+  def self_service_datewise_attendance
+    @from = params[:employee][:from]
+    @to = params[:employee][:to]
+    @employee_id = params[:employee][:employee_id]
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id)
+    
+    respond_to do |format|
+      format.js
+      format.xls {render template: 'self_services/datewise_attendance_report_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'self_service_datewise_attendance',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'self_services/datewise_attendance_report_pdf.pdf.erb',
+              # show_as_html: params[:debug].present?,
+              :page_height      => 1000,
+              :dpi              => '300',
+              :margin           => {:top    => 10, # default 10 (mm)
+                            :bottom => 10,
+                            :left   => 20,
+                            :right  => 20},
+              :show_as_html => params[:debug].present?
+          end
+         end
+  end
+
+  def manager_self_service_attendance
+    @emp = Employee.find(current_user.employee_id)
+    @employees = @emp.subordinates
+    @employees_ind = @emp.indirect_subordinates
+    @employee = @employees + @employees_ind
+
+    @from = params[:employee][:from]
+    @to = params[:employee][:to]
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee)
+
+     respond_to do |format|
+      format.js
+      format.xls {render template: 'manager_self_services/datewise_attendance.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'manager_self_service_attendance',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'manager_self_services/datewise_attendance.pdf.erb',
+              # show_as_html: params[:debug].present?,
+              :page_height      => 1000,
+              :dpi              => '300',
+              :margin           => {:top    => 10, # default 10 (mm)
+                            :bottom => 10,
+                            :left   => 20,
+                            :right  => 20},
+              :show_as_html => params[:debug].present?
+          end
+         end
+
+  end
+
 def search_by_date
   @employee_attendances = EmployeeAttendance.all
     reporter(@employee_attendances, template_class: PdfReportTemplate) do

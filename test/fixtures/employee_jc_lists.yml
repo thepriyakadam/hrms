@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  joining_checklist_master_id: 
+  employee_id: 
+  admin_id: 
+  status: false
+
+two:
+  joining_checklist_master_id: 
+  employee_id: 
+  admin_id: 
+  status: false

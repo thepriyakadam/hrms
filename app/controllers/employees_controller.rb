@@ -157,10 +157,22 @@
             e.update(employee_type_id: employee_type.id)
           end
         end
+        @joining_checklist_master = JoiningChecklistMaster.where(status: true)
+        @joining_checklist_master.each do |jc|
+        EmployeeJcList.create(joining_checklist_master_id: jc.id,employee_id: @employee.id,status: false)
+        end
         redirect_to @employee    
       else
         render :new
       end
+  end
+
+  def is_confirm
+    @employee_jc_list = EmployeeJcList.find(params[:employee_jc_list])
+    @employee_id = Employee.find(params[:employee_id])
+    EmployeeJcList.find(@employee_jc_list.id).update(status: true,admin_id: current_user.employee_id)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to request.referrer
   end
 
 
@@ -269,8 +281,9 @@
             @reporting_master1 = ReportingMaster.find_by(id: @manager1)
             @reporting_master2 = ReportingMaster.find_by(id: @manager2)
 
-            #manager_1 = @reporting_master1.employee_id
-            #manager_2 = @reporting_master2.try(:employee_id)
+            manager_1 = @reporting_master1.employee_id
+            manager_2 = @reporting_master2.try(:employee_id)
+            
             employee.update_attributes(manager_id: @reporting_master1.employee_id, manager_2_id: @reporting_master2.try(:employee_id))
 
             ManagerHistory.create(employee_id: employee.id,manager_id: manager_1,manager_2_id: manager_2,effective_from: params["login"]["effec_date"])
@@ -397,6 +410,11 @@
     @employee = Employee.find(params[:id])
     #@employee_documents = EmployeeDocument.all
   end
+
+  def joining_checklist
+     @employee = Employee.find(params[:id])
+     # @employee1 = Employee.where(employee_id: current_user.employee_id)
+end
 
   def manager
     @employees = Employee.where.not(manager_id: nil)

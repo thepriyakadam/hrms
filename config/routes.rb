@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :employee_jc_lists
+  resources :joining_checklist_masters
   resources :employee_gps
   resources :payroll_periods
   resources :visitor_details do
@@ -1237,6 +1239,9 @@ end
       get :travel_request
       get :employee_attendance
       post :show_self_datewise_attendance
+      get :datewise_attendance_report_xls
+      get :datewise_attendance_report_pdf
+      get :show
     end
   end
 
@@ -2005,6 +2010,7 @@ end
       get :ajax_setup_payroll
       get :ajax_new_assigned_asset
       get :ajax_assigned_asset_detail
+      get :joining_checklist
       get :manager
       get :transfer_form
       post :transfer_employee
@@ -2058,6 +2064,7 @@ end
       post :display_employee_details
       get :employee_detail_form
       get :employee_record_pdf
+      get :is_confirm
     end
     member do
       get :edit_manager

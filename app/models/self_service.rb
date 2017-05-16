@@ -1,4 +1,4 @@
-class AboutSelfService < ActiveRecord::Base
+class SelfService < ActiveRecord::Base
 	 has_attached_file :document,
   :path => "attachments/attach_investment_declarations/:basename.:extension"
 

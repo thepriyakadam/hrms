@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+  resources :reporting_master_rembursments
+  resources :rembursments  do
+    collection do
+      get :rembursment_request
+       end
+  end
+  resources :rembursmentmasters
   resources :employee_jc_lists
   resources :joining_checklist_masters
   resources :employee_gps

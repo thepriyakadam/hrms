@@ -84,7 +84,7 @@ class SelfServicesController < ApplicationController
   end
 
   def create_self_declaration
-    @authenticity_token = params[:investment_declaration][:authenticity_token]
+    # @authenticity_token = params[:investment_declaration][:authenticity_token]
     @employee_id = params[:employee_id]
     @investment_head_id = params[:investment_declaration][:investment_head_id]
     @amount = params[:investment_declaration][:amount]
@@ -97,8 +97,8 @@ class SelfServicesController < ApplicationController
   end
 
   def investment_document2
-      @investment_declaration = InvestmentDeclaration.find(params[:id])
-      send_file @investment_declaration.document.path,
+        @investment_declaration = InvestmentDeclaration.find(params[:id])
+        send_file @investment_declaration.document.path,
                filename: @investment_declaration.document_file_name,
                type: @investment_declaration.document_content_type,
                disposition: 'attachment'

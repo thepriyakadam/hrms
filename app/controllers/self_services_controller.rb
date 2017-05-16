@@ -1,9 +1,6 @@
 class SelfServicesController < ApplicationController
+  #before_action :set_self_service, only: [:show, :edit, :update, :destroy]
 
-
- def show
- end
- 
   def employee
     @employees = Employee.where(id: current_user.employee_id)
     session[:active_tab] ="EmployeeSelfService"
@@ -77,5 +74,7 @@ class SelfServicesController < ApplicationController
     @to = params[:employee][:to]
     @employee_id = params[:employee][:employee_id]
     @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id)
+
   end
+
 end

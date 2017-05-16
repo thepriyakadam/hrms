@@ -1,7 +1,10 @@
+<br>
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th>Employee</th>
+      <th colspan="6">Employee : <%= full_name(current_user.employee) %></th>
+    </tr>
+    <tr>
       <th>Investment head</th>
       <th>Amount</th>
       <th>Date</th>
@@ -12,7 +15,6 @@
   <tbody>
     <% @investment_declarations.each do |investment_declaration| %>
       <tr>
-        <td><%= full_name(investment_declaration.employee) %></td>
         <td><%= investment_declaration.investment_head.try(:description) %></td>
         <td><%= investment_declaration.amount %></td>
         <td><%= investment_declaration.date %></td>
@@ -21,11 +23,11 @@
            <% if investment_declaration.document_file_name == nil %>
            <small class="label label-default">Document Not Available</small>
              <% else %>
-             <%= link_to ' Document',investment_document_path(id: investment_declaration.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
+             <%= link_to ' Document',investment_document2_path(id: investment_declaration.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
              <% end %>
         </td>
         <td>
-          <%= link_to '', edit_investment_declaration_path(investment_declaration),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <!-- <= link_to '', edit_investment_declaration_path(investment_declaration),class: 'btn btn-success btn-xs fa fa-edit',remote:true %> -->
           <%= link_to '',  investment_declaration, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true%>
         </td>
       </tr>

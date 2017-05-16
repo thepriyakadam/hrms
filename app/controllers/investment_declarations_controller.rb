@@ -65,7 +65,15 @@ class InvestmentDeclarationsController < ApplicationController
                disposition: 'attachment'
     
    end
-
+   
+  def investment_document2
+      @investment_declaration = InvestmentDeclaration.find(params[:id])
+      send_file @investment_declaration.document.path,
+               filename: @investment_declaration.document_file_name,
+               type: @investment_declaration.document_content_type,
+               disposition: 'attachment'
+    
+   end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_investment_declaration

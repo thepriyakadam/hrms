@@ -1,0 +1,88 @@
+<%= bootstrap_form_for(@investment_declaration, url: {action: 'create_self_declaration'},html: {id: 'investment_declaration'}) do |f| %>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %> 
+    <%= hidden_field_tag :employee_id, current_user.employee_id %> 
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :investment_head_id, investment_head_all, {label:'Investment Head',include_blank: " Select Investment Head"} %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :amount,label:'Amount', placeholder: 'Amount' %>
+          </div>
+        </div>
+         
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :date, label: 'Date', class: 'interview_date'%>
+            </div>
+          </div>
+        </div> 
+      <div class="col-sm-3">
+     <label>Status</label>
+      <div class="field">       
+        <%= f.check_box :status,label:'Active' %>
+      </div>
+    </div>
+      </div>
+     <div class="row">
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.file_field :document,label: 'Document(doc,docx,pdf only)' %>
+        </div>
+       </div>
+          <div class="col-sm-3">
+          <label></label>
+            <div class="actions">
+              <%= f.submit 'Create Investment Declaration',:class => class_name, data: { disable_with: data_info } %>
+            </div>
+            </div>
+          </div>
+ <% end %>
+
+<script type="text/javascript">
+$(function(){
+    $('.interview_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+
+$("#investment_declaration").validate({
+    rules: {
+       "investment_declaration[investment_head_id]":{
+        required: true,
+      },
+       "investment_declaration[amount]":{
+        required: true,
+      },
+       "investment_declaration[date]":{
+        required: true,
+      }
+    },
+    messages: {
+      "investment_declaration[investment_head_id]":{
+        required: "Please Select Investment Head",
+      },
+      "investment_declaration[amount]":{
+        required: "Please Specify amount",
+      },
+      "investment_declaration[date]":{
+        required: "Please Specify date",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

@@ -89,4 +89,31 @@ class SelfServicesController < ApplicationController
     end
   end
 
+  def investment_declaration
+    @investment_declaration = InvestmentDeclaration.new
+    @investment_declarations = InvestmentDeclaration.where(employee_id: current_user.employee_id)
+    session[:active_tab] ="EmployeeSelfService"
+  end
+
+  def create_self_declaration
+    @authenticity_token = params[:investment_declaration][:authenticity_token]
+    @employee_id = params[:employee_id]
+    @investment_head_id = params[:investment_declaration][:investment_head_id]
+    @amount = params[:investment_declaration][:amount]
+    @date = params[:investment_declaration][:date]
+    @status = params[:investment_declaration][:status]
+    @document = params[:investment_declaration][:document]
+    InvestmentDeclaration.create(date: @date,investment_head_id: @investment_head_id,amount: @amount,employee_id: @employee_id,status: @status)
+    flash[:notice] = "created Successfully!"
+    redirect_to investment_declaration_self_services_path
+  end
+
+  def investment_document2
+      @investment_declaration = InvestmentDeclaration.find(params[:id])
+      send_file @investment_declaration.document.path,
+               filename: @investment_declaration.document_file_name,
+               type: @investment_declaration.document_content_type,
+               disposition: 'attachment'
+    
+   end
 end

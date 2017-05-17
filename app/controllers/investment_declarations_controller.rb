@@ -53,7 +53,7 @@ class InvestmentDeclarationsController < ApplicationController
   # DELETE /investment_declarations/1.json
   def destroy
     @investment_declaration.destroy
-      @investment_declaration = InvestmentDeclaration.new
+    @investment_declaration = InvestmentDeclaration.new
     @investment_declarations = InvestmentDeclaration.all
   end
    
@@ -64,7 +64,7 @@ class InvestmentDeclarationsController < ApplicationController
                type: @investment_declaration.document_content_type,
                disposition: 'attachment'
     
-   end
+  end
    
   def investment_document2
       @investment_declaration = InvestmentDeclaration.find(params[:id])
@@ -73,7 +73,41 @@ class InvestmentDeclarationsController < ApplicationController
                type: @investment_declaration.document_content_type,
                disposition: 'attachment'
     
-   end
+  end
+
+  def manager_view
+    current_login = Employee.find(current_user.employee_id)
+    @emp_sub = current_login.indirect_subordinates.pluck(:id)
+    @emp_ind_sub = current_login.subordinates.pluck(:id)
+    @employee_id = @emp_sub + @emp_ind_sub
+    @investment_declarations = InvestmentDeclaration.where(employee_id: @employee_id)
+  end
+
+  def approve_declaration_modal
+    @investment_declaration = InvestmentDeclaration.find(params[:format])
+    #@investment_declaration = InvestmentDeclaration.find_by(id: investment_declaration_id)
+  end
+
+  def approve_declaration
+    comment = params[:investment_declaration][:comment]
+    @investment_declaration = InvestmentDeclaration.find(params[:investment_declaration_id])
+    @investment_declaration.update(is_confirm: true,comment: comment)
+    flash[:notice] = "Approved!"
+    redirect_to investment_declaration_manager_self_services_path
+  end
+
+  def reject_declaration_modal
+    @investment_declaration = InvestmentDeclaration.find(params[:format])
+  end
+
+  def reject_declaration
+    comment = params[:comment]
+    @investment_declaration = InvestmentDeclaration.find(params[:investment_declaration_id])
+    @investment_declaration.update(status: false,comment: comment)
+    flash[:alert] = "Rejected!"
+    redirect_to investment_declaration_manager_self_services_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_investment_declaration

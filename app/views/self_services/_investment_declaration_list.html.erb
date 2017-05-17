@@ -8,9 +8,9 @@
       <th>Investment head</th>
       <th>Amount</th>
       <th>Date</th>
-      <th>Status</th>
+      <th>Is Send</th>
       <th>Download Document</th>
-      <th>Action</th>
+      <!-- <th>Action</th> -->
     </tr>
   <tbody>
     <% @investment_declarations.each do |investment_declaration| %>
@@ -18,7 +18,7 @@
         <td><%= investment_declaration.investment_head.try(:description) %></td>
         <td><%= investment_declaration.amount %></td>
         <td><%= investment_declaration.date %></td>
-        <td><%= investment_declaration.status ? "Active" : "Inactive"%></td>
+        <td><%= investment_declaration.status ? "True" : "False"%></td>
          <td>
            <% if investment_declaration.document_file_name == nil %>
            <small class="label label-default">Document Not Available</small>
@@ -26,10 +26,9 @@
              <%= link_to ' Document',investment_document2_path(id: investment_declaration.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
              <% end %>
         </td>
-        <td>
           <!-- <= link_to '', edit_investment_declaration_path(investment_declaration),class: 'btn btn-success btn-xs fa fa-edit',remote:true %> -->
-          <%= link_to '',  investment_declaration, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true%>
-        </td>
+          <!-- <= link_to '',  investment_declaration, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true%> -->
+       
       </tr>
     <% end %>
   </tbody>

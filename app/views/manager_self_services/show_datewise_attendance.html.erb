@@ -6,6 +6,16 @@
     <table id="example1" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
+          <td colspan="6"><center> 
+            <% if current_user.employee.company_location.company.company_logo == nil %>
+            <% else %>
+              <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+            <%end%> 
+              <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+          </td>
+        </tr>
+        <tr><th colspan="6"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
+        <tr>
           <th>ID</th>
           <th>Employee Name</th>
           <th>Date</th>

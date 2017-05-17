@@ -80,11 +80,11 @@ class SelfServicesController < ApplicationController
   def investment_declaration
     @investment_declaration = InvestmentDeclaration.new
     @investment_declarations = InvestmentDeclaration.where(employee_id: current_user.employee_id)
+    @employee = Employee.find_by(id: current_user.employee_id)
     session[:active_tab] ="EmployeeSelfService"
   end
 
   def create_self_declaration
-    # @authenticity_token = params[:investment_declaration][:authenticity_token]
     @employee_id = params[:employee_id]
     @investment_head_id = params[:investment_declaration][:investment_head_id]
     @amount = params[:investment_declaration][:amount]

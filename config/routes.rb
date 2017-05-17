@@ -421,8 +421,14 @@ end
       get :approve_declaration
       post :approve_declaration
       get :reject_declaration
+      post :reject_declaration
       get :approve_declaration_modal
       get :reject_declaration_modal
+      get :self_edit_modal
+      post :self_update
+      get :send_for_approval
+      get :cancel_request
+      get :delete_request
     end
   end
   resources :investment_heads

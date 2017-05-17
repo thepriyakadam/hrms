@@ -50,6 +50,7 @@ class EmployeeLeavRequestsController < ApplicationController
 
   if payroll_period.nil?
     flash[:alert] = "Payroll Period Not set!"
+    redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
   else
     if  start_date.to_date >= payroll_period.from.to_date && end_date.to_date <= payroll_period.to.to_date
     # if start_date == payroll_period.from.to_date..payroll_period.to.to_date && end_date == payroll_period.from.to_date..payroll_period.to.to_date
@@ -255,11 +256,16 @@ class EmployeeLeavRequestsController < ApplicationController
         else
         end
     else #start_date == payroll_period.from.to_date
-      flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
-      
+       if current_user.employee_id == @employee_leav_request.employee_id
+        flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+        redirect_to employee_leav_requests_path
+      else
+        flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+        redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+        #redirect_to employee_list_on_duty_requests_path
+      end  
     end
   end#if payroll_period.nil?
-  redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
   end
 
   def update

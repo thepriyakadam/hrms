@@ -55,6 +55,7 @@ class InvestmentDeclarationsController < ApplicationController
     @investment_declaration.destroy
     @investment_declaration = InvestmentDeclaration.new
     @investment_declarations = InvestmentDeclaration.all
+    #redirect_to investment_declaration_self_services_path
   end
    
   def investment_document
@@ -73,6 +74,27 @@ class InvestmentDeclarationsController < ApplicationController
                type: @investment_declaration.document_content_type,
                disposition: 'attachment'
     
+  end
+
+  def send_for_approval
+    @investment_declaration = InvestmentDeclaration.find(params[:format])
+    @investment_declaration.update(status: true)
+    flash[:noitice] = "Successfully send for approval!"
+    redirect_to investment_declaration_self_services_path
+  end
+
+  def cancel_request
+    @investment_declaration = InvestmentDeclaration.find(params[:format])
+    @investment_declaration.update(status: false)
+    flash[:noitice] = "Successfully Cancelled!"
+    redirect_to investment_declaration_self_services_path
+  end
+
+  def delete_request
+    @investment_declaration = InvestmentDeclaration.find(params[:format])
+    @investment_declaration.destroy
+    flash[:noitice] = "Successfully Destroyed!"
+    redirect_to investment_declaration_self_services_path
   end
 
   def manager_view
@@ -106,6 +128,23 @@ class InvestmentDeclarationsController < ApplicationController
     @investment_declaration.update(status: false,comment: comment)
     flash[:alert] = "Rejected!"
     redirect_to investment_declaration_manager_self_services_path
+  end
+
+  def self_edit_modal
+    @investment_declaration = InvestmentDeclaration.find(params[:format])
+  end
+
+  def self_update
+    investment_head_id = params[:investment_declaration][:investment_head_id]
+    amount = params[:investment_declaration][:amount]
+    date = params[:investment_declaration][:date]
+    status = params[:investment_declaration][:status]
+    document = params[:investment_declaration][:document]
+
+    @investment_declaration = InvestmentDeclaration.find(params[:investment_declaration_id])
+    @investment_declaration.update(investment_head_id: investment_head_id,amount: amount,date: date,status: status)
+    flash[:notice] = "Updated Successfully!"
+    redirect_to investment_declaration_self_services_path
   end
 
   private

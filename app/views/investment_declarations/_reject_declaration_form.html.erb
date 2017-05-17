@@ -5,9 +5,9 @@
     </div>
     <div class="modal-body">
 
-      <%= bootstrap_form_for @investment_declaration,url:{action: "reject_declaration",investment_declaration_id: @investment_declaration.id} do |f| %>
+      <%= bootstrap_form_for :investment_declaration,url:{action: "reject_declaration",investment_declaration_id: @investment_declaration.id} do |f| %>
         <div class="row">
-          <div class="col-sm-4">
+          <div class="col-sm-6">
             <label>Comment</label>
             <%= f.text_field :comment,hide_label:true, placeholder: "comment" %>    
           </div>

@@ -4,26 +4,29 @@
   </div>
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
+    <% i = 0%>
       <thead>
         <tr>
-          <th colspan="6">Employee : <%= full_name(@emp) %></th>
+          <td colspan="2">ID : <%= @emp.manual_employee_code %></td>
+          <td colspan="2">Employee : <%= full_name(@emp) %></td>
+          <td colspan="2">Department : <%= @emp.company_location.try(:name) %> - <%= @emp.department.try(:name) %></td>
         </tr>
         <tr>
-          <th>Investment head</th>
+          <th>Sr No</th>
+          <th>Investment Head</th>
           <th>Amount</th>
           <th>Date</th>
-          <th>Is Send</th>
-          <th>Download Document</th>
+          <th>Document</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
         <% @investment_declarations.each do |investment_declaration| %>
           <tr>
+            <td><%= i = i + 1 %></td>
             <td><%= investment_declaration.investment_head.try(:description) %></td>
             <td><%= investment_declaration.amount %></td>
             <td><%= investment_declaration.date %></td>
-            <td><%= investment_declaration.status ? "True" : "False"%></td>
             <td>
               <% if investment_declaration.document_file_name == nil %>
                 <small class="label label-default">Document Not Available</small>
@@ -32,8 +35,6 @@
               <% end %>
             </td>
             <td>
-            <!--   <= text_field_tag 'comment[]',"",class: "form-control" %> -->
-
               <%= link_to 'Approve', approve_declaration_modal_investment_declarations_path(investment_declaration),class: 'btn btn-xs btn-info',remote: true %>
               <%= link_to 'Reject', reject_declaration_modal_investment_declarations_path(investment_declaration),class: 'btn btn-xs btn-danger',remote: true %>
             </td>

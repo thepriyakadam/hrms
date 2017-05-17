@@ -78,6 +78,8 @@ class Employee < ActiveRecord::Base
   has_many :texable_monthly_deductions
   has_many :advance_salaries
   has_many :employee_jc_lists
+  has_many :rembursments
+
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',
                           foreign_key: 'manager_id'

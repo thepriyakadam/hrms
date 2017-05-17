@@ -1,0 +1,1 @@
+json.partial! "reporting_master_rembursments/reporting_master_rembursment", reporting_master_rembursment: @reporting_master_rembursment

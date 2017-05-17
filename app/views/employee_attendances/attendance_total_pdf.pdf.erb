@@ -24,7 +24,6 @@
             <th>EL</th>
             <th>CL</th>
             <th>C.Off</th>
-            <th>AL</th>
             <th>OD</th>
             <th>LWP</th>
             <th>ESIC</th>
@@ -47,13 +46,11 @@
               <% lwp = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "LWP") %>
               <% esic = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "ESIC") %>
               <% coff = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "C.Off") %>
-              <% al = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "AL") %>
               <% od = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "OD") %>
               <% gp = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "PG") %>
               <% phalf = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/2") %>
               <% pcl = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/CL") %>
               <% pel = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/EL") %>
-              <% pal = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/AL") %>
               <% pcoff = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/C.Off") %>
               <% plwp = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/LWP") %>
               <% pesic = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/ESIC") %>
@@ -62,12 +59,12 @@
 
               <td>
                 <% if a.to_f <= 2 %>
-                  <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pal.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f + a.to_f %>
+                  <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f + a.to_f %>
                   <%= ap %>
                 <% else %>
                   <% @a = a.to_f - 2 %>
                   <% @b = @a.to_f/2 %>
-                    <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pal.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f + @b.to_f + 2 %>
+                    <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f + @b.to_f + 2 %>
                     <%= ap %>
                   <% end %>
               </td>
@@ -99,10 +96,6 @@
                 <%= acoff %>
               </td>
               <td>
-                <% aal = al.count + (pal.count)/2.to_f %>
-                <%= aal %>
-              </td>
-              <td>
                 <% aod = od.count + (pod.count)/2.to_f %>
                 <%= aod %>
               </td>
@@ -116,9 +109,9 @@
               </td>
               <td>
                 <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
-                  <%= ap + h.count + ael + acl + acoff + aal + aod %>
+                  <%= ap + h.count + ael + acl + acoff + aod %>
                 <% else %>
-                  <%= ap + wd.count + h.count + ael + acl + acoff + aal + aod %>
+                  <%= ap + wd.count + h.count + ael + acl + acoff + aod %>
                 <% end %>
               </td>
               <td><%= gp.count %></td>

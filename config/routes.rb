@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+  resources :reporting_master_rembursments
+  resources :rembursments  do
+    collection do
+      get :rembursment_request
+       end
+  end
+  resources :rembursmentmasters
   resources :employee_jc_lists
   resources :joining_checklist_masters
   resources :employee_gps
@@ -570,6 +577,9 @@ end
       post :import
       get :import_employee_attendance
       get :import_employee_attendance_to_txt
+
+      get :self_service_datewise_attendance
+      get :manager_self_service_attendance
     end
   end
   resources :salary_comp_mappings

@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Rembursmentmasters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rembursmentmasters.each do |rembursmentmaster| %>
+      <tr>
+        <td><%= rembursmentmaster.code %></td>
+        <td><%= rembursmentmaster.name %></td>
+        <td><%= rembursmentmaster.description %></td>
+        <td><%= rembursmentmaster.status %></td>
+        <td><%= link_to 'Show', rembursmentmaster %></td>
+        <td><%= link_to 'Edit', edit_rembursmentmaster_path(rembursmentmaster) %></td>
+        <td><%= link_to 'Destroy', rembursmentmaster, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Rembursmentmaster', new_rembursmentmaster_path %>

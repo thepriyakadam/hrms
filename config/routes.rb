@@ -77,6 +77,9 @@ Rails.application.routes.draw do
       get :final_approval_emp_resignation_list
       get :employee_attendance
       post :show_datewise_attendance
+      get :investment_declaration
+      get :investment_declaration_list
+      post :reject_declaration
     end
   end
 
@@ -412,13 +415,27 @@ end
   end
   resources :recognition_types
 
-  resources :investment_declarations
+  resources :investment_declarations do
+    collection do
+      get :manager_view
+      get :approve_declaration
+      post :approve_declaration
+      get :reject_declaration
+      post :reject_declaration
+      get :approve_declaration_modal
+      get :reject_declaration_modal
+      get :self_edit_modal
+      post :self_update
+      get :send_for_approval
+      get :cancel_request
+      get :delete_request
+    end
+  end
   resources :investment_heads
   resources :sections
   resources :employee_documents do
     collection do
       get :form16
-      post :create_self_declaration
     end
   end
 

@@ -13,12 +13,25 @@ div.nobreak{ page-break-inside: avoid;
 </style>
 <div>
     <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+    <% i = 0%>
         <thead>
-        <tr><td colspan="6"><center><strong><%= current_user.employee.company_location.company.try(:description)%></strong>
-        <br> <%= current_user.employee.company_location.try(:address)%></center></td></tr>
+        <tr>
+          <td colspan="5"><center> 
+            <% if current_user.employee.company_location.company.company_logo == nil %>
+            <% else %>
+              <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+            <%end%> 
+              <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+          </td>
+        </tr>
+        <tr><th colspan="5"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
+        <tr>
+          <td>ID : <%= current_user.employee.manual_employee_code %></td>
+          <td colspan="2">Employee : <%= full_name(current_user.employee) %></td>
+          <td colspan="2">Department : <%= current_user.employee.company_location.try(:name) %> - <%= current_user.employee.department.try(:name) %></td>
+        </tr>
           <tr>
-            <th>Employee ID</th>
-            <th>Employee Name</th>
+            <th>Sr No</th>
             <th>Date</th>
             <th>In Time</th>
             <th>Out Time</th>
@@ -28,8 +41,7 @@ div.nobreak{ page-break-inside: avoid;
         <tbody>
           <% @employee_attendances.each do |a| %>
             <tr>
-              <td><%= a.employee.manual_employee_code %></td>
-              <td><%= full_name(a.employee) %></td>
+              <td><%= i = i + 1 %></td>
               <td><%= a.try(:day) %></td>
               <td><%= a.try(:in_time) %></td>
               <td><%= a.try(:out_time) %></td>

@@ -435,45 +435,74 @@ require 'roo'
 
 #========================= EMPLOYEE BASIC DATA END ===========================================
 
+#========================= EMPLOYEE ON BOARDING DATA START ===================================
 
-ex = Roo::Excel.new("#{Rails.root}/public/j.xls")
-ex.default_sheet = ex.sheets[0] #siya feb
-i = 1
-ActiveRecord::Base.transaction do
-2.upto(424) do |line| # siya Feb 2016
- puts "Starting Record --------------------------#{ex.cell(line,'A')}"
- @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
- # JoiningDetail.where(id: @employee.id).update_all(is_da: true)
- unless @employee.nil?
+# ex = Roo::Excel.new("#{Rails.root}/public/j.xls")
+# ex.default_sheet = ex.sheets[0] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(424) do |line| # siya Feb 2016
+#  puts "Starting Record --------------------------#{ex.cell(line,'A')}"
+#  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+#  # JoiningDetail.where(id: @employee.id).update_all(is_da: true)
+#  unless @employee.nil?
 
- @joining_details = JoiningDetail.where(employee_id: @employee.id)
-  @joining_details.new do |e|
-     e.employee_uan_no = ex.cell(line,'B').to_i
-     e.joining_date =  ex.cell(line,'C')
-     e.confirmation_date =  ex.cell(line,'D')
-     @designation = EmployeeDesignation.find_by_name(ex.cell(line,'E'))
-     e.employee_designation_id = @designation.id unless @designation.nil?
-      @grade = EmployeeGrade.find_by_name(ex.cell(line,'F'))
-     e.employee_grade_id = @grade.id unless @grade.nil?
-     # e.employee_pf_no = ex.cell(line,'F').to_i
-     @category = EmployeeCategory.find_by_name(ex.cell(line,'G'))
-     e.employee_category_id = @category.id unless @category.nil?
+#  @joining_details = JoiningDetail.where(employee_id: @employee.id)
+#   @joining_details.new do |e|
+#      e.employee_uan_no = ex.cell(line,'B').to_i
+#      e.joining_date =  ex.cell(line,'C')
+#      e.confirmation_date =  ex.cell(line,'D')
+#      @designation = EmployeeDesignation.find_by_name(ex.cell(line,'E'))
+#      e.employee_designation_id = @designation.id unless @designation.nil?
+#       @grade = EmployeeGrade.find_by_name(ex.cell(line,'F'))
+#      e.employee_grade_id = @grade.id unless @grade.nil?
+#      # e.employee_pf_no = ex.cell(line,'F').to_i
+#      @category = EmployeeCategory.find_by_name(ex.cell(line,'G'))
+#      e.employee_category_id = @category.id unless @category.nil?
 
-     e.probation_period = ex.cell(line,'H').to_i
-     e.probation_period = ex.cell(line,'I').to_i
-     e.notice_period =     ex.cell(line,'J').to_i
+#      e.probation_period = ex.cell(line,'H').to_i
+#      e.probation_period = ex.cell(line,'I').to_i
+#      e.notice_period =     ex.cell(line,'J').to_i
 
-     e.have_passport = ex.cell(line,'K')
-     e.passport_no = ex.cell(line,'L').to_i
-     e.passport_issue_date = ex.cell(line,'M')
-     e.passport_expiry_date = ex.cell(line,'N')
-     e.retirement_date = ex.cell(line,'O')
-    e.save!
+#      e.have_passport = ex.cell(line,'K')
+#      e.passport_no = ex.cell(line,'L').to_i
+#      e.passport_issue_date = ex.cell(line,'M')
+#      e.passport_expiry_date = ex.cell(line,'N')
+#      e.retirement_date = ex.cell(line,'O')
+#     e.save!
 
-    puts "Save...."
-   end
-   puts "#{i} Record inserted.------#{ex.cell(line,'B')}--------#{ex.cell(line,'C')}---------#{ex.cell(line,'D')}.....#{ex.cell(line,'E')}......#{ex.cell(line,'G')}"
-   i += 1
- end
- end
-end
+#     puts "Save...."
+#    end
+#    puts "#{i} Record inserted.------#{ex.cell(line,'B')}--------#{ex.cell(line,'C')}---------#{ex.cell(line,'D')}.....#{ex.cell(line,'E')}......#{ex.cell(line,'G')}"
+#    i += 1
+#  end
+#  end
+# end
+
+#==================================== EMPLOYEE ON BOARDING DATA END ====================================================#
+
+# ex = Roo::Excel.new("#{Rails.root}/public/employee bank details.xls")
+# ex.default_sheet = ex.sheets[0] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(51) do |line| # siya Feb 2016
+#  puts "Starting Record --------------------------#{ex.cell(line,'B')}"
+#  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B))
+#  # unless @employee.nil?
+#  @employee_bank_details = EmployeeBankDetail.where(employee_id: @employee.id)
+#   @employee_bank_details.each do |e|
+#     e.account_no = ex.cell(line,'B').to_i
+#     e.bank_name = ex.cell(line,'C')
+#     e.branch_name = ex.cell(line,'D')
+#     e.contact_no = ex.cell(line,'E').to_i
+#     e.micr_code = ex.cell(line,'F').to_i
+#     e.branch_code = ex.cell(line,'G').to_i
+#     e.ifsc_code = ex.cell(line,'H')
+#     e.bank_id = ex.cell(line, 'I').to_i
+#     e.save!
+#    end
+
+#==================================== EMPLOYEE BANK DETAILS DATA START ==================================================#
+
+
+#==================================== EMPLOYEE BANK DETAILS DATA END  ===================================================#

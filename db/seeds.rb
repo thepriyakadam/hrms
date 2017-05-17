@@ -481,26 +481,26 @@ require 'roo'
 
 #==================================== EMPLOYEE ON BOARDING DATA END ====================================================#
 
-ex = Roo::Excel.new("#{Rails.root}/public/employee bank details.xls")
-ex.default_sheet = ex.sheets[0] #siya feb
-i = 1
-ActiveRecord::Base.transaction do
-2.upto(51) do |line| # siya Feb 2016
- puts "Starting Record --------------------------#{ex.cell(line,'B')}"
- @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B))
- # unless @employee.nil?
- @employee_bank_details = EmployeeBankDetail.where(employee_id: @employee.id)
-  @employee_bank_details.each do |e|
-    e.account_no = ex.cell(line,'B').to_i
-    e.bank_name = ex.cell(line,'C')
-    e.branch_name = ex.cell(line,'D')
-    e.contact_no = ex.cell(line,'E').to_i
-    e.micr_code = ex.cell(line,'F').to_i
-    e.branch_code = ex.cell(line,'G').to_i
-    e.ifsc_code = ex.cell(line,'H')
-    e.bank_id = ex.cell(line, 'I').to_i
-    e.save!
-   end
+# ex = Roo::Excel.new("#{Rails.root}/public/employee bank details.xls")
+# ex.default_sheet = ex.sheets[0] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(51) do |line| # siya Feb 2016
+#  puts "Starting Record --------------------------#{ex.cell(line,'B')}"
+#  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B))
+#  # unless @employee.nil?
+#  @employee_bank_details = EmployeeBankDetail.where(employee_id: @employee.id)
+#   @employee_bank_details.each do |e|
+#     e.account_no = ex.cell(line,'B').to_i
+#     e.bank_name = ex.cell(line,'C')
+#     e.branch_name = ex.cell(line,'D')
+#     e.contact_no = ex.cell(line,'E').to_i
+#     e.micr_code = ex.cell(line,'F').to_i
+#     e.branch_code = ex.cell(line,'G').to_i
+#     e.ifsc_code = ex.cell(line,'H')
+#     e.bank_id = ex.cell(line, 'I').to_i
+#     e.save!
+#    end
 
 #==================================== EMPLOYEE BANK DETAILS DATA START ==================================================#
 

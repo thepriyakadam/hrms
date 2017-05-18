@@ -436,6 +436,9 @@ end
   resources :employee_documents do
     collection do
       get :form16
+      post :create_self_declaration
+      get :modal
+      post :update_document
     end
   end
 

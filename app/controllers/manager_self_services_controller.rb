@@ -129,4 +129,14 @@ class ManagerSelfServicesController < ApplicationController
     redirect_to investment_declaration_manager_self_services_path
   end
 
+  def leave_c_off
+    current_login = Employee.find_by(id: current_user.employee_id)
+    @sub = current_login.subordinates
+    @ind_sub = current_login.indirect_subordinates
+
+    @emp = @sub + @ind_sub
+    @employees = LeaveCOff.where(employee_id: @emp,is_taken: false,status: false)
+  end
+
+
 end

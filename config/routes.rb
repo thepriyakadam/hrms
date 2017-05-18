@@ -80,6 +80,7 @@ Rails.application.routes.draw do
       get :investment_declaration
       get :investment_declaration_list
       post :reject_declaration
+      get :leave_c_off
     end
   end
 
@@ -1256,6 +1257,9 @@ end
     collection do
       get :search_by_c_off_date
       get :add_coff
+      get :destroy_self
+      get :approve_c_off
+      get :reject_c_off
     end
   end
 

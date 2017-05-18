@@ -111,25 +111,22 @@ class SelfServicesController < ApplicationController
   end
 
   def create_self_c_off
-      #byebug
     @leave_c_off = LeaveCOff.new
+              
     @employee_id = params[:employee_id]
     @c_off_date = params[:leave_c_off][:c_off_date]
     @c_off_type = params[:leave_c_off][:c_off_type]
+
     @expiry_status = params[:leave_c_off][:expiry_status]
     @c_off_expire_day = params[:leave_c_off][:c_off_expire_day]
 
     if @leave_c_off.is_self_present(@employee_id,@c_off_date)
-      redirect_to leave_c_off_self_services_path
       flash[:alert] = "Your COff already set for that day"
     else
+      @leave_c_off = LeaveCOff.new(leave_c_off_params)
       @leave_c_offs = LeaveCOff.all
-      leav_category = LeavCategory.find_by_name('C.Off')
+      leav_category = LeavCategory.find_by_name('Compensatory Off')
 
-      if @expiry_status == true
-        @leave_c_off.expiry_date = @c_off_date + @c_off_expire_day
-      else
-      end
       if leav_category.nil?
       else
         @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
@@ -142,15 +139,32 @@ class SelfServicesController < ApplicationController
             end
           end#do
         end#c_off.nil?
-         if @c_off_type == 'Full Day'
-          LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: @c_off_expire_day,expiry_status: @expiry_status,leave_count: 1)
-         else
-          LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: @c_off_expire_day,expiry_status: @expiry_status,leave_count: 0.5)
-         end#@c_off_type
+
+          if @c_off_type == 'Full Day'
+            if @leave_c_off.expiry_status == true
+              @expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
+              LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: @c_off_expire_day,expiry_status: @expiry_status,expiry_date: @expiry_date,is_expire: false,leave_count: 1,status: false)
+              flash[:notice] = "Your COff Created Successfully!"
+            else
+              LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: @c_off_expire_day,expiry_status: @expiry_status,expiry_date: nil,is_expire: false,leave_count: 1,status: false)
+              flash[:notice] = "Your COff Created Successfully!"
+            end
+          else
+            if @leave_c_off.expiry_status == true
+              @expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
+              LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: @c_off_expire_day,expiry_status: @expiry_status,expiry_date: @expiry_date,is_expire: false,leave_count: 0.5,status: false)
+              flash[:notice] = "Your COff Created Successfully!"
+            else
+              LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: @c_off_expire_day,expiry_status: @expiry_status,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false)
+              flash[:notice] = "Your COff Created Successfully!"
+            end
+          end#@c_off_type
       end#leav_category.nil?
     end#@leave_c_off.is_self_present?
-      flash[:notice] = "Your COff Created Successfully!"
     redirect_to leave_c_off_self_services_path
   end#def
 
+def leave_c_off_params
+    params.require(:leave_c_off).permit(:is_expire,:employee_id, :c_off_date, :c_off_type, :c_off_expire_day, :expiry_status, :expiry_date, :leave_count)
+  end
 end

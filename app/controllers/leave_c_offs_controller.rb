@@ -50,7 +50,8 @@ class LeaveCOffsController < ApplicationController
     else
         @leave_c_off = LeaveCOff.new(leave_c_off_params)
         @leave_c_offs = LeaveCOff.all
-        leav_category = LeavCategory.find_by_name('C.Off')
+        leav_category = LeavCategory.find_by_name('Compensatory Off')
+
         if @leave_c_off.expiry_status == true
           @leave_c_off.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
         else
@@ -239,6 +240,103 @@ class LeaveCOffsController < ApplicationController
   #   # byebug
   #   @value = params[:value]
   # end
+  def destroy_self
+    @leave_c_off = LeaveCOff.find(params[:format])
+    @leave_c_off.destroy
+    flash[:notice] = "Destroyed successfully"
+    redirect_to leave_c_off_self_services_path
+  end
+
+  def approve_c_off
+    @leave_c_off = LeaveCOff.find(params[:format])
+    @leave_c_off.update(status: true)
+    leav_category = LeavCategory.find_by_name('Compensatory Off')
+
+    is_exist = EmployeeLeavBalance.exists?(employee_id: @leave_c_off.employee_id, leav_category_id: leav_category.id)
+      if is_exist
+        @employee_leave_balance = EmployeeLeavBalance.where(employee_id: @leave_c_off.employee_id, leav_category_id: leav_category.id).take
+         @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
+         
+        if @leave_c_off.c_off_type == 'Full Day'
+          @employee_leave_balance.total_leave = @employee_leave_balance.total_leave.to_f + 1
+          @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f + 1
+          @employee_leave_balance.update(expiry_date: @leave_c_off.expiry_date)
+
+          @c_off.each do |l|
+            if l.try(:expiry_date).to_date < Date.today
+              @employee_leave_balance = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take  
+              @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - l.leave_count
+              LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
+              @employee_leave_balance.save
+            else
+              @employee_leave_balance.save
+            end
+          end
+        else #Half Day
+          @employee_leave_balance.total_leave = @employee_leave_balance.total_leave.to_f + 0.5
+          @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f + 0.5
+          @leave_c_off.leave_count = 0.5
+          @employee_leave_balance.update(expiry_date: @leave_c_off.expiry_date)
+          
+          @c_off.each do |l|
+            if l.try(:expiry_date) < Date.today
+              @employee_leave_balance = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take
+              @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - l.leave_count
+              LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
+            @employee_leave_balance.save
+            else
+            @employee_leave_balance.save
+            end
+          end
+        end
+      else #is_exist
+        @employee_leave_balance = EmployeeLeavBalance.new do |b|
+          b.employee_id = @leave_c_off.employee_id
+          b.leav_category_id = leav_category.id
+
+          if @leave_c_off.expiry_status == true
+            b.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
+          else
+          end
+          
+          b.from_date = @leave_c_off.c_off_date
+          b.is_active = true
+          @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
+
+          if @leave_c_off.c_off_type == "Full Day"
+            b.no_of_leave = 1
+            b.total_leave = 1
+            @leave_c_off.leave_count = 1
+            puts @leave_c_off.leave_count
+          else
+            b.no_of_leave = 0.5
+            b.total_leave = 0.5
+            @leave_c_off.leave_count = 0.5
+            puts @leave_c_off.leave_count
+          end
+        end #do
+          @c_off.each do |l|
+            if l.try(:expiry_date).to_date < Date.today
+              @employee_leave_balance = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take  
+              @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - l.leave_count
+              LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
+              @employee_leave_balance.save
+            else
+              @employee_leave_balance.save
+            end
+          end #do
+      end #is_exist
+
+    flash[:notice] = "Approved successfully"
+    redirect_to leave_c_off_manager_self_services_path
+  end
+
+  def reject_c_off
+    @leave_c_off = LeaveCOff.find(params[:format])
+    @leave_c_off.update(status: nil)
+    flash[:notice] = "Rejected successfully"
+    redirect_to leave_c_off_manager_self_services_path
+  end
 
   private
 

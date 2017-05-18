@@ -1,5 +1,5 @@
 <div class="box-body">
-  <%= bootstrap_form_for(@leave_c_off,html: {id: 'leave_c_off'}, url: {action: 'create_self_c_off'}) do |f| %>
+  <%= bootstrap_form_for(@leave_c_off, url: {action: 'create_self_c_off'},html: {id: 'leave_c_off'}) do |f| %>
     <%= hidden_field_tag :employee_id, current_user.employee_id %> 
  
     <div class="row">

@@ -3,8 +3,23 @@
     <strong> <font color='#0077b3'> EMPLOYEE ONBOARDING DETAILS</font></strong>
   </div><!-- /.box-header -->
   <div class="box-body">
-<%= bootstrap_form_for(@joining_detail,remote:true) do |f| %>
+<%= bootstrap_form_for(@joining_detail,html: {id: 'joining_detail'},remote:true) do |f| %>
 <%= f.hidden_field :employee_id, value: @employee.id %>
+    <div class="row">
+     <div class="col-sm-3">
+        <div class="field" id="checker">
+        <%= f.select :is_new,[['New','true'],['Replacement','false']],{label: 'Employee Option',include_blank: " Select Employee Option"} %>
+       </div>
+     </div>
+
+    <div class="col-sm-3">
+          <div class="field" id="dependent-box">
+            <div id="emp_option">
+                <%= f.select :replacement_id,all_inactive_employee_with_code,{label: "Employee",include_blank: " Select Employee"} %>
+            </div>
+          </div>
+        </div>
+     </div>
     <div class="row">
      <div class="col-sm-3">
         <div class="field">
@@ -14,7 +29,7 @@
   
       <div class="col-sm-3">
         <label>Joining Date </label>
-          <div class="field">
+          <div class="form group-required">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
@@ -37,7 +52,7 @@
         </div>
 
       <div class="col-sm-3">
-        <div class="field">
+        <div class="form group-required">
            <%= f.select :employee_grade_id, all_employee_grade, {label: 'Employee Grade',include_blank: " Select Employee Grade"} %>
         </div>
       </div>
@@ -46,13 +61,13 @@
 
       <div class="row">
       <div class="col-sm-3">
-        <div class="field">
+        <div class="form group-required">
           <%= f.select :employee_designation_id,all_employee_designation,{label: 'Designation',include_blank: " Select Employee Designation"} %>
         </div>
       </div>
 
       <div class="col-sm-3">
-        <div class="field">
+        <div class="form group-required">
            <%= f.select :employee_category_id, all_employee_category, {label: 'Employee Category',include_blank: " Select Employee Category"} %>
         </div>
       </div>
@@ -112,7 +127,18 @@
           </div>
         </div>
       </div>
-
+       <div class="col-sm-3">
+      <label>Leaving Date </label>
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+             <%= f.text_field :leaving_date,hide_label:true, class: 'passport_expiry_date'%>
+          </div>
+        </div>
+      </div>
+     
       <div class="col-sm-3">
         <div class="field">
           <%= f.select :reserved_category_id, all_reserved_category,{label: 'Reserved Category',include_blank: " Select Reserved Category"} %>
@@ -130,7 +156,9 @@
           </div>
         </div>
       </div>
+      </div>
 
+       <div class="row">
       <div class="col-sm-3">
        <div class="field">
          <%= f.select :medical_schem, ['Yes','No'],{label: 'Medical Insurance',include_blank: " Select Medical Insurance"} %>
@@ -203,7 +231,7 @@
     </div>
     <div class="col-sm-3">
       <div class="field">
-    
+      <!--  <select :is_da,[['Yes','true'],['No','false']],{label: 'DA',include_blank: " Select DA"} %>     -->
       </div>
     </div>
     <div class="col-sm-3">
@@ -250,7 +278,7 @@
   </div>
 </div>
 </div>
-<% end %>
+  <%end%>
 
 <script type="text/javascript">
   $(function(){
@@ -286,3 +314,58 @@
     dateFormat: 'dd-mm-yy' });
   }); 
 </script>
+
+<script>
+$("#joining_detail").validate({
+    rules: {
+      "joining_detail[joining_date]":{
+        required: true,
+      },
+      "joining_detail[employee_designation_id]":{
+        required: true,
+      },
+      "joining_detail[employee_grade_id]":{
+        required: true,
+      },
+       "joining_detail[employee_category_id]":{
+        required: true,
+      }
+       },
+    messages: {
+      "joining_detail[joining_date]":{
+        required: "Please Select Joining Date",
+      },
+       "joining_detail[employee_designation_id]":{
+        required: "Please Specify Designation ",
+      },
+      "joining_detail[employee_grade_id]":{
+        required: "Please Specify Grade",
+      },
+      "joining_detail[employee_category_id]":{
+        required: "Please Specify Employee Category",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+<script type="text/javascript">
+   $(document).ready(function () {
+        var checkbox = $('#checker'); 
+        var dependent = $('#dependent-box');
+        if (checkbox.attr('checked') != undefined){
+           dependent.show();
+        } else {
+            dependent.hide();
+        }
+        
+        checkbox.change(function(e){
+           dependent.toggle(); 
+        });
+    }); 
+
+</script>
+

@@ -6,25 +6,44 @@
 <table class="table table-bordered table-hover table-condensed">     
   <thead>
     <tr>
-      <th>Employee Id</th>
+      <th>ID</th>
       <th>Name</th>
       <th>Age</th>
       <th>Department</th>
       <th>Date Of Joining</th>
       <th>Grade</th>
       <th>Current Designation</th> 
+      <th>Current Experience</th>
     </tr>
   </thead>
   <tbody>
     <% @employees.each do |a| %>
     <tr>
       <td><%= a.manual_employee_code %></td> 
-      <td><%= a.first_name %></td>
-      <td><%=  %></td>
+      <td><%= full_name(a) %></td>
+      <td>
+        <% if a.date_of_birth == nil %>
+          <%= %>
+        <% else %>
+          <% day = Date.today - a.try(:date_of_birth).to_date %><% d = day.to_i/365 %><%= d %>
+        <% end %>
+      </td>
       <td><%= a.department.try(:name) %></td>
       <td><%= @joining_detail.joining_date %></td>
       <td><%= @joining_detail.employee_grade.name %></td>
       <td><%= @joining_detail.employee_designation.name %></td>
+      <td>
+        <% if @joining_detail.joining_date == nil %>
+          <%= %>
+        <% else %>
+          <% day = Date.today - @joining_detail.joining_date.to_date %><% d = day.to_f/365 %><% int = d.to_i %><% remaining = d.to_f - int.to_f %><% day1 = remaining.to_f * 365 %><% day2 = day1.to_f/30 %>
+          <% if int.to_i > 0 %>
+            <%= int.to_i %>.<%= day2.to_i %> <%= "year" %>
+          <% else %>
+            <%= day2.to_i %><%= "month" %>
+          <% end %>
+        <% end %>
+        </td>
     </tr>
     <% end %>
   </tbody>
@@ -115,9 +134,9 @@
     <thead>
       <tr>
         <th>Goal Perspective</th>
-        <th>Goal Weightage</th>
         <th>Goal Measure</th>
         <th>Target/Unit</th>
+        <th>Goal Weightage</th>
         <th>Aligned</th>
         <th>Self Comment</th>
         <th>Self Rating</th>
@@ -130,14 +149,14 @@
       <% @goal_ratings.each do |goal_rating| %>
         <tr>
           <td><%= goal_rating.goal_perspective.try(:name) %></td>
-          <td><%= goal_rating.goal_weightage %></td>
           <td><%= goal_rating.goal_measure %></td>
           <td><%= goal_rating.target %></td>
+          <td><%= goal_rating.goal_weightage %></td>
           <td><%= goal_rating.aligned %></td>
           <td><%= goal_rating.appraisee_comment %></td>
-          <td><%= goal_rating.appraisee_rating_id %></td>
+          <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
           <td><%= goal_rating.appraiser_comment %></td>
-          <td><%= goal_rating.appraiser_rating_id %></td>
+          <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
           <td><%= goal_rating.reviewer_comment %></td>
         </tr>
       <% end %>
@@ -149,9 +168,9 @@
     <thead>
       <tr>
         <th>Attribute</th>
-        <th>Goal Weightage</th>
         <th>Goal Measure</th>
         <th>Target/Unit</th>
+        <th>Goal Weightage</th>
         <th>Aligned</th>
         <th>Self Comment</th>
         <th>Self Rating</th>
@@ -164,14 +183,14 @@
       <% @goal_attribute_ratings.each do |goal_rating| %>
         <tr>
           <td><%= goal_rating.attribute_master.try(:name) %></td>
-          <td><%= goal_rating.goal_weightage %></td>
           <td><%= goal_rating.goal_measure %></td>
           <td><%= goal_rating.target %></td>
+          <td><%= goal_rating.goal_weightage %></td>
           <td><%= goal_rating.aligned %></td>
           <td><%= goal_rating.appraisee_comment %></td>
-          <td><%= goal_rating.appraisee_rating_id %></td>
+          <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
           <td><%= goal_rating.appraiser_comment %></td>
-          <td><%= goal_rating.appraiser_rating_id %></td>
+          <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
           <td><%= goal_rating.reviewer_comment %></td>
         </tr>
       <% end %>
@@ -206,7 +225,7 @@
         </tr>
         <tr>
           <th>Reviewer Rating</th>
-          <td><%= goal_bunch.try(:reviewer_rating_id) %></td>
+          <td><%= goal_bunch.try(:reviewer_rating).try(:value) %></td>
         </tr>
         <tr>
           <th>Final Comment</th>
@@ -214,7 +233,7 @@
         </tr>
         <tr>
           <th>Final Rating</th>
-          <td><%= goal_bunch.try(:final_rating_id) %></td>
+          <td><%= goal_bunch.try(:final_rating).try(:value) %></td>
         </tr> 
       <% end %>
     </tbody>

@@ -118,7 +118,7 @@ $(function () {
   });
 
   function calculate_total_leave() {
-    var no_of_leave = parseInt($('#employee_leav_balance_no_of_leave').val());
+    var no_of_leave = parseFloat($('#employee_leav_balance_no_of_leave').val());
     if(isNaN(no_of_leave)){
       $('#employee_leav_balance_total_leave').val(""); 
     }
@@ -127,7 +127,7 @@ $(function () {
     }    
   }
   function calculate_no_of_leave() {
-    var total_leave = parseInt($('#employee_leav_balance_total_leave').val());
+    var total_leave = parseFloat($('#employee_leav_balance_total_leave').val());
     if(isNaN(total_leave)){
       $('#employee_leav_balance_no_of_leave').val(""); 
     }
@@ -141,12 +141,24 @@ $(function () {
       "employee_leav_balance[no_of_leave]":{
         required: true,
         maxlength: 20,
+      },
+      "employee_leav_balance[from_date]":{
+        required: true,
+      },
+      "employee_leav_balance[to_date]":{
+        required: true,
       }
     },
     messages: {
       "employee_leav_balance[no_of_leave]":{
         required: "Please specify No. Of leaves",
         maxlength: "No. Of leaves allows upto 20 characters"
+      },
+      "employee_leav_balance[from_date]":{
+        required: "Please Specify From Date",
+      },
+       "employee_leav_balance[to_date]":{
+        required: "Please Specify To Date",
       }
       
     },

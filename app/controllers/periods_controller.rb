@@ -33,7 +33,7 @@ class PeriodsController < ApplicationController
 	end
 
 	def destroy
-	@period.destroy
+	  @period.destroy
     @periods = Period.all
 	end
 

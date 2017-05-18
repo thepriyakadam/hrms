@@ -3,7 +3,7 @@
 <table style="border-collapse: collapse; font-size:30pt;" border=1 width=1000 cellpadding="19">
   <thead>
     <tr>
-      <th colspan="46">
+      <th colspan="53">
         <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
         <center><small><%= Bank.find(@bank).name unless @bank.nil?  or @bank.blank? %>
         <%= CostCenter.find(@cost_center).name unless @cost_center.blank? or @cost_center.nil? or @cost_center.empty? %>
@@ -12,9 +12,9 @@
       </th>
     </tr>
     <tr>
-      <th colspan="12"><center> SALARY DETAILS</center></th>
-      <th colspan="11"><center> WORKING DAYS</center></th>
-      <th colspan="12"><center> EARNED SALARY</center></th>
+      <th colspan="13"><center> SALARY DETAILS</center></th>
+      <th colspan="13"><center> WORKING DAYS</center></th>
+      <th colspan="13"><center> EARNED SALARY</center></th>
       <th colspan="12"><center>DEDUCTION</center></th>
       <th><center> NET </center></th>
       <th><center> SIGN </center></th>
@@ -32,6 +32,7 @@
       <th>Medi Allow</th>
       <th>Child Edu Allow</th>
       <th>MRA</th>
+       <th>MA</th>
       <th>Total</th>
 
       
@@ -41,6 +42,7 @@
       <th>CL</th>
       <th>EL</th>
       <th>AL</th>
+      <th>OD</th>
 
 
       <th>Coff</th>
@@ -48,6 +50,7 @@
       <th>LWP</th>
       <th>HD</th>
       <th>AD</th>
+      <th>GP</th>
       <th>Payable</th>
     
       <th>Basic</th>
@@ -61,6 +64,7 @@
       <th>Medi Allow</th>
       <th>Child Edu Allow</th>
       <th>MRA</th>
+       <th>MA</th>
       <th>Gross</th>
 
       <th>PF</th>
@@ -86,19 +90,18 @@
       <td colspan="1">
         <strong><%= i = i + 1 %></strong>
       </td>
-      <td colspan="11"><strong>Code - <%= r.try(:code) %></strong></td>
-      <td colspan="8"><strong>Employee - <%= r.try(:employee_name) %></strong></td>
-      <td colspan="12">
+      <td colspan="12"><strong>Code - <%= r.try(:code) %></strong></td>
+      <td colspan="12"><strong>Employee - <%= r.try(:employee_name) %></strong></td>
+      <td colspan="13">
         <strong>
           Department - <%= r.try(:department_name) %>|
           Designation - <%= Employee.find_by_manual_employee_code(r.code).try(:joining_detail).try(:employee_designation).try(:name) %>
         </strong>
       </td>
-      <td colspan="6">
+      <td colspan="7">
         <strong>PF NO - <%= r.try(:pf_no) %></strong></td>
-      <td colspan="6">
+      <td colspan="7">
         <strong>ESIC NO - <%= r.try(:esic_no) %></strong></td>
-      <td></td>
       </tr>
       <tr>  
         <td><%= r.try(:actual_basic).try(:round) %></td>
@@ -113,6 +116,7 @@
         <td><%= r.try(:actual_medical).try(:round) %></td>
         <td><%= r.try(:actual_child_edu).try(:round) %></td>
         <td><%= r.try(:actual_mra).try(:round) %></td>
+        <td><%= r.try(:actual_monthly_arrear).try(:round) %></td>
         <td><%= r.try(:actual_total).try(:round) %></td>
 
 
@@ -121,11 +125,13 @@
         <td><%= r.try(:cl_leave) %></td>
         <td><%= r.try(:el_leave) %></td>
         <td><%= r.try(:advance_leave) %></td>
+        <td><%= r.try(:od_leave) %></td>
         <td><%= r.try(:coff_leave) %></td>
         <td><%= r.try(:esic_leave) %></td>
         <td><%= r.try(:lwp_leave) %></td>
         <td><%= r.try(:holiday) %></td>
         <td><%= r.try(:absent_day) %></td>
+        <td><%= r.try(:gatepass) %></td>
         <td><%= r.try(:payable_day) %></td>
        
         <td><%= r.try(:earned_basic).try(:round) %></td>
@@ -140,6 +146,7 @@
         <td><%= r.try(:earned_medical).try(:round) %></td>
         <td><%= r.try(:earned_child_edu).try(:round) %></td>
         <td><%= r.try(:earned_mra).try(:round) %></td>
+        <td><%= r.try(:earned_monthly_arrear).try(:round)%></td>
         <td><%= r.try(:earned_total).try(:round) %></td>
 
         <td><%= r.try(:pf) %></td>
@@ -160,7 +167,7 @@
       </tr>
     <% end %>
     <tr>
-      <td colspan="47"><strong>Total</strong></td>
+      <td colspan="53"><strong>Total</strong></td>
     </tr>
 
     <tr>      
@@ -175,6 +182,7 @@
       <td><%= @sum.actual_medical.try(:round) %></td>
       <td><%= @sum.actual_child_edu.try(:round) %></td>
       <td><%= @sum.actual_mra.try(:round) %></td>
+      <td><%= @sum.actual_monthly_arrear.try(:round) %></td>
       <td><%= @sum.actual_total.try(:round) %></td>
 
       <td><%= @sum.present_day %></td>
@@ -182,11 +190,13 @@
       <td><%= @sum.cl_leave %></td>
       <td><%= @sum.el_leave %></td>
       <td><%= @sum.advance_leave %></td>
+      <td><%= @sum.od_leave %></td>
       <td><%= @sum.coff_leave %></td>
       <td><%= @sum.esic_leave %></td>
       <td><%= @sum.lwp_leave %></td>
       <td><%= @sum.holiday %></td>
       <td><%= @sum.absent_day %></td>
+      <td><%= @sum.gatepass %></td>
       <td><%= @sum.payable_day %></td>
       
 
@@ -201,6 +211,7 @@
       <td><%= @sum.earned_medical.try(:round) %></td>
       <td><%= @sum.earned_child_edu.try(:round) %></td>
       <td><%= @sum.earned_mra.try(:round) %></td>
+      <td><%= @sum.earned_monthly_arrear.try(:round) %></td>
       <td><%= @sum.earned_total.try(:round) %></td>
 
       <td><%= @sum.pf %></td>

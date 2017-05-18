@@ -2,26 +2,41 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-      <%= f.select :department_id, all_department_type_list1,{hide_label:true,include_blank: 'select Department'},class: 'form-control' %>
+        <%= f.text_field :name,hide_label:true, placeholder: 'Goal Perspective'%>
       </div>
     </div>
-    <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.text_field :name,hide_label:true, placeholder: 'Goal Perspective' %>
+
+    <div class="col-sm-2">
+      <div class="field">
+        <%= f.check_box :goal_weightage, label: 'Weightage'%>
       </div>
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-2">
+      <div class="field">
+        <%= f.text_field :from,hide_label:true, placeholder: 'From'%>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="field">
+        <%= f.text_field :to,hide_label:true, placeholder: 'To'%>
+      </div>
+    </div>
+
+    <div class="col-sm-2">
       <div class="field">
         <%= f.check_box :status, label: 'Active'%>
       </div>
     </div>
+  </div>
+
+  <div class="row">
     <div class="col-sm-3">
       <div class="actions">
         <%= f.submit :class => class_name, data: { disable_with: data_info }%>
       </div>
     </div>
-
   </div>
+
 <% end %>
 
 <script type="text/javascript">
@@ -30,17 +45,11 @@
     rules: {
       "goal_perspective[name]":{
         required: true
-      },
-      "goal_perspective[department_id]":{
-        required: true
       }
     },
     messages: {
       "goal_perspective[name]":{
-        required: "Please Specify Name"
-      },
-      "goal_perspective[department_id]":{
-        required: "Please Specify Department"
+        required: "Please Specify Goal"
       }
     },
     errorPlacement: function(error, element) {
@@ -48,5 +57,17 @@
      error.insertAfter(element.parent(element));
     }
    });
+
+ // $('#goal_perspective_goal_weightage').on('change', function() {
+ //    if ($('#goal_perspective_goal_weightage').val() == true){
+   
+ //      $("#goal_perspective_from").show();
+ //      $("#goal_perspective_to").show();
+ //    }
+ //    else{
+ //      $("#goal_perspective_from").hide();
+ //      $("#goal_perspective_to").hide();
+ //    }
+ //  });
 </script>
 

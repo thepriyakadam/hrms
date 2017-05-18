@@ -1,39 +1,45 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Employee Transfer List</h3>
+    <h3 class="box-title">Employee Transfer Request
+
+       ID : <%= @employee_transfers.first.try(:employee).try(:manual_employee_code) %>
+        Name : <%= full_name(@employee_transfers.first.try(:employee))%></h3>
     
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example1" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th>Employee</th>
-      <th>Reporting Master</th>
+      <th>Request To </th>
       <th>Employee Designation</th>
       <th>Employee Category</th>
       <th>Company</th>
       <th>Company Location</th>
       <th>Department</th>
-      <th>Justification</th>
       <th>Action</th>
     </tr>
   </thead>
 
   <tbody>
     <% @employee_transfers.each do |employee_transfer| %>
+    <% emp_transfer = EmployeeTransfer.where(id: employee_transfer.id).take
+     employee = Employee.where(id: emp_transfer.reporting_master_id).take  %>
       <tr>
-        <td><%= employee_transfer.employee.try(:manual_employee_code) %></td>
-        <td><%= employee_transfer.reporting_master_id%></td>
-        <td><%= employee_transfer.employee_designation.try(:name) %></td>
-        <td><%= employee_transfer.employee_category.try(:name) %></td>
-        <td><%= employee_transfer.company.try(:name) %></td>
-        <td><%= employee_transfer.company_location.try(:name) %></td>  
-        <td><%= employee_transfer.department.try(:name) %></td>
-        <td><%= employee_transfer.justification %></td>
+       
+        <td><%= employee.try(:manager).try(:manual_employee_code) %> <%= employee.try(:manager).try(:prefix) %> <%= employee.try(:manager).try(:first_name) %> <%= employee.try(:manager).try(:middle_name) %> <%= employee.try(:manager).try(:last_name) %></td>
+        <td><%= employee_transfer.designation %></td>
+        <td><%= employee_transfer.category %></td>
+        <td><%= employee_transfer.employee_company %></td>
+        <td><%= employee_transfer.employee_company_location %></td>  
+        <td><%= employee_transfer.employee_department %></td>
         <td>
-        <!-- <= link_to '', employee_transfer,class:'btn btn-xs btn-default fa fa-eye' %> -->
+        <% if employee_transfer.current_status == "Pending" %>
         <%= link_to '', edit_employee_transfer_path(employee_transfer),class:'btn-success btn-xs fa fa-edit' %>
        <%= link_to '', employee_transfer, method: :delete, data: { confirm: 'Are you sure?' },class:'btn-danger btn-xs fa fa-close' %>
+        <%= link_to '', employee_transfer,class:'btn btn-xs btn-default fa fa-eye' %> 
+        <% else %>
+        <%= link_to '', employee_transfer,class:'btn btn-xs btn-default fa fa-eye' %> 
+        <% end %>
        </td>
       </tr>
     <% end %>

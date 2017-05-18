@@ -1,8 +1,65 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h6 class="box-title">Interview Evaluation Of :- <%= @interview_round.interview_schedule.try(:candidate_name) %></h6>
+    <h6 class="box-title">Interview Evaluation <!-- Of :- <= @interview_round.interview_schedule.try(:candidate_name) %> , Interview Type : <= @interview_round.interview_type.try(:name) %> , Interviewer Name : <= @interview_round.employee.try(:first_name) %> <= @interview_round.employee.try(:middle_name) %> = @interview_round.employee.try(:last_name) %> --></h6>
   </div><!-- /.box-header -->
 	<div class="box-body">
+	    <table id="example2" class="table table-bordered table-hover table-condensed">
+<tr>
+    <th colspan="4"><center>Interview Schedule Details</center></th>
+ </tr>
+<tr> 
+  <th><strong>Job Title</strong></th>
+  <td><%= @interview_schedule.try(:job_title) %></td>
+
+  <th><strong>Candidate Name</strong></th>
+  <td><%= @interview_schedule.candidate_name %></td>
+</tr>
+
+<tr> 
+  <th><strong>Email Id</strong></th>
+  <td><%= @interview_schedule.email_id %></td>
+
+  <th><strong>Interview Date</strong></th>
+  <td><%= @interview_schedule.interview_date %></td>
+</tr>
+
+<tr> 
+  <th><strong>Location</strong></th>
+  <td><%= @interview_schedule.location %></td>
+  <th><strong></strong></th>
+  <td><%= %></td>
+</tr>
+
+<tr>
+  <th><strong>Address</strong></th>
+  <td colspan="3"><%= @interview_schedule.address %></td>
+  
+</tr>
+
+</table>
+
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+  <% @interview_rounds.each do |interview_round| %>
+  <tr><th colspan="4"><center>Interview Rounds</center></th></tr>
+    
+  </thead>
+  <tbody>
+    
+      <tr>
+        <td>Interviewer Name : <%= full_name(interview_round.employee) %></td>
+        <td>Type : <%= interview_round.interview_type.try(:name) %></td>
+     
+        <td colspan="2">Date : <%= interview_round.interview_date %> - Time : <%= interview_round.interview_time %></td>
+      </tr>
+      <tr>
+        <td>Location : <%= interview_round.location %></td>
+        <td colspan="3">Description : <%= interview_round.schedule_comment %></td>
+<!--         <td><= interview_rounds.interview_analysis.interview_evalution.try(:name) %></td>
+ -->  </tr>
+      <%end%><br>
+  </tbody>
+</table><br>
 		<div id="form">
 			<%= render 'form' %>	
 		</div>

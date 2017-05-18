@@ -2,8 +2,8 @@
      <%= hidden_field_tag :authenticity_token, form_authenticity_token %> 
       <div class="row">
         <div class="col-sm-3">
-            <div class="form-group required">
-            <%= f.select :employee_id, employee_list_for_food_deduction, {include_blank: "Select Employee"} %>
+          <div class="form-group required">
+           <%= f.select :employee_id, employee_list_for_food_deduction, {include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
           </div>
           </div>
         <div class="col-sm-3">
@@ -76,10 +76,10 @@ $("#investment_declaration").validate({
     },
     messages: {
       "investment_declaration[employee_id]":{
-        required: "Please Specify employee_id",
+        required: "Please Select Employee ",
       },
       "investment_declaration[investment_head_id]":{
-        required: "Please Specify investment_head_id",
+        required: "Please Select Investment Head",
       },
       "investment_declaration[amount]":{
         required: "Please Specify amount",

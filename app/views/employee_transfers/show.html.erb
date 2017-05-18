@@ -1,41 +1,56 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title"> Employee Transfer</h3>
+    <h3 class="box-title">Employee Transfer Request</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
     
 
 <tr>
-  <td><strong>Employee</strong></td>
-  <td><%= @employee_transfer.employee.try(:first_name) %> <%= @employee_transfer.employee.try(:middle_name) %> <%= @employee_transfer.employee.try(:last_name) %></td>
-  <td><strong>Reporting Master</strong></td>
-  <td><%= @employee_transfer.reporting_master_id %></td>
-</tr>
+  <td><strong>Employee ID</strong></td>
+  <td><%= @employee_transfer.employee.manual_employee_code %></td>
+  
+  <td><strong>Employee Name</strong></td>
+    <td><%= full_name(@employee_transfer.employee) %></td>
+  </tr>
 
 <tr>
+  <td><strong>Request To</strong></td>
+  <td><%= @employee_transfer.employee.try(:manager).try(:prefix) %> <%= @employee_transfer.employee.try(:manager).try(:first_name) %> <%= @employee_transfer.employee.try(:manager).try(:middle_name) %> <%= @employee_transfer.employee.try(:manager).try(:last_name) %></td>
+
   <td><strong>Employee Designation</strong></td>
-  <td><%= @employee_transfer.employee_designation.try(:name) %></td>
-  <td> <strong>Employee Category</strong></td>
-  <td><%= @employee_transfer.employee_category.try(:name) %></td>
+  <td><%= @employee_transfer.designation %></td>
+
+ 
 </tr>
 
 <tr>
+ <td> <strong>Employee Category</strong></td>
+  <td><%= @employee_transfer.category %></td>
+
   <td><strong>Company</strong></td>
-  <td><%= @employee_transfer.company.try(:name) %></td>
-   <td> <strong>Company Location</strong></td>
-  <td><%= @employee_transfer.company_location.try(:name) %></td>
+  <td><%= @employee_transfer.employee_company %></td>
+
 </tr>
 
 
 <tr>
+   <td> <strong>Company Location</strong></td>
+  <td><%= @employee_transfer.employee_company_location %></td>
+
   <td><strong>Department</strong></td>
- <td> <%= @employee_transfer.department.try(:name) %></td>
-    <td><strong>Justification</strong></td>
-  <td><%= @employee_transfer.justification %></td>
+ <td> <%= @employee_transfer.employee_department %></td>
 </tr>
-</table>
+<tr>
+ <td><strong>Justification</strong></td>
+  <td colspan="3"><%= @employee_transfer.justification %></td>
+  </tr>
+</table><br>
+<% if @employee_transfer.current_status == "Pending" %>
 <%= link_to 'Edit', edit_employee_transfer_path(@employee_transfer),class:'btn btn-sm btn-success fa fa-edit' %> |
 <%= link_to 'Back', employee_transfers_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
+<% else %>
+<%= link_to 'Back', employee_transfers_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
+<%end%>
 </div>
 </div>

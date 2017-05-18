@@ -2,6 +2,8 @@ require 'query_report/helper'
 class GoalBunchesController < ApplicationController
   before_action :set_goal_bunch, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
+
+  #before_filter :authenticate_user!
  include QueryReport::Helper  # need to include it
   # GET /goal_bunches
   # GET /goal_bunches.json
@@ -19,16 +21,9 @@ class GoalBunchesController < ApplicationController
     @goal_bunch = GoalBunch.new
     @goal_bunches = GoalBunch.where(employee_id: current_user.employee_id)
     #@period_id = params[:period_id]
-    session[:active_tab] ="performancemgmt"
-    session[:active_tab1] ="perform_cycle"
+    session[:active_tab] ="EmployeeSelfService"
   end
 
-  # GET /goal_bunches/1/edit
-  def edit
-  end
-
-  # POST /goal_bunches
-  # POST /goal_bunches.json
   def create
     @goal_bunch = GoalBunch.new(goal_bunch_params)
       if @goal_bunch.save
@@ -39,22 +34,9 @@ class GoalBunchesController < ApplicationController
         @flag = false
       end
   end
-
-  def create_multiple_bunch
-   @goal_bunch = GoalBunch.new(goal_bunch_params)
-    if @goal_bunch.save
-      @flag = true
-      @goal_bunch = GoalBunch.new 
-      redirect_to period_for_multiple_goal_bunches_path
-    else
-      @flag = false
-    redirect_to period_for_multiple_goal_bunches_path
-    end
-  end
-
-
-  def period_for_multiple
-    @goal_bunches = GoalBunch.all
+  
+  # GET /goal_bunches/1/edit
+  def edit
   end
 
   # PATCH/PUT /goal_bunches/1
@@ -77,11 +59,61 @@ class GoalBunchesController < ApplicationController
     redirect_to new_goal_bunch_path
   end
 
+  # POST /goal_bunches
+  # POST /goal_bunches.json
+  def appraiser_confirm
+    @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:emp_id])
+    @period = Period.find(params[:period_id])
+
+    @employees = Employee.where(id: @employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id)
+
+      @goal_bunch = GoalBunch.find_by(id: @goal_bunch_id)
+      sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
+    if sum == 100
+      @goal_bunch.update(goal_approval: true)
+      flash[:notice] = "Confirmed Successfully" 
+      #GoalBunchMailer.send_email_to_appraisee(@goal_bunch).deliver_now
+      redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
+    else
+      flash[:alert] = "Goal weightage sum should be 100"
+      redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
+    end 
+  end
+
+  def revert_goal
+    @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
+    @period = Period.find(params[:period_id])
+    @goal_bunch = GoalBunch.find_by(id: @goal_bunch_id)
+    @goal_bunch.update(goal_approval: false,goal_confirm: false)
+      flash[:alert] = "Goal Rejected Successfully"
+      redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
+  end
+
+  def create_multiple_bunch
+   @goal_bunch = GoalBunch.new(goal_bunch_params)
+    if @goal_bunch.save
+      @flag = true
+      @goal_bunch = GoalBunch.new 
+      redirect_to period_for_multiple_goal_bunches_path
+    else
+      @flag = false
+    redirect_to period_for_multiple_goal_bunches_path
+    end
+  end
+
+  def period_for_multiple
+    @goal_bunches = GoalBunch.all
+  end
+
   def subordinate_list
     @periods = Period.where(status: true).group(:id)
-    #@goal_bunch = GoalBunch.where(period_id: @periods)
-    @goal_bunches = GoalBunch.where(goal_confirm: false).group(:period_id)
-    
+    @goal_bunches = GoalBunch.where(goal_confirm: true).group(:period_id)
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_cycle"
   end
@@ -91,7 +123,7 @@ class GoalBunchesController < ApplicationController
     current_login = Employee.find(current_user.employee_id)
     @emps = current_login.subordinates.pluck(:id)
     #@emp1 = Employee.where(id: @emps).pluck(:id)
-    @employees = GoalBunch.where(employee_id: @emps,period_id: @period.id,goal_confirm: false)
+    @employees = GoalBunch.where(employee_id: @emps,period_id: @period.id,goal_confirm: true,goal_approval: false)
     # end
     # @employee = Employee.find(params[:format])
     # @goal_bunches = GoalBunch.where(employee_id: @employee.id)
@@ -107,20 +139,14 @@ class GoalBunchesController < ApplicationController
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
-
     @goal_ratings = GoalRating.where(appraisee_id: @employee.id,goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal')
     @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ? AND appraisee_id = ?", @goal_bunch_id.id ,'Attribute',@employee.id)
-
     @employee_promotions = EmployeePromotion.where(employee_id: @employee.id)
   end
 
   def appraiser_subordinate
     @periods = Period.where(status: true).group(:id)
     @goal_bunches = GoalBunch.where(appraisee_confirm: true).group(:period_id)
-    #@goal_bunches = GoalBunch.where(period_id: @period.id).group(:period_id)
-
-    # current_login = Employee.find(current_user.employee_id)
-    # @employees = current_login.subordinates
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_cycle"
   end
@@ -129,34 +155,14 @@ class GoalBunchesController < ApplicationController
      @period = Period.find(params[:period_id])
     current_login = Employee.find(current_user.employee_id)
     @emps = current_login.subordinates.pluck(:id)
-    #@emp1 = Employee.where(id: @emps).pluck(:id)
-    @employees = GoalBunch.where(employee_id: @emps,goal_confirm: true,period_id: @period.id)
-  end
-
-  def appraiser_confirm
-    @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
-    @employee = Employee.find(params[:emp_id])
-    @period = Period.find(params[:period_id])
-
-    @employees = Employee.where(id: @employee.id)
-    @qualifications = Qualification.where(employee_id: @employee.id)
-    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
-    @experiences = Experience.where(employee_id: @employee.id)
-    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
-    @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id)
-
-      @goal_bunch = GoalBunch.find_by(id: @goal_bunch_id)
-      @goal_bunch.update(goal_confirm: true)
-      flash[:notice] = "Confirmed Successfully" 
-      GoalBunchMailer.send_email_to_appraisee(@goal_bunch).deliver_now
-      redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
+    @employees = GoalBunch.where(employee_id: @emps,goal_approval: true,period_id: @period.id)
   end
 
   def appraiser_comment
     @period = Period.find(params[:period_id])
     @employee = Employee.find(params[:emp_id])
     @goal_bunch_id = GoalBunch.find(params[:goal_id]) 
-    @goal_bunches = GoalBunch.where(employee_id: @employee.id, id: @goal_bunch_id.id)
+    @goal_bunches = GoalBunch.find_by(id: @goal_bunch_id.id)
     @employee_promotions = EmployeePromotion.where(employee_id: current_user.employee_id)
     @employees = Employee.where(id: @employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)
@@ -236,7 +242,7 @@ class GoalBunchesController < ApplicationController
   def appraisee_comment
     @employee = Employee.find(current_user.employee_id)
     @goal_bunch_id = GoalBunch.find(params[:id]) 
-    @goal_bunches = GoalBunch.where(employee_id: @employee.id, id: @goal_bunch_id.id)
+    @goal_bunches = GoalBunch.find_by(id: @goal_bunch_id.id)
 
     @employees = Employee.where(id: @employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)
@@ -251,7 +257,7 @@ class GoalBunchesController < ApplicationController
     @self_goal_ratings = GoalRating.where(appraisee_id: current_user.employee_id, goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal').where.not(appraisee_comment: nil)
     @self_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch_id.id ,'Attribute').where.not(appraisee_comment: nil)
 
-    @goal_bunch = GoalBunch.where(employee_id: current_user.employee_id, goal_confirm: true, id: @goal_bunch_id.id).take
+    @goal_bunch = GoalBunch.where(employee_id: current_user.employee_id, goal_approval: true, id: @goal_bunch_id.id).take
     if @goal_bunch.nil?
       @goal_ratings = []
       flash[:alert] = "Not Approved By Appraiser"
@@ -324,7 +330,7 @@ class GoalBunchesController < ApplicationController
     @period = Period.find(params[:period_id])
     @employee = Employee.find(params[:emp_id])
     @goal_bunch_id = GoalBunch.find(params[:id])
-    @goal_bunches = GoalBunch.where(employee_id: @employee.id, id: @goal_bunch_id.id)
+    @goal_bunches = GoalBunch.find_by(id: @goal_bunch_id.id)
     @employees = Employee.where(id: @employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
@@ -417,15 +423,10 @@ class GoalBunchesController < ApplicationController
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
 
     @employee_promotions = EmployeePromotion.where(employee_id: current_user.employee_id)
-    #@goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id.id)
     @goal_ratings = GoalRating.where(appraisee_id: @employee.id,goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal')
     @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch_id.id ,'Attribute')
-
-    #@goal_bunches = GoalBunch.where(employee_id: @employee.id,reviewer_confirm: true,id: @goal_bunch_id.id)
-
-    @goal_bunches = GoalBunch.where(employee_id: @employee.id,id: @goal_bunch_id.id)
-    @goal_bunch = GoalBunch.find_by_employee_id(@employee.id)
-    #@goal_bunch = GoalBunch.where(employee_id: @employee.id,id: @goal_bunch_id.id)
+    @goal_bunches = GoalBunch.find_by(id: @goal_bunch_id.id)
+    @goal_bunch = GoalBunch.find_by(id: @goal_bunch_id.id)
   end
 
   def final_create
@@ -435,7 +436,6 @@ class GoalBunchesController < ApplicationController
     @goal_bunch.update(goal_bunch_params)
     flash[:notice] = "final comment added Successfully"
     redirect_to final_comment_goal_bunches_path(emp_id: @employee.id, id:@goal_bunch.id,period_id: @period.id)
-    #redirect_to root_url
   end 
 
   def final_modal
@@ -453,19 +453,11 @@ class GoalBunchesController < ApplicationController
 
   def final_comment_confirm
     @employee = Employee.find(params[:emp_id])
-    @goal_bunch_ids = params[:goal_bunch_ids]
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @period = Period.find(params[:period_id])
-      if @goal_bunch_ids.nil?
-        flash[:alert] = "Please Select the Checkbox"
-      else
-        @goal_bunch_ids.each do |eid|
-        @goal_bunch = GoalBunch.find(eid)
-
-        @goal_bunch.update(final_confirm: true, final_id: params[:final_id])      
-        flash[:notice] = "Confirmed Successfully"
-        end
-      end
-      @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+     
+        GoalBunch.find_by(id: @goal_bunch.id).update(final_confirm: true, final_id: params[:final_id])      
+       
     redirect_to final_comment_goal_bunches_path(emp_id: @employee.id,id: @goal_bunch.id,period_id: @period.id)
   end
 
@@ -640,22 +632,12 @@ class GoalBunchesController < ApplicationController
   end
 
   def self_overall_comment_confirm
-    @goal_bunch_ids = params[:goal_bunch_ids]
-      if @goal_bunch_ids.nil?
-        flash[:alert] = "Please Select the Checkbox"
-      else
-        @goal_bunch_ids.each do |eid|
-        @goal_bunch = GoalBunch.find(eid)
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    GoalBunch.find_by(id: @goal_bunch.id).update(appraisee_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    #GoalBunchMailer.send_email_to_appraiser(@goal_bunch).deliver_now
+    @employee = Employee.find(params[:emp_id])
 
-        @goal_bunch.update(appraisee_confirm: true)      
-        flash[:notice] = "Confirmed Successfully"
-      end
-        GoalBunchMailer.send_email_to_appraiser(@goal_bunch).deliver_now
-        flash[:notice] = "Self Evaluation Confirmed Email Sent Successfully"
-        
-      end
-      @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
-      @employee = Employee.find(params[:emp_id])
     redirect_to appraisee_comment_goal_bunches_path(emp_id: @employee.id,id: @goal_bunch.id)
   end
 
@@ -680,26 +662,17 @@ class GoalBunchesController < ApplicationController
 
   def appraiser_overall_comment_confirm
     @employee = Employee.find(params[:emp_id])
-    @goal_bunch_ids = params[:goal_bunch_ids]
     @period = Period.find(params[:period_id])
-      if @goal_bunch_ids.nil?
-        flash[:alert] = "Please Select the Checkbox"
-      else
-        @goal_bunch_ids.each do |eid|
-        @goal_bunch = GoalBunch.find(eid)
-
-        @goal_bunch.update(appraiser_confirm: true)      
-        flash[:notice] = "Confirmed Successfully"
-        end
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+      GoalBunch.find_by(id: @goal_bunch.id).update(appraiser_confirm: true)      
+      flash[:notice] = "Confirmed Successfully"
           if @employee.manager_2_id == nil
             flash[:notice] = "No Reviewer Available"
           else
-            GoalBunchMailer.send_email_to_reviewer(@goal_bunch).deliver_now
+            #GoalBunchMailer.send_email_to_reviewer(@goal_bunch).deliver_now
             flash[:notice] = "Appraiser Evaluation Confirmed Email Sent Successfully"
           end
-      end
-      @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
-    redirect_to appraiser_comment_goal_bunches_path(emp_id: @employee.id,goal_id: @goal_bunch_id.id,period_id: @period.id)
+    redirect_to appraiser_comment_goal_bunches_path(emp_id: @employee.id,goal_id: @goal_bunch.id,period_id: @period.id)
   end
 
   def modal_reviewer_overall
@@ -725,19 +698,12 @@ class GoalBunchesController < ApplicationController
 
   def reviewer_overall_comment_confirm
     @employee = Employee.find(params[:emp_id])
-    @goal_bunch_ids = params[:goal_bunch_ids]
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @period = Period.find(params[:period_id])
-      if @goal_bunch_ids.nil?
-        flash[:alert] = "Please Select the Checkbox"
-      else
-        @goal_bunch_ids.each do |eid|
-        @goal_bunch = GoalBunch.find(eid)
-
-        @goal_bunch.update(reviewer_confirm: true)      
-        flash[:notice] = "Confirmed Successfully"
-        end
-      end
-      @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+      
+    GoalBunch.find_by(id: @goal_bunch.id).update(reviewer_confirm: true)      
+    flash[:notice] = "Confirmed Successfully"
+        
     redirect_to reviewer_comment_goal_bunches_path(emp_id: @employee.id,id: @goal_bunch.id,period_id: @period.id)
   end
 
@@ -810,8 +776,7 @@ class GoalBunchesController < ApplicationController
   def period_list_appraisee
     @employee = Employee.find(current_user.employee_id)
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
-    session[:active_tab] ="performancemgmt"
-    session[:active_tab1] ="perform_cycle"
+    session[:active_tab] ="EmployeeSelfService"
   end
 
   def period_list_print
@@ -949,6 +914,6 @@ class GoalBunchesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_bunch_params
-      params.require(:goal_bunch).permit(:appraisee_rating_id,:f_promotion,:f_increment,:f_designation_id,:f_ctc,:goal_confirm,:period_id, :employee_id, :appraisee_id, :appraisee_comment, :appraisee_confirm, :appraiser_id, :appraiser_rating, :appraiser_comment, :appraiser_confirm, :reviewer_id, :review_comment, :reviewer_rating_id, :reviewer_confirm, :final_id, :final_comment, :final_rating_id, :final_confirm)
+      params.require(:goal_bunch).permit(:goal_approval,:appraisee_rating_id,:f_promotion,:f_increment,:f_designation_id,:f_ctc,:goal_confirm,:period_id, :employee_id, :appraisee_id, :appraisee_comment, :appraisee_confirm, :appraiser_id, :appraiser_rating, :appraiser_comment, :appraiser_confirm, :reviewer_id, :review_comment, :reviewer_rating_id, :reviewer_confirm, :final_id, :final_comment, :final_rating_id, :final_confirm)
     end
 end

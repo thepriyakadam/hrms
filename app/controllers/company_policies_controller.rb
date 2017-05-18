@@ -25,6 +25,7 @@ class CompanyPoliciesController < ApplicationController
      @company_policies = CompanyPolicy.all
       if @company_policy.save
         @company_policy = CompanyPolicy.new
+      else
       end
       flash[:notice] = 'Company Policy saved Successfully.' 
       redirect_to new_company_policy_path
@@ -42,7 +43,7 @@ class CompanyPoliciesController < ApplicationController
     @company_policy.update(company_policy_params)
     @company_policies = CompanyPolicy.all
     @company_policy = CompanyPolicy.new
-    redirect_to company_policies_path
+    redirect_to new_company_policy_path
     flash[:notice] = 'Company Policy Updated Successfully' 
   end
 

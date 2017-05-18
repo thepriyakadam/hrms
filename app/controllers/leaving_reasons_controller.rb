@@ -16,8 +16,8 @@ class LeavingReasonsController < ApplicationController
   def new
     @leaving_reason = LeavingReason.new
     @leaving_reasons = LeavingReason.all
-    session[:active_tab] = "GlobalSetup"
-    session[:active_tab1] = "Resignation"
+    session[:active_tab] ="GlobalSetup"
+    session[:active_tab1] ="Resignation"
   end
 
   # GET /leaving_reasons/1/edit

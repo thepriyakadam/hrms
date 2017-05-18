@@ -1,0 +1,54 @@
+ <%= bootstrap_form_for :workingdays,url:{action:'revert_workingday', from: @from.to_date , to: @to.to_date} do |f| %> 
+<table id="example6" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+      <th>ID</th>
+      <th>Employee Name</th>
+      <th>Present Day</th>
+      <th>Payable Day</th>
+      <th>Month</th>
+      <th>Year</th>
+      <th>Location</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @workingdays.each do |w| %>
+      <tr>
+        <td><%= check_box_tag "workingday_ids[]", w.id %></td>
+        <td><%= w.employee.try(:manual_employee_code) %></td>
+        <td><%= full_name(w.employee) %></td>
+        <td><%= w.present_day %></td>
+        <td><%= w.payable_day %></td>
+        <td><%= w.month_name %></td>
+        <td><%= w.year %></td>
+        <td><%= w.employee.company_location.try(:name) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= f.submit "Revert Workingday" , class: 'btn btn-primary btn-sm' %>
+<% end %>
+
+<script type="text/javascript">
+$('#selectAll').click(function() {
+  if (this.checked) {
+    $(':checkbox').each(function() {
+      this.checked = true;                       
+    });
+  } 
+  else {
+    $(':checkbox').each(function() {
+      this.checked = false;                        
+    });
+  } 
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

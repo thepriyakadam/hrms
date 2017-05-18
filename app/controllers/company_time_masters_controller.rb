@@ -31,6 +31,8 @@ class CompanyTimeMastersController < ApplicationController
     @company_time_masters = CompanyTimeMaster.all
     respond_to do |format|
       if @company_time_master.save
+        time_diff=Time.at((@company_time_master.out_time-@company_time_master.in_time).round).utc.strftime "%H:%M"
+        CompanyTimeMaster.where(id: @company_time_master.id).update_all(working_hrs: time_diff)
          @company_time_master = CompanyTimeMaster.new
         format.js { @flag = true }
       else
@@ -61,6 +63,8 @@ class CompanyTimeMastersController < ApplicationController
    def update
     # byebug
     @company_time_master.update(company_time_master_params)
+    time_diff=Time.at((@company_time_master.out_time-@company_time_master.in_time).round).utc.strftime "%H:%M"
+    CompanyTimeMaster.where(id: @company_time_master.id).update_all(working_hrs: time_diff)
     @company_time_masters = CompanyTimeMaster.all
     @company_time_master = CompanyTimeMaster.new
   end
@@ -89,6 +93,6 @@ class CompanyTimeMastersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_time_master_params
-      params.require(:company_time_master).permit(:in_min_time, :rest_time,:in_max_time, :shift_master_id, :in_time, :out_time, :out_min_time, :out_max_time, :working_hrs, :is_active, :is_confirm)
+      params.require(:company_time_master).permit(:in_min_time, :rest_time,:in_max_time, :time_adjust, :shift_master_id, :in_time, :out_time, :out_min_time, :out_max_time, :working_hrs, :is_active, :is_confirm)
     end
 end

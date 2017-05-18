@@ -1,0 +1,52 @@
+
+<div class="box-body">
+
+<!-- < if @expence_date == nil %>
+     <center><strong><p class="text-primary"> Selected Date Expence Report Not Available </strong></p></center>
+   < else %> -->
+
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+ <tr>
+ <td colspan="11"><center><strong>
+ <%= Company.find(@company).description unless @company.nil? or @company.blank? %></strong><br> <%= Company.find(@company).address unless @company.nil? or @company.blank? %> <br><%=Department.find(@department).name unless @department.nil? or @department.blank? %> - <%= CompanyLocation.find(@company_location).name unless @company_location.nil? or @company_location.blank? %></center>
+ </td></tr>
+ <tr><th colspan="11"><center> Expence Report</center></th></tr>
+    <tr>
+      <th>Request ID</th>
+      <th>Travel Date</th>
+      <th>Employee ID</th>
+      <th>Employee Name</th>
+       <th>Expense Date</th>
+       <th>Place</th>
+       <th>Expense Type</th>
+       <th>Expense Amount</th>
+       <th>Remark</th>
+       <th>Request Status</th>
+       <th>Confirm</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @daily_bill_details.each do |daily_bill_detail| %>
+      <tr>
+        <td><%= daily_bill_detail.travel_request_id %></td>
+        <td><%= daily_bill_detail.travel_request.traveling_date %> - To - <%= daily_bill_detail.travel_request.to %></td>
+        <td><%= daily_bill_detail.travel_request.employee.try(:manual_employee_code) %></td>
+        <td><%= daily_bill_detail.travel_request.employee.try(:first_name) %> <%= daily_bill_detail.travel_request.employee.try(:middle_name) %> <%= daily_bill_detail.travel_request.employee.try(:last_name) %></td>
+        <td><%= daily_bill_detail.expence_date%></td>
+        <td><%= daily_bill_detail.e_place %></td>
+        <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
+        <td><%= daily_bill_detail.travel_expence %></td>
+        <td><%= daily_bill_detail.remarks %></td>
+        <td><%= daily_bill_detail.request_status %></td>
+        <td><%= daily_bill_detail.is_confirm ? "Yes" : "No" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<%= link_to " Excel Report ",print_expence_date_report_daily_bill_details_path(from_date: params[:salary][:from_date],to_date: params[:salary][:to_date], company_id: params[:employee][:company_id], company_location_id: params[:employee][:company_location_id],department_id: params[:employee][:department_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+ 
+<%= link_to " Print Report ",print_expence_date_report_daily_bill_details_path(from_date: params[:salary][:from_date],to_date: params[:salary][:to_date], company_id: params[:employee][:company_id], company_location_id: params[:employee][:company_location_id],department_id: params[:employee][:department_id],format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+</div>

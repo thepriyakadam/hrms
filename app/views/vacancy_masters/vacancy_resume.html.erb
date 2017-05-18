@@ -6,14 +6,17 @@
   <div class="box-body">
     <div class="row">
       <div class="col-sm-12">
-        <table id="example" class="table table-bordered table-hover table-condensed">
+        <table id="example3" class="table table-bordered table-hover table-condensed">
           <thead>
             <tr>
               <th>Vacancy Code</th>
               <th>Job Title</th>
-              <th>No. of Position</th>
+              <th>Total Position</th>
+              <th>Open Position</th>
+              <th>Closed Position</th>
               <th>Department</th>
               <th>Experience</th>
+              <th>Vacancy Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -21,13 +24,29 @@
           <tbody>
             <% @vacancy_masters.each do |vacancy_master| %>
               <tr>
-                <td><%= vacancy_master.id %></td>
+                <td><%= vacancy_master.vacancy_code %></td>
                 <td><%= vacancy_master.vacancy_name %></td>
                  <td><%= vacancy_master.no_of_position %></td>
+                  <% particular_vacancy_open = ParticularVacancyRequest.where(vacancy_master_id: vacancy_master,is_complete: nil).count
+                  particular_vacancy_closed = ParticularVacancyRequest.where(vacancy_master_id: vacancy_master,is_complete: true).count %>
+                  <td><%= particular_vacancy_open %></td>
+                  <td><%= particular_vacancy_closed %></td>
                 <td><%= vacancy_master.company_location.try(:name) %> - <%= vacancy_master.department.try(:name) %></td>
                 <td><%= vacancy_master.experience %></td>
                 <td>
-                  <%= link_to 'Add Resume & Shortlist',new_selected_resume_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-primary' %>
+                    <% if vacancy_master.is_confirmed == true %>
+                    <small class="label label-primary">Position Closed</small>
+                    <% else %>
+                    <small class="label label-default">Position Vacant</small>
+                    <% end %>
+                </td>
+                <td>
+                  <%= link_to '', vacancy_master,class: 'btn btn-xs btn-default fa fa-eye' %>
+                  <% if vacancy_master.is_confirmed == true %>
+                  <%= link_to 'View Resume',new_selected_resume_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-info' %>
+                  <% else %>
+                  <%= link_to 'Add Resume',new_selected_resume_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-primary' %>
+                  <% end %>
                 </td>
               </tr>
             <% end %>
@@ -37,8 +56,10 @@
     </div>
   </div>
 </div>
-<script>
-$(document).ready(function() {
-    $('#example').DataTable();
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example3').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
 } );
 </script>

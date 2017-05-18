@@ -1,10 +1,11 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Travel Request</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
-
+    <tr>
+      <td colspan="4"><center>Travel Request Detail</center></td>
+    </tr>
     <tr>
       <th><strong>Traveling Request ID</strong></th>
       <td><%= @travel_request.id %></td>
@@ -26,7 +27,8 @@
       <td><%= @travel_request.employee.company_location.try(:name) %> - <%= @travel_request.employee.department.try(:name) %></td>
 
       <th><strong>Request To</strong></th>
-      <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td>
+     <td><% emp=Employee.where(id: @travel_request.reporting_master_id).take %>
+      <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %> </td>
     </tr>
 
     <tr>
@@ -57,14 +59,68 @@
       <tr>
       <th><strong>Advance</strong></th>
       <td><%= @travel_request.total_advance %></td>
-  
+
+      <th><strong>Current Status</strong></th>
+      <td><%= @travel_request.current_status %></td>
+    </tr>
+
+    <tr>
       <th><strong>Tour Purpose</strong></th>
-      <td><%= @travel_request.tour_purpose %></td>
+      <td colspan="3"><%= @travel_request.tour_purpose %></td>
       
     </tr>
 
-  </table>
-    <%= link_to 'Edit', edit_travel_request_path(@travel_request),class: 'btn btn-success btn-sm fa fa-edit' %> |
+  </table><br>
+
+  <table  class="table table-bordered table-hover table-condensed'">
+      <thead>
+    <tr>
+      <td colspan="5"><center>Travel Request Process</center></td>
+    </tr>
+        <tr>
+        <th>Sr.No</th>
+        <th>Employee ID</th>
+        <th>Employee Name</th>
+        <th>Travel Request Status</th>
+        <th>Expence Claim Status</th>
+       </tr>
+      </thead>
+
+      <tbody>
+        <% i = 0 %>
+        <% @reporting_masters_travel_requests.each do |a| %>
+          <tr>
+            <td><%= i=i+1 %></td>
+            <% b=a.reporting_master_id
+                emp=Employee.where(id: b).take %>
+            <td><%= emp.try(:manual_employee_code)%></td>
+            <td><%= emp.try(:first_name)%> <%= emp.try(:middle_name)%> <%= emp.try(:last_name)%></td>
+            <td><%= a.travel_status %></td>
+            <td>
+               <% if a.travel_status == "Pending" %>
+               <small class="label label-default">Pending</small>
+               <% elsif a.travel_status == "FirstApproved" %>
+               <small class="label label-primary">FirstApproved</small>
+               <% elsif a.travel_status == "SecondApproved" %>
+               <small class="label label-primary">SecondApproved</small>
+               <% elsif a.travel_status == "FinalApproved" %>
+               <small class="label label-primary">FinalApproved</small>
+               <% elsif a.travel_status == "Rejected" %>
+               <small class="label label-primary">Rejected</small>
+               <% elsif a.travel_status == "Approved & Send Next" %>
+               <small class="label label-primary">Approved & Send Next</small>
+               <% else %>
+               <% end %>
+          </td>
+          </tr>
+          <tr>
+          <td></td>
+          <td colspan="4"><strong>Comment : </strong><%= a.daily_bill_comment %></td>
+          </tr>
+        <% end %>
+      </tbody>
+</table><br>
+    <!-- <= link_to 'Edit', edit_travel_request_path(@travel_request),class: 'btn btn-success btn-sm fa fa-edit' %> | -->
     <%= link_to 'Back', travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>
     </div>
   </div>

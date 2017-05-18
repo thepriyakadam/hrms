@@ -53,6 +53,6 @@ class BloodGroupsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def blood_group_params
-    params.require(:blood_group).permit(:is_confirm,:name)
+    params.require(:blood_group).permit(:name, :is_confirm)
   end
 end

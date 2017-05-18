@@ -1,9 +1,9 @@
-try(:<div )class="ajax-progress"></div>
+<div class="ajax-progress"></div>
 <% i = 0 %>
-<table style="border-collapse: collapse; font-size:30pt;" border=1 width=1000 cellpadding="15">
+<table style="border-collapse: collapse; font-size:15pt;" border=1 width=1000 cellpadding="15">
   <thead>
     <tr>
-      <th colspan="26">
+      <th colspan="27">
        <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
         <center><small></small></center>
         <center><small>Employee Monthly Salary For The Year <%= @start_date.strftime("%B") %>  <%= @start_date.strftime("%Y") %> - <%= @end_date.strftime("%B") %> <%= @end_date.strftime("%Y") %> </small></center>   
@@ -12,7 +12,7 @@ try(:<div )class="ajax-progress"></div>
     <tr>
       <th colspan="6" align="left"> Employee ID: <%= @reports.first.try(:code) %> </th>
       <th colspan="14" align="left">Employee Name: <%= @reports.first.try(:employee_name) %> </th>
-      <th colspan="6" align="left">Designation: </th>
+      <th colspan="7" align="left">Designation: </th>
     </tr>
      <tr>
       <th>Sr.No</th>
@@ -30,6 +30,7 @@ try(:<div )class="ajax-progress"></div>
       <th>Medi Allow</th>
       <th>Child Edu Allow</th>
       <th>MRA</th>
+      <th>MA</th>
       <th>Gross</th>
 
       <th>PF</th>
@@ -65,6 +66,7 @@ try(:<div )class="ajax-progress"></div>
         <td><%= r.try(:earned_medical).try(:round) %></td>
         <td><%= r.try(:earned_child_edu).try(:round) %></td>
         <td><%= r.try(:earned_mra).try(:round) %></td>
+        <td><%= r.try(:earned_monthly_arrear).try(:round) %></td>
         <td><%= r.try(:earned_total).try(:round) %></td>
 
         <td><%= r.try(:pf) %></td>
@@ -96,6 +98,7 @@ try(:<div )class="ajax-progress"></div>
       <td><%= @sum.earned_medical.try(:round) %></td>
       <td><%= @sum.earned_child_edu.try(:round) %></td>
       <td><%= @sum.earned_mra.try(:round) %></td>
+      <td><%= @sum.earned_monthly_arrear.try(:round) %></td>
       <th><%= @sum.earned_total.try(:round) %></th>
 
       <th><%= @sum.pf %></th>

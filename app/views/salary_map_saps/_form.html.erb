@@ -1,23 +1,37 @@
-<%= bootstrap_form_for(@salary_map_sap,html: {id: 'salary_map_sap'},remote:true) do |f| %>
+<%= bootstrap_form_for(@salary_map_sap,html: {id: 'salary_map_sap'}) do |f| %>
   <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-2">
       <div class="form-group required">
         <%= f.select :salary_component_id,all_salary_component,{hide_label: true,include_blank: " Select Salary Component"} %>
        
       </div>
     </div>
 
-    <div class="col-sm-3">
+    <div class="col-sm-2">
       <div class="form-group required">
         <%= f.text_field :account_code,hide_label:true, placeholder: 'Account Code ' %>
       </div>
     </div>
 
-    <div class="col-sm-3">
+    <div class="col-sm-2">
       <div class="form-group required">
         <%= f.select :is_debit, [["Debit",true],["Credit",false]],hide_label:true,include_blank: "Select Account Type"  %>
       </div>
     </div>
+
+    <div class="col-sm-2">
+            <div class="form-group required">
+              <%=f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form : 'food_deduction'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
+            </div>
+          </div>
+
+    <div class="col-sm-2">
+      <div class="form-group required">
+        <div id="company_location">
+          <%= render 'employees/company_location_dropdown' %> 
+      </div>
+      </div>
+      </div>
     </div>
 
     <div class="row">
@@ -27,4 +41,4 @@
       </div>
     </div>
   </div>
-<% end %>
+<% end %><br>

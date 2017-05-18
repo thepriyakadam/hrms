@@ -19,7 +19,7 @@
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
                 </div>
-                <%= text_field :salary,:day,hide_label: true,class: 'day_date form-control'%>
+                  <%= text_field :salary,:day,hide_label: true,class: 'day_date form-control'%>
               </div>
             </div>
           </div>
@@ -50,17 +50,11 @@
 
      $("#salary").validate({
     rules: {
-      // "salary[department_id]":{
-      //   required: true
-      // },
       "salary[day]":{
         required: true
       }
     },
     messages: {
-      // "salary[department_id]":{
-      //   required: "Please Select Department"
-      // },
       "salary[day]":{
         required: "Please specify Date"
       }

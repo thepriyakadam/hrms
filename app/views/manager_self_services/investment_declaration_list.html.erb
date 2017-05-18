@@ -1,0 +1,51 @@
+<div class="box">
+  <div class="box-header">
+  <h6 class="box-title">Investment Declaration List</h6>  
+  </div>
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <% i = 0%>
+      <thead>
+        <tr>
+          <td colspan="2">ID : <%= @emp.manual_employee_code %></td>
+          <td colspan="2">Employee : <%= full_name(@emp) %></td>
+          <td colspan="2">Department : <%= @emp.company_location.try(:name) %> - <%= @emp.department.try(:name) %></td>
+        </tr>
+        <tr>
+          <th>Sr No</th>
+          <th>Investment Head</th>
+          <th>Amount</th>
+          <th>Date</th>
+          <th>Document</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @investment_declarations.each do |investment_declaration| %>
+          <tr>
+            <td><%= i = i + 1 %></td>
+            <td><%= investment_declaration.investment_head.try(:description) %></td>
+            <td><%= investment_declaration.amount %></td>
+            <td><%= investment_declaration.date %></td>
+            <td>
+              <% if investment_declaration.document_file_name == nil %>
+                <small class="label label-default">Document Not Available</small>
+              <% else %>
+                <%= link_to ' Document',investment_document2_path(id: investment_declaration.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to 'Approve', approve_declaration_modal_investment_declarations_path(investment_declaration),class: 'btn btn-xs btn-info',remote: true %>
+              <%= link_to 'Reject', reject_declaration_modal_investment_declarations_path(investment_declaration),class: 'btn btn-xs btn-danger',remote: true %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <br>
+    <%= link_to 'Back', investment_declaration_manager_self_services_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+
+  </div>
+</div>
+<div id="myModal" class="modal fade"></div>
+<div id="myModal1" class="modal fade"></div>

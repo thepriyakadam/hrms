@@ -1,7 +1,7 @@
 <div class="box">
   <div class="box-header with-border">
     <div class="pull-right"></div>
-    <h3>Vacancy Request List</h3><br>
+    <h3>Vacancy Status List</h3><br>
     
   </div><!-- /.box-header -->
   <div class="box-body">
@@ -11,14 +11,14 @@
           <thead>
             <tr>
               <th>Sr.No</th>
-              <th>Vacancy ID</th>
+              <th>Vacancy Code</th>
               <th>Job Title</th>
               <th>Open Date</th>
               <th>Closed Date</th>
               <th>Fulfillment Date</th>
               <th>Candidate Name</th>
-              <th>Vacancy Request Status</th>
-              <th>Action</th>
+<!--               <th>Vacancy Request Status</th>
+ -->              <!-- <th>Action</th> -->
             </tr>
           </thead>
 
@@ -27,46 +27,37 @@
             <% @particular_vacancy_requests.each do |particular_vacancy_request| %>
               <tr>
                 <td><%= i=i+1 %></td>
-                <td><%= particular_vacancy_request.vacancy_master_id %></td>
+                <td><%= particular_vacancy_request.vacancy_master.try(:vacancy_code) %></td>
                 <td><%= particular_vacancy_request.vacancy_name %></td>
                 <td><%= particular_vacancy_request.open_date %></td>
                 <td><%= particular_vacancy_request.closed_date %></td>
                 <td><%= particular_vacancy_request.fulfillment_date %></td>
                 <td><%= particular_vacancy_request.candidate_name %></td>
-                <td>
-                  <% if particular_vacancy_request.status == "Pending" %>
-                    <small class="label label-default">Pending</small>
-                   <% elsif particular_vacancy_request.status == "Approved" %>
-                    <small class="label label-primary">Approved</small>
-                    <% elsif particular_vacancy_request.status == "Edit And Approved" %>
-                    <small class="label label-primary">Approved</small>
-                   <% elsif particular_vacancy_request.status == "Reject" %>
-                    <small class="label label-danger">Reject</small>
-                    <% elsif particular_vacancy_request.status == "Approved & Send Next" %>
-                    <small class="label label-info">Approved & Send Next</small>
-                    <% elsif particular_vacancy_request.status == "Cancelled" %>
-                    <small class="label label-warning">Cancelled</small>
-                    <% else %>
-                     <small class="label label-success">Revert</small>
-                   <% end %>
-                </td>
-                <td>
-                <% if particular_vacancy_request.status == 'Approved' %>
-                  <% if particular_vacancy_request.is_complete == true %>
-                  <small class="label label-default">Vacancy Completed</small>
-                  <% else %>
-                  <div id="myModal2" class="modal fade"></div>
-                  <%= link_to ' Confirm Candidates',modal2_vacancy_masters_path(particular_vacancy_request),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>
-                  <!-- link_to ' Close',is_closed_vacancy_masters_path(particular_vacancy_request),class: 'btn btn-xs btn-danger' %>-->
-                  <% end %>
-              <% end %>
-               </td>
+<!--                 <td><= particular_vacancy_request.status %></td>
+ -->          <!--  <td>
+                  < if particular_vacancy_request.status == 'FinalApproved' %>
+                    < if particular_vacancy_request.is_complete == true %>
+                    <small class="label label-default">Vacancy Completed</small>
+                   < else %>
+                    <div id="myModal2" class="modal fade"></div>
+                    <= link_to ' Confirm Candidates',modal2_vacancy_masters_path(particular_vacancy_request),class: 'btn btn btn-sm btn-primary fa fa-modx',remote: true %>
+                    <= link_to ' Close',is_closed_vacancy_masters_path(particular_vacancy_request),class: 'btn btn-xs btn-danger' %>
+                  < end %>
+                < end %>
+               </td> -->
               </tr>
             <% end %>
           </tbody>
         </table>
+        <%= link_to 'Back', approved_vacancy_request_history_list_vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
       </div>
    </div>
   </div>
 
-<%= link_to 'Back', approved_vacancy_request_history_list_vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

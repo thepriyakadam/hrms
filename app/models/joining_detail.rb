@@ -10,6 +10,7 @@ class JoiningDetail < ActiveRecord::Base
   belongs_to :reserved_category
 
   validates :employee_id, presence: true, uniqueness: { case_sensitive: false }
+  belongs_to :replacement, class_name: 'Employee'
   # validates :joining_date, presence: true
   # validates :employee_designation_id, presence: true
   # validate :medical_scheme_regex

@@ -8,10 +8,9 @@
       <div class="col-sm-6">
         <table id="example6" class="table table-bordered table-hover table-condensed">
           <thead>
-           <tr><td colspan="6"><center>First Level Request</center></td></tr>
+           <tr><td colspan="5"><center>First Level Request</center></td></tr>
             <tr>
               <th>ID</th>
-              <th>Leave ID</th>
               <th>Employee Name</th>
               <th>Category</th>
               <th>Day</th>
@@ -23,8 +22,7 @@
             <% @first_level_request_lists.try(:each) do |fl| %>
               <tr>
                 <td><%= fl.employee.try(:manual_employee_code) %></td>
-                <td><%= fl.id %></td>
-                <td><%= fl.employee.try(:first_name) %> <%= fl.employee.try(:middle_name) %> <%=fl.employee.try(:last_name) %></td>
+                <td><%= full_name(fl.employee) %></td>
                 <td><%= fl.leav_category.try(:name) %></td>
                 <td><%= fl.leave_count %></td>
                 <td>
@@ -39,10 +37,9 @@
        <div class="col-sm-6">
         <table id="example7" class="table table-bordered table-hover table-condensed">
           <thead>
-          <tr><td colspan="6"><center>Second Level Request</center></td></tr>
+          <tr><td colspan="5"><center>Second Level Request</center></td></tr>
             <tr>
               <th>ID</th>
-              <th>Leave ID</th>
               <th>Employee Name</th>
               <th>Category</th>
               <th>Day</th>
@@ -54,8 +51,7 @@
             <% @second_level_request_lists.try(:each) do |sl| %>
               <tr>
                 <td><%= sl.employee.try(:manual_employee_code) %></td>
-                <td><%= sl.id %></td>
-                <td><%= sl.employee.try(:first_name) %> <%= sl.employee.try(:middle_name) %> <%=sl.employee.try(:last_name) %></td>
+                <td><%= full_name(sl.employee) %></td>
                 <td><%= sl.leav_category.try(:name) %></td>
                 <td><%= sl.leave_count %></td>
                 <td>

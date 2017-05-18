@@ -1,0 +1,7 @@
+<% @employee_leav_requests_1 = EmployeeLeavRequest.where.not(first_reporter_id: nil).where(current_status: "Pending").group(:first_reporter_id) %>
+<!-- Dear, <= @employee_leav_requests_1.employee.try(:prefix) %> <= @employee_leav_requests_1.employee.try(:first_name) %> -->
+<% i=0 %>
+<% @employee_leav_requests_1.each do |el| %>
+Dear, <%= el.first_reporter.employee.try(:prefix) %> <%= el.first_reporter.employee.try(:first_name) %><br> you have leave request Pending from following employees:-
+<%= i=i+1 %>  Name : <%= el.employee.try(:prefix) %> <%= el.employee.try(:first_name) %> <%= el.employee.try(:middle_name) %> <%= el.employee.try(:st_name) %> - Department : <%= el.employee.department.try(:name) %> - Contact No : <%= el.employee.try(:contact_no) %> <br><br>
+<% end %><br>

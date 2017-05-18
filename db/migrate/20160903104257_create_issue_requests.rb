@@ -9,8 +9,13 @@ class CreateIssueRequests < ActiveRecord::Migration
       t.time :time
       t.references :employee, index: true, foreign_key: true
       t.string :issue_priority
-      t.references :status, index: true, foreign_key: true
-      t.references :is_confirm, index: true, foreign_key: true
+      t.boolean :status
+      t.boolean :is_confirm
+      t.references :issue_root_cause, index: true, foreign_key: true
+      t.string :effort_time
+      t.string :comment
+
+     t.boolean :is_complete
 
       t.timestamps null: false
     end

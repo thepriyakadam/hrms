@@ -1,34 +1,39 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">PF Employer</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
 
-<p>
-  <strong>Base component:</strong>
-  <%= @pf_employer.base_component %>
-</p>
+  <tr>
+  <th><strong>Base Component</strong></th>
+   <td colspan="3"> <% i = 0 %>
+          <% @pf_employer.base_component.split(",").each do |e| %>
+            <% if i == 0 %>
+              <%= SalaryComponent.find(e.to_i).name %>
+            <% else %>
+              + <%= SalaryComponent.find(e.to_i).name %>
+            <% end %>
+            <% i = i + 1 %>
+          <% end %>
+      </td>
+  
+</tr>
+<tr>
+  <th><strong>Percentage</strong></th>
+   <td><%= @pf_employer.percentage %></td>
 
-<p>
-  <strong>Percentage:</strong>
-  <%= @pf_employer.percentage %>
-</p>
+    <th><strong>Status</strong></th>
+   <td><%= @pf_employer.is_active ? "Active" : "Inactive" %></td>
+</tr>
 
-<p>
-  <strong>Effective from:</strong>
-  <%= @pf_employer.effective_from %>
-</p>
+<tr>
+  <th><strong>From Date</strong></th>
+  <td><%= @pf_employer.effective_from %></td>
 
-<p>
-  <strong>Effective to:</strong>
-  <%= @pf_employer.effective_to %>
-</p>
+  <th><strong>To Date</strong></th>
+  <td><%= @pf_employer.effective_to %></td>
 
-<p>
-  <strong>Is active:</strong>
-  <%= @pf_employer.is_active %>
-</p>
-
-<p>
-  <strong>Is confirm:</strong>
-  <%= @pf_employer.is_confirm %>
-</p>
-
-<%= link_to 'Edit', edit_pf_employer_path(@pf_employer) %> |
-<%= link_to 'Back', pf_employers_path %>
+</tr>
+</table><br>
+ <%= link_to 'Back', new_pf_employer_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>

@@ -11,9 +11,9 @@ class EmployeeDocumentsController < ApplicationController
   # GET /employee_documents/1.json
 
   
-  # def show
-  #   @employee = @employee_document.employee
-  # end
+  def show
+    @employee = @employee_document.employee
+  end
 
   # GET /employee_documents/new
   def new

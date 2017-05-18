@@ -11,6 +11,8 @@ class CompanyLocation < ActiveRecord::Base
   has_many :vacancy_request_histories
   has_many :travel_request_histories
   has_many :employee_transfers
+  has_many :professional_tax_masters
+  has_many :salary_map_saps
 
   validates :manual_company_location_code, presence: true, uniqueness: { case_sensitive: false }
   validates :country_id, presence: true

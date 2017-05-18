@@ -3,7 +3,7 @@
     <h3 class="box-title">Leave Request Report</h3>
   </div><!-- /.box-header -->
  <div class="box-body">
- <%= bootstrap_form_for(:employee_leav_request, url: { action: 'request_report'},html: {id: 'employee_leav_request'},remote:true) do |f| %>
+ <%= bootstrap_form_for(:employee, url: { action: 'request_report'},html: {id: 'employee'},remote:true) do |f| %>
  		<div class="row">
  			<div class="col-sm-3">
         <div class="form-group required">
@@ -11,7 +11,7 @@
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :start_date, label: 'From Date', class: 'request_from_date'%>
+            <%= f.text_field :start_date,placeholder: "From Date", class: 'request_from_date'%>
           </div>
         </div>
       </div>
@@ -21,25 +21,42 @@
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :end_date, label: 'To Date', class: 'request_from_date' %>
+            <%= f.text_field :end_date,placeholder: 'To Date', class: 'request_from_date' %>
           </div>
         </div>
       </div>
+
       <div class="col-sm-2">
-        <div class="form-group required">
-          <%= f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form : 'food_deduction'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
+        <div class="field">
+          <div class="input-group">
+            <%= f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
+          </div>
         </div>
       </div>
+     
       <div class="col-sm-2">
-        <div class="form-group required">
-          <div id="company_location1">
-            <%= render 'employees/company_loc_dropdown' %> 
-        </div>
+        <div class="field">
+          <div id="company_location_with_label">
+            <%= render 'employees/company_location_dropdown_with_label' %> 
+        </div> 
         </div>
       </div>
-     	<div class="col-sm-2">
+
+      <div class="col-sm-2">
+        <div class="field">
+          <div class="input-group">
+            <div id="department">
+              <%= render 'employees/department_dropdown' %> 
+            </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      
+     	<div class="col-sm-2" style="padding-top:20px;">
        	<div class="actions">
-          <%= f.submit "Display Report", class: "btn btn-sm btn-primary" %>
+          <%= f.submit "Display Report", class: "btn btn-sm btn-primary",id: "buttonCtc"  %>
         </div>
       </div>
     </div><br>
@@ -50,6 +67,11 @@
 </div><!-- /.box -->
         
 <script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#employee_attendance").submit();
+  })
+  
   $(function(){
     $('.request_from_date').datepicker({
     changeYear:true,
@@ -58,20 +80,20 @@
     dateFormat: 'dd-mm-yy' });
   }); 
 
-  $("#employee_leav_request").validate({
+  $("#employee").validate({
     rules: {
-      "employee_leav_request[start_date]":{
+      "employee[start_date]":{
         required: true
       },
-      "employee_leav_request[end_date]":{
+      "employee[end_date]":{
         required: true
       }
     },
     messages: {
-      "employee_leav_request[start_date]":{
+      "employee[start_date]":{
         required: "Please specify date range."
       },
-      "employee_leav_request[end_date]":{
+      "employee[end_date]":{
         required: "Please specify date range."
       }
     },

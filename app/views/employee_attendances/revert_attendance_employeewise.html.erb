@@ -22,7 +22,7 @@
         </div>
         <div class="col-sm-3">
           <div class="actions">
-            <%= f.submit "Employees For Revert Attendance" ,class: 'btn btn-primary btn-sm' %>
+            <%= f.submit "Employees For Revert Attendance" ,class: 'btn btn-primary btn-sm',id: "buttonCtc" %>
           </div>
         </div>
       </div><br>
@@ -30,3 +30,12 @@
     <div id="all_employee_list"></div>
   </div>
 </div>
+
+
+<script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#employee_attendance").submit();
+    $('.ajax-progress').hide();
+  })
+</script>

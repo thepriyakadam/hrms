@@ -5,7 +5,7 @@
     <tr>
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
       <th>Employee No</th>
-      <th>Employee ID </th>
+      <th>ID </th>
       <th>Month</th>
       <th>Year</th>
       <th>Employee Name</th>
@@ -17,6 +17,7 @@
       <th>Absent Day</th>
       <th>Present Day</th>
       <th>Payable Day</th>
+      <!-- <th>Non Payable Day</th> -->
     </tr>
   </thead>
 
@@ -25,9 +26,9 @@
       <tr>
         <td><%= check_box_tag "ids[]", workingday.employee_id %></td>
         <td><%= workingday.employee.try(:manual_employee_code) %></td>
-         <td><%= workingday.employee.id %></td>
-          <td><%= workingday.month_name %></td>
-           <td><%= workingday.year%></td>
+        <td><%= workingday.employee.id %></td>
+        <td><%= workingday.month_name %></td>
+        <td><%= workingday.year%></td>
         <td><%= full_name(workingday.employee) %></td>
         <td><%= workingday.day_in_month %></td>
         <td><%= workingday.total_leave %></td>
@@ -37,6 +38,7 @@
         <td><%= workingday.absent_day %></td>
         <td><%= workingday.present_day %></td>
         <td><%= workingday.payable_day %></td>
+        <!-- <td><= workingday.nonpayable_day %></td> -->
       </tr>
     <% end %>
   </tbody>

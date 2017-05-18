@@ -17,7 +17,7 @@ class WeekOffMastersController < ApplicationController
     @week_off_master = WeekOffMaster.new
     @week_off_masters = WeekOffMaster.all
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="AttendanceSetup"
+    session[:active_tab1] ="WeekoffSetup"
   end
 
   # GET /week_off_masters/1/edit
@@ -29,27 +29,28 @@ class WeekOffMastersController < ApplicationController
   def create
     @week_off_master = WeekOffMaster.new(week_off_master_params)
     @week_off_masters = WeekOffMaster.all
-    respond_to do |format|
-      if @week_off_master.save
-        @week_off_master = WeekOffMaster.new 
-        format.js { @flag = true }
-      else
-        flash.now[:alert] = 'Week Off Created Successfully'
-        format.js { @flag = false }
+    
+      respond_to do |format|
+        if @week_off_master.save
+          @week_off_master = WeekOffMaster.new 
+          format.js { @flag = true }
+        else
+          flash.now[:alert] = 'Week Off Created Successfully'
+          format.js { @flag = false }
+        end
       end
-    end
+    
   end
 
   # PATCH/PUT /week_off_masters/1
   # PATCH/PUT /week_off_masters/1.json
   def update
-     if @week_off_master.update(week_off_master_params)
+    if @week_off_master.update(week_off_master_params)
       @flag = true
     else
      @flag = false
     end
     redirect_to week_off_list_week_off_masters_path
-
      # @week_off_masters = WeekOffMaster.all
      # @week_off_master = WeekOffMaster.new
   end
@@ -63,16 +64,17 @@ class WeekOffMastersController < ApplicationController
   
   def week_off_list
     if current_user.role.name == 'GroupAdmin' 
-      @week_off_masters = WeekOffMaster.where(is_send: nil)
+      @employees = Employee.where(status: 'Active')
+      @week_off_masters = WeekOffMaster.where(is_send: nil).where(employee_id: @employees)
     elsif current_user.role.name == 'Admin'
-      @employees = Employee.where(company_id: current_user.company_location.company_id)
+      @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id)
       @week_off_masters = WeekOffMaster.where(is_send: nil).where(employee_id: @employees)
     elsif current_user.role.name == 'Branch'
-      @employees = Employee.where(company_location_id: current_user.company_location_id)
+      @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id)
       @week_off_masters = WeekOffMaster.where(is_send: nil).where(employee_id: @employees)
     end
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="AttendanceSetup"
+    session[:active_tab1] ="WeekoffSetup"
   end
 
   def employee_list
@@ -86,16 +88,16 @@ class WeekOffMastersController < ApplicationController
 
     if current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
-        @emp_id = WeekOffMaster.where(day: @day,from: @from.to_date,to: @to.to_date).pluck(:employee_id)
+        @emp_id = WeekOffMaster.where(from: @from.to_date,to: @to.to_date).pluck(:employee_id)
         @employees = Employee.where.not(id: @emp_id)      
       elsif current_user.role.name == 'Admin'
-        @emp_id = WeekOffMaster.where(day: @day,from: @from.to_date,to: @to.to_date).pluck(:employee_id)
-        @employees = Employee.where(company_id: current_user.company_location.company_id).where.not(id: @emp_id)
+        @emp_id = WeekOffMaster.where(from: @from.to_date,to: @to.to_date).pluck(:employee_id)
+        @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).where.not(id: @emp_id)
       elsif current_user.role.name == 'Branch'
-        @emp_id = WeekOffMaster.where(day: @day,from: @from.to_date,to: @to.to_date).pluck(:employee_id)
-        @employees = Employee.where(company_location_id: current_user.company_location_id).where.not(id: @emp_id)
+        @emp_id = WeekOffMaster.where(from: @from.to_date,to: @to.to_date).pluck(:employee_id)
+        @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).where.not(id: @emp_id)
       else
-        @employees = Employee.all
+        @employees = Employee.where(status: 'Active')
       end
     end
   end
@@ -108,14 +110,14 @@ class WeekOffMastersController < ApplicationController
     to = params[:week_off_masters][:to]
     is_active = params[:week_off_masters][:is_active]
     is_prefix = params[:week_off_masters][:is_prefix]
-    if @employee_ids.nil?
-      flash[:alert] = "Please Select the Checkbox"
-    else
-      @employee_ids.each do |eid|
-        WeekOffMaster.create(employee_id: eid,day: day,from: from,to: to,is_active: is_active,is_prefix: is_prefix)
-        flash[:notice] = "Created successfully"
+      if @employee_ids.nil?
+        flash[:alert] = "Please Select the Checkbox"
+      else
+        @employee_ids.each do |eid|
+          WeekOffMaster.create(employee_id: eid,day: day,from: from,to: to,is_active: is_active,is_prefix: is_prefix)
+          flash[:notice] = "Created successfully"
+        end
       end
-    end
     redirect_to new_week_off_master_path
   end
 
@@ -156,8 +158,18 @@ class WeekOffMastersController < ApplicationController
 
   def update_week_off
     @week_off_master = WeekOffMaster.find(params[:week_off_master_id])
-    @week_off_master.update(week_off_master_params)
-     flash[:notice] = 'Week Off Updated Successfully'
+
+    params_from = week_off_master_params["from"]
+    params_to = week_off_master_params["to"]
+
+    payroll_period = PayrollPeriod.where(status: true).take 
+    if  params_from.to_date >= payroll_period.from.to_date && params_to.to_date <= payroll_period.to.to_date
+      @week_off_master.update(week_off_master_params)
+       flash[:notice] = 'Week Off Updated Successfully'
+    else
+      flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+    end
+
     redirect_to week_off_list_week_off_masters_path
   end
 

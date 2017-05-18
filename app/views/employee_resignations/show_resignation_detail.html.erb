@@ -1,41 +1,81 @@
-<div class="box">
-  <div class="box-header">
-  <h3 class="box-title">Resignation List</h3>
-    <div class="pull-right">
-      <%= link_to 'Print Report', print_resignation_detail_employee_resignations_path(format: 'pdf',emp_id: @employee_resignation_id.employee_id,resignation_id: @employee_resignation_id.id),class: "btn btn-xl btn-info fa fa-print" %>
-     
-    </div>
-  </div>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Resignation</h3>
+  </div><!-- /.box-header -->
   <div class="box-body">
+  <div>
+       <%= render 'trainee_request' %>
+    </div>
+    
     <table id="example2" class="table table-bordered table-hover table-condensed'">
-      <thead>
-        <tr>
-          <th>Reporting Manager</th>
-          <th>Resignation Date</th>
-          <th>Reason</th>
-          <th>Is Notice Period</th>
-          <th>Notice Period</th>
-          <th>Tentative Leaving Date</th>
-          <th>Remark</th>
-          <th>Exit Interview Date</th>
-          <th>Resign Status</th>
-      </thead>
 
-      <tbody>
-        <% @resignation_histories.each do |resignation_history| %>
-          <tr>
-            <td><%= resignation_history.try(:reporting_master).try(:employee).try(:first_name) %> <%= resignation_history.try(:reporting_master).try(:employee).try(:middle_name) %> <%= resignation_history.try(:reporting_master).try(:employee).try(:last_name) %></td>
-            <td><%= resignation_history.resignation_date %></td>
-            <td><%= resignation_history.reason %></td>
-            <td><%= resignation_history.is_notice_period %></td>
-            <td><%= resignation_history.notice_period %></td>
-            <td><%= resignation_history.tentative_leaving_date %></td>
-            <td><%= resignation_history.remark %></td>
-            <td><%= resignation_history.exit_interview_date %></td>
-            <td><%= resignation_history.resign_status %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+<tr>
+ <th><strong>Employee ID</strong></th>
+ <td><%= @employee_resignations.employee.try (:manual_employee_code )%></td>
+
+  <th><strong>Employee Name</strong></th>
+ <td><%= full_name(@employee_resignations.employee)%></td>
+ 
+</tr>
+
+<tr>
+  <th><strong>Resignation Date</strong></th>
+  <td><%= @employee_resignations.resignation_date %></td>
+ 
+
+ <th><strong>Leaving Reason</strong></th>
+ <td><%= @employee_resignations.leaving_reason.try(:name)%></td>
+</tr>
+
+<tr>
+ <th><strong>Notice Period</strong></th>
+  <td><%= @employee_resignations.notice_period %></td>
+  
+
+  <th><strong>Short Notice Period</strong></th>
+  <td><%= @employee_resignations.short_notice_period %></td>
+</tr>
+
+<tr>
+ <th><strong>Tentative Leaving Date</strong></th>
+ <td><%= @employee_resignations.tentative_leaving_date %></td>
+ 
+
+ <th><strong>Exit Interview Date</strong></th>
+  <td><%= @employee_resignations.exit_interview_date %></td>
+  
+</tr>
+
+<tr>
+ <th><strong>Note</strong></th>
+  <td><%= @employee_resignations.note %></td>
+
+  <th><strong>Remark</strong></th>
+ <td><%= @employee_resignations.remark %></td>
+</tr>
+
+<tr>
+
+  <th><strong>Leaving Date</strong></th>
+  <td><%= @employee_resignations.leaving_date %></td>
+  
+ <th><strong>Settled On</strong></th>
+ <td><%= @employee_resignations.settled_on %></td>
+
+</tr>
+
+<tr>
+ 
+ <th><strong>Reason</strong></th>
+  <td colspan="3"><%= @employee_resignation.reason %></td>
+
+
+</tr>
+
+</table><br>
+<!-- <= link_to 'Edit', edit_employee_resignation_path(@employee_resignation),class: 'btn btn-success btn-sm fa fa-edit' %> -->
+<%= link_to 'Back', employee_resignations_path,class: 'btn btn-default fa fa-arrow-left' %>
+
+
+</div>
 </div>

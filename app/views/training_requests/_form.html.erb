@@ -1,6 +1,5 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Training Request</h3>
   </div>
   <div class="box-body">
 
@@ -9,60 +8,83 @@
     <%= f.hidden_field :employee_id, value: current_user.employee_id %>
     <%= f.hidden_field :no_of_employee, value: @emp_total %>
     <%= f.hidden_field :training_date, value: Date.today %>
+    <%  employ_1 = Employee.where(id: current_user.employee_id).take  %>
       <div class="row">
-        <div class="col-sm-3">
-          <div class="form-group required">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <%= link_to "", new_training_topic_master_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+       <div class="col-sm-6">
+        <div class="field">
+         <table class="table table-bordered table-hover table-condensed'">
+           <thead>
+           <tr>
+           <th colspan="2"><center> Employee Training Request </center></th>
+           </tr>
+           <tr>
+            <td>    
+              <div class="form-group required">
+                <div class="input-group">
+                 <%= f.select :training_topic_master_id, all_training_topic,{hide_label: true,include_blank: " Select Training Course"}%>
+                </div>
               </div>
-              <%= f.select :training_topic_master_id, all_training_topic,{label: 'Training Course',include_blank: " Select Training Course"}%>
+            </td>
+            <td>
+            <div class="form-group required">
+              <%= f.text_field :place,placeholder: 'Place',hide_label: true %>
             </div>
-          </div>
-        </div>
+            </td>
+          </tr>
 
-        <div class="col-sm-3">
-          <div class="form-group required">
-            <%= f.select :reporting_master_id,all_training_reporting_master_list,{label: 'Request To',include_blank: " Select Reporting Manager"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
-          </div>
+          <tr>
+            <td colspan="2"> <div class="field">
+              <%= f.text_field :description,placeholder: 'Description',hide_label: true %>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="2"> 
+              <div class="field">
+              <%= f.text_field :justification,placeholder: 'Justification',hide_label: true%>
+              </div>
+            </td>
+          </tr>
+         </thead>
+         </table>
+         
         </div>
         
-        <div class="col-sm-2">
-          <div class="form-group required">
-            <%= f.text_field :place,placeholder: 'Place',label: 'Place' %>
-          </div>
-        </div>
-
-        <div class="col-sm-4">
-          <div class="field">
-            <%= f.text_field :description,placeholder: 'Description',label: 'Description' %>
-          </div>
-        </div>
       </div>
 
-      <div class="row">
-        <div class="col-sm-5">
-          <div class="field">
-            <%= f.text_field :justification,label: 'Justification'%>
-          </div>
-        </div>   
-      </div>
-
-      <div><%= render 'employee_list' %></div>
-        
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="actions">
-            <%= f.submit "Create Training Request", class: 'btn btn-primary btn-sm' %>
-            <%= link_to 'Back', training_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
-
-          </div>
+       <div class="col-sm-6">
+        <div class="field">
+         <table class="table table-bordered table-hover table-condensed'">
+           <thead>
+           <tr>
+           <th colspan="2"><center> Reporting Manager </center></th>
+           </tr>
+           <tr>
+              <th>Manager 1 </th>
+              <td><%= employ_1.try(:manager).try(:manual_employee_code) %> - <% employ_1.try(:manager).try(:first_name) %> <%= employ_1.try(:manager).try(:middle_name) %> <%= employ_1.try(:manager).try(:last_name) %></td>
+            </tr>
+            <tr>
+              <th>Manager 2 </th>
+              <td><%= employ_1.try(:manager_2).try(:manual_employee_code) %> - <% employ_1.try(:manager_2).try(:first_name) %> <%= employ_1.try(:manager_2).try(:middle_name) %> <%= employ_1.try(:manager_2).try(:last_name) %></td>
+            </tr>
+           </thead>
+         </table>
         </div>
       </div>
+      </div>
+      <div class="box-body">
 
-    <% end %>
+          <div><%= render 'employee_list' %></div>
+      
+           <div class="actions">
+          <%= f.submit "Create Training Request", class: 'btn btn-primary btn-sm' %>
+<!--           <= link_to 'Back', training_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+ -->        </div>
+      <% end %>
+      </div>
+    </div>
   </div>
-</div>
 
 <script type="text/javascript">
 

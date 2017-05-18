@@ -1,6 +1,13 @@
+
+
 <%if @flag == true %>
-$("#form").html("<%= j render 'form' %>");
-$("#goal_rating_list").html("<%= j render 'goal_rating_list' %>");
-<%else%>
-  alert("Goal weightage sum should be 100");
+	$("#form").html("<%= j render 'form' %>");
+	$("#goal_rating_list").html("<%= j render 'goal_rating_list' %>");
+<%elsif @flag1 == false %>
+		alert("Weightage Sum should be within range");
+<%elsif @flag2 == false %>
+		alert("Weightage  should be within range!");
+<%else @flag == false%>
+	alert("Weightage sum should be 100 !");
 <%end%>
+

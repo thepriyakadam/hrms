@@ -23,6 +23,8 @@
              <% elsif e.gender == "Female" && m.avatar_file_name == nil  %>
              <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
              <!-- < image_tag("avatar2.png") %> -->
+               <%else%>
+                 <%= image_tag current_user.avatar.url(:medium),size: "25x25",class: "img-circle", alt: "avatar2"%>
               <%end%>
               <%end%>
               <%end%>
@@ -48,10 +50,16 @@
           <!-- search form (Optional) -->
           <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
-              <input type="text" name="q" class="form-control" placeholder="Search...">
+             <% if current_user.employee.company.company_logo_file_name == nil %>
+              <small class="label label-default">Not Available</small>
+              <% else %>
+              <!-- <center><= link_to '',download_company_logo_path(@company),class: 'btn btn-xs fa fa-picture-o' %></center> -->
+              <%= image_tag current_user.employee.company.company_logo.url, :size => "210x60" %>
+              <%end %>
+              <!-- <input type="text" name="q" class="form-control" placeholder="Search...">
               <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
-              </span>
+              </span> -->
             </div>
           </form>
           <!-- /.search form -->
@@ -110,10 +118,10 @@
       <footer class="main-footer">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
-          Help Line No. 02241310017/02265206530
+          Help Line No. +91-9028013279/+91-9970868601
         </div>
         <!-- Default to the left -->
-        <strong> Copyright © 2015 <a href="#">HRMS-ONE</a>.</strong> All Right Reserved.| Powered By : Indiba Consultancy Services. 
+        <strong> Copyright © 2015 <a href="#">HCM-ZONE</a>.</strong> All Right Reserved.| Powered By : Indiba Business Solution.
       </footer>
       <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->

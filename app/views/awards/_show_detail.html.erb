@@ -1,7 +1,16 @@
 <div class="box box-default">
   <div class="box-header with-border">
-   
-    <h6 class="box-title">Employee Awards Details - <%= code_full_name(@awards.first.employee) %></h6>
+     <div class="row">
+  <div class="col-sm-1">
+      <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+  </div>
+    <div class="col-sm-6">
+     <font color='#0077b3'>
+       ID : <%= @awards.first.employee.try(:manual_employee_code) %><br>
+       Name : <%= full_name(@awards.first.employee) %><br>
+       Email : <%= @awards.first.employee.try(:email) %></font>
+    </div>
+  </div>
     <div class="box-tools pull-right">
       <%= link_to "Add Award", ajax_new_award_employees_path(id: @employee.id), class: 'btn btn-primary btn-sm',remote:true %>
       <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
@@ -9,6 +18,7 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr><th colspan="4"><center><font color='#0077b3'>Award Detail</font></center> </th></tr>
       <tr>
       <th>Award name</th>
       <th>Year</th>

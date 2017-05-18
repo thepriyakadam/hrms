@@ -1,6 +1,11 @@
 class EmployeeCategoriesController < ApplicationController
   before_action :set_employee_category, only: [:show, :edit, :update, :destroy]
 
+
+def index
+   
+end
+
   def new
     @employee_category = EmployeeCategory.new
     @employee_categories = EmployeeCategory.all
@@ -10,17 +15,27 @@ class EmployeeCategoriesController < ApplicationController
 
   # GET /employee_categories/1/edit
   def edit
+    
   end
 
   # POST /employee_categories
   # POST /employee_categories.json
+
+    
   def create
     @employee_category = EmployeeCategory.new(employee_category_params)
     @employee_categories = EmployeeCategory.all
-    @employee_category.save
-    @employee_category = EmployeeCategory.new
-    @employee_categories = EmployeeCategory.all
-        
+      respond_to do |format|
+    if @employee_category.save
+       @employee_category = EmployeeCategory.new
+      format.js { @flag = true }
+      else
+        flash.now[:alert] = 'Degree Already Exist.'
+        format.js { @flag = false }
+      end
+    end
+    # @employee_categories = EmployeeCategory.all
+    # redirect_to new_employee_category_path
   end
 
 
@@ -30,6 +45,7 @@ class EmployeeCategoriesController < ApplicationController
     @employee_category.update(employee_category_params)
     @employee_categories = EmployeeCategory.all
     @employee_category = EmployeeCategory.new
+    # redirect_to new_employee_category_path
   end
 
   # DELETE /employee_categories/1
@@ -55,6 +71,6 @@ class EmployeeCategoriesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_category_params
-    params.require(:employee_category).permit(:is_confirm,:code, :name, :description)
+    params.require(:employee_category).permit(:is_confirm,:code, :name, :description,:is_active)
   end
 end

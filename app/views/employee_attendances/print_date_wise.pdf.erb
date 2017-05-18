@@ -12,11 +12,12 @@ div.nobreak{ page-break-inside: avoid;
 }
 </style>
 <div>
-  <center><h3>Employee Attendance Detail</h3></center>
-      <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover" >
+    <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
         <thead>
+        <tr><td colspan="6"><center><strong><%= current_user.employee.company_location.company.try(:description)%></strong>
+        <br> <%= current_user.employee.company_location.try(:address)%></center></td></tr>
           <tr>
-            <th>Employee Id</th>
+            <th>Employee ID</th>
             <th>Employee Name</th>
             <th>Department Name</th>
             <th>Present</th>
@@ -28,7 +29,7 @@ div.nobreak{ page-break-inside: avoid;
           <% @employee_attendances.each do |a| %>
             <tr>
               <td><%= a.employee.manual_employee_code %></td>
-              <td><%= a.employee.first_name %> <%= a.employee.middle_name %> <%= a.employee.last_name %></td>
+              <td><%= full_name(a.employee) %></td>
               <td><%= a.employee.company_location.try(:name) %> - <%= a.employee.department.try(:name) %></td>
               <td><%= a.try(:present) %></td>
               <td><%= a.try(:day) %></td>

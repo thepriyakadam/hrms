@@ -8,18 +8,11 @@
     <th>PDF</th>
     <th><%= link_to ' Basic Detail', selected_employee_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
 
-
      <th><%= link_to 'On Boarding ', selected_on_boarding_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
-
     
-
      <th><%= link_to 'Bank ', selected_bank_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
 
-    
-
       <th><%= link_to 'Qualification ', selected_qualification_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
-
-    
 
      <th><%= link_to 'Experience ', selected_experience_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
     </tr>
@@ -111,7 +104,6 @@
     </div>
   </tr>
   </table>
-  
 
     <table id="example" class="table table-bordered table-hover table-condensed">
     <thead>
@@ -134,6 +126,7 @@
         <td><%= employee.try(:contact_no) %></td>
         </tr>
       <% end %>
+
   </tbody>
   </table><br>
    <%= link_to 'Back', employee_list_report_employees_path,class:"btn btn-sm btn-default fa fa-arrow-left" %>

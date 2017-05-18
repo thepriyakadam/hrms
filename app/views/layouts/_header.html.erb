@@ -4,9 +4,9 @@
 <!-- Logo -->
 <a href="/home" class="logo">
   <!-- mini logo for sidebar mini 50x50 pixels -->
-  <span class="logo-mini"><b>I</b>HR</span>
+  <span class="logo-mini"><b>H</b>CM</span>
   <!-- logo for regular state and mobile devices -->
-  <span class="logo-lg"><b>HRMS-ONE</b></span>
+  <span class="logo-lg"><b>HCM-ZONE</b></span>
 </a>
 
 <!-- Header Navbar -->
@@ -128,10 +128,14 @@
            <% @members1.each do |m| %>
            <% if e.gender == "Male" && m.avatar_file_name == nil  %>
            <%= image_tag "avatar5.png",size: "25x25",class: "img-circle" %>
+
            <% elsif e.gender == "Female" && m.avatar_file_name == nil  %>
            <%= image_tag "avatar2.png",size: "25x25",class: "img-circle" %>
            <!-- < image_tag("avatar2.png") %> -->
-          <%end%>
+         
+          <%else%>
+          <%= image_tag current_user.avatar.url(:medium),size: "25x25",class: "img-circle", alt: "avatar2"%>
+           <%end%>
           <%end%>
           <%end%>
           <%end%>
@@ -183,7 +187,10 @@
              <% elsif e.gender == "Female" && m.avatar_file_name == nil  %>
              <%= image_tag "avatar2.png" %>
              <!-- < image_tag("avatar2.png") %> -->
+             <% else %>
+              <%= image_tag current_user.avatar.url(:medium),size: "25x25",class: "img-circle", alt: "avatar2"%>
               <%end%>
+
               <%end%>
               <%end%>
               <%end%>

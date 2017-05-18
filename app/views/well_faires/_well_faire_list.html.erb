@@ -16,6 +16,7 @@
         <td>
           <% if well_faire.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>
+            <%= link_to '', edit_well_faire_path(well_faire),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
           <% else %>
             <%= link_to '', edit_well_faire_path(well_faire),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  well_faire, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>

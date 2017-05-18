@@ -60,85 +60,31 @@
   </div><!-- /.box-body -->
   </div><!-- /.box -->
 
-
-<script type="text/javascript">
-  $(function () {
-  $('#btnAdd').click(function () {
-    var num     = $('.clonedInput').length, 
-        newNum  = new Number(num + 1),      
-        newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); 
-    newElem.find('.input_no_of_year').attr('name','experience['+ newNum +'][no_of_year]').attr('id', newNum + '_experience_no_of_year').val('');
-    newElem.find('.input_company_name').attr('name','experience['+ newNum +'][company_name]').attr('id', newNum + '_experience_company_name').val('');
-    newElem.find('.input_designation').attr('name','experience['+ newNum +'][designation]').attr('id', newNum + '_experience_designation').val('');
-    newElem.find('.input_ctc').attr('name','experience['+ newNum +'][ctc]').attr('id', newNum + '_experience_ctc').val('');
-    
-    
-    
-    $('#entry' + num).after(newElem);
-    $('#ID' + newNum + '_title').focus();
-
-    $('#btnDel').attr('disabled', false);
-
-    if (newNum == 5)
-    $('#btnAdd').attr('disabled', true).prop('value', "You've reached the limit"); 
-  });
-
-  $('#btnDel').click(function () {
-      if (confirm("Are you sure you wish to remove this section? This cannot be undone."))
-          {
-              var num = $('.clonedInput').length;
-              $('#entry' + num).slideUp('slow', function () {$(this).remove();
-                  if (num -1 === 1)
-              $('#btnDel').attr('disabled', true);
-              $('#btnAdd').attr('disabled', false).prop('value', "+ Additional Experiences");});
-          }
-      return false;
-  });
-  $('#btnAdd').attr('disabled', false);
-  $('#btnDel').attr('disabled', true);
-});
-</script>
-
 <script>
 $("#experince").validate({
     rules: {
-      "experince[employee_id]":{
-        required: true
-      },
-      "experince[no_of_year_experince]":{
-        required: true,
-        maxlength: 4
-      },
       "experince[company_name]":{
-        required: true
+        required: true,
       },
       "experince[designation]":{
-        required: true
-      },
-      "experince[ctc]":{
         required: true,
-        maxlength: 10
+      },
+      "experince[no_of_year]":{
+        required: true,
+        numbersOnly: true,
       }
-    },
+       },
     messages: {
-      "experince[employee_id]":{
-        required: "Please specify Employee ID"
-      },
-      "experince[no_of_year_experince]":{
-        required: "Please specify No Of Year Of Experiences",
-        maxlength: "No Of Year Of EXperiencesallows upto 4 integers"
-      },
       "experince[company_name]":{
-        required: "Please specify Company Name"
+        required: "Please Specify Company Name",
       },
        "experince[designation]":{
-        required: "Please specify Designation Details"
+        required: "Please Specify Designation ",
       },
-      "experince[ctc]":{
-        required: "Please specify CTC Details",
-        maxlength: "CTC allows upto 10 digit"
+      "experince[no_of_year]":{
+        required: "Please Specify Experience Year",
       }
-    },
+       },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));

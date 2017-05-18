@@ -1,0 +1,24 @@
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>From</th>
+      <th>To</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @payroll_periods.each do |payroll_period| %>
+      <tr>
+        <td><%= payroll_period.from %></td>
+        <td><%= payroll_period.to %></td>
+        <td><%= payroll_period.status ? 'Active' : 'Inactive' %></td>
+        <td>
+          <%= link_to '', edit_payroll_period_path(payroll_period),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+          <%= link_to '',  payroll_period, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

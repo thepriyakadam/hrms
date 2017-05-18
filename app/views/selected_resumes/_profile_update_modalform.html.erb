@@ -11,7 +11,7 @@
 
    <div class="col-sm-3">
     <div class="field">
-      <%= f.text_field :contact_no,label: 'Contact No.' %>
+    <%= f.text_field :job_title,readonly: true, label: 'Job Title' %>
     </div>
   </div>
 
@@ -20,8 +20,8 @@
         <%= f.text_field :skillset,label: 'Skillset' %>
       </div>
   </div>
-    
-  <div class="col-sm-3">
+
+   <div class="col-sm-3">
       <label>Educational Qualification</label>
       <div class="form-group required">
         <div class="input-group">
@@ -36,11 +36,7 @@
 
 <div class="row">
 
- <div class="col-sm-3">
-    <div class="field">
-    <%= f.text_field :job_title,readonly: true, label: 'Job Title' %>
-    </div>
-  </div>
+
   <div class="col-sm-3">
     <div class="field">
       <%= f.text_field :ctc, label: 'CTC' %>
@@ -49,21 +45,27 @@
 
   <div class="col-sm-3">
     <div class="field">
-      <%= f.text_field :email_id, label: 'Email Id' %>
+      <%= f.text_field :experience, label: 'Experience' %>
     </div>
   </div>
 
   <div class="col-sm-3">
     <div class="field">
-      <%= f.text_field :experience, label: 'Experience' %>
+      <%= f.text_field :notice_period, label: 'Notice Period' %>
     </div>
-  </div><br><br>
+  </div>
 
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :contact_no,label: 'Contact No.' %>
+    </div>
+  </div>
 </div>
+
 <div class="row">
  <div class="col-sm-3">
     <div class="field">
-      <%= f.text_field :notice_period, label: 'Notice Period' %>
+      <%= f.text_field :email_id, label: 'Email Id' %>
     </div>
   </div>
 
@@ -82,7 +84,7 @@
 
 <div class="row">
  <div class="col-sm-3">
-            <%= f.submit "Update Profile", class: 'btn btn-sm btn-warning fa fa-modx' %>
+            <%= f.submit "Update Profile", class: 'btn btn-sm btn-primary fa fa-modx' %>
           </div>
           </div>
 
@@ -91,7 +93,6 @@
     </div>
   </div>
   </div>
-</div>
 <script>
 $("#trainee").validate({
     rules: {

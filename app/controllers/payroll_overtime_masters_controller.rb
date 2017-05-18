@@ -14,6 +14,9 @@ class PayrollOvertimeMastersController < ApplicationController
 
   # GET /payroll_overtime_masters/new
   def new
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="PayrollSetup"
+    session[:active_tab2] ="EmployerMaster"
     @payroll_overtime_master = PayrollOvertimeMaster.new
     @payroll_overtime_masters = PayrollOvertimeMaster.all
   end
@@ -62,8 +65,8 @@ class PayrollOvertimeMastersController < ApplicationController
     end
     @payroll_overtime_master.base_component = str
     @payroll_overtime_master.update(payroll_overtime_master_params)
-    @payroll_overtime_masters = PfEmployer.all
-    @payroll_overtime_master = PfEmployer.new
+    @payroll_overtime_masters = PayrollOvertimeMaster.all
+    @payroll_overtime_master = PayrollOvertimeMaster.new
 
   end
 

@@ -17,8 +17,9 @@
 //= require jquery-ui
 //= require jquery.validate
 //= require jquery.validate.additional-methods
-//= require jquery-ui/datepicker
+
 //= require chartkick
+
 
 //= require moment
 //= require bootstrap-datetimepicker
@@ -35,7 +36,7 @@
 // }
 
 // $(document).ready(function() {
-//    Activating Best In Place 
+//    Activating Best In Place
 //   jQuery(".best_in_place").best_in_place();
 // });
 
@@ -94,7 +95,7 @@ $(function(){
   $("#success-alert").alert();
   $("#success-alert").fadeTo(3000, 500).slideUp(500, function(){
   $("#success-alert").alert('close');
-  });   
+  });
 });
 
 Date.format = "yyyy-mm-dd"
@@ -110,7 +111,7 @@ $(function(){
   changeYear:true,
   changeMonth: true,
   yearRange: '-200:-0',
-  dateFormat: 'dd-mm-yy' });   
+  dateFormat: 'dd-mm-yy' });
 
   $('.birth_date').datepicker({
   changeYear:true,
@@ -134,19 +135,19 @@ $(function(){
   changeYear:true,
   changeMonth: true,
   yearRange: '-100:-0',
-  dateFormat: 'dd-mm-yy' }); 
+  dateFormat: 'dd-mm-yy' });
 
   $('.passport_issue_date').datepicker({
   changeYear:true,
   changeMonth: true,
   yearRange: '-100:+2',
-  dateFormat: 'dd-mm-yy' });  
+  dateFormat: 'dd-mm-yy' });
 
   $('.passport_expiry_date').datepicker({
   changeYear:true,
   changeMonth: true,
   yearRange: '-100:+2',
-  dateFormat: 'dd-mm-yy' });  
+  dateFormat: 'dd-mm-yy' });
 
   $('.workingday_date').datepicker({
   changeYear:true,
@@ -164,11 +165,11 @@ $(function(){
   changeYear:true,
   changeMonth: true,
   yearRange: '-10:+50',
-  dateFormat: 'dd-mm-yy' });  
+  dateFormat: 'dd-mm-yy' });
 
   $('.request_end_date').datepicker({
   changeYear:true,
   changeMonth: true,
   yearRange: '-10:+50',
-  dateFormat: 'dd-mm-yy' });  
+  dateFormat: 'dd-mm-yy' });
 });

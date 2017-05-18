@@ -139,15 +139,14 @@ class SelectedResumesController < ApplicationController
     # redirect_to root_url
     flash.now[:alert] = 'Resume Details Destroyed Successfully.'
   end
-  
-#   def download_resume
-#     @selected_resume = SelectedResume.find(params[:id])
-#     send_file @selected_resume.avatar.path,
-#               filename: @selected_resum24 | 7               | 9                       | 4                      | rttt        | 10-09-2016 |      | 4804        | Low            |               | 2016-09... | 2016-09... | redBus_Ticket.pdf   | application/pdf        | 217464              | 2016-09-08 10:45:44  | ambejogai.jpg       | image/jpeg             | 9070                | 2016-09-08 10:45:44  |       
-# e.avatar_file_name,
-#               type: @selected_resume.avatar_content_type,
-#               disposition: 'attachment'
-#   end
+
+  def download_resume
+    @selected_resume = SelectedResume.find(params[:id])
+    send_file @selected_resume.avatar.path,
+              filename: @selected_resume.avatar_file_name,
+              type: @selected_resume.avatar_content_type,
+              disposition: 'inline'
+  end
 
   def download_image
     @selected_resume = SelectedResume.find(params[:id])
@@ -243,6 +242,19 @@ class SelectedResumesController < ApplicationController
   def part_resume
      @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
      @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
+  end
+
+  def modal_vacancy_dropdown
+    @selected_resume = SelectedResume.find(params[:format])
+  end
+
+  def update_vacancy
+     # byebug
+     @selected_resume = SelectedResume.find(params[:id])
+     @vacancy_name = params[:selected_resume][:vacancy_master_id]
+     SelectedResume.where(id: @selected_resume.id).update_all(vacancy_master_id: @vacancy_name)
+     flash[:notice] = 'Vacancy Updated Successfully'
+     redirect_to all_resume_list_selected_resumes_path
   end
 
 

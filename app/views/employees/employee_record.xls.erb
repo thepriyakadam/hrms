@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Sr. No.</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String"> ID</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Employee Name </Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">Department</Data></Cell> 
+        <Cell ss:Index="5"><Data ss:Type="String">Age</Data></Cell> 
+           
+        <Cell ss:Index="6"><Data ss:Type="String">Degree</Data></Cell>
+        <Cell ss:Index="7"><Data ss:Type="String">Year Of Passing</Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String">Marks</Data></Cell>
+       
+        <Cell ss:Index="9"><Data ss:Type="String">Date Of Joining</Data></Cell>
+
+        <Cell ss:Index="10"><Data ss:Type="String">Joining Designation</Data></Cell>
+        <Cell ss:Index="11"><Data ss:Type="String">Current Cadre</Data></Cell>
+        <Cell ss:Index="12"><Data ss:Type="String">Current Designation</Data></Cell>
+        <Cell ss:Index="13"><Data ss:Type="String">Proposed Designation</Data></Cell>
+        <Cell ss:Index="14"><Data ss:Type="String">Proposed Cadre</Data></Cell>
+        <Cell ss:Index="15"><Data ss:Type="String">Past Experience(in year)</Data></Cell>
+
+        <Cell ss:Index="16"><Data ss:Type="String">Joining CTC</Data></Cell>
+        <Cell ss:Index="17"><Data ss:Type="String">CTC 1</Data></Cell>
+        <Cell ss:Index="18"><Data ss:Type="String">CTC 2</Data></Cell>
+        <Cell ss:Index="19"><Data ss:Type="String">CTC 3</Data></Cell>
+        <Cell ss:Index="20"><Data ss:Type="String">Last Salary Revision</Data></Cell>
+        <Cell ss:Index="21"><Data ss:Type="String">Current CTC</Data></Cell>
+        <Cell ss:Index="22"><Data ss:Type="String">As Per Minimum Wages</Data></Cell>
+        <Cell ss:Index="23"><Data ss:Type="String">Eligible For Reward</Data></Cell>
+
+        <Cell ss:Index="24"><Data ss:Type="String">Appraisee Rating </Data></Cell>
+        <Cell ss:Index="25"><Data ss:Type="String">Appraiser Rating </Data></Cell>
+        <Cell ss:Index="26"><Data ss:Type="String">Reviewer Rating </Data></Cell>
+        <Cell ss:Index="27"><Data ss:Type="String">Overall Rating </Data></Cell>
+
+        <Cell ss:Index="28"><Data ss:Type="String">Last Promotion</Data></Cell>
+
+        <Cell ss:Index="29"><Data ss:Type="String">Increment </Data></Cell>
+        <Cell ss:Index="30"><Data ss:Type="String">Promotion </Data></Cell>
+        <Cell ss:Index="31"><Data ss:Type="String">Revised Designation </Data></Cell>
+        <Cell ss:Index="32"><Data ss:Type="String">Revised CTC </Data></Cell>
+  
+        <Cell ss:Index="33"><Data ss:Type="String">Final Increment </Data></Cell>
+        <Cell ss:Index="34"><Data ss:Type="String">Promotion </Data></Cell>
+        <Cell ss:Index="35"><Data ss:Type="String">Revised CTC </Data></Cell>
+        <Cell ss:Index="36"><Data ss:Type="String">PI Bonus </Data></Cell>
+
+      </Row>
+
+      <% i = 0 %>
+      <% @employee_ids.each do |e| %>
+        <% @employee = Employee.find_by(id: e) %>
+        <% @qualification = Qualification.where(employee_id: @employee.id).last %>
+
+        <% @joining_detail = JoiningDetail.find_by(employee_id: @employee.id) %>
+        <% @employee_promotion = EmployeePromotion.where(employee_id: e).first %>
+        <% @employee_promotion_last = EmployeePromotion.where(employee_id: e).last %>
+
+        <% @current_template = EmployeeTemplate.where(employee_id: e,is_active: true).take %>
+        <% @first_template = EmployeeTemplate.where(employee_id: e).first %>
+        <% @last_template = EmployeeTemplate.where(employee_id: e).last %>
+        <% @experience = Experience.where(employee_id: e) %>
+        <% @current_employee_salary_templates = @current_template.try(:employee_salary_templates) %>
+        <% @first_employee_salary_templates = @first_template.try(:employee_salary_templates) %>
+
+        <% @employee_template1 = EmployeeTemplate.where(employee_id: e).last(3).first %>
+        <% @employee_template2 = EmployeeTemplate.where(employee_id: e).last(3).second %>
+        <% @employee_template3 = EmployeeTemplate.where(employee_id: e).last(3).third %>
+        <% @employee_salary_templates1 = @employee_template1.try(:employee_salary_templates) %>
+        <% @employee_salary_templates2 = @employee_template2.try(:employee_salary_templates) %>
+        <% @employee_salary_templates3 = @employee_template3.try(:employee_salary_templates) %>
+
+        <% @goal_bunch = GoalBunch.where(employee_id: e).last  %>
+       <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= i = i+1 %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= @employee.try(:manual_employee_code) %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= full_name(@employee) %></Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="String"><%= @employee.try(:company_location).try(:name) %> - <%= @employee.try(:department).try(:name) %></Data></Cell>
+          <Cell ss:Index="5"><Data ss:Type="String"><% day = Date.today - @employee.try(:date_of_birth).to_date %><% d = day.to_i/365 %><%= d  %></Data></Cell>
+
+\
+          <Cell ss:Index="6"><Data ss:Type="String"><%= @qualification.try(:degree).try(:name) %></Data></Cell>        
+          <Cell ss:Index="7"><Data ss:Type="String"><%= @qualification.try(:year).try(:name) %></Data></Cell>
+          <Cell ss:Index="8"><Data ss:Type="String"><%= @qualification.try(:marks) %></Data></Cell> 
+          
+          <Cell ss:Index="9"><Data ss:Type="String"><%= @joining_detail.try(:joining_date) %></Data></Cell>
+
+          <Cell ss:Index="10"><Data ss:Type="String"><%= @employee_promotion.try(:employee_designation).try(:name) %></Data></Cell>
+          <Cell ss:Index="11"><Data ss:Type="String"><%= %></Data></Cell>
+          <Cell ss:Index="12"><Data ss:Type="String"><%= @joining_detail.try(:employee_designation).try(:name) %></Data></Cell>
+          <Cell ss:Index="13"><Data ss:Type="String"><%= @goal_bunch.try(:r_designation).try(:name) %></Data></Cell>
+          <Cell ss:Index="14"><Data ss:Type="String"><%= %></Data></Cell>
+          <Cell ss:Index="15"><Data ss:Type="String"><%= @experience.sum(:no_of_year) %></Data></Cell>
+
+          
+          <%if @first_employee_salary_templates == nil %>
+              <Cell ss:Index="16"><Data ss:Type="String"></Data></Cell>
+          <% else %>
+            <Cell ss:Index="16"><Data ss:Type="String"><%= @first_employee_salary_templates.sum(:annual_amount) %></Data></Cell>
+          <% end %>
+
+          <%if @employee_salary_templates1 == nil %>
+          <Cell ss:Index="17"><Data ss:Type="String"></Data></Cell>
+          <% else %>
+          <Cell ss:Index="17"><Data ss:Type="String"><%= @employee_salary_templates1.sum(:annual_amount) %></Data></Cell>
+          <% end %>
+
+          <%if @employee_salary_templates2 == nil %>
+              <Cell ss:Index="18"><Data ss:Type="String"></Data></Cell>
+          <% else %>
+          <Cell ss:Index="18"><Data ss:Type="String"><%= @employee_salary_templates2.sum(:annual_amount) %></Data></Cell>
+          <% end %>
+
+          <%if @employee_salary_templates3 == nil %>
+           <Cell ss:Index="19"><Data ss:Type="String"></Data></Cell>
+          <% else %>
+          <Cell ss:Index="19"><Data ss:Type="String"><%= @employee_salary_templates3.sum(:annual_amount) %></Data></Cell>
+          <% end %>
+
+          <Cell ss:Index="20"><Data ss:Type="String"><%= @last_template.try(:start_date) %></Data></Cell>
+
+          <%if @current_employee_salary_templates == nil %>
+            <Cell ss:Index="21"><Data ss:Type="String"></Data></Cell>
+          <% else %>
+            <Cell ss:Index="21"><Data ss:Type="String"><%= @current_employee_salary_templates.sum(:annual_amount) %></Data></Cell>
+          <% end %>
+          
+
+          <Cell ss:Index="22"><Data ss:Type="String"></Data></Cell>
+          <Cell ss:Index="23"><Data ss:Type="String"></Data></Cell>
+          
+
+          <Cell ss:Index="24"><Data ss:Type="String"><%= @goal_bunch.try(:appraisee_rating_id).to_f.round(2)%></Data></Cell>
+          <Cell ss:Index="25"><Data ss:Type="String"><%= @goal_bunch.try(:appraiser_rating) %></Data></Cell>
+          <Cell ss:Index="26"><Data ss:Type="String"><%= @goal_bunch.try(:reviewer_rating_id) %></Data></Cell>
+          <Cell ss:Index="27"><Data ss:Type="String"><%= @goal_bunch.try(:final_rating_id) %></Data></Cell>
+
+          <Cell ss:Index="28"><Data ss:Type="String"><%= @employee_promotion_last.try(:effective_from)%></Data></Cell>
+
+          <Cell ss:Index="29"><Data ss:Type="String"><%= @goal_bunch.try(:r_increment) %></Data></Cell>
+          <Cell ss:Index="30"><Data ss:Type="String"><%= @goal_bunch.try(:r_promotion) %></Data></Cell>
+          <Cell ss:Index="31"><Data ss:Type="String"><%= @goal_bunch.try(:r_designation).try(:name) %></Data></Cell>
+          <Cell ss:Index="32"><Data ss:Type="String"><%= @goal_bunch.try(:r_ctc) %></Data></Cell>
+          
+
+          <Cell ss:Index="33"><Data ss:Type="String"><%= @goal_bunch.try(:f_increment) %></Data></Cell>
+          <Cell ss:Index="34"><Data ss:Type="String"><%= @goal_bunch.try(:f_promotion) %></Data></Cell>
+          <Cell ss:Index="35"><Data ss:Type="String"><%= @goal_bunch.try(:f_ctc) %></Data></Cell>
+          <Cell ss:Index="36"><Data ss:Type="String"></Data></Cell>
+          
+       </Row>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

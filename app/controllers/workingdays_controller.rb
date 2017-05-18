@@ -4,8 +4,8 @@ class WorkingdaysController < ApplicationController
   include QueryReport::Helper  # need to include it
   def index
     @workingdays = Workingday.group(:year)
-   session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Attendance"
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Report"
   end
 
   def show
@@ -74,93 +74,196 @@ class WorkingdaysController < ApplicationController
   end
 
   def display_workingday
-    @workingday = Workingday.where(year: params[:year],month_name: params[:month])
-    if current_user.class == Group
-      @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
-    else
-      if current_user.role.name == 'GroupAdmin'
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
-      elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-      elsif current_user.role.name == 'Branch'
-        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-      elsif current_user.role.name == 'HOD'
-        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-      elsif current_user.role.name == 'Employee'
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: current_user.employee_id)
-      end
-    end
-  end
+    @month = params[:employee][:month]
+    @year = params[:employee][:year]
+    company = params[:employee][:company_id]
+    location = params[:employee][:company_location_id]
+    department = params[:employee][:department_id]
+    status = params[:employee][:status]
+    @workingday = Workingday.where(year: @year,month_name: @month).take
 
-  def workingday_xls
-    @year = params[:year]
-    @month = params[:month]
-    @workingday = Workingday.where(year: params[:year],month_name: params[:month])
     if current_user.class == Group
-      @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
-    else
-      if current_user.role.name == 'GroupAdmin'
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
-      elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-      elsif current_user.role.name == 'Branch'
-        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-      elsif current_user.role.name == 'HOD'
-        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-      elsif current_user.role.name == 'Employee'
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: current_user.employee_id)
+      if company == ""
+        if status == 'Active'
+          @employees = Employee.where(status: 'Active').pluck(:id)
+        elsif status == 'Inactive'
+          @employees = Employee.where(status: 'Inactive').pluck(:id)
+        else
+          @employees = Employee.all.pluck(:id)
+        end
+        @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
+      elsif location == ""
+        if status == 'Active'
+          @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
+        elsif status == 'Inactive'
+          @employees = Employee.where(status: 'Inactive',company_id: company.to_i).pluck(:id)
+        else
+          @employees = Employee.where(company_id: company.to_i).pluck(:id)
+        end
+        @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
+      elsif department == ""
+        if status == 'Active'
+          @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
+        elsif status == 'Inactive'
+          @employees = Employee.where(status: 'Inactive',company_location_id: location.to_i).pluck(:id)
+        else
+          @employees = Employee.where(company_location_id: location.to_i).pluck(:id)
+        end
+        @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
+      else
+        if status == 'Active'
+          @employees = Employee.where(status: 'Active',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+        elsif status == 'Inactive'
+          @employees = Employee.where(status: 'Inactive',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+        else
+          @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+        end
+        @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
       end
-    end
-    respond_to do |format|
-      format.xls {render template: 'workingdays/workingday.xls.erb'}
-    end
-  end
-
-  def workingday_pdf
-    @year = params[:year]
-    @month = params[:month]
-    @workingday = Workingday.where(year: params[:year],month_name: params[:month])
-    if current_user.class == Group
-      @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
-    else
+    elsif current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
-      elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-      elsif current_user.role.name == 'Branch'
-        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-      elsif current_user.role.name == 'HOD'
-        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-      elsif current_user.role.name == 'Employee'
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: current_user.employee_id)
-      end
-    end
-    respond_to do |format|
-    format.json
-    format.pdf do
-      render pdf: 'workingday',
-            layout: 'pdf.html',
-            orientation: 'Landscape',
-            template: 'workingdays/workingday.pdf.erb',
-            # show_as_html: params[:debug].present?,
-            :page_height      => 1000,
-            :dpi              => '300',
-            :margin           => {:top    => 10, # default 10 (mm)
-                          :bottom => 10,
-                          :left   => 20,
-                          :right  => 20},
-            :show_as_html => params[:debug].present?
+        if company == ""
+          if status == 'Active'
+            @employees = Employee.where(status: 'Active').pluck(:id)
+          elsif status == 'Inactive'
+            @employees = Employee.where(status: 'Inactive').pluck(:id)
+          else
+            @employees = Employee.all.pluck(:id)
           end
-       end
+          @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
+        elsif location == ""
+          if status == 'Active'
+            @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
+          elsif status == 'Inactive'
+            @employees = Employee.where(status: 'Inactive',company_id: company.to_i).pluck(:id)
+          else
+            @employees = Employee.where(company_id: company.to_i).pluck(:id)
+          end
+          @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
+        elsif department == ""
+          if status == 'Active'
+            @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
+          elsif status == 'Inactive'
+            @employees = Employee.where(status: 'Inactive',company_location_id: location.to_i).pluck(:id)
+          else
+            @employees = Employee.where(company_location_id: location.to_i).pluck(:id)
+          end
+          @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
+        else
+          if status == 'Active'
+            @employees = Employee.where(status: 'Active',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+          elsif status == 'Inactive'
+            @employees = Employee.where(status: 'Inactive',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+          else
+            @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+          end
+          @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
+        end
+        elsif current_user.role.name == 'Admin'
+         if company == ""
+          if status == 'Active'
+            @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
+          elsif status == 'Inactive'
+            @employees = Employee.where(status: 'Inactive',company_id: current_user.company_location.company_id).pluck(:id)
+          else
+            @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+          end
+          @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
+        elsif location == ""
+          if status == 'Active'
+            @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
+          elsif status == 'Inactive'
+            @employees = Employee.where(status: 'Inactive',company_id: company.to_i).pluck(:id)
+          else
+            @employees = Employee.where(company_id: company.to_i).pluck(:id)
+          end
+          @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
+        elsif department == ""
+          if status == 'Active'
+            @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
+          elsif status == 'Inactive'
+            @employees = Employee.where(status: 'Inactive',company_location_id: location.to_i).pluck(:id)
+          else
+            @employees = Employee.where(company_location_id: location.to_i).pluck(:id)
+          end
+          @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
+        else
+          if status == 'Active'
+            @employees = Employee.where(status: 'Active',company_id: company.to_i,company_location_id: @location.to_i,department_id: department.to_i).pluck(:id)
+          elsif status == 'Inactive'
+            @employees = Employee.where(status: 'Inactive',company_id: company.to_i,company_location_id: @location.to_i,department_id: department.to_i).pluck(:id)
+          else
+            @employees = Employee.where(company_id: company.to_i,company_location_id: @location.to_i,department_id: department.to_i).pluck(:id)
+          end
+          @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
+        end
+        elsif current_user.role.name == 'Branch'
+          if company == "" || location == ""
+            if status == 'Active'
+              @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
+            elsif status == 'Inactive'
+              @employees = Employee.where(status: 'Inactive',company_location_id: current_user.company_location_id).pluck(:id)
+            else
+              @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+            end
+            @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
+         elsif department == ""
+          if status == 'Active'
+            @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
+          elsif status == 'Inactive'
+            @employees = Employee.where(status: 'Inactive',company_location_id: location.to_i).pluck(:id)
+          else
+            @employees = Employee.where(company_location_id: location.to_i).pluck(:id)
+          end
+          @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
+          else 
+            if status == 'Active'
+              @employees = Employee.where(status: 'Active',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+            elsif status == 'Inactive'
+             @employees = Employee.where(status: 'Inactive',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+            else
+              @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+            end
+            @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
+        end
+        elsif current_user.role.name == 'HOD'
+          if company == "" || location == "" || department == ""
+            if status == 'Active'
+              @employees = Employee.where(status: 'Active',department_id: current_user.department_id).pluck(:id)
+            elsif status == 'Inactive'
+              @employees = Employee.where(status: 'Inactive',department_id: current_user.department_id).pluck(:id)
+            else
+              @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+            end
+            @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
+        else 
+          if status == 'Active'
+            @employees = Employee.where(status: 'Active',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+          elsif status == 'Inactive'
+            @employees = Employee.where(status: 'Inactive',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+          else
+            @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+          end
+          @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
+        end
+      elsif current_user.role.name == 'Superviser'
+      elsif current_user.role.name == 'Employee'
+      end
+    end
+
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'workingdays/workingday.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'show_datewise_employee',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'workingdays/workingday.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
   end
 
   def import_workingday
@@ -270,12 +373,27 @@ class WorkingdaysController < ApplicationController
 
   def workingdays_detail
     reporter(Workingday.filter_records(current_user), template_class: PdfReportTemplate) do
-      
-      column(:ID, sortable: true) { |workingday| workingday.employee.manual_employee_code }
+      column(:ID, sortable: true) { |workingday| workingday.id }
+      column(:EID, sortable: true) { |workingday| workingday.employee.manual_employee_code }
       column(:Employee_name, sortable: true) { |workingday| full_name(workingday.employee) }
       column(:Month , sortable: true) { |workingday| workingday.month_name }
       column(:Year , sortable: true) { |workingday| workingday.year }
       column(:Present , sortable: true) { |workingday| workingday.present_day }
+
+      column(:Day, sortable: true) { |workingday| workingday.day_in_month }
+      column(:Present , sortable: true) { |workingday| workingday.present_day }
+      column(:Holiday , sortable: true) { |workingday| workingday.holiday_in_month }
+      column(:Week_off , sortable: true) { |workingday| workingday.week_off_day }
+      column(:Absent , sortable: true) { |workingday| workingday.absent_day }
+      column(:Pay_leave , sortable: true) { |workingday| workingday.pay_leave }
+      column(:Nonpay_leave , sortable: true) { |workingday| workingday.nonpay_leave }
+      column(:Payable , sortable: true) { |workingday| workingday.payable_day }
+
+      column(:cl_leave, sortable: true) { |workingday| workingday.cl_leave }
+      column(:el_leave , sortable: true) { |workingday| workingday.el_leave }
+      column(:esic_leave , sortable: true) { |workingday| workingday.esic_leave }
+      column(:coff_leave , sortable: true) { |workingday| workingday.coff_leave }
+      column(:advance_leave , sortable: true) { |workingday| workingday.advance_leave }
      
 
     end
@@ -284,8 +402,6 @@ class WorkingdaysController < ApplicationController
   end
 
    def is_confirm_workingday
-
-    # @employee = Employee.find(params[:id])
      @workingday_ids = params[:workingday_ids]
     if @workingday_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
@@ -304,29 +420,30 @@ class WorkingdaysController < ApplicationController
   end
   
   def revert_workingday
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Attendance"
   end
 
   def show_employee
     @month = params[:month]
     @year = params[:year]
     if current_user.class == Group
-      @workingday = Salaryslip.where(month: @month,year: @year).pluck(:workingday_id)
-      @workingdays = Workingday.where(month_name: @month, year: @year.to_s)
+        @employees = Employee.where(status: 'Active').pluck(:id)
+      @workingday = Salaryslip.where(month: @month,year: @year,employee_id: @employees).pluck(:workingday_id)
+      @workingdays = Workingday.where(month_name: @month, year: @year.to_s,employee_id: @employees).where.not(id: @workingday)
     elsif current_user.class == Member
       if current_user.role.name == "GroupAdmin"
-        @workingday = Salaryslip.where(month: @month,year: @year).pluck(:workingday_id)
-        @workingdays = Workingday.where(month_name: @month, year: @year.to_s).where.not(id: @workingday)
-      elsif current_user.role.name == "Admin"
-        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-        @workingday = Salaryslip.where(month: @month,year: @year,employee_id: @employee).pluck(:workingday_id)
-        @workingdays = Workingday.where(month_name: @month, year: @year.to_s).where.not(id: @workingday)
-      elsif current_user.role.name == "Branch"
-        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @employees = Employee.where(status: 'Active').pluck(:id)
         @workingday = Salaryslip.where(month: @month,year: @year,employee_id: @employees).pluck(:workingday_id)
-        @workingdays = Workingday.where(month_name: @month,year: @year.to_s).where.not(id: @workingday)
-
-        # @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        # @workingdays = Workingday.where(month_name: @month, year: @year.to_s, employee_id: @employees)
+        @workingdays = Workingday.where(month_name: @month, year: @year.to_s,employee_id: @employees).where.not(id: @workingday)
+      elsif current_user.role.name == "Admin"
+        @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
+        @workingday = Salaryslip.where(month: @month,year: @year,employee_id: @employees).pluck(:workingday_id)
+        @workingdays = Workingday.where(month_name: @month, year: @year.to_s,employee_id: @employees).where.not(id: @workingday)
+      elsif current_user.role.name == "Branch"
+        @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
+        @workingday = Salaryslip.where(month: @month,year: @year,employee_id: @employees).pluck(:workingday_id)
+        @workingdays = Workingday.where(month_name: @month,year: @year.to_s,employee_id: @employees).where.not(id: @workingday)
       end  
     end    
   end
@@ -344,14 +461,113 @@ class WorkingdaysController < ApplicationController
         @workingday = Workingday.find(wid)
         @workingdays = Workingday.where(employee_id: @workingday.employee_id, month_name: date.strftime("%B"), year: date.strftime("%Y"))
         @workingdays.destroy_all
-
-        EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ? ", date.strftime('%m/%Y'),@workingday.employee_id).update_all(is_confirm: false)
-        EmployeeWeekOff.where("strftime('%m/%Y', date) = ? AND employee_id = ? ", date.strftime('%m/%Y'),@workingday.employee_id).update_all(is_confirm: false)
-        
+        EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ? AND employee_id = ? ", date.strftime('%m/%Y'),@workingday.employee_id).update_all(is_confirm: false)
+        EmployeeWeekOff.where("DATE_FORMAT(date,'%m/%Y') = ? AND employee_id = ? ", date.strftime('%m/%Y'),@workingday.employee_id).update_all(is_confirm: false)
       end
       flash[:notice] = "Revert successfully"
       redirect_to revert_workingday_workingdays_path
     end
+  end
+
+  def revert_workingday_datewise
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Attendance"
+  end
+
+  def show_employee_datewise
+    @from = params[:from]
+    @to = params[:to]
+    if current_user.class == Group
+      @employees = Employee.where(status: 'Active').pluck(:id)
+      @workingday = Salaryslip.where(month_year: @from.to_date..@to.to_date,employee_id: @employees).pluck(:workingday_id)
+      @workingdays = Workingday.where(from: @from.to_date,to:@to.to_date,employee_id: @employees).where.not(id: @workingday)
+    elsif current_user.class == Member
+      if current_user.role.name == "GroupAdmin"
+        @employees = Employee.where(status: 'Active').pluck(:id)
+        @workingday = Salaryslip.where(month_year: @from.to_date..@to.to_date,employee_id: @employees).pluck(:workingday_id)
+        @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees).where.not(id: @workingday)
+      elsif current_user.role.name == "Admin"
+        @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
+        @workingday = Salaryslip.where(month_year: @from.to_date..@to.to_date,employee_id: @employees).pluck(:workingday_id)
+        @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees).where.not(id: @workingday)
+      elsif current_user.role.name == "Branch"
+        @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
+        @workingday = Salaryslip.where(month_year: @from.to_date..@to.to_date,employee_id: @employees).pluck(:workingday_id)
+        @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees).where.not(id: @workingday)
+      end  
+    end    
+  end
+
+  def revert_workingday
+     @from = params[:from]
+    @to = params[:to]
+    @workingday_ids = params[:workingday_ids]
+    if @workingday_ids.nil?
+      flash[:alert] = "Please Select Employees"
+      redirect_to revert_workingday_datewise_workingdays_path
+    else
+      @workingday_ids.each do |wid|
+        @workingday = Workingday.find(wid)
+        @workingdays = Workingday.where(employee_id: @workingday.employee_id, from: @from.to_date, to: @to.to_date)
+        @workingdays.destroy_all
+
+        EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @workingday.employee_id).update_all(is_confirm: false)
+        EmployeeWeekOff.where(day: @from.to_date..@to.to_date,employee_id: @workingday.employee_id).update_all(is_confirm: false)
+        
+      end
+      flash[:notice] = "Revert successfully"
+      redirect_to revert_workingday_datewise_workingdays_path
+    end
+  end
+
+  def search_by_month_year
+  end
+
+  def month_year_wise_record
+    month1 = params[:salary][:month1]
+    year1 = params[:salary][:year1]
+    month2 = params[:salary][:month2]
+    year2 = params[:salary][:year2]
+    @date1 = Date.new(year1.to_i, Workingday.months[month1])
+    @date2 = Date.new(year2.to_i, Workingday.months[month2])
+
+    @d1 = @date1.strftime('%B/%Y')
+    @d2 = @date2.strftime('%B/%Y')
+  end
+
+  def date_report
+   session[:active_tab] = "TimeManagement" 
+   session[:active_tab1] = "Report"
+  end
+
+  def print_date_report
+    # byebug
+    @from = params[:salary] ? params[:salary][:from_date] : params[:from_date]
+    @to = params[:salary] ? params[:salary][:to_date] : params[:to_date]
+    @employee = params[:salary] ? params[:salary][:employee_id] : params[:employee_id]
+    @from_date = @from.to_date
+    @to_date = @to.to_date
+    @workingdays = Workingday.where(date: @from.to_date..@to.to_date,employee_id: @employee)
+
+      respond_to do |format|
+      format.js
+      format.xls {render template: 'workingdays/date_report_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'date_report_pdf',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'workingdays/date_report_pdf.pdf.erb',
+              # show_as_html: params[:debug].present?,
+              :page_height      => 1000,
+              :dpi              => '300',
+              :margin           => {:top    => 10, # default 10 (mm)
+                            :bottom => 10,
+                            :left   => 20,
+                            :right  => 20},
+              :show_as_html => params[:debug].present?
+          end
+        end
   end
 
   private
@@ -363,6 +579,6 @@ class WorkingdaysController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def workingday_params
-    params.require(:workingday).permit(:gatepass,:employee_id, :month_name, :year, :day_in_month, :present_day, :total_leave, :holiday_in_month, :week_off_day, :absent_day, :payable_day)
+    params.require(:workingday).permit(:nonpayable_day,:gatepass,:employee_id, :month_name, :year, :day_in_month, :present_day, :total_leave, :holiday_in_month, :week_off_day, :absent_day, :payable_day)
   end
 end

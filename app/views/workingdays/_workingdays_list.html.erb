@@ -12,7 +12,6 @@
     <table id="example5" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
         <th>ID</th>
         <th>Employee Name</th>
         <th>Days In Month</th>
@@ -23,6 +22,7 @@
         <th>Absent</th>
         <th>Non Payable Leave</th>
         <th>Payable Day</th>
+        <!-- <th>Non Payable Day</th> -->
         <th>Month</th>
       </tr>
     </thead>
@@ -30,11 +30,6 @@
     <tbody>
        <% @workingdays.each do |workingday| %>
         <tr>
-          <td> <% if workingday.is_confirm == true %>
-
-          <% else %>
-         <%= check_box_tag "workingday_ids[]", workingday.id %></td>
-         <% end %>
           <td><%= workingday.employee.try(:manual_employee_code) %></td>
           <td><%= full_name(workingday.employee) %></td>
           <td><%= workingday.day_in_month %></td>
@@ -45,6 +40,7 @@
           <td><%= workingday.absent_day %></td>
           <td><%= workingday.nonpay_leave %></td>
           <th><%= workingday.payable_day %></th>
+          <!-- <th><= workingday.nonpayable_day %></th> -->
           <th><%= workingday.month_name %></th>
 
               <!-- < if workingday.is_confirm == true %>
@@ -59,27 +55,13 @@
     </tbody>
   </table>
  <!--  <= f.submit "Confirm workingday", class: "btn btn-sm btn-primary" %> -->
-  <%= link_to " Print Working Days ",workingday_pdf_workingdays_path(month: params[:month], year: params[:year], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+  <%= link_to " Print Working Days ",display_workingday_workingdays_path(month: params[:month], year: params[:year], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 
-  <%= link_to " Excel Report ",workingday_xls_workingdays_path(month: params[:month], year: params[:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <%= link_to " Excel Report ",display_workingday_workingdays_path(month: params[:month], year: params[:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
   </div>
 </div>
 <% end %>
 
-<script type="text/javascript">
-$('#selectAll').click(function() {
-  if (this.checked) {
-    $(':checkbox').each(function() {
-      this.checked = true;                       
-    });
-  } 
-  else {
-    $(':checkbox').each(function() {
-      this.checked = false;                        
-    });
-  } 
-});
-</script>
 
 <script type="text/javascript">
 $(document).ready(function() {

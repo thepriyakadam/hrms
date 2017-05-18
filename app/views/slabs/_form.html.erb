@@ -1,0 +1,67 @@
+<div class="box-body"> 
+  <%= bootstrap_form_for(@slab,html: {id: 'slab'},remote:true) do |f| %>
+  
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.text_field :from ,label:'From', placeholder: 'From' %>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.text_field :to ,label:'To', placeholder: 'To' %>
+        </div>
+      </div> 
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.text_field :percentage ,label:'Percentage', placeholder: 'Percentage' %>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <label>Status</label>
+        <div class="form-group required">
+          <%= f.check_box :status , label:'Active' %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit 'Create Slab',:class => class_name, data: { disable_with: data_info }%>
+        </div>
+      </div>
+    </div>
+
+  <% end %>
+</div>
+
+<script>
+$("#slab").validate({
+    rules: {
+      "slab[from]":{
+        required: true,
+      },
+      "slab[to]":{
+        required: true,
+      },
+      "slab[percentage]":{
+        required: true,
+      }
+       },
+    messages: {
+      "slab[from]":{
+        required: "Please Specify From",
+      },
+       "slab[to]":{
+        required: "Please Specify To",
+      },
+       "slab[percentage]":{
+        required: "Please Specify Percentage",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

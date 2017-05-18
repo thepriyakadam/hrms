@@ -5,6 +5,7 @@ class CreateEmployeeMonthlyDays < ActiveRecord::Migration
       t.string :month
       t.references :year, index: true, foreign_key: true
       t.decimal :overtime, precision: 4, scale: 1
+      t.string :no_of_working_day
 
       t.timestamps null: false
     end

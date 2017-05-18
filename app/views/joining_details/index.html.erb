@@ -12,8 +12,6 @@
       <tr>
       <th>Employee</th>
       <th>Joining Date</th>
-      <th>Admin Interviewer</th>
-      <th>Technical Interviewer</th>
       <th>Designation</th>
       <th>Employee Grade</th>
       <th>Action</th>
@@ -25,8 +23,6 @@
       <tr>
         <td><%= joining_detail.employee.id %></td>
         <td><%= joining_detail.joining_date %></td>
-        <td><%= joining_detail.admin_hr %></td>
-        <td><%= joining_detail.tech_hr %></td>
         <td><%= joining_detail.designation %></td>
         <td><%= joining_detail.employee_grade.try(:name) %></td>
          <td>

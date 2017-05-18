@@ -3,9 +3,15 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
+        <td colspan="8"><center>Employee List For Training</center></td>
+    </tr>
+    <tr>
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
       <th>Sr.No</th>
-      <th>Employee Name</th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Department</th>
+      <th>Designation</th>
       <th>Contact No</th>
       <th>Signature</th>
   </thead>
@@ -20,7 +26,10 @@
           <% end %>
         </td>
         <td><%= i=i+1 %></td>
-        <td><%= trainee.employee.try(:first_name) %> <%= trainee.employee.try(:middle_name) %> <%=trainee.employee.try(:last_name) %></td>
+        <td><%= trainee.employee.try(:manual_employee_code) %></td> 
+        <td><%= full_name(trainee.employee) %></td>
+        <td><%= trainee.employee.department.try(:name) %></td>
+        <td><%= trainee.employee.joining_detail.employee_designation.try(:name) %></td>
         <td><%= trainee.employee.try(:contact_no) %></td>
         <td></td>
       </tr>

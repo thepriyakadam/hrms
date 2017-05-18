@@ -1,61 +1,14 @@
-<style>
-#page {
-    width: 100%;
-    height: 100%;
-    background-color:#eeeeee;
-}
-
-#header {
-    color:white;
-    text-align:center;
-    padding:20px;
-}
-#nav {
-    line-height:30px;
-    background-color:#eeeeee;
-    height:300px;
-    width:100px;
-    float:left;
-    padding:5px;       
-}
-#section {
-    width:350px;
-    float:left;
-    padding:10px;    
-}
-#footer {
-    position:absolute;
-    bottom:0;
-    width:100%;
-    height:60px;   /* Height of the footer */
-    background:#808080;
-}
-</style>
-<div id="page">
-
-<!-- <div id="header" class="w3-container w3-red">
-<center><h1>< link_to image_tag("logo.png") %></h1></center>
-<h1>Enabling A Dynamic Workforce</h1>
-</div> -->
-<header class="w3-container w3-indigo">
+<!-- <header class="w3-container w3-indigo">
   <h1><center>HRMS-ONE</center></h1>
-</header>
-<!-- <div id="footer">
-<h1>< link_to image_tag("logo.png") %></h1>
-</div> -->
-<!-- <header class="w3-container w3-red">
-  <h1><center></center></h1><br><br><br>
 </header> -->
-<div class="login-box" style="padding-bottom:200px;">
 
-<!-- <h1>Indiba HRMS</h1> -->
-<!-- <meta name="viewport" content="width=device-width, initial-scale=1">
- --><!-- <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css"> -->
+<div class="login-box">
   <div class="login-logo">
-<!--     <a><b>Login</b></a>
- -->  </div><!-- /.login-logo -->
+  </div><!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg"><center> Login in to HRMS-ONE</center></p><br>
+   <div class="btn btn-block btn-social btn-facebook btn-flat"> HRMS-ONE </div><!-- 
+    <p class="login-box-msg"><center> Login in to HRMS-ONE</center></p><br> -->
+    <br>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="form-group has-feedback">
         <%= f.text_field :login, autofocus: true, class: "form-control", placeholder: "Employee Code" %>
@@ -65,7 +18,7 @@
         <%= f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "Password" %>
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
-
+<br>
       <div class="row">
         <div class="col-xs-8">
           <div class="checkbox icheck">
@@ -79,8 +32,7 @@
             </label>
           </div>
         </div><!-- /.col -->
-      </div>
-      <div class="row">  
+      
         <div class="col-xs-4 pull-left">
           <%= f.submit "Log in",data: { disable_with: "Logging in..."}, class: "btn btn-primary" %>
         </div><!-- /.col -->
@@ -91,14 +43,13 @@
         <p>- OR -</p>
         <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using Facebook</a>
         <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using Google+</a>
-      </div> --><!-- /.social-auth-links -->
+      </div> --> <!-- /.social-auth-links-->
 
       <%= render "members/shared/links" %>
     <% end %>  
   </div><!-- /.login-box-body -->
-
 </div><!-- /.login-box -->
-</div>
+
 
 
 

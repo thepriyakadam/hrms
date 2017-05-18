@@ -8,18 +8,17 @@
     page-break-inside: avoid; 
   }
 </style>
-<center><h3 class="box-title">Final Report</h3></center><br>
-<h4 class="box-title">Interview Schedule Details</h4>
-<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+<table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
   <thead>
+   <tr><th colspan="6"><center>Interview Schedule Details</center></th></tr>
     <tr>
 <!--       <th>ID</th>
- --> 
-      <th>Job Title</th>
+ -->  <th>Job Title</th>
       <th>Candidate Name</th>
       <th>Email ID</th>
       <th>Interview Date</th>
       <th>Location</th>
+      <th>Address</th>
     </tr>
   </thead>
   <tbody>
@@ -31,65 +30,65 @@
         <td><%= interview_schedule.email_id %></td>
         <td><%= interview_schedule.interview_date %></td>
         <td><%= interview_schedule.location %></td>
+        <td><%= interview_schedule.address %></td>
       </tr>
-    <% end %>
   </tbody>
-</table><br><br>
-<h4 class="box-title">Interview Rounds</h4>
-<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+</table>
+
+<table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
   <thead>
-    <tr>
-      <th>Sr.No</th> 
-      <th>Interviewer Name</th>
-      <th>Interview Type</th>
-      <th>Interview Date</th>
-      <th>Interview Time</th>
-      <th>Location</th>
-      <th>Schedule Comment</th>
-    </tr>
+  <% @interview_rounds.each do |interview_round| %>
+  <tr><th colspan="4"><center>Interview Rounds</center></th></tr>
+    
   </thead>
   <tbody>
-    <% i = 0 %>
-    <% @interview_rounds.each do |interview_round| %>
+    
       <tr>
-        <td><%= i=i+1 %></td>
-        <td><%= full_name(interview_round.employee) %></td>
-        <td><%= interview_round.interview_type.try(:name) %></td>
-        <td><%= interview_round.interview_date %></td>
-        <td><%= interview_round.interview_time %></td>
-        <td><%= interview_round.location %></td>
-        <td><%= interview_round.schedule_comment %></td>
+        <td>Interviewer Name : <%= full_name(interview_round.employee) %></td>
+        <td>Type : <%= interview_round.interview_type.try(:name) %></td>
+     
+        <td colspan="2">Date : <%= interview_round.interview_date %> - Time : <%= interview_round.interview_time %></td>
+      </tr>
+      <tr>
+        <td>Location : <%= interview_round.location %></td>
+        <td colspan="3">Description : <%= interview_round.schedule_comment %></td>
 <!--         <td><= interview_rounds.interview_analysis.interview_evalution.try(:name) %></td>
- -->      </tr>
-    <% end %>
-  </tbody>
-</table>  
-<h4 class="box-title">Interview Evaluation</h4>
-<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
-  <thead>
-    <tr>
-      <th>Sr.No</th> 
-      <th>Interviewer Name</th>
-      <th>Interview Type</th>
-      <th>Evaluation Criteria</th>
-      <th>Skillset</th>
-      <th>Evaluation</th>
-      <th>Comment</th>
-    </tr>
-  </thead>
-  <tbody>
-  <% i = 0 %>
-    <% @interview_analyses.each do |interview_analysis| %>
+ -->  </tr>
+      <tr><th colspan="4"><center>Interview Evaluation</center></th></tr>
       <tr>
-        <td><%= i=i+1 %></td>
-        <td><%= interview_analysis.interview_round.employee.try(:first_name) %> <%= interview_analysis.interview_round.employee.try(:middle_name) %> <%= interview_analysis.interview_round.employee.try(:last_name) %></td>
-        <td><%= interview_analysis.interview_round.interview_type.try(:name) %></td>
-        <td><%= interview_analysis.interview_evalution.try(:name) %></td>
-        <td><%= interview_analysis.interview_attribute.try(:name) %></td>
-        <td><%= interview_analysis.interview_decision.try(:name) %></td>
-        <td><%= interview_analysis.comment %></td>
+          <th>Attributes</th>
+          <th>Skillset</th>
+          <th>Evaluation</th>
+          <th>Remarks</th>
+          
+      </tr>
+      <% interview_round.interview_analyses.try(:each) do |ia| %>
+      <tr>
+          <td><%= ia.interview_evalution.try(:name) %></td>
+          <td><%= ia.interview_attribute.try(:name) %></td>
+          <td><%= ia.interview_decision.try(:name) %></td>
+          <td><%= ia.comment %></td>
+      </tr>
+     
+      <%end%><br>
+       <tr>
+       <th colspan="2">Total Score</th>
+       <th colspan="2"><% interv_analy = InterviewAnalysis.where(interview_round_id: interview_round).pluck(:interview_decision_id)
+        interv_dec = InterviewDecision.where(id: interv_analy).pluck(:name).map {|i| i.to_i} %>
+        <%= interv_dec.sum %>
+       </th>
       </tr>
     <% end %>
+    <tr>
+      <th colspan="2">Overall Total Score</th>
+      <th colspan="2"><% interview_schedule = InterviewSchedule.where(id: @interview_schedule.id).pluck(:id)
+            inter_round = InterviewRound.where(interview_schedule_id: interview_schedule).pluck(:id)
+            interv_analy = InterviewAnalysis.where(interview_round_id: inter_round).pluck(:interview_decision_id)
+            interv_dec = InterviewDecision.where(id: interv_analy).pluck(:name).map {|i| i.to_i} %>
+            <%= interv_dec.sum %>
+      </th>
+    </tr>  
   </tbody>
-</table><br><br>
+</table>
+<% end %>
 

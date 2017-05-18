@@ -5,6 +5,8 @@ class CreateEmployeeLeavBalances < ActiveRecord::Migration
       t.references :leav_category, index: true, foreign_key: true
       t.references :company_leav, index: true, foreign_key: true
       t.string :no_of_leave
+      t.date :expiry_date
+      t.string :total_leave
 
       t.timestamps null: false
     end

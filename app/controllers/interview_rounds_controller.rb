@@ -24,8 +24,8 @@ class InterviewRoundsController < ApplicationController
   end
 
   # GET /interview_rounds/1/edit
-  def edit
-  end
+  # def edit
+  # end
 
   # POST /interview_rounds
   # POST /interview_rounds.json
@@ -61,8 +61,8 @@ class InterviewRoundsController < ApplicationController
     @interview_round = InterviewRound.new(interview_round_params)
     @interview_rounds = InterviewRound.all
       if @interview_round.save
-        InterviewRoundMailer.send_email_to_interviewer(@interview_round).deliver_now
-        InterviewRoundMailer.send_email_to_candidate(@interview_round).deliver_now
+        # InterviewRoundMailer.send_email_to_interviewer(@interview_round).deliver_now
+        # InterviewRoundMailer.send_email_to_candidate(@interview_round).deliver_now
         @interview_round = InterviewRound.new
         flash[:notice] = 'Interview Round saved Successfully.'
       end
@@ -75,12 +75,34 @@ class InterviewRoundsController < ApplicationController
   # PATCH/PUT /interview_rounds/1
   # PATCH/PUT /interview_rounds/1.json
 
-  def update
-    @interview_round.update(interview_round_params)
-    InterviewRoundMailer.send_email_to_interviewer(@interview_round).deliver_now
-    InterviewRoundMailer.send_email_to_candidate(@interview_round).deliver_now
-    @interview_rounds = InterviewRound.all
-    @interview_round = InterviewRound.new
+  # def update
+  #   @interview_round.update(interview_round_params)
+  #   InterviewRoundMailer.send_email_to_interviewer(@interview_round).deliver_now
+  #   InterviewRoundMailer.send_email_to_candidate(@interview_round).deliver_now
+  #   @interview_rounds = InterviewRound.all
+  #   @interview_round = InterviewRound.new
+  # end
+
+
+  def edit
+    @interview_schedule = InterviewSchedule.find(@interview_round.interview_schedule_id)
+    # # @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
+    # @interview_schedules = InterviewSchedule.where(interview_schedule_id: @interview_schedule.id)
+  end
+
+
+    def update
+      @interview_schedule = InterviewSchedule.find(@interview_round.interview_schedule_id)
+
+      if @interview_round.update(interview_round_params)
+        @interview_rounds =  @interview_schedule.interview_rounds
+        # c1 = @daily_bill_details.sum(:travel_expence).to_i
+        # TravelRequest.where(id: @travel_request.id).update_all(expense: c1)
+        flash[:notice] = "Updated successfully"
+      else
+        flash[:alert] = "not updated"
+      end
+      redirect_to new_interview_round_path(interview_schedule_id: @interview_schedule.id)
   end
 
   # DELETE /interview_rounds/1
@@ -121,6 +143,29 @@ class InterviewRoundsController < ApplicationController
   def interview_reschedule_list
      @interview_round = InterviewRound.find(params[:format])
      @interview_round_reschedules = InterviewRoundReschedule.where(interview_round_id: @interview_round.id)
+  end
+
+  # def confirm_interview_round
+  #     @interview_schedule = InterviewSchedule.find(params[:interview_schedule_id])
+  #     InterviewRound.where(interview_schedule_id: @interview_schedule.id).update_all(interview_round_confirm: true)
+  #     flash[:notice] = "Interview Round Confirmed Successfully"
+  #     redirect_to new_interview_round_path(interview_schedule_id: @interview_schedule.id)
+  # end
+
+  def confirm_interview_round
+    @interview_schedule = InterviewSchedule.find(params[:interview_schedule_id])
+    @interview_round_ids = params[:interview_round_ids]
+    if @interview_round_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to new_interview_round_path(interview_schedule_id: @interview_schedule.id)
+    else
+      @interview_round_ids.each do |eid|
+      @interview_round = InterviewRound.find(eid)
+      @interview_round.update(interview_round_confirm: true) 
+      flash[:notice] = "Interview Round Confirmed Successfully"
+    end 
+     redirect_to new_interview_round_path(interview_schedule_id: @interview_schedule.id)
+   end
   end
 
   private

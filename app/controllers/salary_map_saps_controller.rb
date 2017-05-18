@@ -24,23 +24,53 @@ class SalaryMapSapsController < ApplicationController
 
   # POST /salary_map_saps
   # POST /salary_map_saps.json
+
+  # def create
+  #   @salary_map_sap = SalaryMapSap.new(salary_map_sap_params)
+  #   @salary_map_saps = SalaryMapSap.all
+  #   respond_to do |format|
+  #     if @salary_map_sap.save
+  #       @salary_map_sap = SalaryMapSap.new
+  #       format.js { @flag = true }
+  #     else
+  #       format.js { @flag = false }
+  #     end
+  #   end
+  # end
+
+
+  #  def create
+  #   @salary_map_sap = SalaryMapSap.new(salary_map_sap_params)
+  #   @salary_map_saps = SalaryMapSap.all
+     
+  #   respond_to do |format|
+  #     if @salary_map_sap.save
+  #        @salary_map_sap = SalaryMapSap.new
+  #        @company_location = params[:food_deduction][:company_location_id]
+  #        @salary_map_sap.update(company_location_id: @company_location)
+  #       format.js { @flag = true }
+  #     else
+  #       format.js { @flag = false }
+  #     end
+  #   end
+  # end
+
   def create
     @salary_map_sap = SalaryMapSap.new(salary_map_sap_params)
     @salary_map_saps = SalaryMapSap.all
-    respond_to do |format|
       if @salary_map_sap.save
-        @salary_map_sap = SalaryMapSap.new
-        format.js { @flag = true }
-      else
-        format.js { @flag = false }
+        @company_location = params[:food_deduction][:company_location_id]
+        @salary_map_sap.update(company_location_id: @company_location)
       end
-    end
+      redirect_to new_salary_map_sap_path
+      flash[:notice] = 'Salary Map Sap saved Successfully.'   
   end
 
-  # PATCH/PUT /salary_map_saps/1
-  # PATCH/PUT /salary_map_saps/1.json
-  def update
+
+def update
     if @salary_map_sap.update(salary_map_sap_params)
+      @company_location = params[:food_deduction][:company_location_id]
+      @salary_map_sap.update(company_location_id: @company_location)
       @salary_map_sap = SalaryMapSap.new
       @salary_map_saps = SalaryMapSap.all
       @flag = true
@@ -64,6 +94,6 @@ class SalaryMapSapsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def salary_map_sap_params
-      params.require(:salary_map_sap).permit(:salary_component_id, :account_code, :is_debit)
+      params.require(:salary_map_sap).permit(:salary_component_id, :company_id,:company_location_id,:account_code, :is_debit)
     end
 end

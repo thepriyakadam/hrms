@@ -1,7 +1,7 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Vacancy Request History List</h3>
-    </div>
+<!--     <h3 class="box-title">Vacancy Request History List</h3>
+ -->    </div>
 
 <p id="notice"><%= notice %></p>
 
@@ -9,60 +9,79 @@
 
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <tr>
-  <th><strong>Vacancy No.</strong></th>
-  <td><%= @vacancy_master1.id %></td>
+      <th colspan="4"><center>Vacancy Request of : <%= @vacancy_master.employee.try(:manual_employee_code) %> <%= @vacancy_master.employee.try(:prefix) %> <%= @vacancy_master.employee.try(:first_name) %> <%= @vacancy_master.employee.try(:middle_name) %> <%= @vacancy_master.employee.try(:last_name) %></center></th>
+    </tr>
+  <tr>
+  <th><strong>Vacancy Code</strong></th>
+  <td><%= @vacancy_master.vacancy_code %></td>
    <th><strong>Request To</strong></th>
-  <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %> </td>
+  <!-- <td><= @employee.try(:first_name) %> <= @employee.try(:middle_name) %> <= @employee.try(:last_name) %> </td> -->
+  <td><% emp=Employee.where(id: @vacancy_master.reporting_master_id).take %>
+      <%= emp.try(:manual_employee_code) %> - <%= emp.try(:prefix) %> <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %> </td>
   </tr>
 
   <tr>
   <th><strong>Organization</strong></th>
-  <td><%= @vacancy_master1.other_organization %></td>
-   <th><strong>Job Title</strong></th>
+  <td><%= @vacancy_master.other_organization %></td>
+  <th><strong>Application Date</strong></th>
+  <td><%= @vacancy_master.vacancy_post_date %></td>
+   
+  </tr>
+
+  <tr>
+  <th><strong>Job Title</strong></th>
   <td><%= @vacancy_master.employee_designation.name %></td>
-  </tr>
-
-  <tr>
   <th><strong>Vacancy Name</strong></th>
-  <td><%= @vacancy_master1.vacancy_name %></td>
-  <th><strong>Location</strong></th>
-  <td><%= @vacancy_master1.company_location.try(:name) %></td>
+  <td><%= @vacancy_master.vacancy_name %></td>
+  
   </tr>
 
-<tr> 
+<tr>
+  <th><strong>Location</strong></th>
+  <td><%= @vacancy_master.company_location.try(:name) %></td>
   <th><strong>Department</strong></th>
-  <td><%= @vacancy_master1.department.name %></td>
+  <td><%= @vacancy_master.try(:department).try(:name) %></td>
+  
+</tr>
+
+<tr>
   <th><strong>No. of Positions</strong></th>
-  <td><%= @vacancy_master1.no_of_position %></td>
-</tr>
-
-<tr>  
+  <td><%= @vacancy_master.no_of_position %></td>  
   <th><strong>Experience</strong></th>
-  <td><%= @vacancy_master1.experience %></td>
+  <td><%= @vacancy_master.experience %></td>
+  
+</tr>
+<tr>
+
+ <tr>
   <th><strong>Budget</strong></th>
-  <td><%= @vacancy_master1.budget %></td>
-</tr>
-<tr>
-
- <tr>
+  <td><%= @vacancy_master.budget %></td>
    <th><strong>Fulfillment Date</strong></th>
-  <td><%= @vacancy_master1.vacancy_post_date %></td>
-  <th><strong>Keyword</strong></th>
-  <td><%= @vacancy_master1.keyword %></td>
+  <td><%= @vacancy_master.vacancy_post_date %></td>
+  
 </tr>
 
 <tr>
+  <th><strong>Keyword</strong></th>
+  <td><%= @vacancy_master.keyword %></td>
   <th><strong>Organization</strong></th>
-  <td><%= @vacancy_master1.other_organization %></td>
-  <th><strong>Qualification 1</strong></th>
-  <td><%= @vacancy_master1.degree.try(:name) %></td>
+  <td><%= @vacancy_master.other_organization %></td>
+  
 </tr>
 
  <tr>
-  <th><strong>Qualification 2</strong></th>
-  <td><%= @vacancy_master1.degree_1.try(:name) %></td>
-  <th><strong>Qualification 3</strong></th>
-  <td><%= @vacancy_master1.degree_2.try(:name) %></td>
+ <th><strong>Qualification I</strong></th>
+  <td><%= @vacancy_master.degree.try(:name) %></td>
+  <th><strong>Qualification II</strong></th>
+  <td><%= @vacancy_master.degree_1.try(:name) %></td>
+  
+</tr>
+
+<tr>
+<th><strong>Qualification III</strong></th>
+  <td><%= @vacancy_master.degree_2.try(:name) %></td>
+  <th><strong>Current Status</strong></th>
+  <td><%= @vacancy_master.current_status %></td>
 </tr>
 
 <tr>
@@ -80,31 +99,44 @@
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th>Approved By</th>
+      <th colspan="5"><center>Vacancy Process</center></th>
+      </tr>
+    <tr>
+      <th>ID</th>
+      <th>Action
+      </th>
       <th>Date</th>
       <th>Time</th>
       <th>Status</th>
 <!--       <th>Action</th>
- -->    </tr>
+ --> </tr>
   </thead>
 
   <tbody>
     <% @reporting_masters_vacancy_masters.each do |reporting_masters_vacancy_master| %>
-       <tr>
-                <td><%= reporting_masters_vacancy_master.reporting_master.employee.try(:first_name) %> <%= reporting_masters_vacancy_master.reporting_master.employee.try(:middle_name) %> <%= reporting_masters_vacancy_master.reporting_master.employee.try(:last_name) %></td>
+       <tr>     
+                <% a=reporting_masters_vacancy_master.reporting_master_id
+                emp=Employee.where(id: a).take %>
+                <td><%= emp.manual_employee_code %></td>
+                <td><%= emp.try(:prefix) %> <%= emp.try(:first_name)%> <%= emp.try(:middle_name)%> <%= emp.try(:last_name)%>
+                </td>
                 <td><%= reporting_masters_vacancy_master.created_at.to_date %></td>
                 <td><%= reporting_masters_vacancy_master.created_at %></td>
                  <td>
                     <% if reporting_masters_vacancy_master.vacancy_status == "Pending" %>
-                    <small class="label label-primary">Pending</small>
+                    <small class="label label-default">Pending</small>
                     <% elsif reporting_masters_vacancy_master.vacancy_status == "Approved & Send Next" %>
                     <small class="label label-primary">Approved & Send Next</small>
-                    <% elsif reporting_masters_vacancy_master.vacancy_status == "Edit And Approved" %>
-                    <small class="label label-primary">Edit And Approved</small>
                     <% elsif reporting_masters_vacancy_master.vacancy_status == "Rejected" %>
-                    <small class="label label-primary">Rejected</small>
-                    <% elsif reporting_masters_vacancy_master.vacancy_status == "Approved" %>
-                    <small class="label label-primary">Approved</small>
+                    <small class="label label-danger">Rejected</small>
+                    <% elsif reporting_masters_vacancy_master.vacancy_status == "FirstApproved" %>
+                    <small class="label label-primary">FirstApproved</small>
+                    <% elsif reporting_masters_vacancy_master.vacancy_status == "FinalApproved" %>
+                    <small class="label label-success">FinalApproved</small>
+                    <% elsif reporting_masters_vacancy_master.vacancy_status == "SecondApproved" %>
+                    <small class="label label-info">SecondApproved</small>
+                    <% elsif reporting_masters_vacancy_master.vacancy_status == "Cancelled" %>
+                    <small class="label label-warning">Cancelled</small>
                     <% else %>
                     <% end %>
                   </td>
@@ -113,7 +145,8 @@
     <% end %>
   </tbody>
 </table>
-<%= link_to 'Back', vacancy_history_vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+<!-- <= link_to 'Back', current_employee_vacancy_list_vacancy_masters_path(emp_id: @vacancy_master.employee_id),class: 'btn btn-default btn-sm fa fa-arrow-left' %> -->
+<%= link_to 'Back', vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
  </div>
 </div>
 

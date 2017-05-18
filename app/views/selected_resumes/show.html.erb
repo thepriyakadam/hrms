@@ -8,9 +8,7 @@
  <tr> 
   <th><strong>Name</strong></th>
   <td><%= @selected_resume.name %></td>
- </tr>
-
-  <tr>
+ 
    <th><strong>Contact No.</strong></th>
    <td><%= @selected_resume.contact_no %></td>
   </tr>
@@ -18,9 +16,7 @@
 <tr>
   <th><strong>Skillset</strong></th>
   <td><%= @selected_resume.skillset %></td>
-</tr>
 
-<tr>
   <th><strong>Qualification</strong></th>
   <td><%= @selected_resume.degree.name %></td>
 </tr>
@@ -28,9 +24,7 @@
 <tr>
   <th><strong>Expected CTC</strong></th>
   <td><%= @selected_resume.ctc %></td>
- </tr>
-
-<tr>
+ 
   <th><strong>Email ID</strong></th>
   <td><%= @selected_resume.email_id %></td>
 </tr>
@@ -38,15 +32,17 @@
 <tr>
   <th><strong>Experience</strong></th>
   <td><%= @selected_resume.experience %></td>
-</tr>
 
-<tr>
   <th><strong>Notice Period</strong></th>
   <td><%= @selected_resume.notice_period %></td>
 </tr>
+
 <tr>
    <th>Status</th>
    <td><%= @selected_resume.status %></td>
+
+   <th></th>
+   <td></td>
 </tr>
 
 <!-- <tr>
@@ -69,7 +65,9 @@
 </table>
 
 <%= image_tag @selected_resume.passport_photo.url, :size => "100x100" %><br><br>
-<br>
+<!-- <debugger%>
+<iframe src=<= @selected_resume.avatar.url %> width="600" height="780" style="border: none;"> </iframe> -->
+<!--<iframe src="#{@selected_resume.avatar.url}" style= "width: 600px; height:780px; border: none;">-->
 <%= link_to 'Back', all_resume_list_selected_resumes_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 </div>
 </div>

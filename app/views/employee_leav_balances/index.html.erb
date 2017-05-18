@@ -2,7 +2,7 @@
   <div class="box-header">
     <h3 class="box-title">Employee Leave Assignment</h3>
     <div class="pull-right">
-      <%= link_to "New Employee leave balance", new_employee_leav_balance_path, class: 'btn btn-primary' %> | 
+      <%= link_to "New Employee leave balance", new_employee_leav_balance_path, class: 'btn btn-primary' %>
      
     </div>
     
@@ -21,7 +21,7 @@
   </thead>
 
   <tbody>
-    <% @employee_leav_balances.each do |employee_leav_balance| %>
+    <% @employee_leav_balances.where(is_active: true).each do |employee_leav_balance| %>
       <tr>
         <td><%= employee_leav_balance.employee.try(:manual_employee_code) %></td>
         <td><%= full_name(employee_leav_balance.employee)%></td>
@@ -34,7 +34,7 @@
               <small class= "label label-primary">Confirmed</small>
               <% else %>
                 <%= link_to '',leave_balance_modal_employee_leav_balances_path(employee_leav_balance),class: 'btn btn btn-xs btn-success fa fa-edit',remote: true %>
-                <%= link_to '', is_confirm_leave_employee_leav_balances_path(emp_leav_bal_id: employee_leav_balance ),class: 'btn btn-xs btn-info fa fa-check' %>
+                <%= link_to '', is_confirm_leave_employee_leav_balances_path(emp_leav_bal_id: employee_leav_balance ),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
               <% end %>
           </td>
         </tr>

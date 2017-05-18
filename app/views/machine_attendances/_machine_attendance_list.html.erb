@@ -11,15 +11,12 @@
   <tr>
     <th><input type="checkbox" id="selectAll" value="selectAll"></th>
     <th>ID</th>
-    <th>Employee ID</th>
     <th>Employee Name</th>
     <th>Shift</th>
     <th>Day</th>
     <th>In</th>
     <th>Out</th>
     <th>Present</th>
-    <th>User</th>
-    <th>Is Updated</th>
     <th>Action</th>
   </tr>
 </thead>
@@ -27,16 +24,13 @@
   <% @machine_attendances.each do |m| %>
     <tr>              
       <td><%= check_box_tag "machine_attendance_ids[]",m.id %></td>
-      <td><%= m.id %></td>
-      <td><%= m.employee.try(:id) %></td>
+      <td><%= m.employee.manual_employee_code %></td>
       <td><%= m.employee.try(:first_name) %> <%= m.employee.try(:middle_name) %> <%= m.employee.try(:last_name) %></td>
       <td><%= m.shift_master.try(:name) %></td>
       <td><%= m.day %></td>
       <td><%= m.try(:in) %></td>
       <td><%= m.try(:out) %></td>
       <td><%= m.try(:present) %></td>
-      <td><%= m.user_id %></td>
-      <td><%= m.is_updated ? "Yes" : "No" %></td>
       <div id="myModal" class="modal fade"></div>
       <td><%= link_to '',modal_machine_attendances_path(m),class: 'btn btn-success btn-xs fa fa-edit',remote: true %></td>
     </tr>

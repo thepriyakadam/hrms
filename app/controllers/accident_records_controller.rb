@@ -11,6 +11,7 @@ class AccidentRecordsController < ApplicationController
   # GET /accident_records/1
   # GET /accident_records/1.json
   def show
+    @accident_record = AccidentRecord.find(params[:id])
   end
 
   # GET /accident_records/new
@@ -20,14 +21,25 @@ class AccidentRecordsController < ApplicationController
 
   # GET /accident_records/1/edit
   def edit
+    @employee = @accident_record.employee
   end
 
   # POST /accident_records
   # POST /accident_records.json
   def create
+    # byebug
+    # @employee = Employee.find(params[:accident_record][:employee_id])
     @accident_record = AccidentRecord.new(accident_record_params)
     respond_to do |format|
       if @accident_record.save
+        # len = params['accident_record'].length - 2
+        #  for i in 2..len
+        #   AccidentRecord.create(employee_id: params['accident_record']['employee_id'], avatar: params['accident_record'][i.to_s]['avatar'])
+        #   end
+          # @accident_records = @employee.accident_records
+          flash[:notice] = 'Photo Added successfully created'
+        # @employee = AccidentRecord.find(id: employee_id)
+        # @employee1 = Employee.find_by_employee_id(@employee)
         format.html { redirect_to @accident_record, notice: 'Accident record was successfully created.' }
         format.json { render :show, status: :created, location: @accident_record }
       else
@@ -40,6 +52,7 @@ class AccidentRecordsController < ApplicationController
   # PATCH/PUT /accident_records/1
   # PATCH/PUT /accident_records/1.json
   def update
+    # @accident_record = AccidentRecord.find(params['accident_record']['employee_id'])
     respond_to do |format|
       if @accident_record.update(accident_record_params)
         format.html { redirect_to @accident_record, notice: 'Accident record was successfully updated.' }
@@ -65,6 +78,7 @@ class AccidentRecordsController < ApplicationController
     @employee = Employee.find(params[:id])
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @esic_no = @joining_detail.employee_efic_no
+    @department_id = @employee.department.name
   end
 
   def download_jpg

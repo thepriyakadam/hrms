@@ -4,13 +4,38 @@ class EmployeePromotionsController < ApplicationController
   # GET /employee_promotions
   # GET /employee_promotions.json
   def index
-    @employee_promotions = EmployeePromotion.all
+    if current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @employee_promotions= EmployeePromotion.all
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        @employee_promotions = EmployeePromotion.where(employee_id: @employees)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @employee_promotions = EmployeePromotion.where(employee_id: @employees)
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+        @employee_promotions = EmployeePromotion.where(employee_id: @employees)
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
+        @employee_promotions = EmployeePromotion.where(employee_id: @employees)
+      else current_user.role.name == 'Employee'
+        @employee_promotions = EmployeePromotion.where(employee_id: current_user.employee_id)
+        redirect_to home_index_path
+      end
+    else
+      @employees = Employee.all
+    end
     session[:active_tab] ="promotionmanagement"
   end
 
   # GET /employee_promotions/1
   # GET /employee_promotions/1.json
   def show
+     # @employee = Employee.find(params[:id])
+     # @employee1 = EmployeePromotion.where(id: @employee)
+     # @employee_promotions = EmployeePromotion.where(employee_id: params[:id])
   end
 
   # GET /employee_promotions/new
@@ -26,6 +51,8 @@ class EmployeePromotionsController < ApplicationController
   # POST /employee_promotions.json
   def create
     @employee_promotion = EmployeePromotion.new(employee_promotion_params)
+    @effective  =  EmployeePromotion.where(employee_id: @employee_promotion.employee_id).last
+    @effective.update(effective_to: @employee_promotion.effective_from)
     @employee_id = params[:employee_promotion][:employee_id]
     @department_id = params[:employee_promotion][:department_id]
     @employee_designation_id = params[:employee_promotion][:employee_designation_id]
@@ -37,6 +64,13 @@ class EmployeePromotionsController < ApplicationController
     @joining_detail.update(employee_designation_id: @employee_designation_id,employee_grade_id: @employee_grade_id,employee_category_id: @employee_category_id)
     respond_to do |format|
       if @employee_promotion.save
+        PromotionHistory.create(employee_promotion_id: @employee_promotion.id,employee_id: @employee_promotion.employee_id,department_id: @employee_promotion.department_id,employee_designation_id: @employee_promotion.employee_designation_id,employee_category_id: @employee_promotion.employee_category_id,employee_grade_id: @employee_promotion.employee_grade_id,employee_ctc: @employee_promotion.employee_ctc,justification: @employee_promotion.justification,effective_from: @employee_promotion.effective_from,effective_to: @employee_promotion.effective_to)
+        #   ActiveRecord::Base.transaction do
+        # @employee = @employee_promotion.employee
+        # @pre_employee_promotion = EmployeePromotion.where('employee_id = ? and current = ?', @employee.id, true).take
+        # @pre_employee_promotion.update(current: false, effective_to: @pre_employee_promotion.effective_from)
+        # @employee_promotion.update(current: true, effective_from: @pre_employee_promotion.effective_to)
+      # end
         format.html { redirect_to @employee_promotion, notice: 'Employee promotion was successfully created.' }
         format.json { render :show, status: :created, location: @employee_promotion }
       else
@@ -51,15 +85,22 @@ class EmployeePromotionsController < ApplicationController
   def update
     respond_to do |format|
     if @employee_promotion.update(employee_promotion_params)
+      @employee = Employee.find_by_id(@employee_promotion.employee_id)
     @employee_id = params[:employee_promotion][:employee_id]
     @department_id = params[:employee_promotion][:department_id]
     @employee_designation_id = params[:employee_promotion][:employee_designation_id]
     @employee_grade_id = params[:employee_promotion][:employee_grade_id]
     @employee_category_id = params[:employee_promotion][:employee_category_id]
+     # byebug
+    @effective_from = params[:employee_promotion][:effective_from]
     @employee = Employee.find(@employee_id)
     @employee.update(department_id: @department_id)
     @joining_detail= JoiningDetail.find_by_employee_id(@employee_id)
     @joining_detail.update(employee_designation_id: @employee_designation_id,employee_grade_id: @employee_grade_id,employee_category_id: @employee_category_id)
+    PromotionHistory.create(employee_promotion_id: @employee_promotion.id,employee_id: @employee_promotion.employee_id,department_id: @employee_promotion.department_id,employee_designation_id: @employee_promotion.employee_designation_id,employee_category_id: @employee_promotion.employee_category_id,employee_grade_id: @employee_promotion.employee_grade_id,employee_ctc: @employee_promotion.employee_ctc,justification: @employee_promotion.justification,effective_from: @effective_from)
+    @promotion_history = PromotionHistory.last.id - 1
+    PromotionHistory.where(id: @promotion_history).update_all(effective_to: @effective_from)
+    
         format.html { redirect_to @employee_promotion, notice: 'Employee promotion was successfully updated.' }
         format.json { render :show, status: :ok, location: @employee_promotion }
       else
@@ -86,6 +127,7 @@ class EmployeePromotionsController < ApplicationController
 
   def print_employee_promotion
       @employee = Employee.find(params[:id])
+      # @employee1 = EmployeePromotion.where(id: @employee)
       @employee_promotions = EmployeePromotion.where(employee_id: params[:id])
             respond_to do |f|
             f.js
@@ -102,7 +144,9 @@ class EmployeePromotionsController < ApplicationController
 
 
   def promotion_history
+    # byebug
     @employee = Employee.find(params[:id])
+    @employee1 = EmployeePromotion.where(id: @employee)
     @employee_promotions = EmployeePromotion.where(employee_id: params[:id])
   end
 
@@ -157,6 +201,6 @@ class EmployeePromotionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_promotion_params
-      params.require(:employee_promotion).permit(:employee_id, :department_id, :employee_designation_id, :employee_grade_id, :employee_category_id, :employee_ctc, :justification, :effective_from, :effective_to)
+      params.require(:employee_promotion).permit(:employee_id, :department_id, :employee_designation_id, :employee_grade_id, :employee_category_id, :employee_ctc, :justification, :effective_from, :effective_to,:designation,:grade,:category,:employee_department)
     end
 end

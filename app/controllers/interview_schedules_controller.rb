@@ -54,14 +54,14 @@ class InterviewSchedulesController < ApplicationController
     if @interview_schedule.save
      @selected_resume = SelectedResume.find(@interview_schedule.selected_resume_id)
      @selected_resume.update(status: "Interview Scheduled")
-      InterviewScheduleMailer.sample_email(@interview_schedule).deliver_now
+      # InterviewScheduleMailer.sample_email(@interview_schedule).deliver_now
       @interview_schedule = InterviewSchedule.new
     end
     if @interview_schedule.email_id.nil?
       flash[:alert] = 'Interview Scheduled Successfully without Email'
       redirect_to interview_schedules_path
     else
-      InterviewScheduleMailer.sample_email_to_candidate(@interview_schedule).deliver_now
+      # InterviewScheduleMailer.sample_email_to_candidate(@interview_schedule).deliver_now
       flash[:notice] = 'Interview Scheduled Successfully & Email also Sent.'
       redirect_to interview_schedules_path
     # @interview_reschedule.save
@@ -206,7 +206,10 @@ end
 
   def resume_list
      @selected_resume = SelectedResume.new
-     @interview_schedule = InterviewSchedule.find(params[:format])
+     # @interview_schedule = InterviewSchedule.find(params[:format])
+     @interview_round = InterviewRound.find(params[:format])
+     @interview_schedule = InterviewSchedule.where(id: @interview_round.interview_schedule_id).take
+     # @selected_resumes = SelectedResume.where(id: @interview_schedule.selected_resume_id)
      @selected_resumes = SelectedResume.where(id: @interview_schedule.selected_resume_id)
   end
 
@@ -234,7 +237,8 @@ end
   end
 
   def all_interview_schedule_list
-     @interview_schedules = InterviewSchedule.all
+     # @interview_schedules = InterviewSchedule.all
+     @interview_schedules = InterviewSchedule.where(is_confirmed: true)
      session[:active_tab] ="recruitment"
      session[:active_tab1] ="general_vacancy"
   end
@@ -275,9 +279,9 @@ end
   end
 
   def interview_round_list
-    @interview_schedule = InterviewSchedule.find(params[:format])
-    # @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id,employee_id: current_user.employee_id)
-    @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id)
+    # @interview_schedule = InterviewSchedule.find(params[:format])
+    @interview_rounds = InterviewRound.where(employee_id: current_user.employee_id,interview_round_confirm: true)
+    # @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id)
   end
 
   def modal_schedule_list
@@ -294,6 +298,20 @@ end
      redirect_to interview_schedules_path
     end
 
+  def confirm_vacancy
+    @interview_schedule = InterviewSchedule.find(params[:format])
+    @selected_resume = SelectedResume.where(id: @interview_schedule.selected_resume_id).take
+    @vacancy_master = VacancyMaster.where(id: @selected_resume.vacancy_master_id).take
+    @interview_analyses = InterviewAnalysis.where(interview_schedule_id: @interview_schedule.id)
+    @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id)
+  end
+
+    def show_interview_round_list
+       @interview_round = InterviewRound.find(params[:format])
+       @interview_schedule
+       @interview_rounds = InterviewRound.where(id: @interview_round.id).take
+    end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -307,6 +325,6 @@ end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def interview_schedule_params
-    params.require(:interview_schedule).permit(:selected_resume_id, :employee_id, :interview_schedule_id, :email_id, :candidate_name, :interview_date, :location, :job_title)
+    params.require(:interview_schedule).permit(:selected_resume_id, :employee_id, :address,:interview_schedule_id, :email_id, :candidate_name, :interview_date, :location, :job_title)
   end
 end

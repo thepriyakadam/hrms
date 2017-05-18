@@ -12,13 +12,12 @@
  </div> -->
   <div class="row">
   <div class="col-sm-3">
-      <label>Interview Date</label>
       <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :interview_date, hide_label: true, class: 'interview_date'%>
+          <%= f.text_field :interview_date, label: "Interview Date", class: 'interview_date'%>
         </div>
       </div>
     </div>
@@ -26,12 +25,11 @@
     <div class="col-sm-3">
       <div class="bootstrap-timepicker">
        <div class="form-group required">
-       <label>Interview Time</label>
         <div class="input-group">
-         <%= f.text_field :interview_time,hide_label:true, class: 'form-control timepicker' %>
         <div class="input-group-addon">
         <i class="fa fa-clock-o"></i>
         </div>
+         <%= f.text_field :interview_time,label: "Interview Time", class: 'form-control timepicker' %>
         </div><!-- /.input group -->
        </div><!-- /.form group -->
       </div>
@@ -67,6 +65,7 @@
     <div class="col-sm-3">
       <div class="actions">
       <%= f.submit "Create Interview Rechedule",class: "btn btn-primary btn-sm" %>
+      <%= link_to 'Back', new_interview_round_path(interview_schedule_id: @interview_schedule.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
       </div>
     </div> 
   </div>

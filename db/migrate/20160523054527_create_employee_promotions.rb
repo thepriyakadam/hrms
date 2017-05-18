@@ -1,6 +1,11 @@
 class CreateEmployeePromotions < ActiveRecord::Migration
   def change
     create_table :employee_promotions do |t|
+      t.string :designation
+      t.string :current
+      t.string :grade
+      t.string :category
+      t.string :employee_department
       t.references :employee, index: true, foreign_key: true
       t.references :department, index: true, foreign_key: true
       t.references :employee_designation, index: true, foreign_key: true

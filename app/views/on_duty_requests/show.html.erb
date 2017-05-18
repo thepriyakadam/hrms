@@ -1,0 +1,86 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">On Duty Detail</h3>
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+      <tr>
+        <!-- <th><strong>ID:</strong></th>
+        <td><= @on_duty_request.try(:employee).try(:manual_employee_code) %></td> -->
+        <th><strong>Employee:</strong></th>
+        <td><%= full_name(@on_duty_request.employee) %></td>
+      
+        <th><strong>OD Type:</strong></th>
+        <td><%= @on_duty_request.leave_type %></td>
+      </tr>
+
+      <tr>
+        <th><strong>From Date:</strong></th>
+        <td><%= @on_duty_request.start_date.to_date %></td>
+      
+        <th><strong>To Date:</strong></th>
+        <td><%= @on_duty_request.end_date.to_date %></td>
+      </tr>
+
+      <tr>
+        <th><strong>No of Day:</strong></th>
+        <td><%= @on_duty_request.no_of_day %></td>
+      
+        <th><strong>Reason:</strong></th>
+        <td><%= @on_duty_request.reason %></td>
+      </tr>
+
+      <tr>
+        <th><strong>First Reporter:</strong></th>
+        <td><%= full_name(@on_duty_request.first_reporter) %></td>
+      
+        <th><strong>Second Reporter:</strong></th>
+        <td><%= full_name(@on_duty_request.second_reporter) %></td>
+      </tr>
+
+      <tr>
+        <th><strong>First Half:</strong></th>
+        <td><%= @on_duty_request.first_half %></td>
+      
+        <th><strong>Last Half:</strong></th>
+        <td><%= @on_duty_request.last_half %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Status:</strong></th>
+        <td><%= @on_duty_request.current_status %></td>
+    
+        <th><strong>Pending:</strong></th>
+        <td><%= @on_duty_request.is_pending ? 'Yes' : 'No' %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Cancelled:</strong></th>
+        <td><%= @on_duty_request.is_cancelled ? 'Yes' : 'No' %></td>
+      
+        <th><strong>First Approved:</strong></th>
+        <td><%= @on_duty_request.is_first_approved ? 'Yes' : 'No' %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Second Approved:</strong></th>
+        <td><%= @on_duty_request.is_second_approved ? 'Yes' : 'No' %></td>
+      
+        <th><strong>First Rejected:</strong></th>
+        <td><%= @on_duty_request.is_first_rejected ? 'Yes' : 'No' %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Second Rejected:</strong></th>
+        <td><%= @on_duty_request.is_second_rejected  ? 'Yes' : 'No'%></td>
+        <th></th>
+        <td></td>
+      </tr>
+    </table>
+    <br>
+      <% if @on_duty_request.employee_id == current_user.employee_id %>
+        <%= link_to 'Back', on_duty_requests_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+      <% else %>
+        <%= link_to 'Back', hr_view_request_on_duty_requests_path(@on_duty_request.employee_id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+      <% end %>
+    </div>
+  </div></div>

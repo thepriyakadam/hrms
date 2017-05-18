@@ -1,14 +1,13 @@
-<%= bootstrap_form_for(@circular,html: {id: 'circular'},remote:true) do |f| %>
+<%= bootstrap_form_for(@circular,html: {id: 'circular'}) do |f| %>
 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   <div class="row">
     <div class="col-sm-3">
-      <label>Circular Date: </label>
       <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :date, hide_label: true, class: 'interview_date'%>
+          <%= f.text_field :date, class: 'interview_date'%>
         </div>
       </div>
     </div> 
@@ -19,18 +18,24 @@
     </div>
     <div class="col-sm-3">
     <div class="form-group required">
-      <%= f.file_field :avatar,label: 'Document' %>
+      <%= f.file_field :document,label: 'Document' %>
+    </div>
+   </div>
+    <div class="col-sm-3">
+    <div class="field">
+      <%= f.file_field :avatar,label: 'Picture' %>
     </div>
    </div>
 
-   <div class="col-sm-3">
+  
+    </div>
+    <div class="row">
+     <div class="col-sm-3">
       <label>Status </label>
       <div class="field">
         <%= f.check_box :is_active, label: 'Active'%>
       </div>
     </div>
-    </div>
-    <div class="row">
     <div class="col-sm-3">
     <label></label>
       <div class="actions">
@@ -54,7 +59,10 @@ $("#circular").validate({
       "circular[subject]":{
         required: true,
       },
-      "circular[avatar]":{
+       "circular[date]":{
+        required: true,
+      },
+       "circular[document]":{
         required: true,
       }
     },
@@ -62,10 +70,12 @@ $("#circular").validate({
       "circular[subject]":{
         required: "Please Specify Subject",
       },
-      "circular[avatar]":{
-        required: "Please Select Document",
+       "circular[date]":{
+        required: "Please Select Date",
+      },
+       "circular[document]":{
+        required: "Please Upload Document",
       }
-      
     },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
@@ -73,5 +83,3 @@ $("#circular").validate({
     }
    });
 </script>
-
-

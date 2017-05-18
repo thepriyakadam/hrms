@@ -1,54 +1,53 @@
-<div class="box-body">
 
- <div style="width: 700px; height: 700px;
+<div class="box box-default">
+
+
+<div class="box-header with-border">
+ <h3 class="box-title"> Certificate Of Promotion </h3>
+     <div class="pull-right">
+  <%= link_to "Print Certificate",print_certificate_employee_promotions_path(emp_promotion_id: @employee_promotion.id,format: "pdf") ,class: 'btn btn-primary btn-sm ',:target => "_blank"%>
+  </div>
+
+</div>
+<!-- <div class="pull-right">
+
+   </div> -->
+  <div class="box-body">
+<div style="width: 650px; height: 690px;
+ font-size: 15px;
           padding: 10px;
-          border: 5px solid gray;
-          margin: 10;">
-  <div style="float:right;">Date - <%= Time.zone.now.to_date %> </div><br><br>
+          border: 2px solid gray;
 
-  <b><center>PROMOTION CERTIFICATE</center></b><br><br>
-  <table id="example2" class="table table-bordered table-hover table-condensed'">
-  <tr>
-      <th><strong>Employee Name</strong></th>
-      <td><%= @employee_promotion.employee.try(:first_name) %> <%= @employee_promotion.employee.try(:middle_name) %> <%= @employee_promotion.employee.try(:last_name) %></td>
-    
-      <th><strong>Department</strong></th>
-      <td><%= @employee_promotion.department.try(:name) %></td>
-    </tr>
+    margin-right: 150px;
+    margin-left: 300px;">
 
-    <tr>
-      <th><strong>Employee Designation</strong></th>
-      <td><%= @employee_promotion.employee_designation.try(:name) %></td>
-  
-      <th><strong>Employee Grade</strong></th>
-      <td><%= @employee_promotion.employee_grade.try(:name) %></td>
-    </tr>
+  <td colspan="4"><b><b><center>Certificate Of Promotion</center></b></b></td><hr>
+  <tr><td colspan="4"><center><strong><%= @employee_promotion.employee.company_location.company.try(:description) %></strong> <br>
+        <%= @employee_promotion.employee.company_location.company.try(:address) %><br> 
+        <%= @employee_promotion.employee.company_location.try(:name) %></center> </td></tr>
+        <hr>
+ 
+ <p> Dear Mr./Miss.<b> <%= @employee_promotion.employee.try(:first_name) %> <%= @employee_promotion.employee.try(:middle_name) %> <%= @employee_promotion.employee.try(:last_name) %> </b> </p>
 
-    <tr>
-      <th><strong>Employee Category</strong></th>
-      <td><%= @employee_promotion.employee_category.try(:name) %></td>
+ <p>This is in continuation to your application for the internal job posting for the department of <b><%= @employee_promotion.department.try(:name) %> </b>and your subsequent interview with our Board of Directors.</p>
 
-      <th><strong>Employee CTC</strong></th>
-      <td><%= @employee_promotion.employee_ctc %></td>
-    </tr>
+ <p>We are extremely pleased to inform you that the Board has considered you suitable for the post. You have therefore been promoted to <b><%= @employee_promotion.employee_designation.try(:name) %></b> with effect from <b><%= @employee_promotion.effective_from %></b> </p>
 
-    <tr>
-      <th><strong>Effective From</strong></th>
-      <td><%= @employee_promotion.effective_from %></td>
+ <p>By becoming the <b><%= @employee_promotion.employee_designation.try(:name) %></b> your CTC will now be Rs. <b><%= @employee_promotion.employee_ctc %></b> (per annum). Please contact the HR department for a break up of the CTC.</p>
 
-      <th><strong>Effective To</strong></th>
-      <td><%= @employee_promotion.effective_to %></td>
-    </tr>
+ <p>Congratulations on your achievement and we wish you all the very best in the coming years.</p><br>
 
-   </table>
+ <div style="float:left;">Best regards,<br>
 
+ _____________<br>
 
-  <p>For <b> <%= current_user.employee.company_location.company.try(:description) %> </b></p>
-
-  <P>HR</P>
+(Name of signing authority)</div>
 
 
 </div>
-</div>
- <%= link_to "Print",print_certificate_employee_promotions_path(emp_promotion_id: @employee_promotion.id,format: "pdf") ,class: 'btn btn-warning btn-xs ',:target => "_blank"%> 
+
+<br><br>
+ <%= link_to 'Back',promotion_history_employee_promotions_path(id: @employee_promotion.employee_id),class: 'btn btn-default btn-sm fa fa-arrow-left'%>
 <!-- = link_to "Print",service_certificate_certificates_path(employee_id: @employee.id, certificate: @certificate,format: "pdf"),:target => "_blank"%> -->
+</div>
+</div>

@@ -293,4 +293,7 @@ class EmployeeTemplatesController < ApplicationController
       format.xls {render template: 'employee_templates/employee_wise_salary.xls.erb'}
     end
   end
+
+  
+
 end

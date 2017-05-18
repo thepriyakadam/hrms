@@ -1,6 +1,6 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Employee Salary Slip List</h3>
+    <h3 class="box-title">Employee Salaryslip</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example6" class="table table-bordered table-hover">
@@ -15,14 +15,17 @@
   </thead>
 
   <tbody>
-    <% @salray_slips.where(is_confirm: true) do |salary| %>
+    <% @salray_slips.each do |salary| %>
       <tr>
         <td><%= salary.salary_slip_code %></td>
         <td><%= salary.salary_template.try(:description)%></td>
         <td><%= salary.month %></td>
         <td><%= salary.year %></td>
         <td>
-        <%= link_to '', show_salaryslip_salaryslips_path(salary), class: 'btn btn-default fa fa-eye' %>
+        <%=  link_to 'Formate 1', show_salaryslip_formate_3_salaryslips_path(salary), class: 'btn btn-primary fa fa-show' %> 
+        <%= link_to 'Formate 2', show_salaryslip_salaryslips_path(salary), class: 'btn btn-primary fa fa-show' %>
+        <%= link_to 'Formate 3', show_salaryslip_rg_salaryslips_path(salary), class: 'btn btn-primary fa fa-show' %>
+
         </td>
         </tr>
       <% end %>

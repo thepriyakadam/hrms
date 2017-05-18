@@ -1,9 +1,12 @@
 <%= bootstrap_form_for @daily_bill_detail do |f| %>
     <table id="example2" class="table table-bordered table-hover table-condensed">
       <thead>
+      <tr>
+      <td colspan="8"><center>Expense Claim List</center></td>
+    </tr>
         <tr>  
 <!--           <th><input type="checkbox" id="selectAll" value="selectAll"></th>
- -->          <th>Expense Date</th>
+ -->      <th>Expense Date</th>
           <th>Place</th>
           <th>Expense Type</th>
           <th>Expense Amount</th>
@@ -27,7 +30,7 @@
             <td><%= daily_bill_detail.currency_master.try(:name) %> <%= daily_bill_detail.currency_master.try(:description) %></td>
             <td>
                 <% if daily_bill_detail.passport_photo_file_name == nil %>
-                  <small class="label label-warning">Not Available</small>
+                  <small class="label label-default">Not Available</small>
                 <% else %>
                   <%= link_to '',download_pics_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-picture-o' %>
                   <!-- <div id="myModal2" class="modal fade"></div>
@@ -36,7 +39,7 @@
             </td>
             <td>
               <% if daily_bill_detail.avatar_file_file_name == nil %>
-                 <small class="label label-warning">Not Available</small>
+                 <small class="label label-default">Not Available</small>
               <% else %>
                 <%= link_to '',download_doc_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-download',:target => "_blank" %>
               <% end %>
@@ -72,7 +75,7 @@
           <!--<= f.submit "Confirm", class: 'btn btn-primary btn-sm',data: { confirm: 'Are you sure?' } %>--> |
         <% end %>
         <% if @a = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:status).last == true %>
-          <%= link_to 'Print PDF', print_daily_bill_daily_bill_details_path(format: 'pdf',qwe:@travel_request.id ),class: 'btn btn-sm btn-warning',:target => '_blank' %>
+          <%= link_to 'Print PDF', print_daily_bill_daily_bill_details_path(format: 'pdf',qwe:@travel_request.id ),class: 'btn btn-sm btn-primary',:target => '_blank' %>
           <% else %>
 <!--           <small class="label label-success">You Can't Print until Your request is Approved</small>
  -->          <% end %>

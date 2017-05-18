@@ -1,0 +1,79 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">OD Approval</h3>
+    <div class="pull-right"></div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div class="row">
+      <div class="col-sm-6">
+        <table id="example6" class="table table-bordered table-hover table-condensed">
+          <thead>
+           <tr><td colspan="5"><center>First Level Request</center></td></tr>
+            <tr>
+              <th>ID</th>
+              <th>Employee Name</th>
+              <th>Day</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @pending_on_duty_requests.try(:each) do |on_duty_request| %>
+              <tr>
+                <td><%= on_duty_request.employee.try(:manual_employee_code) %></td>
+                <td><%= full_name(on_duty_request.employee) %></td>
+                <td><%= on_duty_request.no_of_day %></td>
+                <td>
+                  <%= link_to 'View Detail', employee_od_request_detail_on_duty_requests_path(on_duty_request),class: 'btn btn-sm btn-info' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+       <div class="col-sm-6">
+        <table id="example7" class="table table-bordered table-hover table-condensed">
+          <thead>
+          <tr><td colspan="5"><center>Second Level Request</center></td></tr>
+            <tr>
+              <th>ID</th>
+              <th>Employee Name</th>
+              <th>Day</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @first_approved_on_duty_requests.try(:each) do |on_duty_request| %>
+              <tr>
+                <td><%= on_duty_request.employee.try(:manual_employee_code) %></td>
+                <td><%= on_duty_request.employee.try(:first_name) %> <%= on_duty_request.employee.try(:middle_name) %> <%=on_duty_request.employee.try(:last_name) %></td>
+                <td><%= on_duty_request.no_of_day %></td>
+                <td>
+                  <%= link_to 'View Detail', employee_od_request_detail_on_duty_requests_path(on_duty_request),class: 'btn btn-sm btn-info' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example7').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

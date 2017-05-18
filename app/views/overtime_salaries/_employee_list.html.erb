@@ -19,7 +19,7 @@
           <td><%= check_box_tag "employee_ids[]", o.employee_id %></td>
           <td><%= o.employee.try(:manual_employee_code) %></td>
           <td><%= full_name(o.employee) %></td>
-          <td><%= o.ot_daily_date.strftime('%B-%Y') %></td>
+          <td><%= o.ot_daily_date.DATE_FORMAT('%B%Y') %></td>
           <% start_date = o.ot_daily_date.at_beginning_of_month %>
           <% end_date = o.ot_daily_date.at_end_of_month %>
           <% ot_amount = OvertimeDailyRecord.where(employee_id: o.employee_id, ot_daily_date:start_date..end_date).sum(:ot_daily_amount) %>

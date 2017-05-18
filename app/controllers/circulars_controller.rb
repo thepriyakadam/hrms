@@ -26,14 +26,30 @@ class CircularsController < ApplicationController
 
   # POST /circulars
   # POST /circulars.json
+
+  # def create
+  #   # byebug
+  #    @circular = Circular.new(circular_params)
+  #    @circulars = Circular.all
+  #     if @circular.save
+  #       @circular = Circular.new
+  #     else
+  #     redirect_to new_circular_path
+  #     flash[:notice] = 'Circular Saved Successfully'   
+  #   end
+  # end
+
+  
   def create
+    # byebug
      @circular = Circular.new(circular_params)
      @circulars = Circular.all
       if @circular.save
         @circular = Circular.new
       end
+      flash[:notice] = 'Circular saved Successfully.' 
       redirect_to new_circular_path
-      flash[:notice] = 'Circular Saved Successfully'   
+        
   end
 
   # PATCH/PUT /circulars/1
@@ -53,6 +69,36 @@ class CircularsController < ApplicationController
   def destroy
     @circular.destroy
     @circulars = Circular.all
+  end
+
+  # def download_company_policy_document
+  #   @circular = Circular.find(params[:id])
+  #   if File.exist?(@circular.document.path)
+  #   send_file @circular.document.path,
+  #             filename: @circular.document,
+  #             type: @circular.document_content_type,
+  #             disposition: 'attachment'
+  #   else
+  #   flash[:alert] = "No file found Please contact to Admin!"
+  #   redirect_to root_url
+  #   end
+  # end
+
+   def download_company_policy_document
+    # byebug
+    @circular = Circular.find(params[:id])
+    if File.exist?(@circular.document.path)
+    send_file @circular.document.path,
+              filename: @circular.document_file_name,
+              type: @circular.document_content_type,
+              disposition: 'attachment'
+               else
+    flash[:alert] = "No file found Please contact to Admin!"
+    redirect_to root_url
+    end
+    # path = params[:to]
+    # render path
+    # render 'show'
   end
 
   def download_documents
@@ -83,6 +129,6 @@ class CircularsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def circular_params
-      params.require(:circular).permit(:avatar, :date, :subject,:is_active,:is_confirm)
+      params.require(:circular).permit(:avatar, :date, :subject,:is_active,:is_confirm,:document)
     end
 end

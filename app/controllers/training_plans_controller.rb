@@ -35,7 +35,18 @@ class TrainingPlansController < ApplicationController
   def create
     @training_plan = TrainingPlan.new(training_plan_params)
     # byebug
+        @training_plan.save
         @trainee_request_ids = params[:trainee_request_ids]
+        TraineeRequest.where(id: @trainee_request_ids).update_all(training_plan: true)
+        # a=TraineeRequest.where(training_topic_master_id: @training_plan.training_topic_master_id,is_complete: true,training_plan: nil)
+        #   a.each do |s|
+        #     s.update(training_plan: true)
+        #   end
+          # TraineeRequest.where(id: a).update_all(training_plan: true)
+          b=TraineeRequest.where(training_topic_master_id: @training_plan.training_topic_master_id,is_complete: nil,training_plan: nil)
+          b.each do |sb|
+            sb.update(is_complete: true,training_plan: nil)
+          end
 
         if @trainee_request_ids.nil?
           flash[:alert] = "Please Select the Checkbox"
@@ -43,11 +54,14 @@ class TrainingPlansController < ApplicationController
           @trainee_request_ids.each do |tid|
           # @emp = Employee.find_by_id(tid)
           @trainee_request = TraineeRequest.find(tid)
-          @training_plan.save
+          # @training_plan.save
           @emp_total = @trainee_request_ids.count
+          # byebug
+
+          # TraineeRequest.where(id: b).update_all(is_complete: true,training_plan: nil)
           TrainingPlan.where(id: @training_plan.id).update_all(no_of_employee: @emp_total)
           Trainee.create(employee_id: @trainee_request.employee_id,training_plan_id: @training_plan.id)
-          TrainingPlanMailer.confirmation_email_to_employee(@trainee_request).deliver_now 
+          # TrainingPlanMailer.confirmation_email_to_employee(@trainee_request).deliver_now 
           flash[:notice] = 'Training Plan Created Successfully'
           end
         end   
@@ -128,7 +142,6 @@ class TrainingPlansController < ApplicationController
       @goal_rating_ids.each do |eid|
         @emp_total = @goal_rating_ids.count
         TrainingPlan.where(id: @training_plan.id).update_all(no_of_employee: @emp_total)
-
       Trainee.create(employee_id: eid,training_plan_id: @training_plan.id)
       GoalRating.where(appraisee_id: eid,training_topic_master_id: training_topic_master_id).update_all(is_hide: true)
         flash[:notice] = "Created Successfully"
@@ -137,12 +150,22 @@ class TrainingPlansController < ApplicationController
   end
 
   def training_topic_wise_search
+    session[:active_tab] ="trainingmgmt"
   end
 
   def show_traineerequest_list
+     # byebug
      @training_plan =TrainingPlan.new
      @training_topic_master = TrainingTopicMaster.find(params[:training_topic_master_id])
-     @trainee_requests =TraineeRequest.where(training_topic_master_id: @training_topic_master.id,is_complete: :true)
+     @trainee_requests =TraineeRequest.where(training_topic_master_id: @training_topic_master.id,is_complete: true,training_plan: nil)
+    #  @trainee_requests_1 =TraineeRequest.where(training_topic_master_id: @training_topic_master.id)
+    #  @trainee_requests_1.each do |tr1|
+    #   if tr1.is_complete == true && tr1.training_plan == nil
+    #      @trainee_requests =TraineeRequest.where(training_topic_master_id: @training_topic_master.id,is_complete: true,training_plan: nil)
+    #   elsif tr1.is_complete == nil && tr1.training_plan == nil
+    #      @trainee_requests =TraineeRequest.where(training_topic_master_id: @training_topic_master.id,is_complete: nil,training_plan: nil)
+    #   end
+    # end
      # @trainee_request =TraineeRequest.where(training_topic_master_id: @training_topic_master.id)
   end
 

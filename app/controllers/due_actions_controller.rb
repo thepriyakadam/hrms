@@ -14,6 +14,7 @@ class DueActionsController < ApplicationController
 
   # GET /due_actions/new
   def new
+    # byebug
     @due_action = DueAction.new
     # @due_detail = DueDetail.find(params[:due_detail_id])
     @due_employee_detail = DueEmployeeDetail.find(params[:due_employee_detail_id])
@@ -32,6 +33,7 @@ class DueActionsController < ApplicationController
      @due_action = DueAction.new(due_action_params)
      @due_actions = DueAction.all
       if @due_action.save
+        # byebug
         @due_action = DueAction.new
         flash[:notice] = 'Due Action created Successfully.'   
       end
@@ -59,6 +61,33 @@ class DueActionsController < ApplicationController
     @due_actions = DueAction.all
   end
 
+  def confirm_employee_due_action
+    # byebug
+    # @due_employee_detail = DueEmployeeDetail.find(params[:due_employee_detail_id])
+    @due_action_ids = params[:due_action_ids]
+    if @due_action_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to employee_due_detail_history_due_details_path
+    else
+      @due_action_ids.each do |did|
+        @due_action = DueAction.find(did)
+        @due_action.update(is_confirm: true)
+        # byebug
+        # if @due_action.is_exist(@due_action.due_employee_detail_id)
+        #  DueEmployeeDetail.where(id: @due_action.due_employee_detail_id).update_all(is_confirmed: true)
+        # else
+        # end
+        a=DueAction.where(due_employee_detail_id: @due_action.due_employee_detail_id,is_confirm: false)
+        if a.present?
+        else
+          DueEmployeeDetail.where(id: @due_action.due_employee_detail_id).update_all(is_confirmed: true)
+        end
+        flash[:notice] = "Confirmed Successfully"
+      end
+      redirect_to employee_due_detail_history_due_details_path
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_due_action
@@ -67,6 +96,6 @@ class DueActionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def due_action_params
-      params.require(:due_action).permit(:due_detail_id, :name, :remark, :amount, :due_detail_id, :due_employee_detail_id)
+      params.require(:due_action).permit(:due_detail_id, :name, :remark, :status,:is_confirm,:amount, :due_detail_id, :due_employee_detail_id)
     end
 end

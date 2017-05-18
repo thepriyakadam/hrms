@@ -6,9 +6,9 @@ class Qualification < ActiveRecord::Base
   belongs_to :degree_stream
   belongs_to :university
 
-  validates :marks, presence: true
-  validates :degree_id, presence: true
-  validates :degree_type_id, presence: true
+  # validates :marks, presence: true
+  # validates :degree_id, presence: true
+  # validates :degree_type_id, presence: true
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|

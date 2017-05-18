@@ -23,16 +23,17 @@
 
       <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">    
         <thead>
-        <tr><th colspan="8"><center>Employee Detail</center></th></tr>
+        <tr><th colspan="9"><center>Employee Detail</center></th></tr>
           <tr>
-           <th>Sr.No</th>
-            <th>Employee ID</th>
+            <th>Sr.No</th>
+            <th>ID</th>
             <th>Name</th>
             <th>Age</th>
             <th>Department</th>
             <th>Date Of Joining</th>
             <th>Grade</th>
-            <th>Designation</th> 
+            <th>Designation</th>
+            <th>Current Experience</th> 
           </tr>
         </thead>
         <tbody>
@@ -40,11 +41,29 @@
            <td><%= i=i+1 %></td>
             <td><%= employee.manual_employee_code %></td> 
             <td><%= full_name(employee) %></td>
-            <td><%=  %></td>
+            <td>
+              <% if employee.date_of_birth == nil %>
+                <%= %>
+              <% else %>
+                <% day = Date.today - employee.try(:date_of_birth).to_date %><% d = day.to_i/365 %><%= d %>
+              <% end %>
+            </td>
             <td><%= employee.department.try(:name) %></td>
             <td><%= joining_detail.joining_date %></td>
             <td><%= joining_detail.employee_grade.try(:name) %></td>
             <td><%= joining_detail.employee_designation.try(:name) %></td>
+            <td>
+              <% if joining_detail.joining_date == nil %>
+                <%= %>
+              <% else %>
+                <% day = Date.today - joining_detail.joining_date.to_date %><% d = day.to_f/365 %><% int = d.to_i %><% remaining = d.to_f - int.to_f %><% day1 = remaining.to_f * 365 %><% day2 = day1.to_f/30 %>
+                <% if int.to_i > 0 %>
+                  <%= int.to_i %>.<%= day2.to_i %> <%= "year" %>
+                <% else %>
+                  <%= day2.to_i %><%= "month" %>
+                <% end %>
+              <% end %>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -132,9 +151,9 @@
           <tr><th colspan="9"><center>Goals</center></th></tr>
             <tr>
               <th>Goal Perspective</th>
-              <th>Goal Weightage</th>
               <th>Goal Measure</th>
               <th>Target/Unit</th>
+              <th>Goal Weightage</th>
               <th>Aligned</th>
               <th>Self Comment</th>
               <th>Self Rating</th>
@@ -147,14 +166,14 @@
             <% @goal_ratings.each do |goal_rating| %>
               <tr>
                 <td><%= goal_rating.try(:goal_perspective).try(:name) %></td>
-                <td><%= goal_rating.try(:goal_weightage) %></td>
                 <td><%= goal_rating.try(:goal_measure) %></td>
                 <td><%= goal_rating.try(:target) %></td>
+                <td><%= goal_rating.try(:goal_weightage) %></td>
                 <td><%= goal_rating.try(:aligned) %></td>
                 <td><%= goal_rating.try(:appraisee_comment) %></td>
-                <td><%= goal_rating.try(:appraisee_rating_id) %></td>
+                <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
                 <td><%= goal_rating.try(:appraiser_comment) %></td>
-                <td><%= goal_rating.try(:appraiser_rating_id) %></td>
+                <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
                 <td><%= goal_rating.try(:reviewer_comment) %></td>
               </tr>
             <% end %>
@@ -165,9 +184,9 @@
           <tr><th colspan="9"><center>Attributes</center></th></tr>
             <tr>
               <th>Attribute</th>
-              <th>Goal Weightage</th>
               <th>Goal Measure</th>
               <th>Target/Unit</th>
+              <th>Goal Weightage</th>
               <th>Aligned</th>
               <th>Self Comment</th>
               <th>Self Rating</th>
@@ -180,14 +199,14 @@
             <% @attribute_ratings.each do |attribute_rating| %>
               <tr>
                 <td><%= attribute_rating.try(:attribute_master).try(:name) %></td>
-                <td><%= attribute_rating.try(:goal_weightage) %></td>
                 <td><%= attribute_rating.try(:goal_measure) %></td>
                 <td><%= attribute_rating.try(:target) %></td>
+                <td><%= attribute_rating.try(:goal_weightage) %></td>
                 <td><%= attribute_rating.try(:aligned) %></td>
                 <td><%= attribute_rating.try(:appraisee_comment) %></td>
-                <td><%= attribute_rating.try(:appraisee_rating_id) %></td>
+                <td><%= attribute_rating.try(:appraisee_rating).try(:value) %></td>
                 <td><%= attribute_rating.try(:appraiser_comment) %></td>
-                <td><%= attribute_rating.try(:appraiser_rating_id) %></td>
+                <td><%= attribute_rating.try(:appraiser_rating).try(:value) %></td>
                 <td><%= attribute_rating.try(:reviewer_comment) %></td>
               </tr>
             <% end %>
@@ -225,7 +244,7 @@
             </tr>
             <tr>
               <th>Reviewer Rating</th>
-              <td><%= goal_bunch.try(:reviewer_rating_id) %></td>
+              <td><%= goal_bunch.try(:reviewer_rating).try(:value) %></td>
             </tr>
             <tr>
               <th>Final Comment</th>
@@ -233,7 +252,7 @@
             </tr>
             <tr>
               <th>Final Rating</th>
-              <td><%= goal_bunch.try(:final_rating_id) %></td>
+              <td><%= goal_bunch.try(:final_rating).try(:value) %></td>
             </tr>
         </tbody>
       </table>
@@ -244,17 +263,17 @@
           <tr><th colspan="2"><center>Detail</center></th><th>Sign</th></tr>
             <tr>
               <th>Appraisee Name</th>
-              <td><%= goal_bunch.employee.try(:first_name) %> <%= goal_bunch.employee.try(:middle_name) %> <%= goal_bunch.employee.try(:last_name) %></td>
+              <td><%= full_name(goal_bunch.employee) %></td>
               <td></td>
             </tr>
             <tr>
               <th>Appraiser Name</th>
-              <td><%= goal_bunch.employee.manager.try(:first_name) %> <%= goal_bunch.employee.manager.try(:middle_name) %> <%= goal_bunch.employee.manager.try(:last_name) %></td>
+              <td><%= full_name(goal_bunch.employee.try(:manager)) %></td>
               <td></td>
             </tr>
             <tr>
               <th>Reviewer Name</th>
-              <td><%= goal_bunch.employee.manager_2.try(:first_name) %> <%= goal_bunch.employee.manager_2.try(:middle_name) %> <%= goal_bunch.employee.manager_2.try(:last_name) %></td>
+              <td><%= full_name(goal_bunch.employee.try(:manager_2)) %></td>
               <td></td>
             </tr>
             <tr>

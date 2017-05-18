@@ -1,4 +1,4 @@
-class EmployeesController < ApplicationController
+ class EmployeesController < ApplicationController
   before_action :set_employee, only: [:show, :edit, :update, :destroy, :ajax_joining_detail, :ajax_bank_detail, :ajax_qualification_detail, :ajax_new_qualification, :ajax_experience_detail, :ajax_new_experience, :ajax_skillset_detail, :ajax_new_skillset, :ajax_certification_detail, :ajax_new_certification, :ajax_award_detail, :ajax_new_award, :ajax_physical_detail, :ajax_family_detail, :ajax_new_family]
   # load_and_authorize_resource
   # GET /employees
@@ -55,7 +55,7 @@ class EmployeesController < ApplicationController
 
   def birthday_email
     date = Date.today
-    @employees = Employee.where("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m'))
+    @employees = Employee.where("DATE_FORMAT('%d/%m', date_of_birth) = ?", date.strftime('%d/%m'))
     if @employees.empty?
     else
       @employees.each do |e|
@@ -68,7 +68,7 @@ class EmployeesController < ApplicationController
 
   def birthday_invitation
     date = Date.today 
-    @employees = Employee.where.not("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m'))
+    @employees = Employee.where.not("DATE_FORMAT('%d/%m', date_of_birth) = ?", date.strftime('%d/%m'))
     if @employees.empty?
     else
     @employees.each do |employee|    
@@ -110,7 +110,7 @@ class EmployeesController < ApplicationController
     @company_locations = CompanyLocation.all
     else
       if current_user.role.name == 'GroupAdmin'
-        @company_locations = CompanyLocation.all
+        @company_locations = CompanyLocation.where(company_id: current_user.company_location.company_id)
         @company_locations.each do |cl|
          @departments = Department.where(company_location_id: cl.id)
         end
@@ -124,34 +124,59 @@ class EmployeesController < ApplicationController
         @company_locations.each do |cl|
          @departments = Department.where(company_location_id: cl.id)
         end
+     elsif current_user.role.name == 'HOD'
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+        @company_locations.each do |cl|
+         @departments = Department.where(company_location_id: cl.id)
+        end
+    elsif current_user.role.name == 'Supervisor'
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+        @company_locations.each do |cl|
+         @departments = Department.where(company_location_id: cl.id)
+        end
       end
     end
     @form = 'employee'
   end
 
-   
-
   # POST /employees
   # POST /employees.json
   def create
     @employee = Employee.new(employee_params)
+    @employee_type = EmployeeType.find_by(name: "Probation")
+    @employees = Employee.where(employee_type_id: @employee_type.id)
     @department = Department.find(@employee.department_id)
     authorize! :create, @employee
-    # byebug
-    
       if @employee.save
         @emp1=params[:employee][:employee_code_master_id]
         EmployeeCodeMaster.where(id: @emp1).update_all(last_range: @employee.manual_employee_code)
         @employee.update(company_location_id: @department.company_location_id,company_id: @department.company_location.company_id)
+        @employees.each do |e|
+          if e.joining_detail.confirmation_date != nil && e.joining_detail.confirmation_date <= Date.today
+            employee_type = EmployeeType.find_by(name: "Permanent")
+            e.update(employee_type_id: employee_type.id)
+          end
+        end
+        @joining_checklist_master = JoiningChecklistMaster.where(status: true)
+        @joining_checklist_master.each do |jc|
+        EmployeeJcList.create(joining_checklist_master_id: jc.id,employee_id: @employee.id,status: false)
+        end
         redirect_to @employee    
       else
         render :new
       end
   end
 
+  def is_confirm
+    @employee_jc_list = EmployeeJcList.find(params[:employee_jc_list])
+    @employee_id = Employee.find(params[:employee_id])
+    EmployeeJcList.find(@employee_jc_list.id).update(status: true,admin_id: current_user.employee_id)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to request.referrer
+  end
+
 
   def display_emp_code_master
-    # byebug
     @emp1= params[:id]
     @emp_master_code = EmployeeCodeMaster.where(id: @emp1,is_active: true).take
     @last = @emp_master_code.last_range.succ
@@ -159,17 +184,25 @@ class EmployeesController < ApplicationController
 
   # PATCH/PUT /employees/1
   # PATCH/PUT /employees/1.json
-  def update
-     respond_to do |format|
-      if @employee.update(employee_params)
-        format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
-        format.json { render :show, status: :ok, location: @employee }
-      else
-        format.html { render :edit }
-        format.json { render json: @employee.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+   def update
+    respond_to do |format|
+     if @employee.update(employee_params)
+       @emp = @employee.id
+       @member = Member.find_by(employee_id: @emp)
+       if @member.nil?
+         format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
+         format.json { render :show, status: :ok, location: @employee }
+       else
+         Member.find_by(employee_id: @employee.id).update(company_id: employee_params["company_id"],company_location_id:employee_params["company_location_id"],department_id:employee_params["department_id"] )
+         format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
+         format.json { render :show, status: :ok, location: @employee }
+       end
+     else
+       format.html { render :edit }
+       format.json { render json: @employee.errors, status: :unprocessable_entity }
+     end
+   end
+ end
 
   # DELETE /employees/1
   # DELETE /employees/1.json
@@ -250,7 +283,8 @@ class EmployeesController < ApplicationController
 
             manager_1 = @reporting_master1.employee_id
             manager_2 = @reporting_master2.try(:employee_id)
-            employee.update_attributes(manager_id: manager_1, manager_2_id: manager_2)
+            
+            employee.update_attributes(manager_id: @reporting_master1.employee_id, manager_2_id: @reporting_master2.try(:employee_id))
 
             ManagerHistory.create(employee_id: employee.id,manager_id: manager_1,manager_2_id: manager_2,effective_from: params["login"]["effec_date"])
             
@@ -259,7 +293,7 @@ class EmployeesController < ApplicationController
             # UserPasswordMailer.welcome_email(company,pass).deliver_now
           else
             p user.errors
-            flash[:alert] = 'Employee not assigned successfully.'
+            flash[:alert] = 'Employee not assigned'
             redirect_to assign_role_employees_path
           end
         end
@@ -377,6 +411,11 @@ class EmployeesController < ApplicationController
     #@employee_documents = EmployeeDocument.all
   end
 
+  def joining_checklist
+     @employee = Employee.find(params[:id])
+     # @employee1 = Employee.where(employee_id: current_user.employee_id)
+end
+
   def manager
     @employees = Employee.where.not(manager_id: nil)
     session[:active_tab] ="UserAdministration"
@@ -485,11 +524,34 @@ class EmployeesController < ApplicationController
     @company_locations = CompanyLocation.all
     else
       if current_user.role.name == 'GroupAdmin'
-        @company_locations = CompanyLocation.all
+        @company_locations = CompanyLocation.where(company_id: @company.id)
       elsif current_user.role.name == 'Admin'
         @company_locations = CompanyLocation.where(company_id: current_user.company_location.company_id)
-        # byebug
       elsif current_user.role.name == 'Branch'
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+      elsif current_user.role.name == 'HOD'
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+      elsif current_user.role.name == 'Supervisor'
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+      end
+    end
+    @form = params[:form]
+  end
+
+   def collect_company_location_dropdown_with_label
+    @company = Company.find(params[:id])
+    if current_user.class == Group
+    @company_locations = CompanyLocation.all
+    else
+      if current_user.role.name == 'GroupAdmin'
+        @company_locations = CompanyLocation.where(company_id: @company.id)
+      elsif current_user.role.name == 'Admin'
+        @company_locations = CompanyLocation.where(company_id: current_user.company_location.company_id)
+      elsif current_user.role.name == 'Branch'
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+      elsif current_user.role.name == 'HOD'
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+      elsif current_user.role.name == 'Supervisor'
         @company_locations = CompanyLocation.where(id: current_user.company_location_id)
       end
     end
@@ -504,7 +566,18 @@ class EmployeesController < ApplicationController
 
   def collect_department
      @company_location = CompanyLocation.find(params[:id])
-     @departments = Department.where(company_location_id: @company_location.id)
+      if current_user.role.name == 'HOD' ||  current_user.role.name == 'Supervisor'
+        @departments = Department.where(id: current_user.department_id)
+      else
+         @departments = Department.where(company_location_id: @company_location.id)
+         @form = params[:form]
+      end
+  end
+
+  def collect_employee
+    # byebug
+     @department = Department.find(params[:id])
+     @employees = Employee.where(department_id: @department.id)
      @form = params[:form]
   end
 
@@ -543,6 +616,7 @@ class EmployeesController < ApplicationController
 
   def member_list_for_update_password
     @members = Member.all
+    session[:active_tab] ="UserAdministration"
   end
 
   def reset_password
@@ -584,15 +658,30 @@ class EmployeesController < ApplicationController
 
   def selected_employee_list_report
     @employee_id = params[:employee_id]
+    @employees = Employee.where(id: @employee_id)
+    if @employee_id.nil?
+      flash[:alert] = "Please Select the checkbox"
+      @employees = []
+      redirect_to selected_employee_list_report_employees_path
+    else
+    end
     @employees = Employee.where(id: @employee_id)     
   end
 
   def selected_employee_pdf
-      @employee_id = params[:employee_id]
+
+    @employee_id = params[:employee_id]
       @employees = Employee.where(id: @employee_id)
       @employee_id.each do |e|
-      @employee = Employee.find_by(id: e)
-    end
+        @employee = Employee.find_by(id: e)
+      end
+
+    #   @employee_id = params[:employee_id]
+    #   @employee_id.each do |e|
+    #   @employee = Employee.find_by(id: e)
+    #   @employees = Employee.where(id: e)
+    # end 
+
     #@employee_template = EmployeeTemplate.find(params[:employee_template_id])
     #@employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employee_template.employee_id,salary_template_id: @employee_template.salary_template_id)    
     respond_to do |format|
@@ -716,7 +805,7 @@ def selected_qualification_xls
     respond_to do |format|
       format.xls {render template: 'employees/selected_qualification_xls.xls.erb'}
     end
-end
+  end
 
 def selected_experience_pdf
       @employee_id = params[:employee_id]
@@ -980,135 +1069,141 @@ def all_employee_list
 end
 
 def dynamic_report
-    @employee_type = params[:employee][:employee_type_id]
-    @company = params[:employee][:company_id]
-    @location = params[:food_deduction][:company_location_id]
-    if current_user.class == Group
-      if @location == ""
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
-        else 
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
-        end
-    elsif current_user.class == Member
-      if current_user.role.name == 'GroupAdmin'
-        if @location == ""
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
-        else 
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
-        end
-       elsif current_user.role.name == 'Admin'
-        if @location == ""
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
-        else 
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
-        end
-        elsif current_user.role.name == 'Branch'
-        if @location == ""
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
-        else 
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
-        end
-      elsif current_user.role.name == 'HOD'
-        @employees = Employee.where(department_id: current_user.department_id)
-      elsif current_user.role.name == 'Superviser'
-      elsif current_user.role.name == 'Employee'
+  @employee = Employee.new(employee_params)
+  @employee_type = params[:employee][:employee_type_id]
+  @company = params[:employee][:company_id]
+  @location = params[:employee][:company_location_id]
+  @employees = @employee.employee_type_wise_role(@employee_type,@company,@location,current_user)
+  respond_to do |f|
+      f.js
+      f.xls {render template: 'employees/left_employee.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'employee_list',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employees/left_employee.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
 end
 
-def left_employee_xl
-    @employee_type = params[:employee_type_id]
-    @company = params[:company_id]
-    @location = params[:company_location_id]
-    if current_user.class == Group
-      if @location == ""
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
-        else 
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
-        end
-    elsif current_user.class == Member
-      if current_user.role.name == 'GroupAdmin'
-        if @location == ""
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
-        else 
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
-        end
-       elsif current_user.role.name == 'Admin'
-        if @location == ""
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
-        else 
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
-        end
-        elsif current_user.role.name == 'Branch'
-        if @location == ""
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
-        else 
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
-        end
-      elsif current_user.role.name == 'HOD'
-        @employees = Employee.where(department_id: current_user.department_id)
-      elsif current_user.role.name == 'Superviser'
-      elsif current_user.role.name == 'Employee'
-      end
-    end
-    respond_to do |format|
-      format.xls {render template: 'employees/left_employee.xls.erb'}
-    end
+def destroy_employee
+  session[:active_tab] ="UserAdministration"
 end
 
-def left_employee_pdf
-    @employee_type = params[:employee_type_id]
-    @company = params[:company_id]
-    @location = params[:company_location_id]
-    if current_user.class == Group
-      if @location == ""
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
-        else 
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
-        end
-    elsif current_user.class == Member
-      if current_user.role.name == 'GroupAdmin'
-        if @location == ""
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
-        else 
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
-        end
-       elsif current_user.role.name == 'Admin'
-        if @location == ""
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
-        else 
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
-        end
-        elsif current_user.role.name == 'Branch'
-        if @location == ""
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
-        else 
-        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
-        end
-      elsif current_user.role.name == 'HOD'
-        @employees = Employee.where(department_id: current_user.department_id)
-      elsif current_user.role.name == 'Superviser'
-      elsif current_user.role.name == 'Employee'
-      end
-    end
-    respond_to do |format|
-          format.json
-          format.pdf do
-            render pdf: 'left_employee_pdf',
-                  layout: 'pdf.html',
-                  orientation: 'Landscape',
-                  template: 'employees/left_employee.pdf.erb',
-                  # show_as_html: params[:debug].present?,
-                  :page_height      => 1000,
-                  :dpi              => '300',
-                  :margin           => {:top    => 10, # default 10 (mm)
-                                :bottom => 10,
-                                :left   => 20,
-                                :right  => 20},
-                  :show_as_html => params[:debug].present?
-                end
-             end
+def employee_report
+  session[:active_tab] ="EmployeeManagement"
+  session[:active_tab1] ="Reports"
 end
+
+def show_employee_list
+  @employee = Employee.new(employee_params)
+  @company = params[:employee][:company_id]
+  @company_location = params[:employee][:company_location_id]
+  @department = params[:employee][:department_id]
+  @employees = @employee.employee_role_wise(@company,@company_location,@department,current_user)
+end
+
+def print_employee
+  # byebug
+      @company = params[:employee][:company_id]
+      @company_location = params[:employee][:company_location_id]
+      @department = params[:employee][:department_id]
+      @employee = params[:employee_ids]
+      if @employee.nil?
+        flash[:alert] = "Please Select the Checkbox"
+        redirect_to select_company_company_location_and_department_employees_path
+      else
+          @employee = Employee.find_by_id(@employee)
+          @employees = Employee.where(id: @employee,company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+          @emp = Employee.where(id: @employees)
+  end
+end
+  
+def show_all_record
+  @employee_ids = params[:employee_ids]
+  if @employee_ids.nil?
+    flash[:alert] = "Please Select the checkbox"
+    @employees = []
+    redirect_to employee_report_employees_path
+    
+  else
+    @employee_ids.each do |e|
+      @employee = Employee.find_by(id: e)
+    end
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employees/employee_record.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'show_all_record',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employees/employee_record_pdf.pdf.erb',
+        :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 10,
+                          :right  => 10},
+            :show_as_html => params[:debug].present?
+      end
+      # f.pdf do
+      #   render pdf: 'show_all_record',
+      #   layout: 'pdf.html',
+      #   orientation: 'Landscape',
+      #   template: 'employees/employee_record.pdf.erb',
+      #   :page_height      => 1000,
+      #       :dpi              => '300',
+      #       :margin           => {:top    => 10, # default 10 (mm)
+      #                     :bottom => 10,
+      #                     :left   => 10,
+      #                     :right  => 10},
+      #       :show_as_html => params[:debug].present?
+      # end
+    end
+  end#if
+  end
+
+  def employee_gps_setting_list
+    @employees = Employee.where(status: "Active")
+    @members = Member.where(employee_id: @employees)
+    session[:active_tab] ="UserAdministration"
+  end
+
+  def member_gps_form
+     @member = Member.find(params[:format])
+  end
+
+  def update_gps
+    # byebug
+    # Member.find(params[:id])
+    @emp = params[:member][:employee_id]
+    @latitude = params[:member][:latitude]
+    @longitude = params[:member][:longitude]
+    @location = params[:member][:location]
+    @gps = params[:member][:is_gps]
+    Member.where(employee_id: @emp).update_all(latitude: @latitude,longitude: @longitude,location: @location,is_gps: true)
+    member=Member.where(employee_id: @emp).take
+    EmployeeGpsHistory.create(member_id: member.id,latitude: @latitude,longitude: @longitude,location: @location,from_date: Date.today)
+    @gps_history = EmployeeGpsHistory.where(member_id: member.id).last(2).first
+    EmployeeGpsHistory.where(id: @gps_history.id).update_all(to_date: @gps_history.from_date)
+    flash[:notice] = "GPS Setting Saved Successfully"
+    redirect_to employee_gps_setting_list_employees_path
+  end
+
+  def display_employee_details
+     @emp = params[:employee][:id]
+     @employee = Employee.where(id: @emp).take
+     @families = Family.where(employee_id: @emp)
+     @qualifications = Qualification.where(employee_id: @emp)
+     @skillsets = Skillset.where(employee_id: @emp)
+     @experiences = Experience.where(employee_id: @emp)
+     @certifications = Certification.where(employee_id: @emp)
+  end
+
 
   # def destroy_details
   #   @employee = Employee.find(params[:emp_id])
@@ -1329,7 +1424,7 @@ end
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_params
     # params.require(:employee).permit(:department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :district, :state, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender)
-    params.require(:employee).permit(:employee_code_master_id,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id)
+    params.require(:employee).permit(:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id)
     # joining_detail_attributes: [:joining_date, :reference_from, :admin_hr, :tech_hr, :designation, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem])
   end
 end

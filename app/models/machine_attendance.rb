@@ -1,13 +1,31 @@
 class MachineAttendance < ActiveRecord::Base
   belongs_to :employee
   belongs_to :shift_master
+  has_many :employee_attendances
   validates :shift_master_id, presence: true
+  validates :employee_id, uniqueness: { scope: [:day] }
+
+  has_many :subordinates, class_name: 'MachineAttendance',
+                          foreign_key: 'user_id'
+  belongs_to :user, class_name: 'Employee'
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
       csv << column_names
       all.each do |machine_attendance|
         csv << machine_attendance.attributes.values_at(*column_names)
+      end
+    end
+  end
+
+  def self.to_txt
+    # attributes = %w{employee_id day in out shift_master_id is_proceed present user_id}
+    attributes = %w{employee_id first_name middle_name last_name status}
+
+    CSV.generate(:col_sep => "#") do |csv|
+      csv << attributes
+      all.each do |employee|
+        csv << attributes.map{ |attr| employee.send(attr) }
       end
     end
   end

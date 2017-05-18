@@ -1,62 +1,64 @@
 
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Employee Induction Plan</h3>
-    <div class="pull-right">  
+<!--     <h3 class="box-title">Employee Induction Plan</h3>
+ -->    <div class="pull-right">  
     </div>
   </div>
   <%= bootstrap_form_for :induction_detail,url:{action:"create_induction_detail",id: @induction_master.id},html: {id: 'induction_detail'} do |f| %>
  <!--   bootstrap_form_for :particular_vacancy_request,url:{action:"update_no_of_positions",id: @vacancy_master.id} do |f| %>-->
  <%= f.hidden_field :employee_id,value: @employee.id %>
       <div class="row">
-        <div class="col-sm-3">
+        <!-- <div class="col-sm-3">
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-               <%= f.text_field :start_date, hide_label: true,placeholder: 'Start Date', class: 'start_date'%>
+               <= f.text_field :start_date, hide_label: true,placeholder: 'Start Date', class: 'start_date'%>
             </div>
           </div>
-        </div>
+        </div> -->
          
 <div class="box-body">
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
+      <th colspan="6"><center>Employee Induction Plan</center></th>
+    </tr>
+    <tr>
       <th>Sr.No</th>
-      <th>Activity</th>
       <th>Day</th>
-      <th>Duration(Hrs)</th>
-      <th>Contact Person</th>
-<!--       <th>Download</th>
- -->    </tr>
+      <th>From</th>
+      <th>To</th>
+      <th>Duration</th>
+      <th>Facilitator&Presenter</th>
+     
+    </tr>
   </thead>
 
   <tbody>
   <% i = 0 %>
-   <% @induction_activities.each do |induction_activity| %>
+    <% @induction_activities.each do |induction_activity| %>
       <tr>
         <td><%= i=i+1 %></td>
-        <td><%= induction_activity.activity %></td>
-        <td><%= induction_activity.day %></td>
+        <td><%= induction_activity.activity_date %></td>
+        <td><%= induction_activity.from %></td>
+        <td><%= induction_activity.to %></td>
         <td><%= induction_activity.duration %></td>
-        <td><%= full_name(induction_activity.employee) %></td>
-        <!-- <td>
-            if induction_activity.avatar_file_name == nil %>
-           <small class="label label-default">Document Not Available</small>
-             < else %>
-             <center>< link_to '',download_document_path(id: induction_activity.id),class: 'btn btn-xs btn-primary fa fa-download' %></center>
-              end %>
-        </td> -->
+        <td><%= induction_activity.facilitator_1 %> , <%= induction_activity.facilitator_2 %></td>
+        </tr>
+        <tr>
+        <td></td>
+        <td colspan="5"><strong>Program Agenda : </strong> <%= induction_activity.program_agenda %></td>
       </tr>
       <% end %>
   </tbody>
-</table>
+</table><br>
   <div class="row">
   <div class="col-sm-6">
-    <%= f.submit "Create Induction Plan" ,class: 'btn btn-primary'%>
-    <%= link_to 'Back', employee_list_induction_activities_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+    <%= f.submit "Create Induction Plan" ,class: 'btn btn-primary'%> |
+     <%= link_to 'Back', employee_list_induction_activities_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 
   </div>
   </div>

@@ -27,22 +27,29 @@ class Ability
         can :manage, :all
       elsif user.role.name == 'HOD'
         can :read, Employee
-        can :manage, EmployeeLeavRequest
+        can :read, [JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family]
+        can :read, [EmployeeTemplate, EmployeeSalaryTemplate]
+        can :manage, [EmployeeLeavRequest, ParticularLeaveRecord]
         can :manage, [GoalBunch, GoalRating]
         can :manage, [TravelRequest, DailyBillDetail]
+        can :manage, [OnDutyRequest, ParticularOdRecord]
       elsif user.role.name == 'Supervisor'
         can :read, Employee
+        can :read, [JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family]
+        can :read, [EmployeeTemplate, EmployeeSalaryTemplate]
         can :manage, EmployeeLeavRequest
         can :manage, [GoalBunch, GoalRating]
         can :manage, [TravelRequest, DailyBillDetail]
+        can :manage, [OnDutyRequest, ParticularOdRecord]
       elsif user.role.name == 'Employee'
         can :read, Employee, id: user.employee_id
         can :read, [JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family]
+        can :read, [EmployeeTemplate, EmployeeSalaryTemplate]
         can :manage, EmployeeLeavRequest, employee_id: user.employee_id
-        can :read, EmployeeTemplate, employee_id: user.employee_id
         can :read, AdvanceSalary, employee_id: user.employee_id
         can :read, Attendance, employee_id: user.employee_id
         can :manage, GoalBunch, employee_id: user.employee_id
+        can :manage, OnDutyRequest, employee_id: user.employee_id
         can :manage, GoalRating, appraisee_id: user.employee_id
         can :manage, TravelRequest, employee_id: user.employee_id
         can [:read, :create, :update], DailyBillDetail, travel_request_id: user.employee_id

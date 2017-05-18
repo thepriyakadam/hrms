@@ -6,7 +6,7 @@ class HolidaysController < ApplicationController
     @holiday = Holiday.new
     @holidays = Holiday.all
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="AttendanceSetup"
+    session[:active_tab1] ="WeekoffSetup"
   end
 
   # GET /holidays/1/edit
@@ -52,6 +52,19 @@ class HolidaysController < ApplicationController
         if @emp_attendance.try(:present) == nil
           EmployeeAttendance.create(employee_id: e.id, day: holiday.holiday_date, present: "H", department_id: e.department_id, is_confirm: false, count: 1)
         else
+          @date = holiday.holiday_date
+          @emp_attendances = EmployeeAttendance.where("DATE_FORMAT('%m/%Y', day) = ? AND present = ?", @date.strftime('%m/%Y'), "H")
+          @emp_attendances.each do |e|
+            date = e.day.to_datetime
+            yd = (date-1).strftime('%Y-%m-%d')
+            tmr = (date+1).strftime('%Y-%m-%d')
+            yd_emp = EmployeeAttendance.where(day: yd,employee_id:e.employee_id).take
+            tmr_emp = EmployeeAttendance.where(day: tmr,employee_id:e.employee_id).take
+            if yd_emp.try(:present) == "A" && tmr_emp.try(:present) == "A"
+              EmployeeAttendance.find_by(id: e.id).update(present: "A")
+            else
+            end
+          end
         end   
     end
     @holidays = Holiday.all

@@ -9,6 +9,7 @@ class Company < ActiveRecord::Base
   has_many :company_locations, dependent: :destroy
   has_many :employee_transfers
   has_many :employees
+  has_many :salary_map_saps
 
   validates :manual_company_code, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true
@@ -23,6 +24,10 @@ class Company < ActiveRecord::Base
   validates :name, uniqueness: { scope: [:company_type_id] }
   validate :pan_no_regex
   validate :contact_no_regex
+
+
+  has_attached_file :company_logo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'missing.png'
+  validates_attachment_content_type :company_logo, :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
 
   def company_name_regex
     if name.present? && !name.match(/\A[A-Za-z0-9&@_ ]{1,30}\Z/)

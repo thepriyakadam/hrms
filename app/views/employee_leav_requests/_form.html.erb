@@ -17,15 +17,15 @@
            </tr>
            <tr>
            <th> Employee </th>
-           <td><%= @employee.manual_employee_code %> - <%= @employee.first_name %> <%= @employee.middle_name %> <%=@employee.last_name %></td>
+           <td><%= @employee.manual_employee_code %> - <%= full_name(@employee) %></td>
            </tr>
            <tr>
               <th>Manager 1 </th>
-              <td><%= @employee.manager.try(:manual_employee_code) %> - <%= @employee.manager.try(:first_name) %> <%= @employee.manager.try(:middle_name) %> <%= @employee.manager.try(:last_name) %></td>
+              <td><%= @employee.manager.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager)) %></td>
             </tr>
             <tr>
               <th>Manager 2 </th>
-              <td><%= @employee.manager_2.try(:manual_employee_code) %> - <%= @employee.manager_2.try(:first_name) %> <%= @employee.manager_2.try(:middle_name) %> <%= @employee.manager_2.try(:last_name) %></td>
+              <td><%= @employee.manager_2.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager_2)) %></td>
             </tr>
            </thead>
          </table>
@@ -53,10 +53,9 @@
     </div>
 
       <div class="row">
-      
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :leav_category_id,all_leav_category,{include_blank: 'Select leave category'}%>
+            <%= f.select :leav_category_id,all_leav_category,{label:"Leave Category",include_blank: 'Select leave category'}%>
           </div>
         </div>
 
@@ -66,7 +65,7 @@
           </div>
         </div>
 
-      <div id="checkbox"></div>
+        <div id="checkbox"></div>
 
         <div class="col-sm-3">
           <div class="form-group required">
@@ -94,7 +93,7 @@
 
       <div id="checkbox1"></div>
 
-        <div class="col-sm-6">
+        <div class="col-sm-5">
           <div class="form-group required">
             <%= f.text_field :reason %>
           </div>

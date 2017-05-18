@@ -21,6 +21,12 @@
       </div>
 
       <div class="row">
+       <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :prefix ,['Mr.','Mrs.','Miss.'] ,{label: 'Prefix',include_blank: "Select Prefix"} %>
+          </div>
+        </div>
+
         <div class="col-sm-3">
           <div class="form-group required">
             <%= f.text_field :first_name , label: 'First Name' %>
@@ -38,15 +44,16 @@
            <%= f.text_field :last_name, label: 'Last Name' %>
           </div>
         </div>
+      </div>
 
-        <div class="col-sm-3">
+      <div class="row">
+
+       <div class="col-sm-3">
           <div class="field">
             <%= f.select :gender, ['Male','Female'],{label: 'Select Gender',include_blank: " Select Gender"} %>
           </div>
         </div>
-      </div>
-
-      <div class="row">
+        
         <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :email %>
@@ -64,14 +71,15 @@
             <%= f.text_field :pan_no, label: 'PAN Card No.',placeholder: "e.g : ABCDE12345B" %>
           </div>
         </div>
+      </div>
+      <div class="row">
 
-        <div class="col-sm-3">
+      <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :licence_no, label: 'Driving Licence No.' %>
           </div>
         </div>
-      </div>
-      <div class="row">
+
         <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :contact_no,label: 'Contact No.' %>
@@ -87,13 +95,14 @@
             <%= f.select :status,['Active','Inactive'],{include_blank: " Select Employee Status"} %>
         </div>
         </div>
-        <div class="col-sm-3">
+      </div>
+      <div class="row">
+       <div class="col-sm-3">
           <div class="field">
             <%= f.select :employee_type_id, all_employee_type,{include_blank: " Select Employee Type"} %>
           </div>
         </div>   
-      </div>
-      <div class="row">
+
         <div class="col-sm-3">
           <div class="field">
             <%= f.select :marital_status, ['Married','UnMarried'],{label: 'Marital Status',include_blank: " Select Marital Status"} %>
@@ -117,16 +126,15 @@
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="col-sm-3">
+      <div class="row">
+       <div class="col-sm-3">
           <div class="field">
             <%= f.select :blood_group_id, all_blood_group, {label: 'Blood Group',include_blank: " Select Blood Group"} %>
           </div>
         </div>
-      </div>
-
-      <div class="row">
-         <div class="col-sm-9">
+         <div class="col-sm-6">
           <div class="form-group required">
            <%= f.text_field :permanent_address, label: 'Permanent Address' %>
           </div>
@@ -199,7 +207,7 @@
           <div class="col-sm-3">
             <div class="form-group required">
             <div class="input-group">
-              <%=f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
+              <%=f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
             </div>
             </div>
           </div>
@@ -207,8 +215,8 @@
           <div class="col-sm-3">
             <div class="form-group required">
             <div class="input-group">
-              <div id="company_location">
-                <%= render 'employees/company_location_dropdown' %> 
+              <div id="company_location_with_label">
+                <%= render 'employees/company_location_dropdown_with_label' %> 
             </div> 
             </div>
             </div>
@@ -231,7 +239,6 @@
           </div> 
       </div>
 
-      
       <div class="row">
         <div class="col-sm-6">
           <div class="actions">

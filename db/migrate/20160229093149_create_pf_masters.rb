@@ -7,6 +7,7 @@ class CreatePfMasters < ActiveRecord::Migration
       t.decimal :min_limit, precision: 15, scale: 2
       t.string :base_component
       t.boolean :is_active
+      t.boolean :is_confirm
 
       t.timestamps null: false
     end

@@ -2,7 +2,11 @@
  <div class="box-body">
   <%= bootstrap_form_for(@interview_round,html: {id: 'interview_round'},interview_schedule_id: @interview_schedule.id) do |f| %>
   <%= f.hidden_field :interview_schedule_id, value: @interview_schedule.id  %>
-  
+
+  <% @interview_round_1 = InterviewRound.where(interview_schedule_id: @interview_schedule.id,interview_round_confirm: true).count
+     @interview_round_2 = InterviewRound.where(interview_schedule_id: @interview_schedule.id,interview_round_confirm: nil).count %>
+<% if @interview_round_2 == 0 && @interview_round_1 > 0  %>
+<% else %>
   <div class="row">
 
     <div class="col-sm-3">
@@ -19,7 +23,7 @@
 
     <div class="col-sm-3">
      <div class="form-group required">
-      <%= f.select :employee_id, all_interviewer_name_list,{label: 'Interviewer Name',include_blank: " Select Interviewer Name"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+      <%= f.select :employee_id, all_interviewer_name_list,{label: 'Interviewer Name',include_blank: " Select Interviewer Name"} %>
      </div>
     </div>
 
@@ -40,10 +44,12 @@
         <div class="form-group">
           <label>Interview Time</label>
           <div class="input-group">
-            <%= f.text_field :interview_time,hide_label:true, class: 'form-control timepicker' %>
+            
             <div class="input-group-addon">
               <i class="fa fa-clock-o"></i>
+
             </div>
+            <%= f.text_field :interview_time,hide_label:true, class: 'form-control timepicker' %>
           </div><!-- /.input group -->
         </div><!-- /.form group -->
       </div>
@@ -58,9 +64,9 @@
       </div>
     </div>
 
-    <div class="col-sm-4">
+    <div class="col-sm-6">
       <div class="field">
-        <%= f.text_area :schedule_comment,label:'Schedule Comment' %>
+        <%= f.text_field :schedule_comment,label:'Description' %>
       </div>
     </div>
 
@@ -75,6 +81,8 @@
    </div>
   </div>
 <% end %>
+<% end %>
+
 <script>
 $(function () {
 //Timepicker

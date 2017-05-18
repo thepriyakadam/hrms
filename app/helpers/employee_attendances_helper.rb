@@ -15,6 +15,22 @@ module EmployeeAttendancesHelper
     Hash[exist.sort]
 	end
 
+  def calculate_attendance_datewise(from,to, exist, e)
+    start_date = from.to_date
+    end_date = to.to_date
+    start_date.step(end_date).each do |d|
+      attendance_record = EmployeeAttendance.where(day: d, employee_id: e.employee_id).take
+      unless attendance_record.nil?
+        exist[d] = attendance_record.present
+      end
+
+      unless exist.key?(d)
+        exist[d] = ""
+      end
+    end
+    Hash[exist.sort]
+  end
+
   # def total_attendance(date, exist, e)
   #   start_date = date.beginning_of_month
   #   end_date = date.end_of_month
@@ -45,7 +61,11 @@ module EmployeeAttendancesHelper
   end
 
   def present_day_count(exist)
-    exist.select {|k,v| v == "P" }.count + (exist.select {|k,v| v == "P/2" }.count)/2.to_f 
+    exist.select {|k,v| v == "P" }.count + (exist.select {|k,v| v == "P/2" }.count)/2.to_f + (exist.select {|k,v| v == "P/OD" }.count)/2.to_f + (exist.select {|k,v| v == "OD/P" }.count)/2.to_f
+  end
+
+  def absent_day_count(exist)
+    exist.select {|k,v| v == "A" || v == "" }.count + (exist.select {|k,v| v == "P/2" }.count)/2.to_f + (exist.select {|k,v| v == "A/OD" }.count)/2.to_f + (exist.select {|k,v| v == "OD/A" }.count)/2.to_f
   end
 
   def holiday_in_month_count(exist)
@@ -56,95 +76,153 @@ module EmployeeAttendancesHelper
     exist.select {|k,v| v == "W" }.count
   end
 
-  def absent_day_count(exist)
-    exist.select {|k,v| v == "A" || v == "" }.count + (exist.select {|k,v| v == "P/2" }.count)/2.to_f
-  end
-
-  def gate_pass_count(exist)
-    exist.select {|k,v| v == "PG" }.count
-  end
   
-  # def payable_day_count(exist)
-  #   exist.select {|k,v| v == "P" }.count
-  # end
 
-  def total_leave_count(exist)
-    leave = LeavCategory.all.collect {|c| c.code }
-    exist.select {|k,v| leave.member?(v)}.count
+  def present_count(exist)
+    exist.select {|k,v| v == "P" }.count + (exist.select {|k,v| v == "P/2" }.count)/2.to_f + (exist.select {|k,v| v == "P/OD" }.count)/2.to_f + (exist.select {|k,v| v == "OD/P" }.count)/2.to_f + (exist.select {|k,v| v == "P/CL" }.count)/2.to_f + (exist.select {|k,v| v == "CL/P" }.count)/2.to_f + (exist.select {|k,v| v == "P/EL" }.count)/2.to_f + (exist.select {|k,v| v == "EL/P" }.count)/2.to_f + (exist.select {|k,v| v == "P/AL" }.count)/2.to_f + (exist.select {|k,v| v == "AL/P" }.count)/2.to_f + (exist.select {|k,v| v == "P/LWP" }.count)/2.to_f + (exist.select {|k,v| v == "LWP/P" }.count)/2.to_f + (exist.select {|k,v| v == "P/ESIC" }.count)/2.to_f + (exist.select {|k,v| v == "ESIC/P" }.count)/2.to_f + (exist.select {|k,v| v == "P/C.Off" }.count)/2.to_f + (exist.select {|k,v| v == "C.Off/P" }.count)/2.to_f
+  end
+
+  def absent_count(exist)
+    exist.select {|k,v| v == "A" || v == "" }.count + (exist.select {|k,v| v == "P/2" }.count)/2.to_f + (exist.select {|k,v| v == "A/OD" }.count)/2.to_f + (exist.select {|k,v| v == "OD/A" }.count)/2.to_f + (exist.select {|k,v| v == "A/CL" }.count)/2.to_f + (exist.select {|k,v| v == "CL/A" }.count)/2.to_f + (exist.select {|k,v| v == "A/EL" }.count)/2.to_f + (exist.select {|k,v| v == "EL/A" }.count)/2.to_f + (exist.select {|k,v| v == "A/AL" }.count)/2.to_f + (exist.select {|k,v| v == "AL/A" }.count)/2.to_f + (exist.select {|k,v| v == "A/LWP" }.count)/2.to_f + (exist.select {|k,v| v == "LWP/A" }.count)/2.to_f + (exist.select {|k,v| v == "A/ESIC" }.count)/2.to_f + (exist.select {|k,v| v == "ESIC/A" }.count)/2.to_f + (exist.select {|k,v| v == "A/C.Off" }.count)/2.to_f + (exist.select {|k,v| v == "C.Off/A" }.count)/2.to_f
   end
 
   def cl_leave_count(exist)
-    exist.select {|k,v| v == "CL" }.count + (exist.select {|k,v| v == "P/CL" }.count)/2.to_f 
+    exist.select {|k,v| v == "CL" }.count + (exist.select {|k,v| v == "P/CL" }.count)/2.to_f + (exist.select {|k,v| v == "CL/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/CL" }.count)/2.to_f + (exist.select {|k,v| v == "CL/A" }.count)/2.to_f
   end
 
   def el_leave_count(exist)
-    exist.select {|k,v| v == "EL" }.count + (exist.select {|k,v| v == "P/EL" }.count)/2.to_f 
+    exist.select {|k,v| v == "EL" }.count + (exist.select {|k,v| v == "P/EL" }.count)/2.to_f + (exist.select {|k,v| v == "EL/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/EL" }.count)/2.to_f + (exist.select {|k,v| v == "EL/A" }.count)/2.to_f
   end
 
   def esic_leave_count(exist)
-    exist.select {|k,v| v == "ESIC" }.count + (exist.select {|k,v| v == "P/ESIC" }.count)/2.to_f 
+    exist.select {|k,v| v == "ESIC" }.count + (exist.select {|k,v| v == "P/ESIC" }.count)/2.to_f + (exist.select {|k,v| v == "ESIC/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/ESIC" }.count)/2.to_f + (exist.select {|k,v| v == "ESIC/A" }.count)/2.to_f
   end
 
   def lwp_leave_count(exist)
-    exist.select {|k,v| v == "LWP" }.count + (exist.select {|k,v| v == "P/LWP" }.count)/2.to_f 
+    exist.select {|k,v| v == "LWP" }.count + (exist.select {|k,v| v == "P/LWP" }.count)/2.to_f + (exist.select {|k,v| v == "LWP/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/LWP" }.count)/2.to_f + (exist.select {|k,v| v == "LWP/A" }.count)/2.to_f
   end
 
   def advance_leave_count(exist)
-    exist.select {|k,v| v == "AL" }.count + (exist.select {|k,v| v == "P/AL" }.count)/2.to_f 
+    exist.select {|k,v| v == "AL" }.count + (exist.select {|k,v| v == "P/AL" }.count)/2.to_f + (exist.select {|k,v| v == "AL/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/AL" }.count)/2.to_f + (exist.select {|k,v| v == "AL/A" }.count)/2.to_f
   end
 
   def coff_leave_count(exist)
-    exist.select {|k,v| v == "C.Off" }.count + (exist.select {|k,v| v == "P/C.Off" }.count)/2.to_f 
+    exist.select {|k,v| v == "C.Off" }.count + (exist.select {|k,v| v == "P/C.Off" }.count)/2.to_f + (exist.select {|k,v| v == "C.Off/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/C.Off" }.count)/2.to_f + (exist.select {|k,v| v == "C.Off/A" }.count)/2.to_f
   end
 
+  def od_day_count(exist)
+    exist.select {|k,v| v == "OD" }.count + (exist.select {|k,v| v == "P/OD" }.count)/2.to_f + (exist.select {|k,v| v == "OD/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/OD" }.count)/2.to_f + (exist.select {|k,v| v == "OD/A" }.count)/2.to_f
+  end
 
-  # def non_pay_leave_count(exist)
-  #   leave = LeavCategory.where(is_payble: false).collect {|c| c.code }
-  #   exist.select {|k,v| leave.member?(v)}.count
-  # end
+  def pl_leave_count(exist)
+    exist.select {|k,v| v == "PL" }.count + (exist.select {|k,v| v == "P/PL" }.count)/2.to_f + (exist.select {|k,v| v == "PL/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/PL" }.count)/2.to_f + (exist.select {|k,v| v == "PL/A" }.count)/2.to_f
+  end
 
-  # def pay_leave_count(date, employee)
-  #   leave = LeavCategory.where(is_payble: true).collect {|c| c.code }
-  #   EmployeeAttendance.where("strftime('%m/%Y',day) = ?", date.strftime('%m/%Y')).where(employee_id: employee.employee_id,present:leave).sum(:count).to_f
-  # end
+  def sl_leave_count(exist)
+    exist.select {|k,v| v == "SL" }.count + (exist.select {|k,v| v == "P/SL" }.count)/2.to_f + (exist.select {|k,v| v == "SL/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/SL" }.count)/2.to_f + (exist.select {|k,v| v == "SL/A" }.count)/2.to_f
+  end
 
-  # def non_pay_leave_count(date, employee)
-  #   leave = LeavCategory.where(is_payble: false).collect {|c| c.code }
-  #   EmployeeAttendance.where("strftime('%m/%Y',day) = ?", date.strftime('%m/%Y')).where(employee_id: employee.employee_id,present:leave).sum(:count).to_f
-  # end
+  def gatepass_count(exist)
+    exist.select {|k,v| v == "PG" }.count
+  end
 
   def create_leave(date,employee)
     arr = []
-    attendances = EmployeeAttendance.where("strftime('%m/%Y',day) = ?", date.strftime('%m/%Y')).where(employee_id: employee.employee_id).where.not(employee_leav_request_id: nil)
-    half_leave = 0
-    full_leave = 0
+    #attendances = EmployeeAttendance.where("strftime('%m/%Y',day) = ?", date.strftime('%m/%Y')).where(employee_id: employee.employee_id).where.not(employee_leav_request_id: nil) || (EmployeeAttendance.where(present: "PG"))    
+      
+    attendances = EmployeeAttendance.where("DATE_FORMAT('%m/%Y',day) = ? AND employee_id = ?",date.strftime('%m/%Y'),employee.employee_id)
     pay_leave = 0
     non_pay_leave = 0
-    lwp_leave = 0
+    present_day = 0
+    gate_pass = 0
+    gate_pas = 0
+    gatepass = 0
+    gatepas = 0
+    absent_day = 0
     attendances.each do |a|
-      if a.employee_leav_request.leave_type == "Full Day"
-        full_leave = full_leave + 1
-        if a.employee_leav_request.leav_category.is_payble
-          pay_leave = pay_leave + 1
+      if a.employee_leav_request_id != nil
+        if a.count == 1.0
+          if a.employee_leav_request.leav_category.is_payble
+            pay_leave = pay_leave + 1
+          else
+            non_pay_leave = non_pay_leave + 1
+          end
         else
-          non_pay_leave = non_pay_leave + 1
-        end
-      else
-        half_leave = half_leave + 0.5
-        if a.employee_leav_request.leav_category.is_payble
-          pay_leave = pay_leave + 0.5
-          lwp_leave = lwp_leave + 0.5
-        else
-          non_pay_leave = non_pay_leave + 0.5
-        end
-      end
-      
-    end
-    arr << half_leave
-    arr << full_leave
+          if a.employee_leav_request.leav_category.is_payble
+            if a.employee_leav_request.present_status == false
+              pay_leave = pay_leave + 0.5
+              absent_day = absent_day + 0.5
+            else
+              pay_leave = pay_leave + 0.5
+              present_day = present_day + 0.5
+            end
+          else
+            if a.employee_leav_request.present_status == false
+              non_pay_leave = non_pay_leave + 0.5
+              absent_day = absent_day + 0.5
+            else
+               non_pay_leave = non_pay_leave + 0.5
+              present_day = present_day + 0.5
+            end
+          end
+        end 
+      else #nil
+      end#
+    end#DO
     arr << pay_leave
     arr << non_pay_leave
-    arr << lwp_leave
+    arr << present_day
+    arr << absent_day
+    arr
+  end
+
+  def create_leave_datewise(from,to,employee)
+    arr = []
+    #attendances = EmployeeAttendance.where("strftime('%m/%Y',day) = ?", date.strftime('%m/%Y')).where(employee_id: employee.employee_id).where.not(employee_leav_request_id: nil) || (EmployeeAttendance.where(present: "PG"))    
+      
+    attendances = EmployeeAttendance.where(day: from.to_date..to.to_date,employee_id: employee.employee_id)
+    pay_leave = 0
+    non_pay_leave = 0
+    present_day = 0
+    gate_pass = 0
+    gate_pas = 0
+    gatepass = 0
+    gatepas = 0
+    absent_day = 0
+    attendances.each do |a|
+      if a.employee_leav_request_id != nil
+        if a.count == 1.0
+          if a.employee_leav_request.leav_category.is_payble
+            pay_leave = pay_leave + 1
+          else
+            non_pay_leave = non_pay_leave + 1
+          end
+        else
+          if a.employee_leav_request.leav_category.is_payble
+            if a.employee_leav_request.present_status == false
+              pay_leave = pay_leave + 0.5
+              absent_day = absent_day + 0.5
+            else
+              pay_leave = pay_leave + 0.5
+              present_day = present_day + 0.5
+            end
+          else
+            if a.employee_leav_request.present_status == false
+              non_pay_leave = non_pay_leave + 0.5
+              absent_day = absent_day + 0.5
+            else
+               non_pay_leave = non_pay_leave + 0.5
+              present_day = present_day + 0.5
+            end
+          end
+        end 
+      else #nil
+      end#
+    end#DO
+    arr << pay_leave
+    arr << non_pay_leave
+    arr << present_day
+    arr << absent_day
     arr
   end
 

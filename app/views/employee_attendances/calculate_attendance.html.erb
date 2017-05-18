@@ -1,22 +1,91 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title"> Attendance</h3>
-    <div class="pull-right">
-    </div>
- <div class="box-body">
-    <div class="row">
-        <div class="col-sm-3">
+    <h3 class="box-title">Attendance</h3>
+    <div class="box-body">
+
+    <%= bootstrap_form_for(:employee, url: { action: 'display_total'},html: {id: "employee"}) do |f| %>
+      <div class="row">
+        <div class="col-sm-2">
+        <label>Month</label>
           <div class="field">
-            <%= select :employee_attendance,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
+            <%= select :employee,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
            </div>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-2">
+        <label>Year</label>
           <div class="field">
-            <%= select :employee_attendance,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, {onchange:"var a={department_id:$(this).val(),month:$('#employee_attendance_month').val(),year:$('#employee_attendance_year').val()};$('.ajax-progress').show(); $.get('/employee_attendances/display_total',a,function(response){});",class: 'form-control'} %>
+            <%= select :employee,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"},class: 'form-control' %>
           </div>
         </div>
+
+        <div class="col-sm-2">
+          <label>Company</label>
+          <div class="form-group required">
+            <%= f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
+          </div>
         </div>
-     </div>
-   <div id="display_total"></div>
+
+        <div class="col-sm-2">
+          <div class="field">
+            <div id="company_location_with_label">
+              <%= render 'employees/company_location_dropdown_with_label' %> 
+          </div>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="field">
+            <div class="input-group">
+              <div id="department">
+                <%= render 'employees/department_dropdown' %> 
+              </div> 
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <label>Status</label>
+          <div class="field">
+            <%= select :employee,:status, ['Active','Inactive','All'],{label: 'Select Status',include_blank: "Select Status"}, class: "form-control" %>
+         </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-2" style="padding-top:20px;">
+          <%= f.submit "show Employee List",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  </div>
 </div>
-</div>
+<script>
+ $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#advance_salary").submit();
+  })
+
+$("#employee").validate({
+    rules: {
+      "employee[month]":{
+        required: true,
+      },
+      "employee[year]":{
+        required: true,
+      }
+       },
+    messages: {
+      "employee[month]":{
+        required: "Please Specify Month",
+      },
+       "employee[year]":{
+        required: "Please Select Year",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

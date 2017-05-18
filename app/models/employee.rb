@@ -27,9 +27,13 @@ class Employee < ActiveRecord::Base
   has_many :qualifications
   has_many :employee_leav_requests
   has_many :reporting_masters, class_name: 'ReportingMaster', foreign_key: 'reporting_master_id'
+  
+  # has_many :first_reporters, :class_name => "EmployeeLeavRequest", :foreign_key => :first_reporter_id
+  # has_many :second_reporters, :class_name => "EmployeeLeavRequest", :foreign_key => :second_reporter_id
+  
   has_many :first_reporters, class_name: 'EmployeeLeavRequest', foreign_key: 'first_reporter_id'
   has_many :second_reporters, class_name: 'EmployeeLeavRequest', foreign_key: 'second_reporter_id'
-  has_many :leave_status_records, class_name: 'LeaveStatusRecord', foreign_key: 'change_status_employee_id'
+  has_many :change_status_employees, class_name: 'LeaveStatusRecord', foreign_key: 'change_status_employee_id'
   has_many :employee_leav_balances
   has_many :overtime_salaries
   has_many :vacancy_request_histories
@@ -58,6 +62,7 @@ class Employee < ActiveRecord::Base
   has_many :manager_histories
   has_many :due_employee_details
   has_many :employee_promotions
+  has_many :promotion_histories
   has_many :leave_records
   has_many :travel_request_histories
   has_many :issue_tracker_members
@@ -67,7 +72,14 @@ class Employee < ActiveRecord::Base
   has_many :issue_requests
   has_many :issue_lockers
   has_many :week_off_masters
-  
+  has_many :machine_attendances
+  has_many :on_duty_requests
+  has_many :gratuity
+  has_many :texable_monthly_deductions
+  has_many :advance_salaries
+  has_many :employee_jc_lists
+  has_many :rembursments
+
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',
                           foreign_key: 'manager_id'
@@ -91,7 +103,18 @@ class Employee < ActiveRecord::Base
   has_many :manager_histories, class_name: "Employee",
                           foreign_key: "manager_2_id"
 
+  has_many :on_duty_requests, class_name: "Employee",
+                          foreign_key: "first_reporter_id"
+
+  has_many :on_duty_requests, class_name: "Employee",
+                          foreign_key: "second_reporter_id"
+
   belongs_to :user, class_name: 'Employee'
+
+  has_many :second_reporters, class_name: 'EmployeeResignation', foreign_key: 'second_reporter_id'
+  has_many :resignation_status_records, class_name: 'ResignationStatusRecord', foreign_key: 'change_status_employee_id'
+  has_many :second_reporters, class_name: 'EmployeeResignation', foreign_key: 'final_reporter_id'
+  has_many :replacements, class_name: 'JoiningDetail', foreign_key: 'replacement_id'
 
   # has_many :reporting_masters, class_name: "Employee",
   #                         foreign_key: "manager_id"
@@ -133,6 +156,23 @@ class Employee < ActiveRecord::Base
     end
   end
 
+  def self.to_txt
+    # attributes = %w{employee_id day in out shift_master_id is_proceed present user_id}
+    attributes = %w{id first_name middle_name last_name status name}
+
+    CSV.generate(:col_sep => "#~#") do |txt|
+      txt << attributes
+
+      all.each do |employee|
+        txt << attributes.map{ |attr| employee.send(attr) }
+      end
+    end
+  end
+
+   def name
+       "#{self.department.try(:name)}"
+    end
+
   def add_department
     department = Department.find(department_id)
     company_location = department.company_location
@@ -155,6 +195,95 @@ class Employee < ActiveRecord::Base
         Employee.where(department_id: current_user.department_id).pluck(:id)
       elsif current_user.role.name == 'Employee'
         Employee.where(id: current_user.employee_id).pluck(:id)
+      end
+    end
+  end
+
+  def self.filter_by_date_and_costcenter(date, costcenter, current_user)
+    month = date.strftime("%B")
+    year = date.strftime("%Y")
+    @workingday = Workingday.where(month_name: month,year: year).pluck(:employee_id)
+    @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
+    @joining_details = JoiningDetail.where(cost_center_id: costcenter).pluck(:employee_id)
+    @roles = collect_rolewise(current_user)
+    finals = (@joining_details - @attendances - @workingday) & @roles
+    Employee.where(id: finals)
+  end
+  
+  def employee_role_wise(company,company_location,department,current_user)
+    if current_user.class == Group
+      if company == ""
+        @employees = Employee.where(status: 'Active')
+      elsif company_location == ""
+        @employees = Employee.where(company_id: company.to_i,status: 'Active')
+      elsif department == ""
+        @employees = Employee.where(company_location_id: company_location.to_i,status: 'Active')
+      else
+        @employees = Employee.where(company_id: company.to_i,company_location_id: company_location.to_i,department_id: department.to_i,status: 'Active')
+      end
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        if company == ""
+          @employees = Employee.where(status: 'Active')
+        elsif company_location == ""
+          @employees = Employee.where(company_id: company.to_i,status: 'Active')
+        elsif department == ""
+          @employees = Employee.where(company_location_id: company_location.to_i,status: 'Active')
+        else
+          @employees = Employee.where(company_id: company.to_i,company_location_id: company_location.to_i,department_id: department.to_i,status: 'Active')
+        end
+      elsif current_user.role.name == 'Admin'
+        if company == ""
+          @employees = Employee.where(company_id: current_user.company_location.company_id,status: 'Active')
+        elsif company_location == ""
+          @employees = Employee.where(company_id: company.to_i,status: 'Active')
+        elsif department == ""
+          @employees = Employee.where(company_location_id: company_location.to_i,status: 'Active')
+        else
+          @employees = Employee.where(company_id: company.to_i,company_location_id: company_location.to_i,department_id: department.to_i,status: 'Active')
+        end
+      elsif current_user.role.name == 'Branch'
+        if company == "" || company_location == ""
+          @employees = Employee.where(company_location_id: current_user.company_location_id,status: 'Active')
+        elsif department == ""
+          @employees = Employee.where(company_location_id: company_location.to_i,status: 'Active')
+        else 
+          @employees = Employee.where(company_id: company.to_i,company_location_id: company_location.to_i,department_id: department.to_i,status: 'Active')
+        end
+      end
+    end
+  end
+
+  def employee_type_wise_role(employee_type,company,location,current_user)
+    if current_user.class == Group
+      if location == ""
+        @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i)
+      else 
+        @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i,company_location_id: location.to_i)
+      end
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        if location == ""
+          @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i)
+        else 
+          @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i,company_location_id: location.to_i)
+        end
+       elsif current_user.role.name == 'Admin'
+        if location == ""
+          @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i)
+        else 
+          @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i,company_location_id: location.to_i)
+        end
+        elsif current_user.role.name == 'Branch'
+        if location == ""
+          @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i)
+        else 
+          @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i,company_location_id: location.to_i)
+        end
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Superviser'
+      elsif current_user.role.name == 'Employee'
       end
     end
   end
@@ -193,23 +322,6 @@ class Employee < ActiveRecord::Base
     end
   end
   
-  def self.filter_by_date_and_costcenter(date, costcenter, current_user)
-    @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
-    @joining_details = JoiningDetail.where(cost_center_id: costcenter).pluck(:employee_id)
-    @roles = collect_rolewise(current_user)
-    finals = (@joining_details - @attendances) & @roles
-    Employee.where(id: finals)
-  end
-
-  def self.filter_by_date_costcenter_and_department(date, costcenter, department, current_user)
-    @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
-    @joining_details = JoiningDetail.where(cost_center_id: costcenter).pluck(:employee_id)
-    @departments = Employee.where(department_id: department).pluck(:id)
-    @roles = collect_rolewise(current_user)
-    final = (@departments) & @roles
-    finals = (@joining_details) & @roles
-    #Employee.where(id: finals,id: final)
-  end
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
@@ -240,4 +352,5 @@ class Employee < ActiveRecord::Base
     end
   end
 
+  
 end

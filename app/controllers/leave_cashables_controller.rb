@@ -15,6 +15,8 @@ class LeaveCashablesController < ApplicationController
   def new
     @leave_cashable = LeaveCashable.new
     @leave_cashables = LeaveCashable.all
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="leaveadministration"
   end
 
   # GET /leave_cashables/1/edit
@@ -36,7 +38,6 @@ class LeaveCashablesController < ApplicationController
       @day_in_month =  @leave_cashable.date.end_of_month.day
       @employee_salary_templates.try(:each) do |est|
         @leave_cash_masters.try(:each) do |lcm|
-          # byebug
           formula_string = lcm.base_component.split(',').map {|i| i.to_i}
           @employee_templates = EmployeeTemplate.where(employee_id: @leave_cashable.employee_id,is_active: true).take
           formula_item = EmployeeSalaryTemplate.where(salary_component_id: formula_string,employee_id: @leave_cashable.employee_id,employee_template_id: @employee_templates.id)  

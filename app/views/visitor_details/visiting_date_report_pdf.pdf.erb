@@ -1,0 +1,48 @@
+<style type="text/css">
+    th { text-align: left; }
+    tr { page-break-inside: avoid; }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;}
+</style>
+  <% @visitor_details.each do |visitor_detail| %>
+
+<table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+ 
+  <thead>
+  <tr><td colspan="7"><center><strong><%= visitor_detail.employee.company_location.company.try(:description) %></strong> <br>
+        <%= visitor_detail.employee.company_location.company.try(:address) %><br>  <%= visitor_detail.employee.department.try(:name) %> -
+        <%= visitor_detail.employee.company_location.try(:name) %></center> </td></tr>
+
+     <tr><th colspan="2">Visiting Date: <%= visitor_detail.try(:visiting_date) %></th><th colspan="2"><center> Visiting Date Report </center></th>
+     <th colspan="1"></th></tr>
+     <tr>
+    <tr>
+    <th>Visitor ID</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Contact No.</th>
+      <th>From</th>
+      <th>Meet To</th>
+      <th>Entry Time</th>
+    
+    </tr>
+  </thead>
+
+  <tbody>
+  
+      <tr>
+       <td><%= visitor_detail.id %></td>
+        <td><%= visitor_detail.name %></td>
+        <td><%= visitor_detail.age %></td>
+        <td><%= visitor_detail.contact_no %></td>
+        <td><%= visitor_detail.from %></td>
+        <td><%= full_name(visitor_detail.employee) %></td>
+        <td><%= visitor_detail.in_time %></td>
+       
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>

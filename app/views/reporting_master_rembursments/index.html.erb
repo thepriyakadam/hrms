@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Reporting Master Rembursments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Rembursment</th>
+      <th>Manager</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reporting_master_rembursments.each do |reporting_master_rembursment| %>
+      <tr>
+        <td><%= reporting_master_rembursment.rembursment %></td>
+        <td><%= reporting_master_rembursment.manager %></td>
+        <td><%= reporting_master_rembursment.status %></td>
+        <td><%= link_to 'Show', reporting_master_rembursment %></td>
+        <td><%= link_to 'Edit', edit_reporting_master_rembursment_path(reporting_master_rembursment) %></td>
+        <td><%= link_to 'Destroy', reporting_master_rembursment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Reporting master rembursment', new_reporting_master_rembursment_path %>

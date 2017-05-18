@@ -6,6 +6,9 @@
   <div id="comments">
     <table id="example1" class="table table-bordered table-hover table-condensed">
     <thead>
+      <tr><td colspan="12"><center><strong><%= current_user.employee.company_location.company.try(:description) %></strong> <br>
+        <%= current_user.employee.company_location.company.try(:address) %><br> <%= current_user.employee.department.try(:name) %> -
+        <%= current_user.employee.company_location.try(:name) %></center> </td></tr>
       <tr>
         <th>Support ID</th>
         <th>Support</th>
@@ -42,7 +45,7 @@
     </tbody>
     </table>
     </div>
-    <%= link_to " Excel Report ",issue_tracker_reports_xls_issue_requests_path(issue_tracker_group_id: @issue_tracker_group, date: @start , to_date: @en , format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+    <%= link_to " Excel Report ",issue_tracker_reports_xls_issue_requests_path(issue_tracker_group_id: @issue_tracker_group, date: @start , to_date: @en,issue_tracker_group_id: @issue , format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
       <%= link_to " Print Support PDF ",issue_tracker_pdf_issue_requests_path(issue_tracker_group_id: @issue_tracker_group, date: @start , to_date: @en , format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
    
-    </div>
+    </div> 

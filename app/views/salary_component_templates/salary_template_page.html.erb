@@ -1,11 +1,19 @@
 <div class="box">
 <div class="box-header">
-    <h3 class="box-title">Employee Salary Template Information</h3>
     <div class="pull-right">
     </div>
   </div><!-- /.box-header -->
-<table id="example2" class="table table-bordered table-hover table-condensed">
+
+    <div class="box-body">
+    <div class="row">
+      <div class="col-sm-1">
+       
+      </div>
+      <div class="col-sm-10">
+        <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
+  <tr><td colspan="6"><center> Employee Salary Template Information </center></td></tr>
+  <tr><td colspan="6"><center> <%= @salary_template.code %> - <%= @salary_template.try(:description) %></center></td></tr>
     <tr>
       <th>Sr.No.</th>
       <th>Salary Component</th>
@@ -31,4 +39,10 @@
   </tbody>
 </table>
 <%= link_to 'Back', new_salary_template_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      </div>
+       <div class="col-sm-1">
+       
+      </div>
+</div>
+</div>
 </div>

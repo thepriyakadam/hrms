@@ -6,8 +6,7 @@
         <div class="col-sm-2">
         <label>Select Attendance </label>
           <div class="field">
-            <%= f.select :present,['P','W','A','P/2','PG'],{hide_label: true,include_blank: "Select Option"} %>
-
+            <%= f.select :present,['P','W','A','P/2','PG','H'],{hide_label: true,include_blank: "Select Option"} %>
             <%= f.hidden_field :day, value: @date %>
           </div>
         </div>
@@ -30,7 +29,7 @@
             <tr>              
               <td><%= check_box_tag "employee_ids[]",e.id %></td>
               <td><%= e.manual_employee_code %></td>
-              <td><%= e.first_name %> <%= e.middle_name %> <%= e.last_name %></td>
+              <td><%= full_name(e) %></td>
               <td><%= e.try(:company_location).try(:name)%> - <%= e.try(:department).try(:name)%></td>
               <td><%= e.try(:joining_detail).try(:employee_designation).try(:name) %></td>
               <td><%= e.try(:joining_detail).try(:cost_center).try(:name) %></td>

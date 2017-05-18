@@ -1,0 +1,119 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Attendance Date Wise</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= bootstrap_form_for(:employee, url: { action: 'show_from_and_to_date'},html: {id: "employee"}) do |f| %>
+  
+  	 <div class="row">
+      <div class="col-sm-2">
+      <label>From Date</label>
+         <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= text_field :employee, :day,{hide_label: true , placeholder: 'From Date',class: 'form-control request_date'}%>
+          </div>
+         </div>
+        </div>
+
+        <div class="col-sm-2">
+        <label>To Date</label>
+         <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= text_field :employee, :to_date,{hide_label: true , placeholder: 'To Date',class: 'form-control request_date'}%>
+          </div>
+         </div>
+        </div>
+
+        <div class="col-sm-2">
+            <div class="field">
+              <%= f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});",class: 'form-control'}%>
+            </div>
+          </div>
+
+          <div class="col-sm-2">
+            <div class="field">
+              <div id="company_location_with_label">
+                <%= render 'employees/company_location_dropdown_with_label' %> 
+            </div>
+            </div>
+          </div>
+
+          <div class="col-sm-2">
+            <div class="field">
+              <div class="input-group">
+                <div id="department">
+                  <%= render 'employees/department_dropdown' %> 
+                </div> 
+              </div>
+            </div>
+          </div>
+
+      <div class="col-sm-2">
+        <div class="field">
+        <%= f.select :present,['P','W','A','P/2','PG'],{include_blank: "Select Option"},class: 'form-control' %>
+        </div>
+      </div>  
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <label>Status</label>
+          <div class="field">
+            <%= select :employee,:status, ['Active','Inactive','All'],{label: 'Select Status',include_blank: " Select"}, class: "form-control" %>
+         </div>
+        </div>
+        
+        <div class="col-sm-3" style="padding-top:20px;">
+          <%= f.submit "show Employee List",class: "btn btn-xl btn-primary fa fa-print" %>
+        </div>
+      </div><br>
+      <% end %>
+    <div id="date_li"></div>
+</div>
+</div>
+
+
+<script type="text/javascript">
+  $(function(){
+    $('.request_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+<script>
+$("#employee").validate({
+    rules: {
+      "employee[day]":{
+        required: true,
+      },
+      "employee[to_date]":{
+        required: true,
+      },
+      "employee[present]":{
+        required: true,
+      }
+       },
+    messages: {
+      "employee[day]":{
+        required: "Please Specify From Date",
+      },
+       "employee[to_date]":{
+        required: "Please Select To Date",
+      },
+       "employee[present]":{
+        required: "Please Select Present",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

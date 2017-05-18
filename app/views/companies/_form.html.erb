@@ -7,14 +7,18 @@
   <div class="box-body">
   <div id="dynamicDropdown"></div>
     <%= bootstrap_form_for(@company,html: {id: 'company'}) do |f| %>
-   
-  
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
            <%= f.text_field :manual_company_code,label: 'Company Code',placeholder: "Company Code"%>
            </div>
         </div>
+         <div class="col-sm-3">
+        <div class="field">
+            <%= f.file_field :company_logo,label: 'Upload Company Logo(only jpeg,jpg,png)' %>
+        </div>
+      </div>
       </div>
 
       <div class="row">
@@ -181,7 +185,6 @@ $("#company").validate({
       "company[state_id]":{
         required: "Please Specify State",
       }
-      
     },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
@@ -189,5 +192,3 @@ $("#company").validate({
     }
    });
 </script>
-
-

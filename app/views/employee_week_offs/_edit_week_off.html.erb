@@ -1,0 +1,52 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h5 class="modal-title"><center> Employee Week Off </center></h5>
+    </div>
+    <div class="modal-body">
+
+      	<%= bootstrap_form_for(:employee_week_off,url:{action:'edit_week_off',employee_week_off_id: @employee_week_off.id},html: {id: 'employee_week_off'}) do |f| %>
+          <div class="row">
+            <div class="col-sm-4">
+            	<label>Date</label>
+             	<div class="field">
+               	<div class="input-group">
+                 	<div class="input-group-addon">
+                  	<i class="fa fa-calendar"></i>
+                 	</div>
+                		<%= f.date_field :date, hide_label: true,placeholder: "Select Date" %>
+               	</div>
+             	</div>
+            </div>
+            <div class="col-sm-3" style="padding-top:20px;">
+              <div class="actions">
+                <%= f.submit "Create" , class: 'btn btn-primary btn-sm' %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+    <div class="modal-footer"></div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+<script type="text/javascript">
+  
+  $("#employee_week_off").validate({
+    rules: {
+      "employee_week_off[date]":{
+        required: true
+      }
+    },
+    messages: {
+      "employee_week_off[date]":{
+        required: "Please specify Date"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script> 

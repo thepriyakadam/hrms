@@ -4,16 +4,16 @@
   <thead>
     <tr>
       <th colspan="6"><center> BASIC DETAILS</center></th>
-      <th colspan="12"><center> SALARY DETAILS</center></th>
-      <th colspan="11"><center> WORKING DAYS</center></th>
-      <th colspan="12"><center> EARNED SALARY</center></th>
+      <th colspan="13"><center> SALARY DETAILS</center></th>
+      <th colspan="12"><center> WORKING DAYS</center></th>
+      <th colspan="13"><center> EARNED SALARY</center></th>
       <th colspan="12"><center>DEDUCTION</center></th>
       <th><center> NET </center></th>
       <th><center> SIGN </center></th>
     </tr>
 
     <tr>
-      <th>Sr. No.</th>
+      <th>Sr. No</th>
       <th>ID</th>
       <th>Name</th>
       <th>Department</th>
@@ -31,6 +31,7 @@
       <th>Medi Allow</th>
       <th>Child Edu Allow</th>
       <th>MRA</th>
+      <th>MA</th>
       <th>Total</th>
 
       <th>CL</th>
@@ -43,6 +44,7 @@
       <th>PD</th>
       <th>AD</th>
       <th>HD</th>
+      <th>GP</th>
       <th>WOff</th>
 
       <th>Basic</th>
@@ -56,6 +58,7 @@
       <th>Medi Allow</th>
       <th>Child Edu Allow</th>
       <th>MRA</th>
+      <th>MA</th>
       <th>Gross</th>
 
       <th>PF</th>
@@ -97,6 +100,7 @@
         <td><%= r.try(:actual_medical).try(:round) %></td>
         <td><%= r.try(:actual_child_edu).try(:round) %></td>
         <td><%= r.try(:actual_mra).try(:round) %></td>
+         <td><%= r.try(:actual_monthly_arrear).try(:round) %></td>
         <td><%= r.try(:actual_total).try(:round) %></td>
 
         <td><%= r.try(:cl_leave) %></td>
@@ -110,6 +114,7 @@
         <td><%= r.try(:present_day) %></td>
         <td><%= r.try(:absent_day) %></td>
         <td><%= r.try(:holiday) %></td>
+        <td><%= r.try(:gatepass) %></td>
         <td><%= r.try(:weekoff) %></td>
 
         <td><%= r.try(:earned_basic).try(:round) %></td>
@@ -123,6 +128,7 @@
         <td><%= r.try(:earned_medical).try(:round) %></td>
         <td><%= r.try(:earned_child_edu).try(:round) %></td>
         <td><%= r.try(:earned_mra).try(:round) %></td>
+        <td><%= r.try(:earned_monthly_arrear).try(:round) %></td>
         <td><%= r.try(:earned_total).try(:round) %></td>
 
         <td><%= r.try(:pf) %></td>
@@ -163,6 +169,7 @@
       <td><%= @sum.actual_medical.try(:round) %></td>
       <td><%= @sum.actual_child_edu.try(:round) %></td>
       <td><%= @sum.actual_mra.try(:round) %></td>
+       <td><%= @sum.actual_monthly_arrear.try(:round) %></td>
       <td><%= @sum.actual_total.try(:round) %></td>
       
       <td><%= @sum.cl_leave %></td>
@@ -176,6 +183,7 @@
       <td><%= @sum.present_day %></td>
       <td><%= @sum.absent_day %></td>
       <td><%= @sum.holiday %></td>
+      <td><%= @sum.gatepass %></td>
       <td><%= @sum.weekoff %></td>
 
       <td><%= @sum.earned_basic.try(:round) %></td>
@@ -189,6 +197,7 @@
       <td><%= @sum.earned_medical.try(:round) %></td>
       <td><%= @sum.earned_child_edu.try(:round) %></td>
       <td><%= @sum.earned_mra.try(:round) %></td>
+      <td><%= @sum.earned_monthly_arrear.try(:round) %></td>
       <td><%= @sum.earned_total.try(:round) %></td>
 
       <td><%= @sum.pf %></td>

@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   # include LocalSubdomain
 
   def after_sign_in_path_for(resource)
+    # binding.pry
     if resource.class == 'Group'
       # root_url(:subdomain => current_user.subdomain)
       root_url

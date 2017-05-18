@@ -533,26 +533,26 @@ i = i+1
 end
 
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/el.xls")
-# ex.default_sheet = ex.sheets[0] 
-# i=1
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/el.xls")
+ex.default_sheet = ex.sheets[0] 
+i=1
 
-# 2.upto(385) do |line|
-# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-# EmployeeLeavBalance.new do |j|
-#   j.employee_id = @employee.id unless @employee.nil?
-#   j.leav_category_id = ex.cell(line,'C')
-#   j.no_of_leave = ex.cell(line,'D')
-#   j.expiry_date = ex.cell(line,'E')
-#   j.total_leave = ex.cell(line,'F')
-#   j.expiry_date = ex.cell(line,'G')
-#   j.total_leave = ex.cell(line,'H')
-#   j.save!
-# end
-# puts "#{i} Record inserted.-----------------------------------------------"
-# i = i+1
-# end
+2.upto(385) do |line|
+@employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+EmployeeLeavBalance.new do |j|
+  j.employee_id = @employee.id unless @employee.nil?
+  j.leav_category_id = ex.cell(line,'C')
+  j.no_of_leave = ex.cell(line,'D')
+  j.expiry_date = ex.cell(line,'E')
+  j.total_leave = ex.cell(line,'F')
+  j.expiry_date = ex.cell(line,'G')
+  j.total_leave = ex.cell(line,'H')
+  j.save!
+end
+puts "#{i} Record inserted.-----------------------------------------------"
+i = i+1
+end
 
 
 

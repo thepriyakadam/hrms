@@ -51,4 +51,3 @@ production:
   database: hrms_production
   username: hrms
   password: <%= ENV['HRMS_DATABASE_PASSWORD'] %>
-  

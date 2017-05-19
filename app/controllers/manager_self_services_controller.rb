@@ -135,7 +135,7 @@ class ManagerSelfServicesController < ApplicationController
     @ind_sub = current_login.indirect_subordinates
 
     @emp = @sub + @ind_sub
-    @employees = LeaveCOff.where(employee_id: @emp,is_taken: false,status: false)
+    @employees = LeaveCOff.where(employee_id: @emp,is_taken: false,status: false,is_expire: false)
   end
 
 

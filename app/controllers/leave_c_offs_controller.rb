@@ -327,6 +327,8 @@ class LeaveCOffsController < ApplicationController
           end #do
       end #is_exist
 
+
+
     flash[:notice] = "Approved successfully"
     redirect_to leave_c_off_manager_self_services_path
   end

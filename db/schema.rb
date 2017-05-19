@@ -225,11 +225,6 @@ ActiveRecord::Schema.define(version: 20170516100415) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "authorized_bies", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id", limit: 4
     t.string   "award_name",  limit: 255
@@ -1047,18 +1042,6 @@ ActiveRecord::Schema.define(version: 20170516100415) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
-
-  create_table "employee_jc_lists", force: :cascade do |t|
-    t.integer  "joining_checklist_master_id", limit: 4
-    t.integer  "employee_id",                 limit: 4
-    t.integer  "admin_id",                    limit: 4
-    t.boolean  "status",                                default: false
-    t.datetime "created_at",                                            null: false
-    t.datetime "updated_at",                                            null: false
-  end
-
-  add_index "employee_jc_lists", ["employee_id"], name: "index_employee_jc_lists_on_employee_id", using: :btree
-  add_index "employee_jc_lists", ["joining_checklist_master_id"], name: "index_employee_jc_lists_on_joining_checklist_master_id", using: :btree
 
   create_table "employee_leav_balances", force: :cascade do |t|
     t.integer  "employee_id",      limit: 4
@@ -2242,15 +2225,6 @@ ActiveRecord::Schema.define(version: 20170516100415) do
     t.datetime "updated_at",             null: false
   end
 
-  create_table "joining_checklist_masters", force: :cascade do |t|
-    t.string   "code",        limit: 255
-    t.string   "name",        limit: 255
-    t.text     "description", limit: 65535
-    t.boolean  "status",                    default: false
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
-  end
-
   create_table "joining_details", force: :cascade do |t|
     t.integer  "employee_id",             limit: 4
     t.date     "joining_date"
@@ -2504,11 +2478,6 @@ ActiveRecord::Schema.define(version: 20170516100415) do
   add_index "manager_histories", ["employee_id"], name: "index_manager_histories_on_employee_id", using: :btree
 
   create_table "managers", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "meet_tos", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -3055,31 +3024,6 @@ ActiveRecord::Schema.define(version: 20170516100415) do
     t.datetime "updated_at",              null: false
   end
 
-  create_table "rembursmentmasters", force: :cascade do |t|
-    t.string   "code",        limit: 255
-    t.string   "name",        limit: 255
-    t.text     "description", limit: 65535
-    t.boolean  "status",                    default: false
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
-  end
-
-  create_table "rembursments", force: :cascade do |t|
-    t.integer  "employee_id",          limit: 4
-    t.integer  "manager_id",           limit: 4
-    t.date     "application_date"
-    t.date     "rembursment_date"
-    t.integer  "rembursmentmaster_id", limit: 4
-    t.decimal  "amount",                         precision: 5, scale: 1
-    t.date     "paid_date"
-    t.boolean  "status"
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
-  end
-
-  add_index "rembursments", ["employee_id"], name: "index_rembursments_on_employee_id", using: :btree
-  add_index "rembursments", ["rembursmentmaster_id"], name: "index_rembursments_on_rembursmentmaster_id", using: :btree
-
   create_table "replacements", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -3094,16 +3038,6 @@ ActiveRecord::Schema.define(version: 20170516100415) do
   end
 
   add_index "reporting_employee_transfers", ["employee_transfer_id"], name: "index_reporting_employee_transfers_on_employee_transfer_id", using: :btree
-
-  create_table "reporting_master_rembursments", force: :cascade do |t|
-    t.integer  "rembursment_id", limit: 4
-    t.integer  "manager_id",     limit: 4
-    t.boolean  "status"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-  end
-
-  add_index "reporting_master_rembursments", ["rembursment_id"], name: "index_reporting_master_rembursments_on_rembursment_id", using: :btree
 
   create_table "reporting_masters", force: :cascade do |t|
     t.string   "code",           limit: 255
@@ -4075,8 +4009,6 @@ ActiveRecord::Schema.define(version: 20170516100415) do
   add_foreign_key "employee_daily_activities", "employees"
   add_foreign_key "employee_daily_activities", "project_masters"
   add_foreign_key "employee_documents", "employees"
-  add_foreign_key "employee_jc_lists", "employees"
-  add_foreign_key "employee_jc_lists", "joining_checklist_masters"
   add_foreign_key "employee_leav_balances", "company_leavs"
   add_foreign_key "employee_leav_balances", "employees"
   add_foreign_key "employee_leav_balances", "leav_categories"
@@ -4257,10 +4189,7 @@ ActiveRecord::Schema.define(version: 20170516100415) do
   add_foreign_key "qualifications", "employees"
   add_foreign_key "qualifications", "universities"
   add_foreign_key "qualifications", "years"
-  add_foreign_key "rembursments", "employees"
-  add_foreign_key "rembursments", "rembursmentmasters"
   add_foreign_key "reporting_employee_transfers", "employee_transfers"
-  add_foreign_key "reporting_master_rembursments", "rembursments"
   add_foreign_key "reporting_masters", "employees"
   add_foreign_key "reporting_masters_resigns", "employee_resignations"
   add_foreign_key "reporting_masters_resigns", "reporting_masters"

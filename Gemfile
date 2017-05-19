@@ -20,7 +20,7 @@ gem 'coffee-rails', '~> 4.1.0'
 
 gem 'whenever', '~> 0.9.4',:require => false
 gem 'geocoder'
-gem 'therubyracer', platforms: :ruby
+# gem 'therubyracer', platforms: :ruby
 gem 'query_report'
 gem 'kaminari', '~> 0.16.3'
 gem 'coderay'

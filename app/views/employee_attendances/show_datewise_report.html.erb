@@ -3,7 +3,7 @@
     <h3 class="box-title">Attendance List</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example1" class="table table-bordered table-hover table-condensed">
+     <table id="example6" class="table table-bordered table-hover table-condensed">
       <thead>
         <!-- <tr>
           <td colspan="6"><center> 
@@ -13,9 +13,9 @@
             <end%> 
               <strong><=current_user.employee.company_location.company.try(:description)%></strong> <br> <= current_user.employee.company_location.company.try(:address)%></center>
           </td>
-        </tr> -->
+        </tr> --> 
         <tr><th colspan="6"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
-        <tr>
+        <tr> 
           <th>ID</th>
           <th>Employee Name</th>
           <th>Date</th>
@@ -47,3 +47,10 @@
      
   </div>
 </div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

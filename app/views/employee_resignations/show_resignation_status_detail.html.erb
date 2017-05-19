@@ -160,7 +160,7 @@
             <% a=resignation_status_record.change_status_employee_id %>
               <% b=Employee.where(id: a).take %>
               <td><%= b.manual_employee_code %></td>
-              <td><%= b.first_name+" "+b.middle_name+" "+b.last_name %></td>
+              <td><%= b.first_name %> <%= b.middle_name %> <%= b.last_name %></td>
             <td><%= resignation_status_record.change_date.to_date %></td>
             <td><%= resignation_status_record.status %></td>   
           </tr>

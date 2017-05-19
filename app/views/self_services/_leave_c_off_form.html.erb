@@ -1,12 +1,7 @@
 <div class="box-body">
-  <%= bootstrap_form_for(@leave_c_off,html: {id: 'leave_c_off'}) do |f| %>
-    <div class="row">
-     <div class="col-sm-3">
-          <div class="form-group required">
-           <%= f.select :employee_id, employee_list_by_company_location, {label: 'Employee ',include_blank: " Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
-           </div>
-        </div>
-    </div>
+  <%= bootstrap_form_for(@leave_c_off, url: {action: 'create_self_c_off'},html: {id: 'leave_c_off'}) do |f| %>
+    <%= hidden_field_tag :employee_id, current_user.employee_id %> 
+ 
     <div class="row">
       <div class="col-sm-3">
         <label>Date </label>
@@ -41,7 +36,7 @@
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
-          <%= f.submit "Create C.Off Leave",:class => class_name, data: { disable_with: data_info } %>
+          <%= f.submit "Create C.Off Leave",class: 'btn btn-sm btn-primary fa fa-modx' %>
         </div>
       </div>
     </div>
@@ -61,9 +56,6 @@
 
   $("#leave_c_off").validate({
   rules: {
-    "leave_c_off[employee_id]":{
-      required: true
-    },
     "leave_c_off[c_off_date]":{
       required: true
     },

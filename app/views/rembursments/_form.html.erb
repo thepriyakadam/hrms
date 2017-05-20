@@ -1,0 +1,81 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title"> Employee Rembursment </h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= bootstrap_form_for(@rembursment,html: {id: 'rembursment'}) do |f| %>
+   <!--  <= f.hidden_field :employee_id, :value => current_user.employee_id %> -->
+     <%= f.hidden_field :application_date, value: Date.today %>
+     
+      <div class="row">
+      <div class="col-sm-3">
+          <div class="form-group required">
+          <%= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Employee",label: "Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1",onchange:"var a={id:$(this).val()}; $.get('/employee_resignations/display_notice_period',a,function(response){});"}%>    
+          </div>
+        </div>
+       
+
+        <div class="col-sm-3">
+        <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :rembursment_date,class: 'rembursment',label:'Rembursment Date'%>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.select :rembursmentmaster_id, all_rembursment,{label: 'Rembursment',include_blank: " Select Rembursment"} %>
+          </div>
+        </div>
+
+          <div class="col-sm-3">
+         <div class="field">
+           <%= f.text_field :amount, label:'Amount' %>
+         </div>
+       </div>
+       </div>
+     <div class="col-sm-6">
+     <label></label>
+      <div class="actions">
+        <%= f.submit 'Create Rembursment',class: "btn btn-primary btn-sm"  %>
+        <%= link_to 'Back', rembursments_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+      </div>
+     </div>
+   </div>
+  <% end %>
+    
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(function(){
+    $('.rembursment').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-5:+10',
+    dateFormat: 'dd-mm-yy' });
+
+    $("#rembursment").validate({
+    rules: {
+      "rembursment[employee_id]":{
+        required: true,
+      }
+    },
+    messages: {
+      "rembursment[employee_id]":{
+        required: "Please Select Employee ",
+      }
+      },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+  }); 
+</script>

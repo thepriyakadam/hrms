@@ -1,9 +1,6 @@
 class SelfServicesController < ApplicationController
+  #before_action :set_self_service, only: [:show, :edit, :update, :destroy]
 
-
- def show
- end
- 
   def employee
     @employees = Employee.where(id: current_user.employee_id)
     session[:active_tab] ="EmployeeSelfService"
@@ -77,26 +74,97 @@ class SelfServicesController < ApplicationController
     @to = params[:employee][:to]
     @employee_id = params[:employee][:employee_id]
     @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id)
-    
-    respond_to do |format|
-      format.js
-      format.xls {render template: 'self_services/datewise_attendance_report_xls.xls.erb'}
-      format.html
-      format.pdf do
-        render pdf: 'datewise_attendance_report_pdf',
-              layout: 'pdf.html',
-              orientation: 'Landscape',
-              template: 'self_services/datewise_attendance_report_pdf.pdf.erb',
-              # show_as_html: params[:debug].present?,
-              :page_height      => 1000,
-              :dpi              => '300',
-              :margin           => {:top    => 10, # default 10 (mm)
-                            :bottom => 10,
-                            :left   => 20,
-                            :right  => 20},
-              :show_as_html => params[:debug].present?
-          end
-         end
 
-    end
+  end
+
+  def investment_declaration
+    @investment_declaration = InvestmentDeclaration.new
+    @investment_declarations = InvestmentDeclaration.where(employee_id: current_user.employee_id)
+    @employee = Employee.find_by(id: current_user.employee_id)
+    session[:active_tab] ="EmployeeSelfService"
+  end
+
+  def create_self_declaration
+    @employee_id = params[:employee_id]
+    @investment_head_id = params[:investment_declaration][:investment_head_id]
+    @amount = params[:investment_declaration][:amount]
+    @date = params[:investment_declaration][:date]
+    @status = params[:investment_declaration][:status]
+    @document = params[:investment_declaration][:document]
+    InvestmentDeclaration.create(date: @date,investment_head_id: @investment_head_id,amount: @amount,employee_id: @employee_id,status: @status)
+    flash[:notice] = "created Successfully!"
+    redirect_to investment_declaration_self_services_path
+  end
+
+  def investment_document2
+        @investment_declaration = InvestmentDeclaration.find(params[:id])
+        send_file @investment_declaration.document.path,
+               filename: @investment_declaration.document_file_name,
+               type: @investment_declaration.document_content_type,
+               disposition: 'attachment'
+    
+  end
+
+  def leave_c_off
+    @leave_c_off = LeaveCOff.new
+    @leave_c_offs = LeaveCOff.where(employee_id: current_user.employee_id)
+  end
+
+  def create_self_c_off
+    @leave_c_off = LeaveCOff.new
+              
+    @employee_id = params[:employee_id]
+    @c_off_date = params[:leave_c_off][:c_off_date]
+    @c_off_type = params[:leave_c_off][:c_off_type]
+
+    @expiry_status = params[:leave_c_off][:expiry_status]
+    @c_off_expire_day = params[:leave_c_off][:c_off_expire_day]
+
+    if @leave_c_off.is_self_present(@employee_id,@c_off_date)
+      flash[:alert] = "Your COff already set for that day"
+    else
+      @leave_c_off = LeaveCOff.new(leave_c_off_params)
+      @leave_c_offs = LeaveCOff.all
+      leav_category = LeavCategory.find_by_name('Compensatory Off')
+
+      if leav_category.nil?
+      else
+        @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
+        if @c_off.nil?
+        else
+          @c_off.each do |l|
+            if l.try(:expiry_date).to_date < Date.today
+              LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
+            else
+            end
+          end#do
+        end#c_off.nil?
+
+          if @c_off_type == 'Full Day'
+            if @leave_c_off.expiry_status == true
+              @expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
+              LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: @c_off_expire_day,expiry_status: @expiry_status,expiry_date: @expiry_date,is_expire: false,leave_count: 1,status: false)
+              flash[:notice] = "Your COff Created Successfully!"
+            else
+              LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: @c_off_expire_day,expiry_status: @expiry_status,expiry_date: nil,is_expire: false,leave_count: 1,status: false)
+              flash[:notice] = "Your COff Created Successfully!"
+            end
+          else
+            if @leave_c_off.expiry_status == true
+              @expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
+              LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: @c_off_expire_day,expiry_status: @expiry_status,expiry_date: @expiry_date,is_expire: false,leave_count: 0.5,status: false)
+              flash[:notice] = "Your COff Created Successfully!"
+            else
+              LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: @c_off_expire_day,expiry_status: @expiry_status,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false)
+              flash[:notice] = "Your COff Created Successfully!"
+            end
+          end#@c_off_type
+      end#leav_category.nil?
+    end#@leave_c_off.is_self_present?
+    redirect_to leave_c_off_self_services_path
+  end#def
+
+def leave_c_off_params
+    params.require(:leave_c_off).permit(:is_expire,:employee_id, :c_off_date, :c_off_type, :c_off_expire_day, :expiry_status, :expiry_date, :leave_count)
+  end
 end

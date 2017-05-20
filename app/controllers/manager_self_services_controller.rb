@@ -108,4 +108,38 @@ class ManagerSelfServicesController < ApplicationController
     @to = params[:employee][:to]
     @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee)
   end
+
+  def investment_declaration
+   session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] = "IncomeTax"
+    @emp = InvestmentDeclaration.where(status: true,is_confirm: false).pluck(:employee_id)
+    @employees = Employee.where(status: 'Active',id: @emp)
+  end
+
+  def investment_declaration_list
+    @employee_id = params[:employee_id]
+    @emp = Employee.find_by(id: @employee_id)
+    @investment_declaration = InvestmentDeclaration.new
+    @investment_declarations = InvestmentDeclaration.where(employee_id: @employee_id,status: true,is_confirm: false)
+  end
+
+  def reject_declaration
+    comment = params[:comment]
+    investment_declaration_id = params[:investment_declaration_id]
+    @investment_declaration = InvestmentDeclaration.find_by(id: investment_declaration_id)
+    @investment_declaration.update(status: false,comment: comment)
+    flash[:alert] = "Rejected!"
+    redirect_to investment_declaration_manager_self_services_path
+  end
+
+  def leave_c_off
+    current_login = Employee.find_by(id: current_user.employee_id)
+    @sub = current_login.subordinates
+    @ind_sub = current_login.indirect_subordinates
+
+    @emp = @sub + @ind_sub
+    @employees = LeaveCOff.where(employee_id: @emp,is_taken: false,status: false,is_expire: false)
+  end
+
+
 end

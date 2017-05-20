@@ -1,0 +1,50 @@
+<div class="box">
+  <div class="box-body">
+    <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+    <thead>
+        <tr>
+          <td colspan="6"><center> 
+            <% if current_user.employee.company_location.company.company_logo == nil %>
+            <%else %>
+              <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+            <%end%> 
+              <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+          </td>
+        </tr>
+        <tr><th colspan="6"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
+        <tr>
+          <th>ID</th>
+          <th>Employee Name</th>
+          <th>Date</th>
+          <th>In Time</th>
+          <th>Out Time</th>
+          <th>Present</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @employee_attendances.each do |employee_attendance| %>
+          <tr>
+            <td><%= employee_attendance.employee.try(:manual_employee_code) %></td>
+            <td><%= full_name(employee_attendance.try(:employee)) %></td>
+            <td><%= employee_attendance.try(:day) %></td>
+            <td><%= employee_attendance.try(:in_time) %></td>
+            <td><%= employee_attendance.try(:out_time) %></td>
+            <td><%= employee_attendance.try(:present) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+   </div>
+  </div>
+
+
+    <script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true,
+        "scrollY": 500
+    } );
+} );
+</script>

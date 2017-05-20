@@ -2,11 +2,11 @@
   <div class="box-header with-border">
   <div class="row">
   <div class="col-sm-1">
-      <%= image_tag @employee_jc_lists.first.employee.passport_photo.url, :size => "70x70" %>
+      <%= image_tag @employee_jc_lists.first.employee.passport_photo.try(:url), :size => "70x70" %>
   </div>
     <div class="col-sm-6">
      <font color='#0077b3'>
-        ID : <%= @employee_jc_lists.first.employee.try(:manual_employee_code) %><br>
+        ID : <%= @employee_jc_lists.first.try(:employee).try(:manual_employee_code) %><br>
         Name : <%= @employee_jc_lists.first.try(:employee).try(:first_name) %> <%= @employee_jc_lists.first.try(:employee).try(:middle_name) %> <%= @employee_jc_lists.first.try(:employee).try(:last_name) %><br>
         Email : <%= @employee_jc_lists.first.try(:employee).try(:email) %></font>
     </div>

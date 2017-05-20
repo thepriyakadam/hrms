@@ -1,0 +1,29 @@
+<%= form_for(@reporting_master_rembursment) do |f| %>
+  <% if @reporting_master_rembursment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@reporting_master_rembursment.errors.count, "error") %> prohibited this reporting_master_rembursment from being saved:</h2>
+
+      <ul>
+      <% @reporting_master_rembursment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :rembursment_id %><br>
+    <%= f.text_field :rembursment_id %>
+  </div>
+  <div class="field">
+    <%= f.label :manager_id %><br>
+    <%= f.text_field :manager_id %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.check_box :status %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

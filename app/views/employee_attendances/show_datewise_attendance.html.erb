@@ -34,7 +34,6 @@
           <% cl_leave_count = cl_leave_count(exist) %>
           <% esic_leave_count = esic_leave_count(exist) %>
           <% lwp_leave_count = lwp_leave_count(exist) %>
-          <% advance_leave_count = advance_leave_count(exist) %>
           <% coff_leave_count = coff_leave_count(exist) %>
           <% od_day_count = od_day_count(exist) %>
           <% workingday = [] %>
@@ -58,7 +57,6 @@
            <%= hidden_field e.employee_id, 'od_leave', value: od_day_count(exist) %>
           <%= hidden_field e.employee_id, 'esic_leave', value: esic_leave_count(exist) %>
           <%= hidden_field e.employee_id, 'coff_leave', value: coff_leave_count(exist) %>
-          <%= hidden_field e.employee_id, 'advance_leave', value: advance_leave_count(exist) %>
           <%= hidden_field e.employee_id, 'holiday_in_month', value: holiday_in_month %>
           <%= hidden_field e.employee_id, 'week_off_day', value: week_off_day %>
 

@@ -1565,6 +1565,174 @@ end
       end
   end
 
+  def self_service_datewise_attendance
+    @from = params[:employee][:from]
+    @to = params[:employee][:to]
+    @employee_id = params[:employee][:employee_id]
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id)
+    
+    respond_to do |format|
+      format.js
+      format.xls {render template: 'self_services/datewise_attendance_report_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'self_service_datewise_attendance',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'self_services/datewise_attendance_report_pdf.pdf.erb',
+              # show_as_html: params[:debug].present?,
+              :page_height      => 1000,
+              :dpi              => '300',
+              :margin           => {:top    => 10, # default 10 (mm)
+                            :bottom => 10,
+                            :left   => 20,
+                            :right  => 20},
+              :show_as_html => params[:debug].present?
+          end
+         end
+  end
+
+  def manager_self_service_attendance
+    @emp = Employee.find(current_user.employee_id)
+    @employees = @emp.subordinates
+    @employees_ind = @emp.indirect_subordinates
+    @employee = @employees + @employees_ind
+
+    @from = params[:employee][:from]
+    @to = params[:employee][:to]
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee)
+
+     respond_to do |format|
+      format.js
+      format.xls {render template: 'manager_self_services/datewise_attendance.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'manager_self_service_attendance',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'manager_self_services/datewise_attendance.pdf.erb',
+              # show_as_html: params[:debug].present?,
+              :page_height      => 1000,
+              :dpi              => '300',
+              :margin           => {:top    => 10, # default 10 (mm)
+                            :bottom => 10,
+                            :left   => 20,
+                            :right  => 20},
+              :show_as_html => params[:debug].present?
+          end
+         end
+
+  end
+
+  def datewise_report
+  end
+
+  def show_datewise_report
+    @from = params[:employee][:from]
+    @to = params[:employee][:to]
+    @company_id = params[:employee][:company_id]
+    @location = params[:employee][:company_location_id]
+    @department = params[:employee][:department_id]
+    #@employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee)
+  
+    if current_user.class == Group
+      if @company_id == ""
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
+      elsif @location == ""
+        @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
+      elsif @department == ""
+        @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
+      else
+        @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
+      end
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        if @company_id == ""
+          @employees = Employee.where(status: 'Active')
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
+        elsif @location == ""
+          @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
+        elsif @department == ""
+          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
+        else
+          @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
+        end
+      elsif current_user.role.name == 'Admin'
+        if @company_id == ""
+          @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
+        elsif @location == ""
+          @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
+        elsif @department == ""
+          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
+        else
+          @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
+        end
+      elsif current_user.role.name == 'Branch'
+        if @company_id == "" || @location == ""
+          @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
+        elsif @department == ""
+          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
+        else
+          @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
+        end
+      elsif current_user.role.name == 'HOD'
+        if @company_id == "" || @location == "" || @department == ""
+          @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
+        else 
+          @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
+        end
+      elsif current_user.role.name == 'Supervisor'
+        if @company_id == "" || @location == "" || @department == ""
+          @emp = Employee.find(current_user.employee_id)
+          @employees = @emp.subordinates
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
+       else
+          @emp = Employee.find(current_user.employee_id)
+          @employees = @emp.subordinates
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
+        end
+      elsif current_user.role.name == 'Employee'
+      end #current_user.role
+    end #current_user.class
+
+      respond_to do |format|
+      format.js
+      format.xls {render template: 'employee_attendances/datewise_report.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'show_datewise_report',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'employee_attendances/datewise_report.pdf.erb',
+              # show_as_html: params[:debug].present?,
+              :page_height      => 1000,
+              :dpi              => '300',
+              :margin           => {:top    => 10, # default 10 (mm)
+                            :bottom => 10,
+                            :left   => 20,
+                            :right  => 20},
+              :show_as_html => params[:debug].present?
+          end
+         end
+
+
+  end
+
 def search_by_date
   @employee_attendances = EmployeeAttendance.all
     reporter(@employee_attendances, template_class: PdfReportTemplate) do

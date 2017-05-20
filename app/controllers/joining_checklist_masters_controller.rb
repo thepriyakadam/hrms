@@ -17,6 +17,8 @@ class JoiningChecklistMastersController < ApplicationController
   def new
     @joining_checklist_master = JoiningChecklistMaster.new
     @joining_checklist_masters = JoiningChecklistMaster.all
+    session[:active_tab] = "GlobalSetup"
+     session[:active_tab1] = "OnBording"
   end
 
   # GET /joining_checklist_masters/1/edit

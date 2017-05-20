@@ -1,0 +1,52 @@
+<br>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+<% i = 0 %>
+  <thead>
+    <tr>
+      <th colspan="2">ID : <%= @employee.manual_employee_code %></th>
+      <th colspan="2">Employee : <%= full_name(@employee) %></th>
+      <th colspan="3">Department : <%= @employee.company_location.try(:name) %> - <%= @employee.department.try(:name) %></th>
+    </tr>
+    <tr>
+      <th>Sr No</th>
+      <th>Investment Head</th>
+      <th>Amount</th>
+      <th>Date</th>
+      <th>Send For Approval</th>
+      <th>Document</th>
+      <th>Action</th>
+    </tr>
+  <tbody>
+    <% @investment_declarations.each do |investment_declaration| %>
+      <tr>
+        <td><%= i = i + 1%></td>
+        <td><%= investment_declaration.investment_head.try(:description) %></td>
+        <td><%= investment_declaration.amount %></td>
+        <td><%= investment_declaration.date %></td>
+        <td><%= investment_declaration.status ? "Yes" : "No"%></td>
+         <td>
+           <% if investment_declaration.document_file_name == nil %>
+           <small class="label label-default">Document Not Available</small>
+             <% else %>
+             <%= link_to ' Document',investment_document2_path(id: investment_declaration.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
+             <% end %>
+        </td>
+        <td>
+          <% if investment_declaration.is_confirm == true %>
+            <small class="label label-primary">Approved</small>
+          <% else %>
+            <% if investment_declaration.status == true %>
+              <small class="label label-info">Send For Approval</small>
+              <%= link_to '', cancel_request_investment_declarations_path(investment_declaration),class: 'btn btn-danger btn-xs fa fa-trash-o' %>
+            <% else %>
+              <%= link_to '', self_edit_modal_investment_declarations_path(investment_declaration),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+              <%= link_to '',  delete_request_investment_declarations_path(investment_declaration),data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close' %>
+              <%= link_to 'Send',  send_for_approval_investment_declarations_path(investment_declaration), data: { confirm: 'Are you sure?' },class: 'btn btn-info btn-xs' %>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div id="myModal" class="modal fade"></div>

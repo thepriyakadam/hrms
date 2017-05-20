@@ -21,9 +21,9 @@
           <tr>
             <td><%= g.period.try(:name) %></td>
             <td>From: <%= g.period.try(:from) %> To: <%= g.period.try(:to) %> </td>
-            <td><%= full_name(g.employee) %></td>
-            <td><%= full_name(g.employee.try(:manager)) %> </td>
-            <td><%= full_name(g.employee.try(:manager_2)) %></td>
+            <td><%= g.employee.try(:manual_employee_code) %> - <%= full_name(g.employee) %></td>
+            <td><%= g.employee.try(:manager).try(:manual_employee_code) %> - <%= full_name(g.employee.try(:manager)) %> </td>
+            <td><%= g.employee.try(:manager_2).try(:manual_employee_code) %> - <%= full_name(g.employee.try(:manager_2)) %></td>
             <td>
               <!-- <= link_to "Details For Print", appraisee_detail_for_print_goal_bunches_path(emp_id: g.employee_id,id: g),class: "btn btn-xs btn-success" %> -->
               <%= link_to 'Print Report', print_appraisee_detail_goal_bunches_path(format: 'pdf',emp_id:g.employee_id,id: g),class: "btn btn-xl btn-info fa fa-print" %>

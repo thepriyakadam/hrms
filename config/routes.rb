@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+  resources :reporting_master_rembursments
+  resources :rembursments  do
+    collection do
+      get :rembursment_request
+       end
+  end
+  resources :rembursmentmasters
   resources :employee_jc_lists
   resources :joining_checklist_masters
   resources :employee_gps
@@ -70,6 +77,9 @@ Rails.application.routes.draw do
       get :final_approval_emp_resignation_list
       get :employee_attendance
       post :show_datewise_attendance
+      get :investment_declaration
+      get :investment_declaration_list
+      post :reject_declaration
     end
   end
 
@@ -405,7 +415,22 @@ end
   end
   resources :recognition_types
 
-  resources :investment_declarations
+  resources :investment_declarations do
+    collection do
+      get :manager_view
+      get :approve_declaration
+      post :approve_declaration
+      get :reject_declaration
+      post :reject_declaration
+      get :approve_declaration_modal
+      get :reject_declaration_modal
+      get :self_edit_modal
+      post :self_update
+      get :send_for_approval
+      get :cancel_request
+      get :delete_request
+    end
+  end
   resources :investment_heads
   resources :sections
   resources :employee_documents do
@@ -558,6 +583,9 @@ end
       post :import
       get :import_employee_attendance
       get :import_employee_attendance_to_txt
+
+      get :self_service_datewise_attendance
+      get :manager_self_service_attendance
     end
   end
   resources :salary_comp_mappings
@@ -1242,6 +1270,8 @@ end
       get :datewise_attendance_report_xls
       get :datewise_attendance_report_pdf
       get :show
+      get :investment_declaration
+      post :create_self_declaration
     end
   end
 
@@ -1312,6 +1342,8 @@ end
   match 'employee_documents/:id/download_emp/:id' => 'employee_documents#download_emp', :via => [:get], :as => :download_emp
   match 'employee_documents/:id/download_pic/:id' => 'employee_documents#download_pic', :via => [:get], :as => :download_pic
   match 'investment_declarations/:id/investment_document/:id' => 'investment_declarations#investment_document', :via => [:get], :as => :investment_document
+   match 'investment_declarations/:id/investment_document2/:id' => 'investment_declarations#investment_document2', :via => [:get], :as => :investment_document2
+
   match 'due_templates/:id/download_due_tempalte_documents/:id' => 'due_templates#download_due_tempalte_documents', :via => [:get], :as => :download_due_tempalte_documents
 
   match 'issue_requests/:id/download_screenshot_image/:id' => 'issue_requests#download_screenshot_image', :via => [:get], :as => :download_screenshot_image

@@ -53,8 +53,9 @@ class InvestmentDeclarationsController < ApplicationController
   # DELETE /investment_declarations/1.json
   def destroy
     @investment_declaration.destroy
-      @investment_declaration = InvestmentDeclaration.new
+    @investment_declaration = InvestmentDeclaration.new
     @investment_declarations = InvestmentDeclaration.all
+    #redirect_to investment_declaration_self_services_path
   end
    
   def investment_document
@@ -64,7 +65,87 @@ class InvestmentDeclarationsController < ApplicationController
                type: @investment_declaration.document_content_type,
                disposition: 'attachment'
     
-   end
+  end
+   
+  def investment_document2
+      @investment_declaration = InvestmentDeclaration.find(params[:id])
+      send_file @investment_declaration.document.path,
+               filename: @investment_declaration.document_file_name,
+               type: @investment_declaration.document_content_type,
+               disposition: 'attachment'
+    
+  end
+
+  def send_for_approval
+    @investment_declaration = InvestmentDeclaration.find(params[:format])
+    @investment_declaration.update(status: true)
+    flash[:noitice] = "Successfully send for approval!"
+    redirect_to investment_declaration_self_services_path
+  end
+
+  def cancel_request
+    @investment_declaration = InvestmentDeclaration.find(params[:format])
+    @investment_declaration.update(status: false)
+    flash[:noitice] = "Successfully Cancelled!"
+    redirect_to investment_declaration_self_services_path
+  end
+
+  def delete_request
+    @investment_declaration = InvestmentDeclaration.find(params[:format])
+    @investment_declaration.destroy
+    flash[:noitice] = "Successfully Destroyed!"
+    redirect_to investment_declaration_self_services_path
+  end
+
+  def manager_view
+    current_login = Employee.find(current_user.employee_id)
+    @emp_sub = current_login.indirect_subordinates.pluck(:id)
+    @emp_ind_sub = current_login.subordinates.pluck(:id)
+    @employee_id = @emp_sub + @emp_ind_sub
+    @investment_declarations = InvestmentDeclaration.where(employee_id: @employee_id)
+  end
+
+  def approve_declaration_modal
+    @investment_declaration = InvestmentDeclaration.find(params[:format])
+    #@investment_declaration = InvestmentDeclaration.find_by(id: investment_declaration_id)
+  end
+
+  def approve_declaration
+    comment = params[:investment_declaration][:comment]
+    @investment_declaration = InvestmentDeclaration.find(params[:investment_declaration_id])
+    @investment_declaration.update(is_confirm: true,comment: comment)
+    flash[:notice] = "Approved!"
+    redirect_to investment_declaration_manager_self_services_path
+  end
+
+  def reject_declaration_modal
+    @investment_declaration = InvestmentDeclaration.find(params[:format])
+  end
+
+  def reject_declaration
+    comment = params[:comment]
+    @investment_declaration = InvestmentDeclaration.find(params[:investment_declaration_id])
+    @investment_declaration.update(status: false,comment: comment)
+    flash[:alert] = "Rejected!"
+    redirect_to investment_declaration_manager_self_services_path
+  end
+
+  def self_edit_modal
+    @investment_declaration = InvestmentDeclaration.find(params[:format])
+  end
+
+  def self_update
+    investment_head_id = params[:investment_declaration][:investment_head_id]
+    amount = params[:investment_declaration][:amount]
+    date = params[:investment_declaration][:date]
+    status = params[:investment_declaration][:status]
+    document = params[:investment_declaration][:document]
+
+    @investment_declaration = InvestmentDeclaration.find(params[:investment_declaration_id])
+    @investment_declaration.update(investment_head_id: investment_head_id,amount: amount,date: date,status: status)
+    flash[:notice] = "Updated Successfully!"
+    redirect_to investment_declaration_self_services_path
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

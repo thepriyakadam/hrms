@@ -3,6 +3,9 @@
     <h3 class="box-title"> Employee Attendance</h3>
  <div class="box-body">
   <%= bootstrap_form_for(:employee, url: { action: 'show_self_datewise_attendance'},html: {id: "employee"}) do |f| %>
+
+  <%= hidden_field :employee,:employee_id, value: current_user.employee_id %>
+
     <div class="row">
         <div class="col-sm-3">
           <label>From </label>
@@ -11,7 +14,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= text_field :employee,:from,hide_label: true,class: 'request_date form-control'%>
+                <%= text_field :employee,:from,hide_label: true,class: 'request_date form-control'%>
             </div>
           </div>
         </div>

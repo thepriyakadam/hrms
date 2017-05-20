@@ -1,0 +1,92 @@
+<div class="modal-dialog" style="height:800px; max-height:1000px; width:800px; max-width:1000px;">>
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="modal-body">
+
+      <%= bootstrap_form_for :investment_declaration, url: {action: 'self_update',investment_declaration_id: @investment_declaration.id},html: {id: 'investment_declaration'} do |f| %>
+
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.select :investment_head_id, investment_head_all, {label:'Investment Head',include_blank: " Select Investment Head"} %>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :amount,label:'Amount', placeholder: 'Amount' %>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <%= f.text_field :date, label: 'Date', class: 'interview_date'%>
+              </div>
+            </div>
+          </div> 
+        </div>
+
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.file_field :document,label: 'Document(doc,docx,pdf only)' %>
+            </div>
+          </div>
+
+          <div class="col-sm-3" style="padding-top:20px;">
+            <label></label>
+            <div class="actions">
+              <%= f.submit 'Update', class: 'btn btn-sm btn-success fa fa-modx'%>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      </div>
+    <div class="modal-footer"></div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+
+<script type="text/javascript">
+$(function(){
+    $('.interview_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+
+$("#investment_declaration").validate({
+    rules: {
+       "investment_declaration[investment_head_id]":{
+        required: true,
+      },
+       "investment_declaration[amount]":{
+        required: true,
+      },
+       "investment_declaration[date]":{
+        required: true,
+      }
+    },
+    messages: {
+      "investment_declaration[investment_head_id]":{
+        required: "Please Select Investment Head",
+      },
+      "investment_declaration[amount]":{
+        required: "Please Specify amount",
+      },
+      "investment_declaration[date]":{
+        required: "Please Specify date",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

@@ -109,6 +109,8 @@ class ManagerSelfServicesController < ApplicationController
   end
 
   def investment_declaration
+   session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] = "IncomeTax"
     @emp = InvestmentDeclaration.where(status: true,is_confirm: false).pluck(:employee_id)
     @employees = Employee.where(status: 'Active',id: @emp)
   end

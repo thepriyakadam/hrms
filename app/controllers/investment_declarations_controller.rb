@@ -147,6 +147,17 @@ class InvestmentDeclarationsController < ApplicationController
     redirect_to investment_declaration_self_services_path
   end
 
+  def datewise_report
+  end
+
+  def show_datewise_report
+    @from = params[:employee][:from]
+    @to = params[:employee][:to]
+    @status = params[:employee][:status]
+
+    @investment_declarations = InvestmentDeclaration.where(date: @from.to_date..@to.to_date,is_confirm: @status)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_investment_declaration

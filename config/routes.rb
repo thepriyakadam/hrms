@@ -430,6 +430,9 @@ end
       get :send_for_approval
       get :cancel_request
       get :delete_request
+      get :datewise_report
+      post :show_datewise_report
+      get :show_datewise_report
     end
   end
   resources :investment_heads

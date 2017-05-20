@@ -12,7 +12,7 @@
       <th>Investment Head</th>
       <th>Amount</th>
       <th>Date</th>
-      <th>Send For Approval</th>
+      <th>Sent For Approval</th>
       <th>Document</th>
       <th>Action</th>
     </tr>
@@ -36,7 +36,7 @@
             <small class="label label-primary">Approved</small>
           <% else %>
             <% if investment_declaration.status == true %>
-              <small class="label label-info">Send For Approval</small>
+              <small class="label label-info">Sent For Approval</small>
               <%= link_to '', cancel_request_investment_declarations_path(investment_declaration),class: 'btn btn-danger btn-xs fa fa-trash-o' %>
             <% else %>
               <%= link_to '', self_edit_modal_investment_declarations_path(investment_declaration),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>

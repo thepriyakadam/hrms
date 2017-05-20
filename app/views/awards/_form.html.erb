@@ -26,7 +26,14 @@
             <%= f.text_field :award_from, label: 'Award From', class: 'input_award_from' %>
           </div>
         </div>
-      </div>
+      
+
+       <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_area :description, label: 'Achievement', class: 'input_award_from' %>
+          </div>
+        </div>
+
     </div>
    <!-- < unless params['controller'] == 'awards' and params['action'] == 'edit' %>
       <div class="row">

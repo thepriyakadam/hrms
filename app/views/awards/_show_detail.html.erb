@@ -23,6 +23,7 @@
       <th>Award name</th>
       <th>Year</th>
       <th>Award from</th>
+      <th>Achievement</th>
       <th>Action</th>
     </tr>
     <% @awards.each do |award| %>
@@ -30,6 +31,7 @@
         <td><%= award.award_name %></td>
         <td><%= award.year.name %></td>
         <td><%= award.award_from %></td>
+        <td><%= award.description %></td>
         <td>
           <%= link_to '', edit_award_path(award),class: 'btn btn-success fa fa-edit btn-sm',remote:true %>
            <!-- link_to '', award, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close btn-sm' %> -->

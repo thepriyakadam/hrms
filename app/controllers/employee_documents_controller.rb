@@ -91,6 +91,24 @@ class EmployeeDocumentsController < ApplicationController
               disposition: 'attachment'
   end
 
+  def modal
+    @employee_document = EmployeeDocument.find(params[:format])
+    
+  end
+
+  def update_document
+    @employee_document = EmployeeDocument.find(params[:id])
+    @employee = Employee.find(@employee_document.employee_id)
+    if @employee_document.update(employee_document_params)
+      @employee_documents = EmployeeDocument.where(employee_id: @employee.id)
+      @flag = true
+    else
+      @employee_documents = EmployeeDocument.where(employee_id: @employee.id)
+      @flag = false  
+    end
+    
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_document

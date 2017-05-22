@@ -4,29 +4,33 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
-    <tr> 
-      <th colspan="2"></th>
-      <th colspan="2"></th>
-    </tr>
-
+   
     <tr>
-      <th><strong>Document Name:</strong></th>
+      <th><strong>Document Name</strong></th>
       <td> <%= @employee_document.name %></td>
+     
+   
+  <th><strong>Download Document</strong></th>
+  <td>
+    <% if @employee_document.document == nil %>
+      <small class="label label-default">Not Available</small>
+          <% else %>
+            <center><%= link_to '',download_emp_path(@employee_document),class: 'btn btn-xs fa fa-download' %>
+      <% end %>
+    </center>
+  </td>
 
-      <th> <strong>Document:</strong></th>
-      <td> <%= @employee_document.document_file_name %></td>
-    </tr>
-
-     <tr>
-      <th><strong>Photo:</strong></th>
-      <td> <%= @employee_document.image_file_name %></td>
-
-      <th> <strong>Status:</strong></th>
-      <td> <%= @employee_document.status %></td>
-    </tr>
+  <th><strong>Download Image</strong></th>
+  <td>
+  <% if @employee_document.image_file_name == nil %>
+    <small class="label label-default">Not Available</small>
+      <% else %>
+    <center><%= link_to '',download_pic_path(@employee_document),class: 'btn btn-xs fa fa-picture-o' %></center>
+  <% end %></td>
+</tr>
     
- </table>
-    <%= image_tag @employee_document.image.url, :size => "100x100" %><br><br>
+ </table><br>
+  <!--   <= image_tag @employee_document.image.url, :size => "100x100" %><br><br> -->
 
     <%= link_to 'Edit', edit_employee_document_path(@employee_document),class: 'btn btn-success btn-sm fa fa-edit' %> 
 

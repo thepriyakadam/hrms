@@ -26,7 +26,7 @@
       <th><strong>Department</strong></th>
       <td><%= @travel_request.employee.company_location.try(:name) %> - <%= @travel_request.employee.department.try(:name) %></td>
 
-      <th><strong>Request To</strong></th>
+      <th><strong>Approve By</strong></th>
      <td><% emp=Employee.where(id: @travel_request.reporting_master_id).take %>
       <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %> </td>
     </tr>
@@ -79,8 +79,8 @@
     </tr>
         <tr>
         <th>Sr.No</th>
-        <th>Employee ID</th>
-        <th>Employee Name</th>
+        <th>Approval ID</th>
+        <th>Approve By</th>
         <th>Travel Request Status</th>
         <th>Expence Claim Status</th>
        </tr>

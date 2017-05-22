@@ -49,6 +49,13 @@
     </div>
   </div>
  -->
+
+
+ <div class="col-sm-3">
+          <div class="form-group required">
+          <%= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Employee",label: "Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1",onchange:"var a={id:$(this).val()}; $.get('/employee_resignations/display_notice_period',a,function(response){});"}%>    
+          </div>
+        </div>
     <div class="col-sm-3">
           <label>Travel Option</label>
           <div class="form-group required">
@@ -81,8 +88,14 @@
       </div>
     </div>
   </div>
+  </div>
 
-  <div class="col-sm-3">
+  
+  
+
+<div class="row">
+
+<div class="col-sm-3">
 <!--     <label>Traveling Date </label>
  -->    <div class="field">
       <div class="input-group">
@@ -96,10 +109,6 @@
   </div>
 </div>
 
-  
-</div>
-
-<div class="row">
   
 
 
@@ -121,7 +130,7 @@
     </div>
   </div>
 
-  <div class="col-sm-6">
+  <div class="col-sm-3">
     <div class="field">
       <div class="form-group required">
         <%= f.text_field :tour_purpose, label: 'Tour Purpose' %>

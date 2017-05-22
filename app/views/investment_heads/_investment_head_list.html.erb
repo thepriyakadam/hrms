@@ -4,7 +4,7 @@
     <tr>  
       <th>Section</th>
       <th>Description</th>
-      <th>Limit</th>
+      <th>Document Name</th>
       <th>Action</th>
  
   <tbody>
@@ -12,7 +12,7 @@
       <tr>
         <td><%= investment_head.section.try(:code) %></td>
         <td><%= investment_head.description %></td>
-         <td><%= investment_head.limit %></td>
+        <td><%= investment_head.document_name %></td>
         <td>
           <%= link_to '', edit_investment_head_path(investment_head),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
           <%= link_to '',  investment_head, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>

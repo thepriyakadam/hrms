@@ -154,8 +154,22 @@ class InvestmentDeclarationsController < ApplicationController
     @from = params[:employee][:from]
     @to = params[:employee][:to]
     @status = params[:employee][:status]
-
     @investment_declarations = InvestmentDeclaration.where(date: @from.to_date..@to.to_date,is_confirm: @status)
+    
+    respond_to do |format|
+      format.js
+      format.html
+      format.xls {render template: 'investment_declarations/datewise_report.xls.erb'}
+      format.pdf do
+        render pdf: 'show_datewise_report',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'investment_declarations/datewise_report.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+
   end
 
   private

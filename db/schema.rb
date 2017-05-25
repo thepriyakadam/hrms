@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170516100415) do
+ActiveRecord::Schema.define(version: 20170520110058) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -2065,11 +2065,12 @@ ActiveRecord::Schema.define(version: 20170516100415) do
   add_index "investment_declarations", ["investment_head_id"], name: "index_investment_declarations_on_investment_head_id", using: :btree
 
   create_table "investment_heads", force: :cascade do |t|
-    t.integer  "section_id",  limit: 4
-    t.text     "description", limit: 65535
-    t.decimal  "limit",                     precision: 10
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.integer  "section_id",    limit: 4
+    t.text     "description",   limit: 65535
+    t.decimal  "limit",                       precision: 10
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.string   "document_name", limit: 255
   end
 
   add_index "investment_heads", ["section_id"], name: "index_investment_heads_on_section_id", using: :btree
@@ -2354,6 +2355,7 @@ ActiveRecord::Schema.define(version: 20170516100415) do
     t.datetime "updated_at",                                                           null: false
     t.decimal  "leave_count",                  precision: 3, scale: 1
     t.boolean  "is_expire"
+    t.boolean  "status"
   end
 
   add_index "leave_c_offs", ["employee_id"], name: "index_leave_c_offs_on_employee_id", using: :btree
@@ -3387,9 +3389,10 @@ ActiveRecord::Schema.define(version: 20170516100415) do
     t.string   "code",        limit: 255
     t.text     "description", limit: 65535
     t.boolean  "status"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.boolean  "is_confirm"
+    t.decimal  "limit",                     precision: 10
   end
 
   create_table "selected_resumes", force: :cascade do |t|
@@ -3524,14 +3527,14 @@ ActiveRecord::Schema.define(version: 20170516100415) do
 
   create_table "texable_monthly_deductions", force: :cascade do |t|
     t.integer  "employee_id",             limit: 4
-    t.integer  "salaryslip_id",           limit: 4
+    t.integer  "salayslip_id",            limit: 4
     t.decimal  "texable_deducted_amount",           precision: 10
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
   end
 
   add_index "texable_monthly_deductions", ["employee_id"], name: "index_texable_monthly_deductions_on_employee_id", using: :btree
-  add_index "texable_monthly_deductions", ["salaryslip_id"], name: "index_texable_monthly_deductions_on_salaryslip_id", using: :btree
+  add_index "texable_monthly_deductions", ["salayslip_id"], name: "index_texable_monthly_deductions_on_salayslip_id", using: :btree
 
   create_table "trainee_requests", force: :cascade do |t|
     t.integer  "employee_id",              limit: 4
@@ -3924,15 +3927,16 @@ ActiveRecord::Schema.define(version: 20170516100415) do
     t.boolean  "is_confirm"
     t.decimal  "pay_leave",                           precision: 10
     t.decimal  "nonpay_leave",                        precision: 10, scale: 2
+    t.decimal  "gatepass",                            precision: 10
     t.decimal  "calculated_payable_days",             precision: 10
     t.decimal  "ot_hours",                            precision: 10
     t.decimal  "od_leave",                            precision: 10
     t.boolean  "paid"
     t.boolean  "full_and_final"
     t.decimal  "od_day",                              precision: 10
-    t.date     "date"
     t.date     "from"
     t.date     "to"
+    t.date     "date"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id", using: :btree
@@ -4233,8 +4237,6 @@ ActiveRecord::Schema.define(version: 20170516100415) do
   add_foreign_key "society_member_ships", "employees"
   add_foreign_key "states", "countries"
   add_foreign_key "texable_amounts", "employees"
-  add_foreign_key "texable_monthly_deductions", "employees"
-  add_foreign_key "texable_monthly_deductions", "salaryslips"
   add_foreign_key "trainee_requests", "employees"
   add_foreign_key "trainees", "employees"
   add_foreign_key "trainees", "training_plans"

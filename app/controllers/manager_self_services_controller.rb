@@ -109,6 +109,8 @@ class ManagerSelfServicesController < ApplicationController
   end
 
   def investment_declaration
+   session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] = "IncomeTax"
     @emp = InvestmentDeclaration.where(status: true,is_confirm: false).pluck(:employee_id)
     @employees = Employee.where(status: 'Active',id: @emp)
   end
@@ -128,5 +130,15 @@ class ManagerSelfServicesController < ApplicationController
     flash[:alert] = "Rejected!"
     redirect_to investment_declaration_manager_self_services_path
   end
+
+  def leave_c_off
+    current_login = Employee.find_by(id: current_user.employee_id)
+    @sub = current_login.subordinates
+    @ind_sub = current_login.indirect_subordinates
+
+    @emp = @sub + @ind_sub
+    @employees = LeaveCOff.where(employee_id: @emp,is_taken: false,status: false,is_expire: false)
+  end
+
 
 end

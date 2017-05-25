@@ -17,7 +17,7 @@
     <% @due_employee_details.each do |due_employee_detail| %>
       <tr>
        <td><%= due_employee_detail.employee.manual_employee_code %></td>
-       <td><%= due_employee_detail.employee.first_name+' '+due_employee_detail.employee.middle_name+' '+due_employee_detail.employee.last_name %></td>
+       <td><%= full_name(due_employee_detail.employee) %></td>
        <td><%= due_employee_detail.reporting_master.employee.try(:first_name) %> <%= due_employee_detail.reporting_master.employee.try(:moddle_name) %> <%= due_employee_detail.reporting_master.employee.try(:last_name) %></td>
        <td><%= due_employee_detail.due_template.try(:name) %></td>
         <td>

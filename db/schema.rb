@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170520110058) do
+ActiveRecord::Schema.define(version: 20170525054920) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -901,6 +901,8 @@ ActiveRecord::Schema.define(version: 20170520110058) do
     t.integer  "employee_id",              limit: 4
     t.integer  "department_id",            limit: 4
     t.integer  "machine_attendance_id",    limit: 4
+    t.integer  "employee_code",            limit: 4
+    t.string   "employee_name",            limit: 255
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id", using: :btree

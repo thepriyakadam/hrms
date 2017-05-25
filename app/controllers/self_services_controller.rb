@@ -121,7 +121,7 @@ class SelfServicesController < ApplicationController
     else
       @leave_c_off = LeaveCOff.new(leave_c_off_params)
       @leave_c_offs = LeaveCOff.all
-      leav_category = LeavCategory.find_by_name('Compensatory Off')
+      leav_category = LeavCategory.find_by_name('C.Off')
 
       if leav_category.nil?
       else

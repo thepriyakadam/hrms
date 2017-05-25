@@ -1261,8 +1261,9 @@ end
       get :search_by_c_off_date
       get :add_coff
       get :destroy_self
-      get :approve_c_off
+      post :approve_c_off
       get :reject_c_off
+      get :approve_modal
     end
   end
 

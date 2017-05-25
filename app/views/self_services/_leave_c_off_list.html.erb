@@ -3,8 +3,6 @@
    <tr>
     	<th>C.Off Date</th>
     	<th>C.off </th>
-   	  <th>Expiry Date</th>
-    	<th>Expiry status</th>
     	<th>Action</th>
    </tr>
   </thead>
@@ -14,8 +12,6 @@
       <tr>
         <td><%= leave_c_off.c_off_date %></td>
         <td><%= leave_c_off.leave_count %></td>
-        <td><%= leave_c_off.expiry_date %></td>
-        <td><%= leave_c_off.expiry_status ? "Yes" : "No" %></td>
         <td>
             <% if leave_c_off.is_taken == true %>
             <small class= "label label-success">Taken</small>

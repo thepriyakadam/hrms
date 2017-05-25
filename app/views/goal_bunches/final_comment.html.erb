@@ -413,7 +413,11 @@
               <div class="col-sm-3">
                 <div class="actions">
                   <% if @goal_bunch.final_comment == nil  or @goal_bunch.final_confirm != nil %>
-                    <%= link_to 'Back',period_list_final_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+                    <% if @goal_bunch.employee_id == current_user.employee_id %>
+                      <%= link_to 'Back',new_goal_bunch_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+                    <% else %>
+                      <%= link_to 'Back',period_list_final_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+                    <% end %>
                   <% else %>
                     <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
                     <%= link_to 'Back',period_list_final_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
@@ -480,7 +484,11 @@
               <div class="col-sm-3">
                 <div class="actions">
                   <% if @goal_bunch.final_comment == nil  or @goal_bunch.final_confirm == true %>
-                    <%= link_to 'Back',period_list_final_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+                    <% if @goal_bunch.employee_id == current_user.employee_id %>
+                      <%= link_to 'Back',new_goal_bunch_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+                    <% else %>
+                      <%= link_to 'Back',period_list_final_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+                    <% end %>
                   <% else %>
                     <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
                     <%= link_to 'Back',period_list_final_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>

@@ -19,22 +19,7 @@
           <%= f.select :c_off_type,['Full Day','Half Day'],{label: 'C.Off Type',include_blank: " Select C.Off Type"} %>
        </div>
       </div> 
-       <div class="col-sm-2">
-       <label>Is Expire</label>
-        <div class="field" id="checker">
-         <%= f.check_box :expiry_status %>
-        </div>
-      </div>
-    
-      <div class="col-sm-3">
-          <div class="field" id="dependent-box">
-              <%= f.text_field :c_off_expire_day, label:'Applicable Day',class: "form-control" %>
-          </div>
-        </div>
-     
-    </div>
-    <div class="row">
-      <div class="col-sm-3">
+      <div class="col-sm-3" style="padding-top: 20px">
         <div class="actions">
           <%= f.submit "Create C.Off Leave",class: 'btn btn-sm btn-primary fa fa-modx' %>
         </div>

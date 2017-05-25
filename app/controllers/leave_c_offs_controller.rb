@@ -50,7 +50,7 @@ class LeaveCOffsController < ApplicationController
     else
         @leave_c_off = LeaveCOff.new(leave_c_off_params)
         @leave_c_offs = LeaveCOff.all
-        leav_category = LeavCategory.find_by_name('Compensatory Off')
+        leav_category = LeavCategory.find_by_name('C.Off')
 
         if @leave_c_off.expiry_status == true
           @leave_c_off.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
@@ -247,10 +247,23 @@ class LeaveCOffsController < ApplicationController
     redirect_to leave_c_off_self_services_path
   end
 
-  def approve_c_off
+  def approve_modal
     @leave_c_off = LeaveCOff.find(params[:format])
+  end
+
+  def approve_c_off
+    expiry_status = params[:leave_c_off][:expiry_status]
+    c_off_expire_day = params[:leave_c_off][:c_off_expire_day]
+    @leave_c_off = LeaveCOff.find(params[:leave_c_off_id])
     @leave_c_off.update(status: true)
-    leav_category = LeavCategory.find_by_name('Compensatory Off')
+
+    if expiry_status == true
+      @expiry_date = @leave_c_off.c_off_date + c_off_expire_day
+    else
+    end
+
+    #@leave_c_off.update(expiry_status: expiry_status,c_off_expire_day: c_off_expire_day)
+    leav_category = LeavCategory.find_by_name('C.Off')
 
     is_exist = EmployeeLeavBalance.exists?(employee_id: @leave_c_off.employee_id, leav_category_id: leav_category.id)
       if is_exist
@@ -326,8 +339,6 @@ class LeaveCOffsController < ApplicationController
             end
           end #do
       end #is_exist
-
-
 
     flash[:notice] = "Approved successfully"
     redirect_to leave_c_off_manager_self_services_path

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170511092455) do
+ActiveRecord::Schema.define(version: 20170518133935) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1827,15 +1827,17 @@ ActiveRecord::Schema.define(version: 20170511092455) do
   create_table "investment_declarations", force: :cascade do |t|
     t.date     "date"
     t.integer  "investment_head_id",    limit: 4
-    t.decimal  "amount",                            precision: 10
+    t.decimal  "amount",                              precision: 10
     t.integer  "employee_id",           limit: 4
     t.boolean  "status"
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
+    t.datetime "created_at",                                                         null: false
+    t.datetime "updated_at",                                                         null: false
     t.string   "document_file_name",    limit: 255
     t.string   "document_content_type", limit: 255
     t.integer  "document_file_size",    limit: 4
     t.datetime "document_updated_at"
+    t.boolean  "is_confirm",                                         default: false
+    t.text     "comment",               limit: 65535
   end
 
   add_index "investment_declarations", ["employee_id"], name: "index_investment_declarations_on_employee_id", using: :btree
@@ -2145,6 +2147,7 @@ ActiveRecord::Schema.define(version: 20170511092455) do
     t.date     "expiry_date"
     t.decimal  "leave_count",                  precision: 3, scale: 1
     t.boolean  "is_expire"
+    t.boolean  "status"
   end
 
   add_index "leave_c_offs", ["employee_id"], name: "index_leave_c_offs_on_employee_id", using: :btree

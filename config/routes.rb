@@ -80,6 +80,7 @@ Rails.application.routes.draw do
       get :investment_declaration
       get :investment_declaration_list
       post :reject_declaration
+      get :leave_c_off
     end
   end
 
@@ -429,6 +430,9 @@ end
       get :send_for_approval
       get :cancel_request
       get :delete_request
+      get :datewise_report
+      post :show_datewise_report
+      get :show_datewise_report
     end
   end
   resources :investment_heads
@@ -436,6 +440,9 @@ end
   resources :employee_documents do
     collection do
       get :form16
+      post :create_self_declaration
+      get :modal
+      post :update_document
     end
   end
 
@@ -586,6 +593,9 @@ end
 
       get :self_service_datewise_attendance
       get :manager_self_service_attendance
+      get :datewise_report
+      post :show_datewise_report
+      get :show_datewise_report
     end
   end
   resources :salary_comp_mappings
@@ -1246,10 +1256,14 @@ end
       post :shortlist_for_interview
     end
   end
-  resources :leave_c_offs do
+   resources :leave_c_offs do
     collection do
       get :search_by_c_off_date
       get :add_coff
+      get :destroy_self
+      post :approve_c_off
+      get :reject_c_off
+      get :approve_modal
     end
   end
 
@@ -1272,6 +1286,8 @@ end
       get :show
       get :investment_declaration
       post :create_self_declaration
+      get :leave_c_off
+      post :create_self_c_off
     end
   end
 
@@ -1354,7 +1370,12 @@ end
   # get '/screenshot', to: 'issue_requests#download_screenshot', as: 'download_screenshot'
   # get '/download', to: 'issue_requests#download_screenshot_image', as: 'download_screenshot_image'
 
-  resources :leave_c_offs
+  resources :leave_c_offs do
+    collection do
+      post :create_self_c_off
+    end
+  end
+
   resources :overtime_month_records
 
   resources :overtime_daily_records do

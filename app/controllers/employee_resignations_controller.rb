@@ -72,7 +72,7 @@ class EmployeeResignationsController < ApplicationController
         if @employee_resignation.save
           @employees=Employee.where(id: @employee_resignation.employee_id).take
           @date_diff = (@employee_resignation.tentative_leaving_date - @employee_resignation.resignation_date).to_i
-           EmployeeResignation.where(id: @employee_resignation.id).update_all(short_notice_period: @date_diff,reporting_master_id: @employees.manager_id,is_pending: true,resign_status: "Pending")
+           EmployeeResignation.where(id: @employee_resignation.id).update_all(short_notice_period: @date_diff,reporting_master_id: @employees.manager_id,is_pending: true,resign_status: "Pending",is_first_approved: false,is_first_rejected: false, is_cancelled: false)
            ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Pending",change_date: Date.today)
            EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
           format.html { redirect_to @employee_resignation, notice: 'Employee Resignation was successfully Created.' }
@@ -191,11 +191,11 @@ end
   def first_approve
     @employee_resignation = EmployeeResignation.find(params[:format])
     if @employee_resignation.employee.manager_2_id.nil?
-      @employee_resignation.update(is_pending:false,is_first_approved: true,is_second_approved: true,resign_status: "SecondApproved")
+      @employee_resignation.update(is_pending:true,is_first_approved: true,is_second_approved: true,resign_status: "SecondApproved")
       ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "SecondApproved",change_date: Date.today)
       EmployeeResignationMailer.no_second_reporter_approval_email_to_employee(@employee_resignation).deliver_now
     else
-       @employee_resignation.update(is_pending:false,is_first_approved: true,second_reporter_id: @employee_resignation.employee.manager_2_id,resign_status: "FirstApproved")
+      @employee_resignation.update(is_pending:true,is_first_approved: true,second_reporter_id: @employee_resignation.employee.manager_2_id,resign_status: "FirstApproved",is_second_approved: false,is_second_rejected: false, is_cancelled: false)
       ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "FirstApproved",change_date: Date.today)
       EmployeeResignationMailer.first_level_approval_email_to_employee(@employee_resignation).deliver_now
       EmployeeResignationMailer.second_level_request_email_to_reporting_manager(@employee_resignation).deliver_now

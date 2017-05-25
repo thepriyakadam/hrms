@@ -11,6 +11,12 @@
               <%= f.text_field :description,label:'Description', placeholder: 'Description' %>
             </div>
           </div>
+
+            <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :limit,label:'Limit', placeholder: 'Limit' %>
+            </div>
+          </div>
            
             <div class="col-sm-3">
             <label>Status</label>
@@ -18,7 +24,9 @@
             <%= f.check_box :status , label:'Active'%>
           </div>
           </div>
+        </div>
          
+         <div class="row">
           <div class="col-sm-3">
           <label></label>
             <div class="actions">

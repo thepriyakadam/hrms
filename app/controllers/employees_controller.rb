@@ -354,8 +354,6 @@
      @employee = Employee.find(params[:id])
   end
 
-
-
   def ajax_certification_detail
     @certification = Certification.new
   end
@@ -412,6 +410,7 @@
 
   def joining_checklist
      @employee = Employee.find(params[:id])
+    @employee = Employee.find(params[:id])
      # @employee1 = Employee.where(employee_id: current_user.employee_id)
 end
 

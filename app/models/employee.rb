@@ -79,6 +79,7 @@ class Employee < ActiveRecord::Base
   has_many :advance_salaries
   has_many :employee_jc_lists
   has_many :rembursments
+  has_many :status_c_offs
 
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',

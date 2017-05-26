@@ -1264,6 +1264,8 @@ end
       post :approve_c_off
       get :reject_c_off
       get :approve_modal
+      get :final_approve
+      get :final_reject
     end
   end
 

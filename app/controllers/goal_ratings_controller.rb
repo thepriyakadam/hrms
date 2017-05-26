@@ -194,7 +194,7 @@ class GoalRatingsController < ApplicationController
     sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
     if sum == 100
       @emp = Employee.find(current_user.employee_id)
-      #GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
+      GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
       @gol_bunch = GoalBunch.find_by(id: @goal_bunch.id).update(goal_confirm: true,appraiser_confirm: false,goal_approval: false)
       flash[:notice] = "Mail Sent Successfully"
       redirect_to new_goal_bunch_path

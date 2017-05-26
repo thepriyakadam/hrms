@@ -28,6 +28,7 @@ class CreateGoalBunches < ActiveRecord::Migration
       t.references :f_designation
       t.decimal :f_ctc
       t.string :appraisee_rating_id
+      t.boolean :goal_approval
 
       t.timestamps null: false
     end

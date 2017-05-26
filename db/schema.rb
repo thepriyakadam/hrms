@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170517100210) do
+ActiveRecord::Schema.define(version: 20170525073353) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -3068,11 +3068,11 @@ ActiveRecord::Schema.define(version: 20170517100210) do
     t.date     "application_date"
     t.date     "rembursment_date"
     t.integer  "rembursmentmaster_id", limit: 4
-    t.decimal  "amount",                         precision: 5, scale: 1
+    t.decimal  "amount",                           precision: 5, scale: 1
     t.date     "paid_date"
-    t.boolean  "status"
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
+    t.string   "status",               limit: 255
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
   end
 
   add_index "rembursments", ["employee_id"], name: "index_rembursments_on_employee_id", using: :btree
@@ -3096,9 +3096,9 @@ ActiveRecord::Schema.define(version: 20170517100210) do
   create_table "reporting_master_rembursments", force: :cascade do |t|
     t.integer  "rembursment_id", limit: 4
     t.integer  "manager_id",     limit: 4
-    t.boolean  "status"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.string   "status",         limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "reporting_master_rembursments", ["rembursment_id"], name: "index_reporting_master_rembursments_on_rembursment_id", using: :btree

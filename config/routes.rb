@@ -4,6 +4,15 @@ Rails.application.routes.draw do
   resources :rembursments  do
     collection do
       get :rembursment_request
+      get :rembursment_confirmation
+      get :first_approve
+      get :reject_rembursment
+      get :approve_rembursment
+      get :final_approve
+      get :final_approval_rembursment
+      get :approve_and_send_next
+      get :modal_approve_and_send_next
+
        end
   end
   resources :rembursmentmasters

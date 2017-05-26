@@ -7,6 +7,7 @@ class CreateLeaveMasters < ActiveRecord::Migration
       t.string :no_of_leave
       t.boolean :is_carry_forward
       t.string :limit
+      t.decimal :company_workingday
 
       t.timestamps null: false
     end

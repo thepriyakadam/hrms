@@ -6,6 +6,7 @@ class CreatePayrollOvertimeMasters < ActiveRecord::Migration
       t.string :rate
       t.boolean :is_active
       t.boolean :is_confirm
+      t.string :company_hrs
 
       t.timestamps null: false
     end

@@ -6,6 +6,7 @@ class CreateCompanyEvents < ActiveRecord::Migration
       t.string :location
       t.boolean :status
       t.string :time
+      t.text :description
 
       t.timestamps null: false
     end

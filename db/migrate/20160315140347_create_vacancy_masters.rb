@@ -4,6 +4,8 @@ class CreateVacancyMasters < ActiveRecord::Migration
       t.string :vacancy_name
       t.integer :no_of_position
       t.text :description
+      t.text :justification
+
       t.date :vacancy_post_date
       t.string :budget
 
@@ -12,8 +14,8 @@ class CreateVacancyMasters < ActiveRecord::Migration
       t.references :employee_designation, index: true, foreign_key: true
 
       t.references :degree, index: true, foreign_key: true
-      t.references :degree_1, index: true, foreign_key: true
-      t.references :degree_2, index: true, foreign_key: true
+      t.references :degree_1
+      t.references :degree_2
 
       t.references :reporting_master, index: true, foreign_key: true
       t.references :employee, index: true, foreign_key: true

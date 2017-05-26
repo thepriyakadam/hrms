@@ -12,6 +12,7 @@ class CreateSlipInformations < ActiveRecord::Migration
       t.decimal :el
       t.decimal :c_off
       t.decimal :advance
+      t.string :account_no
 
       t.timestamps null: false
     end

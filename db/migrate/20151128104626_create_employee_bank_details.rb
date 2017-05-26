@@ -2,6 +2,7 @@ class CreateEmployeeBankDetails < ActiveRecord::Migration
   def change
     create_table :employee_bank_details do |t|
       t.references :employee, index: true, foreign_key: true
+      t.references :bank, index: true, foreign_key: true
       t.string :account_no
       t.string :bank_name
       t.string :branch_name

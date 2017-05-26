@@ -5,7 +5,7 @@ class CreateWellFaires < ActiveRecord::Migration
       t.decimal :amount, precision: 15, scale: 2, default: 0
       t.string :status
       t.boolean :is_confirm
-
+      t.boolean :status
       t.timestamps null: false
     end
   end

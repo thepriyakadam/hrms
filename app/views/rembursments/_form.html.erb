@@ -52,7 +52,6 @@
   </div>
 </div>
 
-
 <script type="text/javascript">
   $(function(){
     $('.rembursment').datepicker({
@@ -60,22 +59,37 @@
     changeMonth: true,
     yearRange: '-5:+10',
     dateFormat: 'dd-mm-yy' });
+     });
+</script>
 
-    $("#rembursment").validate({
+<script>
+$("#rembursment").validate({
     rules: {
       "rembursment[employee_id]":{
+        required: true,
+      },
+      "rembursment[rembursment_date]":{
+        required: true,
+      },
+      "rembursment[amount]":{
         required: true,
       }
     },
     messages: {
       "rembursment[employee_id]":{
-        required: "Please Select Employee ",
-      }
+        required: "Please Select Employee",
       },
+      "rembursment[rembursment_date]":{
+        required: "Please Select Rembursment Date",
+      },
+      "rembursment[amount]":{
+        required: "Please specify Amount",
+      }
+      
+    },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
    });
-  }); 
 </script>

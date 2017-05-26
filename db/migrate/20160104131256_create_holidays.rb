@@ -6,6 +6,7 @@ class CreateHolidays < ActiveRecord::Migration
       t.text :description
       t.date :holiday_date
       t.boolean :isweekend
+      t.boolean :is_send, default: false
 
       t.timestamps null: false
     end

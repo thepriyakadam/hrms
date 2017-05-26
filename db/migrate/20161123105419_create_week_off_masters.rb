@@ -4,6 +4,11 @@ class CreateWeekOffMasters < ActiveRecord::Migration
       t.references :employee, index: true, foreign_key: true
       t.string :day
       t.boolean :is_active
+      t.boolean :is_send
+      t.date :from
+      t.date :to
+
+      t.boolean :is_prefix
 
       t.timestamps null: false
     end

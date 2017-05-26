@@ -6,6 +6,7 @@ class CreateEmployeeTaskToDos < ActiveRecord::Migration
       t.date :task_date
       t.boolean :status
       t.time :task_time
+      t.datetime :task_time1
 
       t.timestamps null: false
     end

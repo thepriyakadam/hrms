@@ -27,7 +27,7 @@ class CreateEmployees < ActiveRecord::Migration
       t.references :blood_group, index: true, foreign_key: true
       t.references :employee_type, index: true, foreign_key: true
       t.references :nationality, index: true, foreign_key: true
-      t.references :religion_masters, index: true, foreign_key: true
+      t.references :religion, index: true, foreign_key: true
       t.string :handicap
       t.string :handicap_type
       t.string :status

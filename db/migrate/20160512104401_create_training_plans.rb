@@ -8,6 +8,7 @@ class CreateTrainingPlans < ActiveRecord::Migration
       t.string :no_of_hrs
       t.string :place
       t.references :training_topic_master, index: true, foreign_key: true
+      t.references :training_request, index: true, foreign_key: true
       t.string :trainer_num
       t.text :about_trainer
 

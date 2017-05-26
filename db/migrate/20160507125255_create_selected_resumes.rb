@@ -13,6 +13,7 @@ class CreateSelectedResumes < ActiveRecord::Migration
       t.string :offer_letter_status
       t.string :status
       t.string :job_title
+      t.boolean :shortlist_for_interview
 
       t.timestamps null: false
     end

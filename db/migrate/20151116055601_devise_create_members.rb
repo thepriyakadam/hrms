@@ -9,6 +9,10 @@ class DeviseCreateMembers < ActiveRecord::Migration
       t.string :email,              null: true, default: ''
       t.string :encrypted_password, null: false, default: ''
       t.string :email, null: true
+      t.boolean :is_gps, :boolean
+      t.float :latitude, :float
+      t.float :longitude, :float
+      t.string :location, :string
 
       ## Recoverable
       t.string   :reset_password_token

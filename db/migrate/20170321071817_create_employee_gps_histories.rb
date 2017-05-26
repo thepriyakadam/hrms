@@ -1,7 +1,8 @@
 class CreateEmployeeGpsHistories < ActiveRecord::Migration
   def change
     create_table :employee_gps_histories do |t|
-      t.references :member, index: true, foreign_key: true
+      t.references :employee, index: true, foreign_key: true
+      t.references :employee_gp, index: true, foreign_key: true
       t.float :latitude
       t.float :longitude
       t.string :location

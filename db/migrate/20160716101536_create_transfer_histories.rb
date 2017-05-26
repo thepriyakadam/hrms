@@ -9,6 +9,12 @@ class CreateTransferHistories < ActiveRecord::Migration
       t.references :company, index: true, foreign_key: true
       t.references :company_location, index: true, foreign_key: true
       t.references :department, index: true, foreign_key: true
+      t.string :designation
+      t.string :category
+      t.string :employee_company
+      t.string :employee_company_location
+      t.string :employee_department
+      t.string :current_status
       t.text :justification
 
       t.timestamps null: false

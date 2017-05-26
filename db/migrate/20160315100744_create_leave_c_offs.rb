@@ -8,6 +8,12 @@ class CreateLeaveCOffs < ActiveRecord::Migration
       t.boolean :expiry_status
       t.boolean :is_taken, default: false
       t.date :expiry_date
+      t.decimal :leave_count, precision: 3, scale: 1
+      t.boolean :is_expire
+      t.boolean :status
+      t.integer :c_off_expire_day, default: false
+      t.string :current_status
+
 
       t.timestamps null: false
     end

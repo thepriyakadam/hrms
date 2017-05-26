@@ -1,7 +1,8 @@
 class LeaveCOff < ActiveRecord::Base
   belongs_to :employee
-  validates_uniqueness_of :c_off_date, :scope => :employee_id
+  validates_uniqueness_of :c_off_date, :scope => :employee_id,  uniqueness: { status: false }
   validates :c_off_expire_day, presence: true
+  has_many :status_c_offs
 def self.filter_records(current_user)
 @leave_c_offs =  if current_user.class == Group
 LeaveCOff.all
@@ -30,7 +31,7 @@ LeaveCOff.all
 
   def is_self_present(emp,date)
     flag = 0
-    flag = LeaveCOff.exists?(employee_id: emp,c_off_date: date.to_date)
+    flag = LeaveCOff.exists?(employee_id: emp,c_off_date: date.to_date,status: false)
     flag 
   end
   # def is_available?

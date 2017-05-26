@@ -6,6 +6,8 @@ class CreateInvestmentDeclarations < ActiveRecord::Migration
       t.decimal :amount
       t.references :employee, index: true, foreign_key: true
       t.boolean :status
+      t.boolean :is_confirm,  default: false
+      t.text :comment
 
       t.timestamps null: false
     end

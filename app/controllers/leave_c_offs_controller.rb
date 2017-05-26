@@ -252,20 +252,54 @@ class LeaveCOffsController < ApplicationController
   end
 
   def approve_c_off
-    expiry_status = params[:leave_c_off][:expiry_status]
-    c_off_expire_day = params[:leave_c_off][:c_off_expire_day]
     @leave_c_off = LeaveCOff.find(params[:leave_c_off_id])
-    @leave_c_off.update(status: true)
-
-    if expiry_status == true
-      @expiry_date = @leave_c_off.c_off_date + c_off_expire_day
+    expiry_status = params[:leave_c_off][:expiry_status]
+    @leave_c_off.update(expiry_status: expiry_status)
+    c_off_expire_day = params[:leave_c_off][:c_off_expire_day]
+    leav_category = LeavCategory.find_by_name('C.Off')
+    if @leave_c_off.expiry_status == true
+      @expiry_date = @leave_c_off.c_off_date + c_off_expire_day.to_i
     else
+      @expiry_date = nil
     end
+    #@status_c_off = StatusCOff.find_by(leave_c_off_id: @leave_c_off.id)
+    if @leave_c_off.employee.manager_2_id == nil
+      #@status_c_off.update(employee_id: current_user.employee_id,status: "Approved")
+      @leave_c_off.update(c_off_expire_day: c_off_expire_day,expiry_date: @expiry_date,current_status: "FinalApproved")
+      StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FinalApproved")  
+    else
+      #@status_c_off.update(employee_id: current_user.employee_id,status: "FirstApproved")
+      @leave_c_off.update(c_off_expire_day: c_off_expire_day,expiry_date: @expiry_date,current_status: "FirstApproved")
+      StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FirstApproved")
+    end
+     @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
+      @c_off.each do |l|
+        if l.try(:expiry_date).to_date < Date.today
+          LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
+        end
+      end
 
-    #@leave_c_off.update(expiry_status: expiry_status,c_off_expire_day: c_off_expire_day)
+    flash[:notice] = "Approved successfully"
+    redirect_to leave_c_off_manager_self_services_path
+  end
+
+  def reject_c_off
+    @leave_c_off = LeaveCOff.find(params[:format])
+    @status_c_off = StatusCOff.find_by(leave_c_off_id: @leave_c_off.id)
+    @status_c_off.destroy
+    @leave_c_off.destroy
+    #StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FirstRejected")
+    flash[:notice] = "Rejected successfully"
+    redirect_to leave_c_off_manager_self_services_path
+  end
+
+  def final_approve
+    @leave_c_off = LeaveCOff.find(params[:format])
     leav_category = LeavCategory.find_by_name('C.Off')
 
-    is_exist = EmployeeLeavBalance.exists?(employee_id: @leave_c_off.employee_id, leav_category_id: leav_category.id)
+      @leave_c_off.update(current_status: "FinalApproved")
+      StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FinalApproved")
+      is_exist = EmployeeLeavBalance.exists?(employee_id: @leave_c_off.employee_id, leav_category_id: leav_category.id)
       if is_exist
         @employee_leave_balance = EmployeeLeavBalance.where(employee_id: @leave_c_off.employee_id, leav_category_id: leav_category.id).take
          @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
@@ -328,6 +362,7 @@ class LeaveCOffsController < ApplicationController
             puts @leave_c_off.leave_count
           end
         end #do
+        @employee_leave_balance.save
           @c_off.each do |l|
             if l.try(:expiry_date).to_date < Date.today
               @employee_leave_balance = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take  
@@ -339,14 +374,15 @@ class LeaveCOffsController < ApplicationController
             end
           end #do
       end #is_exist
-
     flash[:notice] = "Approved successfully"
     redirect_to leave_c_off_manager_self_services_path
   end
 
-  def reject_c_off
+
+  def final_reject
     @leave_c_off = LeaveCOff.find(params[:format])
-    @leave_c_off.update(status: nil)
+    @leave_c_off.destroy
+    #StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FinalRejected")
     flash[:notice] = "Rejected successfully"
     redirect_to leave_c_off_manager_self_services_path
   end

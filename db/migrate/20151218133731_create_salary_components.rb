@@ -4,9 +4,12 @@ class CreateSalaryComponents < ActiveRecord::Migration
       t.string :code
       t.string :name
       t.string :description
-      t.references :parent, index: true, foreign_key: true
+      t.references :parent
       t.boolean :is_deducted
       t.boolean :is_confirm
+      t.string :account_code
+      t.boolean :is_active
+      t.boolean :is_base
       t.timestamps null: false
 
     end

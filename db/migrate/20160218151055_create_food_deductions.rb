@@ -8,6 +8,7 @@ class CreateFoodDeductions < ActiveRecord::Migration
       t.references :employee, index: true, foreign_key: true
       t.integer :return_coupan
       t.integer :total_coupan
+      t.boolean :is_paid
 
       t.timestamps null: false
     end

@@ -5,6 +5,7 @@ class CreateEmployeeDailyActivities < ActiveRecord::Migration
       t.references :project_master, index: true, foreign_key: true
       t.text :today_activity
       t.text :tomorrow_plan
+      t.date :day
 
       t.timestamps null: false
     end

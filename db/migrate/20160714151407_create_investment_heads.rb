@@ -4,6 +4,7 @@ class CreateInvestmentHeads < ActiveRecord::Migration
       t.references :section, index: true, foreign_key: true
       t.text :description
       t.decimal :limit
+      t.string :document_name
 
       t.timestamps null: false
     end

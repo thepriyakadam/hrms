@@ -1776,6 +1776,6 @@ def search_by_date
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_attendance_params
-    params.require(:employee_attendance).permit(:employee_id, :day, :present, :in_time, :out_time)
+    params.require(:employee_attendance).permit(:employee_code,:employee_name,:employee_id, :day, :present, :in_time, :out_time)
   end
 end

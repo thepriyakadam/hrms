@@ -1,0 +1,20 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>Employee</th>
+            <th>Investment Head</th>
+            <th>Amount</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @investment_declarations.each do |investment_declaration| %>
+            <tr>
+              <td><%= full_name(investment_declaration.employee) %></td>
+              <td><%= investment_declaration.investment_head.try(:description) %></td>
+              <td><%= investment_declaration.amount %></td>
+              <td><%= investment_declaration.date %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>

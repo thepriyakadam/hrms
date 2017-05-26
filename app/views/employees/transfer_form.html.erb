@@ -1,0 +1,31 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Transfer - <%= code_full_name(@employee) %></h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= bootstrap_form_for @employee, url: { action: 'transfer_employee', id: @employee.id} do |f| %>
+      <pre>
+        Current Company : <%= @employee.company_location.company.name %>
+        Current Company Location : <%= @employee.company_location.name %>
+        Current Department : <%= @employee.department.name %>
+      </pre>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :department_id, all_department_list,{label: "Transfer to",include_blank: " Select Department"} %>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+            <%= link_to 'Back', transfer_employee_list_employees_path ,class: 'btn btn-sm btn-default' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

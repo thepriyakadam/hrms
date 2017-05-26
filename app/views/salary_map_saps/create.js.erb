@@ -1,0 +1,6 @@
+<%if @flag == true %>
+$("#form").html("<%= j render 'form' %>");
+$("#salary_map_sap_li").html("<%= j render 'salary_map_sap_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

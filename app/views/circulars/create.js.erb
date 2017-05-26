@@ -1,0 +1,9 @@
+// $("#form").html("<%= j render 'form' %>");
+// $("#circulars_li").html("<%= j render 'circulars_list' %>");
+
+<%if @flag == true %>
+  $("#form").html("<%= j render 'form' %>");
+  $("#circulars_li").html("<%= j render 'circulars_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

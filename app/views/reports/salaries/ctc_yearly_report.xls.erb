@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Sr.No.</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Employee ID</Data></Cell>
+
+        <Cell ss:Index="3"><Data ss:Type="String">Employee Name</Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">Designation</Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String">Department</Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String">Cost Unit</Data></Cell>
+        <Cell ss:Index="7"><Data ss:Type="String">Year</Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String">Month</Data></Cell>
+        <Cell ss:Index="9"><Data ss:Type="String">Category</Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String">Account No.</Data></Cell>
+        <Cell ss:Index="11"><Data ss:Type="String">Bank Name</Data></Cell>
+        <Cell ss:Index="12"><Data ss:Type="String">Payment Mode</Data></Cell>
+        <Cell ss:Index="13"><Data ss:Type="String">PF No.</Data></Cell>
+        <Cell ss:Index="14"><Data ss:Type="String">ESIC No.</Data></Cell>
+
+        <Cell ss:Index="15"><Data ss:Type="String">Basic</Data></Cell>
+        <Cell ss:Index="16"><Data ss:Type="String">HRA</Data></Cell>
+        <Cell ss:Index="17"><Data ss:Type="String">Special Allowence</Data></Cell>
+        <Cell ss:Index="18"><Data ss:Type="String">Conveyance Allowence</Data></Cell>
+        <Cell ss:Index="19"><Data ss:Type="String">Other Allowence</Data></Cell>
+        <Cell ss:Index="20"><Data ss:Type="String">Washing Allowence</Data></Cell>
+        <Cell ss:Index="21"><Data ss:Type="String">Direct Allowence</Data></Cell>
+    
+
+        <Cell ss:Index="22"><Data ss:Type="String">CTC Salary</Data></Cell>
+      </Row>
+      <% i = 0 %>
+      <% @@employee_salary_templates.each do |slip| %>
+        <% employee = slip.employee %>
+        <% joining = employee.joining_detail %>
+        <% bank = employee.employee_bank_detail %>
+        <% workingday = slip.workingday %>
+        <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= slip.employee.manual_employee_code %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></Data></Cell>
+          
+          <Cell ss:Index="4"><Data ss:Type="String"><%= joining.employee_designation.try(:name) %></Data></Cell>
+          <Cell ss:Index="5"><Data ss:Type="String"><%= joining.department.try(:name) %></Data></Cell>
+          <Cell ss:Index="6"><Data ss:Type="String"><%= joining.cost_center.try(:name) %></Data></Cell>
+          <Cell ss:Index="7"><Data ss:Type="String"><%= slip.year %></Data></Cell>
+          <Cell ss:Index="8"><Data ss:Type="String"><%= slip.month %></Data></Cell>
+          <Cell ss:Index="9"><Data ss:Type="String"><%= joining.employee_category.try(:name) %></Data></Cell>
+          <Cell ss:Index="10"><Data ss:Type="String"><%= bank.try(:account_no) %></Data></Cell>
+          <Cell ss:Index="11"><Data ss:Type="String"><%= bank.try(:bank_name) %></Data></Cell>
+          <Cell ss:Index="12"><Data ss:Type="String"><%= joining.try(:payment_mode).try(:name) %></Data></Cell>
+          <Cell ss:Index="13"><Data ss:Type="String"><%= joining.try(:employee_pf_no) %></Data></Cell>
+          <Cell ss:Index="14"><Data ss:Type="String"><%= joining.try(:employee_efic_no) %></Data></Cell>
+
+          <% @addable_employee_salary_template_items = employee_salary_template.salaryslip_components.where(is_deducted: false) %>
+          <% @addable_employee_salary_template_items.each do |item| %>
+            <% case item.salary_component.try(:name) %>
+            <% when "Basic" %>
+              <Cell ss:Index="15"><Data ss:Type="Number"><%= item.actual_amount.round * 12 %></Data></Cell>
+            <% when "HRA" %>
+              <Cell ss:Index="16"><Data ss:Type="Number"><%= item.actual_amount.round * 12 %></Data></Cell>
+            <% when "Special Allowance" %>
+              <Cell ss:Index="17"><Data ss:Type="Number"><%= item.actual_amount.round * 12 %></Data></Cell>
+            <% when "Convenience Allowance" %>
+              <Cell ss:Index="18"><Data ss:Type="Number"><%= item.actual_amount.round * 12 %></Data></Cell>
+            <% when "Other Allowance" %>
+              <Cell ss:Index="19"><Data ss:Type="Number"><%= item.actual_amount.round * 12 %></Data></Cell>
+            <% when "Washing Allowance" %>
+              <Cell ss:Index="20"><Data ss:Type="Number"><%= item.actual_amount.round * 12 %></Data></Cell>
+            <% when "DA" %>
+              <Cell ss:Index="21"><Data ss:Type="Number"><%= item.actual_amount.round * 12 %></Data></Cell>
+            <% else %>
+            <% end %> <!-- switch case -->
+          <% end %><!-- addable items -->
+            <Cell ss:Index="22"><Data ss:Type="Number"><%= slip.actual_gross_salary.round * 12 %></Data></Cell>
+        </Row><!-- Row -->
+      <% end %><!-- slip -->
+    </Table>
+  </Worksheet>
+</Workbook>

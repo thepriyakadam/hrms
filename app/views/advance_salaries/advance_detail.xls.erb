@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+
+      <% @advance_salaries.each do |advance_salary| %>
+      <% @instalment = Instalment.where(advance_salary_id: advance_salary) %>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Employee ID</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Name</Data></Cell>
+      </Row>
+      <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= advance_salary.employee.manual_employee_code %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= full_name(advance_salary.employee) %></Data></Cell>
+        </Row>
+       <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Advance Amount </Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Installment Amount </Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Advance Date </Data></Cell>
+     </Row>
+      <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= advance_salary.advance_amount %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= advance_salary.instalment_amount %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= advance_salary.advance_date %></Data></Cell>
+        </Row>
+
+      <% @instalment.each do |instalment| %>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Installment Date </Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Installment Amount </Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Complete </Data></Cell>
+      </Row>
+        <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= instalment.instalment_date %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= instalment.instalment_amount %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= instalment.is_complete %></Data></Cell>
+        </Row>
+      <% end %>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

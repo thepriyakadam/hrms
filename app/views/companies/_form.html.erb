@@ -1,181 +1,194 @@
-<%= bootstrap_form_for(@company) do |f| %>
-  <% if @company.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@company.errors.count, "error") %> prohibited this company from being saved:</h2>
-      <ul>
-      <% @company.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Create Company</h3>
+  </div><!-- /.box-header -->
   
-   <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :name %>
-     </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-       <div class="field">
-      <%= f.select :company_type_id, all_company_type %>
-     </div>
-    </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :registration_no %>
-     </div>
-    </div>
-  </div>
-
-
-  
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :pan_card_no %>
+  <div class="box-body">
+  <div id="dynamicDropdown"></div>
+    <%= bootstrap_form_for(@company,html: {id: 'company'}) do |f| %>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :manual_company_code,label: 'Company Code',placeholder: "Company Code"%>
+           </div>
+        </div>
+         <div class="col-sm-3">
+        <div class="field">
+            <%= f.file_field :company_logo,label: 'Upload Company Logo(only jpeg,jpg,png)' %>
+        </div>
       </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :tax_no %>
-     </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :professional_tax_no %>
       </div>
-    </div>
-  </div>
 
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :name,label: 'Company Name',placeholder: "e.g : ICS"%>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="field">
+            <%= f.text_field :description,label: 'Company Full Name',placeholder: "e.g : Indiba Consultancy Services." %>
+          </div>
+        </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_area :address %>
+        <div class="col-sm-3">
+          <label>Company Type </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_company_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+                 <!-- link_to "", add_company_type_company_types_path,class: "fa fa-plus fa-success",remote:true -->
+              </div>
+              <%= f.select :company_type_id, all_company_type,{hide_label: true,include_blank: " Select Company Type"}%>
+            </div>
+          </div>
+        </div>          
       </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :city %>
+     
+      <div class="row">
+        <div class="col-sm-3">
+        <div class="form-group required">
+          <div class="field">
+           <%= f.text_field :registration_no,label: 'Registration No.' %>
+          </div>
+        </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :contact_no,label: 'Contact No.',placeholder: "Without Space" %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :pan_card_no,label: 'PAN Card No.',placeholder: "e.g : ABCDE12345B" %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <label>Starting Date </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :starting_date,hide_label: true,class: 'company_start_date'%>
+            </div>
+           </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-    <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :district %>
+      <div class="row">
+        <div class="col-sm-9">
+          <div class="form-group required">
+           <%= f.text_field :address,label: 'Address' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :pin_code,label: 'Pin/ZIP Code',placeholder: "e.g : 400703" %>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.number_field :pin_code %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+          <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_country_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+            <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'company'}; $.get('/companies/collect_states',a,function(response){});",:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}%>
+          </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+          <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_state_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+            <div id="states">
+              <%= render 'state_dropdown' %>
+            </div> 
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+          <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_district_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+           <div id="district">
+             <%= render 'city_dropdown' %>
+           </div>
+           </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :city %>
+          </div>
+        </div>        
       </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :tax_no,label: 'TAN No.' %>
+          </div>
+        </div>
+       
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :professional_tax_no,label: 'Professional Tax No.' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :email,label: 'Email' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :web_site, label: 'Website' %>
+          </div>
+        </div>  
+      </div>   
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit :class => class_name, data: { disable_with: data_info } %> |
+            <%= link_to 'Back', companies_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+          </div>
+        </div>
     </div>
-  </div>
+    <% end %>
 
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :state %>
-      </div>
-    </div>
-  </div>
+<script type="text/javascript">
+  $(document).ready(function() {
+  $(".select2").select2();
+});
+</script>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-    <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :email %>
-     </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :contact_no %>
-     </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :web_site %>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.date_select :starting_date %>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :ceo_name %>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="actions">
-       <%= f.submit %>
-      </div>
-    </div>
-  </div>
-<% end %>
+<script>
+$("#company").validate({
+    rules: {
+      "company[state_id]":{
+        required: true,
+      }
+    },
+    messages: {
+      "company[state_id]":{
+        required: "Please Specify State",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

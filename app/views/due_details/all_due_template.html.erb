@@ -1,0 +1,60 @@
+<div class="box">
+  <div class="box-header">
+  <h3 class="box-title">No Dues Template Assign To Employee:  <%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %></h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <%= bootstrap_form_for :due_employee_detail,url:{action:"create_due_employee_detail"},html: {id: 'due_employee_detail'} do |f| %>
+  <%= f.hidden_field :employee_id,value: @employee.id  %>
+  <!--   <= f.hidden_field :due_template_id,value: @due_template.id  %>
+ -->  <div class="row">
+      <div class="col-sm-3">
+        <div class="field">
+          <%= select :due_template_id, :hhh, all_due_template_list,{include_blank: 'Select No Dues Template'},{onchange:"var a={due_template_id:$(this).val()}; $.get('/due_details/show_due_template_list',a,function(response){});",class: 'form-control'}%>
+         </div>
+      </div>
+      </div><br>
+
+       <div id="due_template_li">
+
+      </div>
+
+      <div id="due_detail_li">
+
+      </div>
+
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Send No Dues Approval ", class: 'btn btn-primary btn-sm' %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+</div>
+</div>
+
+<script>
+$("#due_employee_detail").validate({
+    rules: {
+      "due_employee_detail[due_template_id]":{
+        required: true,
+      }
+    },
+    messages: {
+      "due_employee_detail[due_employee_detail]":{
+        required: "Please specify No Due Template",
+      } 
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+
+
+
+

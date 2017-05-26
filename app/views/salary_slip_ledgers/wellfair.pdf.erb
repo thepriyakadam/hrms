@@ -1,0 +1,41 @@
+ <style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+      /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+    }
+</style>
+<table style="border-collapse: collapse; font-size:10pt;" border=1 width=900 cellpadding="25">
+    <thead>
+      <tr>
+        <th>Employee Code</th>
+        <th>Employee Code</th>
+        <th>Well Faire</th>
+    </tr>
+    </thead>
+    <tbody>
+      <% @salaryslips.each do |slip| %>
+        <% employee = slip.employee %>
+        <% joining = employee.joining_detail %>
+        <% bank = employee.employee_bank_detail %>
+        <% workingday = slip.workingday %>
+        <tr>
+          <td><%= slip.employee.manual_employee_code %></td>
+          <td><%= employee.try(:first_name) %> <%= employee.try(:middle_name) %> <%= employee.try(:last_name) %></td>
+
+          <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true,other_component_name: "WelFare") %>
+          <% @deducted_salaryslip_items.each do |item| %>
+              <% if item.other_component_name == "WelFare" %>
+                <td><%= item.calculated_amount.round %></td>
+              <% end %>
+          <% end %><!-- deducted items -->
+        </Row><!-- Row -->
+      <% end %><!-- slip -->
+   </tbody>
+  </table>

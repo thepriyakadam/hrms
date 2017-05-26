@@ -1,57 +1,39 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Companies</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Company type</th>
-      <th>Registration no</th>
-      <th>Pan card no</th>
-      <th>Tax no</th>
-      <th>Professional tax no</th>
-      <th>Address</th>
-      <th>City</th>
-      <th>District</th>
-      <th>Pin code</th>
-      <th>State</th>
-      <th>Email</th>
-      <th>Contact no</th>
-      <th>Web site</th>
-      <th>Starting date</th>
-      <th>Ceo name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @companies.each do |company| %>
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Company List</h3>
+    <div class="pull-right">
+      <%= link_to "Create Company", new_company_path, class: 'btn btn-sm btn-primary' %> 
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <div id="comments">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <thead>
       <tr>
-        <td><%= company.name %></td>
-        <td><%= company.company_type.name %></td>
-        <td><%= company.registration_no %></td>
-        <td><%= company.pan_card_no %></td>
-        <td><%= company.tax_no %></td>
-        <td><%= company.professional_tax_no %></td>
-        <td><%= company.address %></td>
-        <td><%= company.city %></td>
-        <td><%= company.district %></td>
-        <td><%= company.pin_code %></td>
-        <td><%= company.state %></td>
-        <td><%= company.email %></td>
-        <td><%= company.contact_no %></td>
-        <td><%= company.web_site %></td>
-        <td><%= company.starting_date %></td>
-        <td><%= company.ceo_name %></td>
-        <td><%= link_to 'Show', company %></td>
-        <td><%= link_to 'Edit', edit_company_path(company) %></td>
-        <td><%= link_to 'Destroy', company, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Company Code</th>
+        <th>Company Name</th>
+        <th>Company Email</th>
+        <th>Contact No</th>
+        <th>Website</th>
+        <th>Action</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
-
-<%= link_to 'New Company', new_company_path %>
+    <tbody>
+      <% @companies.each do |company| %>
+        <tr>
+          <td><%= company.manual_company_code%></td>
+          <td><%= company.name %></td>
+          <td><%= company.email %></td>
+          <td><%= company.contact_no %></td>
+          <td><%= company.web_site %></td>
+          <td>
+            <%= link_to '', company,class: 'btn btn-sm btn-default fa fa-eye' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>

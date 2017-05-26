@@ -1,85 +1,107 @@
-<%= bootstrap_form_for(@company_location) do |f| %>
-  <% if @company_location.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@company_location.errors.count, "error") %> prohibited this company_location from being saved:</h2>
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Company Locations</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= bootstrap_form_for(@company_location,html: {id: 'company_location'}) do |f| %> 
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+             <%= f.text_field :manual_company_location_code,label: 'Company Location Code',placeholder: "Company Location Code"%>
+             </div>
+          </div>
+        </div>
 
-      <ul>
-      <% @company_location.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="field">
+             <%= f.select :company_id, all_company,{label: 'Company Select',include_blank: " Select Company"} %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :name,label:"Location Name",placeholder: "e.g : Chennai" %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+             <%= f.text_field :email,placeholder: "e.g : xyz@gmail.com" %>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :contact_no,label:"Contact No." %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-9">
+            <div class="field">
+              <%= f.text_field :address %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :pin_code,label:"Pin/ZIP Code",placeholder: "e.g : 400703" %>
+            </div>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_country_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+              <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'company_location'}; $.get('/companies/collect_states',a,function(response){});"}%>
+            </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_state_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+              <div id="states">
+                <%= render 'companies/state_dropdown' %>
+              </div> 
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_district_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+             <div id="district">
+               <%= render 'companies/city_dropdown' %>
+           </div>
+           </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :city,placeholder: "e.g : Mumbai" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+         <div class="col-sm-5">
+          <div class="actions">
+            <%= f.submit :class => class_name, data: { disable_with: data_info } %> |
+            <%= link_to 'Back', company_locations_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+          </div>
+          </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-<<<<<<< HEAD
-  <%= f.hidden_field :company_id, value: current_user.account_id %>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :name %>
-        </div>
-    </div>
-
-
-   <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :address %>
-        </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :city %>
-       </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :district %>
-        </div>
       </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-    <%= f.label :pin_code %><br>
-    <%= f.number_field :pin_code %>
-        </div>
-      </div>
-    </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-    <%= f.label :contact_no %><br>
-    <%= f.text_field :contact_no %>
-        </div>
-      </div>
-    </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="actions">
-    <%= f.submit %>
-        </div>
-      </div>
-    </div>
-
-<% end %>
+        </div><!-- /.box-body -->
+</div><!-- /.box -->

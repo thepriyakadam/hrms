@@ -1,0 +1,99 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    
+    <h6 class="box-title">Employee Family Member Details </h6>
+    <div class="box-tools pull-right">
+      <%= link_to "Add Member", ajax_new_family_employees_path(id: @employee.id), class: 'btn btn-primary',remote:true %>
+      <%= link_to 'Back',ajax_family_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-default fa fa-arrow-left',remote:true%>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
+<tr>
+  <th><strong>Employee</strong></th>
+  <td><%= @family.employee.try(:first_name) %></td>
+
+  <th> <strong>Relation</strong></th>
+  <td><%= @family.relation %></td>
+</tr>
+<tr>
+
+  <th><strong>First Name</strong></th>
+  <td><%= @family.f_name %></td>
+  
+  <th><strong>Middle Name</strong></th>
+  <td><%= @family.m_name %></td>
+</tr>
+<tr>
+  <th><strong>Last Name</strong></th>
+  <td><%= @family.l_name %></td>
+
+  <th> <strong>Date Of Birth</strong></th>
+  <td><%= @family.date_of_birth %></td>
+</tr>
+<tr>
+  <th> <strong>Current Address</strong></th>
+  <td><%= @family.current_address %></td>
+
+  <th><strong>Age</strong></th>
+  <td><%= @family.age %></td>
+</tr>
+<tr>
+  <th> <strong>Contact No</strong></th>
+  <td><%= @family.contact_no %></td>
+
+  <th> <strong>Email</strong></th>
+  <td><%= @family.email %></td>
+</tr>
+<tr>
+  <th><strong>Aadhaar No</strong></th>
+  <td> <%= @family.adhar_no %></td>
+
+  <th> <strong>PAN Card No</strong></th>
+  <td><%= @family.pan_no %></td>
+</tr>
+<tr>
+  <th><strong>Passport No</strong></th>
+  <td><%= @family.passport_no %></td>
+
+  <th><strong>Passport Issue Date</strong></th>
+  <td><%= @family.passport_issue_date %></td>
+</tr>
+<tr>
+  <th><strong>Passport Expiry Date</strong></th>
+  <td><%= @family.passport_expiry_date %></td>
+
+  <th><strong>Gender</strong></th>
+  <td><%= @family.gender %></td>
+</tr>
+<tr>
+  <th><strong>Marital Status</strong></th>
+  <td><%= @family.marital %></td>
+
+  <th> <strong>Blood Group</strong></th>
+  <td><%= @family.blood_group.try(:name) %></td>
+</tr>
+<tr>
+  <th> <strong>Religion</strong></th>
+  <td><%= @family.religion.try(:name) %></td>
+
+  <th> <strong>Profession</strong></th>
+  <td><%= @family.profession %></td>
+</tr>
+<tr>
+  <th><strong>Medical Insurance</strong></th>
+  <td><%= @family.medical_claim %></td>
+
+  <th><strong>Differently Abled</strong></th>
+  <td><%= @family.is_handicap %></td>
+</tr>
+<tr>
+  <th><strong>Disability Type</strong></th>
+  <td><%= @family.handicap_type %></td>
+  <th></th>
+  <td></td>
+</tr>
+</table>
+</div>
+  </div><!-- /.box -->
+</div>

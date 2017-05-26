@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee</strong>
+  <%= @overtime_salary.employee %>
+</p>
+
+<p>
+  <strong>Date</strong>
+  <%= @overtime_salary.ot_date %>
+</p>
+
+<p>
+  <strong>OT Hrs</strong>
+  <%= @overtime_salary.ot_hrs %>
+</p>
+
+<p>
+  <strong>OT ESIC Amount</strong>
+  <%= @overtime_salary.ot_esic_amount %>
+</p>
+
+<p>
+  <strong>Total Amount</strong>
+  <%= @overtime_salary.total_amount %>
+</p>
+
+<p>
+  <strong>Attendence Bonus Amount</strong>
+  <%= @overtime_salary.attendence_bouns_amount %>
+</p>
+
+<p>
+  <strong>Paid Holiday Amount</strong>
+  <%= @overtime_salary.paid_holiday_amount %>
+</p>
+
+<p>
+  <strong>Net Payble Amount</strong>
+  <%= @overtime_salary.net_payble_amount %>
+</p>
+
+<%= link_to 'Edit', edit_overtime_salary_path(@overtime_salary) %> |
+<%= link_to 'Back', overtime_salaries_path %>

@@ -1,0 +1,37 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Assign Salary Template To Employee</h3>
+    <div class="box-tools pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table class="table table-bordered table-hover">
+      <tr>
+        <th>Employee Code</th>
+        <th>Employee Name</th>
+        <th>Current Template</th>
+      </tr>
+      <tr>
+        <td><%= @employee.manual_employee_code %></td>
+        <td><%= full_name(@employee) %></td>
+        <td><%= @employee_template.try(:salary_template).try(:code) %>- <%= @employee_template.try(:salary_template).try(:description) %></td>
+      </tr>
+    </table><br>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <%=select :salary,:template, all_salary_template,{include_blank: "Please Select Template"},{onchange:"var a={id:$(this).val(),employee_id : '#{@employee.id}'}; $.get('/employee_salary_templates/find_template',a,function(response){});",class: 'form-control'}%>
+      </div>  
+    </div>
+
+    <div id="message">
+      
+    </div>
+
+    <div id="template">
+
+    </div>
+    <!-- <button id="btnAdd">Add</button> -->
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

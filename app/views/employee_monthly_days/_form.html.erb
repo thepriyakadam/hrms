@@ -1,0 +1,16 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+<div class="box-body">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="field">
+         <%= text_field :employee_id,:hhhh,{oninput:"var a={employee_id:$(this).val()}; $.get('/employee_monthly_days/find_employee_for_employee_monthly_day',a,function(response){});",class: 'form-control',placeholder:'Search by Employee id'} %>
+        </div>
+      </div>
+    </div>
+    <div id="monthly_day">
+      
+    </div>
+  <!-- <button id="btnAdd">Add</button> -->
+</div><!-- /.box-body -->
+</div><!-- /.box -->

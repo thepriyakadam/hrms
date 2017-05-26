@@ -1,0 +1,157 @@
+ <div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Create Certificate Format</h3>
+  
+  <div class="pull-right">
+
+   </div>
+  <div class="box-body">
+ <%= bootstrap_form_for(@certificate,html: {id: 'certificate'}) do |f| %>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.select :certificate_master_id, all_certificate_master, {include_blank: " Select Certificate"} %>
+      </div>
+    </div> 
+  </div>
+ 
+
+   <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :h1_start,label:'Start Heading 1 ', placeholder: 'Enter The Heading Text' %>
+      </div>
+    </div> 
+ 
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :h1_end,label:'End Heading 1 ', placeholder: 'Enter The Heading Text' %>
+      </div>
+    </div>
+  </div>
+
+   <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :h2_start,label:'Start Heading 2 ', placeholder: 'Enter The Heading Text' %>
+      </div>
+    </div> 
+
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :h2_end,label:'End Heading 2 ', placeholder: 'Enter The Heading Text' %>
+      </div>
+    </div>
+  </div>
+
+
+   <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :b1_start,label:'Start Body ', placeholder: 'Enter The Body Text' %>
+      </div>
+    </div> 
+ 
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :b1_end,label:'End Body', placeholder: 'Enter The Body Text' %>
+      </div>
+    </div>
+  </div>
+
+
+   <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :b2_start,label:'Start Body ', placeholder: 'Enter The Body Text' %>
+      </div>
+    </div> 
+ 
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :b2_end,label:'End Body', placeholder: 'Enter The Body Text' %>
+      </div>
+    </div>
+  </div>
+
+   <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :b3_start,label:'Start Body ', placeholder: 'Enter The Body Text' %>
+      </div>
+    </div> 
+ 
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :b3_end,label:'End Body', placeholder: 'Enter The Body Text' %>
+      </div>
+    </div>
+  </div>
+
+   <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :b4_start,label:'Start Body ', placeholder: 'Enter The Body Text' %>
+      </div>
+    </div> 
+
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :b4_end,label:'End Body', placeholder: 'Enter The Body Text' %>
+      </div>
+    </div>
+  </div>
+
+   <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :b5_start,label:'Start Body ', placeholder: 'Enter The Body Text' %>
+      </div>
+    </div> 
+
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :b5_end,label:'End Body', placeholder: 'Enter The Body Text' %>
+      </div>
+    </div>
+  </div>
+
+   <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :f1_start,label:'Start Footer', placeholder: 'Enter The Footer Text' %>
+      </div>
+    </div> 
+ 
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :f1_end,label:'End Footer', placeholder: 'Enter The Footer Text' %>
+      </div>
+    </div>
+  </div>
+
+   <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :f2_start,label:'Start Footer', placeholder: 'Enter The Footer Text' %>
+      </div>
+    </div> 
+ 
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :f2_end,label:'End Footer', placeholder: 'Enter The Footer Text' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="actions">
+        <%= f.submit "Create Certificate Format",class: "btn btn-primary btn-sm" %>
+       
+      </div>
+    </div>
+  </div>
+  <%end%>
+</div>
+</div>

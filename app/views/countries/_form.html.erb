@@ -1,0 +1,23 @@
+
+<%= bootstrap_form_for(@country,html: {id: 'country'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Code' %>
+      </div>
+    </div>
+
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Country Name' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Country" ,class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+

@@ -1,0 +1,24 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Company Leave </h3>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+    <div class="row">
+      <div class="col-sm-6">
+        <div id="company_leave_list">
+          <%= render 'company_leave_type_list' %>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div id="company_expired_leave_list">
+          <%= render 'company_expired_leave_type_list' %>
+        </div>
+      </div>
+    </div>
+	</div><!-- /.box-body -->
+</div><!-- /.box -->
+

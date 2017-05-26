@@ -1,0 +1,15 @@
+<label class="control-label required" for="company_district" aria-required="true">District</label>
+
+<% if @form == 'company' %>
+	<%= select :company,:district_id,(@cities.present? ? (@cities.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select District",hide_label:true},class: "form-control"%>
+<% elsif @form == 'company_location' %>
+	<%= select :company_location,:district_id,(@cities.present? ? (@cities.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select District",hide_label:true},class: "form-control"%>
+<% elsif @form == 'employee' %>
+	<%= select :employee,:district_id,(@cities.present? ? (@cities.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select District",hide_label:true},class: "form-control"%>
+<%elsif @form == 'family' %>
+	<%= select :family,:district_id,(@cities.present? ? (@cities.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select State",hide_label:true},class: "form-control"%>
+<% elsif @form == 'capture_resume' %>
+	<%= select :capture_resume,:district_id,(@cities.present? ? (@cities.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select District",hide_label:true},class: "form-control"%>
+<%else %>
+	<%= select :company,:district_id,(@cities.present? ? (@cities.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select District",hide_label:true},class: "form-control"%>
+<%end%>

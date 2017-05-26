@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+     <h4>Transfer Request Approved</h4>
+    <p> 
+      This is to inform you that you have a Transfer Request .
+      Details for Transfer Request is given below.<br><br>
+       1. <b>Reporting Manager Name :-</b> <%= @employee.first_name.to_s %> <%= @employee.last_name.to_s %> <%= @employee.middle_name.to_s %><br><br>
+       2. <b>Employee Name :-</b> <%= @emp.employee.first_name.to_s %> <%= @emp.employee.last_name.to_s %> <%= @emp.employee.middle_name.to_s %><br><br>
+       3. <b>Employee Designation :-</b> <%= @employee_transfer.employee_designation.try(:name) %><br><br>
+
+       4. <b>Employee Category :-</b> <%= @employee_transfer.employee_category.try(:name) %><br><br>
+
+       5. <b>Company :-</b> <%= @employee_transfer.company_location.try(:name) %><br><br>
+       6. <b>Department :-</b> <%= @employee_transfer.department.try(:name) %><br><br>
+     
+        With Regards,<br><br>
+        HR 
+     </p>
+  </body>
+</html>

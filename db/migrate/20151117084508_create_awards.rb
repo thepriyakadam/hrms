@@ -3,8 +3,10 @@ class CreateAwards < ActiveRecord::Migration
     create_table :awards do |t|
       t.references :employee, index: true, foreign_key: true
       t.string :award_name
-      t.integer :year
       t.string :award_from
+      t.text :description
+      t.references :year, index: true, foreign_key: true
+      
 
       t.timestamps null: false
     end

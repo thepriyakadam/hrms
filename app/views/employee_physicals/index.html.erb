@@ -1,15 +1,21 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Employee Physicals</h1>
-
-<table>
-  <thead>
-    <tr>
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Company List</h3>
+    <div class="pull-right">
+      <%= link_to "New Employee physical", new_employee_physical_path, class: 'btn btn-primary btn-sm' %> 
+    </div>
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
       <th>Employee</th>
       <th>Hieght</th>
       <th>Weight</th>
-      <th>Size</th>
-      <th colspan="3"></th>
+      <th>T-Shirt Size</th>
+      <th>Trouser Size</th>
+      <th>Action</th>
     </tr>
   </thead>
 
@@ -17,17 +23,18 @@
     <% @employee_physicals.each do |employee_physical| %>
       <tr>
         <td><%= employee_physical.employee %></td>
-        <td><%= employee_physical.hieght %></td>
+        <td><%= employee_physical.height %></td>
         <td><%= employee_physical.weight %></td>
         <td><%= employee_physical.size %></td>
-        <td><%= link_to 'Show', employee_physical %></td>
-        <td><%= link_to 'Edit', edit_employee_physical_path(employee_physical) %></td>
-        <td><%= link_to 'Destroy', employee_physical, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Employee physical', new_employee_physical_path %>
+        <td><%= employee_physical.trouser_size %></td>
+        <td>
+            <%= link_to '', employee_physical,class: 'btn btn-default btn-sm fa fa-eye' %>
+            <%= link_to '', edit_employee_physical_path(employee_physical),class: 'btn btn-sm btn-success fa fa-edit' %>
+            <%= link_to '', employee_physical, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-close' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>

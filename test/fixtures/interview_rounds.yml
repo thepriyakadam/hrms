@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  interview_schedule_id: 
+  employee_id: 
+  interview_type_id: 
+  interview_date: 2016-06-11
+  interview_time: 2016-06-11 19:02:46
+  location: MyString
+  schedule_comment: MyText
+
+two:
+  interview_schedule_id: 
+  employee_id: 
+  interview_type_id: 
+  interview_date: 2016-06-11
+  interview_time: 2016-06-11 19:02:46
+  location: MyString
+  schedule_comment: MyText

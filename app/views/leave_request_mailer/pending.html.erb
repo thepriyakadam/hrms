@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+  <table class="table table-bordered table-hover table-condensed">
+    <tbody>
+    <tr>
+      <td colspan="2">You have one leave request from </td>
+    </tr>
+      <tr>
+        <td>Employee ID :</td>
+        <td><%= @leave_request.employee.manual_employee_code %></td>
+      </tr>
+      <tr>
+        <td>Employee Name :</td>
+        <td> <%= @leave_request.employee.first_name.to_s+' '+@leave_request.employee.last_name.to_s %></td>
+      </tr>
+      <tr>
+        <td> Leave Category :</td>
+        <td><%= @leave_request.leav_category.name %></td>
+      </tr>
+      <tr>
+        <td> Date :</td>
+        <td><%= @leave_request.start_date.to_date %> To <%= @leave_request.end_date.to_date%></td>
+      </tr>
+      <tr>
+        <td> No of Days :</td>
+        <td><%= @leave_request.leave_count %></td>
+      </tr>
+      <tr>
+        <td> Reason :</td>
+        <td><%= @leave_request.reason %></td>
+      </tr>
+      <tr>
+        <td> Click</td>
+        <td>http://10.10.50.20:3000/</td>
+      </tr>
+
+    </tbody>
+  </table>
+  </body>
+</html>

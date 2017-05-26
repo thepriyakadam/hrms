@@ -1,0 +1,147 @@
+    
+ <div class="box-body">
+  <%= bootstrap_form_for(@interview_round,html: {id: 'interview_round'},interview_schedule_id: @interview_schedule.id) do |f| %>
+  <%= f.hidden_field :interview_schedule_id, value: @interview_schedule.id  %>
+
+  <% @interview_round_1 = InterviewRound.where(interview_schedule_id: @interview_schedule.id,interview_round_confirm: true).count
+     @interview_round_2 = InterviewRound.where(interview_schedule_id: @interview_schedule.id,interview_round_confirm: nil).count %>
+<% if @interview_round_2 == 0 && @interview_round_1 > 0  %>
+<% else %>
+  <div class="row">
+
+    <div class="col-sm-3">
+        <label>Interview Type</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_interview_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :interview_type_id, all_interview_type, {hide_label: true,include_blank: " Select Interviewer Type"} %>
+            </div>
+          </div>
+    </div>
+
+    <div class="col-sm-3">
+     <div class="form-group required">
+      <%= f.select :employee_id, all_interviewer_name_list,{label: 'Interviewer Name',include_blank: " Select Interviewer Name"} %>
+     </div>
+    </div>
+
+    <div class="col-sm-3">
+     <div class="form-group required">
+      <label>Interview Date:</label>
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :interview_date, hide_label: true, class: 'interview_date'%>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-2">
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <label>Interview Time</label>
+          <div class="input-group">
+            
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+
+            </div>
+            <%= f.text_field :interview_time,hide_label:true, class: 'form-control timepicker' %>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :location,label:'Location' %>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="field">
+        <%= f.text_field :schedule_comment,label:'Description' %>
+      </div>
+    </div>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+      <%= f.submit "Create Interview Round",class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+   </div>
+  </div>
+<% end %>
+<% end %>
+
+<script>
+$(function () {
+//Timepicker
+  $(".timepicker").timepicker({
+    showInputs: false
+  });
+  
+});
+</script>
+<script type="text/javascript">
+  $(function(){
+    $('.interview_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+
+<script>
+$("#interview_round").validate({
+    rules: {
+      "interview_round[interview_type_id]":{
+        required: true
+              },
+      "interview_round[employee_id]":{
+        required: true
+      },
+      "interview_round[interview_date]":{
+        required: true
+      },
+      "interview_round[interview_time]":{
+        required: true
+      },
+      "interview_round[location]":{
+        required: true
+      }
+    },
+    messages: {
+      "interview_round[interview_type_id]":{
+        required: "Please Interview Type"
+      },
+      "interview_round[employee_id]":{
+        required: "Please Interviewer Name"
+      },
+      "interview_round[interview_date]":{
+        required: "Please Interview Date"
+      },
+      "interview_round[interview_time]":{
+        required: "Please Interview Time"
+      },
+      "interview_round[location]":{
+        required: "Please Interview Location"
+      }
+
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

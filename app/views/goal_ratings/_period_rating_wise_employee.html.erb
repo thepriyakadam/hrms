@@ -1,0 +1,46 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee List</h3>
+    <div class="pull-right">  
+    </div>
+  </div>
+  <div class="box-body">
+    <table id="example6" class="table table-bordered table-hover table-condensed">
+     <thead>
+        <tr>
+          <th>ID</th>
+          <th>Employee Name</th>
+          <th>Appraisee Rating</th>
+          <th>Appraiser Rating</th>
+          <th>Reviewer Rating</th>
+          <th>Final Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @goal_bunches.each do |e| %>
+        <tr>
+        <td><%= e.employee.manual_employee_code %></td>
+        <td><%= full_name(e.employee) %></td>
+        <td><% @a = e.appraisee_rating_id.to_f %><%= @a.round(2) %></td> 
+        <td><%= e.appraiser_rating %></td>
+        <td><%= e.reviewer_rating.try(:value) %></td>
+        <td><%= e.final_rating.try(:value) %>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>  
+
+      <%= link_to " Excel Report ",Period_rating_wise_employee_goal_ratings_path(:salary =>{:period_id => params[:salary][:period_id],:rating_id => params[:salary][:rating_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      
+      <%= link_to " PDF Report ",Period_rating_wise_employee_goal_ratings_path(:salary =>{:period_id => params[:salary][:period_id],:rating_id => params[:salary][:rating_id]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

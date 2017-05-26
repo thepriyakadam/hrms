@@ -1,0 +1,36 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Goal Approval - My Team</h3>
+    <div class="pull-right">  
+    </div>
+  </div>
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+     <thead>
+        <tr>
+          <th>ID</th>
+          <th>Employee Name</th>
+          <th>Department</th>
+          <th>Designation</th>
+          <th>Contact No.</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @employees.each do |e| %>
+        <tr>
+        <td><%= e.employee.manual_employee_code %></td>
+        <td><%= full_name(e.employee) %></td>
+        <td><%= e.employee.company_location.try(:name) %> - <%= e.employee.department.try(:name) %></td> 
+        <td><%= e.employee.joining_detail.employee_designation.try(:name) %></td>
+        <td><%= e.employee.contact_no %>
+        <td><%= link_to 'Goals For Approval', goal_approval_goal_bunches_path(id: e.id,emp_id: e.employee_id,period_id: @period.id) ,class: 'btn btn-xs btn-info' %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <br>
+    <%= link_to 'Back',subordinate_list_goal_bunches_path,class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+  </div>
+</div>
+

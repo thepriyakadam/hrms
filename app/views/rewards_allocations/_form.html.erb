@@ -1,0 +1,78 @@
+<%= bootstrap_form_for(@rewards_allocation,remote:true) do |f| %>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :reward_type_id,all_reward_type,{label: 'Reward Type', include_blank: 'Select Reward Type'} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :department_id,all_department_type_list1, {include_blank: "Select Department"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+    <label>Employee</label>
+      <div class="form-group required">
+        <%= f.select :reporting_master_id,all_reporting_master_list,{include_blank: "Employee",hide_label: true},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <label>From </label>
+      <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :from, hide_label: true, class: 'birth_date1'%>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <label>To </label>
+      <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :to, hide_label: true, class: 'birth_date1'%>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :allocated_qty,label: 'Allocated Qty', placeholder: 'Allocated Qty' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+    <label>Cost</label>
+      <div class="field">
+        <%= f.text_field :cost,hide_label:true, placeholder: 'Cost' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+    <label></label>
+      <div class="actions">
+        <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+    <% end %>
+<br>
+
+<script type="text/javascript">
+  $('.birth_date1').datepicker({
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-100:+10',
+  dateFormat: 'dd-mm-yy' });
+</script>

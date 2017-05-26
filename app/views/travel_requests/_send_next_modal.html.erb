@@ -1,0 +1,14 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-body" style="height:1000px; max-height:100px; width:630px; max-width:630px;">
+      <%= bootstrap_form_for @travel_request,url:{action:"send_request_to_higher_authority", id: @travel_request.id},html: {id: 'travel_request'} do |f| %>
+        <%= render partial: 'modal_edit_travel_request', locals: {f: f} %>
+        <div class="row">
+          <div class="col-sm-2">
+            <%= f.submit "Approve & Send next", class: 'btn btn-sm btn-warning fa fa-modx' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

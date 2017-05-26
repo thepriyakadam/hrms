@@ -1,0 +1,6 @@
+<%if @flag == true %>
+  $("#form").html("<%= j render 'form' %>");
+  $("#due_template_li").html("<%= j render 'due_template_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

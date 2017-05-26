@@ -1,0 +1,104 @@
+<div class="box">
+  <div class="box-header">
+    <center><h3 class="box-title">Interview Schedule Report</h3></center><br>
+<div class="box-body">
+<%= form_for :interview_schedule, url: { action: 'print_final_report',format: 'pdf',id: @interview_schedule.id},:html => {:target => '_blank'} do |f| %>
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+   <tr><th colspan="6"><center>Interview Schedule Details</center></th></tr>
+    <tr>
+<!--       <th>ID</th>
+ -->  <th>Job Title</th>
+      <th>Candidate Name</th>
+      <th>Email ID</th>
+      <th>Interview Date</th>
+      <th>Location</th>
+      <th>Address</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @interview_schedules.each do |interview_schedule| %>
+      <tr>
+<!--         <td><%= interview_schedule.id %></td>
+ -->    <td><%= interview_schedule.job_title %></td>
+        <td><%= interview_schedule.candidate_name %></td>
+        <td><%= interview_schedule.email_id %></td>
+        <td><%= interview_schedule.interview_date %></td>
+        <td><%= interview_schedule.location %></td>
+        <td><%= interview_schedule.address %></td>
+      </tr>
+  </tbody>
+</table>
+
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+  <% @interview_rounds.each do |interview_round| %>
+  <tr><th colspan="4"><center>Interview Rounds</center></th></tr>
+    
+  </thead>
+  <tbody>
+    
+      <tr>
+        <td>Interviewer Name : <%= full_name(interview_round.employee) %></td>
+        <td>Type : <%= interview_round.interview_type.try(:name) %></td>
+     
+        <td colspan="2">Date : <%= interview_round.interview_date %> - Time : <%= interview_round.interview_time %></td>
+      </tr>
+      <tr>
+        <td>Location : <%= interview_round.location %></td>
+        <td colspan="3">Description : <%= interview_round.schedule_comment %></td>
+<!--         <td><= interview_rounds.interview_analysis.interview_evalution.try(:name) %></td>
+ -->  </tr>
+      <tr><th colspan="4"><center>Interview Evaluation</center></th></tr>
+      <tr>
+          <th>Attributes</th>
+          <th>Skillset</th>
+          <th>Evaluation</th>
+          <th>Remarks</th>
+          
+      </tr>
+      <% interview_round.interview_analyses.try(:each) do |ia| %>
+      <tr>
+          <td><%= ia.interview_evalution.try(:name) %></td>
+          <td><%= ia.interview_attribute.try(:name) %></td>
+          <td><%= ia.interview_decision.try(:name) %></td>
+          <td><%= ia.comment %></td>
+      </tr>
+     
+      <%end%><br>
+      <!--  <tr>
+       <th colspan="2">Total Score</th>
+       <th colspan="2">< interv_analy = InterviewAnalysis.where(interview_round_id: interview_round).pluck(:interview_decision_id)
+        interv_dec = InterviewDecision.where(id: interv_analy).pluck(:name).map {|i| i.to_i} %>
+        <= interv_dec.sum %>
+       </th>
+      </tr> -->
+      <tr>
+        <th colspan="2">Total Score</th>
+        <th colspan="2"><% interv_analy = InterviewAnalysis.where(interview_round_id: interview_round).pluck(:interview_decision_id)
+        interv_dec = InterviewDecision.where(id: interv_analy) %><%= interv_dec.sum(:name) %></th>
+    </tr>
+    <% end %>
+    <tr>
+      <th colspan="2">Overall Total Score</th>
+      <th colspan="2"><% interview_schedule = InterviewSchedule.where(id: @interview_schedule.id).pluck(:id)
+            inter_round = InterviewRound.where(interview_schedule_id: interview_schedule).pluck(:id)
+            interv_analy_1 = InterviewAnalysis.where(interview_round_id: inter_round).pluck(:interview_decision_id)
+            interv_dec_1 = InterviewDecision.where(id: interv_analy_1) %>
+            <%= interv_dec_1.sum(:name) %>
+      </th>
+    </tr>  
+  </tbody>
+</table>
+<% end %>
+
+<br>
+<div class="col-sm-6">
+    <%= f.submit " Print Report",class: "btn btn-xl btn-info fa fa-print" %>
+    <%= link_to 'Back', all_interview_schedule_list_interview_schedules_path , class: 'btn btn-sm btn-default fa fa-arrow-left'  %>
+  </div>
+</div>
+</div>
+</div>
+<% end %>
+

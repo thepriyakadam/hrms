@@ -1,0 +1,132 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Salary Advance</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= bootstrap_form_for(@advance_salary,html: {id: 'advance_salary'}) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.select :employee_id, employee_list_by_company_location, {label: 'Employee ',include_blank: " Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
+           </div>
+        </div>
+     
+        <div class="col-sm-3">
+         <div class="form-group required">
+      <!--   <label>Date of Advance </label> -->
+           <div class="input-group"> 
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :advance_date,class: 'company_start_date',label:'Date'%>
+          </div>
+         </div>
+        </div>
+         <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :advance_type_id, all_advance_type,{include_blank: " Select Advance Type"} ,label:'Advance Type'%>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :advance_amount,label: 'Advance Amount',placeholder: "Advance Amount"%>
+          </div>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+      <!--   <label>No. Of Installment </label> -->
+           <%= f.text_field :no_of_instalment,placeholder: "No. of Installment",label:'No.Of Installment' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+             <%= f.text_field :instalment_amount,label: 'Installment Amount',placeholder: " Installment Amount" %>
+          </div>
+        </div>
+        <!-- <div class="col-sm-3">
+          <div class="field">
+              f.text_field :interest,label: 'Intrest',placeholder: " Intrest Percentage" 
+          </div>
+        </div>
+        -->
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Create Advance Salary",:class => class_name, data: { disable_with: data_info } %>
+            <%= link_to 'Back', advance_salaries_path ,class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script type="text/javascript">
+  $(function(){
+    $('#advance_salary_advance_amount').on('input', function() {
+      var advance_salary_advance_amount = parseFloat($('#advance_salary_advance_amount').val());
+      var advance_salary_no_of_instalment = parseFloat($('#advance_salary_no_of_instalment').val());
+      var ans="";
+      if (isNaN(advance_salary_advance_amount) || isNaN(advance_salary_no_of_instalment)) {
+        ans = ""
+      }
+      else{
+        ans = (advance_salary_advance_amount / advance_salary_no_of_instalment).toFixed(2);
+      }
+      $('#advance_salary_instalment_amount').val(ans);
+
+    });
+
+    $('#advance_salary_no_of_instalment').on('input', function() {
+      var advance_salary_no_of_instalment = parseFloat($('#advance_salary_no_of_instalment').val());
+      var advance_salary_advance_amount = parseFloat($('#advance_salary_advance_amount').val());
+      var ans="";
+      if (isNaN(advance_salary_advance_amount) || isNaN(advance_salary_no_of_instalment)) {
+        ans = ""
+      }
+      else{
+        ans = (advance_salary_advance_amount / advance_salary_no_of_instalment).toFixed(2);
+      }
+      $('#advance_salary_instalment_amount').val(ans);
+    });
+  });
+
+   $("#advance_salary").validate({
+  rules: {
+    "advance_salary[employee_id]":{
+      required: true
+    },
+    "advance_salary[advance_date]":{
+      required: true
+    },
+    "advance_salary[advance_type_id]":{
+      required: true
+    },
+    "advance_salary[no_of_instalment]":{
+      required: true
+    },
+    "advance_salary[advance_amount]":{
+      required: true
+    }
+  },
+  
+  errorPlacement: function(error, element) {
+   error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+   error.insertAfter(element.parent(element));
+  }
+});
+
+   $(document).ready(function() {
+    $(".select2").select2();
+  });
+</script>
+

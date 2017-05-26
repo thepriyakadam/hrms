@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Section:</strong>
+  <%= @investment_head.section %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @investment_head.description %>
+</p>
+
+<p>
+  <strong>Document Name:</strong>
+  <%= @investment_head.document_name %>
+</p>
+
+<p>
+  <strong>Limit:</strong>
+  <%= @investment_head.limit %>
+</p>
+
+<%= link_to 'Edit', edit_investment_head_path(@investment_head) %> |
+<%= link_to 'Back', investment_heads_path %>

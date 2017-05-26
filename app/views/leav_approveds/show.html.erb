@@ -1,0 +1,25 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Leave Aproval Details</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
+
+    <tr>
+    	<th> <strong>Employee leave request:</strong></th>
+    	<td><%= @leav_aproved.employee_leav_request %></td>
+
+    	<th><strong>Approved date:</strong></th>
+    	<td><%= @leav_aproved.approved_date %></td>
+    </tr>
+ </table>
+
+  <%= link_to 'Edit', edit_leav_aproved_path(@leav_aproved),class: 'btn btn-success btn-sm fa fa-edit' %> |
+    <%= link_to 'Back', leav_aproveds_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+

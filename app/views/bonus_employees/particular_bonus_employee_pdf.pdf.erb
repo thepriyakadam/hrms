@@ -1,0 +1,35 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+      /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+    }
+</style>
+<table style="border-collapse: collapse; font-size:8pt;" border=1 width=1000 cellpadding="19">  
+  <thead>
+  <tr><th colspan="6"><center><%= current_user.employee.company_location.company.description %></center> </th></tr>
+    <tr>
+      <th>ID</th>
+      <th>Employee Name</th>
+      <th>Bonus date</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @particular_bonuses.each do |bonus_employee| %>
+      <tr>
+        <td><%= bonus_employee.employee.manual_employee_code %></td>
+        <td><%= full_name(bonus_employee.employee) %></td>
+        <td><%= bonus_employee.bonus_date.strftime("%B %Y") %></td>
+        <td><%= bonus_employee.amount %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

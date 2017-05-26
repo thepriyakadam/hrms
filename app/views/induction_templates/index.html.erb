@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Induction Templates</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Template no</th>
+      <th>Description</th>
+      <th>Activity</th>
+      <th>Day</th>
+      <th>Duration</th>
+      <th>Employee</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @induction_templates.each do |induction_template| %>
+      <tr>
+        <td><%= induction_template.template_no %></td>
+        <td><%= induction_template.description %></td>
+        <td><%= induction_template.activity %></td>
+        <td><%= induction_template.day %></td>
+        <td><%= induction_template.duration %></td>
+        <td><%= induction_template.employee %></td>
+        <td><%= link_to 'Show', induction_template %></td>
+        <td><%= link_to 'Edit', edit_induction_template_path(induction_template) %></td>
+        <td><%= link_to 'Destroy', induction_template, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Induction template', new_induction_template_path %>

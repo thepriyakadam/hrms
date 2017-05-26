@@ -1,33 +1,129 @@
-<%= form_for(@award) do |f| %>
-  <% if @award.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@award.errors.count, "error") %> prohibited this award from being saved:</h2>
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Award Details</h3>
+  </div><!-- /.box-header -->
 
-      <ul>
-      <% @award.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<div class="box-body">
+  <%= bootstrap_form_for(@award,html: {id: 'award'},remote:true) do |f| %>
+    <%= f.hidden_field :employee_id, value: @employee.id %>        
+    <div id="entry1" class="clonedInput">
+      <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :award_name, label: 'Award Name', class: 'input_award_name' %>
+            </div>
+          </div>
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :year_id, all_year,{label: 'Year',include_blank: " Select Year"}, class: 'input_year_id' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :award_from, label: 'Award From', class: 'input_award_from' %>
+          </div>
+        </div>
+      </div>
     </div>
-  <% end %>
+   <!-- < unless params['controller'] == 'awards' and params['action'] == 'edit' %>
+      <div class="row">
+        <div class="col-sm-2">
+          <input type="button" id="btnAdd" value="+ Additional Awards" class="btn btn-success btn-sm"> 
+        </div>
 
-  <div class="field">
-    <%= f.label :employee_id %><br>
-    <%= f.text_field :employee_id %>
-  </div>
-  <div class="field">
-    <%= f.label :award_name %><br>
-    <%= f.text_field :award_name %>
-  </div>
-  <div class="field">
-    <%= f.label :year %><br>
-    <%= f.number_field :year %>
-  </div>
-  <div class="field">
-    <%= f.label :award_from %><br>
-    <%= f.text_field :award_from %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+        <div class="col-sm-3">
+          <input type="button" id="btnDel" value="Remove Above Awards" class="btn btn-danger btn-sm">
+        </div>
+      </div><br>
+    <end%>-->
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="actions">
+          <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+          <% if params['controller'] == 'awards' and params['action'] == 'edit' %>
+            <%= link_to 'Back',ajax_award_detail_employees_path(id: @employee.id),class: 'btn btn-default btn-sm',remote:true%>
+          <%end%>
+        </div>
+      </div>
+    </div>
+    <!-- <div id="area"></div> -->
+  <% end %>
+  <!-- <button id="btnAdd">Add</button> -->
+</div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script type="text/javascript">
+  $(function () {
+  $('#btnAdd').click(function () {
+      var num     = $('.clonedInput').length, 
+          newNum  = new Number(num + 1),      
+          newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); // 
+      newElem.find('.input_award_name').attr('name','award['+ newNum +'][award_name]').attr('id', newNum + '_award_award_name').val('');
+      newElem.find('.input_year_id').attr('name','award['+ newNum +'][year_id]').attr('id', newNum + '_award_year_id').val('');
+      newElem.find('.input_award_from').attr('name','award['+ newNum +'][award_from]').attr('id', newNum + '_award_award_from').val('');
+
+      $('#entry' + num).after(newElem);
+      $('#ID' + newNum + '_title').focus();
+
+      $('#btnDel').attr('disabled', false);
+
+      if (newNum == 5)
+      $('#btnAdd').attr('disabled', true).prop('value', "You've reached the limit"); // value here updates the text in the 'add' button when the limit is reached 
+  });
+
+  $('#btnDel').click(function () {
+  // Confirmation dialog box. Works on all desktop browsers and iPhone.
+      if (confirm("Are you sure you wish to remove this section? This cannot be undone."))
+          {
+              var num = $('.clonedInput').length;
+              // how many "duplicatable" input fields we currently have
+              $('#entry' + num).slideUp('slow', function () {$(this).remove();
+              // if only one element remains, disable the "remove" button
+                  if (num -1 === 1)
+              $('#btnDel').attr('disabled', true);
+              // enable the "add" button
+              $('#btnAdd').attr('disabled', false).prop('value', "+ Additional Awards");});
+          }
+      return false; // Removes the last section you added
+  });
+  // Enable the "add" button
+  $('#btnAdd').attr('disabled', false);
+  // Disable the "remove" button
+  $('#btnDel').attr('disabled', true);
+});
+</script>
+
+<script>
+$("#award").validate({
+    rules: {
+      "award[award_name]":{
+        required: true
+      },
+      "award[year_id]":{
+        required: true
+      },
+      "award[award_from]":{
+        required: true
+      }
+    },
+    messages: {
+      "award[award_name]":{
+        required: "Please Specify Award Name"
+      },
+      "award[year_id]":{
+        required: "Please Select Year"
+      },
+      "award[award_from]":{
+        required: "Please Specify Award From"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

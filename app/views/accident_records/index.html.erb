@@ -1,0 +1,63 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Accident Records</h3>
+    <div class="pull-right">
+      <%= link_to "New Accident Record", new_accident_record_path, class: 'btn btn-sm btn-primary' %> 
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <div id="comments">
+    <table id="example" class="table table-bordered table-hover table-condensed">
+    <thead>
+    <tr>
+      <th>Accident Code</th>
+      <th>Employee ID</th>
+      <th>Employee</th>
+      <th>Accident Date</th>
+      <th>Department</th>
+      <th>Root Cause</th>
+      <th>ESIC No</th>
+      <th>Case Type</th>
+      <th>Download</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @accident_records.each do |accident_record| %>
+      <tr>
+        <td><%= accident_record.code %></td>
+        <td><%= accident_record.employee.try(:manual_employee_code) %></td>
+        <td><%= accident_record.employee.try(:first_name) %> <%= accident_record.employee.try(:middle_name) %> <%= accident_record.employee.try(:last_name) %></td>
+        <td><%= accident_record.accident_date %></td>
+        <td><%= accident_record.department.try(:name) %></td>
+        <td><%= accident_record.root_cause_master.try(:name) %>           
+        <td><%= accident_record.esic_no %></td>
+        <td><%= accident_record.case_type %></td>
+        <td>
+        <% if accident_record.avatar_file_name == nil %>
+           <small class="label label-default">Photo Not Available</small>
+            <% else %>
+            <%= link_to '',download_jpg_path(id: accident_record.id),class: 'btn btn-xs btn-primary fa fa-download' %>
+            <% end %>
+        </td>
+        <td>
+         <%= link_to '', accident_record,class: 'btn btn-xs btn-default fa fa-eye' %>
+        <!-- < link_to 'Edit', edit_accident_record_path(accident_record) %> -->
+        <!--  <= link_to '', , method: :delete, data: { confirm: 'Are you sure?' } %> -->
+        <%= link_to '',  accident_record, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-trash' %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

@@ -1,0 +1,51 @@
+<%= bootstrap_form_for(@interview_type,html: {id: 'interview_type'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Interview Type Code' %>
+      </div>
+    </div> 
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Interview Type' %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+$("#interview_type").validate({
+    rules: {
+      "interview_type[code]":{
+        required: true
+              },
+      "interview_type[name]":{
+        required: true
+      }
+    },
+    messages: {
+      "interview_type[code]":{
+        required: "Please Specify Code"
+      },
+      "interview_type[name]":{
+        required: "Please specify Interview Type"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

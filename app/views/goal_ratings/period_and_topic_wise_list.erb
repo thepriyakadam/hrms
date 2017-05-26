@@ -1,0 +1,26 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee List</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  	<div class="row">
+	  	<div class="col-sm-2">
+      <label>Period</label>
+        <div class="field">
+          <%= select :salary,:period_id,all_period_type,{include_blank: "Period"},{class: 'form-control'} %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+      <label>Training Topic</label>
+        <div class="field">
+          <%= select :salary, :training_topic_master_id, all_training_topic,{include_blank: 'Select Topic'},{onchange:"var a={period_id:$('#salary_period_id').val(),
+          	training_topic_master_id:$(this).val()};$('.ajax-progress').show(); $.get('/goal_ratings/period_topic_wise_employee',a,function(response){});",class: 'form-control'} %>
+        </div>
+      </div>
+    </div>
+    <br>
+    
+	  <div id="employee_list"></div>
+	</div>
+	</div>

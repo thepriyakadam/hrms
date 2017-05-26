@@ -1,0 +1,45 @@
+<%= bootstrap_form_for(@question_master,html: {id: 'question_master'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Question No.' %>
+      </div>
+    </div> 
+     <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_area :name,hide_label:true, placeholder: 'Question' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Question",:class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+
+<script>
+$("#question_master").validate({
+    rules: {
+      "question_master[code]":{
+        required: true,
+      },
+      "question_master[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "question_master[code]":{
+        required: "Please Specify Question No.",
+      },
+       "question_master[name]":{
+        required: "Please Specify Question",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

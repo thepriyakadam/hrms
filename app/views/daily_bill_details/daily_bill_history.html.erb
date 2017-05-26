@@ -1,0 +1,80 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Expense Claim History</h3> @reporting_masters_travel_requests
+    <div class="pull-right"></div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <%= bootstrap_form_for DailyBillDetail.new,url:{action:'approve_request'} do |f| %>  
+    <div class="row">
+      <div class="col-sm-12">
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+      <th>Request By</th> 
+      <th>Travel Request Id</th> 
+      <th>Expense Date</th>
+      <th>Place</th>
+      <th>Expense Type</th>
+      <th>Request Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @daily_bill_details.each do |daily_bill_detail| %>
+      <tr>
+        <td><% if daily_bill_detail.request_status == "Approved" %>
+         <% else %>
+            <%= check_box_tag "daily_bill_detail_ids[]", daily_bill_detail.id %>
+            <% end %>
+        </td>
+        <td><%= daily_bill_detail.travel_request.employee.first_name %> <%= daily_bill_detail.travel_request.employee.middle_name %> <%= daily_bill_detail.travel_request.employee.last_name %></td>
+        <td><%= daily_bill_detail.travel_request_id %></td>
+        <td><%= daily_bill_detail.expence_date %></td>
+        <td><%= daily_bill_detail.e_place %></td>
+        <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>   
+        <td>
+        <% if daily_bill_detail.request_status == "Approved" %>
+              <small class="label label-info">Approved</small>
+              <% else %>
+              <% end %>
+        </td>
+         <td>
+           <%= link_to '', daily_bill_detail,class: 'btn btn-sm btn-default fa fa-eye' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>
+<div class="row">
+  <div class="col-sm-3">
+    <div class="actions">
+      <%= f.submit "Approve Request", class: 'btn btn-info btn-sm' %>
+    </div>
+  </div>
+  <!--<= link_to 'Approve / Reject', daily_bill_request_confirmation_daily_bill_details_path,class: 'btn btn-sm btn-warning' %>-->
+</div>
+<% end %>
+</div>
+</div>
+
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>
+
+

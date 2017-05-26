@@ -1,0 +1,98 @@
+	<%= bootstrap_form_for(@leave_master,html: {id: 'leave_master'},remote: true) do |f| %>
+	  <div class="row">
+			<div class="col-sm-3">
+				<div class="form-group required">
+					<%= f.select :leav_category_id,all_leav_category,{label: 'Leave Category',include_blank: 'Please Select Leave Category'} %>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group required">
+					<%= f.select :period,['Monthly','Quarterly','Half-yearly','Yearly'],{label: 'Period',include_blank: 'Select Period'} %>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="field">
+					<%= f.text_field :working_day,label:'Working Day Limit', placeholder: 'Working Day' %>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="field">
+					<%= f.text_field :company_workingday,label:'Company Workingday', placeholder: 'Company Workingday' %>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="form-group required">
+					<%= f.text_field :no_of_leave,label:'No Of Leave', placeholder: 'No Of Leave' %>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="field">
+					<%= f.check_box :is_carry_forward, label: 'Is Carry-forward' %>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="field">
+					<%= f.text_field :limit,label:'Limit', placeholder: 'Limit' %>
+				</div>
+			</div>
+
+		</div>
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="actions">
+					<%= f.submit 'Create Leave Master', :class => class_name, data: { disable_with: data_info } %>
+				</div>
+			</div>
+		</div>
+	<% end %>
+
+<script type="text/javascript">
+$("#leave_master").validate({
+    rules: {
+      "leave_master[leav_category_id]":{
+        required: true
+      },
+      "leave_master[period]":{
+        required: true
+      },
+      "leave_master[no_of_leave]":{
+        required: true
+      }
+    },
+    messages: {
+      "leave_master[leav_category_id]":{
+        required: "Please specify leave category."
+      },
+      "leave_master[period]":{
+        required: "Please specify Period"
+      },
+      "leave_master[no_of_leave]":{
+        required: "Please specify no_of_leave"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+  });
+
+  $(function(){
+    $('#reservationtime').on('click', function() {
+    
+    });
+  });
+
+  $('#leave_master_is_carry_forward').on('change', function() {
+    if ($('#leave_master_is_carry_forward').val() == true){
+ 
+      $("#textbox1").show();
+      
+    }
+    else{
+      $("#textbox1").hide();
+    }
+  });
+
+</script>

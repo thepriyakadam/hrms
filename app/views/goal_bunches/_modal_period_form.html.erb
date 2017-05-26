@@ -1,0 +1,22 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-body">
+
+      <%= bootstrap_form_for(:goal_bunch,url:{action:'modal_period_create',goal_bunch_id: @goal_bunch.id}) do |f| %>
+        <div class="row">
+          <div class="col-sm-9">
+          <label>Period</label>
+            <%= f.select :period_id,all_period_type,{hide_label:true,include_blank: 'Select Period'} %>
+          </div>
+          <div class="col-sm-3">
+          <label></label>
+            <div class="actions">
+              <%= f.submit "Create" , class: 'btn btn-primary btn-sm' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>

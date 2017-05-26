@@ -1,0 +1,41 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+      /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+    }
+</style>
+<table style="border-collapse: collapse; font-size:10pt;" border=1 width=1000 cellpadding="19">
+    <thead>
+    <td colspan="6"><center><strong>
+ <%= Company.find(@company).description unless @company.nil? or @company.blank? %></strong><br> <%= Company.find(@company).address unless @company.nil? or @company.blank? %> <br><%=Department.find(@department).name unless @department.nil? or @department.blank? %> - <%= CompanyLocation.find(@company_location).name unless @company_location.nil? or @company_location.blank? %></center>
+ </td>
+      <tr>
+        <th>ID</th>
+        <th>Employee Name</th>
+        <th>Advance Amount</th>
+        <th>Installment</th>
+        <th>Installment Amount</th>
+        <th>Advance Date</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @advance_salaries.each do |advance_salary| %>
+        <tr>
+         <td><%= advance_salary.employee.try(:manual_employee_code) %></td>
+         <td><%= full_name(advance_salary.employee) %></td>
+         <td><%= advance_salary.advance_amount %></td>
+         <td><%= advance_salary.no_of_instalment %></td>
+         <td><%= advance_salary.instalment_amount %></td>
+         <td><%= advance_salary.advance_date %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

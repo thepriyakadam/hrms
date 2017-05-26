@@ -1,21 +1,36 @@
-<%= form_for(@nationality) do |f| %>
-  <% if @nationality.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@nationality.errors.count, "error") %> prohibited this nationality from being saved:</h2>
-
-      <ul>
-      <% @nationality.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= bootstrap_form_for(@nationality,html: {id: 'nationality'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Nationality' %>
+      </div>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name%>
+      </div>
+    </div>
   </div>
 <% end %>
+
+<script>
+$("#nationality").validate({
+    rules: {
+      "nationality[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "nationality[name]":{
+        required: "Please Specify Nationality",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+

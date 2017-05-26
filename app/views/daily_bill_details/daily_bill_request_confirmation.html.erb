@@ -1,0 +1,141 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Expense Claim Request Confirmation</h3>
+</div>
+<div class="box-body">
+<%= bootstrap_form_for DailyBillDetail.new,url:{action:'approve_request'} do |f| %>
+<!--<= bootstrap_form_for DailyBillDetail.new,url:{action:'reject_request'} do |r| %>-->
+ <div>
+  <%= render 'show_travel_request' %>
+</div>
+<div>
+<%= render 'show_reporting_masters_travel_request' %>
+</div>
+
+
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+  <tr>
+      <td colspan="8"><center>Expense Claim List</center></td>
+    </tr>
+    <tr>
+<!--       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+ -->
+      <th>Expense Date</th>
+      <th>Place</th>
+      <th>Expense Type</th>
+      <th>Amount</th>
+      <th>Status</th>
+      <th>Image</th>
+      <th>Document</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <% @daily_bill_details.each do |daily_bill_detail| %>
+      <tr>
+       <!--  <td>
+        < if daily_bill_detail.request_status == "Approved" %>
+         < else %>
+            <= check_box_tag "daily_bill_detail_ids[]", daily_bill_detail.id %>
+            < end %>
+        </td> -->
+        <td><%= daily_bill_detail.expence_date %></td>
+        <td><%= daily_bill_detail.e_place %></td>
+        <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
+        <td><%= daily_bill_detail.travel_expence %></td>
+        <td>
+            <% if daily_bill_detail.request_status == "Approved" %>
+            <small class="label label-success">Approved</small>
+            <% elsif daily_bill_detail.request_status == "Rejected" %>
+            <small class="label label-danger">Rejected</small>
+            <% elsif daily_bill_detail.request_status == "Approved & Send Next" %>
+            <small class="label label-primary">Approved & Send Next</small>
+            <% else %>
+            <% end %>
+        </td>
+        <td>
+           <% if daily_bill_detail.passport_photo_file_name == nil %>
+           <small class="label label-default">Not Available</small>
+             <% else %>
+             <%= link_to '',download_pics_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-picture-o' %>
+             <% end %>
+        </td>
+         <td>
+           <% if daily_bill_detail.avatar_file_file_name == nil %>
+           <small class="label label-default">Not Available</small>
+             <% else %>
+             <%= link_to '',download_doc_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-download' %>
+             <% end %>
+        </td>
+        <td>
+
+       <!--  < if daily_bill_detail.request_status == "Approved" %>
+            < elsif daily_bill_detail.request_status == nil %>
+            <= link_to 'Comment', comment_modal_daily_bill_details_path(@travel_request.id),class: 'btn btn-xs btn-info fa fa-check', remote: true %>
+            < else %>
+            < end %> -->
+            <%= link_to '', daily_bill_detail,class: 'btn btn-sm btn-default fa fa-eye' %>
+        </td>
+      </tr>
+    <% end %>
+      <tr>
+          <th>Total</th>
+          <td></td>
+          <td></td>
+          <td><%= @daily_bill_details.sum(:travel_expence) %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+
+<% end %>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="actions">
+    <% @daily_bill = ReportingMastersTravelRequest.where(status: nil).count %>
+    <% if @daily_bill == 1 %>
+    <%= link_to 'Approve',comment_modal_daily_bill_details_path(@travel_request.id),class: 'btn btn-sm btn-info',remote: true %> 
+     <% else %>
+     <%= link_to 'Approve & Send Next',comment_modal_daily_bill_details_path(@travel_request.id),class: 'btn btn-sm btn-primary',remote: true %>
+     <% end %>
+    <!--  < if @dbl = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:status).last == nil && @dbl1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:travel_status).last == "FinalApproved" %>
+    <!-  | <= link_to 'Reject',reject_request_daily_bill_details_path(@travel_request.id),class: 'btn btn-sm btn-danger' %> -->
+    <!--  < else %>
+     < end %> -->
+     </div>
+  </div>
+</div>
+
+
+</div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>
+<div id="myModal" class="modal fade"></div>
+<div id="myModal1" class="modal fade"></div>

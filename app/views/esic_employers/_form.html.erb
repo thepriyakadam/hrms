@@ -1,0 +1,106 @@
+<%= bootstrap_form_for(@esic_employer,html: {id: 'esic_employer'},remote:true) do |f| %>
+
+<div class="row">
+  <div class="col-sm-3">
+      <label>Base Component</label>
+      <div class="form-group required">
+        <%=select_tag("components[]",options_for_select(SalaryComponent.where(is_base: true).collect {|ff| [ff.name, ff.id] }),{:multiple=>true,:id => "batches",class: "form-control"})%>
+      </div>
+    </div>
+ <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :percentage %>
+      </div>
+    </div>
+
+   <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :effective_from,label: "Effective From", class: 'effective_from'%>
+        </div>
+      </div>
+    </div>
+<div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :effective_to, label: "Effective To", class: 'effective_to'%>
+        </div>
+      </div>
+      </div>
+      </div>
+    <div class="row">
+
+         <div class="col-sm-1">
+      <label>Status </label>
+      <div class="field">
+        <%= f.check_box :is_active, label: 'Active'%>
+      </div>
+    </div>
+   
+
+ <div class="col-sm-3">
+   <label></label>
+      <div class="actions">
+        <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+     </div>
+<% end %>
+
+<script>     
+    $(function(){
+    $('.effective_from').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-20:+10',
+    dateFormat: 'dd-mm-yy' });
+  });
+</script>
+<script>
+   $(function(){
+    $('.effective_to').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-20:+10',
+    dateFormat: 'dd-mm-yy' });
+  });
+</script>
+
+
+<script>
+$("#esic_employer").validate({
+    rules: {
+      "esic_employer[percentage]":{
+        required: true,
+      },
+      "esic_employer[effective_from]":{
+        required: true,
+      },
+      "esic_employer[effective_to]":{
+        required: true,
+      }
+       },
+    messages: {
+      "esic_employer[percentage]":{
+        required: "Please Specify percentage",
+      },
+       "esic_employer[effective_from]":{
+        required: "Please Select Date",
+      },
+      "esic_employer[effective_to]":{
+        required: "Please Select Date",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

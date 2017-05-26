@@ -1,0 +1,28 @@
+   <table class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Employee ID</th>
+          <th>Employee Name</th>
+          <th>Training Topic</th>
+          <th>Training Period</th>
+          <th>Request Date</th>
+          <th>Reporting Manager</th>
+          <th>No. Of Employee</th>
+          <th>Place</th>
+        </tr>
+      </thead>
+
+      <tbody>
+          <tr>
+            <td><%= @training_request.employee.try(:manual_employee_code) %></td>
+            <td><%= full_name(@training_request.employee) %> </td>
+            <td><%= @training_request.training_topic_master.try(:name) %></td>
+            <td><%= @training_request.training_period %></td>
+            <td><%= @training_request.training_date %></td>
+            <td><%= @training_request.reporting_master_id %></td>
+            <td><%= @training_request.no_of_employee %></td>
+            <td><%= @training_request.place %></td>
+          </tr>
+      </tbody>
+    </table>
+    

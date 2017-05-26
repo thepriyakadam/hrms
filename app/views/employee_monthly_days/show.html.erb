@@ -1,0 +1,33 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Working Day</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table class="table table-bordered table-hover">
+
+     <tr colspam='2'>
+      <th> <strong>Employee Name</strong></th>
+      <td><%= @employee_monthly_day.employee.try(:first_name)+' '+@employee_monthly_day.employee.try(:middle_name)+' '+@employee_monthly_day.employee.try(:last_name) %></td>
+     </tr>
+
+     <tr>
+      <th> <strong>Month</strong></th>
+      <td><%= @employee_monthly_day.month %></td>
+
+      <th><strong>Year</strong></th>
+      <td><%= @employee_monthly_day.year.try(:name) %></td>
+      </tr>
+
+      <tr>
+      <th><strong>No of Working Days</strong></th>
+      <td><%= @employee_monthly_day.no_of_working_day %></td>
+      
+      <th><strong>Overtime</strong></th>
+      <td><%= @employee_monthly_day.overtime %></td>
+      </tr>
+    </table>
+
+    <%= link_to 'Edit', edit_employee_monthly_day_path(@employee_monthly_day),class: 'btn btn-success fa fa-edit' %> 
+    <%= link_to 'Back', employee_monthly_days_path,class: 'btn btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

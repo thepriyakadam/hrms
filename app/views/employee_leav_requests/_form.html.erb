@@ -1,0 +1,217 @@
+<!--SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Leave Request</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for(@employee_leav_request,html: {id: 'employee_leav_request'}) do |f| %>
+     <%= f.hidden_field :employee_id, value: @employee.id %>
+     <div class="row">
+      <div class="col-sm-6">
+        <div class="field">
+         <table class="table table-bordered table-hover table-condensed'">
+           <thead>
+           <tr>
+           <th colspan="2"><center> Leave Process </center></th>
+           </tr>
+           <tr>
+           <th> Employee </th>
+           <td><%= @employee.manual_employee_code %> - <%= full_name(@employee) %></td>
+           </tr>
+           <tr>
+              <th>Manager 1 </th>
+              <td><%= @employee.manager.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager)) %></td>
+            </tr>
+            <tr>
+              <th>Manager 2 </th>
+              <td><%= @employee.manager_2.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager_2)) %></td>
+            </tr>
+           </thead>
+         </table>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="field">
+        <table class="table table-bordered table-hover table-condensed'">
+         <thead>
+         <tr><center><th colspan="2"><center>Leave Balance</center></th></tr>
+          <tr>
+            <th>Leave Type</th>
+            <th>Leave Balance</th>
+          </tr>
+         </thead>
+        <% @total_leaves.where(is_active: true).each do |l| %>
+        <tr>
+        <td><%= l.leav_category.name %></td>
+        <td><%= l.no_of_leave %></td>
+        </tr>
+        <% end %>
+        </table>
+        </div>
+        </div>
+    </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :leav_category_id,all_leav_category,{label:"Leave Category",include_blank: 'Select leave category'}%>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+          <%= f.select :leave_type, ['Full Day','Half Day','Full/Half'],{label:"Leave Type",include_blank: "Select Leave Type"},{onchange:"var a={leave_type:$(this).val()}; $.get('/employee_leav_requests/select_checkbox',a,function(response){});",class: 'form-control'} %>
+          </div>
+        </div>
+
+        <div id="checkbox"></div>
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :start_date, label: 'From Date', class: 'request_from_date'%>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :end_date, label: 'To Date', class: 'request_from_date' %>
+            </div>
+          </div>
+        </div>
+
+      <div id="checkbox1"></div>
+
+        <div class="col-sm-5">
+          <div class="form-group required">
+            <%= f.text_field :reason %>
+          </div>
+        </div>
+      </div>
+     <br>
+     
+      <div class="row">
+         <div class="col-sm-6">
+          <div class="actions">
+            <%= f.submit'Create Leave Request', :class => class_name, data: { disable_with: data_info } %>
+            <%= link_to ' Back', employee_leav_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div><!-- /.box-body -->
+<br>
+<script type="text/javascript">
+$("#employee_leav_request").validate({
+    rules: {
+      "employee_leav_request[leav_category_id]":{
+        required: true
+      },
+      "employee_leav_request[leave_type]":{
+        required: true
+      },
+      "employee_leav_request[start_date]":{
+        required: true
+      },
+      "employee_leav_request[end_date]":{
+        required: true
+      },
+      "employee_leav_request[reason]":{
+        required: true
+      }
+    },
+    messages: {
+      "employee_leav_request[leav_category_id]":{
+        required: "Please specify leave category."
+      },
+      "employee_leav_request[leave_type]":{
+        required: "Please specify leave type."
+      },
+      "employee_leav_request[start_date]":{
+        required: "Please specify date range."
+      },
+      "employee_leav_request[end_date]":{
+        required: "Please specify date range."
+      },
+      "employee_leav_request[reason]":{
+        required: "Please specify reason."
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+  });
+
+  $(function(){
+    $('#reservationtime').on('click', function() {
+    
+    });
+
+  });
+
+  $(function(){
+    $('.request_from_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+5',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+
+
+  
+  $('#employee_leav_request_start_date').on('change', function() {
+    if ($('#employee_leav_request_leave_type').val() == "Half Day"){
+      $('#employee_leav_request_end_date').val($('#employee_leav_request_start_date').val());
+    }
+    else{
+    }
+    
+  });
+
+  $('#employee_leav_request_end_date').on('change', function() {
+    if ($('#employee_leav_request_leave_type').val() == "Half Day"){
+      $('#employee_leav_request_end_date').val($('#employee_leav_request_start_date').val());
+
+    }
+    else{
+    }
+  });
+
+  $('#employee_leav_request_leave_type').on('change', function() {
+    if ($('#employee_leav_request_leave_type').val() == "Half Day"){
+
+      $("#employee_leav_request_end_date").attr('readonly', true);
+      $("#employee_leav_request_end_date").val('<%= @start_date %>');
+      
+    }
+    else{
+      $("#employee_leav_request_end_date").attr('readonly', false);
+      $("#employee_leav_request_end_date").val('');
+    }
+  });
+
+  $('#employee_leav_request_leave_type').on('change', function() {
+    if ($('#employee_leav_request_leave_type').val() == "Full Day"){
+   
+      $("#checkbox1").hide();
+      $("#checkbox").hide();
+    }
+    else{
+      $("#checkbox1").show();
+      $("#checkbox").show();
+    }
+  });
+</script>

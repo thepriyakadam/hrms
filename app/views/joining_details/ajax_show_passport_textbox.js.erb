@@ -1,0 +1,5 @@
+<% if @value == 'Yes' %>
+$('#have_passport').html("<%= j render 'joining_details/have_passport' %>")
+<% else %>
+$('#have_passport').html(" ")
+<%end%>

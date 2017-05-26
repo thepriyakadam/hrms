@@ -1,0 +1,9 @@
+<% if @certificate == "Character" %>
+$("#display_certificate").html("<%= j render 'display_certificate' %>")
+<% elsif @certificate == "Leaving"	%>
+$("#address_proof").html("<%= j render 'address_proof' %>")
+<% elsif @certificate == "Service"	%>
+$("#character_certificate").html("<%= j render 'character_certificate' %>")
+<% elsif @certificate == "Acceptance Of Resignation"	%>
+$("#service_certificate").html("<%= j render 'service_certificate' %>")
+<% end %>

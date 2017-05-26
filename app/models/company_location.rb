@@ -1,22 +1,21 @@
 class CompanyLocation < ActiveRecord::Base
+  protokoll :location_code, pattern: 'COMLOC###'
   belongs_to :company
-  has_one :member, as: :account
-  after_create :create_user_account
+  belongs_to :country
+  belongs_to :state
+  belongs_to :district
+  has_many :member
+  has_many :employees
+  has_many :departments
+  has_many :vacancy_masters
+  has_many :vacancy_request_histories
+  has_many :travel_request_histories
+  has_many :employee_transfers
+  has_many :professional_tax_masters
+  has_many :salary_map_saps
 
-  def create_user_account
-    company_location = CompanyLocation.find(id)
-    pass = (0...8).map { (65 + rand(26)).chr}.join
-    user = Member.new do |u|
-      u.email = name
-      u.password = '12345678'
-      u.account = company_location
-      p "------------------------------------------------------------------"
-    end
-    puts pass
-    if user.save
-      @message = "Company Location Account created successfully."
-      #UserPasswordMailer.welcome_email(company_location,pass).deliver_now
-    end
-    p user.errors
-  end
+  validates :manual_company_location_code, presence: true, uniqueness: { case_sensitive: false }
+  validates :country_id, presence: true
+  validates :state_id, presence: true
+  validates :district_id, presence: true
 end

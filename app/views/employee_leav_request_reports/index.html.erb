@@ -1,0 +1,16 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Leave Report</h3>
+  </div><!-- /.box-header -->
+<div class="right">
+  <%= render :partial => "shared/source", :object => @employee_leav_request_report %>
+</div>
+<div class="left">
+  <%= datagrid_form_for @employee_leav_request_report %>
+  <div class='total'>Total: <%= @employee_leav_request_report.assets.total_count %></div>
+  <%= datagrid_table(@employee_leav_request_report) %>
+  <%= paginate @employee_leav_request_report.assets %>
+</div>
+
+</div>
+</div>

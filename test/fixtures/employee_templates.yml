@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 
+  salary_template_id: 
+  is_active: false
+  start_date: 2016-02-05
+  end_date: 2016-02-05
+
+two:
+  employee_id: 
+  salary_template_id: 
+  is_active: false
+  start_date: 2016-02-05
+  end_date: 2016-02-05

@@ -1,0 +1,40 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Document Details</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+   
+    <tr>
+      <th><strong>Document Name</strong></th>
+      <td> <%= @employee_document.name %></td>
+     
+   
+  <th><strong>Download Document</strong></th>
+  <td>
+    <% if @employee_document.document == nil %>
+      <small class="label label-default">Not Available</small>
+          <% else %>
+            <center><%= link_to '',download_emp_path(@employee_document),class: 'btn btn-xs fa fa-download' %>
+      <% end %>
+    </center>
+  </td>
+
+  <th><strong>Download Image</strong></th>
+  <td>
+  <% if @employee_document.image_file_name == nil %>
+    <small class="label label-default">Not Available</small>
+      <% else %>
+    <center><%= link_to '',download_pic_path(@employee_document),class: 'btn btn-xs fa fa-picture-o' %></center>
+  <% end %></td>
+</tr>
+    
+ </table><br>
+  <!--   <= image_tag @employee_document.image.url, :size => "100x100" %><br><br> -->
+
+    <%= link_to 'Edit', edit_employee_document_path(@employee_document),class: 'btn btn-success btn-sm fa fa-edit' %> 
+
+    <%= link_to 'Back', employees_path, class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+ 

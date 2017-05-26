@@ -1,0 +1,63 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Salary Slip <%= @salaryslip.month%> <%= @salaryslip.year%></h3>
+    <div style="float:right;">
+  <%= link_to 'Print PDF', print_salary_slip_salaryslips_path(format: 'pdf',id: @salaryslip.id),class: 'btn btn-xl btn-primary fa fa-print', :target => '_blank' %><br><br>
+  </div>
+  </div><!-- /.box-header -->
+   
+  <div class="box-body">
+    <table class="table table-bordered table-hover table-condensed">
+      <thead>
+       <tr>
+        <td colspan="4">
+         <% if @employee.company_location.company.company_logo == nil %>
+      <% else %>
+        <center> <%= image_tag @employee.company_location.company.company_logo.url, :size => "180x90" %></center>
+        <%end%>
+          <center><strong><%= @employee.company_location.company.try(:description) %></strong><br><%= @employee.company_location.try(:address) %>, <%= @employee.company_location.try(:name) %>.  </center>
+        </td>           
+       </tr>
+       <tr>
+         <th>Employee Detail</th>
+         <th>Working Day</th>
+         <th>Leave Details</th>
+         <th>Slip Information</th>
+       </tr>
+       <tr>
+       <td>
+       <strong> ID :</strong> <%= @employee.manual_employee_code%><br><br> 
+       <strong> Name :</strong> <%= full_name(@employee) %><br><br>  
+       <strong> Contact No : </strong> <%= @employee.try(:contact_no)%><br><br> 
+      <strong> Designation : </strong> <%= @employee.joining_detail.try(:employee_designation).try(:name) %><br><br>
+       <strong> Department : </strong><%= @slip_information.try(:department).try(:name) %><br><br>
+       <strong> Unit : </strong><%= @slip_information.try(:cost_center).try(:name)%><br><br>
+       </td>
+       <td>
+       <strong> Present Day : </strong><%= @working_day.try(:present_day) %> <br><br> 
+       <strong> Holiday : </strong><%= @working_day.try(:holiday_in_month) %><br><br> 
+       <strong> Week Off :</strong> <%= @working_day.try(:week_off_day) %><br><br> 
+       <strong> Absent Day :</strong> <%= @working_day.try(:absent_day) %><br><br> 
+       <strong> Payable Day :</strong> <%= @working_day.try(:payable_day) %><br><br>
+       </td>
+       <td>
+
+        <% @leave_details.each do |ld| %>
+           <strong> <%= ld.leav_category.name %>  - Leave: </strong> <%= ld.no_of_leave %> - <strong> Balance:</strong> <%= ld.balance %><br><br>
+        <% end %>
+        </td>
+       <td>
+       <strong> Salary Slip : </strong><%= @salaryslip.month%> - <%= @salaryslip.year%><br><br>
+       <strong> UAN No : </strong> <%= @slip_information.try(:uan_no) %><br><br>
+       <strong> PF No :  </strong> <%= @slip_information.try(:pf_no) %><br><br>
+       <strong> ESIC No :</strong> <%= @slip_information.try(:esic_no) %><br><br>
+       </td>
+       </tr>
+  </tbody>
+  </table>
+    <%= render 'slip' %>
+  </div>
+</div>
+
+<div id="myModal" class="modal fade"></div>
+

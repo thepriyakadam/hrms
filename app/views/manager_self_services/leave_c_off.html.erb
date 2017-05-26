@@ -1,39 +1,75 @@
+
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Approve/Reject Leave C Off</h3>
+    <h3 class="box-title">Approve/Reject C Off</h3>
     <div class="pull-right">  
     </div>
   </div>
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover table-condensed">
-     <thead>
-        <tr>
-          <th>ID</th>
-          <th>Employee Name</th>
-          <th>C.Off Date</th>
-          <th>C.off </th>
-          <th>Expiry Date</th>
-          <th>Expire</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @employees.each do |e| %>
-        <tr>
-          <td><%= e.employee.manual_employee_code %></td>
-          <td><%= full_name(e.employee)%></td>
-          <td><%= e.c_off_date %></td>
-            <td><%= e.leave_count %></td>
-            <td><%= e.expiry_date %></td>
-            <td><%= e.expiry_status ? "Yes" : "No" %></td>
-            <td>
-              <%= link_to 'Approve', approve_modal_leave_c_offs_path(e),class: 'btn btn-xs btn-info',remote: true %>
-              <%= link_to 'Reject', reject_c_off_leave_c_offs_path(e),class: 'btn btn-xs btn-danger' %>
-            </td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <div class="row">
+      <div class="col-sm-6">
+        <table id="example2" class="table table-bordered table-hover table-condensed">
+         <thead>
+            <tr><td colspan="6"><center>First Level Request</center></td></tr>
+            <tr>
+              <th>ID</th>
+              <th>Employee Name</th>
+              <th>Date</th>
+              <th>Day</th>
+              <th>C.Off </th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @leave_c_off_pending.each do |e| %>
+            <tr>
+              <td><%= e.employee.manual_employee_code %></td>
+              <td><%= full_name(e.employee)%></td>
+              <td><%= e.c_off_date %></td>
+              <td><%= e.c_off_date.strftime("%A") %></td>
+                <td><%= e.leave_count %></td>
+                <td>
+                  <%= link_to 'Approve', approve_modal_leave_c_offs_path(e),class: 'btn btn-xs btn-success',remote: true %>
+                  <%= link_to 'Reject', reject_c_off_leave_c_offs_path(e),class: 'btn btn-xs btn-danger' %>
+                </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+       <div class="col-sm-6">
+         <table id="example2" class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr><td colspan="6"><center>Second Level Request</center></td></tr>
+            <tr>
+              <th>ID</th>
+              <th>Employee Name</th>
+              <th>Date</th>
+              <th>Day</th>
+              <th>C.Off </th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @leave_c_off_first_approved.each do |e| %>
+            <tr>
+              <td><%= e.employee.manual_employee_code %></td>
+              <td><%= full_name(e.employee)%></td>
+              <td><%= e.c_off_date %></td>
+              <td><%= e.c_off_date.strftime("%A") %></td>
+                <td><%= e.leave_count %></td>
+                <td>
+                  <%= link_to 'Approve', final_approve_leave_c_offs_path(e),class: 'btn btn-xs btn-success' %>
+                  <%= link_to 'Reject', final_reject_leave_c_offs_path(e),class: 'btn btn-xs btn-danger' %>
+                </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 </div>
 <div id="myModal" class="modal fade"></div>

@@ -7,6 +7,8 @@ class CreateDueEmployeeDetails < ActiveRecord::Migration
       t.references :due_detail, index: true, foreign_key: true
       t.references :reporting_master, index: true, foreign_key: true
       t.boolean :is_confirmed
+      t.boolean :is_proceed,  default: false
+  
 
       t.timestamps null: false
     end

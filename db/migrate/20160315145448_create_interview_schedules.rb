@@ -11,6 +11,8 @@ class CreateInterviewSchedules < ActiveRecord::Migration
       t.string :job_title
       t.boolean :is_confirm
       t.string :candidate_name2
+      t.text :address
+      t.boolean :is_confirmed
 
       t.timestamps null: false
     end

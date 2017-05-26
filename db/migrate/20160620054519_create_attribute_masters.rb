@@ -6,6 +6,9 @@ class CreateAttributeMasters < ActiveRecord::Migration
       t.text :definition
       t.boolean :status
       t.boolean :is_confirm
+      t.boolean :attribute_weightage
+      t.string :from
+      t.string :to
 
       t.timestamps null: false
     end

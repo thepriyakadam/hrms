@@ -16,8 +16,17 @@ class CreateWorkingdays < ActiveRecord::Migration
       t.string :el_leave
       t.string :esic_leave
       t.string :coff_leave
+      t.decimal :pay_leave
+      t.boolean :is_confirm
+
+      t.decimal :ot_days
+      t.decimal :od_leave
+
+      t.decimal :calculated_payable_days
+      t.decimal :nonpay_leave, precision: 10, scale: 2
 
       t.timestamps null: false
     end
   end
 end
+   

@@ -10,6 +10,9 @@ class CreateSelectedResumes < ActiveRecord::Migration
       t.string :experience
       t.string :notice_period
       t.references :vacancy_master, index: true, foreign_key: true
+      t.string :offer_letter_status
+      t.string :status
+      t.string :job_title
 
       t.timestamps null: false
     end

@@ -11,6 +11,9 @@ class CreateProfessionalTaxMasters < ActiveRecord::Migration
       t.boolean :is_active
       t.boolean :is_confirm
 
+     t.references :company_location, index: true, foreign_key: true
+    t.boolean :basis_actual_amount
+
       t.timestamps null: false
     end
   end

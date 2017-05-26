@@ -5,7 +5,7 @@ class CreateEmployeeSalaryTemplates < ActiveRecord::Migration
       t.references :salary_template, index: true, foreign_key: true
       t.references :salary_component, index: true, foreign_key: true
       t.boolean :is_deducted
-      t.references :parent_salary_component, index: true, foreign_key: true
+      t.references :parent_salary_component
       t.decimal :percentage, precision: 15, scale: 2
       t.boolean :is_taxable
       t.decimal :tax, precision: 4, scale: 2
@@ -15,6 +15,7 @@ class CreateEmployeeSalaryTemplates < ActiveRecord::Migration
       t.decimal :monthly_amount, precision: 15, scale: 2, default: 0
       t.decimal :annual_amount, precision: 15, scale: 2, default: 0
       t.references :employee_template, index: true, foreign_key: true
+      t.boolean :is_confirm
     
       t.timestamps null: false
     end

@@ -5,12 +5,21 @@ class CreateDailyBillDetails < ActiveRecord::Migration
       t.date :expence_date
       t.string :e_place
       t.decimal :travel_expence, precision: 15, scale: 2, default: 0
-      t.decimal :local_travel_expence, precision: 15, scale: 2, default: 0
-      t.decimal :lodging_expence, precision: 15, scale: 2, default: 0
-      t.decimal :boarding_expence, precision: 15, scale: 2, default: 0
-      t.decimal :other_expence, precision: 15, scale: 2, default: 0
+      t.references :travel_expence_type, index: true, foreign_key: true
+      t.boolean :is_confirm
+      t.references :reporting_master, index: true, foreign_key: true
+      t.string :request_status
+      
+      t.references :currency_master, index: true, foreign_key: true
+      t.text :remark
+      t.text :remarks
+
+      t.boolean :is_sent
+
+      t.text :comment
 
       t.timestamps null: false
     end
   end
 end
+ 

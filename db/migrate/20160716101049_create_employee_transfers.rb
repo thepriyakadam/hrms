@@ -8,6 +8,8 @@ class CreateEmployeeTransfers < ActiveRecord::Migration
       t.references :company, index: true, foreign_key: true
       t.references :company_location, index: true, foreign_key: true
       t.references :department, index: true, foreign_key: true
+
+      t.string :current_status
       t.text :justification
 
       t.timestamps null: false

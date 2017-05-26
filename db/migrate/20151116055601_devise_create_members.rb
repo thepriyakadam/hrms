@@ -8,6 +8,7 @@ class DeviseCreateMembers < ActiveRecord::Migration
       t.string :subdomain
       t.string :email,              null: true, default: ''
       t.string :encrypted_password, null: false, default: ''
+      t.string :email, null: true
 
       ## Recoverable
       t.string   :reset_password_token

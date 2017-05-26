@@ -18,6 +18,16 @@ class CreateGoalBunches < ActiveRecord::Migration
       t.text :final_comment
       t.references :final_rating, index: true, foreign_key: true
       t.boolean :final_confirm
+      t.references :performance_calendar, index: true, foreign_key: true
+      t.boolean :r_promotion
+      t.boolean :r_increment
+      t.references :r_designation
+      t.decimal :r_ctc
+      t.boolean :f_promotion
+      t.boolean :f_increment
+      t.references :f_designation
+      t.decimal :f_ctc
+      t.string :appraisee_rating_id
 
       t.timestamps null: false
     end

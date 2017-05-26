@@ -13,6 +13,7 @@ class CreateCaptureResumes < ActiveRecord::Migration
       t.references :country, index: true, foreign_key: true
       t.references :state, index: true, foreign_key: true
       t.references :district, index: true, foreign_key: true
+      t.references :employee_designation, index: true, foreign_key: true
       t.string :city
       t.string :zip_code
       t.string :current_job_title
@@ -33,6 +34,7 @@ class CreateCaptureResumes < ActiveRecord::Migration
       t.string :reason
       t.string :work_experience
       t.string :candidate_call_status
+      t.string :job_title
 
       t.references :vacancy_master, index: true, foreign_key: true
       t.references :degree, index: true, foreign_key: true

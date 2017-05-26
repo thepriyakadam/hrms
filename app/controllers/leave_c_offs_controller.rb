@@ -297,7 +297,7 @@ class LeaveCOffsController < ApplicationController
     @leave_c_off = LeaveCOff.find(params[:format])
     leav_category = LeavCategory.find_by_name('C.Off')
 
-      @leave_c_off.update(current_status: "FinalApproved")
+      @leave_c_off.update(status: true,current_status: "FinalApproved")
       StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FinalApproved")
       is_exist = EmployeeLeavBalance.exists?(employee_id: @leave_c_off.employee_id, leav_category_id: leav_category.id)
       if is_exist
@@ -381,6 +381,8 @@ class LeaveCOffsController < ApplicationController
 
   def final_reject
     @leave_c_off = LeaveCOff.find(params[:format])
+    @status_c_off = StatusCOff.where(leave_c_off_id: @leave_c_off.id)
+    @status_c_off.destroy_all
     @leave_c_off.destroy
     #StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FinalRejected")
     flash[:notice] = "Rejected successfully"

@@ -1,0 +1,66 @@
+<div class="box">
+  <div class="box-header">
+  </div>
+  <div class="box-body">
+  <%= form_for :goal_ratings, url: { action: 'detail_goal_wise',period_id: @period.id} do |f| %>
+    <table id="example6" class="table table-bordered table-hover table-condensed">
+     <thead>
+        <tr>
+          <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+          <th>ID</th>
+          <th>Employee Name</th>
+          <th>Appraiser Name</th>
+          <th>Department</th>
+          <th>Appraisee Rating</th>
+          <th>Appraiser Rating</th>
+          <th>Reviewer Rating</th>
+          <th>Final Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @goal_bunches.each do |e| %>
+        <tr>
+        <td><%= check_box_tag "goal_bunch_ids[]", e.id %></td>
+        <td><%= e.employee.manual_employee_code %></td>
+        <td><%= full_name(e.employee) %> </td>
+        <td><%= full_name(e.employee.manager) %></td> 
+        <td><%= e.employee.department.try(:name) %></td>
+        <td><% @a = e.appraisee_rating_id.to_f %><%= @a.round(2) %></td>
+        <td><%= e.appraiser_rating %></td>
+        <td><%= e.reviewer_rating.try(:value) %></td>
+        <td><%= e.final_rating_id %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+      <div class="col-sm-3">
+          <%= f.submit "Show Employee Detail",class: "btn btn-xl btn-primary fa fa-print" %>
+        </div>
+    <% end %>    
+  </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>

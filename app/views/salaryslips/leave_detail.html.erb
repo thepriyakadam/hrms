@@ -1,0 +1,32 @@
+ <div class="box-body">
+<table id="example6" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Salary Slip</th>
+      <th>Leave Category</th>
+      <th>No Of Leave</th>
+      <th>Balance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @leave_details.each do |leave_detail| %>
+      <tr>
+        <td><%= leave_detail.salaryslip_id %></td>
+        <td><%= leave_detail.leav_category.code %></td>
+        <td><%= leave_detail.no_of_leave %></td>
+        <td><%= leave_detail.balance %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to " Excel Report ",leave_detail_xls_salaryslips_path(format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

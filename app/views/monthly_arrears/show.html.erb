@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @monthly_arrear.employee %>
+</p>
+
+<p>
+  <strong>Day:</strong>
+  <%= @monthly_arrear.day %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @monthly_arrear.amount %>
+</p>
+
+<p>
+  <strong>Is paid:</strong>
+  <%= @monthly_arrear.is_paid %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @monthly_arrear.description %>
+</p>
+
+<%= link_to 'Edit', edit_monthly_arrear_path(@monthly_arrear) %> |
+<%= link_to 'Back', monthly_arrears_path %>

@@ -1,0 +1,19 @@
+
+ 
+<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+  <thead>
+    <tr>  
+    	<th>Question</th>
+      <th>Answer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @exit_interviews.each do |exit_interview| %>
+      <tr>
+        
+         <td><%= exit_interview.question_master.name %></td>
+        <td><%= exit_interview.answer %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

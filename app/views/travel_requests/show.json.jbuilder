@@ -1,0 +1,1 @@
+json.extract! @travel_request, :id, :employee_id, :reporting_manager_id, :application_date, :traveling_date, :tour_purpose, :place, :traveling_advance, :lodging_boarding_advance, :extra_advance, :total_advance, :created_at, :updated_at

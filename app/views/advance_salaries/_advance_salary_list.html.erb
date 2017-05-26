@@ -1,0 +1,52 @@
+
+  <div class="box-body">
+  <div id="comments">
+    <% i = 0 %>
+
+    <% if @advance_salary_id == nil %>
+      <center><p class="text-primary"> Advance Salary Not Available For : <%= @month %> -<%= @year %> </p></center> 
+    <% else %>
+
+    <table id="example1" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <td colspan="8"><center><strong><%= current_user.company_location.company.description %></strong><br><%= current_user.company_location.address %>, <%= current_user.company_location.name %></center></td>
+      </tr>
+      <tr>
+        <th>Sr No</th>
+        <th>Employee ID</th>
+        <th>Employee Name</th>
+        <th>Advance Amount</th>
+        <th>No. of Installment</th>
+        <th>Installment Amount</th>
+        <th>Advance Date</th>
+        <th>Location</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @advance_salaries.each do |advance_salary| %>
+        <tr>
+          <td><%= i = i + 1 %></td>
+          <td><%= advance_salary.employee.try(:manual_employee_code) %></td>
+          <td><%= full_name(advance_salary.employee) %></td>
+          <td><%= advance_salary.advance_amount %></td>
+          <td><%= advance_salary.no_of_instalment %></td>
+          <td><%= advance_salary.instalment_amount %></td>
+          <td><%= advance_salary.advance_date %></td>
+          <td><%= advance_salary.employee.company_location.try(:name) %></td>
+       </tr>
+      <!--  <tr>
+          <td colspan="3">Total</td>
+          <th><= @sum.advance_amount %></th>
+          <td colspan="4"></td>
+       </tr> -->
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+  <%= link_to " Excel Report ",dynamic_report_advance_salaries_path(:advance_salary =>{:month => params[:advance_salary][:month], :year => params[:advance_salary][:year],:company_id => params[:advance_salary][:company_id],:company_location_id => params[:advance_salary][:company_location_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <%= link_to " PDF Report ",dynamic_report_advance_salaries_path(:advance_salary =>{:month => params[:advance_salary][:month], :year => params[:advance_salary][:year],:company_id => params[:advance_salary][:company_id],:company_location_id => params[:advance_salary][:company_location_id]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+</div>
+
+<% end %> <!-- if-else -->

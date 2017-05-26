@@ -5,18 +5,18 @@ class BloodGroupsControllerTest < ActionController::TestCase
     @blood_group = blood_groups(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get :index
     assert_response :success
     assert_not_nil assigns(:blood_groups)
   end
 
-  test "should get new" do
+  test 'should get new' do
     get :new
     assert_response :success
   end
 
-  test "should create blood_group" do
+  test 'should create blood_group' do
     assert_difference('BloodGroup.count') do
       post :create, blood_group: { name: @blood_group.name }
     end
@@ -24,22 +24,22 @@ class BloodGroupsControllerTest < ActionController::TestCase
     assert_redirected_to blood_group_path(assigns(:blood_group))
   end
 
-  test "should show blood_group" do
+  test 'should show blood_group' do
     get :show, id: @blood_group
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get :edit, id: @blood_group
     assert_response :success
   end
 
-  test "should update blood_group" do
+  test 'should update blood_group' do
     patch :update, id: @blood_group, blood_group: { name: @blood_group.name }
     assert_redirected_to blood_group_path(assigns(:blood_group))
   end
 
-  test "should destroy blood_group" do
+  test 'should destroy blood_group' do
     assert_difference('BloodGroup.count', -1) do
       delete :destroy, id: @blood_group
     end

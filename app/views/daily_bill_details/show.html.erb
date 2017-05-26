@@ -1,0 +1,32 @@
+<div class="box box-default">
+<div class="box-header with-border">
+    <h3 class="box-title">Daily Bill Details</h3>
+  </div><!-- /.box-header -->
+ <div class="box-body">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
+  <tr>
+  <th><strong>Expense Date</strong></th>
+  <td><%= @daily_bill_detail.expence_date %></td>
+   <th><strong>Place</strong></th>
+  <td><%= @daily_bill_detail.e_place %></td>
+  </tr>
+
+  <tr>
+  <th><strong>Expense Amount</strong></th>
+  <td><%= @daily_bill_detail.travel_expence %></td>
+  <th><strong>Expense Type</strong></th>
+  <td><%= @daily_bill_detail.travel_expence_type.try(:name) %></td>
+  </tr>
+
+  <tr>
+  <th><strong>Currency Type</strong></th>
+  <td><%= @daily_bill_detail.currency_master.try(:name) %></td>
+  <th><strong></strong></th>
+  <td></td>
+  </tr>
+</table>
+<%= image_tag @daily_bill_detail.try(:passport_photo).try(:url), :size => "100x100" %><br><br>
+
+<%= link_to 'Back', new_daily_bill_detail_path(travel_request_id: @travel_request.try(:id)),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+</div>
+</div>

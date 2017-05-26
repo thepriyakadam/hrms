@@ -1,0 +1,118 @@
+<%= bootstrap_form_for(@training_plan,html: {id: "training_plan"}) do |f| %>
+<%= f.hidden_field :training_request_id, :value => current_user.employee_id %>
+<%= f.hidden_field :training_topic_master_id,value:@training_topic_master.id  %>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :training_date, label: 'Training Date',class: 'passport_issue_date'%>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :trainer_name,placeholder: 'Trainer Name' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :trainer_num, label: 'Contact No',placeholder: 'Contact No.' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :trainer_email,label: 'Trainer Email id',placeholder: 'Trainer Email id' %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :about_trainer,label: 'Detail',placeholder: 'Detail' %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :no_of_days,placeholder: 'No of Days' %>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :no_of_hrs,placeholder: 'No of Hours' %>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :place,placeholder: 'Place' %>
+        </div>
+      </div>
+    </div>
+
+   <div><%= render 'trainee_request_list' %></div>
+
+  <!-- < if @trainee_requests.nil? %>
+    <h6><center>Request Not Approved Yet</center></h6>
+    < else %> -->
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Create Training Plan", class: 'btn btn-primary btn-sm' %>
+            <%= link_to 'Back', training_plans_path, class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+          </div>
+        </div>
+      </div>
+  
+  <!-- < end %> -->
+      <% end %><br>
+
+  <script type="text/javascript">
+  $(function(){
+    $('.passport_issue_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+25',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+
+<script type="text/javascript">
+
+  $("#training_plan").validate({
+    rules: {
+      "training_plan[training_date]":{
+        required: true
+      },
+      "training_plan[training_topic_master_id]":{
+        required: true
+      },
+      "training_plan[no_of_employee]":{
+        required: true
+      },
+      "training_plan[trainer_name]":{
+        required: true
+      }
+    },
+    messages: {
+      "training_plan[training_date]":{
+        required: "Please specify Training Date"
+      },
+      "training_plan[training_topic_master_id]":{
+        required: "Please specify Topic"
+      },
+      "training_plan[no_of_employee]":{
+        required: "Please specify No of employee"
+      },
+      "training_plan[trainer_name]":{
+        required: "Please specify Trainer Name"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

@@ -1,0 +1,81 @@
+<%= bootstrap_form_for(@monthly_arrear,html: {id: 'monthly_arrear'},remote:true) do |f| %>
+  
+<div class="row">
+  <div class="col-sm-3">
+    <div class="form-group required">
+        <%= f.select :employee_id, employee_list_for_food_deduction, {include_blank: "Select Employee"},{:class=>"select2",:style=>"width: 100%;",:tabindex=>"-1"} %>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="form-group required">
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="fa fa-calendar"></i>
+         </div>
+       <%= f.text_field :day, class: 'date',label:'Date'%>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="form-group required">
+       <%= f.text_field :amount,label:'Amount', placeholder: 'Amount' %>
+    </div>
+  </div>
+  <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :description,label:'Description', placeholder: 'Description' %>
+      </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-3">
+  <label></label>
+    <div class="actions">
+        <%= f.submit 'Create Monthly Arrears',:class => class_name, data: { disable_with: data_info } %>
+    </div>
+  </div>
+</div>
+<% end %>
+
+
+<script type="text/javascript">
+  $(function(){
+    $('.date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+    });
+</script>
+
+<script>
+$("#monthly_arrear").validate({
+    rules: {
+      "monthly_arrear[employee_id]":{
+        required: true,
+      },
+      "monthly_arrear[day]":{
+        required: true,
+      },
+       "monthly_arrear[amount]":{
+        required: true,
+      }
+    },
+    messages: {
+      "monthly_arrear[employee_id]":{
+        required: "Please Select Employee",
+      },
+      "monthly_arrear[day]":{
+        required: "Please Select Date",
+      },
+       "monthly_arrear[amount]":{
+        required: "Please Specify Amount",
+      }        
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

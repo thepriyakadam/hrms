@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Joining Checklist Masters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @joining_checklist_masters.each do |joining_checklist_master| %>
+      <tr>
+        <td><%= joining_checklist_master.code %></td>
+        <td><%= joining_checklist_master.name %></td>
+        <td><%= joining_checklist_master.description %></td>
+        <td><%= joining_checklist_master.status %></td>
+        <td><%= link_to 'Show', joining_checklist_master %></td>
+        <td><%= link_to 'Edit', edit_joining_checklist_master_path(joining_checklist_master) %></td>
+        <td><%= link_to 'Destroy', joining_checklist_master, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Joining checklist master', new_joining_checklist_master_path %>

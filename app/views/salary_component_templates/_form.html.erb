@@ -1,0 +1,52 @@
+<%= bootstrap_form_for @salary_component_template,remote:true do |f| %>
+	<%= f.hidden_field :salary_component_id, value: @salary_component.id %>
+	<%= f.hidden_field :salary_template_id, value: @salary_template.id %>
+	<%= f.hidden_field :manual_template_code, value: @salary_template.code %>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <p class="text-info"><b><%= @salary_component.name %></b></p>
+    </div>
+  </div>
+	<div class="row">
+		<div class="col-sm-2">
+			<%= f.select :to_be_paid, [['Monthly'],['Annual']] %>
+		</div>
+		<div class="col-sm-2">
+			<%= f.select :is_deducted, [['Addable','false'],['Dedected','true'],['EmployerContribution','CTC']] %>
+		</div>
+		
+		<div class="col-sm-2">
+			<label>Depends</label>
+			<%= f.select :parent_salary_component_id, parent_salary_component1(@salary_template),{include_blank: "Select Item",hide_label: true} %>
+		</div>
+		<div class="col-sm-2">
+			<label>Factor(%)</label>
+			<%= f.text_field :percentage,disabled: true,hide_label: true %>
+		</div>
+    <div class="col-sm-2">
+      <label></label>
+      <%= f.submit "Update Salary Component Template",class: "btn btn-primary btn-sm", data: {disable_with: "Wait..."} %>
+    </div>
+	</div>
+	
+<% end %>
+
+<script type="text/javascript">
+	$(function(){
+    $('#salary_component_template_parent_salary_component_id').on('change', function() {
+      enabled_percent_textbox();
+    });
+
+    function enabled_percent_textbox(){
+    	var parent_salary_component_id = parseInt($("#salary_component_template_parent_salary_component_id").val());
+    	if(isNaN(parent_salary_component_id)){
+    		$("#salary_component_template_percentage").val("");
+    		//$("#salary_component_template_percentage").prop('disabled', true);
+      }
+      else{
+        $("#salary_component_template_percentage").prop('disabled', false);
+      }
+    }
+  });
+</script>

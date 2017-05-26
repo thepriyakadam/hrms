@@ -1,0 +1,2 @@
+module RewardsPalsHelper
+end

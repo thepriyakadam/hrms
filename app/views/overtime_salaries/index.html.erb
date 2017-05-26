@@ -1,0 +1,42 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title"> Advance Salary List</h3>
+    <div class="pull-right">
+      <%= link_to "New Advance salary", new_advance_salary_path, class: 'btn btn-sm btn-primary' %> 
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <div id="comments">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Year</th>
+        <th>Months</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @overtime_salaries.each do |os| %>
+        <tr>
+          <% year = os.ot_date.strftime("%Y")%>
+          <td><%= year %></td>
+          <td>
+            <%= link_to 'January',overtimes_overtime_salaries_path(year: year, month: "January") , class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'February',overtimes_overtime_salaries_path(year: year, month: "February") , class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'March',overtimes_overtime_salaries_path(year: year, month: "March") , class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'April',overtimes_overtime_salaries_path(year: year, month: "April") , class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'May',overtimes_overtime_salaries_path(year: year, month: "May") , class: 'btn btn-xs btn-success' %>
+            <%= link_to 'June',overtimes_overtime_salaries_path(year: year, month: "June") , class: 'btn btn-xs btn-success' %>
+            <%= link_to 'July',overtimes_overtime_salaries_path(year: year, month: "July") , class: 'btn btn-xs btn-success' %>
+            <%= link_to 'August',overtimes_overtime_salaries_path(year: year, month: "August") , class: 'btn btn-xs btn-success' %>
+            <%= link_to 'September',overtimes_overtime_salaries_path(year: year, month: "September") , class: 'btn btn-xs btn-danger' %>
+            <%= link_to 'October',overtimes_overtime_salaries_path(year: year, month: "October") , class: 'btn btn-xs btn-danger' %>
+            <%= link_to 'November',overtimes_overtime_salaries_path(year: year, month: "November") , class: 'btn btn-xs btn-danger' %>
+            <%= link_to 'December',overtimes_overtime_salaries_path(year: year, month: "December") , class: 'btn btn-xs btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>

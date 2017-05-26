@@ -1,0 +1,176 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Travel Request Confirmation List</h3>
+  </div>
+<div class="box-body">
+ <table id="example1" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Employee Name</th>
+      <th>Traveling Date</th>
+      <th>Place</th>
+      <th>Advance</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @travel_requests.each do |travel_request| %>
+      <tr>
+        <% if @travel_request.id == travel_request.id %>
+        <th><font color='green'>*<%= travel_request.employee.try(:manual_employee_code) %></font></th>
+        <th><font color='green'><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></font></th>
+     
+        <th><font color='green'><%= travel_request.traveling_date %></font></th>
+        <th><font color='green'><%= travel_request.place %></font></th>
+        <th><font color='green'><%= travel_request.total_advance %></font></th>
+        <%else%>
+        <td><%= travel_request.employee.try(:manual_employee_code) %></td>
+        <td><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></td>
+
+        <td><%= travel_request.traveling_date %></td>
+        <td><%= travel_request.place %></td>
+        <td><%= travel_request.total_advance %></td>
+        <%end%>
+      </tr>
+    <% end %>
+  </tbody>
+</table><br>
+
+<div class="row">
+      <div class="col-sm-12"><strong> <font color='green'>Note - * Row is the latest row to approve/reject </font></strong></div>
+  </div><br>
+  <div class="box-header">
+    <h3 class="box-title"></h3>
+    <div class="pull-right">
+    <% travel_request_1 = TravelRequest.where(id: @travel_request.id).take
+     employ_1 = Employee.where(id: travel_request_1.reporting_master_id).take  %>
+    First Reporter : <%= employ_1.try(:manager).try(:manual_employee_code) %> <% employ_1.try(:manager).try(:first_name) %> <%= employ_1.try(:manager).try(:middle_name) %> <%= employ_1.try(:manager).try(:last_name) %> <br>
+
+    Second Reporter : <%= employ_1.try(:manager_2).try(:manual_employee_code) %> <%= employ_1.try(:manager_2).try(:first_name) %> <% employ_1.try(:manager_2).try(:middle_name) %> <%= employ_1.try(:manager_2).try(:last_name) %> <br>
+    </div>
+  </div>
+
+ <table id="example1" class="table table-bordered table-hover table-condensed">
+    <tbody>
+      <tr><td colspan="4"><font color='red'><center>Current Travel Request Detail</center></font></td></tr>
+    <tr>
+      <th>Traveling Request ID</th>
+      <td><%= @travel_request.id %></td>
+
+      <th><strong>Application Date</strong></th>
+      <td><%= @travel_request.application_date %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Employee ID</strong></th>
+      <td><%= @travel_request.employee.try(:manual_employee_code) %></td>
+
+      <th><strong>Employee Name</strong></th>
+      <td><%= @travel_request.employee.try(:first_name) %> <%= @travel_request.employee.try(:middle_name) %> <%= @travel_request.employee.try(:last_name) %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Department</strong></th>
+      <td><%= @travel_request.employee.company_location.try(:name) %> - <%= @travel_request.employee.department.try(:name) %></td>
+
+      <th><strong>Request To</strong></th>
+       <td><% emp=Employee.where(id: @travel_request.reporting_master_id).take %>
+      <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %> </td>
+    </tr>
+
+    <tr>
+      <th><strong>Traveling Option</strong></th>
+      <td><%= @travel_request.travel_option.try(:name) %></td>
+
+      <th><strong>Travel Mode</strong></th>
+      <td><%= @travel_request.travel_mode.try(:name) %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Place</strong></th>
+      <td><%= @travel_request.place %></td>
+
+      <th><strong>From Date</strong></th>
+      <td><%= @travel_request.traveling_date %></td>
+    </tr>
+
+    <tr>
+      <th><strong>To Date</strong></th>
+      <td><%= @travel_request.to %></td>
+  
+      <th><strong>Day</strong></th>
+      <td><%= @travel_request.day %></td>
+      
+    </tr>
+      <tr>
+      <th><strong>Advance</strong></th>
+      <td colspan="3"><%= @travel_request.total_advance %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Tour Purpose</strong></th>
+      <td colspan="3"><%= @travel_request.tour_purpose %></td>  
+    </tr>
+    <tr>        
+      <td colspan="4"><center>
+      <!--  <div id="myModal" class="modal fade"></div> -->
+    <% if @travel_request.employee.manager_id.present? && @travel_request.employee.manager_2_id.present? && @travel_request.current_status == "Pending" %>
+        <%= link_to 'Approve',first_approve_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+        <%= link_to 'Reject',reject_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
+
+    <% elsif @travel_request.employee.manager_id.present? && @travel_request.employee.manager_2_id.present? && @travel_request.current_status == "FirstApproved" %>
+        
+        <%= link_to 'Approve',first_approve_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+        <%= link_to 'Reject',reject_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
+        <%= link_to 'Approve & Send next',approve_and_send_next_travel_requests_path(@travel_request.id),class: 'btn btn btn-xs btn-success' %> 
+
+    <% elsif @travel_request.employee.manager_id.present? && @travel_request.employee.manager_2_id.nil? && @travel_request.current_status == "Pending" %>
+       <%= link_to 'Approve',approve_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+        <%= link_to 'Reject',reject_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
+      <% end %>
+
+    <% if @travel_request.current_status == "Approved & Send Next" %>
+      <% travel_request = TravelRequest.where(id: @travel_request.id , current_status: "Approved & Send Next").take %>
+      <% employ = Employee.where(id: travel_request.reporting_master_id).take %>
+
+    <% if @travel_request.employee.manager_id.present? && @travel_request.employee.manager_2_id.present? && @travel_request.current_status == "Approved & Send Next" %>
+       <%= link_to 'Approve',first_approve_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Reject',reject_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
+
+    <% elsif @travel_request.employee.manager_id.present? && @travel_request.employee.manager_2_id.nil? && @travel_request.current_status == "Approved & Send Next"%>
+    <%= link_to 'Approve',approve_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'Reject',reject_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
+      %>     
+    <% end %>
+   <% elsif @travel_request.current_status == "SecondApproved"  %>
+      <%= link_to 'Final Approve',final_approve_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check' %>
+      <%= link_to 'Reject',reject_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
+    <% end %>
+
+    <!--   end
+      
+        <= link_to 'Reject',reject_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
+        <= link_to 'Approve & Send next',modal_travel_requests_path(@travel_request.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %>
+
+        <= link_to 'Approve',approve_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+        <= link_to 'Reject',reject_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
+        <= link_to 'Approve & Send next',modal_travel_requests_path(@travel_request.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %> -->
+
+        <!--< link_to 'Edit and send next', edit_and_send_next_modal_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check', remote: true %>
+
+        <= link_to 'Edit and Approve', edit_and_approve_modal_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check', remote: true %>-->
+        <%= link_to 'Back', travel_history_travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %></center>
+    </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+</div>
+</div>
+
+<script>
+$(document).ready(function() {
+  $('#example').DataTable();
+});
+</script>

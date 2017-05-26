@@ -1,0 +1,36 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Gratuity Detail</h3>
+    <div class="box-tools pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+
+    <tr>
+  <td><strong>ID</strong></td>
+  <td><%= @gratuity.employee.try(:manual_employee_code) %></td>
+
+  <td><strong>Employee</strong></td>
+  <td><%= full_name(@gratuity.employee) %></td>
+  </tr>
+  <tr>
+  <td><strong>Amount</strong></td>
+  <td><%= @gratuity.try(:gratuity_amount).try(:round) %></td>
+
+  <td><strong>No of Year</strong></td>
+  <td><%= @gratuity.no_of_year %></td>
+
+ </tr>
+ <tr>
+  <td><strong>Total Gratuity:</strong></td>
+  <td colspan="3"><%= @gratuity.total_gratuity %></td>
+</tr>
+ </table> 
+    
+<br>
+
+    <%= link_to 'Edit', edit_gratuity_path(@gratuity),class: 'btn btn-success btn-sm fa fa-edit' %> 
+    <%= link_to 'Back', gratuities_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

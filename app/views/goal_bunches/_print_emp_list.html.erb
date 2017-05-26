@@ -1,0 +1,54 @@
+<div class="box box-default">
+  <div class="box-body">
+  <%= form_for :goal_bunches, url: { action: 'all_emp_list'} do |f| %>
+      <table id="example1" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+            <th>ID</th>
+            <th>Employee Name</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Goal Bunch</th>
+            <th>Contact No.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @goal_bunches.each do |g| %>
+            <tr>
+              <td><%= check_box_tag "goal_bunch_ids[]", g.id %></td>
+              <td><%= g.employee.manual_employee_code %></td>
+              <td><%= full_name(g.employee) %></td>
+              <td><%= g.employee.try(:department).try(:name)%></td>
+              <td><%= g.employee.try(:joining_detail).try(:employee_designation).try(:name) %></td>
+              <td><%= g.period.name %></td>
+              <td><%= g.employee.contact_no %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+        <div class="col-sm-3">
+          <%= f.submit "Print Employee Detail",class: "btn btn-xl btn-warning fa fa-print" %>
+        </div>
+    <% end %>    
+  </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    $('#example1').Datatable();
+  });
+  
+$('#selectAll').click(function() {
+  if (this.checked) {
+    $(':checkbox').each(function() {
+      this.checked = true;                       
+    });
+  } 
+  else {
+    $(':checkbox').each(function() {
+      this.checked = false;                        
+    });
+  } 
+});
+</script>

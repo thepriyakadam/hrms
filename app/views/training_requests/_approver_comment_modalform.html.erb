@@ -1,0 +1,32 @@
+<div class="modal-dialog" style="height:3000px; max-height:120px; width:630px; max-width:630px;">
+  <div class="modal-content">
+    <div class="modal-body">
+     <%= bootstrap_form_for :training_request,url:{action:"comment",training_request_id: @training_request.id},html: {id: 'training_request'} do |f| %>
+        <div class="row">
+          <div class="col-sm-6">
+            <%= f.text_area :comment,label: '',placeholder: "Please Enter Reason For Approval" %>
+          </div>
+          <div class="col-sm-3" style="padding-top:40px;">
+            <%= f.submit "Comment", class: 'btn btn-sm btn-primary fa fa-modx' %>
+          </div>
+        </div>
+      <% end %>
+</div>
+<script>
+$("#training_request").validate({
+    rules: {
+      "training_request[comment]":{
+        required: true,
+      }
+    },
+    messages: {
+      "training_request[comment]":{
+        required: "Please Specify Comment",
+      }  
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

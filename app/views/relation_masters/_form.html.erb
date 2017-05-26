@@ -1,0 +1,55 @@
+<%= bootstrap_form_for(@relation_master,remote: true,html: {id: "relation_master"}) do |f| %>
+  
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :code,hide_label: true,placeholder:"Code"  %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :name,hide_label: true,placeholder:"Name" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_area :description,hide_label: true,placeholder:"Description" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Relation", class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
+
+<% end %>
+
+<script type="text/javascript">
+
+
+ $("#relation_master").validate({
+    rules: {
+      "relation_master[name]":{
+        required: true
+      },
+       "relation_master[code]":{
+        required: true
+      }
+    },
+    messages: {
+      "relation_master[name]":{
+        required: "Please Specify Name"
+      },
+       "relation_master[code]":{
+        required: "Please Specify code"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

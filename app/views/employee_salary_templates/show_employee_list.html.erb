@@ -1,0 +1,32 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee List</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example1" class="table table-bordered table-hover">
+    <thead>
+      <tr>
+      <th>Employee Id</th>
+      <th>Employee Name</th>
+      <th>Contact No</th>
+      <th>Email</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @employees.each do |employee| %>
+      <tr>
+        <td><%= employee.manual_employee_code %></td>
+        <td><%= employee.first_name %><%= employee.middle_name %><%= employee.last_name %></td>
+        <td><%= employee.contact_no %></td>
+        <td><%= employee.email %></td>
+        <td>
+            <%= link_to '', show_employee_salary_template_employee_salary_templates_path(employee),class: 'btn btn-default fa fa-eye' %>
+        </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>

@@ -1,0 +1,100 @@
+<!-- <div id="div_id">
+ --><table class="table table-hover">
+<tr>
+  <th>Date</th>
+  <th>Task</th>
+  <th>Status</th>
+  <th>Time</th>
+  <th>Time Remaining</th>
+  <th>Action</th>
+</tr>
+
+<% @employee_task_to_dos.each do |e| %>
+<tr>
+  <td><span class="label label-primary"><%= e.try(:task_time1).to_date %></span></td>
+  <td><%= e.task_name %></td>
+  <td><span class="label label-success"><%= e.try(:status) ? "Active" : "Inactive" %></span></td>
+  <td><span class="label label-info"><%= e.try(:task_time1) %></span></td>
+  <td><%  a_date_time = Time.now.to_datetime
+       b_date_time = e.task_time1.to_datetime.change(:offset => "+0530")
+     (b_date_time - a_date_time).to_i
+
+     @Seconds = ((b_date_time - a_date_time)*24*60*60).to_i
+
+     @sec = @Seconds % 60
+
+     @Minutes = @Seconds / 60
+
+     @min = @Minutes % 60
+
+     @Hours = @Minutes / 60
+
+     @hour = @Hours % 24
+
+     @Days = @Hours / 24
+
+     
+     @days = @Days % 30
+
+     @Months = @Days / 30
+
+     @months = @Months % 12
+
+     @Year = @Months / 12
+
+    if @hour <= 0
+      @s=@min.to_s + ' Mins. '
+
+    elsif @days <= 0
+      @s=@hour.to_s + ' Hours, ' + @min.to_s + ' Mins. '
+
+    elsif @months <= 0
+      @s=@days.to_s + ' Days, ' + @hour.to_s + ' Hours, ' + @min.to_s + ' Mins.'
+
+    elsif @Year <= 0
+     @s=@months.to_s + ' Months, ' + @days.to_s + ' Days, ' + @hour.to_s + ' Hours, ' + @min.to_s + ' Mins. '
+
+    if (b_date_time - a_date_time).to_i <= 0
+     @s="Time Out"
+    end
+
+    else
+       @s=@Year.to_s + ' Year,' + @months.to_s + ' Months,'+@days.to_s + ' Days, ' + @hour.to_s + ' Hours, '+ @min.to_s + ' Mins. '
+    end
+     %>
+
+      <%= @s %> 
+     </td>
+  <td>
+    <%= link_to '', edit_employee_task_to_do_path(e),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+  </td>
+</tr>
+<% end %>
+</table>
+<!-- </div>
+ -->
+<!-- <script>
+  $(function() {
+    $(document).ready(function() {
+      setInterval(function() {
+        jQuery.ajax({
+          url: "/employee_task_to_dos/dynamic_refresh",
+          type: "GET",
+          dataType: "script"
+        });
+      }, 60000); // In every 60 seconds
+    });
+  });
+</script> -->
+
+<!-- <script>
+$(document).ready(function() {
+    // get data every 5 seconds and refresh myDiv
+    var pingAfter = 5000;  
+    var refreshId = setInterval(function() {
+        $("#example2").load('/vacancy_masters/vacancy_history');
+    }, pingAfter);
+});
+</script>
+ -->
+

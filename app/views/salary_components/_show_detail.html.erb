@@ -1,0 +1,74 @@
+
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employment Type</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= form_for :employee_salary_template, url: {controller: 'salary_components', action: 'create_employee_template'} do |f| %>
+      <table id="example1" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th>Apply</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+        <% i = 1 %>
+          <% @salary_components.each_with_index do |salary_component,j| %>
+            <tr>
+              <td><%= i %></td>
+              <td><%= salary_component.name %></td>
+                  
+              <td><%= check_box_tag 'ch_name[]', 0, false, {'data-toggle' => 'toggle',"data-size" =>"small", class: 'chk_toggle', id: "ch_id_#{j}"}%></td>
+              <td><%= text_field :amount,j,disabled: true,class: 'form-control'%></td>
+
+            </tr>
+            <% i=i+1 %>
+          <% end %>
+        </tbody>
+      </table>
+    <%end%>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script type="text/javascript">
+  $(function(){
+    <% @salary_components.each_with_index do |s,j| %>
+    $('#chk_id_<%=j%>').on('change', function() {
+      alert("ddddddddddddd"+<%=j%>);
+      console.log("ddddddddddddddddddd"+<%=j%>);
+    });
+
+    $('#ch_id_<%=j%>').on('change', function() {
+      var chk = parseInt($("#ch_id_<%=j%>").val());
+      if (chk == 0){
+        $("#ch_id_<%=j%>").val(1);
+        $("#amount_<%=j%>").prop('disabled', false);
+      }
+      else{
+        $("#ch_id_<%=j%>").val(0);
+        $("#amount_<%=j%>").val("");
+        $("#amount_<%=j%>").prop('disabled', true);
+      }
+      //alert(parseInt($("#ch_id_<%=j%>").val()));
+      // if(isNaN(parent_salary_component_id)){
+      //   $("#salary_component_template_percentage").val("");
+      //   //$("#salary_component_template_percentage").prop('disabled', true);
+      // }
+      // else{
+      //   $("#salary_component_template_percentage").prop('disabled', false);
+      // }
+
+    });
+    <%end%>
+
+    $(function() {
+      $('.chk_toggle').bootstrapToggle();
+    })
+
+  });  
+</script>

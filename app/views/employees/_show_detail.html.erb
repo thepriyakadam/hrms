@@ -1,0 +1,109 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+  <div class="row">
+  <div class="col-sm-1">
+      <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+  </div>
+    <div class="col-sm-6">
+     <font color='#0077b3'>
+        ID : <%= @employee.try(:manual_employee_code) %><br>
+        Name : <%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %><br>
+        Email : <%= @employee.email %></font>
+    </div>
+  </div>
+  <div class="box-tools pull-right">
+    <%= link_to 'Edit', edit_employee_path(@employee),class: 'btn btn-sm btn-success fa fa-edit', remote:true %>
+    <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div>
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table class="table table-bordered table-hover table-condensed">  
+      <tr><th colspan="4"><center><font color='#0077b3'>Basic Detail</font></center> </th></tr>
+      <tr>
+        <th><strong>PAN Card No.</strong></th>
+        <td><%= @employee.pan_no %></td>
+
+        <th><strong>Aadhar Card No.</strong></th>
+        <td><%= @employee.adhar_no %></td>
+      </tr>
+      <tr>
+        <th><strong>License No.</strong></th>
+        <td><%= @employee.licence_no %></td>
+
+        <th><strong>Gender</strong></th>
+        <td><%= @employee.gender %></td> 
+      </tr>
+      <tr>
+        <th><strong>Marital Status</strong></th>
+        <td><%= @employee.marital_status %></td>
+
+        <th><strong>Nationality</strong></th>
+        <td><%= @employee.nationality.try(:name) %></td>
+      </tr>
+      <tr>
+        <th><strong>Date of Birth</strong></th>
+        <td><%= @employee.date_of_birth %></td>
+
+        <th><strong>Blood Group</strong></th>
+        <td><%= @employee.blood_group.try(:name) %></td>
+      </tr>
+      <tr>
+        <th><strong>Permanent Address</strong></th>
+        <td colspan="3"><%= @employee.permanent_address %></td>  
+      </tr>
+      <tr>
+        <th><strong>Country</strong></th>
+        <td><%= @employee.country.try(:name) %></td> 
+
+        <th><strong>State</strong></th>
+        <td><%= @employee.state.try(:name) %></td>
+      </tr>
+      <tr>
+        <th><strong>District</strong></th>
+        <td><%= @employee.district.try(:name) %></td>
+
+        <th><strong>City</strong></th>
+        <td><%= @employee.city %></td>
+      </tr>
+      <tr>
+        <th><strong>Pin/Zip Code</strong></th>
+        <td><%= @employee.pin_code %></td>
+
+        <th><strong>Contact No.</strong></th>
+        <td><%= @employee.contact_no %></td>
+      </tr>
+      <tr>      
+        <th><strong>Current Address</strong></th>
+        <td colspan="3"><%= @employee.current_address %></td>
+      </tr>
+      <tr>
+        <th><strong>Email</strong></th>
+        <td><%= @employee.email %></td>
+
+        <th><strong>Religion</strong></th>
+        <td><%= @employee.religion.try(:name) %></td>
+      </tr>
+      <tr>
+        <th><strong>Differently Abled</strong></th>
+        <td><%= @employee.handicap %></td>
+
+        <th><strong>Disability Type</strong></th>
+        <td><%= @employee.handicap_type %></td>
+      </tr>
+      <tr>
+        <th><strong>Employment Type</strong></th>
+        <td><%= @employee.employee_type.try(:name) %></td>
+
+        <th><strong>Employee Status</strong></th>
+        <td><%= @employee.status%></td>
+      </tr>
+      <tr>
+        <th><strong>Company</strong></th>
+        <td colspan="3"><%= @employee.try(:company).try(:name) %> - <%= @employee.try(:company_location).try(:name) %> - <%= @employee.try(:department).try(:name) %></td>
+        
+      </tr>
+     
+    </table>
+  </div><!-- /.box -->
+</div>

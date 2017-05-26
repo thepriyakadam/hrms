@@ -1,0 +1,62 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+      /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+    }
+</style>
+<table style="border-collapse: collapse; font-size:10pt;" border=1 width=900 cellpadding="25">
+    <thead>
+      <tr>
+        <th>Employee Code</th>
+        <th>Employee Name</th>
+        <th>ESIC No.</th>
+        <th>Payble Days</Data></th>
+        <th>Washing Allowance</th>
+        <th>Gross Salary</th>
+        <th>Amount</th>
+        <th>ESIC Amount</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @salaryslips.each do |slip| %>
+        <% employee = slip.employee %>
+        <% joining = employee.joining_detail %>
+        <% bank = employee.employee_bank_detail %>
+        <% workingday = slip.workingday %>
+        <tr>
+          <td><%= slip.employee.manual_employee_code %></td>
+          <td><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></td>
+          <td><%= joining.try(:employee_efic_no) %></td>
+          <td><%= workingday.payable_day %></td>
+
+          <% @addable_salaryslip_items = slip.salaryslip_components.where(is_deducted: false) %>
+          <%gross_amt = 0%>
+          <%wa_amt = 0%>
+          <% @addable_salaryslip_items.each do |item| %>
+            <% case item.salary_component.try(:name) %>
+            <% when "Washing Allowance" %>
+              <td><%= wa_amt = item.calculated_amount.round %></td>
+            <% else %>
+            <% end %> <!-- switch case -->
+          <% end %><!-- addable items -->
+          <td><%= gross_amt = slip.calculated_gross_salary.round %></td>
+          <td><%= gross_amt - wa_amt %></td>
+          
+          <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
+          <% @deducted_salaryslip_items.each do |item| %>
+              <% if item.other_component_name == "ESIC" %>
+                <td><%= item.calculated_amount.round %></td>
+              <% end %>
+          <% end %><!-- deducted items -->
+        </tr><!-- Row -->
+      <% end %><!-- slip -->
+    </tbody>
+    </table>

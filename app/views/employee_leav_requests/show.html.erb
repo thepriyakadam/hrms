@@ -1,0 +1,46 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Leave Request Details</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed'">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
+
+    <tr>
+      <th><strong>Employee</strong></th>
+      <td> <%= @employee_leav_request.employee.try(:manual_employee_code) %></td>
+      <th></th>
+      <td></td>
+      
+    </tr>
+
+    <tr>
+      <th>  <strong>Leave Category</strong></th>
+      <td> <%= @employee_leav_request.leav_category.try(:code) %></td>
+
+      <th> <strong>Leave Type</strong></th>
+      <td><%= @employee_leav_request.leave_type %></td>
+
+    </tr>
+    <tr>
+      <th><strong>To Date</strong></th>
+      <td><%= @employee_leav_request.end_date %></td>
+
+      <th> <strong>From Date</strong></th>
+      <td><%= @employee_leav_request.start_date %></td>
+
+    </tr>
+    <tr>
+      <th><strong>Leave Reason</strong></th>
+      <td colspan="3"><%= @employee_leav_request.reason %></td>
+
+    </tr>
+
+   </table>
+    <%= link_to 'Edit', edit_employee_leav_request_path(@employee_leav_request),class: 'btn btn-sm btn-success fa fa-edit' %> |
+    <%= link_to 'Back', employee_list_employee_leav_requests_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

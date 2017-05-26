@@ -1,0 +1,1 @@
+json.array! @professional_tax_masters, partial: 'professional_tax_masters/professional_tax_master', as: :professional_tax_master

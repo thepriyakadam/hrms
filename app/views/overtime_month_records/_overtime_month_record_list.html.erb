@@ -1,0 +1,26 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Overtime data</th>
+      <th>Attendance bonus amount</th>
+      <th>Paid holiday amount</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @overtime_month_records.each do |overtime_month_record| %>
+      <tr>
+        <td><%= overtime_month_record.employee.try(:manual_employee_code) %></td>
+        <td><%= overtime_month_record.overtime_data %></td>
+        <td><%= overtime_month_record.attendance_bonus_amount %></td>
+        <td><%= overtime_month_record.paid_holiday_amount %></td>
+        <td>
+          <%= link_to '', edit_overtime_month_record_path(overtime_month_record) ,class: 'btn btn-sm btn-success fa fa-edit',remote:true %>
+          <%= link_to '',  overtime_month_record, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-sm btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

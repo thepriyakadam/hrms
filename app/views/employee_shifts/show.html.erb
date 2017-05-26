@@ -1,0 +1,40 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Company Shift Details</h3>
+  </div><!-- /.box-header -->
+
+    <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr><th>Company Shift</th>
+      <th>From Date</th>
+      <th>To Date</th>
+      </tr>
+      
+      <tr>
+      <th>Employee ID</th>
+      <th>Employee Name</th>
+      <th>Contact No</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+        <td><%= employee_shift.company_shift.try(:name) %></td>
+        <td><%= employee_shift.from_date %></td>
+        <td><%= employee_shift.to_date %></td>
+    </tr>
+    <% @employee_shifts.each do |employee_shift| %>
+      <tr>
+        
+        <td><%= employee_shift.employee.try(:manual_employee_code) %></td>
+        <td><%= employee_shift.employee.try(:first_name) %></td>
+        <td><%= employee_shift.employee.try(:contact_no) %></td>
+        <td><%= employee_shift.employee.try(:email) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  </table>
+</div>
+</div><!-- /.box -->

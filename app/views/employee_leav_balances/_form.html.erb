@@ -1,0 +1,172 @@
+<%= bootstrap_form_for @employee_leav_balance, html: {id: "employee_leav_balance"} do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= label "employee_leav_balance","Leave Category"%>
+        <%= text_field "employee_leav_balance","category_name", value: @leav_category.try(:name),class: "form-control", readonly:true %>
+      </div>
+    </div>
+    <%= hidden_field "employee_leav_balance","leav_category_id", value: @leav_category.id%>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :no_of_leave %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :total_leave, readonly:true %>
+      </div>
+    </div>
+  
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :from_date, class: "expiry_date" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :to_date, class: "expiry_date" %>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <hr>
+  
+  <div class="row">
+    <div class="col-sm-12">
+      <table id="example1" class="table table-bordered table-hover table-condensed'">
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+            <th>ID</th>
+            <th>Employee Name</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Employement</th>
+            <th>Contact No.</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @employees.where(status: 'Active').each do |e| %>
+            <tr>
+              <td><%= check_box_tag "employee_ids[]", e.id %></td>
+              <td><%= e.manual_employee_code %></td>
+              <td><%= full_name(e) %></td>
+              <td><%= e.department.try(:name) %></td>
+              <td><%= e.joining_detail.try(:employee_designation).try(:name) %></td>
+              <td><%= e.employee_type.try(:name) %></td>
+               <td><%= e.contact_no %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+ 
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="actions">
+        <%= f.submit "Create Employee Leave Balance",class: 'btn btn-sm btn-primary' %>
+
+        <%= link_to 'Back', employee_leav_balances_path,class: 'btn btn-sm btn-default fa fa-arrow' %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+$(function () {
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;                       
+      });
+    } 
+    else {
+      $(':checkbox').each(function() {
+        this.checked = false;                        
+      });
+    } 
+  });
+
+  $('.expiry_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+50',
+    dateFormat: 'dd-mm-yy' });
+
+  $("#example1").DataTable();
+  $('#example2').DataTable({
+    "paging": true,
+    "lengthChange": false,
+    "searching": false,
+    "ordering": true,
+    "info": true,
+    "autoWidth": false
+  });
+
+  $('#employee_leav_balance_no_of_leave').on('input', function() {
+    calculate_total_leave();
+  });
+  $('#employee_leav_balance_total_leave').on('input', function() {
+      calculate_no_of_leave();
+  });
+
+  function calculate_total_leave() {
+    var no_of_leave = parseFloat($('#employee_leav_balance_no_of_leave').val());
+    if(isNaN(no_of_leave)){
+      $('#employee_leav_balance_total_leave').val(""); 
+    }
+    else {
+      $('#employee_leav_balance_total_leave').val(no_of_leave); 
+    }    
+  }
+  function calculate_no_of_leave() {
+    var total_leave = parseFloat($('#employee_leav_balance_total_leave').val());
+    if(isNaN(total_leave)){
+      $('#employee_leav_balance_no_of_leave').val(""); 
+    }
+    else {
+      $('#employee_leav_balance_no_of_leave').val(total_leave); 
+    }   
+  }
+
+  $("#employee_leav_balance").validate({
+    rules: {
+      "employee_leav_balance[no_of_leave]":{
+        required: true,
+        maxlength: 20,
+      },
+      "employee_leav_balance[from_date]":{
+        required: true,
+      },
+      "employee_leav_balance[to_date]":{
+        required: true,
+      }
+    },
+    messages: {
+      "employee_leav_balance[no_of_leave]":{
+        required: "Please specify No. Of leaves",
+        maxlength: "No. Of leaves allows upto 20 characters"
+      },
+      "employee_leav_balance[from_date]":{
+        required: "Please Specify From Date",
+      },
+       "employee_leav_balance[to_date]":{
+        required: "Please Specify To Date",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+  });
+
+});
+</script>

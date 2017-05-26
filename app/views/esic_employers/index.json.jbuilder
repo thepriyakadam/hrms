@@ -1,0 +1,1 @@
+json.array! @esic_employers, partial: 'esic_employers/esic_employer', as: :esic_employer

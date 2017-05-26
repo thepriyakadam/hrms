@@ -1,0 +1,1 @@
+json.partial! "on_duty_requests/on_duty_request", on_duty_request: @on_duty_request

@@ -1,62 +1,51 @@
-<%= bootstrap_form_for(@employee_physical) do |f| %>
-  <% if @employee_physical.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@employee_physical.errors.count, "error") %> prohibited this employee_physical from being saved:</h2>
 
-      <ul>
-      <% @employee_physical.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Physical Details</h3>
+  </div><!-- /.box-header -->
 
+
+
+<div class="box-body">
+<%= bootstrap_form_for(@employee_physical,html: {id: 'employee_physical'},remote:true) do |f| %>
+ 
+<%= f.hidden_field :employee_id, value: @employee.id %>
   <div class="row">
-    <div class="col-sm-1"></div>
+      
+  
       <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :employee_id %>
-        </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :hieght %>
+        <div class="form-group required">
+         <%= f.text_field :height,label:"Height",placeholder: "Height(inches)" %>
        </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
+ 
       <div class="col-sm-3">
-        <div class="field">
-    <%= f.text_field :weight %>
+        <div class="form-group required">
+          <%= f.text_field :weight,label:"Weight",placeholder: "Weight(kg)" %>
        </div>
     </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
+ 
       <div class="col-sm-3">
-        <div class="field">
-    <%= f.label :size %><br>
-    <%= f.text_field :size %>
+        <div class="form-group required">
+          <%= f.select :size, ['XS','S','M','L','XL','XXL'],{label: 'T-Shirt Size',include_blank: " Select T-Shirt Size"} %>
        </div>
-    </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.select :trouser_size, ['28','30','32','34','36','38','40','42','44'],{label: 'Trouser Size',include_blank: " Select Trouser Size(cm)"} %>
+       </div>
+      </div>
   </div>
 
 
   <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+      <div class="col-sm-6">
         <div class="actions">
-    <%= f.submit %>
+          <%= f.submit :class => class_name, data: { disable_with: data_info } %>
        </div>
     </div>
   </div>
 <% end %>
+</div><!-- /.box-body -->
+</div><!-- /.box -->

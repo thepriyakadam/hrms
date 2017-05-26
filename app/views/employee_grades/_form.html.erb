@@ -1,33 +1,15 @@
-<%= bootstrap_form_for(@employee_grade) do |f| %>
-  <% if @employee_grade.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@employee_grade.errors.count, "error") %> prohibited this employee_grade from being saved:</h2>
-
-      <ul>
-      <% @employee_grade.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+<%= bootstrap_form_for(@employee_grade,html: {id: 'employee_grade'},remote:true) do |f| %>
   <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :name %>
-       </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Employee Grade' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Employee Grade",:class => class_name, data: { disable_with: data_info }%>
+      </div>
     </div>
   </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.submit %>
-       </div>
-    </div>
-  </div>
-
 <% end %>

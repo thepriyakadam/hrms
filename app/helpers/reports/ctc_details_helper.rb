@@ -1,0 +1,2 @@
+module Reports::CtcDetailsHelper
+end

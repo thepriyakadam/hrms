@@ -1,0 +1,46 @@
+<br>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Circular Date</th>
+      <th>Subject</th>
+      <th>Document</th>
+      <th>Picture</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @circulars.each do |circular| %>
+      <tr>
+        <td><%= circular.date %></td>
+        <td><%= circular.subject %></td>
+        <!-- <td><%= circular.avatar_file_name %></td> -->
+        <td>
+           <% if circular.document_file_name == nil %>
+           <small class="label label-default">Document Not Available</small>
+             <% else %>
+             <%= link_to ' Document',download_company_policy_document_path(id: circular.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
+             <% end %>
+        </td>
+        <td>
+           <% if circular.avatar_file_name == nil %>
+           <small class="label label-default">Picture Not Available</small>
+             <% else %>
+             <%= link_to ' Picture',download_documents_path(id: circular.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
+             <% end %>
+        </td>
+        <td><%= circular.is_active ? "Active" : "Inactive" %></td>
+        <td>
+          <% if circular.is_confirm == true %>
+            <small class= "label label-primary">Confirmed</small>
+          <% else %>
+          <%= link_to '', edit_circular_path(circular),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <%= link_to '',  circular, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+           <%= link_to '', is_confirm_circulars_path(circular: circular),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+            <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

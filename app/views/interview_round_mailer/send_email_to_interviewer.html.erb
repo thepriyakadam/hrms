@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+     <h4>Interview Schedule Details</h4>
+    <p>
+       Dear,<br>  <%= @employee.first_name.to_s %> <%= @employee.last_name.to_s %>-<%= @employee.optinal_contact_no.to_s %><br><br>
+      This is to inform you that you need to take an Interview for the position <b><%= @interview_schedule.job_title %></b>.
+       Details for interview is given below.<br><br>
+       1. <b>Candidate Name :-</b> <%= @interview_schedule.candidate_name %><br><br>
+       2. <b>Interview Type :-</b> <%= @interview_round.interview_type.try(:name) %><br><br>
+       2. <b>Date :-</b> <%= @interview_round.interview_date %><br><br>
+       3. <b>Time :-</b> <%= @interview_round.interview_time %><br><br>
+       4. <b>Address :-</b> <%= @interview_round.location %><br><br>
+       <!-- <div style="float:right;">
+          < image_tag attachments['logo1.jpg'].url %>
+       </div>  -->
+      With Regards,<br><br>
+       HR 
+     </p>
+  </body>
+</html>

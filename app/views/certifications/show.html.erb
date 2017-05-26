@@ -1,29 +1,38 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Certification</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
 
-<p>
-  <strong>Qualification:</strong>
-  <%= @certification.qualification %>
-</p>
+    <tr>
+          <th><strong>Name:</strong></th>
+      <td><%= @certification.name %></td>
+    </tr>
 
-<p>
-  <strong>Name:</strong>
-  <%= @certification.name %>
-</p>
+    <tr>
+      <th><strong>Year:</strong></th>
+      <td><%= @certification.year_id %></td>
 
-<p>
-  <strong>Year:</strong>
-  <%= @certification.year %>
-</p>
+      <th><strong>Duration:</strong></th>
+      <td><%= @certification.duration %></td>
+    </tr>
 
-<p>
-  <strong>Duration:</strong>
-  <%= @certification.duration %>
-</p>
+    <tr>
+      <th><strong>description:</strong></th>
+      <td><%= @certification.description %></td>
 
-<p>
-  <strong>Descripation:</strong>
-  <%= @certification.descripation %>
-</p>
+      <th></th>
+      <td></td>
+    </tr>
 
-<%= link_to 'Edit', edit_certification_path(@certification) %> |
-<%= link_to 'Back', certifications_path %>
+    </table>
+
+    <%= link_to 'Edit', edit_certification_path(@certification),class: 'btn btn-success btn-sm fa fa-edit' %> |
+    <%= link_to ' Back', certifications_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

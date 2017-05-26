@@ -1,0 +1,106 @@
+<div class="box box-default">
+    <div class="box-header with-border">
+       <h6 class="box-title">Interview Reschedule of : <%= @interview_round.interview_schedule.try(:candidate_name) %></h6>
+    </div><!-- /.box-header -->
+ <div class="box-body">
+ 
+ <%= bootstrap_form_for(@interview_round_reschedule,html: {id: 'interview_round_reschedule'},url:{action:"reschedule_interview",interview_schedule_id: @interview_schedule.id}) do |f| %>
+ <%= f.hidden_field :employee_id, value: @employee.id %>
+ <%= f.hidden_field :interview_round_id, value: @interview_round.id %>
+<!--  <div>
+ <= render 'show_interview_schedule' %>
+ </div> -->
+  <div class="row">
+  <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :interview_date, label: "Interview Date", class: 'interview_date'%>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-sm-3">
+      <div class="bootstrap-timepicker">
+       <div class="form-group required">
+        <div class="input-group">
+        <div class="input-group-addon">
+        <i class="fa fa-clock-o"></i>
+        </div>
+         <%= f.text_field :interview_time,label: "Interview Time", class: 'form-control timepicker' %>
+        </div><!-- /.input group -->
+       </div><!-- /.form group -->
+      </div>
+    </div>
+
+
+    <div class="col-sm-3">
+     <div class="form-group required">
+      <%= f.select :employee_id, all_interviewer_name_list,{label: 'Interviewer Name',include_blank: " Select Interviewer Name"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+     </div>
+    </div>
+
+    <div class="col-sm-3">
+      <label>Interview Type</label>
+        <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <%= link_to "", new_interview_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+            </div>
+             <%= f.select :interview_type_id, all_interview_type, {hide_label: true,include_blank: " Select Interviewer Type"} %>
+          </div>
+        </div>
+    </div>
+
+     <div class="col-sm-3">
+       <div class="form-group required">
+        <%= f.text_field :location,label:'Location' %>
+       </div>
+    </div>
+    </div>
+    
+    <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+      <%= f.submit "Create Interview Rechedule",class: "btn btn-primary btn-sm" %>
+      <%= link_to 'Back', new_interview_round_path(interview_schedule_id: @interview_schedule.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      </div>
+    </div> 
+  </div>
+  </div>
+</div>
+<% end %>
+
+<script>
+$("#interview_round_reschedule").validate({
+    rules: {
+      "interview_round_reschedule[interview_date]":{
+        required: true
+              },
+      "interview_round_reschedule[interview_time]":{
+        required: true
+      },
+      "interview_round_reschedule[employee_id]":{
+        required: true
+      },
+    },
+    messages: {
+      "interview_round_reschedule[interview_date]":{
+        required: "Please Specify Interview Date"
+      },
+      "interview_round_reschedule[interview_time]":{
+        required: "Please Specify Interviewer Time"
+      },
+      "interview_round_reschedule[employee_id]":{
+        required: "Please Specify Interviewer Name"
+      }
+
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

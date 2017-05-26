@@ -1,0 +1,24 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Name</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Time Difference</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @company_shifts.each do |company_shift| %>
+      <tr>
+        <td><%= company_shift.name %></td>
+        <td><%= company_shift.in_time %></td>
+        <td><%= company_shift.out_time %></td>
+        <td><%= time_diff(company_shift.in_time,company_shift.out_time) %></td>
+        <td>
+          <%= link_to '', edit_company_shift_path(company_shift),class: 'btn btn-success fa fa-edit btn-sm',remote:true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

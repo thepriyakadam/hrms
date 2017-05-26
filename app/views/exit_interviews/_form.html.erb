@@ -1,0 +1,25 @@
+<%= bootstrap_form_for(@exit_interview,html: {id: 'exit_interview'},remote:true) do |f| %>
+<%= f.hidden_field :employee_id, :value => current_user.employee_id %>
+  
+  <div class="row">
+    <div class="col-sm-5">
+      <div class="form-group required">
+      <%= f.select :question_master_id, all_question_master, {label: "Select Question",include_blank: " Select Question"} %>
+      </div>
+    </div>
+
+    <div class="col-sm-7">
+      <div class="field">
+        <%= f.text_field :answer,label: "Answer" , placeholder: 'Answer' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="actions">
+        <%= f.submit "Create Exit Interview", :class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>

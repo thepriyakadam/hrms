@@ -1,15 +1,20 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Awards</h1>
-
-<table>
-  <thead>
-    <tr>
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Awards List</h3>
+    <div class="pull-right">
+      <%= link_to "New Award", new_award_path, class: 'btn btn-primary btn-sm' %> 
+    </div>
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
       <th>Employee</th>
       <th>Award name</th>
       <th>Year</th>
       <th>Award from</th>
-      <th colspan="3"></th>
+      <th>Action</th>
     </tr>
   </thead>
 
@@ -18,16 +23,18 @@
       <tr>
         <td><%= award.employee %></td>
         <td><%= award.award_name %></td>
-        <td><%= award.year %></td>
+        <td><%= award.year_id %></td>
         <td><%= award.award_from %></td>
-        <td><%= link_to 'Show', award %></td>
-        <td><%= link_to 'Edit', edit_award_path(award) %></td>
-        <td><%= link_to 'Destroy', award, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+         <td>
+            <%= link_to '', award,class: 'btn btn-default fa fa-eye btn-sm' %>
+            <%= link_to '', edit_award_path(award),class: 'btn btn-success fa fa-edit btn-sm' %>
+            <%= link_to '', award, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close btn-sm' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>
 
-<br>
-
-<%= link_to 'New Award', new_award_path %>
+      

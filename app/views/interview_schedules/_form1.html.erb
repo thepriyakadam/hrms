@@ -1,0 +1,114 @@
+<div class="box box-default">
+    <div class="box-header with-border">
+      <h3 class="box-title">Create Interview Schedule</h3>
+    </div><!-- /.box-header -->
+ <div class="box-body">
+ <%= bootstrap_form_for @interview_schedule,html: {id: 'interview_schedule'},url:{action:"create_new"} do |f| %>
+ <%= f.hidden_field :selected_resume_id, value: @selected_resume.id  %>
+  <div class="row">
+    <div class="col-sm-3">
+     <div class="field">
+      <%= f.text_field :job_title,label: 'Job Title' %>
+     </div>
+    </div>
+
+    <div class="col-sm-3">
+     <div class="form-group required">
+       <%= f.text_field :candidate_name,value: @selected_resume.name,readonly: true %>
+     </div>
+    </div>
+
+     <div class="col-sm-3">
+     <div class="field">
+      <%= f.text_field :email_id,value: @selected_resume.email_id,readonly: true %>
+     </div>
+    </div>  
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :location,label:'Location' %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-3">
+      <label>Interview Date: </label>
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :interview_date, hide_label: true, class: 'interview_date'%>
+        </div>
+      </div>
+    </div> 
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="actions">
+      <%= f.submit "Create Interview Schedule",class: "btn btn-primary btn-sm" %>
+      <%= link_to 'Back', interview_schedules_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+<% end %>
+<script type="text/javascript">
+  $(document).ready(function() {
+  $(".select2").select2();
+});
+</script>
+<script>
+$("#interview_schedule").validate({
+    rules: {
+      "interview_schedule[interviewer_name]":{
+        required: true
+              },
+      "interview_schedule[employee_id]":{
+        required: true
+      },
+      "interview_schedule[candidate_name]":{
+        required: true
+      },
+      "interview_schedule[location]":{
+        required: true
+      },
+      "interview_schedule[interview_type]":{
+        required: true
+      }
+    },
+    messages: {
+      "interview_schedule[name]":{
+        required: "Please specify Name"
+      },
+      "interview_schedule[employee_id]":{
+        required: "Please specify Employee Name"
+      },
+      "interview_schedule[candidate_name]":{
+        required: "Please specify Candidate Name"
+      },
+      "interview_schedule[location]":{
+        required: "Please specify Location"
+      },
+      "interview_schedule[interview_type]":{
+        required: "Please specify Interview Type"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+<script type="text/javascript">
+  $(function(){
+    $('.interview_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

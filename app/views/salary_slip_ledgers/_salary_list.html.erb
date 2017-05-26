@@ -1,0 +1,41 @@
+<div class="ajax-progress"></div>
+<% i = 0 %>
+<table id="example3" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr. No</th>
+      <th>Employee ID</th>
+      <th>Employee Name</th>
+      <th>Account Number</th>
+      <th>Month</th>
+      <th>Year</th>
+      <th>Net Salary</th>
+      <th>Location</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @slips.each do |s| %>
+      <tr>
+        <td><%= i = i+1 %></td>
+        <td><%= s.employee.manual_employee_code %></td>
+        <td><%= full_name(s.employee) %></td>
+        <td><%= account_no(s.employee.id) %></td>
+        <td><%= s.month %></td>
+        <td><%= s.year %></td>
+        <td><%= s.calculated_net_salary.round %></td>
+        <td><%= s.employee.company_location.try(:name) %></td>
+      </tr>
+    <% end %>
+    <tfoot>
+      <tr>
+        <th colspan="6">Total</th>
+        
+        <th><%= @total_net_salary %></th>
+        <th></th>
+      </tr>
+    </tfoot>
+  </tbody>
+</table>
+  <%= link_to " PDF Report ", collect_salary_salary_slip_ledgers_path(bank_id: @bank,year: @year,month: @month, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank"  %>
+
+  <%= link_to " Excel Report ", collect_salary_salary_slip_ledgers_path(bank_id: @bank,year: @year,month: @month, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>

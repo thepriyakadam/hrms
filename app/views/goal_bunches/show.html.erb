@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Period:</strong>
+  <%= @goal_bunch.period %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @goal_bunch.employee %>
+</p>
+
+<%= link_to 'Edit', edit_goal_bunch_path(@goal_bunch) %> |
+<%= link_to 'Back', goal_bunches_path %>

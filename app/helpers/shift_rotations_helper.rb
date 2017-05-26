@@ -1,0 +1,3 @@
+module ShiftRotationsHelper
+  
+end

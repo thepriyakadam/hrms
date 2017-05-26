@@ -1,0 +1,83 @@
+<%= bootstrap_form_for(@induction_detail,html: {id: 'induction_detail'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+      <%= f.select :employee_id,all_employee_list,{hide_label: true,include_blank: " Select Employee"} %>
+    </div> 
+    </div>
+     <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+               <%= f.text_field :start_date, hide_label: true,placeholder: 'Start Date', class: 'start_date'%>
+            </div>
+          </div>
+        </div> 
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+      <%= f.select :induction_master_id, all_induction_template,{label: 'Induction Code',include_blank: " Select Induction Code",hide_label: true} %>
+    </div> 
+    </div>
+
+    <div class="col-sm-3">
+       <div class="field">
+        <%= f. check_box :induction_completed, {}, true, false %>  
+        </div>
+        </div> 
+     </div>
+
+    <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Induction Detail", class: 'btn btn-primary btn-sm' %>
+    </div>
+  </div><br>
+
+  </div>
+<% end %>
+<script type="text/javascript">
+  $(function(){
+    $('.start_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+
+  }); 
+
+$(function(){
+$("#induction_detail").validate({
+    rules: {
+      "induction_detail[employee_id]":{
+        required: true
+      },
+      "induction_detail[start_date]":{
+        required: true
+              },
+      "induction_detail[induction_master_id]":{
+        required: true
+      }
+    },
+    messages: {
+      "induction_detail[employee_id]":{
+        required: "Please specify Employee Name"
+      },
+      "induction_detail[start_date]":{
+        required: "Please specify Induction Start Date"
+      },
+      "induction_detail[induction_master_id]":{
+        required: "Please specify Induction Template"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+});
+</script>
+
+

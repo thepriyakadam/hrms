@@ -1,13 +1,21 @@
 <%if current_user.class == Group %>
-	<%= link_to "Create Company", new_company_path %>
+	<%= render 'group_dashboard' %>
 <%elsif current_user.class == Member %>
-	<% if current_user.account_type == 'Company' %>
-		<%= link_to "Create Company Location", new_company_location_path %>
-	<% elsif current_user.account_type == 'CompanyLocation' %>
-		<%= link_to "Create Department", new_department_path %>
-	<% elsif current_user.account_type == 'Department' %>
-		<%= link_to "Create Employee", new_employee_path %>
-	<% elsif current_user.account_type == 'Employee' %>
-		<%= link_to "Create Qualification", new_qualification_path %>
+	<% if current_user.role.try(:name) == 'Admin' %>
+		<%= render 'admin_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'Branch' %>
+		<%= render 'branch_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'HOD' %>
+		<%= render 'hod_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'Supervisor' %>
+		<%= render 'supervisor_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'Account' %>
+		<%= render 'account_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'AccountAdmin' %>
+	    <%= render 'account_admin' %>
+	<% elsif current_user.role.try(:name) == 'GroupAdmin' %>
+	    <%= render 'group_admin' %>
+	<% else %>
+		<%= render 'employee_dashboard' %>
 	<% end %>
 <%end%>

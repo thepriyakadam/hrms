@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing About Companies</h1>
+
+<table>
+  <thead>
+    <tr>
+      
+      <th>Passout Year</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @years.each do |year| %>
+      <tr>
+       
+        <td><%= about_company.name %></td>
+      
+        <td><%= link_to 'Show', year %></td>
+        <td><%= link_to 'Edit', edit_year_path(year) %></td>
+        <td><%= link_to 'Destroy', year, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Year', new_about_company_path %>

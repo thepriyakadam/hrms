@@ -1,0 +1,168 @@
+<div class="modal-dialog" style="height:1000px; max-height:100px; width:1000px; max-width:1400px;">
+  <div class="modal-content">
+<div class="modal-body" >
+
+     <%= bootstrap_form_for(:vacancy_request_history,url:{action:"update_vacancy_details",vacancy_master_id:@vacancy_master.id}) do |f| %>
+     <%= f.hidden_field :vacancy_master_id,value:@vacancy_master.id  %>
+     
+     <div class="row">
+
+       <div class="col-sm-3">
+          <div class="field">
+             <%= f.text_field :other_organization,label: 'Organization',value: @vacancy_master.other_organization%>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+         <label>Job Title</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <%= f.select :employee_designation_id,all_employee_designation,{hide_label: true,include_blank: " Select Job Title"},value:@vacancy_master.employee_designation_id %>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :vacancy_name,label: 'Vacancy Name',value:@vacancy_master.vacancy_name%>
+          </div>
+        </div>
+
+          <div class="col-sm-3">
+          <div class="field">
+            <div class="field">
+              <%= f.select :company_location_id, role_location_list,{label: 'Location',include_blank: " Select Location"},value:@vacancy_master.company_location_id %>
+            </div>
+          </div>
+        </div> 
+        </div>
+
+      <div class="row">
+
+         <div class="col-sm-3">
+          <div class="field">
+            <div class="field">
+              <%= f.select :department_id, all_department_type_list2,{label: 'Department',include_blank: " Select Department"},value:@vacancy_master.department_id %>
+            </div>
+          </div>
+        </div> 
+
+     
+      
+        <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.text_field :no_of_position,label: 'No. of Positions',value:@vacancy_master.no_of_position%>
+          </div>
+        </div>  
+
+        <div class="col-sm-3">
+          <div class="field">
+             <%= f.text_field :experience,label: 'Experience',value:@vacancy_master.experience%>
+          </div>
+        </div>
+
+
+        <div class="col-sm-3">
+          <div class="field">
+             <%= f.text_field :budget,label: 'Budget',value:@vacancy_master.budget%>
+          </div>
+        </div> 
+          </div>
+
+      <div class="row">
+
+        <div class="col-sm-3">
+          <label>Vacancy Fulfillment Date </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+               <%= f.text_field :vacancy_post_date, hide_label: true, class: 'birth_date',value:@vacancy_master.vacancy_post_date%>
+            </div>
+          </div>
+        </div>      
+    
+       
+            <div class="col-sm-3">
+          <label>Educational Qualification 1</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :degree_id, all_degree, {hide_label: true,include_blank: " Select Qualification"}, class: 'input_degree_stream_id',value:@vacancy_master.degree_id %>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <label>Educational Qualification 2</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :degree_1_id, all_degree, {hide_label: true,include_blank: " Select Qualification"}, class: 'input_degree_stream_id',value:@vacancy_master.degree_1_id %>
+            </div>
+          </div>
+        </div>
+
+         <div class="col-sm-3">
+          <label>Educational Qualification 3</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :degree_2_id, all_degree, {hide_label: true,include_blank: " Select Qualification"}, class: 'input_degree_stream_id',value:@vacancy_master.degree_2_id %>
+            </div>
+          </div>
+        </div>
+      </div> 
+      <div class="row">
+
+       <!--  <div class="col-sm-3">
+        <label>Vacancy Approval</label>
+            <div class="form-group required">
+              <%= f.select :reporting_master_id, all_reporting_master_list, {hide_label: true,include_blank: " Select Reporting Master"}, class: 'input_degree_stream_id' %>
+            </div>
+        </div> -->
+
+         <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.text_field :keyword,label: 'Keyword',value:@vacancy_master.keyword%>
+          </div>
+        </div>
+
+         <div class="col-sm-6">
+          <div class="field">
+           <%= f.text_area :description,label: 'Job Description',placeholder: "e.g : Any Description related to Vacancy",value:@vacancy_master.description%>
+          </div>
+        </div>  
+
+       </div>  
+
+       
+     
+
+      <div class="row">
+       
+        <div class="col-sm-6">
+          <div class="field">
+           <%= f.text_area :justification,label: 'Justification',placeholder: "e.g : Any Description related to why its needed for creating this vacancy",value:@vacancy_master.justification%>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+      <div class="col-sm-3">
+        <%= f.submit "Edit & Approve", class: 'btn btn-sm btn-warning fa fa-modx' %>
+        </div>
+      </div>
+
+      <% end %>
+      <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+    </div>
+  </div>
+</div>

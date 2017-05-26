@@ -1,109 +1,94 @@
-<%= bootstrap_form_for(@department) do |f| %>
-  <% if @department.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@department.errors.count, "error") %> prohibited this department from being saved:</h2>
-
-      <ul>
-      <% @department.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
+<div class="box-body">
+  <%= bootstrap_form_for(@department,html: {id: 'department'},remote: true) do |f| %>
+    <div class="row">
       <div class="col-sm-3">
-        <div class="field">
-        <%= f.text_field :company_location_id %>
-        </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :name %>
-        </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.select :department_type_id, all_department_type %>
-        </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-    <%= f.text_field :address %>
-        </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.number_field :pin_code %>
-       </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :head_of_department %>
+        <div class="form-group required">
+         <%= f.text_field :manual_department_code,label: 'Department Code',placeholder: "Department Code"%>
          </div>
       </div>
-  </div>
+    </div>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
+    <div class="row">
       <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :contact_no %>
+        <div class="form-group required">
+         <%= f.select :company_location_id, all_company_with_location,{label: 'Department Location',include_blank: " Select Department Location"} %>
         </div>
       </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
       <div class="col-sm-3">
-        <div class="field">
-    <%= f.text_field :manager %>
+        <div class="form-group required">
+         <%= f.text_field :name,label:"Department Name",placeholder: "e.g : IT" %>
         </div>
       </div>
-  </div>
+      <div class="col-sm-3">
+      <!-- <label>Department Type</label> -->
+        <div class="form-group required">
+         <div class="input-group">
+        <div class="input-group-addon">
+                <%= link_to "", new_department_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+          <%= f.select :department_type_id, all_department_type,{label: "Department Type",include_blank: " Select Department Type"}%>
+        </div>
+        </div>
+      </div>
 
-
-   <div class="row">
-    <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :hr %>
-       </div>
+         <%= f.text_field :contact_no ,label:"Contact No."%>
+        </div>
       </div>
-  </div>
+    </div>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="field">
+          <%= f.text_area :description,placeholder: "e.g : Any description related to Department."%>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
       <div class="col-sm-3">
         <div class="actions">
-         <%= f.submit %>
+          <%= f.submit :class => class_name, data: { disable_with: data_info } %>
         </div>
       </div>
-  </div>
+    </div>
+  <% end %>
+</div>
 
-<% end %>
+<script>
+$("#department").validate({
+    rules: {
+      "department[name]":{
+        required: true,
+      },
+      "department[company_location_id]":{
+        required: true
+      },
+      "department[department_type_id]":{
+        required: true
+      },
+      "department[manual_department_code]":{
+        required: true
+      }
+    },
+    messages: {
+      "department[name]":{
+        required: "Please specify Department Name "
+      },
+      "department[company_location_id]":{
+        required: "Please Select Company Location"
+      },
+     "department[department_type_id]":{
+       required: "Please Select Department Type"
+      },
+      "department[manual_department_code]":{
+       required: "Please Specify Department Code"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

@@ -1,0 +1,57 @@
+<%= form_for(@training_approval) do |f| %>
+  <% if @training_approval.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@training_approval.errors.count, "error") %> prohibited this training_approval from being saved:</h2>
+
+      <ul>
+      <% @training_approval.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :training_request_id %><br>
+    <%= f.text_field :training_request_id %>
+  </div>
+  <div class="field">
+    <%= f.label :employee_id %><br>
+    <%= f.text_field :employee_id %>
+  </div>
+  <div class="field">
+    <%= f.label :training_topic_master_id %><br>
+    <%= f.text_field :training_topic_master_id %>
+  </div>
+  <div class="field">
+    <%= f.label :reporting_master_id %><br>
+    <%= f.text_field :reporting_master_id %>
+  </div>
+  <div class="field">
+    <%= f.label :traininig_period %><br>
+    <%= f.text_field :traininig_period %>
+  </div>
+  <div class="field">
+    <%= f.label :training_date %><br>
+    <%= f.date_select :training_date %>
+  </div>
+  <div class="field">
+    <%= f.label :place %><br>
+    <%= f.text_field :place %>
+  </div>
+  <div class="field">
+    <%= f.label :no_of_employee %><br>
+    <%= f.text_field :no_of_employee %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :justification %><br>
+    <%= f.text_area :justification %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

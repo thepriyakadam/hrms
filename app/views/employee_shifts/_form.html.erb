@@ -1,0 +1,69 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Create Employee Shift</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <%= bootstrap_form_for(@employee_shift, html: {id: 'employee_shift'}) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :employee_id, all_company_shifts,{include_blank: " Select Shift Rotation"} %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+        <label> From Date: </label>
+         <div class="field">
+           <div class="input-group">
+             <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+             </div>
+            <%= f.text_field :from_date, hide_label: true,placeholder: "Select Start Date", class: 'from_date'%>
+           </div>
+         </div>
+        </div>
+        <div class="col-sm-3">
+        <label> To Date </label>
+         <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :to_date, hide_label: true,placeholder: "Select End Date", class: 'to_date'%>
+          </div>
+         </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group required">
+            <%= select_tag :employee_shift,[['a'],['b'],{},{include_blank: " Select Shift Rotation"} %>
+          </div>
+        </div>        
+      </div>
+      
+      <div class="row">
+        <div class="col-sm-5">
+          <div class="actions">
+            <%= f.submit "Create Account",class: "btn btn-primary btn-sm",data: { disable_with: 'Wait...'} %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script type="text/javascript">
+  $(function(){
+    $('.from_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+10',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.to_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+10',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script> 

@@ -1,0 +1,31 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Holiday date</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @holidays.each do |holiday| %>
+      <tr>
+        <td><%= holiday.code %></td>
+        <td><%= holiday.name %></td>
+        <td><%= holiday.description %></td>
+        <td><%= holiday.holiday_date %></td>
+        <td>
+          <% if holiday.is_send == true %>
+            <small class="label label-primary">Already Set</small>
+          <% else %>
+            <%= link_to '', edit_holiday_path(holiday),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  holiday, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+          
+            <%= link_to 'Set Attendance', assign_to_employee_holidays_path(holiday),class: 'btn btn-info btn-xs fa fa-check',remote:true %>
+          <% end %> 
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

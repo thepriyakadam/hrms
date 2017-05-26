@@ -1,0 +1,90 @@
+<div class="box">
+<div class="box-header">
+<h3 class="box-title">Due Details For : <%= code_full_name(@due_employee_details.first.employee) %> , Template Name : <%= @due_employee_details.first.due_template.try(:name) %><br>
+</h3>
+<div class="box-body">
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+     <th>ID</th>
+     <th>Member</th>
+     <th>Action</th>
+     </tr>
+  </thead>
+
+  <tbody>
+    <% @due_employee_details.each do |due_employee_detail| %>
+      <tr>
+       <td><%= due_employee_detail.reporting_master.employee.try(:manual_employee_code) %></td>      
+      <td><%= full_name(due_employee_detail.reporting_master.employee) %></td>
+      <td>
+          <%= link_to ' View Due Action', specific_due_action_list_due_details_path(due_employee_detail),class: 'btn btn-xs btn-primary' %>
+      </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<div class="box-body">
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+  <% @due_employee_details.each do |due_employee_detail| %>
+  <tr><th colspan="5"><center>Member Detail</center></th></tr>
+    <tr>
+     <th>ID</th>
+     <th>Member</th>
+     <th>Department</th>
+     <th></th>
+     <th></th>
+     </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+        <td><%= due_employee_detail.reporting_master.employee.try(:manual_employee_code) %></td>      
+        <td><%= full_name(due_employee_detail.try(:reporting_master).try(:employee)) %></td>
+        <td><%= due_employee_detail.try(:reporting_master).try(:employee).try(:department).try(:name) %></td> 
+        <td></td>
+        <td></td>
+      </tr>
+      <tr><th colspan="5"><center>Due Detail</center></th></tr>
+      <tr>
+          <th>Item Name</th>
+          <th>Remark</th>
+          <th>Confirm</th>
+          <th>Status</th>
+          <th>Amount</th>
+      </tr>
+      <% due_employee_detail.due_actions.try(:each) do |due_action| %>
+      <tr>
+        <td><%= due_action.try(:name) %></td>
+        <td><%= due_action.remark %></td>
+        <td><%= due_action.is_confirm ? "Yes" : "No" %></td>
+        <td>
+          <% if due_action.status == false %>
+          <small class="label label-default">Pending</small>
+          <% else %>
+          <small class="label label-success">Clear</small>
+          <% end %>
+        </td>
+        <td><%= due_action.amount %></td>
+      </tr>
+      <%end%><br>
+      <tr>
+        <th>Pending Total</th>
+        <% a=DueAction.where(due_employee_detail_id: due_employee_detail,status: false) %>
+        <th><%= a.sum(:amount) %></th>
+     
+        <th>Clear Total</th>
+        <% b=DueAction.where(due_employee_detail_id: due_employee_detail,status: true) %>
+        <th><%= b.sum(:amount) %></th>
+
+        <th><%= due_employee_detail.due_actions.sum(:amount) %></th>
+      </tr>
+      <tr><th colspan="5"></th></tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>
+</div>

@@ -1,0 +1,43 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>Day</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Duration</th>
+      <th>Facilitator&Presenter</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% i = 0 %>
+    <% @induction_activities.each do |induction_activity| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= induction_activity.activity_date %></td>
+        <td><%= induction_activity.from %></td>
+        <td><%= induction_activity.to %></td>
+        <td><%= induction_activity.duration %></td>
+        <td><%= induction_activity.facilitator_1 %> , <%= induction_activity.facilitator_2 %></td>
+        <td>
+          <% if induction_activity.is_confirm == true %>
+          <small class="label label-info">Confirmed</small>
+          <% else %>
+          <div id="myModal" class="modal fade"></div>
+            <%= link_to '',modal_induction_activity_induction_activities_path(induction_master_id: induction_activity.induction_master_id, induction_activity_id: induction_activity),class: 'btn btn btn-xs btn-success fa fa-edit',remote: true %>
+
+            <%= link_to '',induction_activity, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close' %>
+            <% end %>
+        </td>
+      </tr>
+      <tr>
+        <th colspan="7"><center><strong>Program Agenda</strong></center></th>
+        </tr>
+        <tr>
+        <td colspan="7"><%= induction_activity.program_agenda %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

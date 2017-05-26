@@ -1,0 +1,37 @@
+<%= bootstrap_form_for(@degree,html: {id: 'degree'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Qualification' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+      <%= f.submit "Create Qualification",:class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+$("#degree").validate({
+    rules: {
+      "degree[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "degree[name]":{
+        required: "Please Specify Qualification",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+
+

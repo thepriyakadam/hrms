@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Issue tracker access:</strong>
+  <%= @access_issue_request.issue_tracker_access %>
+</p>
+
+<p>
+  <strong>Issue request:</strong>
+  <%= @access_issue_request.issue_request %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @access_issue_request.status %>
+</p>
+
+<p>
+  <strong>Current status:</strong>
+  <%= @access_issue_request.current_status %>
+</p>
+
+<%= link_to 'Edit', edit_access_issue_request_path(@access_issue_request) %> |
+<%= link_to 'Back', access_issue_requests_path %>

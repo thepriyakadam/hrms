@@ -1,0 +1,47 @@
+<div class="box-header with-border">
+</div><!-- /.box-header --><!-- 
+<div class="box-body"></div> -->
+<table id="example1" class="table table-bordered table-hover table-condensed">
+ <thead>
+    <tr>
+      <th>Base component</th>
+      <th>Minimum wages</th>
+      <th>Effective from</th>
+      <th>Effective to</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <% @dearness_allowances.each do |dearness_allowance| %>
+      <tr>
+        <td>
+          <% i = 0 %>
+          <% dearness_allowance.base_component.split(",").try(:each) do |e| %>
+            <% if i == 0 %>
+              <%= SalaryComponent.find(e.to_i).name %>
+            <% else %>
+              + <%= SalaryComponent.find(e.to_i).name %>
+            <% end %>
+            <% i = i + 1 %>
+          <% end %>
+        </td>
+        <td><%= dearness_allowance.minimum_wages %></td>
+        <td><%= dearness_allowance.effective_from %></td>
+        <td><%= dearness_allowance.effective_to %></td>
+        <td><%= dearness_allowance.is_active ? "Active" : "Inactive" %></td>
+        <td>
+          <% if dearness_allowance.is_confirm == true %>
+            <small class= "label label-primary">Confirmed</small>
+            <%= link_to '', edit_dearness_allowance_path(dearness_allowance) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+          <% else %>
+            <%= link_to '', edit_dearness_allowance_path(dearness_allowance) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+            <%= link_to '',  dearness_allowance, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+            <%= link_to '', is_confirm_dearness_allowances_path(dearness_allowance: dearness_allowance),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

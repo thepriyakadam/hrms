@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Monthly Arrears</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Day</th>
+      <th>Amount</th>
+      <th>Is paid</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @monthly_arrears.each do |monthly_arrear| %>
+      <tr>
+        <td><%= monthly_arrear.employee %></td>
+        <td><%= monthly_arrear.day %></td>
+        <td><%= monthly_arrear.amount %></td>
+        <td><%= monthly_arrear.is_paid %></td>
+        <td><%= monthly_arrear.description %></td>
+        <td><%= link_to 'Show', monthly_arrear %></td>
+        <td><%= link_to 'Edit', edit_monthly_arrear_path(monthly_arrear) %></td>
+        <td><%= link_to 'Destroy', monthly_arrear, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Monthly arrear', new_monthly_arrear_path %>

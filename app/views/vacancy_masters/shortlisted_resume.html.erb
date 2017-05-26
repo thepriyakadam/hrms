@@ -1,0 +1,97 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Schedule Interview</h3>
+    <div class="pull-right">
+    </div>
+    </div>
+
+<p id="notice"><%= notice %></p>
+
+<div class="box-body">
+<table id="example" class="table table-bordered table-hover table-condensed example3">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email Id</th>
+      <th>Job Title</th>
+      <th>Skillset</th>
+      <th>Contact No</th>
+      <th>Status</th>
+<!--       <th>Offer Letter Status</th>
+ -->      <th>Resume</th>
+      <th>Image</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @selected_resumes.each do |selected_resume| %>
+      <tr>
+        <td><%= selected_resume.name %></td>
+        <td><%= selected_resume.email_id %></td>
+        <td><%= selected_resume.job_title %></td>
+        <td><%= selected_resume.skillset %></td>
+        <td><%= selected_resume.contact_no %></td>
+       <td>
+          <% if selected_resume.shortlist_for_interview == true %>
+            <small class="label label-primary">Shortlisted for Interview</small>
+            <% else %>
+            <small class="label label-default">Not Yet Shortlisted</small>
+            <% end %>
+        </td>
+        <!-- <td><= selected_resume.offer_letter_status %> <div id="myModal" class="modal fade"></div>
+          < if selected_resume.status == "Shortlisted" %>
+          <= link_to ' Offer Letter',modal_selected_resumes_path(selected_resume),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>
+          < elsif selected_resume.status == "Interview Scheduled" %>
+          <= link_to ' Offer Letter',modal_selected_resumes_path(selected_resume),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>
+          < else %>
+          < end %>
+          </td> -->
+        <td>
+         <% if selected_resume.avatar_file_name == nil %>
+           <small class="label label-default">Not Available</small>
+             <% else %>
+             <center><%= link_to '',download_resume_path(id: selected_resume.id),class: 'btn btn-xs fa fa-download',target: "_blank" %>
+             <% end %>
+             </center>
+        </td>
+        <td>
+          <% if selected_resume.passport_photo_file_name == nil %>
+              <small class="label label-default">Not Available</small>
+              <% else %>
+              <center><%= link_to '',download_image_path(id: selected_resume.id),class: 'btn btn-xs fa fa-picture-o' %></center>
+              <% end %>
+        </td>
+        <td>
+        <!--<= link_to '', selected_resume, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>-->
+        <% if selected_resume.status == "Interview Scheduled" %>
+        <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
+        <% else %>
+        <% end %>
+           <% if selected_resume.status == "Shortlisted" %>
+          <%= link_to ' Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>
+          <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
+          <!-- < elsif selected_resume.status == "Interview Rescheduled" %>
+          <= link_to ' Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %> -->
+          <% else %>
+          <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
+          <% end %>
+          
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div id="myModal2" class="modal fade"></div>
+    <%= link_to 'Back', vacancy_shortlisted_list_vacancy_masters_path,class:"btn btn-sm btn-default fa fa-arrow-left" %>
+</div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

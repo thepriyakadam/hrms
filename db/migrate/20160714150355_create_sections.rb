@@ -4,6 +4,8 @@ class CreateSections < ActiveRecord::Migration
       t.string :code
       t.text :description
       t.boolean :status
+      t.boolean :is_confirm
+      t.decimal :limit
 
       t.timestamps null: false
     end

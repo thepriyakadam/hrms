@@ -8,8 +8,7 @@ class CreateRembursments < ActiveRecord::Migration
       t.references :rembursmentmaster, index: true, foreign_key: true
       t.decimal :amount , precision: 5, scale: 1
       t.date :paid_date
-      t.boolean :status
-
+      t.string :status
       t.timestamps null: false
     end
   end

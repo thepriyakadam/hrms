@@ -19,6 +19,8 @@ class CreateEmployeeAttendances < ActiveRecord::Migration
       t.decimal :overtime_hrs
       t.decimal :late_mark
       t.string :month_name
+      t.integer :employee_code
+      t.string :employee_name
 
       t.timestamps null: false
     end

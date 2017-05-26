@@ -8,6 +8,8 @@ class CreateInterviewRounds < ActiveRecord::Migration
       t.time :interview_time
       t.string :location
       t.text :schedule_comment
+      t.boolean :is_confirm
+      t.boolean :interview_round_confirm
 
       t.timestamps null: false
     end

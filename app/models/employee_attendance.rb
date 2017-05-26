@@ -50,7 +50,7 @@ class EmployeeAttendance < ActiveRecord::Base
 
   def self.to_txt
     # attributes = %w{employee_id day in out shift_master_id is_proceed present user_id}
-    attributes = %w{employee_id day in_time out_time present}
+    attributes = %w{employee_id employee_code employee_name day in_time out_time present}
 
     CSV.generate(:col_sep => "#") do |csv|
       csv << attributes

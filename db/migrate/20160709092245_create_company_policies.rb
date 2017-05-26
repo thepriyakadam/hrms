@@ -4,8 +4,9 @@ class CreateCompanyPolicies < ActiveRecord::Migration
       t.string :name
       t.date :effective_from
       t.date :effective_to
+
+      t.text :description
       t.boolean :status
-      t.string :document
 
       t.timestamps null: false
     end

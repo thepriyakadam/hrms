@@ -4,6 +4,7 @@ class CreateSlipInformations < ActiveRecord::Migration
       t.references :salaryslip, index: true, foreign_key: true
       t.references :cost_center, index: true, foreign_key: true
       t.references :department, index: true, foreign_key: true
+      t.references :employee_designation, index: true, foreign_key: true
       t.string :contact_no
       t.string :esic_no
       t.string :pf_no
@@ -12,6 +13,7 @@ class CreateSlipInformations < ActiveRecord::Migration
       t.decimal :el
       t.decimal :c_off
       t.decimal :advance
+      t.string :account_no
 
       t.timestamps null: false
     end

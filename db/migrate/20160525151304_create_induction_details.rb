@@ -5,6 +5,7 @@ class CreateInductionDetails < ActiveRecord::Migration
       t.date :start_date
       t.references :induction_master, index: true, foreign_key: true
       t.boolean :induction_completed
+      t.date :end_date
 
       t.timestamps null: false
     end

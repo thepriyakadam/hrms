@@ -4,6 +4,7 @@ class CreateRatings < ActiveRecord::Migration
       t.string :value
       t.text :discription
       t.boolean :is_confirm
+      t.boolean :status
 
       t.timestamps null: false
     end

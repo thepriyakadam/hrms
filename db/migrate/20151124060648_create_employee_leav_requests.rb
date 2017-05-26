@@ -20,8 +20,8 @@ class CreateEmployeeLeavRequests < ActiveRecord::Migration
       t.boolean :is_second_rejected
       t.integer :current_status
       t.string :current_status1
-      t.references :first_reporter, index: true, foreign_key: true
-      t.references :second_reporter, index: true, foreign_key: true
+      t.references :first_reporter
+      t.references :second_reporter
       t.boolean :present_status
 
       t.timestamps null: false

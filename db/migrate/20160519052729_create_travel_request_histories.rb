@@ -6,15 +6,17 @@ class CreateTravelRequestHistories < ActiveRecord::Migration
       t.date :traveling_date
       t.string :tour_purpose
       t.string :place
-      t.decimal :traveling_advance
-      t.decimal :lodging_boarding_advance
-      t.decimal :food_advance
-      t.decimal :extra_advance
       t.decimal :total_advance
       t.references :reporting_master, index: true, foreign_key: true
       t.string :current_status
       t.references :travel_option, index: true, foreign_key: true
 
+       t.references :travel_mode, index: true, foreign_key: true
+       t.references :employee, index: true, foreign_key: true
+
+       t.string :status
+       
+       t.string :daily_bill_status
       t.timestamps null: false
     end
   end

@@ -4,6 +4,8 @@ class CreateSalaryTemplates < ActiveRecord::Migration
       t.string :code
       t.string :description
       t.date :validity_date
+      t.boolean :is_active
+      t.boolean :is_confirm
 
       t.timestamps null: false
     end

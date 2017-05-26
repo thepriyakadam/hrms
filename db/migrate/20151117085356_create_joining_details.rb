@@ -27,9 +27,10 @@ class CreateJoiningDetails < ActiveRecord::Migration
       t.references :cost_center, index: true, foreign_key: true
       t.references :employee_category, index: true, foreign_key: true
       t.references :payment_mode, index: true, foreign_key: true
+      t.string :ot_rate
       t.boolean :ot_option
       t.boolean :is_new,  default: true
-      t.references :replacement, index: true, foreign_key: true
+      t.references :replacement
       t.boolean :have_retention
       t.boolean :is_employeer_pf
       t.boolean :is_employeer_esic

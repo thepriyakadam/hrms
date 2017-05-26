@@ -10,6 +10,8 @@ class CreateAccidentRecords < ActiveRecord::Migration
       t.string :leave_date_range
       t.string :no_of_day
       t.text :description
+      t.references :root_cause_master, index: true, foreign_key: true
+      t.references :department, index: true, foreign_key: true
 
       t.timestamps null: false
     end

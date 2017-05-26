@@ -25,9 +25,11 @@ class EmployeeJcListsController < ApplicationController
   # POST /employee_jc_lists.json
   def create
     @employee_jc_list = EmployeeJcList.new(employee_jc_list_params)
-
+     @employee = Employee.find(params[:id])
     respond_to do |format|
       if @employee_jc_list.save
+
+
         format.html { redirect_to @employee_jc_list, notice: 'Employee jc list was successfully created.' }
         format.json { render :show, status: :created, location: @employee_jc_list }
       else

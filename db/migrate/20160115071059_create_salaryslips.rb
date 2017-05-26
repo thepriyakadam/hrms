@@ -18,6 +18,7 @@ class CreateSalaryslips < ActiveRecord::Migration
       t.references :employee_template, index: true, foreign_key: true
       t.decimal :arrear_actual_amount, precision: 15, scale: 2
       t.decimal :arrear_calculated_amount, precision: 15, scale: 2
+      t.boolean :is_confirm
       t.timestamps null: false
     end
   end

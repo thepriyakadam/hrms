@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  leave_c_off_id: 
+  employee_id: 
+  status: MyString
+
+two:
+  leave_c_off_id: 
+  employee_id: 
+  status: MyString

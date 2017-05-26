@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170520110058) do
+ActiveRecord::Schema.define(version: 20170525131109) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -901,6 +901,8 @@ ActiveRecord::Schema.define(version: 20170520110058) do
     t.integer  "employee_id",              limit: 4
     t.integer  "department_id",            limit: 4
     t.integer  "machine_attendance_id",    limit: 4
+    t.integer  "employee_code",            limit: 4
+    t.string   "employee_name",            limit: 255
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id", using: :btree
@@ -2382,6 +2384,7 @@ ActiveRecord::Schema.define(version: 20170520110058) do
     t.decimal  "leave_count",                  precision: 3, scale: 1
     t.boolean  "is_expire"
     t.boolean  "status"
+    t.string   "current_status",   limit: 255
   end
 
   add_index "leave_c_offs", ["employee_id"], name: "index_leave_c_offs_on_employee_id", using: :btree
@@ -3579,6 +3582,17 @@ ActiveRecord::Schema.define(version: 20170520110058) do
 
   add_index "states", ["country_id"], name: "index_states_on_country_id", using: :btree
 
+  create_table "status_c_offs", force: :cascade do |t|
+    t.integer  "leave_c_off_id", limit: 4
+    t.integer  "employee_id",    limit: 4
+    t.string   "status",         limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "status_c_offs", ["employee_id"], name: "index_status_c_offs_on_employee_id", using: :btree
+  add_index "status_c_offs", ["leave_c_off_id"], name: "index_status_c_offs_on_leave_c_off_id", using: :btree
+
   create_table "texable_amounts", force: :cascade do |t|
     t.integer  "employee_id",      limit: 4
     t.decimal  "yearly",                     precision: 10
@@ -4324,6 +4338,8 @@ ActiveRecord::Schema.define(version: 20170520110058) do
   add_foreign_key "slip_informations", "salaryslips"
   add_foreign_key "society_member_ships", "employees"
   add_foreign_key "states", "countries"
+  add_foreign_key "status_c_offs", "employees"
+  add_foreign_key "status_c_offs", "leave_c_offs"
   add_foreign_key "texable_amounts", "employees"
 <<<<<<< HEAD
   add_foreign_key "texable_monthly_deductions", "employees"

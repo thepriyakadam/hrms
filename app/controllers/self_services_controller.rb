@@ -106,6 +106,7 @@ class SelfServicesController < ApplicationController
   end
 
   def leave_c_off
+    session[:active_tab] ="EmployeeSelfService"
     @leave_c_off = LeaveCOff.new
     @leave_c_offs = LeaveCOff.where(employee_id: current_user.employee_id)
   end
@@ -137,10 +138,13 @@ class SelfServicesController < ApplicationController
         end#c_off.nil?
 
         if @c_off_type == 'Full Day'
-          LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false)
+
+          @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending")
+          StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
           flash[:notice] = "Your COff Created Successfully!"
         else
-          LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false)
+          @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending")
+          StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
           flash[:notice] = "Your COff Created Successfully!"
         end#@c_off_type
       end#leav_category.nil?

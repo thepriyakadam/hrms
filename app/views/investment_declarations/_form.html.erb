@@ -1,23 +1,30 @@
 <%= bootstrap_form_for(@investment_declaration,html: {id: 'investment_declaration'}) do |f| %>
-     <%= hidden_field_tag :authenticity_token, form_authenticity_token %> 
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %> 
       <div class="row">
         <div class="col-sm-3">
-            <div class="form-group required">
-             <%= f.select :employee_id, employee_list_for_food_deduction, {include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+          <div class="form-group required">
+           <%= f.select :employee_id, employee_list_for_food_deduction, {include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
           </div>
-          </div>
+        </div>
         <div class="col-sm-3">
-            <div class="form-group required">
-               <%= f.select :investment_head_id, investment_head_all, {label:'Investment Head',include_blank: " Select Investment Head"} %>
-            </div>
+          <div class="form-group required">
+             <%= f.select :investment_head_id, investment_head_all, {label:'Investment Head',include_blank: " Select Investment Head"} %>
+          </div>
         </div>
 
-          <div class="col-sm-3">
-            <div class="form-group required">
-              <%= f.text_field :amount,label:'Amount', placeholder: 'Amount' %>
-            </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :document_name,label:'Document Name', placeholder: 'Document Name' %>
           </div>
-         
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :amount,label:'Amount', placeholder: 'Amount' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
             <div class="input-group">
@@ -28,26 +35,24 @@
             </div>
           </div>
         </div> 
-      </div>
-     <div class="row">
-      <div class="col-sm-3">
-     <label>Status</label>
-      <div class="field">       
-        <%= f.check_box :status,label:'Active' %>
-      </div>
-    </div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.file_field :document,label: 'Document(doc,docx,pdf only)' %>
-        </div>
-       </div>
-          <div class="col-sm-3">
-          <label></label>
-            <div class="actions">
-              <%= f.submit 'Create Investment Declaration',:class => class_name, data: { disable_with: data_info } %>
-            </div>
-            </div>
+        <div class="col-sm-3">
+          <label>Status</label>
+          <div class="field">       
+            <%= f.check_box :status,label:'Active' %>
           </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.file_field :document,label: 'Document(doc,docx,pdf only)' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <label></label>
+          <div class="actions">
+            <%= f.submit 'Create Investment Declaration',:class => class_name, data: { disable_with: data_info } %>
+          </div>
+        </div>
+      </div>
  <% end %>
 
 <script type="text/javascript">

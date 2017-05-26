@@ -39,7 +39,7 @@
               <p>
                 <% if current_user.class == Member %>
                   <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:last_name) %><br>
-                  <small> <%= current_user.employee.joining_detail.employee_designation.try(:name) %></small>
+                  <small> <%= current_user.employee.try(:joining_detail).try(:employee_designation).try(:name) %></small>
                 <%else%>
                   <%= current_user.subdomain %> - <%= current_user.class %>
                 <%end%>
@@ -50,16 +50,20 @@
           <!-- search form (Optional) -->
           <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
+             <% if current_user.class == Member %>
              <% if current_user.employee.company.company_logo_file_name == nil %>
               <small class="label label-default">Not Available</small>
               <% else %>
               <!-- <center><= link_to '',download_company_logo_path(@company),class: 'btn btn-xs fa fa-picture-o' %></center> -->
               <%= image_tag current_user.employee.company.company_logo.url, :size => "210x60" %>
               <%end %>
-              <!-- <input type="text" name="q" class="form-control" placeholder="Search...">
+              <%else%>
+                  <input type="text" name="q" class="form-control" placeholder="Search...">
               <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
-              </span> -->
+              </span>
+                <%end%>
+             
             </div>
           </form>
           <!-- /.search form -->

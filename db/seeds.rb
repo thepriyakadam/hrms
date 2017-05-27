@@ -602,7 +602,7 @@ require 'roo'
 #  end
 #  end
 
-#===========================
+# ===========================
 
 
 ex = Roo::Excel.new("#{Rails.root}/public/mdindia.xls")
@@ -610,7 +610,7 @@ ex.default_sheet = ex.sheets[2]
 j = 1
 gross_salary = 0
 ActiveRecord::Base.transaction do
-2.upto(9497) do |line|
+5.upto(9497) do |line|
   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
 
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)

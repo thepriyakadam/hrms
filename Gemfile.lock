@@ -379,7 +379,7 @@ DEPENDENCIES
   pry
   query_report
   quiet_assets
-  rack-timeout (~> 0.4.2)
+  rack-timeout
   rails (= 4.2.4)
   rails-erd
   rake (~> 12.0)

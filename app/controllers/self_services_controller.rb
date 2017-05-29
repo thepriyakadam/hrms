@@ -138,14 +138,15 @@ class SelfServicesController < ApplicationController
         end#c_off.nil?
 
         if @c_off_type == 'Full Day'
-
           @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending")
           StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
           flash[:notice] = "Your COff Created Successfully!"
+          COffMailer.pending(@leave_c_off).deliver_now
         else
           @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending")
           StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
           flash[:notice] = "Your COff Created Successfully!"
+          COffMailer.pending(@leave_c_off).deliver_now
         end#@c_off_type
       end#leav_category.nil?
     end#@leave_c_off.is_self_present?

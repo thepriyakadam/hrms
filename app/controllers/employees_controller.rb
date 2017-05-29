@@ -564,12 +564,12 @@ end
 
   def collect_department
      @company_location = CompanyLocation.find(params[:id])
-      if current_user.role.name == 'HOD' ||  current_user.role.name == 'Supervisor'
-        @departments = Department.where(id: current_user.department_id)
-      else
+      # if current_user.role.name == 'HOD' ||  current_user.role.name == 'Supervisor'
+      #   @departments = Department.where(id: current_user.department_id)
+      # else
          @departments = Department.where(company_location_id: @company_location.id)
          @form = params[:form]
-      end
+      # end
   end
 
   def collect_employee

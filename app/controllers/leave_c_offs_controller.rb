@@ -269,7 +269,6 @@ class LeaveCOffsController < ApplicationController
       StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FinalApproved") 
       COffMailer.first_approved_without_manager(@leave_c_off).deliver_now 
     else
-      byebug
       @leave_c_off.update(c_off_expire_day: c_off_expire_day,expiry_date: @expiry_date,current_status: "FirstApproved")
       StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FirstApproved")
       COffMailer.first_approved(@leave_c_off).deliver_now

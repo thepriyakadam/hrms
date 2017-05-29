@@ -6,6 +6,9 @@ class CreateEsicMasters < ActiveRecord::Migration
       t.date :date_effective
       t.decimal :max_limit, :decimal, precision: 15, scale: 2, default: 0
       t.string :base_component
+      t.date :to_date
+
+      t.boolean :is_active
       t.boolean :is_confirm
 
       t.timestamps null: false

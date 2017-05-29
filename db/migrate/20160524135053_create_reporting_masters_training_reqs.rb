@@ -4,6 +4,7 @@ class CreateReportingMastersTrainingReqs < ActiveRecord::Migration
       t.references :training_request, index: true, foreign_key: true
       t.references :reporting_master, index: true, foreign_key: true
       t.string :training_status
+      t.string :employee_training
 
       t.timestamps null: false
     end

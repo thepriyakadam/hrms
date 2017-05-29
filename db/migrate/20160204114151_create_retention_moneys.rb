@@ -7,6 +7,12 @@ class CreateRetentionMoneys < ActiveRecord::Migration
       t.string :description
       t.boolean :is_confirm
 
+    t.decimal :persent
+    t.string :max_limit
+    t.string :base_component
+    t.boolean :is_active
+    t.string :is_persent
+
       t.timestamps null: false
     end
   end

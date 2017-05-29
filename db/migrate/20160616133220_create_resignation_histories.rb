@@ -17,7 +17,11 @@ class CreateResignationHistories < ActiveRecord::Migration
       t.boolean :has_left
       t.boolean :notice_served
       t.boolean :rehired
-      t.integer :leaving_reason_id
+      t.references :leaving_reason, index: true, foreign_key: true
+      t.references :employee, index: true, foreign_key: true
+      
+
+      t.string :resign_status
 
       t.timestamps null: false
     end

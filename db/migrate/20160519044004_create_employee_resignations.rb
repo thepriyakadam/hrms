@@ -16,6 +16,22 @@ class CreateEmployeeResignations < ActiveRecord::Migration
       t.boolean :has_left
       t.boolean :notice_served
       t.boolean :rehired
+      t.string :resign_status
+      t.references :leaving_reason, index: true, foreign_key: true
+      t.references :reporting_master, index: true, foreign_key: true
+      t.boolean :is_stop_pay_request
+
+      t.references :second_reporter
+      t.references :final_reporter
+      t.boolean :is_pending
+      t.boolean :is_first_approved
+      t.boolean :is_second_approved
+      t.boolean :is_final_approved
+      t.boolean :is_cancelled
+      t.boolean :is_first_rejected
+      t.boolean :is_second_rejected
+      t.boolean :is_final_rejected
+      t.datetime :application_date
 
       t.timestamps null: false
     end

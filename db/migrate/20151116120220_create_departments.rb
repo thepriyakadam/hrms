@@ -8,6 +8,7 @@ class CreateDepartments < ActiveRecord::Migration
       t.string :name
       t.references :department_type, index: true, foreign_key: true
       t.string :contact_no
+      t.boolean :is_confirm
 
       t.timestamps null: false
     end

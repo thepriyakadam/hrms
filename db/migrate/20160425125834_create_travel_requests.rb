@@ -7,9 +7,19 @@ class CreateTravelRequests < ActiveRecord::Migration
       t.text :tour_purpose
       t.string :place
       t.decimal :traveling_advance, precision: 15, scale: 2, default: 0
-      t.decimal :lodging_boarding_advance, precision: 15, scale: 2, default: 0
-      t.decimal :extra_advance, precision: 15, scale: 2, default: 0
-      t.decimal :total_advance, precision: 15, scale: 2, default: 0
+      t.references :reporting_master, index: true, foreign_key: true
+      t.string :current_status
+      t.references :travel_option, index: true, foreign_key: true
+      t.references :travel_mode, index: true, foreign_key: true
+      t.text :daily_bill_status
+      t.date :to
+      t.string :day
+
+      t.decimal :expense
+
+      t.boolean :is_confirm
+
+      t.text :comment
 
       t.timestamps null: false
     end

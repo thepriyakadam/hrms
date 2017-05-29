@@ -11,8 +11,8 @@ class CreateVacancyRequestHistories < ActiveRecord::Migration
       t.references :employee_designation, index: true, foreign_key: true
       t.references :company_location, index: true, foreign_key: true
       t.references :degree, index: true, foreign_key: true
-      t.references :degree_1, index: true, foreign_key: true
-      t.references :degree_2, index: true, foreign_key: true
+      t.references :degree_1
+      t.references :degree_2
       t.string :experience
       t.string :keyword
       t.string :other_organization

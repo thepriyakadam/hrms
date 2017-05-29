@@ -31,12 +31,13 @@ class CreateEmployees < ActiveRecord::Migration
       t.string :handicap
       t.string :handicap_type
       t.string :status
-      t.references :manager, index: true
-      t.references :manager_2, index: true, foreign_key: true
+      t.references :manager
+      t.references :manager_2
       t.references :company, index: true, foreign_key: true
       t.references :company_location, index: true, foreign_key: true
       t.references :department, index: true, foreign_key: true
-      t.references :punch_card, index: true, foreign_key: true
+      t.references :punch_card
+      t.references :employee_code_master, index: true, foreign_key: true
     
       t.timestamps null: false
     end

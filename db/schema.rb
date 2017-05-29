@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170529095137) do
+ActiveRecord::Schema.define(version: 20170529115353) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -3413,13 +3413,14 @@ ActiveRecord::Schema.define(version: 20170529095137) do
   create_table "salaryslip_components", force: :cascade do |t|
     t.integer  "salaryslip_id",        limit: 4
     t.integer  "salary_component_id",  limit: 4
-    t.decimal  "actual_amount",                  precision: 15, scale: 2
-    t.decimal  "calculated_amount",              precision: 15, scale: 2
+    t.decimal  "actual_amount",                    precision: 15, scale: 2
+    t.decimal  "calculated_amount",                precision: 15, scale: 2
     t.boolean  "is_deducted"
     t.integer  "employee_template_id", limit: 4
     t.boolean  "is_arrear"
-    t.datetime "created_at",                                              null: false
-    t.datetime "updated_at",                                              null: false
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
+    t.string   "other_component_name", limit: 255
   end
 
   add_index "salaryslip_components", ["employee_template_id"], name: "index_salaryslip_components_on_employee_template_id", using: :btree

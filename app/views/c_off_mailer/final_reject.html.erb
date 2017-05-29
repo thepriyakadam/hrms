@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h4>C.Off Request Rejected</h4>
+    <p>
+      Your C.Off request is Rejected by Manager <br>
+      Employee ID : <%= @manager.manual_employee_code %><br>
+      Employee Name : <%= @manager.first_name.to_s+' '+@manager.last_name.to_s %><br>
+      Date : <%= @c_off_request.c_off_date.to_date %><br>
+      C.Off Type : <%= @c_off_request.c_off_type %>
+    </p>
+  </body>
+</html>

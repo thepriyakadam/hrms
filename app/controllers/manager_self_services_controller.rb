@@ -109,6 +109,8 @@ class ManagerSelfServicesController < ApplicationController
   end
 
   def investment_declaration
+   session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] = "IncomeTax"
     @emp = InvestmentDeclaration.where(status: true,is_confirm: false).pluck(:employee_id)
     @employees = Employee.where(status: 'Active',id: @emp)
   end
@@ -130,12 +132,15 @@ class ManagerSelfServicesController < ApplicationController
   end
 
   def leave_c_off
+    session[:active_tab] ="ManagerSelfService"
     current_login = Employee.find_by(id: current_user.employee_id)
     @sub = current_login.subordinates
     @ind_sub = current_login.indirect_subordinates
 
     @emp = @sub + @ind_sub
-    @employees = LeaveCOff.where(employee_id: @emp,is_taken: false,status: false,is_expire: false)
+    @leave_c_off_pending = LeaveCOff.where(employee_id: @sub,is_taken: false,status: false,is_expire: false,current_status: "Pending")
+    @leave_c_off_first_approved = LeaveCOff.where(employee_id: @ind_sub,is_taken: false,status: false,is_expire: false,current_status: "FirstApproved")
+
   end
 
 

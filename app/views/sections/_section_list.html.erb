@@ -3,6 +3,7 @@
     <tr>  
       <th>Code</th>
       <th>Description</th>
+      <th>Limit</th>
       <th>Status</th>
       <th>Action</th>
  
@@ -11,6 +12,7 @@
       <tr>
         <td><%= section.code %></td>
         <td><%= section.description %></td>
+        <td><%= section.limit %></td>
          <td><%= section.status ? "Active" : "Inactive" %></td>
         <td>
            <%= link_to '', edit_section_path(section),class: 'btn btn-success btn-xs fa fa-edit',remote:true %> 

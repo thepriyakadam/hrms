@@ -3,8 +3,11 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 # Use mysql as the database for Active Record
+
 gem 'mysql2', '~> 0.3.18'
  #gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
+
+gem "rack-timeout", require:"rack/timeout/base"
 
 gem 'ruby-graphviz', '~> 1.2', '>= 1.2.2'
 
@@ -20,6 +23,20 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'whenever', '~> 0.9.4',:require => false
 gem 'geocoder'
 gem 'therubyracer', platforms: :ruby
+gem 'query_report'
+gem 'kaminari', '~> 0.16.3'
+gem 'coderay'
+gem 'bootstrap-datepicker-rails'
+gem 'awesome_print'
+gem 'datagrid', '~> 1.4', '>= 1.4.1'
+gem 'quiet_assets'
+
+gem 'tzinfo-data', '~> 1.2016', '>= 1.2016.10'
+
+gem 'paperclip', '~> 4.3', '>= 4.3.6'
+
+gem 'mime-types-data', '~> 3.2016', '>= 3.2016.0521'
+gem 'globalid', '~> 0.3.7'
 
 gem 'query_report'
 gem 'kaminari', '~> 0.16.3'
@@ -69,9 +86,13 @@ gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
 #inline edit
 gem 'best_in_place', '~> 3.0.1'
 
+gem 'bcrypt-ruby', '~> 3.0.0', :require => 'bcrypt'
+gem 'bcrypt'
+
 # gem 'backup', '~> 4.4'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+
 
 # Use Unicorn as the app server
 # gem 'unicorn'
@@ -91,7 +112,7 @@ group :development do
 	# Access an IRB console on exception pages or by using <%= console %> in views
 	gem 'web-console', '~> 2.0'
 	# Rails console table print
-   gem 'table_print'
+	gem 'table_print'
 	gem 'wirble'
 	gem 'hirb'
 	# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

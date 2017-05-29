@@ -430,6 +430,9 @@ end
       get :send_for_approval
       get :cancel_request
       get :delete_request
+      get :datewise_report
+      post :show_datewise_report
+      get :show_datewise_report
     end
   end
   resources :investment_heads
@@ -1258,8 +1261,11 @@ end
       get :search_by_c_off_date
       get :add_coff
       get :destroy_self
-      get :approve_c_off
+      post :approve_c_off
       get :reject_c_off
+      get :approve_modal
+      get :final_approve
+      get :final_reject
     end
   end
 
@@ -1769,7 +1775,7 @@ end
       get :current_template
       get :employee_list
       post :show_current_template
-      get :current_template
+      get :employees_current_template
     end
   end
 

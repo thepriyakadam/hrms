@@ -20,8 +20,21 @@ class ReportingMaster < ActiveRecord::Base
  # belongs_to :manager_2, class_name: 'Employee'
  # belongs_to :manager, class_name: 'Employee'
 
+
   belongs_to :reporting_master, class_name: 'Employee'
   validates :employee_id, presence: true, uniqueness: { case_sensitive: false }
+  
+  before_destroy :check_for_employee
+
+  private
+
+  def check_for_orders
+    if orders.count > 0
+      errors.add_to_base("cannot delete customer while orders exist")
+      return false
+    end
+  end
+
  end
 
  

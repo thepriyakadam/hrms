@@ -1732,54 +1732,54 @@ end
   end
 
   def dynamic_daterange_report
-    # byebug
+    #byebug
     start_date = params[:salaryslip][:start_date].to_date
     end_date = params[:salaryslip][:end_date].to_date
     @company = params[:salaryslip][:company_id]
     @location = params[:food_deduction][:company_location_id]
     if current_user.class == Group
-      if @location == ""
-          @employees = Employee.where(company_id: @company.to_i)
+        if @company == ""
+          @employees = Employee.where(status: "Active").pluck(:id)
           @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
-        elsif @company == ""
-          @employees = Employee.where(company_location_id: @location.to_i)
+        elsif @location == ""
+          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
         else 
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i)
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
         end
     elsif current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
-        if @location == ""
-          @employees = Employee.where(company_id: @company.to_i)
+        if  @company == ""
+          @employees = Employee.where(status: "Active").pluck(:id)
           @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
-        elsif @company == ""
-          @employees = Employee.where(company_location_id: @location.to_i)
+        elsif @location == ""
+          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
         else 
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i)
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
         end
        elsif current_user.role.name == 'Admin'
-        if @location == ""
-          @employees = Employee.where(company_id: @company.to_i)
+        if @company == ""
+          @employees = Employee.where(status: "Active").pluck(:id)
           @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
-        elsif @company == ""
-          @employees = Employee.where(company_location_id: @location.to_i)
+        elsif @location == ""
+          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
         else 
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i)
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
         end
         elsif current_user.role.name == 'Branch'
-        if @location == ""
-          @employees = Employee.where(company_location_id: current_user.company_location_id)
+        if @company == ""
+          @employees = Employee.where(status: "Active").pluck(:id)
           @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
-        elsif @company == ""
-          @employees = Employee.where(company_location_id: @location.to_i)
+        elsif @location == ""
+          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
         else 
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i)
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'HOD'

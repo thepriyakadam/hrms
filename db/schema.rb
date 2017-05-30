@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170530090410) do
+ActiveRecord::Schema.define(version: 20170530091323) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -2375,7 +2375,8 @@ ActiveRecord::Schema.define(version: 20170530090410) do
     t.datetime "updated_at",                                                           null: false
     t.decimal  "leave_count",                  precision: 3, scale: 1
     t.boolean  "is_expire"
-    t.string   "status",           limit: 255
+    t.string   "current_status",   limit: 255
+    t.boolean  "status"
   end
 
   add_index "leave_c_offs", ["employee_id"], name: "index_leave_c_offs_on_employee_id", using: :btree

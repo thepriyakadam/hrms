@@ -34,6 +34,7 @@ class IssueRequestsController < ApplicationController
 
 
   def create
+     # byebug
    @issue_request = IssueRequest.new(issue_request_params)
     respond_to do |format|
       if @issue_request.save
@@ -112,9 +113,10 @@ class IssueRequestsController < ApplicationController
   end
 
   def lock_request_list 
+    # byebug
     if @issue_tracker_member = IssueTrackerMember.where(employee_id: current_user.employee_id)
     if @issue_tracker_member_id = IssueTrackerMember.find_by(employee_id: current_user.employee_id)
-    @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member_id.issue_tracker_group_id,status: false)   
+    @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member_id.issue_tracker_group_id,status: nil)   
     else
       redirect_to issue_requests_path
       # flash[:alert] = "This Member Is Not Present In Member List To Solve Support "
@@ -129,6 +131,7 @@ class IssueRequestsController < ApplicationController
   end
 
   def lock_request
+    # byebug
      @issue_request = IssueRequest.find(params[:id])
      @issue_tracker_member = params[:issue_request][:issue_tracker_member_id]
      IssueRequest.where(id: @issue_request.id).update_all(issue_tracker_member_id: @issue_tracker_member)

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h4>C.Off Request Approved</h4>
+    <p>
+      
+      ID : <%= @manager1.manual_employee_code %><br>
+      Employee Name : <%= @manager1.first_name.to_s+' '+@manager1.last_name.to_s %><br>
+      First Approved
+
+      You have one leave request from <br>
+      
+      Employee ID : <%= @c_off_request.employee.manual_employee_code %><br>
+      Employee Name : <%= @c_off_request.employee.first_name.to_s+' '+@c_off_request.employee.last_name.to_s %><br>
+      Date : <%= @c_off_request.c_off_date.to_date %><br>
+      C.Off Type : <%= @c_off_request.c_off_type %>
+    </p>
+  </body>
+</html>

@@ -570,6 +570,116 @@ class WorkingdaysController < ApplicationController
         end
   end
 
+  def datewise_workingday
+  end
+
+  def show_datewise_workingday
+    @from = params[:employee][:from]
+    @to = params[:employee][:to]
+    @company_id = params[:employee][:company_id]
+    @location = params[:employee][:company_location_id]
+    @department = params[:employee][:department_id]
+    payroll_period = PayrollPeriod.where(status: true).take
+
+    if @from == payroll_period.from.to_date && @to == payroll_period.to.to_date
+      if current_user.class == Group
+        if @company_id == ""
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date)
+        elsif @location == ""
+          @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+        elsif @department == ""
+          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+        else
+          @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+        end
+      elsif current_user.class == Member
+        if current_user.role.name == 'GroupAdmin'
+          if @company_id == ""
+            @employees = Employee.where(status: 'Active')
+            @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          elsif @location == ""
+            @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          elsif @department == ""
+            @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          else
+            @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          end
+        elsif current_user.role.name == 'Admin'
+          if @company_id == ""
+            @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          elsif @location == ""
+            @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          elsif @department == ""
+            @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          else
+            @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          end
+        elsif current_user.role.name == 'Branch'
+          if @company_id == "" || @location == ""
+            @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          elsif @department == ""
+            @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          else
+            @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          end
+        elsif current_user.role.name == 'HOD'
+          if @company_id == "" || @location == "" || @department == ""
+            @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          else 
+            @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          end
+        elsif current_user.role.name == 'Supervisor'
+          if @company_id == "" || @location == "" || @department == ""
+            @emp = Employee.find(current_user.employee_id)
+            @employees = @emp.subordinates
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+         else
+            @emp = Employee.find(current_user.employee_id)
+            @employees = @emp.subordinates
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          end
+        elsif current_user.role.name == 'Employee'
+        end #current_user.role
+      end #current_user.class
+    else
+      flash[:alert] = "Please Select Date Within payroll Period!"
+    end
+      # respond_to do |format|
+      # format.js
+      # format.xls {render template: 'workingdays/datewise_workingday.xls.erb'}
+      # format.html
+      # format.pdf do
+      #   render pdf: 'show_datewise_report',
+      #         layout: 'pdf.html',
+      #         orientation: 'Landscape',
+      #         template: 'workingdays/datewise_workingday.pdf.erb',
+      #         # show_as_html: params[:debug].present?,
+      #         :page_height      => 1000,
+      #         :dpi              => '300',
+      #         :margin           => {:top    => 10, # default 10 (mm)
+      #                       :bottom => 10,
+      #                       :left   => 20,
+      #                       :right  => 20},
+      #         :show_as_html => params[:debug].present?
+      #     end
+      #    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

@@ -1747,6 +1747,9 @@ end
       get :revert_workingday_datewise
       get :show_employee_datewise
       post :revert_workingday
+      get :datewise_workingday
+      post :show_datewise_workingday
+      get :show_datewise_workingday
     end
   end
 

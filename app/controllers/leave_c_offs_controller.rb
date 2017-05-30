@@ -256,7 +256,7 @@ class LeaveCOffsController < ApplicationController
     expiry_status = params[:leave_c_off][:expiry_status]
     @leave_c_off.update(expiry_status: expiry_status)
     c_off_expire_day = params[:leave_c_off][:c_off_expire_day]
-    leav_category = LeavCategory.find_by_name('C.Off')
+    # leav_category = LeavCategory.find_by_name('C.Off')
     if @leave_c_off.expiry_status == true
       @expiry_date = @leave_c_off.c_off_date + c_off_expire_day.to_i
     else

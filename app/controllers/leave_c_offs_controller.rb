@@ -266,11 +266,13 @@ class LeaveCOffsController < ApplicationController
     if @leave_c_off.employee.manager_2_id == nil
       #@status_c_off.update(employee_id: current_user.employee_id,status: "Approved")
       @leave_c_off.update(c_off_expire_day: c_off_expire_day,expiry_date: @expiry_date,current_status: "FinalApproved")
-      StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FinalApproved")  
+      StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FinalApproved") 
+      COffMailer.first_approved_without_manager(@leave_c_off).deliver_now 
     else
-      #@status_c_off.update(employee_id: current_user.employee_id,status: "FirstApproved")
+      byebug
       @leave_c_off.update(c_off_expire_day: c_off_expire_day,expiry_date: @expiry_date,current_status: "FirstApproved")
       StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FirstApproved")
+      COffMailer.first_approved(@leave_c_off).deliver_now
     end
      @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
       @c_off.each do |l|
@@ -290,6 +292,7 @@ class LeaveCOffsController < ApplicationController
     @leave_c_off.destroy
     #StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FirstRejected")
     flash[:notice] = "Rejected successfully"
+    COffMailer.first_reject(@leave_c_off).deliver_now
     redirect_to leave_c_off_manager_self_services_path
   end
 
@@ -297,7 +300,7 @@ class LeaveCOffsController < ApplicationController
     @leave_c_off = LeaveCOff.find(params[:format])
     leav_category = LeavCategory.find_by_name('C.Off')
 
-      @leave_c_off.update(current_status: "FinalApproved")
+      @leave_c_off.update(status: true,current_status: "FinalApproved")
       StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FinalApproved")
       is_exist = EmployeeLeavBalance.exists?(employee_id: @leave_c_off.employee_id, leav_category_id: leav_category.id)
       if is_exist
@@ -375,15 +378,19 @@ class LeaveCOffsController < ApplicationController
           end #do
       end #is_exist
     flash[:notice] = "Approved successfully"
+    COffMailer.final_approved(@leave_c_off).deliver_now
     redirect_to leave_c_off_manager_self_services_path
   end
 
 
   def final_reject
     @leave_c_off = LeaveCOff.find(params[:format])
+    @status_c_off = StatusCOff.where(leave_c_off_id: @leave_c_off.id)
+    @status_c_off.destroy_all
     @leave_c_off.destroy
     #StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FinalRejected")
     flash[:notice] = "Rejected successfully"
+    COffMailer.final_reject(@leave_c_off).deliver_now
     redirect_to leave_c_off_manager_self_services_path
   end
 

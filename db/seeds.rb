@@ -430,7 +430,7 @@ require 'roo'
 # ex.default_sheet = ex.sheets[0] 
 # i=1
 
-# 2.upto(9497) do |line|
+# 2.upto(5000) do |line|
 # Employee.new do |e|
 #   e.manual_employee_code = ex.cell(line,'A').to_i
 #   e.first_name = ex.cell(line,'B')
@@ -605,6 +605,7 @@ end
 # ===========================
 
 
+<<<<<<< HEAD
 # ex = Roo::Excel.new("#{Rails.root}/public/mdindia.xls")
 # ex.default_sheet = ex.sheets[2]
 # j = 1
@@ -612,6 +613,15 @@ end
 # ActiveRecord::Base.transaction do
 # 5.upto(9497) do |line|
 #   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+=======
+ex = Roo::Excel.new("#{Rails.root}/public/mdindia.xls")
+ex.default_sheet = ex.sheets[2]
+j = 1
+gross_salary = 0
+ActiveRecord::Base.transaction do
+2.upto(5000) do |line|
+  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+>>>>>>> 0c1bcd5bbd3ba1c79c867bc79aafd7a17218a20e
 
 #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   
@@ -665,10 +675,17 @@ end
 
 #       puts "Medical Allowance..................Salary"
 
+<<<<<<< HEAD
 #   elsif t.salary_component.name == "Other Allowance"
 #       est.monthly_amount = ex.cell(line,'G') unless ex.cell(line,'G').nil?
 #       est.annual_amount = est.monthly_amount.to_i * 12
 #       gross_salary = gross_salary + ex.cell(line,'G').to_i
+=======
+  elsif t.salary_component.name == "Bonus"
+      est.monthly_amount = ex.cell(line,'G') unless ex.cell(line,'G').nil?
+      est.annual_amount = est.monthly_amount.to_i * 12
+      gross_salary = gross_salary + ex.cell(line,'G').to_i
+>>>>>>> 0c1bcd5bbd3ba1c79c867bc79aafd7a17218a20e
 
 #       puts "Bonus Allowance..................Salary"
 

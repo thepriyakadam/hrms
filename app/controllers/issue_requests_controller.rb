@@ -159,10 +159,10 @@ class IssueRequestsController < ApplicationController
 
   def unlock_request
     @issue_request = IssueRequest.find(params[:format])
-    @issue_request.update(issue_tracker_member_id: nil,status: false)
+    @issue_request.update(issue_tracker_member_id: nil,status: nil)
     @issue_locker = IssueLocker.where(issue_request_id: @issue_request.id).take
-    IssueLocker.where(issue_request_id: @issue_request.id).update_all(status: false)
-    IssueLockerHistory.create(issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_locker_id: @issue_locker.id,issue_request_id: @issue_request.id,status: false)
+    IssueLocker.where(issue_request_id: @issue_request.id).update_all(status: nil)
+    IssueLockerHistory.create(issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_locker_id: @issue_locker.id,issue_request_id: @issue_request.id,status: nil)
     flash[:notice] = "Support Request Unlocked Successfully"
     redirect_to lock_request_list_issue_requests_path
   end
@@ -199,7 +199,7 @@ class IssueRequestsController < ApplicationController
   def resend_request
     @issue_request = IssueRequest.find(params[:format])
     IssueRequest.where(id: @issue_request.id).update_all(status: nil,issue_tracker_member_id: nil,issue_root_cause_id: nil,effort_time: nil,comment: nil) 
-    IssueHistory.create(issue_tracker_group_id: @issue_request.issue_tracker_group_id,issue_request_id: @issue_request.id,issue_master_id: @issue_request.issue_master_id,description: @issue_request.description,date: @issue_request.date,time: @issue_request.time,employee_id: @issue_request.employee_id,issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_priority: @issue_request.issue_priority,status: false)
+    IssueHistory.create(issue_tracker_group_id: @issue_request.issue_tracker_group_id,issue_request_id: @issue_request.id,issue_master_id: @issue_request.issue_master_id,description: @issue_request.description,date: @issue_request.date,time: @issue_request.time,employee_id: @issue_request.employee_id,issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_priority: @issue_request.issue_priority,status: nil)
     # IssueRequestMailer.issue_resend(@issue_request).deliver_now
     flash[:notice] = "Resend Request Successfully"
     redirect_to solved_issues_issue_requests_path

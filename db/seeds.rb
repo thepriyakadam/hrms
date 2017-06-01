@@ -430,7 +430,7 @@ require 'roo'
 # ex.default_sheet = ex.sheets[0] 
 # i=1
 
-# 2.upto(9497) do |line|
+# 2.upto(5000) do |line|
 # Employee.new do |e|
 #   e.manual_employee_code = ex.cell(line,'A').to_i
 #   e.first_name = ex.cell(line,'B')
@@ -610,8 +610,9 @@ end
 # j = 1
 # gross_salary = 0
 # ActiveRecord::Base.transaction do
-# 5.upto(9497) do |line|
+# 2.upto(5000) do |line|
 #   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+
 
 #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   
@@ -665,10 +666,11 @@ end
 
 #       puts "Medical Allowance..................Salary"
 
-#   elsif t.salary_component.name == "Other Allowance"
-#       est.monthly_amount = ex.cell(line,'G') unless ex.cell(line,'G').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       gross_salary = gross_salary + ex.cell(line,'G').to_i
+
+  # elsif t.salary_component.name == "Bonus"
+  #     est.monthly_amount = ex.cell(line,'G') unless ex.cell(line,'G').nil?
+  #     est.annual_amount = est.monthly_amount.to_i * 12
+  #     gross_salary = gross_salary + ex.cell(line,'G').to_i
 
 #       puts "Bonus Allowance..................Salary"
 

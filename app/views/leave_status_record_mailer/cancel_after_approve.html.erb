@@ -7,8 +7,8 @@
     <h4>Leave Request Cancelled</h4>
     <p>
       Leave request is Cancel after approved by
-      Employee ID : <%= @current_emp.manual_employee_code %><br>
-      Employee Name : <%= @current_emp.first_name.to_s+' '+@current_emp.last_name.to_s %><br>
+      ID : <%= @current_emp.manual_employee_code %><br>
+      Employee : <%= @current_emp.first_name.to_s+' '+@current_emp.last_name.to_s %><br>
       Date <%= @particular_leave_record.leave_date.to_date %><br>
     </p>
   </body>

@@ -26,6 +26,8 @@ class Employee < ActiveRecord::Base
   has_many :interview_reschedules
   has_many :qualifications
   has_many :employee_leav_requests
+  has_many :reimbursement_requests
+
   has_many :reporting_masters, class_name: 'ReportingMaster', foreign_key: 'reporting_master_id'
   
   # has_many :first_reporters, :class_name => "EmployeeLeavRequest", :foreign_key => :first_reporter_id
@@ -110,6 +112,9 @@ class Employee < ActiveRecord::Base
   has_many :on_duty_requests, class_name: "Employee",
                           foreign_key: "second_reporter_id"
 
+  has_many :reimbursement_requests, class_name: "Employee",
+                          foreign_key: "approval_id"
+                          
   belongs_to :user, class_name: 'Employee'
 
   has_many :second_reporters, class_name: 'EmployeeResignation', foreign_key: 'second_reporter_id'

@@ -1,5 +1,17 @@
 Rails.application.routes.draw do
 
+  resources :reimbursement_requests do
+    collection do
+      get :send_for_approval
+      get :list_for_approval
+      get :approve_request
+      get :reject_request
+      get :edit_request_modal
+      post :update_request_modal
+    end
+  end
+  resources :reimbursement_slabs
+  resources :reimbursement_heads
   resources :reporting_master_rembursments
   resources :rembursments  do
     collection do
@@ -1299,6 +1311,8 @@ end
       post :create_self_declaration
       get :leave_c_off
       post :create_self_c_off
+      get :reimbursement_request
+      post :create_reimbursement_request
     end
   end
 

@@ -541,7 +541,6 @@ class WorkingdaysController < ApplicationController
   end
 
   def print_date_report
-    # byebug
     @from = params[:salary] ? params[:salary][:from_date] : params[:from_date]
     @to = params[:salary] ? params[:salary][:to_date] : params[:to_date]
     @employee = params[:salary] ? params[:salary][:employee_id] : params[:employee_id]
@@ -574,13 +573,15 @@ class WorkingdaysController < ApplicationController
   end
 
   def show_datewise_workingday
-    @from = params[:employee][:from]
-    @to = params[:employee][:to]
+    from = params[:employee][:from]
+    to = params[:employee][:to]
     @company_id = params[:employee][:company_id]
     @location = params[:employee][:company_location_id]
     @department = params[:employee][:department_id]
+    @from = from.to_date
+    @to = to.to_date
     payroll_period = PayrollPeriod.where(status: true).take
-
+     #byebug
     if @from == payroll_period.from.to_date && @to == payroll_period.to.to_date
       if current_user.class == Group
         if @company_id == ""
@@ -658,26 +659,8 @@ class WorkingdaysController < ApplicationController
       end #current_user.class
     else
       flash[:alert] = "Please Select Date Within payroll Period!"
+      redirect_to datewise_workingday_workingdays_path
     end
-      # respond_to do |format|
-      # format.js
-      # format.xls {render template: 'workingdays/datewise_workingday.xls.erb'}
-      # format.html
-      # format.pdf do
-      #   render pdf: 'show_datewise_report',
-      #         layout: 'pdf.html',
-      #         orientation: 'Landscape',
-      #         template: 'workingdays/datewise_workingday.pdf.erb',
-      #         # show_as_html: params[:debug].present?,
-      #         :page_height      => 1000,
-      #         :dpi              => '300',
-      #         :margin           => {:top    => 10, # default 10 (mm)
-      #                       :bottom => 10,
-      #                       :left   => 20,
-      #                       :right  => 20},
-      #         :show_as_html => params[:debug].present?
-      #     end
-      #    end
   end
 
   private

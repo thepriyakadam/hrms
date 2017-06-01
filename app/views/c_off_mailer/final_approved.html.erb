@@ -7,7 +7,7 @@
     <h4>C.Off Request Approved by</h4>
     <p>
       ID : <%= @manager.manual_employee_code %><br>
-      Employee Name : <%= @manager.first_name.to_s+' '+@manager.last_name.to_s %><br>
+      Employee : <%= @manager.first_name.to_s+' '+@manager.last_name.to_s %><br>
       Date : <%= @c_off_request.c_off_date.to_date %><br>
       C.Off Type : <%= @c_off_request.c_off_type %>
     </p>

@@ -242,6 +242,8 @@ class LeaveCOffsController < ApplicationController
   # end
   def destroy_self
     @leave_c_off = LeaveCOff.find(params[:format])
+    @status_c_off = StatusCOff.where(leave_c_off_id: @leave_c_off)
+    @status_c_off.destroy_all
     @leave_c_off.destroy
     flash[:notice] = "Destroyed successfully"
     redirect_to leave_c_off_self_services_path

@@ -53,7 +53,6 @@ class EmployeeSalaryTemplatesController < ApplicationController
   end
 
   def current_template
-    # byebug
     @current_template = EmployeeTemplate.where(employee_id: params[:emp_id], is_active: true).take
     authorize! :show, @current_template
     @employee_salary_templates = @current_template.employee_salary_templates
@@ -204,12 +203,20 @@ class EmployeeSalaryTemplatesController < ApplicationController
       end 
   end
 
-  def current_template
+
+  def employees_current_template
     @employee_ids = params[:employee_ids]
     respond_to do |format|
       format.xls {render template: 'employee_salary_templates/current_template.xls.erb'}
       end
   end
+
+  # def current_template
+  #   @employee_ids = params[:employee_ids]
+  #   respond_to do |format|
+  #     format.xls {render template: 'employee_salary_templates/current_template.xls.erb'}
+  #     end
+  # end
 
   private
 

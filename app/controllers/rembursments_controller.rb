@@ -78,7 +78,7 @@ class RembursmentsController < ApplicationController
     # @emp1 = current_login.subordinates.pluck(:id)
     # @emp2 = current_login.indirect_subordinates.pluck(:id)
     # @emp = @emp1 + @emp2
-    @rembursments = Rembursment.where(manager_id: current_user.employee_id).where("status = ? || status = ?","Pending","Approved & Send Next")
+    @rembursments = Rembursment.where(manager_id: current_user.employee_id).where("status = ? || status = ? || status = ?","Pending","Approved & Send Next","FirstApproved")
     # @pending_requests = Rembursment.where(employee_id: @emp)
     # @first_approved_requests = Rembursment.where(employee_id: @emp1)
     #@rembursments = Rembursment.where("manager_id = ? and (status = ? or status = ? or status = ?)",current_user.employee_id,"Pending","FirstApproved","Approved & Send Next")
@@ -91,7 +91,7 @@ class RembursmentsController < ApplicationController
   end
 
   def single_approve
-    # byebug
+     #byebug
      @rembursment = Rembursment.find(params[:format])
      reporting_master = @rembursment.manager_id #new code
      employee = Employee.where(id: reporting_master).take #new code

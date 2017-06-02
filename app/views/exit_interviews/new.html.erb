@@ -1,7 +1,11 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Exit Interview</h3>
-  
+    <h3 class="box-title">Exit Interview of
+      ID : <%= @employee_resignation.employee.try(:manual_employee_code) %> 
+      Name :  <%= full_name(@employee_resignation.employee)%> 
+
+
+    </h3>
 
   </div><!-- /.box-header -->
 	<div class="box-body">
@@ -9,7 +13,7 @@
 			<%= render 'form' %>	
 		</div>
 		
-		<div id="exit_interview_li">
+		<div id="exit_interview_list">
 			<%= render 'exit_interview_list' %>
 		</div>
 	</div><!-- /.box-body -->

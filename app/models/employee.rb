@@ -13,6 +13,7 @@ class Employee < ActiveRecord::Base
   belongs_to :employee_code_master
   # has_many :employee_resignations
   has_many :trainees
+  has_many :exit_interviews
 
   has_many :reporting_masters
   has_many :employee_attendances

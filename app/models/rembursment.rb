@@ -8,4 +8,5 @@ class Rembursment < ActiveRecord::Base
    validates :employee_id, presence: true
    validates :rembursment_date, presence: true
    validates :amount, presence: true
+   validates :rembursmentmaster, presence: true
 end

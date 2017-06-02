@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170530131057) do
+ActiveRecord::Schema.define(version: 20170531073440) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -323,6 +323,11 @@ ActiveRecord::Schema.define(version: 20170530131057) do
 
   add_index "certifications", ["employee_id"], name: "index_certifications_on_employee_id", using: :btree
   add_index "certifications", ["year_id"], name: "index_certifications_on_year_id", using: :btree
+
+  create_table "change_status_employees", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "circulars", force: :cascade do |t|
     t.date     "date"
@@ -1018,27 +1023,27 @@ ActiveRecord::Schema.define(version: 20170530131057) do
   add_index "employee_promotions", ["employee_id"], name: "index_employee_promotions_on_employee_id", using: :btree
 
   create_table "employee_resignations", force: :cascade do |t|
-    t.integer  "employee_id",            limit: 4
+    t.integer  "employee_id",               limit: 4
     t.date     "resignation_date"
-    t.string   "reason",                 limit: 255
+    t.string   "reason",                    limit: 255
     t.boolean  "is_notice_period"
-    t.string   "notice_period",          limit: 255
-    t.string   "short_notice_period",    limit: 255
+    t.string   "notice_period",             limit: 255
+    t.string   "short_notice_period",       limit: 255
     t.date     "tentative_leaving_date"
-    t.text     "remark",                 limit: 65535
+    t.text     "remark",                    limit: 65535
     t.date     "exit_interview_date"
-    t.text     "note",                   limit: 65535
+    t.text     "note",                      limit: 65535
     t.date     "leaving_date"
     t.date     "settled_on"
     t.boolean  "has_left"
     t.boolean  "notice_served"
     t.boolean  "rehired"
-    t.string   "resign_status",          limit: 255
-    t.integer  "leaving_reason_id",      limit: 4
-    t.integer  "reporting_master_id",    limit: 4
+    t.string   "resign_status",             limit: 255
+    t.integer  "leaving_reason_id",         limit: 4
+    t.integer  "reporting_master_id",       limit: 4
     t.boolean  "is_stop_pay_request"
-    t.integer  "second_reporter_id",     limit: 4
-    t.integer  "final_reporter_id",      limit: 4
+    t.integer  "second_reporter_id",        limit: 4
+    t.integer  "final_reporter_id",         limit: 4
     t.boolean  "is_pending"
     t.boolean  "is_first_approved"
     t.boolean  "is_second_approved"
@@ -1048,8 +1053,9 @@ ActiveRecord::Schema.define(version: 20170530131057) do
     t.boolean  "is_second_rejected"
     t.boolean  "is_final_rejected"
     t.datetime "application_date"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.integer  "change_status_employee_id", limit: 4
   end
 
   add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id", using: :btree

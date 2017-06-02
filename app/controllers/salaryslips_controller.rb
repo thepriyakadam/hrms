@@ -651,20 +651,28 @@ class SalaryslipsController < ApplicationController
           @salary_component=SalaryComponent.find_by(name: "Mobile Deduction")
           @salary_comp=SalaryComponent.find_by(name: "Other Deduction")
           @salary_compon=SalaryComponent.find_by(name: "Income Tax")
-
+          @mobile_deduction = 0
+          @income_tax_deduction = 0
+          @other_deduction = 0
           @monthly_expences.try(:each) do |m|
-            deducted_actual_amount = 0
-            deducted_calculated_amount = m.amount
-
             if m.expencess_type.name == @salary_component.name
-              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: m.expencess_type.name,salary_component_id:  @salary_component.id)
+              @mobile_deduction = @mobile_deduction + m.amount
             elsif m.expencess_type.name == @salary_comp.name
-              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: m.expencess_type.name,salary_component_id:  @salary_comp.id)
+              @other_deduction = @other_deduction + m.amount
             elsif m.expencess_type.name == @salary_compon.name
-              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: m.expencess_type.name,salary_component_id:  @salary_compon.id)
+              @income_tax_deduction = @income_tax_deduction + m.amount
             end
           end
-        
+            if @salary_component.name
+              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @mobile_deduction, calculated_amount: @mobile_deduction, is_deducted: true, other_component_name: @salary_component.name,salary_component_id:  @salary_component.id)
+            end
+            if @salary_comp.name
+              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @other_deduction, calculated_amount: @other_deduction, is_deducted: true, other_component_name: @salary_comp.name,salary_component_id:  @salary_comp.id)
+            end
+            if @salary_compon.name
+              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @income_tax_deduction, calculated_amount: @income_tax_deduction, is_deducted: true, other_component_name: @salary_compon.name,salary_component_id:  @salary_compon.id)
+            end
+     
           # @salary_component = SalaryComponent.find_by(name: "DA")
           # @salslip_comp = SalaryslipComponent.where(salaryslip_id: @salaryslip.id,salary_component_id: @salary_component.id).take
           # if @salslip_comp.try(:actual_amount).to_f < 0
@@ -672,7 +680,6 @@ class SalaryslipsController < ApplicationController
           # else
           # end
 
- 
           BonusEmployee.create_bonus(basic_calculated_amount, @employee.id, date)
 
       if @employee.joining_detail.is_employeer_esic == true || @employee.joining_detail.is_insurance == true || @employee.joining_detail.is_employeer_pf == true || @employee.joining_detail.is_family_pension == true || @employee.joining_detail.is_bonus == true
@@ -1224,23 +1231,33 @@ class SalaryslipsController < ApplicationController
             SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_actual_amount, is_deducted: true, other_component_name: 'Advance',salary_component_id: @salary_component.id)
           end
 
+
           @monthly_expences = MonthlyExpence.where(employee_id: @employee.id, expence_date: date.all_month)
           @salary_component=SalaryComponent.find_by(name: "Mobile Deduction")
           @salary_comp=SalaryComponent.find_by(name: "Other Deduction")
           @salary_compon=SalaryComponent.find_by(name: "Income Tax")
-
+          @mobile_deduction = 0
+          @income_tax_deduction = 0
+          @other_deduction = 0
           @monthly_expences.try(:each) do |m|
-            deducted_actual_amount = 0
-            deducted_calculated_amount = m.amount
-
             if m.expencess_type.name == @salary_component.name
-              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: m.expencess_type.name,salary_component_id:  @salary_component.id)
+              @mobile_deduction = @mobile_deduction + m.amount
             elsif m.expencess_type.name == @salary_comp.name
-              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: m.expencess_type.name,salary_component_id:  @salary_comp.id)
+              @other_deduction = @other_deduction + m.amount
             elsif m.expencess_type.name == @salary_compon.name
-              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: m.expencess_type.name,salary_component_id:  @salary_compon.id)
+              @income_tax_deduction = @income_tax_deduction + m.amount
             end
           end
+            if @salary_component.name
+              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @mobile_deduction, calculated_amount: @mobile_deduction, is_deducted: true, other_component_name: @salary_component.name,salary_component_id:  @salary_component.id)
+            end
+            if @salary_comp.name
+              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @other_deduction, calculated_amount: @other_deduction, is_deducted: true, other_component_name: @salary_comp.name,salary_component_id:  @salary_comp.id)
+            end
+            if @salary_compon.name
+              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @income_tax_deduction, calculated_amount: @income_tax_deduction, is_deducted: true, other_component_name: @salary_compon.name,salary_component_id:  @salary_compon.id)
+            end
+     
         
           # @salary_component = SalaryComponent.find_by(name: "DA")
           # @salslip_comp = SalaryslipComponent.where(salaryslip_id: @salaryslip.id,salary_component_id: @salary_component.id).take

@@ -1313,6 +1313,8 @@ end
       post :create_self_c_off
       get :reimbursement_request
       post :create_reimbursement_request
+      get :employee_rembursment
+      post :create_emp_rembursment
     end
   end
 

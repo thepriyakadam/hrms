@@ -169,6 +169,25 @@ class SelfServicesController < ApplicationController
     redirect_to reimbursement_request_self_services_path
   end
 
+  def employee_rembursment
+    @rembursment = Rembursment.new
+    @rembursments = Rembursment.where(employee_id: current_user.employee_id)
+  end
+
+  def create_emp_rembursment
+    @rembursment = Rembursment.new
+    employee_id = params[:rembursment][:employee_id]
+    application_date = params[:rembursment][:application_date]
+    rembursment_date = params[:rembursment][:rembursment_date]
+    rembursmentmaster_id = params[:rembursment][:rembursmentmaster_id]
+    amount = params[:rembursment][:amount]
+    @employee = Employee.find_by(id: employee_id)
+    @rembursment_req = Rembursment.create(employee_id: employee_id,application_date: application_date,rembursment_date: rembursment_date,rembursmentmaster_id: rembursmentmaster_id,amount: amount,status: "Pending",manager_id: @employee.manager_id)
+    ReportingMasterRembursment.create(rembursment_id: @rembursment_req.id,status: "Pending",manager_id: employee_id)
+    flash[:notice] = "Reimbursement Request Created Successfully!"
+    redirect_to employee_rembursment_self_services_path
+  end
+
   def leave_c_off_params
     params.require(:leave_c_off).permit(:is_expire,:employee_id, :c_off_date, :c_off_type, :c_off_expire_day, :expiry_status, :expiry_date, :leave_count)
   end

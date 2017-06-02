@@ -16,6 +16,7 @@ class ReimbursementHeadsController < ApplicationController
   def new
     @reimbursement_head = ReimbursementHead.new
     @reimbursement_heads = ReimbursementHead.all
+    session[:active_tab] ="ltareimbursement"
   end
 
   # GET /reimbursement_heads/1/edit

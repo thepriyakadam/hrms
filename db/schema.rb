@@ -1634,6 +1634,17 @@ ActiveRecord::Schema.define(version: 20170602065242) do
 
   add_index "induction_templates", ["employee_id"], name: "index_induction_templates_on_employee_id", using: :btree
 
+  create_table "instalments", force: :cascade do |t|
+    t.integer  "advance_salary_id", limit: 4
+    t.date     "instalment_date"
+    t.decimal  "instalment_amount",           precision: 15, scale: 2
+    t.boolean  "is_complete",                                          default: false
+    t.datetime "created_at",                                                           null: false
+    t.datetime "updated_at",                                                           null: false
+  end
+
+  add_index "instalments", ["advance_salary_id"], name: "index_instalments_on_advance_salary_id", using: :btree
+
   create_table "interview_analyses", force: :cascade do |t|
     t.integer  "vacancy_request_history_id", limit: 4
     t.integer  "interview_evalution_id",     limit: 4
@@ -3744,6 +3755,7 @@ ActiveRecord::Schema.define(version: 20170602065242) do
   add_foreign_key "induction_details", "employees"
   add_foreign_key "induction_details", "induction_masters"
   add_foreign_key "induction_templates", "employees"
+  add_foreign_key "instalments", "advance_salaries"
   add_foreign_key "interview_analyses", "interview_attributes"
   add_foreign_key "interview_analyses", "interview_decisions"
   add_foreign_key "interview_analyses", "interview_evalutions"

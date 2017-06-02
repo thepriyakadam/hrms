@@ -91,7 +91,7 @@ class RembursmentsController < ApplicationController
 
   def single_approve
      # byebug
-    @rembursment = Rembursment.find(params[:format])
+     @rembursment = Rembursment.find(params[:format])
      reporting_master = @rembursment.manager_id #new code
      employee = Employee.where(id: reporting_master).take #new code
      first_manager_id = employee.manager_id #new code

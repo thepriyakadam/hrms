@@ -18,9 +18,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
     t.boolean  "status"
+    t.boolean  "is_confirm"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "about_companies", force: :cascade do |t|
@@ -28,14 +28,15 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
     t.boolean  "status"
+    t.boolean  "is_confirm"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "access_issue_requests", force: :cascade do |t|
     t.integer  "issue_tracker_access_id", limit: 4
     t.integer  "issue_request_id",        limit: 4
+    t.integer  "issue_tracker_member_id", limit: 4
     t.boolean  "status"
     t.boolean  "current_status"
     t.datetime "created_at",                        null: false
@@ -44,6 +45,7 @@ ActiveRecord::Schema.define(version: 20170531125126) do
 
   add_index "access_issue_requests", ["issue_request_id"], name: "index_access_issue_requests_on_issue_request_id", using: :btree
   add_index "access_issue_requests", ["issue_tracker_access_id"], name: "index_access_issue_requests_on_issue_tracker_access_id", using: :btree
+  add_index "access_issue_requests", ["issue_tracker_member_id"], name: "index_access_issue_requests_on_issue_tracker_member_id", using: :btree
 
   create_table "accident_images", force: :cascade do |t|
     t.integer  "accident_record_id",  limit: 4
@@ -108,9 +110,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "appraisees", force: :cascade do |t|
@@ -132,9 +134,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
+    t.boolean  "is_confirm"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "assigned_assets", force: :cascade do |t|
@@ -159,6 +161,7 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.integer  "employee_shift_id", limit: 4
     t.integer  "employee_id",       limit: 4
     t.date     "attendance_date"
+    t.integer  "shift_rotation_id", limit: 4
     t.time     "check_in"
     t.time     "check_out"
     t.decimal  "company_hrs",                 precision: 10
@@ -166,7 +169,6 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.decimal  "total_hrs",                   precision: 10
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
-    t.integer  "shift_rotation_id", limit: 4
   end
 
   add_index "attendances", ["employee_id"], name: "index_attendances_on_employee_id", using: :btree
@@ -178,9 +180,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "name",                limit: 255
     t.text     "definition",          limit: 65535
     t.boolean  "status"
+    t.boolean  "is_confirm"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
-    t.boolean  "is_confirm"
     t.boolean  "attribute_weightage"
     t.string   "from",                limit: 255
     t.string   "to",                  limit: 255
@@ -199,9 +201,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id", limit: 4
     t.string   "award_name",  limit: 255
+    t.string   "award_from",  limit: 255
     t.text     "description", limit: 65535
     t.integer  "year_id",     limit: 4
-    t.string   "award_from",  limit: 255
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
   end
@@ -213,16 +215,16 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "name",        limit: 255
     t.string   "code",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "blood_groups", force: :cascade do |t|
     t.string   "name",       limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "bonus_employees", force: :cascade do |t|
@@ -253,9 +255,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.decimal  "limit_amount",     precision: 15, scale: 2, default: 0.0
     t.decimal  "bonus_persentage", precision: 15, scale: 2, default: 0.0
     t.boolean  "status"
+    t.boolean  "is_confirm"
     t.datetime "created_at",                                              null: false
     t.datetime "updated_at",                                              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "capture_resumes", force: :cascade do |t|
@@ -351,9 +353,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
 
   create_table "certifications", force: :cascade do |t|
     t.integer  "employee_id", limit: 4
-    t.integer  "year_id",     limit: 4
     t.string   "name",        limit: 255
     t.string   "duration",    limit: 255
+    t.integer  "year_id",     limit: 4
     t.text     "description", limit: 65535
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
@@ -511,18 +513,18 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "cost_centers", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "countries", force: :cascade do |t|
@@ -536,9 +538,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
+    t.boolean  "is_confirm"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "custom_auto_increments", force: :cascade do |t|
@@ -589,7 +591,6 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.datetime "updated_at",                                                                       null: false
     t.boolean  "is_confirm"
     t.integer  "travel_expence_type_id",      limit: 4
-    t.integer  "reporting_master_id",         limit: 4
     t.string   "request_status",              limit: 255
     t.text     "remark",                      limit: 65535
     t.string   "passport_photo_file_name",    limit: 255
@@ -604,10 +605,10 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.integer  "currency_master_id",          limit: 4
     t.boolean  "is_sent"
     t.text     "comment",                     limit: 65535
+    t.integer  "reporting_master_id",         limit: 4
   end
 
   add_index "daily_bill_details", ["currency_master_id"], name: "index_daily_bill_details_on_currency_master_id", using: :btree
-  add_index "daily_bill_details", ["reporting_master_id"], name: "index_daily_bill_details_on_reporting_master_id", using: :btree
   add_index "daily_bill_details", ["travel_expence_type_id"], name: "index_daily_bill_details_on_travel_expence_type_id", using: :btree
   add_index "daily_bill_details", ["travel_request_id"], name: "index_daily_bill_details_on_travel_request_id", using: :btree
 
@@ -650,36 +651,36 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "degree_types", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "degrees", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "department_types", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "departments", force: :cascade do |t|
@@ -740,14 +741,13 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   create_table "due_employee_details", force: :cascade do |t|
     t.integer  "employee_id",              limit: 4
     t.integer  "due_template_id",          limit: 4
-    t.integer  "due_detail_id",            limit: 4
     t.integer  "due_employee_template_id", limit: 4
+    t.integer  "due_detail_id",            limit: 4
     t.integer  "reporting_master_id",      limit: 4
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
     t.boolean  "is_confirmed"
-    t.boolean  "is_proceed"
-    t.string   "is_sent",                  limit: 255
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.boolean  "is_proceed",                         default: false
   end
 
   add_index "due_employee_details", ["due_detail_id"], name: "index_due_employee_details_on_due_detail_id", using: :btree
@@ -796,9 +796,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.integer  "salary_component_id", limit: 4
     t.decimal  "actual_amount",                 precision: 15, scale: 2, default: 0.0
     t.decimal  "calculated_amount",             precision: 15, scale: 2, default: 0.0
+    t.boolean  "is_deducted"
     t.datetime "created_at",                                                           null: false
     t.datetime "updated_at",                                                           null: false
-    t.boolean  "is_deducted"
   end
 
   add_index "employee_arrear_items", ["employee_arrear_id"], name: "index_employee_arrear_items_on_employee_arrear_id", using: :btree
@@ -819,17 +819,14 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   add_index "employee_arrears", ["employee_id"], name: "index_employee_arrears_on_employee_id", using: :btree
 
   create_table "employee_attendances", force: :cascade do |t|
-    t.integer  "employee_id",              limit: 4
     t.date     "day"
     t.string   "present",                  limit: 255
-    t.datetime "created_at",                                                                    null: false
-    t.datetime "updated_at",                                                                    null: false
-    t.integer  "department_id",            limit: 4
     t.datetime "in_time"
     t.datetime "out_time"
     t.boolean  "is_confirm",                                                    default: false
+    t.datetime "created_at",                                                                    null: false
+    t.datetime "updated_at",                                                                    null: false
     t.decimal  "count",                                precision: 5,  scale: 2
-    t.integer  "employee_leav_request_id", limit: 4
     t.integer  "company_time_master_id",   limit: 4
     t.string   "working_hrs",              limit: 255
     t.string   "rest_time",                limit: 255
@@ -837,18 +834,16 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.decimal  "overtime_hrs",                         precision: 10
     t.string   "month_name",               limit: 255
     t.decimal  "late_mark",                            precision: 10
-    t.integer  "machine_attendance_id",    limit: 4
+    t.integer  "employee_leav_request_id", limit: 4
     t.integer  "on_duty_request_id",       limit: 4
+    t.integer  "employee_id",              limit: 4
+    t.integer  "department_id",            limit: 4
+    t.integer  "machine_attendance_id",    limit: 4
     t.integer  "employee_code",            limit: 4
     t.string   "employee_name",            limit: 255
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id", using: :btree
-  add_index "employee_attendances", ["department_id"], name: "index_employee_attendances_on_department_id", using: :btree
-  add_index "employee_attendances", ["employee_id"], name: "index_employee_attendances_on_employee_id", using: :btree
-  add_index "employee_attendances", ["employee_leav_request_id"], name: "index_employee_attendances_on_employee_leav_request_id", using: :btree
-  add_index "employee_attendances", ["machine_attendance_id"], name: "index_employee_attendances_on_machine_attendance_id", using: :btree
-  add_index "employee_attendances", ["on_duty_request_id"], name: "index_employee_attendances_on_on_duty_request_id", using: :btree
 
   create_table "employee_bank_details", force: :cascade do |t|
     t.integer  "employee_id", limit: 4
@@ -872,9 +867,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
     t.boolean  "is_active"
   end
 
@@ -905,9 +900,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "employee_documents", force: :cascade do |t|
@@ -940,17 +935,16 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   end
 
   create_table "employee_gps_histories", force: :cascade do |t|
-    t.integer  "member_id",  limit: 4
-    t.float    "latitude",   limit: 24
-    t.float    "longitude",  limit: 24
-    t.string   "location",   limit: 255
+    t.float    "latitude",       limit: 24
+    t.float    "longitude",      limit: 24
+    t.string   "location",       limit: 255
     t.date     "from_date"
     t.date     "to_date"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "employee_id",    limit: 4
+    t.integer  "employee_gp_id", limit: 4
   end
-
-  add_index "employee_gps_histories", ["member_id"], name: "index_employee_gps_histories_on_member_id", using: :btree
 
   create_table "employee_grades", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -958,7 +952,6 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "description", limit: 255
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "employee_jc_lists", force: :cascade do |t|
@@ -978,10 +971,10 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.integer  "leav_category_id", limit: 4
     t.integer  "company_leav_id",  limit: 4
     t.string   "no_of_leave",      limit: 255
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
     t.date     "expiry_date"
     t.string   "total_leave",      limit: 255
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.boolean  "is_confirm"
     t.date     "from_date"
     t.date     "to_date"
@@ -1001,8 +994,8 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "date_range",         limit: 255
     t.integer  "no_of_day",          limit: 4
     t.decimal  "leave_count",                    precision: 5, scale: 1
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
+    t.boolean  "first_half"
+    t.boolean  "last_half"
     t.string   "reason",             limit: 255
     t.boolean  "is_pending"
     t.boolean  "is_cancelled"
@@ -1011,27 +1004,25 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.boolean  "is_first_rejected"
     t.boolean  "is_second_rejected"
     t.integer  "current_status",     limit: 4
+    t.string   "current_status1",    limit: 255
+    t.boolean  "present_status"
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
     t.integer  "first_reporter_id",  limit: 4
     t.integer  "second_reporter_id", limit: 4
-    t.string   "current_status1",    limit: 255
-    t.boolean  "first_half"
-    t.boolean  "last_half"
-    t.boolean  "present_status"
   end
 
   add_index "employee_leav_requests", ["employee_id"], name: "index_employee_leav_requests_on_employee_id", using: :btree
-  add_index "employee_leav_requests", ["first_reporter_id"], name: "index_employee_leav_requests_on_first_reporter_id", using: :btree
   add_index "employee_leav_requests", ["leav_category_id"], name: "index_employee_leav_requests_on_leav_category_id", using: :btree
-  add_index "employee_leav_requests", ["second_reporter_id"], name: "index_employee_leav_requests_on_second_reporter_id", using: :btree
 
   create_table "employee_monthly_days", force: :cascade do |t|
     t.integer  "employee_id",       limit: 4
     t.string   "month",             limit: 255
     t.integer  "year_id",           limit: 4
     t.decimal  "overtime",                      precision: 4, scale: 1
+    t.string   "no_of_working_day", limit: 255
     t.datetime "created_at",                                            null: false
     t.datetime "updated_at",                                            null: false
-    t.string   "no_of_working_day", limit: 255
   end
 
   add_index "employee_monthly_days", ["employee_id"], name: "index_employee_monthly_days_on_employee_id", using: :btree
@@ -1044,7 +1035,6 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.boolean  "mental_illness"
     t.boolean  "minor"
     t.string   "guardian_name",        limit: 255
-    t.integer  "relation_id",          limit: 4
     t.boolean  "same_address"
     t.text     "address",              limit: 65535
     t.string   "city",                 limit: 255
@@ -1068,7 +1058,6 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   add_index "employee_nominations", ["family_id"], name: "index_employee_nominations_on_family_id", using: :btree
   add_index "employee_nominations", ["illness_type_id"], name: "index_employee_nominations_on_illness_type_id", using: :btree
   add_index "employee_nominations", ["nomination_master_id"], name: "index_employee_nominations_on_nomination_master_id", using: :btree
-  add_index "employee_nominations", ["relation_id"], name: "index_employee_nominations_on_relation_id", using: :btree
   add_index "employee_nominations", ["relation_master_id"], name: "index_employee_nominations_on_relation_master_id", using: :btree
   add_index "employee_nominations", ["state_id"], name: "index_employee_nominations_on_state_id", using: :btree
 
@@ -1077,14 +1066,19 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "height",       limit: 255
     t.string   "weight",       limit: 255
     t.string   "size",         limit: 255
+    t.string   "trouser_size", limit: 255
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-    t.string   "trouser_size", limit: 255
   end
 
   add_index "employee_physicals", ["employee_id"], name: "index_employee_physicals_on_employee_id", using: :btree
 
   create_table "employee_promotions", force: :cascade do |t|
+    t.string   "designation",             limit: 255
+    t.string   "current",                 limit: 255
+    t.string   "grade",                   limit: 255
+    t.string   "category",                limit: 255
+    t.string   "employee_department",     limit: 255
     t.integer  "employee_id",             limit: 4
     t.integer  "department_id",           limit: 4
     t.integer  "employee_designation_id", limit: 4
@@ -1096,11 +1090,6 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.date     "effective_to"
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
-    t.boolean  "current"
-    t.string   "designation",             limit: 255
-    t.string   "grade",                   limit: 255
-    t.string   "category",                limit: 255
-    t.string   "employee_department",     limit: 255
   end
 
   add_index "employee_promotions", ["department_id"], name: "index_employee_promotions_on_department_id", using: :btree
@@ -1109,29 +1098,27 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   add_index "employee_promotions", ["employee_id"], name: "index_employee_promotions_on_employee_id", using: :btree
 
   create_table "employee_resignations", force: :cascade do |t|
-    t.integer  "employee_id",            limit: 4
+    t.integer  "employee_id",               limit: 4
     t.date     "resignation_date"
-    t.string   "reason",                 limit: 255
+    t.string   "reason",                    limit: 255
     t.boolean  "is_notice_period"
-    t.string   "notice_period",          limit: 255
-    t.string   "short_notice_period",    limit: 255
+    t.string   "notice_period",             limit: 255
+    t.string   "short_notice_period",       limit: 255
     t.date     "tentative_leaving_date"
-    t.text     "remark",                 limit: 65535
+    t.text     "remark",                    limit: 65535
     t.date     "exit_interview_date"
-    t.text     "note",                   limit: 65535
+    t.text     "note",                      limit: 65535
     t.date     "leaving_date"
     t.date     "settled_on"
     t.boolean  "has_left"
     t.boolean  "notice_served"
     t.boolean  "rehired"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.integer  "leaving_reason_id",      limit: 4
-    t.integer  "reporting_master_id",    limit: 4
-    t.string   "resign_status",          limit: 255
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.integer  "leaving_reason_id",         limit: 4
+    t.integer  "reporting_master_id",       limit: 4
+    t.string   "resign_status",             limit: 255
     t.boolean  "is_stop_pay_request"
-    t.integer  "second_reporter_id",     limit: 4
-    t.integer  "final_reporter_id",      limit: 4
     t.boolean  "is_pending"
     t.boolean  "is_first_approved"
     t.boolean  "is_second_approved"
@@ -1141,20 +1128,20 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.boolean  "is_second_rejected"
     t.boolean  "is_final_rejected"
     t.datetime "application_date"
+    t.integer  "final_reporter_id",         limit: 4
+    t.integer  "second_reporter_id",        limit: 4
+    t.integer  "change_status_employee_id", limit: 4
   end
 
   add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id", using: :btree
-  add_index "employee_resignations", ["final_reporter_id"], name: "index_employee_resignations_on_final_reporter_id", using: :btree
   add_index "employee_resignations", ["leaving_reason_id"], name: "index_employee_resignations_on_leaving_reason_id", using: :btree
   add_index "employee_resignations", ["reporting_master_id"], name: "index_employee_resignations_on_reporting_master_id", using: :btree
-  add_index "employee_resignations", ["second_reporter_id"], name: "index_employee_resignations_on_second_reporter_id", using: :btree
 
   create_table "employee_salary_templates", force: :cascade do |t|
     t.integer  "employee_id",                limit: 4
     t.integer  "salary_template_id",         limit: 4
     t.integer  "salary_component_id",        limit: 4
     t.boolean  "is_deducted"
-    t.integer  "parent_salary_component_id", limit: 4
     t.decimal  "percentage",                             precision: 15, scale: 2
     t.boolean  "is_taxable"
     t.decimal  "tax",                                    precision: 4,  scale: 2
@@ -1163,20 +1150,22 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.decimal  "max_amount",                             precision: 15, scale: 2
     t.decimal  "monthly_amount",                         precision: 15, scale: 2, default: 0.0
     t.decimal  "annual_amount",                          precision: 15, scale: 2, default: 0.0
+    t.integer  "employee_template_id",       limit: 4
     t.datetime "created_at",                                                                    null: false
     t.datetime "updated_at",                                                                    null: false
-    t.integer  "employee_template_id",       limit: 4
     t.boolean  "is_confirm"
+    t.integer  "parent_salary_component_id", limit: 4
   end
 
   add_index "employee_salary_templates", ["employee_id"], name: "index_employee_salary_templates_on_employee_id", using: :btree
   add_index "employee_salary_templates", ["employee_template_id"], name: "index_employee_salary_templates_on_employee_template_id", using: :btree
-  add_index "employee_salary_templates", ["parent_salary_component_id"], name: "index_employee_salary_templates_on_parent_salary_component_id", using: :btree
   add_index "employee_salary_templates", ["salary_component_id"], name: "index_employee_salary_templates_on_salary_component_id", using: :btree
   add_index "employee_salary_templates", ["salary_template_id"], name: "index_employee_salary_templates_on_salary_template_id", using: :btree
 
   create_table "employee_shifts", force: :cascade do |t|
     t.integer  "employee_id", limit: 4
+    t.date     "from_date"
+    t.date     "to_date"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
   end
@@ -1222,7 +1211,6 @@ ActiveRecord::Schema.define(version: 20170531125126) do
 
   create_table "employee_transfers", force: :cascade do |t|
     t.integer  "employee_id",               limit: 4
-    t.integer  "reporting_master_id",       limit: 4
     t.integer  "employee_designation_id",   limit: 4
     t.integer  "employee_category_id",      limit: 4
     t.integer  "company_id",                limit: 4
@@ -1237,6 +1225,7 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "employee_company",          limit: 255
     t.string   "employee_company_location", limit: 255
     t.string   "employee_department",       limit: 255
+    t.integer  "reporting_master_id",       limit: 4
   end
 
   add_index "employee_transfers", ["company_id"], name: "index_employee_transfers_on_company_id", using: :btree
@@ -1245,15 +1234,14 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   add_index "employee_transfers", ["employee_category_id"], name: "index_employee_transfers_on_employee_category_id", using: :btree
   add_index "employee_transfers", ["employee_designation_id"], name: "index_employee_transfers_on_employee_designation_id", using: :btree
   add_index "employee_transfers", ["employee_id"], name: "index_employee_transfers_on_employee_id", using: :btree
-  add_index "employee_transfers", ["reporting_master_id"], name: "index_employee_transfers_on_reporting_master_id", using: :btree
 
   create_table "employee_types", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "employee_week_offs", force: :cascade do |t|
@@ -1271,13 +1259,15 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   add_index "employee_week_offs", ["week_off_master_id"], name: "index_employee_week_offs_on_week_off_master_id", using: :btree
 
   create_table "employees", force: :cascade do |t|
-    t.integer  "department_id",               limit: 4
     t.string   "manual_employee_code",        limit: 255
     t.string   "employee_code",               limit: 255
+    t.string   "employees",                   limit: 255
+    t.string   "prefix",                      limit: 255
     t.string   "first_name",                  limit: 255
     t.string   "middle_name",                 limit: 255
     t.string   "last_name",                   limit: 255
     t.date     "date_of_birth"
+    t.string   "gender",                      limit: 255
     t.string   "contact_no",                  limit: 255
     t.string   "optinal_contact_no",          limit: 255
     t.string   "email",                       limit: 255
@@ -1292,27 +1282,26 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "pan_no",                      limit: 255
     t.string   "licence_no",                  limit: 255
     t.string   "marital_status",              limit: 255
-    t.integer  "nationality_id",              limit: 4
     t.integer  "blood_group_id",              limit: 4
+    t.integer  "employee_type_id",            limit: 4
+    t.integer  "nationality_id",              limit: 4
+    t.integer  "religion_id",                 limit: 4
     t.string   "handicap",                    limit: 255
     t.string   "handicap_type",               limit: 255
     t.string   "status",                      limit: 255
-    t.integer  "employee_type_id",            limit: 4
-    t.string   "gender",                      limit: 255
     t.integer  "manager_id",                  limit: 4
+    t.integer  "company_id",                  limit: 4
+    t.integer  "company_location_id",         limit: 4
+    t.integer  "department_id",               limit: 4
+    t.integer  "punch_card_id",               limit: 4
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
-    t.integer  "religion_id",                 limit: 4
-    t.integer  "manager_2_id",                limit: 4
-    t.integer  "company_location_id",         limit: 4
-    t.integer  "company_id",                  limit: 4
     t.integer  "employee_code_master_id",     limit: 4
     t.string   "passport_photo_file_name",    limit: 255
     t.string   "passport_photo_content_type", limit: 255
     t.integer  "passport_photo_file_size",    limit: 4
     t.datetime "passport_photo_updated_at"
-    t.string   "punch_card_id",               limit: 255
-    t.string   "prefix",                      limit: 255
+    t.integer  "manager_2_id",                limit: 4
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id", using: :btree
@@ -1324,9 +1313,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   add_index "employees", ["employee_code"], name: "index_employees_on_employee_code", using: :btree
   add_index "employees", ["employee_code_master_id"], name: "index_employees_on_employee_code_master_id", using: :btree
   add_index "employees", ["employee_type_id"], name: "index_employees_on_employee_type_id", using: :btree
-  add_index "employees", ["manager_2_id"], name: "index_employees_on_manager_2_id", using: :btree
   add_index "employees", ["manager_id"], name: "index_employees_on_manager_id", using: :btree
   add_index "employees", ["nationality_id"], name: "index_employees_on_nationality_id", using: :btree
+  add_index "employees", ["punch_card_id"], name: "index_employees_on_punch_card_id", using: :btree
   add_index "employees", ["religion_id"], name: "index_employees_on_religion_id", using: :btree
   add_index "employees", ["state_id"], name: "index_employees_on_state_id", using: :btree
 
@@ -1389,9 +1378,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.date     "date_effective"
     t.decimal  "max_limit",                  precision: 15, scale: 2, default: 0.0
     t.string   "base_component", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",                                                        null: false
     t.datetime "updated_at",                                                        null: false
-    t.boolean  "is_confirm"
     t.boolean  "is_active"
     t.date     "to_date"
   end
@@ -1421,20 +1410,20 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "experiences", force: :cascade do |t|
     t.integer  "employee_id",  limit: 4
+    t.string   "company_name", limit: 255
+    t.string   "designation",  limit: 255
+    t.string   "no_of_year",   limit: 255
+    t.string   "ctc",          limit: 255
     t.date     "start_date"
     t.date     "end_date"
     t.text     "description",  limit: 65535
-    t.string   "no_of_year",   limit: 255
-    t.string   "company_name", limit: 255
-    t.string   "designation",  limit: 255
-    t.string   "ctc",          limit: 255
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
   end
@@ -1452,12 +1441,15 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "f_name",               limit: 255
     t.string   "m_name",               limit: 255
     t.string   "l_name",               limit: 255
+    t.string   "gender",               limit: 255
     t.date     "date_of_birth"
     t.integer  "age",                  limit: 4
     t.string   "contact_no",           limit: 255
     t.string   "email",                limit: 255
     t.text     "current_address",      limit: 65535
+    t.string   "marital",              limit: 255
     t.string   "relation",             limit: 255
+    t.string   "profession",           limit: 255
     t.string   "adhar_no",             limit: 255
     t.string   "pan_no",               limit: 255
     t.string   "have_passport",        limit: 255
@@ -1465,15 +1457,12 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.date     "passport_issue_date"
     t.date     "passport_expiry_date"
     t.string   "medical_claim",        limit: 255
-    t.string   "marital",              limit: 255
+    t.integer  "blood_group_id",       limit: 4
     t.string   "is_handicap",          limit: 255
     t.string   "handicap_type",        limit: 255
-    t.string   "profession",           limit: 255
+    t.integer  "religion_id",          limit: 4
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
-    t.string   "gender",               limit: 255
-    t.integer  "blood_group_id",       limit: 4
-    t.integer  "religion_id",          limit: 4
   end
 
   add_index "families", ["blood_group_id"], name: "index_families_on_blood_group_id", using: :btree
@@ -1505,21 +1494,21 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
     t.decimal  "price",                   precision: 15, scale: 2, default: 0.0
+    t.boolean  "is_confirm"
     t.datetime "created_at",                                                     null: false
     t.datetime "updated_at",                                                     null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "food_deductions", force: :cascade do |t|
     t.date     "food_date"
     t.integer  "no_of_coupan",          limit: 4
+    t.integer  "food_coupan_master_id", limit: 4
     t.decimal  "amount",                          precision: 15, scale: 2, default: 0.0
     t.integer  "employee_id",           limit: 4
-    t.datetime "created_at",                                                             null: false
-    t.datetime "updated_at",                                                             null: false
-    t.integer  "food_coupan_master_id", limit: 4
     t.integer  "return_coupan",         limit: 4
     t.integer  "total_coupan",          limit: 4
+    t.datetime "created_at",                                                             null: false
+    t.datetime "updated_at",                                                             null: false
     t.boolean  "is_paid"
   end
 
@@ -1527,56 +1516,48 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   add_index "food_deductions", ["food_coupan_master_id"], name: "index_food_deductions_on_food_coupan_master_id", using: :btree
 
   create_table "goal_bunches", force: :cascade do |t|
-    t.integer  "period_id",               limit: 4
     t.integer  "employee_id",             limit: 4
     t.boolean  "goal_confirm"
-    t.integer  "appraisee_id",            limit: 4
     t.text     "appraisee_comment",       limit: 65535
     t.boolean  "appraisee_confirm"
-    t.integer  "appraiser_id",            limit: 4
     t.string   "appraiser_rating",        limit: 255
     t.text     "appraiser_comment",       limit: 65535
     t.boolean  "appraiser_confirm"
-    t.integer  "reviewer_id",             limit: 4
     t.text     "review_comment",          limit: 65535
-    t.integer  "reviewer_rating_id",      limit: 4
     t.boolean  "reviewer_confirm"
-    t.integer  "final_id",                limit: 4
     t.text     "final_comment",           limit: 65535
-    t.integer  "final_rating_id",         limit: 4
     t.boolean  "final_confirm"
     t.datetime "created_at",                                           null: false
     t.datetime "updated_at",                                           null: false
     t.integer  "performance_calendar_id", limit: 4
     t.boolean  "r_promotion"
     t.boolean  "r_increment"
-    t.integer  "r_designation_id",        limit: 4
     t.decimal  "r_ctc",                                 precision: 10
     t.boolean  "f_promotion"
     t.boolean  "f_increment"
-    t.integer  "f_designation_id",        limit: 4
     t.decimal  "f_ctc",                                 precision: 10
     t.string   "appraisee_rating_id",     limit: 255
     t.boolean  "goal_approval"
+    t.integer  "appraisee_id",            limit: 4
+    t.integer  "appraiser_id",            limit: 4
+    t.integer  "reviewer_id",             limit: 4
+    t.integer  "reviewer_rating_id",      limit: 4
+    t.integer  "final_rating_id",         limit: 4
+    t.integer  "final_id",                limit: 4
+    t.integer  "r_designation_id",        limit: 4
+    t.integer  "f_designation_id",        limit: 4
+    t.integer  "period_id",               limit: 4
   end
 
-  add_index "goal_bunches", ["appraisee_id"], name: "index_goal_bunches_on_appraisee_id", using: :btree
-  add_index "goal_bunches", ["appraiser_id"], name: "index_goal_bunches_on_appraiser_id", using: :btree
   add_index "goal_bunches", ["employee_id"], name: "index_goal_bunches_on_employee_id", using: :btree
-  add_index "goal_bunches", ["f_designation_id"], name: "index_goal_bunches_on_f_designation_id", using: :btree
-  add_index "goal_bunches", ["final_id"], name: "index_goal_bunches_on_final_id", using: :btree
-  add_index "goal_bunches", ["final_rating_id"], name: "index_goal_bunches_on_final_rating_id", using: :btree
   add_index "goal_bunches", ["performance_calendar_id"], name: "index_goal_bunches_on_performance_calendar_id", using: :btree
   add_index "goal_bunches", ["period_id"], name: "index_goal_bunches_on_period_id", using: :btree
-  add_index "goal_bunches", ["r_designation_id"], name: "index_goal_bunches_on_r_designation_id", using: :btree
-  add_index "goal_bunches", ["reviewer_id"], name: "index_goal_bunches_on_reviewer_id", using: :btree
-  add_index "goal_bunches", ["reviewer_rating_id"], name: "index_goal_bunches_on_reviewer_rating_id", using: :btree
 
   create_table "goal_perspectives", force: :cascade do |t|
     t.string   "name",           limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.boolean  "is_confirm"
     t.boolean  "status"
     t.boolean  "goal_weightage"
     t.integer  "from",           limit: 4
@@ -1587,16 +1568,11 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.integer  "goal_bunch_id",            limit: 4
     t.integer  "goal_perspective_id",      limit: 4
     t.integer  "goal_weightage",           limit: 4
-    t.text     "goal_measure",             limit: 65535
+    t.string   "goal_measure",             limit: 255
     t.text     "target",                   limit: 65535
     t.string   "aligned",                  limit: 255
-    t.integer  "goal_setter_id",           limit: 4
-    t.integer  "appraisee_id",             limit: 4
     t.text     "appraisee_comment",        limit: 65535
-    t.integer  "appraiser_id",             limit: 4
     t.text     "appraiser_comment",        limit: 65535
-    t.integer  "appraiser_rating_id",      limit: 4
-    t.integer  "reviewer_id",              limit: 4
     t.text     "reviewer_comment",         limit: 65535
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
@@ -1608,21 +1584,20 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.boolean  "is_assigned"
     t.boolean  "is_hide"
     t.integer  "period_id",                limit: 4
+    t.integer  "appraisee_id",             limit: 4
+    t.integer  "appraiser_id",             limit: 4
+    t.integer  "reviewer_id",              limit: 4
+    t.integer  "appraiser_rating_id",      limit: 4
     t.integer  "appraisee_rating_id",      limit: 4
+    t.integer  "goal_setter_id",           limit: 4
   end
 
-  add_index "goal_ratings", ["appraisee_id"], name: "index_goal_ratings_on_appraisee_id", using: :btree
-  add_index "goal_ratings", ["appraisee_rating_id"], name: "index_goal_ratings_on_appraisee_rating_id", using: :btree
-  add_index "goal_ratings", ["appraiser_id"], name: "index_goal_ratings_on_appraiser_id", using: :btree
-  add_index "goal_ratings", ["appraiser_rating_id"], name: "index_goal_ratings_on_appraiser_rating_id", using: :btree
   add_index "goal_ratings", ["attribute_id"], name: "index_goal_ratings_on_attribute_id", using: :btree
   add_index "goal_ratings", ["attribute_master_id"], name: "index_goal_ratings_on_attribute_master_id", using: :btree
   add_index "goal_ratings", ["goal_bunch_id"], name: "index_goal_ratings_on_goal_bunch_id", using: :btree
   add_index "goal_ratings", ["goal_perspective_id"], name: "index_goal_ratings_on_goal_perspective_id", using: :btree
-  add_index "goal_ratings", ["goal_setter_id"], name: "index_goal_ratings_on_goal_setter_id", using: :btree
   add_index "goal_ratings", ["performance_calendar_id"], name: "index_goal_ratings_on_performance_calendar_id", using: :btree
   add_index "goal_ratings", ["period_id"], name: "index_goal_ratings_on_period_id", using: :btree
-  add_index "goal_ratings", ["reviewer_id"], name: "index_goal_ratings_on_reviewer_id", using: :btree
   add_index "goal_ratings", ["training_topic_master_id"], name: "index_goal_ratings_on_training_topic_master_id", using: :btree
 
   create_table "goal_setters", force: :cascade do |t|
@@ -1685,9 +1660,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "name",         limit: 255
     t.text     "description",  limit: 65535
     t.date     "holiday_date"
+    t.boolean  "isweekend"
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
-    t.boolean  "isweekend"
     t.boolean  "is_send",                    default: false
   end
 
@@ -1695,9 +1670,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
+    t.boolean  "is_confirm"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "induction_activities", force: :cascade do |t|
@@ -1797,36 +1772,36 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
+    t.boolean  "is_confirm"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "interview_decisions", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.integer  "name",        limit: 4
     t.text     "description", limit: 65535
+    t.boolean  "is_confirm"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "interview_evalutions", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
+    t.boolean  "is_confirm"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "interview_reschedules", force: :cascade do |t|
     t.date     "interview_date"
     t.time     "interview_time"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
     t.integer  "interview_schedule_id", limit: 4
     t.integer  "employee_id",           limit: 4
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   add_index "interview_reschedules", ["employee_id"], name: "index_interview_reschedules_on_employee_id", using: :btree
@@ -1872,11 +1847,12 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.date     "interview_date"
     t.string   "location",           limit: 255
     t.string   "post_title",         limit: 255
+    t.string   "job_title",          limit: 255
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
     t.boolean  "is_confirm"
     t.integer  "selected_resume_id", limit: 4
-    t.string   "job_title",          limit: 255
+    t.string   "candidate_name2",    limit: 255
     t.text     "address",            limit: 65535
     t.boolean  "is_confirmed"
   end
@@ -1888,9 +1864,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.integer  "code",        limit: 4
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
+    t.boolean  "is_confirm"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "investment_declarations", force: :cascade do |t|
@@ -1948,12 +1924,12 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   create_table "issue_locker_histories", force: :cascade do |t|
     t.integer  "issue_locker_id",         limit: 4
     t.integer  "issue_request_id",        limit: 4
-    t.boolean  "status"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
     t.integer  "issue_tracker_member_id", limit: 4
+    t.boolean  "status"
     t.date     "lock_date"
     t.time     "lock_time"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   add_index "issue_locker_histories", ["issue_locker_id"], name: "index_issue_locker_histories_on_issue_locker_id", using: :btree
@@ -1962,12 +1938,12 @@ ActiveRecord::Schema.define(version: 20170531125126) do
 
   create_table "issue_lockers", force: :cascade do |t|
     t.integer  "issue_request_id",        limit: 4
-    t.boolean  "status"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
     t.integer  "issue_tracker_member_id", limit: 4
+    t.boolean  "status"
     t.date     "lock_date"
     t.time     "lock_time"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   add_index "issue_lockers", ["issue_request_id"], name: "index_issue_lockers_on_issue_request_id", using: :btree
@@ -1977,6 +1953,7 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.integer  "issue_tracker_group_id", limit: 4
     t.integer  "issue_type_id",          limit: 4
     t.string   "name",                   limit: 255
+    t.string   "role",                   limit: 255
     t.string   "description",            limit: 255
     t.boolean  "status"
     t.boolean  "is_confirm"
@@ -1996,6 +1973,12 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.time     "time"
     t.integer  "employee_id",             limit: 4
     t.string   "issue_priority",          limit: 255
+    t.boolean  "status"
+    t.boolean  "is_confirm"
+    t.integer  "issue_root_cause_id",     limit: 4
+    t.string   "effort_time",             limit: 255
+    t.string   "comment",                 limit: 255
+    t.boolean  "is_complete"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "document1_file_name",     limit: 255
@@ -2006,12 +1989,6 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "document2_content_type",  limit: 255
     t.integer  "document2_file_size",     limit: 4
     t.datetime "document2_updated_at"
-    t.boolean  "status"
-    t.boolean  "is_confirm"
-    t.boolean  "is_complete"
-    t.integer  "issue_root_cause_id",     limit: 4
-    t.string   "effort_time",             limit: 255
-    t.string   "comment",                 limit: 255
   end
 
   add_index "issue_requests", ["employee_id"], name: "index_issue_requests_on_employee_id", using: :btree
@@ -2032,27 +2009,25 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   add_index "issue_root_causes", ["issue_tracker_group_id"], name: "index_issue_root_causes_on_issue_tracker_group_id", using: :btree
 
   create_table "issue_tracker_accesses", force: :cascade do |t|
-    t.string   "name",                    limit: 255
-    t.string   "role",                    limit: 255
+    t.string   "name",                   limit: 255
+    t.string   "role",                   limit: 255
     t.boolean  "status"
     t.boolean  "is_confirm"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.integer  "issue_tracker_member_id", limit: 4
-    t.integer  "issue_tracker_group_id",  limit: 4
+    t.integer  "issue_tracker_group_id", limit: 4
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
   end
 
   add_index "issue_tracker_accesses", ["issue_tracker_group_id"], name: "index_issue_tracker_accesses_on_issue_tracker_group_id", using: :btree
-  add_index "issue_tracker_accesses", ["issue_tracker_member_id"], name: "index_issue_tracker_accesses_on_issue_tracker_member_id", using: :btree
 
   create_table "issue_tracker_groups", force: :cascade do |t|
     t.string   "name",           limit: 255
     t.string   "email",          limit: 255
+    t.string   "contact_number", limit: 255
     t.boolean  "status"
     t.boolean  "is_confirm"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.string   "contact_number", limit: 255
   end
 
   create_table "issue_tracker_members", force: :cascade do |t|
@@ -2060,9 +2035,8 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.integer  "employee_id",            limit: 4
     t.boolean  "status"
     t.boolean  "is_confirm"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.string   "role",                   limit: 255
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   add_index "issue_tracker_members", ["employee_id"], name: "index_issue_tracker_members_on_employee_id", using: :btree
@@ -2088,11 +2062,13 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   create_table "joining_details", force: :cascade do |t|
     t.integer  "employee_id",             limit: 4
     t.date     "joining_date"
-    t.string   "designation",             limit: 255
     t.integer  "employee_grade_id",       limit: 4
     t.integer  "employee_designation_id", limit: 4
     t.date     "confirmation_date"
     t.string   "status",                  limit: 255
+    t.string   "employee_uan_no",         limit: 255
+    t.string   "employee_pf_no",          limit: 255
+    t.string   "employee_efic_no",        limit: 255
     t.string   "probation_period",        limit: 255
     t.string   "notice_period",           limit: 255
     t.boolean  "is_mediclaim"
@@ -2101,45 +2077,40 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "passport_no",             limit: 255
     t.date     "passport_issue_date"
     t.date     "passport_expiry_date"
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
-    t.string   "employee_uan_no",         limit: 255
-    t.string   "employee_pf_no",          limit: 255
-    t.string   "employee_efic_no",        limit: 255
+    t.boolean  "is_society_member"
+    t.date     "retirement_date"
+    t.date     "date"
+    t.integer  "reserved_category_id",    limit: 4
     t.string   "select_pf",               limit: 255
     t.string   "pf_max_amount",           limit: 255
     t.boolean  "have_esic"
     t.integer  "cost_center_id",          limit: 4
     t.integer  "employee_category_id",    limit: 4
     t.integer  "payment_mode_id",         limit: 4
-    t.integer  "department_id",           limit: 4
+    t.boolean  "ot_option"
+    t.boolean  "is_new",                              default: true
     t.boolean  "have_retention"
-    t.boolean  "is_society_member"
-    t.date     "retirement_date"
-    t.integer  "reserved_category_id",    limit: 4
     t.boolean  "is_employeer_pf"
     t.boolean  "is_employeer_esic"
     t.boolean  "is_insurance"
     t.boolean  "is_family_pension"
     t.boolean  "is_bonus"
     t.boolean  "basis_of_time",                       default: false
-    t.string   "ot_rate",                 limit: 255
-    t.boolean  "ot_option"
     t.boolean  "time_master"
     t.boolean  "time_adjusted"
     t.date     "leaving_date"
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+    t.string   "ot_rate",                 limit: 255
     t.integer  "replacement_id",          limit: 4
-    t.boolean  "is_new",                              default: true
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id", using: :btree
-  add_index "joining_details", ["department_id"], name: "index_joining_details_on_department_id", using: :btree
   add_index "joining_details", ["employee_category_id"], name: "index_joining_details_on_employee_category_id", using: :btree
   add_index "joining_details", ["employee_designation_id"], name: "index_joining_details_on_employee_designation_id", using: :btree
   add_index "joining_details", ["employee_grade_id"], name: "index_joining_details_on_employee_grade_id", using: :btree
   add_index "joining_details", ["employee_id"], name: "index_joining_details_on_employee_id", using: :btree
   add_index "joining_details", ["payment_mode_id"], name: "index_joining_details_on_payment_mode_id", using: :btree
-  add_index "joining_details", ["replacement_id"], name: "index_joining_details_on_replacement_id", using: :btree
   add_index "joining_details", ["reserved_category_id"], name: "index_joining_details_on_reserved_category_id", using: :btree
 
   create_table "late_mark_masters", force: :cascade do |t|
@@ -2178,12 +2149,12 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "code",           limit: 255
     t.string   "name",           limit: 255
     t.string   "description",    limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
     t.boolean  "is_payble"
     t.decimal  "from",                       precision: 10
     t.decimal  "to",                         precision: 10
-    t.boolean  "is_confirm"
     t.boolean  "is_active"
     t.boolean  "is_balance"
     t.string   "limit",          limit: 255
@@ -2211,10 +2182,10 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "c_off_type",       limit: 255
     t.integer  "c_off_expire_day", limit: 4,                           default: 0
     t.boolean  "expiry_status"
-    t.datetime "created_at",                                                           null: false
-    t.datetime "updated_at",                                                           null: false
     t.boolean  "is_taken",                                             default: false
     t.date     "expiry_date"
+    t.datetime "created_at",                                                           null: false
+    t.datetime "updated_at",                                                           null: false
     t.decimal  "leave_count",                  precision: 3, scale: 1
     t.boolean  "is_expire"
     t.boolean  "status"
@@ -2274,12 +2245,12 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   add_index "leave_masters", ["leav_category_id"], name: "index_leave_masters_on_leav_category_id", using: :btree
 
   create_table "leave_records", force: :cascade do |t|
+    t.integer  "employee_leav_request_id", limit: 4
+    t.integer  "employee_id",              limit: 4
     t.date     "day"
     t.string   "status",                   limit: 255
     t.datetime "created_at",                                          null: false
     t.datetime "updated_at",                                          null: false
-    t.integer  "employee_leav_request_id", limit: 4
-    t.integer  "employee_id",              limit: 4
     t.decimal  "count",                                precision: 10
     t.integer  "leav_category_id",         limit: 4
   end
@@ -2290,23 +2261,22 @@ ActiveRecord::Schema.define(version: 20170531125126) do
 
   create_table "leave_status_records", force: :cascade do |t|
     t.integer  "employee_leav_request_id",  limit: 4
-    t.integer  "change_status_employee_id", limit: 4
     t.string   "status",                    limit: 255
     t.datetime "change_date"
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
+    t.integer  "change_status_employee_id", limit: 4
   end
 
-  add_index "leave_status_records", ["change_status_employee_id"], name: "index_leave_status_records_on_change_status_employee_id", using: :btree
   add_index "leave_status_records", ["employee_leav_request_id"], name: "index_leave_status_records_on_employee_leav_request_id", using: :btree
 
   create_table "leaving_reasons", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
+    t.boolean  "is_confirm"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "machine_attendances", force: :cascade do |t|
@@ -2319,13 +2289,12 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.integer  "shift_master_id", limit: 4
     t.boolean  "is_proceed"
     t.string   "present",         limit: 255
-    t.integer  "user_id",         limit: 4
     t.boolean  "is_updated"
+    t.integer  "user_id",         limit: 4
   end
 
   add_index "machine_attendances", ["employee_id"], name: "index_machine_attendances_on_employee_id", using: :btree
   add_index "machine_attendances", ["shift_master_id"], name: "index_machine_attendances_on_shift_master_id", using: :btree
-  add_index "machine_attendances", ["user_id"], name: "index_machine_attendances_on_user_id", using: :btree
 
   create_table "manager_2s", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -2334,17 +2303,15 @@ ActiveRecord::Schema.define(version: 20170531125126) do
 
   create_table "manager_histories", force: :cascade do |t|
     t.integer  "employee_id",    limit: 4
-    t.integer  "manager_id",     limit: 4
-    t.integer  "manager_2_id",   limit: 4
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.date     "effective_from"
     t.date     "effective_to"
+    t.integer  "manager_id",     limit: 4
+    t.integer  "manager_2_id",   limit: 4
   end
 
   add_index "manager_histories", ["employee_id"], name: "index_manager_histories_on_employee_id", using: :btree
-  add_index "manager_histories", ["manager_2_id"], name: "index_manager_histories_on_manager_2_id", using: :btree
-  add_index "manager_histories", ["manager_id"], name: "index_manager_histories_on_manager_id", using: :btree
 
   create_table "managers", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -2412,9 +2379,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.date     "expence_date"
     t.decimal  "amount",                          precision: 15, scale: 2, default: 0.0
     t.integer  "employee_id",       limit: 4
+    t.integer  "expencess_type_id", limit: 4
     t.datetime "created_at",                                                             null: false
     t.datetime "updated_at",                                                             null: false
-    t.integer  "expencess_type_id", limit: 4
     t.boolean  "is_paid"
     t.text     "description",       limit: 65535
   end
@@ -2426,18 +2393,18 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "nomination_masters", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "od_records", force: :cascade do |t|
@@ -2473,8 +2440,7 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.text     "reason",             limit: 65535
     t.boolean  "first_half"
     t.boolean  "last_half"
-    t.integer  "first_reporter_id",  limit: 4
-    t.integer  "second_reporter_id", limit: 4
+    t.boolean  "present_status"
     t.integer  "current_status",     limit: 4
     t.boolean  "is_pending"
     t.boolean  "is_cancelled"
@@ -2484,12 +2450,11 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.boolean  "is_second_rejected"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
-    t.boolean  "present_status"
+    t.integer  "first_reporter_id",  limit: 4
+    t.integer  "second_reporter_id", limit: 4
   end
 
   add_index "on_duty_requests", ["employee_id"], name: "index_on_duty_requests_on_employee_id", using: :btree
-  add_index "on_duty_requests", ["first_reporter_id"], name: "index_on_duty_requests_on_first_reporter_id", using: :btree
-  add_index "on_duty_requests", ["second_reporter_id"], name: "index_on_duty_requests_on_second_reporter_id", using: :btree
 
   create_table "other_salary_components", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -2535,10 +2500,10 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.decimal  "ot_daily_hrs",                      precision: 15, scale: 2, default: 0.0
     t.decimal  "ot_rate",                           precision: 15, scale: 2, default: 0.0
     t.decimal  "ot_daily_amount",                   precision: 15, scale: 2, default: 0.0
-    t.datetime "created_at",                                                               null: false
-    t.datetime "updated_at",                                                               null: false
     t.decimal  "attendance_bonus_amount",           precision: 15, scale: 2, default: 0.0
     t.decimal  "paid_holiday_amount",               precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                                               null: false
+    t.datetime "updated_at",                                                               null: false
   end
 
   add_index "overtime_daily_records", ["employee_id"], name: "index_overtime_daily_records_on_employee_id", using: :btree
@@ -2550,9 +2515,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.decimal  "ot_rate",                precision: 15, scale: 2, default: 0.0
     t.boolean  "is_esic"
     t.boolean  "status"
+    t.boolean  "is_confirm"
     t.datetime "created_at",                                                    null: false
     t.datetime "updated_at",                                                    null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "overtime_month_records", force: :cascade do |t|
@@ -2568,17 +2533,18 @@ ActiveRecord::Schema.define(version: 20170531125126) do
 
   create_table "overtime_salaries", force: :cascade do |t|
     t.integer  "employee_id",             limit: 4
+    t.date     "date"
     t.decimal  "ot_hrs",                            precision: 15, scale: 2, default: 0.0
     t.decimal  "ot_esic_amount",                    precision: 15, scale: 2, default: 0.0
     t.decimal  "total_amount",                      precision: 15, scale: 2, default: 0.0
     t.decimal  "attendence_bouns_amount",           precision: 15, scale: 2, default: 0.0
     t.decimal  "paid_holiday_amount",               precision: 15, scale: 2, default: 0.0
     t.decimal  "net_payble_amount",                 precision: 15, scale: 2, default: 0.0
-    t.datetime "created_at",                                                               null: false
-    t.datetime "updated_at",                                                               null: false
     t.date     "ot_date"
     t.decimal  "basic_amount",                      precision: 15, scale: 2, default: 0.0
     t.decimal  "ot_amount",                         precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                                               null: false
+    t.datetime "updated_at",                                                               null: false
   end
 
   add_index "overtime_salaries", ["employee_id"], name: "index_overtime_salaries_on_employee_id", using: :btree
@@ -2599,9 +2565,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.integer  "leav_category_id",         limit: 4
     t.datetime "leave_date"
     t.boolean  "is_full"
+    t.boolean  "is_cancel_after_approve"
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
-    t.boolean  "is_cancel_after_approve"
   end
 
   add_index "particular_leave_records", ["employee_id"], name: "index_particular_leave_records_on_employee_id", using: :btree
@@ -2637,23 +2603,21 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.integer  "interview_schedule_id",   limit: 4
     t.integer  "selected_resume_id",      limit: 4
     t.string   "candidate_name",          limit: 255
-    t.integer  "vacancy_history_id",      limit: 4
   end
 
   add_index "particular_vacancy_requests", ["employee_designation_id"], name: "index_particular_vacancy_requests_on_employee_designation_id", using: :btree
   add_index "particular_vacancy_requests", ["employee_id"], name: "index_particular_vacancy_requests_on_employee_id", using: :btree
   add_index "particular_vacancy_requests", ["interview_schedule_id"], name: "index_particular_vacancy_requests_on_interview_schedule_id", using: :btree
   add_index "particular_vacancy_requests", ["selected_resume_id"], name: "index_particular_vacancy_requests_on_selected_resume_id", using: :btree
-  add_index "particular_vacancy_requests", ["vacancy_history_id"], name: "index_particular_vacancy_requests_on_vacancy_history_id", using: :btree
   add_index "particular_vacancy_requests", ["vacancy_master_id"], name: "index_particular_vacancy_requests_on_vacancy_master_id", using: :btree
 
   create_table "payment_modes", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "payroll_overtime_masters", force: :cascade do |t|
@@ -2679,9 +2643,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
+    t.boolean  "is_confirm"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "performance_calendars", force: :cascade do |t|
@@ -2689,9 +2653,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.integer  "performance_activity_id", limit: 4
     t.date     "start_date"
     t.date     "end_date"
+    t.boolean  "is_confirm"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
-    t.boolean  "is_confirm"
   end
 
   add_index "performance_calendars", ["performance_activity_id"], name: "index_performance_calendars_on_performance_activity_id", using: :btree
@@ -2702,9 +2666,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.date     "from"
     t.date     "to"
     t.boolean  "status"
+    t.boolean  "is_confirm"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "pf_employers", force: :cascade do |t|
@@ -2725,9 +2689,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.decimal  "min_limit",                  precision: 15, scale: 2
     t.string   "base_component", limit: 255
     t.boolean  "is_active"
+    t.boolean  "is_confirm"
     t.datetime "created_at",                                          null: false
     t.datetime "updated_at",                                          null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "professional_tax_masters", force: :cascade do |t|
@@ -2755,18 +2719,18 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.decimal  "pt_amount",               precision: 15, scale: 2, default: 0.0
     t.decimal  "for_months",              precision: 15, scale: 2, default: 0.0
     t.decimal  "march_month",             precision: 15, scale: 2, default: 0.0
+    t.boolean  "is_confirm"
     t.datetime "created_at",                                                     null: false
     t.datetime "updated_at",                                                     null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "project_masters", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
+    t.boolean  "is_confirm"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "promotion_histories", force: :cascade do |t|
@@ -2821,9 +2785,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
+    t.boolean  "is_confirm"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "r_designations", force: :cascade do |t|
@@ -2834,9 +2798,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   create_table "ratings", force: :cascade do |t|
     t.string   "value",       limit: 255
     t.text     "discription", limit: 65535
+    t.boolean  "is_confirm"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.boolean  "is_confirm"
     t.boolean  "status"
   end
 
@@ -2853,18 +2817,18 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
+    t.boolean  "is_confirm"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "religions", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.string   "code",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "rembursmentmasters", force: :cascade do |t|
@@ -2884,9 +2848,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.integer  "rembursmentmaster_id", limit: 4
     t.decimal  "amount",                           precision: 5, scale: 1
     t.date     "paid_date"
-    t.string   "status",               limit: 255
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
+    t.string   "status",               limit: 255
   end
 
   add_index "rembursments", ["employee_id"], name: "index_rembursments_on_employee_id", using: :btree
@@ -2899,21 +2863,20 @@ ActiveRecord::Schema.define(version: 20170531125126) do
 
   create_table "reporting_employee_transfers", force: :cascade do |t|
     t.integer  "employee_transfer_id", limit: 4
-    t.integer  "reporting_master_id",  limit: 4
     t.string   "status",               limit: 255
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
+    t.integer  "reporting_master_id",  limit: 4
   end
 
   add_index "reporting_employee_transfers", ["employee_transfer_id"], name: "index_reporting_employee_transfers_on_employee_transfer_id", using: :btree
-  add_index "reporting_employee_transfers", ["reporting_master_id"], name: "index_reporting_employee_transfers_on_reporting_master_id", using: :btree
 
   create_table "reporting_master_rembursments", force: :cascade do |t|
     t.integer  "rembursment_id", limit: 4
     t.integer  "manager_id",     limit: 4
-    t.string   "status",         limit: 255
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.string   "status",         limit: 255
   end
 
   add_index "reporting_master_rembursments", ["rembursment_id"], name: "index_reporting_master_rembursments_on_rembursment_id", using: :btree
@@ -2948,50 +2911,41 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   add_index "reporting_masters_resigns", ["reporting_master_id"], name: "index_reporting_masters_resigns_on_reporting_master_id", using: :btree
 
   create_table "reporting_masters_training_reqs", force: :cascade do |t|
-    t.integer  "training_request_id", limit: 4
-    t.integer  "reporting_master_id", limit: 4
     t.string   "training_status",     limit: 255
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.string   "employee_training",   limit: 255
+    t.integer  "reporting_master_id", limit: 4
+    t.integer  "training_request_id", limit: 4
   end
 
-  add_index "reporting_masters_training_reqs", ["reporting_master_id"], name: "index_reporting_masters_training_reqs_on_reporting_master_id", using: :btree
-  add_index "reporting_masters_training_reqs", ["training_request_id"], name: "index_reporting_masters_training_reqs_on_training_request_id", using: :btree
-
   create_table "reporting_masters_travel_requests", force: :cascade do |t|
-    t.integer  "travel_request_id",   limit: 4
-    t.integer  "reporting_master_id", limit: 4
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.string   "travel_status",       limit: 255
-    t.integer  "daily_bill_id",       limit: 4
     t.boolean  "status"
     t.text     "daily_bill_comment",  limit: 65535
+    t.integer  "reporting_master_id", limit: 4
+    t.integer  "travel_request_id",   limit: 4
   end
-
-  add_index "reporting_masters_travel_requests", ["daily_bill_id"], name: "index_reporting_masters_travel_requests_on_daily_bill_id", using: :btree
-  add_index "reporting_masters_travel_requests", ["reporting_master_id"], name: "index_reporting_masters_travel_requests_on_reporting_master_id", using: :btree
-  add_index "reporting_masters_travel_requests", ["travel_request_id"], name: "index_reporting_masters_travel_requests_on_travel_request_id", using: :btree
 
   create_table "reporting_masters_vacancy_masters", force: :cascade do |t|
     t.integer  "vacancy_master_id",   limit: 4
-    t.integer  "reporting_master_id", limit: 4
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.string   "vacancy_status",      limit: 255
+    t.integer  "reporting_master_id", limit: 4
   end
 
-  add_index "reporting_masters_vacancy_masters", ["reporting_master_id"], name: "index_reporting_masters_vacancy_masters_on_reporting_master_id", using: :btree
   add_index "reporting_masters_vacancy_masters", ["vacancy_master_id"], name: "index_reporting_masters_vacancy_masters_on_vacancy_master_id", using: :btree
 
   create_table "reserved_categories", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "resignation_histories", force: :cascade do |t|
@@ -3040,9 +2994,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.decimal  "decimal",                    precision: 15, scale: 2
     t.string   "no_of_month",    limit: 255
     t.string   "description",    limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",                                          null: false
     t.datetime "updated_at",                                          null: false
-    t.boolean  "is_confirm"
     t.decimal  "persent",                    precision: 10
     t.string   "max_limit",      limit: 255
     t.string   "base_component", limit: 255
@@ -3065,9 +3019,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
     t.boolean  "status"
+    t.boolean  "is_confirm"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "reward_recognitions", force: :cascade do |t|
@@ -3088,9 +3042,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
     t.boolean  "status"
+    t.boolean  "is_confirm"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "rewards_allocations", force: :cascade do |t|
@@ -3128,18 +3082,18 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "root_cause_masters", force: :cascade do |t|
     t.integer  "code",        limit: 4
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
+    t.boolean  "is_confirm"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "salary_comp_mappings", force: :cascade do |t|
@@ -3171,26 +3125,23 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.integer  "parent_id",                  limit: 4
   end
 
-  add_index "salary_component_templates", ["parent_id"], name: "index_salary_component_templates_on_parent_id", using: :btree
   add_index "salary_component_templates", ["parent_salary_component_id"], name: "index_salary_component_templates_on_parent_salary_component_id", using: :btree
   add_index "salary_component_templates", ["salary_component_id"], name: "index_salary_component_templates_on_salary_component_id", using: :btree
   add_index "salary_component_templates", ["salary_template_id"], name: "index_salary_component_templates_on_salary_template_id", using: :btree
 
   create_table "salary_components", force: :cascade do |t|
-    t.string   "name",         limit: 255
-    t.boolean  "is_deducted"
     t.string   "code",         limit: 255
+    t.string   "name",         limit: 255
     t.string   "description",  limit: 255
+    t.boolean  "is_deducted"
+    t.boolean  "is_confirm"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-    t.integer  "parent_id",    limit: 4
     t.string   "account_code", limit: 255
-    t.boolean  "is_confirm"
     t.boolean  "is_active"
     t.boolean  "is_base"
+    t.integer  "parent_id",    limit: 4
   end
-
-  add_index "salary_components", ["parent_id"], name: "index_salary_components_on_parent_id", using: :btree
 
   create_table "salary_map_saps", force: :cascade do |t|
     t.integer  "salary_component_id", limit: 4
@@ -3219,14 +3170,13 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   create_table "salaryslip_components", force: :cascade do |t|
     t.integer  "salaryslip_id",        limit: 4
     t.integer  "salary_component_id",  limit: 4
-    t.decimal  "actual_amount",                    precision: 15, scale: 2
+    t.decimal  "actual_amount",                  precision: 15, scale: 2
+    t.decimal  "calculated_amount",              precision: 15, scale: 2
     t.boolean  "is_deducted"
-    t.datetime "created_at",                                                null: false
-    t.datetime "updated_at",                                                null: false
-    t.string   "other_component_name", limit: 255
-    t.decimal  "calculated_amount",                precision: 15, scale: 2
     t.integer  "employee_template_id", limit: 4
     t.boolean  "is_arrear"
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
   end
 
   add_index "salaryslip_components", ["employee_template_id"], name: "index_salaryslip_components_on_employee_template_id", using: :btree
@@ -3236,22 +3186,23 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   create_table "salaryslips", force: :cascade do |t|
     t.string   "salary_slip_code",           limit: 255
     t.integer  "employee_id",                limit: 4
-    t.integer  "workingday_id",              limit: 4
-    t.decimal  "actual_gross_salary",                    precision: 15, scale: 2
-    t.decimal  "actual_total_deduction",                 precision: 15, scale: 2
-    t.decimal  "actual_net_salary",                      precision: 15, scale: 2
-    t.datetime "created_at",                                                      null: false
-    t.datetime "updated_at",                                                      null: false
-    t.integer  "salary_template_id",         limit: 4
+    t.date     "month_year"
     t.string   "month",                      limit: 255
     t.string   "year",                       limit: 255
+    t.integer  "workingday_id",              limit: 4
+    t.decimal  "actual_gross_salary",                    precision: 15, scale: 2
     t.decimal  "calculated_gross_salary",                precision: 15, scale: 2
+    t.decimal  "actual_total_deduction",                 precision: 15, scale: 2
     t.decimal  "calculated_total_deduction",             precision: 15, scale: 2
+    t.decimal  "actual_net_salary",                      precision: 15, scale: 2
     t.decimal  "calculated_net_salary",                  precision: 15, scale: 2
-    t.date     "month_year"
+    t.integer  "salary_template_id",         limit: 4
+    t.string   "other_component_name",       limit: 255
     t.integer  "employee_template_id",       limit: 4
     t.decimal  "arrear_actual_amount",                   precision: 15, scale: 2
     t.decimal  "arrear_calculated_amount",               precision: 15, scale: 2
+    t.datetime "created_at",                                                      null: false
+    t.datetime "updated_at",                                                      null: false
     t.boolean  "is_confirm"
   end
 
@@ -3316,11 +3267,11 @@ ActiveRecord::Schema.define(version: 20170531125126) do
 
   create_table "shift_rotations", force: :cascade do |t|
     t.integer  "company_shift_id", limit: 4
+    t.integer  "department_id",    limit: 4
     t.date     "start_date"
     t.date     "end_date"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.integer  "department_id",    limit: 4
   end
 
   add_index "shift_rotations", ["company_shift_id"], name: "index_shift_rotations_on_company_shift_id", using: :btree
@@ -3329,8 +3280,8 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   create_table "skillsets", force: :cascade do |t|
     t.integer  "employee_id", limit: 4
     t.string   "name",        limit: 255
-    t.string   "description", limit: 255
     t.string   "skill_level", limit: 255
+    t.string   "description", limit: 255
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
@@ -3355,8 +3306,12 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "esic_no",                 limit: 255
     t.string   "pf_no",                   limit: 255
     t.string   "uan_no",                  limit: 255
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.decimal  "cl",                                  precision: 10
+    t.decimal  "el",                                  precision: 10
+    t.decimal  "c_off",                               precision: 10
+    t.decimal  "advance",                             precision: 10
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
     t.string   "account_no",              limit: 255
     t.integer  "employee_designation_id", limit: 4
   end
@@ -3370,9 +3325,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.boolean  "is_society_member"
     t.decimal  "amount",                      precision: 15, scale: 2, default: 0.0
     t.integer  "employee_id",       limit: 4
+    t.date     "start_date"
     t.datetime "created_at",                                                         null: false
     t.datetime "updated_at",                                                         null: false
-    t.date     "start_date"
     t.boolean  "is_active"
     t.boolean  "is_confirm"
   end
@@ -3424,20 +3379,17 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   add_index "texable_monthly_deductions", ["salayslip_id"], name: "index_texable_monthly_deductions_on_salayslip_id", using: :btree
 
   create_table "trainee_requests", force: :cascade do |t|
-    t.integer  "training_request_id",      limit: 4
     t.integer  "employee_id",              limit: 4
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
-    t.integer  "training_topic_master_id", limit: 4
     t.boolean  "is_complete"
-    t.integer  "reporting_master_id",      limit: 4
     t.boolean  "training_plan"
+    t.integer  "reporting_master_id",      limit: 4
+    t.integer  "training_request_id",      limit: 4
+    t.integer  "training_topic_master_id", limit: 4
   end
 
   add_index "trainee_requests", ["employee_id"], name: "index_trainee_requests_on_employee_id", using: :btree
-  add_index "trainee_requests", ["reporting_master_id"], name: "index_trainee_requests_on_reporting_master_id", using: :btree
-  add_index "trainee_requests", ["training_request_id"], name: "index_trainee_requests_on_training_request_id", using: :btree
-  add_index "trainee_requests", ["training_topic_master_id"], name: "index_trainee_requests_on_training_topic_master_id", using: :btree
 
   create_table "trainees", force: :cascade do |t|
     t.integer  "training_plan_id", limit: 4
@@ -3452,10 +3404,7 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   add_index "trainees", ["training_plan_id"], name: "index_trainees_on_training_plan_id", using: :btree
 
   create_table "training_approvals", force: :cascade do |t|
-    t.integer  "training_request_id",      limit: 4
     t.integer  "employee_id",              limit: 4
-    t.integer  "training_topic_master_id", limit: 4
-    t.integer  "reporting_master_id",      limit: 4
     t.string   "traininig_period",         limit: 255
     t.date     "training_date"
     t.string   "place",                    limit: 255
@@ -3465,12 +3414,12 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
     t.string   "current_status",           limit: 255
+    t.integer  "reporting_master_id",      limit: 4
+    t.integer  "training_request_id",      limit: 4
+    t.integer  "training_topic_master_id", limit: 4
   end
 
   add_index "training_approvals", ["employee_id"], name: "index_training_approvals_on_employee_id", using: :btree
-  add_index "training_approvals", ["reporting_master_id"], name: "index_training_approvals_on_reporting_master_id", using: :btree
-  add_index "training_approvals", ["training_request_id"], name: "index_training_approvals_on_training_request_id", using: :btree
-  add_index "training_approvals", ["training_topic_master_id"], name: "index_training_approvals_on_training_topic_master_id", using: :btree
 
   create_table "training_plans", force: :cascade do |t|
     t.date     "training_date"
@@ -3481,17 +3430,15 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "place",                    limit: 255
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
-    t.integer  "training_topic_master_id", limit: 4
-    t.integer  "training_request_id",      limit: 4
     t.integer  "period_id",                limit: 4
     t.string   "trainer_num",              limit: 255
     t.text     "about_trainer",            limit: 65535
     t.string   "trainer_email",            limit: 255
+    t.integer  "training_request_id",      limit: 4
+    t.integer  "training_topic_master_id", limit: 4
   end
 
   add_index "training_plans", ["period_id"], name: "index_training_plans_on_period_id", using: :btree
-  add_index "training_plans", ["training_request_id"], name: "index_training_plans_on_training_request_id", using: :btree
-  add_index "training_plans", ["training_topic_master_id"], name: "index_training_plans_on_training_topic_master_id", using: :btree
 
   create_table "training_records", force: :cascade do |t|
     t.integer  "employee_id",              limit: 4
@@ -3511,7 +3458,6 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.integer  "employee_id",              limit: 4
     t.string   "training_period",          limit: 255
     t.date     "training_date"
-    t.integer  "reporting_master_id",      limit: 4
     t.text     "description",              limit: 65535
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
@@ -3521,10 +3467,10 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.text     "justification",            limit: 65535
     t.string   "status",                   limit: 255
     t.text     "comment",                  limit: 65535
+    t.integer  "reporting_master_id",      limit: 4
   end
 
   add_index "training_requests", ["employee_id"], name: "index_training_requests_on_employee_id", using: :btree
-  add_index "training_requests", ["reporting_master_id"], name: "index_training_requests_on_reporting_master_id", using: :btree
   add_index "training_requests", ["training_topic_master_id"], name: "index_training_requests_on_training_topic_master_id", using: :btree
 
   create_table "training_topic_masters", force: :cascade do |t|
@@ -3532,9 +3478,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
     t.boolean  "status"
+    t.boolean  "is_confirm"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "training_topics", force: :cascade do |t|
@@ -3549,7 +3495,6 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   create_table "transfer_histories", force: :cascade do |t|
     t.integer  "employee_transfer_id",      limit: 4
     t.integer  "employee_id",               limit: 4
-    t.integer  "reporting_master_id",       limit: 4
     t.integer  "employee_designation_id",   limit: 4
     t.integer  "employee_category_id",      limit: 4
     t.integer  "company_id",                limit: 4
@@ -3564,6 +3509,7 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "employee_company",          limit: 255
     t.string   "employee_company_location", limit: 255
     t.string   "employee_department",       limit: 255
+    t.integer  "reporting_master_id",       limit: 4
   end
 
   add_index "transfer_histories", ["company_id"], name: "index_transfer_histories_on_company_id", using: :btree
@@ -3573,15 +3519,14 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   add_index "transfer_histories", ["employee_designation_id"], name: "index_transfer_histories_on_employee_designation_id", using: :btree
   add_index "transfer_histories", ["employee_id"], name: "index_transfer_histories_on_employee_id", using: :btree
   add_index "transfer_histories", ["employee_transfer_id"], name: "index_transfer_histories_on_employee_transfer_id", using: :btree
-  add_index "transfer_histories", ["reporting_master_id"], name: "index_transfer_histories_on_reporting_master_id", using: :btree
 
   create_table "travel_expence_types", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "travel_expences", force: :cascade do |t|
@@ -3601,28 +3546,26 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "travel_options", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.text     "discription", limit: 65535
+    t.boolean  "is_confirm"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "travel_request_histories", force: :cascade do |t|
-    t.integer  "travel_request_id",   limit: 4
     t.date     "application_date"
     t.date     "traveling_date"
     t.string   "tour_purpose",        limit: 255
     t.string   "place",               limit: 255
     t.decimal  "total_advance",                   precision: 10
-    t.integer  "reporting_master_id", limit: 4
     t.string   "current_status",      limit: 255
     t.integer  "travel_option_id",    limit: 4
     t.datetime "created_at",                                     null: false
@@ -3631,13 +3574,13 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.integer  "employee_id",         limit: 4
     t.string   "daily_bill_status",   limit: 255
     t.string   "status",              limit: 255
+    t.integer  "reporting_master_id", limit: 4
+    t.integer  "travel_request_id",   limit: 4
   end
 
   add_index "travel_request_histories", ["employee_id"], name: "index_travel_request_histories_on_employee_id", using: :btree
-  add_index "travel_request_histories", ["reporting_master_id"], name: "index_travel_request_histories_on_reporting_master_id", using: :btree
   add_index "travel_request_histories", ["travel_mode_id"], name: "index_travel_request_histories_on_travel_mode_id", using: :btree
   add_index "travel_request_histories", ["travel_option_id"], name: "index_travel_request_histories_on_travel_option_id", using: :btree
-  add_index "travel_request_histories", ["travel_request_id"], name: "index_travel_request_histories_on_travel_request_id", using: :btree
 
   create_table "travel_requests", force: :cascade do |t|
     t.integer  "employee_id",         limit: 4
@@ -3648,7 +3591,6 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.decimal  "total_advance",                     precision: 15, scale: 2, default: 0.0
     t.datetime "created_at",                                                               null: false
     t.datetime "updated_at",                                                               null: false
-    t.integer  "reporting_master_id", limit: 4
     t.string   "current_status",      limit: 255
     t.integer  "travel_option_id",    limit: 4
     t.integer  "travel_mode_id",      limit: 4
@@ -3658,10 +3600,10 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.decimal  "expense",                           precision: 10
     t.date     "to"
     t.string   "day",                 limit: 255
+    t.integer  "reporting_master_id", limit: 4
   end
 
   add_index "travel_requests", ["employee_id"], name: "index_travel_requests_on_employee_id", using: :btree
-  add_index "travel_requests", ["reporting_master_id"], name: "index_travel_requests_on_reporting_master_id", using: :btree
   add_index "travel_requests", ["travel_mode_id"], name: "index_travel_requests_on_travel_mode_id", using: :btree
   add_index "travel_requests", ["travel_option_id"], name: "index_travel_requests_on_travel_option_id", using: :btree
 
@@ -3669,9 +3611,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "users", force: :cascade do |t|
@@ -3689,8 +3631,6 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.integer  "company_location_id",       limit: 4
     t.integer  "employee_designation_id",   limit: 4
     t.integer  "degree_id",                 limit: 4
-    t.integer  "degree_1_id",               limit: 4
-    t.integer  "degree_2_id",               limit: 4
     t.integer  "reporting_master_id",       limit: 4
     t.integer  "employee_id",               limit: 4
     t.string   "other_organization",        limit: 255
@@ -3699,16 +3639,16 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
     t.text     "justification",             limit: 65535
-    t.string   "experience",                limit: 255
-    t.text     "keyword",                   limit: 65535
     t.date     "vacancy_fullfillment_date"
     t.boolean  "is_confirmed"
     t.string   "vacancy_code",              limit: 255
+    t.integer  "degree_1_id",               limit: 4
+    t.integer  "degree_2_id",               limit: 4
+    t.string   "experience",                limit: 255
+    t.string   "keyword",                   limit: 255
   end
 
   add_index "vacancy_masters", ["company_location_id"], name: "index_vacancy_masters_on_company_location_id", using: :btree
-  add_index "vacancy_masters", ["degree_1_id"], name: "index_vacancy_masters_on_degree_1_id", using: :btree
-  add_index "vacancy_masters", ["degree_2_id"], name: "index_vacancy_masters_on_degree_2_id", using: :btree
   add_index "vacancy_masters", ["degree_id"], name: "index_vacancy_masters_on_degree_id", using: :btree
   add_index "vacancy_masters", ["department_id"], name: "index_vacancy_masters_on_department_id", using: :btree
   add_index "vacancy_masters", ["employee_designation_id"], name: "index_vacancy_masters_on_employee_designation_id", using: :btree
@@ -3726,8 +3666,6 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.integer  "employee_designation_id", limit: 4
     t.integer  "company_location_id",     limit: 4
     t.integer  "degree_id",               limit: 4
-    t.integer  "degree_1_id",             limit: 4
-    t.integer  "degree_2_id",             limit: 4
     t.string   "experience",              limit: 255
     t.string   "keyword",                 limit: 255
     t.string   "other_organization",      limit: 255
@@ -3738,11 +3676,11 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.text     "justification",           limit: 65535
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
+    t.integer  "degree_1_id",             limit: 4
+    t.integer  "degree_2_id",             limit: 4
   end
 
   add_index "vacancy_request_histories", ["company_location_id"], name: "index_vacancy_request_histories_on_company_location_id", using: :btree
-  add_index "vacancy_request_histories", ["degree_1_id"], name: "index_vacancy_request_histories_on_degree_1_id", using: :btree
-  add_index "vacancy_request_histories", ["degree_2_id"], name: "index_vacancy_request_histories_on_degree_2_id", using: :btree
   add_index "vacancy_request_histories", ["degree_id"], name: "index_vacancy_request_histories_on_degree_id", using: :btree
   add_index "vacancy_request_histories", ["department_id"], name: "index_vacancy_request_histories_on_department_id", using: :btree
   add_index "vacancy_request_histories", ["employee_designation_id"], name: "index_vacancy_request_histories_on_employee_designation_id", using: :btree
@@ -3757,22 +3695,20 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "email_id",            limit: 255
     t.string   "id_proof",            limit: 255
     t.string   "from",                limit: 255
-    t.integer  "meet_to_id",          limit: 4
+    t.integer  "employee_id",         limit: 4
     t.time     "in_time"
     t.time     "out_time"
     t.text     "purpose",             limit: 65535
-    t.integer  "authorized_by_id",    limit: 4
+    t.date     "visiting_date"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.string   "avatar_file_name",    limit: 255
     t.string   "avatar_content_type", limit: 255
     t.integer  "avatar_file_size",    limit: 4
     t.datetime "avatar_updated_at"
-    t.date     "visiting_date"
   end
 
-  add_index "visitor_details", ["authorized_by_id"], name: "index_visitor_details_on_authorized_by_id", using: :btree
-  add_index "visitor_details", ["meet_to_id"], name: "index_visitor_details_on_meet_to_id", using: :btree
+  add_index "visitor_details", ["employee_id"], name: "index_visitor_details_on_employee_id", using: :btree
 
   create_table "week_off_masters", force: :cascade do |t|
     t.integer  "employee_id", limit: 4
@@ -3807,9 +3743,9 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.string   "month",      limit: 255
     t.decimal  "amount",                 precision: 15, scale: 2, default: 0.0
     t.boolean  "status"
+    t.boolean  "is_confirm"
     t.datetime "created_at",                                                    null: false
     t.datetime "updated_at",                                                    null: false
-    t.boolean  "is_confirm"
   end
 
   create_table "workingdays", force: :cascade do |t|
@@ -3823,18 +3759,13 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.decimal  "week_off_day",                        precision: 10
     t.decimal  "absent_day",                          precision: 10
     t.decimal  "payable_day",                         precision: 10
+    t.string   "lwp_leave",               limit: 255
+    t.string   "cl_leave",                limit: 255
+    t.string   "el_leave",                limit: 255
+    t.string   "esic_leave",              limit: 255
+    t.string   "coff_leave",              limit: 255
     t.datetime "created_at",                                                   null: false
     t.datetime "updated_at",                                                   null: false
-    t.decimal  "lwp_leave",                           precision: 10
-    t.decimal  "cl_leave",                            precision: 10
-    t.decimal  "el_leave",                            precision: 10
-    t.decimal  "esic_leave",                          precision: 10
-    t.decimal  "coff_leave",                          precision: 10
-    t.decimal  "advance_leave",                       precision: 10
-    t.decimal  "cl_balance",                          precision: 10
-    t.decimal  "el_balance",                          precision: 10
-    t.decimal  "coff_balance",                        precision: 10
-    t.decimal  "advance_balance",                     precision: 10
     t.boolean  "is_confirm"
     t.decimal  "pay_leave",                           precision: 10
     t.decimal  "nonpay_leave",                        precision: 10, scale: 2
@@ -3845,29 +3776,354 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.boolean  "paid"
     t.boolean  "full_and_final"
     t.decimal  "od_day",                              precision: 10
-    t.decimal  "nonpayable_day",                      precision: 10
-    t.date     "date"
     t.date     "from"
     t.date     "to"
+    t.date     "date"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id", using: :btree
 
   create_table "years", force: :cascade do |t|
     t.integer  "name",       limit: 4
+    t.boolean  "is_confirm"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
-    t.boolean  "is_confirm"
   end
 
+  add_foreign_key "access_issue_requests", "issue_requests"
+  add_foreign_key "access_issue_requests", "issue_tracker_accesses"
+  add_foreign_key "access_issue_requests", "issue_tracker_members"
+  add_foreign_key "accident_images", "accident_records"
+  add_foreign_key "accident_records", "departments"
+  add_foreign_key "accident_records", "employees"
+  add_foreign_key "accident_records", "root_cause_masters"
+  add_foreign_key "assigned_assets", "asset_types"
+  add_foreign_key "assigned_assets", "employees"
+  add_foreign_key "attendances", "employee_shifts"
+  add_foreign_key "attendances", "employees"
+  add_foreign_key "attendances", "shift_rotations"
+  add_foreign_key "awards", "employees"
+  add_foreign_key "awards", "years"
+  add_foreign_key "bonus_employees", "employees"
+  add_foreign_key "capture_resumes", "countries"
+  add_foreign_key "capture_resumes", "degrees"
+  add_foreign_key "capture_resumes", "districts"
+  add_foreign_key "capture_resumes", "employee_designations"
+  add_foreign_key "capture_resumes", "states"
+  add_foreign_key "capture_resumes", "vacancy_masters"
+  add_foreign_key "certificates", "certificate_masters"
+  add_foreign_key "certifications", "employees"
+  add_foreign_key "certifications", "years"
+  add_foreign_key "companies", "company_types"
+  add_foreign_key "companies", "countries"
+  add_foreign_key "companies", "districts"
+  add_foreign_key "companies", "groups"
+  add_foreign_key "companies", "states"
+  add_foreign_key "company_leavs", "employee_grades"
+  add_foreign_key "company_leavs", "leav_categories"
+  add_foreign_key "company_locations", "companies"
+  add_foreign_key "company_locations", "countries"
+  add_foreign_key "company_locations", "districts"
+  add_foreign_key "company_locations", "states"
+  add_foreign_key "company_time_masters", "shift_masters"
+  add_foreign_key "daily_bill_detail_histories", "daily_bill_details"
+  add_foreign_key "daily_bill_detail_histories", "travel_expence_types"
+  add_foreign_key "daily_bill_details", "currency_masters"
+  add_foreign_key "daily_bill_details", "travel_expence_types"
+  add_foreign_key "daily_bill_details", "travel_requests"
+  add_foreign_key "departments", "company_locations"
+  add_foreign_key "departments", "department_types"
+  add_foreign_key "districts", "states"
+  add_foreign_key "due_actions", "due_details"
+  add_foreign_key "due_actions", "due_employee_details"
+  add_foreign_key "due_details", "due_employee_templates"
+  add_foreign_key "due_details", "due_templates"
+  add_foreign_key "due_details", "reporting_masters"
+  add_foreign_key "due_employee_details", "due_details"
+  add_foreign_key "due_employee_details", "due_employee_templates"
+  add_foreign_key "due_employee_details", "due_templates"
+  add_foreign_key "due_employee_details", "employees"
+  add_foreign_key "due_employee_details", "reporting_masters"
+  add_foreign_key "due_employee_templates", "due_templates"
+  add_foreign_key "due_employee_templates", "employees"
+  add_foreign_key "employee_arrear_items", "employee_arrears"
+  add_foreign_key "employee_arrear_items", "salary_components"
+  add_foreign_key "employee_arrears", "employees"
+  add_foreign_key "employee_attendances", "company_time_masters"
+  add_foreign_key "employee_bank_details", "banks"
+  add_foreign_key "employee_bank_details", "employees"
+  add_foreign_key "employee_daily_activities", "employees"
+  add_foreign_key "employee_daily_activities", "project_masters"
+  add_foreign_key "employee_documents", "employees"
   add_foreign_key "employee_jc_lists", "employees"
   add_foreign_key "employee_jc_lists", "joining_checklist_masters"
+  add_foreign_key "employee_leav_balances", "company_leavs"
+  add_foreign_key "employee_leav_balances", "employees"
+  add_foreign_key "employee_leav_balances", "leav_categories"
+  add_foreign_key "employee_leav_requests", "employees"
+  add_foreign_key "employee_leav_requests", "leav_categories"
+  add_foreign_key "employee_monthly_days", "employees"
+  add_foreign_key "employee_monthly_days", "years"
+  add_foreign_key "employee_nominations", "countries"
+  add_foreign_key "employee_nominations", "districts"
+  add_foreign_key "employee_nominations", "employees"
+  add_foreign_key "employee_nominations", "families"
+  add_foreign_key "employee_nominations", "illness_types"
+  add_foreign_key "employee_nominations", "nomination_masters"
+  add_foreign_key "employee_nominations", "relation_masters"
+  add_foreign_key "employee_nominations", "states"
+  add_foreign_key "employee_physicals", "employees"
+  add_foreign_key "employee_promotions", "departments"
+  add_foreign_key "employee_promotions", "employee_designations"
+  add_foreign_key "employee_promotions", "employee_grades"
+  add_foreign_key "employee_promotions", "employees"
+  add_foreign_key "employee_resignations", "employees"
+  add_foreign_key "employee_resignations", "leaving_reasons"
+  add_foreign_key "employee_resignations", "reporting_masters"
+  add_foreign_key "employee_salary_templates", "employee_templates"
+  add_foreign_key "employee_salary_templates", "employees"
+  add_foreign_key "employee_salary_templates", "salary_components"
+  add_foreign_key "employee_salary_templates", "salary_templates"
+  add_foreign_key "employee_shifts", "employees"
+  add_foreign_key "employee_shifts_shift_rotations", "employee_shifts"
+  add_foreign_key "employee_shifts_shift_rotations", "shift_rotations"
+  add_foreign_key "employee_task_to_dos", "employees"
+  add_foreign_key "employee_templates", "employees"
+  add_foreign_key "employee_templates", "salary_templates"
+  add_foreign_key "employee_transfers", "companies"
+  add_foreign_key "employee_transfers", "company_locations"
+  add_foreign_key "employee_transfers", "departments"
+  add_foreign_key "employee_transfers", "employee_categories"
+  add_foreign_key "employee_transfers", "employee_designations"
+  add_foreign_key "employee_transfers", "employees"
+  add_foreign_key "employee_week_offs", "employees"
+  add_foreign_key "employee_week_offs", "week_off_masters"
+  add_foreign_key "employees", "blood_groups"
+  add_foreign_key "employees", "companies"
+  add_foreign_key "employees", "company_locations"
+  add_foreign_key "employees", "countries"
+  add_foreign_key "employees", "departments"
+  add_foreign_key "employees", "districts"
+  add_foreign_key "employees", "employee_code_masters"
+  add_foreign_key "employees", "employee_types"
+  add_foreign_key "employees", "nationalities"
+  add_foreign_key "employees", "punch_cards"
+  add_foreign_key "employees", "religions"
+  add_foreign_key "employees", "states"
+  add_foreign_key "employer_contributions", "employees"
   add_foreign_key "exit_interviews", "employee_resignations"
+  add_foreign_key "exit_interviews", "employees"
+  add_foreign_key "exit_interviews", "question_masters"
+  add_foreign_key "experiences", "employees"
+  add_foreign_key "families", "blood_groups"
+  add_foreign_key "families", "employees"
+  add_foreign_key "families", "religions"
+  add_foreign_key "food_deductions", "employees"
+  add_foreign_key "food_deductions", "food_coupan_masters"
+  add_foreign_key "goal_bunches", "employees"
+  add_foreign_key "goal_bunches", "performance_calendars"
+  add_foreign_key "goal_bunches", "periods"
+  add_foreign_key "goal_ratings", "attribute_masters"
+  add_foreign_key "goal_ratings", "attributes"
+  add_foreign_key "goal_ratings", "goal_bunches"
+  add_foreign_key "goal_ratings", "goal_perspectives"
+  add_foreign_key "goal_ratings", "performance_calendars"
+  add_foreign_key "goal_ratings", "periods"
+  add_foreign_key "goal_ratings", "training_topic_masters"
+  add_foreign_key "gratuities", "employees"
+  add_foreign_key "gratuities", "gratuity_masters"
+  add_foreign_key "induction_activities", "employees"
+  add_foreign_key "induction_activities", "induction_masters"
+  add_foreign_key "induction_details", "employees"
+  add_foreign_key "induction_details", "induction_masters"
+  add_foreign_key "induction_templates", "employees"
+  add_foreign_key "interview_analyses", "interview_attributes"
+  add_foreign_key "interview_analyses", "interview_decisions"
+  add_foreign_key "interview_analyses", "interview_evalutions"
+  add_foreign_key "interview_analyses", "interview_rounds"
+  add_foreign_key "interview_analyses", "interview_schedules"
+  add_foreign_key "interview_analyses", "vacancy_request_histories"
+  add_foreign_key "interview_reschedules", "employees"
+  add_foreign_key "interview_reschedules", "interview_schedules"
+  add_foreign_key "interview_round_reschedules", "employees"
+  add_foreign_key "interview_round_reschedules", "interview_rounds"
+  add_foreign_key "interview_round_reschedules", "interview_types"
+  add_foreign_key "interview_rounds", "employees"
+  add_foreign_key "interview_rounds", "interview_schedules"
+  add_foreign_key "interview_rounds", "interview_types"
+  add_foreign_key "interview_schedules", "employees"
+  add_foreign_key "interview_schedules", "selected_resumes"
+  add_foreign_key "investment_declarations", "employees"
+  add_foreign_key "investment_declarations", "investment_heads"
+  add_foreign_key "investment_heads", "sections"
+  add_foreign_key "issue_histories", "employees"
+  add_foreign_key "issue_histories", "issue_masters"
+  add_foreign_key "issue_histories", "issue_requests"
+  add_foreign_key "issue_histories", "issue_tracker_groups"
+  add_foreign_key "issue_histories", "issue_tracker_members"
+  add_foreign_key "issue_locker_histories", "issue_lockers"
+  add_foreign_key "issue_locker_histories", "issue_requests"
+  add_foreign_key "issue_locker_histories", "issue_tracker_members"
+  add_foreign_key "issue_lockers", "issue_requests"
+  add_foreign_key "issue_lockers", "issue_tracker_members"
+  add_foreign_key "issue_masters", "issue_tracker_groups"
+  add_foreign_key "issue_masters", "issue_types"
+  add_foreign_key "issue_requests", "employees"
+  add_foreign_key "issue_requests", "issue_masters"
+  add_foreign_key "issue_requests", "issue_root_causes"
+  add_foreign_key "issue_requests", "issue_tracker_groups"
+  add_foreign_key "issue_requests", "issue_tracker_members"
+  add_foreign_key "issue_root_causes", "issue_tracker_groups"
+  add_foreign_key "issue_tracker_accesses", "issue_tracker_groups"
+  add_foreign_key "issue_tracker_members", "employees"
+  add_foreign_key "issue_tracker_members", "issue_tracker_groups"
+  add_foreign_key "joining_details", "cost_centers"
+  add_foreign_key "joining_details", "employee_categories"
+  add_foreign_key "joining_details", "employee_designations"
+  add_foreign_key "joining_details", "employee_grades"
+  add_foreign_key "joining_details", "employees"
+  add_foreign_key "joining_details", "payment_modes"
+  add_foreign_key "joining_details", "reserved_categories"
+  add_foreign_key "leave_c_offs", "employees"
+  add_foreign_key "leave_cashables", "employees"
+  add_foreign_key "leave_cashables", "leav_categories"
+  add_foreign_key "leave_details", "leav_categories"
+  add_foreign_key "leave_details", "salaryslips"
+  add_foreign_key "leave_masters", "leav_categories"
+  add_foreign_key "leave_records", "employee_leav_requests"
+  add_foreign_key "leave_records", "employees"
+  add_foreign_key "leave_records", "leav_categories"
+  add_foreign_key "leave_status_records", "employee_leav_requests"
+  add_foreign_key "machine_attendances", "employees"
+  add_foreign_key "machine_attendances", "shift_masters"
+  add_foreign_key "manager_histories", "employees"
+  add_foreign_key "members", "companies"
+  add_foreign_key "members", "company_locations"
+  add_foreign_key "members", "departments"
+  add_foreign_key "members", "employees"
+  add_foreign_key "members", "roles"
+  add_foreign_key "monthly_arrears", "employees"
+  add_foreign_key "monthly_expences", "employees"
+  add_foreign_key "monthly_expences", "expencess_types"
+  add_foreign_key "od_records", "employees"
+  add_foreign_key "od_records", "on_duty_requests"
+  add_foreign_key "od_status_records", "employees"
+  add_foreign_key "od_status_records", "on_duty_requests"
+  add_foreign_key "on_duty_requests", "employees"
+  add_foreign_key "overtime_daily_records", "employees"
+  add_foreign_key "overtime_month_records", "employees"
+  add_foreign_key "overtime_salaries", "employees"
+  add_foreign_key "particular_leave_records", "employee_leav_requests"
+  add_foreign_key "particular_leave_records", "employees"
+  add_foreign_key "particular_leave_records", "leav_categories"
+  add_foreign_key "particular_od_records", "employees"
+  add_foreign_key "particular_od_records", "on_duty_requests"
+  add_foreign_key "particular_vacancy_requests", "employee_designations"
+  add_foreign_key "particular_vacancy_requests", "employees"
+  add_foreign_key "particular_vacancy_requests", "interview_schedules"
+  add_foreign_key "particular_vacancy_requests", "selected_resumes"
+  add_foreign_key "particular_vacancy_requests", "vacancy_masters"
+  add_foreign_key "performance_calendars", "performance_activities"
+  add_foreign_key "performance_calendars", "periods"
+  add_foreign_key "professional_tax_masters", "company_locations"
+  add_foreign_key "promotion_histories", "departments"
+  add_foreign_key "promotion_histories", "employee_categories"
+  add_foreign_key "promotion_histories", "employee_designations"
+  add_foreign_key "promotion_histories", "employee_grades"
+  add_foreign_key "promotion_histories", "employee_promotions"
+  add_foreign_key "promotion_histories", "employees"
+  add_foreign_key "qualifications", "degree_streams"
+  add_foreign_key "qualifications", "degree_types"
+  add_foreign_key "qualifications", "degrees"
+  add_foreign_key "qualifications", "employees"
+  add_foreign_key "qualifications", "universities"
+  add_foreign_key "qualifications", "years"
   add_foreign_key "rembursments", "employees"
   add_foreign_key "rembursments", "rembursmentmasters"
+  add_foreign_key "reporting_employee_transfers", "employee_transfers"
   add_foreign_key "reporting_master_rembursments", "rembursments"
+  add_foreign_key "reporting_masters", "employees"
+  add_foreign_key "reporting_masters_resigns", "employee_resignations"
+  add_foreign_key "reporting_masters_resigns", "reporting_masters"
+  add_foreign_key "reporting_masters_vacancy_masters", "vacancy_masters"
+  add_foreign_key "resignation_histories", "employee_resignations"
+  add_foreign_key "resignation_histories", "employees"
+  add_foreign_key "resignation_histories", "reporting_masters"
+  add_foreign_key "resignation_status_records", "change_status_employees"
+  add_foreign_key "resignation_status_records", "employee_resignations"
+  add_foreign_key "reward_recognitions", "reward_owners"
+  add_foreign_key "reward_recognitions", "reward_types"
+  add_foreign_key "rewards_allocations", "departments"
+  add_foreign_key "rewards_allocations", "reporting_masters"
+  add_foreign_key "rewards_allocations", "reward_types"
+  add_foreign_key "rewards_pals", "employees"
+  add_foreign_key "rewards_pals", "reporting_masters"
+  add_foreign_key "rewards_pals", "reward_types"
+  add_foreign_key "salary_comp_mappings", "salary_components"
+  add_foreign_key "salary_component_templates", "parent_salary_components"
+  add_foreign_key "salary_component_templates", "salary_components"
+  add_foreign_key "salary_component_templates", "salary_templates"
+  add_foreign_key "salary_map_saps", "companies"
+  add_foreign_key "salary_map_saps", "company_locations"
+  add_foreign_key "salary_map_saps", "salary_components"
+  add_foreign_key "salaryslip_components", "employee_templates"
+  add_foreign_key "salaryslip_components", "salary_components"
+  add_foreign_key "salaryslip_components", "salaryslips"
+  add_foreign_key "salaryslips", "employee_templates"
+  add_foreign_key "salaryslips", "employees"
+  add_foreign_key "salaryslips", "salary_templates"
+  add_foreign_key "salaryslips", "workingdays"
+  add_foreign_key "selected_resumes", "degrees"
+  add_foreign_key "selected_resumes", "vacancy_masters"
+  add_foreign_key "shift_rotations", "company_shifts"
+  add_foreign_key "shift_rotations", "departments"
+  add_foreign_key "skillsets", "employees"
+  add_foreign_key "slip_informations", "cost_centers"
+  add_foreign_key "slip_informations", "departments"
+  add_foreign_key "slip_informations", "employee_designations"
+  add_foreign_key "slip_informations", "salaryslips"
+  add_foreign_key "society_member_ships", "employees"
+  add_foreign_key "states", "countries"
   add_foreign_key "status_c_offs", "employees"
   add_foreign_key "status_c_offs", "leave_c_offs"
-  add_foreign_key "visitor_details", "authorized_bies"
-  add_foreign_key "visitor_details", "meet_tos"
+  add_foreign_key "texable_amounts", "employees"
+  add_foreign_key "trainee_requests", "employees"
+  add_foreign_key "trainees", "employees"
+  add_foreign_key "trainees", "training_plans"
+  add_foreign_key "training_approvals", "employees"
+  add_foreign_key "training_plans", "periods"
+  add_foreign_key "training_records", "employees"
+  add_foreign_key "training_records", "training_topic_masters"
+  add_foreign_key "training_requests", "employees"
+  add_foreign_key "training_requests", "training_topic_masters"
+  add_foreign_key "transfer_histories", "companies"
+  add_foreign_key "transfer_histories", "company_locations"
+  add_foreign_key "transfer_histories", "departments"
+  add_foreign_key "transfer_histories", "employee_categories"
+  add_foreign_key "transfer_histories", "employee_designations"
+  add_foreign_key "transfer_histories", "employee_transfers"
+  add_foreign_key "transfer_histories", "employees"
+  add_foreign_key "travel_expences", "travel_requests"
+  add_foreign_key "travel_request_histories", "employees"
+  add_foreign_key "travel_request_histories", "travel_modes"
+  add_foreign_key "travel_request_histories", "travel_options"
+  add_foreign_key "travel_requests", "employees"
+  add_foreign_key "travel_requests", "travel_modes"
+  add_foreign_key "travel_requests", "travel_options"
+  add_foreign_key "vacancy_masters", "company_locations"
+  add_foreign_key "vacancy_masters", "degrees"
+  add_foreign_key "vacancy_masters", "departments"
+  add_foreign_key "vacancy_masters", "employee_designations"
+  add_foreign_key "vacancy_masters", "employees"
+  add_foreign_key "vacancy_masters", "reporting_masters"
+  add_foreign_key "vacancy_request_histories", "company_locations"
+  add_foreign_key "vacancy_request_histories", "degrees"
+  add_foreign_key "vacancy_request_histories", "departments"
+  add_foreign_key "vacancy_request_histories", "employee_designations"
+  add_foreign_key "vacancy_request_histories", "employees"
+  add_foreign_key "vacancy_request_histories", "reporting_masters"
+  add_foreign_key "vacancy_request_histories", "vacancy_masters"
+  add_foreign_key "visitor_details", "employees"
+  add_foreign_key "week_off_masters", "employees"
+  add_foreign_key "workingdays", "employees"
 end

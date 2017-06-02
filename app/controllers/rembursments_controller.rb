@@ -89,7 +89,21 @@ class RembursmentsController < ApplicationController
     @rembursments = Rembursment.where(employee_id: @rembursment.employee_id)
   end
 
+  def single_approve
+     # byebug
+    @rembursment = Rembursment.find(params[:format])
+     reporting_master = @rembursment.manager_id #new code
+     employee = Employee.where(id: reporting_master).take #new code
+     first_manager_id = employee.manager_id #new code
+     second_manager_id = employee.manager_2_id #new code
+    @rembursment.update(manager_id: second_manager_id,status: "FirstApproved")
+    ReportingMasterRembursment.create(manager_id: current_user.employee_id, rembursment_id: @rembursment.id,status: "FirstApproved")
+    flash[:notice] = 'Rembursment Request Approved Successfully'
+     redirect_to rembursment_request_rembursments_path
+    end
+
   def first_approve
+    # byebug
     @rembursment = Rembursment.find(params[:format])
     first_manager_id = @rembursment.employee.manager_id
     second_manager_id = @rembursment.employee.manager_2_id
@@ -108,11 +122,12 @@ class RembursmentsController < ApplicationController
     flash[:notice] = 'Rembursment Request Approved Successfully'
      redirect_to rembursment_request_rembursments_path
     else
+      # byebug
      reporting_master = @rembursment.manager_id #new code
      employee = Employee.where(id: reporting_master).take #new code
      first_manager_id = employee.manager_id #new code
      second_manager_id = employee.manager_2_id #new code
-    @rembursment.update(manager_id: second_manager_id,status: "FirstApproved")
+    @rembursment.update(manager_id: first_manager_id,status: "FirstApproved")
     ReportingMasterRembursment.create(manager_id: current_user.employee_id, rembursment_id: @rembursment.id,status: "FirstApproved")
     flash[:notice] = 'Rembursment Request Approved Successfully'
      redirect_to rembursment_request_rembursments_path

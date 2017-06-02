@@ -76,7 +76,7 @@
 
 <td>
   <% if @rembursment.employee.manager_id.present? && @rembursment.employee.manager_2_id.present? && @rembursment.status == "Pending" %>
-      <%= link_to 'Approve',first_approve_rembursments_path(@rembursment.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %> |
+      <%= link_to 'Approve',single_approve_rembursments_path(@rembursment.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %> |
       <%= link_to 'Reject',reject_rembursment_rembursments_path(@rembursment.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %> 
   <%  elsif @rembursment.employee.manager_id.present? && @rembursment.employee.manager_2_id.present? && @rembursment.status == "FirstApproved" %>
     <%= link_to 'Approve',first_approve_rembursments_path(@rembursment.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %> |

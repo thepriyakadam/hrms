@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Reimbursement Requests</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Reimbursement head</th>
+      <th>Date</th>
+      <th>Amount</th>
+      <th>Status</th>
+      <th>Approval</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reimbursement_requests.each do |reimbursement_request| %>
+      <tr>
+        <td><%= reimbursement_request.employee %></td>
+        <td><%= reimbursement_request.reimbursement_head %></td>
+        <td><%= reimbursement_request.date %></td>
+        <td><%= reimbursement_request.amount %></td>
+        <td><%= reimbursement_request.status %></td>
+        <td><%= reimbursement_request.approval %></td>
+        <td><%= link_to 'Show', reimbursement_request %></td>
+        <td><%= link_to 'Edit', edit_reimbursement_request_path(reimbursement_request) %></td>
+        <td><%= link_to 'Destroy', reimbursement_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Reimbursement request', new_reimbursement_request_path %>

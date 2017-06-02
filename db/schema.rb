@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170531073440) do
+ActiveRecord::Schema.define(version: 20170602065242) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -90,6 +90,21 @@ ActiveRecord::Schema.define(version: 20170531073440) do
   add_index "accident_records", ["department_id"], name: "index_accident_records_on_department_id", using: :btree
   add_index "accident_records", ["employee_id"], name: "index_accident_records_on_employee_id", using: :btree
   add_index "accident_records", ["root_cause_master_id"], name: "index_accident_records_on_root_cause_master_id", using: :btree
+
+  create_table "advance_salaries", force: :cascade do |t|
+    t.integer  "employee_id",       limit: 4
+    t.decimal  "advance_amount",                precision: 15, scale: 2
+    t.string   "no_of_instalment",  limit: 255
+    t.decimal  "instalment_amount",             precision: 15, scale: 2
+    t.date     "advance_date"
+    t.integer  "advance_type_id",   limit: 4
+    t.decimal  "interest",                      precision: 15, scale: 2
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
+  end
+
+  add_index "advance_salaries", ["advance_type_id"], name: "index_advance_salaries_on_advance_type_id", using: :btree
+  add_index "advance_salaries", ["employee_id"], name: "index_advance_salaries_on_employee_id", using: :btree
 
   create_table "advance_types", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1311,14 +1326,16 @@ ActiveRecord::Schema.define(version: 20170531073440) do
   end
 
   create_table "exit_interviews", force: :cascade do |t|
-    t.integer  "employee_id",        limit: 4
-    t.integer  "question_master_id", limit: 4
-    t.text     "answer",             limit: 65535
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.integer  "employee_id",             limit: 4
+    t.integer  "question_master_id",      limit: 4
+    t.text     "answer",                  limit: 65535
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.integer  "employee_resignation_id", limit: 4
   end
 
   add_index "exit_interviews", ["employee_id"], name: "index_exit_interviews_on_employee_id", using: :btree
+  add_index "exit_interviews", ["employee_resignation_id"], name: "index_exit_interviews_on_employee_resignation_id", using: :btree
   add_index "exit_interviews", ["question_master_id"], name: "index_exit_interviews_on_question_master_id", using: :btree
 
   create_table "expencess_types", force: :cascade do |t|
@@ -2589,6 +2606,46 @@ ActiveRecord::Schema.define(version: 20170531073440) do
     t.datetime "updated_at",                null: false
   end
 
+  create_table "reimbursement_heads", force: :cascade do |t|
+    t.string   "code",        limit: 255
+    t.string   "name",        limit: 255
+    t.text     "description", limit: 65535
+    t.boolean  "status"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  create_table "reimbursement_requests", force: :cascade do |t|
+    t.integer  "employee_id",           limit: 4
+    t.integer  "reimbursement_head_id", limit: 4
+    t.date     "date"
+    t.decimal  "amount",                            precision: 10, scale: 2, default: 0.0
+    t.string   "status",                limit: 255
+    t.integer  "approval_id",           limit: 4
+    t.datetime "created_at",                                                               null: false
+    t.datetime "updated_at",                                                               null: false
+  end
+
+  add_index "reimbursement_requests", ["employee_id"], name: "index_reimbursement_requests_on_employee_id", using: :btree
+  add_index "reimbursement_requests", ["reimbursement_head_id"], name: "index_reimbursement_requests_on_reimbursement_head_id", using: :btree
+
+  create_table "reimbursement_slabs", force: :cascade do |t|
+    t.integer  "reimbursement_head_id",   limit: 4
+    t.integer  "employee_grade_id",       limit: 4
+    t.integer  "employee_designation_id", limit: 4
+    t.decimal  "from",                              precision: 10, scale: 2, default: 0.0
+    t.decimal  "to",                                precision: 10, scale: 2, default: 0.0
+    t.decimal  "monthly_amount",                    precision: 10, scale: 2, default: 0.0
+    t.decimal  "yearly_amount",                     precision: 10, scale: 2, default: 0.0
+    t.boolean  "status"
+    t.datetime "created_at",                                                               null: false
+    t.datetime "updated_at",                                                               null: false
+  end
+
+  add_index "reimbursement_slabs", ["employee_designation_id"], name: "index_reimbursement_slabs_on_employee_designation_id", using: :btree
+  add_index "reimbursement_slabs", ["employee_grade_id"], name: "index_reimbursement_slabs_on_employee_grade_id", using: :btree
+  add_index "reimbursement_slabs", ["reimbursement_head_id"], name: "index_reimbursement_slabs_on_reimbursement_head_id", using: :btree
+
   create_table "relation_masters", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
@@ -2624,9 +2681,9 @@ ActiveRecord::Schema.define(version: 20170531073440) do
     t.integer  "rembursmentmaster_id", limit: 4
     t.decimal  "amount",                           precision: 5, scale: 1
     t.date     "paid_date"
-    t.string   "status",               limit: 255
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
+    t.string   "status",               limit: 255
   end
 
   add_index "rembursments", ["employee_id"], name: "index_rembursments_on_employee_id", using: :btree
@@ -2646,9 +2703,9 @@ ActiveRecord::Schema.define(version: 20170531073440) do
   create_table "reporting_master_rembursments", force: :cascade do |t|
     t.integer  "rembursment_id", limit: 4
     t.integer  "manager_id",     limit: 4
-    t.string   "status",         limit: 255
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.string   "status",         limit: 255
   end
 
   add_index "reporting_master_rembursments", ["rembursment_id"], name: "index_reporting_master_rembursments_on_rembursment_id", using: :btree
@@ -2932,13 +2989,14 @@ ActiveRecord::Schema.define(version: 20170531073440) do
   create_table "salaryslip_components", force: :cascade do |t|
     t.integer  "salaryslip_id",        limit: 4
     t.integer  "salary_component_id",  limit: 4
-    t.decimal  "actual_amount",                  precision: 15, scale: 2
-    t.decimal  "calculated_amount",              precision: 15, scale: 2
+    t.decimal  "actual_amount",                    precision: 15, scale: 2
+    t.decimal  "calculated_amount",                precision: 15, scale: 2
     t.boolean  "is_deducted"
     t.integer  "employee_template_id", limit: 4
     t.boolean  "is_arrear"
-    t.datetime "created_at",                                              null: false
-    t.datetime "updated_at",                                              null: false
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
+    t.string   "other_component_name", limit: 255
   end
 
   add_index "salaryslip_components", ["employee_template_id"], name: "index_salaryslip_components_on_employee_template_id", using: :btree
@@ -3370,6 +3428,7 @@ ActiveRecord::Schema.define(version: 20170531073440) do
     t.text     "comment",             limit: 65535
     t.datetime "created_at",                                                               null: false
     t.datetime "updated_at",                                                               null: false
+    t.decimal  "total_advance",                     precision: 10
   end
 
   add_index "travel_requests", ["employee_id"], name: "index_travel_requests_on_employee_id", using: :btree
@@ -3540,6 +3599,8 @@ ActiveRecord::Schema.define(version: 20170531073440) do
   add_foreign_key "accident_records", "departments"
   add_foreign_key "accident_records", "employees"
   add_foreign_key "accident_records", "root_cause_masters"
+  add_foreign_key "advance_salaries", "advance_types"
+  add_foreign_key "advance_salaries", "employees"
   add_foreign_key "assigned_assets", "asset_types"
   add_foreign_key "assigned_assets", "employees"
   add_foreign_key "attendances", "employee_shifts"
@@ -3659,6 +3720,7 @@ ActiveRecord::Schema.define(version: 20170531073440) do
   add_foreign_key "employees", "religions"
   add_foreign_key "employees", "states"
   add_foreign_key "employer_contributions", "employees"
+  add_foreign_key "exit_interviews", "employee_resignations"
   add_foreign_key "exit_interviews", "employees"
   add_foreign_key "exit_interviews", "question_masters"
   add_foreign_key "experiences", "employees"
@@ -3783,6 +3845,11 @@ ActiveRecord::Schema.define(version: 20170531073440) do
   add_foreign_key "qualifications", "employees"
   add_foreign_key "qualifications", "universities"
   add_foreign_key "qualifications", "years"
+  add_foreign_key "reimbursement_requests", "employees"
+  add_foreign_key "reimbursement_requests", "reimbursement_heads"
+  add_foreign_key "reimbursement_slabs", "employee_designations"
+  add_foreign_key "reimbursement_slabs", "employee_grades"
+  add_foreign_key "reimbursement_slabs", "reimbursement_heads"
   add_foreign_key "rembursments", "employees"
   add_foreign_key "rembursments", "rembursmentmasters"
   add_foreign_key "reporting_employee_transfers", "employee_transfers"

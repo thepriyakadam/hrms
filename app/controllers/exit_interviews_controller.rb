@@ -14,8 +14,12 @@ class ExitInterviewsController < ApplicationController
 
   # GET /exit_interviews/new
   def new
+    # byebug
     @exit_interview = ExitInterview.new
-    @exit_interviews = ExitInterview.where(employee_id: current_user.employee_id).group(:employee_id)
+    @employee = params[:exit_interview] ? params[:exit_interview][:employee_id] : params[:employee_id]
+    @employee_resignation = EmployeeResignation.find(params[:format])
+    @exit_interviews = ExitInterview.where(employee_id: @employee_resignation.employee_id)
+    @employee_resignation = EmployeeResignation.find(params[:format])
     session[:active_tab] ="employee_resignation"
     session[:active_tab1] = "resignation"
   end
@@ -27,6 +31,7 @@ class ExitInterviewsController < ApplicationController
   # POST /exit_interviews
   # POST /exit_interviews.json
   def create
+  # byebug
    @exit_interview = ExitInterview.new(exit_interview_params)
     @exit_interviews = ExitInterview.all
     respond_to do |format|
@@ -44,8 +49,9 @@ class ExitInterviewsController < ApplicationController
   # PATCH/PUT /exit_interviews/1.json
   def update
    @exit_interview.update(exit_interview_params)
-   @exit_interview = ExitInterview.new
    @exit_interviews = ExitInterview.all
+   @exit_interview = ExitInterview.new
+   
   end
 
   # DELETE /exit_interviews/1
@@ -56,8 +62,11 @@ class ExitInterviewsController < ApplicationController
   end
 
   def print_exit_interview
-    @emps = ExitInterview.where(employee_id: current_user.employee_id).group(:employee_id)
-    @exit_interviews = ExitInterview.all
+     # byebug
+    @employee = params[:exit_interview] ? params[:exit_interview][:employee_id] : params[:employee_id]
+    @employee_resignation = EmployeeResignation.find(params[:resignation_id])
+    @exit_interviews = ExitInterview.where(employee_id: @employee_resignation.employee_id)
+    @exit_interview = ExitInterview.where(employee_id: @employee_resignation.employee_id).first
     respond_to do |format|
         format.html
         format.pdf do

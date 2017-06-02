@@ -8,7 +8,7 @@
           <th>ID</th>
           <td><%= @current_request.employee.try(:manual_employee_code) %></td>
 
-          <th>Employee Name</th>
+          <th>Employee</th>
           <td><%= full_name(@current_request.employee) %></td>
         </tr>
         <tr>
@@ -19,10 +19,10 @@
           <td><%= @current_request.employee.try(:joining_detail).try(:employee_designation).try(:name) %></td>
         </tr>
         <tr>
-          <th>Manager 1 </th>
+          <th>Manager 1</th>
           <td><%= @current_request.employee.manager.try(:manual_employee_code) %> - <%= full_name(@current_request.employee.try(:manager)) %></td>
        
-          <th>Manager 2 </th>
+          <th>Manager 2</th>
           <td><%= @current_request.employee.manager_2.try(:manual_employee_code) %> - <%= full_name(@current_request.employee.try(:manager_2)) %></td>
         </tr>
 
@@ -34,7 +34,7 @@
       <thead>
         <tr><th colspan="7"><center>Employee OD History</center></th></tr>
         <tr>
-          <th>Employee ID</th>
+          <th>ID</th>
           <th>OD Type</th>
           <th>From Date</th>
           <th>To Date</th>

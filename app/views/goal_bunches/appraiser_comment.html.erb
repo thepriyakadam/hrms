@@ -248,7 +248,10 @@
               <% if @goal_bunch.appraiser_confirm == true %>
               <small class="label label-info">Confirmed</small>
               <% else %>
-              <%= link_to '',appraiser_modal_goal_ratings_path(goal_rating_id: goal_rating,period_id: @period.id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+                <% if @goal_bunch.appraiser_rating == nil %>
+                  <%= link_to '',appraiser_modal_goal_ratings_path(goal_rating_id: goal_rating,period_id: @period.id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+                <% else %>
+                <% end %>
               <% end %>
             </td>
             <% appraiser_output = weightage * appraiser_rating.to_i / 100.to_f %>
@@ -296,7 +299,10 @@
               <% if @goal_bunch.appraiser_confirm == true %>
               <small class="label label-info">Confirmed</small>
               <% else %>
-              <%= link_to '',appraiser_modal_goal_ratings_path(goal_rating_id: goal_rating,period_id: @period.id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+                <% if @goal_bunch.appraiser_rating == nil %>
+                  <%= link_to '',appraiser_modal_goal_ratings_path(goal_rating_id: goal_rating,period_id: @period.id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+                <% else %>
+                <% end %>
               <% end %>
             </td>
             <% appraiser_output = weightage * appraiser_rating.to_i / 100.to_f %>

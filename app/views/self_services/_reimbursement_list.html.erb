@@ -8,7 +8,6 @@
       <th>Date</th>
       <th>Amount</th>
       <th>Status</th>
-      <th>Action</th>
     </tr>
   </thead>
 
@@ -20,13 +19,13 @@
         <td><%= reimbursement_request.reimbursement_head.try(:name) %></td>
         <td><%= reimbursement_request.date %></td>
         <td><%= reimbursement_request.amount %></td>
-        <td><%= reimbursement_request.status %></td>
         <td>
           <% if reimbursement_request.status == "Pending" %>
-            <%= link_to 'Send For Approval', send_for_approval_reimbursement_requests_path(reimbursement_request) ,class: 'btn btn-xs btn-warning' %>
-            <!-- <= link_to '', edit_request_modal_reimbursement_requests_path(reimbursement_request),class: 'btn btn-xs btn-success fa fa-edit',remote: true %>  -->
+            <%= link_to 'Send For Approval', send_for_approval_reimbursement_requests_path(reimbursement_request) ,class: 'btn btn-xs btn-primary' %>
+          <% else %>
+            <%= reimbursement_request.status %>
           <% end %>
-          </td>
+        </td>
       </tr>
     <% end %>
   </tbody>

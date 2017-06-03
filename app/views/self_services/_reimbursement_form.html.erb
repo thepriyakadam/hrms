@@ -12,7 +12,7 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-            <%= f.text_field :date,label: "Date",class: 'date'%>
+            <%= f.text_field :date,label: "Date",class: 'rem_date'%>
         </div>
       </div>
     </div>
@@ -31,13 +31,12 @@
 
 <script type="text/javascript">
   $(function(){
-    $('.date').datepicker({
+    $('.rem_date').datepicker({
     changeYear:true,
     changeMonth: true,
-    yearRange: '-200:-0',
+    yearRange: '-200:+1',
     dateFormat: 'dd-mm-yy' });
-
-   }); 
+  }); 
 
   $("#reimbursement_request").validate({
     rules: {

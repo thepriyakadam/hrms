@@ -1062,8 +1062,8 @@ end
       get :daily_bill
       get :travel_history
       get :travel_request_confirmation
-      get :approve_travel_request
-      get :reject_travel_request
+      get :approve
+      get :reject
       post :send_request_to_higher_authority
       get :modal
       get :cancel_travel_request

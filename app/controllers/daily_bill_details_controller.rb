@@ -154,23 +154,19 @@ class DailyBillDetailsController < ApplicationController
   end 
 
   def daily_bill_request_confirmation
-    # byebug
     @travel_request = TravelRequest.find(params[:format])
+    @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id,is_confirm: true)
     
-  
     @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
     @reporting_masters_travel_requests2 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: false).second
     @reporting_masters_travel_requests3 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: false).third
     @reporting_masters_travel_requests4 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: false).fourth
     @reporting_masters_travel_requests5 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: false).fifth
-    @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id,is_confirm: :true)
+    #@daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id,is_confirm: :true)
    
     session[:active_tab] ="travelmgmt"
   end
 
-  def approve_and_send_next
-
-  end
 
   def approved_daily_bill_details
     @daily_bill_details = DailyBillDetail.where(request_status: "Approved")

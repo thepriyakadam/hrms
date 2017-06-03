@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       get :rembursment_request
       get :rembursment_confirmation
       get :first_approve
+      
       get :reject_rembursment
       get :approve_rembursment
       get :final_approve

@@ -31,30 +31,34 @@
          <td>
             <% rembursment.reporting_master_rembursments.try(:each) do |er| %>
             <% case er.status %>
-            <% when "Pending" %>
-              <small class="label label-default">Pending</small>
-            <% when "FirstApproved" %>
-              <small class="label label-primary">FirstApproved</small>
-              <% when "SecondApproved" %>
-              <small class="label label-info">SecondApproved</small>
+              <% when "Pending" %>
+                <small class="label label-default">Pending</small>
+              <% when "FirstApproved" %>
+                <small class="label label-info">FirstApproved</small>
+              <% when "Approved" %>
+                <small class="label label-primary">Approved</small>
+              <% when "Approved & Send Next" %>
+                <small class="label label-warning">Approved & Send Next</small>
               <% when "FinalApproved" %>
-              <small class="label label-success">FinalApproved</small>
+                <small class="label label-success">FinalApproved</small>
               <% when "Rejected" %>
-              <small class="label label-danger">Rejected</small>
+                <small class="label label-danger">Rejected</small>
               <% when "Cancelled" %>
-              <small class="label label-warning">Cancelled</small>
-              <% else %>
-              <small class="label label-success">Else</small>
-             <% end %>
-             <% end %>
-            </td>
-              <td>
-            
+                <small class="label label-warning">Cancelled</small>
+              <% end %>
+            <% end %>
+          </td>
+          <td>
+            <% if rembursment.status == "Pending" %>
+              <%= link_to '', rembursment,class: 'btn btn-xs btn-default fa fa-eye' %>
+              <%= link_to '', cancel_rembursments_path(rembursment),class: 'btn btn-xs btn-danger fa fa-trash-o' %>
+            <% else %>
             <%= link_to '', rembursment,class: 'btn btn-xs btn-default fa fa-eye' %>
-            </td>
-      </tr>
-    <% end %>
-  </tbody>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
   </table>
-  </div>
-  </div>
+</div>
+</div>

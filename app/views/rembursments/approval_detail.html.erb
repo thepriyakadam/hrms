@@ -77,26 +77,30 @@
 <td>
   <% if @rembursment.employee.manager_id.present? && @rembursment.employee.manager_2_id.present? && @rembursment.status == "Pending" %>
       <%= link_to 'Approve',first_approve_rembursments_path(@rembursment.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %> |
-      <%= link_to 'Reject',reject_rembursment_rembursments_path(@rembursment.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %> 
+      <%= link_to 'Reject',reject_rembursments_path(@rembursment.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %> 
   
   <% elsif @rembursment.employee.manager_id.present? && @rembursment.employee.manager_2_id.nil? && @rembursment.status == "Pending" %>
     <%= link_to 'Approve',approve_rembursments_path(@rembursment.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %> |
-    <%= link_to ' Reject',reject_rembursment_rembursments_path(@rembursment.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
+    <%= link_to ' Reject',reject_rembursments_path(@rembursment.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
     <%= link_to 'Approve & Send next',approve_and_send_next_rembursments_path(@rembursment.id),class: 'btn btn btn-xs btn-success',data: { confirm: 'Are you sure?' } %> 
 
  <%  elsif @rembursment.status == "FirstApproved" %>
     <%= link_to 'Approve',approve_rembursments_path(@rembursment.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %> |
-    <%= link_to 'Reject',reject_rembursment_rembursments_path(@rembursment.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %> 
+    <%= link_to 'Reject',reject_rembursments_path(@rembursment.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %> 
     <%= link_to 'Approve & Send next',approve_and_send_next_rembursments_path(@rembursment.id),class: 'btn btn btn-xs btn-success',data: { confirm: 'Are you sure?' } %> 
   
   <% elsif @rembursment.status == "Approved & Send Next" %>
    <%= link_to 'Approve',approve_rembursments_path(@rembursment.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %> |
-    <%= link_to 'Reject',reject_rembursment_rembursments_path(@rembursment.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %> 
+    <%= link_to 'Reject',reject_rembursments_path(@rembursment.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %> 
     <%= link_to 'Approve & Send next',approve_and_send_next_rembursments_path(@rembursment.id),class: 'btn btn btn-xs btn-success',data: { confirm: 'Are you sure?' } %> 
+
+  <% elsif @rembursment.status == "Approved" %>
+    <%= link_to 'Approve',final_approve_rembursments_path(@rembursment.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %> |
+    <%= link_to 'Reject',reject_rembursments_path(@rembursment.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %> 
 
   <% end %>
 </td>
- <%= link_to 'Back', rembursment_request_rembursments_path(rembursment_id: @rembursment.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %> 
+ <%= link_to 'Back', approval_list_rembursments_path(rembursment_id: @rembursment.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %> 
 
  </div>
  </div>

@@ -15,18 +15,17 @@ Rails.application.routes.draw do
   resources :reporting_master_rembursments
   resources :rembursments  do
     collection do
-      get :rembursment_request
-      get :rembursment_confirmation
+      get :approval_list
+      get :approval_detail
       get :first_approve
       get :approve
-      get :reject_rembursment
-      get :approve_rembursment
+      get :reject
       get :final_approve
-      get :final_approval_rembursment
+      get :final_approval_list
       get :approve_and_send_next
       get :modal_approve_and_send_next
-
-       end
+      get :cancel
+    end
   end
   resources :rembursmentmasters
   resources :employee_jc_lists

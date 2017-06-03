@@ -1,5 +1,6 @@
 class EmployeeResignationMailer < ApplicationMailer
   def resignation_request(employee_resignation)
+    # byebug
       # @reporting_master = ReportingMaster.find(employee_resignation.reporting_master_id)
 	    @employee_resignation = EmployeeResignation.find(employee_resignation.id)
       @employee = Employee.find(@employee_resignation.reporting_master_id)

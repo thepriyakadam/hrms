@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170531125126) do
+ActiveRecord::Schema.define(version: 20170603090226) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -3018,14 +3018,13 @@ ActiveRecord::Schema.define(version: 20170531125126) do
 
   create_table "resignation_status_records", force: :cascade do |t|
     t.integer  "employee_resignation_id",   limit: 4
-    t.integer  "change_status_employee_id", limit: 4
     t.string   "status",                    limit: 255
     t.datetime "change_date"
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
+    t.integer  "change_status_employee_id", limit: 4
   end
 
-  add_index "resignation_status_records", ["change_status_employee_id"], name: "index_resignation_status_records_on_change_status_employee_id", using: :btree
   add_index "resignation_status_records", ["employee_resignation_id"], name: "index_resignation_status_records_on_employee_resignation_id", using: :btree
 
   create_table "retention_moneys", force: :cascade do |t|
@@ -4098,7 +4097,6 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   add_foreign_key "resignation_histories", "employee_resignations"
   add_foreign_key "resignation_histories", "employees"
   add_foreign_key "resignation_histories", "reporting_masters"
-  add_foreign_key "resignation_status_records", "change_status_employees"
   add_foreign_key "resignation_status_records", "employee_resignations"
   add_foreign_key "reward_recognitions", "reward_owners"
   add_foreign_key "reward_recognitions", "reward_types"

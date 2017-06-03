@@ -2703,6 +2703,46 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.datetime "updated_at",                null: false
   end
 
+  create_table "reimbursement_heads", force: :cascade do |t|
+    t.string   "code",        limit: 255
+    t.string   "name",        limit: 255
+    t.text     "description", limit: 65535
+    t.boolean  "status"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  create_table "reimbursement_requests", force: :cascade do |t|
+    t.integer  "employee_id",           limit: 4
+    t.integer  "reimbursement_head_id", limit: 4
+    t.date     "date"
+    t.decimal  "amount",                            precision: 10, scale: 2, default: 0.0
+    t.string   "status",                limit: 255
+    t.integer  "approval_id",           limit: 4
+    t.datetime "created_at",                                                               null: false
+    t.datetime "updated_at",                                                               null: false
+  end
+
+  add_index "reimbursement_requests", ["employee_id"], name: "index_reimbursement_requests_on_employee_id", using: :btree
+  add_index "reimbursement_requests", ["reimbursement_head_id"], name: "index_reimbursement_requests_on_reimbursement_head_id", using: :btree
+
+  create_table "reimbursement_slabs", force: :cascade do |t|
+    t.integer  "reimbursement_head_id",   limit: 4
+    t.integer  "employee_grade_id",       limit: 4
+    t.integer  "employee_designation_id", limit: 4
+    t.decimal  "from",                              precision: 10, scale: 2, default: 0.0
+    t.decimal  "to",                                precision: 10, scale: 2, default: 0.0
+    t.decimal  "monthly_amount",                    precision: 10, scale: 2, default: 0.0
+    t.decimal  "yearly_amount",                     precision: 10, scale: 2, default: 0.0
+    t.boolean  "status"
+    t.datetime "created_at",                                                               null: false
+    t.datetime "updated_at",                                                               null: false
+  end
+
+  add_index "reimbursement_slabs", ["employee_designation_id"], name: "index_reimbursement_slabs_on_employee_designation_id", using: :btree
+  add_index "reimbursement_slabs", ["employee_grade_id"], name: "index_reimbursement_slabs_on_employee_grade_id", using: :btree
+  add_index "reimbursement_slabs", ["reimbursement_head_id"], name: "index_reimbursement_slabs_on_reimbursement_head_id", using: :btree
+
   create_table "relation_masters", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
@@ -3060,13 +3100,14 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   create_table "salaryslip_components", force: :cascade do |t|
     t.integer  "salaryslip_id",        limit: 4
     t.integer  "salary_component_id",  limit: 4
-    t.decimal  "actual_amount",                  precision: 15, scale: 2
-    t.decimal  "calculated_amount",              precision: 15, scale: 2
+    t.decimal  "actual_amount",                    precision: 15, scale: 2
+    t.decimal  "calculated_amount",                precision: 15, scale: 2
     t.boolean  "is_deducted"
     t.integer  "employee_template_id", limit: 4
     t.boolean  "is_arrear"
-    t.datetime "created_at",                                              null: false
-    t.datetime "updated_at",                                              null: false
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
+    t.string   "other_component_name", limit: 255
   end
 
   add_index "salaryslip_components", ["employee_template_id"], name: "index_salaryslip_components_on_employee_template_id", using: :btree
@@ -3891,6 +3932,11 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   add_foreign_key "qualifications", "employees"
   add_foreign_key "qualifications", "universities"
   add_foreign_key "qualifications", "years"
+  add_foreign_key "reimbursement_requests", "employees"
+  add_foreign_key "reimbursement_requests", "reimbursement_heads"
+  add_foreign_key "reimbursement_slabs", "employee_designations"
+  add_foreign_key "reimbursement_slabs", "employee_grades"
+  add_foreign_key "reimbursement_slabs", "reimbursement_heads"
   add_foreign_key "rembursments", "employees"
   add_foreign_key "rembursments", "rembursmentmasters"
   add_foreign_key "reporting_employee_transfers", "employee_transfers"

@@ -1620,6 +1620,8 @@ end
   end
 
   def datewise_report
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Report"
   end
 
   def show_datewise_report

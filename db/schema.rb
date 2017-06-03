@@ -91,6 +91,21 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   add_index "accident_records", ["employee_id"], name: "index_accident_records_on_employee_id", using: :btree
   add_index "accident_records", ["root_cause_master_id"], name: "index_accident_records_on_root_cause_master_id", using: :btree
 
+  create_table "advance_salaries", force: :cascade do |t|
+    t.integer  "employee_id",       limit: 4
+    t.decimal  "advance_amount",                precision: 15, scale: 2
+    t.string   "no_of_instalment",  limit: 255
+    t.decimal  "instalment_amount",             precision: 15, scale: 2
+    t.date     "advance_date"
+    t.integer  "advance_type_id",   limit: 4
+    t.decimal  "interest",                      precision: 15, scale: 2
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
+  end
+
+  add_index "advance_salaries", ["advance_type_id"], name: "index_advance_salaries_on_advance_type_id", using: :btree
+  add_index "advance_salaries", ["employee_id"], name: "index_advance_salaries_on_employee_id", using: :btree
+
   create_table "advance_types", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
@@ -3691,6 +3706,8 @@ ActiveRecord::Schema.define(version: 20170531125126) do
   add_foreign_key "accident_records", "departments"
   add_foreign_key "accident_records", "employees"
   add_foreign_key "accident_records", "root_cause_masters"
+  add_foreign_key "advance_salaries", "advance_types"
+  add_foreign_key "advance_salaries", "employees"
   add_foreign_key "assigned_assets", "asset_types"
   add_foreign_key "assigned_assets", "employees"
   add_foreign_key "attendances", "employee_shifts"

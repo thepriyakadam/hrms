@@ -541,7 +541,6 @@ class WorkingdaysController < ApplicationController
   end
 
   def print_date_report
-    # byebug
     @from = params[:salary] ? params[:salary][:from_date] : params[:from_date]
     @to = params[:salary] ? params[:salary][:to_date] : params[:to_date]
     @employee = params[:salary] ? params[:salary][:employee_id] : params[:employee_id]
@@ -568,6 +567,100 @@ class WorkingdaysController < ApplicationController
               :show_as_html => params[:debug].present?
           end
         end
+  end
+
+  def datewise_workingday
+  end
+
+  def show_datewise_workingday
+    from = params[:employee][:from]
+    to = params[:employee][:to]
+    @company_id = params[:employee][:company_id]
+    @location = params[:employee][:company_location_id]
+    @department = params[:employee][:department_id]
+    @from = from.to_date
+    @to = to.to_date
+    payroll_period = PayrollPeriod.where(status: true).take
+     #byebug
+    if @from == payroll_period.from.to_date && @to == payroll_period.to.to_date
+      if current_user.class == Group
+        if @company_id == ""
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date)
+        elsif @location == ""
+          @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+        elsif @department == ""
+          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+        else
+          @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+        end
+      elsif current_user.class == Member
+        if current_user.role.name == 'GroupAdmin'
+          if @company_id == ""
+            @employees = Employee.where(status: 'Active')
+            @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          elsif @location == ""
+            @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          elsif @department == ""
+            @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          else
+            @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          end
+        elsif current_user.role.name == 'Admin'
+          if @company_id == ""
+            @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          elsif @location == ""
+            @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          elsif @department == ""
+            @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          else
+            @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          end
+        elsif current_user.role.name == 'Branch'
+          if @company_id == "" || @location == ""
+            @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          elsif @department == ""
+            @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          else
+            @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          end
+        elsif current_user.role.name == 'HOD'
+          if @company_id == "" || @location == "" || @department == ""
+            @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          else 
+            @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          end
+        elsif current_user.role.name == 'Supervisor'
+          if @company_id == "" || @location == "" || @department == ""
+            @emp = Employee.find(current_user.employee_id)
+            @employees = @emp.subordinates
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+         else
+            @emp = Employee.find(current_user.employee_id)
+            @employees = @emp.subordinates
+          @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
+          end
+        elsif current_user.role.name == 'Employee'
+        end #current_user.role
+      end #current_user.class
+    else
+      flash[:alert] = "Please Select Date Within payroll Period!"
+      redirect_to datewise_workingday_workingdays_path
+    end
   end
 
   private

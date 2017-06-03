@@ -242,6 +242,8 @@ class LeaveCOffsController < ApplicationController
   # end
   def destroy_self
     @leave_c_off = LeaveCOff.find(params[:format])
+    @status_c_off = StatusCOff.where(leave_c_off_id: @leave_c_off)
+    @status_c_off.destroy_all
     @leave_c_off.destroy
     flash[:notice] = "Destroyed successfully"
     redirect_to leave_c_off_self_services_path
@@ -256,7 +258,7 @@ class LeaveCOffsController < ApplicationController
     expiry_status = params[:leave_c_off][:expiry_status]
     @leave_c_off.update(expiry_status: expiry_status)
     c_off_expire_day = params[:leave_c_off][:c_off_expire_day]
-    leav_category = LeavCategory.find_by_name('C.Off')
+    # leav_category = LeavCategory.find_by_name('C.Off')
     if @leave_c_off.expiry_status == true
       @expiry_date = @leave_c_off.c_off_date + c_off_expire_day.to_i
     else
@@ -269,7 +271,6 @@ class LeaveCOffsController < ApplicationController
       StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FinalApproved") 
       COffMailer.first_approved_without_manager(@leave_c_off).deliver_now 
     else
-      byebug
       @leave_c_off.update(c_off_expire_day: c_off_expire_day,expiry_date: @expiry_date,current_status: "FirstApproved")
       StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FirstApproved")
       COffMailer.first_approved(@leave_c_off).deliver_now

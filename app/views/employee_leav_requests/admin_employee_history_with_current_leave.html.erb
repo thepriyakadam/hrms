@@ -70,7 +70,7 @@
               <th>ID</th>
               <td><%= @current_request.employee.try(:manual_employee_code) %></td>
 
-              <th>Employee Name</th>
+              <th>Employee</th>
               <td><%= full_name(@employee) %></td>
             </tr>
             <tr>
@@ -103,7 +103,7 @@
                 <% elsif @current_request.current_status == "FirstApproved" %>
                 <th></th>
                   <th colspan="2"><center>
-                  <%= link_to 'Approved', second_approve_leave_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-info fa fa-check' %>
+                  <%= link_to 'Approve', second_approve_leave_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-info fa fa-check' %>
                   <%= link_to 'Reject', second_reject_leave_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
                   <%= link_to 'Back', all_leave_request_list_employee_leav_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %></center></th>
                   <th></th>

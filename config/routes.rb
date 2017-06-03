@@ -1,20 +1,31 @@
 Rails.application.routes.draw do
 
+  resources :reimbursement_requests do
+    collection do
+      get :send_for_approval
+      get :approval_list
+      get :approve
+      get :reject
+      get :edit_request_modal
+      post :update_request_modal
+    end
+  end
+  resources :reimbursement_slabs
+  resources :reimbursement_heads
   resources :reporting_master_rembursments
   resources :rembursments  do
     collection do
-      get :rembursment_request
-      get :rembursment_confirmation
+      get :approval_list
+      get :approval_detail
       get :first_approve
-      
-      get :reject_rembursment
-      get :approve_rembursment
+      get :approve
+      get :reject
       get :final_approve
-      get :final_approval_rembursment
+      get :final_approval_list
       get :approve_and_send_next
       get :modal_approve_and_send_next
-
-       end
+      get :cancel
+    end
   end
   resources :rembursmentmasters
   resources :employee_jc_lists
@@ -1300,6 +1311,10 @@ end
       post :create_self_declaration
       get :leave_c_off
       post :create_self_c_off
+      get :reimbursement_request
+      post :create_reimbursement_request
+      get :employee_rembursment
+      post :create_emp_rembursment
     end
   end
 
@@ -1748,6 +1763,9 @@ end
       get :revert_workingday_datewise
       get :show_employee_datewise
       post :revert_workingday
+      get :datewise_workingday
+      post :show_datewise_workingday
+      get :show_datewise_workingday
     end
   end
 

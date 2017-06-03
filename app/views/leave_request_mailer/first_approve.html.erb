@@ -9,12 +9,12 @@
 
       You have one leave request from
       
-      Employee ID : <%= @from_manager.manual_employee_code %><br>
-      Employee Name : <%= @from_manager.first_name.to_s+' '+@from_manager.last_name.to_s %><br>
+      ID : <%= @from_manager.manual_employee_code %><br>
+      Employee : <%= @from_manager.first_name.to_s+' '+@from_manager.last_name.to_s %><br>
 
       For Employee <br>
-      Employee ID : <%= @leave_request.employee.manual_employee_code %><br>
-      Employee Name : <%= @leave_request.employee.first_name.to_s+' '+@leave_request.employee.last_name.to_s %><br>
+      ID : <%= @leave_request.employee.manual_employee_code %><br>
+      Employee : <%= @leave_request.employee.first_name.to_s+' '+@leave_request.employee.last_name.to_s %><br>
       From <%= @leave_request.start_date.to_date %>To<%= @leave_request.end_date.to_date%><br>
       No of Days : <%= @leave_request.leave_count %><br>
       Reason : <%= @leave_request.reason %><br>

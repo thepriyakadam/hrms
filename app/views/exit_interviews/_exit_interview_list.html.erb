@@ -1,20 +1,23 @@
 <br>
-<%= form_for :pdf_salaries, url: { action: 'print_exit_interview',format: 'pdf',id: @exit_interview.id},:html => {:target => '_blank'} do |f| %>
- 
+<%= form_for :pdf_salaries, url: { action: 'print_exit_interview',format: 'pdf',id: @exit_interview.id,resignation_id: @employee_resignation.id},:html => {:target => '_blank'} do |f| %>
 
+ 
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
-    <tr>  
-      <th>Select Question</th>
-      <th>Answer</th>
+    <tr> 
+      <th>Sr. No.</th> 
+      <th>Question</th>
       <th>Action</th>
     </tr>
   </thead>
   <tbody>
+  <% i = 0%>
     <% @exit_interviews.each do |exit_interview| %>
       <tr>
-         <td><%= exit_interview.question_master.name %></td>
-        <td><%= exit_interview.answer %></td>
+      <td><%= i = i+1 %></td>
+         <td><strong><%= exit_interview.question_master.name %><br>
+
+        Answer : </strong><%= exit_interview.answer %></td>
         <td>
           <%= link_to '', edit_exit_interview_path(exit_interview),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
           <%= link_to '',  exit_interview, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
@@ -22,7 +25,7 @@
       </tr>
     <% end %>
   </tbody>
-   <%= f.submit "Print Exit Interview",class: "btn btn-xl btn-info fa fa-print" %><br>
 
 </table>
+<%= f.submit "Print",class: "btn btn-xl btn-success fa fa-print" %><br>
 <% end %>

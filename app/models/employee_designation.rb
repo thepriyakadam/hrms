@@ -14,6 +14,7 @@ class EmployeeDesignation < ActiveRecord::Base
                           
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
+  has_many :reimbursement_slabs
   def self.filter_records(current_user)
     @employee_designations =  if current_user.class == Group
       EmployeeDesignation.all

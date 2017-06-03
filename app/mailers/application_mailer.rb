@@ -1,5 +1,11 @@
 class ApplicationMailer < ActionMailer::Base
-  #default from: "from@example.com"
-  default from: "hrms@rajgreen.co.in"
-  layout 'mailer'
+    # default from: "hrmsdws@bhandarigroup.in"
+    	# default from: "hrms@rajgreen.co.in"
+
+     # default from: "hrmsdws@bhandarigroup.in"
+    # default from: "hrms@rajgreen.co.in"
+    # default from: "vishal.h@indibasolustions.com"
+    # default from: "vish.hake04@gmail.com"
+     default from: " hrms@redefine.in"
+     layout 'mailer'
 end

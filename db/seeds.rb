@@ -613,6 +613,14 @@ end
 # 2.upto(5000) do |line|
 #   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
 
+ex = Roo::Excel.new("#{Rails.root}/public/mdindia.xls")
+ex.default_sheet = ex.sheets[2]
+j = 1
+gross_salary = 0
+ActiveRecord::Base.transaction do
+2.upto(5000) do |line|
+  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+
 
 #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   
@@ -671,6 +679,13 @@ end
   #     est.monthly_amount = ex.cell(line,'G') unless ex.cell(line,'G').nil?
   #     est.annual_amount = est.monthly_amount.to_i * 12
   #     gross_salary = gross_salary + ex.cell(line,'G').to_i
+
+#   elsif t.salary_component.name == "Other Allowance"
+#       est.monthly_amount = ex.cell(line,'G') unless ex.cell(line,'G').nil?
+#       est.annual_amount = est.monthly_amount.to_i * 12
+#       gross_salary = gross_salary + ex.cell(line,'G').to_i
+ 
+
 
 #       puts "Bonus Allowance..................Salary"
 

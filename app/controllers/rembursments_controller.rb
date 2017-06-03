@@ -90,52 +90,57 @@ class RembursmentsController < ApplicationController
     @rembursments = Rembursment.where(employee_id: @rembursment.employee_id)
   end
 
-  def single_approve
-     #byebug
+  def first_approve
      @rembursment = Rembursment.find(params[:format])
-     reporting_master = @rembursment.manager_id #new code
-     employee = Employee.where(id: reporting_master).take #new code
-     first_manager_id = employee.manager_id #new code
-     second_manager_id = employee.manager_2_id #new code
+     #reporting_master = @rembursment.manager_id #new code
+     #employee = Employee.where(id: reporting_master).take #new code
+     employee = Employee.find_by(id: @rembursment.employee_id)
+     first_manager_id = employee.manager_id 
+     second_manager_id = employee.manager_2_id 
     @rembursment.update(manager_id: second_manager_id,status: "FirstApproved")
     ReportingMasterRembursment.create(manager_id: current_user.employee_id, rembursment_id: @rembursment.id,status: "FirstApproved")
-    flash[:notice] = 'Rembursment Request Approved Successfully'
-     redirect_to rembursment_request_rembursments_path
-    end
-
-  def first_approve
-    # byebug
-    @rembursment = Rembursment.find(params[:format])
-    first_manager_id = @rembursment.employee.manager_id
-    second_manager_id = @rembursment.employee.manager_2_id
-    if @rembursment.status == "FirstApproved"
-    @rembursment.update(status: "SecondApproved")
-    ReportingMasterRembursment.create(rembursment_id: @rembursment.id,manager_id: second_manager_id,status: "SecondApproved")
     flash[:notice] = 'Rembursment Request Approved Successfully at First Level'
-    redirect_to rembursment_request_rembursments_path
-   elsif @rembursment.status == "Approved & Send Next"
-     reporting_master = @rembursment.manager_id
-     employee = Employee.where(id: reporting_master).take
-     first_manager_id = employee.manager_id
-     second_manager_id = employee.manager_2_id
-    @rembursment.update(status: "SecondApproved",manager_id: first_manager_id)
-    ReportingMasterRembursment.create(rembursment_id: @rembursment.id,manager_id: current_user.employee_id,status: "SecondApproved")
-    flash[:notice] = 'Rembursment Request Approved Successfully'
-     redirect_to rembursment_request_rembursments_path
-    else
-      # byebug
-     reporting_master = @rembursment.manager_id #new code
-     employee = Employee.where(id: reporting_master).take #new code
-     first_manager_id = employee.manager_id #new code
-     second_manager_id = employee.manager_2_id #new code
-    @rembursment.update(manager_id: first_manager_id,status: "FirstApproved")
-    ReportingMasterRembursment.create(manager_id: current_user.employee_id, rembursment_id: @rembursment.id,status: "FirstApproved")
-    flash[:notice] = 'Rembursment Request Approved Successfully'
      redirect_to rembursment_request_rembursments_path
     end
+
+  # def approve
+  #   @rembursment = Rembursment.find(params[:format])
+  #   first_manager_id = @rembursment.employee.manager_id
+  #   second_manager_id = @rembursment.employee.manager_2_id
+  #   if @rembursment.status == "FirstApproved"
+  #   @rembursment.update(status: "Approved")
+  #   ReportingMasterRembursment.create(rembursment_id: @rembursment.id,manager_id: second_manager_id,status: "Approved")
+  #   flash[:notice] = 'Rembursment Request Approved Successfully '
+  #   redirect_to rembursment_request_rembursments_path
+  #  elsif @rembursment.status == "Approved & Send Next"
+  #    reporting_master = @rembursment.manager_id
+  #    employee = Employee.where(id: reporting_master).take
+  #    first_manager_id = employee.manager_id
+  #    second_manager_id = employee.manager_2_id
+  #   @rembursment.update(status: "Approved",manager_id: first_manager_id)
+  #   ReportingMasterRembursment.create(rembursment_id: @rembursment.id,manager_id: current_user.employee_id,status: "Approved")
+  #   flash[:notice] = 'Rembursment Request Approved Successfully'
+  #    redirect_to rembursment_request_rembursments_path
+  #   else
+  #     # byebug
+  #    reporting_master = @rembursment.manager_id #new code
+  #    employee = Employee.where(id: reporting_master).take #new code
+  #    first_manager_id = employee.manager_id #new code
+  #    second_manager_id = employee.manager_2_id #new code
+  #   @rembursment.update(manager_id: first_manager_id,status: "Approved")
+  #   ReportingMasterRembursment.create(manager_id: current_user.employee_id, rembursment_id: @rembursment.id,status: "Approved")
+  #   flash[:notice] = 'Rembursment Request Approved Successfully'
+  #    redirect_to rembursment_request_rembursments_path
+  #   end
+  # end
+
+  def approve
+    @rembursment = Rembursment.find(params[:format])
+    @rembursment.update(status: "Approved")
+    ReportingMasterRembursment.create(rembursment_id: @rembursment.id,manager_id: second_manager_id,status: "Approved")
+    flash[:notice] = 'Rembursment Request Approved Successfully'
+    redirect_to rembursment_request_rembursments_path
   end
-
-
 
  def reject_rembursment
     @rembursment = Rembursment.find(params[:format])
@@ -145,46 +150,37 @@ class RembursmentsController < ApplicationController
     redirect_to rembursment_request_rembursments_path
   end
 
-  def approve_rembursment
-    # byebug
+  # def approve
+  #   # byebug
+  #     @rembursment = Rembursment.find(params[:format])
+  #    first_manager_id = @rembursment.employee
+  #   if @rembursment.status == "Pending"
+  #    @rembursment.update(status: "SecondApproved")
+  #     ReportingMasterRembursment.create(rembursment_id: @rembursment.id,manager_id: current_user.employee_id,status: "SecondApproved")
+  #     flash[:notice] = 'Rembursment Request Approved Successfully'
+  #     redirect_to rembursment_request_rembursments_path
+  #    elsif  @rembursment.status == "Approved & Send Next"
+  #     reporting_master = @rembursment.manager_id
+  #     employee = Employee.where(id: reporting_master).take
+  #     first_manag_id = employee.manager_id
+  #     @rembursment.update(status: "SecondApproved")
+  #     ReportingMasterRembursment.create(rembursment_id: @rembursment.id,manager_id: current_user.employee_id,status: "SecondApproved")
+  #     flash[:notice] = 'Rembursment Request Approved Successfully'
+  #      redirect_to rembursment_request_rembursments_path
+  #    else
+  #   end
+  # end
+
+    def approve_and_send_next
       @rembursment = Rembursment.find(params[:format])
-     first_manager_id = @rembursment.employee
-    if @rembursment.status == "Pending"
-     @rembursment.update(status: "SecondApproved")
-      ReportingMasterRembursment.create(rembursment_id: @rembursment.id,manager_id: current_user.employee_id,status: "SecondApproved")
-      flash[:notice] = 'Rembursment Request Approved Successfully'
-      redirect_to rembursment_request_rembursments_path
-     elsif  @rembursment.status == "Approved & Send Next"
       reporting_master = @rembursment.manager_id
       employee = Employee.where(id: reporting_master).take
-      first_manag_id = employee.manager_id
-      @rembursment.update(status: "SecondApproved")
-      ReportingMasterRembursment.create(rembursment_id: @rembursment.id,manager_id: current_user.employee_id,status: "SecondApproved")
-      flash[:notice] = 'Rembursment Request Approved Successfully'
-       redirect_to rembursment_request_rembursments_path
-     else
+      first_manager_id = employee.manager_id
+      @rembursment.update(manager_id: first_manager_id,status: "Approved & Send Next")
+      ReportingMasterRembursment.create(rembursment_id: @rembursment.id,manager_id: current_user.employee_id,status: "Approved & Send Next")
+      flash[:notice] = 'Rembursment Request Sent to Higher Authority for Approval'
+      redirect_to rembursment_request_rembursments_path
     end
-  end
-
-   def approve_and_send_next
-    # byebug
-    @rembursment = Rembursment.find(params[:format])
-     reporting_master = @rembursment.manager_id
-     employee = Employee.where(id: reporting_master).take
-     first_manager_id = employee.manager_id
-     second_manager_id = employee.manager_2_id
-     if employee.manager_id.present? && employee.manager_2_id.present?
-        @rembursment.update(manager_id: first_manager_id,status: "Approved & Send Next")
-        ReportingMasterRembursment.create(rembursment_id: @rembursment.id,manager_id: current_user.employee_id,status: "Approved & Send Next")
-        flash[:notice] = 'Rembursment Request Sent to Higher Authority for Approval'
-         redirect_to rembursment_request_rembursments_path
-     elsif employee.manager_2_id.nil?
-           @rembursment.update(manager_id: first_manager_id,status: "Approved & Send Next")
-           ReportingMasterRembursment.create(rembursment_id: @rembursment.id,manager_id: current_user.employee_id,status: "Approved & Send Next")
-           flash[:notice] = 'Rembursment Request Approved Successfully'
-           redirect_to rembursment_request_rembursments_path
-     end
-  end
 
   def final_approve
     @rembursment = Rembursment.find(params[:format])

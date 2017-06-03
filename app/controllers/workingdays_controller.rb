@@ -499,11 +499,11 @@ class WorkingdaysController < ApplicationController
   end
 
   def revert_workingday
-     @from = params[:from]
+    @from = params[:from]
     @to = params[:to]
     @workingday_ids = params[:workingday_ids]
     if @workingday_ids.nil?
-      flash[:alert] = "Please Select Employees"
+      flash[:alert] = "Please Select Date"
       redirect_to revert_workingday_datewise_workingdays_path
     else
       @workingday_ids.each do |wid|

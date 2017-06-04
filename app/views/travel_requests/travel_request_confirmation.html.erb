@@ -115,51 +115,30 @@
     <tr>        
       <td colspan="4"><center>
       <!--  <div id="myModal" class="modal fade"></div> -->
-    <% if @travel_request.employee.manager_id.present? && @travel_request.employee.manager_2_id.present? && @travel_request.current_status == "Pending" %>
-        <%= link_to 'Approve',first_approve_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
-        <%= link_to 'Reject',reject_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
+      <% if @travel_request.employee.manager_id.present? && @travel_request.employee.manager_2_id.present? && @travel_request.current_status == "Pending" %>
+          <%= link_to 'Approve',first_approve_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Reject',reject_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
 
-    <% elsif @travel_request.employee.manager_id.present? && @travel_request.employee.manager_2_id.present? && @travel_request.current_status == "FirstApproved" %>
-        
-        <%= link_to 'Approve',first_approve_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
-        <%= link_to 'Reject',reject_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
-        <%= link_to 'Approve & Send next',approve_and_send_next_travel_requests_path(@travel_request.id),class: 'btn btn btn-xs btn-success' %> 
+      <% elsif @travel_request.employee.manager_id.present? && @travel_request.employee.manager_2_id.nil? && @travel_request.current_status == "Pending" %>
+         <%= link_to 'Approve',approve_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Reject',reject_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Approve & Send next',approve_and_send_next_travel_requests_path(@travel_request.id),class: 'btn btn btn-xs btn-success' %> 
 
-    <% elsif @travel_request.employee.manager_id.present? && @travel_request.employee.manager_2_id.nil? && @travel_request.current_status == "Pending" %>
-       <%= link_to 'Approve',approve_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
-        <%= link_to 'Reject',reject_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
+      <% elsif @travel_request.current_status == "FirstApproved" %>
+          <%= link_to 'Approve',approve_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Reject',reject_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Approve & Send next',approve_and_send_next_travel_requests_path(@travel_request.id),class: 'btn btn btn-xs btn-success' %> 
+
+      <% elsif @travel_request.current_status == "Approved & Send Next" %>
+          <%= link_to 'Approve',approve_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Reject',reject_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Approve & Send next',approve_and_send_next_travel_requests_path(@travel_request.id),class: 'btn btn btn-xs btn-success' %> 
+      
+      <% elsif @travel_request.current_status == "Approved" %>
+          <%= link_to 'Approve',final_approve_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Reject',reject_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
       <% end %>
 
-    <% if @travel_request.current_status == "Approved & Send Next" %>
-      <% travel_request = TravelRequest.where(id: @travel_request.id , current_status: "Approved & Send Next").take %>
-      <% employ = Employee.where(id: travel_request.reporting_master_id).take %>
-
-    <% if @travel_request.employee.manager_id.present? && @travel_request.employee.manager_2_id.present? && @travel_request.current_status == "Approved & Send Next" %>
-       <%= link_to 'Approve',first_approve_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
-      <%= link_to 'Reject',reject_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
-
-    <% elsif @travel_request.employee.manager_id.present? && @travel_request.employee.manager_2_id.nil? && @travel_request.current_status == "Approved & Send Next"%>
-    <%= link_to 'Approve',approve_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
-    <%= link_to 'Reject',reject_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
-      %>     
-    <% end %>
-   <% elsif @travel_request.current_status == "SecondApproved"  %>
-      <%= link_to 'Final Approve',final_approve_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check' %>
-      <%= link_to 'Reject',reject_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
-    <% end %>
-
-    <!--   end
-      
-        <= link_to 'Reject',reject_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
-        <= link_to 'Approve & Send next',modal_travel_requests_path(@travel_request.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %>
-
-        <= link_to 'Approve',approve_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
-        <= link_to 'Reject',reject_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %>
-        <= link_to 'Approve & Send next',modal_travel_requests_path(@travel_request.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %> -->
-
-        <!--< link_to 'Edit and send next', edit_and_send_next_modal_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check', remote: true %>
-
-        <= link_to 'Edit and Approve', edit_and_approve_modal_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check', remote: true %>-->
         <%= link_to 'Back', travel_history_travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %></center>
     </td>
     </tr>

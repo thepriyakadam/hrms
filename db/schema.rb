@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170531125126) do
+ActiveRecord::Schema.define(version: 20170604072528) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -4054,22 +4054,24 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.date     "from"
     t.date     "to"
     t.integer  "day_in_month",            limit: 4
-    t.decimal  "present_day",                         precision: 5, scale: 1
-    t.decimal  "holiday_in_month",                    precision: 5, scale: 1
-    t.decimal  "week_off_day",                        precision: 5, scale: 1
-    t.decimal  "absent_day",                          precision: 5, scale: 1
-    t.decimal  "payable_day",                         precision: 5, scale: 1
-    t.decimal  "calculated_payable_days",             precision: 5, scale: 1
-    t.decimal  "pay_leave",                           precision: 5, scale: 1
-    t.decimal  "nonpay_leave",                        precision: 5, scale: 1
-    t.decimal  "od_day",                              precision: 5, scale: 1
-    t.decimal  "ot_hours",                            precision: 5, scale: 1
-    t.decimal  "total_leave",                         precision: 5, scale: 1
+    t.decimal  "present_day",                         precision: 5,  scale: 1
+    t.decimal  "holiday_in_month",                    precision: 5,  scale: 1
+    t.decimal  "week_off_day",                        precision: 5,  scale: 1
+    t.decimal  "absent_day",                          precision: 5,  scale: 1
+    t.decimal  "payable_day",                         precision: 5,  scale: 1
+    t.decimal  "calculated_payable_days",             precision: 5,  scale: 1
+    t.decimal  "pay_leave",                           precision: 5,  scale: 1
+    t.decimal  "nonpay_leave",                        precision: 5,  scale: 1
+    t.decimal  "od_day",                              precision: 5,  scale: 1
+    t.decimal  "ot_hours",                            precision: 5,  scale: 1
+    t.decimal  "total_leave",                         precision: 5,  scale: 1
     t.boolean  "paid"
     t.boolean  "full_and_final"
     t.boolean  "is_confirm"
-    t.datetime "created_at",                                                  null: false
-    t.datetime "updated_at",                                                  null: false
+    t.datetime "created_at",                                                   null: false
+    t.datetime "updated_at",                                                   null: false
+    t.decimal  "gatepass",                            precision: 10
+    t.decimal  "nonpayble_day",                       precision: 10
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id", using: :btree

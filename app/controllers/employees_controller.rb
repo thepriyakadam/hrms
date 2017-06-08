@@ -235,7 +235,6 @@
 
   def submit_form
     @employee_ids = params[:employee_ids]
-
     role_id = params[:role_id]
     manager_id = params[:manager_id]
     manager_2_id = params[:manager_2_id]

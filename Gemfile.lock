@@ -207,11 +207,7 @@ GEM
       rmagick (~> 2.13)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
-<<<<<<< HEAD
     rack (1.6.4)
-=======
-    rack (1.6.8)
->>>>>>> 5d7b23e87976d329d09f5034b83046e932f042d5
     rack-test (0.6.3)
       rack (>= 1.0)
     rack-timeout (0.4.2)

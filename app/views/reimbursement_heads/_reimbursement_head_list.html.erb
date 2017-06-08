@@ -1,0 +1,26 @@
+<br>
+	<table class="table table-bordered table-hover table-condensed">
+	  <thead>
+	    <tr>
+	      <th>Code</th>
+	      <th>Head</th>
+	      <th>Description</th>
+	      <th>Status</th>
+	      <th>Action</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+    	<% @reimbursement_heads.each do |reimbursement_head| %>
+      	<tr>
+	        <td><%= reimbursement_head.code %></td>
+	        <td><%= reimbursement_head.try(:name) %></td>
+	        <td><%= reimbursement_head.try(:description) %></td>
+	        <td><%= reimbursement_head.try(:status) ? "Active" : "Inactive" %></td>
+		       <td>
+	          <%= link_to '', edit_reimbursement_head_path(reimbursement_head),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+	          <%= link_to '',  reimbursement_head, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+	        </td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>

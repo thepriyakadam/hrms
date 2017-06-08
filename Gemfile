@@ -7,6 +7,8 @@ gem 'rails', '4.2.4'
 gem 'mysql2', '~> 0.3.18'
  #gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
 
+gem "rack-timeout", require:"rack/timeout/base"
+
 gem 'ruby-graphviz', '~> 1.2', '>= 1.2.2'
 
 gem 'twilio-ruby', '~> 4.11', '>= 4.11.1'
@@ -21,21 +23,6 @@ gem 'sass-rails', '~> 5.0'
 gem 'whenever', '~> 0.9.4',:require => false
 gem 'geocoder'
 gem 'therubyracer', platforms: :ruby
-gem 'query_report'
-gem 'kaminari', '~> 0.16.3'
-gem 'coderay'
-gem 'bootstrap-datepicker-rails'
-gem 'awesome_print'
-gem 'datagrid', '~> 1.4', '>= 1.4.1'
-gem 'quiet_assets'
-
-gem 'tzinfo-data', '~> 1.2016', '>= 1.2016.10'
-
-gem 'paperclip', '~> 4.3', '>= 4.3.6'
-
-gem 'mime-types-data', '~> 3.2016', '>= 3.2016.0521'
-gem 'globalid', '~> 0.3.7'
-
 gem 'query_report'
 gem 'kaminari', '~> 0.16.3'
 gem 'coderay'

@@ -1,10 +1,31 @@
 Rails.application.routes.draw do
 
+  resources :reimbursement_requests do
+    collection do
+      get :send_for_approval
+      get :approval_list
+      get :approve
+      get :reject
+      get :edit_request_modal
+      post :update_request_modal
+    end
+  end
+  resources :reimbursement_slabs
+  resources :reimbursement_heads
   resources :reporting_master_rembursments
   resources :rembursments  do
     collection do
-      get :rembursment_request
-       end
+      get :approval_list
+      get :approval_detail
+      get :first_approve
+      get :approve
+      get :reject
+      get :final_approve
+      get :final_approval_list
+      get :approve_and_send_next
+      get :modal_approve_and_send_next
+      get :cancel
+    end
   end
   resources :rembursmentmasters
   resources :employee_jc_lists
@@ -1041,8 +1062,8 @@ end
       get :daily_bill
       get :travel_history
       get :travel_request_confirmation
-      get :approve_travel_request
-      get :reject_travel_request
+      get :approve
+      get :reject
       post :send_request_to_higher_authority
       get :modal
       get :cancel_travel_request
@@ -1264,6 +1285,8 @@ end
       post :approve_c_off
       get :reject_c_off
       get :approve_modal
+      get :final_approve
+      get :final_reject
     end
   end
 
@@ -1288,6 +1311,10 @@ end
       post :create_self_declaration
       get :leave_c_off
       post :create_self_c_off
+      get :reimbursement_request
+      post :create_reimbursement_request
+      get :employee_rembursment
+      post :create_emp_rembursment
     end
   end
 
@@ -1736,6 +1763,9 @@ end
       get :revert_workingday_datewise
       get :show_employee_datewise
       post :revert_workingday
+      get :datewise_workingday
+      post :show_datewise_workingday
+      get :show_datewise_workingday
     end
   end
 
@@ -1773,7 +1803,7 @@ end
       get :current_template
       get :employee_list
       post :show_current_template
-      get :current_template
+      get :employees_current_template
     end
   end
 

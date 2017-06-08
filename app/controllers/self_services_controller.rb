@@ -60,6 +60,7 @@ class SelfServicesController < ApplicationController
   def travel_request
     @travel_request = TravelRequest.new
     @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
+    @employee = Employee.find_by(id: current_user.employee_id)
     session[:active_tab] ="EmployeeSelfService"
   end
 
@@ -74,7 +75,6 @@ class SelfServicesController < ApplicationController
     @to = params[:employee][:to]
     @employee_id = params[:employee][:employee_id]
     @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id)
-
   end
 
   def investment_declaration
@@ -97,15 +97,16 @@ class SelfServicesController < ApplicationController
   end
 
   def investment_document2
-        @investment_declaration = InvestmentDeclaration.find(params[:id])
-        send_file @investment_declaration.document.path,
-               filename: @investment_declaration.document_file_name,
-               type: @investment_declaration.document_content_type,
-               disposition: 'attachment'
+    @investment_declaration = InvestmentDeclaration.find(params[:id])
+    send_file @investment_declaration.document.path,
+       filename: @investment_declaration.document_file_name,
+       type: @investment_declaration.document_content_type,
+       disposition: 'attachment'
     
   end
 
   def leave_c_off
+    session[:active_tab] ="EmployeeSelfService"
     @leave_c_off = LeaveCOff.new
     @leave_c_offs = LeaveCOff.where(employee_id: current_user.employee_id)
   end
@@ -137,18 +138,57 @@ class SelfServicesController < ApplicationController
         end#c_off.nil?
 
         if @c_off_type == 'Full Day'
-          LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false)
+          @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending")
+          StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
           flash[:notice] = "Your COff Created Successfully!"
+          COffMailer.pending(@leave_c_off).deliver_now
         else
-          LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false)
+          @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending")
+          StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
           flash[:notice] = "Your COff Created Successfully!"
+          COffMailer.pending(@leave_c_off).deliver_now
         end#@c_off_type
       end#leav_category.nil?
     end#@leave_c_off.is_self_present?
     redirect_to leave_c_off_self_services_path
   end#def
 
-def leave_c_off_params
+  def reimbursement_request
+    @reimbursement_request = ReimbursementRequest.new
+    @reimbursement_requests = ReimbursementRequest.where(employee_id: current_user.employee_id)
+  end
+
+  def create_reimbursement_request
+    @reimbursement_request = ReimbursementRequest.new
+    @employee_id = params[:employee_id]
+    @reimbursement_head_id = params[:reimbursement_request][:reimbursement_head_id]
+    @date = params[:reimbursement_request][:date]
+    @amount = params[:reimbursement_request][:amount]
+    ReimbursementRequest.create(employee_id: @employee_id,reimbursement_head_id: @reimbursement_head_id,date: @date,amount: @amount,status: "Pending")
+    flash[:notice] = "Reimbursement Request Created Successfully!"
+    redirect_to reimbursement_request_self_services_path
+  end
+
+  def employee_rembursment
+    @rembursment = Rembursment.new
+    @rembursments = Rembursment.where(employee_id: current_user.employee_id)
+  end
+
+  def create_emp_rembursment
+    @rembursment = Rembursment.new
+    employee_id = params[:rembursment][:employee_id]
+    application_date = params[:rembursment][:application_date]
+    rembursment_date = params[:rembursment][:rembursment_date]
+    rembursmentmaster_id = params[:rembursment][:rembursmentmaster_id]
+    amount = params[:rembursment][:amount]
+    @employee = Employee.find_by(id: employee_id)
+    @rembursment_req = Rembursment.create(employee_id: employee_id,application_date: application_date,rembursment_date: rembursment_date,rembursmentmaster_id: rembursmentmaster_id,amount: amount,status: "Pending",manager_id: @employee.manager_id)
+    ReportingMasterRembursment.create(rembursment_id: @rembursment_req.id,status: "Pending",manager_id: employee_id)
+    flash[:notice] = "Reimbursement Request Created Successfully!"
+    redirect_to employee_rembursment_self_services_path
+  end
+
+  def leave_c_off_params
     params.require(:leave_c_off).permit(:is_expire,:employee_id, :c_off_date, :c_off_type, :c_off_expire_day, :expiry_status, :expiry_date, :leave_count)
   end
 end

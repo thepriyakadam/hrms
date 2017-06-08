@@ -7,10 +7,10 @@
     
 
 <tr>
-  <td><strong>Employee ID</strong></td>
+  <td><strong>ID</strong></td>
   <td><%= @employee_transfer.employee.manual_employee_code %></td>
   
-  <td><strong>Employee Name</strong></td>
+  <td><strong>Employee</strong></td>
     <td><%= full_name(@employee_transfer.employee) %></td>
   </tr>
 
@@ -18,14 +18,14 @@
   <td><strong>Request To</strong></td>
   <td><%= @employee_transfer.employee.try(:manager).try(:prefix) %> <%= @employee_transfer.employee.try(:manager).try(:first_name) %> <%= @employee_transfer.employee.try(:manager).try(:middle_name) %> <%= @employee_transfer.employee.try(:manager).try(:last_name) %></td>
 
-  <td><strong>Employee Designation</strong></td>
+  <td><strong>Designation</strong></td>
   <td><%= @employee_transfer.designation %></td>
 
  
 </tr>
 
 <tr>
- <td> <strong>Employee Category</strong></td>
+ <td> <strong>Category</strong></td>
   <td><%= @employee_transfer.category %></td>
 
   <td><strong>Company</strong></td>

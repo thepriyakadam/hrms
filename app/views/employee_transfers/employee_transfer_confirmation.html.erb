@@ -140,10 +140,12 @@
       <% if @employee_transfer.employee.manager_id.present? && @employee_transfer.employee.manager_2_id.present? && @employee_transfer.current_status == "Pending" %>
       <%= link_to 'Approve',first_approve_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
      <%= link_to 'Reject',reject_transfer_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-danger fa fa-trash' %>
+
       <% elsif @employee_transfer.employee.manager_id.present? && @employee_transfer.employee.manager_2_id.present? && @employee_transfer.current_status == "FirstApproved" %>
        <%= link_to 'Approve',first_approve_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
        <%= link_to 'Reject',reject_transfer_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-danger fa fa-trash' %>
         <%= link_to 'Approve & Send next',approve_and_send_next_employee_transfers_path(@employee_transfer.id),class: 'btn btn btn-xs btn-success' %> 
+      
       <% elsif @employee_transfer.employee.manager_id.present? && @employee_transfer.employee.manager_2_id.nil? && @employee_transfer.current_status == "Pending" %>
         <%= link_to 'Approve',approve_employee_transfer_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %>
        <%= link_to 'Reject',reject_transfer_employee_transfers_path(@employee_transfer.id),class: 'btn btn-sm btn-danger fa fa-trash' %>

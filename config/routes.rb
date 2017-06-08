@@ -3,9 +3,9 @@ Rails.application.routes.draw do
   resources :reimbursement_requests do
     collection do
       get :send_for_approval
-      get :list_for_approval
-      get :approve_request
-      get :reject_request
+      get :approval_list
+      get :approve
+      get :reject
       get :edit_request_modal
       post :update_request_modal
     end
@@ -1062,8 +1062,8 @@ end
       get :daily_bill
       get :travel_history
       get :travel_request_confirmation
-      get :approve_travel_request
-      get :reject_travel_request
+      get :approve
+      get :reject
       post :send_request_to_higher_authority
       get :modal
       get :cancel_travel_request

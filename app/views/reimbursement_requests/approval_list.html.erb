@@ -23,8 +23,8 @@
 		        <td><%= reimbursement_request.date %></td>
 		        <td><%= reimbursement_request.amount %></td>
 		        <td>
-		        	<%= link_to 'Approve', approve_request_reimbursement_requests_path(reimbursement_request) ,class: 'btn btn-xs btn-primary' %>
-		        	<%= link_to 'Reject', reject_request_reimbursement_requests_path(reimbursement_request) ,class: 'btn btn-xs btn-danger' %>
+		        	<%= link_to 'Approve', approve_reimbursement_requests_path(reimbursement_request) ,class: 'btn btn-xs btn-primary' %>
+		        	<%= link_to 'Reject', reject_reimbursement_requests_path(reimbursement_request) ,class: 'btn btn-xs btn-danger' %>
 		        </td>
 		      </tr>
 		    <% end %>

@@ -27,7 +27,7 @@ class RembursmentsController < ApplicationController
     else
       @employees = Employee.all
     end
-    session[:active_tab] ="rembursment"
+    session[:active_tab] ="EmployeeRembursment"
   end
 
   # GET /rembursments/1
@@ -38,7 +38,7 @@ class RembursmentsController < ApplicationController
   # GET /rembursments/new
   def new
     @rembursment = Rembursment.new
-    session[:active_tab] ="rembursment"
+    session[:active_tab] ="EmployeeRembursment"
   end
 
   # GET /rembursments/1/edit
@@ -96,7 +96,7 @@ class RembursmentsController < ApplicationController
   def approval_list
     current_login = Employee.find(current_user.employee_id)
     @rembursments = Rembursment.where(manager_id: current_user.employee_id).where("status = ? || status = ? || status = ?","Pending","Approved & Send Next","FirstApproved")
-    session[:active_tab] ="rembursment"
+    session[:active_tab] ="EmployeeRembursment"
   end
 
   def approval_detail
@@ -152,7 +152,7 @@ class RembursmentsController < ApplicationController
 
   def final_approval_list
      @rembursments = Rembursment.where(status: "Approved")
-    session[:active_tab] ="rembursment"
+    session[:active_tab] ="EmployeeRembursment"
   end
 
   def final_approve
@@ -160,7 +160,7 @@ class RembursmentsController < ApplicationController
     @rembursment.update(status: "FinalApproved",manager_id: current_user.employee_id)
     ReportingMasterRembursment.create(rembursment_id: @rembursment.id,manager_id: current_user.employee_id,status: "FinalApproved")
     flash[:notice] = 'Rembursment Request Approved Successfully'
-    redirect_to final_approval_rembursment_rembursments_path
+    redirect_to final_approval_list_rembursments_path
   end
   #End Of Rembursment Request Process
 

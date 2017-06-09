@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170607052133) do
+ActiveRecord::Schema.define(version: 20170609074403) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1559,6 +1559,7 @@ ActiveRecord::Schema.define(version: 20170607052133) do
     t.string   "avatar_content_type", limit: 255
     t.integer  "avatar_file_size",    limit: 4
     t.datetime "avatar_updated_at"
+    t.boolean  "is_confirm"
   end
 
   add_index "induction_activities", ["employee_id"], name: "index_induction_activities_on_employee_id", using: :btree

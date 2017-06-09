@@ -203,12 +203,22 @@ class EmployeeSalaryTemplatesController < ApplicationController
       end 
   end
 
-  def employees_current_template
+
+ def employees_current_template
     @employee_ids = params[:employee_ids]
     respond_to do |format|
       format.xls {render template: 'employee_salary_templates/current_template.xls.erb'}
       end
   end
+
+
+  # def current_template
+  #   @employee_ids = params[:employee_ids]
+  #   respond_to do |format|
+  #     format.xls {render template: 'employee_salary_templates/current_template.xls.erb'}
+  #     end
+  # end
+
 
   private
 

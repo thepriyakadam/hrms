@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170609074403) do
+ActiveRecord::Schema.define(version: 20170610051709) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -904,6 +904,7 @@ ActiveRecord::Schema.define(version: 20170609074403) do
     t.string   "employee_name",            limit: 255
     t.datetime "created_at",                                                                    null: false
     t.datetime "updated_at",                                                                    null: false
+    t.boolean  "ot_option"
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id", using: :btree
@@ -1696,10 +1697,12 @@ ActiveRecord::Schema.define(version: 20170609074403) do
     t.integer  "performance_calendar_id", limit: 4
     t.datetime "created_at",                                           null: false
     t.datetime "updated_at",                                           null: false
+    t.integer  "period_id",               limit: 4
   end
 
   add_index "goal_bunches", ["employee_id"], name: "index_goal_bunches_on_employee_id", using: :btree
   add_index "goal_bunches", ["performance_calendar_id"], name: "index_goal_bunches_on_performance_calendar_id", using: :btree
+  add_index "goal_bunches", ["period_id"], name: "index_goal_bunches_on_period_id", using: :btree
 
   create_table "goal_measures", force: :cascade do |t|
     t.text     "name",       limit: 65535
@@ -2233,8 +2236,9 @@ ActiveRecord::Schema.define(version: 20170609074403) do
     t.integer  "employee_id",            limit: 4
     t.boolean  "status"
     t.boolean  "is_confirm"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "role",                   limit: 255
   end
 
   add_index "issue_tracker_members", ["employee_id"], name: "index_issue_tracker_members_on_employee_id", using: :btree
@@ -4224,6 +4228,7 @@ ActiveRecord::Schema.define(version: 20170609074403) do
   add_foreign_key "food_deductions", "food_coupan_masters"
   add_foreign_key "goal_bunches", "employees"
   add_foreign_key "goal_bunches", "performance_calendars"
+  add_foreign_key "goal_bunches", "periods"
   add_foreign_key "goal_ratings", "attribute_masters"
   add_foreign_key "goal_ratings", "goal_bunches"
   add_foreign_key "goal_ratings", "goal_perspectives"

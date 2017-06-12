@@ -60,6 +60,7 @@ class SelfServicesController < ApplicationController
   def travel_request
     @travel_request = TravelRequest.new
     @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
+    @employee = Employee.find_by(id: current_user.employee_id)
     session[:active_tab] ="EmployeeSelfService"
   end
 
@@ -97,11 +98,11 @@ class SelfServicesController < ApplicationController
   end
 
   def investment_document2
-        @investment_declaration = InvestmentDeclaration.find(params[:id])
-        send_file @investment_declaration.document.path,
-               filename: @investment_declaration.document_file_name,
-               type: @investment_declaration.document_content_type,
-               disposition: 'attachment'
+    @investment_declaration = InvestmentDeclaration.find(params[:id])
+    send_file @investment_declaration.document.path,
+       filename: @investment_declaration.document_file_name,
+       type: @investment_declaration.document_content_type,
+       disposition: 'attachment'
     
   end
 

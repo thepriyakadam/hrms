@@ -49,7 +49,7 @@
                 <small class="label label-info">Confirmed</small>
               <% else %>
                 <%= link_to '', edit_daily_bill_detail_path(daily_bill_detail),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
-                <%= link_to '', daily_bill_detail,class: 'btn btn-xs btn-default fa fa-eye' %>
+                <!-- <= link_to '', daily_bill_detail,class: 'btn btn-xs btn-default fa fa-eye' %> -->
                 <%= link_to '',  daily_bill_detail, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-danger fa fa-close' %>
               <% end %>
               <% if daily_bill_detail.request_status == "Approved" %>

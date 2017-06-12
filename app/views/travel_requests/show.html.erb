@@ -26,7 +26,7 @@
       <th><strong>Department</strong></th>
       <td><%= @travel_request.employee.company_location.try(:name) %> - <%= @travel_request.employee.department.try(:name) %></td>
 
-      <th><strong>Approve By</strong></th>
+      <th><strong>Manager</strong></th>
      <td><% emp=Employee.where(id: @travel_request.reporting_master_id).take %>
       <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %> </td>
     </tr>
@@ -67,23 +67,22 @@
     <tr>
       <th><strong>Tour Purpose</strong></th>
       <td colspan="3"><%= @travel_request.tour_purpose %></td>
-      
     </tr>
 
   </table><br>
 
   <table  class="table table-bordered table-hover table-condensed'">
       <thead>
-    <tr>
-      <td colspan="5"><center>Travel Request Process</center></td>
-    </tr>
         <tr>
-        <th>Sr.No</th>
-        <th>Approval ID</th>
-        <th>Approve By</th>
-        <th>Travel Request Status</th>
-        <th>Expence Claim Status</th>
-       </tr>
+          <td colspan="5"><center>Travel Request Process</center></td>
+        </tr>
+        <tr>
+          <th>Sr.No</th>
+          <th>Approval ID</th>
+          <th>Process By</th>
+          <th>Travel Request Status</th>
+          <th>Expence Claim Status</th>
+        </tr>
       </thead>
 
       <tbody>
@@ -97,18 +96,8 @@
             <td><%= emp.try(:first_name)%> <%= emp.try(:middle_name)%> <%= emp.try(:last_name)%></td>
             <td><%= a.travel_status %></td>
             <td>
-               <% if a.travel_status == "Pending" %>
-               <small class="label label-default">Pending</small>
-               <% elsif a.travel_status == "FirstApproved" %>
-               <small class="label label-primary">FirstApproved</small>
-               <% elsif a.travel_status == "SecondApproved" %>
-               <small class="label label-primary">SecondApproved</small>
-               <% elsif a.travel_status == "FinalApproved" %>
-               <small class="label label-primary">FinalApproved</small>
-               <% elsif a.travel_status == "Rejected" %>
-               <small class="label label-primary">Rejected</small>
-               <% elsif a.travel_status == "Approved & Send Next" %>
-               <small class="label label-primary">Approved & Send Next</small>
+               <% if a.status == true %>
+               <small class="label label-primary">Confirmed & Send Next</small>
                <% else %>
                <% end %>
           </td>

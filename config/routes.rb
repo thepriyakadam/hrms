@@ -1385,7 +1385,7 @@ end
   match 'employee_documents/:id/download_emp/:id' => 'employee_documents#download_emp', :via => [:get], :as => :download_emp
   match 'employee_documents/:id/download_pic/:id' => 'employee_documents#download_pic', :via => [:get], :as => :download_pic
   match 'investment_declarations/:id/investment_document/:id' => 'investment_declarations#investment_document', :via => [:get], :as => :investment_document
-   match 'investment_declarations/:id/investment_document2/:id' => 'investment_declarations#investment_document2', :via => [:get], :as => :investment_document2
+  match 'investment_declarations/:id/investment_document2/:id' => 'investment_declarations#investment_document2', :via => [:get], :as => :investment_document2
 
   match 'due_templates/:id/download_due_tempalte_documents/:id' => 'due_templates#download_due_tempalte_documents', :via => [:get], :as => :download_due_tempalte_documents
 

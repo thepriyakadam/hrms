@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170531125126) do
+ActiveRecord::Schema.define(version: 20170612103424) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -2098,12 +2098,12 @@ ActiveRecord::Schema.define(version: 20170531125126) do
     t.boolean  "status"
     t.datetime "created_at",                                                         null: false
     t.datetime "updated_at",                                                         null: false
+    t.boolean  "is_confirm",                                         default: false
+    t.text     "comment",               limit: 65535
     t.string   "document_file_name",    limit: 255
     t.string   "document_content_type", limit: 255
     t.integer  "document_file_size",    limit: 4
     t.datetime "document_updated_at"
-    t.boolean  "is_confirm",                                         default: false
-    t.text     "comment",               limit: 65535
   end
 
   add_index "investment_declarations", ["employee_id"], name: "index_investment_declarations_on_employee_id", using: :btree

@@ -1,0 +1,89 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee C.Off History</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div class="row">
+      <div class="col-sm-12">
+        <table id="example1" class="table table-bordered table-hover table-condensed">
+          <% i = 0%>
+          <thead>
+            <tr>
+              <th>Sr No</th>
+              <th>ID</th>
+              <th>Employee</th>
+              <th>Day</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @leave_c_offs.each do |leave_c_off| %>
+              <tr>
+                <% if @current_request.id == leave_c_off.id %>
+                  <th><font color="green">*<%= i = i + 1 %></font></th>
+                  <th><font color='green'><%= leave_c_off.employee.try(:manual_employee_code) %> </font></th>
+                  <th><font color='green'><%= full_name(leave_c_off.employee) %></th></font>
+                  <th><font color='green'><%= leave_c_off.c_off_date %></th></font>
+                <%else%>
+                  <td><%= i = i + 1 %></td>
+                  <td><%= leave_c_off.employee.try(:manual_employee_code) %></td>
+                  <td><%= full_name(leave_c_off.employee) %></td>
+                  <td><%= leave_c_off.c_off_date %></td>
+                <%end%>
+                <td>
+                  <% leave_c_off.status_c_offs.try(:each) do |r| %>
+                    <% case r.status %>
+                      <% when "Pending" %>
+                        <small class="label label-default">Pending</small>
+                      <% when "FirstApproved" %>
+                        <small class="label label-primary">FirstApproved</small>
+                      <% when "FinalApproved" %>
+                        <small class="label label-info">FinalApproved</small>
+                      <% when "Rejected" %>
+                        <small class="label label-danger">Rejected</small>
+                      <% when "Cancelled" %>
+                        <small class="label label-warning">Cancelled</small>
+                      <% when "Approved" %>
+                        <small class="label label-success">Approved</small>
+                      <% when "Approved & Send Next" %>
+                        <small class="label label-warning">Approved & Send Next</small>
+                    <%end%>
+                  <%end%>
+                </td> 
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+
+    <table id="example1" class="table table-bordered table-hover table-condensed">
+      <tbody>
+        <tr><td colspan="4"><font color='red'><center>Current C.Off Request Detail</center></font></td></tr>
+        <tr>
+          <th>ID</th>
+          <td><%= @current_request.employee.try(:manual_employee_code) %></td>
+        </tr>
+        <tr>
+          <th>Employee</th>
+          <td><%= full_name(@employee) %></td>
+        </tr>
+        <tr>
+          <th>Day</th>
+          <td><%= @current_request.c_off_date %></td>
+        </tr>
+        <tr>
+          
+            <th colspan="2"><center>
+              <%= link_to 'Approve', admin_approve_modal_leave_c_offs_path(@current_request.id),class: 'btn btn-xs btn-success',remote: true %>
+              <%= link_to 'Reject', final_reject_leave_c_offs_path(@current_request.id),class: 'btn btn-xs btn-danger' %>
+            </th>
+        </tr>
+     </tbody>
+    </table>
+    <br>
+      <%= link_to 'Back', admin_c_off_approval_leave_c_offs_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %></center>
+  </div>
+<div id="myModal" class="modal fade"></div>

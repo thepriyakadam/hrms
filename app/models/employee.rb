@@ -17,7 +17,7 @@ class Employee < ActiveRecord::Base
 
   has_many :reporting_masters
   has_many :employee_attendances
-  has_many :leav_c_offs
+  has_many :leave_c_offs
   has_many :salaryslips
   has_many :employee_nominations
   has_many :awards

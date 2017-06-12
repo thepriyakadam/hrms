@@ -11,6 +11,7 @@
 		    <tr>
 		      <th>ID</th>
 		      <th>Employee</th>
+		      <th>Application Date</th>
 		      <th>Leave Category</th>
 		      <th>Leave Type</th>
 		      <th>No. Of Days</th>
@@ -26,6 +27,7 @@
 		      <tr>
 		        <td><%= employee_leav_request.employee.try(:manual_employee_code) %></td>
 		        <td><%= full_name(employee_leav_request.employee) %></td>
+		        <td><%= employee_leav_request.created_at.to_date %> - <%= employee_leav_request.created_at %></td>
 		        <td><%= employee_leav_request.leav_category.try(:name) %></td>
 		        <td><%= employee_leav_request.leave_type %></td>
 		        <td><%= employee_leav_request.leave_count %></td>

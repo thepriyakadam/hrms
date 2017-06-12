@@ -17,7 +17,7 @@ class Employee < ActiveRecord::Base
 
   has_many :reporting_masters
   has_many :employee_attendances
-  has_many :leav_c_offs
+  has_many :leave_c_offs
   has_many :salaryslips
   has_many :employee_nominations
   has_many :awards
@@ -134,6 +134,7 @@ class Employee < ActiveRecord::Base
 
   validates :manual_employee_code, presence: true, uniqueness: { case_sensitive: false }
   validates :first_name, presence: true
+  validates :email, presence: true
 
   has_attached_file :passport_photo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'Profile11.jpg'
   validates_attachment_content_type :passport_photo,  :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'

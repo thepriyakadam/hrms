@@ -44,16 +44,29 @@ class HolidaysController < ApplicationController
     @holidays = Holiday.all
   end
 
+  def employee_list
+    department_id = params[:department_id]
+    @holiday_id = params[:holiday_id]
+    @holiday = Holiday.find_by(id: @holiday_id)
+    @emp = EmployeeAttendance.where(department_id: department_id,day: @holiday.holiday_date).pluck(:employee_id)
+    @employees = Employee.where(department_id: department_id).where.not(id: @emp)
+  end
+
   def assign_to_employee
-    holiday = Holiday.find(params[:format])
-    holiday.update(is_send: true)
-    Employee.where(status: 'Active').each do |e|
-      @emp_attendance = EmployeeAttendance.where(employee_id: e.id,day: holiday.holiday_date).take
+    @employee_ids = params[:employee_ids]
+    holiday = Holiday.find(params[:holiday_id])
+    #holiday.update(is_send: true)
+    if @employee_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+    else
+      @employee_ids.each do |eid|
+        @emp = Employee.find_by_id(eid)
+        @emp_attendance = EmployeeAttendance.where(employee_id: eid,day: holiday.holiday_date).take
         if @emp_attendance.try(:present) == nil
-          EmployeeAttendance.create(employee_id: e.id, day: holiday.holiday_date, present: "H", department_id: e.department_id, is_confirm: false, count: 1)
+          EmployeeAttendance.create(employee_id: eid, day: holiday.holiday_date, present: "H", department_id: @emp.department_id, is_confirm: false, count: 1)
         else
           @date = holiday.holiday_date
-          @emp_attendances = EmployeeAttendance.where("DATE_FORMAT('%m/%Y', day) = ? AND present = ?", @date.strftime('%m/%Y'), "H")
+          @emp_attendances = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ? AND present = ?", @date.strftime('%m/%Y'), "H")
           @emp_attendances.each do |e|
             date = e.day.to_datetime
             yd = (date-1).strftime('%Y-%m-%d')
@@ -64,10 +77,13 @@ class HolidaysController < ApplicationController
               EmployeeAttendance.find_by(id: e.id).update(present: "A")
             else
             end
-          end
-        end   
-    end
+          end  
+        end
+      end#do
+    end#if @employee_id.nil?
     @holidays = Holiday.all
+    flash[:notice] = "Holiday Created Successfully!"
+    redirect_to new_holiday_path
   end
 
   private

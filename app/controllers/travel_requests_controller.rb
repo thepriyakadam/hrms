@@ -143,14 +143,6 @@ end
     redirect_to travel_history_travel_requests_path
   end
 
-  def reject
-    @travel_request = TravelRequest.find(params[:format])
-    @travel_request.update(current_status: "Rejected",reporting_master_id: current_user.employee_id)
-    ReportingMastersTravelRequest.create(reporting_master_id: current_user.employee_id, travel_request_id: @travel_request.id,travel_status: "Rejected")
-    flash[:alert] = 'Travel Request Rejected Successfully'
-    redirect_to travel_history_travel_requests_path
-  end
-
   def approve_and_send_next
     @travel_request = TravelRequest.find(params[:format])
     employee = Employee.find_by(id: @travel_request.reporting_master_id)
@@ -158,6 +150,14 @@ end
     @travel_request.update(reporting_master_id: first_manager_id,current_status: "Approved & Send Next")
     ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id,reporting_master_id: current_user.employee_id,travel_status: "Approved & Send Next")
     flash[:notice] = 'Travel Request Approved Successfully'
+    redirect_to travel_history_travel_requests_path
+  end
+
+  def reject
+    @travel_request = TravelRequest.find(params[:format])
+    @travel_request.update(current_status: "Rejected",reporting_master_id: current_user.employee_id)
+    ReportingMastersTravelRequest.create(reporting_master_id: current_user.employee_id, travel_request_id: @travel_request.id,travel_status: "Rejected")
+    flash[:alert] = 'Travel Request Rejected Successfully'
     redirect_to travel_history_travel_requests_path
   end
 

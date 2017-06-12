@@ -676,7 +676,7 @@ class EmployeeAttendancesController < ApplicationController
           # Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f / @payroll_overtime_masters.company_hrs.to_f)
           # byebug
           joining_detail = JoiningDetail.where(employee_id: x).take
-        if joining_detail.ot_option == true
+        if try(:joining_detail).try(:ot_option) == true
           Workingday.where(employee_id: x).update_all(ot_hours: calculated_diff.to_f.round(2))
           # d=Workingday.where(employee_id: x)
           #   d.each do |f|
@@ -1564,7 +1564,7 @@ end
     @from = params[:employee][:from]
     @to = params[:employee][:to]
     @employee_id = params[:employee][:employee_id]
-    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id)
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day")
     
     respond_to do |format|
       format.js

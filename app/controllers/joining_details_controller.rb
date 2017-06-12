@@ -54,8 +54,8 @@ class JoiningDetailsController < ApplicationController
 
         @employee = Employee.find_by(id: @joining_detail.employee_id)
         @department = Department.find_by(id: @employee.department_id)
-        @employee_promotion = EmployeePromotion.where(employee_id: @joining_detail.employee_id).last
-        @employee_promotion.update(employee_id: @joining_detail.employee_id,department_id: @department.id,employee_designation_id: @joining_detail.employee_designation_id,employee_grade_id: @joining_detail.employee_grade_id,employee_category_id: @joining_detail.employee_category_id,effective_from: @joining_detail.joining_date)
+        # @employee_promotion = EmployeePromotion.where(employee_id: @joining_detail.employee_id).last
+        # @employee_promotion.update(employee_id: @joining_detail.employee_id,department_id: @department.id,employee_designation_id: @joining_detail.employee_designation_id,employee_grade_id: @joining_detail.employee_grade_id,employee_category_id: @joining_detail.employee_category_id,effective_from: @joining_detail.joining_date)
         # format.html { redirect_to @joining_detail, notice: 'Joining detail was successfully updated.' }
         # format.json { render :show, status: :ok, location: @joining_detail }
         format.js { @flag = true }

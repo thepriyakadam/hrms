@@ -1,0 +1,6 @@
+<%if @flag == true %>
+  $("#form").html("<%= j render 'form' %>");
+  $("#policy_type_list").html("<%= j render 'policy_type_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

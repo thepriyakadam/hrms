@@ -6,7 +6,7 @@ class HomeController < ApplicationController
 
   def index
     @circulars = Circular.where(is_active: true)
-    @company_policies = CompanyPolicy.group("policy_type")
+    @company_policies = CompanyPolicy.group("policy_type_id")
     @company_events = CompanyEvent.all
     @companies = Company.all
     @company_locations = CompanyLocation.all

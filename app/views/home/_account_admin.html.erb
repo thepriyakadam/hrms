@@ -168,7 +168,7 @@
             <tbody>
               <% @company_policies.each do |company_policy| %>
               <tr>
-                <td><%= company_policy.policy_type %></td>
+                <td><%= company_policy.policy_type.try(:name) %></td>
               
                   <td>
                      <%= link_to '', policy_type_detail_company_policies_path(company_policy_id: company_policy.id) ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>

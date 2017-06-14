@@ -1,4 +1,8 @@
 class CompanyPolicy < ActiveRecord::Base
+ 
+ belongs_to :policy_type
+
+
 	validates :name,presence:true
 	has_attached_file :document,
     :path => "attachments/attach_company_policy/:basename.:extension"

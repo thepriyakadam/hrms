@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :policy_types
   resources :reimbursement_requests do
     collection do
       get :send_for_approval
@@ -470,6 +471,8 @@ end
   resources :company_policies do
     collection do
       get :active_policies_list
+      get :policy_type_detail
+      get :policy_type_dashboard
     end
   end
 
@@ -2216,6 +2219,7 @@ end
     collection do
       get :created_user
       patch :update_form
+      # get :show
     end
   end
 

@@ -108,7 +108,7 @@ class SelfServicesController < ApplicationController
   def leave_c_off
     session[:active_tab] ="EmployeeSelfService"
     @leave_c_off = LeaveCOff.new
-    @leave_c_offs = LeaveCOff.where(employee_id: current_user.employee_id)
+    @leave_c_offs = LeaveCOff.where(employee_id: current_user.employee_id).order("id DESC")
   end
 
   def create_self_c_off

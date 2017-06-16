@@ -1973,6 +1973,7 @@ end
       get :leave_req_status_report
       post :status_wise_request
       get :status_wise_request
+      get :select_form
     end
   end
   resources :company_leavs

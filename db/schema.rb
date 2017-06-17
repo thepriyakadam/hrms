@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170614061852) do
+ActiveRecord::Schema.define(version: 20170616113933) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -606,6 +606,20 @@ ActiveRecord::Schema.define(version: 20170614061852) do
     t.string   "base_component", limit: 255
   end
 
+  create_table "daily_attendances", force: :cascade do |t|
+    t.string   "sr_no",         limit: 255
+    t.date     "date"
+    t.time     "time"
+    t.string   "employee_code", limit: 255
+    t.string   "card_no",       limit: 255
+    t.string   "employee_name", limit: 255
+    t.string   "controller",    limit: 255
+    t.string   "reader_name",   limit: 255
+    t.string   "access_status", limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
   create_table "daily_bill_detail_histories", force: :cascade do |t|
     t.integer  "daily_bill_detail_id",   limit: 4
     t.integer  "travel_expence_type_id", limit: 4
@@ -901,6 +915,7 @@ ActiveRecord::Schema.define(version: 20170614061852) do
     t.integer  "employee_id",              limit: 4
     t.integer  "department_id",            limit: 4
     t.integer  "machine_attendance_id",    limit: 4
+    t.string   "comment",                  limit: 255
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id", using: :btree

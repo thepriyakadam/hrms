@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170614094927) do
+ActiveRecord::Schema.define(version: 20170617122323) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -299,6 +299,32 @@ ActiveRecord::Schema.define(version: 20170614094927) do
     t.datetime "updated_at",                                              null: false
     t.boolean  "is_confirm"
   end
+
+  create_table "candidate_forms", force: :cascade do |t|
+    t.integer  "vacancy_request_id",     limit: 4
+    t.string   "name",                   limit: 255
+    t.integer  "qualification_id",       limit: 4
+    t.string   "skill_set",              limit: 255
+    t.integer  "contact_no",             limit: 4
+    t.string   "email",                  limit: 255
+    t.string   "candidate_type",         limit: 255
+    t.string   "experience",             limit: 255
+    t.string   "notice_period",          limit: 255
+    t.integer  "selected_by_id",         limit: 4
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "document1_file_name",    limit: 255
+    t.string   "document1_content_type", limit: 255
+    t.integer  "document1_file_size",    limit: 4
+    t.datetime "document1_updated_at"
+    t.string   "document2_file_name",    limit: 255
+    t.string   "document2_content_type", limit: 255
+    t.integer  "document2_file_size",    limit: 4
+    t.datetime "document2_updated_at"
+  end
+
+  add_index "candidate_forms", ["qualification_id"], name: "index_candidate_forms_on_qualification_id", using: :btree
+  add_index "candidate_forms", ["vacancy_request_id"], name: "index_candidate_forms_on_vacancy_request_id", using: :btree
 
   create_table "capture_resumes", force: :cascade do |t|
     t.string   "name_of_candidate",           limit: 255
@@ -4045,6 +4071,40 @@ ActiveRecord::Schema.define(version: 20170614094927) do
   add_index "vacancy_request_histories", ["reporting_master_id"], name: "index_vacancy_request_histories_on_reporting_master_id", using: :btree
   add_index "vacancy_request_histories", ["vacancy_master_id"], name: "index_vacancy_request_histories_on_vacancy_master_id", using: :btree
 
+  create_table "vacancy_request_statuses", force: :cascade do |t|
+    t.integer  "vacancy_request_id", limit: 4
+    t.integer  "action_by_id",       limit: 4
+    t.string   "status",             limit: 255
+    t.date     "action_date"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "vacancy_request_statuses", ["vacancy_request_id"], name: "index_vacancy_request_statuses_on_vacancy_request_id", using: :btree
+
+  create_table "vacancy_requests", force: :cascade do |t|
+    t.string   "vacancy",                 limit: 255
+    t.integer  "no_of_position",          limit: 4
+    t.text     "description",             limit: 65535
+    t.integer  "request_by_id",           limit: 4
+    t.integer  "approval_by_id",          limit: 4
+    t.date     "request_date"
+    t.string   "qualification",           limit: 255
+    t.text     "skill_set",               limit: 65535
+    t.integer  "designation_id",          limit: 4
+    t.integer  "department_id",           limit: 4
+    t.string   "experience",              limit: 255
+    t.string   "current_status",          limit: 255
+    t.string   "vacancy_type",            limit: 255
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.integer  "employee_designation_id", limit: 4
+  end
+
+  add_index "vacancy_requests", ["department_id"], name: "index_vacancy_requests_on_department_id", using: :btree
+  add_index "vacancy_requests", ["designation_id"], name: "index_vacancy_requests_on_designation_id", using: :btree
+  add_index "vacancy_requests", ["employee_designation_id"], name: "index_vacancy_requests_on_employee_designation_id", using: :btree
+
   create_table "visitor_details", force: :cascade do |t|
     t.string   "name",                limit: 255
     t.string   "age",                 limit: 255
@@ -4155,6 +4215,8 @@ ActiveRecord::Schema.define(version: 20170614094927) do
     t.boolean  "is_confirm"
   end
 
+  add_foreign_key "candidate_forms", "qualifications"
+  add_foreign_key "candidate_forms", "vacancy_requests"
   add_foreign_key "company_policies", "policy_types"
   add_foreign_key "employee_jc_lists", "employees"
   add_foreign_key "employee_jc_lists", "joining_checklist_masters"
@@ -4169,6 +4231,8 @@ ActiveRecord::Schema.define(version: 20170614094927) do
   add_foreign_key "reporting_master_rembursments", "rembursments"
   add_foreign_key "status_c_offs", "employees"
   add_foreign_key "status_c_offs", "leave_c_offs"
+  add_foreign_key "vacancy_request_statuses", "vacancy_requests"
+  add_foreign_key "vacancy_requests", "employee_designations"
   add_foreign_key "visitor_details", "authorized_bies"
   add_foreign_key "visitor_details", "meet_tos"
 end

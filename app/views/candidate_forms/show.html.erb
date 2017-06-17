@@ -1,0 +1,74 @@
+<div class="box box-default">
+<div class="box-header with-border">
+    <h3 class="box-title">Candidate Profile</h3>
+  </div><!-- /.box-header -->
+ <div class="box-body">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
+  
+
+  <tr>
+  <th><strong>Candidate Name</strong></th>
+  <td colspan="3"><%= @candidate_form.name %></td>  
+   
+  </tr>
+
+  <tr>
+  <th><strong>Qualification</strong></th>
+  <td><%= @candidate_form.qualification.try(:name) %></td>
+   <th><strong>Skill Set</strong></th>
+  <td><%= @candidate_form.skill_set %></td>
+  
+  
+  </tr>
+
+   <tr>
+  <th><strong>Contact No.</strong></th>
+  <td><%= @candidate_form.contact_no %></td>
+   <th><strong>Email</strong></th>
+  <td><%= @candidate_form.email %></td>
+  </tr>
+
+
+<tr>
+  <th><strong>Candidate Type</strong></th>
+  <td><%= @candidate_form.candidate_type %></td>
+
+ <th><strong>Notice Period</strong></th>
+  <td><%= @candidate_form.notice_period %></td>
+  
+</tr>
+
+<tr>
+  <th><strong>Experience</strong></th>
+  <td><%= @candidate_form.experience %></td>
+   <th><strong>Selected By</strong></th>
+  <td><% emp = Employee.find_by(id: @candidate_form.selected_by_id) %><%= full_name(emp) %></td>
+</tr>
+
+<tr>
+  <th><strong>Download Document</strong></th>
+  <td>
+    <% if @candidate_form.document1_file_name == nil %>
+      <small class="label label-default">Not Available</small>
+          <% else %>
+            <center><%= link_to '',document_1_path(@candidate_form),class: 'btn btn-xs fa fa-download' %>
+      <% end %>
+    </center>
+  </td>
+
+  <th><strong>Download Image</strong></th>
+  <td>
+  <% if @candidate_form.document2_file_name == nil %>
+    <small class="label label-default">Not Available</small>
+      <% else %>
+    <center><%= link_to '',document_2_image_path(@candidate_form),class: 'btn btn-xs fa fa-picture-o' %></center>
+  <% end %></td>
+</tr>
+
+
+
+</table><br>
+<!--<= link_to 'Edit', edit_vacancy_master_path(@vacancy_master),class: 'btn btn-success btn-sm fa fa-edit' %> -->
+<%= link_to 'Back', candidate_forms_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+</div>
+</div>

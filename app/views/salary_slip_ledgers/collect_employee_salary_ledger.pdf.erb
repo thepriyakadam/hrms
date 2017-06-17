@@ -16,7 +16,7 @@
     <tr>
       <th colspan="6" align="left"> Employee ID: <%= @reports.first.try(:code) %> </th>
       <th colspan="14" align="left">Employee Name: <%= @reports.first.try(:employee_name) %> </th>
-      <th colspan="7" align="left">Designation: </th>
+      <th colspan="7" align="left">Designation: <%= @reports.first.try(:employee_designation) %> </th>
     </tr>
      <tr>
       <th>Sr.No</th>

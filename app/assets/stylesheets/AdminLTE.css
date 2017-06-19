@@ -3184,7 +3184,8 @@ table.text-center th {
 .login-page,
 .register-page {
   background: #d2d6de;
-  background-image: url("back1.jpg");*/
+  background-image: url("landing.jpg");
+  background-repeat: no-repeat;
  /* background-image: url("img5.jpg");*/
   /*  background-image: url("img4.jpg");*/
   /*background-image: url("effectiveHR.jpg");*/

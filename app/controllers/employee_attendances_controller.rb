@@ -1580,7 +1580,9 @@ def update_daily_attendance
   in_time = params[:employee_attendance][:in_time]
   out_time = params[:employee_attendance][:out_time]
   present = params[:employee_attendance][:present]
-  @employee_attendance.update(in_time: in_time,out_time: out_time,present: present)
+  comment = params[:employee_attendance][:comment]
+
+  @employee_attendance.update(in_time: in_time,out_time: out_time,present: present,comment: comment)
   flash[:notice] = "Updated Successfully!"
   redirect_to datewise_daily_attendance_employee_attendances_path
 end

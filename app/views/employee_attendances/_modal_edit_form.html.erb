@@ -1,9 +1,15 @@
-<div class="modal-dialog"  style="height:2000px; max-height:400px; width:630px; max-width:630px;">
+<div class="modal-dialog"  style="height:1000px; max-height:2000px; width:700px; max-width:730px;">
   <div class="modal-content"> 
     <div class="modal-body">
     	<%= bootstrap_form_for :employee_attendance,url:{action:"update_daily_attendance",employee_attendance_id: @employee_attendance.id} do |f| %>
 
     		<div class="row">
+	    		<div class="col-sm-3">
+		          <div class="field">
+		            <%= select :employee_attendance,:present,['P','W','A','P/2','PG','H'],{hide_label: true,include_blank: "Select Option"},class: 'form-control' %>
+		         	</div>
+	        </div>
+
         	<div class="col-sm-3">
 			      <div class="bootstrap-timepicker">
 			        <div class="form-group">
@@ -30,9 +36,11 @@
 			    </div>
 			    <div class="col-sm-3">
 	          <div class="field">
-	            <%= select :employee_attendance,:present,['P','W','A','P/2','PG','H'],{hide_label: true,include_blank: "Select Option"},class: 'form-control' %>
+	            <%= select :employee_attendance,:comment,['In Time Not Available','Out Time Not Available','In & Out Time Not Available'],{hide_label: true,include_blank: "Select Option"},class: 'form-control' %>
 	         	</div>
-        </div>
+	        </div>
+	        </div>
+	        <div class="row">
           <div class="col-sm-2">
             <%= f.submit "Update", class: 'btn btn-sm btn-success fa fa-modx' %>
           </div>

@@ -6,5 +6,5 @@ class Degree < ActiveRecord::Base
   has_many :vacancy_request_histories
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
- 
+ has_many :candidate_forms
 end

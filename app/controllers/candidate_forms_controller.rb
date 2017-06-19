@@ -24,10 +24,10 @@ class CandidateFormsController < ApplicationController
   # POST /candidate_forms
   # POST /candidate_forms.json
   def create
-     # byebug
+      byebug
     @candidate_form = CandidateForm.new(candidate_form_params)
-    @vacancy_request = params[:candidate_form][:vacancy_request_id]
-    # @vacancy_request = VacancyRequest.find(@candidate_form.vacancy_request_id)
+    # @vacancy_request = params[:candidate_form][:vacancy_request_id]
+    @vacancy_request = VacancyRequest.find(@candidate_form.vacancy_request_id)
     @candidate_forms = CandidateForm.where(vacancy_request_id: @vacancy_request)
 
     respond_to do |format|
@@ -97,6 +97,6 @@ class CandidateFormsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def candidate_form_params
-      params.require(:candidate_form).permit(:vacancy_request_id, :name, :qualification_id, :skill_set, :contact_no, :email, :candidate_type, :experience, :notice_period, :selected_by_id,:document1,:document2)
+      params.require(:candidate_form).permit(:vacancy_request_id, :name, :qualification_id, :degree_id,:skill_set, :contact_no, :email, :candidate_type, :experience, :notice_period, :selected_by_id,:document1,:document2)
     end
 end

@@ -1,7 +1,8 @@
 class CandidateForm < ActiveRecord::Base
   belongs_to :vacancy_request
   belongs_to :qualification
-  belongs_to :selected_by
+  belongs_to :degree
+  belongs_to :selected_by,class_name: 'Employee'
 
   has_attached_file :document1, :path => "attachments/attach_resume/:basename.:extension"
 

@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20170616113933) do
-=======
-ActiveRecord::Schema.define(version: 20170617122323) do
->>>>>>> 08334fabf2697f0d752e2467edb75accc8a716ed
+ActiveRecord::Schema.define(version: 20170619045528) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -325,8 +321,10 @@ ActiveRecord::Schema.define(version: 20170617122323) do
     t.string   "document2_content_type", limit: 255
     t.integer  "document2_file_size",    limit: 4
     t.datetime "document2_updated_at"
+    t.integer  "degree_id",              limit: 4
   end
 
+  add_index "candidate_forms", ["degree_id"], name: "index_candidate_forms_on_degree_id", using: :btree
   add_index "candidate_forms", ["qualification_id"], name: "index_candidate_forms_on_qualification_id", using: :btree
   add_index "candidate_forms", ["vacancy_request_id"], name: "index_candidate_forms_on_vacancy_request_id", using: :btree
 
@@ -4013,11 +4011,8 @@ ActiveRecord::Schema.define(version: 20170617122323) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.string   "auth_token",             limit: 255
-    t.string   "password_reset_token",   limit: 255
-    t.datetime "password_reset_sent_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "vacancy_masters", force: :cascade do |t|
@@ -4111,18 +4106,16 @@ ActiveRecord::Schema.define(version: 20170617122323) do
     t.date     "request_date"
     t.string   "qualification",           limit: 255
     t.text     "skill_set",               limit: 65535
-    t.integer  "designation_id",          limit: 4
+    t.integer  "employee_designation_id", limit: 4
     t.integer  "department_id",           limit: 4
     t.string   "experience",              limit: 255
     t.string   "current_status",          limit: 255
     t.string   "vacancy_type",            limit: 255
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
-    t.integer  "employee_designation_id", limit: 4
   end
 
   add_index "vacancy_requests", ["department_id"], name: "index_vacancy_requests_on_department_id", using: :btree
-  add_index "vacancy_requests", ["designation_id"], name: "index_vacancy_requests_on_designation_id", using: :btree
   add_index "vacancy_requests", ["employee_designation_id"], name: "index_vacancy_requests_on_employee_designation_id", using: :btree
 
   create_table "visitor_details", force: :cascade do |t|
@@ -4235,6 +4228,7 @@ ActiveRecord::Schema.define(version: 20170617122323) do
     t.boolean  "is_confirm"
   end
 
+  add_foreign_key "candidate_forms", "degrees"
   add_foreign_key "candidate_forms", "qualifications"
   add_foreign_key "candidate_forms", "vacancy_requests"
   add_foreign_key "company_policies", "policy_types"
@@ -4251,7 +4245,7 @@ ActiveRecord::Schema.define(version: 20170617122323) do
   add_foreign_key "reporting_master_rembursments", "rembursments"
   add_foreign_key "status_c_offs", "employees"
   add_foreign_key "status_c_offs", "leave_c_offs"
-  add_foreign_key "vacancy_request_statuses", "vacancy_requests"
+  add_foreign_key "vacancy_requests", "departments"
   add_foreign_key "vacancy_requests", "employee_designations"
   add_foreign_key "visitor_details", "authorized_bies"
   add_foreign_key "visitor_details", "meet_tos"

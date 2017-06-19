@@ -14,7 +14,7 @@
 
   <tr>
   <th><strong>Qualification</strong></th>
-  <td><%= @candidate_form.qualification.try(:name) %></td>
+  <td><%= @candidate_form.degree.try(:name) %></td>
    <th><strong>Skill Set</strong></th>
   <td><%= @candidate_form.skill_set %></td>
   
@@ -61,7 +61,7 @@
   <% if @candidate_form.document2_file_name == nil %>
     <small class="label label-default">Not Available</small>
       <% else %>
-    <center><%= link_to '',document_2_image_path(@candidate_form),class: 'btn btn-xs fa fa-picture-o' %></center>
+    <center><%= link_to '',document_2_path(@candidate_form),class: 'btn btn-xs fa fa-picture-o' %></center>
   <% end %></td>
 </tr>
 

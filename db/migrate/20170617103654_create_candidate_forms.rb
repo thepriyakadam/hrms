@@ -4,6 +4,7 @@ class CreateCandidateForms < ActiveRecord::Migration
       t.references :vacancy_request, index: true, foreign_key: true
       t.string :name
       t.references :qualification, index: true, foreign_key: true
+      t.references :degree, index: true, foreign_key: true
       t.string :skill_set
       t.integer :contact_no
       t.string :email

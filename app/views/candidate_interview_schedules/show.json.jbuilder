@@ -1,0 +1,1 @@
+json.partial! "candidate_interview_schedules/candidate_interview_schedule", candidate_interview_schedule: @candidate_interview_schedule

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :candidate_interview_schedules
+  resources :interview_type_masters
+  resources :interview_types
   resources :candidate_forms
   resources :vacancy_request_statuses
   resources :interview_types
@@ -493,6 +496,8 @@ end
       get :active_policies_list
       get :policy_type_detail
       get :policy_type_dashboard
+      get :modal
+      post :update_company_policy
     end
   end
 

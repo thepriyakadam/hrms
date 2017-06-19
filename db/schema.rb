@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170604073538) do
+ActiveRecord::Schema.define(version: 20170608111756) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -2367,6 +2367,7 @@ ActiveRecord::Schema.define(version: 20170604073538) do
     t.decimal  "leave_count",                  precision: 3, scale: 1
     t.boolean  "is_expire"
     t.boolean  "status"
+    t.string   "current_status",   limit: 255
   end
 
   add_index "leave_c_offs", ["employee_id"], name: "index_leave_c_offs_on_employee_id", using: :btree
@@ -3600,6 +3601,17 @@ ActiveRecord::Schema.define(version: 20170604073538) do
 
   add_index "states", ["country_id"], name: "index_states_on_country_id", using: :btree
 
+  create_table "status_c_offs", force: :cascade do |t|
+    t.integer  "leave_c_off_id", limit: 4
+    t.integer  "employee_id",    limit: 4
+    t.string   "status",         limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "status_c_offs", ["employee_id"], name: "index_status_c_offs_on_employee_id", using: :btree
+  add_index "status_c_offs", ["leave_c_off_id"], name: "index_status_c_offs_on_leave_c_off_id", using: :btree
+
   create_table "texable_amounts", force: :cascade do |t|
     t.integer  "employee_id",      limit: 4
     t.decimal  "yearly",                     precision: 10
@@ -4332,6 +4344,8 @@ ActiveRecord::Schema.define(version: 20170604073538) do
   add_foreign_key "slip_informations", "salaryslips"
   add_foreign_key "society_member_ships", "employees"
   add_foreign_key "states", "countries"
+  add_foreign_key "status_c_offs", "employees"
+  add_foreign_key "status_c_offs", "leave_c_offs"
   add_foreign_key "texable_amounts", "employees"
   add_foreign_key "texable_monthly_deductions", "employees"
   add_foreign_key "texable_monthly_deductions", "salaryslips"

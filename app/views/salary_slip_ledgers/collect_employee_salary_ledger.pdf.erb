@@ -3,7 +3,11 @@
 <table style="border-collapse: collapse; font-size:15pt;" border=1 width=1000 cellpadding="15">
   <thead>
     <tr>
-      <th colspan="27">
+            <td colspan="27">
+         <% if current_user.company_location.company.company_logo == nil %>
+      <% else %>
+        <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
+        <%end%>
        <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
         <center><small></small></center>
         <center><small>Employee Monthly Salary For The Year <%= @start_date.strftime("%B") %>  <%= @start_date.strftime("%Y") %> - <%= @end_date.strftime("%B") %> <%= @end_date.strftime("%Y") %> </small></center>   
@@ -12,7 +16,7 @@
     <tr>
       <th colspan="6" align="left"> Employee ID: <%= @reports.first.try(:code) %> </th>
       <th colspan="14" align="left">Employee Name: <%= @reports.first.try(:employee_name) %> </th>
-      <th colspan="7" align="left">Designation: </th>
+      <th colspan="7" align="left">Designation: <%= @reports.first.try(:employee_designation) %> </th>
     </tr>
      <tr>
       <th>Sr.No</th>

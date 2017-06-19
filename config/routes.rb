@@ -1,5 +1,26 @@
 Rails.application.routes.draw do
 
+  resources :candidate_forms
+  resources :vacancy_request_statuses
+  resources :interview_types
+  resources :vacancy_requests do
+    collection do
+      get :cancel
+      get :approval_list
+      get :approval_detail
+      get :first_approve
+      get :approve
+      get :reject
+      get :final_approve
+      get :final_approval_list
+      get :approve_and_send_next
+      get :modal_approve_and_send_next
+      get :select_candidate
+      get :admin_approval
+      get :admin_approval_detail
+    end
+  end
+  resources :policy_types
   resources :reimbursement_requests do
     collection do
       get :send_for_approval
@@ -470,6 +491,8 @@ end
   resources :company_policies do
     collection do
       get :active_policies_list
+      get :policy_type_detail
+      get :policy_type_dashboard
     end
   end
 
@@ -1400,6 +1423,7 @@ end
   match 'employee_documents/:id/download_emp/:id' => 'employee_documents#download_emp', :via => [:get], :as => :download_emp
   match 'employee_documents/:id/download_pic/:id' => 'employee_documents#download_pic', :via => [:get], :as => :download_pic
   match 'investment_declarations/:id/investment_document/:id' => 'investment_declarations#investment_document', :via => [:get], :as => :investment_document
+
   match 'self_services/:id/investment_document2/:id' => 'self_services#investment_document2', :via => [:get], :as => :investment_document2
  
   match 'due_templates/:id/download_due_tempalte_documents/:id' => 'due_templates#download_due_tempalte_documents', :via => [:get], :as => :download_due_tempalte_documents
@@ -1407,6 +1431,9 @@ end
   match 'issue_requests/:id/download_screenshot_image/:id' => 'issue_requests#download_screenshot_image', :via => [:get], :as => :download_screenshot_image
   match 'issue_requests/:id/download_screenshot/:id' => 'issue_requests#download_screenshot', :via => [:get], :as => :download_screenshot
   match 'companies/:id/download_company_logo/:id' => 'companies#download_company_logo', :via => [:get], :as => :download_company_logo
+  
+   match 'candidate_forms/:id/document_1/:id' => 'candidate_forms#document_1', :via => [:get], :as => :document_1
+   match 'candidate_forms/:id/document_2/:id' => 'candidate_forms#document_2', :via => [:get], :as => :document_2
 
   match 'visitor_details/:id/download_person_image/:id' => 'visitor_details#download_person_image', :via => [:get], :as => :download_person_image
   # get '/screenshot', to: 'issue_requests#download_screenshot', as: 'download_screenshot'
@@ -2057,6 +2084,7 @@ end
   end
   resources :employees do
     collection do
+      get :print_employee_data_formate
       get :employee_list_report
       post :selected_employee_list_report
       get :selected_employee_pdf
@@ -2162,6 +2190,7 @@ end
       post :update_gps
       get :employee_gps_setting_list
       post :display_employee_details
+      get :display_employee_details
       get :employee_detail_form
       get :employee_record_pdf
       get :is_confirm
@@ -2227,6 +2256,7 @@ end
     collection do
       get :created_user
       patch :update_form
+      # get :show
     end
   end
 

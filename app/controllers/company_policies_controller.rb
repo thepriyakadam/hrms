@@ -8,7 +8,7 @@ class CompanyPoliciesController < ApplicationController
   # end
 
   def new
-    @company_policies = CompanyPolicy.all
+    @company_policies = CompanyPolicy.group("policy_type_id")
     @company_policy = CompanyPolicy.new
     session[:active_tab] = "InformationManagement"
     session[:active_tab1] = "Events" 
@@ -34,6 +34,19 @@ class CompanyPoliciesController < ApplicationController
 
   def active_policies_list
     @company_policies = CompanyPolicy.all
+  end
+
+  def policy_type_detail
+      @company_policy = CompanyPolicy.find(params[:company_policy_id])
+      policy_type = @company_policy.policy_type
+      @company_policies = CompanyPolicy.where(policy_type: policy_type)
+
+  end
+
+  def policy_type_dashboard
+     @company_policy = CompanyPolicy.find(params[:company_policy_id])
+      policy_type = @company_policy.policy_type
+      @company_policies = CompanyPolicy.where(policy_type: policy_type)
   end
 
 	def edit
@@ -73,6 +86,6 @@ class CompanyPoliciesController < ApplicationController
 	  end
 
     def company_policy_params
-      params.require(:company_policy).permit(:name, :effective_from, :effective_to, :status, :document, :description)
+      params.require(:company_policy).permit(:name, :effective_from, :effective_to, :status, :document, :description,:policy_type_id)
 	  end
 end

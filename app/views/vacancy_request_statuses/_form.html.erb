@@ -1,0 +1,33 @@
+<%= form_for(@vacancy_request_status) do |f| %>
+  <% if @vacancy_request_status.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@vacancy_request_status.errors.count, "error") %> prohibited this vacancy_request_status from being saved:</h2>
+
+      <ul>
+      <% @vacancy_request_status.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :vacancy_request_id %><br>
+    <%= f.text_field :vacancy_request_id %>
+  </div>
+  <div class="field">
+    <%= f.label :action_by_id %><br>
+    <%= f.text_field :action_by_id %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.text_field :status %>
+  </div>
+  <div class="field">
+    <%= f.label :action_date %><br>
+    <%= f.date_select :action_date %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

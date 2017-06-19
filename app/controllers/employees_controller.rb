@@ -1095,6 +1095,11 @@ def employee_report
   session[:active_tab1] ="Reports"
 end
 
+def employee_detail_form
+  session[:active_tab] ="EmployeeManagement"
+  session[:active_tab1] ="Reports"  
+end
+
 def show_employee_list
   @employee = Employee.new(employee_params)
   @company = params[:employee][:company_id]
@@ -1192,13 +1197,31 @@ def show_all_record
   end
 
   def display_employee_details
-     @emp = params[:employee][:id]
+    # byebug
+     @emp = params[:employee] ? params[:employee][:id] : params[:id]
      @employee = Employee.where(id: @emp).take
      @families = Family.where(employee_id: @emp)
      @qualifications = Qualification.where(employee_id: @emp)
      @skillsets = Skillset.where(employee_id: @emp)
      @experiences = Experience.where(employee_id: @emp)
      @certifications = Certification.where(employee_id: @emp)
+
+      respond_to do |f|
+      f.js
+      f.pdf do
+        render pdf: 'display_employee_details',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employees/employee_details.pdf.erb',
+        :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 10,
+                          :right  => 10},
+            :show_as_html => params[:debug].present?
+      end
+    end
   end
 
 

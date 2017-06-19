@@ -6,6 +6,8 @@ class Qualification < ActiveRecord::Base
   belongs_to :degree_stream
   belongs_to :university
 
+  has_many :candidate_forms
+
   # validates :marks, presence: true
   # validates :degree_id, presence: true
   # validates :degree_type_id, presence: true

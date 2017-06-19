@@ -667,7 +667,17 @@ require 'roo'
 # ActiveRecord::Base.transaction do
 # 2.upto(168) do |line|
 #   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
+
+ex = Roo::Excel.new("#{Rails.root}/public/mdindia.xls")
+ex.default_sheet = ex.sheets[2]
+j = 1
+gross_salary = 0
+ActiveRecord::Base.transaction do
+2.upto(5000) do |line|
+  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+
+
+#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   
 #   @salary_template = SalaryTemplate.find_by_id(ex.cell(line,'B'))
 #   @salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?
@@ -738,6 +748,7 @@ require 'roo'
 #       gross_salary = gross_salary + ex.cell(line,'I').to_i
 
 #       puts "Program Allowance..................Salary"
+
 
 #  elsif t.salary_component.name == "Transport Allowance"
 #       est.monthly_amount = ex.cell(line,'J') unless ex.cell(line,'J').nil?

@@ -1,17 +1,22 @@
-<style>
-    th {
-        text-align: left;
-    }
-    tr {
-        page-break-inside: avoid;
-    }
+<style type="text/css">
+    th { text-align: left; }
+    tr { page-break-inside: avoid; }
     div.alwaysbreak { page-break-before: always; }
     div.nobreak:before { clear:both; }
-    div.nobreak{ page-break-inside: avoid;
-      /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
-    }
+    div.nobreak{ page-break-inside: avoid;}
 </style>
-<table style="border-collapse: collapse; font-size:10pt;" border=1 width=900 cellpadding="25">
+
+<table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+<thead>
+  <tr>
+        <td colspan="6">
+         <% if current_user.company_location.company.company_logo == nil %>
+      <% else %>
+        <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
+        <%end%>
+          <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>. <br> <%= @month %> <%= @year %> </center>
+        </td>           
+       </tr>
     <thead>
       <tr>
         <th>ID</th>

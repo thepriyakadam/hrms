@@ -4,6 +4,7 @@ class AttributeMastersController < ApplicationController
   # GET /attribute_masters
   # GET /attribute_masters.json
   def index
+    @attribute_master = AttributeMaster.new
     @attribute_masters = AttributeMaster.all
   end
 
@@ -39,6 +40,7 @@ class AttributeMastersController < ApplicationController
       end
     end
   end
+
 
   # PATCH/PUT /attribute_masters/1
   # PATCH/PUT /attribute_masters/1.json

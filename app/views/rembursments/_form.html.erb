@@ -73,7 +73,7 @@ $("#rembursment").validate({
       },
       "rembursment[amount]":{
         required: true,
-      },
+        },
       "rembursment[rembursmentmaster]":{
         required: true,
       }
@@ -83,14 +83,15 @@ $("#rembursment").validate({
         required: "Please Select Employee",
       },
       "rembursment[rembursment_date]":{
-        required: "Please Select Rembursment Date",
+        required: "Please Select Date",
       },
       "rembursment[amount]":{
-        required: "Please specify Amount",
-      },
+        required: "Please Specify Amount",
+         },
       "rembursment[rembursmentmaster]":{
         required: "Please Select Rembursment",
-      }  
+      }
+      
     },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
@@ -98,3 +99,4 @@ $("#rembursment").validate({
     }
    });
 </script>
+

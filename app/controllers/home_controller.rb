@@ -1,10 +1,12 @@
 class HomeController < ApplicationController
+
+  # before_action :set_home, only: [:show]
   # load_and_authorize_resource
   require 'date'
 
   def index
     @circulars = Circular.where(is_active: true)
-    @company_policies = CompanyPolicy.all
+    @company_policies = CompanyPolicy.group("policy_type_id")
     @company_events = CompanyEvent.all
     @companies = Company.all
     @company_locations = CompanyLocation.all
@@ -37,6 +39,7 @@ class HomeController < ApplicationController
     end
   end
 
+  
   def created_user
   session[:active_tab] ="UserAdministration"
     if current_user.class == Group
@@ -52,6 +55,12 @@ class HomeController < ApplicationController
         @employees = Employee.joins('INNER JOIN members on employees.id = members.employee_id')
       end
     end
+  end
+
+  def company_policy_detail_dashboard
+      @company_policy = CompanyPolicy.find(params[:company_policy_id])
+      policy_type = @company_policy.policy_type
+      @company_policies = CompanyPolicy.where(policy_type: policy_type)
   end
   
   def event_detail

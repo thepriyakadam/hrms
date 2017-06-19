@@ -6,7 +6,6 @@ class DailyAttendance < ActiveRecord::Base
 	(2..spreadsheet.last_row).each do |i|
 	  row = Hash[[header, spreadsheet.row(i)].transpose]
 	  employee_attendance = find_by_id(row['id']) || new
-    
 	  employee_attendance.attributes = row.to_hash.slice(*row.to_hash.keys)
 	  employee_attendance.save!
 	end

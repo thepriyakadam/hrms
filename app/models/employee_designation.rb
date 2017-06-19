@@ -5,6 +5,7 @@ class EmployeeDesignation < ActiveRecord::Base
   has_many :vacancy_request_histories
   has_many :employee_promotions
   has_many :promotion_histories
+  has_many :vacancy_requests
 
   has_many :goal_bunches, class_name: "EmployeeDesignation",
                           foreign_key: "r_designation_id"

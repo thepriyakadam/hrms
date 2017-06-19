@@ -11,9 +11,17 @@
       /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
     }
 </style>
-<table style="border-collapse: collapse; font-size:8pt;" border=1 width=1000 cellpadding="19">  
-  <thead>
-  <tr><th colspan="6"><center><%= current_user.employee.company_location.company.description %></center> </th></tr>
+<table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+<thead>
+  <tr>
+        <td colspan="3">
+         <% if current_user.company_location.company.company_logo == nil %>
+      <% else %>
+        <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
+        <%end%>
+          <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>. <br> <%= @month %> <%= @year %> </center>
+        </td>           
+       </tr>
     <tr>
       <th>ID</th>
       <th>Employee Name</th>

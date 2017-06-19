@@ -17,6 +17,8 @@ class PolicyTypesController < ApplicationController
   def new
     @policy_type = PolicyType.new
     @policy_types = PolicyType.all
+    session[:active_tab] = "GlobalSetup"
+    session[:active_tab1] = "ProjectMaster"
   end
 
   # GET /policy_types/1/edit

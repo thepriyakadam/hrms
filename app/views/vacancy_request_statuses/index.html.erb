@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Vacancy Request Statuses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Vacancy request</th>
+      <th>Action by</th>
+      <th>Status</th>
+      <th>Action date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @vacancy_request_statuses.each do |vacancy_request_status| %>
+      <tr>
+        <td><%= vacancy_request_status.vacancy_request %></td>
+        <td><%= vacancy_request_status.action_by %></td>
+        <td><%= vacancy_request_status.status %></td>
+        <td><%= vacancy_request_status.action_date %></td>
+        <td><%= link_to 'Show', vacancy_request_status %></td>
+        <td><%= link_to 'Edit', edit_vacancy_request_status_path(vacancy_request_status) %></td>
+        <td><%= link_to 'Destroy', vacancy_request_status, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Vacancy request status', new_vacancy_request_status_path %>

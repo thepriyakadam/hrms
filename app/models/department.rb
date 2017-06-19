@@ -17,6 +17,7 @@ class Department < ActiveRecord::Base
   has_many :goal_perspectives
   has_many :attribute_masters
   has_many :slip_informations
+  has_many :vacancy_requests
   
   validates :manual_department_code, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true

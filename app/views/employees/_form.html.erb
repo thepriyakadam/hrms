@@ -329,6 +329,9 @@ $("#employee").validate({
       },
        "employee[email]":{
         required: true
+         },
+       "employee[date_of_birth]":{
+        required: true
       }
     },
     messages: {
@@ -393,6 +396,9 @@ $("#employee").validate({
       },
       "employee[email]":{
         required: "Please Specify Email Id"
+         },
+      "employee[date_of_birth]":{
+        required: "Please Specify DOB"
       }
     },
     errorPlacement: function(error, element) {

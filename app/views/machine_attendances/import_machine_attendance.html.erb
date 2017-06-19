@@ -5,7 +5,7 @@
 </div><!-- /.box-header -->
 <div class="box-body">
 <%= form_tag import_machine_attendances_path, multipart: true do %>
-<label> File </label>
+<label> File (.xls,.csv,.xlsx only) </label>
   <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
   <br>
   <%= submit_tag "Import" %>

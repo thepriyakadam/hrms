@@ -17,8 +17,11 @@ div.nobreak{ page-break-inside: avoid;
       <thead>
         <tr>
           <td colspan="7">
-          
-            <center><strong><%= @employee.company_location.company.try(:description)%></strong><%= @employee.company_location.try(:address)%> - <%= @employee.company_location.try(:name)%></center>
+           <% if current_user.company_location.company.company_logo == nil %>
+          <% else %>
+          <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
+        <%end%>
+      <center><strong><%= @employee.company_location.company.try(:description)%></strong><br></center><center><%= @employee.company_location.try(:address)%> - <%= @employee.company_location.try(:name)%></center>
           </td>           
         </tr>
         <tr>

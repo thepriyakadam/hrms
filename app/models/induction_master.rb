@@ -2,7 +2,7 @@ class InductionMaster < ActiveRecord::Base
 	has_many :induction_activities
 	has_many :induction_details
 	validates :code, presence: true, uniqueness: { case_sensitive: false }
-	validates :description, presence: true
+	validates :description, presence: true 
 	has_attached_file :avatar,
    :path => "attachments/attach_induction/:basename.:extension"
 	

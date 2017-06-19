@@ -1524,6 +1524,60 @@ class EmployeeAttendancesController < ApplicationController
 #       end
 #     end
 # end
+def upload
+   file = params[:file]
+  if file.nil?
+    flash[:alert] = "Please Select File!"
+  redirect_to upload_daily_attendance_employee_attendances_path
+  else
+  DailyAttendance.import(params[:file])
+  redirect_to upload_daily_attendance_employee_attendances_path, notice: "File imported."
+  end
+  last_record = DailyAttendance.last
+  @daily_attendances = DailyAttendance.where(date: last_record.date)
+  @daily_attendances.each do |da|
+    first_in = DailyAttendance.where(employee_code: da.employee_code,reader_name: 'Main Door IN').first
+    last_out = DailyAttendance.where(employee_code: da.employee_code,reader_name: 'Main Door Out').last
+    first_in_time = first_in.try(:time)
+    last_out_time = last_out.try(:time)
+
+    employee = Employee.find_by_manual_employee_code(da.employee_code)
+    if employee.nil?
+    else
+      if first_in_time == nil && last_out_time == nil
+        EmployeeAttendance.create(day: last_record.date,in_time: first_in_time,out_time: last_out_time,employee_id: employee.id,comment: "In & Out Time Not Available")
+      elsif first_in_time == nil
+        EmployeeAttendance.create(day: last_record.date,in_time: first_in_time,out_time: last_out_time,employee_id: employee.id,comment: "In Time Not Available")
+      elsif last_out_time == nil
+        EmployeeAttendance.create(day: last_record.date,in_time: first_in_time,out_time: last_out_time,employee_id: employee.id,comment: "Out Time Not Available")
+      else
+        EmployeeAttendance.create(day: last_record.date,in_time: first_in_time,out_time: last_out_time,employee_id: employee.id)
+      end
+    end#employee.nil?
+  end#do
+end
+
+def datewise_daily_attendance
+end
+
+def show_datewise_daily_attendance
+  date = params[:employee][:date]
+  @employee_attendances = EmployeeAttendance.where(day: date.to_date)
+end
+
+def modal_edit_daily_attendance 
+  @employee_attendance = EmployeeAttendance.find(params[:format])
+end
+
+def update_daily_attendance
+  @employee_attendance = EmployeeAttendance.find(params[:employee_attendance_id])
+  in_time = params[:employee_attendance][:in_time]
+  out_time = params[:employee_attendance][:out_time]
+  present = params[:employee_attendance][:present]
+  @employee_attendance.update(in_time: in_time,out_time: out_time,present: present)
+  flash[:notice] = "Updated Successfully!"
+  redirect_to datewise_daily_attendance_employee_attendances_path
+end
 
 def import
   file = params[:file]
@@ -1763,6 +1817,21 @@ def search_by_date
     session[:active_tab1] ="LeaveReports"
   end
 
+
+  # def create_self_attendance
+  #   @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
+  #   employee_id = params[:salary][:employee_id]
+  #   day = params[:salary][:day]
+  #   present = params[:salary][:present]
+  #   @emp = Employee.find_by(id: employee_id)
+  #   if @employee_attendance.is_present(day,employee_id)
+  #     flash[:notice] = "Already Exist"
+  #   else
+  #     EmployeeAttendance.create(employee_id: employee_id,day: day,present: present, is_confirm: false)  
+  #     flash[:notice] = "Created successfully"
+  #   end
+  # end
+  
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_employee_attendance

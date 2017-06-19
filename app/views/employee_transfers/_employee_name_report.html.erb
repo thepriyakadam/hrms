@@ -5,13 +5,13 @@
 
   <thead>
    <tr><td colspan="5">
-   <% if @employee.company_location.company.company_logo == nil %>
+   <% if @employee.try(:company_location).try(:company).try(:company_logo) == nil %>
       <% else %>
-        <center> <%= image_tag @employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+        <center> <%= image_tag @employee.try(:company_location).try(:company).try(:company_logo).url, :size => "90x50" %></center>
         <%end%>
-   <center><strong><%= @employee.company_location.company.try(:description) %></strong> <br>
-        <%= @employee.company_location.company.try(:address) %><br>  <%= @employee.department.try(:name) %> -
-        <%= @employee.company_location.try(:name) %></center> 
+   <center><strong><%= @employee.try(:company_location).try(:company).try(:description) %></strong> <br>
+        <%= @employee.try(:company_location).try(:company).try(:address) %><br>  <%= @employee.try(:department).try(:name) %> -
+        <%= @employee.try(:company_location).try(:name) %></center> 
 
         </td></tr>
 

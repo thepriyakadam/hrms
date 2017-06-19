@@ -49,7 +49,7 @@
            
           <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
           <% @deducted_salaryslip_items.each do |item| %>
-              <% if item.other_component_name == "PF" %>
+              <% if item.other_component_name == "Provident Fund" %>
                <td><%= item.calculated_amount.round %></td>
             <% end %>
              

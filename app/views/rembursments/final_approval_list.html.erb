@@ -29,7 +29,7 @@
             <td><%= rembursment.rembursment_date %></td>
             <td><%= rembursment.amount %></td>
             <td>
-              <%= link_to 'Approve / Reject',rembursment_confirmation_rembursments_path(rembursment_id: rembursment.id),class: 'btn btn-sm btn-primary' %>
+              <%= link_to 'Approve / Reject',approval_detail_rembursments_path(rembursment_id: rembursment.id),class: 'btn btn-sm btn-primary' %>
             </td>
           </tr>
         <% end %>

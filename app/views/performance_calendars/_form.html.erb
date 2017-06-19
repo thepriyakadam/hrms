@@ -13,7 +13,7 @@
     </div>
 
     <div class="col-sm-3">
-      <label>Start Date: </label>
+      <label>Start Date </label>
       <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
@@ -25,7 +25,7 @@
     </div>
 
     <div class="col-sm-3">
-      <label>End Date: </label>
+      <label>End Date </label>
       <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
@@ -49,13 +49,23 @@
 
 <script type="text/javascript">
   $(function(){
-    $('.birth_date').datepicker({
+    $('.birth_date1').datepicker({
     changeYear:true,
     changeMonth: true,
     yearRange: '-200:+1',
     dateFormat: 'dd-mm-yy' });
   }); 
 </script>
+<script type="text/javascript">
+  $(function(){
+    $('.birth_date1').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+
 
 <script>
 $("#performance_calendar").validate({

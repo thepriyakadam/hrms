@@ -159,23 +159,19 @@
             <table id="example1" class="table no-margin">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Document</th>
+              <th>Policy Type</th>
+
+                <th>Action</th>
               </tr>
             </thead>
 
             <tbody>
               <% @company_policies.each do |company_policy| %>
               <tr>
-                <td><%= company_policy.name %></td>
-                <td><%= company_policy.description %></td>
-                <td>
-                   <% if company_policy.document_file_name == nil %>
-                   <small class="label label-default">Not Available</small>
-                     <% else %>
-                     <%= link_to '',download_docs_path(id: company_policy.id),class: 'btn btn-xs btn btn-primary fa fa-download',:target => "_blank" %>
-                     <% end %>
+              <td><%= company_policy.policy_type.try(:name) %></td>
+    
+                  <td>
+                     <%= link_to '', policy_type_detail_company_policies_path(company_policy_id: company_policy.id) ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
                   </td>
                 </tr>
                 <% end %>

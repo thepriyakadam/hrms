@@ -2,6 +2,13 @@
    <%= bootstrap_form_for(@company_policy,html: {id: 'company_policy'},remote:true) do |f| %>
    <%= hidden_field_tag :authenticity_token, form_authenticity_token %> 
         <div class="row">
+
+         <div class="col-sm-3">
+            <div class="form-group required">
+             <%= f.select :policy_type_id,all_policy_type,{label: "Policy Type",include_blank: 'Select Policy Type'} %>
+            </div>
+          </div>
+
           <div class="col-sm-3">
             <div class="form-group required">
              <%= f.text_field :name,label: "Policy Name" %>
@@ -27,7 +34,12 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-3">
+   
+    </div>
+        <br>
+        <div class="row">
+
+ <div class="col-sm-3">
          <div class="col-sm-1">
       <label>Status </label>
       <div class="field">
@@ -36,9 +48,7 @@
     </div>
     </div>
    
-    </div>
-        <br>
-        <div class="row">
+
         <div class="col-sm-6">
             <div class="field">
               <%= f.text_area :description,label: 'Description' %>
@@ -90,14 +100,20 @@ $("#company_policy").validate({
       },
       "company_policy[document]":{
         required: true,
+        },
+      "company_policy[policy_type]":{
+        required: true,
       }
     },
     messages: {
       "company_policy[name]":{
         required: "Please Specify Name",
       },
-      "circular[document]":{
+      "company_policy[document]":{
         required: "Please Select Document",
+         },
+      "company_policy[policy_type]":{
+        required: "Please Select Policy Type",
       }
       
     },

@@ -80,20 +80,17 @@
         <Cell ss:Index="57"><Data ss:Type="String">Present Days</Data></Cell>
         <Cell ss:Index="58"><Data ss:Type="String">Weekoff</Data></Cell>
 
-        <Cell ss:Index="59"><Data ss:Type="String">CL</Data></Cell>
-        <Cell ss:Index="60"><Data ss:Type="String">EL</Data></Cell>
-        <Cell ss:Index="61"><Data ss:Type="String">Coff</Data></Cell>
-        <Cell ss:Index="62"><Data ss:Type="String">Advance</Data></Cell>
-        <Cell ss:Index="63"><Data ss:Type="String">OD</Data></Cell>
-        <Cell ss:Index="64"><Data ss:Type="String">ESIC LEAVE</Data></Cell>
+        <Cell ss:Index="59"><Data ss:Type="String">Pay Leave</Data></Cell>
+        <Cell ss:Index="60"><Data ss:Type="String">Non Pay Leave</Data></Cell>
+     
 
-        <Cell ss:Index="65"><Data ss:Type="String">Holiday</Data></Cell>
+        <Cell ss:Index="61"><Data ss:Type="String">Holiday</Data></Cell>
         
-        <Cell ss:Index="66"><Data ss:Type="String">Absent Days</Data></Cell>
-        <Cell ss:Index="67"><Data ss:Type="String">Payable Days</Data></Cell>
-        <Cell ss:Index="68"><Data ss:Type="String">Location</Data></Cell>
-         <Cell ss:Index="69"><Data ss:Type="String">Slip iD</Data></Cell>
-          <Cell ss:Index="70"><Data ss:Type="String">Slip iD</Data></Cell>
+        <Cell ss:Index="62"><Data ss:Type="String">Absent Days</Data></Cell>
+        <Cell ss:Index="63"><Data ss:Type="String">Payable Days</Data></Cell>
+        <Cell ss:Index="64"><Data ss:Type="String">Location</Data></Cell>
+         <Cell ss:Index="65"><Data ss:Type="String">Slip iD</Data></Cell>
+          <Cell ss:Index="66"><Data ss:Type="String">Slip iD</Data></Cell>
 
 
       </Row>
@@ -226,18 +223,14 @@
           <Cell ss:Index="57"><Data ss:Type="Number"><%= workingday.present_day %></Data></Cell>
          
           <Cell ss:Index="58"><Data ss:Type="Number"><%= workingday.week_off_day %></Data></Cell>
-          <Cell ss:Index="59"><Data ss:Type="Number"><%= workingday.cl_leave %></Data></Cell>
-          <Cell ss:Index="60"><Data ss:Type="Number"><%= workingday.el_leave %></Data></Cell>
-          <Cell ss:Index="61"><Data ss:Type="Number"><%= workingday.coff_leave %></Data></Cell>
-          <Cell ss:Index="62"><Data ss:Type="Number"><%= workingday.advance_leave %></Data></Cell>
-           <Cell ss:Index="63"><Data ss:Type="Number"><%= workingday.od_leave %></Data></Cell>
-          <Cell ss:Index="64"><Data ss:Type="Number"><%= workingday.esic_leave %></Data></Cell>
-          <Cell ss:Index="65"><Data ss:Type="Number"><%= workingday.holiday_in_month %></Data></Cell>
-          <Cell ss:Index="66"><Data ss:Type="Number"><%= workingday.absent_day %></Data></Cell>
-          <Cell ss:Index="67"><Data ss:Type="Number"><%= workingday.payable_day %></Data></Cell>
-          <Cell ss:Index="68"><Data ss:Type="String"><%= employee.company_location.name %></Data></Cell>
-             <Cell ss:Index="69"><Data ss:Type="String"><%= slip.id %></Data></Cell>
-             <Cell ss:Index="70"><Data ss:Type="String"><%= slip.employee_id %></Data></Cell>
+          <Cell ss:Index="59"><Data ss:Type="Number"><%= workingday.pay_leave %></Data></Cell>
+          <Cell ss:Index="60"><Data ss:Type="Number"><%= workingday.nonpay_leave %></Data></Cell>
+          <Cell ss:Index="61"><Data ss:Type="Number"><%= workingday.holiday_in_month %></Data></Cell>
+          <Cell ss:Index="62"><Data ss:Type="Number"><%= workingday.absent_day %></Data></Cell>
+          <Cell ss:Index="63"><Data ss:Type="Number"><%= workingday.payable_day %></Data></Cell>
+          <Cell ss:Index="64"><Data ss:Type="String"><%= employee.company_location.name %></Data></Cell>
+             <Cell ss:Index="65"><Data ss:Type="String"><%= slip.id %></Data></Cell>
+             <Cell ss:Index="66"><Data ss:Type="String"><%= slip.employee_id %></Data></Cell>
         </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

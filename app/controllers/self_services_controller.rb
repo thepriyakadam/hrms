@@ -74,7 +74,8 @@ class SelfServicesController < ApplicationController
     @from = params[:employee][:from]
     @to = params[:employee][:to]
     @employee_id = params[:employee][:employee_id]
-    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id)
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day")
+
   end
 
   def investment_declaration
@@ -108,7 +109,7 @@ class SelfServicesController < ApplicationController
   def leave_c_off
     session[:active_tab] ="EmployeeSelfService"
     @leave_c_off = LeaveCOff.new
-    @leave_c_offs = LeaveCOff.where(employee_id: current_user.employee_id)
+    @leave_c_offs = LeaveCOff.where(employee_id: current_user.employee_id).order("id DESC")
   end
 
   def create_self_c_off
@@ -188,7 +189,32 @@ class SelfServicesController < ApplicationController
     redirect_to employee_rembursment_self_services_path
   end
 
+  def add_attendance
+    @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id)
+  end
+
+  def create_self_attendance
+    # @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
+    employee_id = params[:salary][:employee_id]
+    day = params[:salary][:day]
+    present = params[:salary][:present]
+    @emp = Employee.find_by(id: employee_id)
+    # if @employee_attendance.is_present(day,employee_id)
+    #   flash[:notice] = "Already Exist"
+    # else
+      @emp_atten = EmployeeAttendance.create(employee_id: employee_id,day: day,present: present, is_confirm: false)  
+      if @emp_atten.save
+        flash[:notice] = "Created successfully"
+      else
+        flash[:alert] = "Already Exist"
+      end
+    # end
+    redirect_to add_attendance_self_services_path
+  end
+
   def leave_c_off_params
     params.require(:leave_c_off).permit(:is_expire,:employee_id, :c_off_date, :c_off_type, :c_off_expire_day, :expiry_status, :expiry_date, :leave_count)
   end
+ 
+
 end

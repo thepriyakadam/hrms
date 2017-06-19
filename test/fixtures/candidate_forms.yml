@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  vacancy_request_id: 
+  name: MyString
+  qualification_id: 
+  skill_set: MyString
+  contact_no: 1
+  email: MyString
+  candidate_type: MyString
+  experience: MyString
+  notice_period: MyString
+  selected_by_id: 
+
+two:
+  vacancy_request_id: 
+  name: MyString
+  qualification_id: 
+  skill_set: MyString
+  contact_no: 1
+  email: MyString
+  candidate_type: MyString
+  experience: MyString
+  notice_period: MyString
+  selected_by_id: 

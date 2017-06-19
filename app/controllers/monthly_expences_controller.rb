@@ -137,6 +137,7 @@ class MonthlyExpencesController < ApplicationController
   end
 
   def dynamic_report
+    # byebug
     @month = params[:food_deduction][:month]
     @year = params[:food_deduction][:year]
     @company = params[:food_deduction][:company_id]

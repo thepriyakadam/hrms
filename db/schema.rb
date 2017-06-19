@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170619045528) do
+ActiveRecord::Schema.define(version: 20170619093726) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -327,6 +327,22 @@ ActiveRecord::Schema.define(version: 20170619045528) do
   add_index "candidate_forms", ["degree_id"], name: "index_candidate_forms_on_degree_id", using: :btree
   add_index "candidate_forms", ["qualification_id"], name: "index_candidate_forms_on_qualification_id", using: :btree
   add_index "candidate_forms", ["vacancy_request_id"], name: "index_candidate_forms_on_vacancy_request_id", using: :btree
+
+  create_table "candidate_interview_schedules", force: :cascade do |t|
+    t.integer  "candidate_form_id",        limit: 4
+    t.integer  "interviewer_id",           limit: 4
+    t.integer  "interview_type_master_id", limit: 4
+    t.date     "date"
+    t.time     "time"
+    t.string   "place",                    limit: 255
+    t.text     "address",                  limit: 65535
+    t.text     "description",              limit: 65535
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
+  add_index "candidate_interview_schedules", ["candidate_form_id"], name: "index_candidate_interview_schedules_on_candidate_form_id", using: :btree
+  add_index "candidate_interview_schedules", ["interview_type_master_id"], name: "index_candidate_interview_schedules_on_interview_type_master_id", using: :btree
 
   create_table "capture_resumes", force: :cascade do |t|
     t.string   "name_of_candidate",           limit: 255
@@ -2111,6 +2127,14 @@ ActiveRecord::Schema.define(version: 20170619045528) do
 
   add_index "interview_schedules", ["employee_id"], name: "index_interview_schedules_on_employee_id", using: :btree
   add_index "interview_schedules", ["selected_resume_id"], name: "index_interview_schedules_on_selected_resume_id", using: :btree
+
+  create_table "interview_type_masters", force: :cascade do |t|
+    t.string   "code",        limit: 255
+    t.string   "name",        limit: 255
+    t.text     "description", limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
 
   create_table "interview_types", force: :cascade do |t|
     t.integer  "code",        limit: 4
@@ -4220,6 +4244,8 @@ ActiveRecord::Schema.define(version: 20170619045528) do
   add_foreign_key "candidate_forms", "degrees"
   add_foreign_key "candidate_forms", "qualifications"
   add_foreign_key "candidate_forms", "vacancy_requests"
+  add_foreign_key "candidate_interview_schedules", "candidate_forms"
+  add_foreign_key "candidate_interview_schedules", "interview_type_masters"
   add_foreign_key "company_policies", "policy_types"
   add_foreign_key "employee_jc_lists", "employees"
   add_foreign_key "employee_jc_lists", "joining_checklist_masters"

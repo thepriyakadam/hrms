@@ -3,6 +3,7 @@ class CandidateForm < ActiveRecord::Base
   belongs_to :qualification
   belongs_to :degree
   belongs_to :selected_by,class_name: 'Employee'
+  has_many :candidate_interview_schedules
 
   has_attached_file :document1, :path => "attachments/attach_resume/:basename.:extension"
 

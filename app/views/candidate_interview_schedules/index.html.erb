@@ -1,0 +1,58 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Interview Schedule</h3>
+    <div class="pull-right">
+    </div>
+  </div>
+
+  <div class="box-body">
+
+<table id="example6" class="table table-bordered table-hover table-condensed'">
+  <thead>
+    <tr>
+      <th>Candidate Name</th>
+      <th>Contact no</th>
+      <th>Email</th>
+      <th>Qualification</th>
+      <th>Selected by</th>
+      <th>Download Resume</th>
+      <th>Download Photo</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @candidate_forms.each do |candidate_form| %>
+      <tr>
+        <td><%= candidate_form.name %></td>
+        <td><%= candidate_form.contact_no %></td>
+        <td><%= candidate_form.email %></td>
+        <td><%= candidate_form.degree.try(:name) %></td>
+        <td><%= full_name(candidate_form.selected_by) %></td>
+         <td>
+         <% if candidate_form.document1_file_name == nil %>
+           <small class="label label-default">Not Available</small>
+             <% else %>
+             <center><%= link_to '',document_1_path(id: candidate_form.id),class: 'btn btn-xs fa fa-download' %>
+             <% end %>
+             </center>
+        </td>
+        <td>
+          <% if candidate_form.document2_file_name == nil %>
+              <small class="label label-default">Not Available</small>
+              <% else %>
+              <center><%= link_to '',document_2_path(id: candidate_form.id),class: 'btn btn-xs fa fa-picture-o' %></center>
+              <% end %>
+        </td>
+    <td> 
+    <% if @candidate_form_id == nil %>
+    <%= link_to 'Schedule Interview',new_candidate_interview_schedule_path(candidate_form_id: candidate_form.id),class: 'btn btn-sm btn-primary' %> </td>
+    <% else %>
+     <center><small class="label label-success">Interview Scheduled</small></center>
+     <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>

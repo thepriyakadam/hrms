@@ -15,6 +15,8 @@ class CandidateFormsController < ApplicationController
   # GET /candidate_forms/new
   def new
     @candidate_form = CandidateForm.new
+    @vacancy_request = VacancyRequest.find(params[:vacancy_request])
+     # @candidate_forms = CandidateForm.where(vacancy_request_id: @vacancy_request.id)
   end
 
   # GET /candidate_forms/1/edit
@@ -24,11 +26,10 @@ class CandidateFormsController < ApplicationController
   # POST /candidate_forms
   # POST /candidate_forms.json
   def create
-      byebug
+      # byebug
     @candidate_form = CandidateForm.new(candidate_form_params)
-    # @vacancy_request = params[:candidate_form][:vacancy_request_id]
     @vacancy_request = VacancyRequest.find(@candidate_form.vacancy_request_id)
-    @candidate_forms = CandidateForm.where(vacancy_request_id: @vacancy_request)
+    @candidate_forms = CandidateForm.where(vacancy_request_id: @vacancy_request.id)
 
     respond_to do |format|
       if @candidate_form.save

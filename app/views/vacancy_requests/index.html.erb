@@ -56,7 +56,7 @@
           <td>
             <% if vacancy_request.current_status == "Pending" %>
               <%= link_to '', vacancy_request,class: 'btn btn-xs btn-default fa fa-eye' %>
-              <!-- <= link_to '', cancel_vacancy_requests_path(vacancy_request),class: 'btn btn-xs btn-danger fa fa-trash-o' %> -->
+               <!-- <= link_to '', cancel_vacancy_requests_path(vacancy_request),class: 'btn btn-xs btn-danger fa fa-trash-o' %> -->
             <% else %>
             <%= link_to '', vacancy_request,class: 'btn btn-xs btn-default fa fa-eye' %>
             <% end %>

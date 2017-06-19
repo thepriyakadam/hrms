@@ -46,10 +46,11 @@
         </td>
     <td> 
     <% if @candidate_form_id == nil %>
-    <%= link_to 'Schedule Interview',new_candidate_interview_schedule_path(candidate_form_id: candidate_form.id),class: 'btn btn-sm btn-primary' %> </td>
+    <%= link_to 'Schedule Interview',new_candidate_interview_schedule_path(candidate_form_id: candidate_form.id),class: 'btn btn-sm btn-primary' %> 
     <% else %>
      <center><small class="label label-success">Interview Scheduled</small></center>
      <% end %>
+     </td>
       </tr>
     <% end %>
   </tbody>

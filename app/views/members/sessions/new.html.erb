@@ -3,13 +3,12 @@
 </header> -->
 
 <div class="login-box">
- 
   <div class="login-logo">
-  <%= image_tag "SGA_New Logo.png",size: "200x200" %>
+  <%= image_tag "SGA_New Logo.png",size: "120x120" %>
   </div><!-- /.login-logo -->
-  <p><center><strong>Welcome to HRMS</strong></center></p>
+  <p><center><strong>Welcome to HCM</strong></center></p>
   <div class="login-box-body">
-    <p class="login-box-msg"><center> Login in to HRMS-ONE</center></p>
+    <p class="login-box-msg"><center> Login in to HCM-ZONE</center></p>
     <br>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="form-group has-feedback">
@@ -31,16 +30,14 @@
             </label>
           </div> 
           <%= f.submit 'SIGN IN' ,data: { disable_with: "Logging in..."}, class: "btn btn-block btn-social btn-github" %>
-  
-
       <div class="social-auth-links text-center"><br>
         <!-- <p>- OR -</p> -->
-        <a href="#" class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i> </a>
-        <a href="#" class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"></i> </a>
-        <a href="#" class="btn btn-social-icon btn-linkedin"><i class="fa fa-linkedin"></i> </a>
-        <a href="#" class="btn btn-social-icon btn-instagram"><i class="fa fa-instagram"></i> </a>
+        <a target="_blank" href="https://www.facebook.com/SGAnalytics" class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i> </a>
+        <a target="_blank" href="https://twitter.com/search?q=sg%20analytics&src=typd" class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"></i> </a>
+        <a target="_blank" href="https://www.linkedin.com/company/523808/" class="btn btn-social-icon btn-linkedin"><i class="fa fa-linkedin"></i> </a>
+        <a target="_blank" href="https://plus.google.com/+sganalytics" class="btn btn-social-icon btn-google"><i class="fa fa-google"></i> </a>
+        <a target="_blank" href="https://www.instagram.com/sganalytics/?hl=en" class="btn btn-social-icon btn-instagram"><i class="fa fa-instagram"></i> </a>
       </div> <!-- /.social-auth-links-->
-
      <!--  <= render "members/shared/links" %> -->
     <% end %>  
   </div><!-- /.login-box-body -->

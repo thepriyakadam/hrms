@@ -13,6 +13,7 @@
       <th>Candidate Name</th>
       <th>Contact no</th>
       <th>Email</th>
+      <th>Qualification</th>
       <th>Selected by</th>
       <th>Download Resume</th>
       <th>Download Photo</th>
@@ -26,6 +27,7 @@
         <td><%= candidate_form.name %></td>
         <td><%= candidate_form.contact_no %></td>
         <td><%= candidate_form.email %></td>
+        <td><%= candidate_form.degree.try(:name) %></td>
         <td><%= full_name(candidate_form.selected_by) %></td>
          <td>
          <% if candidate_form.document1_file_name == nil %>

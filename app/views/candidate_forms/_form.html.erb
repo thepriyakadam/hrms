@@ -3,7 +3,8 @@
     <h3 class="box-title">Candidate Form</h3>
   </div>
   <div class="box-body">
-<%= bootstrap_form_for(@candidate_form,html: {id: 'candidate_form'},vacancy_request_id: @vacancy_request) do |f| %>
+<%= bootstrap_form_for(@candidate_form,html: {id: 'candidate_form'},vacancy_request_id: @vacancy_request.id) do |f| %>
+ <%= f.hidden_field :vacancy_request_id,value:@vacancy_request.id  %> 
 
 <div class="row">
   <div class="col-sm-3">
@@ -14,7 +15,7 @@
 
   <div class="col-sm-3">
     <div class="field">
-      <%= f.select :qualification_id,all_degree,{include_blank: 'Select Qualification',label: 'Select Qualification'} %>
+      <%= f.select :degree_id,all_degree,{include_blank: 'Select Qualification',label: 'Select Qualification'} %>
     </div>
   </div>
 

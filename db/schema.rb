@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170617122323) do
+ActiveRecord::Schema.define(version: 20170619045528) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -321,8 +321,10 @@ ActiveRecord::Schema.define(version: 20170617122323) do
     t.string   "document2_content_type", limit: 255
     t.integer  "document2_file_size",    limit: 4
     t.datetime "document2_updated_at"
+    t.integer  "degree_id",              limit: 4
   end
 
+  add_index "candidate_forms", ["degree_id"], name: "index_candidate_forms_on_degree_id", using: :btree
   add_index "candidate_forms", ["qualification_id"], name: "index_candidate_forms_on_qualification_id", using: :btree
   add_index "candidate_forms", ["vacancy_request_id"], name: "index_candidate_forms_on_vacancy_request_id", using: :btree
 
@@ -4215,6 +4217,7 @@ ActiveRecord::Schema.define(version: 20170617122323) do
     t.boolean  "is_confirm"
   end
 
+  add_foreign_key "candidate_forms", "degrees"
   add_foreign_key "candidate_forms", "qualifications"
   add_foreign_key "candidate_forms", "vacancy_requests"
   add_foreign_key "company_policies", "policy_types"

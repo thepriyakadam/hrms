@@ -1524,14 +1524,20 @@ class EmployeeAttendancesController < ApplicationController
 #       end
 #     end
 # end
+
+def upload_daily_attendance
+  session[:active_tab] ="TimeManagement"
+  session[:active_tab1] ="Attendance"
+end
+
 def upload
    file = params[:file]
   if file.nil?
     flash[:alert] = "Please Select File!"
-  redirect_to upload_daily_attendance_employee_attendances_path
+    redirect_to upload_daily_attendance_employee_attendances_path
   else
-  DailyAttendance.import(params[:file])
-  redirect_to upload_daily_attendance_employee_attendances_path, notice: "File imported."
+    DailyAttendance.import(params[:file])
+    redirect_to upload_daily_attendance_employee_attendances_path, notice: "File imported."
   end
   last_record = DailyAttendance.last
   @daily_attendances = DailyAttendance.where(date: last_record.date)

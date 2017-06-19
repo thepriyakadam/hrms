@@ -3184,15 +3184,13 @@ table.text-center th {
 .login-page,
 .register-page {
   background: #d2d6de;
-  background-image: url("back1.jpg");*/
- /* background-image: url("img5.jpg");*/
-  /*  background-image: url("img4.jpg");*/
-  /*background-image: url("effectiveHR.jpg");*/
+  background-image: url("landing.jpg");
+  background-size: 100% 100%;
 }
 .login-box,
 .register-box {
   width: 360px;
-  margin: 7% auto;
+  margin: 9%;
 }
 @media (max-width: 768px) {
   .login-box,
@@ -3203,11 +3201,10 @@ table.text-center th {
 }
 .login-box-body,
 .register-box-body {
-  background: #fff;
   padding: 30px;
   border-top: 0;
   color: #666;
-  margin-top: 250px;
+  margin-top: 50px;
 }
 .login-box-body .form-control-feedback,
 .register-box-body .form-control-feedback {

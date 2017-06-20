@@ -360,41 +360,41 @@ require 'roo'
 
 #================================== DEPARTMENT ==================================#
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/department.xls")
-# ex.default_sheet = ex.sheets[1]
-# i=1
-# 2.upto(166) do |line|
-# Department.new do |ec|
-#   ec.department_code = ex.cell(line,'A')
-#   ec.company_location_id = ex.cell(line,'B').to_i
-#   ec.name = ex.cell(line,'C')
-#   ec.department_type_id = ex.cell(line,'D').to_i
-#   ec.manual_department_code = ex.cell(line,'E')
-#   ec.save!
-# end
-# puts "#{i} State inserted.-----------------------------------------------"
-# i = i+1
-# end
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/department.xls")
+ex.default_sheet = ex.sheets[0]
+i=1
+2.upto(26) do |line|
+Department.new do |ec|
+  ec.department_code = ex.cell(line,'A')
+  ec.company_location_id = ex.cell(line,'B').to_i
+  ec.name = ex.cell(line,'C')
+  ec.department_type_id = ex.cell(line,'D').to_i
+  ec.manual_department_code = ex.cell(line,'E').to_i
+  ec.save!
+end
+puts "#{i} State inserted.-----------------------------------------------"
+i = i+1
+end
 
 
-# ex = Roo::Excel.new("#{Rails.root}/public/update_dep.xls")
-# ex.default_sheet = ex.sheets[0] #siya feb
-# i = 1
-# ActiveRecord::Base.transaction do
-# 2.upto(424) do |line| # siya Feb 2016
-#  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-#  puts "#{i} Record inserting.----------------------------"
+ex = Roo::Excel.new("#{Rails.root}/public/update_dep.xls")
+ex.default_sheet = ex.sheets[0] #siya feb
+i = 1
+ActiveRecord::Base.transaction do
+2.upto(424) do |line| # siya Feb 2016
+ puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+ puts "#{i} Record inserting.----------------------------"
 
 
-#   @type2 = Department.find_by_name(ex.cell(line,'B'))
-#  Employee.where(id: @employee).update_all(department_id: @type2.id)
-#  # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
-#  puts "#{i} Record inserted.-----------------------------------------------"
-#  i += 1
-#  end
-#  end
+  @type2 = Department.find_by_name(ex.cell(line,'B'))
+ Employee.where(id: @employee).update_all(department_id: @type2.id)
+ # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
+ puts "#{i} Record inserted.-----------------------------------------------"
+ i += 1
+ end
+ end
 
 #============================== DEPARTMENT END =====================================#
 # puts "Starting ..."
@@ -428,10 +428,10 @@ require 'roo'
 #================================ EMPLOYEE BASIC DETAIL START =========================
 
 # puts "Starting ..."
+
 # ex = Roo::Excel.new("#{Rails.root}/public/employee_span_pump.xls")
 # ex.default_sheet = ex.sheets[0] 
 # i=1
-
 # 2.upto(168) do |line|
 # Employee.new do |e|
 #   e.manual_employee_code = ex.cell(line,'A')

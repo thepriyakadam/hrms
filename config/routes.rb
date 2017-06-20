@@ -654,6 +654,10 @@ end
       get :modal_edit_daily_attendance
       post :update_daily_attendance
       post :create_self_attendance
+      get :daily_attendance_datewise
+      post :show_daily_attendance_datewise
+      get :select_date_and_employee
+      post :date_and_employeewise_attendance
     end
   end
   resources :salary_comp_mappings

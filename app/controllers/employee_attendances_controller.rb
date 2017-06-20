@@ -1563,7 +1563,29 @@ def upload
   end#do
 end
 
+def select_date_and_employee
+end
+
+def date_and_employeewise_attendance
+  from = params[:employee][:from]
+  to = params[:employee][:to]
+  employee_id = params[:employee][:employee_id]
+  @employee_attendances = EmployeeAttendance.where(employee_id: employee_id,day: from.to_date..to.to_date)
+end
+
+def daily_attendance_datewise
+  session[:active_tab] ="TimeManagement"
+  session[:active_tab1] ="Attendance"
+end
+
+def show_daily_attendance_datewise
+  date = params[:employee][:date]
+  @daily_attendances = DailyAttendance.where(date: date.to_date)
+end
+
 def datewise_daily_attendance
+  session[:active_tab] ="TimeManagement"
+  session[:active_tab1] ="Attendance"
 end
 
 def show_datewise_daily_attendance

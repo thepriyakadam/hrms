@@ -5,6 +5,7 @@ class VacancyRequestsController < ApplicationController
   # GET /vacancy_requests.json
   def index
     @vacancy_requests = VacancyRequest.all
+    session[:active_tab] = "VacancyRequest"
   end
 
   # GET /vacancy_requests/1
@@ -15,6 +16,7 @@ class VacancyRequestsController < ApplicationController
   # GET /vacancy_requests/new
   def new
     @vacancy_request = VacancyRequest.new
+    session[:active_tab] = "VacancyRequest"
   end
 
   # GET /vacancy_requests/1/edit
@@ -71,6 +73,7 @@ class VacancyRequestsController < ApplicationController
     indirect_subordinate = current_login.indirect_subordinates.pluck(:id)
     @vacancy_request_pending = VacancyRequest.where(approval_by_id: subordinate).where("current_status = ? || current_status = ?","Pending","Approved & Send Next")
     @vacancy_request_first_approved = VacancyRequest.where(request_by_id: indirect_subordinate).where("current_status = ? ","FirstApproved")
+    session[:active_tab] = "VacancyRequest"
   end
 
   def approval_detail
@@ -127,6 +130,7 @@ class VacancyRequestsController < ApplicationController
 
   def final_approval_list
     @vacancy_requests = VacancyRequest.where(current_status: "Approved")
+    session[:active_tab] = "VacancyRequest"
   end
 
   def final_approve
@@ -139,6 +143,7 @@ class VacancyRequestsController < ApplicationController
 
   def admin_approval
     @vacancy_requests = VacancyRequest.where.not(current_status: "FinalApproved")
+    session[:active_tab] = "VacancyRequest"
   end
 
   def admin_approval_detail
@@ -148,9 +153,8 @@ class VacancyRequestsController < ApplicationController
   end
 
   def select_candidate
-
     @vacancy_requests = VacancyRequest.where(current_status: "FinalApproved")
-
+    session[:active_tab] = "VacancyRequest"
   end
 
   private

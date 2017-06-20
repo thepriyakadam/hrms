@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-sm-3">
      <div class="form-group required">
-          <%= f.select :interviewer_id, all_active_employee_with_code, {include_blank: "Select Interviewer ",label: "Interviewer "},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1",onchange:"var a={id:$(this).val()}; $.get('/employee_resignations/display_notice_period',a,function(response){});"}%>    
+           <%= f.select :interviewer_id, all_active_employee_with_code, {include_blank: "Select Interviewer",label: "Select Interviewer"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>  
           </div>
   </div>
 
@@ -33,17 +33,7 @@
   </div>
 </div>
 
-<div class="col-sm-3">
-    <div class="field">
-      <%= f.text_field :place, label: 'Place' %>
-    </div>
-  </div>
-  </div>
-
-  <div class="row">
-
-
- <div class="col-sm-2">
+<div class="col-sm-2">
       <div class="bootstrap-timepicker">
         <div class="form-group">
           <label>Interview Time</label>
@@ -56,21 +46,34 @@
         </div><!-- /.form group -->
       </div>
     </div>
+    </div>
 
 
-  
-   <div class="col-sm-6">
+
+  <div class="row">
+
+<div class="col-sm-3">
+    <div class="form-group required">
+      <%= f.text_field :place, label: 'Place' %>
+    </div>
+  </div>
+
+ 
+   <div class="col-sm-8">
     <div class="field">
       <%= f.text_field :address, label: 'Address' %>
     </div>
   </div>
+  </div>
+
+  <div class="row">
  
   <div class="col-sm-5">
     <div class="field">
       <%= f.text_area :description, label: 'Description' %>
     </div>
   </div>
-  </div>
+
   <div class="col-sm-3">
   <label></label>
     <div class="actions">
@@ -80,9 +83,9 @@
   </div>
 </div>
 
-</div>
-</div>
 <% end %>
+</div>
+</div>
 
 <script type="text/javascript">
   $(function(){
@@ -109,7 +112,7 @@ $("#candidate_interview_schedule").validate({
       "candidate_interview_schedule[time]":{
         required: true,
          },
-      "candidate_interview_schedule[address]":{
+      "candidate_interview_schedule[place]":{
         required: true,
          }
     },
@@ -126,8 +129,8 @@ $("#candidate_interview_schedule").validate({
       "candidate_interview_schedule[time]":{
         required: "Please Select time",
          },
-      "candidate_interview_schedule[address]":{
-        required: "Please specify address",
+      "candidate_interview_schedule[place]":{
+        required: "Please specify place",
          }
       
     },

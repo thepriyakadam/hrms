@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
-  resources :candidate_interview_schedules
+  resources :candidate_interview_schedules do
+    collection do
+      get :interview
+    end
+  end
   resources :interview_type_masters
   resources :interview_types
   resources :candidate_forms

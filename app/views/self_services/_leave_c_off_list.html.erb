@@ -5,6 +5,10 @@
       <th>Sr. No</th>
     	<th>Date</th>
     	<th>C.Off </th>
+      <th>Expiry Date </th>
+      <th>Expired </th>
+      <th>Taken </th>
+      <th>Taken Date </th>
     	<th>Action</th>
    </tr>
   </thead>
@@ -15,6 +19,10 @@
         <td><%= i = i + 1 %></td>
         <td><%= leave_c_off.c_off_date %></td>
         <td><%= leave_c_off.leave_count %></td>
+        <td><%= leave_c_off.expiry_date %></td>
+        <td><%= leave_c_off.is_expire ? "Yes" : "No" %></td>
+        <td><%= leave_c_off.is_taken ? "Yes" : "No" %></td>
+        <td><%= leave_c_off.taken_date %></td>
         <td>
          <% if leave_c_off.current_status == "Pending" %>
                   <small class="label label-primary">Pending</small>

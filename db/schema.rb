@@ -651,6 +651,20 @@ ActiveRecord::Schema.define(version: 20170619093726) do
     t.string   "base_component", limit: 255
   end
 
+  create_table "daily_attendances", force: :cascade do |t|
+    t.string   "sr_no",         limit: 255
+    t.date     "date"
+    t.time     "time"
+    t.string   "employee_code", limit: 255
+    t.string   "card_no",       limit: 255
+    t.string   "employee_name", limit: 255
+    t.string   "controller",    limit: 255
+    t.string   "reader_name",   limit: 255
+    t.string   "access_status", limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
   create_table "daily_bill_detail_histories", force: :cascade do |t|
     t.integer  "daily_bill_detail_id",   limit: 4
     t.integer  "travel_expence_type_id", limit: 4
@@ -950,6 +964,7 @@ ActiveRecord::Schema.define(version: 20170619093726) do
     t.integer  "on_duty_request_id",       limit: 4
     t.integer  "employee_code",            limit: 4
     t.string   "employee_name",            limit: 255
+    t.string   "comment",                  limit: 255
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id", using: :btree
@@ -2471,6 +2486,7 @@ ActiveRecord::Schema.define(version: 20170619093726) do
     t.boolean  "is_expire"
     t.boolean  "status"
     t.string   "current_status",   limit: 255
+    t.date     "taken_date"
   end
 
   add_index "leave_c_offs", ["employee_id"], name: "index_leave_c_offs_on_employee_id", using: :btree
@@ -2528,12 +2544,12 @@ ActiveRecord::Schema.define(version: 20170619093726) do
   create_table "leave_records", force: :cascade do |t|
     t.date     "day"
     t.string   "status",                   limit: 255
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
+    t.datetime "created_at",                                                    null: false
+    t.datetime "updated_at",                                                    null: false
     t.integer  "employee_leav_request_id", limit: 4
     t.integer  "employee_id",              limit: 4
-    t.decimal  "count",                                precision: 10
     t.integer  "leav_category_id",         limit: 4
+    t.decimal  "count",                                precision: 15, scale: 2
   end
 
   add_index "leave_records", ["employee_id"], name: "index_leave_records_on_employee_id", using: :btree
@@ -4019,11 +4035,8 @@ ActiveRecord::Schema.define(version: 20170619093726) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.string   "auth_token",             limit: 255
-    t.string   "password_reset_token",   limit: 255
-    t.datetime "password_reset_sent_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "vacancy_masters", force: :cascade do |t|
@@ -4117,18 +4130,16 @@ ActiveRecord::Schema.define(version: 20170619093726) do
     t.date     "request_date"
     t.string   "qualification",           limit: 255
     t.text     "skill_set",               limit: 65535
-    t.integer  "designation_id",          limit: 4
+    t.integer  "employee_designation_id", limit: 4
     t.integer  "department_id",           limit: 4
     t.string   "experience",              limit: 255
     t.string   "current_status",          limit: 255
     t.string   "vacancy_type",            limit: 255
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
-    t.integer  "employee_designation_id", limit: 4
   end
 
   add_index "vacancy_requests", ["department_id"], name: "index_vacancy_requests_on_department_id", using: :btree
-  add_index "vacancy_requests", ["designation_id"], name: "index_vacancy_requests_on_designation_id", using: :btree
   add_index "vacancy_requests", ["employee_designation_id"], name: "index_vacancy_requests_on_employee_designation_id", using: :btree
 
   create_table "visitor_details", force: :cascade do |t|
@@ -4260,7 +4271,7 @@ ActiveRecord::Schema.define(version: 20170619093726) do
   add_foreign_key "reporting_master_rembursments", "rembursments"
   add_foreign_key "status_c_offs", "employees"
   add_foreign_key "status_c_offs", "leave_c_offs"
-  add_foreign_key "vacancy_request_statuses", "vacancy_requests"
+  add_foreign_key "vacancy_requests", "departments"
   add_foreign_key "vacancy_requests", "employee_designations"
   add_foreign_key "visitor_details", "authorized_bies"
   add_foreign_key "visitor_details", "meet_tos"

@@ -649,6 +649,15 @@ end
       get :datewise_report
       post :show_datewise_report
       get :show_datewise_report
+
+      post :upload
+      get :upload_daily_attendance
+      get :upload_daily_attendance_to_txt
+      get :datewise_daily_attendance
+      post :show_datewise_daily_attendance
+      get :modal_edit_daily_attendance
+      post :update_daily_attendance
+      post :create_self_attendance
     end
   end
   resources :salary_comp_mappings
@@ -1351,6 +1360,8 @@ end
       post :create_reimbursement_request
       get :employee_rembursment
       post :create_emp_rembursment
+      get :add_attendance
+      post :create_self_attendance
     end
   end
 
@@ -2009,6 +2020,7 @@ end
       get :leave_req_status_report
       post :status_wise_request
       get :status_wise_request
+      get :select_form
     end
   end
   resources :company_leavs

@@ -360,41 +360,41 @@ require 'roo'
 
 #================================== DEPARTMENT ==================================#
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/department.xls")
-# ex.default_sheet = ex.sheets[1]
-# i=1
-# 2.upto(166) do |line|
-# Department.new do |ec|
-#   ec.department_code = ex.cell(line,'A')
-#   ec.company_location_id = ex.cell(line,'B').to_i
-#   ec.name = ex.cell(line,'C')
-#   ec.department_type_id = ex.cell(line,'D').to_i
-#   ec.manual_department_code = ex.cell(line,'E')
-#   ec.save!
-# end
-# puts "#{i} State inserted.-----------------------------------------------"
-# i = i+1
-# end
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/department.xls")
+ex.default_sheet = ex.sheets[0]
+i=1
+2.upto(26) do |line|
+Department.new do |ec|
+  ec.department_code = ex.cell(line,'A')
+  ec.company_location_id = ex.cell(line,'B').to_i
+  ec.name = ex.cell(line,'C')
+  ec.department_type_id = ex.cell(line,'D').to_i
+  ec.manual_department_code = ex.cell(line,'E').to_i
+  ec.save!
+end
+puts "#{i} State inserted.-----------------------------------------------"
+i = i+1
+end
 
 
-# ex = Roo::Excel.new("#{Rails.root}/public/update_dep.xls")
-# ex.default_sheet = ex.sheets[0] #siya feb
-# i = 1
-# ActiveRecord::Base.transaction do
-# 2.upto(424) do |line| # siya Feb 2016
-#  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-#  puts "#{i} Record inserting.----------------------------"
+ex = Roo::Excel.new("#{Rails.root}/public/update_dep.xls")
+ex.default_sheet = ex.sheets[0] #siya feb
+i = 1
+ActiveRecord::Base.transaction do
+2.upto(424) do |line| # siya Feb 2016
+ puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+ puts "#{i} Record inserting.----------------------------"
 
 
-#   @type2 = Department.find_by_name(ex.cell(line,'B'))
-#  Employee.where(id: @employee).update_all(department_id: @type2.id)
-#  # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
-#  puts "#{i} Record inserted.-----------------------------------------------"
-#  i += 1
-#  end
-#  end
+  @type2 = Department.find_by_name(ex.cell(line,'B'))
+ Employee.where(id: @employee).update_all(department_id: @type2.id)
+ # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
+ puts "#{i} Record inserted.-----------------------------------------------"
+ i += 1
+ end
+ end
 
 #============================== DEPARTMENT END =====================================#
 # puts "Starting ..."
@@ -428,10 +428,10 @@ require 'roo'
 #================================ EMPLOYEE BASIC DETAIL START =========================
 
 # puts "Starting ..."
+
 # ex = Roo::Excel.new("#{Rails.root}/public/employee_span_pump.xls")
 # ex.default_sheet = ex.sheets[0] 
 # i=1
-
 # 2.upto(168) do |line|
 # Employee.new do |e|
 #   e.manual_employee_code = ex.cell(line,'A')
@@ -667,7 +667,6 @@ require 'roo'
 # ActiveRecord::Base.transaction do
 # 2.upto(168) do |line|
 #   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-<<<<<<< HEAD
 
 ex = Roo::Excel.new("#{Rails.root}/public/mdindia.xls")
 ex.default_sheet = ex.sheets[2]
@@ -679,9 +678,6 @@ ActiveRecord::Base.transaction do
 
 
 #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-=======
-#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
->>>>>>> ae5454f340add183ca8b523fd3c6b7e3623b6125
   
 #   @salary_template = SalaryTemplate.find_by_id(ex.cell(line,'B'))
 #   @salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?
@@ -753,23 +749,13 @@ ActiveRecord::Base.transaction do
 
 #       puts "Program Allowance..................Salary"
 
-<<<<<<< HEAD
-#   elsif t.salary_component.name == "Other Allowance"
-#       est.monthly_amount = ex.cell(line,'G') unless ex.cell(line,'G').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       gross_salary = gross_salary + ex.cell(line,'G').to_i
- 
 
-
-#       puts "Bonus Allowance..................Salary"
-=======
 #  elsif t.salary_component.name == "Transport Allowance"
 #       est.monthly_amount = ex.cell(line,'J') unless ex.cell(line,'J').nil?
 #       est.annual_amount = est.monthly_amount.to_i * 12
 #       gross_salary = gross_salary + ex.cell(line,'J').to_i
 
 #       puts "Transport Allowance..................Salary"
->>>>>>> ae5454f340add183ca8b523fd3c6b7e3623b6125
 
       
 #     end

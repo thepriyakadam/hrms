@@ -30,10 +30,7 @@
     $('.ajax-progress').show();
     $("#advance_salary").submit();
   })
-</script>
 
-
-<script type="text/javascript">
   $(function(){
     $('.request_date').datepicker({
     changeYear:true,
@@ -41,4 +38,21 @@
     yearRange: '-200:+1',
     dateFormat: 'dd-mm-yy' });
   }); 
+
+  $("#employee").validate({
+    rules: {
+      "employee[date]":{
+        required: true,
+      }
+       },
+    messages: {
+      "employee[date]":{
+        required: "Please Specify From Date",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
 </script>

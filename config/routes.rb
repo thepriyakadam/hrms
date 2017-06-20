@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :thoughts
   resources :candidate_interview_schedules
   resources :interview_type_masters
   resources :interview_types

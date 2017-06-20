@@ -3,7 +3,12 @@ class Members::SessionsController < Devise::SessionsController
 
   # GET /resource/sign_in
   # def new
-  #   super
+  #   @thought = Thought.find_by(date: Date.today)
+  #   if @thought.nil? 
+  #     @th = "B"
+  #   else
+  #     @th = @thought.thought
+  #   end
   # end
 
   # POST /resource/sign_in

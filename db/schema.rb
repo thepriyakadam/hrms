@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170619093726) do
+ActiveRecord::Schema.define(version: 20170620124404) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -3733,6 +3733,14 @@ ActiveRecord::Schema.define(version: 20170619093726) do
 
   add_index "texable_monthly_deductions", ["employee_id"], name: "index_texable_monthly_deductions_on_employee_id", using: :btree
   add_index "texable_monthly_deductions", ["salayslip_id"], name: "index_texable_monthly_deductions_on_salayslip_id", using: :btree
+
+  create_table "thoughts", force: :cascade do |t|
+    t.date     "date"
+    t.text     "thought",    limit: 65535
+    t.string   "thought_of", limit: 255
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "trainee_requests", force: :cascade do |t|
     t.integer  "employee_id",              limit: 4

@@ -1491,40 +1491,6 @@ class EmployeeAttendancesController < ApplicationController
     end
   end
 
-#   def from_date_wise_xls
-#     @start = params[:day]
-#     @end = params[:to_date]
-#     @present = params[:present]
-#     @employee_attendances = EmployeeAttendance.where(present: @present,day: @start.to_date..@end.to_date)
-#     respond_to do |format|
-#     format.xls {render template: 'employee_attendances/from_date_wise_xls.xls.erb'}
-#   end
-# end
-
-# def from_date_wise_pdf
-#     @start = params[:day]
-#     @end = params[:to_date]
-#     @present = params[:present]
-#     @employee_attendances = EmployeeAttendance.where(present: @present,day: @start.to_date..@end.to_date)
-
-#      respond_to do |format|
-#         format.html
-#         format.pdf do
-#         render :pdf => 'from_date_wise_pdf',
-#         layout: '/layouts/pdf.html.erb',
-#         :template => 'employee_attendances/from_date_wise_pdf.pdf.erb',
-#         :orientation      => 'Landscape', # default , Landscape
-#         :page_height      => 1000,
-#         :dpi              => '300',
-#         :margin           => {:top    => 10, # default 10 (mm)
-#                       :bottom => 10,
-#                       :left   => 20,
-#                       :right  => 20},
-#         :show_as_html => params[:debug].present?
-#       end
-#     end
-# end
-
 def upload_daily_attendance
   session[:active_tab] ="TimeManagement"
   session[:active_tab1] ="Attendance"
@@ -1541,11 +1507,20 @@ def upload
   end
   last_record = DailyAttendance.last
   @daily_attendances = DailyAttendance.where(date: last_record.date)
+
   @daily_attendances.each do |da|
-    first_in = DailyAttendance.where(employee_code: da.employee_code,reader_name: 'Main Door IN').first
-    last_out = DailyAttendance.where(employee_code: da.employee_code,reader_name: 'Main Door Out').last
+    # @first_record = DailyAttendance.where(employee_id: da.employee_code).first
+    # if @first_record.reader_name == "Main Door Out" ||  @first_record.reader_name == "Emergency Out" 
+    #   previous_date = (@first_record.date-1).strftime('%Y-%m-%d')
+    #   @emp_attendance = EmployeeAttendance.where(employee_id: da.employee_code,day: previous_date).take
+    #   @emp_attendance.update_all(out_time: @first_record.time)
+    # else
+    # end
+    first_in = DailyAttendance.where(employee_code: da.employee_code).where("reader_name = ? OR reader_name = ? ", 'Main Door IN','Emergency IN').first
+    last_out = DailyAttendance.where(employee_code: da.employee_code).where("reader_name = ? OR reader_name = ? ", 'Main Door Out','Emergency Out').last
     first_in_time = first_in.try(:time)
     last_out_time = last_out.try(:time)
+    
 
     employee = Employee.find_by_manual_employee_code(da.employee_code)
     if employee.nil?
@@ -1557,10 +1532,13 @@ def upload
       elsif last_out_time == nil
         EmployeeAttendance.create(day: last_record.date,in_time: first_in_time,out_time: last_out_time,employee_id: employee.id,comment: "Out Time Not Available")
       else
-        EmployeeAttendance.create(day: last_record.date,in_time: first_in_time,out_time: last_out_time,employee_id: employee.id)
+        total_hrs = last_out_time.to_f - first_in_time.to_f
+        working_hrs = total_hrs/3600
+        EmployeeAttendance.create(day: last_record.date,in_time: first_in_time,out_time: last_out_time,employee_id: employee.id,working_hrs: working_hrs.round(2))
       end
     end#employee.nil?
   end#do
+
 end
 
 def select_date_and_employee
@@ -1635,8 +1613,6 @@ def import_employee_attendance
 end
 
   def import_employee_attendance_to_txt
-    # @content = "Hello World"
-    # @machine_attendances = MachineAttendance.all
     @employees = Employee.all
     respond_to do |format|
     format.html

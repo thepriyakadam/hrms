@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170620124404) do
+ActiveRecord::Schema.define(version: 20170621071225) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1480,6 +1480,7 @@ ActiveRecord::Schema.define(version: 20170620124404) do
     t.integer  "passport_photo_file_size",    limit: 4
     t.datetime "passport_photo_updated_at"
     t.integer  "manager_2_id",                limit: 4
+    t.string   "optional_email",              limit: 255
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id", using: :btree
@@ -1874,6 +1875,17 @@ ActiveRecord::Schema.define(version: 20170620124404) do
     t.boolean  "is_confirm"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+  end
+
+  create_table "greetings", force: :cascade do |t|
+    t.date     "date"
+    t.string   "type",        limit: 255
+    t.integer  "sender_id",   limit: 4
+    t.integer  "receiver_id", limit: 4
+    t.text     "message",     limit: 65535
+    t.boolean  "status"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "groups", force: :cascade do |t|
@@ -2366,6 +2378,8 @@ ActiveRecord::Schema.define(version: 20170620124404) do
     t.datetime "updated_at",                                          null: false
     t.string   "ot_rate",                 limit: 255
     t.integer  "replacement_id",          limit: 4
+    t.string   "company_rfid",            limit: 255
+    t.string   "gate_rfid",               limit: 255
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id", using: :btree

@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :greetings do
+    collection do
+      get :modal_for_mail
+      post :send_mail
+    end
+  end
   resources :thoughts
   resources :candidate_interview_schedules
   resources :interview_type_masters

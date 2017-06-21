@@ -1542,6 +1542,8 @@ def upload
 end
 
 def select_date_and_employee
+  session[:active_tab] ="TimeManagement"
+  session[:active_tab1] ="Attendance"
 end
 
 def date_and_employeewise_attendance

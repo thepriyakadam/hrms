@@ -22,7 +22,7 @@
                 <td><%= fl.employee.try(:manual_employee_code) %></td>
                 <td><%= full_name(fl.employee) %></td>
                 <td>
-                  <%= link_to 'View Detail', admin_employee_history_with_current_leave_employee_leav_requests_path(fl),class: 'btn btn-sm btn-warning' %>
+                  <%= link_to 'View Detail', admin_employee_history_with_current_leave_employee_leav_requests_path(fl),class: 'btn btn-sm btn-info' %>
                 </td>
               </tr>
             <% end %>
@@ -47,7 +47,7 @@
                 <td><%= sl.employee.try(:manual_employee_code) %></td>
                 <td><%= full_name(sl.employee) %></td>
                 <td>
-                  <%= link_to 'View Detail', admin_employee_history_with_current_leave_employee_leav_requests_path(sl),class: 'btn btn-sm btn-warning' %>
+                  <%= link_to 'View Detail', admin_employee_history_with_current_leave_employee_leav_requests_path(sl),class: 'btn btn-sm btn-info' %>
                 </td>
               </tr>
             <% end %>

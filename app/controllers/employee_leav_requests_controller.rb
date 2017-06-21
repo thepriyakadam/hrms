@@ -21,7 +21,7 @@ class EmployeeLeavRequestsController < ApplicationController
     @remain_leaves = EmployeeLeavRequest.joins(:leav_approved)
     @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
 
-    leav_category = LeavCategory.find_by(name: "C.Off")
+    leav_category = LeavCategory.find_by(code: "C.Off")
     @leav_category_id = leav_category.id
     @leav_id = @leav_category_id.to_s.split('')
 
@@ -44,7 +44,7 @@ class EmployeeLeavRequestsController < ApplicationController
     @employee = Employee.find_by(id: current_user.employee_id)
     @leave_id = params[:leav_category_id]
 
-    leav_category = LeavCategory.find_by(name: "C.Off")
+    leav_category = LeavCategory.find_by(code: "C.Off")
     @leav_category_id = leav_category.id
     @leav_id = @leav_category_id.to_s.split('')
 
@@ -61,7 +61,7 @@ class EmployeeLeavRequestsController < ApplicationController
     start_date = params['employee_leav_request']['start_date']
     @start_date = params['employee_leav_request']['start_date']
     end_date = params['employee_leav_request']['end_date']
-    leav_category = LeavCategory.find_by(name: "C.Off")
+    leav_category = LeavCategory.find_by(code: "C.Off")
     @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
     @leav_category = LeavCategory.find(@employee_leav_request.leav_category_id)
     payroll_period = PayrollPeriod.where(status: true).take 

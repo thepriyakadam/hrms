@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170619093726) do
+ActiveRecord::Schema.define(version: 20170621071225) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1493,6 +1493,7 @@ ActiveRecord::Schema.define(version: 20170619093726) do
     t.datetime "passport_photo_updated_at"
     t.string   "punch_card_id",               limit: 255
     t.string   "prefix",                      limit: 255
+    t.string   "optional_email",              limit: 255
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id", using: :btree
@@ -1901,6 +1902,17 @@ ActiveRecord::Schema.define(version: 20170619093726) do
     t.boolean  "is_confirm"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+  end
+
+  create_table "greetings", force: :cascade do |t|
+    t.date     "date"
+    t.string   "type",        limit: 255
+    t.integer  "sender_id",   limit: 4
+    t.integer  "receiver_id", limit: 4
+    t.text     "message",     limit: 65535
+    t.boolean  "status"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "groups", force: :cascade do |t|
@@ -2397,6 +2409,8 @@ ActiveRecord::Schema.define(version: 20170619093726) do
     t.date     "leaving_date"
     t.integer  "replacement_id",          limit: 4
     t.boolean  "is_new",                              default: true
+    t.string   "company_rfid",            limit: 255
+    t.string   "gate_rfid",               limit: 255
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id", using: :btree
@@ -3782,6 +3796,14 @@ ActiveRecord::Schema.define(version: 20170619093726) do
 
   add_index "texable_monthly_deductions", ["employee_id"], name: "index_texable_monthly_deductions_on_employee_id", using: :btree
   add_index "texable_monthly_deductions", ["salayslip_id"], name: "index_texable_monthly_deductions_on_salayslip_id", using: :btree
+
+  create_table "thoughts", force: :cascade do |t|
+    t.date     "date"
+    t.text     "thought",    limit: 65535
+    t.string   "thought_of", limit: 255
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "trainee_requests", force: :cascade do |t|
     t.integer  "training_request_id",      limit: 4

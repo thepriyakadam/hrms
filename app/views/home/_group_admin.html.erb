@@ -159,6 +159,7 @@
             <table id="example1" class="table no-margin">
             <thead>
               <tr>
+                <th>Code</th>
                 <th>Policy</th>
                 <th>Action</th>
               </tr>
@@ -167,6 +168,7 @@
             <tbody>
               <% @company_policies.each do |company_policy| %>
               <tr>
+                <td><%= company_policy.policy_type.try(:code) %></td>
                <td><%= company_policy.policy_type.try(:name) %></td>
               
                   <td>
@@ -210,20 +212,22 @@
               <% @employees.each do |e| %>
                 <li class="item">
                   <div class="product-img">
-                  <%unless e.nil? or e.nil? or  e.member.nil? or e.member.avatar.nil? %>
-                 <% if e.gender == "Male" && e.member.avatar_file_name == nil  %>
+                  <%unless e.nil? or e.nil? or  e.employee.member.nil? or e.employee.member.avatar.nil? %>
+                 <% if e.employee.gender == "Male" && e.employee.member.avatar_file_name == nil  %>
                  <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                  <% elsif e.gender == "Female" && e.member.avatar_file_name == nil  %>
+                  <% elsif e.employee.gender == "Female" && e.employee.member.avatar_file_name == nil  %>
                   <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
                    <%else%>
-                   <%= image_tag e.member.avatar.url(:medium),class: "img-circle"%>
+                   <%= image_tag e.employee.member.avatar.url(:medium),class: "img-circle"%>
                   <%end%>
                    <%end%>
                 </div> 
                 <div class="product-info">
-                  <%= full_name(e) %>
-                 <span class="label label-primary pull-right"><i><strong>Happy Birthday</strong></i></span>
-                  <span class="users-list-date"><%= e.contact_no %></span>
+                  <%= full_name(e.employee) %>
+                 <span class="label label-primary pull-right"><i><strong>Congratulations!</strong></i></span>
+                  <span class="users-list-date"><%= e.employee.department.try(:name) %></span>
+                  
+                  <%= link_to '', modal_for_mail_greetings_path(e.employee_id),class: 'btn btn-sm btn-primary',remote:true %>
                   </div>
                 <% end %>
             </li><!-- /.item -->
@@ -231,6 +235,8 @@
           </ul>
         </div><!-- /.box-body -->
       </div><!-- /.box -->
+
+      <div id="birthday_email" class="modal fade"></div>
 
        <div class="box box-primary">
         <div class="box-header with-border">
@@ -265,6 +271,9 @@
                   <%= full_name(e) %>
                  <span class="label label-primary pull-right"><i><strong>Happy Birthday</strong></i></span>
                   <span class="users-list-date"><%= e.contact_no %></span>
+                  </div>
+                  <div>
+                  <%= link_to '', modal_for_mail_greetings_path(emp_id: e.id),class: 'btn btn-sm btn-primary',remote:true %>
                   </div>
                 <% end %>
             </li><!-- /.item -->

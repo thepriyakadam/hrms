@@ -53,23 +53,27 @@
         <td colspan="3"><%= @employee.permanent_address %></td>  
       </tr>
       <tr>
-        <th><strong>Country</strong></th>
-        <td><%= @employee.country.try(:name) %></td> 
-
-        <th><strong>State</strong></th>
-        <td><%= @employee.state.try(:name) %></td>
-      </tr>
-      <tr>
-        <th><strong>District</strong></th>
-        <td><%= @employee.district.try(:name) %></td>
-
-        <th><strong>City</strong></th>
-        <td><%= @employee.city %></td>
-      </tr>
-      <tr>
         <th><strong>Pin/Zip Code</strong></th>
         <td><%= @employee.pin_code %></td>
 
+        <th><strong>Country</strong></th>
+        <td><%= @employee.country.try(:name) %></td> 
+
+        
+      </tr>
+      <tr>
+      <th><strong>State</strong></th>
+        <td><%= @employee.state.try(:name) %></td>
+
+        <th><strong>District</strong></th>
+        <td><%= @employee.district.try(:name) %></td>
+
+      </tr>
+      <tr>
+
+        <th><strong>City</strong></th>
+        <td><%= @employee.city %></td>
+        
         <th><strong>Contact No.</strong></th>
         <td><%= @employee.contact_no %></td>
       </tr>
@@ -77,9 +81,16 @@
         <th><strong>Current Address</strong></th>
         <td colspan="3"><%= @employee.current_address %></td>
       </tr>
-      <tr>
+        <tr>
+        <th><strong>Optional Contact</strong></th>
+        <td><%= @employee.optinal_contact_no %></td>
+
         <th><strong>Email</strong></th>
         <td><%= @employee.email %></td>
+      </tr>
+      <tr>
+        <th><strong>Optional Email</strong></th>
+        <td><%= @employee.optional_email %></td>
 
         <th><strong>Religion</strong></th>
         <td><%= @employee.religion.try(:name) %></td>
@@ -107,8 +118,8 @@
       <tr>
         <th>Department</th>
         <td><%= @employee.try(:department).try(:name) %></td>
-        <th></th>
-        <td></td>
+        <th>Optional Contact No.</th>
+        <td><%= @employee.try(:optional_contact_no) %></td>
       </tr>
      
     </table>

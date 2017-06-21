@@ -7,6 +7,7 @@
           <th>Present</th>
           <th>In Time</th>
           <th>Out Time</th>
+          <th>Comment</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -18,6 +19,7 @@
             <td><%= a.try(:present) %></td>
             <td><%= a.try(:in_time) %></td>
             <td><%= a.try(:out_time) %></td>
+            <td><%= a.try(:comment) %></td>
             <td><%= link_to ' ',modal_edit_daily_attendance_employee_attendances_path(a),class: 'btn btn-success btn-xs fa fa-edit',remote: true %></td>
           </tr>
         <% end %>

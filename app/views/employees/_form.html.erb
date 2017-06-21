@@ -18,10 +18,7 @@
            <%= f.text_field :manual_employee_code,label: 'Employee ID',placeholder: "Employee ID",readonly: true %>
            </div>
         </div>
-      </div>
-
-      <div class="row">
-       <div class="col-sm-3">
+           <div class="col-sm-3">
           <div class="field">
             <%= f.select :prefix ,['Mr.','Mrs.','Miss.'] ,{label: 'Prefix',include_blank: "Select Prefix"} %>
           </div>
@@ -32,6 +29,10 @@
             <%= f.text_field :first_name , label: 'First Name' %>
           </div>
         </div>
+      </div>
+
+      <div class="row">
+    
 
         <div class="col-sm-3">
           <div class="field">
@@ -44,11 +45,8 @@
            <%= f.text_field :last_name, label: 'Last Name' %>
           </div>
         </div>
-      </div>
 
-      <div class="row">
-
-       <div class="col-sm-3">
+          <div class="col-sm-3">
           <div class="field">
             <%= f.select :gender, ['Male','Female'],{label: 'Select Gender',include_blank: " Select Gender"} %>
           </div>
@@ -59,6 +57,19 @@
            <%= f.text_field :email %>
           </div>
         </div>
+      </div>
+
+
+
+      <div class="row">
+
+     
+
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :optional_email %>
+          </div>
+        </div>
 
          <div class="col-sm-3">
           <div class="field">
@@ -66,26 +77,35 @@
           </div>
         </div>
 
-        <div class="col-sm-3">
+         <div class="col-sm-3">
           <div class="field">
             <%= f.text_field :pan_no, label: 'PAN Card No.',placeholder: "e.g : ABCDE12345B" %>
           </div>
         </div>
-      </div>
-      <div class="row">
+     
 
       <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :licence_no, label: 'Driving Licence No.' %>
           </div>
         </div>
+      </div>
+
+      <div class="row">
+       
 
         <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :contact_no,label: 'Contact No.' %>
           </div>
         </div>
-        <div class="col-sm-3">
+
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :optinal_contact_no,label: 'Optional Contact No.' %>
+          </div>
+        </div>
+         <div class="col-sm-3">
           <div class="field">
             <%= f.select :religion_id, all_religions,{include_blank: " Select Religion"} %>
           </div>
@@ -95,8 +115,11 @@
             <%= f.select :status,['Active','Inactive'],{include_blank: " Select Employee Status"} %>
         </div>
         </div>
+      
       </div>
       <div class="row">
+
+       
        <div class="col-sm-3">
           <div class="field">
             <%= f.select :employee_type_id, all_employee_type,{include_blank: " Select Employee Type"} %>
@@ -109,7 +132,7 @@
           </div>
         </div>
 
-        <div class="col-sm-3">
+          <div class="col-sm-3">
           <div class="field">
             <%= f.select :nationality_id, all_nationality,{include_blank: " Select Nationality"} %>
           </div>
@@ -126,14 +149,18 @@
             </div>
           </div>
         </div>
-      </div>
+        </div>
 
       <div class="row">
+      
+      
        <div class="col-sm-3">
           <div class="field">
             <%= f.select :blood_group_id, all_blood_group, {label: 'Blood Group',include_blank: " Select Blood Group"} %>
           </div>
         </div>
+
+
          <div class="col-sm-6">
           <div class="form-group required">
            <%= f.text_field :permanent_address, label: 'Permanent Address' %>
@@ -147,11 +174,13 @@
         </div>
    
          <div class="row">
+
+        
           <div class="col-sm-3">
           <div class="form-group required">
             <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/companies/collect_states',a,function(response){});"}%>
           </div>
-        </div>  
+        </div> 
           <div class="col-sm-3">
             <div class="form-group required">
             <div class="input-group">

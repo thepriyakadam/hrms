@@ -67,4 +67,5 @@ class HomeController < ApplicationController
     @company_event = CompanyEvent.find(params[:id])
   end
   
+ 
 end

@@ -228,7 +228,7 @@ class MachineAttendancesController < ApplicationController
 																EmployeeAttendance.where(id: ea).update_all(late_mark: late_diff_in_min)
 															 end
 														end
-														puts "Outttttttttttttttttttttt Timeeeeeeeeeeee"
+														puts "Out Time"
 							
 												else
 

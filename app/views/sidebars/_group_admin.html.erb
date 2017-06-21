@@ -223,7 +223,7 @@
       <li><a href="/reporting_masters/update_reporting_manager"><i class="fa fa-tags"></i> Replace Manager </a></li>
       <li><a href="/employees/member_list_for_update_password"><i class="fa fa-tags"></i> Reset Password </a></li>
       <!-- <li><a href="/employees/destroy_employee"><i class="fa fa-tags"></i> Destroy Employee </a></li> -->
-      <li><a href="/employees/employee_gps_setting_list"><i class="fa fa-tags"></i> Set GPS </a></li>
+      <!-- <li><a href="/employees/employee_gps_setting_list"><i class="fa fa-tags"></i> Set GPS </a></li> -->
       <!-- <li><a href="/employees/employee_list_for_revert"><i class="fa fa-tags"></i> Revert </a></li> -->
       <!-- <li><a href="/employees/transfer_employee_list"><i class="fa fa-tags"></i>Transfer Employee</a></li> -->
     </ul>
@@ -242,7 +242,7 @@
       <!-- <li><a href="/employee_attendances/loginwise_attendance_form"><i class="fa fa-tags"></i>Attendance </a></li>  -->
       <li><a href="/self_services/employee_attendance"><i class="fa fa-tags"></i> Attendance </a></li> 
       <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i> Salary Slip </a></li>
-      <li><a href="/self_services/advance"><i class="fa fa-tags"></i> Advance & Installment </a></li>
+     <!--  <li><a href="/self_services/advance"><i class="fa fa-tags"></i> Advance & Installment </a></li> -->
       <li><a href="/self_services/employee_resignation"><i class="fa fa-tags"></i> Employee Resignation </a></li>
       <li><a href="/training_plans/trainee_list"><i class="fa fa-tags"></i> Training Feedback </a></li>
       <li><a href="/self_services/resignation_history"><i class="fa fa-tags"></i> Resignation History </a></li>
@@ -318,18 +318,18 @@
       <li class="treeview" id="ODProcess">
         <a href="#"><i class="fa fa-edit"></i> On Duty Process <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-        <li><a href="/on_duty_requests/employee_list"><i class="fa fa-tags"></i>OD Request</a></li>
-        <li><a href="/on_duty_requests/request_approval_list"><i class="fa fa-tags"></i>OD Approval</a></li>
-        <li><a href="/on_duty_requests/od_request_list"><i class="fa fa-tags"></i>Admin OD Approval</a></li>
+        <li><a href="/on_duty_requests/employee_list"><i class="fa fa-tags"></i> Request</a></li>
+        <li><a href="/on_duty_requests/request_approval_list"><i class="fa fa-tags"></i>Approval</a></li>
+        <li><a href="/on_duty_requests/od_request_list"><i class="fa fa-tags"></i>Admin Approval</a></li>
         </ul>
       </li>
 
       <li class="treeview" id="ODReports">
         <a href="#"><i class="fa fa-edit"></i> On Duty Reports  <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-        <li><a href="/on_duty_requests/on_duty_request_report"><i class="fa fa-tags"></i>On Duty Request </a></li>
-        <li><a href="/on_duty_requests/on_duty_request_status_report"><i class="fa fa-tags"></i>Status Wise On Duty</a></li>
-        <li><a href="/on_duty_requests/on_duty_approval_report"><i class="fa fa-tags"></i>On Duty Approved</a></li>
+        <li><a href="/on_duty_requests/on_duty_request_report"><i class="fa fa-tags"></i> Request </a></li>
+        <li><a href="/on_duty_requests/on_duty_request_status_report"><i class="fa fa-tags"></i> Status Wise</a></li>
+        <li><a href="/on_duty_requests/on_duty_approval_report"><i class="fa fa-tags"></i> Approved</a></li>
         </ul>
       </li>
     </ul>
@@ -382,6 +382,9 @@
        <li><a href="/workingdays/revert_workingday_datewise"><i class="fa fa-tags"> </i> Revert Datewise</a></li>
        <li><a href="/employee_attendances/import_employee_attendance"><i class="fa fa-tags"></i> Upload Attendance</a></li>
        <li><a href="/employee_attendances/upload_daily_attendance"><i class="fa fa-tags"></i> Daily Attendance</a></li>
+       <li><a href="/employee_attendances/datewise_daily_attendance"><i class="fa fa-tags"></i> Update Attendance</a></li>
+       <li><a href="/employee_attendances/daily_attendance_datewise"><i class="fa fa-tags"></i> Datewise Attendance</a></li>
+       <li><a href="/employee_attendances/select_date_and_employee"><i class="fa fa-tags"></i> Employeewise</a></li>
      <!-- <li><a href="/workingdays/search_month_year"><i class="fa fa-tags"> </i>Attendace Update(Auto) </a></li> -->
      <!--  <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
       <li><a href="/company_shifts/new"><i class="fa fa-tags"></i> Shifts Maintenance </a></li>
@@ -540,7 +543,7 @@
             <ul class="treeview-menu">
             <!-- <li><a href="/reports/advance_salaries/new"><i class="fa fa-tags"> </i>Advance Salaries</a></li> -->
            
-            <li><a href="/salary_slip_ledgers/monthly_deduction_report"><i class="fa fa-tags"> </i>Advance EMI</a></li>
+            <li><a href="/salary_slip_ledgers/monthly_deduction_report"><i class="fa fa-tags"> </i> Advance EMI </a></li>
 
            
             <!-- <li><a href="/reports/food_deduction_details/new"><i class="fa fa-tags"> </i>Food Deductions</a></li> -->
@@ -574,6 +577,28 @@
             <li><a href="/manager_self_services/investment_declaration"><i class="fa fa-tags"> </i> Declaration Approval</a></li>
         </ul>
       </li>
+
+
+      <li id="rembursment">
+      <a href=""><i class="fa fa-briefcase"></i> <span> Employee Rembursment </span> <i class="fa fa-angle-left pull-right"></i></a>
+      <ul class="treeview-menu">
+        <li><a href="/rembursments/new"><i class="fa fa-tags"></i> Reimbursment Request </a></li>
+        <li><a href="/rembursments"><i class="fa fa-tags"></i> Reimbursment Status </a></li>
+        <li><a href="/rembursments/approval_list"><i class="fa fa-tags"></i> Approve/Reject </a></li>
+        <li><a href="/rembursments/final_approval_list"><i class="fa fa-tags"></i> Final Approve/Reject </a></li>
+      </ul>
+     </li>
+
+
+     <li id="ltareimbursement">
+      <a href=""><i class="fa fa-briefcase"></i> <span> LTA Reimbursement </span> <i class="fa fa-angle-left pull-right"></i></a>
+      <ul class="treeview-menu">
+        <li><a href="/reimbursement_heads/new"><i class="fa fa-tags"></i> Reimbursement Head </a></li>
+        <li><a href="/reimbursement_slabs/new"><i class="fa fa-tags"></i> Reimbursement Slab </a></li>
+        <li><a href="/self_services/reimbursement_request"><i class="fa fa-tags"></i> Reimbursement Request </a></li>
+        <li><a href="/reimbursement_requests/approval_list"><i class="fa fa-tags"></i> Reimbursement Approval </a></li>
+      </ul>
+     </li>
 
 <!--        <li id="Overtime">
         <a href="#"><i class="fa fa-edit"></i> Overtime <i class="fa fa-angle-left pull-right"></i></a>
@@ -758,7 +783,7 @@
          <li><a href="/due_details/all_employee_list"><i class="fa fa-tags"> </i> Assign Template </a></li>
     <!--  <li><a href="/due_details/all_employee_resignation_list"><i class="fa fa-tags"> </i> Assign Template </a></li> -->
      <!-- <li><a href="/due_details/all_employee_due_detail"><i class="fa fa-tags"> </i>Send For Confirmation</a></li> -->
-     <li><a href="/due_details/employee_due_detail_history"><i class="fa fa-tags"> </i>Due Clearance </a></li>
+     <li><a href="/due_details/employee_due_detail_history"><i class="fa fa-tags"> </i> Due Clearance </a></li>
         </ul>
       </li> 
       <li class="treeview" id= "full_and_final">
@@ -835,16 +860,6 @@
     </ul>
    </li>
 
-    <li class="treeview" id="rembursment">
-    <a href=""><i class="fa fa-briefcase"></i> <span> Employee Rembursment </span> <i class="fa fa-angle-left pull-right"></i></a>
-    <ul class="treeview-menu">
-      <li><a href="/rembursments/new"><i class="fa fa-tags"></i> Reimbursment Request </a></li>
-      <li><a href="/rembursments"><i class="fa fa-tags"></i> Reimbursment Status </a></li>
-      <li><a href="/rembursments/approval_list"><i class="fa fa-tags"></i> Approve/Reject </a></li>
-      <li><a href="/rembursments/final_approval_list"><i class="fa fa-tags"></i> Final Approve/Reject </a></li>
-    </ul>
-   </li>
-
     <li class="treeview" id="VacancyRequest">
     <a href=""><i class="fa fa-briefcase"></i> <span> Recruitment </span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
@@ -856,15 +871,7 @@
     </ul>
    </li>
 
-   <li class="treeview" id="ltareimbursement">
-    <a href=""><i class="fa fa-briefcase"></i> <span> LTA Reimbursement </span> <i class="fa fa-angle-left pull-right"></i></a>
-    <ul class="treeview-menu">
-      <li><a href="/reimbursement_heads/new"><i class="fa fa-tags"></i> Reimbursement Head </a></li>
-      <li><a href="/reimbursement_slabs/new"><i class="fa fa-tags"></i> Reimbursement Slab </a></li>
-      <li><a href="/self_services/reimbursement_request"><i class="fa fa-tags"></i> Reimbursement Request </a></li>
-      <li><a href="/reimbursement_requests/approval_list"><i class="fa fa-tags"></i> Reimbursement Approval </a></li>
-    </ul>
-   </li>
+
 
  <!--   <li class="treeview" id="safety">
     <a href=""><i class="ionicons ion-ios-time"></i><span><span> Health Safety Management </span></span> <i class="fa fa-angle-left pull-right"></i></a>

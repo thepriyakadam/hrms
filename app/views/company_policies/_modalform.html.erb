@@ -1,9 +1,14 @@
  <div class="modal-dialog"  style="height:2000px; max-height:400px; width:630px; max-width:630px;">
   <div class="modal-content"> 
     <div class="modal-body">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  
       <%= bootstrap_form_for :company_policy,url:{action:"update_company_policy", id: @company_policy.id},html: {id: 'company_policy'} do |f| %>
         <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group required">
+             <%= f.select :policy_type_id,all_policy_type,{label: "Policy Type",include_blank: 'Select Policy Type'} %>
+            </div>
+          </div>
           <div class="col-sm-3">
             <div class="form-group required">
              <%= f.text_field :name,label: "Policy Name" %>
@@ -30,7 +35,8 @@
               </div>
             </div>
           </div>
-   
+          </div>
+    <div class="row">
  <div class="col-sm-3">
          <div class="col-sm-1">
       <label>Status </label>
@@ -39,9 +45,6 @@
       </div>
     </div>
     </div>
-    </div>
-     <div class="row">
-
    
         <div class="col-sm-6">
             <div class="field">
@@ -56,6 +59,7 @@
             <%= f.submit'Update Policy', class: 'btn btn-primary btn-sm' %>
           </div>
           </div>
+</div>
       <% end %>
      
         </div>

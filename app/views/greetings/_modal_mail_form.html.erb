@@ -9,10 +9,10 @@
     <%= bootstrap_form_for @greeting,url:{action: "send_mail",employee_id: @employee.id} do |f| %>
         <div class="row">
           <div class="col-sm-6">
-            <%= f.text_field :message,label: 'Message', placeholder: "Message" %>
+            <%= f.text_area :message,label: 'Wishes', placeholder: "Wishes" %>
           </div>
 
-          <div class="col-sm-3" style="padding-top:20px;">
+          <div class="col-sm-3" style="padding-top:40px;">
             <%= f.submit "Send", class: 'btn btn-success btn-sm' %>
           </div>
         </div>

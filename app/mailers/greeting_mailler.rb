@@ -1,9 +1,7 @@
 class GreetingMailler < ApplicationMailer
-	def send_email_to_employee(employee,greeting)
-		@employee = employee
+	def send_email_to_employee(greeting)
 		@greeting = greeting
-		# @employee = Employee.find(@goal_rating.manager_id)
-		# @emp = Employee.find(goal_rating)
-    mail(to: @employee.email, subject: 'Congratulations!')
+		@employee = Employee.find(@greeting.receiver_id)
+	  mail(to: @employee.email, subject: 'Congratulations!')
 	end
 end

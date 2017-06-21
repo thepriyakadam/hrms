@@ -107,8 +107,8 @@
       <tr>
         <th>Department</th>
         <td><%= @employee.try(:department).try(:name) %></td>
-        <th></th>
-        <td></td>
+        <th>Optional Contact No.</th>
+        <td><%= @employee.try(:optional_contact_no) %></td>
       </tr>
      
     </table>

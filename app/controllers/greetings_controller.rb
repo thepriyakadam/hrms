@@ -1,8 +1,11 @@
 class GreetingsController < ApplicationController
-#before_action :set_greeting, only: [:show, :edit, :update, :destroy]
-
+before_action :set_greeting, only: [:show, :edit, :update, :destroy]
+  
+  # def show
+  # end
+  
 	def modal_for_mail
-    @employee = Employee.find(params[:format])
+    @employee = Employee.find(params[:emp_id])
     @greeting = Greeting.new
   end
 
@@ -10,7 +13,17 @@ class GreetingsController < ApplicationController
     message = params[:message]
     employee_id = params[:employee_id]
     @greeting = Greeting.create(date: Date.today,message: message,sender: current_user.employee_id,receiver: employee_id,status: true)
-     GreetingMailer.send_email_to_employee(employee_id,@greeting).deliver_now
+    GreetingMailer.send_email_to_employee(employee_id,@greeting).deliver_now
   end
 
-end
+  # private
+  #   # Use callbacks to share common setup or constraints between actions.
+  #   def set_greeting
+  #     @greeting = Greeting.find(params[:id])
+  #   end
+
+  #   # Never trust parameters from the scary internet, only allow the white list through.
+  #   def greeting_params
+  #     params.require(:greeting).permit(:date,:type,:sender_id,:receiver_id,:message,:status)
+  #   end
+  end

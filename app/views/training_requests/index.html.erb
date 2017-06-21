@@ -11,11 +11,8 @@
    <!--  <meta http-equiv="refresh" content="5" /> -->
       <thead>
         <tr>
-          <th>Employee ID</th>
+          <th>ID</th>
           <th>Employee Name</th>
-          <th>Training Topic</th>
-          <th>Request Date</th>
-          <th>No Of Employee</th>
           <th>Status</th>
           <th>Action</th>
         </tr>
@@ -26,9 +23,6 @@
           <tr>
             <td><%= training_request.employee.try(:manual_employee_code) %></td>
             <td><%= full_name(training_request.employee) %> </td>
-            <td><%= training_request.training_topic_master.try(:name) %></td>
-            <td><%= training_request.training_date %></td>
-            <td><%= training_request.no_of_employee %></td>
             <td>
             <% training_request.reporting_masters_training_reqs.try(:each) do |er| %>
             <% case er.training_status %>

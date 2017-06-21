@@ -11,11 +11,6 @@
             <tr>
               <th>ID</th>
               <th>Employee Name</th>
-              <th>Designation</th>
-              <th>Employee Category</th>
-              <th>Company</th>
-              <th>Company Location</th>
-              <th>Department</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -26,20 +21,11 @@
           <% if @employee_transfer.id == employee_transfer.id %>
           <th><font color='green'>*<%= employee_transfer.employee.try(:manual_employee_code) %></font></th>
                 <th><font color='green'><%= full_name(employee_transfer.employee) %></th></font>
-                <th><font color='green'><%= employee_transfer.designation %></th></font>
-                <th><font color='green'><%= employee_transfer.category %></th></font>
-                <th><font color='green'><%= employee_transfer.employee_company %></th></font>
-                <th><font color='green'><%= employee_transfer.employee_company_location %></th></font>
-                <th><font color='green'><%= employee_transfer.employee_department %></th></font>
 
                 <%else%>
             <td><%= employee_transfer.employee.try(:manual_employee_code) %></td>
             <td><%= full_name(employee_transfer.employee) %></td>
-            <td><%= employee_transfer.designation %></td>
-            <td><%= employee_transfer.category %></td>
-            <td><%= employee_transfer.employee_company %></td>
-            <td><%= employee_transfer.employee_company_location %></td>  
-            <td><%= employee_transfer.employee_department %></td>
+    
           <% end %>
               <td>
                   <% employee_transfer.reporting_employee_transfers.try(:each) do |r| %>

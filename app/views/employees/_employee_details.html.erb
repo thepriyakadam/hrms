@@ -1,6 +1,6 @@
 <div class="box-body">
 
-  <div style="width: 700px; height: auto;
+  <div style="width: auto; height: auto;
           padding: 10px;
           border: 5px solid gray;
           margin: 10;">
@@ -48,18 +48,16 @@
     <thead>
        <tr><th colspan="4"><center><font color='#0077b3'>Experience Detail's</font></center> </th></tr>
       <tr>
+      <th>Company Name</th>
         <th>No. of Year</th>
-        <th>Company Name</th>
-        <th>Designation</th>
         <th>CTC</th>
       </tr>
     </thead>
   <tbody>
     <% @experiences.each do |e| %>
       <tr>
+       <td><%= e.company_name %></td>
         <td><%= e.no_of_year %></td>
-        <td><%= e.company_name %></td>
-        <td><%= e.designation %></td>
         <td><%= e.ctc %></td>
       </tr>
       <% end %>
@@ -90,13 +88,11 @@
    
   <table id="example2" class="table table-bordered table-hover table-condensed">
     <thead>
-    <tr><th colspan="5"><center><font color='#0077b3'>Education Detail's</font></center> </th></tr>
+    <tr><th colspan="3"><center><font color='#0077b3'>Education Detail's</font></center> </th></tr>
       <tr>
         <th>Qualification</th>
         <th>Marks</th>
         <th>Passout Year</th>
-        <th>College/School</th>
-        <th>University/Institute</th>
      </tr>
     </thead>
 
@@ -106,8 +102,6 @@
           <td><%= qualification.degree.try(:name) %></td>
           <td><%= qualification.marks %></td>
           <td><%= qualification.year.try(:name) %></td>
-          <td><%= qualification.college %></td>
-          <td><%= qualification.university.try(:name) %></td>
         </tr>
       <% end %>
     </tbody>

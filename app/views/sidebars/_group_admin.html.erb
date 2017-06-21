@@ -381,9 +381,8 @@
        <li><a href="/workingdays/revert_workingday"><i class="fa fa-tags"> </i> Revert Workingday</a></li>
        <li><a href="/workingdays/revert_workingday_datewise"><i class="fa fa-tags"> </i> Revert Datewise</a></li>
        <li><a href="/employee_attendances/import_employee_attendance"><i class="fa fa-tags"></i> Upload Attendance</a></li>
-       <li><a href="/employee_attendances/upload_daily_attendance"><i class="fa fa-tags"></i> Daily Attendance</a></li>
-       <li><a href="/employee_attendances/datewise_daily_attendance"><i class="fa fa-tags"></i> Update Attendance</a></li>
-       <li><a href="/employee_attendances/daily_attendance_datewise"><i class="fa fa-tags"></i> Datewise Attendance</a></li>
+       
+       <li><a href="/employee_attendances/datewise_daily_attendance"><i class="fa fa-tags"></i> Datewise Update</a></li>
        <li><a href="/employee_attendances/select_date_and_employee"><i class="fa fa-tags"></i> Employeewise</a></li>
      <!-- <li><a href="/workingdays/search_month_year"><i class="fa fa-tags"> </i>Attendace Update(Auto) </a></li> -->
      <!--  <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
@@ -393,6 +392,17 @@
       <li><a href="/attendances"><i class="fa fa-tags"></i> Employee Attendance </a></li> -->
       </ul>
       </li> 
+
+       <li class="treeview" id="daily_attendance">
+      <a href="#">
+      <i class="fa fa-edit"></i> Daily Attendance <i class="fa fa-angle-left pull-right"></i>
+      </a>
+      <ul class="treeview-menu">
+        <li><a href="/employee_attendances/upload_daily_attendance"><i class="fa fa-tags"></i> Upload Attendance</a></li>
+       <li><a href="/employee_attendances/daily_attendance_datewise"><i class="fa fa-tags"></i> Datewise Attendance</a></li>
+     </ul>
+      </li> 
+
       <!--   <li id="TimeSheet">
         <a href="#"><i class="fa fa-edit"></i> Time Sheet <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu" >
@@ -580,7 +590,7 @@
 
 
       <li id="rembursment">
-      <a href=""><i class="fa fa-briefcase"></i> <span> Employee Rembursment </span> <i class="fa fa-angle-left pull-right"></i></a>
+      <a href="#"><i class="fa fa-edit"></i> <span> Rembursment </span> <i class="fa fa-angle-left pull-right"></i></a>
       <ul class="treeview-menu">
         <li><a href="/rembursments/new"><i class="fa fa-tags"></i> Reimbursment Request </a></li>
         <li><a href="/rembursments"><i class="fa fa-tags"></i> Reimbursment Status </a></li>
@@ -591,7 +601,7 @@
 
 
      <li id="ltareimbursement">
-      <a href=""><i class="fa fa-briefcase"></i> <span> LTA Reimbursement </span> <i class="fa fa-angle-left pull-right"></i></a>
+      <a href="#"><i class="fa fa-edit"></i> <span> LTA Reimbursement </span> <i class="fa fa-angle-left pull-right"></i></a>
       <ul class="treeview-menu">
         <li><a href="/reimbursement_heads/new"><i class="fa fa-tags"></i> Reimbursement Head </a></li>
         <li><a href="/reimbursement_slabs/new"><i class="fa fa-tags"></i> Reimbursement Slab </a></li>

@@ -272,6 +272,9 @@
                  <span class="label label-primary pull-right"><i><strong>Happy Birthday</strong></i></span>
                   <span class="users-list-date"><%= e.contact_no %></span>
                   </div>
+                  <div>
+                  <%= link_to '', modal_for_mail_greetings_path(emp_id: e.id),class: 'btn btn-sm btn-primary',remote:true %>
+                  </div>
                 <% end %>
             </li><!-- /.item -->
             <%end%>

@@ -4035,8 +4035,11 @@ ActiveRecord::Schema.define(version: 20170619093726) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "auth_token",             limit: 255
+    t.string   "password_reset_token",   limit: 255
+    t.datetime "password_reset_sent_at"
   end
 
   create_table "vacancy_masters", force: :cascade do |t|
@@ -4130,16 +4133,18 @@ ActiveRecord::Schema.define(version: 20170619093726) do
     t.date     "request_date"
     t.string   "qualification",           limit: 255
     t.text     "skill_set",               limit: 65535
-    t.integer  "employee_designation_id", limit: 4
+    t.integer  "designation_id",          limit: 4
     t.integer  "department_id",           limit: 4
     t.string   "experience",              limit: 255
     t.string   "current_status",          limit: 255
     t.string   "vacancy_type",            limit: 255
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
+    t.integer  "employee_designation_id", limit: 4
   end
 
   add_index "vacancy_requests", ["department_id"], name: "index_vacancy_requests_on_department_id", using: :btree
+  add_index "vacancy_requests", ["designation_id"], name: "index_vacancy_requests_on_designation_id", using: :btree
   add_index "vacancy_requests", ["employee_designation_id"], name: "index_vacancy_requests_on_employee_designation_id", using: :btree
 
   create_table "visitor_details", force: :cascade do |t|
@@ -4271,7 +4276,7 @@ ActiveRecord::Schema.define(version: 20170619093726) do
   add_foreign_key "reporting_master_rembursments", "rembursments"
   add_foreign_key "status_c_offs", "employees"
   add_foreign_key "status_c_offs", "leave_c_offs"
-  add_foreign_key "vacancy_requests", "departments"
+  add_foreign_key "vacancy_request_statuses", "vacancy_requests"
   add_foreign_key "vacancy_requests", "employee_designations"
   add_foreign_key "visitor_details", "authorized_bies"
   add_foreign_key "visitor_details", "meet_tos"

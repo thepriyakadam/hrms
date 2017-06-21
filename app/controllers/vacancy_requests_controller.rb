@@ -33,7 +33,7 @@ class VacancyRequestsController < ApplicationController
         
         @vacancy_request.update(current_status: "Pending")
         VacancyRequestStatus.create(vacancy_request_id: @vacancy_request.id,status: "Pending",action_by_id: current_user.employee_id,action_date: Date.today)
-        
+        # VacancyRequestMailer.pending(@vacancy_request).deliver_now
         format.html { redirect_to @vacancy_request, notice: 'Vacancy request was successfully created.' }
         format.json { render :show, status: :created, location: @vacancy_request }
       else

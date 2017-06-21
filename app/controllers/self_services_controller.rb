@@ -123,33 +123,40 @@ class SelfServicesController < ApplicationController
     else
       @leave_c_off = LeaveCOff.new(leave_c_off_params)
       @leave_c_offs = LeaveCOff.all
-      leav_category = LeavCategory.find_by_name('C.Off')
+      leav_category = LeavCategory.find_by(code: 'C.Off')
 
-      if leav_category.nil?
+      if @leave_c_off.is_week_off_present(@employee_id) || @leave_c_off.is_holiday_present(@employee_id)
+
+        if leav_category.nil?
+        else
+          @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
+          if @c_off.nil?
+          else
+            @c_off.each do |l|
+              if l.try(:expiry_date).to_date < Date.today
+                LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
+              else
+              end
+            end#do
+          end#c_off.nil?
+
+          if @c_off_type == 'Full Day'
+            @leave_c_off = LeaveCOff.create(employee_id:
+             @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending")
+            StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
+            flash[:notice] = "Your COff Created Successfully!"
+            COffMailer.pending(@leave_c_off).deliver_now
+          else
+            @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending")
+            StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
+            flash[:notice] = "Your COff Created Successfully!"
+            COffMailer.pending(@leave_c_off).deliver_now
+          end#@c_off_type
+        end#leav_category.nil?
       else
-        @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
-        if @c_off.nil?
-        else
-          @c_off.each do |l|
-            if l.try(:expiry_date).to_date < Date.today
-              LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
-            else
-            end
-          end#do
-        end#c_off.nil?
+        flash[:alert] = "Week Off Or Holiday Not Set"
+      end#is_week_off_present
 
-        if @c_off_type == 'Full Day'
-          @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending")
-          StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
-          flash[:notice] = "Your COff Created Successfully!"
-          COffMailer.pending(@leave_c_off).deliver_now
-        else
-          @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending")
-          StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
-          flash[:notice] = "Your COff Created Successfully!"
-          COffMailer.pending(@leave_c_off).deliver_now
-        end#@c_off_type
-      end#leav_category.nil?
     end#@leave_c_off.is_self_present?
     redirect_to leave_c_off_self_services_path
   end#def

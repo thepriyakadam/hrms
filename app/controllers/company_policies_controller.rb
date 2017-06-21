@@ -79,6 +79,27 @@ class CompanyPoliciesController < ApplicationController
     end
   end
 
+  def modal
+    @company_policy = CompanyPolicy.find(params[:format])
+  end
+
+  def update_company_policy
+   # byebug
+    @name = params[:company_policy][:name]
+    @effective_from = params[:company_policy][:effective_from]
+    @effective_to = params[:company_policy][:effective_to]
+    @status = params[:company_policy][:status]
+    @description= params[:company_policy] [:description]
+    @company_policy_type_id = params[:company_policy][:policy_type_id]
+    # @company_policy = params[:company_policy_id]
+    @company_policy1 = CompanyPolicy.find(params[:id])
+    @company_policy1.update(name: @name,effective_from: @effective_from,effective_to: @effective_to,status: @status,description: @description,policy_type_id: @company_policy_type_id)  
+    flash[:notice] = 'Company Policy Updated Successfully' 
+    redirect_to policy_type_detail_company_policies_path(company_policy_id: @company_policy1.id)
+  end
+
+
+
 	private
 
     def set_company_policy

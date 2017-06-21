@@ -154,7 +154,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
   end
 
   def manage_coff(request)
-    if request.leav_category.name == 'C.Off'
+    if request.leav_category.code == 'C.Off'
       c_offs = LeaveCOff.where(employee_id: request.employee_id, is_taken: false, is_expire: false).order('c_off_date asc')
       c_offs.each do |c|
         if request.leave_count == 0

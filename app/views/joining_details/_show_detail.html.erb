@@ -22,12 +22,20 @@
     <table id="example2" class="table table-bordered table-hover table-condensed">
    <tr><th colspan="4"><center><font color='#0077b3'>EMPLOYEE ONBOARDING DETAILS</font></center> </th></tr>
 
+     <tr>
+      <th><strong>Company RFID</strong></th>
+      <td><%= @joining_detail.company_rfid %></td>
+      <th><strong>Gate RFID</strong></th>
+      <td><%= @joining_detail.gate_rfid %></td>
+    </tr>
+
     <tr>
       <th><strong>UAN No</strong></th>
       <td><%= @joining_detail.employee_uan_no %></td>
       <th></th>
       <td></td>
     </tr>
+
 
     <tr>
       <th> <strong>Joining Date</strong></th>

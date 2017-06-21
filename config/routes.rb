@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
 
+  resources :greetings do
+    collection do
+      get :modal_for_mail
+      post :send_mail
+    end
+  end
+  resources :thoughts
+  resources :candidate_interview_schedules
+  resources :interview_type_masters
+  resources :interview_types
   resources :candidate_forms
   resources :vacancy_request_statuses
   resources :interview_types
@@ -493,6 +503,8 @@ end
       get :active_policies_list
       get :policy_type_detail
       get :policy_type_dashboard
+      get :modal
+      post :update_company_policy
     end
   end
 
@@ -649,6 +661,10 @@ end
       get :modal_edit_daily_attendance
       post :update_daily_attendance
       post :create_self_attendance
+      get :daily_attendance_datewise
+      post :show_daily_attendance_datewise
+      get :select_date_and_employee
+      post :date_and_employeewise_attendance
     end
   end
   resources :salary_comp_mappings

@@ -27,8 +27,8 @@
              <% end %>
         </td>
         <td>
-         <%= link_to '', edit_company_policy_path(company_policy),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
-         <%= link_to '',  company_policy, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
+         <%= link_to '', modal_company_policies_path(company_policy),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+         <!-- <= link_to '',  company_policy, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %> -->
         </td>
 
       </tr>
@@ -37,4 +37,4 @@
 </table>
 </div>
 </div>
-
+  <div id="myModal" class="modal fade"></div>

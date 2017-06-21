@@ -26,7 +26,7 @@ class LeaveStatusRecordsController < ApplicationController
           flash[:alert] = 'Leave Already cancelled. Please refresh page.'
           redirect_to hr_view_request_employee_leav_requests_path(@employee_leav_request.employee_id)
         end
-        @leav_category = LeavCategory.find_by(name: "C.Off")
+        @leav_category = LeavCategory.find_by(code: "C.Off")
         if @employee_leav_request.leav_category_id = @leav_category.id
           @leave_c_off = LeaveCOff.where(employee_id: @employee_leav_request.employee_id,taken_date: @employee_leav_request.start_date)
           @leave_c_off.update_all(taken_date: nil)
@@ -234,7 +234,7 @@ class LeaveStatusRecordsController < ApplicationController
           
         ActiveRecord::Base.transaction do
           @employee_leav_balance.save
-          if @particular_leave_record.employee_leav_request.leav_category.name == "C.Off"
+          if @particular_leave_record.employee_leav_request.leav_category.code == "C.Off"
             #@particular_leave_record.rollback_coff(@particular_leave_record)
             if @particular_leave_record.is_full == true
               @expiry_date = @particular_leave_record.leave_date.to_date + 60
@@ -265,7 +265,7 @@ class LeaveStatusRecordsController < ApplicationController
         	
         ActiveRecord::Base.transaction do
           @particular_leave_record.save
-          if @particular_leave_record.employee_leav_request.leav_category.name == "C.Off"
+          if @particular_leave_record.employee_leav_request.leav_category.code == "C.Off"
             #@particular_leave_record.rollback_coff(@particular_leave_record)
             if @particular_leave_record.is_full == true
               @expiry_date = @particular_leave_record.leave_date.to_date + 60

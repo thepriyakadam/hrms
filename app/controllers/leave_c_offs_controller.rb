@@ -50,7 +50,7 @@ class LeaveCOffsController < ApplicationController
     else
         @leave_c_off = LeaveCOff.new(leave_c_off_params)
         @leave_c_offs = LeaveCOff.all
-        leav_category = LeavCategory.find_by_name('C.Off')
+        leav_category = LeavCategory.find_by(code: 'C.Off')
 
         if @leave_c_off.expiry_status == true
           @leave_c_off.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
@@ -170,7 +170,7 @@ class LeaveCOffsController < ApplicationController
     params_expiry_status = leave_c_off_params["expiry_status"]
     params_c_off_expire_day = leave_c_off_params["c_off_expire_day"]
     expiry_date = @leave_c_off.try(:c_off_date) + @leave_c_off.try(:c_off_expire_day)
-    leav_category = LeavCategory.find_by_name('C.Off')
+    leav_category = LeavCategory.find_by_code('C.Off')
     @employee_leave_balance = EmployeeLeavBalance.where(employee_id: params_employee_id, leav_category_id: leav_category.id).take
    
     if @leave_c_off.c_off_type == params_c_off_type
@@ -196,7 +196,7 @@ class LeaveCOffsController < ApplicationController
   # DELETE /leave_c_offs/1.json
   def destroy
     @leave_c_offs = LeaveCOff.all
-    leav_category = LeavCategory.find_by_name('C.Off')
+    leav_category = LeavCategory.find_by_code('C.Off')
     @employee_leave_balance = EmployeeLeavBalance.where(employee_id: @leave_c_off.employee_id,leav_category_id: leav_category.id).take
     
     if @leave_c_off.c_off_type == 'Full Day'
@@ -233,7 +233,7 @@ class LeaveCOffsController < ApplicationController
 
   def add_coff
     @leave_c_off = LeaveCOff.find(params[:id])
-    leav_category = LeavCategory.find_by(name: 'C.Off')
+    leav_category = LeavCategory.find_by(code: 'C.Off')
     @emp_leav_bal = EmployeeLeavBalance.where(employee_id: @leave_c_off.employee_id,leav_category_id: leav_category.id)
     @emp_leav_bal1 = EmployeeLeavBalance.where(employee_id: @leave_c_off.employee_id,leav_category_id: leav_category.id).take
   
@@ -271,7 +271,7 @@ class LeaveCOffsController < ApplicationController
     expiry_status = params[:leave_c_off][:expiry_status]
     @leave_c_off.update(expiry_status: expiry_status)
     c_off_expire_day = params[:leave_c_off][:c_off_expire_day]
-    leav_category = LeavCategory.find_by_name('C.Off')
+    leav_category = LeavCategory.find_by_code('C.Off')
     if @leave_c_off.expiry_status == true
       @expiry_date = @leave_c_off.c_off_date + c_off_expire_day.to_i
     else
@@ -326,7 +326,7 @@ class LeaveCOffsController < ApplicationController
 
   def final_approve
     @leave_c_off = LeaveCOff.find(params[:leave_c_off_id])
-    leav_category = LeavCategory.find_by_name('C.Off')
+    leav_category = LeavCategory.find_by_code('C.Off')
 
     if @leave_c_off.current_status != "FirstApproved"
       expiry_status = params[:leave_c_off][:expiry_status]

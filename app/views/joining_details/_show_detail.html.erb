@@ -77,8 +77,10 @@
     </tr>
 
     <tr>
-      <th><strong>Reserved Category</strong></th>
-      <td><%= @joining_detail.reserved_category.try(:name) %></td>
+     <!--  <th><strong>Reserved Category</strong></th>
+      <td>< @joining_detail.reserved_category.try(:name) %></td> -->
+      <th><strong>Leaving Date</strong></th>
+      <td><%= @joining_detail.try(:leaving_date) %></td>
 
       <th><strong>Medical Insurance</strong></th>
       <td> <%= @joining_detail.medical_schem %></td>
@@ -93,14 +95,11 @@
       <td><%= full_name(@joining_detail.try(:replacement).try(:employee)) %></td>
      </tr>
 
-     <tr>
-      <th><strong>Leaving Date</strong></th>
-      <td><%= @joining_detail.try(:leaving_date) %></td>
+    
+      
 
 
-      <th></th>
-      <td></td>
-     </tr>
+      
 
 
     <tr><th colspan="4"><center><font color='#0077b3'>EMPLOYEE PAYROLL DETAILS</font></center> </th></tr>

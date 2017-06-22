@@ -225,8 +225,17 @@
                 <div class="product-info">
                   <%= full_name(e.employee) %>
                 <div class="pull-right">
-                  <%= link_to 'Wish', anniversary_mail_greetings_path(emp_id: e.employee_id),class: 'btn btn-xs btn-primary',remote:true %>
-                  </div>
+                <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today) %>
+                  <% if e.employee_id == current_user.employee_id %>
+                      <small class="label label-success">Wish You A Very Happy Work Anniversary!</small>
+                  <% else %>
+                    <% if @greeting.empty? %>
+                        <%= link_to 'Wish', anniversary_mail_greetings_path(emp_id: e.employee_id),class: 'btn btn-xs btn-primary',remote:true %>
+                    <% else %>
+                        <small class="label label-success">Message Sent</small>
+                    <% end %>
+                  <% end %>
+                </div>
                   <span class="users-list-date"><%= e.employee.department.try(:name) %></span>
                   </div>
                  
@@ -270,11 +279,20 @@
                 </div> 
                 <div class="product-info">
                   <%= full_name(e) %>
-                 <div class="pull-right">
-                  <%= link_to 'Wish', modal_for_mail_greetings_path(emp_id: e.id),class: 'btn btn-xs btn-primary',remote:true %>
+                  <div class="pull-right">
+                    <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today) %>
+                    <% if e.id == current_user.employee_id %>
+                      <small class="label label-success">Wish You A Very Happy Birthday!</small>
+                    <% else %>
+                      <% if @greeting.empty? %>
+                        <%= link_to 'Wish', modal_for_mail_greetings_path(emp_id: e.id),class: 'btn btn-xs btn-primary',remote:true %>
+                      <% else %>
+                          <small class="label label-success">Message Sent</small>
+                      <% end %>
+                    <% end %>
                   </div>
                   <span class="users-list-date"><%= e.contact_no %></span>
-                  </div>
+                </div>
                  
                 <% end %>
             </li><!-- /.item -->

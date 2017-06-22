@@ -1584,7 +1584,10 @@ def update_daily_attendance
   present = params[:employee_attendance][:present]
   comment = params[:employee_attendance][:comment]
 
-  @employee_attendance.update(in_time: in_time,out_time: out_time,present: present,comment: comment)
+  total_hrs = out_time.to_time - in_time.to_time
+  working_hrs = total_hrs/3600
+
+  @employee_attendance.update(in_time: in_time,out_time: out_time,present: present,comment: comment,working_hrs: working_hrs.round(2))
   flash[:notice] = "Updated Successfully!"
   redirect_to datewise_daily_attendance_employee_attendances_path
 end

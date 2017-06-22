@@ -6,6 +6,7 @@ class CandidateInterviewSchedulesController < ApplicationController
   def index
     @candidate_forms = CandidateForm.all
     # @candidate_interview_schedules = CandidateInterviewSchedule.all
+    session[:active_tab] = "VacancyRequest"
   end
 
   # GET /candidate_interview_schedules/1
@@ -25,11 +26,27 @@ class CandidateInterviewSchedulesController < ApplicationController
 
   # POST /candidate_interview_schedules
   # POST /candidate_interview_schedules.json
-  def create
+
+ def create
     @candidate_interview_schedule = CandidateInterviewSchedule.new(candidate_interview_schedule_params)
-    @candidate_interview_schedule.save
-    redirect_to candidate_interview_schedules_path
+
+    respond_to do |format|
+      if @candidate_interview_schedule.save
+        format.html { redirect_to @candidate_interview_schedule, notice: 'Interview scheduled Successfully.' }
+        format.json { render :show, status: :created, location: @candidate_interview_schedule }
+      else
+        format.html { render :new }
+        format.json { render json: @candidate_interview_schedule.errors, status: :unprocessable_entity }
+      end
+    end
   end
+
+
+  # def create
+  #   @candidate_interview_schedule = CandidateInterviewSchedule.new(candidate_interview_schedule_params)
+  #   @candidate_interview_schedule.save
+  #    redirect_to candidate_interview_schedules_path
+  # end
 
   # PATCH/PUT /candidate_interview_schedules/1
   # PATCH/PUT /candidate_interview_schedules/1.json
@@ -53,6 +70,11 @@ class CandidateInterviewSchedulesController < ApplicationController
       format.html { redirect_to candidate_interview_schedules_url, notice: 'Candidate interview schedule was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def interview
+    @candidate_interview_schedules = CandidateInterviewSchedule.all
+    
   end
 
   private

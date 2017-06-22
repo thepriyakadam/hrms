@@ -30,7 +30,9 @@ class HomeController < ApplicationController
         @employee = Employee.find(current_user.employee_id)
       elsif current_user.role.name == 'AccountAdmin'
         @employee = Employee.find(current_user.employee_id)
-      else current_user.role.name == 'Account'
+      elsif current_user.role.name == 'Account'
+        @employee = Employee.find(current_user.employee_id)
+      else current_user.role.name == 'NewEmployee'
         @employee = Employee.find(current_user.employee_id)
       end
     else

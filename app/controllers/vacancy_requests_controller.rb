@@ -5,6 +5,7 @@ class VacancyRequestsController < ApplicationController
   # GET /vacancy_requests.json
   def index
     @vacancy_requests = VacancyRequest.all
+    session[:active_tab] = "VacancyRequest"
   end
 
   # GET /vacancy_requests/1
@@ -15,6 +16,7 @@ class VacancyRequestsController < ApplicationController
   # GET /vacancy_requests/new
   def new
     @vacancy_request = VacancyRequest.new
+    session[:active_tab] = "VacancyRequest"
   end
 
   # GET /vacancy_requests/1/edit
@@ -31,7 +33,7 @@ class VacancyRequestsController < ApplicationController
         
         @vacancy_request.update(current_status: "Pending")
         VacancyRequestStatus.create(vacancy_request_id: @vacancy_request.id,status: "Pending",action_by_id: current_user.employee_id,action_date: Date.today)
-        
+         # VacancyRequestMailer.pending(@vacancy_request).deliver_now
         format.html { redirect_to @vacancy_request, notice: 'Vacancy request was successfully created.' }
         format.json { render :show, status: :created, location: @vacancy_request }
       else
@@ -71,6 +73,7 @@ class VacancyRequestsController < ApplicationController
     indirect_subordinate = current_login.indirect_subordinates.pluck(:id)
     @vacancy_request_pending = VacancyRequest.where(approval_by_id: subordinate).where("current_status = ? || current_status = ?","Pending","Approved & Send Next")
     @vacancy_request_first_approved = VacancyRequest.where(request_by_id: indirect_subordinate).where("current_status = ? ","FirstApproved")
+    session[:active_tab] = "VacancyRequest"
   end
 
   def approval_detail
@@ -94,6 +97,7 @@ class VacancyRequestsController < ApplicationController
     second_manager_id = employee.manager_2_id 
     @vacancy_request.update(current_status: "FirstApproved",approval_by_id: current_user.employee_id)
     VacancyRequestStatus.create(vacancy_request_id: @vacancy_request.id,action_by_id: current_user.employee_id,action_date: Date.today,status: "FirstApproved")
+    VacancyRequestMailer.first_approve(@vacancy_request).deliver_now
     flash[:notice] = 'Vacancy Request Approved Successfully at First Level'
     redirect_to approval_list_vacancy_requests_path
   end
@@ -102,6 +106,7 @@ class VacancyRequestsController < ApplicationController
     @vacancy_request = VacancyRequest.find(params[:format])
     @vacancy_request.update(current_status: "Approved",approval_by_id: current_user.employee_id)
     VacancyRequestStatus.create(vacancy_request_id: @vacancy_request.id,action_by_id: current_user.employee_id,action_date: Date.today,status: "Approved")
+    VacancyRequestMailer.second_approve(@vacancy_request).deliver_now
     flash[:notice] = 'Vacancy Request Approved Successfully'
     redirect_to approval_list_vacancy_requests_path
   end
@@ -110,6 +115,7 @@ class VacancyRequestsController < ApplicationController
     @vacancy_request = VacancyRequest.find(params[:format])
     @vacancy_request.update(current_status: "Rejected",approval_by_id: current_user.employee_id)
     VacancyRequestStatus.create(vacancy_request_id: @vacancy_request.id,action_by_id: current_user.employee_id,action_date: Date.today,status: "Rejected")
+    # VacancyRequestMailer.first_reject(@vacancy_request).deliver_now
     flash[:alert] = 'Vacancy Request Rejected'
     redirect_to approval_list_vacancy_requests_path
   end
@@ -127,18 +133,21 @@ class VacancyRequestsController < ApplicationController
 
   def final_approval_list
     @vacancy_requests = VacancyRequest.where(current_status: "Approved")
+    session[:active_tab] = "VacancyRequest"
   end
 
   def final_approve
     @vacancy_request = VacancyRequest.find(params[:format])
     @vacancy_request.update(current_status: "FinalApproved",approval_by_id: current_user.employee_id)
     VacancyRequestStatus.create(vacancy_request_id: @vacancy_request.id,action_by_id: current_user.employee_id,action_date: Date.today,status: "FinalApproved")
+    VacancyRequestMailer.final_approve(@vacancy_request).deliver_now
     flash[:notice] = 'Vacancy Request Approved Successfully'
     redirect_to final_approval_list_vacancy_requests_path
   end
 
   def admin_approval
     @vacancy_requests = VacancyRequest.where.not(current_status: "FinalApproved")
+    session[:active_tab] = "VacancyRequest"
   end
 
   def admin_approval_detail
@@ -148,9 +157,8 @@ class VacancyRequestsController < ApplicationController
   end
 
   def select_candidate
-
     @vacancy_requests = VacancyRequest.where(current_status: "FinalApproved")
-
+    session[:active_tab] = "VacancyRequest"
   end
 
   private

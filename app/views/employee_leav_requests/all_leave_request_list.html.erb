@@ -12,8 +12,6 @@
             <tr>
               <th>ID</th>
               <th>Employee</th>
-              <th>Category</th>
-              <th>Day</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -23,8 +21,6 @@
               <tr>
                 <td><%= fl.employee.try(:manual_employee_code) %></td>
                 <td><%= full_name(fl.employee) %></td>
-                <td><%= fl.leav_category.try(:name) %></td>
-                <td><%= fl.leave_count %></td>
                 <td>
                   <%= link_to 'View Detail', admin_employee_history_with_current_leave_employee_leav_requests_path(fl),class: 'btn btn-sm btn-info' %>
                 </td>
@@ -41,8 +37,6 @@
             <tr>
               <th>ID</th>
               <th>Employee</th>
-              <th>Category</th>
-              <th>Day</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -52,8 +46,6 @@
               <tr>
                 <td><%= sl.employee.try(:manual_employee_code) %></td>
                 <td><%= full_name(sl.employee) %></td>
-                <td><%= sl.leav_category.try(:name) %></td>
-                <td><%= sl.leave_count %></td>
                 <td>
                   <%= link_to 'View Detail', admin_employee_history_with_current_leave_employee_leav_requests_path(sl),class: 'btn btn-sm btn-info' %>
                 </td>

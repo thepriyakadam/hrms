@@ -8,15 +8,21 @@
 
 <div class="row">
   <div class="col-sm-3">
-    <div class="field">
+    <div class="form-group required">
       <%= f.text_field :name, label: 'Candidate Name' %>
     </div>
   </div>
 
   <div class="col-sm-3">
     <div class="field">
+     <div class="input-group">
+         <div class="input-group-addon">
+           <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+               </div>
+
       <%= f.select :degree_id,all_degree,{include_blank: 'Select Qualification',label: 'Select Qualification'} %>
-    </div>
+  </div>
+  </div>
   </div>
 
   <div class="col-sm-3">
@@ -25,7 +31,7 @@
     </div>
   </div>
    <div class="col-sm-3">
-    <div class="field">
+    <div class="form-group required">
       <%= f.text_field :contact_no, label: 'Contact No.' %>
     </div>
   </div>
@@ -35,7 +41,7 @@
  
 
    <div class="col-sm-3">
-    <div class="field">
+    <div class="form-group required">
       <%= f.text_field :email, label: 'Email' %>
     </div>
   </div>
@@ -51,7 +57,7 @@
     </div>
   </div>
    <div class="col-sm-3">
-    <div class="field">
+    <div class="form-group required">
       <%= f.text_field :notice_period, label: 'Notice Period' %>
     </div>
   </div>
@@ -63,7 +69,9 @@
 
    <div class="col-sm-3">
      <div class="form-group required">
-          <%= f.select :selected_by, all_active_employee_with_code, {include_blank: "Selected BY",label: "Selected By"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1",onchange:"var a={id:$(this).val()}; $.get('/employee_resignations/display_notice_period',a,function(response){});"}%>    
+
+             <%= f.select :selected_by_id, all_active_employee_with_code, {include_blank: "Select Employee",label: "Selected By"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+      
           </div>
   </div>
 
@@ -108,12 +116,6 @@ $("#candidate_form").validate({
       "candidate_form[email]":{
         required: true,
          },
-      "candidate_form[candidate_type]":{
-        required: true,
-         },
-      "candidate_form[experience]":{
-        required: true,
-         },
       "candidate_form[notice_period]":{
         required: true,
           },
@@ -136,12 +138,6 @@ $("#candidate_form").validate({
          },
       "candidate_form[email]":{
         required: "Please specify Email",
-         },
-      "candidate_form[candidate_type]":{
-        required: "Please specify Candidate Type",
-         },
-      "candidate_form[experience]":{
-        required: "Please specify Experience",
          },
       "candidate_form[notice_period]":{
         required: "Please specify Notice Period",

@@ -10,38 +10,34 @@
 
 <div class="row">
    <div class="col-sm-3">
-    <div class="field">
-      <%= f.text_field :vacancy, label: 'Vacancy' %>
+    <div class="form-group required">
+      <%= f.text_field :vacancy, label: 'Vacancy Name' %>
     </div>
   </div>
 
   <div class="col-sm-3">
-    <div class="field">
+    <div class="form-group required">
       <%= f.text_field :no_of_position, label: 'No. of Position' %>
     </div>
   </div>
 
   <div class="col-sm-3">
-    <div class="field">
+    <div class="form-group required">
       <%= f.text_field :qualification, label: 'Qualification' %>
     </div>
   </div>
   <div class="col-sm-3">
          <div class="form-group required">
-              <%= f.select :employee_designation_id,all_employee_designation,{label: 'Job Title',include_blank: " Select Job Title"} %>
+              <%= f.select :employee_designation_id,all_employee_designation,{label: 'Designation',include_blank: " Select Designation"} %>
           </div>
         </div>
 
 </div>
-
- 
-
-
 <div class="row">
   
  <div class="col-sm-3">
-          <div class="field">
-            <%= f.select :department_id,all_department_name,label: 'Department',include_blank: "Select Department" %>
+          <div class="form-group required">
+            <%= f.select :department_id,all_department_type_list2,label: 'Department',include_blank: "Select Department" %>
           </div>
         </div>
 
@@ -53,7 +49,7 @@
  
  <div class="col-sm-3">
     <div class="field">
-      <%= f.text_field :vacancy_type, label: 'Vacancy Type' %>
+      <%= f.select :vacancy_type,["Internal","External"] ,label: 'Vacancy Type',include_blank: "Select Vacancy Type" %>
     </div>
   </div>
 
@@ -107,19 +103,10 @@ $("#vacancy_request").validate({
       "vacancy_request[qualification]":{
         required: true,
          },
-      "vacancy_request[skill_set]":{
-        required: true,
-         },
       "vacancy_request[employee_designation_id]":{
         required: true,
          },
       "vacancy_request[department_id]":{
-        required: true,
-         },
-      "vacancy_request[experience]":{
-        required: true,
-          },
-      "vacancy_request[vacancy_type]":{
         required: true,
       }
     },
@@ -133,20 +120,11 @@ $("#vacancy_request").validate({
       "vacancy_request[qualification]":{
         required: "Please specify Qualification ",
          },
-      "vacancy_request[skill_set]":{
-        required: "Please specify Skill Set",
-         },
       "vacancy_request[employee_designation_id]":{
         required: "Please Select Designation",
          },
       "vacancy_request[department_id]":{
         required: "Please select Department",
-         },
-      "vacancy_request[experience]":{
-        required: "Please specify Experience",
-         },
-      "vacancy_request[vacancy_type]":{
-        required: "Please specify Vacancy Type",
       }
       
     },

@@ -2,7 +2,7 @@
   <div class="box-header">
     <h3 class="box-title"> Support </h3>
     <div class="pull-right">
-      <%= link_to "New Support Request",  new_issue_request_path, class: 'btn btn-primary' %> 
+      <%= link_to "New Support Request",  new_issue_request_path, class: 'btn btn-primary btn-sm' %> 
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
@@ -42,9 +42,9 @@
         </td>
     
        
-        <td><%= link_to '', issue_request, class: 'btn btn-default fa fa-eye btn-sm' %>
-            <%= link_to '', edit_issue_request_path(issue_request), class: 'btn btn-sm btn-success fa fa-edit' %>
-            <%= link_to '', issue_request, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-close' %>
+        <td><%= link_to '', issue_request, class: 'btn btn-default fa fa-eye btn-xs' %>
+            <%= link_to '', edit_issue_request_path(issue_request), class: 'btn btn-xs btn-success fa fa-edit' %>
+            <%= link_to '', issue_request, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close' %>
             </td>
       </tr>
     <% end %>

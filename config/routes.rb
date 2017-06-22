@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     collection do
       get :modal_for_mail
       post :send_mail
+      get :anniversary_mail
+      post :send_anniversary_mail
     end
   end
   resources :thoughts

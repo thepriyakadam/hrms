@@ -190,7 +190,6 @@
     <!-- right col (We are only adding the ID to make the widgets sortable)-->
     <section class="col-lg-5 connectedSortable">
       <div class="row">
-
         <div class="col-md-12">
           <!-- USERS LIST -->
         <div class="box box-primary">
@@ -204,8 +203,9 @@
         <div class="box-body">
           <ul class="products-list product-list-in-box">
             
+
               <% date = Date.today %>
-             <% @employees = JoiningDetail.where("DATE_FORMAT(joining_date,'%m/%Y') = ?", date.strftime('%m/%Y'))%>
+             <% @employees = JoiningDetail.where("DATE_FORMAT(joining_date,'%d/%m') = ?", date.strftime('%d/%m'))%>
             <% if @employees.empty? %>
              
             <%else%>
@@ -219,24 +219,25 @@
                   <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
                    <%else%>
                    <%= image_tag e.employee.member.avatar.url(:medium),class: "img-circle"%>
-                  <%end%>
-                   <%end%>
+                  <%end%> <!-- if -->
+                   <%end%> <!-- unless -->
                 </div> 
                 <div class="product-info">
                   <%= full_name(e.employee) %>
-                 <span class="label label-primary pull-right"><i><strong>Congratulations!</strong></i></span>
-                  <span class="users-list-date"><%= e.employee.department.try(:name) %></span>
-                  
-                  <%= link_to '', modal_for_mail_greetings_path(e.employee_id),class: 'btn btn-sm btn-primary',remote:true %>
+                <div class="pull-right">
+                  <%= link_to 'Wish', anniversary_mail_greetings_path(emp_id: e.employee_id),class: 'btn btn-xs btn-primary',remote:true %>
                   </div>
-                <% end %>
+                  <span class="users-list-date"><%= e.employee.department.try(:name) %></span>
+                  </div>
+                 
+                <% end %> <!-- do -->
             </li><!-- /.item -->
-            <%end%>
+            <%end%> <!-- if employee.empty? -->
           </ul>
         </div><!-- /.box-body -->
       </div><!-- /.box -->
 
-      <div id="birthday_email" class="modal fade"></div>
+      <div id="anniversary_email" class="modal fade"></div>
 
        <div class="box box-primary">
         <div class="box-header with-border">
@@ -248,7 +249,7 @@
         </div><!-- /.box-header -->
         <div class="box-body">
           <ul class="products-list product-list-in-box">
-            
+              <!-- <hidden_field :type, value: "Birthday" %> -->
               <% date = Date.today %>
              <% @employees = Employee.where("status = ? AND DATE_FORMAT(date_of_birth,'%d/%m') = ?", "Active" , date.strftime('%d/%m')) %>
             <% if @employees.empty? %>
@@ -269,18 +270,19 @@
                 </div> 
                 <div class="product-info">
                   <%= full_name(e) %>
-                 <span class="label label-primary pull-right"><i><strong>Happy Birthday</strong></i></span>
+                 <div class="pull-right">
+                  <%= link_to 'Wish', modal_for_mail_greetings_path(emp_id: e.id),class: 'btn btn-xs btn-primary',remote:true %>
+                  </div>
                   <span class="users-list-date"><%= e.contact_no %></span>
                   </div>
-                  <div>
-                  <%= link_to '', modal_for_mail_greetings_path(emp_id: e.id),class: 'btn btn-sm btn-primary',remote:true %>
-                  </div>
+                 
                 <% end %>
             </li><!-- /.item -->
             <%end%>
           </ul>
         </div><!-- /.box-body -->
       </div><!-- /.box -->
+      <div id="birthday_email" class="modal fade"></div>
 
       <div class="box box-primary">
         <div class="box-header with-border">
@@ -299,14 +301,12 @@
             <table  class="table table-bordered table-hover table-condensed">
               <thead>
                 <th>Name</th>
-                <th>Department</th>
                 <th>Contact No</th>
               </thead>
               <tbody>
                 <%@employees.each do |e|%>
                 <tr>
                   <td><%= full_name(e) %></td>
-                  <td><%= e.department.try(:name) %></td>
                   <td><%= e.contact_no %></td>
                 </tr>
                 <%end%>

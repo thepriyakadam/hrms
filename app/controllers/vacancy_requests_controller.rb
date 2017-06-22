@@ -33,7 +33,7 @@ class VacancyRequestsController < ApplicationController
         
         @vacancy_request.update(current_status: "Pending")
         VacancyRequestStatus.create(vacancy_request_id: @vacancy_request.id,status: "Pending",action_by_id: current_user.employee_id,action_date: Date.today)
-        # VacancyRequestMailer.pending(@vacancy_request).deliver_now
+         # VacancyRequestMailer.pending(@vacancy_request).deliver_now
         format.html { redirect_to @vacancy_request, notice: 'Vacancy request was successfully created.' }
         format.json { render :show, status: :created, location: @vacancy_request }
       else
@@ -97,6 +97,7 @@ class VacancyRequestsController < ApplicationController
     second_manager_id = employee.manager_2_id 
     @vacancy_request.update(current_status: "FirstApproved",approval_by_id: current_user.employee_id)
     VacancyRequestStatus.create(vacancy_request_id: @vacancy_request.id,action_by_id: current_user.employee_id,action_date: Date.today,status: "FirstApproved")
+    VacancyRequestMailer.first_approve(@vacancy_request).deliver_now
     flash[:notice] = 'Vacancy Request Approved Successfully at First Level'
     redirect_to approval_list_vacancy_requests_path
   end
@@ -105,6 +106,7 @@ class VacancyRequestsController < ApplicationController
     @vacancy_request = VacancyRequest.find(params[:format])
     @vacancy_request.update(current_status: "Approved",approval_by_id: current_user.employee_id)
     VacancyRequestStatus.create(vacancy_request_id: @vacancy_request.id,action_by_id: current_user.employee_id,action_date: Date.today,status: "Approved")
+    VacancyRequestMailer.second_approve(@vacancy_request).deliver_now
     flash[:notice] = 'Vacancy Request Approved Successfully'
     redirect_to approval_list_vacancy_requests_path
   end
@@ -113,6 +115,7 @@ class VacancyRequestsController < ApplicationController
     @vacancy_request = VacancyRequest.find(params[:format])
     @vacancy_request.update(current_status: "Rejected",approval_by_id: current_user.employee_id)
     VacancyRequestStatus.create(vacancy_request_id: @vacancy_request.id,action_by_id: current_user.employee_id,action_date: Date.today,status: "Rejected")
+    # VacancyRequestMailer.first_reject(@vacancy_request).deliver_now
     flash[:alert] = 'Vacancy Request Rejected'
     redirect_to approval_list_vacancy_requests_path
   end
@@ -137,6 +140,7 @@ class VacancyRequestsController < ApplicationController
     @vacancy_request = VacancyRequest.find(params[:format])
     @vacancy_request.update(current_status: "FinalApproved",approval_by_id: current_user.employee_id)
     VacancyRequestStatus.create(vacancy_request_id: @vacancy_request.id,action_by_id: current_user.employee_id,action_date: Date.today,status: "FinalApproved")
+    VacancyRequestMailer.final_approve(@vacancy_request).deliver_now
     flash[:notice] = 'Vacancy Request Approved Successfully'
     redirect_to final_approval_list_vacancy_requests_path
   end

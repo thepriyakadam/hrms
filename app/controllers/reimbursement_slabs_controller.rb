@@ -16,6 +16,8 @@ class ReimbursementSlabsController < ApplicationController
   def new
     @reimbursement_slab = ReimbursementSlab.new
     @reimbursement_slabs = ReimbursementSlab.all
+    session[:active_tab] = "PayrollManagement"
+    session[:active_tab1] ="ltareimbursement"
   end
 
   # GET /reimbursement_slabs/1/edit

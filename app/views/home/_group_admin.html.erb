@@ -224,12 +224,12 @@
                 </div> 
                 <div class="product-info">
                   <%= full_name(e.employee) %>
-                 <span class="label label-primary pull-right"><i><strong>Congratulations!</strong></i></span>
+                <div class="pull-right">
+                  <%= link_to 'Wish', anniversary_mail_greetings_path(emp_id: e.employee_id),class: 'btn btn-xs btn-primary',remote:true %>
+                  </div>
                   <span class="users-list-date"><%= e.employee.department.try(:name) %></span>
                   </div>
-                  <div class="pull-right">
-                  <%= link_to 'Wishes', anniversary_mail_greetings_path(emp_id: e.employee_id),class: 'btn btn-xs btn-primary',remote:true %>
-                  </div>
+                 
                 <% end %> <!-- do -->
             </li><!-- /.item -->
             <%end%> <!-- if employee.empty? -->
@@ -270,12 +270,12 @@
                 </div> 
                 <div class="product-info">
                   <%= full_name(e) %>
-                 <span class="label label-primary pull-right"><i><strong>Happy Birthday</strong></i></span>
+                 <div class="pull-right">
+                  <%= link_to 'Wish', modal_for_mail_greetings_path(emp_id: e.id),class: 'btn btn-xs btn-primary',remote:true %>
+                  </div>
                   <span class="users-list-date"><%= e.contact_no %></span>
                   </div>
-                  <div class="pull-right">
-                  <%= link_to 'Wishes', modal_for_mail_greetings_path(emp_id: e.id),class: 'btn btn-xs btn-primary',remote:true %>
-                  </div>
+                 
                 <% end %>
             </li><!-- /.item -->
             <%end%>
@@ -301,14 +301,12 @@
             <table  class="table table-bordered table-hover table-condensed">
               <thead>
                 <th>Name</th>
-                <th>Department</th>
                 <th>Contact No</th>
               </thead>
               <tbody>
                 <%@employees.each do |e|%>
                 <tr>
                   <td><%= full_name(e) %></td>
-                  <td><%= e.department.try(:name) %></td>
                   <td><%= e.contact_no %></td>
                 </tr>
                 <%end%>

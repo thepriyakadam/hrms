@@ -1,0 +1,26 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Code Master</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr>
+      <th><strong>Range</strong></th>
+      <td><%= @employee_code_master.range %></td>
+
+      <th><strong>Last Range</strong></th>
+      <td><%= @employee_code_master.last_range %></td>
+    </tr>
+ 
+ 
+    <tr>
+     <th><strong>Status</strong></th>
+      <td colspan="2"><%= @employee_code_master.is_active ? "Active" : "Inactive" %></td>
+    </tr>
+     </table> <br>
+
+    <%= link_to 'Edit', edit_employee_code_master_path(@employee_code_master),class: 'btn btn-sm btn-success fa fa-edit' %> |
+    <%= link_to 'Back', new_employee_code_master_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

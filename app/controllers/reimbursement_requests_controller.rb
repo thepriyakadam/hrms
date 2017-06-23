@@ -70,6 +70,8 @@ class ReimbursementRequestsController < ApplicationController
 
   def approval_list
     @reimbursement_requests = ReimbursementRequest.where(status: "Send For Approval")
+    session[:active_tab] = "PayrollManagement"
+    session[:active_tab1] ="ltareimbursement"
   end
 
   def approve

@@ -164,6 +164,8 @@ class SelfServicesController < ApplicationController
   def reimbursement_request
     @reimbursement_request = ReimbursementRequest.new
     @reimbursement_requests = ReimbursementRequest.where(employee_id: current_user.employee_id)
+    session[:active_tab] = "PayrollManagement"
+    session[:active_tab1] ="ltareimbursement"
   end
 
   def create_reimbursement_request

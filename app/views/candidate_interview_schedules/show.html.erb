@@ -1,44 +1,47 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+<div class="box-header with-border">
+    <h3 class="box-title">Interview Schedule</h3>
+  </div><!-- /.box-header -->
+ <div class="box-body">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
+  
 
-<p>
-  <strong>Candidate form:</strong>
-  <%= @candidate_interview_schedule.candidate_form %>
-</p>
+  <tr>
+  <th><strong>Interviewer Name</strong></th>
+  <td colspan="3"><% emp = Employee.find_by(id: @candidate_interview_schedule.interviewer_id) %> <%= full_name(emp) %></td>  
+   
+  </tr>
 
-<p>
-  <strong>Interviewer:</strong>
-  <%= @candidate_interview_schedule.interviewer %>
-</p>
+  <tr>
+  <th><strong>Interview type</strong></th>
+  <td><%= @candidate_interview_schedule.interview_type_master.try(:name) %></td>
+   <th><strong>Date</strong></th>
+  <td><%= @candidate_interview_schedule.date %></td>
+  
+  
+  </tr>
 
-<p>
-  <strong>Interview type master:</strong>
-  <%= @candidate_interview_schedule.interview_type_master %>
-</p>
+   <tr>
+  <th><strong>Time</strong></th>
+  <td><%= @candidate_interview_schedule.time %></td>
+   <th><strong>Place</strong></th>
+  <td><%= @candidate_interview_schedule.place %></td>
+  </tr>
 
-<p>
-  <strong>Date:</strong>
-  <%= @candidate_interview_schedule.date %>
-</p>
 
-<p>
-  <strong>Time:</strong>
-  <%= @candidate_interview_schedule.time %>
-</p>
+<tr>
+  <th><strong>Address</strong></th>
+  <td colspan="3"><%= @candidate_interview_schedule.address %></td>
+  </tr>
+<tr>
+ <th><strong>Description</strong></th>
+  <td colspan="3"><%= @candidate_interview_schedule.description %></td>
+  
+</tr>
 
-<p>
-  <strong>Place:</strong>
-  <%= @candidate_interview_schedule.place %>
-</p>
 
-<p>
-  <strong>Address:</strong>
-  <%= @candidate_interview_schedule.address %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @candidate_interview_schedule.description %>
-</p>
-
-<%= link_to 'Edit', edit_candidate_interview_schedule_path(@candidate_interview_schedule) %> |
-<%= link_to 'Back', candidate_interview_schedules_path %>
+</table><br>
+<!--<= link_to 'Edit', edit_vacancy_master_path(@vacancy_master),class: 'btn btn-success btn-sm fa fa-edit' %> -->
+<%= link_to 'Back', interview_candidate_interview_schedules_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+</div>
+</div>

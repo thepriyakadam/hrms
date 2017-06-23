@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+  resources :candidate_interview_schedules do
+    collection do
+      get :interview
+    end
+  end
   resources :greetings do
     collection do
       get :modal_for_mail

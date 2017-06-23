@@ -49,7 +49,6 @@
    config.action_mailer.perform_deliveries = true
 
 
-
    #config.action_mailer.raise_delivery_errors = true 
 
 
@@ -146,9 +145,9 @@
    # # openssl_verify_mode: 'none'
    # }
 
- config.action_mailer.default_url_options = { host: 'http://amaazia.co.in', port: 2095 }
- 
- 
+
+  config.action_mailer.default_url_options = { host: 'http://amaazia.co.in', port: 2095 }
+
   # config.domain = 'lvh.me'
   # config.action_mailer.perform_deliveries = true,
   ActionMailer::Base.delivery_method = :smtp

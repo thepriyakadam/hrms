@@ -1,0 +1,42 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">C.Off Leave</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+     <tr>
+      <th><strong> Employee </strong></th>
+      <td><%= @leave_cashable.try(:employee).try(:manual_employee_code) %></td>
+
+      <th><strong>Leave category</strong></th>
+      <td><%= @leave_cashable.try(:leav_category).try(:name) %></td>
+    </tr>
+ 
+    <tr>
+      <th><strong>Date</strong></th>
+      <td><%= @leave_cashable.date %></td>
+
+      <th><strong>Balance</strong></th>
+      <td><%= @leave_cashable.no_of_leave %></td>
+    </tr>
+ 
+ 
+    <tr>
+     <th><strong>No. of Leave Encashment</strong></th>
+      <td><%= @leave_cashable.cashable %></td>
+
+      <th><strong>Amount</strong></th>
+      <td> <%= @leave_cashable.amount %></td>
+    </tr>
+
+     <tr>
+     <th><strong>Status</strong></th>
+      <td colspan="3"><%= @leave_cashable.is_confirm ? "Yes" : "No" %></td>
+    </tr>
+
+     </table> <br>
+
+    <%= link_to 'Back', new_leave_cashable_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

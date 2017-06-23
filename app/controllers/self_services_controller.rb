@@ -47,8 +47,8 @@ class SelfServicesController < ApplicationController
   end
 
   def show_resignation_detail
-    @employee_resignation_id = EmployeeResignation.find_by_employee_id(params[:emp_id])
-    @resignation_histories = ResignationHistory.where(employee_resignation_id: @employee_resignation_id.id)
+    @employee_resignations = EmployeeResignation.find_by_employee_id(params[:emp_id])
+    # @employee_resignations = EmployeeResignation.where(id: @employee_resignation_id.id)
   end
 
   def employee_transfer

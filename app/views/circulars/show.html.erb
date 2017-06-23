@@ -1,0 +1,37 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Company Circular</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed'">
+<tr>
+  <th><strong>Download Document</strong></th>
+  <td>
+    <% if @circular.document_file_name == nil %>
+      <small class="label label-default">Not Available</small>
+          <% else %>
+            <center><%= link_to '',download_company_policy_document_path(@circular),class: 'btn btn-xs fa fa-download' %>
+      <% end %>
+    </center>
+  </td>
+
+  <th><strong>Download Image</strong></th>
+  <td>
+  <% if @circular.avatar_file_name == nil %>
+    <small class="label label-default">Not Available</small>
+      <% else %>
+    <center><%= link_to '',download_documents_path(@circular),class: 'btn btn-xs fa fa-picture-o' %></center>
+  <% end %></td>
+</tr>
+<tr>
+<th><strong>Status</strong></th>
+  <td colspan="3"><%= @circular.is_active ? "Active" : "Inactive" %></td>
+
+</tr>
+
+
+</table><br>
+<%= link_to 'Back', new_circular_path,class: 'btn btn-default fa fa-arrow-left' %>
+</div>
+</div>
+

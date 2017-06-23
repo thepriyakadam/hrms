@@ -1,21 +1,19 @@
 <!-- SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Policy Type</h3>
+    <h3 class="box-title">Employee Category</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
     <tr>
-      <th><strong>Description</strong></th>
-      <td><%= @policy_type.description  %></td>
-    </tr>
-
-    <tr>
       <th><strong>Status</strong></th>
-      <td colspan="3"><%= @policy_type.is_active ? "Active" : "Inactive" %></td>
+      <td><%= @employee_category.is_active ? "Active" : "Inactive"  %></td>
+      </tr>
+      <tr>
+      <th><strong>Description</strong></th>
+      <td><%= @employee_category.description %></td>
     </tr>
-
      </table> <br>
-    <%= link_to 'Back', new_policy_type_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+    <%= link_to 'Back', new_employee_category_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
   </div><!-- /.box-body -->
 </div><!-- /.box -->

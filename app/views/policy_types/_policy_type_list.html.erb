@@ -4,8 +4,6 @@
     <tr>  
       <th>Code</th>
       <th>Name</th>
-      <th>Description</th>
-      <th>Status</th>
       <th>Action</th>
  
   <tbody>
@@ -13,11 +11,10 @@
       <tr>
         <td><%= pt.code %></td>
         <td><%= pt.name %></td>
-        <td><%= pt.description %></td>
-         <td><%= pt.is_active ? "Active" : "Inactive" %></td>
         <td>
             <%= link_to '', edit_policy_type_path(pt),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  pt, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
+            <%= link_to '', pt,class: 'btn btn-default btn-xs fa fa-eye' %>
         </td>
       </tr>
     <% end %>

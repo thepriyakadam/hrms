@@ -50,19 +50,21 @@ class LeaveStatusRecordsController < ApplicationController
           @employee_leav_request.create_attendance
           LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FinalApproved")
           LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
-          a=@employee_leav_request.first_reporter_id
-          b=@employee_leav_request.second_reporter_id
-          if a == current_user.employee_id || b == current_user.employee_id
+          if @employee_leav_request.first_reporter_id == current_user.employee_id
             redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
             flash[:notice] = 'Leave Request Approved Successfully.'
-          elsif @employee_leav_request.current_status == "FinalApproved"
+          else
             redirect_to all_leave_request_list_employee_leav_requests_path
             flash[:notice] = 'Leave Request Approved Successfully by Admin.'
-          else
           end
         else
-          flash[:alert] = 'Leave Already Approved. Please refresh page.'
-          redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
+          if @employee_leav_request.first_reporter_id == current_user.employee_id
+            redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
+            flash[:alert] = 'Leave Already Approved. Please refresh page.'
+          else
+            redirect_to all_leave_request_list_employee_leav_requests_path
+            flash[:alert] = 'Leave Already Approved. Please refresh page.'
+          end  
         end
       end
     ### if second reporter available
@@ -78,19 +80,21 @@ class LeaveStatusRecordsController < ApplicationController
         if @leave_status.save
           @employee_leav_request.update(is_first_approved: true, current_status: 'FirstApproved', second_reporter_id: @employee_leav_request.employee.manager_2_id)
           LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
-          a=@employee_leav_request.first_reporter_id
-          b=@employee_leav_request.second_reporter_id
-          if a == current_user.employee_id || b == current_user.employee_id
+          if @employee_leav_request.first_reporter_id == current_user.employee_id
             redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
             flash[:notice] = 'Leave Request Approved Successfully.'
-          elsif @employee_leav_request.current_status == "FirstApproved"
+          else
             redirect_to all_leave_request_list_employee_leav_requests_path
             flash[:notice] = 'Leave Request Approved Successfully by Admin.'
-          else
           end
         else
-          flash[:alert] = 'Leave Already Approved. Please refresh page.'
-          redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
+          if @employee_leav_request.first_reporter_id == current_user.employee_id
+            flash[:alert] = 'Leave Already Approved. Please refresh page.'
+            redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
+          else
+            flash[:alert] = 'Leave Already Approved. Please refresh page.'
+            redirect_to all_leave_request_list_employee_leav_requests_path
+          end
         end
       end
     end
@@ -111,17 +115,21 @@ class LeaveStatusRecordsController < ApplicationController
         @employee_leav_request.create_attendance
         LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FinalApproved")
         LeaveRequestMailer.second_approve(@employee_leav_request).deliver_now
-        a=@employee_leav_request.first_reporter_id
-        b=@employee_leav_request.second_reporter_id
-        if a == current_user.employee_id || b == current_user.employee_id
+        if @employee_leav_request.second_reporter_id == current_user.employee_id
           redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
           flash[:notice] = 'Leave Request Approved Successfully.'
-        elsif @employee_leav_request.current_status == "FinalApproved"
+        else
           redirect_to all_leave_request_list_employee_leav_requests_path
           flash[:notice] = 'Leave Request Approved Successfully by Admin.'
-        else
         end
       else
+        if @employee_leav_request.second_reporter_id == current_user.employee_id
+          flash[:alert] = 'Leave Already Approved. Please refresh page.'
+          redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
+        else
+          flash[:alert] = 'Leave Already Approved. Please refresh page.'
+          redirect_to all_leave_request_list_employee_leav_requests_path
+        end
       end
     end
   end
@@ -136,18 +144,23 @@ class LeaveStatusRecordsController < ApplicationController
     ActiveRecord::Base.transaction do
       if @leave_status.save
         @employee_leav_request.update(is_first_rejected: true, current_status: 'Rejected')
-      LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Rejected")   
-      @employee_leav_request.revert_leave(@employee_leav_request)
-      LeaveRequestMailer.first_reject(@employee_leav_request).deliver_now
-        a=@employee_leav_request.first_reporter_id
-        b=@employee_leav_request.second_reporter_id
-        if a == current_user.employee_id || b == current_user.employee_id
+        LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Rejected")   
+        @employee_leav_request.revert_leave(@employee_leav_request)
+        LeaveRequestMailer.first_reject(@employee_leav_request).deliver_now
+        if @employee_leav_request.first_reporter_id == current_user.employee_id
           redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
           flash[:alert] = 'Leave Request Rejected Successfully.'
-        elsif @employee_leav_request.current_status == "Rejected"
+        else
           redirect_to all_leave_request_list_employee_leav_requests_path
           flash[:alert] = 'Leave Request Rejected Successfully by Admin.'
+        end
+      else
+        if @employee_leav_request.first_reporter_id == current_user.employee_id
+          flash[:alert] = 'Leave Already Rejected. Please refresh page.'
+          redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
         else
+          flash[:alert] = 'Leave Already Rejected. Please refresh page.'
+          redirect_to all_leave_request_list_employee_leav_requests_path
         end
       end
     end
@@ -166,19 +179,21 @@ class LeaveStatusRecordsController < ApplicationController
         LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Rejected")
         @employee_leav_request.revert_leave(@employee_leav_request)
         LeaveRequestMailer.second_reject(@employee_leav_request).deliver_now
-        a=@employee_leav_request.first_reporter_id
-        b=@employee_leav_request.second_reporter_id
-        if a == current_user.employee_id || b == current_user.employee_id
+        if @employee_leav_request.second_reporter_id == current_user.employee_id
           redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
           flash[:alert] = 'Leave Request Rejected Successfully.'
-        elsif @employee_leav_request.is_second_rejected == true
+        else
           redirect_to all_leave_request_list_employee_leav_requests_path
           flash[:alert] = 'Leave Request Rejected Successfully by Admin.'
-        else
         end
       else
-        flash[:alert] = 'Leave Already Rejected. Please refresh page.'
-        redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
+        if @employee_leav_request.second_reporter_id == current_user.employee_id
+          flash[:alert] = 'Leave Already Rejected. Please refresh page.'
+          redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
+        else
+          flash[:alert] = 'Leave Already Rejected. Please refresh page.'
+          redirect_to all_leave_request_list_employee_leav_requests_path
+        end
       end
     end
   end

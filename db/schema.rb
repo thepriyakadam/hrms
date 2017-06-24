@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170525131109) do
+ActiveRecord::Schema.define(version: 20170612103424) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1370,14 +1370,16 @@ ActiveRecord::Schema.define(version: 20170525131109) do
   end
 
   create_table "exit_interviews", force: :cascade do |t|
-    t.integer  "employee_id",        limit: 4
-    t.integer  "question_master_id", limit: 4
-    t.text     "answer",             limit: 65535
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.integer  "employee_id",             limit: 4
+    t.integer  "question_master_id",      limit: 4
+    t.text     "answer",                  limit: 65535
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.integer  "employee_resignation_id", limit: 4
   end
 
   add_index "exit_interviews", ["employee_id"], name: "index_exit_interviews_on_employee_id", using: :btree
+  add_index "exit_interviews", ["employee_resignation_id"], name: "index_exit_interviews_on_employee_resignation_id", using: :btree
   add_index "exit_interviews", ["question_master_id"], name: "index_exit_interviews_on_question_master_id", using: :btree
 
   create_table "expencess_types", force: :cascade do |t|
@@ -1834,12 +1836,12 @@ ActiveRecord::Schema.define(version: 20170525131109) do
     t.boolean  "status"
     t.datetime "created_at",                                                         null: false
     t.datetime "updated_at",                                                         null: false
+    t.boolean  "is_confirm",                                         default: false
+    t.text     "comment",               limit: 65535
     t.string   "document_file_name",    limit: 255
     t.string   "document_content_type", limit: 255
     t.integer  "document_file_size",    limit: 4
     t.datetime "document_updated_at"
-    t.boolean  "is_confirm",                                         default: false
-    t.text     "comment",               limit: 65535
   end
 
   add_index "investment_declarations", ["employee_id"], name: "index_investment_declarations_on_employee_id", using: :btree
@@ -3705,6 +3707,7 @@ ActiveRecord::Schema.define(version: 20170525131109) do
 
   add_foreign_key "employee_jc_lists", "employees"
   add_foreign_key "employee_jc_lists", "joining_checklist_masters"
+  add_foreign_key "exit_interviews", "employee_resignations"
   add_foreign_key "status_c_offs", "employees"
   add_foreign_key "status_c_offs", "leave_c_offs"
   add_foreign_key "visitor_details", "authorized_bies"

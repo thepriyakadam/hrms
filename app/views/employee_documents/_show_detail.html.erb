@@ -12,8 +12,9 @@
     </div>
   </div>
     <div class="box-tools pull-right">
-      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
-      <%= link_to "Add Document", ajax_new_employee_document_employees_path(id: @employee.id), class: 'btn btn-primary btn-sm',remote:true %>
+    <%= link_to "Add Document", ajax_new_employee_document_employees_path(id: @employee.id), class: 'btn btn-primary btn-sm',remote:true %>
+    <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      
     </div>
   </div><!-- /.box-header --><br>
   <div class="box-body">

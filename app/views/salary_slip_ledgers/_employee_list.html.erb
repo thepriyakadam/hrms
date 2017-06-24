@@ -5,7 +5,7 @@
     <tr>
       <th colspan="6"><center> BASIC DETAILS</center></th>
       <th colspan="13"><center> SALARY DETAILS</center></th>
-      <th colspan="12"><center> WORKING DAYS</center></th>
+      <th colspan="8"><center> WORKING DAYS</center></th>
       <th colspan="13"><center> EARNED SALARY</center></th>
       <th colspan="12"><center>DEDUCTION</center></th>
       <th><center> NET </center></th>
@@ -34,12 +34,8 @@
       <th>MA</th>
       <th>Total</th>
 
-      <th>CL</th>
-      <th>EL</th>
-      <th>AL</th>
-      <th>Coff</th>
-      <th>ESIC</th>
-      <th>LWP</th>
+      <th>Pay Leave</th>
+      <th>Non Pay Leave</th>
       <th>Payable</th>
       <th>PD</th>
       <th>AD</th>
@@ -103,13 +99,8 @@
          <td><%= r.try(:actual_monthly_arrear).try(:round) %></td>
         <td><%= r.try(:actual_total).try(:round) %></td>
 
-        <td><%= r.try(:cl_leave) %></td>
-        <td><%= r.try(:el_leave) %></td>
-        <td><%= r.try(:advance_leave) %></td>
-        <td><%= r.try(:coff_leave) %></td>
-        <td><%= r.try(:esic_leave) %></td>
-
-        <td><%= r.try(:lwp_leave) %></td>
+        <td><%= r.try(:pay_leave) %></td>
+        <td><%= r.try(:nonpay_leave) %></td>
         <td><%= r.try(:payable_day) %></td>
         <td><%= r.try(:present_day) %></td>
         <td><%= r.try(:absent_day) %></td>
@@ -171,14 +162,9 @@
       <td><%= @sum.actual_mra.try(:round) %></td>
        <td><%= @sum.actual_monthly_arrear.try(:round) %></td>
       <td><%= @sum.actual_total.try(:round) %></td>
-      
-      <td><%= @sum.cl_leave %></td>
-      <td><%= @sum.el_leave %></td>
-      <td><%= @sum.advance_leave %></td>
-      <td><%= @sum.coff_leave %></td>
-      <td><%= @sum.esic_leave %></td>
-
-      <td><%= @sum.lwp_leave %></td>
+  
+      <td><%= @sum.pay_leave %></td>
+      <td><%= @sum.nonpay_leave %></td>
       <td><%= @sum.payable_day %></td>
       <td><%= @sum.present_day %></td>
       <td><%= @sum.absent_day %></td>

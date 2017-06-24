@@ -34,9 +34,9 @@
             <% when "Pending" %>
               <small class="label label-default">Pending</small>
             <% when "FirstApproved" %>
-              <small class="label label-primary">FirstApproved</small>
-              <% when "SecondApproved" %>
-              <small class="label label-info">SecondApproved</small>
+              <small class="label label-warning">FirstApproved</small>
+              <% when "Approved" %>
+              <small class="label label-primary">Approved</small>
               <% when "FinalApproved" %>
               <small class="label label-success">FinalApproved</small>
               <% when "Approved & Send Next" %>
@@ -44,14 +44,17 @@
               <% when "Rejected" %>
               <small class="label label-danger">Rejected</small>
               <% when "Cancelled" %>
-              <small class="label label-warning">Cancelled</small>
-              <% else %>
-              <small class="label label-success">Else</small>
+              <small class="label label-danger">Cancelled</small>
              <% end %>
              <% end %>
         </td>
         <td>
-            <%= link_to 'Show', travel_request,class: 'btn btn-xs btn-info fa fa-check' %>
+            <% if travel_request.current_status == "Pending" %>
+              <%= link_to '', travel_request,class: 'btn btn-xs btn-default fa fa-eye' %>
+              <%= link_to '', cancel_travel_request_travel_requests_path(travel_request),class: 'btn btn-xs btn-danger fa fa-trash-o' %>
+            <% else %>
+              <%= link_to '', travel_request,class: 'btn btn-xs btn-default fa fa-eye' %>
+            <% end %>
         </td>
       </tr>
     <% end %>

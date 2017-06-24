@@ -189,8 +189,8 @@ class EmployeePromotionsController < ApplicationController
                       :left   => 20,
                       :right  => 20},
         :show_as_html => params[:debug].present?
-     end
         end
+      end
   end
 
   private

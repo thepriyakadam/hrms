@@ -2,6 +2,7 @@ class EmployeeResignation < ActiveRecord::Base
   belongs_to :employee
   belongs_to :reporting_master
   belongs_to :leaving_reason
+  belongs_to :exit_interview
   has_many :due_employee_details
   has_many :resignation_status_records
   belongs_to :second_reporter, class_name: 'Employee'

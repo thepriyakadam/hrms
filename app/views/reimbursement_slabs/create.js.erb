@@ -1,0 +1,6 @@
+<%if @flag == true %>
+  $("#form").html("<%= j render 'form' %>");
+  $("#reimbursement_slab_list").html("<%= j render 'reimbursement_slab_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

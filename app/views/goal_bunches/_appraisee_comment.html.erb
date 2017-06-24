@@ -232,10 +232,13 @@
             <td><%= goal_rating.appraisee_comment %></td>
             <td><%= appraisee_rating = goal_rating.try(:appraisee_rating).try(:value) %></td>
             <td>
-            <% if @goal_bunch.appraisee_confirm == true %>
-              <small class="label label-info">Confirmed</small>
-            <% else %>
-              <%= link_to '', self_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote: true %> 
+              <% if @goal_bunch.appraisee_confirm == true %>
+                <small class="label label-info">Confirmed</small>
+              <% else %>
+                <% if @goal_bunch.appraisee_rating_id == nil %>
+                  <%= link_to '', self_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote: true %> 
+                <% else %>
+                <% end %>
               <% end %>
             </td>
             <% appraisee_output = weightage * appraisee_rating.to_i / 100.to_f %>
@@ -275,11 +278,13 @@
             <td><%= goal_rating.appraisee_comment %></td>
             <td><%= appraisee_rating = goal_rating.try(:appraisee_rating).try(:value) %></td>
             <td>
-            <% if @goal_bunch.appraisee_confirm == true %>
-              <small class="label label-info">Confirmed</small>
-            <% else %>
-              <%= link_to '', self_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote: true %>
-              
+              <% if @goal_bunch.appraisee_confirm == true %>
+                <small class="label label-info">Confirmed</small>
+              <% else %>
+                <% if @goal_bunch.appraisee_rating_id == nil %>
+                  <%= link_to '', self_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote: true %> 
+                <% else %>
+                <% end %>
               <% end %>
             </td>
             <% appraisee_output = weightage * appraisee_rating.to_i / 100.to_f %>

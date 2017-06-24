@@ -1,0 +1,76 @@
+
+    <%= bootstrap_form_for(@rembursment, url: {action: 'create_emp_rembursment'},html: {id: 'rembursment'}) do |f| %>
+   
+     <%= f.hidden_field :application_date, value: Date.today %>
+     <%= f.hidden_field :employee_id, value: current_user.employee_id %>
+
+      <div class="row">
+        <div class="col-sm-3">
+        <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :rembursment_date,class: 'rembursment',label:'Rembursment Date'%>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.select :rembursmentmaster_id, all_rembursment,{label: 'Rembursment',include_blank: " Select Rembursment"} %>
+          </div>
+        </div>
+
+          <div class="col-sm-3">
+         <div class="field">
+           <%= f.text_field :amount, label:'Amount' %>
+         </div>
+       </div>
+       </div>
+     <div class="col-sm-6">
+     <label></label>
+      <div class="actions">
+        <%= f.submit 'Create Rembursment',class: "btn btn-primary btn-sm"  %>
+        
+      </div>
+     </div>
+   </div>
+  <% end %>
+   
+<script type="text/javascript">
+  $(function(){
+    $('.rembursment').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-5:+10',
+    dateFormat: 'dd-mm-yy' });
+     });
+</script>
+
+<script>
+$("#rembursment").validate({
+    rules: {
+      "rembursment[rembursment_date]":{
+        required: true,
+      },
+      "rembursment[amount]":{
+        required: true,
+      }
+    },
+    messages: {
+      "rembursment[rembursment_date]":{
+        required: "Please Select Rembursment Date",
+      },
+      "rembursment[amount]":{
+        required: "Please specify Amount",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

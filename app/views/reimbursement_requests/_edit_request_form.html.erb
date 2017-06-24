@@ -1,0 +1,85 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h5 class="modal-title"><center> Update Request </center></h5>
+    </div>
+    <div class="modal-body">
+
+    <%= bootstrap_form_for @reimbursement_request,html: {id: "reimbursement_request"},url:{action:'update_request_modal',reimbursement_request_id: @reimbursement_request.id} do |f| %>
+      <%=  f.hidden_field :employee_id, value: @reimbursement_request.employee_id %>
+
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.select :reimbursement_head_id,all_reimbursement_head,{include_blank: "Select Head",label: "Head", placeholder: 'Reimbursement Head'} %>   
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                  <%= f.text_field :date,label: "Date",class: 'date'%>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :amount,label: "Amount", placeholder: 'Amount' %>
+            </div>
+          </div>
+
+          <div class="col-sm-2" style="padding-top:20px;">
+            <%= f.submit "Update", class: 'btn btn-success btn-sm' %>
+          </div>
+        </div>
+      <% end %>
+     
+  
+      </div>
+    <div class="modal-footer"></div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+
+<script type="text/javascript">
+  $(function(){
+    $('.date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+
+   }); 
+
+  $("#reimbursement_request").validate({
+    rules: {
+       "reimbursement_request[reimbursement_head_id]":{
+        required: true,
+      },
+       "reimbursement_request[amount]":{
+        required: true,
+      },
+       "reimbursement_request[date]":{
+        required: true,
+      }
+    },
+    messages: {
+      "reimbursement_request[reimbursement_head_id]":{
+        required: "Please Select reimbursement_head_id",
+      },
+      "reimbursement_request[amount]":{
+        required: "Please Specify amount",
+      },
+      "reimbursement_request[date]":{
+        required: "Please Specify date",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

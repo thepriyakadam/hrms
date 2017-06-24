@@ -1,13 +1,10 @@
-<table id="example" class="table table-bordered table-hover table-condensed">
+ <div class="box-body">
+  <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
-  <tr><th colspan="8"><center> Leave History</center></th></tr>
+  <tr><th colspan="4"><center>Leave History</center></th></tr>
     <tr>
       <th>ID</th>
       <th>Leave Category</th>
-      <th>Leave Type</th>
-      <th>Start Date</th>
-      <th>End Date</th>
-      <th>Days</th>
       <th>Status</th>
       <th>Action</th>
     </tr>
@@ -16,12 +13,8 @@
   <tbody>
     <% @employee_leav_requests.each do |employee_leav_request| %>
       <tr>
-        <td><%= employee_leav_request.employee.try(:manual_employee_code)%>
+        <td><%= employee_leav_request.employee.try(:manual_employee_code)%></td>
         <td><%= employee_leav_request.leav_category.try(:code) %> - <%= employee_leav_request.leav_category.try(:name) %></td>
-        <td><%= employee_leav_request.leave_type %></td>
-        <td><%= employee_leav_request.start_date.to_date %></td>
-        <td><%= employee_leav_request.try(:end_date).try(:to_date) %></td>
-        <td><%= employee_leav_request.leave_count %></td>
         <td>
           <% employee_leav_request.leave_status_records.try(:each) do |r| %>
             <% case r.status %>
@@ -47,14 +40,16 @@
             <%= link_to 'Revert',show_leave_record_particular_leave_records_path(employee_leav_request), class: 'btn btn-danger btn-xs' %>
           <% else %>
           <% end %>
+          <%= link_to '', employee_leav_request,class: 'btn btn-default btn-xs fa fa-eye' %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+</div>
 <script type="text/javascript">
   $(document).ready(function() {
-    $('#example').DataTable( {
+    $('#example2').DataTable( {
         "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
     } );
 } );

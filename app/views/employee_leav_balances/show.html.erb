@@ -18,10 +18,15 @@
     </tr>
     <tr>
     	<th><strong>Leave Category</strong></th>
-    	<td><%= @employee_leav_balance.leav_category.try(:name) %></td>
+    	<td><%=  @employee_leav_balance.leav_category.try(:code) %> - <%= @employee_leav_balance.leav_category.try(:name) %></td>
    
     	<th><strong>No. of Leave</strong></th>
     	<td> <%= @employee_leav_balance.no_of_leave %></td>
+    </tr>
+
+    <tr>
+    <th><strong>Location</strong></th>
+    <td colspan="3"> <%= @employee_leav_balance.employee.try(:company_location).try(:name) %></td>
     </tr>
 
     </table>

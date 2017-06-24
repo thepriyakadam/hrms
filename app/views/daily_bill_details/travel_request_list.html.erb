@@ -10,10 +10,7 @@
     <tr>
       <th>ID</th>
       <th>Employee Name</th>
-      <th>Department</th>
-      <th>Application Date</th>
       <th>Place</th>
-      <th>Advance</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -23,15 +20,12 @@
       <tr>
         <td><%= travel_request.employee.try(:manual_employee_code) %></td>
         <td><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></td>
-        <td><%= travel_request.employee.company_location.try(:name) %> - <%= travel_request.employee.department.try(:name) %></td>
-        <td><%= travel_request.application_date %></td>
         <td><%= travel_request.place %></td>
-        <td><%= travel_request.total_advance %></td>
         <td>
            <!--  < if travel_request.daily_bill_status == "true" %>
             <small class="label label-success">Approved</small>
             < else %> -->
-            <%= link_to 'Approve / Reject', daily_bill_request_confirmation_daily_bill_details_path(travel_request),class: 'btn btn-sm btn-primary' %>
+            <%= link_to 'Approve', daily_bill_request_confirmation_daily_bill_details_path(travel_request),class: 'btn btn-sm btn-primary' %>
             <!--< end %>-->
         </td>
       </tr>

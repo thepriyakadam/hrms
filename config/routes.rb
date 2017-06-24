@@ -787,6 +787,8 @@ end
       get :period_rating_wise_xls
       get :increment_index_report
       get :detail_employee_wise
+      get :show_goal_rating
+      get :show_attribute
     end
   end
   #post 'goal_ratings/update_goal_set_modal'

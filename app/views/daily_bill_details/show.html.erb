@@ -21,12 +21,31 @@
   <tr>
   <th><strong>Currency Type</strong></th>
   <td><%= @daily_bill_detail.currency_master.try(:name) %></td>
-  <th><strong></strong></th>
-  <td></td>
+  <th><strong>Download Document</strong></th>
+  <td> 
+    <% if @daily_bill_detail.avatar_file_file_name == nil %>
+      <small class="label label-default">Not Available</small>
+       <% else %>
+        <%= link_to '',download_doc_path(@daily_bill_detail),class: 'btn btn-xs fa fa-download',:target => "_blank" %>
+      <% end %>
+  </td>
+  </tr>
+
+  <tr>
+    <th><strong>Download Image</strong></th>
+     <td colspan="3">
+                <% if @daily_bill_detail.passport_photo_file_name == nil %>
+                  <small class="label label-default">Not Available</small>
+                <% else %>
+                  <%= link_to '',download_pics_path(@daily_bill_detail),class: 'btn btn-xs fa fa-picture-o' %>
+                  <!-- <div id="myModal2" class="modal fade"></div>
+                  <= link_to 'View',image_modal_daily_bill_details_path(daily_bill_detail),remote: true %>  -->
+                <% end %>
+            </td>
   </tr>
 </table>
 <%= image_tag @daily_bill_detail.try(:passport_photo).try(:url), :size => "100x100" %><br><br>
 
-<%= link_to 'Back', new_daily_bill_detail_path(travel_request_id: @travel_request.try(:id)),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+<!-- <= link_to 'Back', new_daily_bill_detail_path(travel_request_id: @travel_request.try(:id)),class: 'btn btn-default btn-sm fa fa-arrow-left' %> -->
 </div>
 </div>

@@ -3,14 +3,10 @@
 
     <table id="example6" class="table table-bordered table-hover table-condensed">
       <thead>
-        <tr><th colspan="7"><center>Employee OD History</center></th></tr>
         <tr>
           <th>ID</th>
           <th>OD Type</th>
-          <th>From Date</th>
-          <th>To Date</th>
           <th>No. Of Days</th>
-          <th>Reason</th>
           <th>Status</th>
         </tr>
       </thead>
@@ -21,17 +17,11 @@
             <% if @current_request.id == on_duty_request.id %>
               <th><font color='green'>*<%= on_duty_request.employee.try(:manual_employee_code) %> </font></th>
               <th><font color='green'><%= on_duty_request.leave_type %></th></font>
-              <th><font color='green'><%= on_duty_request.start_date.to_date %> </th></font>
-              <th><font color='green'><%= on_duty_request.end_date.to_date %></th></font>
               <th><font color='green'><%= on_duty_request.no_of_day %></th></font>
-              <th><font color='green'><%= on_duty_request.reason %></th></font>
             <%else%>
               <td><%= on_duty_request.employee.try(:manual_employee_code) %></td>
               <td><%= on_duty_request.leave_type %></td>
-              <td><%= on_duty_request.start_date.to_date %> </td>
-              <td><%= on_duty_request.end_date.to_date %></td>
               <td><%= on_duty_request.no_of_day %></td>
-              <td><%= on_duty_request.reason %></td>
             <%end%>
             <td>
               <% on_duty_request.od_status_records.try(:each) do |r| %>

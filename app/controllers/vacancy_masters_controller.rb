@@ -188,13 +188,12 @@ end
     @vacancy_master = VacancyMaster.find(params[:format])
   end
 
-
   def send_request_to_higher_authority
     @vacancy_master = VacancyMaster.find(params[:id])
     @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
-    @particular_vacancy_requests.each do |p|
-      p.update(status: "Approved & Send Next")
-    end 
+      @particular_vacancy_requests.each do |p|
+        p.update(status: "Approved & Send Next")
+      end 
     VacancyMasterMailer.approve_and_send_next_email(@vacancy_master).deliver_now
     @vacancy_master.update(current_status: "Approved & Send Next",reporting_master_id: params[:vacancy_master][:reporting_master_id])
     VacancyRequestHistory.create(vacancy_master_id: @vacancy_master.id, vacancy_name: @vacancy_master.vacancy_name,no_of_position: @vacancy_master.no_of_position,description: @vacancy_master.description,vacancy_post_date: @vacancy_master.vacancy_post_date,budget: @vacancy_master.budget,department_id: @vacancy_master.department_id,employee_designation_id: @vacancy_master.employee_designation_id,company_location_id: @vacancy_master.company_location_id,degree_id: @vacancy_master.degree_id,degree_1_id: @vacancy_master.degree_1_id,degree_2_id: @vacancy_master.degree_2_id,experience: @vacancy_master.experience,keyword: @vacancy_master.keyword,other_organization: @vacancy_master.other_organization,industry: @vacancy_master.industry,reporting_master_id: @vacancy_master.reporting_master_id,current_status: @vacancy_master.current_status,employee_id: @vacancy_master.employee_id,justification: @vacancy_master.justification)

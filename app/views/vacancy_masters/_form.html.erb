@@ -11,7 +11,7 @@
 
        <div class="col-sm-3">
           <div class="field">
-             <%= f.text_field :other_organization,label: 'Organization',value: current_user.employee.company_location.company.description%>
+             <%= f.text_field :other_organization,label: 'Organization',value: current_user.employee.try(:company_location).try(:company).try(:description) %>
           </div>
         </div>
 

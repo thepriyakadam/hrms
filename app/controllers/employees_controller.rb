@@ -1095,6 +1095,11 @@ def employee_report
   session[:active_tab1] ="Reports"
 end
 
+def employee_detail_form
+  session[:active_tab] ="EmployeeManagement"
+  session[:active_tab1] ="Reports"  
+end
+
 def show_employee_list
   @employee = Employee.new(employee_params)
   @company = params[:employee][:company_id]
@@ -1192,13 +1197,31 @@ def show_all_record
   end
 
   def display_employee_details
-     @emp = params[:employee][:id]
+    # byebug
+     @emp = params[:employee] ? params[:employee][:id] : params[:id]
      @employee = Employee.where(id: @emp).take
      @families = Family.where(employee_id: @emp)
      @qualifications = Qualification.where(employee_id: @emp)
      @skillsets = Skillset.where(employee_id: @emp)
      @experiences = Experience.where(employee_id: @emp)
      @certifications = Certification.where(employee_id: @emp)
+
+      respond_to do |f|
+      f.js
+      f.pdf do
+        render pdf: 'display_employee_details',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employees/employee_details.pdf.erb',
+        :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 10,
+                          :right  => 10},
+            :show_as_html => params[:debug].present?
+      end
+    end
   end
 
 
@@ -1421,7 +1444,7 @@ def show_all_record
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_params
     # params.require(:employee).permit(:department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :district, :state, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender)
-    params.require(:employee).permit(:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id)
+    params.require(:employee).permit(:optional_email,:optinal_contact_no,:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id)
     # joining_detail_attributes: [:joining_date, :reference_from, :admin_hr, :tech_hr, :designation, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem])
   end
 end

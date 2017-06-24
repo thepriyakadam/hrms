@@ -31,32 +31,37 @@
 
        <td colspan="2"><strong>Date Of Joining : </strong><%= @induction_detail.employee.joining_detail.joining_date %></td>
     </tr>
-     <tr><th colspan="6"><center>Induction Activity</center></th></tr>
-    <tr>
-      <th>Sr.No</th>
-      <th>Day</th>
-      <th>From</th>
-      <th>To</th>
-      <th>Duration</th>
-      <th>Facilitator&Presenter</th>
-    </tr>
-
-  <tbody>
-  <% i = 0 %>
+   <table id="example2" class="table table-bordered table-hover table-condensed">
+ <tr><th colspan="4"><center>Induction Activity</center></th></tr>
+ <% i = 0 %>
     <% @induction_activities.each do |induction_activity| %>
-      <tr>
-        <td><%= i=i+1 %></td>
-        <td><%= induction_activity.activity_date %></td>
-        <td><%= induction_activity.from %></td>
-        <td><%= induction_activity.to %></td>
-        <td><%= induction_activity.duration %></td>
-        <td><%= induction_activity.facilitator_1 %> , 
-        <%= induction_activity.facilitator_2 %></td>
-      </tr>
-      <tr>
-      <td></td>
-      <td colspan="5"><strong>Program Agenda : </strong> <%= induction_activity.program_agenda %></td>
-      </tr>
+     
+       <tr><th colspan="4"><center>Sr. No.<%= i = i+1 %></center></th></tr>
+       <tr>
+         <th>Day</th>
+          <td><%= induction_activity.activity_date %></td>
+          <th>From</th>
+           <td><%= induction_activity.from %></td>
+       </tr>
+       <tr>
+         <th>To</th>
+         <td><%= induction_activity.to %></td>
+      <th>Duration</th>
+      <td><%= induction_activity.duration %></td>   
+       </tr>
+        <tr>
+         <th>Facilitator</th>
+        <td colspan="3"><%= induction_activity.facilitator_1 %> </td>
+        </tr>
+        <tr>
+        <th>Presenter</th>
+        <td colspan="3"><%= induction_activity.facilitator_2 %></td>
+        </tr>
+        <tr>
+        <th>Program Agenda</th>
+        
+        <td colspan="3"><%= induction_activity.program_agenda %></td>
+    </tr>
       <% end %>
   </tbody>
 </table><br>

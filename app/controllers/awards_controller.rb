@@ -49,7 +49,7 @@ class AwardsController < ApplicationController
       end
     end
   end
-
+  
   # PATCH/PUT /awards/1
   # PATCH/PUT /awards/1.json
   def update

@@ -1,0 +1,59 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Company Time Master </h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr>
+      <th><strong>Shift</strong></th>
+      <td><%= @company_time_master.shift_master.try(:name) %></td>
+
+      <th><strong>In Min Time</strong></th>
+      <td><%= @company_time_master.in_min_time %></td>
+    </tr>
+ 
+ 
+    <tr>
+     <th><strong>In Max Time</strong></th>
+      <td><%= @company_time_master.in_max_time %></td>
+
+      <th><strong>In Time</strong></th>
+      <td> <%= @company_time_master.in_time %></td>
+    </tr>
+
+     <tr>
+     <th><strong>Out Min Time</strong></th>
+      <td><%= @company_time_master.out_min_time %></td>
+
+      <th><strong>Out Max Time</strong></th>
+      <td> <%= @company_time_master.out_max_time %></td>
+    </tr>
+
+     <tr>
+     <th><strong>Out Time</strong></th>
+      <td><%= @company_time_master.out_time %></td>
+
+      <th><strong>Working Hrs</strong></th>
+      <td> <%= @company_time_master.working_hrs %></td>
+    </tr>
+
+
+     <tr>
+     <th><strong>Rest Time</strong></th>
+      <td><%= @company_time_master.rest_time %></td>
+
+      <th><strong>Status</strong></th>
+      <td> <%= @company_time_master.is_active ? "Yes" : "No" %></td>
+    </tr>
+
+
+     <tr>
+     <th><strong>Time Adjust</strong></th>
+      <td colspan="3"><%= @company_time_master.time_adjust ? "Yes" : "No"  %></td>
+    </tr>
+     </table> <br>
+
+    <%= link_to 'Back', new_company_time_master_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

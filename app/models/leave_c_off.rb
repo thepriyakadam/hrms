@@ -31,11 +31,20 @@ LeaveCOff.all
 
   def is_self_present(emp,date)
     flag = 0
-    flag = LeaveCOff.exists?(employee_id: emp,c_off_date: date.to_date,status: false)
+    flag = LeaveCOff.exists?(employee_id: emp,c_off_date: date.to_date,status: nil)
     flag 
   end
-  # def is_available?
-  #   LeaveCOff.exists?(employee_id: self.employee_id,c_off_type: 'Full Day')
-  # end
+  
+  def is_week_off_present(emp)
+    flag = 0
+    flag = EmployeeAttendance.exists?(employee_id: emp,present: "W")
+    flag 
+  end
+
+  def is_holiday_present(emp)
+    flag = 0
+    flag = EmployeeAttendance.exists?(employee_id: emp,present: "H")
+    flag 
+  end
 
 end

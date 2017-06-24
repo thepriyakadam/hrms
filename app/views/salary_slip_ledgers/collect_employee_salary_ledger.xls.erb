@@ -9,76 +9,76 @@
       <Row>
 
       <Cell ss:Index="1"><Data ss:Type="String">No</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Code</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Name</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Month</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Year</Data></Cell>
+      <Cell ss:Index="2"><Data ss:Type="String">Code</Data></Cell>
+      <Cell ss:Index="3"><Data ss:Type="String">Name</Data></Cell>
+      <Cell ss:Index="4"><Data ss:Type="String">Month</Data></Cell>
+      <Cell ss:Index="5"><Data ss:Type="String">Year</Data></Cell>
       
-      <Cell ss:Index="1"><Data ss:Type="String">Basic</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">DA</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">HRA</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">conv</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">O.Allow</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">S.Allow</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Wsh.Allow</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Driver Allow</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Medi Allow</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Child Edu Allow</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">MRA</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">MA</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Gross</Data></Cell>
+      <Cell ss:Index="6"><Data ss:Type="String">Basic</Data></Cell>
+      <Cell ss:Index="7"><Data ss:Type="String">DA</Data></Cell>
+      <Cell ss:Index="8"><Data ss:Type="String">HRA</Data></Cell>
+      <Cell ss:Index="9"><Data ss:Type="String">conv</Data></Cell>
+      <Cell ss:Index="10"><Data ss:Type="String">O.Allow</Data></Cell>
+      <Cell ss:Index="11"><Data ss:Type="String">S.Allow</Data></Cell>
+      <Cell ss:Index="12"><Data ss:Type="String">Wsh.Allow</Data></Cell>
+      <Cell ss:Index="13"><Data ss:Type="String">Driver Allow</Data></Cell>
+      <Cell ss:Index="14"><Data ss:Type="String">Medi Allow</Data></Cell>
+      <Cell ss:Index="15"><Data ss:Type="String">Child Edu Allow</Data></Cell>
+      <Cell ss:Index="16"><Data ss:Type="String">MRA</Data></Cell>
+      <Cell ss:Index="17"><Data ss:Type="String">MA</Data></Cell>
+      <Cell ss:Index="18"><Data ss:Type="String">Gross</Data></Cell>
 
-      <Cell ss:Index="1"><Data ss:Type="String">PF</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">ESIC</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">IT</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">PT</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Adv.Sal</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Society</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Food</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Mobile</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Retention</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Total Dedu</Data></Cell>
+      <Cell ss:Index="19"><Data ss:Type="String">PF</Data></Cell>
+      <Cell ss:Index="20"><Data ss:Type="String">ESIC</Data></Cell>
+      <Cell ss:Index="21"><Data ss:Type="String">IT</Data></Cell>
+      <Cell ss:Index="22"><Data ss:Type="String">PT</Data></Cell>
+      <Cell ss:Index="23"><Data ss:Type="String">Adv.Sal</Data></Cell>
+      <Cell ss:Index="24"><Data ss:Type="String">Society</Data></Cell>
+      <Cell ss:Index="25"><Data ss:Type="String">Food</Data></Cell>
+      <Cell ss:Index="26"><Data ss:Type="String">Mobile</Data></Cell>
+      <Cell ss:Index="27"><Data ss:Type="String">Retention</Data></Cell>
+      <Cell ss:Index="28"><Data ss:Type="String">Total Dedu</Data></Cell>
 
-      <Cell ss:Index="1"><Data ss:Type="String">NET</Data></Cell>
+      <Cell ss:Index="29"><Data ss:Type="String">NET</Data></Cell>
     </Row>
 
     <% i = 0 %>
     <% @reports.each do |r| %>
        <Row>
         <Cell ss:Index="1"><Data ss:Type="String"><%= i = i+1 %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="String"><%= r.try(:code) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="String"><%= r.try(:employee_name) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="String"><%= r.try(:month) %></Data></Cell>
-         <Cell ss:Index="1"><Data ss:Type="String"><%= r.try(:year) %></Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String"><%= r.try(:code) %></Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String"><%= r.try(:employee_name) %></Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String"><%= r.try(:month) %></Data></Cell>
+         <Cell ss:Index="5"><Data ss:Type="String"><%= r.try(:year) %></Data></Cell>
         
         
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_basic).try(:round) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_da).try(:round) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_hra).try(:round) %></Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="Number"><%= r.try(:earned_basic).try(:round) %></Data></Cell>
+        <Cell ss:Index="7"><Data ss:Type="Number"><%= r.try(:earned_da).try(:round) %></Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="Number"><%= r.try(:earned_hra).try(:round) %></Data></Cell>
 
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_convenience).try(:round) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_other).try(:round) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_special).try(:round) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_washing).try(:round) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_driver).try(:round) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_medical).try(:round) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_child_edu).try(:round) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_mra).try(:round) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_monthly_arrear).try(:round) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_total).try(:round) %></Data></Cell>
+        <Cell ss:Index="9"><Data ss:Type="Number"><%= r.try(:earned_convenience).try(:round) %></Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="Number"><%= r.try(:earned_other).try(:round) %></Data></Cell>
+        <Cell ss:Index="11"><Data ss:Type="Number"><%= r.try(:earned_special).try(:round) %></Data></Cell>
+        <Cell ss:Index="12"><Data ss:Type="Number"><%= r.try(:earned_washing).try(:round) %></Data></Cell>
+        <Cell ss:Index="13"><Data ss:Type="Number"><%= r.try(:earned_driver).try(:round) %></Data></Cell>
+        <Cell ss:Index="14"><Data ss:Type="Number"><%= r.try(:earned_medical).try(:round) %></Data></Cell>
+        <Cell ss:Index="15"><Data ss:Type="Number"><%= r.try(:earned_child_edu).try(:round) %></Data></Cell>
+        <Cell ss:Index="16"><Data ss:Type="Number"><%= r.try(:earned_mra).try(:round) %></Data></Cell>
+        <Cell ss:Index="17"><Data ss:Type="Number"><%= r.try(:earned_monthly_arrear).try(:round) %></Data></Cell>
+        <Cell ss:Index="18"><Data ss:Type="Number"><%= r.try(:earned_total).try(:round) %></Data></Cell>
 
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:pf) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:esic) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:income_tax) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:pt) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:advance) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:society) %></Data></Cell>
+        <Cell ss:Index="19"><Data ss:Type="Number"><%= r.try(:pf) %></Data></Cell>
+        <Cell ss:Index="20"><Data ss:Type="Number"><%= r.try(:esic) %></Data></Cell>
+        <Cell ss:Index="21"><Data ss:Type="Number"><%= r.try(:income_tax) %></Data></Cell>
+        <Cell ss:Index="22"><Data ss:Type="Number"><%= r.try(:pt) %></Data></Cell>
+        <Cell ss:Index="23"><Data ss:Type="Number"><%= r.try(:advance) %></Data></Cell>
+        <Cell ss:Index="24"><Data ss:Type="Number"><%= r.try(:society) %></Data></Cell>
 
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:food_deduction) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:mobile) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:retention) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:deduction_total) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:net_payable) %></Data></Cell>
+        <Cell ss:Index="25"><Data ss:Type="Number"><%= r.try(:food_deduction) %></Data></Cell>
+        <Cell ss:Index="26"><Data ss:Type="Number"><%= r.try(:mobile) %></Data></Cell>
+        <Cell ss:Index="27"><Data ss:Type="Number"><%= r.try(:retention) %></Data></Cell>
+        <Cell ss:Index="28"><Data ss:Type="Number"><%= r.try(:deduction_total) %></Data></Cell>
+        <Cell ss:Index="29"><Data ss:Type="Number"><%= r.try(:net_payable) %></Data></Cell>
      </Row>
     <% end %>  
     </Table>

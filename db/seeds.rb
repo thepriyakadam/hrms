@@ -50,7 +50,7 @@ require 'roo'
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
 # ex.default_sheet = ex.sheets[3]
 # i=1
-# 2.upto(8) do |line|
+# 2.upto(2) do |line|
 # EmployeeGrade.new do |eg|
 #   eg.code = ex.cell(line,'A')
 #   eg.name = ex.cell(line,'B')
@@ -296,13 +296,15 @@ require 'roo'
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
 # ex.default_sheet = ex.sheets[19]
 # i=1
-# 2.upto(23) do |line|
+# 2.upto(25) do |line|
 # SalaryComponent.new do |ec|
 #   ec.code = ex.cell(line,'A')
 #   ec.name = ex.cell(line,'B')
 #   ec.description = ex.cell(line,'C')
 #   ec.account_code = ex.cell(line,'D')
 #   ec.is_deducted = ex.cell(line,'E')
+#   ec.is_active = ex.cell(line,'F')
+#   ec.is_base = ex.cell(line,'G') 
 #   ec.save!
 # end
 # puts "#{i} SalaryComponent inserted.-----------------------------------------------"
@@ -358,41 +360,41 @@ require 'roo'
 
 #================================== DEPARTMENT ==================================#
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/department.xls")
-# ex.default_sheet = ex.sheets[1]
-# i=1
-# 2.upto(166) do |line|
-# Department.new do |ec|
-#   ec.department_code = ex.cell(line,'A')
-#   ec.company_location_id = ex.cell(line,'B').to_i
-#   ec.name = ex.cell(line,'C')
-#   ec.department_type_id = ex.cell(line,'D').to_i
-#   ec.manual_department_code = ex.cell(line,'E')
-#   ec.save!
-# end
-# puts "#{i} State inserted.-----------------------------------------------"
-# i = i+1
-# end
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/department.xls")
+ex.default_sheet = ex.sheets[0]
+i=1
+2.upto(26) do |line|
+Department.new do |ec|
+  ec.department_code = ex.cell(line,'A')
+  ec.company_location_id = ex.cell(line,'B').to_i
+  ec.name = ex.cell(line,'C')
+  ec.department_type_id = ex.cell(line,'D').to_i
+  ec.manual_department_code = ex.cell(line,'E').to_i
+  ec.save!
+end
+puts "#{i} State inserted.-----------------------------------------------"
+i = i+1
+end
 
 
-# ex = Roo::Excel.new("#{Rails.root}/public/update_dep.xls")
-# ex.default_sheet = ex.sheets[0] #siya feb
-# i = 1
-# ActiveRecord::Base.transaction do
-# 2.upto(424) do |line| # siya Feb 2016
-#  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-#  puts "#{i} Record inserting.----------------------------"
+ex = Roo::Excel.new("#{Rails.root}/public/update_dep.xls")
+ex.default_sheet = ex.sheets[0] #siya feb
+i = 1
+ActiveRecord::Base.transaction do
+2.upto(424) do |line| # siya Feb 2016
+ puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+ puts "#{i} Record inserting.----------------------------"
 
 
-#   @type2 = Department.find_by_name(ex.cell(line,'B'))
-#  Employee.where(id: @employee).update_all(department_id: @type2.id)
-#  # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
-#  puts "#{i} Record inserted.-----------------------------------------------"
-#  i += 1
-#  end
-#  end
+  @type2 = Department.find_by_name(ex.cell(line,'B'))
+ Employee.where(id: @employee).update_all(department_id: @type2.id)
+ # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
+ puts "#{i} Record inserted.-----------------------------------------------"
+ i += 1
+ end
+ end
 
 #============================== DEPARTMENT END =====================================#
 # puts "Starting ..."
@@ -426,6 +428,7 @@ require 'roo'
 #================================ EMPLOYEE BASIC DETAIL START =========================
 
 # puts "Starting ..."
+<<<<<<< HEAD
 # ex = Roo::Excel.new("#{Rails.root}/public/mdindia.xls")
 # ex.default_sheet = ex.sheets[0] 
 # i=1
@@ -433,6 +436,15 @@ require 'roo'
 # 2.upto(9497) do |line|
 # Employee.new do |e|
 #   e.manual_employee_code = ex.cell(line,'A').to_i
+=======
+
+# ex = Roo::Excel.new("#{Rails.root}/public/employee_span_pump.xls")
+# ex.default_sheet = ex.sheets[0] 
+# i=1
+# 2.upto(168) do |line|
+# Employee.new do |e|
+#   e.manual_employee_code = ex.cell(line,'A')
+>>>>>>> 63e0b3a3a546c0a67d4f799b3bf9ee3ae579c364
 #   e.first_name = ex.cell(line,'B')
 #   e.middle_name = ex.cell(line,'C')
 #   e.last_name = ex.cell(line,'D')
@@ -486,34 +498,34 @@ require 'roo'
 # end
 
 
-#========================= EMPLOYEE BASIC DATA END ===========================================
+# #========================= EMPLOYEE BASIC DATA END ===========================================
 
-#========================= EMPLOYEE ON BOARDING DATA START ===================================
+# #========================= EMPLOYEE ON BOARDING DATA START ===================================
 
-# ex = Roo::Excel.new("#{Rails.root}/public/j.xls")
+# ex = Roo::Excel.new("#{Rails.root}/public/spjd.xls")
 # ex.default_sheet = ex.sheets[0] #siya feb
 # i = 1
 # ActiveRecord::Base.transaction do
-# 2.upto(424) do |line| # siya Feb 2016
+# 2.upto(168) do |line| # siya Feb 2016
 #  puts "Starting Record --------------------------#{ex.cell(line,'A')}"
-#  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+#  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
 #  # JoiningDetail.where(id: @employee.id).update_all(is_da: true)
 #  unless @employee.nil?
 
 #  @joining_details = JoiningDetail.where(employee_id: @employee.id)
 #   @joining_details.new do |e|
-#      e.employee_uan_no = ex.cell(line,'B').to_i
-#      e.joining_date =  ex.cell(line,'C')
-#      e.confirmation_date =  ex.cell(line,'D')
-#      @designation = EmployeeDesignation.find_by_name(ex.cell(line,'E'))
+#      e.employee_uan_no = ex.cell(line,'C').to_i
+#      e.joining_date =  ex.cell(line,'D')
+#      e.confirmation_date =  ex.cell(line,'E')
+#      @designation = EmployeeDesignation.find_by_name(ex.cell(line,'F'))
 #      e.employee_designation_id = @designation.id unless @designation.nil?
-#       @grade = EmployeeGrade.find_by_name(ex.cell(line,'F'))
+#       @grade = EmployeeGrade.find_by_name(ex.cell(line,'G'))
 #      e.employee_grade_id = @grade.id unless @grade.nil?
 #      # e.employee_pf_no = ex.cell(line,'F').to_i
-#      @category = EmployeeCategory.find_by_name(ex.cell(line,'G'))
+#      @category = EmployeeCategory.find_by_name(ex.cell(line,'H'))
 #      e.employee_category_id = @category.id unless @category.nil?
 
-#      e.probation_period = ex.cell(line,'H').to_i
+#      # e.probation_period = ex.cell(line,'H').to_i
 #      e.probation_period = ex.cell(line,'I').to_i
 #      e.notice_period =     ex.cell(line,'J').to_i
 
@@ -535,10 +547,10 @@ require 'roo'
 #==================================== EMPLOYEE ON BOARDING DATA END ====================================================#
 
 # puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/eb.xls")
+# ex = Roo::Excel.new("#{Rails.root}/public/spbd.xls")
 # ex.default_sheet = ex.sheets[0] 
 # i=1
-# 3.upto(412) do |line|
+# 2.upto(155) do |line|
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 # EmployeeBankDetail.new do |b|
 #   b.employee_id = @employee.id unless @employee.nil?
@@ -558,20 +570,73 @@ require 'roo'
 
 
 # puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/el.xls")
+# ex = Roo::Excel.new("#{Rails.root}/public/spelb.xls")
 # ex.default_sheet = ex.sheets[0] 
 # i=1
 
-# 2.upto(385) do |line|
-# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+# 2.upto(105) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
+# puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
 # EmployeeLeavBalance.new do |j|
+
 #   j.employee_id = @employee.id unless @employee.nil?
-#   j.leav_category_id = ex.cell(line,'C')
+#   puts "#{(ex.cell(line,'A'))} Record inserted........Employee ID #{@employee.id}-----------------------------------------------"
+#   j.leav_category_id = ex.cell(line,'C').to_i
+#   puts "#{(ex.cell(line,'C'))} Record inserted.-----------------------------------------------"
 #   j.no_of_leave = ex.cell(line,'D')
 #   j.expiry_date = ex.cell(line,'E')
 #   j.total_leave = ex.cell(line,'F')
-#   j.expiry_date = ex.cell(line,'G')
-#   j.total_leave = ex.cell(line,'H')
+#   j.from_date = ex.cell(line,'G')
+#   j.to_date = ex.cell(line,'H')
+#   j.save!
+# end
+# puts "#{i} Record inserted.-----------------------------------------------"
+# i = i+1
+# end
+
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/spelb.xls")
+# ex.default_sheet = ex.sheets[1] 
+# i=1
+
+# 2.upto(173) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
+# puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
+# EmployeeLeavBalance.new do |j|
+
+#   j.employee_id = @employee.id unless @employee.nil?
+#   puts "#{(ex.cell(line,'A'))} Record inserted........Employee ID #{@employee.id}-----------------------------------------------"
+#   j.leav_category_id = ex.cell(line,'C').to_i
+#   puts "#{(ex.cell(line,'C'))} Record inserted.-----------------------------------------------"
+#   j.no_of_leave = ex.cell(line,'D')
+#   j.expiry_date = ex.cell(line,'E')
+#   j.total_leave = ex.cell(line,'F')
+#   j.from_date = ex.cell(line,'G')
+#   j.to_date = ex.cell(line,'H')
+#   j.save!
+# end
+# puts "#{i} Record inserted.-----------------------------------------------"
+# i = i+1
+# end
+
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/spelb.xls")
+# ex.default_sheet = ex.sheets[2] 
+# i=1
+# 15.upto(31) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
+# puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
+# EmployeeLeavBalance.new do |j|
+
+#   j.employee_id = @employee.id unless @employee.nil?
+#   puts "#{(ex.cell(line,'A'))} Record inserted........Employee ID #{@employee.id}-----------------------------------------------"
+#   j.leav_category_id = ex.cell(line,'C').to_i
+#   puts "#{(ex.cell(line,'C'))} Record inserted.-----------------------------------------------"
+#   j.no_of_leave = ex.cell(line,'D')
+#   j.expiry_date = ex.cell(line,'E')
+#   j.total_leave = ex.cell(line,'F')
+#   j.from_date = ex.cell(line,'G')
+#   j.to_date = ex.cell(line,'H')
 #   j.save!
 # end
 # puts "#{i} Record inserted.-----------------------------------------------"
@@ -1204,6 +1269,7 @@ require 'roo'
 #  end
 #  end
 
+<<<<<<< HEAD
 # ex = Roo::Excel.new("#{Rails.root}/public/rgfdj.xls")
 #  ex.default_sheet = ex.sheets[1] #siya feb
 #  i = 1
@@ -1253,3 +1319,117 @@ require 'roo'
    end
    end
 end
+=======
+# ===========================
+
+
+# ex = Roo::Excel.new("#{Rails.root}/public/spep.xls")
+# ex.default_sheet = ex.sheets[0]
+# j = 1
+# gross_salary = 0
+# ActiveRecord::Base.transaction do
+# 2.upto(168) do |line|
+#   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+
+ex = Roo::Excel.new("#{Rails.root}/public/mdindia.xls")
+ex.default_sheet = ex.sheets[2]
+j = 1
+gross_salary = 0
+ActiveRecord::Base.transaction do
+2.upto(5000) do |line|
+  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+
+
+#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+  
+#   @salary_template = SalaryTemplate.find_by_id(ex.cell(line,'B'))
+#   @salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?
+
+#   EmployeeTemplate.create(employee_id: @employee.try(:id), salary_template_id: @salary_template.id, start_date: Date.today)
+
+#   @salary_component_templates.each do |t|
+#     EmployeeSalaryTemplate.new do |est|
+#       est.employee_id = @employee.id
+#       est.salary_template_id = @salary_template.id
+#       est.salary_component_id = t.salary_component_id 
+#       est.is_deducted = t.is_deducted
+#       est.parent_salary_component_id
+#       est.percentage = t.is_deducted
+#       est.to_be_paid = t.to_be_paid
+#       est.employee_template_id = EmployeeTemplate.last.id
+      
+#       if t.salary_component.name == "Basic"
+#       est.monthly_amount = ex.cell(line,'C') unless ex.cell(line,'C').nil?
+#       est.annual_amount = est.monthly_amount.to_i * 12
+#       gross_salary = gross_salary + ex.cell(line,'C').to_i
+#       puts "Basic..................Salary"
+
+#      elsif t.salary_component.name == "HRA"
+#       est.monthly_amount = ex.cell(line,'D') unless ex.cell(line,'D').nil?
+#       est.annual_amount = est.monthly_amount.to_i * 12
+#       gross_salary = gross_salary + ex.cell(line,'D').to_i
+
+#       puts "HRA..................Salary"
+      
+#       elsif t.salary_component.name == "Convenience Allowance"
+#       est.monthly_amount = ex.cell(line,'E') unless ex.cell(line,'E').nil?
+#       est.annual_amount = est.monthly_amount.to_i * 12
+#       gross_salary = gross_salary + ex.cell(line,'E').to_i
+#       puts "Convenience Allowance..................Salary"
+
+#       # elsif t.salary_component.name == "Other Allowance"
+#       # est.monthly_amount = ex.cell(line,'E') unless ex.cell(line,'E').nil?
+#       # est.annual_amount = est.monthly_amount.to_i * 12
+#       # gross_salary = gross_salary + ex.cell(line,'E').to_i
+
+#       # puts "Convenience Allowance..................Salary"
+
+#       elsif t.salary_component.name == "Medical Reimbursement"
+#       est.monthly_amount = ex.cell(line,'F') unless ex.cell(line,'F').nil?
+#       est.annual_amount = est.monthly_amount.to_i * 12
+#       gross_salary = gross_salary + ex.cell(line,'F').to_i
+
+#       puts "Medical Reimbursement..................Salary"
+
+#   elsif t.salary_component.name == "Leave Travel Allowance"
+#       est.monthly_amount = ex.cell(line,'G') unless ex.cell(line,'G').nil?
+#       est.annual_amount = est.monthly_amount.to_i * 12
+#       gross_salary = gross_salary + ex.cell(line,'G').to_i
+
+#       puts "Leave Travel Allowance..................Salary"
+
+#   elsif t.salary_component.name == "Children Education Allowance"
+#       est.monthly_amount = ex.cell(line,'H') unless ex.cell(line,'H').nil?
+#       est.annual_amount = est.monthly_amount.to_i * 12
+#       gross_salary = gross_salary + ex.cell(line,'H').to_i
+
+#       puts "Children Education Allowance..................Salary"
+
+#  elsif t.salary_component.name == "Program Allowance"
+#       est.monthly_amount = ex.cell(line,'I') unless ex.cell(line,'I').nil?
+#       est.annual_amount = est.monthly_amount.to_i * 12
+#       gross_salary = gross_salary + ex.cell(line,'I').to_i
+
+#       puts "Program Allowance..................Salary"
+
+
+#  elsif t.salary_component.name == "Transport Allowance"
+#       est.monthly_amount = ex.cell(line,'J') unless ex.cell(line,'J').nil?
+#       est.annual_amount = est.monthly_amount.to_i * 12
+#       gross_salary = gross_salary + ex.cell(line,'J').to_i
+
+#       puts "Transport Allowance..................Salary"
+
+      
+#     end
+#       est.save!
+#       puts "#{j} component inserted..."
+#       j=j+1
+#     end
+#   end
+#   gross_salary = 0
+# end
+# end
+
+
+>>>>>>> 63e0b3a3a546c0a67d4f799b3bf9ee3ae579c364

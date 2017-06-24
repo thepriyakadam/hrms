@@ -47,8 +47,8 @@ class SelfServicesController < ApplicationController
   end
 
   def show_resignation_detail
-    @employee_resignation_id = EmployeeResignation.find_by_employee_id(params[:emp_id])
-    @resignation_histories = ResignationHistory.where(employee_resignation_id: @employee_resignation_id.id)
+    @employee_resignations = EmployeeResignation.find_by_employee_id(params[:emp_id])
+    # @employee_resignations = EmployeeResignation.where(id: @employee_resignation_id.id)
   end
 
   def employee_transfer
@@ -109,7 +109,7 @@ class SelfServicesController < ApplicationController
   def leave_c_off
     session[:active_tab] ="EmployeeSelfService"
     @leave_c_off = LeaveCOff.new
-    @leave_c_offs = LeaveCOff.where(employee_id: current_user.employee_id)
+    @leave_c_offs = LeaveCOff.where(employee_id: current_user.employee_id).order("id DESC")
   end
 
   def create_self_c_off
@@ -123,33 +123,38 @@ class SelfServicesController < ApplicationController
     else
       @leave_c_off = LeaveCOff.new(leave_c_off_params)
       @leave_c_offs = LeaveCOff.all
-      leav_category = LeavCategory.find_by_name('C.Off')
+      leav_category = LeavCategory.find_by(code: 'C.Off')
+      if @leave_c_off.is_week_off_present(@employee_id) || @leave_c_off.is_holiday_present(@employee_id)
 
-      if leav_category.nil?
+        if leav_category.nil?
+        else
+          @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
+          if @c_off.nil?
+          else
+            @c_off.each do |l|
+              if l.try(:expiry_date).to_date < Date.today
+                LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
+              else
+              end
+            end#do
+          end#c_off.nil?
+
+          if @c_off_type == 'Full Day'
+            @leave_c_off = LeaveCOff.create(employee_id:
+             @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending")
+            StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
+            flash[:notice] = "Your COff Created Successfully!"
+            COffMailer.pending(@leave_c_off).deliver_now
+          else
+            @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending")
+            StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
+            flash[:notice] = "Your COff Created Successfully!"
+            COffMailer.pending(@leave_c_off).deliver_now
+          end#@c_off_type
+        end#leav_category.nil?
       else
-        @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
-        if @c_off.nil?
-        else
-          @c_off.each do |l|
-            if l.try(:expiry_date).to_date < Date.today
-              LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
-            else
-            end
-          end#do
-        end#c_off.nil?
-
-        if @c_off_type == 'Full Day'
-          @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending")
-          StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
-          flash[:notice] = "Your COff Created Successfully!"
-          COffMailer.pending(@leave_c_off).deliver_now
-        else
-          @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending")
-          StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
-          flash[:notice] = "Your COff Created Successfully!"
-          COffMailer.pending(@leave_c_off).deliver_now
-        end#@c_off_type
-      end#leav_category.nil?
+        flash[:alert] = "Week Off Or Holiday Not Set"
+      end#is_week_off_present
     end#@leave_c_off.is_self_present?
     redirect_to leave_c_off_self_services_path
   end#def
@@ -157,6 +162,8 @@ class SelfServicesController < ApplicationController
   def reimbursement_request
     @reimbursement_request = ReimbursementRequest.new
     @reimbursement_requests = ReimbursementRequest.where(employee_id: current_user.employee_id)
+    session[:active_tab] = "PayrollManagement"
+    session[:active_tab1] ="ltareimbursement"
   end
 
   def create_reimbursement_request
@@ -189,7 +196,32 @@ class SelfServicesController < ApplicationController
     redirect_to employee_rembursment_self_services_path
   end
 
+  def add_attendance
+    @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id)
+  end
+
+  def create_self_attendance
+    # @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
+    employee_id = params[:salary][:employee_id]
+    day = params[:salary][:day]
+    present = params[:salary][:present]
+    @emp = Employee.find_by(id: employee_id)
+    # if @employee_attendance.is_present(day,employee_id)
+    #   flash[:notice] = "Already Exist"
+    # else
+      @emp_atten = EmployeeAttendance.create(employee_id: employee_id,day: day,present: present, is_confirm: false)  
+      if @emp_atten.save
+        flash[:notice] = "Created successfully"
+      else
+        flash[:alert] = "Already Exist"
+      end
+    # end
+    redirect_to add_attendance_self_services_path
+  end
+
   def leave_c_off_params
     params.require(:leave_c_off).permit(:is_expire,:employee_id, :c_off_date, :c_off_type, :c_off_expire_day, :expiry_status, :expiry_date, :leave_count)
   end
+ 
+
 end

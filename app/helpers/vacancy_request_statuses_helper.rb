@@ -1,0 +1,2 @@
+module VacancyRequestStatusesHelper
+end

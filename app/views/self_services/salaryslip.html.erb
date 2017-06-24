@@ -7,7 +7,6 @@
     <thead>
       <tr>
         <th>Salary Slip Code</th>
-        <th>Salary Template</th>
         <th>Month</th>
         <th>Year</th>
         <th>Action</th>
@@ -18,7 +17,6 @@
     <% @salary_slips.each do |salary| %>
       <tr>
         <td><%= salary.salary_slip_code %></td>
-        <td><%= salary.salary_template.try(:description)%></td>
         <td><%= salary.month %></td>
         <td><%= salary.year %></td>
         <td>

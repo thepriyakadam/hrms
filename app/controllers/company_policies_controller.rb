@@ -8,7 +8,7 @@ class CompanyPoliciesController < ApplicationController
   # end
 
   def new
-    @company_policies = CompanyPolicy.all
+    @company_policies = CompanyPolicy.group("policy_type_id")
     @company_policy = CompanyPolicy.new
     session[:active_tab] = "InformationManagement"
     session[:active_tab1] = "Events" 
@@ -34,6 +34,19 @@ class CompanyPoliciesController < ApplicationController
 
   def active_policies_list
     @company_policies = CompanyPolicy.all
+  end
+
+  def policy_type_detail
+      @company_policy = CompanyPolicy.find(params[:company_policy_id])
+      policy_type = @company_policy.policy_type
+      @company_policies = CompanyPolicy.where(policy_type: policy_type)
+
+  end
+
+  def policy_type_dashboard
+     @company_policy = CompanyPolicy.find(params[:company_policy_id])
+      policy_type = @company_policy.policy_type
+      @company_policies = CompanyPolicy.where(policy_type: policy_type)
   end
 
 	def edit
@@ -66,6 +79,27 @@ class CompanyPoliciesController < ApplicationController
     end
   end
 
+  def modal
+    @company_policy = CompanyPolicy.find(params[:format])
+  end
+
+  def update_company_policy
+   # byebug
+    @name = params[:company_policy][:name]
+    @effective_from = params[:company_policy][:effective_from]
+    @effective_to = params[:company_policy][:effective_to]
+    @status = params[:company_policy][:status]
+    @description= params[:company_policy] [:description]
+    @company_policy_type_id = params[:company_policy][:policy_type_id]
+    # @company_policy = params[:company_policy_id]
+    @company_policy1 = CompanyPolicy.find(params[:id])
+    @company_policy1.update(name: @name,effective_from: @effective_from,effective_to: @effective_to,status: @status,description: @description,policy_type_id: @company_policy_type_id)  
+    flash[:notice] = 'Company Policy Updated Successfully' 
+    redirect_to policy_type_detail_company_policies_path(company_policy_id: @company_policy1.id)
+  end
+
+
+
 	private
 
     def set_company_policy
@@ -73,6 +107,6 @@ class CompanyPoliciesController < ApplicationController
 	  end
 
     def company_policy_params
-      params.require(:company_policy).permit(:name, :effective_from, :effective_to, :status, :document, :description)
+      params.require(:company_policy).permit(:name, :effective_from, :effective_to, :status, :document, :description,:policy_type_id)
 	  end
 end

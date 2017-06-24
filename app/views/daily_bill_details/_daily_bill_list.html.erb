@@ -2,7 +2,7 @@
     <table id="example2" class="table table-bordered table-hover table-condensed">
       <thead>
       <tr>
-      <td colspan="8"><center>Expense Claim List</center></td>
+      <td colspan="5"><center>Expense Claim List</center></td>
     </tr>
         <tr>  
 <!--           <th><input type="checkbox" id="selectAll" value="selectAll"></th>
@@ -10,9 +10,6 @@
           <th>Place</th>
           <th>Expense Type</th>
           <th>Expense Amount</th>
-          <th>Currency</th>
-          <th>Image</th>
-          <th>Document</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -27,23 +24,7 @@
             <td><%= daily_bill_detail.e_place %></td>
             <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
             <td><%= daily_bill_detail.travel_expence %></td>
-            <td><%= daily_bill_detail.currency_master.try(:name) %> <%= daily_bill_detail.currency_master.try(:description) %></td>
-            <td>
-                <% if daily_bill_detail.passport_photo_file_name == nil %>
-                  <small class="label label-default">Not Available</small>
-                <% else %>
-                  <%= link_to '',download_pics_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-picture-o' %>
-                  <!-- <div id="myModal2" class="modal fade"></div>
-                  <= link_to 'View',image_modal_daily_bill_details_path(daily_bill_detail),remote: true %>  -->
-                <% end %>
-            </td>
-            <td>
-              <% if daily_bill_detail.avatar_file_file_name == nil %>
-                 <small class="label label-default">Not Available</small>
-              <% else %>
-                <%= link_to '',download_doc_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-download',:target => "_blank" %>
-              <% end %>
-            </td>            
+      
             <td>
               <% if daily_bill_detail.is_confirm == true %>
                 <small class="label label-info">Confirmed</small>
@@ -51,6 +32,7 @@
                 <%= link_to '', edit_daily_bill_detail_path(daily_bill_detail),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
                 <!-- <= link_to '', daily_bill_detail,class: 'btn btn-xs btn-default fa fa-eye' %> -->
                 <%= link_to '',  daily_bill_detail, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-danger fa fa-close' %>
+                <%= link_to '', daily_bill_detail,class: 'btn btn-default btn-xs fa fa-eye' %>
               <% end %>
               <% if daily_bill_detail.request_status == "Approved" %>
                 <small class="label label-success">Approved</small>
@@ -61,7 +43,8 @@
         <% end %>
         <tr>
               <th colspan="3">Total</th>
-              <th colspan="5"><%= @daily_bill_details.sum(:travel_expence) %></th>
+              <th><%= @daily_bill_details.sum(:travel_expence) %></th>
+              <th></th>
         </tr>    
       </tbody>
     </table>

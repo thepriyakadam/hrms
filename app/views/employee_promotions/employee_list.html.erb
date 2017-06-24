@@ -12,8 +12,11 @@
       <tr>
         <th>ID</th>
         <th>Employee</th>
+<<<<<<< HEAD
         <th>Designation</th>
         <th>Employement Type</th>
+=======
+>>>>>>> 63e0b3a3a546c0a67d4f799b3bf9ee3ae579c364
         <th>Action</th>
       </tr>
     </thead>
@@ -22,9 +25,7 @@
         <tr>
           <td><%= employee.manual_employee_code %></td>
           <td><%= full_name(employee) %></td>
-          <td><%= employee.joining_detail.try(:employee_designation).try(:name) %></td>
-          <td><%= employee.employee_type.try(:name) %></td>
-          <td><%= link_to 'Promotion History',promotion_history_employee_promotions_path(id: employee.id),class: 'btn btn-sm btn-primary' %></td>
+          <td><%= link_to 'History',promotion_history_employee_promotions_path(id: employee.id),class: 'btn btn-sm btn-primary' %></td>
         </tr>
       <% end %>
     </tbody>

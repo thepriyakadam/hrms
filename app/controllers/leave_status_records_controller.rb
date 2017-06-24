@@ -1,6 +1,7 @@
 class LeaveStatusRecordsController < ApplicationController
   before_action :set_employee_leav_request, only: [:cancel, :first_approve, :second_approve, :first_reject, :second_reject]
   def cancel
+
     if @employee_leav_request.current_status == 'Pending'
       @leave_status = LeaveStatusRecord.new do |s|
         s.employee_leav_request_id = params[:id]
@@ -24,6 +25,11 @@ class LeaveStatusRecordsController < ApplicationController
         else
           flash[:alert] = 'Leave Already cancelled. Please refresh page.'
           redirect_to hr_view_request_employee_leav_requests_path(@employee_leav_request.employee_id)
+        end
+        @leav_category = LeavCategory.find_by(code: "C.Off")
+        if @employee_leav_request.leav_category_id = @leav_category.id
+          @leave_c_off = LeaveCOff.where(employee_id: @employee_leav_request.employee_id,taken_date: @employee_leav_request.start_date)
+          @leave_c_off.update_all(taken_date: nil)
         end
       end
     else
@@ -200,7 +206,7 @@ class LeaveStatusRecordsController < ApplicationController
 
   def cancel_after_approve
     @particular_leave_record = ParticularLeaveRecord.find(params[:format])
-    @employee_leav_request = EmployeeLeavRequest.find_by_employee_id(@particular_leave_record.employee_id)
+    @employee_leav_request = EmployeeLeavRequest.find_by(id: @particular_leave_record.employee_leav_request_id)
     @current_emp = current_user.employee_id
 
      @date = @particular_leave_record.leave_date.strftime("%Y-%m-%d")
@@ -210,34 +216,40 @@ class LeaveStatusRecordsController < ApplicationController
       @particular_leave_record.is_cancel_after_approve = true
 
       EmployeeAttendance.where("employee_id = ? AND day = ?", @particular_leave_record.employee_id,@particular_leave_record.leave_date.to_date).destroy_all
-      @employee_leav_balance = EmployeeLeavBalance.where("employee_id = ? AND leav_category_id = ? AND is_active = ?", @particular_leave_record.employee_id, @particular_leave_record.leav_category_id,true).take
-      
+      #@employee_leav_balance = EmployeeLeavBalance.where("employee_id = ? AND leav_category_id = ? AND is_active = ?", @particular_leave_record.employee_id, @particular_leave_record.leav_category_id,true).take
+     @employee_leav_balance = EmployeeLeavBalance.where(employee_id: @particular_leave_record.employee_id,leav_category_id: @particular_leave_record.leav_category_id,is_active: true).take
+
+      #@employee_leav_request.update(current_status: "Cancelled")
+
       if @particular_leave_record.try(:leav_category).try(:is_balance) == true
-        if @particular_leave_record.is_full
-          @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 1
+        if @particular_leave_record.is_full == true
+          no_of_leave = @employee_leav_balance.no_of_leave.to_f + 1
+          @employee_leav_balance.update(no_of_leave: no_of_leave)
         else
-          @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 0.5
+          no_of_leave = @employee_leav_balance.no_of_leave.to_f + 0.5
+          @employee_leav_balance.update(no_of_leave: no_of_leave)
         end
         @particular_leave_record.update(is_cancel_after_approve: true)
         EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).destroy_all
           
         ActiveRecord::Base.transaction do
           @employee_leav_balance.save
-          if @particular_leave_record.employee_leav_request.leav_category.name == "Compensatory Off"
+          if @particular_leave_record.employee_leav_request.leav_category.code == "C.Off"
             #@particular_leave_record.rollback_coff(@particular_leave_record)
             if @particular_leave_record.is_full == true
               @expiry_date = @particular_leave_record.leave_date.to_date + 60
-              LeaveCOff.create(employee_id: @particular_leave_record.employee_id,c_off_date: @particular_leave_record.leave_date, c_off_type: 'Full Day',
-              c_off_expire_day: 60,expiry_status: true,is_taken: false,expiry_date: @expiry_date,leave_count: 1,is_expire: nil )
-              @employee_leav_balance.total_leave = @employee_leav_balance.total_leave.to_f + 1
+              @leave_c_off = LeaveCOff.create(employee_id: @particular_leave_record.employee_id,c_off_date: @particular_leave_record.leave_date, c_off_type: 'Full Day',
+              c_off_expire_day: 60,expiry_status: true,is_taken: false,expiry_date: @expiry_date,leave_count: 1,is_expire: false,current_status: "FinalApproved")
+              #@employee_leav_balance.total_leave = @employee_leav_balance.total_leave.to_f + 1
             else
               @expiry_date = @particular_leave_record.leave_date.to_date + 60
-              LeaveCOff.create(employee_id: @particular_leave_record.employee_id,c_off_date: @particular_leave_record.leave_date, c_off_type: 'Half Day',
-              c_off_expire_day: 60,expiry_status: true,is_taken: false,expiry_date: @expiry_date,leave_count: 0.5,is_expire: nil )
-              @employee_leav_balance.total_leave = @employee_leav_balance.total_leave.to_f + 0.5
+              @leave_c_off = LeaveCOff.create(employee_id: @particular_leave_record.employee_id,c_off_date: @particular_leave_record.leave_date, c_off_type: 'Half Day',
+              c_off_expire_day: 60,expiry_status: true,is_taken: false,expiry_date: @expiry_date,leave_count: 0.5,is_expire: false,current_status: "FinalApproved")
+              #@employee_leav_balance.total_leave = @employee_leav_balance.total_leave.to_f + 0.5
             end
+            StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @particular_leave_record.employee_id,status: "FinalApproved")
           end
-        end
+        end#do
 
         if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
           flash[:notice] = 'Leave Cancelled Successfully without email.'
@@ -246,28 +258,29 @@ class LeaveStatusRecordsController < ApplicationController
           LeaveStatusRecordMailer.cancel_after_approve(@particular_leave_record,@current_emp).deliver_now
         end
 
-      else
+      else#is_balance = false
         @particular_leave_record.update(is_cancel_after_approve: true)
 
         EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).destroy_all
         	
         ActiveRecord::Base.transaction do
           @particular_leave_record.save
-          if @particular_leave_record.employee_leav_request.leav_category.name == "Compensatory Off"
+          if @particular_leave_record.employee_leav_request.leav_category.code == "C.Off"
             #@particular_leave_record.rollback_coff(@particular_leave_record)
             if @particular_leave_record.is_full == true
               @expiry_date = @particular_leave_record.leave_date.to_date + 60
-              LeaveCOff.create(employee_id: @particular_leave_record.employee_id,c_off_date: @particular_leave_record.leave_date, c_off_type: 'Full Day',
-              c_off_expire_day: 60,expiry_status: true,is_taken: false,expiry_date: @expiry_date,leave_count: 1,is_expire: nil )
-              @employee_leav_balance.total_leave = @employee_leav_balance.total_leave.to_f + 1
+              @leave_c_off = LeaveCOff.create(employee_id: @particular_leave_record.employee_id,c_off_date: @particular_leave_record.leave_date, c_off_type: 'Full Day',
+              c_off_expire_day: 60,expiry_status: true,is_taken: false,expiry_date: @expiry_date,leave_count: 1,is_expire: false,current_status: "FinalApproved")
+              #@employee_leav_balance.total_leave = @employee_leav_balance.total_leave.to_f + 1
             else
               @expiry_date = @particular_leave_record.leave_date.to_date + 60
-              LeaveCOff.create(employee_id: @particular_leave_record.employee_id,c_off_date: @particular_leave_record.leave_date, c_off_type: 'Half Day',
-              c_off_expire_day: 60,expiry_status: true,is_taken: false,expiry_date: @expiry_date,leave_count: 0.5,is_expire: nil )
-              @employee_leav_balance.total_leave = @employee_leav_balance.total_leave.to_f + 0.5
+              @leave_c_off = LeaveCOff.create(employee_id: @particular_leave_record.employee_id,c_off_date: @particular_leave_record.leave_date, c_off_type: 'Half Day',
+              c_off_expire_day: 60,expiry_status: true,is_taken: false,expiry_date: @expiry_date,leave_count: 0.5,is_expire: false,current_status: "FinalApproved")
+              #@employee_leav_balance.total_leave = @employee_leav_balance.total_leave.to_f + 0.5
             end
+              StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @particular_leave_record.employee_id,status: "FinalApproved")
           end
-        end
+        end#do
 
         if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
           flash[:notice] = 'Leave Cancelled Successfully without email.'
@@ -278,9 +291,9 @@ class LeaveStatusRecordsController < ApplicationController
       end #particular_leav_balance.is_payble
     else
       flash[:notice] = 'Salary is processed you cannot cancel the leave.'
-    end
+    end#@flag.nil?
     redirect_to show_leave_record_particular_leave_records_path(format: @particular_leave_record.employee_leav_request_id)
-  end
+  end#def
 
   private
 

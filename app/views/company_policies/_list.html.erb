@@ -1,11 +1,8 @@
 <table id="example1" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Effective from</th>
-      <th>Effective to</th>
-      <th>Status</th>
-      <th>Download Document</th>
+     <th>Policy Type</th>
+   
       <th>Action</th>
     </tr>
   </thead>
@@ -13,20 +10,9 @@
   <tbody>
     <% @company_policies.each do |company_policy| %>
       <tr>
-        <td><%= company_policy.name %></td>
-        <td><%= company_policy.effective_from %></td>
-        <td><%= company_policy.effective_to %></td>
-        <td><%= company_policy.status ? "Active" : "Inactive" %></td>
+        <td><%= company_policy.policy_type.try(:name)%></td>
         <td>
-           <% if company_policy.document_file_name == nil %>
-           <small class="label label-default">Document Not Available</small>
-             <% else %>
-             <%= link_to ' Document',download_docs_path(id: company_policy.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
-             <% end %>
-        </td>
-        <td>
-         <%= link_to '', edit_company_policy_path(company_policy),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
-         <%= link_to '',  company_policy, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
+        <%= link_to '', policy_type_detail_company_policies_path(company_policy_id: company_policy.id) ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
         </td>
       </tr>
     <% end %>

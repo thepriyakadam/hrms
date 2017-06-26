@@ -4,9 +4,6 @@
     <tr>
       <th>Goal Perspective</th>
       <th>Weightage</th>
-      <th>From</th>
-      <th>To</th>
-      <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -15,9 +12,6 @@
       <tr>
         <td><%= goal_perspective.name %></td>
         <td><%= goal_perspective.goal_weightage ? "Yes" : "No" %></td>
-        <td><%= goal_perspective.from %></td>
-        <td><%= goal_perspective.to %></td>
-        <td><%= goal_perspective.status ? "Active" : "Inactive" %></td>
         <td>
           <% if goal_perspective.is_confirm == true %>
           <%= link_to '', edit_goal_perspective_path(goal_perspective),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
@@ -26,6 +20,7 @@
             <%= link_to '', edit_goal_perspective_path(goal_perspective),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  goal_perspective, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
             <%= link_to '', is_confirm_goal_perspectives_path(goal_perspective: goal_perspective),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+             <%= link_to '', goal_perspective,class: 'btn btn-default btn-xs fa fa-eye' %>
           <% end %>
         </td>
       </tr>

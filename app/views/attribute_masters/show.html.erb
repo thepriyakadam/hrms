@@ -1,0 +1,32 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Attribute Definition</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr>
+      <th><strong>Definition</strong></th>
+      <td><%= @attribute_master.definition  %></td>
+
+      <th><strong>Weightage</strong></th>
+      <td><%= @attribute_master.attribute_weightage ? "Yes" : "No" %></td>
+    </tr>
+
+    <tr>
+      <th><strong>From</strong></th>
+      <td><%= @attribute_master.from  %></td>
+      
+      <th><strong>To</strong></th>
+      <td><%= @attribute_master.to %></td>
+    </tr>
+
+     <tr>
+      <th><strong>Status</strong></th>
+      <td colspan="3"><%= @attribute_master.status ? "Active" : "Inactive" %></td>
+      </tr>
+
+     </table> <br>
+    <%= link_to 'Back', new_attribute_master_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

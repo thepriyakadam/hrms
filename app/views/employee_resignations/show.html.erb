@@ -7,19 +7,21 @@
 
 <tr>
  <th><strong>Employee ID</strong></th>
- <td><%= @employee_resignation.employee.try (:manual_employee_code )%></td>
-
+ <td colspan="3"><%= @employee_resignation.employee.try (:manual_employee_code )%></td>
+</tr>
+<tr>
   <th><strong>Employee Name</strong></th>
- <td><%= full_name(@employee_resignation.employee)%></td>
+ <td colspan="3"><%= full_name(@employee_resignation.employee)%></td>
  
 </tr>
 
  <tr>
     <td><b>Reporting Manager 1</b></td>
-    <td><%= @employee_resignation.employee.manager.try(:first_name) %> <%= @employee_resignation.employee.manager.try(:middle_name) %> <%= @employee_resignation.employee.manager.try(:last_name) %></td>
-
+    <td colspan="3"><%= @employee_resignation.employee.manager.try(:first_name) %> <%= @employee_resignation.employee.manager.try(:middle_name) %> <%= @employee_resignation.employee.manager.try(:last_name) %></td>
+</tr>
+<tr>
     <td><b>Reporting Manager 2</b></td>
-    <td><%= @employee_resignation.employee.try(:manager_2).try(:first_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:middle_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:last_name) %></td>
+    <td colspan="3"><%= @employee_resignation.employee.try(:manager_2).try(:first_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:middle_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:last_name) %></td>
  </tr>
 
 <tr>

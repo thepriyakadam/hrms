@@ -1,3 +1,24 @@
+ <table class="table table-bordered table-hover table-condensed">
+      <thead>
+       <tr>
+         <td colspan="4"><center><%= @goal_bunch.employee.manual_employee_code %> - <%= full_name(@goal_bunch.employee) %></center></td>
+         </tr>
+        <tr>
+         <th>Base</th>
+         <td><%= @goal_bunch.period.try(:name)  %></td>
+         <th>Period</th>
+         <td>From : <%= @goal_bunch.period.try(:from) %> To: <%= @goal_bunch.period.try(:to) %></td>
+         </tr>
+        
+         <th>Appraiser</th>
+         <td><%= @goal_bunch.employee.try(:manager).try(:manual_employee_code) %> - <%= full_name(@goal_bunch.employee.manager)  %></td>
+       
+  
+         <th>Reviewer</th>
+         <td><%= @goal_bunch.employee.try(:manager_2).try(:manual_employee_code) %> - <%= full_name(@goal_bunch.employee.manager_2) %></td>
+         </tr>
+         </thead>
+  </table>
 <%= bootstrap_form_for @goal_rating,url:{action:'send_mail_to_appraiser',emp_id: @employee.id,goal_bunch_id: @goal_bunch.id} do |f| %>
 
 <!-- < if @goal_rating.goal_type == 'Goal' %> -->
@@ -5,13 +26,10 @@
     <div class="col-sm-6">
       <table class="table table-bordered table-hover table-condensed">
         <thead>
-        <tr><td colspan="6"><center>Employee Goals </center></td></tr>
+        <tr><td colspan="3"><center>Employee Goals </center></td></tr>
           <tr>
             <th>Goal Perspective</th>
-            <th>Measure</th>
-            <th>Target</th>
             <th>Weightage</th>
-            <th>Aligned</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -19,10 +37,7 @@
           <% @goal_ratings.each do |goal_rating| %>
             <tr>
               <td><%= goal_rating.goal_perspective.try(:name) %></td>
-              <td><%= goal_rating.goal_measure %></td>
-              <td><%= goal_rating.target %></td>
               <td><%= goal_rating.goal_weightage %></td>
-              <td><%= goal_rating.aligned %></td>
               <td>
                 <% if goal_rating.goal_bunch.goal_approval == true %>
                 <small class="label label-success">Confirmed</small>
@@ -31,6 +46,7 @@
                 <% elsif goal_rating.goal_bunch.goal_confirm == false || goal_rating.goal_bunch.goal_confirm == nil %>
                   <%= link_to '', goal_set_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
                   <%= link_to '', goal_rating, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close' %>
+                  <%= link_to '', show_goal_rating_goal_ratings_path(goal_rating_id: goal_rating.id,employee_id: @employee.id,goal_bunch_id: @goal_bunch.id),class: 'btn btn-default btn-xs fa fa-eye' %>
                 <% end %>
               </td>
             </tr>
@@ -47,10 +63,7 @@
        <tr><td colspan="6"><center> Employee Attribute & Definition</center></td></tr>
         <tr>
           <th>Attribute</th>
-          <th>Measure</th>
-          <th>Target</th>
           <th>Weightage</th>
-          <th>Aligned</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -58,10 +71,7 @@
         <% @goal_attribute_ratings.each do |goal_rating| %>
           <tr>
             <td><%= goal_rating.attribute_master.try(:name) %></td>
-            <td><%= goal_rating.goal_measure %></td>
-            <td><%= goal_rating.target %></td>
             <td><%= goal_rating.goal_weightage %></td>
-            <td><%= goal_rating.aligned %></td>
             <td>
               <% if goal_rating.goal_bunch.goal_approval == true %>
               <small class="label label-success">Confirmed</small>
@@ -70,6 +80,7 @@
               <% elsif goal_rating.goal_bunch.goal_confirm == false || goal_rating.goal_bunch.goal_confirm == nil %>
                   <%= link_to '', goal_set_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
                   <%= link_to '', goal_rating, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close' %>
+                  <%= link_to '', show_attribute_goal_ratings_path(goal_rating_id: goal_rating.id,employee_id: @employee.id,goal_bunch_id: @goal_bunch.id),class: 'btn btn-default btn-xs fa fa-eye' %>
               <% end %>
             </td>
           </tr>

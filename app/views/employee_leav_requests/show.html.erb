@@ -41,6 +41,10 @@
 
    </table>
     <%= link_to 'Edit', edit_employee_leav_request_path(@employee_leav_request),class: 'btn btn-sm btn-success fa fa-edit' %> |
+    <% if current_user.employee_id == @employee_leav_request.employee_id %>
+     <%= link_to 'Back', employee_leav_requests_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+    <% else %>
     <%= link_to 'Back', employee_list_employee_leav_requests_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  <% end %>
   </div><!-- /.box-body -->
 </div><!-- /.box -->

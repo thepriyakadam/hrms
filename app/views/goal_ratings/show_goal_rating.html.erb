@@ -1,0 +1,28 @@
+ <div class= "box-body ">
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+           <tr><td colspan="2"><center>Employee Goals </center></td></tr>
+             <tr>
+               <th>Goal Perspective</th>
+               <td><%= @goal_rating.goal_perspective.try(:name) %></td>
+              </tr>
+              <tr>
+                <th>Measure</th>
+                <td><%= @goal_rating.goal_measure %></td>
+              </tr>
+              <tr>
+           	    <th>Target</th>
+           	    <td><%= @goal_rating.target %></td>
+           	  </tr>
+           	  <tr>
+           	    <th>Weightage</th>
+           	    <td><%= @goal_rating.goal_weightage %></td>
+              </tr>
+              <tr>
+           	    <th>Aligned</th>
+           	    <td><%= @goal_rating.aligned %></td>
+              </tr>
+       </thead>
+    </table><br>
+     <%= link_to 'Back', new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+</div>

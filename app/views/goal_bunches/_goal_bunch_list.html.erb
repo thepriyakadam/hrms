@@ -4,8 +4,6 @@
       <th>Base</th>
       <th>Period</th>
       <th>Employee</th>
-      <th>Appraiser</th>
-      <th>Reviewer</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -15,8 +13,6 @@
         <td><%= goal_bunch.period.try(:name) %></td>
         <td>From: <%= goal_bunch.period.try(:from) %> To: <%= goal_bunch.period.try(:to) %> </td>
         <td><%= goal_bunch.employee.manual_employee_code %> - <%= full_name(goal_bunch.employee)%></td>
-        <td><%= goal_bunch.employee.try(:manager).try(:manual_employee_code) %> - <%= full_name(goal_bunch.employee.manager) %></td>
-        <td><%= goal_bunch.employee.try(:manager_2).try(:manual_employee_code) %> - <%= full_name(goal_bunch.employee.manager_2) %></td>
         <td>
            <!-- link_to '', edit_goal_bunch_path(goal_bunch),class: 'btn btn-xs btn-success fa fa-edit',remote:true %> -->
             <!-- link_to '', modal_period_goal_bunches_path(goal_bunch),class: 'btn btn-xs btn-success fa fa-edit',remote:true %> -->

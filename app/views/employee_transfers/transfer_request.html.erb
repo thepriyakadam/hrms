@@ -10,12 +10,8 @@
           <thead>
             <tr>
               <th>ID</th>
-              <th>Employee Name</th>
-              <th>Employee Designation</th>
-              <th>Employee Category</th>
-              <th>Company</th>
-              <th>Company Location</th>
-              <th>Department</th>
+              <th>Employee</th>
+              <th>Designation</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -26,12 +22,8 @@
             <td><%= employee_transfer.employee.try(:manual_employee_code) %></td>
             <td><%= full_name(employee_transfer.employee) %></td>
             <td><%= employee_transfer.designation %></td>
-            <td><%= employee_transfer.category %></td>
-            <td><%= employee_transfer.employee_company %></td>
-            <td><%= employee_transfer.employee_company_location %></td>  
-            <td><%= employee_transfer.employee_department %></td>
             <td>
-            <%= link_to 'Approve / Reject', employee_transfer_confirmation_employee_transfers_path(employee_transfer),class: 'btn btn-sm btn-primary' %>
+            <%= link_to 'Approve', employee_transfer_confirmation_employee_transfers_path(employee_transfer),class: 'btn btn-sm btn-primary' %>
            </td>
           </tr>
         <% end %>

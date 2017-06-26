@@ -58,9 +58,6 @@
       <th>ID</th>
       <th>Name</th>
       <th>Department</th>
-      <th>Designation</th>
-      <th>Contact No</th>
-      
       </tr>
   </thead>
 
@@ -70,8 +67,6 @@
       <td><%= trainee_request.employee.try(:manual_employee_code) %></td> 
       <td><%= full_name(trainee_request.employee) %></td>
       <td><%= trainee_request.employee.department.try(:name) %></td>
-      <td><%= trainee_request.employee.joining_detail.employee_designation.try(:name) %></td>
-      <td><%= trainee_request.employee.try(:contact_no) %></td>
       </tr>
       <% end %>
   </tbody>

@@ -23,7 +23,7 @@
         <td><%= investment_declaration.investment_head.try(:description) %></td>
         <td><%= investment_declaration.amount %></td>
         <td><%= investment_declaration.date %></td>
-        <td><%= investment_declaration.status ? "Yes" : "No"%></td>
+        <td><%= investment_declaration.status ? "Yes" : "No" %></td>
          <td>
            <% if investment_declaration.document_file_name == nil %>
            <small class="label label-default">Document Not Available</small>

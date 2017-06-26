@@ -11,8 +11,6 @@
           <th>ID</th>
           <th>Employee</th>
           <th>Department</th>
-          <th>Designation</th>
-          <th>Contact No.</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -22,8 +20,6 @@
         <td><%= e.employee.manual_employee_code %></td>
         <td><%= full_name(e.employee) %></td>
         <td><%= e.employee.company_location.try(:name) %> - <%= e.employee.department.try(:name) %></td> 
-        <td><%= e.employee.joining_detail.employee_designation.try(:name) %></td>
-        <td><%= e.employee.contact_no %>
         <td><%= link_to 'Goals For Approval', goal_approval_goal_bunches_path(id: e.id,emp_id: e.employee_id,period_id: @period.id) ,class: 'btn btn-xs btn-info' %></td>
         </tr>
         <% end %>

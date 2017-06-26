@@ -3,8 +3,6 @@
     <tr> 
       <th>ID</th>
       <th>Name</th>
-      <th>Designation</th>
-      <th>Department</th>
       <th>Active</th>
       <th>Action</th>
     </tr>
@@ -13,12 +11,8 @@
    <% @reporting_masters.each do |reporting_master| %>
       <tr>
         <td><%= reporting_master.employee.try(:manual_employee_code) %></td>
-
         <td><%= full_name(reporting_master.employee) %></td>
-
-        <td><%= reporting_master.employee.try(:joining_detail).try(:employee_designation).try(:name) %></td>
-        <td><%= reporting_master.employee.company_location.try(:name) %> - <%= reporting_master.employee.department.try(:name) %></td>
-        <td><%= reporting_master.is_active ? "Yes" : "No" %></td>
+        <td><%= reporting_master.is_active ? "Active" : "Inactive" %></td>
         </td> 
         <td>
          <%= link_to '', edit_reporting_master_path(reporting_master),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>

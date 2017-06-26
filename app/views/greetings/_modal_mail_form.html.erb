@@ -1,0 +1,25 @@
+<!-- Main content -->
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Wishes </center></h4>
+    </div>
+    <div class="modal-body">
+    <%= bootstrap_form_for @greeting,url:{action: "send_mail",employee_id: @employee.id} do |f| %>
+        <div class="row">
+          <div class="col-sm-6">
+            <%= f.text_area :message,placeholder: "Wishes" %>
+          </div>
+
+          <div class="col-sm-3" style="padding-top:40px;">
+            <%= f.submit "Send", class: 'btn btn-success btn-sm' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="modal-footer"></div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+
+

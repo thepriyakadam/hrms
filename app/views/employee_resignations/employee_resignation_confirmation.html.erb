@@ -131,27 +131,29 @@
 <div id="myModal1" class="modal fade"></div>
 <div id="myModal2" class="modal fade"></div>
 
-  <% if @employee_resignation.resign_status == "Pending" %>
-  <%= link_to 'Back', resignation_history_employee_resignations_path,class: 'btn btn-default fa fa-arrow-left' %> | 
+  <% if @employee_resignation.resign_status == "Pending" %> 
      <%= link_to 'Approve',first_approve_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-info fa fa-check' %> |
-      <%= link_to 'Reject',first_reject_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-danger fa fa-trash' %>
+      <%= link_to 'Reject',first_reject_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-danger fa fa-trash' %> |
+       <%= link_to 'Back', resignation_history_employee_resignations_path,class: 'btn btn-default fa fa-arrow-left' %> 
       <!-- <= link_to 'Approve & Send next',modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %>  |
       <= link_to 'Edit & Send Next',edit_n_send_next_modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn-sm btn-primary fa fa-check',remote: true %> | -->
       <!-- <= link_to 'Edit & Approve',edit_n_approve_modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %> -->
 
   <% elsif @employee_resignation.resign_status == "FirstApproved" %>
-   <%= link_to 'Back', resignation_history_employee_resignations_path,class: 'btn btn-default fa fa-arrow-left' %> | 
+ 
     <%= link_to 'Approve',second_approve_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-info fa fa-check' %> |
-      <%= link_to 'Reject',second_reject_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-danger fa fa-trash' %>
+      <%= link_to 'Reject',second_reject_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-danger fa fa-trash' %> |
+        <%= link_to 'Back', resignation_history_employee_resignations_path,class: 'btn btn-default fa fa-arrow-left' %> 
       <!-- <= link_to 'Approve & Send next',modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %>  |
       <= link_to 'Edit & Send Next',edit_n_send_next_modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn-sm btn-primary fa fa-check',remote: true %> | -->
       <!-- <= link_to 'Edit & Approve',edit_n_approve_modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %> -->
       
 
   <% elsif @employee_resignation.resign_status == "SecondApproved" %>
-  <%= link_to 'Back', resignation_history_employee_resignations_path,class: 'btn btn-default fa fa-arrow-left' %> | 
+  
     <%= link_to 'Approve',final_approve_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-info fa fa-check' %> |
-      <%= link_to 'Reject',final_reject_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-danger fa fa-trash' %>
+      <%= link_to 'Reject',final_reject_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-danger fa fa-trash' %> |
+      <%= link_to 'Back', resignation_history_employee_resignations_path,class: 'btn btn-default fa fa-arrow-left' %> 
       <!-- <= link_to 'Approve & Send next',modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %>  |
       <= link_to 'Edit & Send Next',edit_n_send_next_modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn-sm btn-primary fa fa-check',remote: true %> | -->
       <!-- <= link_to 'Edit & Approve',edit_n_approve_modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %> -->

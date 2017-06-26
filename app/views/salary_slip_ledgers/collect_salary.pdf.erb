@@ -2,7 +2,11 @@
 <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1000 cellpadding="10">
   <thead>
     <tr>
-      <th colspan="6">
+     <td colspan="6">
+         <% if current_user.company_location.company.company_logo == nil %>
+      <% else %>
+        <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
+        <%end%>
         <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
         <center><small><%= Bank.find(@bank).name %></small></center>
         <center><small>Employee Monthly Salary For The Month <%= @month %> - <%= @year %></small></center> 

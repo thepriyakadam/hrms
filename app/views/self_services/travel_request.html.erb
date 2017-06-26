@@ -9,6 +9,35 @@
   <%= f.hidden_field :application_date, value: Time.zone.now.to_date %>
 
 <div class="row">
+<div class="col-sm-12">
+        <div class="field">
+         <table class="table table-bordered table-hover table-condensed'">
+           <thead>
+           <tr>
+           <th colspan="2"><center>Request Process</center></th>
+           </tr>
+           <tr>
+           <th> Employee </th>
+           <td><%= @employee.try(:manual_employee_code) %> - <%= full_name(@employee) %></td>
+           </tr>
+           <tr>
+              <th>Manager 1 </th>
+              <td><%= @employee.manager.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager)) %></td>
+            </tr>
+            <tr>
+              <th>Manager 2 </th>
+              <td><%= @employee.manager_2.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager_2)) %></td>
+            </tr>
+             <tr>
+          
+           </tr>
+           </thead>
+         </table>
+        </div>
+      </div>
+      </div>
+
+<div class="row">
     <div class="col-sm-3">
           <label>Travel Option</label>
           <div class="form-group required">
@@ -78,7 +107,7 @@
   <div class="col-sm-6">
     <div class="field">
       <div class="form-group required">
-        <%= f.text_area :tour_purpose, label: 'Tour Purpose' %>
+        <%= f.text_field :tour_purpose, label: 'Tour Purpose' %>
       </div>
     </div>
   </div>

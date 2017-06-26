@@ -11,14 +11,12 @@
     <%= select :employee,:status,['Active','Inactive'],{label: 'Status',include_blank: " Select Status"}, class: "form-control" %>
   </div>
 </div><br>
- <table id="example6" class="table table-bordered table-hover table-condensed">
+ <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
       <th>Employee ID</th>
       <th>Name</th>
-      <th>Contact No</th>
-      <th>Department</th>
       <th>Status</th>
     </tr>
   </thead>
@@ -28,8 +26,6 @@
       <td><%= check_box_tag "employee_ids[]", e.id %></td>
       <td><%= e.manual_employee_code %></td> 
       <td><%= full_name(e) %></td>
-      <td><%= e.contact_no %></td>
-      <td><%= e.department.try(:name) %></td>
       <td><%= e.status %></td>
     </tr>
   <% end %>
@@ -86,7 +82,7 @@ $("#employee").validate({
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#example6').DataTable( {
+    $('#example2').DataTable( {
         "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
     } );
 } );

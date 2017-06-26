@@ -1,9 +1,9 @@
 class SalaryReport
-  attr_accessor :employee_name, :department_name, :code, :pf_no, :esic_no,
+  attr_accessor :employee_name, :department_name, :code, :pf_no, :esic_no,:employee_designation,
                 :actual_basic, :actual_da, :actual_hra, :actual_convenience, :actual_other, :actual_special, :actual_washing, :actual_total,
                 :earned_basic, :earned_da, :earned_hra, :earned_convenience, :earned_other, :earned_special, :earned_washing, :earned_total,
                 :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, :welfair, :deduction_total, :net_payable, :other_deduction,
-                :total_leave, :cl_leave, :el_leave,:advance_leave,:od_leave,:coff_leave,:esic_leave, :lwp_leave, :gatepass, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff, :month, :year,
+                :total_leave, :pay_leave, :nonpay_leave, :gatepass, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff, :month, :year,
                 :pf_ctc, :esic_ctc, :bonus_ctc, :actual_driver, :actual_medical, :actual_child_edu, :actual_mra, :earned_driver, :earned_medical, :earned_child_edu,
                 :earned_mra,:actual_monthly_arrear,:earned_monthly_arrear
         
@@ -17,8 +17,9 @@ class SalaryReport
     sr.month = sl.month
     sr.year = sl.year
     sr.employee_name = e.try(:first_name).to_s + ' ' + e.try(:middle_name).to_s + ' ' + e.try(:last_name).to_s
-    sr.department_name = e.department.try(:name)
+    sr.department_name = e.department.try(:name) 
     sr.code = e.manual_employee_code
+    sr.employee_designation = j.employee_designation.try(:name)
     sr.pf_no = j.employee_pf_no
     sr.esic_no = j.employee_efic_no
 
@@ -108,13 +109,15 @@ class SalaryReport
     sr.deduction_total =  deductable_items.sum(:calculated_amount).try(:to_i)
     sr.net_payable = sr.earned_total - sr.deduction_total.to_i
     
-    sr.cl_leave = wd.cl_leave.to_f
-    sr.el_leave = wd.el_leave.to_f
-    sr.advance_leave = wd.advance_leave.to_f
-    sr.od_leave = wd.od_leave.to_f
-    sr.coff_leave = wd.coff_leave.to_f
-    sr.esic_leave = wd.esic_leave.to_f
-    sr.lwp_leave = wd.lwp_leave.to_f 
+    # sr.cl_leave = wd.cl_leave.to_f
+    # sr.el_leave = wd.el_leave.to_f
+    # sr.advance_leave = wd.advance_leave.to_f
+    # sr.od_leave = wd.od_leave.to_f
+    # sr.coff_leave = wd.coff_leave.to_f
+    # sr.esic_leave = wd.esic_leave.to_f
+    # sr.lwp_leave = wd.lwp_leave.to_f 
+    sr.pay_leave = wd.pay_leave
+    sr.nonpay_leave = wd.nonpay_leave
     sr.day_in_month = wd.day_in_month
     sr.payable_day = wd.payable_day
     sr.present_day = wd.present_day
@@ -319,26 +322,32 @@ class SalaryReport
     array_total_leave = reports.collect {|r| r.try(:total_leave)}.compact
     @sum.total_leave = array_total_leave.inject(0){|sum,x| sum + x }
 
-    array_cl_leave = reports.collect {|r| r.try(:cl_leave)}.compact
-    @sum.cl_leave = array_cl_leave.inject(0){|sum,x| sum + x }
+    # array_cl_leave = reports.collect {|r| r.try(:cl_leave)}.compact
+    # @sum.cl_leave = array_cl_leave.inject(0){|sum,x| sum + x }
 
-    array_el_leave = reports.collect {|r| r.try(:el_leave)}.compact
-    @sum.el_leave = array_el_leave.inject(0){|sum,x| sum + x }
+    # array_el_leave = reports.collect {|r| r.try(:el_leave)}.compact
+    # @sum.el_leave = array_el_leave.inject(0){|sum,x| sum + x }
 
-    array_advance_leave = reports.collect {|r| r.try(:advance_leave)}.compact
-    @sum.advance_leave = array_advance_leave.inject(0){|sum,x| sum + x }
+    # array_advance_leave = reports.collect {|r| r.try(:advance_leave)}.compact
+    # @sum.advance_leave = array_advance_leave.inject(0){|sum,x| sum + x }
 
-     array_od_leave = reports.collect {|r| r.try(:od_leave)}.compact
-    @sum.od_leave = array_od_leave.inject(0){|sum,x| sum + x }
+    #  array_od_leave = reports.collect {|r| r.try(:od_leave)}.compact
+    # @sum.od_leave = array_od_leave.inject(0){|sum,x| sum + x }
 
-    array_coff_leave = reports.collect {|r| r.try(:coff_leave)}.compact
-    @sum.coff_leave = array_coff_leave.inject(0){|sum,x| sum + x }
+    # array_coff_leave = reports.collect {|r| r.try(:coff_leave)}.compact
+    # @sum.coff_leave = array_coff_leave.inject(0){|sum,x| sum + x }
 
-    array_esic_leave = reports.collect {|r| r.try(:esic_leave)}.compact
-    @sum.esic_leave = array_esic_leave.inject(0){|sum,x| sum + x }
+    # array_esic_leave = reports.collect {|r| r.try(:esic_leave)}.compact
+    # @sum.esic_leave = array_esic_leave.inject(0){|sum,x| sum + x }
 
-    array_lwp_leave = reports.collect {|r| r.try(:lwp_leave)}.compact
-    @sum.lwp_leave = array_lwp_leave.inject(0){|sum,x| sum + x.to_i }
+    # array_lwp_leave = reports.collect {|r| r.try(:lwp_leave)}.compact
+    # @sum.lwp_leave = array_lwp_leave.inject(0){|sum,x| sum + x.to_i }
+
+    array_pay_leave = reports.collect {|r| r.try(:pay_leave)}.compact
+    @sum.pay_leave = array_pay_leave.inject(0){|sum,x| sum + x}
+
+    array_nonpay_leave = reports.collect {|r| r.try(:nonpay_leave)}.compact
+    @sum.nonpay_leave = array_nonpay_leave.inject(0){|sum,x| sum + x}
 
     array_payable_day = reports.collect {|r| r.try(:payable_day)}.compact
     @sum.payable_day = array_payable_day.inject(0){|sum,x| sum + x }

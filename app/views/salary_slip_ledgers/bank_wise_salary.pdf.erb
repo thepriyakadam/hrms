@@ -3,7 +3,12 @@
 <table style="border-collapse: collapse; font-size:30pt;" border=1 width=1000 cellpadding="19">
   <thead>
     <tr>
-      <th colspan="53">
+
+     <td colspan="49">
+         <% if current_user.company_location.company.company_logo == nil %>
+      <% else %>
+        <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
+        <%end%>
         <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
         <center><small><%= Bank.find(@bank).name unless @bank.nil?  or @bank.blank? %>
         <%= CostCenter.find(@cost_center).name unless @cost_center.blank? or @cost_center.nil? or @cost_center.empty? %>
@@ -12,10 +17,10 @@
       </th>
     </tr>
     <tr>
-      <th colspan="13"><center> SALARY DETAILS</center></th>
-      <th colspan="13"><center> WORKING DAYS</center></th>
-      <th colspan="13"><center> EARNED SALARY</center></th>
-      <th colspan="12"><center>DEDUCTION</center></th>
+      <th colspan="11"><center> SALARY DETAILS</center></th>
+      <th colspan="12"><center> WORKING DAYS</center></th>
+      <th colspan="12"><center> EARNED SALARY</center></th>
+      <th colspan="11"><center>DEDUCTION</center></th>
       <th><center> NET </center></th>
       <th><center> SIGN </center></th>
     </tr>
@@ -34,25 +39,14 @@
       <th>MRA</th>
        <th>MA</th>
       <th>Total</th>
-
-      
-      
       <th>PD</th>
       <th>WOff</th>
-      <th>CL</th>
-      <th>EL</th>
-      <th>AL</th>
-      <th>OD</th>
-
-
-      <th>Coff</th>
-      <th>ESIC</th>
-      <th>LWP</th>
+      <th>Pay Leave</th>
+      <th>Non Pay Leave</th>
       <th>HD</th>
       <th>AD</th>
       <th>GP</th>
       <th>Payable</th>
-    
       <th>Basic</th>
       <th>DA</th>
       <th>HRA</th>
@@ -66,7 +60,6 @@
       <th>MRA</th>
        <th>MA</th>
       <th>Gross</th>
-
       <th>PF</th>
       <th>ESIC</th>
       <th>IT</th>
@@ -79,7 +72,6 @@
       <th>WF</th>
       <th>o.Dedu</th>
       <th>Total Dedu</th>
-
       <th>NET</th>
       <th>SING</th>
     </tr>
@@ -90,8 +82,8 @@
       <td colspan="1">
         <strong><%= i = i + 1 %></strong>
       </td>
-      <td colspan="12"><strong>Code - <%= r.try(:code) %></strong></td>
-      <td colspan="12"><strong>Employee - <%= r.try(:employee_name) %></strong></td>
+      <td colspan="11"><strong>Code - <%= r.try(:code) %></strong></td>
+      <td colspan="11"><strong>Employee - <%= r.try(:employee_name) %></strong></td>
       <td colspan="13">
         <strong>
           Department - <%= r.try(:department_name) %>|
@@ -103,11 +95,11 @@
       <td colspan="7">
         <strong>ESIC NO - <%= r.try(:esic_no) %></strong></td>
       </tr>
+
       <tr>  
         <td><%= r.try(:actual_basic).try(:round) %></td>
         <td><%= r.try(:actual_da).try(:round) %></td>
         <td><%= r.try(:actual_hra).try(:round) %></td>
-
         <td><%= r.try(:actual_convenience).try(:round) %></td>
         <td><%= r.try(:actual_other).try(:round) %></td>
         <td><%= r.try(:actual_special).try(:round) %></td>
@@ -118,26 +110,17 @@
         <td><%= r.try(:actual_mra).try(:round) %></td>
         <td><%= r.try(:actual_monthly_arrear).try(:round) %></td>
         <td><%= r.try(:actual_total).try(:round) %></td>
-
-
         <td><%= r.try(:present_day) %></td>
         <td><%= r.try(:weekoff) %></td>
-        <td><%= r.try(:cl_leave) %></td>
-        <td><%= r.try(:el_leave) %></td>
-        <td><%= r.try(:advance_leave) %></td>
-        <td><%= r.try(:od_leave) %></td>
-        <td><%= r.try(:coff_leave) %></td>
-        <td><%= r.try(:esic_leave) %></td>
-        <td><%= r.try(:lwp_leave) %></td>
+        <td><%= r.try(:pay_leave) %></td>
+        <td><%= r.try(:nonpay_leave) %></td>
         <td><%= r.try(:holiday) %></td>
         <td><%= r.try(:absent_day) %></td>
         <td><%= r.try(:gatepass) %></td>
         <td><%= r.try(:payable_day) %></td>
-       
         <td><%= r.try(:earned_basic).try(:round) %></td>
         <td><%= r.try(:earned_da).try(:round) %></td>
         <td><%= r.try(:earned_hra).try(:round) %></td>
-
         <td><%= r.try(:earned_convenience).try(:round) %></td>
         <td><%= r.try(:earned_other).try(:round) %></td>
         <td><%= r.try(:earned_special).try(:round) %></td>
@@ -148,14 +131,12 @@
         <td><%= r.try(:earned_mra).try(:round) %></td>
         <td><%= r.try(:earned_monthly_arrear).try(:round)%></td>
         <td><%= r.try(:earned_total).try(:round) %></td>
-
         <td><%= r.try(:pf) %></td>
         <td><%= r.try(:esic) %></td>
         <td><%= r.try(:income_tax) %></td>
         <td><%= r.try(:pt) %></td>
         <td><%= r.try(:advance) %></td>
         <td><%= r.try(:society) %></td>
-
         <td><%= r.try(:food_deduction) %></td>
         <td><%= r.try(:mobile) %></td>
         <td><%= r.try(:retention) %></td>
@@ -167,7 +148,7 @@
       </tr>
     <% end %>
     <tr>
-      <td colspan="53"><strong>Total</strong></td>
+      <td colspan="48"><strong>Total</strong></td>
     </tr>
 
     <tr>      
@@ -184,22 +165,14 @@
       <td><%= @sum.actual_mra.try(:round) %></td>
       <td><%= @sum.actual_monthly_arrear.try(:round) %></td>
       <td><%= @sum.actual_total.try(:round) %></td>
-
       <td><%= @sum.present_day %></td>
       <td><%= @sum.weekoff %></td>
-      <td><%= @sum.cl_leave %></td>
-      <td><%= @sum.el_leave %></td>
-      <td><%= @sum.advance_leave %></td>
-      <td><%= @sum.od_leave %></td>
-      <td><%= @sum.coff_leave %></td>
-      <td><%= @sum.esic_leave %></td>
-      <td><%= @sum.lwp_leave %></td>
+      <td><%= @sum.pay_leave %></td>
+      <td><%= @sum.nonpay_leave %></td>
       <td><%= @sum.holiday %></td>
       <td><%= @sum.absent_day %></td>
       <td><%= @sum.gatepass %></td>
       <td><%= @sum.payable_day %></td>
-      
-
       <td><%= @sum.earned_basic.try(:round) %></td>
       <td><%= @sum.earned_da.try(:round) %></td>
       <td><%= @sum.earned_hra.try(:round) %></td>
@@ -213,7 +186,6 @@
       <td><%= @sum.earned_mra.try(:round) %></td>
       <td><%= @sum.earned_monthly_arrear.try(:round) %></td>
       <td><%= @sum.earned_total.try(:round) %></td>
-
       <td><%= @sum.pf %></td>
       <td><%= @sum.esic %></td>
       <td><%= @sum.income_tax %></td>
@@ -226,7 +198,6 @@
       <td><%= @sum.welfair %></td>
       <td><%= @sum.other_deduction %></td>
       <td><%= @sum.deduction_total %></td>
-
       <td><%= @sum.net_payable %></td>
       <td></td>
     </tr>

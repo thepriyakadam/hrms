@@ -1,11 +1,52 @@
 Rails.application.routes.draw do
 
+  resources :recruiters 
+  resources :candidate_interview_schedules do
+    collection do
+      get :interview
+    end
+  end
+  resources :greetings do
+    collection do
+      get :modal_for_mail
+      post :send_mail
+      get :anniversary_mail
+      post :send_anniversary_mail
+    end
+  end
+  resources :thoughts
+  resources :candidate_interview_schedules
+  resources :interview_type_masters
+  resources :interview_types
+  resources :candidate_forms
+  resources :vacancy_request_statuses
+  resources :interview_types
+  resources :vacancy_requests do
+    collection do
+      get :cancel
+      get :approval_list
+      get :approval_detail
+      get :first_approve
+      get :approve
+      get :reject
+      get :final_approve
+      get :final_approval_list
+      get :approve_and_send_next
+      get :modal_approve_and_send_next
+      get :select_candidate
+      get :admin_approval
+      get :admin_approval_detail
+      get :recruiter_modal
+      post :final_approve
+    end
+  end
+  resources :policy_types
   resources :reimbursement_requests do
     collection do
       get :send_for_approval
-      get :list_for_approval
-      get :approve_request
-      get :reject_request
+      get :approval_list
+      get :approve
+      get :reject
       get :edit_request_modal
       post :update_request_modal
     end
@@ -15,18 +56,17 @@ Rails.application.routes.draw do
   resources :reporting_master_rembursments
   resources :rembursments  do
     collection do
-      get :rembursment_request
-      get :rembursment_confirmation
+      get :approval_list
+      get :approval_detail
       get :first_approve
       get :approve
-      get :reject_rembursment
-      get :approve_rembursment
+      get :reject
       get :final_approve
-      get :final_approval_rembursment
+      get :final_approval_list
       get :approve_and_send_next
       get :modal_approve_and_send_next
-
-       end
+      get :cancel
+    end
   end
   resources :rembursmentmasters
   resources :employee_jc_lists
@@ -416,7 +456,8 @@ end
       post :print_transfer_employee_name_report
       get :transfer_employee_name_report_pdf
       get :transfer_employee_name_report_xls
-
+      get :admin_employee_transfer
+      post :final_approve_by_admin
     end
   end
 
@@ -471,6 +512,10 @@ end
   resources :company_policies do
     collection do
       get :active_policies_list
+      get :policy_type_detail
+      get :policy_type_dashboard
+      get :modal
+      post :update_company_policy
     end
   end
 
@@ -618,6 +663,19 @@ end
       get :datewise_report
       post :show_datewise_report
       get :show_datewise_report
+
+      post :upload
+      get :upload_daily_attendance
+      get :upload_daily_attendance_to_txt
+      get :datewise_daily_attendance
+      post :show_datewise_daily_attendance
+      get :modal_edit_daily_attendance
+      post :update_daily_attendance
+      post :create_self_attendance
+      get :daily_attendance_datewise
+      post :show_daily_attendance_datewise
+      get :select_date_and_employee
+      post :date_and_employeewise_attendance
     end
   end
   resources :salary_comp_mappings
@@ -729,6 +787,8 @@ end
       get :period_rating_wise_xls
       get :increment_index_report
       get :detail_employee_wise
+      get :show_goal_rating
+      get :show_attribute
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -1063,8 +1123,8 @@ end
       get :daily_bill
       get :travel_history
       get :travel_request_confirmation
-      get :approve_travel_request
-      get :reject_travel_request
+      get :approve
+      get :reject
       post :send_request_to_higher_authority
       get :modal
       get :cancel_travel_request
@@ -1286,8 +1346,12 @@ end
       post :approve_c_off
       get :reject_c_off
       get :approve_modal
+      post :final_approve
       get :final_approve
       get :final_reject
+      get :admin_c_off_approval
+      get :admin_level_c_off_detail
+      get :admin_approve_modal
     end
   end
 
@@ -1316,6 +1380,8 @@ end
       post :create_reimbursement_request
       get :employee_rembursment
       post :create_emp_rembursment
+      get :add_attendance
+      post :create_self_attendance
     end
   end
 
@@ -1386,13 +1452,17 @@ end
   match 'employee_documents/:id/download_emp/:id' => 'employee_documents#download_emp', :via => [:get], :as => :download_emp
   match 'employee_documents/:id/download_pic/:id' => 'employee_documents#download_pic', :via => [:get], :as => :download_pic
   match 'investment_declarations/:id/investment_document/:id' => 'investment_declarations#investment_document', :via => [:get], :as => :investment_document
-   match 'investment_declarations/:id/investment_document2/:id' => 'investment_declarations#investment_document2', :via => [:get], :as => :investment_document2
 
+  match 'self_services/:id/investment_document2/:id' => 'self_services#investment_document2', :via => [:get], :as => :investment_document2
+ 
   match 'due_templates/:id/download_due_tempalte_documents/:id' => 'due_templates#download_due_tempalte_documents', :via => [:get], :as => :download_due_tempalte_documents
 
   match 'issue_requests/:id/download_screenshot_image/:id' => 'issue_requests#download_screenshot_image', :via => [:get], :as => :download_screenshot_image
   match 'issue_requests/:id/download_screenshot/:id' => 'issue_requests#download_screenshot', :via => [:get], :as => :download_screenshot
   match 'companies/:id/download_company_logo/:id' => 'companies#download_company_logo', :via => [:get], :as => :download_company_logo
+  
+   match 'candidate_forms/:id/document_1/:id' => 'candidate_forms#document_1', :via => [:get], :as => :document_1
+   match 'candidate_forms/:id/document_2/:id' => 'candidate_forms#document_2', :via => [:get], :as => :document_2
 
   match 'visitor_details/:id/download_person_image/:id' => 'visitor_details#download_person_image', :via => [:get], :as => :download_person_image
   # get '/screenshot', to: 'issue_requests#download_screenshot', as: 'download_screenshot'
@@ -1784,7 +1854,8 @@ end
 
   resources :holidays do
     collection do
-      get :assign_to_employee
+      post :assign_to_employee
+      post :employee_list
     end
   end
 
@@ -1969,6 +2040,7 @@ end
       get :leave_req_status_report
       post :status_wise_request
       get :status_wise_request
+      get :select_form
     end
   end
   resources :company_leavs
@@ -2041,6 +2113,7 @@ end
   end
   resources :employees do
     collection do
+      get :print_employee_data_formate
       get :employee_list_report
       post :selected_employee_list_report
       get :selected_employee_pdf
@@ -2146,6 +2219,7 @@ end
       post :update_gps
       get :employee_gps_setting_list
       post :display_employee_details
+      get :display_employee_details
       get :employee_detail_form
       get :employee_record_pdf
       get :is_confirm
@@ -2211,6 +2285,7 @@ end
     collection do
       get :created_user
       patch :update_form
+      # get :show
     end
   end
 

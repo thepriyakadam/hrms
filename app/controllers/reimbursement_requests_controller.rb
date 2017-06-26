@@ -68,39 +68,40 @@ class ReimbursementRequestsController < ApplicationController
     redirect_to reimbursement_request_self_services_path
   end
 
-  def list_for_approval
+  def approval_list
     @reimbursement_requests = ReimbursementRequest.where(status: "Send For Approval")
+    session[:active_tab] = "PayrollManagement"
+    session[:active_tab1] ="ltareimbursement"
   end
 
-  def approve_request
+  def approve
     @reimbursement_request = ReimbursementRequest.find(params[:format])
     @reimbursement_request.update(status: "Approved",approval_id: current_user.employee_id)
     flash[:notice] = "Request Approved Successfully!"
     redirect_to list_for_approval_reimbursement_requests_path
   end
 
-  def reject_request
+  def reject
     @reimbursement_request = ReimbursementRequest.find(params[:format])
     @reimbursement_request.update(status: "Pending",approval_id: current_user.employee_id)
     flash[:notice] = "Request Rejected Successfully!"
     redirect_to list_for_approval_reimbursement_requests_path
   end
 
-  def edit_request_modal
-    @reimbursement_request = ReimbursementRequest.find(params[:format])
-  end
+  # def edit_request_modal
+  #   @reimbursement_request = ReimbursementRequest.find(params[:format])
+  # end
 
-  def update_request_modal
-    @reimbursement_request = ReimbursementRequest.find(params[:reimbursement_request_id])
-    # reimbursement_head_id = params[:reimbursement_request][:reimbursement_head_id]
-    # date = params[:reimbursement_request][:date]
-    # amount = params[:reimbursement_request][:amount]
-    # @reimbursement_request.update(reimbursement_head_id: reimbursement_head_id,date: date,amount: amount)
-    
-    @reimbursement_request.update(reimbursement_request_params)
-    flash[:notice] = "Request Updated Successfully!"
-    redirect_to reimbursement_request_self_services_path
-  end
+  # def update_request_modal
+  #   @reimbursement_request = ReimbursementRequest.find(params[:reimbursement_request_id])
+  #   # reimbursement_head_id = params[:reimbursement_request][:reimbursement_head_id]
+  #   # date = params[:reimbursement_request][:date]
+  #   # amount = params[:reimbursement_request][:amount]
+  #   # @reimbursement_request.update(reimbursement_head_id: reimbursement_head_id,date: date,amount: amount)
+  #   @reimbursement_request.update(reimbursement_request_params)
+  #   flash[:notice] = "Request Updated Successfully!"
+  #   redirect_to reimbursement_request_self_services_path
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.

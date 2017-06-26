@@ -44,10 +44,6 @@
             <th><input type="checkbox" id="selectAll" value="selectAll"></th>
             <th>ID</th>
             <th>Employee Name</th>
-            <th>Department</th>
-            <th>Designation</th>
-            <th>Employement</th>
-            <th>Contact No.</th>
           </tr>
         </thead>
 
@@ -57,10 +53,6 @@
               <td><%= check_box_tag "employee_ids[]", e.id %></td>
               <td><%= e.manual_employee_code %></td>
               <td><%= full_name(e) %></td>
-              <td><%= e.department.try(:name) %></td>
-              <td><%= e.joining_detail.try(:employee_designation).try(:name) %></td>
-              <td><%= e.employee_type.try(:name) %></td>
-               <td><%= e.contact_no %></td>
             </tr>
           <% end %>
         </tbody>

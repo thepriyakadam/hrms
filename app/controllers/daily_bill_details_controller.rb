@@ -154,23 +154,20 @@ class DailyBillDetailsController < ApplicationController
   end 
 
   def daily_bill_request_confirmation
-    # byebug
     @travel_request = TravelRequest.find(params[:format])
+    @travel_expence = TravelExpence.find_by(travel_request_id: @travel_request.id)
+    @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id,is_confirm: true)
     
-  
     @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
     @reporting_masters_travel_requests2 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: false).second
     @reporting_masters_travel_requests3 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: false).third
     @reporting_masters_travel_requests4 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: false).fourth
     @reporting_masters_travel_requests5 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: false).fifth
-    @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id,is_confirm: :true)
+    #@daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id,is_confirm: :true)
    
     session[:active_tab] ="travelmgmt"
   end
 
-  def approve_and_send_next
-
-  end
 
   def approved_daily_bill_details
     @daily_bill_details = DailyBillDetail.where(request_status: "Approved")
@@ -283,18 +280,18 @@ class DailyBillDetailsController < ApplicationController
     else
   end
     # byebug
-     @report = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).last
-      c1 = @travel_request.total_advance - @travel_request.expense
-      if @report.status == true  && @report.travel_status == "FinalApproved"
-        @travel_expence = TravelExpence.create(travel_request_id: @travel_request.id,total_advance_amount: @travel_request.total_advance,total_expence_amount: @travel_request.expense,remaining_amount: c1)
-      else
-      end
+     # @report = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).last
+     #  c1 = @travel_request.total_advance - @travel_request.expense
+     #  if @report.status == true  && @report.travel_status == "FinalApproved"
+     #    @travel_expence = TravelExpence.create(travel_request_id: @travel_request.id,total_advance_amount: @travel_request.total_advance,total_expence_amount: @travel_request.expense,remaining_amount: c1)
+     #  else
+     #  end
       
-      if c1<0
-         TravelExpence.where(travel_request_id: @travel_request.id).update_all(employee_amount: c1.abs)
-        else
-          TravelExpence.where(travel_request_id: @travel_request.id).update_all(company_amount: c1.abs)
-      end  
+     #  if c1<0
+     #     TravelExpence.where(travel_request_id: @travel_request.id).update_all(employee_amount: c1.abs)
+     #    else
+     #      TravelExpence.where(travel_request_id: @travel_request.id).update_all(company_amount: c1.abs)
+     #  end  
       redirect_to travel_request_list_daily_bill_details_path
   end 
 
@@ -347,7 +344,6 @@ class DailyBillDetailsController < ApplicationController
   end
 
   def is_confirm
-    # byebug
     @travel_request = TravelRequest.find(params[:travel_request_id])
     @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
     @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[0]
@@ -356,8 +352,25 @@ class DailyBillDetailsController < ApplicationController
     DailyBillDetail.where(travel_request_id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests.reporting_master_id,is_confirm: true)
     c1 = @daily_bill_details.sum(:travel_expence).to_i
     TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests_1.reporting_master_id,is_confirm: true,expense: c1)
+      
+      #byebug
+      @travel_req = TravelRequest.find_by(id: @travel_request.id)
+       @report = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).first
+      c1 = @travel_request.total_advance - @travel_req.expense
+      if @report.status == true  && @report.travel_status == "Pending"
+        @travel_expence = TravelExpence.create(travel_request_id: @travel_request.id,total_advance_amount: @travel_request.total_advance,total_expence_amount: @travel_req.expense,remaining_amount: c1)
+      else
+      end
+      if c1<0
+         TravelExpence.where(travel_request_id: @travel_request.id).update_all(employee_amount: c1.abs)
+        else
+          TravelExpence.where(travel_request_id: @travel_request.id).update_all(company_amount: c1.abs)
+      end  
+
+
     flash[:notice] = "Confirmed Successfully"
     redirect_to new_daily_bill_detail_path(travel_request_id: @travel_request.id)
+
   end
 
   def image_modal

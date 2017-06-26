@@ -10,8 +10,6 @@
         <tr>
           <th>ID</th>
           <th>Employee Name</th>
-          <th>Department</th>
-          <th>Designation</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -20,10 +18,8 @@
         <tr>
         <td><%= e.manual_employee_code %></td>
         <td><%= e.first_name %> <%= e.middle_name %> <%= e.last_name %> </td>
-        <td><%= e.company_location.try(:name) %> - <%= e.department.try(:name) %></td> 
-        <td><%= e.joining_detail.try(:employee_designation).try(:name)%></td>
         <td>
-          <%= link_to 'Assign Induction', search_template_induction_activities_path(e) ,class: 'btn btn-xs btn-info' %>
+          <%= link_to 'Plan', search_template_induction_activities_path(e) ,class: 'btn btn-xs btn-info' %>
 <!--           <= link_to 'View Induction', view_induction_list_induction_activities_path(emp_id: e.id) ,class: 'btn btn-xs btn-info' %>
  -->        </td>
         </tr>

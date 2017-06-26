@@ -785,6 +785,8 @@ end
       get :detail_employee_wise
       get :show_goal_rating
       get :show_attribute
+      get :show_goal_modal
+      get :show_attribute_modal
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -1378,6 +1380,8 @@ end
       post :create_emp_rembursment
       get :add_attendance
       post :create_self_attendance
+      get :show_investment_declaration_list
+      get :show_leave_c_off_list
     end
   end
 

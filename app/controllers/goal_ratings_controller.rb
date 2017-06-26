@@ -224,6 +224,14 @@ class GoalRatingsController < ApplicationController
     end
   end
 
+   def show_goal_modal
+    @goal_rating = GoalRating.find(params[:format])
+  end
+
+  def show_attribute_modal
+     @goal_rating = GoalRating.find(params[:format])
+  end
+
   def update_goal_modal
     @goal_rating = GoalRating.find(params[:goal_rating_id])
     @period = Period.find(params[:period_id])

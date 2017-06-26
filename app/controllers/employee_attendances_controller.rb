@@ -1534,7 +1534,14 @@ def upload
       else
         total_hrs = last_out_time.to_f - first_in_time.to_f
         working_hrs = total_hrs/3600
-        EmployeeAttendance.create(day: last_record.date,in_time: first_in_time,out_time: last_out_time,employee_id: employee.id,working_hrs: working_hrs.round(2))
+
+        if working_hrs.to_f <  4
+          EmployeeAttendance.create(day: last_record.date,in_time: first_in_time,out_time: last_out_time,employee_id: employee.id,working_hrs: working_hrs.round(2),present: "A")
+        elsif working_hrs.to_f < 7
+          EmployeeAttendance.create(day: last_record.date,in_time: first_in_time,out_time: last_out_time,employee_id: employee.id,working_hrs: working_hrs.round(2),present: "P/2")
+        else
+          EmployeeAttendance.create(day: last_record.date,in_time: first_in_time,out_time: last_out_time,employee_id: employee.id,working_hrs: working_hrs.round(2),present: "P")
+        end
       end
     end#employee.nil?
   end#do

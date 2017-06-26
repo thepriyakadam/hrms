@@ -75,7 +75,10 @@ class SelfServicesController < ApplicationController
     @to = params[:employee][:to]
     @employee_id = params[:employee][:employee_id]
     @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day")
+<<<<<<< HEAD
 
+=======
+>>>>>>> 69b84b1b1026d5486dfe72a7ffeb255da21d9ad7
   end
 
   def investment_declaration
@@ -224,6 +227,4 @@ class SelfServicesController < ApplicationController
   def leave_c_off_params
     params.require(:leave_c_off).permit(:is_expire,:employee_id, :c_off_date, :c_off_type, :c_off_expire_day, :expiry_status, :expiry_date, :leave_count)
   end
- 
-
 end

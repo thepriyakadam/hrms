@@ -122,6 +122,27 @@ end
     redirect_to transfer_request_employee_transfers_path
   end
 
+  def admin_employee_transfer
+  end
+
+  def final_approve_by_admin
+    employee_id = params[:employee_transfer][:employee_id]
+    employee_designation_id = params[:employee_transfer][:employee_designation_id]
+    employee_category_id = params[:employee_transfer][:employee_category_id]
+    company_id = params[:employee_transfer][:company_id]
+    company_location_id = params[:employee] ? params[:employee][:company_location_id] : params[:company_location_id]
+    department_id = params[:employee] ? params[:employee][:department_id] : params[:department_id]
+    @emp = Employee.find_by(id: employee_id)
+    @employee_transfer = EmployeeTransfer.create(employee_id: employee_id,employee_designation_id: employee_designation_id,employee_category_id: employee_category_id,company_id: company_id,company_location_id: company_location_id,department_id: department_id,reporting_master_id: current_user.employee_id,current_status: "FinalApproved")
+    @emp.update(company_id: company_id,company_location_id: company_location_id,department_id: department_id)
+    @joining_detail= JoiningDetail.find_by_employee_id(employee_id)    
+    @joining_detail.update(employee_designation_id: employee_designation_id,employee_category_id: employee_category_id)
+    ReportingEmployeeTransfer.create(employee_transfer_id: @employee_transfer.id,reporting_master_id: current_user.employee_id,status: "FinalApproved")
+    TransferHistory.create(employee_transfer_id: @employee_transfer.id,current_status: "FinalApproved",reporting_master_id: current_user.employee_id,employee_id: employee_id,employee_designation_id: employee_designation_id,employee_category_id: employee_category_id,company_id: company_id,company_location_id: company_location_id,department_id: department_id)
+    flash[:notice] = 'Transfer Request Created Successfully'
+    redirect_to admin_employee_transfer_employee_transfers_path
+  end
+
   def final_approval_transfer_list
      @employee_transfers = EmployeeTransfer.where(current_status: "Approved")
   end

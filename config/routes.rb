@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :recruiters 
   resources :candidate_interview_schedules do
     collection do
       get :interview
@@ -35,6 +36,8 @@ Rails.application.routes.draw do
       get :select_candidate
       get :admin_approval
       get :admin_approval_detail
+      get :recruiter_modal
+      post :final_approve
     end
   end
   resources :policy_types
@@ -453,7 +456,8 @@ end
       post :print_transfer_employee_name_report
       get :transfer_employee_name_report_pdf
       get :transfer_employee_name_report_xls
-
+      get :admin_employee_transfer
+      post :final_approve_by_admin
     end
   end
 
@@ -2041,6 +2045,7 @@ end
       post :status_wise_request
       get :status_wise_request
       get :select_form
+      get :select_admin_form
     end
   end
   resources :company_leavs

@@ -15,7 +15,8 @@
       </tr>
       <tr>
         <td>Employee :</td>
-        <td> <%= @leave_request.employee.try(:first_name)%> <%= @leave_request.employee.try(:middle_name)%> <%= @leave_request.employee.try(:last_name)%></td>
+
+        <td><%= @leave_request.employee.try(:prefix) %> <%= @leave_request.employee.first_name %> <%= @leave_request.employee.try(:middle_name) %> <%= @leave_request.employee.last_name %></td>
       </tr>
       <tr>
         <td> Leave Category :</td>

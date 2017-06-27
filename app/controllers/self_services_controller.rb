@@ -75,10 +75,6 @@ class SelfServicesController < ApplicationController
     @to = params[:employee][:to]
     @employee_id = params[:employee][:employee_id]
     @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day")
-<<<<<<< HEAD
-
-=======
->>>>>>> 69b84b1b1026d5486dfe72a7ffeb255da21d9ad7
   end
 
   def investment_declaration

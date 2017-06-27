@@ -41,6 +41,7 @@ class LeaveStatusRecordsController < ApplicationController
 
   def first_approve
     ### if no second reporter available
+    #byebug
     if @employee_leav_request.employee.manager_2_id.nil?
       @leave_status = LeaveStatusRecord.new do |s|
         s.employee_leav_request_id = params[:id]
@@ -55,12 +56,14 @@ class LeaveStatusRecordsController < ApplicationController
           @employee_leav_request.manage_coff(@employee_leav_request)
           @employee_leav_request.create_attendance
           LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FinalApproved")
-          LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
+          
           if @employee_leav_request.first_reporter_id == current_user.employee_id
             redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
+            LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
             flash[:notice] = 'Leave Request Approved Successfully.'
           else
             redirect_to all_leave_request_list_employee_leav_requests_path
+            LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
             flash[:notice] = 'Leave Request Approved Successfully by Admin.'
           end
         else
@@ -71,7 +74,7 @@ class LeaveStatusRecordsController < ApplicationController
             redirect_to all_leave_request_list_employee_leav_requests_path
             flash[:alert] = 'Leave Already Approved. Please refresh page.'
           end  
-        end
+        end# @leave_status.save
       end
     ### if second reporter available
     else
@@ -85,12 +88,14 @@ class LeaveStatusRecordsController < ApplicationController
       ActiveRecord::Base.transaction do
         if @leave_status.save
           @employee_leav_request.update(is_first_approved: true, current_status: 'FirstApproved', second_reporter_id: @employee_leav_request.employee.manager_2_id)
-          LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
+          
           if @employee_leav_request.first_reporter_id == current_user.employee_id
             redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
+            LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
             flash[:notice] = 'Leave Request Approved Successfully.'
           else
             redirect_to all_leave_request_list_employee_leav_requests_path
+            LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
             flash[:notice] = 'Leave Request Approved Successfully by Admin.'
           end
         else

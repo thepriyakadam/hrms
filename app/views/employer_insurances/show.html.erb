@@ -8,7 +8,7 @@
   <tr>
   <th><strong>Base Component</strong></th>
    <td colspan="3"> <% i = 0 %>
-          <% @employer_family_pension.base_component.split(",").each do |e| %>
+          <% @employer_insurance.base_component.split(",").each do |e| %>
             <% if i == 0 %>
               <%= SalaryComponent.find(e.to_i).name %>
             <% else %>
@@ -21,20 +21,20 @@
 </tr>
 <tr>
   <th><strong>Percentage</strong></th>
-   <td><%= @employer_family_pension.percentage %></td>
+   <td><%= @employer_insurance.percentage %></td>
 
      <th><strong>Effective from</strong></th>
-  <td><%= @employer_family_pension.effective_from %></td>
+  <td><%= @employer_insurance.effective_from %></td>
 
 </tr>
 
 <tr>
    <th><strong>Effective to</strong></th>
-   <td><%= @employer_family_pension.effective_to %></td>
+   <td><%= @employer_insurance.effective_to %></td>
 
   <th>Status</th>
-  <td><%= @employer_family_pension.is_active ? "Active" : "Inactive"  %></td>
+  <td><%= @employer_insurance.is_active ? "Active" : "Inactive"  %></td>
 </tr>  
 
 </table><br>
- <%= link_to 'Back', new_employer_family_pension_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>
+ <%= link_to 'Back', new_employer_insurance_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>

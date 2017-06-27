@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employer Insurance</h3>
+    <h3 class="box-title">Dearness Allowance</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
@@ -8,7 +8,7 @@
   <tr>
   <th><strong>Base Component</strong></th>
    <td colspan="3"> <% i = 0 %>
-          <% @employer_family_pension.base_component.split(",").each do |e| %>
+          <% @dearness_allowance.base_component.split(",").each do |e| %>
             <% if i == 0 %>
               <%= SalaryComponent.find(e.to_i).name %>
             <% else %>
@@ -20,21 +20,21 @@
   
 </tr>
 <tr>
-  <th><strong>Percentage</strong></th>
-   <td><%= @employer_family_pension.percentage %></td>
+  <th><strong>Minimum wages</strong></th>
+   <td><%= @dearness_allowance.minimum_wages %></td>
 
      <th><strong>Effective from</strong></th>
-  <td><%= @employer_family_pension.effective_from %></td>
+  <td><%= @dearness_allowance.effective_from %></td>
 
 </tr>
 
 <tr>
    <th><strong>Effective to</strong></th>
-   <td><%= @employer_family_pension.effective_to %></td>
+   <td><%= @dearness_allowance.effective_to %></td>
 
   <th>Status</th>
-  <td><%= @employer_family_pension.is_active ? "Active" : "Inactive"  %></td>
+  <td><%= @dearness_allowance.is_active ? "Active" : "Inactive"  %></td>
 </tr>  
 
 </table><br>
- <%= link_to 'Back', new_employer_family_pension_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>
+ <%= link_to 'Back', new_dearness_allowance_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>

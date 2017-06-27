@@ -98,7 +98,11 @@ Rails.application.routes.draw do
       get :is_confirm
     end
   end
-  resources :monthly_arrears
+  resources :monthly_arrears  do
+    collection do
+      get :modal
+    end
+  end
   resources :on_duty_requests do
     collection do
       get :select_checkbox
@@ -1549,6 +1553,7 @@ end
       get :monthly_expence_report
       get :dynamic_report
       post :dynamic_report
+      get :modal
     end
   end
   resources :expencess_types do
@@ -1571,6 +1576,7 @@ end
       get :food_deduction_report
       get :dynamic_report
       post :dynamic_report
+      get :modal
     end
   end
   resources :reporting_masters do
@@ -1914,6 +1920,7 @@ end
     collection do
       post :create_employee_template
       get :is_confirm
+      get :modal
     end
   end
   resources :universities do

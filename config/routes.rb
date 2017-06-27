@@ -2041,6 +2041,7 @@ end
       post :status_wise_request
       get :status_wise_request
       get :select_form
+      get :select_admin_form
     end
   end
   resources :company_leavs

@@ -4,7 +4,7 @@
     <h3 class="box-title"> Leave Request </h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <%= bootstrap_form_for(@employee_leav_request,html: {id: 'employee_leav_request'}) do |f| %>
+    <%= bootstrap_form_for(:employee_leav_request,html: {id: 'employee_leav_request'}) do |f| %>
      <%= f.hidden_field :employee_id, value: @employee.id %>
     <div class="row">
        <div class="col-sm-6">
@@ -54,7 +54,7 @@
        <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :leav_category_id,options_for_select(all_leav_category),{include_blank: "Select Leave" },{onchange:"var a={leav_category_id:$(this).val()}; $.get('/employee_leav_requests/select_form',a,function(response){});",class: 'form-control'} %>
+            <%= f.select :leav_category_id,options_for_select(all_leav_category),{include_blank: "Select Leave" },{onchange:"var a={leav_category_id:$(this).val(),employee_id:$('#employee_leav_request_employee_id').val()};$('.ajax-progress').show(); $.get('/employee_leav_requests/select_admin_form',a,function(response){});",class: 'form-control'} %>
           </div>
         </div>
       </div>

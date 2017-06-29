@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :punch_masters
   resources :recruiters 
   resources :candidate_interview_schedules do
     collection do

@@ -3073,6 +3073,18 @@ ActiveRecord::Schema.define(version: 20170621051549) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "punch_masters", force: :cascade do |t|
+    t.time     "start_time"
+    t.time     "end_time"
+    t.string   "reader_in",    limit: 255
+    t.string   "reader_out",   limit: 255
+    t.decimal  "full_day_hrs",             precision: 10
+    t.decimal  "half_day_hrs",             precision: 10
+    t.boolean  "status"
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+  end
+
   create_table "qualifications", force: :cascade do |t|
     t.integer  "employee_id",      limit: 4
     t.integer  "degree_id",        limit: 4

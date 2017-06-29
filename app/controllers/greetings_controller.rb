@@ -10,10 +10,12 @@ before_action :set_greeting, only: [:show, :edit, :update, :destroy]
   end
 
   def send_mail
-    message = params[:message]
+    message = params[:greeting][:message]
     employee_id = params[:employee_id]
-    @greeting = Greeting.create(date: Date.today,message: message,sender: current_user.employee_id,receiver: employee_id,status: true)
-    GreetingMailer.send_email_to_employee(employee_id,@greeting).deliver_now
+    @greeting = Greeting.create(date: Date.today,message: message,sender_id: current_user.employee_id,receiver_id: employee_id,status: true)
+    GreetingMailler.send_email_to_employee(@greeting).deliver_now
+    flash[:notice] = "Thank You For Your Wishes"
+    redirect_to root_path
   end
 
   # private

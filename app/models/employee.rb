@@ -126,6 +126,8 @@ class Employee < ActiveRecord::Base
   has_many :vacancy_requests, class_name: 'Employee', foreign_key: 'approval_by_id'
   has_many :candidate_forms, class_name: 'Employee', foreign_key: 'selected_by_id'
   has_many :candidate_interview_schedule, class_name: 'Employee', foreign_key: 'interviewer_id'
+  has_many :greetings, class_name: "Employee", foreign_key: "sender_id"
+  has_many :greetings, class_name: "Employee", foreign_key: "receiver_id"
 
   # has_many :reporting_masters, class_name: "Employee",
   #                         foreign_key: "manager_id"

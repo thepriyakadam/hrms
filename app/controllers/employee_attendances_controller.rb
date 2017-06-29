@@ -1517,9 +1517,8 @@ def upload
 
     employee = Employee.find_by_manual_employee_code(da.employee_code)
 
-    employee_daily_attendance = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date).first  
+    #employee_daily_attendance = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date).first  
     previous_date = (da.date - 1).to_date
-  
     #if employee_daily_attendance.reader_name == "Main Door Out"
     @punch_master = PunchMaster.find_by(status: true)
         if employee.nil?
@@ -1538,10 +1537,16 @@ def upload
             else
               if last_record.nil?
               else
-
-                total_hrs = last_record.time.to_time - employee_attendance.in_time.to_time
-                working_hrs = total_hrs/3600
-                employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2))
+                if last_record.time.to_time <= employee_attendance.in_time.to_time
+                  last_re = last_record.time.to_time + 24
+                  total_hrs = last_re.to_time - employee_attendance.in_time.to_time
+                  working_hrs = total_hrs/3600
+                  employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2))
+                else
+                  total_hrs = last_record.time.to_time - employee_attendance.in_time.to_time
+                  working_hrs = total_hrs/3600
+                  employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2))
+                end
               end
             end
 

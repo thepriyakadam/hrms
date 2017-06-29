@@ -13,8 +13,6 @@
         <th>Company Name</th>
         <th>Location Code</th>
         <th>Location Name</th>
-        <th>Contact No</th>
-        <th>Email</th>
         <th>Action</th>
       </tr>
       </thead>
@@ -25,8 +23,6 @@
             <td><%= company_location.company.try(:name)  %></td>
             <td><%= company_location.manual_company_location_code %></td>
             <td><%= company_location.name %></td>
-            <td><%= company_location.contact_no %></td>
-            <td><%= company_location.email %></td>
             <td>
               <%= link_to '', company_location,class: 'btn btn-default btn-sm fa fa-eye' %>
             </td>

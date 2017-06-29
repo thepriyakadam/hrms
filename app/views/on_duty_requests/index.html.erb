@@ -33,12 +33,10 @@
     <div class="box-body">
       <table id="example" class="table table-bordered table-hover table-condensed">
         <thead>
+        <tr><th colspan="4"><center>On Duty History</center></th></tr>
           <tr>
             <th>OD Type</th>
-            <th>From Date</th>
-            <th>To Date</th>
-            <th>No of Day</th>
-            <th>Reason</th>
+            <th>No. of Day</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -48,10 +46,7 @@
           <% @on_duty_requests.each do |on_duty_request| %>
             <tr>
               <td><%= on_duty_request.leave_type %></td>
-              <td><%= on_duty_request.start_date.to_date %></td>
-              <td><%= on_duty_request.end_date.to_date %></td>
               <td><%= on_duty_request.no_of_day %></td>
-              <td><%= on_duty_request.reason %></td>
               <td>
                  <% on_duty_request.od_status_records.try(:each) do |o| %>
                     <% case o.status %>

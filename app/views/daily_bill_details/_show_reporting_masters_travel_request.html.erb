@@ -2,15 +2,13 @@
 <table  class="table table-bordered table-hover table-condensed'">
       <thead>
       <tr>
-      <td colspan="5"><center>Travel Request Process</center></td>
+      <td colspan="4"><center>Travel Request Process</center></td>
     </tr>
         <tr>
         <th>Sr.No</th>
-        <th>Approver ID</th>
         <th>Approver Name</th>
-        <th>Travel Request Status</th>
-        
-        <th>Expence Claim Status</th>
+        <th>Request Status</th>
+        <th>Claim Status</th>
        </tr>
       </thead>
 
@@ -21,13 +19,12 @@
             <td><%= i=i+1 %></td>
             <% b=a.reporting_master_id
                 emp=Employee.where(id: b).take %>
-            <td><%= emp.manual_employee_code%></td>
             <td><%= emp.try(:first_name)%> <%= emp.try(:middle_name)%> <%= emp.try(:last_name)%></td>
   	        <td><%= a.travel_status %></td>
             
             <td>
               <% if a.status == true %>
-              <small class="label label-primary">Confirmed & Send Next</small>
+              <small class="label label-primary">Confirmed</small>
              <!--  < if @dbl = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:status).last == true %>
               <small class="label label-danger">Confirmed</small>
               < else %>
@@ -40,7 +37,7 @@
           </tr>
           <tr>
           <td></td>
-          <td colspan="4"><strong>Comment : </strong><%= a.daily_bill_comment %></td>
+          <td colspan="3"><strong>Comment : </strong><%= a.daily_bill_comment %></td>
           </tr>
         <% end %>
       </tbody>

@@ -3,11 +3,6 @@
     <tr>  
       <th>Code</th>
       <th>Attribute</th>
-      <th>Definition</th>
-      <th>Weightage</th>
-      <th>From</th>
-      <th>To</th>
-      <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -17,11 +12,6 @@
       <tr>
         <td><%= attribute_master.code %></td>
         <td><%= attribute_master.name %></td>
-        <td><%= attribute_master.definition %></td>
-        <td><%= attribute_master.attribute_weightage ? "Yes" : "No" %></td>
-        <td><%= attribute_master.from %></td>
-        <td><%= attribute_master.to %></td>
-        <td><%= attribute_master.status ? "Active" : "Inactive" %></td>
         <td>
           <% if attribute_master.is_confirm == true %>
           <%= link_to '', edit_attribute_master_path(attribute_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
@@ -30,6 +20,7 @@
             <%= link_to '', edit_attribute_master_path(attribute_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  attribute_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
             <%= link_to '', is_confirm_attribute_masters_path(attribute_master: attribute_master),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+             <%= link_to '', attribute_master,class: 'btn btn-default btn-xs fa fa-eye' %>
           <% end %>
         </td>
       </tr>

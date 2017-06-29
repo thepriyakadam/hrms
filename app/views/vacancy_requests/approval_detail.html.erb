@@ -5,14 +5,12 @@
     </div>
     </div>
 <div class="box-body">
-<table id="example" class="table table-bordered table-hover table-condensed">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
 	  <th>Vacancy</th>
-	  <th>Request date</th>
-	  <th>Designation</th>
-	  <th>Department</th>
-	  <th>Action</th>
+	  <th>No of Position</th>
+	  <th>Status</th>
     </tr>
   </thead>
 
@@ -21,15 +19,11 @@
       <tr>
         <% if @vacancy_request.id == vacancy_request.id %>
           <td><font color='green'><%= vacancy_request.vacancy %></font></td>
-          <td><font color='green'> *<%= vacancy_request.request_date %></font></td>
-          <td><font color='green'><%= vacancy_request.employee_designation.try(:name) %></font></td>
-          <td><font color='green'><%= vacancy_request.department.try(:name) %></font></td>
+          <td><font color='green'><%= vacancy_request.no_of_position %></font></td>
           <td><font color='green'><%= vacancy_request.current_status %></font></td>
         <% else %>
           <td><%= vacancy_request.vacancy %></td>
-          <td><%= vacancy_request.employee.request_date %></td>
-          <td><%= vacancy_request.employee_designation.try(:name) %></td>
-          <td><%= vacancy_request.department.try(:name) %></td>
+          <td><%= vacancy_request.no_of_position %></td>
           <td><%= vacancy_request.current_status %></td>
         <% end %>
       </tr>
@@ -37,12 +31,13 @@
   </tbody>
 </table>
 
-<table id="example1" class="table table-bordered table-hover table-condensed">
-<tbody>
-    <tr><td colspan="4"><font color='red'><center>Current Vacancy Request</center></font></td></tr>  </tbody>
+   <table id="example2" class="table table-bordered table-hover table-condensed">
+
+  <tr><td colspan="4"><font color='red'><center>Current Vacancy Request</center></font></td></tr> 
     <tr>
   <th><strong>Vacancy</strong></th>
   <td><%= @vacancy_request.vacancy %></td>
+
   <th><strong>No. of Positions</strong></th>
   <td><%= @vacancy_request.no_of_position %></td>  
    
@@ -51,6 +46,7 @@
     <tr>
   <th><strong>Designation</strong></th>
   <td><%= @vacancy_request.employee_designation.try(:name) %></td>
+
    <th><strong>Department</strong></th>
   <td><%= @vacancy_request.try(:department).try(:name) %></td>
   </tr>
@@ -58,6 +54,7 @@
 <tr>
   <th><strong>Request Date</strong></th>
   <td><%= @vacancy_request.request_date %></td>
+
  <th><strong>Vacancy Type</strong></th>
   <td><%= @vacancy_request.vacancy_type %></td>
 </tr>
@@ -90,7 +87,7 @@
     <%= link_to 'Approve & Send next',approve_and_send_next_vacancy_requests_path(@vacancy_request.id),class: 'btn btn btn-xs btn-success',data: { confirm: 'Are you sure?' } %> 
 
   <% elsif @vacancy_request.current_status == "Approved" %>
-    <%= link_to 'Approve',final_approve_vacancy_requests_path(@vacancy_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %> |
+    <%= link_to 'Approve',recruiter_modal_vacancy_requests_path(@vacancy_request.id),class: 'btn btn-sm btn-info fa fa-check',remote: true %> |
     <%= link_to 'Reject',reject_vacancy_requests_path(@vacancy_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %> 
 
   <% end %>
@@ -99,4 +96,5 @@
 
  </div>
  </div>
+    <div id="myModal" class="modal fade"></div>
 <div id="myModal1" class="modal fade"></div>

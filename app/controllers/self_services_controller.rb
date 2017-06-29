@@ -47,8 +47,8 @@ class SelfServicesController < ApplicationController
   end
 
   def show_resignation_detail
-    @employee_resignation_id = EmployeeResignation.find_by_employee_id(params[:emp_id])
-    @resignation_histories = ResignationHistory.where(employee_resignation_id: @employee_resignation_id.id)
+    @employee_resignations = EmployeeResignation.find_by_employee_id(params[:emp_id])
+    # @employee_resignations = EmployeeResignation.where(id: @employee_resignation_id.id)
   end
 
   def employee_transfer
@@ -75,7 +75,6 @@ class SelfServicesController < ApplicationController
     @to = params[:employee][:to]
     @employee_id = params[:employee][:employee_id]
     @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day")
-
   end
 
   def investment_declaration
@@ -83,6 +82,13 @@ class SelfServicesController < ApplicationController
     @investment_declarations = InvestmentDeclaration.where(employee_id: current_user.employee_id)
     @employee = Employee.find_by(id: current_user.employee_id)
     session[:active_tab] ="EmployeeSelfService"
+  end
+
+  def show_investment_declaration_list
+    # byebug
+    # @investment_head_id = params[:investment_head_id]
+    @investment_declaration = InvestmentDeclaration.find(params[:format])
+    @employee = Employee.find_by(id: current_user.employee_id)
   end
 
   def create_self_declaration
@@ -110,6 +116,10 @@ class SelfServicesController < ApplicationController
     session[:active_tab] ="EmployeeSelfService"
     @leave_c_off = LeaveCOff.new
     @leave_c_offs = LeaveCOff.where(employee_id: current_user.employee_id).order("id DESC")
+  end
+
+  def show_leave_c_off_list
+    @leave_c_off = LeaveCOff.find(params[:format])
   end
 
   def create_self_c_off
@@ -164,6 +174,8 @@ class SelfServicesController < ApplicationController
   def reimbursement_request
     @reimbursement_request = ReimbursementRequest.new
     @reimbursement_requests = ReimbursementRequest.where(employee_id: current_user.employee_id)
+    session[:active_tab] = "PayrollManagement"
+    session[:active_tab1] ="ltareimbursement"
   end
 
   def create_reimbursement_request
@@ -222,6 +234,4 @@ class SelfServicesController < ApplicationController
   def leave_c_off_params
     params.require(:leave_c_off).permit(:is_expire,:employee_id, :c_off_date, :c_off_type, :c_off_expire_day, :expiry_status, :expiry_date, :leave_count)
   end
- 
-
 end

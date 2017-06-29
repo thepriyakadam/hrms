@@ -12,8 +12,6 @@
       <th>Investment Head</th>
       <th>Amount</th>
       <th>Date</th>
-      <th>Sent For Approval</th>
-      <th>Document</th>
       <th>Action</th>
     </tr>
   <tbody>
@@ -23,14 +21,6 @@
         <td><%= investment_declaration.investment_head.try(:description) %></td>
         <td><%= investment_declaration.amount %></td>
         <td><%= investment_declaration.date %></td>
-        <td><%= investment_declaration.status ? "Yes" : "No" %></td>
-         <td>
-           <% if investment_declaration.document_file_name == nil %>
-           <small class="label label-default">Document Not Available</small>
-             <% else %>
-             <%= link_to ' Document',investment_document2_path(id: investment_declaration.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
-             <% end %>
-        </td>
         <td>
           <% if investment_declaration.is_confirm == true %>
             <small class="label label-primary">Approved</small>
@@ -43,6 +33,7 @@
               <%= link_to '',  delete_request_investment_declarations_path(investment_declaration),data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close' %>
               <%= link_to 'Send',  send_for_approval_investment_declarations_path(investment_declaration), data: { confirm: 'Are you sure?' },class: 'btn btn-info btn-xs' %>
             <% end %>
+             <%= link_to '', show_investment_declaration_list_self_services_path(investment_declaration),class: 'btn btn-default btn-xs fa fa-eye' %>
           <% end %>
         </td>
       </tr>

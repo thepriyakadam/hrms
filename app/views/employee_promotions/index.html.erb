@@ -9,8 +9,6 @@
       <tr>
         <th>ID</th>
         <th>Employee</th>
-        <th>Department</th>
-        <th>Designation</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -20,10 +18,8 @@
         <tr>
           <td><%= employee_promotion.employee.try(:manual_employee_code) %></td>
           <td><%= employee_promotion.employee.try(:first_name) %> <%= employee_promotion.employee.try(:middle_name) %> <%= employee_promotion.employee.try(:last_name) %></td>
-          <td><%= employee_promotion.employee.try(:company_location).try(:name) %> - <%= employee_promotion.employee.try(:department).try(:name) %></td>
-          <td><%= employee_promotion.employee_designation.try(:name) %></td>
           <td>
-           <%= link_to 'Employee Promotion', edit_employee_promotion_path(employee_promotion),class: 'btn btn-primary btn-xs' %>
+           <%= link_to 'Promotion', edit_employee_promotion_path(employee_promotion),class: 'btn btn-primary btn-xs' %>
             <%= link_to '', employee_promotion,class: 'btn btn-default btn-xs fa fa-eye' %>
 
           </td> 

@@ -9,8 +9,6 @@
       <tr>
       <th>Employee ID</th>
       <th>Employee Name</th>
-      <th>Department</th>
-      <th>Contact No.</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -20,8 +18,6 @@
       <tr>
         <td><%= employee.manual_employee_code %></td>
         <td><%= employee.try(:first_name) %> <%= employee.try(:middle_name) %> <%= employee.try(:last_name) %></td>
-        <td><%= employee.company_location.try(:name) %> - <%= employee.department.try(:name) %></td>
-        <td><%= employee.contact_no %></td>
   
         <td>
         <%= link_to '', salary_slip_list_salaryslips_path(employee), class: 'btn btn-default fa fa-eye' %>

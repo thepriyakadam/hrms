@@ -1,9 +1,18 @@
 Rails.application.routes.draw do
 
+  resources :punch_masters
+  resources :recruiters 
+  resources :candidate_interview_schedules do
+    collection do
+      get :interview
+    end
+  end
   resources :greetings do
     collection do
       get :modal_for_mail
       post :send_mail
+      get :anniversary_mail
+      post :send_anniversary_mail
     end
   end
   resources :thoughts
@@ -28,6 +37,8 @@ Rails.application.routes.draw do
       get :select_candidate
       get :admin_approval
       get :admin_approval_detail
+      get :recruiter_modal
+      post :final_approve
     end
   end
   resources :policy_types
@@ -446,7 +457,8 @@ end
       post :print_transfer_employee_name_report
       get :transfer_employee_name_report_pdf
       get :transfer_employee_name_report_xls
-
+      get :admin_employee_transfer
+      post :final_approve_by_admin
     end
   end
 
@@ -776,6 +788,10 @@ end
       get :period_rating_wise_xls
       get :increment_index_report
       get :detail_employee_wise
+      get :show_goal_rating
+      get :show_attribute
+      get :show_goal_modal
+      get :show_attribute_modal
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -1369,6 +1385,8 @@ end
       post :create_emp_rembursment
       get :add_attendance
       post :create_self_attendance
+      get :show_investment_declaration_list
+      get :show_leave_c_off_list
     end
   end
 
@@ -2028,6 +2046,7 @@ end
       post :status_wise_request
       get :status_wise_request
       get :select_form
+      get :select_admin_form
     end
   end
   resources :company_leavs

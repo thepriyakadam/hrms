@@ -69,7 +69,8 @@
 
 </table>
 <br><td>
-    <%= link_to 'Approve',final_approve_vacancy_requests_path(@vacancy_request.id),class: 'btn btn-sm btn-info fa fa-check',data: { confirm: 'Are you sure?' } %> |
+
+    <%= link_to 'Approve',recruiter_modal_vacancy_requests_path(@vacancy_request.id),class: 'btn btn-sm btn-info fa fa-check',remote: true %> |
     <%= link_to 'Reject',reject_vacancy_requests_path(@vacancy_request.id),class: 'btn btn-sm btn-danger fa fa-trash',data: { confirm: 'Are you sure?' } %> 
 
 </td>
@@ -77,4 +78,5 @@
 
  </div>
  </div>
+<div id="myModal" class="modal fade"></div>
 <div id="myModal1" class="modal fade"></div>

@@ -1,6 +1,15 @@
-   <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
+  <style type="text/css">
+    th { text-align: left; }
+    tr { page-break-inside: avoid; }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;}
+</style>
+
+
+   <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="5">
    <tr>
-      <td colspan="6">
+      <td colspan="4">
         <center>
             <% if current_user.employee.company_location.company.company_logo == nil %>
           <% else %>
@@ -17,41 +26,51 @@
       
       <td colspan="2"><strong>Employee : </strong><%= @induction_detail.employee.try(:first_name) %> <%= @induction_detail.employee.try(:middle_name) %> <%= @induction_detail.employee.try(:last_name) %></td>
 
-      <td colspan="2"><strong>Contact No : </strong><%= @induction_detail.employee.contact_no %></td>
+      
     </tr>
     <tr>
       <td colspan="2"><strong>Department : </strong><%= @induction_detail.employee.company_location.try(:name) %> - <%= @induction_detail.employee.department.try(:name) %></td>
 
       <td colspan="2"> <strong>Designation : </strong> <%= @induction_detail.employee.joining_detail.try(:employee_designation).try(:name)%></td>
 
+      
+    </tr>
+    <tr>
+      <td colspan="2"><strong>Contact No : </strong><%= @induction_detail.employee.contact_no %></td>
        <td colspan="2"><strong>Date Of Joining : </strong><%= @induction_detail.employee.joining_detail.joining_date %></td>
     </tr>
-     <tr><th colspan="6"><center>Induction Activity</center></th></tr>
-    <tr>
-      <th>Sr.No</th>
-      <th>Day</th>
-      <th>From</th>
-      <th>To</th>
-      <th>Duration</th>
-      <th>Facilitator&Presenter</th>
-    </tr>
 
-  <tbody>
-  <% i = 0 %>
+   <tr><th colspan="4"><center>Induction Activity</center></th></tr>
+ 
+ <% i = 0 %>
     <% @induction_activities.each do |induction_activity| %>
-      <tr>
-        <td><%= i=i+1 %></td>
-        <td><%= induction_activity.activity_date %></td>
-        <td><%= induction_activity.from %></td>
-        <td><%= induction_activity.to %></td>
-        <td><%= induction_activity.duration %></td>
-        <td><%= induction_activity.facilitator_1 %> , 
-        <%= induction_activity.facilitator_2 %></td>
-      </tr>
-      <tr>
-      <td></td>
-      <td colspan="5"><strong>Program Agenda : </strong> <%= induction_activity.program_agenda %></td>
-      </tr>
+     
+       <tr><th colspan="4"><center>Sr. No.<%= i = i+1 %></center></th></tr>
+       <tr>
+         <th>Day</th>
+          <td><%= induction_activity.activity_date %></td>
+          <th>From</th>
+           <td><%= induction_activity.from %></td>
+       </tr>
+       <tr>
+         <th>To</th>
+         <td><%= induction_activity.to %></td>
+      <th>Duration</th>
+      <td><%= induction_activity.duration %></td>   
+       </tr>
+        <tr>
+         <th>Facilitator</th>
+        <td colspan="3"><%= induction_activity.facilitator_1 %> </td>
+        </tr>
+        <tr>
+        <th>Presenter</th>
+        <td colspan="3"><%= induction_activity.facilitator_2 %></td>
+        </tr>
+        <tr>
+        <th>Program Agenda</th>
+        
+        <td colspan="3"><%= induction_activity.program_agenda %></td>
+    </tr>
       <% end %>
   </tbody>
 </table>

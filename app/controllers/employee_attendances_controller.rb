@@ -1521,8 +1521,9 @@ def upload
     first_in_time = first_in.try(:time)
     last_out_time = last_out.try(:time)
     
-
+    
     employee = Employee.find_by_manual_employee_code(da.employee_code)
+    
     if employee.nil?
     else
       if first_in_time == nil && last_out_time == nil

@@ -55,6 +55,10 @@ class SalaryComponentsController < ApplicationController
     flash[:notice] = "Confirmed Successfully"
     redirect_to new_salary_component_path
   end
+
+  def modal
+    @salary_component = SalaryComponent.find(params[:format])
+  end
   
   private
 

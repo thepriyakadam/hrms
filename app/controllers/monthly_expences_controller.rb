@@ -72,6 +72,10 @@ class MonthlyExpencesController < ApplicationController
     end
   end
 
+  def modal
+    @m = MonthlyExpence.find(params[:format])
+  end
+
   def employees
     @year = params[:year]
     @month = params[:month]

@@ -13,10 +13,7 @@
       <tr>
         <th>Employee ID</th>
         <th>Employee Name</th>
-        <th>Society Member</th>
-        <th>Date</th>
         <th>Amount</th>
-        <th>Status</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -26,10 +23,7 @@
         <tr>
           <td><%= society_member_ship.employee.try(:manual_employee_code) %></td>
           <td><%= full_name(society_member_ship.employee) %></td>
-          <td><%= society_member_ship.is_society_member ? "Yes" : "No" %></td>
-          <td><%= society_member_ship.start_date %></td>
           <td><%= society_member_ship.amount %></td>
-          <td><%= society_member_ship.is_active ? "Active" : "Inactive" %></td>
           <td>
            <% if society_member_ship.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>

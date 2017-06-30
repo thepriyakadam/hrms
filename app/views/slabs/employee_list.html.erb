@@ -5,9 +5,6 @@
           <tr>
             <th>ID</th>
             <th>Employee Name</th>
-            <th>Department</th>
-            <th>Designation</th>
-            <th>Cost Center</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -16,9 +13,6 @@
             <tr> 
               <td><%= e.manual_employee_code %></td>
               <td><%= full_name(e) %></td>
-              <td><%= e.try(:company_location).try(:name)%> - <%= e.try(:department).try(:name)%></td>
-              <td><%= e.try(:joining_detail).try(:employee_designation).try(:name) %></td>
-              <td><%= e.try(:joining_detail).try(:cost_center).try(:name) %></td>
               <td>
                 <%= link_to 'Action', apply_tds_slabs_path(employee_id: e.id),class: 'btn btn-primary btn-xs' %> 
               </td>

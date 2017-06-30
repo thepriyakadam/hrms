@@ -12,8 +12,8 @@
       <th>Type</th>
       <th>Group</th>
       <th>Priority</th>
-      <th>Download Document</th>
-      <th>Download Image</th>
+<!--       <th>Download Document</th>
+      <th>Download Image</th> -->
       <th>Action</th>
     </tr>
   </thead>
@@ -25,22 +25,22 @@
         <td><%= issue_request.issue_tracker_group.try(:name) %></td>
         <td><%= issue_request.issue_priority %></td>
        
-        <td>
-         <% if issue_request.document1_file_name == nil %>
+       <!--  <td>
+         < if issue_request.document1_file_name == nil %>
            <small class="label label-default">Not Available</small>
-             <% else %>
+             < else %>
              <center><%= link_to '',download_screenshot_path(id: issue_request.id),class: 'btn btn-xs fa fa-download' %>
-             <% end %>
+             < end %>
              </center>
         </td>
         <td>
-          <% if issue_request.document2_file_name == nil %>
+          < if issue_request.document2_file_name == nil %>
               <small class="label label-default">Not Available</small>
-              <% else %>
-              <center><%= link_to '',download_screenshot_image_path(id: issue_request.id),class: 'btn btn-xs fa fa-picture-o' %></center>
-              <% end %>
+              < else %>
+              <center>< link_to '',download_screenshot_image_path(id: issue_request.id),class: 'btn btn-xs fa fa-picture-o' %></center>
+              < end %>
         </td>
-    
+     -->
        
         <td><%= link_to '', issue_request, class: 'btn btn-default fa fa-eye btn-xs' %>
             <%= link_to '', edit_issue_request_path(issue_request), class: 'btn btn-xs btn-success fa fa-edit' %>

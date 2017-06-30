@@ -68,6 +68,7 @@ class HomeController < ApplicationController
   def event_detail
     @company_event = CompanyEvent.find(params[:id])
   end
+
   
  
 end

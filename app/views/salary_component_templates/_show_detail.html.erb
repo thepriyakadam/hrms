@@ -4,10 +4,6 @@
     <tr>
       <th>Sr.No.</th>
       <th>Salary Component</th>
-      <th>Is Deducted</th>
-      <th>Parent Salary Component</th>
-      <th>Percentage</th>
-      <th>To Be Paid</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -18,10 +14,6 @@
       <tr>
         <td><%= i=i+1 %></td>
         <td><%= salary_component_template.try(:salary_component).try(:name) %></td>
-        <td><%= salary_component_template.try(:is_deducted) ? "Yes" : "No" %></td>
-        <td><%= salary_component_template.try(:parent_salary_component).try(:name) %></td>
-        <td><%= salary_component_template.try(:percentage) %></td>
-        <td><%= salary_component_template.try(:to_be_paid) %></td>
         <td>  
           <%= link_to '', edit_salary_component_template_path(salary_component_template),class: "btn btn-sm btn-success btn-xs fa fa-edit", remote: true %>
         </td>

@@ -8,8 +8,6 @@
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th>Employee ID</th>
-      <th>Employee Name</th>
       <th>Resignation Date</th>
       <th>Tentative leaving date</th>
       <th>Status</th>
@@ -20,14 +18,10 @@
       <% @employee_resignations.each do |employee_resignation| %>
       <tr>
       <% if @employee_resignation.id == employee_resignation.id %>
-        <td><font color='green'> *<%= employee_resignation.employee.try(:manual_employee_code) %></font></td>
-        <td><font color='green'><%= full_name(employee_resignation.employee)%></font></td>
         <td><font color='green'><%= employee_resignation.resignation_date %></font></td>
         <td><font color='green'><%= employee_resignation.tentative_leaving_date %></font></td>
         <td><font color='green'><%= employee_resignation.resign_status %></font></td>
       <% else %>
-        <td><%= employee_resignation.employee.try(:manual_employee_code) %></td>
-        <td><%= full_name(employee_resignation.employee)%></td>
         <td><%= employee_resignation.resignation_date %></td>
         <td><%= employee_resignation.tentative_leaving_date %></td>
         <td><%= employee_resignation.resign_status %></td>
@@ -47,23 +41,24 @@
     <tr><td colspan="4"><font color='red'><center>Current Resignation Request</center></font></td></tr>  </tbody>
     <tr>
 
-      <td><b>Resignation Code</b></td>
+      <th>Resignation Code</th>
       <td><%= @employee_resignation.id %></td>
     
-      <td><b>Employee Name</b></td>
+      <th>Employee Name</th>
       <td><%= full_name(@employee_resignation.employee) %></td>
     </tr>
     <tr>
       <td><b>Reporting Manager 1</b></td>
-      <td><%= @employee_resignation.employee.try(:manager).try(:first_name) %> <%= @employee_resignation.employee.try(:manager).try(:middle_name) %> <%= @employee_resignation.employee.try(:manager).try(:last_name) %></td>
-    
-      <td><b>Reporting Manager 2</b></td>
-      <td><%= @employee_resignation.employee.try(:manager_2).try(:first_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:middle_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:last_name) %></td>
+      <td colspan="3"><%= @employee_resignation.employee.try(:manager).try(:first_name) %> <%= @employee_resignation.employee.try(:manager).try(:middle_name) %> <%= @employee_resignation.employee.try(:manager).try(:last_name) %></td>
+    </tr>
+    <tr>
+      <th>Reporting Manager 2</th>
+      <td colspan="3"><%= @employee_resignation.employee.try(:manager_2).try(:first_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:middle_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:last_name) %></td>
     </tr>
 
     <tr>
 
-    <td><b>Resignation Date</b></td>
+    <th>Resignation Date</th>
       <td><%= @employee_resignation.resignation_date %></td>
 
       <!-- <td><b>Exit interview date</b></td>
@@ -75,41 +70,41 @@
     <tr>
 
     <tr>
-      <td><b>Notice Period (In Months)</b></td>
+      <th>Notice Period (In Months)</th>
       <td><%= @employee_resignation.notice_period %></td>
    
-      <td><b>Short Notice Period</b></td>
+      <th>Short Notice Period</th>
       <td><%= @employee_resignation.short_notice_period %></td>
     </tr>
       
   <tr>
-      <td><b>Reason</b></td>
+      <th>Reason</th>
       <td colspan="3"><%= @employee_resignation.reason %></td>
     </tr>
 
 
     <tr>
-     <th><strong>Requested Releaving Date</strong></th>
+     <th>Requested Releaving Date</th>
      <td><%= @employee_resignation.tentative_leaving_date %></td>
      
 
-     <th><strong>Exit Interview Date</strong></th>
+     <th>Exit Interview Date</th>
       <td><%= @employee_resignation.exit_interview_date %></td>
   
   </tr>
 
   <tr>
 
-      <th><strong>Leaving Date</strong></th>
+      <th>Leaving Date</th>
       <td><%= @employee_resignation.leaving_date %></td>
       
-     <th><strong>Settled On</strong></th>
+     <th>Settled On</th>
      <td><%= @employee_resignation.settled_on %></td>
 
   </tr>
 
   <tr>
- <th><strong>Note</strong></th>
+ <th>Note</th>
   <td colspan="3"><%= @employee_resignation.note %></td>
 
   <!-- <th><strong>Remark</strong></th>
@@ -118,7 +113,7 @@
 
 <tr>
 
-  <th><strong>Current Status</strong></th>
+  <th>Current Status</th>
   <td><%= @employee_resignation.resign_status %></td>
   
  <th></th>

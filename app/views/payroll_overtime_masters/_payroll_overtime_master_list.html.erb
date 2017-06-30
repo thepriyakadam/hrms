@@ -1,9 +1,7 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th>Base Component</th>
       <th>Payroll</th>
-      <th>Rate</th>
       <th>Company Hrs</th>
       <th>Status</th>
       <th>Action</th>
@@ -12,19 +10,7 @@
   <tbody>
     <% @payroll_overtime_masters.each do |payroll_overtime_master| %>
       <tr>
-        <td>
-          <% i = 0 %>
-          <% payroll_overtime_master.base_component.split(",").try(:each) do |e| %>
-            <% if i == 0 %>
-              <%= SalaryComponent.find(e.to_i).name %>
-            <% else %>
-              + <%= SalaryComponent.find(e.to_i).name %>
-            <% end %>
-            <% i = i + 1 %>
-          <% end %>
-        </td>
         <td><%= payroll_overtime_master.is_payroll ? "Yes" : "No" %></td>
-        <td><%= payroll_overtime_master.rate %></td>
         <td><%= payroll_overtime_master.company_hrs %></td>
         <td><%= payroll_overtime_master.is_active ? "Active" : "Inactive" %></td>
         <td>

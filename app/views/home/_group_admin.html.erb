@@ -225,7 +225,7 @@
                 <div class="product-info">
                   <%= full_name(e.employee) %>
                 <div class="pull-right">
-                <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today) %>
+                <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today,receiver_id: e.employee_id,greeting_type: "Anniversary") %>
                   <% if e.employee_id == current_user.employee_id %>
                       <small class="label label-success">Wish You A Very Happy Work Anniversary!</small>
                   <% else %>
@@ -280,7 +280,7 @@
                 <div class="product-info">
                   <%= full_name(e) %>
                   <div class="pull-right">
-                    <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today) %>
+                    <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today,receiver_id: e.id,greeting_type: "Birthday") %>
                     <% if e.id == current_user.employee_id %>
                       <small class="label label-success">Wish You A Very Happy Birthday!</small>
                     <% else %>

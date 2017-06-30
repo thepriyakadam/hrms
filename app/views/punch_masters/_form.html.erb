@@ -1,0 +1,45 @@
+<%= form_for(@punch_master) do |f| %>
+  <% if @punch_master.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@punch_master.errors.count, "error") %> prohibited this punch_master from being saved:</h2>
+
+      <ul>
+      <% @punch_master.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :start_time %><br>
+    <%= f.time_select :start_time %>
+  </div>
+  <div class="field">
+    <%= f.label :end_time %><br>
+    <%= f.time_select :end_time %>
+  </div>
+  <div class="field">
+    <%= f.label :reader_in %><br>
+    <%= f.text_field :reader_in %>
+  </div>
+  <div class="field">
+    <%= f.label :reader_out %><br>
+    <%= f.text_field :reader_out %>
+  </div>
+  <div class="field">
+    <%= f.label :full_day_hrs %><br>
+    <%= f.text_field :full_day_hrs %>
+  </div>
+  <div class="field">
+    <%= f.label :half_day_hrs %><br>
+    <%= f.text_field :half_day_hrs %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.check_box :status %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

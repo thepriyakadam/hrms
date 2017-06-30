@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_time: 2017-06-28 14:24:23
+  end_time: 2017-06-28 14:24:23
+  reader_in: MyString
+  reader_out: MyString
+  full_day_hrs: 9.99
+  half_day_hrs: 9.99
+  status: false
+
+two:
+  start_time: 2017-06-28 14:24:23
+  end_time: 2017-06-28 14:24:23
+  reader_in: MyString
+  reader_out: MyString
+  full_day_hrs: 9.99
+  half_day_hrs: 9.99
+  status: false

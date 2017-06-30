@@ -1,6 +1,10 @@
-<div class="modal-dialog" style="height:1000px; max-height:100px; width:1000px; max-width:1400px;">
+<div class="modal-dialog">
   <div class="modal-content">
-<div class="modal-body" >
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h5 class="modal-title"><center> Solved Request </center></h5>
+    </div>
+    <div class="modal-body">
       <%= bootstrap_form_for :issue_request,url:{action:"solved_request", id: @issue_request.id},html: {id: 'issue_request'} do |f| %>
 
         <div class="row">
@@ -9,27 +13,34 @@
                <%= f.select :issue_root_cause_id,all_issue_root_cause,{label: "Support Root Cause",include_blank: "Select Support Root Cause"} %>
             </div>
           </div>
+          </div>
+           <div class="row">
           <div class="col-sm-3">
             <div class="field">
               <%= f.text_area :comment,label: "Description",class: "form-control"%>
             </div>
          </div>
+         </div>
+         <div class="row">
          <div class="col-sm-3">
             <div class="form-group required">
               <%= f.text_field :effort_time,label: "Effort Time",class: "form-control"%>
             </div>
          </div>
-        </div><br>
-        <div class="row">
-          <div class="col-sm-6">
-            <%= f.submit "Submit", class: 'btn btn-sm btn-primary fa fa-modx' %>
+         </div>
+          <div class="row">
+          <div class="col-sm-3" style="padding-top:20px;" >
+            <%= f.submit "Submit" ,class: 'btn btn-sm btn-primary fa fa-modx' %>
           </div>
 
         </div>
      <% end %>
-    </div>
-  </div>
-</div>
+  
+      </div>
+    <div class="modal-footer"></div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+
 <script>
 $("#issue_request").validate({
     rules: {

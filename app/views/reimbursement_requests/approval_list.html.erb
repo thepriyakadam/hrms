@@ -8,10 +8,9 @@
 		    <tr>
 		      <th>ID</th>
 		      <th>Employee</th>
-		      <th>Reimbursement head</th>
+		      <th>Reimbursement</th>
 		      <th>Date</th>
 		      <th>Amount</th>
-		      <th>Action</th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -22,10 +21,12 @@
 		        <td><%= reimbursement_request.reimbursement_head.try(:name) %></td>
 		        <td><%= reimbursement_request.date %></td>
 		        <td><%= reimbursement_request.amount %></td>
-		        <td>
+		        <tr>
+		        <th colspan="5"><center>
 		        	<%= link_to 'Approve', approve_reimbursement_requests_path(reimbursement_request) ,class: 'btn btn-xs btn-primary' %>
 		        	<%= link_to 'Reject', reject_reimbursement_requests_path(reimbursement_request) ,class: 'btn btn-xs btn-danger' %>
-		        </td>
+		        </center></th>
+		       </tr> 
 		      </tr>
 		    <% end %>
 		  </tbody>

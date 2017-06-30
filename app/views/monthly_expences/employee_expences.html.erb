@@ -11,7 +11,6 @@
         <th>Employee Name</th>
         <th>Expence Type</th>
         <th>Amount</th>
-        <th>Date</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -23,12 +22,12 @@
           <td><%= full_name(m.employee) %></td>
           <td><%= m.expencess_type.name %></td>
           <td><%= m.amount %></td>
-          <td><%= m.expence_date %></td>
           <td>
             <% if m.is_paid == true %>
               <small class="label label-primary">Paid</small>
             <% else %>
               <%= link_to '', edit_monthly_expence_path(m), class: 'btn btn-xs btn-success fa fa-edit' %>
+              <%= link_to '', modal_monthly_expences_path(m), class: 'btn btn-xs btn-default fa fa-eye',remote: true%>
             <% end %>
           </td>
         </tr>
@@ -39,3 +38,4 @@
   <%= link_to 'Back',monthly_expences_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 </div>
 </div>
+<div id="myModal" class="modal fade"></div>

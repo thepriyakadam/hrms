@@ -11,8 +11,6 @@
         <tr>
           <th>Employee ID</th>
           <th>Employee Name</th>
-          <th>Department</th>
-          <th>Designation</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -22,8 +20,6 @@
           <tr>
             <td><%= employee.try(:manual_employee_code) %></td>
             <td><%= full_name(employee) %></td>
-            <td><%= employee.company_location.try(:name) %> - <%= employee.department.try(:name) %> </td>
-            <td><%= employee.joining_detail.try(:employee_designation).try(:name) %> </td>
             <td>
               <% if have_template(employee) %>
                 <%= link_to 'Create Template', fresh_employee_templates_path(employee),class: 'btn btn-sm btn-warning fa fa-check' %>

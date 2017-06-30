@@ -8,9 +8,8 @@
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th>Employee ID</th>
+      <th>ID</th>
       <th>Employee Name</th>
-      <th>Rembursment Date</th>
       <th>Amount</th>
       <th>Status</th>
     </tr>
@@ -22,13 +21,11 @@
       <% if @rembursment.id == rembursment.id %>
         <td><font color='green'> *<%= rembursment.employee.try(:manual_employee_code) %></font></td>
         <td><font color='green'><%= full_name(rembursment.employee)%></font></td>
-        <td><font color='green'><%= rembursment.rembursment_date %></font></td>
         <td><font color='green'><%= rembursment.amount %></font></td>
         <td><font color='green'><%= rembursment.status %></font></td>
       <% else %>
         <td><%= rembursment.employee.try(:manual_employee_code) %></td>
         <td><%= full_name(rembursment.employee)%></td>
-        <td><%= rembursment.rembursment_date %></td>
         <td><%= rembursment.amount %></td>
         <td><%= rembursment.status %></td>
       </tr>
@@ -42,34 +39,35 @@
     <tr><td colspan="4"><font color='red'><center>Current Rembursment Request</center></font></td></tr>  </tbody>
     <tr>
 
-      <td><b>Rembursment Code</b></td>
+      <th><b>Rembursment Code</b></th>
       <td><%= @rembursment.id %></td>
     
-      <td><b>Employee Name</b></td>
+      <th><b>Employee Name</b></th>
       <td><%= full_name(@rembursment.employee) %></td>
     </tr>
     <tr>
-      <td><b>Reporting Manager 1</b></td>
+      <th>Manager 1</th>
       <td><%= @rembursment.employee.try(:manager).try(:first_name) %> <%= @rembursment.employee.try(:manager).try(:middle_name) %> <%= @rembursment.employee.try(:manager).try(:last_name) %></td>
     
-      <td><b>Reporting Manager 2</b></td>
+      <th> Manager 2</th>
       <td><%= @rembursment.employee.try(:manager_2).try(:first_name) %> <%= @rembursment.employee.try(:manager_2).try(:middle_name) %> <%= @rembursment.employee.try(:manager_2).try(:last_name) %></td>
     </tr>
 
     <tr>
 
-    <td><b>Rembursment Date</b></td>
+    <th><b> Date</b></th>
       <td><%= @rembursment.rembursment_date %></td>
       
-      <th><strong>Rembursment</strong></th>
+    <th><strong>Rembursment</strong></th>
       <td><%= @rembursment.rembursmentmaster.try(:name)%></td>
     </tr>
     <tr>
-      <td><b>Amount</b></td>
-      <td><%= @rembursment.amount %></td>
-   
-      <td><b>Status</b></td>
-      <td><%= @rembursment.status %></td>
+      <th><b>Amount</b></th>
+      <td colspan="3"><%= @rembursment.amount %></td>
+    </tr>
+    <tr>
+      <th><b>Status</b></th>
+      <td colspan="3"><%= @rembursment.status %></td>
     </tr>
 
 </table>

@@ -7,7 +7,7 @@
     <tr>
      <th>ID</th>
      <th>Employee Name</th>
-     <th>Member</th>
+     <!-- <th>Member</th> -->
      <th>Template Name</th>
      <th>Action</th>
     </tr>
@@ -18,13 +18,13 @@
       <tr>
        <td><%= due_employee_detail.employee.manual_employee_code %></td>
        <td><%= full_name(due_employee_detail.employee) %></td>
-       <td><%= due_employee_detail.reporting_master.employee.try(:first_name) %> <%= due_employee_detail.reporting_master.employee.try(:moddle_name) %> <%= due_employee_detail.reporting_master.employee.try(:last_name) %></td>
+       <!-- <td><= due_employee_detail.reporting_master.employee.try(:first_name) %> <= due_employee_detail.reporting_master.employee.try(:moddle_name) %> <= due_employee_detail.reporting_master.employee.try(:last_name) %></td> -->
        <td><%= due_employee_detail.due_template.try(:name) %></td>
         <td>
         <% if due_employee_detail.is_confirmed == true %>
-          <%= link_to ' Approve Due Clearance', new_due_action_path(due_employee_detail_id: due_employee_detail.id),class: 'btn btn-xs btn-primary' %>
+          <%= link_to ' Approve Due ', new_due_action_path(due_employee_detail_id: due_employee_detail.id),class: 'btn btn-xs btn-primary' %>
           <% else %>
-          <%= link_to ' View Due Clearance', new_due_action_path(due_employee_detail_id: due_employee_detail.id),class: 'btn btn-xs btn-info' %>
+          <%= link_to 'Due Clearance', new_due_action_path(due_employee_detail_id: due_employee_detail.id),class: 'btn btn-xs btn-info' %>
           <% end %>
         </td>
       </tr>

@@ -194,7 +194,7 @@
           <!-- USERS LIST -->
         <div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">Work Aniversary</h3>
+          <h3 class="box-title">Work Anniversary</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -225,7 +225,7 @@
                 <div class="product-info">
                   <%= full_name(e.employee) %>
                 <div class="pull-right">
-                <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today) %>
+                <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today,receiver_id: e.employee_id,greeting_type: "Anniversary") %>
                   <% if e.employee_id == current_user.employee_id %>
                       <small class="label label-success">Wish You A Very Happy Work Anniversary!</small>
                   <% else %>
@@ -280,12 +280,12 @@
                 <div class="product-info">
                   <%= full_name(e) %>
                   <div class="pull-right">
-                    <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today) %>
+                    <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today,receiver_id: e.id,greeting_type: "Birthday") %>
                     <% if e.id == current_user.employee_id %>
                       <small class="label label-success">Wish You A Very Happy Birthday!</small>
                     <% else %>
                       <% if @greeting.empty? %>
-                        <%= link_to 'Wish', modal_for_mail_greetings_path(emp_id: e.id),class: 'btn btn-xs btn-primary',remote:true %>
+                        <%= link_to '', modal_for_mail_greetings_path(emp_id: e.id),class: 'btn btn-xs btn-red fa fa-birthday-cake',remote:true %>
                       <% else %>
                           <small class="label label-success">Message Sent</small>
                       <% end %>

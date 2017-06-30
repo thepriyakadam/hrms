@@ -1,0 +1,38 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Interview Detail </center></h4>
+    </div>
+    <div class="modal-body">
+    <table class="table table-bordered table-hover table-condensed">
+  <thead>
+  <tr>
+  	<th>Candidate Name</th>
+  	 <td><%= @candidate_interview_schedule.candidate_form.try(:name) %></td>
+      <th>Interviewer Name</th>
+       <td> <% emp = Employee.find_by(id: @candidate_interview_schedule.interviewer_id) %> <%= full_name(emp) %> </td>
+    </tr>
+    <tr>   
+      <th>Interview Type</th>
+      <td><%= @candidate_interview_schedule.interview_type_master.try(:name) %></td>
+      <th>Date</th>
+      <td><%= @candidate_interview_schedule.date %></td>
+    </tr>
+    <tr>
+      <th>Time</th>
+      <td><%= @candidate_interview_schedule.time %></td>
+      <th>Place</th>
+       <td><%= @candidate_interview_schedule.place %></td>
+    </tr>
+    <tr>  
+      <th>Address</th>
+      <td colspan="3"><%= @candidate_interview_schedule.address %></td>
+  </tr>
+
+  </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

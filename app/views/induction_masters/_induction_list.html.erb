@@ -26,7 +26,7 @@
           <% if @induction_activity.try(:is_confirm) == true %>
           <%= link_to ' View Induction Activity',new_induction_activity_path(induction_master_id: induction_master),class: 'btn btn-xs btn-info' %>
           <% else %>
-          <%= link_to ' Assign Induction Activity',new_induction_activity_path(induction_master_id: induction_master),class: 'btn btn-xs btn-primary' %>
+          <%= link_to '',new_induction_activity_path(induction_master_id: induction_master),class: 'btn btn-xs btn-info fa fa-plus-square' %>
            <%= link_to ' Edit Template Detail', edit_induction_master_path(induction_master),class: 'btn btn-sm btn-success btn-xs',remote:true %>
           <% end %>
         </td>

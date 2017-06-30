@@ -49,9 +49,14 @@ Rails.application.routes.draw do
       get :reject
       get :edit_request_modal
       post :update_request_modal
+      get :modal
     end
   end
-  resources :reimbursement_slabs
+  resources :reimbursement_slabs do
+    collection do
+      get :modal
+    end
+  end
   resources :reimbursement_heads
   resources :reporting_master_rembursments
   resources :rembursments  do
@@ -89,6 +94,7 @@ Rails.application.routes.draw do
       get :employee_list
       get :apply_tds
       get :deduction_list
+      get :modal
     end
   end
   resources :employee_gps_histories
@@ -500,6 +506,7 @@ end
       get :datewise_report
       post :show_datewise_report
       get :show_datewise_report
+      get :modal
     end
   end
   resources :investment_heads
@@ -1390,6 +1397,7 @@ end
       post :create_self_attendance
       get :show_investment_declaration_list
       get :show_leave_c_off_list
+      get :modal
     end
   end
 
@@ -2235,6 +2243,8 @@ end
       get :employee_detail_form
       get :employee_record_pdf
       get :is_confirm
+      get :modal
+      get :update_manager_modal
     end
     member do
       get :edit_manager

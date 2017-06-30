@@ -84,6 +84,10 @@ class SlabsController < ApplicationController
     @slabs = Slab.all
   end
 
+  def modal
+    @slab = Slab.find(params[:format])
+  end
+
   def employee_list
     if current_user.class == Member
       if current_user.role.name == 'GroupAdmin'

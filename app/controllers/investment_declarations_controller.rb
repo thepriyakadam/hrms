@@ -57,6 +57,10 @@ class InvestmentDeclarationsController < ApplicationController
     @investment_declarations = InvestmentDeclaration.all
     #redirect_to investment_declaration_self_services_path
   end
+
+  def modal
+    @investment_declaration = InvestmentDeclaration.find(params[:format])
+  end
    
  
    def investment_document

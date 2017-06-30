@@ -56,6 +56,10 @@ class ReimbursementSlabsController < ApplicationController
     @reimbursement_slabs = ReimbursementSlab.all
   end
 
+  def modal
+    @reimbursement_slab = ReimbursementSlab.find(params[:format])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_reimbursement_slab

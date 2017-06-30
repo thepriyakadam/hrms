@@ -18,13 +18,13 @@
            <% if due_template.document_file_name == nil %>
            <small class="label label-default">Not Available</small>
              <% else %>
-             <%= link_to ' Document',download_due_tempalte_documents_path(id: due_template.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
+             <%= link_to '',download_due_tempalte_documents_path(id: due_template.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
              <% end %>
         </td>
         <td>
           <%= link_to '', edit_due_template_path(due_template),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
           <%= link_to '',  due_template, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
-          <%= link_to ' Assign Member To Template', new_due_detail_path(due_template_id: due_template.id),class: 'btn btn-xs btn-primary' %>
+          <%= link_to '', new_due_detail_path(due_template_id: due_template.id),class: 'btn btn-xs btn-info btn-xs fa fa-tasks' %>
         </td>
       </tr>
     <% end %>

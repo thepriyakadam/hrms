@@ -6,7 +6,7 @@
     <table id="example2" class="table table-bordered table-hover table-condensed'">
 
 <tr>
- <th><strong>Employee ID</strong></th>
+ <th><strong>ID</strong></th>
  <td><%= @rembursment.employee.try (:manual_employee_code )%></td>
 
   <th><strong>Employee Name</strong></th>
@@ -15,15 +15,15 @@
 </tr>
 
  <tr>
-    <td><b>Reporting Manager 1</b></td>
+    <td><b>Manager 1</b></td>
     <td><%= @rembursment.employee.manager.try(:first_name) %> <%= @rembursment.employee.manager.try(:middle_name) %> <%= @rembursment.employee.manager.try(:last_name) %></td>
 
-    <td><b>Reporting Manager 2</b></td>
+    <td><b>Manager 2</b></td>
     <td><%= @rembursment.employee.try(:manager_2).try(:first_name) %> <%= @rembursment.employee.try(:manager_2).try(:middle_name) %> <%= @rembursment.employee.try(:manager_2).try(:last_name) %></td>
  </tr>
 
  <tr>
-  <th><strong>Rembursment Date</strong></th>
+  <th><strong>Date</strong></th>
   <td><%= @rembursment.rembursment_date %></td>
  
 

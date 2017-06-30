@@ -285,7 +285,7 @@
                       <small class="label label-success">Wish You A Very Happy Birthday!</small>
                     <% else %>
                       <% if @greeting.empty? %>
-                        <%= link_to 'Wish', modal_for_mail_greetings_path(emp_id: e.id),class: 'btn btn-xs btn-primary',remote:true %>
+                        <%= link_to '', modal_for_mail_greetings_path(emp_id: e.id),class: 'btn btn-xs btn-red fa fa-birthday-cake',remote:true %>
                       <% else %>
                           <small class="label label-success">Message Sent</small>
                       <% end %>

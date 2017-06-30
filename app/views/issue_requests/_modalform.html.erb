@@ -1,5 +1,7 @@
 <div class="modal-dialog">
-    <div class="modal-body" style="height:400px; max-height:600px; width:400px; max-width:600px;">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <%= bootstrap_form_for :issue_request,url:{action:"lock_request", id: @issue_request.id},html: {id: 'issue_request'} do |f| %>
       <%= f.hidden_field :lock_date, :value => Time.zone.now.to_date %>
       <%= f.hidden_field :lock_time, :value => Time.zone.now.to_time %>
@@ -18,6 +20,7 @@
       </div>
      <% end %>
   </div>
+</div>
 </div>
 <script>
 $("#issue_request").validate({

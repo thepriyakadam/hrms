@@ -75,10 +75,6 @@ class SelfServicesController < ApplicationController
     @to = params[:employee][:to]
     @employee_id = params[:employee][:employee_id]
     @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day")
-<<<<<<< HEAD
-
-=======
->>>>>>> 69b84b1b1026d5486dfe72a7ffeb255da21d9ad7
   end
 
   def investment_declaration
@@ -86,6 +82,13 @@ class SelfServicesController < ApplicationController
     @investment_declarations = InvestmentDeclaration.where(employee_id: current_user.employee_id)
     @employee = Employee.find_by(id: current_user.employee_id)
     session[:active_tab] ="EmployeeSelfService"
+  end
+
+  def show_investment_declaration_list
+    # byebug
+    # @investment_head_id = params[:investment_head_id]
+    @investment_declaration = InvestmentDeclaration.find(params[:format])
+    @employee = Employee.find_by(id: current_user.employee_id)
   end
 
   def create_self_declaration
@@ -113,6 +116,10 @@ class SelfServicesController < ApplicationController
     session[:active_tab] ="EmployeeSelfService"
     @leave_c_off = LeaveCOff.new
     @leave_c_offs = LeaveCOff.where(employee_id: current_user.employee_id).order("id DESC")
+  end
+
+  def show_leave_c_off_list
+    @leave_c_off = LeaveCOff.find(params[:format])
   end
 
   def create_self_c_off

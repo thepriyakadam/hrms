@@ -1196,6 +1196,14 @@ def show_all_record
     redirect_to employee_gps_setting_list_employees_path
   end
 
+  def modal
+    @employee = Employee.find(params[:format])
+  end
+
+  def update_manager_modal
+    @e = Employee.find(params[:format])
+  end
+
   def display_employee_details
     # byebug
      @emp = params[:employee] ? params[:employee][:id] : params[:id]

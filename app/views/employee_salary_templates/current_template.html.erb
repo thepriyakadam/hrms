@@ -19,10 +19,10 @@
         <tr>
           <th><input type="checkbox" id="selectAll" value="selectAll"></th>
           <th>Salary Component</th>
-          <th>Deducted</th>
+      <!--     <th>Deducted</th>
           <th>Parent Component</th>
           <th>Percentage</th>
-          <th>To Be Paid</th>
+          <th>To Be Paid</th> -->
           <th>Monthly Amount</th>
           <th>Annual Amount</th>
           <th>Action</th>
@@ -34,11 +34,11 @@
           <td> <% if template.try(:is_confirm) == true %>
           <% else %>
            <%= check_box_tag "template_ids[]", template.id %><% end %></td>
-           <td><%= template.try(:salary_component).try(:name)%></td>
-           <td><%= template.try(:is_deducted) ? "Yes" : "No" %></td>
-           <td><%= template.try(:parent_salary_component).try(:name)%></td>
-           <td><%= template.try(:percentage)%></td>
-           <td><%= template.try(:to_be_paid)%></td>
+            <td><%= template.try(:salary_component).try(:name)%></td>
+           <!-- <td><= template.try(:is_deducted) ? "Yes" : "No" %></td> -->
+           <!-- <td><= template.try(:parent_salary_component).try(:name)%></td> -->
+           <!-- <td><= template.try(:percentage)%></td> -->
+           <!-- <td><= template.try(:to_be_paid)%></td> --> 
            <td align="right"><%= template.try(:monthly_amount)%></td>
            <td align="right"><%= template.try(:annual_amount)%></td>
 
@@ -50,7 +50,7 @@
         <% end %> 
         <tr>
           <th colspan="2">Total</th>
-          <th colspan="4"></th>
+          <!-- <th colspan="4"></th> -->
           <td align="right"><strong><%= @employee_salary_templates.sum(:monthly_amount) %></strong></td>
           <td align="right"><strong><%= @employee_salary_templates.sum(:annual_amount) %></strong></td>
           <td></td>

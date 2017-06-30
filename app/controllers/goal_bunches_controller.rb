@@ -256,6 +256,8 @@ class GoalBunchesController < ApplicationController
 
     @self_goal_ratings = GoalRating.where(appraisee_id: current_user.employee_id, goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal').where.not(appraisee_comment: nil)
     @self_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch_id.id ,'Attribute').where.not(appraisee_comment: nil)
+    
+     @goal_bunche = GoalBunch.where(employee_id: @employee.id)
 
     @goal_bunch = GoalBunch.where(employee_id: current_user.employee_id, goal_approval: true, id: @goal_bunch_id.id).take
     if @goal_bunch.nil?

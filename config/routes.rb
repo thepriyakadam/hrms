@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :punch_masters
   resources :recruiters 
   resources :candidate_interview_schedules do
     collection do
       get :interview
+      get :modal
     end
   end
   resources :greetings do
@@ -49,9 +51,14 @@ Rails.application.routes.draw do
       get :reject
       get :edit_request_modal
       post :update_request_modal
+      get :modal
     end
   end
-  resources :reimbursement_slabs
+  resources :reimbursement_slabs do
+    collection do
+      get :modal
+    end
+  end
   resources :reimbursement_heads
   resources :reporting_master_rembursments
   resources :rembursments  do
@@ -89,6 +96,7 @@ Rails.application.routes.draw do
       get :employee_list
       get :apply_tds
       get :deduction_list
+      get :modal
     end
   end
   resources :employee_gps_histories
@@ -98,7 +106,11 @@ Rails.application.routes.draw do
       get :is_confirm
     end
   end
-  resources :monthly_arrears
+  resources :monthly_arrears  do
+    collection do
+      get :modal
+    end
+  end
   resources :on_duty_requests do
     collection do
       get :select_checkbox
@@ -496,6 +508,7 @@ end
       get :datewise_report
       post :show_datewise_report
       get :show_datewise_report
+      get :modal
     end
   end
   resources :investment_heads
@@ -789,6 +802,8 @@ end
       get :detail_employee_wise
       get :show_goal_rating
       get :show_attribute
+      get :show_goal_modal
+      get :show_attribute_modal
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -1382,6 +1397,9 @@ end
       post :create_emp_rembursment
       get :add_attendance
       post :create_self_attendance
+      get :show_investment_declaration_list
+      get :show_leave_c_off_list
+      get :modal
     end
   end
 
@@ -1545,6 +1563,7 @@ end
       get :monthly_expence_report
       get :dynamic_report
       post :dynamic_report
+      get :modal
     end
   end
   resources :expencess_types do
@@ -1567,6 +1586,7 @@ end
       get :food_deduction_report
       get :dynamic_report
       post :dynamic_report
+      get :modal
     end
   end
   resources :reporting_masters do
@@ -1910,6 +1930,7 @@ end
     collection do
       post :create_employee_template
       get :is_confirm
+      get :modal
     end
   end
   resources :universities do
@@ -2041,6 +2062,7 @@ end
       post :status_wise_request
       get :status_wise_request
       get :select_form
+      get :select_admin_form
     end
   end
   resources :company_leavs
@@ -2223,6 +2245,8 @@ end
       get :employee_detail_form
       get :employee_record_pdf
       get :is_confirm
+      get :modal
+      get :update_manager_modal
     end
     member do
       get :edit_manager

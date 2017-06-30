@@ -1,0 +1,34 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Investment Declaration</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr>
+
+      <th><strong>Investment Head</strong></th>
+      <td><%= @investment_declaration.investment_head.try(:description) %></td>
+  
+     <th><strong>Amount</strong></th>
+      <td><%= @investment_declaration.amount %></td>
+  </tr>
+ 
+ 
+    <tr>
+      <th><strong>Date</strong></th>
+      <td> <%= @investment_declaration.date %></td>
+
+     <th><strong>Document</strong></th>
+      <td>
+           <% if @investment_declaration.document_file_name == nil %>
+           <small class="label label-default">Document Not Available</small>
+             <% else %>
+             <%= link_to ' Document',investment_document2_path(@investment_declaration),class: 'btn btn-xs btn btn-info fa fa-download' %>
+             <% end %>
+        </td>
+    </tr>
+     </table> <br>
+
+     <%= link_to 'Back', investment_declaration_self_services_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box

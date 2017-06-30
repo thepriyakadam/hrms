@@ -3,11 +3,7 @@
     <tr>  
       <th>Code</th>
       <th>Name</th>
-      <th>Description</th>
-      <th>Account Code</th>
-      <th>Is Deducted</th>
       <th>Status</th>
-      <th>Base</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -16,11 +12,7 @@
       <tr>
         <td><%= salary_component.code %></td>
         <td><%= salary_component.name %></td>
-        <td><%= salary_component.description %></td>
-        <td><%= salary_component.account_code %></td>
-        <td><%= salary_component.is_deducted ? "Yes" : "No" %></td>
         <td><%= salary_component.is_active ? "Active" : "Inactive" %></td>
-        <td><%= salary_component.is_base ? "Yes" : "No" %></td>
 
         <td>
           <% if salary_component.is_confirm == true %>
@@ -28,12 +20,15 @@
           <% else %>
             <%= link_to '', edit_salary_component_path(salary_component),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '', is_confirm_salary_components_path(salary_component: salary_component),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+            <%= link_to '', modal_salary_components_path(salary_component),class: 'btn btn-default btn-xs fa fa-eye' ,remote:true%>
           <% end %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<div id="myModal" class="modal fade"></div>
 
 <script type="text/javascript">
 $(document).ready(function() {

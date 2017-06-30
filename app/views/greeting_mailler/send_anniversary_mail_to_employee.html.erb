@@ -6,8 +6,10 @@
   <body>
     <h4>Congratulations On Your Work Anniversary!</h4>
     <p>
-      <%= @greeting.message %><br>
-      With Warm Regards : <%= @greeting.sender.try(:first_name) %> <%= @greeting.sender.try(:last_name) %>
+      <%= @greeting.message %><br><br><br>
+
+      <b>Warm Regards,</b><br>
+      <%= @greeting.sender.try(:first_name) %> <%= @greeting.sender.try(:last_name) %>
     </p>
   </body>
 </html>

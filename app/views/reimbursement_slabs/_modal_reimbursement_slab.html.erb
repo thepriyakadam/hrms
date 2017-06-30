@@ -1,0 +1,45 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Reimbursement Slab Detail </center></h4>
+    </div>
+    <div class="modal-body">
+    <table class="table table-bordered table-hover table-condensed">
+  <thead>
+  <tr>
+  	   <th>Reimbursement Head</th>
+  	    <td colspan="3"><%= @reimbursement_slab.reimbursement_head.try(:name) %></td>
+  	</tr>
+  	<tr>    
+	    <th>Employee Grade</th>
+	      <td colspan="3"><%= @reimbursement_slab.employee_grade.try(:name) %></td>
+	</tr>
+	<tr>      
+	      <th>Designation</th>
+	      <td colspan="3"><%= @reimbursement_slab.employee_designation.try(:name) %></td>
+	</tr>
+	<tr>      
+	      <th>From</th>  
+	      <td><%= @reimbursement_slab.from %></td>
+	    
+	      <th>To</th>
+	       <td><%= @reimbursement_slab.to %></td>
+	</tr>
+	<tr>       
+	      <th>Monthly Amount</th>
+	       <td><%= @reimbursement_slab.monthly_amount %></td>
+	   
+	      <th>Yearly Amount</th>
+	      <td><%= @reimbursement_slab.yearly_amount %></td>
+	</tr>
+	<tr>      
+	      <th>Status</th>
+	      <td colspan="3"><%= @reimbursement_slab.status ? "Active" : "Inactive" %></td>
+  </tr>
+  </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>    

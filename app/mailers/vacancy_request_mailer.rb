@@ -60,4 +60,20 @@ class VacancyRequestMailer < ApplicationMailer
   	email = @employee.try(:email)
     mail(to: email, subject: 'Vacancy Final Approved')
   end
+
+  def interview_schedule(candidate_interview_schedule)
+    # byebug
+    @candidate_interview_schedule = candidate_interview_schedule
+    @employee = Employee.find(@candidate_interview_schedule.interviewer_id)
+    email = @employee.try(:email)
+    mail(to: email, subject: 'Interview Scheduled')
+  end 
+
+  def candidate_email(candidate_interview_schedule)
+      # byebug
+    @candidate_interview_schedule = candidate_interview_schedule
+    @candidate = CandidateForm.find(@candidate_interview_schedule.candidate_form)
+    email = @candidate.try(:email)
+    mail(to: email, subject: 'Interview Scheduled')
+  end
 end

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :candidate_interview_schedules do
     collection do
       get :interview
+      get :modal
     end
   end
   resources :greetings do
@@ -1399,6 +1400,7 @@ end
       get :show_investment_declaration_list
       get :show_leave_c_off_list
       get :modal
+      post :create_self_resignation
     end
   end
 

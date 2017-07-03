@@ -7,31 +7,30 @@
 
   <div class="box-body">
 
-<table id="example6" class="table table-bordered table-hover table-condensed'">
+<table id="example" class="table table-bordered table-hover table-condensed'">
   <thead>
     <tr>
       <th>Candidate Name</th>
       <th>Interviewer Name</th>
       <th>Interview Type</th>
-      <th>Date</th>
-      <th>Time</th>
-      <th>Place</th>
-      <th>Address</th>
+      <th>Action</th>
     </tr>
   </thead>
 
   <tbody>
     <% @candidate_interview_schedules.each do |candidate_interview_schedule| %>
       <tr>
-        <td><%= candidate_interview_schedule.candidate_form_id %></td>
+        <td><%= candidate_interview_schedule.candidate_form.try(:name) %></td>
         <td> <% emp = Employee.find_by(id: candidate_interview_schedule.interviewer_id) %> <%= full_name(emp) %> </td>
         <td><%= candidate_interview_schedule.interview_type_master.try(:name) %></td>
-        <td><%= candidate_interview_schedule.date %></td>
-        <td><%= candidate_interview_schedule.place %></td>
-        <td><%= candidate_interview_schedule.address %></td>
+        <td>
+        <%= link_to '', modal_candidate_interview_schedules_path(candidate_interview_schedule), class: 'btn btn-xs btn-default fa fa-eye',remote: true %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 </div>
 </div>
+
+<div id="myModal" class="modal fade"></div>

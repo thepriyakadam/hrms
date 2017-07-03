@@ -74,7 +74,10 @@ class CandidateInterviewSchedulesController < ApplicationController
 
   def interview
     @candidate_interview_schedules = CandidateInterviewSchedule.all
-    
+  end
+
+  def modal
+    @candidate_interview_schedule = CandidateInterviewSchedule.find(params[:format])
   end
 
   private

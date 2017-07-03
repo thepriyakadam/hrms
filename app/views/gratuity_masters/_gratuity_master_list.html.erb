@@ -3,11 +3,8 @@
   <thead>
     <tr>
       <th>No of year</th>
-      <th>Base component</th>
-      <th>Day in month</th>
       <th>Payable day</th>
       <th>Status</th>
-      <th>Confirm</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -15,21 +12,8 @@
     <% @gratuity_masters.each do |gratuity_master| %>
       <tr>
         <td><%= gratuity_master.no_of_year %></td>
-        <td>
-          <% i = 0 %>
-          <% gratuity_master.base_component.split(",").each do |e| %>
-            <% if i == 0 %>
-              <%= SalaryComponent.find(e.to_i).name %>
-            <% else %>
-              + <%= SalaryComponent.find(e.to_i).name %>
-            <% end %>
-            <% i = i + 1 %>
-          <% end %>
-        </td>
-        <td><%= gratuity_master.day_in_month %></td>
         <td><%= gratuity_master.payable_day %></td>
         <td><%= gratuity_master.is_active ? "Active" : "Inactive" %></td>
-        <td><%= gratuity_master.is_confirm ? "Yes" : "No" %></td>
         <td>
           <% if gratuity_master.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>
@@ -38,6 +22,7 @@
             <%= link_to '',  gratuity_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
             <%= link_to '', is_confirm_gratuity_masters_path(gratuity_master: gratuity_master),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
           <% end %>
+           <%= link_to '',gratuity_master,class: 'btn btn-xs btn-default fa fa-eye' %>
         </td>
       </tr>
     <% end %>

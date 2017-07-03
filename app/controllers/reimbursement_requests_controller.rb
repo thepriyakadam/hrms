@@ -88,6 +88,10 @@ class ReimbursementRequestsController < ApplicationController
     redirect_to list_for_approval_reimbursement_requests_path
   end
 
+  def modal
+    @reimbursement_request = ReimbursementRequest.find(params[:format])
+  end
+
   # def edit_request_modal
   #   @reimbursement_request = ReimbursementRequest.find(params[:format])
   # end

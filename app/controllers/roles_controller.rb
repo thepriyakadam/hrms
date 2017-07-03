@@ -67,6 +67,7 @@ class RolesController < ApplicationController
     end
   end
 
+
   def is_confirm
     @role = Role.find(params[:role])
     Role.find(@role.id).update(is_confirm: true)

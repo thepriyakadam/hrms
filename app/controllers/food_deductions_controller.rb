@@ -71,6 +71,10 @@ class FoodDeductionsController < ApplicationController
     @amount = price * total_coupan
   end
 
+  def modal
+    @food_deduction = FoodDeduction.find(params[:format])
+  end
+
   def employees
     @year = params[:year]
     @month = params[:month]

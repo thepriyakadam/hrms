@@ -13,8 +13,6 @@
         <tr>
          <th>ID</th>
          <th>Employee</th>
-         <th>Rembursment</th>
-         <th>Rembursment Date</th>
          <th>Amount</th>
          <th>Action</th>
         </tr>
@@ -25,8 +23,6 @@
           <tr>
             <td><%= rembursment.employee.try(:manual_employee_code) %></td>
             <td><%= full_name(rembursment.employee) %></td>
-            <td><%= rembursment.rembursmentmaster.try(:name) %></td>
-            <td><%= rembursment.rembursment_date %></td>
             <td><%= rembursment.amount %></td>
             <td>
               <%= link_to 'Approve / Reject',approval_detail_rembursments_path(rembursment_id: rembursment.id),class: 'btn btn-sm btn-primary' %>

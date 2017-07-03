@@ -126,10 +126,12 @@ class EmployeeTemplatesController < ApplicationController
       if @a1.is_active == true
         @a1.destroy
         @emp_temp = EmployeeTemplate.where(employee_id: @employee.id).last
+      if @emp_temp == nil
+        else 
         @emp_temp.update(end_date: nil,is_active: true)
-
-        EmployeeSalaryTemplate.where(employee_id: @employee.id,employee_template_id: @employee_template.id).destroy_all
       end
+        EmployeeSalaryTemplate.where(employee_id: @employee.id,employee_template_id: @employee_template.id).destroy_all
+    end
     flash[:notice] = 'Employee Template was Reverted Successfully.'
     redirect_to template_list_employee_templates_path(format: @employee.id)
   end

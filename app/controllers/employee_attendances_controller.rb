@@ -1537,15 +1537,16 @@ def upload
             else
               if last_record.nil?
               else
+                byebug
                 if last_record.time.to_time <= employee_attendance.in_time.to_time
                   last_re = last_record.time.to_time + 24
                   total_hrs = last_re.to_time - employee_attendance.in_time.to_time
                   working_hrs = total_hrs/3600
-                  employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2))
+                  employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round)
                 else
                   total_hrs = last_record.time.to_time - employee_attendance.in_time.to_time
                   working_hrs = total_hrs/3600
-                  employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2))
+                  employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round)
                 end
               end
             end
@@ -1561,11 +1562,11 @@ def upload
               working_hrs = total_hrs/3600
 
               if working_hrs.to_f <  4
-                EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time,employee_id: employee.id,working_hrs: working_hrs.round(2),present: "A")
+                EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time,employee_id: employee.id,working_hrs: working_hrs.round,present: "A")
               elsif working_hrs.to_f < 7
-                EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time,employee_id: employee.id,working_hrs: working_hrs.round(2),present: "P/2")
+                EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time,employee_id: employee.id,working_hrs: working_hrs.round,present: "P/2")
               else
-                EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time,employee_id: employee.id,working_hrs: working_hrs.round(2),present: "P")
+                EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time,employee_id: employee.id,working_hrs: working_hrs.round,present: "P")
               end
             end#first_in_time == nil && last_out_time == nil
           end#employee.nil?

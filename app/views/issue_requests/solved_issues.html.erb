@@ -7,7 +7,6 @@
       <thead>
         <tr>
           <th>Support</th>
-          <th>Group</th>
           <th>Date</th>
           <th>Priority</th>
           <th>Action</th>
@@ -18,7 +17,6 @@
         <% @issue_requests.each do |issue_request| %>
           <tr>
             <td><%= issue_request.issue_master.try(:name) %></td>
-            <td><%= issue_request.issue_tracker_group.try(:name) %></td>
             <td><%= issue_request.date %></td>
             <td><%= issue_request.issue_priority %></td>
             <td>

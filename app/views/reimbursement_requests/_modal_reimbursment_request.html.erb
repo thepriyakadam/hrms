@@ -1,0 +1,33 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Reimbursment Request Detail </center></h4>
+    </div>
+    <div class="modal-body">
+    <table class="table table-bordered table-hover table-condensed">
+  <thead>
+  <tr>
+  	  <th>ID</th>
+  	  <td><%= @reimbursement_request.employee.manual_employee_code %></td>
+      <th>Employee</th>
+      <td><%= full_name(@reimbursement_request.employee) %></td>
+   </tr>
+   <tr>   
+      <th>Reimbursement head</th>
+      <td colspan="3"><%= @reimbursement_request.reimbursement_head.try(:name) %></td>
+   </tr>
+      <tr>
+      <th>Date</th>
+      <td colspan="3"><%= @reimbursement_request.date %></td>
+   </tr>
+   <tr>   
+      <th>Amount</th>
+      <td colspan="3"><%= @reimbursement_request.amount %></td>    
+  </tr>
+        </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>

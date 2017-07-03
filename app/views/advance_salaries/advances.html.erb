@@ -14,9 +14,6 @@
         <th>Employee ID</th>
         <th>Employee Name</th>
         <th>Advance Amount</th>
-        <th>No. of Installment</th>
-        <th>Installment Amount</th>
-        <th>Advance Date</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -27,9 +24,6 @@
          <td><%= advance_salary.employee.try(:manual_employee_code) %></td>
          <td><%= full_name(advance_salary.employee) %></td>
          <td><%= advance_salary.advance_amount %></td>
-         <td><%= advance_salary.no_of_instalment %></td>
-         <td><%= advance_salary.instalment_amount %></td>
-         <td><%= advance_salary.advance_date %></td>
          <td>
             <%= link_to '', edit_advance_salary_path(advance_salary), class: 'btn btn-xs btn-success fa fa-edit' %>
             <!-- link_to '', advance_salary, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-sm  btn-danger fa fa-close' -->

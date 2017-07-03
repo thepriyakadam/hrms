@@ -7,7 +7,7 @@ gem 'rails', '4.2.4'
 gem 'mysql2', '~> 0.3.18'
  #gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
 
-
+gem "rack-timeout", require:"rack/timeout/base"
 
 gem 'ruby-graphviz', '~> 1.2', '>= 1.2.2'
 

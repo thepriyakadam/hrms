@@ -53,6 +53,7 @@ class SelfServicesController < ApplicationController
     tentative_leaving_date = params[:employee_resignation][:tentative_leaving_date]
     reason = params[:employee_resignation][:reason]
     note = params[:employee_resignation][:note]
+
     @employee_resignation = EmployeeResignation.create(employee_id: employee_id,resignation_date: resignation_date,application_date: application_date,reason: reason,note: note,leaving_reason_id: leaving_reason_id,notice_period: notice_period,tentative_leaving_date: tentative_leaving_date)  
     @resignation_status_record = ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Pending",change_date: Date.today)
     #EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now

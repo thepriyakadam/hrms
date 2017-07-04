@@ -8,9 +8,9 @@
      <%= f.hidden_field :application_date, value: Date.today %>
      
       <div class="row">
-      <div class="col-sm-3">
+        <div class="col-sm-3">
           <div class="form-group required">
-          <%= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Employee",label: "Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1",onchange:"var a={id:$(this).val()}; $.get('/employee_resignations/display_notice_period',a,function(response){});"}%>    
+            <%= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Employee",label: "Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1",onchange:"var a={id:$(this).val()}; $.get('/employee_resignations/display_notice_period',a,function(response){});"}%>    
           </div>
         </div>
         
@@ -32,22 +32,20 @@
           </div>
         </div>
 
-         <div class="col-sm-3">
+        <div class="col-sm-3">
          <div class="field">
            <%= f.text_field :notice_period, label:'Notice Period (in days)',readonly: true %>
          </div>
-       </div>
-       
+        </div> 
       </div>  
 
-       <div class="row">
-
-      <div class="col-sm-12">
-        <div class="field">
+    <div class="row">
+        <div class="col-sm-12">
+         <div class="field">
           <%= f.text_area :reason, label: "Reason" %>
         </div>
       </div>
-      </div>
+    </div>
 
       <div class="row">
 
@@ -157,28 +155,11 @@
     changeMonth: true,
     yearRange: '-5:+10',
     dateFormat: 'dd-mm-yy' });
-
-    $("#employee_resignation").validate({
-    rules: {
-      "employee_resignation[employee_id]":{
-        required: true,
-      }
-    },
-    messages: {
-      "employee_resignation[employee_id]":{
-        required: "Please Select ",
-      }
-      },
-    errorPlacement: function(error, element) {
-     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
-     error.insertAfter(element.parent(element));
-    }
-   });
   }); 
 </script>
 
 
-<!-- <script>
+<script>
 $("#employee_resignation").validate({
     rules: {
       "employee_resignation[employee_id]":{
@@ -203,4 +184,3 @@ $("#employee_resignation").validate({
    });
 </script>
 
- -->

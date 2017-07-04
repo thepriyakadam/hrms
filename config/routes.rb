@@ -1400,6 +1400,7 @@ end
       get :show_investment_declaration_list
       get :show_leave_c_off_list
       get :modal
+      get :holiday_setup
     end
   end
 

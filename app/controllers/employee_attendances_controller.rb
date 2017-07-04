@@ -1537,7 +1537,8 @@ def upload
             else
               if last_record.nil?
               else
-                if last_record.time.to_time <= employee_attendance.in_time.to_time
+                
+                if last_record_time <= employee_attendance.in_time.to_time
                   last_re = last_record.time.to_time + 24
                   total_hrs = last_re.to_time - employee_attendance.in_time.to_time
                   working_hrs = total_hrs/3600

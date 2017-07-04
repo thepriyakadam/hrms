@@ -1401,6 +1401,7 @@ end
       get :show_leave_c_off_list
       get :modal
       get :holiday_setup
+      post :create_self_resignation
     end
   end
 

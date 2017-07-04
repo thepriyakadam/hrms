@@ -3,9 +3,10 @@
     <h3 class="box-title"> Employee Resignation </h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <%= bootstrap_form_for(@employee_resignation, url: {action: 'create_self_resignation'},html: {id: 'employee_resignation'}) do |f| %>
+    <%= bootstrap_form_for(@employee_resignation,html: {id: 'emp_resignation'}, url: {action: 'create_self_resignation'}) do |f| %>
       <%= hidden_field_tag :employee_id, current_user.employee_id %>
       <%= hidden_field_tag :application_date, Date.today %>
+      <%= hidden_field_tag :notice_period, @notice_period %>
 
       <div class="row">
         <div class="col-sm-3">
@@ -26,12 +27,6 @@
         </div>
 
         <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :notice_period, label:'Notice Period (in days)',readonly: true %>
-          </div>
-        </div>
-       
-        <div class="col-sm-3">
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
@@ -45,7 +40,7 @@
 
       <div class="row">
         <div class="col-sm-6">
-          <div class="field">
+          <div class="form-group required">
             <%= f.text_area :reason, label: "Reason" %>
           </div>
         </div>
@@ -61,7 +56,7 @@
         <div class="col-sm-6">
           <div class="actions">
             <%= f.submit 'Create Employee Resignation',class: "btn btn-primary btn-sm"  %>
-            <%= link_to 'Back', employee_resignations_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+            <!-- <= link_to 'Back', employee_resignations_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %> -->
           </div>
         </div>
       </div>
@@ -70,28 +65,32 @@
 </div>
 
 <script type="text/javascript">
-  $(function(){
+   $(function(){
     $('.resignation').datepicker({
     changeYear:true,
     changeMonth: true,
-    yearRange: '-5:+10',
+    yearRange: '-200:+1',
     dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
 
-  $("#employee_resignation").validate({
+
+<script>
+$("#emp_resignation").validate({
     rules: {
-       "employee_resignation[resignation_date]":{
+      "emp_resignation[resignation_date]":{
         required: true,
       },
-       "employee_resignation[leaving_reason_id]":{
+      "emp_resignation[reason]":{
         required: true,
       }
     },
     messages: {
-      "employee_resignation[resignation_date]":{
+      "emp_resignation[resignation_date]":{
         required: "Please Select Resignation Date",
       },
-      "employee_resignation[leaving_reason_id]":{
-        required: "Please Specify Leaving Reason",
+      "emp_resignation[reason]":{
+        required: "Please specify Reason",
       }
       
     },

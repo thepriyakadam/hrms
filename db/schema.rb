@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20170703130036) do
+=======
+ActiveRecord::Schema.define(version: 20170705055346) do
+>>>>>>> c5a2acb340f54ce9d033ccade0e7efd3dbd388b3
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1279,9 +1283,13 @@ ActiveRecord::Schema.define(version: 20170703130036) do
     t.boolean  "is_second_rejected"
     t.boolean  "is_final_rejected"
     t.datetime "application_date"
+<<<<<<< HEAD
     t.integer  "final_reporter_id",         limit: 4
     t.integer  "second_reporter_id",        limit: 4
     t.integer  "change_status_employee_id", limit: 4
+=======
+    t.string   "current_status",         limit: 255
+>>>>>>> c5a2acb340f54ce9d033ccade0e7efd3dbd388b3
   end
 
   add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id", using: :btree

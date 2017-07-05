@@ -70,7 +70,7 @@ class EmployeeResignationsController < ApplicationController
       else
         respond_to do |format|
           if @employee_resignation.save
-            @employees=Employee.where(id: @employee_resignation.employee_id).take
+            @employees = Employee.where(id: @employee_resignation.employee_id).take
             @date_diff = (@employee_resignation.tentative_leaving_date - @employee_resignation.resignation_date).to_i
              EmployeeResignation.where(id: @employee_resignation.id).update_all(short_notice_period: @date_diff,reporting_master_id: @employees.manager_id,is_pending: true,resign_status: "Pending",is_first_approved: false,is_first_rejected: false, is_cancelled: false)
              ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Pending",change_date: Date.today)

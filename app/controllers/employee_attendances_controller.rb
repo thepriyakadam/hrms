@@ -1548,6 +1548,7 @@ def upload
                   last_re = last_record.time.to_time + 24*60*60
                   total_hrs = last_re.to_time - employee_attendance.in_time.to_time
                   working_hrs = total_hrs/3600
+
                     if working_hrs.to_f <  4
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "A",comment: nil)
                     elsif working_hrs.to_f < 7
@@ -1851,12 +1852,23 @@ end
               :show_as_html => params[:debug].present?
           end
          end
-
-
   end
 
-def search_by_date
-  @employee_attendances = EmployeeAttendance.all
+  def destroy_daily_attendance
+  end
+
+  def show_daily_attendance_for_destroy
+    @date = params[:employee][:date]
+    @daily_attendances = DailyAttendance.where(date: @date.to_date)
+  end
+
+  def destroy_daily_attendance_datewise
+    date = params[:date]
+    DailyAttendance.where(date: date).destroy_all
+  end
+
+  def search_by_date
+    @employee_attendances = EmployeeAttendance.all
     reporter(@employee_attendances, template_class: PdfReportTemplate) do
       filter :day, type: :date
       # filter :current_status, type: :string

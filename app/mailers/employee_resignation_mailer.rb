@@ -4,8 +4,9 @@ class EmployeeResignationMailer < ApplicationMailer
       # @reporting_master = ReportingMaster.find(employee_resignation.reporting_master_id)
 	    @employee_resignation = EmployeeResignation.find(employee_resignation.id)
       @employee = Employee.find(@employee_resignation.reporting_master_id)
+      @employe = Employee.find(@employee_resignation.employee_id)
 	    @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
-	    mail(to: @employee.email,cc: @employee.email,bcc: @employee.email, subject: 'Resignation Request')
+	    mail(to: @employee.email,cc: @employe.company_location.email,bcc: @employee.email, subject: 'Resignation Request')
   end
 
 

@@ -54,7 +54,7 @@ class SelfServicesController < ApplicationController
     note = params[:employee_resignation][:note]
         @employee_resignation = EmployeeResignation.create(employee_id: employee_id,resignation_date: resignation_date,application_date: application_date,reason: reason,note: note,leaving_reason_id: leaving_reason_id,notice_period: notice_period,tentative_leaving_date: tentative_leaving_date)  
         ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Pending",change_date: Date.today)
-        #EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
+        EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
     flash[:notice] = "created Successfully!"
     redirect_to employee_resignation_self_services_path
   end

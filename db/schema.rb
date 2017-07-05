@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170703093433) do
+ActiveRecord::Schema.define(version: 20170703130036) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -2308,8 +2308,9 @@ ActiveRecord::Schema.define(version: 20170703093433) do
     t.integer  "employee_id",            limit: 4
     t.boolean  "status"
     t.boolean  "is_confirm"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "role",                   limit: 255
   end
 
   add_index "issue_tracker_members", ["employee_id"], name: "index_issue_tracker_members_on_employee_id", using: :btree

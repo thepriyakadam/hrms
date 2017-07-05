@@ -11,14 +11,33 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :start_time %><br>
-    <%= f.time_select :start_time %>
-  </div>
-  <div class="field">
-    <%= f.label :end_time %><br>
-    <%= f.time_select :end_time %>
-  </div>
+
+      <div class="bootstrap-timepicker">
+       <div class="form-group required">
+       <label>Start Time</label>
+        <div class="input-group">
+         <%= f.text_field :start_time,hide_label:true, class: 'form-control timepicker' %>
+        <div class="input-group-addon">
+        <i class="fa fa-clock-o"></i>
+        </div>
+        </div><!-- /.input group -->
+       </div><!-- /.form group -->
+      </div>
+
+
+      <div class="bootstrap-timepicker">
+       <div class="form-group required">
+       <label>End Time</label>
+        <div class="input-group">
+         <%= f.text_field :end_time,hide_label:true, class: 'form-control timepicker' %>
+        <div class="input-group-addon">
+        <i class="fa fa-clock-o"></i>
+        </div>
+        </div><!-- /.input group -->
+       </div><!-- /.form group -->
+      </div>
+
+
   <div class="field">
     <%= f.label :reader_in %><br>
     <%= f.text_field :reader_in %>

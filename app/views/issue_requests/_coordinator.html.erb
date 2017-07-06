@@ -15,11 +15,11 @@
   <thead>
     <tr>
       <th>Support</th>
-      <th>Support Group</th>
-      <th>Date</th>
+<!--       <th>Support Group</th>
+ -->      <th>Date</th>
       <th>Priority</th>
-      <th>Document</th>
-      <th>Image</th>
+   <!--    <th>Document</th>
+      <th>Image</th> -->
       <th>Action</th>
     </tr>
   </thead>
@@ -30,24 +30,24 @@
         <% if issue_request.status == 'true' %>
         <% else %>
             <td><%= issue_request.issue_master.try(:name) %></td>
-            <td><%= issue_request.issue_tracker_group.try(:name) %></td>
-            <td><%= issue_request.date %></td>
+<!--             <td>< issue_request.issue_tracker_group.try(:name) %></td>
+ -->            <td><%= issue_request.date %></td>
             <td><%= issue_request.issue_priority %></td>
-            <td>
-             <% if issue_request.document1_file_name == nil %>
+          <!--   <td>
+             < if issue_request.document1_file_name == nil %>
                <small class="label label-default">Not Available</small>
-                 <% else %>
-                 <center><%= link_to '',download_screenshot_path(id: issue_request.id),class: 'btn btn-xs fa fa-download' %>
-                 <% end %>
+                 < else %>
+                 <center>< link_to '',download_screenshot_path(id: issue_request.id),class: 'btn btn-xs fa fa-download' %>
+                 < end %>
                  </center>
             </td>
             <td>
-              <% if issue_request.document2_file_name == nil %>
+              < if issue_request.document2_file_name == nil %>
                   <small class="label label-default">Not Available</small>
-                  <% else %>
-                  <center><%= link_to '',download_screenshot_image_path(id: issue_request.id),class: 'btn btn-xs fa fa-picture-o' %></center>
-                  <% end %>
-            </td>
+                  < else %>
+                  <center>< link_to '',download_screenshot_image_path(id: issue_request.id),class: 'btn btn-xs fa fa-picture-o' %></center>
+                  < end %>
+            </td> -->
 
              <td>
                  <% if issue_request.issue_tracker_member_id == nil %>

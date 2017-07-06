@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h4> Invitation to interview for the position of <%=  @candidate_interview_schedule.candidate_form.vacancy_request.vacancy %>
+    </h4>
+     
+    <p>
+     	Dear <b><%= @candidate_interview_schedule.candidate_form.try(:name) %></b> ,<br><br>
+
+     	Thank you for applying in our company .<br><br> 
+
+     	Your application for the position of <b><%=  @candidate_interview_schedule.candidate_form.vacancy_request.vacancy %></b> stood out to us and we would like to invite you for an interview at our office <b><%= @candidate_interview_schedule.address %></b> to get to know you a bit better.<br>
+    </p>
+    <p>
+     	Your interview is schedule with the <% employee1 = Employee.find_by(id: @candidate_interview_schedule.interviewer_id) %> <b> <%= employee1.try(:first_name) %> <%= employee1.try(:middle_name) %> <%= employee1.try(:last_name) %>.</b> The interview is<b> <%= @candidate_interview_schedule.interview_type_master.try(:name) %></b> and you’ll have the chance to discuss the Job position and learn more about our company .<br> 
+    </p>
+    <p>
+     	Would you be available on <b><%= @candidate_interview_schedule.date %></b> at <b><%= @candidate_interview_schedule.time %>?</b><br>
+
+    </p><br>
+    <p>
+        Looking forward to hearing from you,<br><br>
+
+        All the best / Kind regards.
+     </p>
+  </body>
+</html>

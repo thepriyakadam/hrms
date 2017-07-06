@@ -152,7 +152,7 @@
         EmployeeCodeMaster.where(id: @emp1).update_all(last_range: @employee.manual_employee_code)
         @employee.update(company_location_id: @department.company_location_id,company_id: @department.company_location.company_id)
         @employees.each do |e|
-          if e.joining_detail.confirmation_date != nil && e.joining_detail.confirmation_date <= Date.today
+          if e.joining_detail.try(:confirmation_date) != nil && e.joining_detail.try(:confirmation_date) <= Date.today
             employee_type = EmployeeType.find_by(name: "Permanent")
             e.update(employee_type_id: employee_type.id)
           end

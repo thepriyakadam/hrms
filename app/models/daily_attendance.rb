@@ -1,5 +1,11 @@
 class DailyAttendance < ActiveRecord::Base
 
+  #validates :time, uniqueness: { scope: [:date, :employee_code] }
+
+  #validates_uniqueness_of :employee_code, {scope: [:time]}
+  #validates_uniqueness_of :employee_code, :scope => :time
+  #validates_uniqueness_of :employee_code, scope: [:date, :time]
+
   def self.import(file)
 	spreadsheet = open_spreadsheet(file)
 	header = spreadsheet.row(1)

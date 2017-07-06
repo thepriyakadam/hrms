@@ -6,7 +6,7 @@ class EmployeeResignationMailer < ApplicationMailer
       @employee = Employee.find(@employee_resignation.reporting_master_id)
       @employe = Employee.find(@employee_resignation.employee_id)
 	    @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
-	    mail(to: @employee.email,cc: @employe.company_location.email,bcc: @employee.email, subject: 'Resignation Request')
+	    mail(to: @employee.email,cc: @employe.company_location.email,bcc: "tanu.chourey26@gmail.com", subject: 'Resignation Request')
   end
 
 

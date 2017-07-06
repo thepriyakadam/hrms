@@ -1516,18 +1516,24 @@ def upload
     last_out_time = last_out.try(:time)
 
     employee = Employee.find_by_manual_employee_code(da.employee_code)
-    #employee_daily_attendance = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date).first  
     previous_date = (da.date - 1).to_date
-    #if employee_daily_attendance.reader_name == "Main Door Out"
-    @punch_master = PunchMaster.find_by(status: true)
+      @punch_master = PunchMaster.find_by(status: true)
+      @punch_master_2 = PunchMaster.find_by(status: false)
+      start_time1 = @punch_master.start_time
+      end_time1 = @punch_master.end_time
+      start_time2 = @punch_master_2.start_time
+      end_time2 = @punch_master_2.end_time
+
         if employee.nil?
         else
-          
-          last_record = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date,reader_name:"Main Door Out",time:" @punch_master.end_time.to_time".."@punch_master.start_time.to_time").last
-          first_record = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date,reader_name:"Main Door IN",time: @punch_master.start_time..@punch_master.end_time).first
-          if last_record.nil? || first_record.nil?
-            first_record_time = nil
+          first_record = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date,reader_name: "Main Door IN",time: start_time1..end_time1).first
+          last_record = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date,reader_name: "Main Door Out",time: start_time2..end_time2).last
+          if last_record.nil?
             last_record_time = nil
+            first_record_time = first_record.time.to_time
+          elsif first_record.nil?
+            first_record_time = nil
+            last_record_time = last_record.time.to_time
           else
             last_record_time = last_record.time.to_time
             first_record_time = first_record.time.to_time
@@ -1542,21 +1548,34 @@ def upload
                   last_re = last_record.time.to_time + 24*60*60
                   total_hrs = last_re.to_time - employee_attendance.in_time.to_time
                   working_hrs = total_hrs/3600
-                  employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2))
+
+                    if working_hrs.to_f <  4
+                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "A",comment: nil)
+                    elsif working_hrs.to_f < 7
+                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "P/2",comment: nil)
+                    else
+                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "P",comment: nil)
+                    end
                 else
                   total_hrs = last_record.time.to_time - employee_attendance.in_time.to_time
                   working_hrs = total_hrs/3600
-                  employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2))
+                    if working_hrs.to_f <  4
+                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "A",comment: nil)
+                    elsif working_hrs.to_f < 7
+                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "P/2",comment: nil)
+                    else
+                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "P",comment: nil)
+                    end
                 end
               end
             end
 
             if first_in_time == nil && last_out_time == nil
-              EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,comment: "In & Out Time Not Available",present: "A")
+              EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: nil,employee_id: employee.id,comment: "In & Out Time Not Available",present: "A")
             elsif first_in_time == nil
               EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,comment: "In Time Not Available",present: "A")
             elsif last_out_time == nil
-              EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,comment: "Out Time Not Available",present: "A")
+              EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: nil,employee_id: employee.id,comment: "Out Time Not Available",present: "A")
             else
               
               if first_record.time.to_time.nil?
@@ -1581,32 +1600,6 @@ def upload
               end
             end#first_in_time == nil && last_out_time == nil
           end#employee.nil?
-
-    # else#Main_Door_Out
-
-    #   if employee.nil?
-    #   else
-    #     if first_in_time == nil && last_out_time == nil
-    #       EmployeeAttendance.create(day: last.date,in_time: first_in_time,out_time: last_out_time,employee_id: employee.id,comment: "In & Out Time Not Available",present: "A")
-    #     elsif first_in_time == nil
-    #       EmployeeAttendance.create(day: last.date,in_time: first_in_time,out_time: last_out_time,employee_id: employee.id,comment: "In Time Not Available",present: "A")
-    #     elsif last_out_time == nil
-    #       EmployeeAttendance.create(day: last.date,in_time: first_in_time,out_time: last_out_time,employee_id: employee.id,comment: "Out Time Not Available",present: "A")
-    #     else
-    #       total_hrs = last_out_time.to_f - first_in_time.to_f
-    #       working_hrs = total_hrs/3600
-    #         #EmployeeAttendance.create(day: last.date,in_time: first_in_time,out_time: last_out_time,employee_id: employee.id,working_hrs: working_hrs.round(2))
-    #       if working_hrs.to_f <  4
-    #         EmployeeAttendance.create(day: last.date,in_time: first_in_time,out_time: last_out_time,employee_id: employee.id,working_hrs: working_hrs.round(2),present: "A")
-    #       elsif working_hrs.to_f < 7
-    #         EmployeeAttendance.create(day: last.date,in_time: first_in_time,out_time: last_out_time,employee_id: employee.id,working_hrs: working_hrs.round(2),present: "P/2")
-    #       else
-    #         EmployeeAttendance.create(day: last.date,in_time: first_in_time,out_time: last_out_time,employee_id: employee.id,working_hrs: working_hrs.round(2),present: "P")
-    #       end
-    #     end#first_in_time == nil && last_out_time == nil
-    #   end#employee.nil?
-
-    # end#MAIN DOOR OUT
   end#do
 end
 
@@ -1859,12 +1852,25 @@ end
               :show_as_html => params[:debug].present?
           end
          end
-
-
   end
 
-def search_by_date
-  @employee_attendances = EmployeeAttendance.all
+  def destroy_daily_attendance
+  end
+
+  def show_daily_attendance_for_destroy
+    @date = params[:employee][:date]
+    @daily_attendances = DailyAttendance.where(date: @date.to_date)
+  end
+
+  def destroy_daily_attendance_datewise
+    date = params[:date]
+    DailyAttendance.where(date: date.to_date).destroy_all
+    flash[:notice] = "Attendance destroyed successfully!"
+    redirect_to destroy_daily_attendance_employee_attendances_path
+  end
+
+  def search_by_date
+    @employee_attendances = EmployeeAttendance.all
     reporter(@employee_attendances, template_class: PdfReportTemplate) do
       filter :day, type: :date
       # filter :current_status, type: :string

@@ -18,7 +18,7 @@
         <div class="col-sm-3">
          <div class="form-group required">
        <!--   <label>Job Title</label> -->
-              <%= f.select :employee_designation_id,all_employee_designation,{label: 'Job Title',include_blank: " Select Job Title"} %>
+              <%= f.select :employee_designation_id,all_employee_designation,{label: 'Designation',include_blank: " Select Designation"} %>
           </div>
         </div>
 
@@ -83,7 +83,7 @@
     
         <div class="col-sm-3">
           <div class="field">
-             <%= f.text_field :keyword,label: 'Keyword'%>
+             <%= f.text_field :keyword,label: 'Primary Skill'%>
           </div>
         </div>  
 

@@ -689,6 +689,9 @@ end
       post :show_daily_attendance_datewise
       get :select_date_and_employee
       post :date_and_employeewise_attendance
+      get :destroy_daily_attendance
+      post :show_daily_attendance_for_destroy
+      post :destroy_daily_attendance_datewise
     end
   end
   resources :salary_comp_mappings

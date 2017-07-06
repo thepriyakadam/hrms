@@ -42,25 +42,23 @@ class SelfServicesController < ApplicationController
     @notice_period = joining_detail.notice_period
     session[:active_tab] ="EmployeeSelfService"
   end
+  def create_self_resignation
+    # byebug
+    employee_id = params[:employee_id]
+    application_date = params[:application_date]
+    resignation_date = params[:employee_resignation][:resignation_date]
+    leaving_reason_id = params[:employee_resignation][:leaving_reason_id]
+    notice_period = params[:notice_period]
+    tentative_leaving_date = params[:employee_resignation][:tentative_leaving_date]
+    reason = params[:employee_resignation][:reason]
+    note = params[:employee_resignation][:note]
 
-#   def create_self_resignation
-#     # byebug
-#     employee_id = params[:employee_id]
-#     application_date = params[:application_date]
-#     resignation_date = params[:employee_resignation][:resignation_date]
-#     leaving_reason_id = params[:employee_resignation][:leaving_reason_id]
-#     notice_period = params[:notice_period]
-#     tentative_leaving_date = params[:employee_resignation][:tentative_leaving_date]
-#     reason = params[:employee_resignation][:reason]
-#     note = params[:employee_resignation][:note]   
-#     @employee = Employee.find_by(id: current_user.employee_id)
-
-#     @employee_resignation = EmployeeResignation.create(reporting_master_id: @employee.manager_id,employee_id: employee_id,resignation_date: resignation_date,application_date: application_date,reason: reason,note: note,leaving_reason_id: leaving_reason_id,notice_period: notice_period,tentative_leaving_date: tentative_leaving_date)  
-#     @resignation_status_record = ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Pending",change_date: Date.today)
-#     EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
-#     flash[:notice] = "created Successfully!"
-#     redirect_to employee_resignation_self_services_path
-# end
+    @employee_resignation = EmployeeResignation.create(employee_id: employee_id,resignation_date: resignation_date,application_date: application_date,reason: reason,note: note,leaving_reason_id: leaving_reason_id,notice_period: notice_period,tentative_leaving_date: tentative_leaving_date)  
+    @resignation_status_record = ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Pending",change_date: Date.today)
+    #EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
+    flash[:notice] = "created Successfully!"
+    redirect_to employee_resignation_self_services_path
+end
 
   def resignation_history
     @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
@@ -239,7 +237,7 @@ class SelfServicesController < ApplicationController
   end
 
   def add_attendance
-    @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id)
+    @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id).order('day DESC')
   end
 
   def create_self_attendance

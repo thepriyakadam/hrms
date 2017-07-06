@@ -3,7 +3,7 @@
     <h3 class="box-title"> Employee Resignation </h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <%= bootstrap_form_for(@employee_resignation,url: {action: 'create_self_resignation'},html: {id: 'resignation'}) do |f| %>
+    <%= bootstrap_form_for(@employee_resignation,html: {id: 'resignation'},url: {action: 'create_self_resignation'}) do |f| %>
       <%= hidden_field_tag :employee_id, current_user.employee_id %>
       <%= hidden_field_tag :application_date, Date.today %>
       <%= hidden_field_tag :notice_period, @notice_period %>

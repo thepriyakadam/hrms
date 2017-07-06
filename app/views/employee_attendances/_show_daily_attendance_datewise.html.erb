@@ -5,6 +5,7 @@
           <th>ID</th>
           <th>Employee Name</th>
           <th>Time</th>
+          <th>Reader Name</th>
           <th>Card No</th>
         </tr>
       </thead>
@@ -14,6 +15,7 @@
             <td><%= a.employee_code %></td>
             <td><%= a.employee_name %></td>
             <td><%= a.try(:time) %></td>
+            <td><%= a.try(:reader_name) %></td>
             <td><%= a.try(:card_no) %></td>
           </tr>
         <% end %>

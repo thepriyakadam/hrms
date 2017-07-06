@@ -1864,7 +1864,9 @@ end
 
   def destroy_daily_attendance_datewise
     date = params[:date]
-    DailyAttendance.where(date: date).destroy_all
+    DailyAttendance.where(date: date.to_date).destroy_all
+    flash[:notice] = "Attendance destroyed successfully!"
+    redirect_to destroy_daily_attendance_employee_attendances_path
   end
 
   def search_by_date

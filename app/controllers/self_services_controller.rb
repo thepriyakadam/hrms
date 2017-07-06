@@ -238,7 +238,7 @@ end
   end
 
   def add_attendance
-    @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id)
+    @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id).order('day DESC')
   end
 
   def create_self_attendance

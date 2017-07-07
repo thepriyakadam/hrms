@@ -1653,8 +1653,8 @@ def datewise_daily_attendance
 end
 
 def show_datewise_daily_attendance
-  date = params[:employee][:date]
-  @employee_attendances = EmployeeAttendance.where(day: date.to_date)
+  @date = params[:employee][:date]
+  @employee_attendances = EmployeeAttendance.where(day: @date.to_date)
 end
 
 def modal_edit_daily_attendance 
@@ -1673,7 +1673,7 @@ def update_daily_attendance
 
   @employee_attendance.update(in_time: in_time,out_time: out_time,present: present,comment: comment,working_hrs: working_hrs)
   flash[:notice] = "Updated Successfully!"
-  redirect_to datewise_daily_attendance_employee_attendances_path
+  redirect_to datewise_daily_attendances_employee_attendances_path
 end
 
 def import

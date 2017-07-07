@@ -1,6 +1,6 @@
 class DailyAttendance < ActiveRecord::Base
 
-  #validates :time, uniqueness: { scope: [:date, :employee_code] }
+  validates :employee_code, uniqueness: { scope: [:date, :time] }
 
   #validates_uniqueness_of :employee_code, {scope: [:time]}
   #validates_uniqueness_of :employee_code, :scope => :time

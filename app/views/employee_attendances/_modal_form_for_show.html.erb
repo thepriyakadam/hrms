@@ -2,26 +2,17 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+		 <center><%= @employee_attendance.employee.try(:manual_employee_code) %> - <%= full_name(@employee_attendance.employee) %></center>
     </div>
     <div class="modal-body">
-
-    	<table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
-		   	<thead>
-		      <tr>
-		        <th>
-		           <center><%= @employee_attendance.employee.try(:manual_employee_code) %> - <%= full_name(@employee_attendance.employee) %></center>
-		        </th>
-		      </tr>
-		    </thead>
-		  </table>
-		  <br>
      		
     	<%= bootstrap_form_for :employee_attendance,url:{action:"update_attendance_for_show",employee_attendance_id: @employee_attendance.id} do |f| %>
 
     		<div class="row">
 	    		<div class="col-sm-3">
 		          <div class="field">
-		            <%= select :employee_attendance,:present,['P','W','A','P/2','H','LWP'],{hide_label: true,include_blank: "Select Option"},class: 'form-control' %>
+		            <%= select :employee_attendance,:present,['P','WO','WOP','A','HDL','H','HP','LWP','HD-LWP','PO','ACF'],{hide_label: true,include_blank: "Select Option"},class: 'form-control' %>
 		         	</div>
 	        </div>
 

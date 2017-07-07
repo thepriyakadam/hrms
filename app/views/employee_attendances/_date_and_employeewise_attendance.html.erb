@@ -10,6 +10,7 @@
           <th>Out Time</th>
           <th>Working Hours</th>
           <th>Comment</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -23,10 +24,12 @@
             <td><%= a.try(:out_time) %></td>
             <td><%= a.try(:working_hrs) %></td>
             <td><%= a.try(:comment) %></td>
+            <td><%= link_to ' ',modal_edit_for_show_employee_attendances_path(a),class: 'btn btn-success btn-xs fa fa-edit',remote: true %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
+  <div id="myModal" class="modal fade"></div>
 
 
 <script type="text/javascript">

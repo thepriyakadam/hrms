@@ -1552,9 +1552,9 @@ def upload
                   total_hrs = last_re.to_time - employee_attendance.in_time.to_time
                   working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
 
-                    if working_hrs.to_f <  4
+                    if working_hrs.to_s <  "04:30"
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "A",comment: "System Updated")
-                    elsif working_hrs.to_f < 7
+                    elsif working_hrs.to_s < "07:30"
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P/2",comment: "System Updated")
                     else
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P",comment: "System Updated")
@@ -1562,9 +1562,9 @@ def upload
                 else
                   total_hrs = last_record.time.to_time - employee_attendance.in_time.to_time
                   working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
-                    if working_hrs.to_f <  4
+                    if working_hrs.to_s <  "04:30"
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "A",comment: "System Updated")
-                    elsif working_hrs.to_f < 7
+                    elsif working_hrs.to_s < "07:30"
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P/2",comment: "System Updated")
                     else
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P",comment: "System Updated")
@@ -1594,9 +1594,9 @@ def upload
                 end
               end
 
-              if working_hrs.to_f <  4
+              if working_hrs.to_s <  "04:30"
                 EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "A")
-              elsif working_hrs.to_f < 7
+              elsif working_hrs.to_s < "07:30"
                 EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "P/2")
               else
                 EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "P")
@@ -1632,7 +1632,7 @@ def update_attendance_for_show
   total_hrs = out_time.to_time - in_time.to_time
   working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
 
-  @employee_attendance.update(in_time: in_time,out_time: out_time,present: present,comment: comment,working_hrs: working_hrs)
+  @employee_attendance.update(in_time: in_time,out_time: out_time,present: present,comment: comment,working_hrs: working_hrs,comment: "User Updated")
   flash[:notice] = "Updated Successfully!"
   redirect_to select_date_and_employee_employee_attendances_path
 end
@@ -1671,7 +1671,7 @@ def update_daily_attendance
   total_hrs = out_time.to_time - in_time.to_time
   working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
 
-  @employee_attendance.update(in_time: in_time,out_time: out_time,present: present,comment: comment,working_hrs: working_hrs)
+  @employee_attendance.update(in_time: in_time,out_time: out_time,present: present,comment: comment,working_hrs: working_hrs,comment: "User Updated")
   flash[:notice] = "Updated Successfully!"
   redirect_to datewise_daily_attendances_employee_attendances_path
 end

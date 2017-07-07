@@ -692,6 +692,8 @@ end
       get :destroy_daily_attendance
       post :show_daily_attendance_for_destroy
       post :destroy_daily_attendance_datewise
+      get :modal_edit_for_show
+      post :update_attendance_for_show
     end
   end
   resources :salary_comp_mappings

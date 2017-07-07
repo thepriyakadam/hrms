@@ -3,22 +3,22 @@
 
 <!-- Logo -->
 <a href="/home" class="logo">
-<!--  <span class="logo-mini"><b>H</b>CM</span>
-  <span class="logo-lg"><b> -->
+ <span class="logo-mini"><b>SGA</b></span>
+  <span class="logo-lg"><b>
    <% if current_user.class == Member %>
-             <% if current_user.employee.company.company_logo_file_name == nil %>
-              <small class="label label-default">Not Available</small>
-              <% else %>
-              <!-- <center><= link_to '',download_company_logo_path(@company),class: 'btn btn-xs fa fa-picture-o' %></center> -->
-              <%= image_tag current_user.employee.company.company_logo.url, :size => "120x40" %>
-              <%end %>
-              <%else%>
-                  <input type="text" name="q" class="form-control" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
-              </span>
-                <%end%>
-               <!--  </b></span> -->
+       <% if current_user.employee.company.company_logo_file_name == nil %>
+        <small class="label label-default">Not Available</small>
+        <% else %>
+        <!-- <center><= link_to '',download_company_logo_path(@company),class: 'btn btn-xs fa fa-picture-o' %></center> -->
+        <%= image_tag current_user.employee.company.company_logo.url, :size => "200x40" %>
+        <%end %>
+        <%else%>
+          <!--   <input type="text" name="q" class="form-control" placeholder="Search...">
+        <span class="input-group-btn">
+          <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+        </span> -->
+          <%end%>
+                </b></span>
 </a>
 
 <!-- Header Navbar -->

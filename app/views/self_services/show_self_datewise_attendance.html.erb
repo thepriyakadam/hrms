@@ -17,7 +17,7 @@
               </center>
           </td>
         </tr>
-        <tr><th colspan="5"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
+        <tr><th colspan="5"><center> Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
       <tr>
         <td>ID : <%= current_user.employee.manual_employee_code %></td>
         <td colspan="2">Employee : <%= full_name(current_user.employee) %></td>
@@ -28,6 +28,7 @@
           <th>Date</th>
           <th>In Time</th>
           <th>Out Time</th>
+          <th>Working Hrs.</th>
           <th>Present</th>
         </tr>
       </thead>
@@ -40,6 +41,7 @@
             <td><%= employee_attendance.try(:in_time) %></td>
             <td><%= employee_attendance.try(:out_time) %></td>
             <td><%= employee_attendance.try(:present) %></td>
+            <td><%= employee_attendance.try(:working_hrs) %></td>
           </tr>
         <% end %>
       </tbody>

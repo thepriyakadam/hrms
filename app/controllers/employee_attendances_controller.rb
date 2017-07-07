@@ -1528,7 +1528,10 @@ def upload
         else
           first_record = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date,reader_name: "Main Door IN",time: start_time1..end_time1).first
           last_record = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date,reader_name: "Main Door Out",time: start_time2..end_time2).last
-          if last_record.nil?
+          if last_record.nil? && first_record.nil?
+            last_record_time = nil
+            first_record_time = nil
+          elsif last_record.nil?
             last_record_time = nil
             first_record_time = first_record.time.to_time
           elsif first_record.nil?
@@ -1550,21 +1553,21 @@ def upload
                   working_hrs = total_hrs/3600
 
                     if working_hrs.to_f <  4
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "A",comment: nil)
+                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "A",comment: "System Updated")
                     elsif working_hrs.to_f < 7
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "P/2",comment: nil)
+                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "P/2",comment: "System Updated")
                     else
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "P",comment: nil)
+                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "P",comment: "System Updated")
                     end
                 else
                   total_hrs = last_record.time.to_time - employee_attendance.in_time.to_time
                   working_hrs = total_hrs/3600
                     if working_hrs.to_f <  4
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "A",comment: nil)
+                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "A",comment: "System Updated")
                     elsif working_hrs.to_f < 7
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "P/2",comment: nil)
+                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "P/2",comment: "System Updated")
                     else
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "P",comment: nil)
+                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "P",comment: "System Updated")
                     end
                 end
               end
@@ -1578,7 +1581,7 @@ def upload
               EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: nil,employee_id: employee.id,comment: "Out Time Not Available",present: "A")
             else
               
-              if first_record.time.to_time.nil?
+              if first_record.nil? || first_record.time.to_time.nil?
                 working_hrs = 0
               else
                 if last_out_time.to_time <= first_record.time.to_time

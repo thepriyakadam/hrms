@@ -1,34 +1,35 @@
 <br>
-    <table id="example6" class="table table-bordered table-hover table-condensed">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Employee Name</th>
-          <th>Present</th>
-          <th>In Time</th>
-          <th>Out Time</th>
-          <th>Working Hours</th>
-          <th>Comment</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @employee_attendances.each do |a| %>
+      <table id="example6" class="table table-bordered table-hover table-condensed">
+        <thead>
           <tr>
-            <td><%= a.employee.manual_employee_code %></td>
-            <td><%= full_name(a.employee) %></td>
-            <td><%= a.try(:present) %></td>
-            <td><%= a.try(:in_time) %></td>
-            <td><%= a.try(:out_time) %></td>
-            <td><%= a.try(:working_hrs) %></td>
-            <td><%= a.try(:comment) %></td>
-            <td><%= link_to ' ',modal_edit_daily_attendance_employee_attendances_path(a),class: 'btn btn-success btn-xs fa fa-edit',remote: true %></td>
+            <th>ID</th>
+            <th>Employee Name</th>
+            <th>Present</th>
+            <th>In Time</th>
+            <th>Out Time</th>
+            <th>Working Hours</th>
+            <th>Comment</th>
+            <th>Action</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <div id="myModal" class="modal fade"></div>
-
+        </thead>
+        <tbody>
+          <% @employee_attendances.each do |a| %>
+            <tr>
+              <td><%= a.employee.manual_employee_code %></td>
+              <td><%= full_name(a.employee) %></td>
+              <td><%= a.try(:present) %></td>
+              <td><%= a.try(:in_time) %></td>
+              <td><%= a.try(:out_time) %></td>
+              <td><%= a.try(:working_hrs) %></td>
+              <td><%= a.try(:comment) %></td>
+              <td><%= link_to ' ',modal_edit_daily_attendance_employee_attendances_path(a),class: 'btn btn-success btn-xs fa fa-edit',remote: true %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <!-- <= link_to "Back",datewise_daily_attendance_employee_attendances_path,class: "btn btn-sm btn-default" %> -->
+      <div id="myModal" class="modal fade"></div>
+    
 
 <script type="text/javascript">
 $(document).ready(function() {

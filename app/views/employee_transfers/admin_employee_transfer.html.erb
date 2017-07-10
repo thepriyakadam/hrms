@@ -22,7 +22,7 @@
               </div>
           </div>
           <div class="col-sm-3">
-            <div class="field">
+            <div class="form-group required">
               <div class="input-group">
                 <%=f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
               </div>
@@ -31,7 +31,7 @@
         </div>
         <div class="row">
           <div class="col-sm-3">
-            <div class="field">
+            <div class="form-group required">
               <div class="input-group">
                 <div id="company_location_with_label">
                   <%= render 'employees/company_location_dropdown_with_label' %> 
@@ -40,7 +40,7 @@
             </div>
           </div>
           <div class="col-sm-3">
-            <div class="field">
+            <div class="form-group required">
               <div class="input-group">
                 <div id="department">
                   <%= render 'employees/department_dropdown' %> 
@@ -68,6 +68,18 @@ $("#employee_transfer").validate({
       },
       "employee_transfer[employee_designation_id]":{
         required: true,
+      },
+       "employee_transfer[employee_category_id]":{
+        required: true,
+      },
+       "employee_transfer[company_id]":{
+        required: true,
+      },
+       "employee_transfer[company_location_id]":{
+        required: true,
+      },
+       "employee_transfer[department_id]":{
+        required: true,
       }
     },
     messages: {
@@ -76,7 +88,19 @@ $("#employee_transfer").validate({
       },
       "employee_transfer[employee_designation_id]":{
         required: "Please Select Designation",
-      }
+      },
+      "employee_transfer[employee_category_id]":{
+        required: "Please Select Employee Category",
+      },
+      "employee_transfer[company_id]":{
+        required: "Please Select Company",
+      },
+      "employee_transfer[company_location_id]":{
+        required: "Please Select Location",
+      },
+      "employee_transfer[department_id]":{
+        required: "Please Select Department",
+      },
       },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})

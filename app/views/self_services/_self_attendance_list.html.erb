@@ -12,7 +12,7 @@
       <tr>
         <td><%= e.employee.manual_employee_code %></td>
         <td><%= full_name(e.employee) %></td>
-        <td><%= e.try(:Present) %></td>
+        <td><%= e.try(:present) %></td>
         <td><%= e.try(:day) %></td>
       </tr>
     <% end %>

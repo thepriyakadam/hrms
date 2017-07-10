@@ -39,24 +39,21 @@
         <br>
         <div class="row">
 
- <div class="col-sm-3">
-         <div class="col-sm-1">
-      <label>Status </label>
-      <div class="field">
-        <%= f.check_box :status, label: 'Active'%>
-      </div>
-    </div>
-    </div>
-   
-
         <div class="col-sm-6">
             <div class="field">
-              <%= f.text_area :description,label: 'Description' %>
+              <%= f.text_field :description,label: 'Description' %>
             </div>
           </div>
 
-
-          <div class="col-sm-2">
+          <div class="col-sm-3">
+          <div class="col-sm-1">
+            <label>Status </label>
+            <div class="field">
+              <%= f.check_box :status, label: 'Active'%>
+            </div>
+          </div>
+          </div>
+          <div class="col-sm-3">
             <div class="form-group required">
               <%= f.file_field :document,label: 'Document(doc,docx,pdf only)' %>
             </div>

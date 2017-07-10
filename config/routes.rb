@@ -694,6 +694,8 @@ end
       post :destroy_daily_attendance_datewise
       get :modal_edit_for_show
       post :update_attendance_for_show
+      get :access_record
+      post :show_access_card_list
     end
   end
   resources :salary_comp_mappings
@@ -1405,6 +1407,7 @@ end
       get :show_investment_declaration_list
       get :show_leave_c_off_list
       get :modal
+      get :holiday_setup
       post :create_self_resignation
     end
   end

@@ -1558,7 +1558,7 @@ def upload
                     elsif working_hrs.to_s < "07:30"
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "HDL",comment: "System Updated")
                     else
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "P",comment: "System Updated")
+                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P",comment: "System Updated")
                     end
                 else
                   total_hrs = last_record.time.to_time - employee_attendance.in_time.to_time
@@ -1569,7 +1569,7 @@ def upload
                     elsif working_hrs.to_s < "07:30"
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "HDL",comment: "System Updated")
                     else
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs.round(2),present: "P",comment: "System Updated")
+                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P",comment: "System Updated")
 
                     end
                 end

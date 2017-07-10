@@ -1879,27 +1879,75 @@ end
   end
 
   def access_record
+    session[:active_tab] = "EmployeeSelfService"
   end
 
-  def show_access_card_list
+  def access_card_list
     date = params[:salary][:date]
     employee_code = params[:salary][:employee_code]
     employee = Employee.find_by_id(current_user.employee_id)
     @daily_attendances = DailyAttendance.where(date: date.to_date,employee_code: employee_code)
     first_in = DailyAttendance.where(date: date.to_date,employee_code: employee_code,reader_name: "Main Door IN").first
     last_out = DailyAttendance.where(date: date.to_date,employee_code: employee_code,reader_name: "Main Door Out").last
+    daily_attendance = DailyAttendance.where(employee_code: employee.manual_employee_code,date: date.to_date).take
     employee_attendance = EmployeeAttendance.where(employee_id: employee.id,day: date.to_date).take
     
-    if employee_attendance.nil?
+    if first_in.nil? && last_out.nil?
+      working_hrs = 0
+      first_in_time = nil
+      last_out_time = nil
+    elsif first_in.nil?
+      working_hrs = 0
+      first_in_time = nil
+      last_out_time = last_out.time
+    elsif last_out.nil?
+      working_hrs = 0
+      first_in_time = first_in.time
+      last_out_time = nil
+    else
+      first_in_time = first_in.time
+      last_out_time = last_out.time
+      total_hrs = last_out.time.to_time - first_in.time.to_time
+      working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+    end
+
+    if daily_attendance.nil? && employee_attendance.nil?
       @daily_attendances.each do |d|
-        d.update(employee_code: current_user.employee_id)
+        d.update(employee_code: employee.manual_employee_code)
       end
-      EmployeeAttendanceMailer.pending(employee).deliver_now
+      @employee_attendance = EmployeeAttendance.create(day: date.to_date,in_time: first_in_time,out_time: last_out_time,working_hrs: working_hrs,employee_id: employee.id,present: 'A',comment: 'ACF Request')
+      @employee_attendance.save
+      EmployeeAttendanceMailer.pending(employee,date,employee_code,working_hrs,first_in_time,last_out_time).deliver_now
+      flash[:notice] = "ACF Request Sent!"
     else
       flash[:alert] = "Attendance available for this date!"
     end
     redirect_to access_record_employee_attendances_path
   end#def
+
+  def access_card_approval
+    current_login = Employee.find(current_user.employee_id)
+    @emps = current_login.subordinates.pluck(:id)
+    @pending_requests = EmployeeAttendance.where(employee_id: @emps,comment: "ACF Request")
+    session[:active_tab] = "ManagerSelfService"
+  end
+
+  def view_access_card_detail
+    @pending_request = EmployeeAttendance.find(params[:pending_request])
+  end
+
+  def approve_acf_request
+    @pending_request = EmployeeAttendance.find(params[:format])
+    # if @pending_request.working_hrs.to_s < "04:30"
+    #   @pending_request.update(present: "A",comment: "ACF Approved")
+    # elsif @pending_request.working_hrs.to_s < "07:30"
+    #   @pending_request.update(present: "",comment: "ACF Approved")
+    # else
+      @pending_request.update(present: "ACF",comment: "ACF Approved")
+    # end
+    flash[:notice] = "ACF Request Approved!"
+    redirect_to access_card_approval_employee_attendances_path
+  end
 
   def destroy_daily_attendance
   end

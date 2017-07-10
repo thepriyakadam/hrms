@@ -3,7 +3,7 @@
   <div class="box-header">
     <h3 class="box-title">Access Card</h3>
   </div>
-  <%= bootstrap_form_for(:salary, url: { action: 'show_access_card_list'},remote: true) do |f| %>
+  <%= bootstrap_form_for(:salary, url: { action: 'access_card_list'}) do |f| %>
     <div class="box-body">
       <div class="row">
         <div class="col-sm-3">
@@ -25,11 +25,11 @@
         </div>
         <div class="col-sm-3" style="padding-top:20px;">
           <div class="actions">
-            <%= f.submit "Show Records" ,class: 'btn btn-primary btn-sm' %>
+            <%= f.submit "Send Request" ,class: 'btn btn-primary btn-sm',id: "buttonCtc" %>
           </div>
         </div>
       </div><br>
-      <div id="access_card_list"></div>
+     <!--  <div id="access_card_list"></div> -->
     </div>
   <% end %>
 </div>

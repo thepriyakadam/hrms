@@ -15,12 +15,6 @@ class EmployeeAttendance < ActiveRecord::Base
       flag = EmployeeAttendance.exists?(day: day,employee_id: emp)
     flag
   end
-
-  # def self.record_available(day,emp)
-  #   flag = 0
-  #     flag = EmployeeAttendance.exists?(day: day,employee_id: emp)
-  #   flag
-  # end
   
   def self.collect_rolewise(current_user)
     if current_user.class == Group

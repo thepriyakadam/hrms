@@ -1882,21 +1882,21 @@ end
   end
 
   def show_access_card_list
-    @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
     date = params[:salary][:date]
     employee_code = params[:salary][:employee_code]
+    employee = Employee.find_by_id(current_user.employee_id)
     @daily_attendances = DailyAttendance.where(date: date.to_date,employee_code: employee_code)
     first_in = DailyAttendance.where(date: date.to_date,employee_code: employee_code,reader_name: "Main Door IN").first
     last_out = DailyAttendance.where(date: date.to_date,employee_code: employee_code,reader_name: "Main Door Out").last
-    employee = Employee.find_by_id(current_user.employee_id)
-
-    if @employee_attendance.is_present(date,employee)
-      flash[:alert] = "Attendance available for this date!"
-    else
+    employee_attendance = EmployeeAttendance.where(employee_id: employee.id,day: date.to_date).take
+    
+    if employee_attendance.nil?
       @daily_attendances.each do |d|
         d.update(employee_code: current_user.employee_id)
       end
-      EmployeeAttendanceMailer.pending(@employee_attendance).deliver_now
+      EmployeeAttendanceMailer.pending(employee).deliver_now
+    else
+      flash[:alert] = "Attendance available for this date!"
     end
     redirect_to access_record_employee_attendances_path
   end#def

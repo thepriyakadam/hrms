@@ -694,6 +694,8 @@ end
       post :destroy_daily_attendance_datewise
       get :modal_edit_for_show
       post :update_attendance_for_show
+      get :access_record
+      post :show_access_card_list
     end
   end
   resources :salary_comp_mappings

@@ -1509,7 +1509,6 @@ def upload
   @daily_attendances = DailyAttendance.where(date: last.date)
 
   @daily_attendances.each do |da|
-
     first_in = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date,reader_name: "Main Door IN").first
     last_out = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date,reader_name: "Main Door Out").last
     first_in_time = first_in.try(:time)
@@ -1528,6 +1527,9 @@ def upload
         else
           first_record = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date,reader_name: "Main Door IN",time: start_time1..end_time1).first
           last_record = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date,reader_name: "Main Door Out",time: start_time2..end_time2).last
+          #actual_in = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date).where.not(reader_name: "Main Door IN").first
+          #actual_out = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date).where.not(reader_name: "Main Door Out").last
+
           if last_record.nil? && first_record.nil?
             last_record_time = nil
             first_record_time = nil
@@ -1552,7 +1554,7 @@ def upload
                   total_hrs = last_re.to_time - employee_attendance.in_time.to_time
                   working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
 
-                    if working_hrs.to_s <  "04:30"
+                    if working_hrs.to_s < "04:30"
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "A",comment: "System Updated")
                     elsif working_hrs.to_s < "07:30"
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P/2",comment: "System Updated")
@@ -1875,6 +1877,29 @@ end
           end
          end
   end
+
+  def access_record
+  end
+
+  def show_access_card_list
+    
+    date = params[:salary][:date]
+    employee_code = params[:salary][:employee_code]
+    @daily_attendances = DailyAttendance.where(date: date.to_date,employee_code: employee_code)
+    first_in = DailyAttendance.where(date: date.to_date,employee_code: employee_code,reader_name: "Main Door IN").first
+    last_out = DailyAttendance.where(date: date.to_date,employee_code: employee_code,reader_name: "Main Door Out").last
+    employee = Employee.find_by_id(current_user.employee_id)
+
+    if @employee_attendance.is_present(date,employee)
+      flash[:alert] = "Attendance available for this date!"
+    else
+      @daily_attendances.each do |d|
+        d.update(employee_code: current_user.employee_id)
+      end
+      EmployeeAttendanceMailer.pending(@employee_attendance).deliver_now
+    end
+    redirect_to access_record_employee_attendances_path
+  end#def
 
   def destroy_daily_attendance
   end

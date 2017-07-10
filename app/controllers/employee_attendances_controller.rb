@@ -1882,7 +1882,7 @@ end
   end
 
   def show_access_card_list
-    
+    @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
     date = params[:salary][:date]
     employee_code = params[:salary][:employee_code]
     @daily_attendances = DailyAttendance.where(date: date.to_date,employee_code: employee_code)

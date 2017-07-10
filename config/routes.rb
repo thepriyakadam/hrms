@@ -695,7 +695,10 @@ end
       get :modal_edit_for_show
       post :update_attendance_for_show
       get :access_record
-      post :show_access_card_list
+      post :access_card_list
+      get :access_card_approval
+      get :view_access_card_detail
+      get :approve_acf_request
     end
   end
   resources :salary_comp_mappings

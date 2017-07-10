@@ -74,7 +74,7 @@
    # }
 
    # config.action_mailer.default_url_options = { host: 'https://mg.mail.yahoo.com', port: 3000}
-   
+
    # # config.domain = 'lvh.me'
    # # config.action_mailer.perform_deliveries = true,
    # ActionMailer::Base.delivery_method = :smtp

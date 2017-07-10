@@ -1,9 +1,9 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title"> Initiate Resignation </h3>
+    <h3 class="box-title"> Employee Resignation </h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <%= bootstrap_form_for(@employee_resignation,html: {id: 'resignation'},url: {action: 'create_self_resignation'}) do |f| %>
+    <%= bootstrap_form_for(@employee_resignation, url: {action: 'create_self_resignation'},html: {id: 'employee_resignation'}) do |f| %>
       <%= hidden_field_tag :employee_id, current_user.employee_id %>
       <%= hidden_field_tag :application_date, Date.today %>
       <%= hidden_field_tag :notice_period, @notice_period %>
@@ -15,7 +15,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :resignation_date,label:'Resignation Date',class: 'resignation'%>
+              <%= f.text_field :resignation_date,label:'Resignation Date',class: 'c_off_date'%>
             </div>
           </div>
         </div>
@@ -32,7 +32,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :tentative_leaving_date, class: 'resignation',label:'Requested Releaving Date'%>
+              <%= f.text_field :tentative_leaving_date, class: 'c_off_date',label:'Requested Releaving Date'%>
             </div>
           </div>
         </div>
@@ -55,7 +55,7 @@
       <div class="row">
         <div class="col-sm-6">
           <div class="actions">
-            <%= f.submit 'Create Employee Resignation',class: "btn btn-primary btn-sm"  %>
+             <%= f.submit "Create Employee Resignation",class: 'btn btn-sm btn-primary fa fa-modx' %>
             <!-- <= link_to 'Back', employee_resignations_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %> -->
           </div>
         </div>
@@ -65,36 +65,37 @@
 </div>
 
 <script type="text/javascript">
-   $(function(){
-    $('.resignation').datepicker({
+ 
+  $(function(){
+    $('.c_off_date').datepicker({
     changeYear:true,
     changeMonth: true,
-    yearRange: '-200:+1',
+    yearRange: '-200:-0',
     dateFormat: 'dd-mm-yy' });
-  }); 
-</script>
 
-<script>
-$("#resignation").validate({
-    rules: {
-      "resignation[resignation_date]":{
-        required: true,
-      },
-      "resignation[reason]":{
-        required: true,
-      }
+   }); 
+
+  $("#employee_resignation").validate({
+  rules: {
+    "employee_resignation[resignation_date]":{
+      required: true
     },
-    messages: {
-      "resignation[resignation_date]":{
-        required: "Please Select Resignation Date",
-      },
-      "resignation[reason]":{
-        required: "Please specify Reason",
-      }
+    "employee_resignation[reason]":{
+      required: true
     },
-    errorPlacement: function(error, element) {
-     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
-     error.insertAfter(element.parent(element));
+    "employee_resignation[leaving_reason_id]":{
+      required: true
     }
-   });
+  },
+  
+  errorPlacement: function(error, element) {
+   error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+   error.insertAfter(element.parent(element));
+  }
+}); 
+
+$(document).ready(function() {
+  $(".select2").select2();
+});
+
 </script>

@@ -8,7 +8,7 @@
         <div class="row">
           <div class="col-sm-9">
             <div class="form-group required">
-             <%= f.select :issue_tracker_member_id,issue_tracker_member_role_wise(@issue_request.issue_tracker_group.id),{include_blank: " Select Member"},class: "form-control"%>
+             <%= f.select :issue_tracker_member_id,issue_tracker_member_role_wise(@issue_request.issue_tracker_group.id),{label: 'Issue Tracker Member',include_blank: " Select Member"},class: "form-control"%>
             </div>
          </div>
         <div class="col-sm-3">
@@ -22,6 +22,7 @@
   </div>
 </div>
 </div>
+
 <script>
 $("#issue_request").validate({
     rules: {

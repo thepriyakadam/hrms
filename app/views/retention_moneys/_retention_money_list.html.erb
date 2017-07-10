@@ -2,10 +2,7 @@
   <thead>
     <tr>  
       <th>Retention Money In Percentage</th>
-      <th>Max. Amount</th>
       <th>Percentage</th>
-      <th>No. of Month</th>
-      <th>Amount</th>
       <th>Status</th>
       <th>Action</th>
     </tr>
@@ -14,11 +11,8 @@
   <% @retention_moneys.each do |retention_money| %>
       <tr>
         <td><%= retention_money.have_retention ? "Yes" : "No" %></td>
-        <td><%= retention_money.max_limit %></td>
         <td><%= retention_money.persent %></td>
-        <td><%= retention_money.no_of_month %></td>
-        <td><%= retention_money.amount %></td> 
-        <td><%= retention_money.is_active %></td>
+        <td><%= retention_money.is_active ? "Active" : "Inactive" %></td>
         <td>
           <% if retention_money.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>

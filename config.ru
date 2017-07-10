@@ -3,7 +3,6 @@
 require ::File.expand_path('../config/environment', __FILE__)
 run Rails.application
 
-
 require "rack-timeout"
 
 # Call as early as possible so rack-timeout runs before all other middleware.

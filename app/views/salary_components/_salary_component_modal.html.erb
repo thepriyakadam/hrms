@@ -1,0 +1,39 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Salary Component Detail </center></h4>
+    </div>
+    <div class="modal-body">
+    <table class="table table-bordered table-hover table-condensed">
+  <thead>
+<tr>
+	 <th>Code</th>
+	  <td><%= @salary_component.code %></td>
+      <th>Name</th>
+      <td><%= @salary_component.name %></td>
+</tr>
+
+<tr>      
+      <th>Account Code</th>
+      <td><%= @salary_component.account_code %></td>
+      <th>Is Deducted</th>
+      <td><%= @salary_component.is_deducted ? "Yes" : "No" %></td>
+</tr>
+<tr>      
+      <th>Status</th>
+      <td><%= @salary_component.is_active ? "Active" : "Inactive" %></td>
+      <th>Base</th>
+      <td><%= @salary_component.is_base ? "Yes" : "No" %></td>
+</tr>
+
+<tr>      
+      <th>Description</th>
+      <td colspan="3"><%= @salary_component.description %></td>
+</tr>
+</thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>

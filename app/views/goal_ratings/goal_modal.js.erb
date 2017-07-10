@@ -1,5 +1,3 @@
-
-
 <%if @flag == true %>
 	$("#myModal").html("<%= j render 'goal_modal_form' %>");
 	$("#myModal").modal('show');
@@ -11,4 +9,3 @@
 <%elsif @flag == false%>
 	alert("Weightage sum should be 100 !");
 <%end%>
-

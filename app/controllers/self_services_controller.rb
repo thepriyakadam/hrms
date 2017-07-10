@@ -38,8 +38,27 @@ class SelfServicesController < ApplicationController
   def employee_resignation
     @employee_resignation = EmployeeResignation.new
     @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
+    joining_detail = JoiningDetail.find_by(employee_id: current_user.employee_id)
+    @notice_period = joining_detail.notice_period
     session[:active_tab] ="EmployeeSelfService"
   end
+  def create_self_resignation
+    # byebug
+    employee_id = params[:employee_id]
+    application_date = params[:application_date]
+    resignation_date = params[:employee_resignation][:resignation_date]
+    leaving_reason_id = params[:employee_resignation][:leaving_reason_id]
+    notice_period = params[:notice_period]
+    tentative_leaving_date = params[:employee_resignation][:tentative_leaving_date]
+    reason = params[:employee_resignation][:reason]
+    note = params[:employee_resignation][:note]
+
+    @employee_resignation = EmployeeResignation.create(employee_id: employee_id,resignation_date: resignation_date,application_date: application_date,reason: reason,note: note,leaving_reason_id: leaving_reason_id,notice_period: notice_period,tentative_leaving_date: tentative_leaving_date)  
+    @resignation_status_record = ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Pending",change_date: Date.today)
+    #EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
+    flash[:notice] = "created Successfully!"
+    redirect_to employee_resignation_self_services_path
+end
 
   def resignation_history
     @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
@@ -75,7 +94,6 @@ class SelfServicesController < ApplicationController
     @to = params[:employee][:to]
     @employee_id = params[:employee][:employee_id]
     @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day")
-
   end
 
   def investment_declaration
@@ -83,6 +101,13 @@ class SelfServicesController < ApplicationController
     @investment_declarations = InvestmentDeclaration.where(employee_id: current_user.employee_id)
     @employee = Employee.find_by(id: current_user.employee_id)
     session[:active_tab] ="EmployeeSelfService"
+  end
+
+  def show_investment_declaration_list
+    # byebug
+    # @investment_head_id = params[:investment_head_id]
+    @investment_declaration = InvestmentDeclaration.find(params[:format])
+    @employee = Employee.find_by(id: current_user.employee_id)
   end
 
   def create_self_declaration
@@ -106,10 +131,23 @@ class SelfServicesController < ApplicationController
     
   end
 
+
+  def holiday_setup
+    # byebug
+    @day = params[:day]
+    @employee_attendances = EmployeeAttendance.where(present: 'H')
+    session[:active_tab] = "EmployeeSelfService"
+  end
+
+
   def leave_c_off
     session[:active_tab] ="EmployeeSelfService"
     @leave_c_off = LeaveCOff.new
     @leave_c_offs = LeaveCOff.where(employee_id: current_user.employee_id).order("id DESC")
+  end
+
+  def show_leave_c_off_list
+    @leave_c_off = LeaveCOff.find(params[:format])
   end
 
   def create_self_c_off
@@ -197,7 +235,7 @@ class SelfServicesController < ApplicationController
   end
 
   def add_attendance
-    @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id)
+    @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id).order('day DESC')
   end
 
   def create_self_attendance
@@ -222,6 +260,4 @@ class SelfServicesController < ApplicationController
   def leave_c_off_params
     params.require(:leave_c_off).permit(:is_expire,:employee_id, :c_off_date, :c_off_type, :c_off_expire_day, :expiry_status, :expiry_date, :leave_count)
   end
- 
-
 end

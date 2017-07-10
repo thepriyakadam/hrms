@@ -39,6 +39,31 @@ class EmployeeLeavRequestsController < ApplicationController
     end
   end
 
+  def from_hr
+    @employee = Employee.find(params[:format])
+    @employee_leav_request = EmployeeLeavRequest.new
+    @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
+    @remain_leaves = EmployeeLeavRequest.joins(:leav_approved)
+    @leave_c_offs = LeaveCOff.where(employee_id: @employee.id, is_taken: false).order("expiry_date desc")
+  end
+
+  def select_admin_form
+    @employee_leav_request = EmployeeLeavRequest.new
+    employee = params[:employee_id]
+    @employee = Employee.find_by(id: employee)
+    @leave_id = params[:leav_category_id]
+
+    leav_category = LeavCategory.find_by(code: "C.Off")
+    @leav_category_id = leav_category.id
+    @leav_id = @leav_category_id.to_s.split('')
+
+    if params[:leav_category_id] == @leav_id.inject{|n| n}
+      @flag = true
+    else
+      @flag = false
+    end
+  end
+
   def select_form
     @employee_leav_request = EmployeeLeavRequest.new
     @employee = Employee.find_by(id: current_user.employee_id)
@@ -432,13 +457,6 @@ class EmployeeLeavRequestsController < ApplicationController
     session[:active_tab1] ="LeaveProcess"
   end
 
-  def from_hr
-    @employee = Employee.find(params[:format])
-    @employee_leav_request = EmployeeLeavRequest.new
-    @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
-    @remain_leaves = EmployeeLeavRequest.joins(:leav_approved)
-    @leave_c_offs = LeaveCOff.where(employee_id: @employee.id, is_taken: false).order("expiry_date desc")
-  end
 
   def hr_view_request
     @employee = Employee.find(params[:format])

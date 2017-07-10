@@ -3,7 +3,6 @@
     <tr>
       <th>ID</th>
       <th>Employee</th>
-      <th>Department</th>
       <th>Present</th>
       <th>Day</th>
     </tr>
@@ -13,8 +12,7 @@
       <tr>
         <td><%= e.employee.manual_employee_code %></td>
         <td><%= full_name(e.employee) %></td>
-        <td><%= e.employee.try(:company_location).try(:name)%> - <%= e.employee.try(:department).try(:name)%></td>
-        <td><%= e.try(:Present) %></td>
+        <td><%= e.try(:present) %></td>
         <td><%= e.try(:day) %></td>
       </tr>
     <% end %>

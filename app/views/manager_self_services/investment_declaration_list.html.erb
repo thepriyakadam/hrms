@@ -7,7 +7,7 @@
     <% i = 0%>
       <thead>
         <tr>
-          <td colspan="2">ID : <%= @emp.manual_employee_code %></td>
+          <td colspan="1">ID : <%= @emp.manual_employee_code %></td>
           <td colspan="2">Employee : <%= full_name(@emp) %></td>
           <td colspan="2">Department : <%= @emp.company_location.try(:name) %> - <%= @emp.department.try(:name) %></td>
         </tr>
@@ -17,7 +17,7 @@
           <th>Amount</th>
           <th>Date</th>
           <th>Document</th>
-          <th>Action</th>
+         <!--  <th>Action</th> -->
         </tr>
       </thead>
       <tbody>
@@ -29,16 +29,18 @@
             <td><%= investment_declaration.date %></td>
             <td>
               <% if investment_declaration.document_file_name == nil %>
-                <small class="label label-default">Document Not Available</small>
+                <small class="label label-default">Not Available</small>
               <% else %>
                 <%= link_to ' Document',investment_document2_path(id: investment_declaration.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
               <% end %>
             </td>
-            <td>
+            </tr>
+            <tr>
+            <th colspan="5"><center>
               <%= link_to 'Approve', approve_declaration_modal_investment_declarations_path(investment_declaration),class: 'btn btn-xs btn-info',remote: true %>
               <%= link_to 'Reject', reject_declaration_modal_investment_declarations_path(investment_declaration),class: 'btn btn-xs btn-danger',remote: true %>
-            </td>
-          </tr>
+           </th></center>
+           </tr>
         <% end %>
       </tbody>
     </table>

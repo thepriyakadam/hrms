@@ -32,6 +32,8 @@ class CandidateInterviewSchedulesController < ApplicationController
 
     respond_to do |format|
       if @candidate_interview_schedule.save
+        VacancyRequestMailer.interview_schedule(@candidate_interview_schedule).deliver_now
+        VacancyRequestMailer.candidate_email(@candidate_interview_schedule).deliver_now
         format.html { redirect_to @candidate_interview_schedule, notice: 'Interview scheduled Successfully.' }
         format.json { render :show, status: :created, location: @candidate_interview_schedule }
       else
@@ -74,7 +76,10 @@ class CandidateInterviewSchedulesController < ApplicationController
 
   def interview
     @candidate_interview_schedules = CandidateInterviewSchedule.all
-    
+  end
+
+  def modal
+    @candidate_interview_schedule = CandidateInterviewSchedule.find(params[:format])
   end
 
   private

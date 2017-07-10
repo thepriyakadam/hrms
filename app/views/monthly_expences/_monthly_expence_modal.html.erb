@@ -1,0 +1,33 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Monthly Expence Detail </center></h4>
+    </div>
+    <div class="modal-body">
+    <table class="table table-bordered table-hover table-condensed">
+  <thead>
+  <tr>
+  	  <th>Employee ID</th>
+  	  <td><%= @m.employee.try(:manual_employee_code) %></td>
+      <th>Employee Name</th>
+      <td><%= full_name(@m.employee) %></td>
+  </tr>
+  <tr>   
+      <th>Expence Type</th>
+      <td><%= @m.expencess_type.name %></td>
+      <th>Amount</th>
+      <td><%= @m.amount %></td>
+   </tr>
+   <tr>   
+        <th>Date</th>
+        <td><%= @m.expence_date %></td>
+        <th>Description</th>
+        <td><%= @m.description %></td>
+    </tr>
+    </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>    

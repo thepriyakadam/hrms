@@ -10,9 +10,6 @@
         <tr>
          <th>Base</th>
          <th>Period</th>
-         <th>Employee</th>
-         <th>Appraiser</th>
-         <th>Reviewer</th>
          <th>Action</th>
         </tr>
       </thead>
@@ -21,9 +18,6 @@
         <tr>
         <td><%= g.period.try(:name) %></td>
         <td>From: <%= g.period.try(:from) %> To: <%= g.period.try(:to) %> </td>
-        <td><%= g.employee.try(:manual_employee_code) %> - <%= full_name(g.employee) %></td>
-        <td><%= g.employee.try(:manager).try(:manual_employee_code) %> - <%= full_name(g.employee.try(:manager)) %></td>
-        <td><%= g.employee.try(:manager_2).try(:manual_employee_code) %> - <%= full_name(g.employee.try(:manager_2)) %></td>
         <td><%= link_to 'Appraisee Comment', appraisee_comment_goal_bunches_path(id: g,emp_id: g.employee_id) ,class: 'btn btn-xs btn-info' %></td>
         </tr>
         <% end %>

@@ -1,0 +1,45 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Investment Declaration Detail </center></h4>
+    </div>
+    <div class="modal-body">
+    <table class="table table-bordered table-hover table-condensed">
+  <thead>
+   <tr>
+      <th>Employee</th>
+      <td colspan="3"><%= full_name(@investment_declaration.employee) %></td>
+    </tr>
+    <tr>  
+      <th>Investment Head</th>
+       <td colspan="3"><%= @investment_declaration.investment_head.try(:description) %></td>
+    </tr>
+    <tr>   
+      <th>Amount</th>
+       <td colspan="3"><%= @investment_declaration.amount %></td>
+    </tr>
+    <tr>   
+      <th>Date</th>
+      <td colspan="3"><%= @investment_declaration.date %></td>
+    </tr>
+    <tr>  
+      <th>Status</th>
+       <td colspan="3"><%= @investment_declaration.status ? "Active" : "Inactive"%></td>
+    </tr>
+    <tr>  
+      <th>Document</th>
+      <td colspan="3">
+           <% if @investment_declaration.document_file_name == nil %>
+           <small class="label label-default">Document Not Available</small>
+             <% else %>
+             <%= link_to ' Document',investment_document_path(@investment_declaration),class: 'btn btn-xs btn btn-info fa fa-download' %>
+             <% end %>
+        </td>
+   </tr>
+ </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>

@@ -4,11 +4,8 @@
 <table id="example1" class="table table-bordered table-hover table-condensed">
  <thead>
     <tr>
-      <th>Base component</th>
       <th>Limit Amount</th>
       <th>Percentage</th>
-      <th>Effective from</th>
-      <th>Effective to</th>
       <th>Status</th>
       <th>Action</th>
     </tr>
@@ -17,21 +14,8 @@
   <tbody>
       <% @bonus_employers.each do |bonus_employer| %>
       <tr>
-        <td>
-          <% i = 0 %>
-          <% bonus_employer.base_component.split(",").each do |e| %>
-            <% if i == 0 %>
-              <%= SalaryComponent.find(e.to_i).name %>
-            <% else %>
-              + <%= SalaryComponent.find(e.to_i).name %>
-            <% end %>
-            <% i = i + 1 %>
-          <% end %>
-        </td>
         <td><%= bonus_employer.limit_amount %></td>
         <td><%= bonus_employer.percentage %></td>
-        <td><%= bonus_employer.effective_from %></td>
-        <td><%= bonus_employer.effective_to %></td>
         <td><%= bonus_employer.is_active ? "Active" : "Inactive" %></td>
         <td>
           <% if bonus_employer.is_confirm == true %>
@@ -41,6 +25,7 @@
             <%= link_to '', edit_bonus_employer_path(bonus_employer) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '',  bonus_employer, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
             <%= link_to '', is_confirm_bonus_employers_path(bonus_employer: bonus_employer),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+            <%= link_to '', bonus_employer,class: 'btn btn-xs btn-eye fa fa-eye' %>
           <% end %>
         </td>
       </tr>

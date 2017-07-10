@@ -1,34 +1,40 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employer Insurance</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
 
-<p>
-  <strong>Base component:</strong>
-  <%= @employer_family_pension.base_component %>
-</p>
+  <tr>
+  <th><strong>Base Component</strong></th>
+   <td colspan="3"> <% i = 0 %>
+          <% @employer_family_pension.base_component.split(",").each do |e| %>
+            <% if i == 0 %>
+              <%= SalaryComponent.find(e.to_i).name %>
+            <% else %>
+              + <%= SalaryComponent.find(e.to_i).name %>
+            <% end %>
+            <% i = i + 1 %>
+          <% end %>
+      </td>
+  
+</tr>
+<tr>
+  <th><strong>Percentage</strong></th>
+   <td><%= @employer_family_pension.percentage %></td>
 
-<p>
-  <strong>Percentage:</strong>
-  <%= @employer_family_pension.percentage %>
-</p>
+     <th><strong>Effective from</strong></th>
+  <td><%= @employer_family_pension.effective_from %></td>
 
-<p>
-  <strong>Effective from:</strong>
-  <%= @employer_family_pension.effective_from %>
-</p>
+</tr>
 
-<p>
-  <strong>Effective to:</strong>
-  <%= @employer_family_pension.effective_to %>
-</p>
+<tr>
+   <th><strong>Effective to</strong></th>
+   <td><%= @employer_family_pension.effective_to %></td>
 
-<p>
-  <strong>Is active:</strong>
-  <%= @employer_family_pension.is_active %>
-</p>
+  <th>Status</th>
+  <td><%= @employer_family_pension.is_active ? "Active" : "Inactive"  %></td>
+</tr>  
 
-<p>
-  <strong>Is confirm:</strong>
-  <%= @employer_family_pension.is_confirm %>
-</p>
-
-<%= link_to 'Edit', edit_employer_family_pension_path(@employer_family_pension) %> |
-<%= link_to 'Back', employer_family_pensions_path %>
+</table><br>
+ <%= link_to 'Back', new_employer_family_pension_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>

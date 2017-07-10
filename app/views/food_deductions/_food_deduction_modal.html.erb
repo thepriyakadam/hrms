@@ -1,0 +1,39 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Food Deduction Detail </center></h4>
+    </div>
+    <div class="modal-body">
+    <table class="table table-bordered table-hover table-condensed">
+  <thead>
+   <tr>
+        <th>ID</th>
+        <td><%= @food_deduction.employee.try(:manual_employee_code) %></td>
+        <th>Employee Name</th>
+        <td><%= full_name(@food_deduction.employee) %></td>
+    </tr>
+    <tr>    
+        <th>Date</th>
+        <td><%= @food_deduction.food_date %></td>
+        <th>No. of Coupon</th>
+         <td><%= @food_deduction.no_of_coupan %></td>
+    </tr>
+    <tr>    
+        <th>Return Coupon</th>
+        <td><%= @food_deduction.return_coupan %></td>
+        <th>Total</th>
+        <td><%= @food_deduction.total_coupan %></td>
+    </tr>
+    <tr>
+        <th>Price</th>
+        <td><%= @food_deduction.food_coupan_master.price %></td>
+        <th>Amount</th>
+        <td><%= @food_deduction.amount %></td>    
+    </tr>
+    </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>    

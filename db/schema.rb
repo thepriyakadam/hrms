@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170705055346) do
+ActiveRecord::Schema.define(version: 20170712094207) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -965,12 +965,14 @@ ActiveRecord::Schema.define(version: 20170705055346) do
     t.integer  "employee_code",            limit: 4
     t.string   "employee_name",            limit: 255
     t.string   "comment",                  limit: 255
+    t.integer  "holiday_id",               limit: 4
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id", using: :btree
   add_index "employee_attendances", ["department_id"], name: "index_employee_attendances_on_department_id", using: :btree
   add_index "employee_attendances", ["employee_id"], name: "index_employee_attendances_on_employee_id", using: :btree
   add_index "employee_attendances", ["employee_leav_request_id"], name: "index_employee_attendances_on_employee_leav_request_id", using: :btree
+  add_index "employee_attendances", ["holiday_id"], name: "index_employee_attendances_on_holiday_id", using: :btree
   add_index "employee_attendances", ["machine_attendance_id"], name: "index_employee_attendances_on_machine_attendance_id", using: :btree
   add_index "employee_attendances", ["on_duty_request_id"], name: "index_employee_attendances_on_on_duty_request_id", using: :btree
 
@@ -4297,6 +4299,7 @@ ActiveRecord::Schema.define(version: 20170705055346) do
   add_foreign_key "candidate_interview_schedules", "candidate_forms"
   add_foreign_key "candidate_interview_schedules", "interview_type_masters"
   add_foreign_key "company_policies", "policy_types"
+  add_foreign_key "employee_attendances", "holidays"
   add_foreign_key "employee_jc_lists", "employees"
   add_foreign_key "employee_jc_lists", "joining_checklist_masters"
   add_foreign_key "exit_interviews", "employee_resignations"

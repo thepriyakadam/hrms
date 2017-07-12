@@ -135,7 +135,7 @@ end
   def holiday_setup
     # byebug
     @day = params[:day]
-    @employee_attendances = EmployeeAttendance.where(present: 'H')
+    @employee_attendances = EmployeeAttendance.where(present: 'H',employee_id: current_user.employee_id)
     session[:active_tab] = "EmployeeSelfService"
   end
 

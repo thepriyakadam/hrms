@@ -132,6 +132,7 @@ class ManagerSelfServicesController < ApplicationController
   end
 
   def leave_c_off
+    # byebug
     session[:active_tab] ="ManagerSelfService"
     current_login = Employee.find_by(id: current_user.employee_id)
     @sub = current_login.subordinates

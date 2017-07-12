@@ -131,7 +131,7 @@
    <div class="row">
      <div class="col-sm-6">
       <div class="actions">
-        <%= f.submit 'Create Employee Resignation',class: "btn btn-primary btn-sm"  %>
+        <%= f.submit 'Create Employee Resignation',class: 'btn btn-sm btn-primary'  %>
         <%= link_to 'Back', employee_resignations_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
       </div>
      </div>
@@ -152,23 +152,31 @@
     yearRange: '-5:+10',
     dateFormat: 'dd-mm-yy' });
   }); 
+</script>
 
+<script>
 $("#employee_resignation").validate({
     rules: {
-      "employee_resignation[employee_id]":{
+      "employee_resignation[resignation_date]":{
         required: true,
       },
-      "employee_resignation[resignation_date]":{
+      "employee_resignation[leaving_reason_id]":{
+        required: true,
+      },
+      "employee_resignation[reason]":{
         required: true,
       }
     },
     messages: {
-      "employee_resignation[employee_id]":{
-        required: "Please Select Employee",
-      },
       "employee_resignation[resignation_date]":{
-        required: "Please Select Resignation Date",
-      } 
+        required: "Please select date",
+      },
+      "employee_resignation[leaving_reason_id]":{
+        required: "Please select leaving reason ",
+      },
+      "employee_resignation[reason]":{
+        required: "Please specify reason",
+      }  
     },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
@@ -176,4 +184,3 @@ $("#employee_resignation").validate({
     }
    });
 </script>
-

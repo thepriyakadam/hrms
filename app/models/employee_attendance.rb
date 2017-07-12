@@ -3,6 +3,7 @@ class EmployeeAttendance < ActiveRecord::Base
   belongs_to :employee_leav_request
   belongs_to :machine_attendance
   belongs_to :company_time_master
+  belongs_to :holiday
   validates :day, uniqueness: { scope: [:employee_id] }
   #attr_accessible :employee_id, :day, :present, :in_time, :out_time
   # extend ActiveModel::Naming

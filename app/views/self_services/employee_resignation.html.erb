@@ -3,7 +3,7 @@
     <h3 class="box-title"> Initiate Resignation </h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <%= bootstrap_form_for(@employee_resignation,html: {id: 'resignation'},url: {action: 'create_self_resignation'}) do |f| %>
+    <%= bootstrap_form_for(@employee_resignation,url: {action: 'create_self_resignation'},html: {id: 'employee_resignation'}) do |f| %>
       <%= hidden_field_tag :employee_id, current_user.employee_id %>
       <%= hidden_field_tag :application_date, Date.today %>
       <%= hidden_field_tag :notice_period, @notice_period %>
@@ -15,7 +15,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :resignation_date,label:'Resignation Date',class: 'resignation'%>
+              <%= f.text_field :resignation_date,label:'Resignation Date',class: 'employee_resignation'%>
             </div>
           </div>
         </div>
@@ -32,7 +32,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :tentative_leaving_date, class: 'resignation',label:'Requested Releaving Date'%>
+              <%= f.text_field :tentative_leaving_date, class: 'employee_resignation',label:'Requested Releaving Date'%>
             </div>
           </div>
         </div>
@@ -66,7 +66,7 @@
 
 <script type="text/javascript">
    $(function(){
-    $('.resignation').datepicker({
+    $('.employee_resignation').datepicker({
     changeYear:true,
     changeMonth: true,
     yearRange: '-200:+1',
@@ -75,21 +75,21 @@
 </script>
 
 <script>
-$("#resignation").validate({
+$("#employee_resignation").validate({
     rules: {
-      "resignation[resignation_date]":{
+      "employee_resignation[resignation_date]":{
         required: true,
       },
-      "resignation[reason]":{
+      "employee_resignation[reason]":{
         required: true,
       }
     },
     messages: {
-      "resignation[resignation_date]":{
-        required: "Please Select Resignation Date",
+      "employee_resignation[resignation_date]":{
+        required: "Please select resignation date",
       },
-      "resignation[reason]":{
-        required: "Please specify Reason",
+      "employee_resignation[reason]":{
+        required: "Please Specify reason",
       }
     },
     errorPlacement: function(error, element) {

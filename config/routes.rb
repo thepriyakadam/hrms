@@ -364,6 +364,7 @@ Rails.application.routes.draw do
     collection do
       get :collect_issues
        get :is_confirm
+       get :modal
     end
   end
   resources :issue_types do

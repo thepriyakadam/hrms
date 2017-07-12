@@ -42,7 +42,6 @@ class SelfServicesController < ApplicationController
     @notice_period = joining_detail.notice_period
     session[:active_tab] ="EmployeeSelfService"
   end
-
   def create_self_resignation
 
     employee_id = params[:employee_id]

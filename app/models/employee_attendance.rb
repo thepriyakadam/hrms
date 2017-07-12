@@ -11,12 +11,12 @@ class EmployeeAttendance < ActiveRecord::Base
   # include ActiveModel::Validations
   # attr_accessor :file
 
-   def self.is_present(day,emp)
+  def self.is_present(day,emp)
     flag = 0
       flag = EmployeeAttendance.exists?(day: day,employee_id: emp)
     flag
   end
-
+  
   def self.collect_rolewise(current_user)
     if current_user.class == Group
       Employee.all.pluck(:id)

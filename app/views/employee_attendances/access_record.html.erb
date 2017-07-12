@@ -1,0 +1,51 @@
+
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Access Card</h3>
+  </div>
+  <%= bootstrap_form_for(:salary, url: { action: 'access_card_list'}) do |f| %>
+    <div class="box-body">
+      <div class="row">
+        <div class="col-sm-3">
+          <label>Date</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :salary,:date,hide_label: true,class: 'request_date form-control'%>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <label>Card No.</label>
+          <div class="field">
+            <%= text_field :salary,:employee_code,hide_label: true,class: 'form-control'%>
+          </div>
+        </div>
+        <div class="col-sm-3" style="padding-top:20px;">
+          <div class="actions">
+            <%= f.submit "Send Request" ,class: 'btn btn-primary btn-sm',id: "buttonCtc" %>
+          </div>
+        </div>
+      </div><br>
+     <!--  <div id="access_card_list"></div> -->
+    </div>
+  <% end %>
+</div>
+<script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#advance_salary").submit();
+  })
+</script>
+
+<script type="text/javascript">
+  $(function(){
+    $('.request_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

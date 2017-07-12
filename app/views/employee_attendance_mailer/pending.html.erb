@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+  <table class="table table-bordered table-hover table-condensed">
+    <tbody>
+    <tr>
+      <td colspan="2">You have one ACF request from </td>
+    </tr>
+      <tr>
+        <td>ID :</td>
+        <td><%= @employee.manual_employee_code %></td>
+      </tr>
+      <tr>
+        <td>Employee :</td>
+        <td><%= @employee.try(:prefix) %> <%= @employee.first_name %> <%= @employee.try(:middle_name) %> <%= @employee.last_name %></td>
+      </tr>
+      <tr>
+        <td>Date :</td>
+        <td><%= @date.to_date %></td>
+      </tr>
+      <tr>
+        <td>Card No :</td>
+        <td><%= @employee_code %></td>
+      </tr>
+      <tr>
+        <td>In Time :</td>
+        <td><%= @first_in_time %></td>
+      </tr>
+      <tr>
+        <td>Out Time :</td>
+        <td><%= @last_out_time %></td>
+      </tr>
+      <tr>
+        <td>Working Hrs :</td>
+        <td><%= @working_hrs %></td>
+      </tr>
+
+    </tbody>
+  </table>
+  </body>
+</html>

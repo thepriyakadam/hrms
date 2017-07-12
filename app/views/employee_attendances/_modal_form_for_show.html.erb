@@ -2,12 +2,12 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      
+
 		 <center><%= @employee_attendance.employee.try(:manual_employee_code) %> - <%= full_name(@employee_attendance.employee) %></center>
     </div>
     <div class="modal-body">
      		
-    	<%= bootstrap_form_for :employee_attendance,url:{action:"update_daily_attendance",employee_attendance_id: @employee_attendance.id} do |f| %>
+    	<%= bootstrap_form_for :employee_attendance,url:{action:"update_attendance_for_show",employee_attendance_id: @employee_attendance.id} do |f| %>
 
     		<div class="row">
 	    		<div class="col-sm-3">

@@ -1610,9 +1610,9 @@ def upload
             end#first_in_time == nil && last_out_time == nil
 
           else#current_employee_attendance.nil?
-            if current_employee_attendance.present == "WO" || current_employee_attendance.present == "H"
+            if current_employee_attendance.present == "WO" || current_employee_attendance.present == "H" || current_employee_attendance.present == "WOP" || current_employee_attendance.present == "HP"
               
-              if current_employee_attendance.present == "WO"
+              if current_employee_attendance.present == "WO" || current_employee_attendance.present == "WOP"
 
                 if first_in_time == nil && last_out_time == nil
                   current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: nil,employee_id: employee.id,comment: "In & Out Time Not Available",present: "WOP")
@@ -1636,7 +1636,7 @@ def upload
                   current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "WOP",comment: "Week Off Present")
                 end#first_in_time == nil && last_out_time == nil
 
-              elsif current_employee_attendance.present == "H"
+              elsif current_employee_attendance.present == "H"  || current_employee_attendance.present == "HP"
 
                 if first_in_time == nil && last_out_time == nil
                   current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: nil,employee_id: employee.id,comment: "In & Out Time Not Available",present: "HP")
@@ -1661,6 +1661,36 @@ def upload
                 end#first_in_time == nil && last_out_time == nil
 
               end#current_employee_attendance.present == "H"
+#HDL,P,A
+            else#current_employee_attendance.present == "WO" || current_employee_attendance.present == "H"
+              if first_in_time == nil && last_out_time == nil
+                current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: nil,employee_id: employee.id,comment: "In & Out Time Not Available",present: "A")
+              elsif first_in_time == nil
+                current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,comment: "In Time Not Available",present: "A")
+              elsif last_out_time == nil
+                current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: nil,employee_id: employee.id,comment: "Out Time Not Available",present: "A")
+              else
+                
+                if first_record.nil? || first_record.time.to_time.nil?
+                  working_hrs = 0
+                else
+                  if last_out_time.to_time <= first_record.time.to_time
+                    last_re = last_out_time.to_time + 24*60*60
+                    total_hrs = last_re.to_time - first_record.time.to_time
+                    working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+                  else
+                    total_hrs = last_out_time.to_time - first_record.time.to_time
+                    working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+                  end
+                end
+                if working_hrs.to_s <  "04:30"
+                  current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "A")
+                elsif working_hrs.to_s < "07:00"
+                  current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "HDL")
+                else
+                  current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "P")
+                end
+              end#first_in_time == nil && last_out_time == nil
 
             end#current_employee_attendance.present == "WO" || current_employee_attendance.present == "H"
           end#current_employee_attendance.nil?
@@ -2082,7 +2112,7 @@ end
   def destroy_daily_attendance_datewise
     date = params[:date]
     DailyAttendance.where(date: date.to_date).destroy_all
-    EmployeeAttendance.where(day: date.to_date,is_confirm: false).destroy_all
+    #EmployeeAttendance.where(day: date.to_date,is_confirm: false).destroy_all
     flash[:notice] = "Attendance Reverted successfully!"
     redirect_to destroy_daily_attendance_employee_attendances_path
   end

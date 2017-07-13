@@ -6,8 +6,8 @@
             <th>ID</th>
             <th>P</th>
             <th>A</th>
-            <th>W</th>
-            <th>H</th>
+            <th>WOP</th>
+            <th>HP</th>
             <th>EL</th>
             <th>CL</th>
             <th>C.Off</th>
@@ -25,8 +25,10 @@
 
               <% abs = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "A") %>
               <% pre = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id,"P") %>
-              <% wd = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "W") %>
+              <% wd = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "WO") %>
+              <% wop = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "WOP") %>
               <% h = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "H") %>
+              <% hp = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "HP") %>
               <% el = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "EL") %>
               <% cl = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "CL") %>
               <% coff = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "C.Off") %>
@@ -41,16 +43,18 @@
               <% plwp = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/LWP") %>
               <% pesic = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/ESIC") %>
               <% pod = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/OD") %>
+              <% acf = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "ACF") %>
+              <% po = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "PO") %>
               <% a = gp.count %>
 
               <td>
                 <% if a.to_f <= 2 %>
-                  <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f + a.to_f %>
+                  <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f + a.to_f + acf.count + po.count %>
                   <%= ap %>
                 <% else %>
                   <% @a = a.to_f - 2 %>
                   <% @b = @a.to_f/2 %>
-                    <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f + @b.to_f + 2 %>
+                    <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f + @b.to_f + 2 + acf.count + po.count %>
                     <%= ap %>
                   <% end %>
               </td>
@@ -66,8 +70,8 @@
                   <%= ab %>
                 <% end %>
               </td>
-              <td><%= wd.count %></td>
-              <td><%= h.count %></td>
+              <td><%= wd.count + wop.count %></td>
+              <td><%= h.count + hp.count %></td>
               <td>
                 <% ael = el.count + (pel.count)/2.to_f %>
                 <%= ael %>

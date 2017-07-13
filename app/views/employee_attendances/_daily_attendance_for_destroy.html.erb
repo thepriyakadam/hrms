@@ -12,10 +12,9 @@
       </thead>
       <tbody>
         <% @daily_attendances.each do |a| %>
-        <% @employee = Employee.find_by_manual_employee_code(a.employee_code) %>
           <tr>
-            <td><%= @employee.manual_employee_code %></td>
-            <td><%= full_name(@employee) %></td>
+            <td><%= a.employee_code %></td>
+            <td><%= a.employee_name %></td>
             <td><%= a.try(:date) %></td>
             <td><%= a.try(:time) %></td>
             <td><%= a.try(:reader_name) %></td>

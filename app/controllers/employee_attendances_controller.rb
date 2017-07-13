@@ -1554,7 +1554,7 @@ def upload
 
                     if working_hrs.to_s < "04:30"
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "A",comment: "System Updated")
-                    elsif working_hrs.to_s < "07:30"
+                    elsif working_hrs.to_s < "07:00"
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "HDL",comment: "System Updated")
                     else
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P",comment: "System Updated")
@@ -1564,7 +1564,7 @@ def upload
                   working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
                     if working_hrs.to_s <  "04:30"
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "A",comment: "System Updated")
-                    elsif working_hrs.to_s < "07:30"
+                    elsif working_hrs.to_s < "07:00"
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "HDL",comment: "System Updated")
                     else
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P",comment: "System Updated")
@@ -1599,7 +1599,7 @@ def upload
               end
               if working_hrs.to_s <  "04:30"
                 EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "A")
-              elsif working_hrs.to_s < "07:30"
+              elsif working_hrs.to_s < "07:00"
                 EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "HDL")
               else
                 EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "P")
@@ -2048,7 +2048,7 @@ end
     @pending_request = EmployeeAttendance.find(params[:format])
     # if @pending_request.working_hrs.to_s < "04:30"
     #   @pending_request.update(present: "A",comment: "ACF Approved")
-    # elsif @pending_request.working_hrs.to_s < "07:30"
+    # elsif @pending_request.working_hrs.to_s < "07:00"
     #   @pending_request.update(present: "",comment: "ACF Approved")
     # else
       manager = Employee.find_by(id: current_user.employee_id)

@@ -7,38 +7,34 @@
   <table class="table table-bordered table-hover table-condensed">
     <tbody>
     <tr>
-      <td colspan="2">You have one ACF request from </td>
+      <td colspan="2">Your ACF request Approved by </td>
     </tr>
       <tr>
         <td>ID :</td>
-        <td><%= @employee.manual_employee_code %></td>
+        <td><%= @manager.manual_employee_code %></td>
       </tr>
       <tr>
         <td>Employee :</td>
-        <td><%= @employee.try(:prefix) %> <%= @employee.first_name %> <%= @employee.try(:middle_name) %> <%= @employee.last_name %></td>
+        <td><%= @manager.try(:prefix) %> <%= @manager.first_name %> <%= @manager.try(:middle_name) %> <%= @manager.last_name %></td>
       </tr>
     <tr>
-      <td colspan="2">ACF request :</td>
+      <td colspan="2">Your ACF request </td>
     </tr> 
       <tr>
         <td>Date :</td>
-        <td><%= @date.to_date %></td>
-      </tr>
-      <tr>
-        <td>Card No :</td>
-        <td><%= @employee_code %></td>
+        <td><%= @request.day.to_date %></td>
       </tr>
       <tr>
         <td>In Time :</td>
-        <td><%= @first_in_time %></td>
+        <td><%= @request.in_time %></td>
       </tr>
       <tr>
         <td>Out Time :</td>
-        <td><%= @last_out_time %></td>
+        <td><%= @request.out_time %></td>
       </tr>
       <tr>
         <td>Working Hrs :</td>
-        <td><%= @working_hrs %></td>
+        <td><%= @request.working_hrs %></td>
       </tr>
 
     </tbody>

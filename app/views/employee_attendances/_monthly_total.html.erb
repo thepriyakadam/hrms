@@ -41,16 +41,18 @@
               <% plwp = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/LWP") %>
               <% pesic = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/ESIC") %>
               <% pod = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/OD") %>
+              <% acf = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "ACF") %>
+              <% po = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "PO") %>
               <% a = gp.count %>
 
               <td>
                 <% if a.to_f <= 2 %>
-                  <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f + a.to_f %>
+                  <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f + a.to_f + acf.count + po.count %>
                   <%= ap %>
                 <% else %>
                   <% @a = a.to_f - 2 %>
                   <% @b = @a.to_f/2 %>
-                    <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f + @b.to_f + 2 %>
+                    <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f + @b.to_f + 2 + acf.count + po.count %>
                     <%= ap %>
                   <% end %>
               </td>

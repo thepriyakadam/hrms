@@ -1745,7 +1745,7 @@ def update_daily_attendance
 
   @employee_attendance.update(in_time: in_time,out_time: out_time,present: present,comment: comment,working_hrs: working_hrs,comment: "User Updated")
   flash[:notice] = "Updated Successfully!"
-  redirect_to datewise_daily_attendances_employee_attendances_path
+  redirect_to datewise_daily_attendance_employee_attendances_path
 end
 
 def import
@@ -2083,7 +2083,7 @@ end
     date = params[:date]
     DailyAttendance.where(date: date.to_date).destroy_all
     EmployeeAttendance.where(day: date.to_date,is_confirm: false).destroy_all
-    flash[:notice] = "Attendance destroyed successfully!"
+    flash[:notice] = "Attendance Reverted successfully!"
     redirect_to destroy_daily_attendance_employee_attendances_path
   end
 

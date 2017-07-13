@@ -163,7 +163,7 @@ class SelfServicesController < ApplicationController
       @leave_c_offs = LeaveCOff.all
       leav_category = LeavCategory.find_by(code: 'C.Off')
 
-      if @leave_c_off.is_week_off_present(@employee_id) || @leave_c_off.is_holiday_present(@employee_id)
+      if @leave_c_off.is_week_off_present_for_coff(@employee_id) || @leave_c_off.is_holiday_present_for_coff(@employee_id)
 
         if leav_category.nil?
         else

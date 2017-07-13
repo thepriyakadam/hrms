@@ -10,4 +10,20 @@ class EmployeeAttendanceMailer < ApplicationMailer
     email = @manager.email
     mail(to: email, subject: 'ACF Request')
   end
+
+  def approved(pending_request,manager)
+    @request = pending_request
+    @manager = Employee.find_by(id: manager.id)
+    employee = Employee.find(@request.employee_id)
+    email = employee.email
+    mail(to: email, subject: 'ACF Request Approved')
+  end
+
+  def rejected(pending_request,manager)
+    @request = pending_request
+    @manager = Employee.find_by(id: manager.id)
+    employee = Employee.find(@request.employee_id)
+    email = employee.email
+    mail(to: email, subject: 'ACF Request Rejected')
+  end
 end

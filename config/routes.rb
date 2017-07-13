@@ -700,6 +700,7 @@ end
       get :access_card_approval
       get :view_access_card_detail
       get :approve_acf_request
+      get :reject_acf_request
     end
   end
   resources :salary_comp_mappings

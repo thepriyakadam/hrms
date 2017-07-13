@@ -1703,6 +1703,15 @@ def upload
             end
           end#employee.nil?
   end#do
+  #remaining employees attendance creation
+    @employees = Employee.where(status: "Active")
+    @employees.each do |e|
+      employee_atten = EmployeeAttendance.where(employee_id: e.id,day: last.date.to_date).take
+      if employee_atten.nil?
+        EmployeeAttendance.create(employee_id: e.id,day: last.date.to_date,present: "A")
+      end
+    end
+
 end
 
 def select_date_and_employee

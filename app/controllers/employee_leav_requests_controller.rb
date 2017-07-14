@@ -643,6 +643,8 @@ class EmployeeLeavRequestsController < ApplicationController
   end
 
   def modal
+   # byebug
+   #  employee_id = params[:employee][:employee_id]
     @leave_c_off = LeaveCOff.find(params[:format])
   end
 

@@ -1,7 +1,7 @@
 
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Vacancy Confirmation List</h3>
+    <h3 class="box-title">Requisition - Confirmation List</h3>
     <div class="pull-right">
     </div>
     </div>
@@ -12,7 +12,7 @@
       <th>Vacancy Code</th>
       <th>Organization</th>
       <th>Designation</th>
-      <th>Job Title</th>
+      <th>Vacancy Name</th>
       <th>Qualification</th>
       <th>No. of position</th>
       <th>Experience</th>
@@ -31,7 +31,7 @@
         <td><font color='green'><%= vacancy_master.no_of_position %></font></td>
         <td><font color='green'><%= vacancy_master.experience %></font></td>
         <%else%>
-        <td<%= vacancy_master.vacancy_code %></td>
+        <td><%= vacancy_master.vacancy_code %></td>
         <td><%= vacancy_master.other_organization %> </td>
         <td><%= vacancy_master.employee_designation.try(:name) %></td>
         <td><%= vacancy_master.vacancy_name %></td>
@@ -88,52 +88,76 @@
   <tr>
   <th><strong>Organization</strong></th>
   <td><%= @vacancy_master.other_organization %></td>
-  <th><strong>Application Date</strong></th>
+  <th><strong>Requisition Date</strong></th>
   <td><%= @vacancy_master.vacancy_post_date %></td>
    
   </tr>
 
   <tr>
-  <th><strong>Job Title</strong></th>
+  <th><strong>Designation</strong></th>
   <td><%= @vacancy_master.employee_designation.name %></td>
   <th><strong>Vacancy Name</strong></th>
   <td><%= @vacancy_master.vacancy_name %></td>
-  
   </tr>
 
 <tr>
+  <th><strong>Type Of Vacancy</strong></th>
+  <td><%= @vacancy_master.vacancy_type %></td>
   <th><strong>Location</strong></th>
   <td><%= @vacancy_master.company_location.try(:name) %></td>
-  <th><strong>Department</strong></th>
-  <td><%= @vacancy_master.try(:department).try(:name) %></td>
-  
 </tr>
 
+
 <tr>
+  <th><strong>Department</strong></th>
+  <td><%= @vacancy_master.try(:department).try(:name) %></td>
   <th><strong>No. of Positions</strong></th>
-  <td><%= @vacancy_master.no_of_position %></td>  
-  <th><strong>Experience</strong></th>
+  <td><%= @vacancy_master.no_of_position %></td> 
+</tr>
+
+<tr>  
+   <th><strong>Primary Skill</strong></th>
+  <td><%= @vacancy_master.keyword %></td> 
+  <th><strong>Minimum Experience</strong></th>
   <td><%= @vacancy_master.experience %></td>
   
 </tr>
 <tr>
 
- <tr>
-  <th><strong>Budget</strong></th>
+<tr>
+ <th><strong>Maximum Experience</strong></th>
+  <td><%= @vacancy_master.experince_max %></td>
+  <th><strong>Minimum Budget</strong></th>
   <td><%= @vacancy_master.budget %></td>
-   <th><strong>Fulfillment Date</strong></th>
-  <td><%= @vacancy_master.vacancy_post_date %></td>
-  
 </tr>
 
 <tr>
-  <th><strong>Keyword</strong></th>
-  <td><%= @vacancy_master.keyword %></td>
-  <th><strong>Organization</strong></th>
-  <td><%= @vacancy_master.other_organization %></td>
-  
+   <th><strong>Maximum Budget</strong></th>
+  <td><%= @vacancy_master.budget_max %></td>
+   <th><strong>Fulfillment Date</strong></th>
+  <td><%= @vacancy_master.vacancy_post_date %></td>
 </tr>
 
+<tr>
+  <th><strong>Reason for requirement </strong></th>
+  <td><%= @vacancy_master.reason %></td>
+   <th><strong>Replacement</strong></th>
+  <td><%= @vacancy_master.replacement_id %></td>
+</tr>
+
+<tr>  
+  <th><strong>Notice Period</strong></th>
+  <td><%= @vacancy_master.notice_period ? "Yes": "No" %></td>
+  <th><strong>No. of days (Notice Period)</strong></th>
+  <td><%= @vacancy_master.notice_period_day %></td>
+</tr>
+<tr>
+  <th><strong>Relocation Reimburment</strong></th>
+  <td><%= @vacancy_master.relocation_rerimbursement ? "Yes": "No" %></td>
+
+  <th><strong>Relocation Reimburment</strong></th>
+  <td><%= @vacancy_master.relocation_cost %></td>
+</tr>
  <tr>
  <th><strong>Qualification I</strong></th>
   <td><%= @vacancy_master.degree.try(:name) %></td>

@@ -2076,6 +2076,7 @@ end
       get :status_wise_request
       get :select_form
       get :select_admin_form
+      get :modal
     end
   end
   resources :company_leavs

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170712110333) do
+ActiveRecord::Schema.define(version: 20170714073650) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1144,33 +1144,35 @@ ActiveRecord::Schema.define(version: 20170712110333) do
   add_index "employee_leav_balances", ["leav_category_id"], name: "index_employee_leav_balances_on_leav_category_id", using: :btree
 
   create_table "employee_leav_requests", force: :cascade do |t|
-    t.integer  "employee_id",        limit: 4
-    t.integer  "leav_category_id",   limit: 4
-    t.string   "leave_type",         limit: 255
+    t.integer  "employee_id",              limit: 4
+    t.integer  "leav_category_id",         limit: 4
+    t.string   "leave_type",               limit: 255
     t.datetime "start_date"
     t.datetime "end_date"
-    t.string   "date_range",         limit: 255
-    t.integer  "no_of_day",          limit: 4
-    t.decimal  "leave_count",                    precision: 5, scale: 1
+    t.string   "date_range",               limit: 255
+    t.integer  "no_of_day",                limit: 4
+    t.decimal  "leave_count",                          precision: 5, scale: 1
     t.boolean  "first_half"
     t.boolean  "last_half"
-    t.string   "reason",             limit: 255
+    t.string   "reason",                   limit: 255
     t.boolean  "is_pending"
     t.boolean  "is_cancelled"
     t.boolean  "is_first_approved"
     t.boolean  "is_second_approved"
     t.boolean  "is_first_rejected"
     t.boolean  "is_second_rejected"
-    t.integer  "current_status",     limit: 4
-    t.string   "current_status1",    limit: 255
+    t.integer  "current_status",           limit: 4
+    t.string   "current_status1",          limit: 255
     t.boolean  "present_status"
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
-    t.integer  "first_reporter_id",  limit: 4
-    t.integer  "second_reporter_id", limit: 4
+    t.datetime "created_at",                                                   null: false
+    t.datetime "updated_at",                                                   null: false
+    t.integer  "first_reporter_id",        limit: 4
+    t.integer  "second_reporter_id",       limit: 4
+    t.integer  "employee_leav_balance_id", limit: 4
   end
 
   add_index "employee_leav_requests", ["employee_id"], name: "index_employee_leav_requests_on_employee_id", using: :btree
+  add_index "employee_leav_requests", ["employee_leav_balance_id"], name: "index_employee_leav_requests_on_employee_leav_balance_id", using: :btree
   add_index "employee_leav_requests", ["leav_category_id"], name: "index_employee_leav_requests_on_leav_category_id", using: :btree
 
   create_table "employee_monthly_days", force: :cascade do |t|
@@ -4299,6 +4301,7 @@ ActiveRecord::Schema.define(version: 20170712110333) do
   add_foreign_key "employee_leav_balances", "company_leavs"
   add_foreign_key "employee_leav_balances", "employees"
   add_foreign_key "employee_leav_balances", "leav_categories"
+  add_foreign_key "employee_leav_requests", "employee_leav_balances"
   add_foreign_key "employee_leav_requests", "employees"
   add_foreign_key "employee_leav_requests", "leav_categories"
   add_foreign_key "employee_monthly_days", "employees"

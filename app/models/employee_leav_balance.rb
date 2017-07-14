@@ -2,6 +2,7 @@ class EmployeeLeavBalance < ActiveRecord::Base
   belongs_to :employee
   belongs_to :leav_category
   belongs_to :company_leav
+  has_many :employee_leav_requests
   #validates :employee_id, uniqueness: { scope: [:leav_category_id] }
   validates :no_of_leave, presence: true
 

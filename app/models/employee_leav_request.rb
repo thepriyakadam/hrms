@@ -9,6 +9,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
   has_many :particular_leave_records
   has_many :employee_attendances
   has_many :leave_records
+  belongs_to :employee_leav_balance
   # belongs_to :first_reporter, class_name: 'Employee', foreign_key: 'first_reporter_id'
   # belongs_to :second_reporter, class_name: 'Employee', foreign_key: 'second_reporter_id'
 

@@ -26,10 +26,10 @@
 
               <% abs = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "A") %>
               <% pre = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id,"P") %>
-              <% wd = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "W") %>
-              <% wop = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "WOP") %>
+              <% wo = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "WO") %>
+              <% wop = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "WOP") %>
               <% h = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "H") %>
-              <% hp = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "HP") %>
+              <% hp = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "HP") %>
               <% el = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "EL") %>
               <% cl = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "CL") %>
               <% coff = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "C.Off") %>
@@ -71,8 +71,8 @@
                   <%= ab %>
                 <% end %>
               </td>
-              <td><% wop = wd.count + wop.count %><%= wd %></td>
-              <td><% hp =  h.count + hp.count %><%= h %></td>
+              <td><% w = wo.count + wop.count %><%= w %></td>
+              <td><% hd =  h.count + hp.count %><%= hd %></td>
               <td>
                 <% ael = el.count + (pel.count)/2.to_f %>
                 <%= ael %>
@@ -99,9 +99,9 @@
               </td>
               <td>
                 <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
-                  <%= ap + hp + ael + acl + acoff + aod %>
+                  <%= ap + hd + ael + acl + acoff + aod %>
                 <% else %>
-                  <%= ap + wop + h.count + ael + acl + acoff + aod %>
+                  <%= ap + w + hd + ael + acl + acoff + aod %>
                 <% end %>
               </td>
               <td><%= gp.count %></td>

@@ -1,4 +1,5 @@
 class Holiday < ActiveRecord::Base
+  has_many :employee_attendances
   validates :name, presence: true
   # validate :holiday_date_cannot_be_in_the_past, on: :create
 

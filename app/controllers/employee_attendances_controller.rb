@@ -9,7 +9,7 @@ class EmployeeAttendancesController < ApplicationController
   def index
     @employee_attendances = EmployeeAttendance.group("strftime('%Y',day)")
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Attendance"
+    session[:active_tab1] ="daily_attendance"
 
   end
 
@@ -435,7 +435,7 @@ class EmployeeAttendancesController < ApplicationController
   
   def datewise_attendance
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Attendance"
+    session[:active_tab1] ="daily_attendance"
   end
 
   def show_datewise_attendance
@@ -1493,7 +1493,7 @@ class EmployeeAttendancesController < ApplicationController
 
 def upload_daily_attendance
   session[:active_tab] ="TimeManagement"
-  session[:active_tab1] ="daily_attendance"
+  session[:active_tab1] ="Attendance"
 end
 
 def upload
@@ -1747,7 +1747,7 @@ end
 
 def daily_attendance_datewise
   session[:active_tab] ="TimeManagement"
-  session[:active_tab1] ="daily_attendance"
+  session[:active_tab1] ="Attendance"
 end
 
 def show_daily_attendance_datewise
@@ -1805,8 +1805,8 @@ def import_employee_attendance
     format.csv { send_data @employee_attendances.to_csv }
     format.xls
   end
-    session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Attendance"
+   session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="AttendanceSetup"
 end
 
   def import_employee_attendance_to_txt
@@ -2108,6 +2108,8 @@ end
   end
 
   def destroy_daily_attendance
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Attendance"
   end
 
   def show_daily_attendance_for_destroy

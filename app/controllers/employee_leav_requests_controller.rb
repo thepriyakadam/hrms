@@ -91,6 +91,7 @@ class EmployeeLeavRequestsController < ApplicationController
     @leav_category = LeavCategory.find(@employee_leav_request.leav_category_id)
     payroll_period = PayrollPeriod.where(status: true).take 
 
+    @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ? AND is_active = ?', @employee.id, @employee_leav_request.leav_category_id,true).take
     #c_off
     if @leav_category.id == leav_category.id
 
@@ -135,6 +136,8 @@ class EmployeeLeavRequestsController < ApplicationController
                     no_of_leave = @emp_leave_bal.no_of_leave.to_f - @employee_leav_request.leave_count.to_f
                     @emp_leave_bal.update(no_of_leave: no_of_leave)
                   end
+#emp_leav_bal_id
+                    @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                 end
                 flash[:notice] = "Created successfully!"
                   #LeaveRequestMailer.pending(@employee_leav_request).deliver_now        
@@ -264,6 +267,8 @@ class EmployeeLeavRequestsController < ApplicationController
                       else
                         @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
                         @employee_leav_request.save
+    #emp_leav_bal_id                
+                        @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                         @employee_leav_request.leave_record_create(@employee_leav_request)
                         @employee_leav_request.minus_leave(@employee_leav_request)
                         if @employee.manager.email.nil? || @employee.manager.email == ''
@@ -278,8 +283,11 @@ class EmployeeLeavRequestsController < ApplicationController
                     elsif @leav_category.from.nil? or @leav_category.to.nil?
                       @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
                       if @employee_leav_request.save
-            #leave_record
-                    @employee_leav_request.leave_record_create(@employee_leav_request)
+    #emp_leav_bal_id                
+                      @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
+
+                #leave_record
+                        @employee_leav_request.leave_record_create(@employee_leav_request)
                         @employee_leav_request.minus_leave(@employee_leav_request)
                         if @employee.manager.email.nil? || @employee.manager.email == ''
                           flash[:notice] = 'Send request without email.'
@@ -302,6 +310,8 @@ class EmployeeLeavRequestsController < ApplicationController
                     elsif type == 'C.Off'
                       @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
                       if @employee_leav_request.save
+      #emp_leav_bal_id                
+                      @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
             #leave_record
                     @employee_leav_request.leave_record_create(@employee_leav_request)
                         #@employee_leav_request.manage_coff(@employee_leav_request)
@@ -321,6 +331,8 @@ class EmployeeLeavRequestsController < ApplicationController
                     else
                       @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
                       if @employee_leav_request.save
+    #emp_leav_bal_id                
+                      @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
             #leave_record
                     @employee_leav_request.leave_record_create(@employee_leav_request)
                         @employee_leav_request.minus_leave(@employee_leav_request)
@@ -338,6 +350,8 @@ class EmployeeLeavRequestsController < ApplicationController
                   else #is_balance == true
                       @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
                       if @employee_leav_request.save
+    #emp_leav_bal_id                
+                      @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
             #leave_record
                     @employee_leav_request.leave_record_create(@employee_leav_request)
                         @employee_leav_request.minus_leave(@employee_leav_request)
@@ -369,6 +383,8 @@ class EmployeeLeavRequestsController < ApplicationController
                   @employee_leav_request.update(first_half: true,last_half: false)
                 else @employee_leav_request.first_half == true || @employee_leav_request.last_half == true
                   @employee_leav_request.save
+#emp_leav_bal_id                
+                  #@employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                 end
               end
             else
@@ -386,6 +402,7 @@ class EmployeeLeavRequestsController < ApplicationController
       end#if payroll_period.nil?
     end#c_off
   end
+
 
   def update
     respond_to do |format|

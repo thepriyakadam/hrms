@@ -105,7 +105,7 @@
       <!-- TABLE: LATEST ORDERS -->
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">Company Events</h3>
+          <h3 class="box-title">Events</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -144,54 +144,76 @@
         </div><!-- /.box-footer -->
       </div><!-- /.box -->
 
+
+
     <div id="event_detail" class="modal fade"></div>
             <!-- TABLE: LATEST ORDERS -->
-      <div class="box box-info">
+
+
+    </section><!-- /.Left col -->
+    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+    
+    <section class="col-lg-5 connectedSortable">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- USERS LIST -->
+        <div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">Policy Corner</h3>
+          <h3 class="box-title">Work Anniversary</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
           </div>
         </div><!-- /.box-header -->
         <div class="box-body">
-          <div class="table-responsive">
-            <table id="example1" class="table no-margin">
-            <thead>
-              <tr>
-              <th>Policy</th>
-                <th>Action</th>
-              </tr>
-            </thead>
+          <ul class="products-list product-list-in-box">
+            
 
-            <tbody>
-              <% @company_policies.each do |company_policy| %>
-              <tr>
-              <td><%= company_policy.policy_type.try(:name) %></td>
-                  <td>
-                     <%= link_to '', policy_type_detail_company_policies_path(company_policy_id: company_policy.id) ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
-                  </td>
-                </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div><!-- /.table-responsive -->
+              <% date = Date.today %>
+             <% @employees = JoiningDetail.where("DATE_FORMAT(joining_date,'%d/%m') = ?", date.strftime('%d/%m'))%>
+            <% if @employees.empty? %>
+             
+            <%else%>
+              <% @employees.each do |e| %>
+                <li class="item">
+                  <div class="product-img">
+                  <%unless e.nil? or e.nil? or  e.employee.member.nil? or e.employee.member.avatar.nil? %>
+                 <% if e.employee.gender == "Male" && e.employee.member.avatar_file_name == nil  %>
+                 <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                  <% elsif e.employee.gender == "Female" && e.employee.member.avatar_file_name == nil  %>
+                  <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                   <%else%>
+                   <%= image_tag e.employee.member.avatar.url(:medium),class: "img-circle"%>
+                  <%end%> <!-- if -->
+                   <%end%> <!-- unless -->
+                </div> 
+                <div class="product-info">
+                  <%= full_name(e.employee) %>
+                <div class="pull-right">
+                <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today,receiver_id: e.employee_id,greeting_type: "Anniversary") %>
+                  <% if e.employee_id == current_user.employee_id %>
+                      <small class="label label-success">Wish You A Very Happy Work Anniversary!</small>
+                  <% else %>
+                    <% if @greeting.empty? %>
+                        <%= link_to 'Wish', anniversary_mail_greetings_path(emp_id: e.employee_id),class: 'btn btn-xs btn-primary',remote:true %>
+                    <% else %>
+                        <small class="label label-success">Message Sent</small>
+                    <% end %>
+                  <% end %>
+                </div>
+                  <span class="users-list-date"><%= e.employee.department.try(:name) %></span>
+                  </div>
+                 
+                <% end %> <!-- do -->
+            </li><!-- /.item -->
+            <%end%> <!-- if employee.empty? -->
+          </ul>
         </div><!-- /.box-body -->
-        <div class="box-footer clearfix">
-          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
-          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
-        </div><!-- /.box-footer -->
       </div><!-- /.box -->
 
-    </section><!-- /.Left col -->
-    <!-- right col (We are only adding the ID to make the widgets sortable)-->
-    <section class="col-lg-5 connectedSortable">
-      <div class="row">
-
-        <div class="col-md-12">
-          <!-- USERS LIST -->
-
-        <div class="box box-primary">
+      <div id="anniversary_email" class="modal fade"></div>
+       <div class="box box-primary">
         <div class="box-header with-border">
           <h3 class="box-title">Today's Birthday</h3>
           <div class="box-tools pull-right">
@@ -201,7 +223,7 @@
         </div><!-- /.box-header -->
         <div class="box-body">
           <ul class="products-list product-list-in-box">
-            
+              <!-- <hidden_field :type, value: "Birthday" %> -->
               <% date = Date.today %>
              <% @employees = Employee.where("status = ? AND DATE_FORMAT(date_of_birth,'%d/%m') = ?", "Active" , date.strftime('%d/%m')) %>
             <% if @employees.empty? %>
@@ -222,58 +244,102 @@
                 </div> 
                 <div class="product-info">
                   <%= full_name(e) %>
-                 <span class="label label-primary pull-right"><i><strong>Happy Birthday</strong></i></span>
-                  <span class="users-list-date"><%= e.contact_no %></span>
+                  <div class="pull-right">
+                    <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today,receiver_id: e.id,greeting_type: "Birthday") %>
+                    <% if e.id == current_user.employee_id %>
+                      <small class="label label-success">Wish You A Very Happy Birthday!</small>
+                    <% else %>
+                      <% if @greeting.empty? %>
+                        <%= link_to 'Wish', modal_for_mail_greetings_path(emp_id: e.id),class: 'btn btn-xs btn-primary ',remote:true %>
+                      <% else %>
+                          <small class="label label-success">Message Sent</small>
+                      <% end %>
+                    <% end %>
                   </div>
+                  <span class="users-list-date"><%= e.contact_no %></span>
+                </div>
+                 
                 <% end %>
             </li><!-- /.item -->
             <%end%>
           </ul>
         </div><!-- /.box-body -->
       </div><!-- /.box -->
-          
-          <!-- USERS LIST -->
-          <div class="box box-default collapsed-box">
-          <div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">Tomorrow's Birthday</h3>
-              <div class="box-tools pull-right">
-               <!--  <span class="label label-success"> BirthDay's</span> -->
-                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
-                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div><!-- /.box-header -->
-            <div class="box-body no-padding">
-            <% date = Date.today + 1 %>
+      <div id="birthday_email" class="modal fade"></div>
+
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Upcoming Birthday</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            
+             <% date = Date.today + 1 %>
             <% @employees = Employee.where("status = ? AND DATE_FORMAT(date_of_birth,'%d/%m') = ?", "Active" , date.strftime('%d/%m')) %>
             <% if @employees.empty? %>
-              
             <%else%>
             <table  class="table table-bordered table-hover table-condensed">
-            <thead>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Contact No</th>
-            </thead>
-            </thead>
-            <tbody>
-              <%@employees.each do |e|%>
-              <tr>
-              <td><%= e.manual_employee_code %></td>
-              <td><%= full_name(e) %></td>
-              <td><%= e.contact_no %></td>
-              </tr>
-              <%end%>
+              <thead>
+                <th>Name</th>
+                <th>Contact No</th>
+              </thead>
+              <tbody>
+                <%@employees.each do |e|%>
+                <tr>
+                  <td><%= full_name(e) %></td>
+                  <td><%= e.contact_no %></td>
+                </tr>
+                <%end%>
               </tbody>
-              </table>
+            </table>
             <%end%>
-            </div><!-- /.box-body -->
-          </div><!--/.box -->
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+          
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Policy Corner</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
           </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table id="example1" class="table no-margin">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Policy</th>
+                <th>Action</th>
+              </tr>
+            </thead>
 
-
-      <!-- PRODUCT LIST -->
-      <div class="box box-primary">
+            <tbody>
+              <% @company_policies.each do |company_policy| %>
+              <tr>
+                <td><%= company_policy.policy_type.try(:code) %></td>
+               <td><%= company_policy.policy_type.try(:name) %></td>
+              
+                  <td>
+                     <%= link_to '', policy_type_dashboard_company_policies_path(company_policy_id: company_policy.id) ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+       
+          <div class="box box-primary">
         <div class="box-header with-border">
           <h3 class="box-title">Newly Joined Employees</h3>
           <div class="box-tools pull-right">
@@ -284,7 +350,7 @@
         <div class="box-body">
           <ul class="products-list product-list-in-box">
 
-                <% JoiningDetail.all.order("id desc").limit(5).each do |j| %>
+                <% JoiningDetail.all.order("id desc").limit(3).each do |j| %>
                 <li class="item">
                  <div class="product-img">
 
@@ -301,21 +367,24 @@
                    <%end%>
                 </div> 
                 <div class="product-info">
-                  <%= j.employee.try(:manual_employee_code) %> <%= j.employee.try(:first_name) %> <%= j.employee.try(:middle_name) %> <%= j.employee.try(:last_name) %>
+                 <%= full_name(j.employee)%>
                   <span class="label label-info pull-right"><%= j.joining_date %></span>
-                  <span class="product-description"><%= j.employee_designation.try(:name) %></span>
+                  <span class="product-description"><%= j.employee.department.try(:name) %></span>
                   </div>
                 <% end %>
             </li><!-- /.item -->
           </ul>
         </div><!-- /.box-body -->
       </div><!-- /.box -->
+
+      <!-- PRODUCT LIST -->
+  
+
       </div><!-- /.col -->
       </div><!-- /.row -->
     </section><!-- right col -->
+
   </div><!-- /.row (main row) -->
- </section><!-- /.content -->
-</div><!-- /.content-wrapper -->
 
       <!-- Control Sidebar -->
       <aside class="control-sidebar control-sidebar-dark">

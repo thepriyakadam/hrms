@@ -24,6 +24,13 @@ class EmployeeLeavRequest < ActiveRecord::Base
   # CURRENT_STATUSS = [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]]
   # validates_inclusion_of :current_status, :in => CURRENT_STATUSS
 
+  def is_out_of_limit(employee_leav_request)
+    flag = 0
+      @leav_category = LeavCategory.find_by(id: employee_leav_request.leav_category_id)
+      flag = employee_leav_request.leave_count <  @leav_category.from || employee_leav_request.leave_count > @leav_category.to
+    flag
+  end
+
   def is_salary_processed?
     flag = 0
     for i in self.start_date.to_date..self.end_date.to_date

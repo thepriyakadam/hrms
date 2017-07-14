@@ -167,6 +167,7 @@ class EmployeeLeavRequestsController < ApplicationController
             @checkbox = false
           end
       payroll_period = PayrollPeriod.where(status: true).take 
+       @leav_category = LeavCategory.find_by(id: @employee_leav_request.leav_category_id)
 
       if payroll_period.nil?
         flash[:alert] = "Payroll Period Not set!"
@@ -196,6 +197,9 @@ class EmployeeLeavRequestsController < ApplicationController
           elsif @employee.manager_id.nil?
             flash[:alert] = 'Reporting manager not set please set Reporting Manager'
             redirect_to root_url
+          # elsif @employee_leav_request.is_out_of_limit(@employee_leav_request)
+          #   flash[:alert] = "Leave "
+          #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
           else
             @employee_leav_request.first_reporter_id = @employee.manager_id
             @employee_leav_request.is_pending = true
@@ -244,7 +248,11 @@ class EmployeeLeavRequestsController < ApplicationController
                       LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                     end
                     redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-       
+
+                elsif @employee_leav_request.is_out_of_limit(@employee_leav_request)
+                  flash[:alert] = "Leave Range for #{@leav_category.code} is #{@leav_category.from} - #{@leav_category.to}"
+                  redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+
                 else
                   @leave_category = LeavCategory.where(id: @employee_leav_request.leav_category_id,is_active: true).take
                   if @leave_category.is_balance == true
@@ -293,12 +301,12 @@ class EmployeeLeavRequestsController < ApplicationController
                         else
                           render :new
                         end
-          #from-to limit
-                    elsif
-                        @employee_leav_request.leave_count < @leav_category.from or @employee_leav_request.leave_count > @leav_category.to 
-                        @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
-                        flash.now[:alert] = "Leave Range for #{@leav_category.code} is #{@leav_category.from} - #{@leav_category.to} "
-                        render :new
+          # #from-to limit
+          #           elsif
+          #               @employee_leav_request.leave_count < @leav_category.from or @employee_leav_request.leave_count > @leav_category.to 
+          #               @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
+          #               flash.now[:alert] = "Leave Range for #{@leav_category.code} is #{@leav_category.from} - #{@leav_category.to} "
+          #               render :new
 
                         #@leave_coff = LeaveCOff.where(employee_id: @employee.id)
                     elsif type == 'C.Off'
@@ -344,7 +352,8 @@ class EmployeeLeavRequestsController < ApplicationController
                       @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
                       if @employee_leav_request.save
                      #emp_leav_bal_id
-                          @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
+                          #@employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
+
             #leave_record
                     @employee_leav_request.leave_record_create(@employee_leav_request)
                         @employee_leav_request.minus_leave(@employee_leav_request)

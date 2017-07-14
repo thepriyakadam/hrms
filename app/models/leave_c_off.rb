@@ -47,15 +47,15 @@ LeaveCOff.all
     flag 
   end
 
-  def is_week_off_present_for_coff(emp)
+  def is_week_off_present_for_coff(emp,date)
     flag = 0
-    flag = EmployeeAttendance.exists?(employee_id: emp,present: "WOP")
+    flag = EmployeeAttendance.exists?(employee_id: emp,present: "WOP",day: date.to_date)
     flag 
   end
 
-  def is_holiday_present_for_coff(emp)
+  def is_holiday_present_for_coff(emp,date)
     flag = 0
-    flag = EmployeeAttendance.exists?(employee_id: emp,present: "HP")
+    flag = EmployeeAttendance.exists?(employee_id: emp,present: "HP",day: date.to_date)
     flag 
   end
 end

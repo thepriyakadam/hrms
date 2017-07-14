@@ -231,6 +231,7 @@
 });
 </script>
 
+
 <script>
 $("#vacancy_master").validate({
     rules: {
@@ -274,6 +275,11 @@ $("#vacancy_master").validate({
         required: true,
       },
       "vacancy_master[degree_id]":{
+      },
+      "vacancy_master[no_of_position]":{
+        required: true,
+      },
+      "vacancy_master[vacancy_fullfillment_date]":{
         required: true,
       }
     },
@@ -320,6 +326,17 @@ $("#vacancy_master").validate({
       "vacancy_master[degree_id]":{
         required: "Please select qualification",
       }
+        required: "Please select designation ",
+      },
+      "vacancy_master[vacancy_name]":{
+        required: "Please specify vacancy name",
+      },
+      "vacancy_master[no_of_position]":{
+        required: "Please specify no. of position",
+      },
+      "vacancy_master[vacancy_fullfillment_date]":{
+        required: "Please select date",
+      }  
     },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})

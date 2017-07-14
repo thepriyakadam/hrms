@@ -3,7 +3,6 @@
     <h3 class="box-title">Employee Transfer</h3>
     <div class="box-body">
       <%= bootstrap_form_for(@employee_transfer,html: {id: 'employee_transfer'}) do |f| %>
-
       <%= f.hidden_field :employee_id, value: current_user.employee_id %>
       <div class="row">
         <div class="col-sm-3">
@@ -58,7 +57,7 @@
         </div>
       </div>
     </div>
-      <% end %>
+  <% end %>
 
   </div>
 </div>

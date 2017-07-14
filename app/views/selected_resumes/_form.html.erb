@@ -125,8 +125,11 @@ $("#selected_resume").validate({
     rules: {
       "selected_resume[skillset]":{
         required: true
-              },
+      },
       "selected_resume[degree_id]":{
+        required: true
+      },
+      "selected_resume[name]":{
         required: true
       }
     },
@@ -136,6 +139,9 @@ $("#selected_resume").validate({
       },
       "selected_resume[degree_id]":{
         required: "Please specify Qualification"
+      },
+      "selected_resume[name]":{
+        required: "Please specify name"
       }
     },
     errorPlacement: function(error, element) {

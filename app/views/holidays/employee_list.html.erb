@@ -3,7 +3,7 @@
     <h3 class="box-title"> Employee List </h3>
     <div class="box-body">
       <%= bootstrap_form_for :temp, url: {action: "assign_to_employee",holiday_id: @holiday_id} do |f| %>
-        <table id="example" class="table table-bordered table-hover table-condensed">
+        <table id="example5" class="table table-bordered table-hover table-condensed">
           <thead>
             <tr>
               <th><input type="checkbox" id="selectAll" value="selectAll"></th>
@@ -44,4 +44,12 @@ $('#selectAll').click(function() {
     });
   } 
 });
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example5').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true
+    } );
+} );
 </script>

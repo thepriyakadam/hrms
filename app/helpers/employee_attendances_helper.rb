@@ -128,6 +128,14 @@ module EmployeeAttendancesHelper
     exist.select {|k,v| v == "L" }.count + (exist.select {|k,v| v == "P/L" }.count)/2.to_f + (exist.select {|k,v| v == "L/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/L" }.count)/2.to_f + (exist.select {|k,v| v == "L/A" }.count)/2.to_f
   end
 
+  def ml_leave_count(exist)
+    exist.select {|k,v| v == "ML" }.count + (exist.select {|k,v| v == "P/ML" }.count)/2.to_f + (exist.select {|k,v| v == "ML/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/ML" }.count)/2.to_f + (exist.select {|k,v| v == "ML/A" }.count)/2.to_f
+  end
+
+  def wfh_leave_count(exist)
+    exist.select {|k,v| v == "WFH" }.count + (exist.select {|k,v| v == "P/WFH" }.count)/2.to_f + (exist.select {|k,v| v == "WFH/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/WFH" }.count)/2.to_f + (exist.select {|k,v| v == "WFH/A" }.count)/2.to_f
+  end
+
   def process_off_count(exist)
     exist.select {|k,v| v == "PO" }.count
   end

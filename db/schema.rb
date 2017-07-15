@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170712094207) do
+ActiveRecord::Schema.define(version: 20170525131109) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -562,10 +562,7 @@ ActiveRecord::Schema.define(version: 20170712094207) do
     t.integer  "document_file_size",    limit: 4
     t.datetime "document_updated_at"
     t.text     "description",           limit: 65535
-    t.integer  "policy_type_id",        limit: 4
   end
-
-  add_index "company_policies", ["policy_type_id"], name: "index_company_policies_on_policy_type_id", using: :btree
 
   create_table "company_shifts", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -964,15 +961,12 @@ ActiveRecord::Schema.define(version: 20170712094207) do
     t.integer  "on_duty_request_id",       limit: 4
     t.integer  "employee_code",            limit: 4
     t.string   "employee_name",            limit: 255
-    t.string   "comment",                  limit: 255
-    t.integer  "holiday_id",               limit: 4
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id", using: :btree
   add_index "employee_attendances", ["department_id"], name: "index_employee_attendances_on_department_id", using: :btree
   add_index "employee_attendances", ["employee_id"], name: "index_employee_attendances_on_employee_id", using: :btree
   add_index "employee_attendances", ["employee_leav_request_id"], name: "index_employee_attendances_on_employee_leav_request_id", using: :btree
-  add_index "employee_attendances", ["holiday_id"], name: "index_employee_attendances_on_holiday_id", using: :btree
   add_index "employee_attendances", ["machine_attendance_id"], name: "index_employee_attendances_on_machine_attendance_id", using: :btree
   add_index "employee_attendances", ["on_duty_request_id"], name: "index_employee_attendances_on_on_duty_request_id", using: :btree
 
@@ -1301,7 +1295,6 @@ ActiveRecord::Schema.define(version: 20170712094207) do
     t.boolean  "is_second_rejected"
     t.boolean  "is_final_rejected"
     t.datetime "application_date"
-    t.string   "current_status",         limit: 255
   end
 
   add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id", using: :btree
@@ -1496,7 +1489,6 @@ ActiveRecord::Schema.define(version: 20170712094207) do
     t.datetime "passport_photo_updated_at"
     t.string   "punch_card_id",               limit: 255
     t.string   "prefix",                      limit: 255
-    t.string   "optional_email",              limit: 255
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id", using: :btree
@@ -1602,16 +1594,14 @@ ActiveRecord::Schema.define(version: 20170712094207) do
   end
 
   create_table "exit_interviews", force: :cascade do |t|
-    t.integer  "employee_id",             limit: 4
-    t.integer  "question_master_id",      limit: 4
-    t.text     "answer",                  limit: 65535
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.integer  "employee_resignation_id", limit: 4
+    t.integer  "employee_id",        limit: 4
+    t.integer  "question_master_id", limit: 4
+    t.text     "answer",             limit: 65535
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   add_index "exit_interviews", ["employee_id"], name: "index_exit_interviews_on_employee_id", using: :btree
-  add_index "exit_interviews", ["employee_resignation_id"], name: "index_exit_interviews_on_employee_resignation_id", using: :btree
   add_index "exit_interviews", ["question_master_id"], name: "index_exit_interviews_on_question_master_id", using: :btree
 
   create_table "expencess_types", force: :cascade do |t|
@@ -2184,12 +2174,12 @@ ActiveRecord::Schema.define(version: 20170712094207) do
     t.boolean  "status"
     t.datetime "created_at",                                                         null: false
     t.datetime "updated_at",                                                         null: false
-    t.boolean  "is_confirm",                                         default: false
-    t.text     "comment",               limit: 65535
     t.string   "document_file_name",    limit: 255
     t.string   "document_content_type", limit: 255
     t.integer  "document_file_size",    limit: 4
     t.datetime "document_updated_at"
+    t.boolean  "is_confirm",                                         default: false
+    t.text     "comment",               limit: 65535
   end
 
   add_index "investment_declarations", ["employee_id"], name: "index_investment_declarations_on_employee_id", using: :btree
@@ -2413,8 +2403,6 @@ ActiveRecord::Schema.define(version: 20170712094207) do
     t.date     "leaving_date"
     t.integer  "replacement_id",          limit: 4
     t.boolean  "is_new",                              default: true
-    t.string   "company_rfid",            limit: 255
-    t.string   "gate_rfid",               limit: 255
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id", using: :btree
@@ -2504,7 +2492,6 @@ ActiveRecord::Schema.define(version: 20170712094207) do
     t.boolean  "is_expire"
     t.boolean  "status"
     t.string   "current_status",   limit: 255
-    t.date     "taken_date"
   end
 
   add_index "leave_c_offs", ["employee_id"], name: "index_leave_c_offs_on_employee_id", using: :btree
@@ -2562,12 +2549,12 @@ ActiveRecord::Schema.define(version: 20170712094207) do
   create_table "leave_records", force: :cascade do |t|
     t.date     "day"
     t.string   "status",                   limit: 255
-    t.datetime "created_at",                                                    null: false
-    t.datetime "updated_at",                                                    null: false
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
     t.integer  "employee_leav_request_id", limit: 4
     t.integer  "employee_id",              limit: 4
+    t.decimal  "count",                                precision: 10
     t.integer  "leav_category_id",         limit: 4
-    t.decimal  "count",                                precision: 15, scale: 2
   end
 
   add_index "leave_records", ["employee_id"], name: "index_leave_records_on_employee_id", using: :btree
@@ -4298,11 +4285,8 @@ ActiveRecord::Schema.define(version: 20170712094207) do
   add_foreign_key "candidate_forms", "vacancy_requests"
   add_foreign_key "candidate_interview_schedules", "candidate_forms"
   add_foreign_key "candidate_interview_schedules", "interview_type_masters"
-  add_foreign_key "company_policies", "policy_types"
-  add_foreign_key "employee_attendances", "holidays"
   add_foreign_key "employee_jc_lists", "employees"
   add_foreign_key "employee_jc_lists", "joining_checklist_masters"
-  add_foreign_key "exit_interviews", "employee_resignations"
   add_foreign_key "recruiters", "employees"
   add_foreign_key "reimbursement_requests", "employees"
   add_foreign_key "reimbursement_requests", "reimbursement_heads"

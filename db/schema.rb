@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170714094906) do
+ActiveRecord::Schema.define(version: 20170715071436) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -963,9 +963,11 @@ ActiveRecord::Schema.define(version: 20170714094906) do
     t.integer  "department_id",            limit: 4
     t.integer  "machine_attendance_id",    limit: 4
     t.string   "comment",                  limit: 255
+    t.integer  "holiday_id",               limit: 4
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id", using: :btree
+  add_index "employee_attendances", ["holiday_id"], name: "index_employee_attendances_on_holiday_id", using: :btree
 
   create_table "employee_attributes", force: :cascade do |t|
     t.integer  "attribute_master_id",   limit: 4
@@ -4300,6 +4302,7 @@ ActiveRecord::Schema.define(version: 20170714094906) do
   add_foreign_key "employee_arrear_items", "salary_components"
   add_foreign_key "employee_arrears", "employees"
   add_foreign_key "employee_attendances", "company_time_masters"
+  add_foreign_key "employee_attendances", "holidays"
   add_foreign_key "employee_bank_details", "banks"
   add_foreign_key "employee_bank_details", "employees"
   add_foreign_key "employee_daily_activities", "employees"

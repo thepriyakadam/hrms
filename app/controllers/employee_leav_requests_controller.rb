@@ -651,12 +651,6 @@ class EmployeeLeavRequestsController < ApplicationController
     session[:active_tab1] ="LeaveReports"
   end
 
-  def modal
-   # byebug
-   #  employee_id = params[:employee][:employee_id]
-    @leave_c_off = LeaveCOff.find(params[:format])
-  end
-
   def status_wise_request
     @start_date = params[:employee] ? params[:employee][:start_date] : params[:start_date]
     @end_date = params[:employee] ? params[:employee][:end_date] : params[:end_date]

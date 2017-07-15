@@ -47,13 +47,13 @@
       <div class="col-sm-12"><strong> <font color='green'>Note - * Row is the latest row to approve/reject </font></strong></div>
   </div><br>
   
-    <% vacancy_master_1 = VacancyMaster.where(id: @vacancy_master.id).take
+   <!--  < vacancy_master_1 = VacancyMaster.where(id: @vacancy_master.id).take
      employ_1 = Employee.where(id: vacancy_master_1.reporting_master_id).take  %>
     
     
 
-       <% if @vacancy_master.current_status == "SecondApproved" %>
-       <% else %>
+       < if @vacancy_master.current_status == "SecondApproved" %>
+       < else %>
          <table class="table table-bordered table-hover table-condensed'">
            <thead>
            <tr>
@@ -61,15 +61,15 @@
            </tr>
            <tr>
               <th>Manager 1 </th>
-              <td><%= employ_1.try(:manager).try(:manual_employee_code) %> - <% employ_1.try(:manager).try(:first_name) %> <%= employ_1.try(:manager).try(:middle_name) %> <%= employ_1.try(:manager).try(:last_name) %></td>
+              <td>< employ_1.try(:manager).try(:manual_employee_code) %> - < employ_1.try(:manager).try(:first_name) %> < employ_1.try(:manager).try(:middle_name) %> < employ_1.try(:manager).try(:last_name) %></td>
             </tr>
             <tr>
               <th>Manager 2 </th>
-              <td><%= employ_1.try(:manager_2).try(:manual_employee_code) %> - <% employ_1.try(:manager_2).try(:first_name) %> <%= employ_1.try(:manager_2).try(:middle_name) %> <%= employ_1.try(:manager_2).try(:last_name) %></td>
+              <td>< employ_1.try(:manager_2).try(:manual_employee_code) %> - < employ_1.try(:manager_2).try(:first_name) %> < employ_1.try(:manager_2).try(:middle_name) %> < employ_1.try(:manager_2).try(:last_name) %></td>
             </tr>
            </thead>
          </table>
-         <% end %><br>
+         < end %><br> -->
        
 
 <div>

@@ -266,6 +266,10 @@ class LeaveCOffsController < ApplicationController
     @leave_c_off = LeaveCOff.find(params[:format])
   end
 
+  def modal
+   @leave_c_off = LeaveCOff.find(params[:format])
+  end
+
   def approve_c_off
     @leave_c_off = LeaveCOff.find(params[:leave_c_off_id])
     expiry_status = params[:leave_c_off][:expiry_status]

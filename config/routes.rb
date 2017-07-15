@@ -1379,6 +1379,7 @@ end
       get :admin_c_off_approval
       get :admin_level_c_off_detail
       get :admin_approve_modal
+      get :modal
     end
   end
 
@@ -2077,7 +2078,6 @@ end
       get :status_wise_request
       get :select_form
       get :select_admin_form
-      get :modal
     end
   end
   resources :company_leavs

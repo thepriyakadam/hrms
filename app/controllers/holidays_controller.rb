@@ -48,8 +48,13 @@ class HolidaysController < ApplicationController
     department_id = params[:department_id]
     @holiday_id = params[:holiday_id]
     @holiday = Holiday.find_by(id: @holiday_id)
-    @emp = EmployeeAttendance.where(department_id: department_id,day: @holiday.holiday_date).pluck(:employee_id)
-    @employees = Employee.where(department_id: department_id).where.not(id: @emp)
+    if department_id == [""]
+      @emp = EmployeeAttendance.where(day: @holiday.holiday_date).pluck(:employee_id)
+      @employees = Employee.where(status: "Active").where.not(id: @emp)
+    else
+      @emp = EmployeeAttendance.where(department_id: department_id,day: @holiday.holiday_date).pluck(:employee_id)
+      @employees = Employee.where(department_id: department_id).where.not(id: @emp)
+    end
   end
 
   def assign_to_employee

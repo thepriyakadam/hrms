@@ -249,9 +249,7 @@ class EmployeeLeavRequestsController < ApplicationController
                     end
                     redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
 
-                elsif @leav_category.is_limit == true
-                    @employee_leav_request.is_out_of_limit(@employee_leav_request)
-                 
+                elsif @leav_category.is_limit == true && @employee_leav_request.is_out_of_limit(@employee_leav_request)
                   flash[:alert] = "Leave Range for #{@leav_category.code} is #{@leav_category.from} - #{@leav_category.to}" 
                   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
                 else

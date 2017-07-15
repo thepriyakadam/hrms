@@ -1274,6 +1274,7 @@ ActiveRecord::Schema.define(version: 20170714094906) do
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
     t.integer  "leaving_reason_id",         limit: 4
+    t.integer  "reporting_master_id",       limit: 4
     t.string   "resign_status",             limit: 255
     t.boolean  "is_stop_pay_request"
     t.boolean  "is_pending"
@@ -1288,11 +1289,11 @@ ActiveRecord::Schema.define(version: 20170714094906) do
     t.integer  "final_reporter_id",         limit: 4
     t.integer  "second_reporter_id",        limit: 4
     t.integer  "change_status_employee_id", limit: 4
-    t.integer  "reporting_master_id",       limit: 4
   end
 
   add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id", using: :btree
   add_index "employee_resignations", ["leaving_reason_id"], name: "index_employee_resignations_on_leaving_reason_id", using: :btree
+  add_index "employee_resignations", ["reporting_master_id"], name: "index_employee_resignations_on_reporting_master_id", using: :btree
 
   create_table "employee_salary_templates", force: :cascade do |t|
     t.integer  "employee_id",                limit: 4
@@ -2312,9 +2313,8 @@ ActiveRecord::Schema.define(version: 20170714094906) do
     t.integer  "employee_id",            limit: 4
     t.boolean  "status"
     t.boolean  "is_confirm"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.string   "role",                   limit: 255
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   add_index "issue_tracker_members", ["employee_id"], name: "index_issue_tracker_members_on_employee_id", using: :btree
@@ -4330,6 +4330,7 @@ ActiveRecord::Schema.define(version: 20170714094906) do
   add_foreign_key "employee_promotions", "employees"
   add_foreign_key "employee_resignations", "employees"
   add_foreign_key "employee_resignations", "leaving_reasons"
+  add_foreign_key "employee_resignations", "reporting_masters"
   add_foreign_key "employee_salary_templates", "employee_templates"
   add_foreign_key "employee_salary_templates", "employees"
   add_foreign_key "employee_salary_templates", "salary_components"

@@ -72,7 +72,7 @@ class VacancyMastersController < ApplicationController
         @vacancy_master.reporting_master_id = employee.manager_id
         respond_to do |format|
       if @vacancy_master.save
-        # byebug
+         # byebug
         dept_id = params[:employee][:department_id]
         # @vacancy_master.department_id = dept_id.to_i
         VacancyMaster.where(id: @vacancy_master.id).update_all(department_id: dept_id)
@@ -739,6 +739,6 @@ end
 
   # Never trust param eters from the scary internet, only allow the white list through.
   def vacancy_master_params
-    params.require(:vacancy_master).permit(:employee_designation_id,:justification,:employee_id,:vacancy_code,:vacancy_fullfillment_date,:is_confirmed,:current_status,:experience,:degree_1_id,:degree_2_id,:reporting_master_id,:keyword,:other_organization, :department_id, :degree_id, :company_location_id, :vacancy_name, :no_of_position, :description, :vacancy_post_date, :budget)
+    params.require(:vacancy_master).permit(:vacancy_type,:employee_designation_id,:justification,:employee_id,:vacancy_code,:vacancy_fullfillment_date,:is_confirmed,:current_status,:experience,:experince_max,:degree_1_id,:degree_2_id,:reporting_master_id,:keyword,:other_organization, :department_id, :degree_id, :company_location_id, :vacancy_name, :no_of_position, :description, :vacancy_post_date, :budget,:budget_max,:reason,:replacement_id,:notice_period,:notice_period_day,:relocation_rerimbursement,:relocation_cost)
   end
 end

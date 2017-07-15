@@ -1,12 +1,14 @@
- <div class="box-body">
- <table id="example1" class="table table-bordered table-hover table-condensed">
+<div class="box">
+  <div class="box-body">
+      <table id="example6" class="table table-bordered table-hover table-condensed">
         <thead>
+          <tr><th colspan="13"><center>Attendance</center></th></tr>
           <tr>
             <th>ID</th>
             <th>P</th>
             <th>A</th>
-            <th>W</th>
-            <th>H</th>
+            <th>WOP</th>
+            <th>HP</th>
             <th>EL</th>
             <th>CL</th>
             <th>C.Off</th>
@@ -18,40 +20,42 @@
           </tr>
         </thead>
         <tbody>
-          <% exist = {} %>
           <% @employee_attendances.each do |e| %>
             <tr>
               <td><%= e.employee.manual_employee_code %></td>
 
-              <% abs = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "A") %>
-              <% pre = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id,"P") %>
-              <% wd = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "W") %>
-              <% h = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "H") %>
-              <% el = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "EL") %>
-              <% cl = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "CL") %>
-              <% lwp = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "LWP") %>
-              <% esic = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "ESIC") %>
-              <% coff = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "C.Off") %>
-              <% od = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "OD") %>
-              <% gp = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "PG") %>
-              <% phalf = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/2") %>
-              <% pcl = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/CL") %>
-              <% pel = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/EL") %>
-              <% pcoff = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/C.Off") %>
-              <% plwp = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/LWP") %>
-              <% pesic = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/ESIC") %>
-              <% pod = EmployeeAttendance.where( "DATE_FORMAT('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/OD") %>
-
+              <% abs = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "A") %>
+              <% pre = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id,"P") %>
+              <% wo = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "WO") %>
+              <% wop = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "WOP") %>
+              <% h = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "H") %>
+              <% hp = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "HP") %>
+              <% el = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "EL") %>
+              <% cl = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "CL") %>
+              <% coff = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "C.Off") %>
+              <% od = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "OD") %>
+              <% gp = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "PG") %>
+              <% lwp = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "LWP") %>
+              <% esic = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "ESIC") %>
+              <% phalf = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/2") %>
+              <% pcl = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/CL") %>
+              <% pel = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/EL") %>
+              <% pcoff = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/C.Off") %>
+              <% plwp = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/LWP") %>
+              <% pesic = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/ESIC") %>
+              <% pod = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/OD") %>
+              <% acf = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "ACF") %>
+              <% po = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "PO") %>
               <% a = gp.count %>
 
               <td>
                 <% if a.to_f <= 2 %>
-                  <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f + a.to_f %>
+                  <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f + a.to_f + acf.count + po.count %>
                   <%= ap %>
                 <% else %>
                   <% @a = a.to_f - 2 %>
                   <% @b = @a.to_f/2 %>
-                    <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f + @b.to_f + 2 %>
+                    <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f + @b.to_f + acf.count + po.count + 2 %>
                     <%= ap %>
                   <% end %>
               </td>
@@ -67,9 +71,8 @@
                   <%= ab %>
                 <% end %>
               </td>
-
-              <td><%= wd.count %></td>
-              <td><%= h.count %></td>
+              <td><% w = wo.count + wop.count %><%= w %></td>
+              <td><% hd =  h.count + hp.count %><%= hd %></td>
               <td>
                 <% ael = el.count + (pel.count)/2.to_f %>
                 <%= ael %>
@@ -96,9 +99,9 @@
               </td>
               <td>
                 <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
-                  <%= ap + h.count + ael + acl + acoff + aod %>
+                  <%= ap + hd + ael + acl + acoff + aod %>
                 <% else %>
-                  <%= ap + wd.count + h.count + ael + acl + acoff + aod %>
+                  <%= ap + w + hd + ael + acl + acoff + aod %>
                 <% end %>
               </td>
               <td><%= gp.count %></td>
@@ -106,4 +109,14 @@
           <%end%>
         </tbody>
       </table>
+  </div>
 </div>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

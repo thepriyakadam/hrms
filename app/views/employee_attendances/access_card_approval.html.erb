@@ -20,6 +20,7 @@
               <td><%= full_name(pending_request.employee) %></td>
               <td>
                 <%= link_to 'Approve', approve_acf_request_employee_attendances_path(pending_request),class: 'btn btn-sm btn-info' %>
+                <%= link_to 'Reject', reject_acf_request_employee_attendances_path(pending_request),class: 'btn btn-sm btn-info' %>
               </td>
             </tr>
           <% end %>

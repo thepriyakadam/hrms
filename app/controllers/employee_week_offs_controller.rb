@@ -207,6 +207,8 @@ class EmployeeWeekOffsController < ApplicationController
   end
 
   def revert_selective
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="WeekoffSetup"
   end
 
   def show_employee_list

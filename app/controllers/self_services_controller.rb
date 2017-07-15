@@ -163,39 +163,44 @@ class SelfServicesController < ApplicationController
       @leave_c_offs = LeaveCOff.all
       leav_category = LeavCategory.find_by(code: 'C.Off')
 
-      if @leave_c_off.is_week_off_present(@employee_id) || @leave_c_off.is_holiday_present(@employee_id)
-
-        if leav_category.nil?
+      if @leave_c_off.is_week_off_present_for_coff(@employee_id,@c_off_date) || @leave_c_off.is_holiday_present_for_coff(@employee_id,@c_off_date)
+        @employee_attendance = EmployeeAttendance.where(employee_id: @employee_id,present: "WOP",day: @c_off_date.to_date).take
+        
+        if @employee_attendance.working_hrs.to_s < "07:00"
+          flash[:alert] = "Working hrs. less than 7,Please contact to Admin"
         else
-          @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
-          if @c_off.nil?
+          if leav_category.nil?
           else
-            @c_off.each do |l|
-              if l.try(:expiry_date).to_date < Date.today
-                LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
-              else
-              end
-            end#do
-          end#c_off.nil?
+            @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
+            if @c_off.nil?
+            else
+              @c_off.each do |l|
+                if l.try(:expiry_date).to_date < Date.today
+                  LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
+                else
+                end
+              end#do
+            end#c_off.nil?
 
-          if @c_off_type == 'Full Day'
-            @leave_c_off = LeaveCOff.create(employee_id:
-             @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending")
-            StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
-            flash[:notice] = "Your COff Created Successfully!"
-            COffMailer.pending(@leave_c_off).deliver_now
-          else
-            @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending")
-            StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
-            flash[:notice] = "Your COff Created Successfully!"
-            COffMailer.pending(@leave_c_off).deliver_now
-          end#@c_off_type
-        end#leav_category.nil?
+            if @c_off_type == 'Full Day'
+              @leave_c_off = LeaveCOff.create(employee_id:
+               @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending")
+              StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
+              flash[:notice] = "Your COff Created Successfully!"
+              COffMailer.pending(@leave_c_off).deliver_now
+            else
+              @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending")
+              StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
+              flash[:notice] = "Your COff Created Successfully!"
+              COffMailer.pending(@leave_c_off).deliver_now
+            end#@c_off_type
+          end#leav_category.nil?
+        end#@employee_attendance.working_hrs.to_f < "7:00"
       else
-        flash[:alert] = "Week Off Or Holiday Not Set"
+        flash[:alert] = "Working details not available"
       end#is_week_off_present
 
-    end#@leave_c_off.is_self_present?
+    end#@leave_c_off.is_self_present(@employee_id,@c_off_date)
     redirect_to leave_c_off_self_services_path
   end#def
 

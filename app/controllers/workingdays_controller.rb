@@ -421,7 +421,7 @@ class WorkingdaysController < ApplicationController
   
   def revert_workingday
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Attendance"
+    session[:active_tab1] ="daily_attendance"
   end
 
   def show_employee
@@ -471,7 +471,7 @@ class WorkingdaysController < ApplicationController
 
   def revert_workingday_datewise
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Attendance"
+    session[:active_tab1] ="daily_attendance"
   end
 
   def show_employee_datewise

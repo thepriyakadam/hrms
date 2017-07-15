@@ -5,6 +5,7 @@ class VacancyMaster < ActiveRecord::Base
   belongs_to :company_location
   belongs_to :degree
   belongs_to :employee
+  belongs_to :replacement
   has_many :capture_resumes
   has_many :selected_resumes
   has_many :vacancy_request_histories

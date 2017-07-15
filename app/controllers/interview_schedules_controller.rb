@@ -240,7 +240,7 @@ end
      # @interview_schedules = InterviewSchedule.all
      @interview_schedules = InterviewSchedule.where(is_confirmed: true)
      session[:active_tab] ="recruitment"
-     session[:active_tab1] ="general_vacancy"
+     session[:active_tab1] ="interview_sched"
   end
  
   def final_report

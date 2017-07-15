@@ -228,7 +228,7 @@
             <div class="col-xs-7 text-left">
               <!-- <a href="#">Sales</a> -->
               <% if current_user.class == Member %>
-              <small><a href="#">  <%= current_user.employee.try(:joining_detail).try(:employee_designation).try(:name) %></a></small>
+              <small><%= current_user.employee.try(:joining_detail).try(:employee_designation).try(:name) %></small>
               <%else%>
                 <%= current_user.subdomain %>-
                 <%= current_user.class %>

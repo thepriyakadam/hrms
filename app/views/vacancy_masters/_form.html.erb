@@ -1,8 +1,7 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Vacancy</h3>
+    <h3 class="box-title">Requisition Form</h3>
   </div><!-- /.box-header -->
-
   <div class="box-body">
   <%= bootstrap_form_for(@vacancy_master,html: {id: 'vacancy_master'}) do |f| %>
   <%= f.hidden_field :employee_id, :value => current_user.employee_id %>
@@ -28,16 +27,22 @@
           </div>
         </div>
 
+         <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :vacancy_type,label: 'Type of vacancy'%>
+          </div>
+        </div>
+      </div>
+        
+        <div class="row">
           <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
               <%=f.select :company_location_id, role_location_list,{include_blank: "Select Company Location"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_department',a,function(response){});"}%>
           </div>
         </div> 
-        </div>
 
-      <div class="row">
          <div class="col-sm-3">
-         <div class="field">
+         <div class="form-group required">
             <div class="input-group">
               <div id="department">
                 <%= render 'employees/department_dropdown' %> 
@@ -50,25 +55,83 @@
           <div class="form-group required">
              <%= f.text_field :no_of_position,label: 'No. of Positions'%>
           </div>
-        </div>  
+        </div> 
 
-        <div class="col-sm-3">
+         <div class="col-sm-3">
           <div class="field">
-             <%= f.text_field :experience,label: 'Experience'%>
+             <%= f.text_field :keyword,label: 'Primary Skill'%>
+          </div>
+        </div>  
+      </div>
+
+       <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.text_field :experience,label: 'Minimum Experience'%>
           </div>
         </div>
-
-
+       
         <div class="col-sm-3">
-          <div class="field">
-             <%= f.text_field :budget,label: 'Budget'%>
+          <div class="form-group required">
+             <%= f.text_field :experince_max,label: 'Maximum Experience'%>
           </div>
         </div> 
-        </div>
-
-      <div class="row">
 
         <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.text_field :budget,label: 'Minimum Budget'%>
+          </div>
+        </div> 
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.text_field :budget_max,label: 'Maximum Budget'%>
+          </div>
+        </div> 
+
+        </div>
+
+         <div class="row">
+
+          <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.text_field :reason,label: 'Reason for the Requirement'%>
+          </div>
+        </div> 
+
+         <div class="col-sm-3">
+          <div class="field">
+          <%= f.select :replacement_id, all_active_employee_with_code, {include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
+          </div>
+        </div> 
+
+         <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.select :notice_period,["Yes","No"],{label: 'Notice Period',include_label:"Select Option"}%>
+          </div>
+        </div> 
+
+        <div class="col-sm-3">
+          <div class="field">
+             <%= f.text_field :notice_period_day,label: 'No. of days'%>
+          </div>
+        </div> 
+
+         </div>
+        <div class="row">
+         <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.select :relocation_rerimbursement,["Yes","No"],{label: 'Relocation Reimbursment',include_label:"Select Option"}%>
+          </div>
+        </div> 
+
+        <div class="col-sm-3">
+          <div class="field">
+             <%= f.text_field :relocation_cost,{label: 'Relocation Cost'}%>
+          </div>
+        </div>
+
+         <div class="col-sm-3">
           <div class="form-group required">
           <!-- <label>Vacancy Fulfillment Date </label> -->
         
@@ -79,13 +142,7 @@
                <%= f.text_field :vacancy_fullfillment_date, label: 'Vacancy Fulfillment Date', class: 'birth_date'%>
             </div>
           </div>
-        </div>      
-    
-        <div class="col-sm-3">
-          <div class="field">
-             <%= f.text_field :keyword,label: 'Primary Skill'%>
-          </div>
-        </div>  
+        </div> 
 
         <div class="col-sm-3">
           <label>Qualification I</label>
@@ -97,11 +154,14 @@
                <%= f.select :degree_id, all_degree, {hide_label: true,include_blank: " Select Qualification"}, class: 'input_degree_stream_id' %>
             </div>
           </div>
+        </div>     
+     
         </div>
 
+      <div class="row">       
         <div class="col-sm-3">
           <label>Qualification II</label>
-          <div class="form-group required">
+          <div class="field">
             <div class="input-group">
               <div class="input-group-addon">
                 <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
@@ -110,13 +170,10 @@
             </div>
           </div>
         </div>
-      </div>
-      
-      <div class="row">
 
         <div class="col-sm-3">
           <label>Qualification III</label>
-          <div class="form-group required">
+          <div class="field">
             <div class="input-group">
               <div class="input-group-addon">
                 <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
@@ -125,8 +182,9 @@
             </div>
           </div>
         </div>
-
-        <div class="col-sm-9">
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
           <div class="field">
            <%= f.text_area :description,label: 'Job Description',placeholder: "e.g : Any Description related to Vacancy"%>
           </div>
@@ -163,6 +221,16 @@
   </div>
 <% end %>
 
+<script type="text/javascript">
+  $(function(){
+    $('.birth_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+});
+</script>
+
 
 <script>
 $("#vacancy_master").validate({
@@ -173,6 +241,41 @@ $("#vacancy_master").validate({
       "vacancy_master[vacancy_name]":{
         required: true,
       },
+      "vacancy_master[vacancy_type]":{
+        required: true,
+      },
+      "vacancy_master[company_location_id]":{
+        required: true,
+      },
+      "vacancy_master[department_id]":{
+        required: true,
+      },
+      "vacancy_master[no_of_position]":{
+        required: true,
+      },
+      "vacancy_master[experience]":{
+        required: true,
+      },
+      "vacancy_master[experience_max]":{
+        required: true,
+      },
+      "vacancy_master[budget]":{
+        required: true,
+      },
+      "vacancy_master[budget_max]":{
+        required: true,
+      },
+      "vacancy_master[reason]":{
+        required: true,
+      },
+      "vacancy_master[notice_period]":{
+        required: true,
+      },
+      "vacancy_master[relocation_rerimbursement]":{
+        required: true,
+      },
+      "vacancy_master[degree_id]":{
+      },
       "vacancy_master[no_of_position]":{
         required: true,
       },
@@ -182,6 +285,47 @@ $("#vacancy_master").validate({
     },
     messages: {
       "vacancy_master[employee_designation_id]":{
+        required: "Please select designation",
+      },
+      "vacancy_master[vacancy_name]":{
+        required: "Please specify vacancy name",
+      },
+      "vacancy_master[vacancy_type]":{
+        required: "Please specify type of vacancy",
+      },
+      "vacancy_master[company_location_id]":{
+        required: "Please select company location",
+      },
+      "vacancy_master[department_id]":{
+        required: "Please select department",
+      },
+      "vacancy_master[no_of_position]":{
+        required: "Please specify no. of position",
+      },
+      "vacancy_master[experience]":{
+        required: "Please specify min. exp.",
+      },
+      "vacancy_master[experience_max)]":{
+        required: "Please specify max. exp.",
+      },
+      "vacancy_master[budget]":{
+        required: "Please specify min. budget",
+      },
+      "vacancy_master[budget_max]":{
+        required: "Please specify max. budget",
+      },
+      "vacancy_master[reason]":{
+        required: "Please specify reason for requirement",
+      },
+      "vacancy_master[notice_period]":{
+        required: "Please select notice period",
+      },
+      "vacancy_master[relocation_rerimbursement]":{
+        required: "Please specify relocation reimbursment",
+      },
+      "vacancy_master[degree_id]":{
+        required: "Please select qualification",
+      }
         required: "Please select designation ",
       },
       "vacancy_master[vacancy_name]":{

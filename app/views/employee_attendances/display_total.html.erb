@@ -26,7 +26,6 @@
                <td><%= e.employee.manual_employee_code %></td>
                <td><%= full_name(e.employee) %></td
 
-
                 <% present = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ?", @date.strftime('%m/%Y'), e.employee_id).where( "present = ? OR present = ? OR present = ?","P","PO","ACF") %>
                 <% absent = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ?", @date.strftime('%m/%Y'), e.employee_id).where( "present = ?","A") %>
                 <% half_day = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ?", @date.strftime('%m/%Y'), e.employee_id).where( "present = ?","HDL") %>

@@ -493,38 +493,28 @@ require 'roo'
 
 # #========================= EMPLOYEE ON BOARDING DATA START ===================================
 
-# ex = Roo::Excel.new("#{Rails.root}/public/spjd.xls")
+# ex = Roo::Excel.new("#{Rails.root}/public/promotion1.xls")
 # ex.default_sheet = ex.sheets[0] #siya feb
 # i = 1
 # ActiveRecord::Base.transaction do
-# 2.upto(168) do |line| # siya Feb 2016
+# 1.upto(182) do |line| # siya Feb 2016
 #  puts "Starting Record --------------------------#{ex.cell(line,'A')}"
 #  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
 #  # JoiningDetail.where(id: @employee.id).update_all(is_da: true)
 #  unless @employee.nil?
 
-#  @joining_details = JoiningDetail.where(employee_id: @employee.id)
-#   @joining_details.new do |e|
-#      e.employee_uan_no = ex.cell(line,'C').to_i
-#      e.joining_date =  ex.cell(line,'D')
-#      e.confirmation_date =  ex.cell(line,'E')
-#      @designation = EmployeeDesignation.find_by_name(ex.cell(line,'F'))
+#  @employee_promotions = EmployeePromotion.where(employee_id: @employee.id)
+#   @employee_promotions.new do |e|
+
+#   	@type2 = Department.find_by_name(ex.cell(line,'B'))
+#      e.department_id =  @type2.id unless @type2.nil?
+#      @designation = EmployeeDesignation.find_by_name(ex.cell(line,'C'))
 #      e.employee_designation_id = @designation.id unless @designation.nil?
-#       @grade = EmployeeGrade.find_by_name(ex.cell(line,'G'))
+#      @grade = EmployeeGrade.find_by_name(ex.cell(line,'D'))
 #      e.employee_grade_id = @grade.id unless @grade.nil?
-#      # e.employee_pf_no = ex.cell(line,'F').to_i
-#      @category = EmployeeCategory.find_by_name(ex.cell(line,'H'))
+#      @category = EmployeeCategory.find_by_name(ex.cell(line,'E'))
 #      e.employee_category_id = @category.id unless @category.nil?
-
-#      # e.probation_period = ex.cell(line,'H').to_i
-#      e.probation_period = ex.cell(line,'I').to_i
-#      e.notice_period =     ex.cell(line,'J').to_i
-
-#      e.have_passport = ex.cell(line,'K')
-#      e.passport_no = ex.cell(line,'L').to_i
-#      e.passport_issue_date = ex.cell(line,'M')
-#      e.passport_expiry_date = ex.cell(line,'N')
-#      e.retirement_date = ex.cell(line,'O')
+#      e.effective_from = ex.cell(line,'F')
 #     e.save!
 
 #     puts "Save...."
@@ -1421,38 +1411,38 @@ require 'roo'
 # end
 
 
-ex = Roo::Excel.new("#{Rails.root}/public/rgfdj.xls")
- ex.default_sheet = ex.sheets[2] #siya feb
+# ex = Roo::Excel.new("#{Rails.root}/public/rgfdj.xls")
+#  ex.default_sheet = ex.sheets[2] #siya feb
+#  i = 1
+#  ActiveRecord::Base.transaction do
+
+#  2.upto(84) do |line| # siya Feb 201
+#    puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#    @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+#    unless @employee.nil?
+
+#      FoodDeduction.new do |w|
+#        w.employee_id = @employee.id
+#        w.no_of_coupan = ex.cell(line, 'B')
+#        w.return_coupan = ex.cell(line, 'C').to_i
+#        w.total_coupan = ex.cell(line, 'D')
+#        w.food_coupan_master_id = ex.cell(line, 'E').to_i
+#        w.amount = ex.cell(line, 'F')
+#        w.food_date = ex.cell(line, 'G')
+#        w.save!
+#      end
+#      puts "#{i} Record inserted.-----------------------------------------------"
+#      i += 1
+#    end
+#    end
+#  end
+
+ ex = Roo::Excel.new("#{Rails.root}/public/rg.xls")
+ ex.default_sheet = ex.sheets[1] #siya feb
  i = 1
  ActiveRecord::Base.transaction do
 
- 2.upto(84) do |line| # siya Feb 201
-   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-   unless @employee.nil?
-
-     FoodDeduction.new do |w|
-       w.employee_id = @employee.id
-       w.no_of_coupan = ex.cell(line, 'B')
-       w.return_coupan = ex.cell(line, 'C').to_i
-       w.total_coupan = ex.cell(line, 'D')
-       w.food_coupan_master_id = ex.cell(line, 'E').to_i
-       w.amount = ex.cell(line, 'F')
-       w.food_date = ex.cell(line, 'G')
-       w.save!
-     end
-     puts "#{i} Record inserted.-----------------------------------------------"
-     i += 1
-   end
-   end
- end
-
- ex = Roo::Excel.new("#{Rails.root}/public/rgwdj.xls")
- ex.default_sheet = ex.sheets[8] #siya feb
- i = 1
- ActiveRecord::Base.transaction do
-
- 2.upto(199) do |line| # siya Feb 201
+ 1.upto(6) do |line| # siya Feb 201
    puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
    @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
    unless @employee.nil?
@@ -1462,7 +1452,7 @@ ex = Roo::Excel.new("#{Rails.root}/public/rgfdj.xls")
        w.month_name = ex.cell(line, 'B')
        w.year = ex.cell(line, 'C').to_i
        w.day_in_month = ex.cell(line, 'D')
-       w.payable_day = ex.cell(line, 'E')
+       w.payable_day = ex.cell(line, 'E').to_f
        w.save!
      end
      puts "#{i} Record inserted.-----------------------------------------------"

@@ -1740,7 +1740,7 @@ def update_attendance_for_show
   total_hrs = out_time.to_time - in_time.to_time
   working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
 
-  @employee_attendance.update(in_time: in_time,out_time: out_time,present: present,comment: comment,working_hrs: working_hrs,comment: "User Updated")
+  @employee_attendance.update(in_time: in_time,out_time: out_time,present: present,comment: comment,working_hrs: working_hrs,comment: "Manually Update")
   flash[:notice] = "Updated Successfully!"
   redirect_to select_date_and_employee_employee_attendances_path
 end

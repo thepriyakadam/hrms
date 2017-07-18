@@ -100,7 +100,7 @@ class EmployeeLeavRequestsController < ApplicationController
           @leave_c_off_id = params[:leave_c_off][:c_off_date]
           @leave_c_off = LeaveCOff.find_by(id: @leave_c_off_id)
         if start_date.to_date > @leave_c_off.c_off_date.to_date
-            if @leave_c_off.expiry_date < Date.today
+            if @leave_c_off.expiry_date < Date.today || @leave_c_off.expiry_date < start_date.to_date
               flash[:alert] = "C.Off Expire for that day"
             elsif @employee_leav_request.is_available_coff?
               flash[:alert] = "Your Leave Request already has been sent"

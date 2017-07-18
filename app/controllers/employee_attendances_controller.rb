@@ -2041,7 +2041,7 @@ end
     employee_attendance = EmployeeAttendance.where(employee_id: @employee.id,day: @date.to_date).take
     
     if @daily_attendance.nil?
-      flash[:alert] = "Please recheck your information!"
+      flash[:alert] = "Please Check Date and Crad Details!"
     else
 
       if first_in.nil? && last_out.nil?
@@ -2079,6 +2079,8 @@ end
   end#def
 
   def admin_level_acf
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Attendance"
   end
 
   def admin_acf_approval
@@ -2095,7 +2097,7 @@ end
     manager = Employee.find_by(id: current_user.employee_id)
 
     if @daily_attendance.nil?
-      flash[:alert] = "Please recheck your information!"
+      flash[:alert] = "Please Check Date and Crad Details!"
     else
 
       if first_in.nil? && last_out.nil?

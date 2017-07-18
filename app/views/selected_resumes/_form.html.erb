@@ -49,6 +49,13 @@
 
 <div class="col-sm-3">
     <div class="field">
+      <%= f.text_field :current_ctc, label: 'Current CTC' %>
+    </div>
+  </div>
+
+
+<div class="col-sm-3">
+    <div class="field">
       <%= f.text_field :ctc, label: 'Expected CTC' %>
     </div>
   </div>
@@ -65,6 +72,9 @@
       <%= f.text_field :notice_period, label: 'Notice Period' %>
     </div>
   </div>
+  </div>
+
+<div class="row">
 
   <div class="col-sm-3">
     <div class="field">
@@ -72,12 +82,12 @@
     </div>
   </div>
 
- 
+<div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :contact_no2,label: 'Alternate Contact No.' %>
+    </div>
+  </div>
 
- 
-
-</div>
-<div class="row">
 
  <div class="col-sm-3">
     <div class="field">
@@ -85,12 +95,14 @@
     </div>
   </div>
 
-
-  <div class="col-sm-3">
+   <div class="col-sm-3">
     <div class="field">
       <%= f.file_field :avatar,label: 'Resume Upload(only docx,pdf)' %>
     </div>
  </div>
+</div>
+
+<div class="row">
 
  <div class="col-sm-3">
       <div class="field">
@@ -98,10 +110,8 @@
       </div>
     </div>
 
-  
-</div>
-<div class="row">
 <div class="col-sm-3">
+<label></label>
     <div class="actions">
       <%= f.submit "Create", class: "btn btn-primary btn-sm" %>
     </div>

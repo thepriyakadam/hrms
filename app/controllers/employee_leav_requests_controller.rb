@@ -251,8 +251,8 @@ class EmployeeLeavRequestsController < ApplicationController
 
                 elsif @leav_category.is_limit == true && @employee_leav_request.is_out_of_limit(@employee_leav_request)
                   flash[:alert] = "Leave Range for #{@leav_category.name} is Between #{@leav_category.from} - #{@leav_category.to}"
-                  redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
 
+                  redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
                 else
                   @leave_category = LeavCategory.where(id: @employee_leav_request.leav_category_id,is_active: true).take
                   if @leave_category.is_balance == true
@@ -649,6 +649,12 @@ class EmployeeLeavRequestsController < ApplicationController
   def leave_req_status_report
     session[:active_tab] ="LeaveManagement"
     session[:active_tab1] ="LeaveReports"
+  end
+
+  def modal
+   # byebug
+   #  employee_id = params[:employee][:employee_id]
+    @leave_c_off = LeaveCOff.find(params[:format])
   end
 
   def status_wise_request

@@ -33,7 +33,7 @@
     <div class="row">
       <div class="col-sm-2">
         <div class="form-group required">
-          <%= f.select :leave_type,['Full Day','Half Day','Full/Half'],{label:"OD Type",include_blank: "Select OD Type"},{onchange:"var a={leave_type:$(this).val()}; $.get('/on_duty_requests/select_checkbox',a,function(response){});",class: 'form-control'} %>
+          <%= f.select :leave_type,['Full Day','Half Day'],{label:"OD Type",include_blank: "Select OD Type"},{onchange:"var a={leave_type:$(this).val()}; $.get('/on_duty_requests/select_checkbox',a,function(response){});",class: 'form-control'} %>
         </div>
       </div>
 

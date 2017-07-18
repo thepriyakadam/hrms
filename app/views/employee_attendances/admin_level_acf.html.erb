@@ -3,9 +3,13 @@
   <div class="box-header">
     <h3 class="box-title">Access Card</h3>
   </div>
-  <%= bootstrap_form_for(:salary,url:{ action: 'access_card_list'},html: {id: "salary"}) do |f| %>
+  <%= bootstrap_form_for(:salary,url:{ action: 'admin_acf_approval'},html: {id: "salary"}) do |f| %>
     <div class="box-body">
       <div class="row">
+        <div class="col-sm-3">
+          <%= select :salary, :employee_id, all_active_employee_with_code, {include_blank: "Select Employee",hide_label: true},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+        </div>
+
         <div class="col-sm-3">
           <div class="form-group required">
             <div class="input-group">
@@ -23,7 +27,7 @@
         </div>
         <div class="col-sm-3">
           <div class="actions">
-            <%= f.submit "Send Request" ,class: 'btn btn-primary btn-sm',id: "buttonCtc" %>
+            <%= f.submit "Assign ACF" ,class: 'btn btn-primary btn-sm',id: "buttonCtc" %>
           </div>
         </div>
       </div><br>
@@ -51,6 +55,9 @@
 <script>
 $("#salary").validate({
     rules: {
+      "salary[employee_id]":{
+        required: true,
+      },
       "salary[date]":{
         required: true,
       },
@@ -59,6 +66,9 @@ $("#salary").validate({
       }
     },
     messages: {
+      "salary[employee_id]":{
+        required: "Please select Employee",
+      },
       "salary[date]":{
         required: "Please select Date",
       },

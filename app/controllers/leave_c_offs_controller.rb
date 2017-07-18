@@ -66,7 +66,7 @@ class LeaveCOffsController < ApplicationController
             @employee_leave_balance = EmployeeLeavBalance.where(employee_id: @leave_c_off.employee_id, leav_category_id: leav_category.id).take
              @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
              
-            if @leave_c_off.c_off_type == 'Full Day'
+            if @leave_c_off.c_off_type == 'Full Day' || @leave_c_off.c_off_type == "" || @leave_c_off.c_off_type.nil?
               @employee_leave_balance.total_leave = @employee_leave_balance.total_leave.to_f + 1
               @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f + 1
               @leave_c_off.leave_count = 1

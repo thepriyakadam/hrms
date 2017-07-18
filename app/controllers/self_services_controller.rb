@@ -52,14 +52,20 @@ class SelfServicesController < ApplicationController
     tentative_leaving_date = params[:employee_resignation][:tentative_leaving_date]
     reason = params[:employee_resignation][:reason]
     note = params[:employee_resignation][:note]
-    @employees=Employee.find_by(id: employee_id)
-    @date_diff = (tentative_leaving_date.to_date - resignation_date.to_date).to_i
 
-    @employee_resignation = EmployeeResignation.create(short_notice_period: @date_diff,reporting_master_id: @employees.manager_id,is_pending: true,resign_status: "Pending",is_first_approved: false,is_first_rejected: false, is_cancelled: false,employee_id: employee_id,resignation_date: resignation_date,application_date: application_date,reason: reason,note: note,leaving_reason_id: leaving_reason_id,notice_period: notice_period,tentative_leaving_date: tentative_leaving_date)  
-    @resignation_status_record = ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Pending",change_date: Date.today)
-    EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
-    flash[:notice] = "created Successfully!"
-    redirect_to employee_resignation_self_services_path
+    if resignation_date == "" || leaving_reason_id == "" || tentative_leaving_date == "" || reason == ""
+      flash[:alert] = "Please fill all mendetory fields!"
+    else
+
+      @employees=Employee.find_by(id: employee_id)
+      @date_diff = (tentative_leaving_date.to_date - resignation_date.to_date).to_i
+
+      @employee_resignation = EmployeeResignation.create(short_notice_period: @date_diff,reporting_master_id: @employees.manager_id,is_pending: true,resign_status: "Pending",is_first_approved: false,is_first_rejected: false, is_cancelled: false,employee_id: employee_id,resignation_date: resignation_date,application_date: application_date,reason: reason,note: note,leaving_reason_id: leaving_reason_id,notice_period: notice_period,tentative_leaving_date: tentative_leaving_date)  
+      @resignation_status_record = ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Pending",change_date: Date.today)
+      EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
+      flash[:notice] = "created Successfully!"
+    end#nil
+      redirect_to employee_resignation_self_services_path
   end
 
   def resignation_history
@@ -178,15 +184,19 @@ class SelfServicesController < ApplicationController
             else
               @c_off.each do |l|
                 if l.try(:expiry_date).to_date < Date.today
+                  @employee_leave_balance = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take  
+                  @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - l.leave_count
                   LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
+                  @employee_leave_balance.save
                 else
+                  @employee_leave_balance = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take
+                  @employee_leave_balance.save
                 end
               end#do
             end#c_off.nil?
 
-            if @c_off_type == 'Full Day'
-              @leave_c_off = LeaveCOff.create(employee_id:
-               @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending")
+            if @c_off_type == 'Full Day' || @c_off_type == "" || @c_off_type == nil
+              @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending")
               StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
               flash[:notice] = "Your COff Created Successfully!"
               COffMailer.pending(@leave_c_off).deliver_now

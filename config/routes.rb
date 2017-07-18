@@ -701,6 +701,8 @@ end
       get :view_access_card_detail
       get :approve_acf_request
       get :reject_acf_request
+      get :admin_level_acf
+      post :admin_acf_approval
     end
   end
   resources :salary_comp_mappings

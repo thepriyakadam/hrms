@@ -31,7 +31,7 @@ LeaveCOff.all
 
   def is_self_present(emp,date)
     flag = 0
-    flag = LeaveCOff.exists?(employee_id: emp,c_off_date: date.to_date,status: nil)
+    flag = LeaveCOff.exists?(employee_id: emp,c_off_date: date.to_date,status: true)
     flag 
   end
   

@@ -34,9 +34,6 @@ class SelectedResumesController < ApplicationController
     @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
   end
 
-
-  
-
   def create
      @selected_resume = SelectedResume.new(selected_resume_params)
      @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
@@ -196,8 +193,6 @@ class SelectedResumesController < ApplicationController
   end
 
   def offer_letter
-      # puts "-----------------"
-      # byebug
       # @vacancy_master = VacancyMaster.find(params[:id])
       @selected_resume = SelectedResume.find(params[:id])
       @offer_letter_status = params[:selected_resume][:offer_letter_status]
@@ -217,7 +212,6 @@ class SelectedResumesController < ApplicationController
   end
 
   def update_status
-    # puts "----------------------------------"
     @selected_resume = SelectedResume.find(params[:id])
     @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
     @current_status = params[:selected_resume][:status]
@@ -249,7 +243,6 @@ class SelectedResumesController < ApplicationController
   end
 
   def update_vacancy
-     # byebug
      @selected_resume = SelectedResume.find(params[:id])
      @vacancy_name = params[:selected_resume][:vacancy_master_id]
      SelectedResume.where(id: @selected_resume.id).update_all(vacancy_master_id: @vacancy_name)
@@ -257,6 +250,15 @@ class SelectedResumesController < ApplicationController
      redirect_to all_resume_list_selected_resumes_path
   end
 
+  def show_selected_resume
+    @selected_resume = SelectedResume.find(params[:format])
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+  end
+
+  def show_part_resume
+    @selected_resume = SelectedResume.find(params[:id])
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

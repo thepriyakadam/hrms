@@ -54,6 +54,27 @@ class RecruitersController < ApplicationController
     @recruiters = Recruiter.all
   end
 
+  def final_approve_modal
+    @vacancy_master = VacancyMaster.find(params[:format])
+  end
+
+  def final_approve_request
+    employee_id = params[:salary][:employee_id]
+    target_date = params[:salary][:target_date]
+    recruiter = Recruiter.find_by(id: employee_id)
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+    @vacancy_master.update(target_date: target_date.to_date,recruiter_id: recruiter.employee_id,current_status: "FinalApproved",reporting_master_id: current_user.employee_id)
+    ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id,reporting_master_id: current_user.employee_id,vacancy_status: "FinalApproved")
+    ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id).update_all(status: "FinalApproved")
+    if @vacancy_master.current_status == "FinalApproved"
+      flash[:notice] = 'Vacancy Request Approved Successfully'
+      redirect_to final_approval_vacancy_list_vacancy_masters_path
+    else
+      flash[:notice] = 'Vacancy Request Approved Successfully'
+      redirect_to vacancy_history_vacancy_masters_path
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_recruiter

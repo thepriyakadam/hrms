@@ -39,14 +39,6 @@
             <small class="label label-default">Not Yet Shortlisted</small>
             <% end %>
         </td>
-        <!-- <td><= selected_resume.offer_letter_status %> <div id="myModal" class="modal fade"></div>
-          < if selected_resume.status == "Shortlisted" %>
-          <= link_to ' Offer Letter',modal_selected_resumes_path(selected_resume),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>
-          < elsif selected_resume.status == "Interview Scheduled" %>
-          <= link_to ' Offer Letter',modal_selected_resumes_path(selected_resume),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>
-          < else %>
-          < end %>
-          </td> -->
         <td>
          <% if selected_resume.avatar_file_name == nil %>
            <small class="label label-default">Not Available</small>
@@ -65,16 +57,15 @@
         <td>
         <!--<= link_to '', selected_resume, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>-->
         <% if selected_resume.status == "Interview Scheduled" %>
-        <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
+        <%= link_to '', show_scheduled_resume_vacancy_masters_path(vacancy_master_id: @vacancy_master.id,id: selected_resume.id),class: 'btn btn-xs btn-default fa fa-eye' %>
         <% else %>
         <% end %>
            <% if selected_resume.status == "Shortlisted" %>
           <%= link_to ' Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>
-          <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
-          <!-- < elsif selected_resume.status == "Interview Rescheduled" %>
-          <= link_to ' Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %> -->
+          <%= link_to '', show_scheduled_resume_vacancy_masters_path(vacancy_master_id: @vacancy_master.id,id: selected_resume.id),class: 'btn btn-xs btn-default fa fa-eye' %>
+          
           <% else %>
-          <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
+          <%= link_to '', show_scheduled_resume_vacancy_masters_path(vacancy_master_id: @vacancy_master.id,id: selected_resume.id),class: 'btn btn-xs btn-default fa fa-eye' %>
           <% end %>
           
         </td>

@@ -19,7 +19,7 @@
     <% @interview_round_reschedules.each do |interview_round_reschedule| %>
       <tr>
         <td><%= i=i+1 %></td>
-        <td><%= interview_round_reschedule.employee.first_name+' '+interview_round_reschedule.employee.middle_name+' '+interview_round_reschedule.employee.last_name %></td>
+        <td><%= interview_round_reschedule.employee.first_name.to_s+' '+interview_round_reschedule.employee.middle_name.to_s+' '+interview_round_reschedule.employee.last_name.to_s %></td>
         <td><%= interview_round_reschedule.interview_type.try(:name) %></td>
         <td><%= interview_round_reschedule.interview_date %></td>
         <td><%= interview_round_reschedule.interview_time %></td>

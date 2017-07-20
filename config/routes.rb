@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
 
   resources :punch_masters
-  resources :recruiters 
+  resources :recruiters do
+    collection do
+      get :final_approve_modal
+      post :final_approve_request
+    end
+  end
   resources :candidate_interview_schedules do
     collection do
       get :interview
@@ -1089,6 +1094,8 @@ end
     post :is_confirm_resume
     get :modal_vacancy_dropdown
     post :update_vacancy
+    get :show_selected_resume
+    get :show_part_resume
     end
   end
   resources :assigned_assets do
@@ -1365,6 +1372,12 @@ end
       get :vacancy_hr_resume
       get :hr_resume
       post :shortlist_for_interview
+      get :show_selected_resume
+      get :show_scheduled_resume
+      get :show_vacancy_resume
+      get :show_vacancy_hr_resume
+      get :show_vacancy_shortlisted_list
+      get :show_vacancy_profile
     end
   end
    resources :leave_c_offs do

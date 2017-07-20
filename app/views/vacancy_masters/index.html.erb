@@ -33,23 +33,21 @@
         <td>
             <% vacancy_master.reporting_masters_vacancy_masters.try(:each) do |rm| %>
             <% case rm.vacancy_status %>
-            <% when "Pending" %>
+              <% when "Pending" %>
               <small class="label label-default">Pending</small>
-            <% when "FirstApproved" %>
-              <small class="label label-primary">FirstApproved</small>
-              <% when "SecondApproved" %>
-              <small class="label label-info">SecondApproved</small>
+              <% when "FirstApproved" %>
+              <small class="label label-warning">FirstApproved</small>
+              <% when "Approved" %>
+              <small class="label label-primary">Approved</small>
               <% when "Approved & Send Next" %>
               <small class="label label-info">Approved & Send Next</small>
               <% when "FinalApproved" %>
-              <small class="label label-primary">FinalApproved</small>
+              <small class="label label-success">FinalApproved</small>
               <% when "Rejected" %>
               <small class="label label-danger">Rejected</small>
               <% when "Cancelled" %>
               <small class="label label-warning">Cancelled</small>
-              <% else %>
-              <small class="label label-success">Else</small>
-             <% end %>
+              <% end %>
             <% end %>
         </td>
         <td>

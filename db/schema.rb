@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170717054916) do
+ActiveRecord::Schema.define(version: 20170720090004) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1276,7 +1276,6 @@ ActiveRecord::Schema.define(version: 20170717054916) do
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
     t.integer  "leaving_reason_id",         limit: 4
-    t.integer  "reporting_master_id",       limit: 4
     t.string   "resign_status",             limit: 255
     t.boolean  "is_stop_pay_request"
     t.boolean  "is_pending"
@@ -1291,11 +1290,11 @@ ActiveRecord::Schema.define(version: 20170717054916) do
     t.integer  "final_reporter_id",         limit: 4
     t.integer  "second_reporter_id",        limit: 4
     t.integer  "change_status_employee_id", limit: 4
+    t.integer  "reporting_master_id",       limit: 4
   end
 
   add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id", using: :btree
   add_index "employee_resignations", ["leaving_reason_id"], name: "index_employee_resignations_on_leaving_reason_id", using: :btree
-  add_index "employee_resignations", ["reporting_master_id"], name: "index_employee_resignations_on_reporting_master_id", using: :btree
 
   create_table "employee_salary_templates", force: :cascade do |t|
     t.integer  "employee_id",                limit: 4
@@ -3365,14 +3364,13 @@ ActiveRecord::Schema.define(version: 20170717054916) do
 
   create_table "resignation_status_records", force: :cascade do |t|
     t.integer  "employee_resignation_id",   limit: 4
-    t.integer  "change_status_employee_id", limit: 4
     t.string   "status",                    limit: 255
     t.datetime "change_date"
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
+    t.integer  "change_status_employee_id", limit: 4
   end
 
-  add_index "resignation_status_records", ["change_status_employee_id"], name: "index_resignation_status_records_on_change_status_employee_id", using: :btree
   add_index "resignation_status_records", ["employee_resignation_id"], name: "index_resignation_status_records_on_employee_resignation_id", using: :btree
 
   create_table "retention_moneys", force: :cascade do |t|
@@ -4061,6 +4059,8 @@ ActiveRecord::Schema.define(version: 20170717054916) do
     t.boolean  "relocation_rerimbursement"
     t.string   "relocation_cost",           limit: 255
     t.integer  "reporting_master_id",       limit: 4
+    t.integer  "recruiter_id",              limit: 4
+    t.date     "target_date"
   end
 
   add_index "vacancy_masters", ["company_location_id"], name: "index_vacancy_masters_on_company_location_id", using: :btree
@@ -4329,7 +4329,6 @@ ActiveRecord::Schema.define(version: 20170717054916) do
   add_foreign_key "employee_promotions", "employees"
   add_foreign_key "employee_resignations", "employees"
   add_foreign_key "employee_resignations", "leaving_reasons"
-  add_foreign_key "employee_resignations", "reporting_masters"
   add_foreign_key "employee_salary_templates", "employee_templates"
   add_foreign_key "employee_salary_templates", "employees"
   add_foreign_key "employee_salary_templates", "salary_components"
@@ -4505,7 +4504,6 @@ ActiveRecord::Schema.define(version: 20170717054916) do
   add_foreign_key "resignation_histories", "employee_resignations"
   add_foreign_key "resignation_histories", "employees"
   add_foreign_key "resignation_histories", "reporting_masters"
-  add_foreign_key "resignation_status_records", "change_status_employees"
   add_foreign_key "resignation_status_records", "employee_resignations"
   add_foreign_key "reward_recognitions", "reward_owners"
   add_foreign_key "reward_recognitions", "reward_types"

@@ -2,7 +2,7 @@
   <div class="box-header with-border">
     <h3 class="box-title">Employee Details</h3>
   </div>
-  <%= bootstrap_form_for :employee, url: { action: 'display_employee_details'},html: {id: 'employee'},remote:true do |f| %>
+  <%= bootstrap_form_for :employee, url: { action: 'display_employee_details'},id: @emp,html: {id: 'employee'},remote:true do |f| %>
   <div class="box-body">
 
       <div class="row">

@@ -4,6 +4,7 @@ class EmployeePhysical < ActiveRecord::Base
   validates :height, presence: true
   validates :weight, presence: true
   validates :size, presence: true
+  validates :trouser_size, presence: true
 
    def self.to_csv(options = {})
     CSV.generate(options) do |csv|

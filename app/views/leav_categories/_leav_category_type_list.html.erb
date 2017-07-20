@@ -3,11 +3,7 @@
   <thead>
     <tr>  
       <th>Code</th> 
-      <th>Name</th>
-      <th>From</th>
-      <th>To</th>
-      <th>Monthly Limit</th>
-      <th>Payble</th> 
+      <th>Name</th> 
       <th>Status</th> 
       <th>Action</th>
     </tr>
@@ -17,10 +13,7 @@
       <tr>
         <td><%= leav_category.code %></td> 
         <td><%= leav_category.name %></td>
-        <td><%= leav_category.from %></td>
-        <td><%= leav_category.to %></td>
-        <td><%= leav_category.monthly_leave %></td>
-        <td><%= leav_category.is_payble ? "Yes" : "No" %></td>
+
         <td><%= leav_category.is_active ? "Active" : "Inactive" %></td> 
         <td>
           <% if leav_category.is_confirm == true %>

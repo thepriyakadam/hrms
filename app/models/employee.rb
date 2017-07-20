@@ -33,7 +33,8 @@ class Employee < ActiveRecord::Base
   
   # has_many :first_reporters, :class_name => "EmployeeLeavRequest", :foreign_key => :first_reporter_id
   # has_many :second_reporters, :class_name => "EmployeeLeavRequest", :foreign_key => :second_reporter_id
-  
+  has_many :reporting_masters, class_name: 'Employee', foreign_key: 'reporting_master_id'
+  has_many :replacements, class_name: 'Employee', foreign_key: 'replacement_id'
   has_many :first_reporters, class_name: 'EmployeeLeavRequest', foreign_key: 'first_reporter_id'
   has_many :second_reporters, class_name: 'EmployeeLeavRequest', foreign_key: 'second_reporter_id'
   has_many :change_status_employees, class_name: 'LeaveStatusRecord', foreign_key: 'change_status_employee_id'
@@ -122,6 +123,12 @@ class Employee < ActiveRecord::Base
   has_many :resignation_status_records, class_name: 'ResignationStatusRecord', foreign_key: 'change_status_employee_id'
   has_many :second_reporters, class_name: 'EmployeeResignation', foreign_key: 'final_reporter_id'
   has_many :replacements, class_name: 'JoiningDetail', foreign_key: 'replacement_id'
+  has_many :vacancy_requests, class_name: 'Employee', foreign_key: 'request_by_id'
+  has_many :vacancy_requests, class_name: 'Employee', foreign_key: 'approval_by_id'
+  has_many :candidate_forms, class_name: 'Employee', foreign_key: 'selected_by_id'
+  has_many :candidate_interview_schedules, class_name: 'Employee', foreign_key: 'interviewer_id'
+  has_many :greetings, class_name: "Employee", foreign_key: "sender_id"
+  has_many :greetings, class_name: "Employee", foreign_key: "receiver_id"
 
   # has_many :reporting_masters, class_name: "Employee",
   #                         foreign_key: "manager_id"

@@ -1,5 +1,48 @@
 Rails.application.routes.draw do
 
+  resources :punch_masters
+  resources :recruiters 
+  resources :candidate_interview_schedules do
+    collection do
+      get :interview
+      get :modal
+    end
+  end
+  resources :greetings do
+    collection do
+      get :modal_for_mail
+      post :send_mail
+      get :anniversary_mail
+      post :send_anniversary_mail
+    end
+  end
+  resources :thoughts
+  resources :candidate_interview_schedules
+  resources :interview_type_masters
+  resources :interview_types
+  resources :candidate_forms
+  resources :vacancy_request_statuses
+  resources :interview_types
+  resources :vacancy_requests do
+    collection do
+      get :cancel
+      get :approval_list
+      get :approval_detail
+      get :first_approve
+      get :approve
+      get :reject
+      get :final_approve
+      get :final_approval_list
+      get :approve_and_send_next
+      get :modal_approve_and_send_next
+      get :select_candidate
+      get :admin_approval
+      get :admin_approval_detail
+      get :recruiter_modal
+      post :final_approve
+    end
+  end
+  resources :policy_types
   resources :reimbursement_requests do
     collection do
       get :send_for_approval
@@ -8,9 +51,14 @@ Rails.application.routes.draw do
       get :reject
       get :edit_request_modal
       post :update_request_modal
+      get :modal
     end
   end
-  resources :reimbursement_slabs
+  resources :reimbursement_slabs do
+    collection do
+      get :modal
+    end
+  end
   resources :reimbursement_heads
   resources :reporting_master_rembursments
   resources :rembursments  do
@@ -48,6 +96,7 @@ Rails.application.routes.draw do
       get :employee_list
       get :apply_tds
       get :deduction_list
+      get :modal
     end
   end
   resources :employee_gps_histories
@@ -57,7 +106,11 @@ Rails.application.routes.draw do
       get :is_confirm
     end
   end
-  resources :monthly_arrears
+  resources :monthly_arrears  do
+    collection do
+      get :modal
+    end
+  end
   resources :on_duty_requests do
     collection do
       get :select_checkbox
@@ -311,6 +364,7 @@ Rails.application.routes.draw do
     collection do
       get :collect_issues
        get :is_confirm
+       get :modal
     end
   end
   resources :issue_types do
@@ -415,7 +469,8 @@ end
       post :print_transfer_employee_name_report
       get :transfer_employee_name_report_pdf
       get :transfer_employee_name_report_xls
-
+      get :admin_employee_transfer
+      post :final_approve_by_admin
     end
   end
 
@@ -454,6 +509,7 @@ end
       get :datewise_report
       post :show_datewise_report
       get :show_datewise_report
+      get :modal
     end
   end
   resources :investment_heads
@@ -470,6 +526,10 @@ end
   resources :company_policies do
     collection do
       get :active_policies_list
+      get :policy_type_detail
+      get :policy_type_dashboard
+      get :modal
+      post :update_company_policy
     end
   end
 
@@ -617,6 +677,32 @@ end
       get :datewise_report
       post :show_datewise_report
       get :show_datewise_report
+
+      post :upload
+      get :upload_daily_attendance
+      get :upload_daily_attendance_to_txt
+      get :datewise_daily_attendance
+      post :show_datewise_daily_attendance
+      get :modal_edit_daily_attendance
+      post :update_daily_attendance
+      post :create_self_attendance
+      get :daily_attendance_datewise
+      post :show_daily_attendance_datewise
+      get :select_date_and_employee
+      post :date_and_employeewise_attendance
+      get :destroy_daily_attendance
+      post :show_daily_attendance_for_destroy
+      post :destroy_daily_attendance_datewise
+      get :modal_edit_for_show
+      post :update_attendance_for_show
+      get :access_record
+      post :access_card_list
+      get :access_card_approval
+      get :view_access_card_detail
+      get :approve_acf_request
+      get :reject_acf_request
+      get :admin_level_acf
+      post :admin_acf_approval
     end
   end
   resources :salary_comp_mappings
@@ -728,6 +814,10 @@ end
       get :period_rating_wise_xls
       get :increment_index_report
       get :detail_employee_wise
+      get :show_goal_rating
+      get :show_attribute
+      get :show_goal_modal
+      get :show_attribute_modal
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -1319,6 +1409,13 @@ end
       post :create_reimbursement_request
       get :employee_rembursment
       post :create_emp_rembursment
+      get :add_attendance
+      post :create_self_attendance
+      get :show_investment_declaration_list
+      get :show_leave_c_off_list
+      get :modal
+      get :holiday_setup
+      post :create_self_resignation
     end
   end
 
@@ -1397,6 +1494,9 @@ end
   match 'issue_requests/:id/download_screenshot_image/:id' => 'issue_requests#download_screenshot_image', :via => [:get], :as => :download_screenshot_image
   match 'issue_requests/:id/download_screenshot/:id' => 'issue_requests#download_screenshot', :via => [:get], :as => :download_screenshot
   match 'companies/:id/download_company_logo/:id' => 'companies#download_company_logo', :via => [:get], :as => :download_company_logo
+  
+   match 'candidate_forms/:id/document_1/:id' => 'candidate_forms#document_1', :via => [:get], :as => :document_1
+   match 'candidate_forms/:id/document_2/:id' => 'candidate_forms#document_2', :via => [:get], :as => :document_2
 
   match 'visitor_details/:id/download_person_image/:id' => 'visitor_details#download_person_image', :via => [:get], :as => :download_person_image
   # get '/screenshot', to: 'issue_requests#download_screenshot', as: 'download_screenshot'
@@ -1479,6 +1579,7 @@ end
       get :monthly_expence_report
       get :dynamic_report
       post :dynamic_report
+      get :modal
     end
   end
   resources :expencess_types do
@@ -1501,6 +1602,7 @@ end
       get :food_deduction_report
       get :dynamic_report
       post :dynamic_report
+      get :modal
     end
   end
   resources :reporting_masters do
@@ -1844,6 +1946,7 @@ end
     collection do
       post :create_employee_template
       get :is_confirm
+      get :modal
     end
   end
   resources :universities do
@@ -1974,6 +2077,9 @@ end
       get :leave_req_status_report
       post :status_wise_request
       get :status_wise_request
+      get :select_form
+      get :select_admin_form
+      get :modal
     end
   end
   resources :company_leavs
@@ -2046,6 +2152,7 @@ end
   end
   resources :employees do
     collection do
+      get :print_employee_data_formate
       get :employee_list_report
       post :selected_employee_list_report
       get :selected_employee_pdf
@@ -2151,9 +2258,12 @@ end
       post :update_gps
       get :employee_gps_setting_list
       post :display_employee_details
+      get :display_employee_details
       get :employee_detail_form
       get :employee_record_pdf
       get :is_confirm
+      get :modal
+      get :update_manager_modal
     end
     member do
       get :edit_manager
@@ -2216,6 +2326,7 @@ end
     collection do
       get :created_user
       patch :update_form
+      # get :show
     end
   end
 

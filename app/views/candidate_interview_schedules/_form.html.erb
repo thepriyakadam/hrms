@@ -1,0 +1,142 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Interview Schedule</h3>
+  </div>
+  <div class="box-body">
+<%= bootstrap_form_for(@candidate_interview_schedule,html: {id: 'candidate_interview_schedule'},candidate_form_id: @candidate_form.id) do |f| %>
+ <%= f.hidden_field :candidate_form_id,value:@candidate_form.id  %> 
+
+<div class="row">
+    <div class="col-sm-3">
+     <div class="form-group required">
+           <%= f.select :interviewer_id, all_active_employee_with_code, {include_blank: "Select Interviewer",label: "Select Interviewer"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>  
+          </div>
+  </div>
+
+  <div class="col-sm-3">
+         <div class="form-group required">
+              <%= f.select :interview_type_master_id,all_interview_type_master,{label: 'Interview Type',include_blank: " Select Interview Type"} %>
+          </div>
+        </div>
+
+<div class="col-sm-3">
+<!--     <label>Traveling Date </label>
+ -->    <div class="field">
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="fa fa-calendar"></i>
+        </div>
+          <div class="form-group required">
+        <%= f.text_field :date, label: 'Interview Date', class: 'interview_date'%>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-2">
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <label>Interview Time</label>
+          <div class="input-group">
+            <%= f.text_field :time,hide_label: true, placeholder: 'Time',class: 'form-control timepicker' %>
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+    </div>
+    </div>
+
+
+
+  <div class="row">
+
+<div class="col-sm-3">
+    <div class="form-group required">
+      <%= f.text_field :place, label: 'Place' %>
+    </div>
+  </div>
+
+ 
+   <div class="col-sm-8">
+    <div class="field">
+      <%= f.text_field :address, label: 'Address' %>
+    </div>
+  </div>
+  </div>
+
+  <div class="row">
+ 
+  <div class="col-sm-5">
+    <div class="field">
+      <%= f.text_area :description, label: 'Description' %>
+    </div>
+  </div>
+
+  <div class="col-sm-3">
+  <label></label>
+    <div class="actions">
+      <%= f.submit "Create Schedule Interview",:class => class_name, data: { disable_with: data_info }  %>
+      <!-- <= link_to 'Back', candidate_interview_schedules_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %> -->
+    </div>
+  </div>
+</div>
+
+<% end %>
+</div>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+    $('.interview_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+10',
+    dateFormat: 'dd-mm-yy' });
+    });
+</script>
+
+<script>
+$("#candidate_interview_schedule").validate({
+    rules: {
+      "candidate_interview_schedule[interviewer_id]":{
+        required: true,
+      },
+      "candidate_interview_schedule[interview_type_master_id]":{
+        required: true,
+      },
+      "candidate_interview_schedule[date]":{
+        required: true,
+         },
+      "candidate_interview_schedule[time]":{
+        required: true,
+         },
+      "candidate_interview_schedule[place]":{
+        required: true,
+         }
+    },
+    messages: {
+      "candidate_interview_schedule[interviewer_id]":{
+        required: "Please Select Interviewer",
+      },
+      "candidate_interview_schedule[interview_type_master_id]":{
+        required: "Please Select Type of Interview ",
+      },
+      "candidate_interview_schedule[date]":{
+        required: "Please Select Date ",
+         },
+      "candidate_interview_schedule[time]":{
+        required: "Please Select time",
+         },
+      "candidate_interview_schedule[place]":{
+        required: "Please specify place",
+         }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

@@ -9,6 +9,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
   has_many :particular_leave_records
   has_many :employee_attendances
   has_many :leave_records
+  belongs_to :employee_leav_balance
   # belongs_to :first_reporter, class_name: 'Employee', foreign_key: 'first_reporter_id'
   # belongs_to :second_reporter, class_name: 'Employee', foreign_key: 'second_reporter_id'
 
@@ -23,9 +24,27 @@ class EmployeeLeavRequest < ActiveRecord::Base
   # CURRENT_STATUSS = [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]]
   # validates_inclusion_of :current_status, :in => CURRENT_STATUSS
 
+  def is_out_of_limit(employee_leav_request)
+    flag = 0
+      @leav_category = LeavCategory.find_by(id: employee_leav_request.leav_category_id)
+      flag = employee_leav_request.leave_count.to_f <  @leav_category.from.to_f || employee_leav_request.leave_count.to_f > @leav_category.to.to_f
+    flag
+  end
+
   def is_salary_processed?
     flag = 0
     for i in self.start_date.to_date..self.end_date.to_date
+      flag = Workingday.exists?(year: i.year,month_name: i.strftime("%B"), employee_id: self.employee_id)
+      if flag == true
+        break
+      end
+    end
+    flag
+  end
+
+  def is_salary_processed_coff?
+    flag = 0
+    for i in self.start_date.to_date..self.start_date.to_date
       flag = Workingday.exists?(year: i.year,month_name: i.strftime("%B"), employee_id: self.employee_id)
       if flag == true
         break
@@ -130,14 +149,12 @@ class EmployeeLeavRequest < ActiveRecord::Base
       leave_balance.no_of_leave.to_f
       employee_leav_request.leave_count.to_f
       leave_balance.no_of_leave = leave_balance.no_of_leave.to_f - employee_leav_request.leave_count.to_f
-      #leave_balance.no_of_leave = leave_balance.no_of_leave.to_f - employee_leav_request.leave_count.to_f
       leave_balance.save
     end
   end
 
   def revert_leave(employee_leav_request)
     leave_balance = EmployeeLeavBalance.where("employee_id = ? AND leav_category_id = ? AND is_active = ?",employee_leav_request.employee_id, employee_leav_request.leav_category_id, true).take
-
     unless leave_balance.nil?
       leave_balance.no_of_leave = leave_balance.no_of_leave.to_f + employee_leav_request.leave_count.to_f
       leave_balance.save
@@ -145,7 +162,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
   end
 
   def manage_coff(request)
-    if request.leav_category.name == 'Compensatory Off'
+    if request.leav_category.code == 'C.Off'
       c_offs = LeaveCOff.where(employee_id: request.employee_id, is_taken: false, is_expire: false).order('c_off_date asc')
       c_offs.each do |c|
         if request.leave_count == 0
@@ -359,6 +376,19 @@ class EmployeeLeavRequest < ActiveRecord::Base
     flag
   end
 
+  def is_available_coff?
+    flag = false
+    leave_records = LeaveRecord.where(employee_id: self.employee_id).where.not(status: "Cancelled")
+    leave_records.each do |l|
+      for i in self.start_date.to_date..self.start_date.to_date
+        if i ==  l.day
+          flag = true
+        end
+      end
+    end
+    flag
+  end
+
   def is_first_approved?
     flag = false
     leave_records = LeaveRecord.where(employee_id: self.employee_id,status: 'FirstApproved')
@@ -422,6 +452,14 @@ class EmployeeLeavRequest < ActiveRecord::Base
     
     if count_1 > @monthly_limit
     elsif count_2 > @monthly_limit
+    end
+  end
+
+  def leave_record_create_coff(employee_leav_request)
+    if employee_leav_request.leave_count == 0.5
+      LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: employee_leav_request.start_date,count: 0.5,leav_category_id: employee_leav_request.leav_category_id)
+    else
+      LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: employee_leav_request.start_date,count: 1,leav_category_id: employee_leav_request.leav_category_id)
     end
   end
 

@@ -1,0 +1,118 @@
+ <div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Policy Details </center></h4>
+    </div>
+    <div class="modal-body">
+  
+      <%= bootstrap_form_for :company_policy,url:{action:"update_company_policy", id: @company_policy.id},html: {id: 'company_policy'} do |f| %>
+        <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group required">
+             <%= f.select :policy_type_id,all_policy_type,{label: "Policy Type",include_blank: 'Select Policy Type'} %>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group required">
+             <%= f.text_field :name,label: "Policy Name" %>
+            </div>
+          </div>
+          
+             <div class="col-sm-4">
+              <div class="form-group required">
+               
+                    <%= f.date_field :effective_from, label: "Effective From", class: 'effective_from form-control'%>
+                </div>
+           </div>
+            </div>
+    <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group required">
+             
+                  <%= f.date_field :effective_to, label: "Effective To", class: 'effective_to form-control'%>
+              </div>
+          </div>
+         
+      <div class="col-sm-2">
+         <div class="col-sm-1">
+      <label>Status </label>
+      <div class="field">
+        <%= f.check_box :status, label: 'Active'%>
+      </div>
+    </div>
+    </div>
+   
+        <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :description,label: 'Description' %>
+            </div>
+          </div>
+           </div>
+    <div class="row">
+
+         <div class="col-sm-3">
+         <label></label>
+
+          <div class="actions">
+            <%= f.submit'Update Policy', class: 'btn btn-primary btn-sm' %>
+          </div>
+          </div>
+</div>
+      <% end %>
+     
+        </div>
+        </div>
+        </div>
+        </div>
+
+<script>     
+    $(function(){
+    $('.effective_from').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-20:+10',
+    dateFormat: 'dd-mm-yy' });
+  });
+</script>
+<script>
+   $(function(){
+    $('.effective_to').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-20:+10',
+    dateFormat: 'dd-mm-yy' });
+  });
+</script>
+
+<script>
+$("#company_policy").validate({
+    rules: {
+      "company_policy[name]":{
+        required: true,
+      },
+      "company_policy[document]":{
+        required: true,
+        },
+      "company_policy[policy_type]":{
+        required: true,
+      }
+    },
+    messages: {
+      "company_policy[name]":{
+        required: "Please Specify Name",
+      },
+      "company_policy[document]":{
+        required: "Please Select Document",
+         },
+      "company_policy[policy_type]":{
+        required: "Please Select Policy Type",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

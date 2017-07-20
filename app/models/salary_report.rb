@@ -1,5 +1,5 @@
 class SalaryReport
-  attr_accessor :employee_name, :department_name, :code, :pf_no, :esic_no,
+  attr_accessor :employee_name, :department_name, :code, :pf_no, :esic_no,:employee_designation,
                 :actual_basic, :actual_da, :actual_hra, :actual_convenience, :actual_other, :actual_special, :actual_washing, :actual_total,
                 :earned_basic, :earned_da, :earned_hra, :earned_convenience, :earned_other, :earned_special, :earned_washing, :earned_total,
                 :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, :welfair, :deduction_total, :net_payable, :other_deduction,
@@ -17,8 +17,9 @@ class SalaryReport
     sr.month = sl.month
     sr.year = sl.year
     sr.employee_name = e.try(:first_name).to_s + ' ' + e.try(:middle_name).to_s + ' ' + e.try(:last_name).to_s
-    sr.department_name = e.department.try(:name)
+    sr.department_name = e.department.try(:name) 
     sr.code = e.manual_employee_code
+    sr.employee_designation = j.employee_designation.try(:name)
     sr.pf_no = j.employee_pf_no
     sr.esic_no = j.employee_efic_no
 

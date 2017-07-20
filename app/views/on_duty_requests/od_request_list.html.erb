@@ -12,7 +12,6 @@
             <tr>
               <th>ID</th>
               <th>Employee</th>
-              <th>Day</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -22,7 +21,6 @@
               <tr>
                 <td><%= fl.employee.try(:manual_employee_code) %></td>
                 <td><%= full_name(fl.employee) %></td>
-                <td><%= fl.no_of_day %></td>
                 <td>
                   <%= link_to 'View Detail', employee_od_request_detil_for_admin_on_duty_requests_path(fl),class: 'btn btn-sm btn-primary' %>
                 </td>
@@ -39,7 +37,6 @@
             <tr>
               <th>ID</th>
               <th>Employee</th>
-              <th>Day</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -49,7 +46,6 @@
               <tr>
                 <td><%= sl.employee.try(:manual_employee_code) %></td>
                 <td><%= full_name(sl.employee) %></td>
-                <td><%= sl.no_of_day %></td>
                 <td>
                   <%= link_to 'View Detail', employee_od_request_detil_for_admin_on_duty_requests_path(sl),class: 'btn btn-sm btn-primary' %>
                 </td>

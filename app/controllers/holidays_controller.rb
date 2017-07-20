@@ -48,8 +48,13 @@ class HolidaysController < ApplicationController
     department_id = params[:department_id]
     @holiday_id = params[:holiday_id]
     @holiday = Holiday.find_by(id: @holiday_id)
-    @emp = EmployeeAttendance.where(department_id: department_id,day: @holiday.holiday_date).pluck(:employee_id)
-    @employees = Employee.where(department_id: department_id).where.not(id: @emp)
+    if department_id == [""]
+      @emp = EmployeeAttendance.where(day: @holiday.holiday_date).pluck(:employee_id)
+      @employees = Employee.where(status: "Active").where.not(id: @emp)
+    else
+      @emp = EmployeeAttendance.where(department_id: department_id,day: @holiday.holiday_date).pluck(:employee_id)
+      @employees = Employee.where(department_id: department_id).where.not(id: @emp)
+    end
   end
 
   def assign_to_employee
@@ -63,7 +68,7 @@ class HolidaysController < ApplicationController
         @emp = Employee.find_by_id(eid)
         @emp_attendance = EmployeeAttendance.where(employee_id: eid,day: holiday.holiday_date).take
         if @emp_attendance.try(:present) == nil
-          EmployeeAttendance.create(employee_id: eid, day: holiday.holiday_date, present: "H", department_id: @emp.department_id, is_confirm: false, count: 1)
+          EmployeeAttendance.create(holiday_id: holiday.id,employee_id: eid, day: holiday.holiday_date, present: "H", department_id: @emp.department_id, is_confirm: false, count: 1)
         else
           @date = holiday.holiday_date
           @emp_attendances = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ? AND present = ?", @date.strftime('%m/%Y'), "H")

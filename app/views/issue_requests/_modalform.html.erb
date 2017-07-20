@@ -1,12 +1,14 @@
 <div class="modal-dialog">
-    <div class="modal-body" style="height:400px; max-height:600px; width:400px; max-width:600px;">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <%= bootstrap_form_for :issue_request,url:{action:"lock_request", id: @issue_request.id},html: {id: 'issue_request'} do |f| %>
       <%= f.hidden_field :lock_date, :value => Time.zone.now.to_date %>
       <%= f.hidden_field :lock_time, :value => Time.zone.now.to_time %>
         <div class="row">
           <div class="col-sm-9">
             <div class="form-group required">
-             <%= f.select :issue_tracker_member_id,issue_tracker_member_role_wise(@issue_request.issue_tracker_group.id),{include_blank: " Select Member"},class: "form-control"%>
+             <%= f.select :issue_tracker_member_id,issue_tracker_member_role_wise(@issue_request.issue_tracker_group.id),{label: 'Issue Tracker Member',include_blank: " Select Member"},class: "form-control"%>
             </div>
          </div>
         <div class="col-sm-3">
@@ -19,6 +21,8 @@
      <% end %>
   </div>
 </div>
+</div>
+
 <script>
 $("#issue_request").validate({
     rules: {

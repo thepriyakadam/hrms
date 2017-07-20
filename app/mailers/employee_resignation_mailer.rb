@@ -4,9 +4,11 @@ class EmployeeResignationMailer < ApplicationMailer
       # @reporting_master = ReportingMaster.find(employee_resignation.reporting_master_id)
 	    @employee_resignation = EmployeeResignation.find(employee_resignation.id)
       @employee = Employee.find(@employee_resignation.reporting_master_id)
+      @employe = Employee.find(@employee_resignation.employee_id)
 	    @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
-	    mail(to: @employee.email, subject: 'Resignation Request')
+	    mail(to: @employee.email,cc: @employe.company_location.email,bcc: "tanu.chourey26@gmail.com", subject: 'Resignation Request')
   end
+
 
   # def cancel_resignation_email(employee_resignation)
   #    @employee_resignation = EmployeeResignation.find(employee_resignation.id)

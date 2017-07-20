@@ -1,0 +1,25 @@
+<br>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Interview Type</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @interview_type_masters.each do |interview_type_master| %>
+      <tr>
+        <td><%= interview_type_master.code %></td>
+        <td><%= interview_type_master.name %></td>
+        <td><%= interview_type_master.description %></td>
+        <td>
+        	  <%= link_to '', edit_interview_type_master_path(interview_type_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  interview_type_master, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

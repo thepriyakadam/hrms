@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Vacancy request:</strong>
+  <%= @vacancy_request_status.vacancy_request %>
+</p>
+
+<p>
+  <strong>Action by:</strong>
+  <%= @vacancy_request_status.action_by %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @vacancy_request_status.status %>
+</p>
+
+<p>
+  <strong>Action date:</strong>
+  <%= @vacancy_request_status.action_date %>
+</p>
+
+<%= link_to 'Edit', edit_vacancy_request_status_path(@vacancy_request_status) %> |
+<%= link_to 'Back', vacancy_request_statuses_path %>

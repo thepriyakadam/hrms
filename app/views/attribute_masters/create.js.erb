@@ -1,3 +1,6 @@
-
+<%if @flag == true %>
   $("#form").html("<%= j render 'form' %>");
-  $("#attribute_master_list").html("<%= j render 'attribute_master_list' %>");
+  $("#attribute_master_li").html("<%= j render 'attribute_master_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

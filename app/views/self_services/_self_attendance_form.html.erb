@@ -1,0 +1,71 @@
+
+      <%= bootstrap_form_for(:salary, url: { action: 'create_self_attendance'},html: {id: "salary"}) do |f| %>
+      <%= f.hidden_field :employee_id, value: current_user.employee_id %>
+
+        <div class="row">
+          <div class="col-sm-3">
+            <label>Date </label>
+            <div class="form-group required">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                  <%= text_field :salary,:day,hide_label: true,class: 'day_date form-control'%>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-2">
+          <label>Select Attendance </label>
+            <div class="field">
+              <%= f.select :present,['P','W','A','P/2','PG','H'],{hide_label: true,include_blank: "Select Option"} %>
+            </div>
+          </div>
+
+          <div class="col-sm-3" style="padding-top:20px;">
+            <div class="actions">
+              <%= f.submit "Create Attendance" ,class: 'btn btn-primary btn-sm', id: "buttonCtc" %>
+            </div>
+          </div>
+        </div>
+        <br>
+      <% end %>
+
+
+  <script type="text/javascript">
+    $("#buttonCtc").click(function(){
+      $('.ajax-progress').show();
+      $("#salary").submit();
+    })
+
+     $("#salary").validate({
+    rules: {
+      "salary[day]":{
+        required: true
+      },
+      "salary[present]":{
+        required: true
+      }
+    },
+    messages: {
+      "salary[day]":{
+        required: "Please specify Date"
+      },
+       "salary[present]":{
+        required: "Please specify Present"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+
+    $(function(){
+      $('.day_date').datepicker({
+      changeYear:true,
+      changeMonth: true,
+      yearRange: '-2:+20',
+      dateFormat: 'dd-mm-yy' });
+    });
+</script>

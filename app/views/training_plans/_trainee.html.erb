@@ -10,9 +10,6 @@
       <th>Sr.No</th>
       <th>ID</th>
       <th>Name</th>
-      <th>Department</th>
-      <th>Designation</th>
-      <th>Contact No</th>
       <th>Signature</th>
   </thead>
   <tbody>
@@ -28,9 +25,6 @@
         <td><%= i=i+1 %></td>
         <td><%= trainee.employee.try(:manual_employee_code) %></td> 
         <td><%= full_name(trainee.employee) %></td>
-        <td><%= trainee.employee.department.try(:name) %></td>
-        <td><%= trainee.employee.joining_detail.employee_designation.try(:name) %></td>
-        <td><%= trainee.employee.try(:contact_no) %></td>
         <td></td>
       </tr>
       <% end %>

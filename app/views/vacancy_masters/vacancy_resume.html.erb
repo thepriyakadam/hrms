@@ -41,7 +41,7 @@
                     <% end %>
                 </td>
                 <td>
-                  <%= link_to '', vacancy_master,class: 'btn btn-xs btn-default fa fa-eye' %>
+                  <%= link_to '', show_vacancy_resume_vacancy_masters_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-default fa fa-eye' %>
                   <% if vacancy_master.is_confirmed == true %>
                   <%= link_to 'View Resume',new_selected_resume_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-info' %>
                   <% else %>

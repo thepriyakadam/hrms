@@ -41,7 +41,7 @@
                     <% end %>
                 </td>
                 <td>
-                  <%= link_to '', vacancy_master,class: 'btn btn-xs btn-default fa fa-eye' %>
+                  <%= link_to '', show_vacancy_hr_resume_vacancy_masters_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-default fa fa-eye' %>
                   <%= link_to 'Shortlist Resume',hr_resume_vacancy_masters_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-primary' %>
                 </td>
               </tr>

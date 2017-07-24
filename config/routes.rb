@@ -18,7 +18,12 @@ Rails.application.routes.draw do
   resources :memberships
   resources :membership_types
   resources :punch_masters
-  resources :recruiters 
+  resources :recruiters do
+    collection do
+      get :final_approve_modal
+      post :final_approve_request
+    end
+  end
   resources :candidate_interview_schedules do
     collection do
       get :interview
@@ -718,6 +723,8 @@ end
       get :view_access_card_detail
       get :approve_acf_request
       get :reject_acf_request
+      get :admin_level_acf
+      post :admin_acf_approval
     end
   end
   resources :salary_comp_mappings
@@ -1104,6 +1111,10 @@ end
     post :is_confirm_resume
     get :modal_vacancy_dropdown
     post :update_vacancy
+    get :show_selected_resume
+    get :show_part_resume
+    get :refferal_form
+    post :refferal_create
     end
   end
   resources :assigned_assets do
@@ -1380,6 +1391,16 @@ end
       get :vacancy_hr_resume
       get :hr_resume
       post :shortlist_for_interview
+      get :show_selected_resume
+      get :show_scheduled_resume
+      get :show_vacancy_resume
+      get :show_vacancy_hr_resume
+      get :show_vacancy_shortlisted_list
+      get :show_vacancy_profile
+      get :show_refferal
+      get :show_internal
+      get :refferal
+      get :internal
     end
   end
    resources :leave_c_offs do

@@ -17,7 +17,7 @@ class InterviewSchedulesController < ApplicationController
       end
     end
     session[:active_tab] ="recruitment"
-    session[:active_tab1] = "general_vacancy"
+    session[:active_tab1] ="interview_sched"
   end
 
   # GET /interview_schedules/1
@@ -58,7 +58,7 @@ class InterviewSchedulesController < ApplicationController
       @interview_schedule = InterviewSchedule.new
     end
     if @interview_schedule.email_id.nil?
-      flash[:alert] = 'Interview Scheduled Successfully without Email'
+      flash[:notice] = 'Interview Scheduled Successfully without Email'
       redirect_to interview_schedules_path
     else
       # InterviewScheduleMailer.sample_email_to_candidate(@interview_schedule).deliver_now
@@ -141,7 +141,6 @@ class InterviewSchedulesController < ApplicationController
   end
   end
 
-  
   def sample_email
     @interview_schedule = InterviewSchedule.find_by_employee_id(params[:id])
     @employee = Employee.find(@interview_schedule.employee_id)
@@ -282,6 +281,9 @@ end
     # @interview_schedule = InterviewSchedule.find(params[:format])
     @interview_rounds = InterviewRound.where(employee_id: current_user.employee_id,interview_round_confirm: true)
     # @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id)
+    
+    session[:active_tab] ="recruitment"
+    session[:active_tab1] ="interview_sched"
   end
 
   def modal_schedule_list

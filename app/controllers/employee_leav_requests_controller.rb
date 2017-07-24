@@ -100,7 +100,9 @@ class EmployeeLeavRequestsController < ApplicationController
           @leave_c_off_id = params[:leave_c_off][:c_off_date]
           @leave_c_off = LeaveCOff.find_by(id: @leave_c_off_id)
         if start_date.to_date > @leave_c_off.c_off_date.to_date
-            if @employee_leav_request.is_available_coff?
+            if @leave_c_off.expiry_date < Date.today || @leave_c_off.expiry_date < start_date.to_date
+              flash[:alert] = "C.Off Expire for that day"
+            elsif @employee_leav_request.is_available_coff?
               flash[:alert] = "Your Leave Request already has been sent"
             elsif @employee_leav_request.is_salary_processed_coff?
               flash[:alert] = "Salary Processed for this month"
@@ -110,7 +112,7 @@ class EmployeeLeavRequestsController < ApplicationController
               @employee_leav_request.first_reporter_id = @employee.manager_id
               @employee_leav_request.is_pending = true
               @employee_leav_request.current_status = 'Pending'
-              if @leave_c_off.leave_count == 1.0
+              if @leave_c_off.leave_count == 1.0 || @leave_c_off.leave_count == 0.0
                 @employee_leav_request.leave_count = 1
                 @employee_leav_request.leave_type = "Full Day"
               else
@@ -249,10 +251,9 @@ class EmployeeLeavRequestsController < ApplicationController
                     end
                     redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
 
-                elsif @employee_leav_request.is_out_of_limit(@employee_leav_request)
-                  flash[:alert] = "Leave Range for #{@leav_category.code} is #{@leav_category.from} - #{@leav_category.to}"
+                elsif @leav_category.is_limit == true && @employee_leav_request.is_out_of_limit(@employee_leav_request)
+                  flash[:alert] = "Leave Range for #{@leav_category.code} is #{@leav_category.from} - #{@leav_category.to}" 
                   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-
                 else
                   @leave_category = LeavCategory.where(id: @employee_leav_request.leav_category_id,is_active: true).take
                   if @leave_category.is_balance == true

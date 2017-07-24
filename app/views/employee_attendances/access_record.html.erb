@@ -3,27 +3,25 @@
   <div class="box-header">
     <h3 class="box-title">Access Card</h3>
   </div>
-  <%= bootstrap_form_for(:salary,url:{ action: 'access_card_list'},html: {id: "attendance"}) do |f| %>
+  <%= bootstrap_form_for(:salary,url:{ action: 'access_card_list'},html: {id: "salary"}) do |f| %>
     <div class="box-body">
       <div class="row">
         <div class="col-sm-3">
-          <label>Date</label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= text_field :salary,:date,hide_label: true,class: 'request_date form-control'%>
+              <%= text_field :salary,:date,label: "Date",placeholder: "Date",class: 'request_date form-control'%>
             </div>
           </div>
         </div>
         <div class="col-sm-3">
-          <label>Card No.</label>
-          <div class="field">
-            <%= text_field :salary,:employee_code,hide_label: true,class: 'form-control'%>
+          <div class="form-group required">
+            <%= text_field :salary,:employee_code,label: 'Card No',placeholder: "Card No",class: 'form-control'%>
           </div>
         </div>
-        <div class="col-sm-3" style="padding-top:20px;">
+        <div class="col-sm-3">
           <div class="actions">
             <%= f.submit "Send Request" ,class: 'btn btn-primary btn-sm',id: "buttonCtc" %>
           </div>
@@ -51,20 +49,20 @@
 </script>
 
 <script>
-$("#attendance").validate({
+$("#salary").validate({
     rules: {
-      "attendance[date]":{
+      "salary[date]":{
         required: true,
       },
-      "attendance[employee_code]":{
+      "salary[employee_code]":{
         required: true,
       }
     },
     messages: {
-      "attendance[date]":{
+      "salary[date]":{
         required: "Please select Date",
       },
-      "attendance[employee_code]":{
+      "salary[employee_code]":{
         required: "Please select Card No",
       }
     },

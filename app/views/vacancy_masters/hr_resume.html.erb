@@ -70,7 +70,7 @@
         </td>
         <td>
         <div id="myModal" class="modal fade"></div>
-          <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
+          <%= link_to '', show_selected_resume_vacancy_masters_path(vacancy_master_id: @vacancy_master.id,id: selected_resume.id),class: 'btn btn-xs btn-default fa fa-eye' %>
         </td>
       </tr>
     <% end %>

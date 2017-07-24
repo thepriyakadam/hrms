@@ -11,6 +11,7 @@ class HomeController < ApplicationController
     @companies = Company.all
     @company_locations = CompanyLocation.all
     @departments = Department.all
+    @vacancy_masters = VacancyMaster.where(vacancy_of: 'Refferal')
     #@employees = Employee.all
     if current_user.class == Member
       @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id, status: true)

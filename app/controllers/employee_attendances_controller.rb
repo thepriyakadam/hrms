@@ -1805,6 +1805,11 @@ def import_employee_attendance
     format.csv { send_data @employee_attendances.to_csv }
     format.xls
   end
+  @employee_attendance = EmployeeAttendance.where(employee_id: nil)
+  @employee_attendance.each do |e|
+    employee = Employee.find_by_manual_employee_code(e.employee_code)
+    e.update(employee_id: employee.id)
+  end
    session[:active_tab] ="TimeManagement"
     session[:active_tab1] ="AttendanceSetup"
 end

@@ -2,11 +2,11 @@ class SelectedResume < ActiveRecord::Base
   belongs_to :degree
   belongs_to :vacancy_master
   has_many :particular_vacancy_requests
+  belongs_to :add_by, class_name: 'Employee'
 
   validates :skillset, presence: true
   validates :degree_id, presence: true
   
-
   has_attached_file :avatar,
   :path => "attachments/attach_resume/:basename.:extension"
 

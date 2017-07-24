@@ -9,43 +9,44 @@
         <table id="example3" class="table table-bordered table-hover table-condensed">
           <thead>
             <tr>
+              <th>Sr. No</th>
               <th>Vacancy Code</th>
               <th>Vacancy Name</th>
+              <th>Experience</th>
               <th>Total Position</th>
               <th>Open Position</th>
               <th>Closed Position</th>
-              <th>Department</th>
-              <th>Experience</th>
               <th>Vacancy Status</th>
               <th>Action</th>
             </tr>
           </thead>
 
           <tbody>
+            <% i = 0 %>
             <% @vacancy_masters.each do |vacancy_master| %>
               <tr>
+                <td><%= i = i + 1 %></td>
                 <td><%= vacancy_master.vacancy_code %></td>
                 <td><%= vacancy_master.vacancy_name %></td>
-                 <td><%= vacancy_master.no_of_position %></td>
+                <td><%= vacancy_master.experience %></td>
+                <td><%= vacancy_master.no_of_position %></td>
                   <% particular_vacancy_open = ParticularVacancyRequest.where(vacancy_master_id: vacancy_master,is_complete: nil).count
                   particular_vacancy_closed = ParticularVacancyRequest.where(vacancy_master_id: vacancy_master,is_complete: true).count %>
-                  <td><%= particular_vacancy_open %></td>
-                  <td><%= particular_vacancy_closed %></td>
-                <td><%= vacancy_master.company_location.try(:name) %> - <%= vacancy_master.department.try(:name) %></td>
-                <td><%= vacancy_master.experience %></td>
+                <td><%= particular_vacancy_open %></td>
+                <td><%= particular_vacancy_closed %></td>
                 <td>
-                    <% if vacancy_master.is_confirmed == true %>
+                  <% if vacancy_master.is_confirmed == true %>
                     <small class="label label-primary">Position Closed</small>
-                    <% else %>
+                  <% else %>
                     <small class="label label-default">Position Vacant</small>
-                    <% end %>
+                  <% end %>
                 </td>
                 <td>
                   <%= link_to '', show_vacancy_resume_vacancy_masters_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-default fa fa-eye' %>
                   <% if vacancy_master.is_confirmed == true %>
-                  <%= link_to 'View Resume',new_selected_resume_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-info' %>
+                    <%= link_to 'View Resume',new_selected_resume_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-info' %>
                   <% else %>
-                  <%= link_to 'Add Resume',new_selected_resume_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-primary' %>
+                    <%= link_to 'Add Resume',new_selected_resume_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-primary' %>
                   <% end %>
                 </td>
               </tr>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170721092158) do
+ActiveRecord::Schema.define(version: 20170724071545) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -3755,6 +3755,7 @@ ActiveRecord::Schema.define(version: 20170721092158) do
     t.boolean  "shortlist_for_interview"
     t.string   "contact_no2",                 limit: 255
     t.decimal  "current_ctc",                               precision: 10
+    t.integer  "add_by_id",                   limit: 4
   end
 
   add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id", using: :btree

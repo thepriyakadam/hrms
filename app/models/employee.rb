@@ -30,6 +30,7 @@ class Employee < ActiveRecord::Base
   has_many :reimbursement_requests
   has_many :memberships
   has_many :recruiters
+  has_many :selected_resumes, class_name: "Employee",foreign_key: "add_by_id"
   has_many :vacancy_masters, class_name: "Employee",foreign_key: "recruiter_id"
 
   #has_many :vacancy_masters,class_name: 'Employee',foreign_key: 'recruiter_id'

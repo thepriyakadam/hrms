@@ -1113,7 +1113,7 @@ end
     post :update_vacancy
     get :show_selected_resume
     get :show_part_resume
-    get :refferal_form
+    get :refferal
     post :refferal_create
     end
   end

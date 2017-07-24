@@ -211,6 +211,15 @@ class SelectedResumesController < ApplicationController
     @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
   end
 
+  def modal_show_selected_resume
+    @selected_resume = SelectedResume.find(params[:format])
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+  end
+
+  def modal_vacancy_master
+    @vacancy_master = VacancyMaster.find(params[:format])
+  end
+
   def update_status
     @selected_resume = SelectedResume.find(params[:id])
     @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])

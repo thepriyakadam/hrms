@@ -267,7 +267,7 @@ class LeaveCOffsController < ApplicationController
   end
 
   def modal
-   @leave_c_off = LeaveCOff.find(params[:format])
+   @leave_c_off = LeaveCOff.find_by(params[:id])
   end
 
   def approve_c_off

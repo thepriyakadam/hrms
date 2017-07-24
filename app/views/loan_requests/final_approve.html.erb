@@ -1,0 +1,42 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Final Approve</h3>
+    <div class="pull-right">
+    </div>
+    </div>
+
+<div class="box-body">
+
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Member</th>
+      <th>Loan type</th>
+      <th>Amount</th>
+      <th>No. of EMI</th>
+      <th>EMI</th>
+      <th>Loan Approval Date</th>
+      <th>Loan Request Date</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @loan_approvals.each do |loan_approval| %>
+      <tr>
+        <td><%= full_name(loan_approval.membership.employee) %></td>
+        <td><%= loan_approval.loan_type.try(:name) %></td>
+        <td><%= loan_approval.amount %></td>
+        <td><%= loan_approval.no_of_emi %></td>
+        <td><%= loan_approval.emi %></td>
+        <td><%= loan_approval.loan_approval_date %></td>
+        <td><%= loan_approval.loan_request_date %></td>
+        <td><%= loan_approval.status %></td>
+        <td><%= link_to 'Approve', final_loan_request_loan_requests_path(loan_approval),class: 'btn btn-xs btn-primary' %></td>
+      </tr>
+ <% end %>
+  </tbody>
+</table>
+</div>
+</div>

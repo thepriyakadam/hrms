@@ -1,5 +1,22 @@
 Rails.application.routes.draw do
 
+  resources :loan_emis
+  resources :approval_processes
+  resources :loan_requests do
+    collection do
+      get :loan_approval
+      get :approve_loan_request
+      get :first_approve
+      get :reject
+      get :final_approve
+      get :final_loan_request
+      get :final
+    end
+  end
+  resources :loan_types
+  resources :membership_contributions
+  resources :memberships
+  resources :membership_types
   resources :punch_masters
   resources :recruiters 
   resources :candidate_interview_schedules do

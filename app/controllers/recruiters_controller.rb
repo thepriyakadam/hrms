@@ -16,6 +16,8 @@ class RecruitersController < ApplicationController
   def new
     @recruiter = Recruiter.new
     @recruiters = Recruiter.all
+    session[:active_tab] = "GlobalSetup"
+    session[:active_tab1] = "Recruitment"
   end
 
   # GET /recruiters/1/edit

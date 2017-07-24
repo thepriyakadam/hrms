@@ -28,6 +28,7 @@ class Employee < ActiveRecord::Base
   has_many :qualifications
   has_many :employee_leav_requests
   has_many :reimbursement_requests
+  has_many :memberships
 
   has_many :reporting_masters, class_name: 'ReportingMaster', foreign_key: 'reporting_master_id'
   
@@ -129,6 +130,8 @@ class Employee < ActiveRecord::Base
   has_many :candidate_interview_schedules, class_name: 'Employee', foreign_key: 'interviewer_id'
   has_many :greetings, class_name: "Employee", foreign_key: "sender_id"
   has_many :greetings, class_name: "Employee", foreign_key: "receiver_id"
+  has_many :loan_requests, class_name: "Employee", foreign_key: "request_to_id"
+  has_many :loan_approvals, class_name: "Membership", foreign_key: "approval_id"
 
   # has_many :reporting_masters, class_name: "Employee",
   #                         foreign_key: "manager_id"

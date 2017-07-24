@@ -2576,15 +2576,15 @@ ActiveRecord::Schema.define(version: 20170721092158) do
     t.integer  "loan_request_id",    limit: 4
     t.integer  "membership_id",      limit: 4
     t.integer  "loan_type_id",       limit: 4
+    t.integer  "approval_id",        limit: 4
     t.decimal  "amount",                         precision: 15, scale: 2
     t.integer  "no_of_emi",          limit: 4
     t.decimal  "emi",                            precision: 15, scale: 2
+    t.date     "loan_request_date"
+    t.date     "loan_approval_date"
     t.string   "status",             limit: 255
     t.datetime "created_at",                                              null: false
     t.datetime "updated_at",                                              null: false
-    t.date     "loan_request_date"
-    t.date     "loan_approval_date"
-    t.integer  "approval_id",        limit: 4
   end
 
   add_index "loan_approvals", ["loan_request_id"], name: "index_loan_approvals_on_loan_request_id", using: :btree
@@ -2606,13 +2606,13 @@ ActiveRecord::Schema.define(version: 20170721092158) do
     t.integer  "membership_id", limit: 4
     t.date     "date"
     t.integer  "loan_type_id",  limit: 4
-    t.integer  "emi",           limit: 4
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.decimal  "amount",                    precision: 10
-    t.string   "status",        limit: 255
-    t.integer  "no_of_emi",     limit: 4
     t.integer  "request_to_id", limit: 4
+    t.decimal  "amount",                    precision: 15, scale: 2
+    t.integer  "no_of_emi",     limit: 4
+    t.decimal  "emi",                       precision: 15, scale: 2
+    t.string   "status",        limit: 255
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
   end
 
   add_index "loan_requests", ["loan_type_id"], name: "index_loan_requests_on_loan_type_id", using: :btree
@@ -2625,10 +2625,10 @@ ActiveRecord::Schema.define(version: 20170721092158) do
     t.decimal  "from",                        precision: 10
     t.decimal  "to",                          precision: 10
     t.decimal  "interest_rate",               precision: 10
+    t.string   "interest_type", limit: 255
     t.boolean  "status"
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
-    t.string   "interest_type", limit: 255
   end
 
   create_table "machine_attendances", force: :cascade do |t|
@@ -2715,17 +2715,6 @@ ActiveRecord::Schema.define(version: 20170721092158) do
   add_index "members", ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true, using: :btree
   add_index "members", ["role_id"], name: "index_members_on_role_id", using: :btree
 
-  create_table "membership_amounts", force: :cascade do |t|
-    t.string   "membership_references", limit: 255
-    t.date     "date"
-    t.decimal  "amount",                            precision: 10
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
-    t.integer  "membership_id",         limit: 4
-  end
-
-  add_index "membership_amounts", ["membership_id"], name: "index_membership_amounts_on_membership_id", using: :btree
-
   create_table "membership_balances", force: :cascade do |t|
     t.integer  "membership_id", limit: 4
     t.decimal  "balance",                 precision: 10
@@ -2758,9 +2747,9 @@ ActiveRecord::Schema.define(version: 20170721092158) do
     t.integer  "membership_type_id", limit: 4
     t.decimal  "contribution",                 precision: 10
     t.date     "date"
+    t.boolean  "status"
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
-    t.boolean  "status"
   end
 
   add_index "memberships", ["employee_id"], name: "index_memberships_on_employee_id", using: :btree
@@ -4582,7 +4571,6 @@ ActiveRecord::Schema.define(version: 20170721092158) do
   add_foreign_key "members", "departments"
   add_foreign_key "members", "employees"
   add_foreign_key "members", "roles"
-  add_foreign_key "membership_amounts", "memberships"
   add_foreign_key "membership_balances", "memberships"
   add_foreign_key "membership_contributions", "memberships"
   add_foreign_key "memberships", "employees"

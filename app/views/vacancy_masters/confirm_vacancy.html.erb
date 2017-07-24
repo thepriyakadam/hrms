@@ -5,7 +5,7 @@
  <div class="box-body">
    <table id="example2" class="table table-bordered table-hover table-condensed">
    <tr>
-      <th colspan="4"><center>Vacancy Request Details of : <%= @vacancy_master.employee.try(:manual_employee_code) %> <%= @vacancy_master.employee.try(:first_name) %> <%= @vacancy_master.employee.try(:middle_name) %> <%= @vacancy_master.employee.try(:last_name) %></center></th>
+      <th colspan="4"><center>Vacancy Request Details of : <%= @vacancy_master.employee.try(:prefix) %> <%= @vacancy_master.employee.try(:first_name) %> <%= @vacancy_master.employee.try(:middle_name) %> <%= @vacancy_master.employee.try(:last_name) %></center></th>
     </tr>
   <tr>
   <th><strong>Vacancy Code</strong></th>
@@ -13,12 +13,12 @@
    <th><strong>Current Request To</strong></th>
   <!-- <td><= @employee.try(:first_name) %> <= @employee.try(:middle_name) %> <= @employee.try(:last_name) %> </td> -->
   <td><% emp=Employee.where(id: @vacancy_master.reporting_master_id).take %>
-     <%= emp.try(:manual_employee_code) %> - <%= emp.try(:prefix) %> <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %> </td>
+      <%= emp.try(:prefix) %> <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %> </td>
   </tr>
 
   <tr>
-  <th><strong>Organization</strong></th>
-  <td><%= @vacancy_master.other_organization %></td>
+  <th><strong>Company</strong></th>
+  <td><%= @vacancy_master.company.try(:name) %></td>
    <th><strong>Job Title</strong></th>
   <td><%= @vacancy_master.employee_designation.name %></td>
   </tr>
@@ -82,6 +82,14 @@
   <th><strong>Current Staus</strong></th>
   <td><%= @vacancy_master.current_status %></td>
  </tr>
+
+<tr>
+  <th><strong>Recruiter</strong></th>
+  <td><%= full_name(@vacancy_master.recruiter) %></td>
+
+  <th><strong>Target Date</strong></th>
+  <td><%= @vacancy_master.target_date %></td>
+</tr>
 
 <tr>
   <th><strong>Description</strong></th>

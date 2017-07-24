@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170720090004) do
+ActiveRecord::Schema.define(version: 20170721092158) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -4061,8 +4061,11 @@ ActiveRecord::Schema.define(version: 20170720090004) do
     t.integer  "reporting_master_id",       limit: 4
     t.integer  "recruiter_id",              limit: 4
     t.date     "target_date"
+    t.integer  "company_id",                limit: 4
+    t.string   "vacancy_of",                limit: 255
   end
 
+  add_index "vacancy_masters", ["company_id"], name: "index_vacancy_masters_on_company_id", using: :btree
   add_index "vacancy_masters", ["company_location_id"], name: "index_vacancy_masters_on_company_location_id", using: :btree
   add_index "vacancy_masters", ["degree_id"], name: "index_vacancy_masters_on_degree_id", using: :btree
   add_index "vacancy_masters", ["department_id"], name: "index_vacancy_masters_on_department_id", using: :btree
@@ -4566,6 +4569,7 @@ ActiveRecord::Schema.define(version: 20170720090004) do
   add_foreign_key "travel_requests", "employees"
   add_foreign_key "travel_requests", "travel_modes"
   add_foreign_key "travel_requests", "travel_options"
+  add_foreign_key "vacancy_masters", "companies"
   add_foreign_key "vacancy_masters", "company_locations"
   add_foreign_key "vacancy_masters", "degrees"
   add_foreign_key "vacancy_masters", "departments"

@@ -75,7 +75,9 @@ class VacancyMastersController < ApplicationController
         respond_to do |format|
       if @vacancy_master.save
         dept_id = params[:employee][:department_id]
-        VacancyMaster.where(id: @vacancy_master.id).update_all(department_id: dept_id)
+        location = params[:employee][:company_location_id]
+        company = params[:vacancy_master][:company_id]
+        VacancyMaster.where(id: @vacancy_master.id).update_all(company_id: company,company_location_id: location,department_id: dept_id)
         ReportingMastersVacancyMaster.create(reporting_master_id: current_user.employee_id, vacancy_master_id: @vacancy_master.id,vacancy_status: "Pending")
         for i in 1..@vacancy_master.no_of_position.to_i
           ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id, employee_id: @vacancy_master.employee_id, open_date: @vacancy_master.vacancy_post_date, fulfillment_date: @vacancy_master.vacancy_fullfillment_date,status: "Pending", employee_designation_id: @vacancy_master.employee_designation_id, vacancy_name: @vacancy_master.vacancy_name)
@@ -162,6 +164,7 @@ end
 
   def vacancy_history
     @vacancy_masters = VacancyMaster.where("reporting_master_id = ? and (current_status = ? or current_status = ? or current_status = ?)",current_user.employee_id,"Pending","FirstApproved","Approved & Send Next")
+    
     session[:active_tab] ="recruitment"
     session[:active_tab1] ="particular_vacancy"
   end 
@@ -671,6 +674,70 @@ end
     @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
   end
   
+  def show_refferal
+     @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+  end
+
+  def show_internal
+     @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+  end
+
+  def refferal
+    if current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved")
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+      elsif current_user.role.name == 'Recruitment'
+        @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved")
+      else current_user.role.name == 'Employee'
+        @vacancy_masters = VacancyMaster.where(employee_id: current_user.employee_id,current_status: "FinalApproved")
+        redirect_to home_index_path
+      end
+    else
+      @employees = Employee.all
+    end
+  end
+
+  def internal
+    if current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved")
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+      elsif current_user.role.name == 'Recruitment'
+        @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved")
+      else current_user.role.name == 'Employee'
+        @vacancy_masters = VacancyMaster.where(employee_id: current_user.employee_id,current_status: "FinalApproved")
+        redirect_to home_index_path
+      end
+    else
+      @employees = Employee.all
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -684,6 +751,6 @@ end
 
   # Never trust param eters from the scary internet, only allow the white list through.
   def vacancy_master_params
-    params.require(:vacancy_master).permit(:vacancy_type,:employee_designation_id,:justification,:employee_id,:vacancy_code,:vacancy_fullfillment_date,:is_confirmed,:current_status,:experience,:experince_max,:degree_1_id,:degree_2_id,:reporting_master_id,:keyword,:other_organization, :department_id, :degree_id, :company_location_id, :vacancy_name, :no_of_position, :description, :vacancy_post_date, :budget,:budget_max,:reason,:replacement_id,:notice_period,:notice_period_day,:relocation_rerimbursement,:relocation_cost)
+    params.require(:vacancy_master).permit(:vacancy_of,:target_date,:recruiter_id,:company_id,:vacancy_type,:employee_designation_id,:justification,:employee_id,:vacancy_code,:vacancy_fullfillment_date,:is_confirmed,:current_status,:experience,:experince_max,:degree_1_id,:degree_2_id,:reporting_master_id,:keyword,:other_organization, :department_id, :degree_id, :company_location_id, :vacancy_name, :no_of_position, :description, :vacancy_post_date, :budget,:budget_max,:reason,:replacement_id,:notice_period,:notice_period_day,:relocation_rerimbursement,:relocation_cost)
   end
 end

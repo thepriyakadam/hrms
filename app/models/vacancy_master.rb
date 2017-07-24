@@ -6,6 +6,8 @@ class VacancyMaster < ActiveRecord::Base
   belongs_to :degree
   belongs_to :employee
   belongs_to :replacement
+  belongs_to :company
+  belongs_to :recruiter,class_name: 'Employee'
   has_many :capture_resumes
   has_many :selected_resumes
   has_many :vacancy_request_histories
@@ -21,10 +23,12 @@ class VacancyMaster < ActiveRecord::Base
                                    foreign_key: 'degree_2_id'
   belongs_to :degree_2, class_name: 'Degree'
 
-  validates :employee_designation_id, presence: true
-  validates :vacancy_name, presence: true
-  validates :no_of_position, presence: true
-  validates :vacancy_fullfillment_date, presence: true
+  # validates :employee_designation_id, presence: true
+  # validates :department_id, presence: true
+  # validates :vacancy_name, presence: true
+  # validates :no_of_position, presence: true
+  # validates :vacancy_fullfillment_date, presence: true
+  
   # validates :reporting_master_id, presence: true
 
   def self.to_csv(options = {})

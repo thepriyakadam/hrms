@@ -1,6 +1,8 @@
 <div class="modal-dialog">
   <div class="modal-content">
-    <div class="modal-body" style="height:100px; max-height:1000px; width:630px; max-width:630px;">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <div class="modal-body">
+
      <%= bootstrap_form_for :salary,url:{action:'final_approve_request',vacancy_master_id: @vacancy_master.id},html: {id: 'salary'} do |f| %>
         <div class="row">
           <div class="col-sm-3">
@@ -10,11 +12,17 @@
           <div class="col-sm-4">
             <label>Date </label>
             <div class="field">
-                </div>
-                <%= f.text_field :target_date, hide_label: true, class: 'birth_date1'%>
-              </div>
+              <%= f.text_field :target_date, hide_label: true, class: 'birth_date1'%>
+            </div>
+          </div>
 
-          <div class="col-sm-3" style="padding-top: 20px">
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.select :vacancy_of, ['Refferal','Internal','Open Source'],{label: 'Select Vacancy',include_blank: " Select Vacancy"} %>
+            </div>
+          </div>
+
+          <div class="col-sm-2" style="padding-top: 20px">
             <%= f.submit "Approve", class: 'btn btn-sm btn-primary fa fa-modx' %>
           </div>
         </div>

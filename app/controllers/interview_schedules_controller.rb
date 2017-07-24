@@ -17,7 +17,7 @@ class InterviewSchedulesController < ApplicationController
       end
     end
     session[:active_tab] ="recruitment"
-    session[:active_tab1] = "general_vacancy"
+    session[:active_tab1] ="interview_sched"
   end
 
   # GET /interview_schedules/1
@@ -281,6 +281,9 @@ end
     # @interview_schedule = InterviewSchedule.find(params[:format])
     @interview_rounds = InterviewRound.where(employee_id: current_user.employee_id,interview_round_confirm: true)
     # @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id)
+    
+    session[:active_tab] ="recruitment"
+    session[:active_tab1] ="interview_sched"
   end
 
   def modal_schedule_list

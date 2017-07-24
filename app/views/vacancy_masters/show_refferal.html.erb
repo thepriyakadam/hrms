@@ -9,7 +9,8 @@
         <td><%= @vacancy_master.vacancy_code %></td>
 
         <th><strong>Request To</strong></th>
-        <td><% emp=Employee.where(id: @vacancy_master.reporting_master_id).take %> <%= emp.try(:prefix) %> <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %> </td>
+        <td><% emp=Employee.where(id: @vacancy_master.reporting_master_id).take %>
+           <%= emp.try(:prefix) %> <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %> </td>
       </tr>
 
       <tr>
@@ -126,6 +127,6 @@
         <td colspan="3"><%= @vacancy_master.justification %></td>
       </tr>
     </table><br>
-    <%= link_to 'Back', vacancy_hr_resume_vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+    <%= link_to 'Back', refferal_vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
   </div>
 </div>

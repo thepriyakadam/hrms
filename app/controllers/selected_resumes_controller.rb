@@ -260,6 +260,15 @@ class SelectedResumesController < ApplicationController
     @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
   end
 
+  def refferal_form
+    @selected_resume = SelectedResume.new
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+    @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
+  end
+
+  def refferal_create
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_selected_resume

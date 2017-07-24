@@ -1096,6 +1096,8 @@ end
     post :update_vacancy
     get :show_selected_resume
     get :show_part_resume
+    get :refferal_form
+    post :refferal_create
     end
   end
   resources :assigned_assets do
@@ -1378,6 +1380,10 @@ end
       get :show_vacancy_hr_resume
       get :show_vacancy_shortlisted_list
       get :show_vacancy_profile
+      get :show_refferal
+      get :show_internal
+      get :refferal
+      get :internal
     end
   end
    resources :leave_c_offs do

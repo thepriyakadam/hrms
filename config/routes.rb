@@ -365,6 +365,7 @@ Rails.application.routes.draw do
     collection do
       get :collect_issues
        get :is_confirm
+       get :modal
     end
   end
   resources :issue_types do
@@ -696,7 +697,11 @@ end
       get :modal_edit_for_show
       post :update_attendance_for_show
       get :access_record
-      post :show_access_card_list
+      post :access_card_list
+      get :access_card_approval
+      get :view_access_card_detail
+      get :approve_acf_request
+      get :reject_acf_request
     end
   end
   resources :salary_comp_mappings
@@ -2073,6 +2078,7 @@ end
       get :status_wise_request
       get :select_form
       get :select_admin_form
+      get :modal
     end
   end
   resources :company_leavs

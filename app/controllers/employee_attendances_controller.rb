@@ -11,7 +11,7 @@ class EmployeeAttendancesController < ApplicationController
   def index
     @employee_attendances = EmployeeAttendance.group("strftime('%Y',day)")
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Attendance"
+    session[:active_tab1] ="daily_attendance"
 
   end
 
@@ -438,7 +438,7 @@ class EmployeeAttendancesController < ApplicationController
   
   def datewise_attendance
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Attendance"
+    session[:active_tab1] ="daily_attendance"
   end
 
   def show_datewise_attendance
@@ -1498,7 +1498,7 @@ class EmployeeAttendancesController < ApplicationController
 
 def upload_daily_attendance
   session[:active_tab] ="TimeManagement"
-  session[:active_tab1] ="daily_attendance"
+  session[:active_tab1] ="Attendance"
 end
 
 def upload
@@ -1508,10 +1508,10 @@ def upload
     redirect_to upload_daily_attendance_employee_attendances_path
   else
     DailyAttendance.import(params[:file])
-    redirect_to upload_daily_attendance_employee_attendances_path, notice: "File imported."
+    redirect_to root_url, notice: "File imported."
   end
   last = DailyAttendance.last
-  @daily_attendances = DailyAttendance.where(date: last.date)
+  @daily_attendances = DailyAttendance.where(date: last.date.to_date)
 
   @daily_attendances.each do |da|
     first_in = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date,reader_name: "Main Door IN").first
@@ -1532,8 +1532,6 @@ def upload
         else
           first_record = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date,reader_name: "Main Door IN",time: start_time1..end_time1).first
           last_record = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date,reader_name: "Main Door Out",time: start_time2..end_time2).last
-          #actual_in = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date).where.not(reader_name: "Main Door IN").first
-          #actual_out = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date).where.not(reader_name: "Main Door Out").last
 
           if last_record.nil? && first_record.nil?
             last_record_time = nil
@@ -1548,7 +1546,7 @@ def upload
             last_record_time = last_record.time.to_time
             first_record_time = first_record.time.to_time
           end
-
+#operation
           employee_attendance = EmployeeAttendance.where(employee_id: employee.id,day: previous_date.to_date).take
             if employee_attendance.nil?
             else
@@ -1561,8 +1559,8 @@ def upload
 
                     if working_hrs.to_s < "04:30"
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "A",comment: "System Updated")
-                    elsif working_hrs.to_s < "07:30"
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P/2",comment: "System Updated")
+                    elsif working_hrs.to_s < "07:00"
+                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "HDL",comment: "System Updated")
                     else
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P",comment: "System Updated")
                     end
@@ -1571,14 +1569,18 @@ def upload
                   working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
                     if working_hrs.to_s <  "04:30"
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "A",comment: "System Updated")
-                    elsif working_hrs.to_s < "07:30"
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P/2",comment: "System Updated")
+                    elsif working_hrs.to_s < "07:00"
+                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "HDL",comment: "System Updated")
                     else
                       employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P",comment: "System Updated")
                     end
                 end
-              end
-            end
+              end#last_record.nil?
+            end#employee_attendance.nil?
+
+  #current_employee_attendance
+        current_employee_attendance = EmployeeAttendance.where(employee_id: employee.id,day: da.date.to_date).take
+          if current_employee_attendance.nil?
 
             if first_in_time == nil && last_out_time == nil
               EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: nil,employee_id: employee.id,comment: "In & Out Time Not Available",present: "A")
@@ -1600,17 +1602,121 @@ def upload
                   working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
                 end
               end
-
               if working_hrs.to_s <  "04:30"
                 EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "A")
-              elsif working_hrs.to_s < "07:30"
-                EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "P/2")
+              elsif working_hrs.to_s < "07:00"
+                EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "HDL")
               else
                 EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "P")
               end
             end#first_in_time == nil && last_out_time == nil
+
+          else#current_employee_attendance.nil?
+            if current_employee_attendance.present == "WO" || current_employee_attendance.present == "H" || current_employee_attendance.present == "WOP" || current_employee_attendance.present == "HP"
+              
+              if current_employee_attendance.present == "WO" || current_employee_attendance.present == "WOP"
+
+                if first_in_time == nil && last_out_time == nil
+                  current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: nil,employee_id: employee.id,comment: "In & Out Time Not Available",present: "WOP")
+                elsif first_in_time == nil
+                  current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,comment: "In Time Not Available",present: "WOP")
+                elsif last_out_time == nil
+                  current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: nil,employee_id: employee.id,comment: "Out Time Not Available",present: "WOP")
+                else
+                  if first_record.nil? || first_record.time.to_time.nil?
+                    working_hrs = 0
+                  else
+                    if last_out_time.to_time <= first_record.time.to_time
+                      last_re = last_out_time.to_time + 24*60*60
+                      total_hrs = last_re.to_time - first_record.time.to_time
+                      working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+                    else
+                      total_hrs = last_out_time.to_time - first_record.time.to_time
+                      working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+                    end
+                  end#first_record.nil? || first_record.time.to_time.nil?
+                  current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "WOP",comment: "Week Off Present")
+                end#first_in_time == nil && last_out_time == nil
+
+              elsif current_employee_attendance.present == "H"  || current_employee_attendance.present == "HP"
+
+                if first_in_time == nil && last_out_time == nil
+                  current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: nil,employee_id: employee.id,comment: "In & Out Time Not Available",present: "HP")
+                elsif first_in_time == nil
+                  current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,comment: "In Time Not Available",present: "HP")
+                elsif last_out_time == nil
+                  current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: nil,employee_id: employee.id,comment: "Out Time Not Available",present: "HP")
+                else
+                  if first_record.nil? || first_record.time.to_time.nil?
+                    working_hrs = 0
+                  else
+                    if last_out_time.to_time <= first_record.time.to_time
+                      last_re = last_out_time.to_time + 24*60*60
+                      total_hrs = last_re.to_time - first_record.time.to_time
+                      working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+                    else
+                      total_hrs = last_out_time.to_time - first_record.time.to_time
+                      working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+                    end
+                  end#first_record.nil? || first_record.time.to_time.nil?
+                  current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "HP",comment: "Holiday Present")
+                end#first_in_time == nil && last_out_time == nil
+
+              end#current_employee_attendance.present == "H"
+#HDL,P,A
+            else#current_employee_attendance.present == "WO" || current_employee_attendance.present == "H"
+              if first_in_time == nil && last_out_time == nil
+                current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: nil,employee_id: employee.id,comment: "In & Out Time Not Available",present: "A")
+              elsif first_in_time == nil
+                current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,comment: "In Time Not Available",present: "A")
+              elsif last_out_time == nil
+                current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: nil,employee_id: employee.id,comment: "Out Time Not Available",present: "A")
+              else
+                
+                if first_record.nil? || first_record.time.to_time.nil?
+                  working_hrs = 0
+                else
+                  if last_out_time.to_time <= first_record.time.to_time
+                    last_re = last_out_time.to_time + 24*60*60
+                    total_hrs = last_re.to_time - first_record.time.to_time
+                    working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+                  else
+                    total_hrs = last_out_time.to_time - first_record.time.to_time
+                    working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+                  end
+                end
+                if working_hrs.to_s <  "04:30"
+                  current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "A")
+                elsif working_hrs.to_s < "07:00"
+                  current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "HDL")
+                else
+                  current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "P")
+                end
+              end#first_in_time == nil && last_out_time == nil
+
+            end#current_employee_attendance.present == "WO" || current_employee_attendance.present == "H"
+          end#current_employee_attendance.nil?
+            actual_in = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date).first
+            actual_out = DailyAttendance.where(employee_code: da.employee_code,date: da.date.to_date).last
+            @employee_attendance = EmployeeAttendance.where(employee_id: employee.id,day: da.date.to_date).take
+            if actual_in.reader_name != "Main Door IN" && actual_out.reader_name != "Main Door Out"
+              @employee_attendance.update(comment: "Exist Record In #{actual_in.time} Out #{actual_out.time}")
+            elsif actual_in.reader_name != "Main Door IN"
+              @employee_attendance.update(comment: "Exist Record In #{actual_in.time} Reader #{actual_in.reader_name}")
+            elsif actual_out.reader_name != "Main Door Out"
+              @employee_attendance.update(comment: "Exist Record Out #{actual_out.time} Reader #{actual_out.reader_name}")
+            end
           end#employee.nil?
   end#do
+  #remaining employees attendance creation
+    @employees = Employee.where(status: "Active")
+    @employees.each do |e|
+      employee_atten = EmployeeAttendance.where(employee_id: e.id,day: last.date.to_date).take
+      if employee_atten.nil?
+        EmployeeAttendance.create(employee_id: e.id,day: last.date.to_date,present: "A")
+      end
+    end
+
 end
 
 def select_date_and_employee
@@ -1646,7 +1752,7 @@ end
 
 def daily_attendance_datewise
   session[:active_tab] ="TimeManagement"
-  session[:active_tab1] ="daily_attendance"
+  session[:active_tab1] ="Attendance"
 end
 
 def show_daily_attendance_datewise
@@ -1704,8 +1810,8 @@ def import_employee_attendance
     format.csv { send_data @employee_attendances.to_csv }
     format.xls
   end
-    session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Attendance"
+   session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="AttendanceSetup"
 end
 
   def import_employee_attendance_to_txt
@@ -1884,29 +1990,131 @@ end
   end
 
   def access_record
+    session[:active_tab] = "EmployeeSelfService"
   end
 
-  def show_access_card_list
-    @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
-    date = params[:salary][:date]
-    employee_code = params[:salary][:employee_code]
-    @daily_attendances = DailyAttendance.where(date: date.to_date,employee_code: employee_code)
-    first_in = DailyAttendance.where(date: date.to_date,employee_code: employee_code,reader_name: "Main Door IN").first
-    last_out = DailyAttendance.where(date: date.to_date,employee_code: employee_code,reader_name: "Main Door Out").last
-    employee = Employee.find_by_id(current_user.employee_id)
+  # def show_access_card_list
+  #   @date = params[:salary][:date]
+  #   @employee_code = params[:salary][:employee_code]
+  #   @employee = Employee.find_by_id(current_user.employee_id)
+  #   @daily_attendances = DailyAttendance.where(date: @date.to_date,employee_code: @employee_code)
+  #   first_in = DailyAttendance.where(date: @date.to_date,employee_code: @employee_code,reader_name: "Main Door IN").first
+  #   last_out = DailyAttendance.where(date: @date.to_date,employee_code: @employee_code,reader_name: "Main Door Out").last
+  #   daily_attendance = DailyAttendance.where(employee_code: @employee.manual_employee_code,date: @date.to_date).take
+  #   employee_attendance = EmployeeAttendance.where(employee_id: @employee.id,day: @date.to_date).take
+    
+  #   if first_in.nil? && last_out.nil?
+  #     @working_hrs = 0
+  #     @first_in_time = nil
+  #     @last_out_time = nil
+  #   elsif first_in.nil?
+  #     @working_hrs = 0
+  #     @first_in_time = nil
+  #     @last_out_time = last_out.time
+  #   elsif last_out.nil?
+  #     @working_hrs = 0
+  #     @first_in_time = first_in.time
+  #     @last_out_time = nil
+  #   else
+  #     @first_in_time = first_in.time
+  #     @last_out_time = last_out.time
+  #     total_hrs = last_out.time.to_time - first_in.time.to_time
+  #     @working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+  #     if daily_attendance.nil? && employee_attendance.nil?
+  #       @daily_attendances.each do |d|
+  #         d.update(employee_code: @employee.manual_employee_code)
+  #       end#do
+  #       @employee_attendance = EmployeeAttendance.create(day: @date.to_date,in_time: @first_in_time,out_time: @last_out_time,working_hrs: @working_hrs,employee_id: @employee.id,present: 'A',comment: 'ACF Request')
+  #       @employee_attendance.save
+  #       EmployeeAttendanceMailer.pending(@employee,@date,@employee_code,@working_hrs,@first_in_time,@last_out_time).deliver_now
+  #       flash[:notice] = "ACF Request Sent!"
+  #     else
+  #       flash[:alert] = "Attendance available for this date!"
+  #     end#if
+  #   end#if/elsif
+  # end#def
 
-    if @employee_attendance.is_present(date,employee)
-      flash[:alert] = "Attendance available for this date!"
+  def access_card_list
+    @date = params[:salary][:date]
+    @employee_code = params[:salary][:employee_code]
+    @employee = Employee.find_by_id(current_user.employee_id)
+    @daily_attendances = DailyAttendance.where(date: @date.to_date,employee_code: @employee_code)
+    first_in = DailyAttendance.where(date: @date.to_date,employee_code: @employee_code,reader_name: "Main Door IN").first
+    last_out = DailyAttendance.where(date: @date.to_date,employee_code: @employee_code,reader_name: "Main Door Out").last
+    daily_attendance = DailyAttendance.where(employee_code: @employee.manual_employee_code,date: @date.to_date).take
+    employee_attendance = EmployeeAttendance.where(employee_id: @employee.id,day: @date.to_date).take
+    
+    if first_in.nil? && last_out.nil?
+      @working_hrs = 0
+      @first_in_time = nil
+      @last_out_time = nil
+    elsif first_in.nil?
+      @working_hrs = 0
+      @first_in_time = nil
+      @last_out_time = last_out.time
+    elsif last_out.nil?
+      @working_hrs = 0
+      @first_in_time = first_in.time
+      @last_out_time = nil
     else
+      @first_in_time = first_in.time
+      @last_out_time = last_out.time
+      total_hrs = last_out.time.to_time - first_in.time.to_time
+      @working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+    end
+
+    if daily_attendance.nil? && employee_attendance.nil?
       @daily_attendances.each do |d|
-        d.update(employee_code: current_user.employee_id)
+        d.update(employee_code: @employee.manual_employee_code)
       end
-      EmployeeAttendanceMailer.pending(@employee_attendance).deliver_now
+      @employee_attendance = EmployeeAttendance.create(day: @date.to_date,in_time: @first_in_time,out_time: @last_out_time,working_hrs: @working_hrs,employee_id: @employee.id,present: 'A',comment: 'ACF Request')
+      @employee_attendance.save
+      EmployeeAttendanceMailer.pending(@employee,@date,@employee_code,@working_hrs,@first_in_time,@last_out_time).deliver_now
+      flash[:notice] = "ACF Request Sent!"
+    else
+      flash[:alert] = "Attendance available for this date!"
     end
     redirect_to access_record_employee_attendances_path
   end#def
 
+  def access_card_approval
+    current_login = Employee.find(current_user.employee_id)
+    @emps = current_login.subordinates.pluck(:id)
+    @pending_requests = EmployeeAttendance.where(employee_id: @emps,comment: "ACF Request")
+    session[:active_tab] = "ManagerSelfService"
+  end
+
+  def view_access_card_detail
+    @pending_request = EmployeeAttendance.find(params[:pending_request])
+  end
+
+  def approve_acf_request
+    @pending_request = EmployeeAttendance.find(params[:format])
+    # if @pending_request.working_hrs.to_s < "04:30"
+    #   @pending_request.update(present: "A",comment: "ACF Approved")
+    # elsif @pending_request.working_hrs.to_s < "07:00"
+    #   @pending_request.update(present: "",comment: "ACF Approved")
+    # else
+      manager = Employee.find_by(id: current_user.employee_id)
+      @pending_request.update(present: "ACF",comment: "ACF Approved")
+      EmployeeAttendanceMailer.approved(@pending_request,manager).deliver_now
+    # end
+    flash[:notice] = "ACF Request Approved!"
+    redirect_to access_card_approval_employee_attendances_path
+  end
+
+  def reject_acf_request
+    @pending_request = EmployeeAttendance.find(params[:format])
+    manager = Employee.find_by(id: current_user.employee_id)
+    @pending_request.update(present: "A",comment: "ACF Rejected")
+    EmployeeAttendanceMailer.rejected(@pending_request,manager).deliver_now
+    flash[:notice] = "ACF Request Rejected!"
+    redirect_to access_card_approval_employee_attendances_path
+  end
+
   def destroy_daily_attendance
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Attendance"
   end
 
   def show_daily_attendance_for_destroy
@@ -1917,7 +2125,7 @@ end
   def destroy_daily_attendance_datewise
     date = params[:date]
     DailyAttendance.where(date: date.to_date).destroy_all
-    EmployeeAttendance.where(day: date.to_date,is_confirm: false).destroy_all
+    #EmployeeAttendance.where(day: date.to_date,is_confirm: false).destroy_all
     flash[:notice] = "Attendance destroyed successfully!"
     redirect_to destroy_daily_attendance_employee_attendances_path
   end

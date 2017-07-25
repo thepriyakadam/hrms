@@ -210,7 +210,7 @@
              
             <%else%>
               <% @employees.each do |e| %>
-                <li class="item">
+                <li class="item"> 
                   <div class="product-img">
                   <%unless e.nil? or e.nil? or  e.employee.member.nil? or e.employee.member.avatar.nil? %>
                  <% if e.employee.gender == "Male" && e.employee.member.avatar_file_name == nil  %>
@@ -245,6 +245,16 @@
           </ul>
         </div><!-- /.box-body -->
       </div><!-- /.box -->
+
+      <script type="text/javascript">
+      $(document).ready(function() {
+      $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true,
+        "scrollY": 500
+      } );
+     } );
+</script>
 
       <div id="anniversary_email" class="modal fade"></div>
 
@@ -348,7 +358,6 @@
         </div><!-- /.box-header -->
         <div class="box-body">
           <ul class="products-list product-list-in-box">
-
                 <% JoiningDetail.all.order("id desc").limit(5).each do |j| %>
                 <li class="item">
                  <div class="product-img">
@@ -375,7 +384,6 @@
           </ul>
         </div><!-- /.box-body -->
       </div><!-- /.box -->
-
       </div><!-- /.col -->
       </div><!-- /.row -->
     </section><!-- right col -->

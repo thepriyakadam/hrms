@@ -3,6 +3,7 @@ class EmployeeAttendance < ActiveRecord::Base
   belongs_to :employee_leav_request
   belongs_to :machine_attendance
   belongs_to :company_time_master
+  belongs_to :holiday
   validates :day, uniqueness: { scope: [:employee_id] }
   #attr_accessible :employee_id, :day, :present, :in_time, :out_time
   # extend ActiveModel::Naming
@@ -15,12 +16,6 @@ class EmployeeAttendance < ActiveRecord::Base
       flag = EmployeeAttendance.exists?(day: day,employee_id: emp)
     flag
   end
-
-  # def self.record_available(day,emp)
-  #   flag = 0
-  #     flag = EmployeeAttendance.exists?(day: day,employee_id: emp)
-  #   flag
-  # end
   
   def self.collect_rolewise(current_user)
     if current_user.class == Group

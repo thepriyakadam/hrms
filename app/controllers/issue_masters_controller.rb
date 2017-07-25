@@ -67,6 +67,10 @@ class IssueMastersController < ApplicationController
     redirect_to new_issue_master_path
   end
 
+  def modal
+    @issue_master = IssueMaster.find(params[:format])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_issue_master

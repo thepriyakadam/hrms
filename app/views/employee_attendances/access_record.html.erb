@@ -3,7 +3,7 @@
   <div class="box-header">
     <h3 class="box-title">Access Card</h3>
   </div>
-  <%= bootstrap_form_for(:salary, url: { action: 'show_access_card_list'},remote: true) do |f| %>
+  <%= bootstrap_form_for(:salary,url:{ action: 'access_card_list'},html: {id: "attendance"}) do |f| %>
     <div class="box-body">
       <div class="row">
         <div class="col-sm-3">
@@ -25,7 +25,7 @@
         </div>
         <div class="col-sm-3" style="padding-top:20px;">
           <div class="actions">
-            <%= f.submit "Show Records" ,class: 'btn btn-primary btn-sm' %>
+            <%= f.submit "Send Request" ,class: 'btn btn-primary btn-sm',id: "buttonCtc" %>
           </div>
         </div>
       </div><br>
@@ -48,4 +48,29 @@
     yearRange: '-200:+1',
     dateFormat: 'dd-mm-yy' });
   }); 
+</script>
+
+<script>
+$("#attendance").validate({
+    rules: {
+      "attendance[date]":{
+        required: true,
+      },
+      "attendance[employee_code]":{
+        required: true,
+      }
+    },
+    messages: {
+      "attendance[date]":{
+        required: "Please select Date",
+      },
+      "attendance[employee_code]":{
+        required: "Please select Card No",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
 </script>

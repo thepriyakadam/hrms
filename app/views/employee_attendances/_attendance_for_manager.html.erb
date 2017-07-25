@@ -29,6 +29,9 @@
             <% od_day = od_day_count(exist) %>
             <% gatepass = gatepass_count(exist) %>
 
+            <% process_off = process_off_count(exist) %>
+            <% access_card_forgotten = access_card_forgotten_count(exist) %>
+
             <% workingday = [] %>
             <% workingday = create_leave(@date, e) %>
             <%= hidden_field_tag "attendances[]", e.id %>
@@ -36,7 +39,7 @@
             <%= hidden_field e.employee_id, 'month_name', value: @date.strftime("%B") %>
             <%= hidden_field e.employee_id, 'year', value: @date.strftime("%Y") %>
             <%= hidden_field e.employee_id, 'day_in_month', value: count_day(@day,e.employee_id) %>
-            <%= hidden_field e.employee_id, 'present_day', value: present_day + workingday[2] %>
+            <%= hidden_field e.employee_id, 'present_day', value: present_day.to_f + process_off.to_f +  access_card_forgotten.to_f + workingday[2] %>
             <%= hidden_field e.employee_id, 'od_day', value: od_day %>
             <%= hidden_field e.employee_id, 'total_leave', value: workingday[0] + workingday[1] %>
             <%= hidden_field e.employee_id, 'nonpay_leave', value: workingday[1] %>
@@ -55,9 +58,9 @@
               <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count.to_f + workingday[3] + gatepas_value.to_f %>
 
               <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
-                <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + workingday[0] + workingday[2] + od_day.to_f + gatepas_value.to_f + gatepass_value.to_f %>
+                <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + process_off.to_f +  access_card_forgotten.to_f + holiday_in_month.to_f + workingday[0] + workingday[2] + od_day.to_f + gatepas_value.to_f + gatepass_value.to_f %>
               <% else %>
-                <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[0] + workingday[2] + od_day.to_f + gatepas_value.to_f + gatepass_value.to_f %>
+                <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + process_off.to_f +  access_card_forgotten.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[0] + workingday[2] + od_day.to_f + gatepas_value.to_f + gatepass_value.to_f %>
               <% end %>            
              
               

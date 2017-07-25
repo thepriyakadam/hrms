@@ -9,6 +9,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
   has_many :particular_leave_records
   has_many :employee_attendances
   has_many :leave_records
+  belongs_to :employee_leav_balance
   # belongs_to :first_reporter, class_name: 'Employee', foreign_key: 'first_reporter_id'
   # belongs_to :second_reporter, class_name: 'Employee', foreign_key: 'second_reporter_id'
 
@@ -22,6 +23,13 @@ class EmployeeLeavRequest < ActiveRecord::Base
 
   # CURRENT_STATUSS = [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]]
   # validates_inclusion_of :current_status, :in => CURRENT_STATUSS
+
+  def is_out_of_limit(employee_leav_request)
+    flag = 0
+      @leav_category = LeavCategory.find_by(id: employee_leav_request.leav_category_id)
+      flag = employee_leav_request.leave_count <  @leav_category.from || employee_leav_request.leave_count > @leav_category.to
+    flag
+  end
 
   def is_salary_processed?
     flag = 0

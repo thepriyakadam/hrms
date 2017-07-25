@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170711094007) do
+ActiveRecord::Schema.define(version: 20170715071436) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -868,12 +868,14 @@ ActiveRecord::Schema.define(version: 20170711094007) do
     t.integer  "employee_code",            limit: 4
     t.string   "employee_name",            limit: 255
     t.string   "comment",                  limit: 255
+    t.integer  "holiday_id",               limit: 4
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id", using: :btree
   add_index "employee_attendances", ["department_id"], name: "index_employee_attendances_on_department_id", using: :btree
   add_index "employee_attendances", ["employee_id"], name: "index_employee_attendances_on_employee_id", using: :btree
   add_index "employee_attendances", ["employee_leav_request_id"], name: "index_employee_attendances_on_employee_leav_request_id", using: :btree
+  add_index "employee_attendances", ["holiday_id"], name: "index_employee_attendances_on_holiday_id", using: :btree
   add_index "employee_attendances", ["machine_attendance_id"], name: "index_employee_attendances_on_machine_attendance_id", using: :btree
   add_index "employee_attendances", ["on_duty_request_id"], name: "index_employee_attendances_on_on_duty_request_id", using: :btree
 
@@ -1020,33 +1022,35 @@ ActiveRecord::Schema.define(version: 20170711094007) do
   add_index "employee_leav_balances", ["leav_category_id"], name: "index_employee_leav_balances_on_leav_category_id", using: :btree
 
   create_table "employee_leav_requests", force: :cascade do |t|
-    t.integer  "employee_id",        limit: 4
-    t.integer  "leav_category_id",   limit: 4
-    t.string   "leave_type",         limit: 255
+    t.integer  "employee_id",              limit: 4
+    t.integer  "leav_category_id",         limit: 4
+    t.string   "leave_type",               limit: 255
     t.datetime "start_date"
     t.datetime "end_date"
-    t.string   "date_range",         limit: 255
-    t.integer  "no_of_day",          limit: 4
-    t.decimal  "leave_count",                    precision: 5, scale: 1
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
-    t.string   "reason",             limit: 255
+    t.string   "date_range",               limit: 255
+    t.integer  "no_of_day",                limit: 4
+    t.decimal  "leave_count",                          precision: 5, scale: 1
+    t.datetime "created_at",                                                   null: false
+    t.datetime "updated_at",                                                   null: false
+    t.string   "reason",                   limit: 255
     t.boolean  "is_pending"
     t.boolean  "is_cancelled"
     t.boolean  "is_first_approved"
     t.boolean  "is_second_approved"
     t.boolean  "is_first_rejected"
     t.boolean  "is_second_rejected"
-    t.integer  "current_status",     limit: 4
-    t.integer  "first_reporter_id",  limit: 4
-    t.integer  "second_reporter_id", limit: 4
-    t.string   "current_status1",    limit: 255
+    t.integer  "current_status",           limit: 4
+    t.integer  "first_reporter_id",        limit: 4
+    t.integer  "second_reporter_id",       limit: 4
+    t.string   "current_status1",          limit: 255
     t.boolean  "first_half"
     t.boolean  "last_half"
     t.boolean  "present_status"
+    t.integer  "employee_leav_balance_id", limit: 4
   end
 
   add_index "employee_leav_requests", ["employee_id"], name: "index_employee_leav_requests_on_employee_id", using: :btree
+  add_index "employee_leav_requests", ["employee_leav_balance_id"], name: "index_employee_leav_requests_on_employee_leav_balance_id", using: :btree
   add_index "employee_leav_requests", ["first_reporter_id"], name: "index_employee_leav_requests_on_first_reporter_id", using: :btree
   add_index "employee_leav_requests", ["leav_category_id"], name: "index_employee_leav_requests_on_leav_category_id", using: :btree
   add_index "employee_leav_requests", ["second_reporter_id"], name: "index_employee_leav_requests_on_second_reporter_id", using: :btree
@@ -3252,6 +3256,8 @@ ActiveRecord::Schema.define(version: 20170711094007) do
     t.string   "job_title",                   limit: 255
     t.string   "status",                      limit: 255
     t.boolean  "shortlist_for_interview"
+    t.string   "contact_no2",                 limit: 255
+    t.decimal  "current_ctc",                               precision: 10
   end
 
   add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id", using: :btree
@@ -3660,6 +3666,16 @@ ActiveRecord::Schema.define(version: 20170711094007) do
     t.date     "vacancy_fullfillment_date"
     t.boolean  "is_confirmed"
     t.string   "vacancy_code",              limit: 255
+    t.string   "vacancy_type",              limit: 255
+    t.string   "string",                    limit: 255
+    t.string   "experince_max",             limit: 255
+    t.string   "budget_max",                limit: 255
+    t.string   "reason",                    limit: 255
+    t.integer  "replacement_id",            limit: 4
+    t.boolean  "notice_period"
+    t.string   "notice_period_day",         limit: 255
+    t.boolean  "relocation_rerimbursement"
+    t.string   "relocation_cost",           limit: 255
   end
 
   add_index "vacancy_masters", ["company_location_id"], name: "index_vacancy_masters_on_company_location_id", using: :btree
@@ -3855,8 +3871,10 @@ ActiveRecord::Schema.define(version: 20170711094007) do
   add_foreign_key "candidate_interview_schedules", "candidate_forms"
   add_foreign_key "candidate_interview_schedules", "interview_type_masters"
   add_foreign_key "company_policies", "policy_types"
+  add_foreign_key "employee_attendances", "holidays"
   add_foreign_key "employee_jc_lists", "employees"
   add_foreign_key "employee_jc_lists", "joining_checklist_masters"
+  add_foreign_key "employee_leav_requests", "employee_leav_balances"
   add_foreign_key "exit_interviews", "employee_resignations"
   add_foreign_key "recruiters", "employees"
   add_foreign_key "status_c_offs", "employees"

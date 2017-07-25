@@ -1808,6 +1808,7 @@ def import_employee_attendance
     format.csv { send_data @employee_attendances.to_csv }
     format.xls
   end
+
    session[:active_tab] ="TimeManagement"
     session[:active_tab1] ="AttendanceSetup"
 end
@@ -1815,9 +1816,9 @@ end
   def import_employee_attendance_to_txt
     @employees = Employee.all
     respond_to do |format|
-    format.html
-    format.csv { send_data @employees.to_txt,filename: "employees-#{Date.today}.txt" }
-      end
+      format.html
+      format.csv { send_data @employees.to_txt,filename: "employees-#{Date.today}.txt" }
+    end#do
   end
 
   def self_service_datewise_attendance
@@ -2044,7 +2045,7 @@ end
     employee_attendance = EmployeeAttendance.where(employee_id: @employee.id,day: @date.to_date).take
     
     if @daily_attendance.nil?
-      flash[:alert] = "Please Check Date and Crad Details"
+      flash[:alert] = "Please Check Date and Crad Details!"
     else
 
       if first_in.nil? && last_out.nil?
@@ -2082,6 +2083,8 @@ end
   end#def
 
   def admin_level_acf
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Attendance"
   end
 
   def admin_acf_approval

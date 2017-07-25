@@ -53,17 +53,16 @@
           </div>
         </div>
     </div>
-
-     <div class="col-sm-3">
-       <div class="form-group required">
-        <%= f.text_field :location,label:'Location' %>
-       </div>
-    </div>
     </div>
     
     <div class="row">
     <div class="col-sm-3">
-      <div class="actions">
+       <div class="field">
+        <%= f.text_field :location,label:'Location' %>
+       </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="actions" style="padding-top: 20px;">
       <%= f.submit "Create Interview Rechedule",class: "btn btn-primary btn-sm" %>
       <%= link_to 'Back', new_interview_round_path(interview_schedule_id: @interview_schedule.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
       </div>

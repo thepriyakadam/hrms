@@ -66,6 +66,8 @@
               <%= render 'sidebars/account' %>
             <% elsif current_user.role.name == 'AccountAdmin' %>
               <%= render 'sidebars/account_admin' %>
+            <% elsif current_user.role.name == 'Recruitment' %>
+              <%= render 'sidebars/recruitment' %>
             <% else %>
               <%= render 'sidebars/employee' %>
             <% end %>

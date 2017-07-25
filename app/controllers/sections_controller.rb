@@ -16,7 +16,7 @@ class SectionsController < ApplicationController
   # GET /sections/new
   def new
     @section = Section.new
-     @sections = Section.all
+    @sections = Section.all
    session[:active_tab] ="PayrollManagement"
    session[:active_tab1] = "IncomeTax"
   end

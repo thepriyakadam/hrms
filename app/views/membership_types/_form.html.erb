@@ -1,0 +1,53 @@
+ <%= bootstrap_form_for(@membership_type,html: {id: 'membership_type'},remote:true) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :code,label:'Code', placeholder: 'Code' %>
+            </div>
+        </div> 
+           <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :name,label:'Member Type', placeholder: 'Type of Member' %>
+              </div>
+              </div>
+           
+            <div class="col-sm-3">
+            <label>Status</label>
+            <div class="field">
+            <%= f.check_box :status , label:'Active'%>
+          </div>
+          </div>
+          </div>
+           <div class="row">
+          <div class="col-sm-3">
+            <div class="actions">
+              <%= f.submit 'Create Member Type',:class => class_name, data: { disable_with: data_info } %>
+            </div>
+          </div>
+        </div>
+<% end %>
+
+<script>
+$("#membership_type").validate({
+    rules: {
+      "membership_type[code]":{
+        required: true,
+      },
+      "membership_type[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "membership_type[code]":{
+        required: "Please Specify Code",
+      },
+       "membership_type[name]":{
+        required: "Please Specify type of member",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

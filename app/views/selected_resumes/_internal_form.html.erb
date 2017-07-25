@@ -1,0 +1,116 @@
+
+    <%= bootstrap_form_for(@selected_resume,url:{action:'internal_create'},html: {id: "selected_resume"}) do |f| %>
+    <%= f.hidden_field :vacancy_master_id,value: @vacancy_master.id  %>
+    <%= f.hidden_field :add_by_id,value:current_user.employee_id  %>
+    <%= f.hidden_field :name,value: full_name(@emp)  %>
+    <%= f.hidden_field :contact_no,value: @emp.contact_no  %>
+    <%= f.hidden_field :email_id,value: @emp.email %>
+    <% if @qualification.nil? %>
+    <% else %>
+      <%= f.hidden_field :degree_id,value: @qualification.degree_id  %>
+    <% end %>
+
+  <div><%= render 'show_vacancy_detail' %></div>
+
+    <% if @vacancy_master.is_confirmed == true %>
+    <% else %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :job_title,value: @vacancy_master.vacancy_name,readonly: true, label: 'Job Title' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :skillset,label: 'Skillset' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :current_ctc, label: 'Current CTC' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :ctc, label: 'Expected CTC' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :experience, label: 'Experience' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :notice_period, label: 'Notice Period' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :contact_no2,label: 'Alternate Contact No.' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.file_field :avatar,label: 'Resume Upload(only docx,pdf)' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.file_field :passport_photo,label: 'Photo Upload(only jpeg,jpg,png)' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <label></label>
+          <div class="actions">
+            <%= f.submit "Create", class: "btn btn-primary btn-sm" %>
+            <%= link_to 'Back', root_url,class:"btn btn-sm btn-default fa fa-arrow-left" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <% end %> <!-- do -->
+
+<script>
+$("#selected_resume").validate({
+    rules: {
+      "selected_resume[skillset]":{
+        required: true
+      },
+      "selected_resume[degree_id]":{
+        required: true
+      },
+      "selected_resume[name]":{
+        required: true
+      }
+    },
+    messages: {
+      "selected_resume[skillset]":{
+        required: "Please specify Skillset"
+      },
+      "selected_resume[degree_id]":{
+        required: "Please specify Qualification"
+      },
+      "selected_resume[name]":{
+        required: "Please specify name"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

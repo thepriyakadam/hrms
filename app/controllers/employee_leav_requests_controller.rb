@@ -126,7 +126,7 @@ class EmployeeLeavRequestsController < ApplicationController
                 @employee_leav_request.is_second_rejected = false
                 @employee_leav_request.end_date = start_date
                 @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ? AND is_active = ?', @employee.id, @employee_leav_request.leav_category_id,true).take
-                LeaveCOff.find_by(id: @leave_c_off_id).update(taken_date: start_date)
+                LeaveCOff.find_by(id: @leave_c_off_id).update(taken_date: start_date,is_taken: true)
                 @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)
                 @employee_leav_request.save
                 @employee_leav_request.leave_record_create_coff(@employee_leav_request)
@@ -252,7 +252,7 @@ class EmployeeLeavRequestsController < ApplicationController
                     redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
 
                 elsif @leav_category.is_limit == true && @employee_leav_request.is_out_of_limit(@employee_leav_request)
-                  flash[:alert] = "Leave Range for #{@leav_category.name} is Between #{@leav_category.from} - #{@leav_category.to}"
+                  flash[:alert] = " #{@leav_category.from} to  #{@leav_category.to} days leave eligible for #{@leav_category.name}"
 
                   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
                 else

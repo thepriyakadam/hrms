@@ -154,7 +154,7 @@ class RembursmentsController < ApplicationController
   end
 
   def final_approval_list
-     @rembursments = Rembursment.where(status: "Approved")
+    @rembursments = Rembursment.where(status: "Approved")
     session[:active_tab] = "PayrollManagement"
     session[:active_tab1] ="EmployeeRembursment"
   end

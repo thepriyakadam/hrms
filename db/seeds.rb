@@ -786,7 +786,10 @@ end
 #        w.total_coupan = ex.cell(line, 'D')
 #        w.food_coupan_master_id = ex.cell(line, 'E').to_i
 #        w.amount = ex.cell(line, 'F')
+<<<<<<< HEAD
  
+=======
+>>>>>>> 5000c82d699dd57b3e42bc89716f400f2807b278
 #        w.food_date = ex.cell(line, 'G')
 #        w.save!
 #      end
@@ -819,3 +822,23 @@ end
 #    end
 #    end
 # end
+<<<<<<< HEAD
+=======
+InterviewEvalution.destroy_all
+InterviewDecision.destroy_all
+InterviewAttribute.destroy_all
+SelectedResume.destroy_all
+InterviewRound.destroy_all
+InterviewType.destroy_all
+InterviewAnalysis.destroy_all
+InterviewRoundSchedule.destroy_all
+InterviewSchedule.destroy_all
+ParticularVacancyRequest.destroy_all
+ReportingMastersVacancyMaster.destroy_all
+
+VacancyMaster.destroy_all
+
+
+
+
+>>>>>>> 5000c82d699dd57b3e42bc89716f400f2807b278

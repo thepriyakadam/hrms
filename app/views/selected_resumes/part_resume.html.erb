@@ -54,7 +54,7 @@
               <% end %>
         </td>
         <td>
-          <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>  
+          <%= link_to '', show_part_resume_selected_resumes_path(vacancy_master_id: @vacancy_master.id,id: selected_resume.id),class: 'btn btn-xs btn-default fa fa-eye' %>  
         </td>
         </td>
       </tr>

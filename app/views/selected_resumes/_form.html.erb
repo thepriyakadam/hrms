@@ -18,13 +18,13 @@
 
 <div class="col-sm-3">
     <div class="form-group required">
-    <%= f.text_field :job_title,value: @vacancy_master.vacancy_name,readonly: true, label: 'Job Title' %>
+    <%= f.text_field :job_title,value: @vacancy_master.vacancy_name,readonly: true, label: 'Vacancy Name' %>
     </div>
   </div>
 
   <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :skillset,label: 'Skillset' %>
+        <%= f.text_field :skillset,label: 'Skill Set' %>
       </div>
   </div>
 
@@ -38,17 +38,12 @@
         </div>
       </div>
     </div>
-
-   
-   
- 
-
 </div>
 
 <div class="row">
 
 <div class="col-sm-3">
-    <div class="field">
+    <div class="form-group required">
       <%= f.text_field :current_ctc, label: 'Current CTC' %>
     </div>
   </div>
@@ -62,7 +57,7 @@
 
 
   <div class="col-sm-3">
-    <div class="field">
+    <div class="form-group required">
       <%= f.text_field :experience, label: 'Experience' %>
     </div>
   </div>
@@ -77,7 +72,7 @@
 <div class="row">
 
   <div class="col-sm-3">
-    <div class="field">
+    <div class="form-group required">
       <%= f.text_field :contact_no,label: 'Contact No.' %>
     </div>
   </div>
@@ -131,17 +126,35 @@ $("#selected_resume").validate({
       },
       "selected_resume[name]":{
         required: true
+      },
+      "selected_resume[current_ctc]":{
+        required: true
+      },
+      "selected_resume[experience]":{
+        required: true
+      },
+      "selected_resume[contact_no]":{
+        required: true
       }
     },
     messages: {
       "selected_resume[skillset]":{
-        required: "Please specify Skillset"
+        required: "Please specify Skill set"
       },
       "selected_resume[degree_id]":{
         required: "Please specify Qualification"
       },
       "selected_resume[name]":{
         required: "Please specify name"
+      },
+      "selected_resume[current_ctc]":{
+        required: "Please specify current ctc"
+      },
+      "selected_resume[experience]":{
+        required: "Please specify experience"
+      },
+      "selected_resume[contact_no]":{
+        required: "Please specify contact no."
       }
     },
     errorPlacement: function(error, element) {

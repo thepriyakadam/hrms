@@ -1,0 +1,68 @@
+<%= bootstrap_form_for(@approval_process,html: {id: 'approval_process'},remote:true) do |f| %>
+ <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :membership_id,all_membership,{label: 'Member',include_blank: 'Select Member'} %>
+          </div>
+        </div>
+         <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :from,label: 'From'%>
+          </div>
+        </div>
+
+          <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :to,label: 'To'%>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+            <label>Status</label>
+          <div class="field">
+            <%= f.check_box :status , label:'Active'%>
+          </div>
+        </div>
+
+      <div class="col-sm-3">
+         <label></label>
+        <div class="actions">
+          <%= f.submit'Create Loan Approval Process', :class => class_name, data: { disable_with: data_info } %> 
+        </div>
+      </div>
+ </div>
+</div>
+  <% end %>
+
+<script>
+$("#approval_process").validate({
+    rules: {
+      "approval_process[membership_id]":{
+        required: true,
+      },
+      "approval_process[from]":{
+        required: true,
+        numbersOnly: true,
+      },
+      "approval_process[to]":{
+        required: true,
+        numbersOnly: true,
+      }
+    },
+    messages: {
+      "approval_process[membership_id]":{
+        required: "Please Select Member",
+      },
+      "approval_process[from]":{
+        required: "Please Specify from",
+      },
+      "approval_process[to]":{
+        required: "Please Specify to",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

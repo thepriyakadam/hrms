@@ -1,0 +1,103 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Member</h3>
+    <div class="box-body">
+      <%= bootstrap_form_for(@membership,html: {id: 'membership'}) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+          <%= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :membership_type_id,all_membership_type,{label: 'Member Type',include_blank: 'Select Type Of Member'} %>
+          </div>
+        </div>
+    
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :contribution,label: 'Employee Contribution'%>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+         <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+             <i class="fa fa-calendar"></i>
+            </div>
+            <div class="form-group required">
+              <%= f.text_field :date, label: 'Date', class: 'membership'%>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <label>Status</label>
+          <div class="field">
+            <%= f.check_box :status , label:'Active'%>
+          </div>
+        </div>
+       <div class="col-sm-3">
+         <label></label>
+        <div class="actions">
+          <%= f.submit'Create Membership', :class => class_name, data: { disable_with: data_info } %> | <%= link_to 'Back', memberships_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
+          <!--  <= link_to 'Back',employee_list_employee_transfers_path,class: 'btn btn-default btn-sm fa fa-arrow-left'%> -->
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <% end %>
+
+  <script type="text/javascript">
+  $(function(){
+    $('.membership').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+     });
+</script>
+
+<script>
+$("#membership").validate({
+    rules: {
+       "membership[employee_id]":{
+        required: true,
+      },
+      "membership[membership_type_id]":{
+        required: true,
+      },
+      "membership[contribution]":{
+        required: true,
+        numbersOnly: true,
+      },
+      "membership[date]":{
+        required: true,
+      }
+    },
+    messages: {
+       "membership[employee_id]":{
+        required: "Please Select Employee",
+      },
+      "membership[membership_type_id]":{
+        required: "Please Select Member Type",
+      },
+      "membership[contribution]":{
+        required: "Please Specify Contribution",
+      },
+      "membership[date]":{
+        required: "Please select date",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

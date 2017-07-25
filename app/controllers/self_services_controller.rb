@@ -135,8 +135,7 @@ class SelfServicesController < ApplicationController
     send_file @investment_declaration.document.path,
        filename: @investment_declaration.document_file_name,
        type: @investment_declaration.document_content_type,
-       disposition: 'attachment'
-    
+       disposition: 'attachment' 
   end
 
 

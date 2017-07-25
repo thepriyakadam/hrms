@@ -1,0 +1,147 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Loan Request</h3>
+    <div class="box-body">
+      <%= bootstrap_form_for(@loan_request,html: {id: 'loan_request'}) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :membership_id,all_membership,{label: 'Member',include_blank: 'Select Member'} %>
+          </div>
+        </div>
+    
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :loan_type_id,all_loan_type,label: 'Loan Type',include_blank: 'Select Loan Type'%>
+          </div>
+        </div>
+
+         <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :amount,label: 'Amount'%>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :no_of_emi,label: 'No. of EMI'%>
+          </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :emi,label: 'EMI'%>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+           <div class="input-group">
+            <div class="input-group-addon">
+             <i class="fa fa-calendar"></i>
+            </div>
+            <div class="form-group required">
+              <%= f.text_field :date, label: 'Date', class: 'loan_request'%>
+            </div>
+           </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="actions" style="padding: 20px">
+            <%= f.submit'Create Loan Request', :class => class_name, data: { disable_with: data_info } %> <!-- | < link_to 'Back', loan_requests_path,class:'btn btn-sm btn-default fa fa-arrow-left' %> -->
+          </div>
+        </div>
+    </div>
+    </div>
+  </div>
+<% end %>
+</div>
+
+  <script type="text/javascript">
+  $(function(){
+    $('#loan_request_amount').on('input', function() {
+      var loan_request_amount = parseFloat($('#loan_request_amount').val());
+      var loan_request_no_of_emi = parseFloat($('#loan_request_no_of_emi').val());
+      var ans="";
+      if (isNaN(loan_request_amount) || isNaN(loan_request_no_of_emi)) {
+        ans = ""
+      }
+      else{
+        ans = (loan_request_amount / loan_request_no_of_emi).toFixed(2);
+      }
+      $('#loan_request_emi').val(ans);
+
+    });
+
+    $('#loan_request_no_of_emi').on('input', function() {
+      var loan_request_no_of_emi = parseFloat($('#loan_request_no_of_emi').val());
+      var loan_request_amount = parseFloat($('#loan_request_amount').val());
+      var ans="";
+      if (isNaN(loan_request_amount) || isNaN(loan_request_no_of_emi)) {
+        ans = ""
+      }
+      else{
+        ans = (loan_request_amount / loan_request_no_of_emi).toFixed(2);
+      }
+      $('#loan_request_emi').val(ans);
+    });
+  });
+  </script>
+
+  <script type="text/javascript">
+  $(function(){
+    $('.loan_request').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+     });
+</script>
+
+<script>
+$("#loan_request").validate({
+    rules: {
+      "loan_request[membership_id]":{
+        required: true,
+      },
+      "loan_request[amount]":{
+        required: true,
+        numbersOnly: true,
+      },
+      "loan_request[loan_type_id]":{
+        required: true,
+      },
+      "loan_request[no_of_emi]":{
+        required: true,
+        numbersOnly: true,
+      },
+      "loan_request[date]":{
+        required: true,
+      }
+    },
+    messages: {
+      "loan_request[membership_id]":{
+        required: "Please Select Member",
+      },
+      "loan_request[amount]":{
+        required: "Please Specify Amount",
+      },
+      "loan_request[loan_type_id]":{
+        required: "Please select loan type  ",
+      },
+      "loan_request[no_of_emi]":{
+        required: "Please specify no. of emi  ",
+      },
+      "loan_request[date]":{
+        required: "Please select date  ",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

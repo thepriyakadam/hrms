@@ -1,0 +1,67 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <div class="modal-body">
+
+     <%= bootstrap_form_for :salary,url:{action:'final_approve_request',vacancy_master_id: @vacancy_master.id},html: {id: 'salary'} do |f| %>
+        <div class="row">
+          <div class="col-sm-3">
+            <%= f.select :employee_id, all_recruiter, {label: "Recruiter",include_blank: " Select Recruiter"}, class: 'input_degree_stream_id' %>
+          </div>
+
+          <div class="col-sm-4">
+            <label>Date </label>
+            <div class="field">
+              <%= f.text_field :target_date, hide_label: true, class: 'birth_date1'%>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.select :vacancy_of, ['Refferal','Internal','Open Source'],{label: 'Select Vacancy',include_blank: " Select Vacancy"} %>
+            </div>
+          </div>
+
+          <div class="col-sm-2" style="padding-top: 20px">
+            <%= f.submit "Approve", class: 'btn btn-sm btn-primary fa fa-modx' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+$("#salary").validate({
+    rules: {
+      "salary[employee_id]":{
+        required: true,
+      },
+      "salary[target_date]":{
+        required: true,
+      }
+    },
+    messages: {
+      "salary[employee_id]":{
+        required: "Please specify Employee Name",
+      },
+      "salary[target_date]":{
+        required: "Please specify Date",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+<script type="text/javascript">
+  $('.birth_date1').datepicker({
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-100:+10',
+  dateFormat: 'dd-mm-yy' });
+</script>
+

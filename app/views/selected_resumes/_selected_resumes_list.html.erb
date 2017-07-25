@@ -8,7 +8,6 @@
       <% end %>
       <th>Name</th>
       <th>Email Id</th>
-      <th>Job Title</th>
       <th>Skillset</th>
       <th>Contact No</th>
       <th>Status</th>
@@ -35,7 +34,6 @@
         <% end %>
         <td><%= selected_resume.name %></td>
         <td><%= selected_resume.email_id %></td>
-        <td><%= selected_resume.job_title %></td>
         <td><%= selected_resume.skillset %></td>
         <td><%= selected_resume.contact_no %></td>
         <td>
@@ -81,9 +79,9 @@
         
         <!--<= link_to '', selected_resume, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>-->
         <% if selected_resume.status == "Shortlisted" %>
-        <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
+        <%= link_to '', show_selected_resume_selected_resumes_path(selected_resume,vacancy_master_id: @vacancy_master.id),class: 'btn btn-xs btn-default fa fa-eye' %>
         <% else %>
-        <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
+        <%= link_to '', show_selected_resume_selected_resumes_path(selected_resume,vacancy_master_id: @vacancy_master.id),class: 'btn btn-xs btn-default fa fa-eye' %>
         <%= link_to '',modal_profile_update_selected_resumes_path(selected_resume,vacancy_master_id: @vacancy_master.id),class: 'btn btn btn-xs btn-success fa fa-edit',remote: true %>
         <% end %>
            <!-- < if selected_resume.status == "Shortlisted" %>

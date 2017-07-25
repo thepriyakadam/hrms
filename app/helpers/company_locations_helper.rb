@@ -21,6 +21,8 @@ module CompanyLocationsHelper
         CompanyLocation.where(id: current_user.company_location_id).collect { |cl| [cl.company.name + '-' + cl.name, cl.id] }
       elsif current_user.role.name == 'HOD'
         Department.where(id: current_user.department_id).collect { |cl| [cl.company.name + '-' + cl.name, cl.id] }
+      elsif current_user.role.name == 'Recruitment'
+      CompanyLocation.all.collect { |cl| [cl.company.name + '-' + cl.name, cl.id] }
       end
     end
   end
@@ -37,6 +39,8 @@ module CompanyLocationsHelper
         CompanyLocation.where(id: current_user.company_location_id).collect { |cl| [cl.name , cl.id] }
       elsif current_user.role.name == 'HOD'
         Department.where(id: current_user.department_id).collect { |cl| [cl.name , cl.id] }
+         elsif current_user.role.name == 'Recruitment'
+      CompanyLocation.all.collect { |cl| [cl.company.name + '-' + cl.name, cl.id] }
       end
     end
   end
@@ -53,6 +57,8 @@ module CompanyLocationsHelper
         CompanyLocation.where(id: current_user.company_location_id).collect { |d| [d.company.name + '-' + d.name, d.id] }
       elsif current_user.role.name == 'HOD'
         CompanyLocation.where(id: current_user.company_location_id).collect { |d| [d.company.name + '-' + d.name, d.id] }
+      elsif current_user.role.name == 'Recruitment'
+        CompanyLocation.all.collect { |cl| [cl.company.name + '-' + cl.name, cl.id] }
       end
     end
   end

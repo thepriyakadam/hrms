@@ -37,6 +37,8 @@
                     <small class="label label-default">Pending</small>
                    <% elsif particular_vacancy_request.status == "Approved" %>
                     <small class="label label-primary">Approved</small>
+                   <% elsif particular_vacancy_request.status == "FirstApproved" %>
+                    <small class="label label-info">FirstApproved</small>
                    <% elsif particular_vacancy_request.status == "Reject" %>
                     <small class="label label-danger">Reject</small>
                     <% elsif particular_vacancy_request.status == "Approved & Send Next" %>

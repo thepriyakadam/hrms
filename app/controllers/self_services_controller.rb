@@ -279,6 +279,10 @@ class SelfServicesController < ApplicationController
     @vacancy_masters = VacancyMaster.where(vacancy_of: 'Internal')
   end
 
+  def show_internal_modal
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+    @selected_resume1 = SelectedResume.where(vacancy_master_id: @vacancy_master.id,add_by_id: current_user.employee_id)
+  end
   # def apply_internally
   #   @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
   # end

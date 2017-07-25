@@ -23,6 +23,7 @@
               <%= link_to 'Apply', internal_selected_resumes_path(vacancy_master_id: vacancy_master.id) ,class: 'btn btn-xs btn-primary' %>
             <% else %>
               <small class="label label-default">Applied</small>
+              <%= link_to '', show_internal_modal_self_services_path(vacancy_master_id: vacancy_master.id) ,class: 'btn btn-xs btn-default fa fa-eye',remote: true %>
             <% end %>
           </td>
         </tr>
@@ -31,3 +32,4 @@
     </table>
   </div>
 </div>
+<div id="myModal" class="modal fade"></div>

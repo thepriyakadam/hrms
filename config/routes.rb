@@ -1459,6 +1459,7 @@ end
       get :holiday_setup
       post :create_self_resignation
       get :internal
+      get :show_internal_modal
     end
   end
 

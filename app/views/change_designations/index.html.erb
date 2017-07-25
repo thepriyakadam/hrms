@@ -1,0 +1,34 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Change Designation</h3>
+    <div class="pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <div id="comments">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr>
+      <th>ID</th>
+      <th>Employee</th>
+      <th>Action</th>
+     
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @change_designations.each do |change_designation| %>
+      <tr>
+         <td><%= change_designation.employee.try(:manual_employee_code) %></td>
+          <td><%= change_designation.employee.try(:first_name) %> <%= change_designation.employee.try(:middle_name) %> <%= change_designation.employee.try(:last_name) %></td>
+          <td>
+           <%= link_to 'Promotion', edit_employee_promotion_path(change_designation),class: 'btn btn-primary btn-xs' %>
+            <%= link_to '', change_designation,class: 'btn btn-default btn-xs fa fa-eye' %>
+
+          </td> 
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>

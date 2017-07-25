@@ -211,6 +211,15 @@ class SelectedResumesController < ApplicationController
     @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
   end
 
+  def modal_show_selected_resume
+    @selected_resume = SelectedResume.find(params[:format])
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+  end
+
+  def modal_vacancy_master
+    @vacancy_master = VacancyMaster.find(params[:format])
+  end
+
   def update_status
     @selected_resume = SelectedResume.find(params[:id])
     @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
@@ -260,15 +269,41 @@ class SelectedResumesController < ApplicationController
     @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
   end
 
-  def refferal_form
+  def refferal
     @selected_resume = SelectedResume.new
     @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
     @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
+    @selected_resume1 = SelectedResume.where(vacancy_master_id: @vacancy_master.id,add_by_id: current_user.employee_id)
   end
 
   def refferal_create
+    @selected_resume = SelectedResume.new(selected_resume_params)
+    @selected_resume.save
+    vacancy_master_id = @selected_resume.vacancy_master_id
+    flash[:notice] = "Resume Updated!"
+    redirect_to refferal_selected_resumes_path(vacancy_master_id: vacancy_master_id)
   end
   
+  def internal
+    @selected_resume = SelectedResume.new
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+    @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
+    
+    @emp = Employee.find_by(id: current_user.employee_id)
+    @qualification = Qualification.where(employee_id: current_user.employee_id).last
+  end
+
+  def internal_create
+    emp = Employee.find_by(id: current_user.employee_id)
+    qualification = Qualification.where(employee_id: current_user.employee_id).last
+    @selected_resume = SelectedResume.new(selected_resume_params)
+    @selected_resume.save
+    #vacancy_master_id = @selected_resume.vacancy_master_id
+    flash[:notice] = "Resume Updated!"
+    redirect_to internal_self_services_path
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_selected_resume
@@ -277,6 +312,6 @@ class SelectedResumesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def selected_resume_params
-      params.require(:selected_resume).permit(:name, :contact_no,:contact_no2 ,:avatar, :passport_photo, :job_title, :skillset, :degree_id, :ctc,:current_ctc ,:email_id, :experience, :notice_period, :vacancy_master_id)
+      params.require(:selected_resume).permit(:add_by_id,:name, :contact_no,:contact_no2 ,:avatar, :passport_photo, :job_title, :skillset, :degree_id, :ctc,:current_ctc ,:email_id, :experience, :notice_period, :vacancy_master_id)
     end
 end

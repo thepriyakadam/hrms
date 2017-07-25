@@ -290,6 +290,10 @@ end
     @interview_schedule = InterviewSchedule.find(params[:format])
   end
 
+  def modal_show_page
+    @interview_schedule = InterviewSchedule.find(params[:format])
+  end
+
    def update_interview_schedule
      @interview_schedule = InterviewSchedule.find(params[:id])
      @email_id = params[:interview_schedule][:email_id]

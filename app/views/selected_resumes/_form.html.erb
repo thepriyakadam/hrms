@@ -3,6 +3,7 @@
 <%= bootstrap_form_for(@selected_resume,html: {id: "selected_resume"},vacancy_master_id: @vacancy_master.id) do |f| %>
 <%= f.hidden_field :vacancy_master_id,value:@vacancy_master.id  %>
 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <%= hidden_field_tag :add_by_id, current_user.employee_id %>
 <div>
   <%= render 'show_vacancy_detail' %>
 </div>
@@ -50,7 +51,7 @@
 
 
 <div class="col-sm-3">
-    <div class="field">
+    <div class="form-group required">
       <%= f.text_field :ctc, label: 'Expected CTC' %>
     </div>
   </div>
@@ -63,7 +64,7 @@
   </div>
 
   <div class="col-sm-3">
-    <div class="field">
+    <div class="form-group required">
       <%= f.text_field :notice_period, label: 'Notice Period' %>
     </div>
   </div>
@@ -85,13 +86,13 @@
 
 
  <div class="col-sm-3">
-    <div class="field">
+    <div class="form-group required">
       <%= f.text_field :email_id, label: 'Email Id' %>
     </div>
   </div>
 
    <div class="col-sm-3">
-    <div class="field">
+    <div class="form-group required">
       <%= f.file_field :avatar,label: 'Resume Upload(only docx,pdf)' %>
     </div>
  </div>
@@ -130,19 +131,31 @@ $("#selected_resume").validate({
       "selected_resume[current_ctc]":{
         required: true
       },
+      "selected_resume[ctc]":{
+        required: true
+      },
       "selected_resume[experience]":{
         required: true
       },
+      "selected_resume[notice_period]":{
+        required: true
+      },
       "selected_resume[contact_no]":{
+        required: true
+      },
+      "selected_resume[email_id]":{
+        required: true
+      },
+      "selected_resume[avatar]":{
         required: true
       }
     },
     messages: {
       "selected_resume[skillset]":{
-        required: "Please specify Skill set"
+        required: "Please specify skillset"
       },
       "selected_resume[degree_id]":{
-        required: "Please specify Qualification"
+        required: "Please specify qualification"
       },
       "selected_resume[name]":{
         required: "Please specify name"
@@ -150,11 +163,23 @@ $("#selected_resume").validate({
       "selected_resume[current_ctc]":{
         required: "Please specify current ctc"
       },
+      "selected_resume[ctc]":{
+        required: "Please specify expected ctc"
+      },
       "selected_resume[experience]":{
         required: "Please specify experience"
       },
+      "selected_resume[notice_period]":{
+        required: "Please specify notice period"
+      },
       "selected_resume[contact_no]":{
         required: "Please specify contact no."
+      },
+      "selected_resume[email_id]":{
+        required: "Please specify email id"
+      },
+      "selected_resume[avatar]":{
+        required: "Please upload resume"
       }
     },
     errorPlacement: function(error, element) {

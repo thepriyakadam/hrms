@@ -1805,6 +1805,7 @@ def import_employee_attendance
     format.csv { send_data @employee_attendances.to_csv }
     format.xls
   end
+
    session[:active_tab] ="TimeManagement"
     session[:active_tab1] ="AttendanceSetup"
 end
@@ -1812,9 +1813,9 @@ end
   def import_employee_attendance_to_txt
     @employees = Employee.all
     respond_to do |format|
-    format.html
-    format.csv { send_data @employees.to_txt,filename: "employees-#{Date.today}.txt" }
-      end
+      format.html
+      format.csv { send_data @employees.to_txt,filename: "employees-#{Date.today}.txt" }
+    end#do
   end
 
   def self_service_datewise_attendance

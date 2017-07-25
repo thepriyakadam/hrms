@@ -136,6 +136,9 @@ class Employee < ActiveRecord::Base
   has_many :greetings, class_name: "Employee", foreign_key: "receiver_id"
   has_many :loan_requests, class_name: "Employee", foreign_key: "request_to_id"
   has_many :loan_approvals, class_name: "Membership", foreign_key: "approval_id"
+  has_many :change_designations
+  has_many :change_designations, class_name: "Employee", foreign_key: "change_by_id"
+
 
   # has_many :reporting_masters, class_name: "Employee",
   #                         foreign_key: "manager_id"

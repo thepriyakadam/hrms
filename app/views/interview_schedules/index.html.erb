@@ -63,7 +63,8 @@
         </td>
         <td>
          <div id="myModal1" class="modal fade"></div>
-          <%= link_to '', interview_schedule,class: 'btn btn-xs btn-default fa fa-eye' %>
+         <%= link_to '', modal_show_page_interview_schedules_path(interview_schedule),class: 'btn btn-xs btn-default fa fa-eye',remote:true %>
+          <!-- <= link_to '', interview_schedule,class: 'btn btn-xs btn-default fa fa-eye' %> -->
           <% @interview_round_1 = InterviewRound.where(interview_schedule_id: interview_schedule,interview_round_confirm: true).count
                         @interview_round_2 = InterviewRound.where(interview_schedule_id: interview_schedule,interview_round_confirm: nil).count %>
             <% if @interview_round_2 == 0 && @interview_round_1 > 0  %>
@@ -89,6 +90,8 @@
      
 <br>
 <div id="myModal" class="modal fade"></div>
+<div id="myModal1" class="modal fade"></div>
+
 
 </div>
 </div>

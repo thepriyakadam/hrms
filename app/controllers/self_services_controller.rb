@@ -256,6 +256,11 @@ class SelfServicesController < ApplicationController
     @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id).order('day DESC')
   end
 
+  def employee_contact_library
+    @employees = Employee.where(status: "Active")
+    session[:active_tab] = "EmployeeSelfService"
+  end
+
   def create_self_attendance
     # @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
     employee_id = params[:salary][:employee_id]

@@ -1,0 +1,2 @@
+module ApprovalProcessesHelper
+end

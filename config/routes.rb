@@ -1,7 +1,29 @@
 Rails.application.routes.draw do
 
+  resources :loan_emis
+  resources :approval_processes
+  resources :loan_requests do
+    collection do
+      get :loan_approval
+      get :approve_loan_request
+      get :first_approve
+      get :reject
+      get :final_approve
+      get :final_loan_request
+      get :final
+    end
+  end
+  resources :loan_types
+  resources :membership_contributions
+  resources :memberships
+  resources :membership_types
   resources :punch_masters
-  resources :recruiters 
+  resources :recruiters do
+    collection do
+      get :final_approve_modal
+      post :final_approve_request
+    end
+  end
   resources :candidate_interview_schedules do
     collection do
       get :interview
@@ -702,6 +724,8 @@ end
       get :view_access_card_detail
       get :approve_acf_request
       get :reject_acf_request
+      get :admin_level_acf
+      post :admin_acf_approval
     end
   end
   resources :salary_comp_mappings
@@ -1088,6 +1112,14 @@ end
     post :is_confirm_resume
     get :modal_vacancy_dropdown
     post :update_vacancy
+    get :show_selected_resume
+    get :show_part_resume
+    get :refferal
+    post :refferal_create
+    get :modal_show_selected_resume
+    get :modal_vacancy_master
+    get :internal
+    post :internal_create
     end
   end
   resources :assigned_assets do
@@ -1364,6 +1396,17 @@ end
       get :vacancy_hr_resume
       get :hr_resume
       post :shortlist_for_interview
+      get :show_selected_resume
+      get :show_scheduled_resume
+      get :show_vacancy_resume
+      get :show_vacancy_hr_resume
+      get :show_vacancy_shortlisted_list
+      get :show_vacancy_profile
+      get :show_refferal
+      get :show_internal
+      get :refferal
+      get :internal
+      get :modal_show_vacancy_page
     end
   end
    resources :leave_c_offs do
@@ -1380,6 +1423,7 @@ end
       get :admin_c_off_approval
       get :admin_level_c_off_detail
       get :admin_approve_modal
+      get :modal
     end
   end
 
@@ -1415,6 +1459,7 @@ end
       get :modal
       get :holiday_setup
       post :create_self_resignation
+      get :internal
     end
   end
 
@@ -2078,7 +2123,6 @@ end
       get :status_wise_request
       get :select_form
       get :select_admin_form
-      get :modal
     end
   end
   resources :company_leavs

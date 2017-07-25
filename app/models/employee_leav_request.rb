@@ -27,7 +27,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
   def is_out_of_limit(employee_leav_request)
     flag = 0
       @leav_category = LeavCategory.find_by(id: employee_leav_request.leav_category_id)
-      flag = employee_leav_request.leave_count <  @leav_category.from || employee_leav_request.leave_count > @leav_category.to
+      flag = employee_leav_request.leave_count.to_f <  @leav_category.from.to_f || employee_leav_request.leave_count.to_f > @leav_category.to.to_f
     flag
   end
 

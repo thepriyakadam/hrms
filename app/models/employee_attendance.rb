@@ -57,7 +57,7 @@ class EmployeeAttendance < ActiveRecord::Base
 
   def self.to_txt
     # attributes = %w{employee_id day in out shift_master_id is_proceed present user_id}
-    attributes = %w{employee_id employee_code employee_name day in_time out_time present}
+    attributes = %w{employee_code employee_name day in_time out_time working_hrs present}
 
     CSV.generate(:col_sep => "#") do |csv|
       csv << attributes
@@ -77,6 +77,11 @@ class EmployeeAttendance < ActiveRecord::Base
           employee_attendance = find_by_id(row['id']) || new
           employee_attendance.attributes = row.to_hash.slice(*row.to_hash.keys)
           employee_attendance.save!
+
+          @employee_attendance = EmployeeAttendance.last
+          employee = Employee.find_by_manual_employee_code(@employee_attendance.employee_code)
+          @employee_attendance.update(employee_id: employee.id)
+        EmployeeAttendance.where(employee_id: nil).destroy_all
         end
   end
 

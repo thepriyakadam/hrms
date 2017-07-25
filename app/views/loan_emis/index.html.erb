@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Loan Emis</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Loan approval</th>
+      <th>Date</th>
+      <th>Emi amount</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @loan_emis.each do |loan_emi| %>
+      <tr>
+        <td><%= loan_emi.loan_approval %></td>
+        <td><%= loan_emi.date %></td>
+        <td><%= loan_emi.emi_amount %></td>
+        <td><%= loan_emi.status %></td>
+        <td><%= link_to 'Show', loan_emi %></td>
+        <td><%= link_to 'Edit', edit_loan_emi_path(loan_emi) %></td>
+        <td><%= link_to 'Destroy', loan_emi, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Loan emi', new_loan_emi_path %>

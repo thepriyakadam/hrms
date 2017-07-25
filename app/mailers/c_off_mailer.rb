@@ -30,17 +30,17 @@ class COffMailer < ApplicationMailer
     mail(to: email, subject: 'C.Off First Rejected')
 	end
 
-	def final_reject(request)
-		@c_off_request = request
-    @manager = Employee.find(@c_off_request.employee.try(:manager_2_id))
+	def final_reject(request,employee)
+	@c_off_request = request
+    @manager = Employee.find(employee.id)
     @employee = Employee.find(@c_off_request.employee_id)
     email = @employee.email
     mail(to: email, subject: 'C.Off Final Rejected')
 	end
 
-	def final_approved(request)
-		@c_off_request = request
-    @manager = Employee.find(@c_off_request.employee.try(:manager_2_id))
+	def final_approved(request,employee)
+    @c_off_request = request
+    @manager = Employee.find(employee.id)
     @employee = Employee.find(@c_off_request.employee_id)
     email = @employee.email
     mail(to: email, subject: 'C.Off Final Approved')

@@ -178,7 +178,8 @@
   # }
 
   # config.action_mailer.default_url_options = { host: 'https://webmail.logix.in/', port: 443 }
-
+ 
+ 
   # # config.domain = 'lvh.me'
   # # config.action_mailer.perform_deliveries = true,
   # ActionMailer::Base.delivery_method = :smtp

@@ -1805,6 +1805,7 @@ def import_employee_attendance
     format.csv { send_data @employee_attendances.to_csv }
     format.xls
   end
+
    session[:active_tab] ="TimeManagement"
     session[:active_tab1] ="AttendanceSetup"
 end
@@ -1815,9 +1816,6 @@ end
       format.html
       format.csv { send_data @employees.to_txt,filename: "employees-#{Date.today}.txt" }
     end#do
-      # @employee_attendance = EmployeeAttendance.last
-      # employee = Employee.find_by_manual_employee_code(@employee_attendance.employee_code)
-      # @employee_attendance.update(employee_id: employee.id)
   end
 
   def self_service_datewise_attendance

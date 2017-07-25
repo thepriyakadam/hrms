@@ -83,6 +83,15 @@ class EmployeeAttendance < ActiveRecord::Base
           @employee_attendance.update(employee_id: employee.id)
         EmployeeAttendance.where(employee_id: nil).destroy_all
         end
+         @employee_attendance = EmployeeAttendance.last
+      @employees = Employee.where(status: "Active")
+        @employees.each do |e|
+          employee_atten = EmployeeAttendance.where(employee_id: e.id,day: @employee_attendance.day.to_date).take
+          if employee_atten.nil?
+            EmployeeAttendance.create(employee_id: e.id,day: @employee_attendance.day.to_date.to_date,present: "A")
+          end
+        end
+     
   end
 
   def self.open_spreadsheet(file)

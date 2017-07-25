@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :change_designations
   resources :loan_emis
   resources :approval_processes
   resources :loan_requests do
@@ -1346,6 +1347,7 @@ end
       post :update_interview_schedule
       patch :create_new
       get :show_interview_round_list
+      get :modal_show_page
     end
   end
   resources :vacancy_masters do
@@ -1456,6 +1458,7 @@ end
       get :modal
       get :holiday_setup
       post :create_self_resignation
+      get :employee_contact_library
     end
   end
 

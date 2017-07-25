@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170724071545) do
+ActiveRecord::Schema.define(version: 20170724105724) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -460,6 +460,20 @@ ActiveRecord::Schema.define(version: 20170724071545) do
 
   add_index "certifications", ["employee_id"], name: "index_certifications_on_employee_id", using: :btree
   add_index "certifications", ["year_id"], name: "index_certifications_on_year_id", using: :btree
+
+  create_table "change_designations", force: :cascade do |t|
+    t.integer  "employee_id",             limit: 4
+    t.integer  "employee_designation_id", limit: 4
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "status"
+    t.integer  "change_by_id",            limit: 4
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  add_index "change_designations", ["employee_designation_id"], name: "index_change_designations_on_employee_designation_id", using: :btree
+  add_index "change_designations", ["employee_id"], name: "index_change_designations_on_employee_id", using: :btree
 
   create_table "change_status_employees", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -2715,6 +2729,17 @@ ActiveRecord::Schema.define(version: 20170724071545) do
   add_index "members", ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true, using: :btree
   add_index "members", ["role_id"], name: "index_members_on_role_id", using: :btree
 
+  create_table "membership_amounts", force: :cascade do |t|
+    t.string   "membership_references", limit: 255
+    t.date     "date"
+    t.decimal  "amount",                            precision: 10
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.integer  "membership_id",         limit: 4
+  end
+
+  add_index "membership_amounts", ["membership_id"], name: "index_membership_amounts_on_membership_id", using: :btree
+
   create_table "membership_balances", force: :cascade do |t|
     t.integer  "membership_id", limit: 4
     t.decimal  "balance",                 precision: 10
@@ -4376,6 +4401,8 @@ ActiveRecord::Schema.define(version: 20170724071545) do
   add_foreign_key "certificates", "certificate_masters"
   add_foreign_key "certifications", "employees"
   add_foreign_key "certifications", "years"
+  add_foreign_key "change_designations", "employee_designations"
+  add_foreign_key "change_designations", "employees"
   add_foreign_key "companies", "company_types"
   add_foreign_key "companies", "countries"
   add_foreign_key "companies", "districts"
@@ -4572,6 +4599,7 @@ ActiveRecord::Schema.define(version: 20170724071545) do
   add_foreign_key "members", "departments"
   add_foreign_key "members", "employees"
   add_foreign_key "members", "roles"
+  add_foreign_key "membership_amounts", "memberships"
   add_foreign_key "membership_balances", "memberships"
   add_foreign_key "membership_contributions", "memberships"
   add_foreign_key "memberships", "employees"

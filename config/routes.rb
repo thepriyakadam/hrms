@@ -1408,6 +1408,7 @@ end
       get :refferal
       get :internal
       get :modal_show_vacancy_page
+      get :select_reason
     end
   end
    resources :leave_c_offs do

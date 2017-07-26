@@ -11,7 +11,6 @@ class SelectedResumesController < ApplicationController
   # GET /selected_resumes/new
   def new
     @selected_resume = SelectedResume.new
-    # byebug
     @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
     @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
   end
@@ -297,13 +296,16 @@ class SelectedResumesController < ApplicationController
     emp = Employee.find_by(id: current_user.employee_id)
     qualification = Qualification.where(employee_id: current_user.employee_id).last
     @selected_resume = SelectedResume.new(selected_resume_params)
-    @selected_resume.save
-    #vacancy_master_id = @selected_resume.vacancy_master_id
-    flash[:notice] = "Resume Updated!"
-    redirect_to internal_self_services_path
+    if qualification.nil?
+      flash[:alert] = "Please check the Qualification detail!"
+      redirect_to internal_selected_resumes_path(vacancy_master_id: @selected_resume.vacancy_master_id)
+    else
+      @selected_resume.save
+      flash[:notice] = "Resume Updated!"
+      redirect_to internal_self_services_path
+    end
   end
-
-
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_selected_resume

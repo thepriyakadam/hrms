@@ -56,7 +56,13 @@ class VacancyMastersController < ApplicationController
 
   # POST /vacancy_masters
   # POST /vacancy_masters.json
-  
+   def select_reason
+    if params[:reason] == "Replacement"
+      @flag = true
+    else
+      @flag = false
+    end
+  end
 
   def create
     @vacancy_master = VacancyMaster.new(vacancy_master_params)

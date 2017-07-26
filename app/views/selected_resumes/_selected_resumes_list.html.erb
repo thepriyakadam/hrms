@@ -76,7 +76,6 @@
         <td>
         <div id="myModal" class="modal fade"></div>
 
-        
         <!--<= link_to '', selected_resume, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>-->
         <% if selected_resume.status == "Shortlisted" %>
         <%= link_to '', modal_show_selected_resume_selected_resumes_path(selected_resume,vacancy_master_id: @vacancy_master.id),class: 'btn btn-xs btn-default fa fa-eye',remote:true %>

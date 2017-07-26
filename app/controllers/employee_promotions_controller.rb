@@ -95,7 +95,6 @@ class EmployeePromotionsController < ApplicationController
     @employee = Employee.find(@employee_id)
     @employee.update(department_id: @department_id)
     @joining_detail= JoiningDetail.find_by_employee_id(@employee_id)
-    
     # byebug
     @joining_detail.update(employee_designation_id: @employee_designation_id,employee_grade_id: @employee_grade_id,employee_category_id: @employee_category_id)
     PromotionHistory.create(employee_promotion_id: @employee_promotion.id,employee_id: @employee_promotion.employee_id,department_id: @employee_promotion.department_id,employee_designation_id: @employee_promotion.employee_designation_id,employee_category_id: @employee_promotion.employee_category_id,employee_grade_id: @employee_promotion.employee_grade_id,employee_ctc: @employee_promotion.employee_ctc,justification: @employee_promotion.justification,effective_from: @effective_from)

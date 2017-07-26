@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
 
-  resources :change_designations
+  resources :change_designations do
+    collection do
+      get :employee_list
+      get :change_designation_history
+      get :modal
+      get :print_designation
+      get :excel_designation
+      get :employee_record_detail
+    end
+  end
   resources :loan_emis
   resources :approval_processes
   resources :loan_requests do

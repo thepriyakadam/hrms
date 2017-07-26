@@ -1127,6 +1127,8 @@ end
     post :refferal_create
     get :modal_show_selected_resume
     get :modal_vacancy_master
+    get :internal
+    post :internal_create
     end
   end
   resources :assigned_assets do
@@ -1467,6 +1469,8 @@ end
       get :modal
       get :holiday_setup
       post :create_self_resignation
+      get :internal
+      get :show_internal_modal
       get :employee_contact_library
     end
   end

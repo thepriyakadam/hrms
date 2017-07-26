@@ -280,6 +280,18 @@ class SelfServicesController < ApplicationController
     redirect_to add_attendance_self_services_path
   end
 
+  def internal
+    @vacancy_masters = VacancyMaster.where(vacancy_of: 'Internal')
+  end
+
+  def show_internal_modal
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+    @selected_resume1 = SelectedResume.where(vacancy_master_id: @vacancy_master.id,add_by_id: current_user.employee_id)
+  end
+  # def apply_internally
+  #   @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+  # end
+
   def leave_c_off_params
     params.require(:leave_c_off).permit(:is_expire,:employee_id, :c_off_date, :c_off_type, :c_off_expire_day, :expiry_status, :expiry_date, :leave_count)
   end

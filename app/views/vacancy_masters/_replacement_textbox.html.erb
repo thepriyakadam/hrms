@@ -1,0 +1,9 @@
+
+
+<div class="col-sm-3">
+  <div class="field">
+  <%= select :common,:replacement_id, all_active_employee_with_code, {include_blank: "Select Employee",class: 'form-control'} %> 
+
+	    <%= hidden_field_tag :flag, "Replacement" %>   
+  </div>
+</div>

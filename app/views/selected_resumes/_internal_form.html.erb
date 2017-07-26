@@ -28,13 +28,13 @@
         </div>
 
         <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
             <%= f.text_field :current_ctc, label: 'Current CTC' %>
           </div>
         </div>
 
         <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
             <%= f.text_field :ctc, label: 'Expected CTC' %>
           </div>
         </div>
@@ -42,13 +42,13 @@
 
       <div class="row">
         <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
             <%= f.text_field :experience, label: 'Experience' %>
           </div>
         </div>
 
         <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
             <%= f.text_field :notice_period, label: 'Notice Period' %>
           </div>
         </div>
@@ -60,7 +60,7 @@
         </div>
 
         <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
             <%= f.file_field :avatar,label: 'Resume Upload(only docx,pdf)' %>
           </div>
         </div>
@@ -90,10 +90,19 @@ $("#selected_resume").validate({
       "selected_resume[skillset]":{
         required: true
       },
-      "selected_resume[degree_id]":{
+      "selected_resume[current_ctc]":{
         required: true
       },
-      "selected_resume[name]":{
+      "selected_resume[ctc]":{
+        required: true
+      },
+      "selected_resume[experience]":{
+        required: true
+      },
+      "selected_resume[notice_period]":{
+        required: true
+      },
+      "selected_resume[avatar]":{
         required: true
       }
     },
@@ -101,11 +110,20 @@ $("#selected_resume").validate({
       "selected_resume[skillset]":{
         required: "Please specify Skillset"
       },
-      "selected_resume[degree_id]":{
-        required: "Please specify Qualification"
+      "selected_resume[current_ctc]":{
+        required: "Please specify Current CTC"
       },
-      "selected_resume[name]":{
-        required: "Please specify name"
+      "selected_resume[ctc]":{
+        required: "Please specify CTC"
+      },
+      "selected_resume[experience]":{
+        required: "Please specify Experience"
+      },
+      "selected_resume[notice_period]":{
+        required: "Please specify Notice Period"
+      },
+      "selected_resume[avatar]":{
+        required: "Please Add Resume"
       }
     },
     errorPlacement: function(error, element) {

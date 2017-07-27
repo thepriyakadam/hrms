@@ -682,6 +682,10 @@ end
      @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
   end
 
+  def modal_show_vacancy_page
+    @vacancy_master = VacancyMaster.find(params[:format])
+  end
+
   def refferal
     if current_user.class == Member
       if current_user.role.name == 'GroupAdmin'

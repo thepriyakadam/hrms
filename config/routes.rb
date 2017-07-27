@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
 
+  resources :change_designations do
+    collection do
+      get :employee_list
+      get :change_designation_history
+      get :modal
+      get :print_designation
+      get :excel_designation
+      get :employee_record_detail
+    end
+  end
   resources :loan_emis
   resources :approval_processes
   resources :loan_requests do
@@ -1115,6 +1125,10 @@ end
     get :show_part_resume
     get :refferal
     post :refferal_create
+    get :modal_show_selected_resume
+    get :modal_vacancy_master
+    get :internal
+    post :internal_create
     end
   end
   resources :assigned_assets do
@@ -1344,6 +1358,7 @@ end
       post :update_interview_schedule
       patch :create_new
       get :show_interview_round_list
+      get :modal_show_page
     end
   end
   resources :vacancy_masters do
@@ -1401,6 +1416,7 @@ end
       get :show_internal
       get :refferal
       get :internal
+      get :modal_show_vacancy_page
     end
   end
    resources :leave_c_offs do
@@ -1453,6 +1469,9 @@ end
       get :modal
       get :holiday_setup
       post :create_self_resignation
+      get :internal
+      get :show_internal_modal
+      get :employee_contact_library
     end
   end
 

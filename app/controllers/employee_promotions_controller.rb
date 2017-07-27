@@ -91,11 +91,11 @@ class EmployeePromotionsController < ApplicationController
     @employee_designation_id = params[:employee_promotion][:employee_designation_id]
     @employee_grade_id = params[:employee_promotion][:employee_grade_id]
     @employee_category_id = params[:employee_promotion][:employee_category_id]
-     # byebug
-    @effective_from = params[:employee_promotion][:effective_from]
+    @effective_from = params[:employee_promotion][:effective_from].to_date
     @employee = Employee.find(@employee_id)
     @employee.update(department_id: @department_id)
     @joining_detail= JoiningDetail.find_by_employee_id(@employee_id)
+    # byebug
     @joining_detail.update(employee_designation_id: @employee_designation_id,employee_grade_id: @employee_grade_id,employee_category_id: @employee_category_id)
     PromotionHistory.create(employee_promotion_id: @employee_promotion.id,employee_id: @employee_promotion.employee_id,department_id: @employee_promotion.department_id,employee_designation_id: @employee_promotion.employee_designation_id,employee_category_id: @employee_promotion.employee_category_id,employee_grade_id: @employee_promotion.employee_grade_id,employee_ctc: @employee_promotion.employee_ctc,justification: @employee_promotion.justification,effective_from: @effective_from)
     @promotion_history = PromotionHistory.last.id - 1
@@ -144,10 +144,10 @@ class EmployeePromotionsController < ApplicationController
 
 
   def promotion_history
-    # byebug
     @employee = Employee.find(params[:id])
     @employee1 = EmployeePromotion.where(id: @employee)
-    @employee_promotions = EmployeePromotion.where(employee_id: params[:id])
+    # @employee_promotions = EmployeePromotion.where(employee_id: params[:id])
+    @promotion_histories = PromotionHistory.where(employee_id: params[:id])
   end
 
   def employee_list

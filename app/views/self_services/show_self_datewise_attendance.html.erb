@@ -8,11 +8,11 @@
       <thead>
       <tr>
           <td colspan="5"><center> 
-            <% if current_user.employee.company_location.company.company_logo == nil %>
+            <% if current_user.try(:employee).try(:company_location).try(:company).try(:company_logo) == nil %>
             <% else %>
-              <center> <%= image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+              <center> <%= image_tag current_user.try(:employee).try(:company_location).try(:company).try(:company_logo).url, :size => "90x50" %></center>
             <%end%> 
-              <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%> <br>
+              <strong><%=current_user.try(:employee).try(:company_location).try(:company).try(:description)%></strong> <br> <%= current_user.try(:employee).try(:company_location).try(:company).try(:address)%> <br>
               
               </center>
           </td>

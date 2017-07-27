@@ -13,19 +13,20 @@
 </style>
 <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
   <thead>
-    <tr><td colspan="9"><center><strong><%= current_user.employee.company_location.company.try(:description) %></strong> <br>
-        <%= current_user.employee.company_location.company.try(:address) %><br>  <%= current_user.employee.department.try(:name) %> -
-        <%= current_user.employee.company_location.try(:name) %></center> </td>
+    <tr><td colspan="10"><center><strong><%= current_user.try(:employee).try(:company_location).try(:company).try(:description) %></strong> <br>
+        <%= current_user.try(:employee).try(:company_location).try(:company).try(:address) %><br>  <%= current_user.try(:employee).try(:department).try(:name) %> -
+        <%= current_user.try(:employee).try(:company_location).try(:name) %></center> </td>
     </tr>
 
     <tr>
       <th>ID</th>
       <th>Employee</th>
+      <th>Application Date</th>
       <th>Leave Category</th>
       <th>Leave Type</th>
       <th>No. Of Days</th>
-      <th>Start Date</th>
-      <th>End Date</th>
+      <th>From Date</th>
+      <th>To Date</th>
       <th>Reason</th>
       <th>Status</th>
     </tr>
@@ -36,6 +37,7 @@
       <tr>
         <td><%= employee_leav_request.employee.try(:manual_employee_code) %></td>
         <td><%= full_name(employee_leav_request.employee) %></td>
+        <td><%= employee_leav_request.created_at.to_date %> - <%= employee_leav_request.created_at %></td>
         <td><%= employee_leav_request.leav_category.try(:name) %></td>
         <td><%= employee_leav_request.leave_type %></td>
         <td><%= employee_leav_request.leave_count %></td>

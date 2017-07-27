@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+  <table class="table table-bordered table-hover table-condensed">
+    <tbody>
+    <tr>
+      <td colspan="2">Your ACF request Approved by </td>
+    </tr>
+      <tr>
+        <td>ID :</td>
+        <td><%= @manager.manual_employee_code %></td>
+      </tr>
+      <tr>
+        <td>Employee :</td>
+        <td><%= @manager.try(:prefix) %> <%= @manager.first_name %> <%= @manager.try(:middle_name) %> <%= @manager.last_name %></td>
+      </tr>
+    <tr>
+      <td colspan="2">Your ACF request </td>
+    </tr> 
+      <tr>
+        <td>Date :</td>
+        <td><%= @request.day.to_date %></td>
+      </tr>
+      <tr>
+        <td>In Time :</td>
+        <td><%= @request.in_time %></td>
+      </tr>
+      <tr>
+        <td>Out Time :</td>
+        <td><%= @request.out_time %></td>
+      </tr>
+      <tr>
+        <td>Working Hrs :</td>
+        <td><%= @request.working_hrs %></td>
+      </tr>
+
+    </tbody>
+  </table>
+  </body>
+</html>

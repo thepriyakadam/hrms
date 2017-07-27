@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+      <% day = Date.today - @employee.date_of_birth%>
+      <% @day = day/365 %>
+    <h4>Wish You A Very Happy Birthday On Your <%= @day.to_i %> Birthday!</h4>
+    <p>
+      <%= @greeting.message %><br><br><br>
+      <b>Warm Regards,</b><br>
+      <%= @greeting.sender.try(:first_name) %> <%= @greeting.sender.try(:last_name) %>
+    </p>
+  </body>
+</html>

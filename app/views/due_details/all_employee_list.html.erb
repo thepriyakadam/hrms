@@ -10,10 +10,7 @@
       <tr>
       <th>ID</th>
       <th>Employee Name</th>
-      <th>Department</th>
-      <th>Designation</th>
       <th>Status</th>
-      <th>No.</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -23,10 +20,7 @@
       <tr>
         <td><%= employee.manual_employee_code %></td>
         <td><%= full_name(employee) %></td>
-        <td><%= employee.try(:company).try(:name) %> - <%= employee.try(:company_location).try(:name) %> - <%= employee.try(:department).try(:name) %></td>
-        <td><%= employee.joining_detail.try(:employee_designation).try(:name) %></td>
         <td><%= employee.try(:status) %></td>
-        <td><%= employee.try(:contact_no) %></td>
         <td>
         <!-- < emp=Employee.ids %> -->
 <!-- 	      < emp.each do |e| %> -->
@@ -42,7 +36,7 @@
 <!--             < else %>
  -->            
           <% if have_due_template(employee) %>
-                <%= link_to ' Assign Template', all_due_template_due_details_path(emp_id: employee.id),class: 'btn btn-xs btn-info' %>
+                <%= link_to '', all_due_template_due_details_path(emp_id: employee.id),class: 'btn btn-xs btn-info btn-xs fa fa-tasks' %>
               <% else %>
                 <%= link_to ' View Template', due_employee_detail_list_due_details_path(emp_id: employee.id),class: 'btn btn-xs btn-primary' %>
            <% end %>

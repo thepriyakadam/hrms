@@ -1,10 +1,13 @@
 <br>
 <table id="example6" class="table table-bordered table-hover table-condensed'">
  	<thead>
+  <tr>
+ 
+    <td colspan="4"><center><%= @reimbursement_requests.first.employee.try(:manual_employee_code) %>
+        <%= full_name(@reimbursement_requests.first.employee) %></center></td>
+  </tr>
     <tr>
-      <th>ID</th>
-      <th>Employee</th>
-      <th>Reimbursement head</th>
+      <th>Reimbursement</th>
       <th>Date</th>
       <th>Amount</th>
       <th>Status</th>
@@ -14,16 +17,15 @@
   <tbody>
     <% @reimbursement_requests.each do |reimbursement_request| %>
       <tr>
-        <td><%= reimbursement_request.employee.manual_employee_code %></td>
-        <td><%= full_name(reimbursement_request.employee) %></td>
         <td><%= reimbursement_request.reimbursement_head.try(:name) %></td>
         <td><%= reimbursement_request.date %></td>
         <td><%= reimbursement_request.amount %></td>
         <td>
           <% if reimbursement_request.status == "Pending" %>
-            <%= link_to 'Send For Approval', send_for_approval_reimbursement_requests_path(reimbursement_request) ,class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'Request', send_for_approval_reimbursement_requests_path(reimbursement_request) ,class: 'btn btn-xs btn-primary' %>
           <% else %>
             <%= reimbursement_request.status %>
+             <%= link_to '', modal_reimbursement_requests_path(reimbursement_request) ,class: 'btn btn-xs btn-default fa fa-eye',remote: true %>
           <% end %>
         </td>
       </tr>

@@ -5,30 +5,24 @@
    <table id="example2" class="table table-bordered table-hover table-condensed">
   
 
- <tr> 
-  <th><strong>Name</strong></th>
+<tr> 
+  <th colspan="1"><strong>Name</strong></th>
   <td><%= @selected_resume.name %></td>
- 
-   <th><strong>Contact No.</strong></th>
-   <td><%= @selected_resume.contact_no %></td>
-  </tr>
-
+</tr> 
 <tr>
-  <th><strong>Skillset</strong></th>
+   <th><strong>Skill Set</strong></th>
   <td><%= @selected_resume.skillset %></td>
 
   <th><strong>Qualification</strong></th>
-  <td><%= @selected_resume.degree.name %></td>
-</tr>
+  <td><%= @selected_resume.degree.name %></td> 
+ </tr>
+ <tr>  
+  <th><strong>Current CTC</strong></th>
+  <td><%= @selected_resume.current_ctc %></td>
 
-<tr>
   <th><strong>Expected CTC</strong></th>
-  <td><%= @selected_resume.ctc %></td>
- 
-  <th><strong>Email ID</strong></th>
-  <td><%= @selected_resume.email_id %></td>
+  <td><%= @selected_resume.ctc %></td>  
 </tr>
-
 <tr>
   <th><strong>Experience</strong></th>
   <td><%= @selected_resume.experience %></td>
@@ -36,13 +30,19 @@
   <th><strong>Notice Period</strong></th>
   <td><%= @selected_resume.notice_period %></td>
 </tr>
-
 <tr>
+   <th><strong>Contact No.</strong></th>
+   <td><%= @selected_resume.contact_no %></td>
+
+<th><strong>Alternate Contact No.</strong></th>
+   <td><%= @selected_resume.contact_no2 %></td>
+</tr>
+<tr>
+   <th><strong>Email ID</strong></th>
+  <td><%= @selected_resume.email_id %></td>
+
    <th>Status</th>
    <td><%= @selected_resume.status %></td>
-
-   <th></th>
-   <td></td>
 </tr>
 
 <!-- <tr>

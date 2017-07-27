@@ -1,45 +1,60 @@
-<div class="box">
-  <div class="box-header">
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
     <h3 class="box-title">Leave Type</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <div id="comments">  
-      <table id="example2" class="table table-bordered table-hover table-condensed">
-        <thead>
-          <tr>  
-            <th>Code</th> 
-            <th>Name</th>
-            <th>Description</th>
-            <th>From</th>
-            <th>To</th>
-            <th>Monthly Leave Limit</th>
-            <th>Payble</th> 
-            <th>Balance Required</th> 
-            <th>Cashable</th> 
-            <th>Assign Balance</th> 
-            <th>Status</th> 
-            <th>Continue</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr>
-              <td><%= @leav_category.code %></td> 
-              <td><%= @leav_category.name %></td>
-              <td><%= @leav_category.description %></td>
-              <td><%= @leav_category.from %></td>
-              <td><%= @leav_category.to %></td>
-              <td><%= @leav_category.monthly_leave %></td>
-              <td><%= @leav_category.is_payble ? "Yes" : "No" %></td>
-              <td><%= @leav_category.is_balance ? "Yes" : "No" %></td>
-              <td><%= @leav_category.is_cashable ? "Yes" : "No" %></td>
-              <td><%= @leav_category.assign_balance ? "Yes" : "No" %></td>
-              <td><%= @leav_category.is_active ? "Active" : "Inactive" %></td> 
-              <td><%= @leav_category.is_continuous ? "Yes" : "No" %></td> 
-            </tr>
-        </tbody>
-      </table>
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr>
+      <th><strong>Code</strong></th>
+      <td><%= @leav_category.code %></td>
 
-      <%= link_to 'Back',new_leav_category_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
-    </div>
-  </div>
-</div>
+      <th><strong>Name</strong></th>
+      <td><%= @leav_category.name %></td>
+    </tr>
+ 
+ 
+    <tr>
+     <th><strong>Description</strong></th>
+      <td><%= @leav_category.description %></td>
+
+      <th><strong>From</strong></th>
+      <td> <%= @leav_category.from %></td>
+    </tr>
+
+    <tr>
+     <th><strong>To</strong></th>
+      <td><%= @leav_category.to %></td>
+
+      <th><strong>Monthly Leave Limit</strong></th>
+      <td> <%= @leav_category.monthly_leave %></td>
+    </tr>
+
+     <tr>
+     <th><strong>Payble</strong></th>
+      <td><%= @leav_category.is_payble ? "Yes" : "No" %></td>
+
+      <th><strong>Balance Required</strong></th>
+      <td> <%= @leav_category.is_balance ? "Yes" : "No" %></td>
+    </tr>
+
+     <tr>
+     <th><strong>Cashable</strong></th>
+      <td><%= @leav_category.is_cashable ? "Yes" : "No" %></td>
+
+      <th><strong>Assign Balance</strong></th>
+      <td> <%= @leav_category.assign_balance ? "Yes" : "No" %></td>
+    </tr>
+
+    <tr>
+     <th><strong>Status</strong></th>
+      <td><%= @leav_category.is_active ? "Yes" : "No" %></td>
+
+      <th><strong>Continue</strong></th>
+      <td> <%= @leav_category.is_continuous ? "Yes" : "No" %></td>
+    </tr>
+     </table> <br>
+
+    <%= link_to 'Back', new_leav_category_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

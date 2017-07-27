@@ -1,0 +1,26 @@
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Member</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @approval_processes.each do |approval_process| %>
+      <tr>
+        <td><%= full_name(approval_process.membership.employee) %></td>
+        <td><%= approval_process.from %></td>
+        <td><%= approval_process.to %></td>
+        <td><%= approval_process.status ? "Active" : "Inactive" %></td>
+        <td><%= link_to '', approval_process,class: 'btn btn-xs btn-default fa fa-eye' %>
+        	<%= link_to '', edit_approval_process_path(approval_process),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+        	<%= link_to '',  approval_process, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

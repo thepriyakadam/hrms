@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Skillset</h3>
+    <h3 class="box-title">Employee Skill Set</h3>
   </div><!-- /.box-header -->
 
   <div class="box-body">
@@ -19,8 +19,6 @@
               <%= f.select :skill_level, ['Competence','Proficiency','Expertise','Mastery'],{include_blank: " Select Skill Level"}, class: 'input_skill_level' %>
             </div>
           </div>
-        </div>
-      </div>
 <!-- 
       < unless params['controller'] == 'skillsets' and params['action'] == 'edit' %>
         <div class="row">
@@ -34,9 +32,8 @@
         </div><br>
       %end%> -->
       
-      <div class="row">
         <div class="col-sm-6">
-          <div class="actions">
+          <div class="actions" style="padding: 20px">
             <%= f.submit :class => class_name, data: { disable_with: data_info } %>
             <% if params['controller'] == 'skillsets' and params['action'] == 'edit' %>
             <%= link_to 'Back',ajax_skillset_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-default',remote:true%>

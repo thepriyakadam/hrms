@@ -10,6 +10,18 @@ class GoalRatingsController < ApplicationController
     @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
     @goal_bunches = GoalBunch.all    
   end
+
+  def show_goal_rating
+    @goal_rating = GoalRating.find(params[:goal_rating_id])
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:employee_id])
+  end
+
+  def show_attribute
+    @goal_rating = GoalRating.find(params[:goal_rating_id])
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:employee_id])
+  end
  
   def destroy
     @goal_bunch = @goal_rating.goal_bunch_id
@@ -210,6 +222,14 @@ class GoalRatingsController < ApplicationController
     if @goal_rating.goal_type == "Goal" || @goal_rating.goal_type == "Attribute"
       @flag = true
     end
+  end
+
+   def show_goal_modal
+    @goal_rating = GoalRating.find(params[:format])
+  end
+
+  def show_attribute_modal
+     @goal_rating = GoalRating.find(params[:format])
   end
 
   def update_goal_modal

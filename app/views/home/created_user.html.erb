@@ -9,9 +9,8 @@
 		      <th>ID</th>
 		      <th>Employee Name</th>
 		      <th>System Role</th>
-		      <th>Reporting Manager 1</th>
-		      <th>Reporting Manager 2</th>
-		    </tr>
+		      <th>Action</th>
+	    </tr>
 		  </thead>
 		  <tbody>
 			<% @employees.each do |employee| %>  
@@ -19,14 +18,15 @@
 		        <td><%= employee.manual_employee_code %></td>
 		        <td><%= employee.first_name %> <%= employee.middle_name %> <%= employee.last_name %></td>
 		        <td><%= employee.member.try(:role).try(:name) %></td>
-				<td><%= employee.manager.try(:first_name) %> <%= employee.manager.try(:middle_name) %> <%= employee.manager.try(:last_name) %></td>
-				<td><%= employee.manager_2.try(:first_name) %> <%= employee.manager_2.try(:middle_name) %><%= employee.manager_2.try(:last_name) %></td>
+				<td><%= link_to '', modal_employees_path(employee), class: 'btn btn-xs btn-default fa fa-eye',remote: true%></td>
 		      </tr>	
 		    <% end %>
 		  </tbody>
 		</table>
 	</div>
 </div>
+
+<div id="myModal" class="modal fade"></div>
 
 <script type="text/javascript">
 $(document).ready(function() {

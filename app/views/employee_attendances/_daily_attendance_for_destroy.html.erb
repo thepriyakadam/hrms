@@ -1,0 +1,33 @@
+<br>
+  <%= bootstrap_form_for :temp, url: {action: "destroy_daily_attendance_datewise",date: @date.to_date} do |f| %>
+    <table id="example6" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Employee Name</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Reader Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @daily_attendances.each do |a| %>
+          <tr>
+            <td><%= a.employee_code %></td>
+            <td><%= a.employee_name %></td>
+            <td><%= a.try(:date) %></td>
+            <td><%= a.try(:time) %></td>
+            <td><%= a.try(:reader_name) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= f.submit "Destroy Attendance", class: "btn btn-sm btn-primary" %>
+  <% end %>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

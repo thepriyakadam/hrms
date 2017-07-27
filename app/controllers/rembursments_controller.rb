@@ -27,7 +27,8 @@ class RembursmentsController < ApplicationController
     else
       @employees = Employee.all
     end
-    session[:active_tab] ="EmployeeRembursment"
+    session[:active_tab] = "PayrollManagement"
+    session[:active_tab1] ="EmployeeRembursment"
   end
 
   # GET /rembursments/1
@@ -38,7 +39,8 @@ class RembursmentsController < ApplicationController
   # GET /rembursments/new
   def new
     @rembursment = Rembursment.new
-    session[:active_tab] ="EmployeeRembursment"
+    session[:active_tab] = "PayrollManagement"
+    session[:active_tab1] ="EmployeeRembursment"
   end
 
   # GET /rembursments/1/edit
@@ -96,7 +98,8 @@ class RembursmentsController < ApplicationController
   def approval_list
     current_login = Employee.find(current_user.employee_id)
     @rembursments = Rembursment.where(manager_id: current_user.employee_id).where("status = ? || status = ? || status = ?","Pending","Approved & Send Next","FirstApproved")
-    session[:active_tab] ="EmployeeRembursment"
+    session[:active_tab] = "PayrollManagement"
+    session[:active_tab1] ="EmployeeRembursment"
   end
 
   def approval_detail
@@ -151,8 +154,9 @@ class RembursmentsController < ApplicationController
   end
 
   def final_approval_list
-     @rembursments = Rembursment.where(status: "Approved")
-    session[:active_tab] ="EmployeeRembursment"
+    @rembursments = Rembursment.where(status: "Approved")
+    session[:active_tab] = "PayrollManagement"
+    session[:active_tab1] ="EmployeeRembursment"
   end
 
   def final_approve

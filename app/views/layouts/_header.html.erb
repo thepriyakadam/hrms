@@ -3,10 +3,22 @@
 
 <!-- Logo -->
 <a href="/home" class="logo">
-  <!-- mini logo for sidebar mini 50x50 pixels -->
-  <span class="logo-mini"><b>H</b>CM</span>
-  <!-- logo for regular state and mobile devices -->
-  <span class="logo-lg"><b>HCM-ZONE</b></span>
+<!--  <span class="logo-mini"><b>H</b>CM</span>
+  <span class="logo-lg"><b> -->
+   <% if current_user.class == Member %>
+             <% if current_user.employee.company.company_logo_file_name == nil %>
+              <small class="label label-default">Not Available</small>
+              <% else %>
+              <!-- <center><= link_to '',download_company_logo_path(@company),class: 'btn btn-xs fa fa-picture-o' %></center> -->
+              <%= image_tag current_user.employee.company.company_logo.url, :size => "120x40" %>
+              <%end %>
+              <%else%>
+                  <input type="text" name="q" class="form-control" placeholder="Search...">
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+              </span>
+                <%end%>
+               <!--  </b></span> -->
 </a>
 
 <!-- Header Navbar -->
@@ -216,7 +228,7 @@
             <div class="col-xs-7 text-left">
               <!-- <a href="#">Sales</a> -->
               <% if current_user.class == Member %>
-              <small><a href="#">  <%= current_user.employee.try(:joining_detail).try(:employee_designation).try(:name) %></a></small>
+              <small><%= current_user.employee.try(:joining_detail).try(:employee_designation).try(:name) %></small>
               <%else%>
                 <%= current_user.subdomain %>-
                 <%= current_user.class %>

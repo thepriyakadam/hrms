@@ -1,0 +1,112 @@
+ <%= bootstrap_form_for(@loan_type,html: {id: 'loan_type'},remote:true) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :code,label:'Code', placeholder: 'Code' %>
+            </div>
+        </div> 
+           <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :name,label:'Name', placeholder: 'Name' %>
+              </div>
+              </div>
+
+               <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :from,label:'From', placeholder: 'From' %>
+              </div>
+              </div>
+
+               <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :to,label:'To', placeholder: 'To' %>
+              </div>
+              </div>
+        </div>
+              
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :interest_rate,label:'Interest Rate', placeholder: 'Interest Rate' %>
+            </div>
+          </div>
+
+           <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.select :interest_type,["Simple Interest","Compound Interest"],label:'Interest Type',include_blank: 'Select Interest Type' %>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :description,label:'Description', placeholder: 'Description' %>
+            </div>
+          </div>
+
+
+            <div class="col-sm-3">
+            <label>Status</label>
+            <div class="field">
+            <%= f.check_box :status , label:'Active'%>
+          </div>
+          </div>
+       
+          <div class="col-sm-3">
+            <div class="actions" style="padding: 20px">
+              <%= f.submit 'Create Loan Type',:class => class_name, data: { disable_with: data_info } %>
+            </div>
+          </div>
+        </div>
+<% end %>
+
+<script>
+$("#loan_type").validate({
+    rules: {
+      "loan_type[code]":{
+        required: true,
+      },
+      "loan_type[name]":{
+        required: true,
+      },
+      "loan_type[from]":{
+        required: true,
+        numbersOnly: true,
+      },
+      "loan_type[to]":{
+        required: true,
+        numbersOnly: true,
+      },
+      "loan_type[interest_rate]":{
+        required: true,
+      },
+      "loan_type[interest_type]":{
+        required: true,
+
+      }
+       },
+    messages: {
+      "loan_type[code]":{
+        required: "Please Specify Code",
+      },
+       "loan_type[name]":{
+        required: "Please Specify name",
+      },
+       "loan_type[from]":{
+        required: "Please Specify limit",
+      },
+       "loan_type[to]":{
+        required: "Please Specify limit",
+      },
+       "loan_type[interest_rate]":{
+        required: "Please Specify interest rate",
+      },
+       "loan_type[interest_type]":{
+        required: "Please Specify interest type",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

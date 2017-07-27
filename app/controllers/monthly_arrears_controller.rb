@@ -59,6 +59,10 @@ class MonthlyArrearsController < ApplicationController
      @monthly_arrears = MonthlyArrear.all   
   end
 
+ def modal
+  @monthly_arrear = MonthlyArrear.find(params[:format])
+   
+ end
   #  def is_paid
   #   @monthly_arrear = MonthlyArrear.find(params[:monthly_arrear])
   #   MonthlyArrear.find(@monthly_arrear.id).update(is_paid: true)

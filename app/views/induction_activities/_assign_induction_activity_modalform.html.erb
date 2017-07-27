@@ -1,5 +1,5 @@
 <!-- Main content -->
-<div class="modal-dialog" style="height:1000px; max-height:150px; width:1000px; max-width:1400px;">
+<div class="modal-dialog" style="height:auto; max-height:1000px; width:auto; max-width:1400px;">
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -48,7 +48,7 @@
     </div>
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :facilitator_1,label: "Facilitator 1&Presenter" %>
+        <%= f.text_field :facilitator_1,label: "Facilitator" %>
       </div>
     </div>
     </div>
@@ -56,18 +56,16 @@
    <div class="row">
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :facilitator_2,label: "Facilitator 2&Presenter" %>
+        <%= f.text_field :facilitator_2,label: "Presenter" %>
       </div>
     </div>
-     <div class="col-sm-9">
+     <div class="col-sm-6">
       <div class="field">
         <%= f.text_field :program_agenda,placeholder: 'Eg: Program Agenda',label: "Program Agenda" %>
       </div>
     </div>
-  </div>
-  <div class="row">
     <div class="col-sm-3">
-      <div class="actions">
+      <div class="actions" style="padding: 20px">
         <%= f.submit "Update Induction Activity", class: 'btn btn-primary btn-sm' %>
       </div>
     </div>

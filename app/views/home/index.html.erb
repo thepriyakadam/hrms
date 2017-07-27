@@ -15,6 +15,10 @@
 	    <%= render 'account_admin' %>
 	<% elsif current_user.role.try(:name) == 'GroupAdmin' %>
 	    <%= render 'group_admin' %>
+	<% elsif current_user.role.try(:name) == 'NewEmployee' %>
+	    <%= render 'new_employee_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'Recruitment' %>
+	    <%= render 'recruitment_dashboard' %>
 	<% else %>
 		<%= render 'employee_dashboard' %>
 	<% end %>

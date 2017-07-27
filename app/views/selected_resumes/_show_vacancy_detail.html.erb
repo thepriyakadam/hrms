@@ -2,11 +2,13 @@
  <thead>
   <tr> 
 	  <th>Vacancy Code</th> 
-	  <th>Job Title</th> 
+	  <th>Vacancy Name</th> 
 	  <th>Department</th> 
 	  <th>Qualification</th> 
 	  <th>No. of Position</th> 
-	  <th>Experience</th> </tr> 
+	  <th>Experience</th>
+	  <th>Action</th> 
+  </tr> 
  </thead> 
  <tbody> 
  <tr> 
@@ -16,6 +18,8 @@
 	 <td><%= @vacancy_master.degree.try(:name) %></td> 
 	 <td><%= @vacancy_master.no_of_position %></td> 
 	 <td><%= @vacancy_master.experience %></td> 
+	 <td><%= link_to '', modal_vacancy_master_selected_resumes_path(@vacancy_master), class: 'btn btn-xs btn-default fa fa-eye',remote: true%></td>
  </tr> 
  </tbody> 
  </table>
+  <div id="myModal4" class="modal fade"></div>

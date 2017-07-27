@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Punch Masters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Start time</th>
+      <th>End time</th>
+      <th>Reader in</th>
+      <th>Reader out</th>
+      <th>Full day hrs</th>
+      <th>Half day hrs</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @punch_masters.each do |punch_master| %>
+      <tr>
+        <td><%= punch_master.start_time %></td>
+        <td><%= punch_master.end_time %></td>
+        <td><%= punch_master.reader_in %></td>
+        <td><%= punch_master.reader_out %></td>
+        <td><%= punch_master.full_day_hrs %></td>
+        <td><%= punch_master.half_day_hrs %></td>
+        <td><%= punch_master.status %></td>
+        <td><%= link_to 'Show', punch_master %></td>
+        <td><%= link_to 'Edit', edit_punch_master_path(punch_master) %></td>
+        <td><%= link_to 'Destroy', punch_master, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Punch master', new_punch_master_path %>

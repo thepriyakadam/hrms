@@ -139,11 +139,11 @@
         </div>
       </div>
      
-      <div class="col-sm-3">
+      <!-- <div class="col-sm-3">
         <div class="field">
-          <%= f.select :reserved_category_id, all_reserved_category,{label: 'Reserved Category',include_blank: " Select Reserved Category"} %>
+          < f.select :reserved_category_id, all_reserved_category,{label: 'Reserved Category',include_blank: " Select Reserved Category"} %>
        </div>
-       </div> 
+       </div>  -->
 
        <div class="col-sm-3">
       <label>Retirement Date </label>
@@ -156,15 +156,27 @@
           </div>
         </div>
       </div>
-      </div>
-
-       <div class="row">
+      
       <div class="col-sm-3">
        <div class="field">
          <%= f.select :medical_schem, ['Yes','No'],{label: 'Medical Insurance',include_blank: " Select Medical Insurance"} %>
       </div>
      </div>
      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :company_rfid,label: 'Company RFID' %>
+          </div>
+        </div> 
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :gate_rfid,label: 'Gate RFID' %>
+          </div>
+        </div> 
+      </div>
+
      <div class="box-header with-border">
     <strong><font color='#0077b3'> EMPLOYEE PAYROLL DETAILS</font></strong>
   </div><!-- /.box-header -->

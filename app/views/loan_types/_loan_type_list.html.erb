@@ -1,0 +1,35 @@
+<br>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+     <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Interest Rate</th>
+      <th>Interest Type</th>
+      <th>Description</th>
+      <th>Status</th>
+       <th>Action</th>
+    </tr>
+   </thead>
+  <tbody>
+    <% @loan_types.each do |loan_type| %>
+      <tr>
+        <td><%= loan_type.code %></td>
+        <td><%= loan_type.name %></td>
+        <td><%= loan_type.from %></td>
+        <td><%= loan_type.to %></td>
+        <td><%= loan_type.interest_rate %></td>
+        <td><%= loan_type.interest_type %></td>
+        <td><%= loan_type.description %></td>
+        <td><%= loan_type.status ? "Active" : "Inactive" %></td>
+        <td>
+            <%= link_to '', edit_loan_type_path(loan_type),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  loan_type, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

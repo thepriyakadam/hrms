@@ -1,0 +1,40 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employer Insurance</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+
+  <tr>
+  <th><strong>Base Component</strong></th>
+   <td colspan="3"> <% i = 0 %>
+          <% @employer_insurance.base_component.split(",").each do |e| %>
+            <% if i == 0 %>
+              <%= SalaryComponent.find(e.to_i).name %>
+            <% else %>
+              + <%= SalaryComponent.find(e.to_i).name %>
+            <% end %>
+            <% i = i + 1 %>
+          <% end %>
+      </td>
+  
+</tr>
+<tr>
+  <th><strong>Percentage</strong></th>
+   <td><%= @employer_insurance.percentage %></td>
+
+     <th><strong>Effective from</strong></th>
+  <td><%= @employer_insurance.effective_from %></td>
+
+</tr>
+
+<tr>
+   <th><strong>Effective to</strong></th>
+   <td><%= @employer_insurance.effective_to %></td>
+
+  <th>Status</th>
+  <td><%= @employer_insurance.is_active ? "Active" : "Inactive"  %></td>
+</tr>  
+
+</table><br>
+ <%= link_to 'Back', new_employer_insurance_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>

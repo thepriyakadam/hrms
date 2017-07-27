@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Start time:</strong>
+  <%= @punch_master.start_time %>
+</p>
+
+<p>
+  <strong>End time:</strong>
+  <%= @punch_master.end_time %>
+</p>
+
+<p>
+  <strong>Reader in:</strong>
+  <%= @punch_master.reader_in %>
+</p>
+
+<p>
+  <strong>Reader out:</strong>
+  <%= @punch_master.reader_out %>
+</p>
+
+<p>
+  <strong>Full day hrs:</strong>
+  <%= @punch_master.full_day_hrs %>
+</p>
+
+<p>
+  <strong>Half day hrs:</strong>
+  <%= @punch_master.half_day_hrs %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @punch_master.status %>
+</p>
+
+<%= link_to 'Edit', edit_punch_master_path(@punch_master) %> |
+<%= link_to 'Back', punch_masters_path %>

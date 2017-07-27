@@ -57,24 +57,31 @@ class InvestmentDeclarationsController < ApplicationController
     @investment_declarations = InvestmentDeclaration.all
     #redirect_to investment_declaration_self_services_path
   end
-   
-  def investment_document
-      @investment_declaration = InvestmentDeclaration.find(params[:id])
-      send_file @investment_declaration.document.path,
-               filename: @investment_declaration.document_file_name,
-               type: @investment_declaration.document_content_type,
-               disposition: 'attachment'
-    
+
+  def modal
+    @investment_declaration = InvestmentDeclaration.find(params[:format])
   end
    
-  def investment_document2
-      @investment_declaration = InvestmentDeclaration.find(params[:id])
-      send_file @investment_declaration.document.path,
-               filename: @investment_declaration.document_file_name,
-               type: @investment_declaration.document_content_type,
-               disposition: 'attachment'
-    
+ 
+   def investment_document
+    @investment_declaration = InvestmentDeclaration.find(params[:id])
+    send_file @investment_declaration.document.path,
+              filename: @investment_declaration.document_file_name,
+              type: @investment_declaration.document_content_type,
+              disposition: 'attachment'
+    # path = params[:to]
+    # render path
+    # render 'show'
   end
+
+  # def investment_document2
+  #     @investment_declaration = InvestmentDeclaration.find(params[:id])
+  #     send_file @investment_declaration.document.path,
+  #              filename: @investment_declaration.document_file_name,
+  #              type: @investment_declaration.document_content_type,
+  #              disposition: 'attachment'
+    
+  # end
 
   def send_for_approval
     @investment_declaration = InvestmentDeclaration.find(params[:format])

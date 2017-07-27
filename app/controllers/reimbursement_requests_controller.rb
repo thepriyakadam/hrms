@@ -70,6 +70,8 @@ class ReimbursementRequestsController < ApplicationController
 
   def approval_list
     @reimbursement_requests = ReimbursementRequest.where(status: "Send For Approval")
+    session[:active_tab] = "PayrollManagement"
+    session[:active_tab1] ="ltareimbursement"
   end
 
   def approve
@@ -84,6 +86,10 @@ class ReimbursementRequestsController < ApplicationController
     @reimbursement_request.update(status: "Pending",approval_id: current_user.employee_id)
     flash[:notice] = "Request Rejected Successfully!"
     redirect_to list_for_approval_reimbursement_requests_path
+  end
+
+  def modal
+    @reimbursement_request = ReimbursementRequest.find(params[:format])
   end
 
   # def edit_request_modal

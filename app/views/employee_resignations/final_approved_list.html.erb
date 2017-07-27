@@ -10,9 +10,6 @@
         <tr>
         <th>ID</th>
          <th>Employee Name</th>
-         <th>Department</th>
-         <th>Contact No.</th>
-         <th>Designation</th>
          <th>Action</th>
         </tr>
       </thead>
@@ -21,9 +18,6 @@
         <tr>
         <td><%= g.employee.try(:manual_employee_code)%></td>
         <td> <%= full_name(g.employee)%></td>
-        <td><%= g.employee.try(:company_location).try(:name) %> - <%= g.employee.try(:department).try(:name) %></td> 
-         <td><%= g.employee.try(:contact_no) %></td>
-        <td><%= g.employee.try(:joining_detail).try(:employee_designation).try(:name) %></td>
         <td> 
         <% if  g.employee.joining_detail.leaving_date == nil %>
          <%= link_to 'Confirm',confirm_resignation_employee_resignations_path(g),class: 'btn btn-xs btn-primary' %>

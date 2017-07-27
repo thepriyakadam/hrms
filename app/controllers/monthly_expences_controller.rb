@@ -72,6 +72,10 @@ class MonthlyExpencesController < ApplicationController
     end
   end
 
+  def modal
+    @m = MonthlyExpence.find(params[:format])
+  end
+
   def employees
     @year = params[:year]
     @month = params[:month]
@@ -137,6 +141,7 @@ class MonthlyExpencesController < ApplicationController
   end
 
   def dynamic_report
+    # byebug
     @month = params[:food_deduction][:month]
     @year = params[:food_deduction][:year]
     @company = params[:food_deduction][:company_id]

@@ -1,0 +1,35 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Internal Vacancies</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example1" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Vacancy Code</th>
+          <th>Vacancy</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @vacancy_masters.each do |vacancy_master| %>
+        <tr>
+          <td><%= vacancy_master.vacancy_code %></td>
+          <td><%= vacancy_master.vacancy_name %></td>
+          <td>
+            <% selected_resume = SelectedResume.where(vacancy_master_id: vacancy_master.id,add_by_id: current_user.employee_id).take %>
+            <% if selected_resume.nil? %>
+              <%= link_to 'Apply', internal_selected_resumes_path(vacancy_master_id: vacancy_master.id) ,class: 'btn btn-xs btn-primary' %>
+            <% else %>
+              <small class="label label-default">Applied</small>
+              <%= link_to '', show_internal_modal_self_services_path(vacancy_master_id: vacancy_master.id) ,class: 'btn btn-xs btn-default fa fa-eye',remote: true %>
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div id="myModal" class="modal fade"></div>

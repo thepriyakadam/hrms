@@ -70,12 +70,15 @@
         </td>
         <td>
         <div id="myModal" class="modal fade"></div>
-          <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
+          <!-- < link_to '', show_selected_resume_vacancy_masters_path(vacancy_master_id: @vacancy_master.id,id: selected_resume.id),class: 'btn btn-xs btn-default fa fa-eye' %> -->
+          <%= link_to '', modal_show_selected_resume_selected_resumes_path(selected_resume,vacancy_master_id: @vacancy_master.id),class: 'btn btn-xs btn-default fa fa-eye',remote:true %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<div id="myModal3" class="modal fade"></div>
+
 
 <div id="myModal2" class="modal fade"></div>
 
@@ -92,7 +95,7 @@
       <%= link_to 'Back', vacancy_resume_vacancy_masters_path,class:"btn btn-sm btn-default fa fa-arrow-left" %>
        <% else %>
       <%= f.submit "Shortlist for Interview", class: 'btn btn-primary btn-sm',data: { confirm: 'Are you sure?' } %>
-      <%= link_to 'Back', vacancy_resume_vacancy_masters_path,class:"btn btn-sm btn-default fa fa-arrow-left" %>
+      <%= link_to 'Back', vacancy_hr_resume_vacancy_masters_path,class:"btn btn-sm btn-default fa fa-arrow-left" %>
       <% end %>
       <!-- < end %> -->
     </div>

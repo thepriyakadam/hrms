@@ -5,8 +5,6 @@
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
       <th>Employee ID</th>
       <th>Employee Name</th>
-      <th>Actual Gross Salary</th>
-      <th>Actual Total Deduction</th>
       <th>Month</th>
       <th>Year</th>
     </tr>
@@ -17,8 +15,6 @@
         <td><%= check_box_tag "salaryslip_ids[]", s.id %></td>
         <td><%= s.employee.try(:manual_employee_code) %></td>
         <td><%= full_name(s.employee) %></td>
-        <td><%= s.actual_gross_salary %></td>
-        <td><%= s.actual_total_deduction %></td>
         <td><%= s.month %></td>
         <td><%= s.year %></td>
       </tr>

@@ -6,34 +6,39 @@
   </div>
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed'">
-      <thead>
-        <tr>
-          <th>Reporting Manager</th>
-          <th>Resignation Date</th>
-          <th>Reason</th>
-          <th>Is Notice Period</th>
-          <th>Notice Period</th>
-          <th>Tentative Leaving Date</th>
-          <th>Remark</th>
-          <th>Exit Interview Date</th>
-          <th>Resign Status</th>
-      </thead>
-
       <tbody>
-        <% @resignation_histories.each do |resignation_history| %>
           <tr>
-            <td><%= resignation_history.reporting_master.employee.try(:first_name) %> <%= resignation_history.reporting_master.employee.try(:middle_name) %> <%= resignation_history.reporting_master.employee.try(:last_name) %></td>
-            <td><%= resignation_history.resignation_date %></td>
-            <td><%= resignation_history.reason %></td>
-            <td><%= resignation_history.is_notice_period %></td>
-            <td><%= resignation_history.notice_period %></td>
-            <td><%= resignation_history.tentative_leaving_date %></td>
-            <td><%= resignation_history.remark %></td>
-            <td><%= resignation_history.exit_interview_date %></td>
-            <td><%= resignation_history.resign_status %></td>
+          <th>Resignation Date</th>
+            <td colspan="3"><%= @employee_resignations.resignation_date %></td>
           </tr>
-        <% end %>
+          <tr> 
+           <th>Reason</th>
+            <td colspan="3"><%= @employee_resignations.reason %></td>
+          </tr>
+          <tr>
+          <th>Notice Period</th>
+            <td><%= @employee_resignations.is_notice_period %></td>
+          <th>Notice Period</th>
+            <td><%= @employee_resignations.notice_period %></td>
+          </tr>
+          <tr>
+          <th>Tentative Leaving Date</th>
+            <td><%= @employee_resignations.tentative_leaving_date %></td>
+            <th>Exit Interview Date</th>
+            <td><%= @employee_resignations.exit_interview_date %></td>
+            </tr>
+            <tr>
+          <th>Remark</th>
+            <td colspan="3"><%= @employee_resignations.remark %></td>
+
+         </tr>
+         <tr>
+          <th>Resign Status</th>  
+            <td colspan="3"><%= @employee_resignations.resign_status %></td>
+
+          </tr>
       </tbody>
-    </table>
+    </table><br>
+    <%= link_to 'Back', resignation_history_self_services_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
   </div>
 </div>

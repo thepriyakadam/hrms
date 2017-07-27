@@ -10,9 +10,6 @@
         <tr>
           <th>ID</th>
           <th>Employee Name</th>
-          <th>Resignation Date</th>
-          <th>Leaving Date</th>
-          <th>Notice Period (In Months)</th>
           <th>Status</th>
           <th>Action</th>
        </tr>
@@ -23,9 +20,6 @@
           <tr>
             <td><%= employee_resignation.employee.try(:manual_employee_code) %></td>
             <td><%= full_name(employee_resignation.employee) %></td>
-            <td><%= employee_resignation.resignation_date %></td>
-            <td><%= employee_resignation.leaving_date %></td>
-            <td><%= employee_resignation.notice_period %></td>
             <td>
             <% employee_resignation.resignation_status_records.try(:each) do |er| %>
             <% case er.status %>

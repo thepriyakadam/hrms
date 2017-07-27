@@ -1,0 +1,40 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Loan Request</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+
+    <tr>
+    	<th>Member</th>
+    	<td><%= full_name(@loan_request.membership.employee)%></td>
+    	<th>Date</th>
+    	<td><%= @loan_request.date %></td>
+
+    </tr>
+
+    <tr>
+    	<th>Loan Type</th>
+    	<td><%= @loan_request.loan_type.try(:name) %></td>
+
+    	<th>Amount</th>
+    	<td><%= @loan_request.amount %></td>
+    </tr>
+
+    <tr>
+        <th>No. of EMI</th>
+        <td><%= @loan_request.no_of_emi %></td>
+    	<th>EMI</th>
+    	<td><%= @loan_request.emi %></td>
+    </tr>
+    <tr>
+    <th>Request To</th>
+    <td colspan="3"><% emp = Employee.find_by(id: @loan_request.request_to_id) %><%= full_name(emp) %></td>
+    </tr>
+            
+
+</table><br>
+<%= link_to 'Edit', edit_loan_request_path(@loan_request) ,class:'btn btn-sm btn-success fa fa-edit'%> |
+<%= link_to 'Back', loan_requests_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
+</div>
+</div>

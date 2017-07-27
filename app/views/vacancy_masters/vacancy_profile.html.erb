@@ -28,7 +28,8 @@
                
                 <td><%= vacancy_master.experience %></td>
                 <td>
-                  <%= link_to '', vacancy_master,class: 'btn btn-xs btn-default fa fa-eye' %>
+                <%= link_to '', modal_show_vacancy_page_vacancy_masters_path(vacancy_master),class: 'btn btn-xs btn-default fa fa-eye',remote:true %>
+                  <!-- <= link_to '', show_vacancy_profile_vacancy_masters_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-default fa fa-eye' %> -->
                   <%= link_to 'View Profile',part_resume_selected_resumes_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-primary' %>
                 </td>
               </tr>
@@ -39,6 +40,9 @@
     </div>
   </div>
 </div>
+
+<div id="myModal" class="modal fade"></div>
+
 <script>
 $(document).ready(function() {
     $('#example').DataTable();

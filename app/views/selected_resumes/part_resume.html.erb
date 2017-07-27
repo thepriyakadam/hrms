@@ -54,7 +54,8 @@
               <% end %>
         </td>
         <td>
-          <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>  
+        <%= link_to '', modal_show_selected_resume_selected_resumes_path(selected_resume,vacancy_master_id: @vacancy_master.id),class: 'btn btn-xs btn-default fa fa-eye',remote:true %>
+          <!-- <= link_to '', show_part_resume_selected_resumes_path(vacancy_master_id: @vacancy_master.id,id: selected_resume.id),class: 'btn btn-xs btn-default fa fa-eye' %>   -->
         </td>
         </td>
       </tr>
@@ -65,6 +66,8 @@
  </div>
  </div>
  </div>
+
+<div id="myModal3" class="modal fade"></div>
 
  <script>
 $(document).ready(function() {

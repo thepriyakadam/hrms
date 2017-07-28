@@ -9,7 +9,11 @@
 
  
 <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
-<tr><th colspan="4"><center><strong><%= @change_designations.first.employee.company_location.company.try(:description) %><br> <%= @change_designations.first.employee.company_location.company.try(:address) %><br> <%= @change_designations.first.employee.company_location.try(:name) %></strong></center></th></tr>
+<tr><th colspan="4"><center><strong><% if @change_designations.first.employee.company_location.company.company_logo == nil %>
+     <% else %>
+     <center> <%= wicked_pdf_image_tag @change_designations.first.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+     <%end%>
+<%= @change_designations.first.employee.company_location.company.try(:description) %><br> <%= @change_designations.first.employee.company_location.company.try(:address) %><br> <%= @change_designations.first.employee.company_location.try(:name) %></strong></center></th></tr>
 <tr><th colspan="4"><center> Designation Details of - <%= @change_designations.first.try(:employee).try(:manual_employee_code) %> - <%= full_name(@change_designations.first.try(:employee)) %></center></th></tr>
  
 

@@ -46,6 +46,10 @@
    <th>Status</th>
    <td><%= @selected_resume.status %></td>
 </tr>
+<tr>
+<th><strong>Image</strong></th>
+<td colspan="3"><%= @selected_resume.passport_photo_file_name %></td>
+</tr>
    </thead>
 </table>
 <%= image_tag @selected_resume.passport_photo.url, :size => "100x100" %><br><br>

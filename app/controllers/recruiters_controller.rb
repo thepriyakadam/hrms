@@ -69,6 +69,7 @@ class RecruitersController < ApplicationController
     @vacancy_master.update(vacancy_of: vacancy_of,target_date: target_date.to_date,recruiter_id: recruiter.employee_id,current_status: "FinalApproved",reporting_master_id: current_user.employee_id)
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id,reporting_master_id: current_user.employee_id,vacancy_status: "FinalApproved")
     ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id).update_all(status: "FinalApproved")
+    VacancyMasterMailer.final_approve(@vacancy_master,recruiter).deliver_now
     if @vacancy_master.current_status == "FinalApproved"
       flash[:notice] = 'Vacancy Request Approved Successfully'
       redirect_to final_approval_vacancy_list_vacancy_masters_path

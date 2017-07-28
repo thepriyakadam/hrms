@@ -3,7 +3,7 @@
       <h3 class="box-title">Schedule Interview </h3>
     </div><!-- /.box-header -->
  <div class="box-body">
- <%= bootstrap_form_for @interview_schedule,html: {id: 'selected_resume'},abc: @selected_resume.id do |f| %>
+ <%= bootstrap_form_for @interview_schedule,html: {id: 'interview_schedule'},abc: @selected_resume.id do |f| %>
   <%= f.hidden_field :selected_resume_id, value: @selected_resume.id  %>
   <%= f.hidden_field :employee_id, :value => current_user.employee_id %>
   <div>
@@ -44,13 +44,12 @@
      </div>
 
     <div class="col-sm-3">
-      <label>Interview Date: </label>
       <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :interview_date, hide_label: true, class: 'interview_date'%>
+          <%= f.text_field :interview_date,label: 'Interview Date', class: 'interview_date'%>
         </div>
       </div>
     </div> 
@@ -97,7 +96,7 @@ $("#interview_schedule").validate({
       "interview_schedule[location]":{
         required: true
       },
-      "interview_schedule[interview_type]":{
+      "interview_schedule[interview_date]":{
         required: true
       }
     },
@@ -114,8 +113,8 @@ $("#interview_schedule").validate({
       "interview_schedule[location]":{
         required: "Please specify Location"
       },
-      "interview_schedule[interview_type]":{
-        required: "Please specify Interview Type"
+      "interview_schedule[interview_date]":{
+        required: "Please specify Interview Date"
       }
     },
     errorPlacement: function(error, element) {

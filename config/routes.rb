@@ -10,6 +10,8 @@ Rails.application.routes.draw do
       get :employee_record_detail
     end
   end
+  resources :pre_onboardings
+  resources :change_designations
   resources :loan_emis
   resources :approval_processes
   resources :loan_requests do
@@ -1417,6 +1419,9 @@ end
       get :refferal
       get :internal
       get :modal_show_vacancy_page
+      get :select_reason
+      get :select_notice_period
+      get :select_relocation
     end
   end
    resources :leave_c_offs do

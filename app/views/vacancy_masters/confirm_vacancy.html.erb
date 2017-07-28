@@ -175,17 +175,32 @@
       <%end%><br>
       <tr>
         <th colspan="2">Total Score</th>
-        <th colspan="2"><% interv_analy = InterviewAnalysis.where(interview_round_id: interview_round).pluck(:interview_decision_id)
-        interv_dec = InterviewDecision.where(id: interv_analy) %><%= interv_dec.sum(:name) %></th>
+        <th colspan="2">
+          <% interv_analy = InterviewAnalysis.where(interview_round_id: interview_round) %>
+          <% sum = 0 %>
+          <% interv_analy.each do |i| %>
+          <% interv_dec = InterviewDecision.find_by(id: i.interview_decision_id) %>
+          <% sum = interv_dec.name + sum %>
+          <% end %> 
+          <%= sum %> 
+        </th>
       </tr>
     <% end %>
     <tr>
       <th colspan="2">Overall Total Score</th>
-      <th colspan="2"><% interview_schedule = InterviewSchedule.where(id: @interview_schedule.id).pluck(:id)
+      <th colspan="2">
+      <!-- < interview_schedule = InterviewSchedule.where(id: @interview_schedule.id).pluck(:id)
             inter_round = InterviewRound.where(interview_schedule_id: interview_schedule).pluck(:id)
             interv_analy_1 = InterviewAnalysis.where(interview_round_id: inter_round).pluck(:interview_decision_id)
             interv_dec_1 = InterviewDecision.where(id: interv_analy_1) %>
-            <%= interv_dec_1.sum(:name) %>
+            <= interv_dec_1.sum(:name) %> -->
+          <% interv_analy = InterviewAnalysis.where(interview_schedule_id: @interview_schedule.id) %>
+          <% sum = 0 %>
+          <% interv_analy.each do |i| %>
+          <% interv_dec = InterviewDecision.find_by(id: i.interview_decision_id) %>
+          <% sum = interv_dec.name + sum %>
+          <% end %> 
+          <%= sum %>
       </th>
     </tr>  
   </tbody>

@@ -47,10 +47,11 @@
                 <% end %>
               </td>
        			</tr>
+          <%= image_tag selected_resume.passport_photo.url, :size => "100x100" %><br><br>
           <% end %>
           
-          <tr><th colspan="4"><center>Vacancy Details</center></th></tr>
- <tr>
+      <tr><th colspan="4"><center>Vacancy Details</center></th></tr>
+      <tr>
         <th><strong>Vacancy Code</strong></th>
         <td><%= @vacancy_master.vacancy_code %></td>
 

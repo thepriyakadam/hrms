@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   resources :change_designations do
     collection do
       get :employee_list

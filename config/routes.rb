@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :pre_onboardings
   resources :change_designations
   resources :loan_emis
   resources :approval_processes
@@ -1409,6 +1410,8 @@ end
       get :internal
       get :modal_show_vacancy_page
       get :select_reason
+      get :select_notice_period
+      get :select_relocation
     end
   end
    resources :leave_c_offs do

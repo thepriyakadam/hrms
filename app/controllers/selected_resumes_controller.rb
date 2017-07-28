@@ -162,6 +162,7 @@ class SelectedResumesController < ApplicationController
       @selected_resume_ids.each do |eid|
       @selected_resume = SelectedResume.find(eid)
       @selected_resume.update(status: "Shortlisted") 
+      VacancyMasterMailer.confirm_resume(@selected_resume).deliver_now
       flash[:notice] = "Confirmed Successfully"
     end 
      redirect_to new_selected_resume_path(vacancy_master_id: @vacancy_master.id)
@@ -184,9 +185,9 @@ class SelectedResumesController < ApplicationController
   end
 
   def all_resume_list
-     @selected_resume = SelectedResume.new
-     @selected_resumes = SelectedResume.where(vacancy_master_id: nil)
-     # @selected_resumes = SelectedResume.all
+    @selected_resume = SelectedResume.new
+     # @selected_resumes = SelectedResume.where(vacancy_master_id: nil)
+    @selected_resumes = SelectedResume.all
      session[:active_tab] ="recruitment"
      session[:active_tab1] ="general_vacancy"
   end

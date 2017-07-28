@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170724115749) do
+ActiveRecord::Schema.define(version: 20170727052427) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -3138,6 +3138,37 @@ ActiveRecord::Schema.define(version: 20170724115749) do
     t.datetime "updated_at",              null: false
   end
 
+  create_table "pre_onboardings", force: :cascade do |t|
+    t.integer  "selected_resume_id", limit: 4
+    t.string   "first_name",         limit: 255
+    t.string   "middle_name",        limit: 255
+    t.string   "last_name",          limit: 255
+    t.date     "birth_date"
+    t.string   "gender",             limit: 255
+    t.string   "marital_status",     limit: 255
+    t.string   "fathers_name",       limit: 255
+    t.string   "nationality",        limit: 255
+    t.text     "permanent_address",  limit: 65535
+    t.string   "city",               limit: 255
+    t.integer  "country_id",         limit: 4
+    t.integer  "state_id",           limit: 4
+    t.integer  "district_id",        limit: 4
+    t.string   "pin_code",           limit: 255
+    t.text     "current_address",    limit: 65535
+    t.string   "contact_no",         limit: 255
+    t.string   "optional_no",        limit: 255
+    t.string   "email",              limit: 255
+    t.string   "pan_no",             limit: 255
+    t.string   "adhar_no",           limit: 255
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
+
+  add_index "pre_onboardings", ["country_id"], name: "index_pre_onboardings_on_country_id", using: :btree
+  add_index "pre_onboardings", ["district_id"], name: "index_pre_onboardings_on_district_id", using: :btree
+  add_index "pre_onboardings", ["selected_resume_id"], name: "index_pre_onboardings_on_selected_resume_id", using: :btree
+  add_index "pre_onboardings", ["state_id"], name: "index_pre_onboardings_on_state_id", using: :btree
+
   create_table "professional_tax_masters", force: :cascade do |t|
     t.string   "base_component",      limit: 255
     t.decimal  "min_amount",                      precision: 10
@@ -4617,6 +4648,10 @@ ActiveRecord::Schema.define(version: 20170724115749) do
   add_foreign_key "particular_vacancy_requests", "vacancy_masters"
   add_foreign_key "performance_calendars", "performance_activities"
   add_foreign_key "performance_calendars", "periods"
+  add_foreign_key "pre_onboardings", "countries"
+  add_foreign_key "pre_onboardings", "districts"
+  add_foreign_key "pre_onboardings", "selected_resumes"
+  add_foreign_key "pre_onboardings", "states"
   add_foreign_key "professional_tax_masters", "company_locations"
   add_foreign_key "promotion_histories", "departments"
   add_foreign_key "promotion_histories", "employee_categories"

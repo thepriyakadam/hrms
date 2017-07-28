@@ -461,9 +461,11 @@ require 'roo'
 #   @religion = Religion.find_by_name(ex.cell(line,'T'))
 #   e.religion_id = @religion.id unless @religion.nil?
 #   e.contact_no = ex.cell(line,'U').to_i
-#   e.email = ex.cell(line,'V')
-#   e.handicap = ex.cell(line,'W')
-#   e.handicap_type = ex.cell(line, 'X')
+#   e.contact_no = ex.cell(line,'V').to_i
+#   e.email = ex.cell(line,'W')
+#   e.email = ex.cell(line,'X')
+#   e.handicap = ex.cell(line,'Y')
+#   e.handicap_type = ex.cell(line, 'Z')
   
 #   @type = EmployeeType.find_by_name(ex.cell(line,'Y'))
 #   e.employee_type_id = @type.id unless @type.nil?
@@ -545,13 +547,13 @@ require 'roo'
 # EmployeeBankDetail.new do |b|
 #   b.employee_id = @employee.id unless @employee.nil?
 #   b.account_no = ex.cell(line,'C').to_i
-#   b.bank_name = ex.cell(line,'D')
-#   b.branch_name = ex.cell(line,'E')
-#   b.address = ex.cell(line,'J')
-#   b.contact_no = ex.cell(line,'F').to_i
+#   b.bank_name = ex.cell(line,'B')
+#   b.branch_name = ex.cell(line,'D')
+#   b.contact_no = ex.cell(line,'H').to_i
 #   b.micr_code = ex.cell(line,'G')
-#   b.branch_code = ex.cell(line,'H')
-#   b.ifsc_code = ex.cell(line,'I')
+#   b.branch_code = ex.cell(line,'F')
+#   b.ifsc_code = ex.cell(line,'E')
+#    b.address = ex.cell(line,'J')
 #   b.save!
 # end
 # puts "#{i} Record inserted.-----------------------------------------------"
@@ -582,7 +584,7 @@ require 'roo'
 # end
 # puts "#{i} Record inserted.-----------------------------------------------"
 # i = i+1
-# end
+#  end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/spelb.xls")

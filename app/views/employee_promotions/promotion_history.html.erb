@@ -19,7 +19,7 @@
         <th>CTC</th>
         <th>Effective From</th>
         <th>Effective To</th>
-        <!-- <th>Action</th> -->
+        <th>Action</th> 
       </tr>
     </thead>
     <tbody>
@@ -34,7 +34,7 @@
           <td><%= promotion_history.employee_ctc %></td>
           <td><%= promotion_history.effective_from %></td>
           <td><%= promotion_history.effective_to %></td>
-          <!-- <td><= link_to 'Certificate', display_certificate_employee_promotions_path(emp_promotion_id: @employee_promotion.id),class: 'btn btn-primary btn-xs ' %> -->
+           <td><%= link_to 'Certificate', display_certificate_employee_promotions_path(promotion_history),class: 'btn btn-primary btn-xs ' %> </td>
        <!--   <= link_to '', @employee_promotion,class: 'btn btn-default btn-xs fa fa-eye' %>
  --><!-- 
           </td> --> 

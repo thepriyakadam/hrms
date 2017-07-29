@@ -4,11 +4,11 @@ class Ability
     if user.class == Group
       can :manage, :all
     elsif user.class == Member
-      if user.role.name == 'GroupAdmin'
+      if user.role.name == 'GroupAdmin' || user.role.name == "GroupTimeManagement" 
        can :manage, :all
-      elsif user.role.name == 'Admin'
+      elsif user.role.name == 'Admin'|| user.role.name == "AdminTimeManagement" 
        can :manage, :all
-      elsif user.role.name == 'Branch'
+      elsif user.role.name == 'Branch'|| user.role.name == "TimeAndAttendance" 
         # can :manage, Employee, :joining_detail => { :company_location_id => user.company_location_id }
         # can :manage, [Employee, JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family, Award, Certification, Award, EmployeeNomination]
         # can :manage, CompanyLeav

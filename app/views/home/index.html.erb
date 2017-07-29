@@ -19,6 +19,16 @@
 	    <%= render 'new_employee_dashboard' %>
 	<% elsif current_user.role.try(:name) == 'Recruitment' %>
 	    <%= render 'recruitment_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'GroupRecruiter' %>
+	    <%= render 'group_recruiter_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'AdminRecruiter' %>
+	    <%= render 'admin_recuiter_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'TimeAndAttendance' %>
+	    <%= render 'time_and_attendance_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'GroupTimeManagement' %>
+	    <%= render 'group_time_management' %>
+	<% elsif current_user.role.try(:name) == 'AdminTimeManagement' %>
+	    <%= render 'admin_time_management' %>
 	<% else %>
 		<%= render 'employee_dashboard' %>
 	<% end %>

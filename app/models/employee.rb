@@ -32,6 +32,7 @@ class Employee < ActiveRecord::Base
   has_many :recruiters
   has_many :selected_resumes, class_name: "Employee",foreign_key: "add_by_id"
   has_many :vacancy_masters, class_name: "Employee",foreign_key: "recruiter_id"
+  has_many :vacancy_masters, class_name: "Employee",foreign_key: "replacement_id"
 
   #has_many :vacancy_masters,class_name: 'Employee',foreign_key: 'recruiter_id'
   has_many :reporting_masters, class_name: 'ReportingMaster', foreign_key: 'reporting_master_id'
@@ -39,7 +40,7 @@ class Employee < ActiveRecord::Base
   # has_many :first_reporters, :class_name => "EmployeeLeavRequest", :foreign_key => :first_reporter_id
   # has_many :second_reporters, :class_name => "EmployeeLeavRequest", :foreign_key => :second_reporter_id
   has_many :reporting_masters, class_name: 'Employee', foreign_key: 'reporting_master_id'
-  has_many :replacements, class_name: 'Employee', foreign_key: 'replacement_id'
+  #has_many :replacements, class_name: 'Employee', foreign_key: 'replacement_id'
   has_many :first_reporters, class_name: 'EmployeeLeavRequest', foreign_key: 'first_reporter_id'
   has_many :second_reporters, class_name: 'EmployeeLeavRequest', foreign_key: 'second_reporter_id'
   has_many :change_status_employees, class_name: 'LeaveStatusRecord', foreign_key: 'change_status_employee_id'

@@ -1,0 +1,38 @@
+<style>
+    th { text-align: left;}
+    tr {page-break-inside: avoid;}
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+    }
+</style>
+
+ 
+<table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
+<tr><th colspan="4"><center><strong><%= @change_designation.employee.company_location.company.try(:description) %><br> <%= @change_designation.employee.company_location.company.try(:address) %><br> <%= @change_designation.employee.company_location.try(:name) %></strong></center></th></tr>
+
+<tr>
+      <th><strong>Employee</strong></th>
+      <td><%= full_name(@change_designation.employee) %></td>
+    
+      <th><strong>Designation</strong></th>
+      <td><%= @change_designation.employee_designation.try(:name) %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Effective From</strong></th>
+      <td><%= @change_designation.effective_from %></td>
+
+      <th><strong>Effective To</strong></th>
+       <td><% if @change_designation.effective_to.nil? %>
+      <%= "Till Next Change" %>
+        <% else %>
+        <%= @change_designation.effective_to %>
+        <% end %>
+        </td>
+    </tr>
+
+    <tr>
+      <th><strong>Change By</strong></th>
+      <td colspan="3"><% @emp = Employee.find_by(id: @change_designation.change_by_id)%><%= full_name(@emp) %></td>
+    </tr>

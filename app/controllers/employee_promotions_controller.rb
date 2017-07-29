@@ -95,7 +95,6 @@ class EmployeePromotionsController < ApplicationController
     @employee = Employee.find(@employee_id)
     @employee.update(department_id: @department_id)
     @joining_detail= JoiningDetail.find_by_employee_id(@employee_id)
-    
     # byebug
     @joining_detail.update(employee_designation_id: @employee_designation_id,employee_grade_id: @employee_grade_id,employee_category_id: @employee_category_id)
     PromotionHistory.create(employee_promotion_id: @employee_promotion.id,employee_id: @employee_promotion.employee_id,department_id: @employee_promotion.department_id,employee_designation_id: @employee_promotion.employee_designation_id,employee_category_id: @employee_promotion.employee_category_id,employee_grade_id: @employee_promotion.employee_grade_id,employee_ctc: @employee_promotion.employee_ctc,justification: @employee_promotion.justification,effective_from: @effective_from)
@@ -129,7 +128,8 @@ class EmployeePromotionsController < ApplicationController
   def print_employee_promotion
       @employee = Employee.find(params[:id])
       # @employee1 = EmployeePromotion.where(id: @employee)
-      @employee_promotions = EmployeePromotion.where(employee_id: params[:id])
+      # @employee_promotions = EmployeePromotion.where(employee_id: params[:id])
+      @promotion_histories = PromotionHistory.where(employee_id: params[:id])
             respond_to do |f|
             f.js
             f.html
@@ -158,8 +158,9 @@ class EmployeePromotionsController < ApplicationController
 
   def print_promotion_excel
     # byebug
-    @employee = Employee.find(params[:id])
-    @employee_promotions = EmployeePromotion.where(employee_id: params[:id])
+    # @employee = Employee.find(params[:id])
+     # @employee_promotions = EmployeePromotion.where(employee_id: params[:id])
+     @promotion_histories = PromotionHistory.where(employee_id: params[:id])
     respond_to do |f|
       f.js
       f.xls {render template: 'employee_promotions/print_promotion_excel.xls.erb'}
@@ -169,13 +170,15 @@ class EmployeePromotionsController < ApplicationController
 
   def display_certificate
      # @employee_promotion = EmployeePromotion.find_by_employee_id(params[:emp_id])
-     @employee_promotion = EmployeePromotion.find_by_id(params[:emp_promotion_id])
-     @employee_promotions = EmployeePromotion.where(id: @employee_promotion.id)
+     # @employee_promotion = EmployeePromotion.find_by_id(params[:emp_promotion_id])
+     # @employee_promotions = EmployeePromotion.where(id: @employee_promotion.id)
+     @employee_promotion = PromotionHistory.find(params[:format])
   end
   
   def print_certificate
-     @employee_promotion = EmployeePromotion.find(params[:emp_promotion_id])
-     @employee_promotions = EmployeePromotion.where(id: @employee_promotion.id)
+     # @employee_promotion = EmployeePromotion.find(params[:emp_promotion_id])
+     # @employee_promotions = EmployeePromotion.where(id: @employee_promotion.id)
+     @employee_promotion = PromotionHistory.find(params[:format])
      respond_to do |format|
         format.html
         format.pdf do

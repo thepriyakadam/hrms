@@ -1,1 +1,7 @@
-api_employees_controller.rb
+require 'open-uri'
+class Api::ApiEmployeeController < ApplicationController
+	def index
+
+		
+	end
+end

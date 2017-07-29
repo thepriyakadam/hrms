@@ -828,6 +828,7 @@
 # #       puts "Transport Allowance..................Salary"
 
       
+<<<<<<< HEAD
 # #     end
 # #       est.save!
 # #       puts "#{j} component inserted..."
@@ -895,6 +896,68 @@
 # <<<<<<< HEAD
 # <<<<<<< HEAD
 # =======
+=======
+#     end
+#       est.save!
+#       puts "#{j} component inserted..."
+#       j=j+1
+#     end
+#   end
+#   gross_salary = 0
+# end
+# end
+
+
+# ex = Roo::Excel.new("#{Rails.root}/public/rgfdj.xls")
+#  ex.default_sheet = ex.sheets[2] #siya feb
+#  i = 1
+#  ActiveRecord::Base.transaction do
+
+#  2.upto(84) do |line| # siya Feb 201
+#    puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#    @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+#    unless @employee.nil?
+
+#      FoodDeduction.new do |w|
+#        w.employee_id = @employee.id
+#        w.no_of_coupan = ex.cell(line, 'B')
+#        w.return_coupan = ex.cell(line, 'C').to_i
+#        w.total_coupan = ex.cell(line, 'D')
+#        w.food_coupan_master_id = ex.cell(line, 'E').to_i
+#        w.amount = ex.cell(line, 'F')
+#        w.food_date = ex.cell(line, 'G')
+#        w.save!
+#      end
+#      puts "#{i} Record inserted.-----------------------------------------------"
+#      i += 1
+#    end
+#    end
+#  end
+
+#  ex = Roo::Excel.new("#{Rails.root}/public/rgwdj.xls")
+#  ex.default_sheet = ex.sheets[8] #siya feb
+#  i = 1
+#  ActiveRecord::Base.transaction do
+
+#  2.upto(199) do |line| # siya Feb 201
+#    puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#    @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+#    unless @employee.nil?
+
+#      Workingday.new do |w|
+#        w.employee_id = @employee.id
+#        w.month_name = ex.cell(line, 'B')
+#        w.year = ex.cell(line, 'C').to_i
+#        w.day_in_month = ex.cell(line, 'D')
+#        w.payable_day = ex.cell(line, 'E')
+#        w.save!
+#      end
+#      puts "#{i} Record inserted.-----------------------------------------------"
+#      i += 1
+#    end
+#    end
+# end
+>>>>>>> af3192d9349c399462fcd0d2c3e00352b4fcff13
 # InterviewEvalution.destroy_all
 # InterviewDecision.destroy_all
 # InterviewAttribute.destroy_all
@@ -908,6 +971,7 @@
 # ReportingMastersVacancyMaster.destroy_all
 
 # VacancyMaster.destroy_all
+<<<<<<< HEAD
 # =======
 # # InterviewEvalution.destroy_all
 # # InterviewDecision.destroy_all
@@ -928,3 +992,5 @@
 
 
 # >>>>>>> 5000c82d699dd57b3e42bc89716f400f2807b278
+=======
+>>>>>>> af3192d9349c399462fcd0d2c3e00352b4fcff13

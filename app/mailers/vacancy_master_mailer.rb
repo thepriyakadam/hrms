@@ -46,21 +46,36 @@ class VacancyMasterMailer < ApplicationMailer
     @vacancy_master = vacancy_master
     @employe = Employee.find_by(id: vacancy_master.employee_id)
     @recruiter = Employee.find_by(id: recruiter.employee_id)
-    mail(to: @recruiter.email,cc: @employe.email, subject: 'Request Final Approved')
+    mail(to: @recruiter.email,to: @employe.email, subject: 'Request Final Approved')
   end
 
   def confirm_resume(selected_resume)
     @selected_resume = selected_resume
-    mail(to: @selected_resume.email_id, subject: 'Resume Confirmed')
+    @vacancy_master = VacancyMaster.find_by(id: selected_resume.vacancy_master_id)
+    @recruiter = Recruiter.find_by(employee_id: @vacancy_master.recruiter_id)
+    @emp = Employee.find_by(id: @recruiter.employee_id)
+    mail(to: @selected_resume.email_id,to: @emp.email, subject: 'Resume Confirmed')
   end
 
   def shortlist_resume(selected_resume)
     @selected_resume = selected_resume
-    @vacancy_master = VacancyMaster.find_by(id: selected_resume.vacancy_master_id)
-    @recruiter = Recruiter.find_by(employee_id: @vacancy_master.recruiter_id)
-    @emp = Employee.find_by(id: @recruiter.employee_id)
-    mail(to: @selected_resume.email_id,cc: @emp.email, subject: 'Resume shortlisted')
+    mail(to: @selected_resume.email_id, subject: 'Resume shortlisted')
   end
+
+   def mail_to_candidate(interview_schedule)
+    @interview_schedule = interview_schedule
+    @employee = Employee.find(@interview_schedule.employee_id)
+    mail(to: interview_schedule.email_id, subject: 'Interview Schedule')
+  end
+
+  def round_info_to_candidate(interview_schedule,interview_round)
+    @interview_schedule = interview_schedule
+    @interview_round = interview_round
+    @interviewer = Employee.find_by(id: @interview_round.employee_id)
+    mail(to: interview_schedule.email_id,to: @interviewer.email,subject: 'Interview Round Schedule')
+  end
+
+
 
   def update_no_of_position_email(vacancy_master)
     @vacancy_master = vacancy_master

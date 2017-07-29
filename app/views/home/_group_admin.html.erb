@@ -144,11 +144,11 @@
         </div><!-- /.box-footer -->
       </div><!-- /.box -->
 
-    <div id="event_detail" class="modal fade"></div>
-            <!-- TABLE: LATEST ORDERS -->
-      <div class="box box-info">
+    
+
+           <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">Policy Corner</h3>
+          <h3 class="box-title">Openings</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -159,20 +159,19 @@
             <table id="example1" class="table no-margin">
             <thead>
               <tr>
-                <th>Code</th>
-                <th>Policy</th>
+                <th>Vacancy Code</th>
+                <th>Vacancy</th>
                 <th>Action</th>
               </tr>
             </thead>
 
             <tbody>
-              <% @company_policies.each do |company_policy| %>
+              <% @vacancy_masters.each do |vacancy_master| %>
               <tr>
-                <td><%= company_policy.policy_type.try(:code) %></td>
-               <td><%= company_policy.policy_type.try(:name) %></td>
-              
+                <td><%= vacancy_master.vacancy_code %></td>
+                <td><%= vacancy_master.vacancy_name %></td>
                   <td>
-                     <%= link_to '', policy_type_dashboard_company_policies_path(company_policy_id: company_policy.id) ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                     <%= link_to 'Apply', refferal_selected_resumes_path(vacancy_master_id: vacancy_master.id) ,class: 'btn btn-xs btn-primary' %>
                   </td>
                 </tr>
                 <% end %>
@@ -185,6 +184,7 @@
           <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
         </div><!-- /.box-footer -->
       </div><!-- /.box -->
+
 
 
     </section><!-- /.Left col -->

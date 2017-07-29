@@ -1,0 +1,43 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Pre Onboarding</h3>
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example1" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Selected resume</th>
+          <th>First name</th>
+          <th>Middle name</th>
+          <th>Last name</th>
+          <th>Fathers name</th>
+          <th>City</th>
+          <th>Email</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @pre_onboardings.each do |pre_onboarding| %>
+          <tr>
+            <td><%= pre_onboarding.selected_resume %></td>
+            <td><%= pre_onboarding.first_name %></td>
+            <td><%= pre_onboarding.middle_name %></td>
+            <td><%= pre_onboarding.last_name %></td>
+            <td><%= pre_onboarding.fathers_name %></td>
+            <td><%= pre_onboarding.city %></td>
+            <td><%= pre_onboarding.email %></td>
+            <td>
+              <%= link_to '', pre_onboarding,class:'btn btn-xs btn-default fa fa-eye' %>
+              <%= link_to '', edit_pre_onboarding_path(pre_onboarding),class:'btn-success btn-xs fa fa-edit' %>
+              <%= link_to '', pre_onboarding, method: :delete, data: { confirm: 'Are you sure?' },class:'btn-danger btn-xs fa fa-close' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- <= link_to 'New Pre onboarding', new_pre_onboarding_path %> -->

@@ -102,43 +102,32 @@
           <div class="col-sm-3">
           <div class="form-group required">
 
-             <%= f.select :reason,["New","Replacement","Bench"],{label: 'Reason for the Requirement',include_blank:"Select Reason"}%>
+             <%= f.select :reason,["New","Replacement","Bench"],{label: 'Reason for the Requirement',include_blank:"Select Reason"},{onchange:"var a={reason:$(this).val()}; $.get('/vacancy_masters/select_reason',a,function(response){});",class: 'form-control'} %>
+
           </div>
         </div> 
 
-         <div class="col-sm-3">
-          <div class="field">
-          <%= f.select :replacement_id, all_active_employee_with_code, {include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
-          </div>
-        </div> 
+        <div id="replacement_textbox"></div>
 
          <div class="col-sm-3">
           <div class="form-group required">
 
-             <%= f.select :notice_period,[['Yes','true'],['No','false']],{label: 'Notice Period',include_blank:"Select Option"}%>
+             <%= f.select :notice_period,[['Yes','true'],['No','false']],{label: 'Notice Period',include_blank:"Select Option"},{onchange:"var a={notice_period:$(this).val()}; $.get('/vacancy_masters/select_notice_period',a,function(response){});",class: 'form-control'}%>
           </div>
         </div> 
 
-        <div class="col-sm-3">
-          <div class="field">
-             <%= f.text_field :notice_period_day,label: 'No. of days'%>
-          </div>
-        </div> 
+        <div id="notice_period_textbox"></div>
 
          </div>
         <div class="row">
          <div class="col-sm-3">
           <div class="form-group required">
 
-             <%= f.select :relocation_rerimbursement,[['Yes','true'],['No','false']],{label: 'Relocation Reimbursment',include_blank:"Select Option"}%>
+             <%= f.select :relocation_rerimbursement,[['Yes','true'],['No','false']],{label: 'Relocation Reimbursment',include_blank:"Select Option"},{onchange:"var a={relocation_rerimbursement:$(this).val()}; $.get('/vacancy_masters/select_relocation',a,function(response){});",class: 'form-control'} %>
           </div>
         </div> 
 
-        <div class="col-sm-3">
-          <div class="field">
-             <%= f.text_field :relocation_cost,{label: 'Relocation Cost'}%>
-          </div>
-        </div>
+         <div id="relocation_textbox"></div>
 
          <div class="col-sm-3">
           <div class="form-group required">
@@ -238,6 +227,38 @@
     yearRange: '-200:-0',
     dateFormat: 'dd-mm-yy' });
 });
+
+
+
+  $('#vacancy_master_reason').on('change', function() {
+    if ($('#vacancy_master_reason').val() == "Replacement"){
+   
+      $("#replacement_textbox").show();
+    }
+    else{
+      $("#replacement_textbox").hide();
+    }
+  });
+
+  
+   $('#vacancy_master_notice_period').on('change', function() {
+    if ($('#vacancy_master_notice_period').val() == "true"){
+   
+      $("#notice_period_textbox").show();
+    }
+    else{
+      $("#notice_period_textbox").hide();
+    }
+  });
+    $('#vacancy_master_relocation_rerimbursement').on('change', function() {
+    if ($('#vacancy_master_relocation_rerimbursement').val() == "true"){
+   
+      $("#relocation_textbox").show();
+    }
+    else{
+      $("#relocation_textbox").hide();
+    }
+  });
 </script>
 
 <script>

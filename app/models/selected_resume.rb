@@ -2,6 +2,7 @@ class SelectedResume < ActiveRecord::Base
   belongs_to :degree
   belongs_to :vacancy_master
   has_many :particular_vacancy_requests
+  has_many :pre_onboardings
   belongs_to :add_by, class_name: 'Employee'
 
   validates :skillset, presence: true

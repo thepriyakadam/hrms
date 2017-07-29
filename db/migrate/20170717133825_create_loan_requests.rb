@@ -8,6 +8,7 @@ class CreateLoanRequests < ActiveRecord::Migration
       t.decimal  :amount , scale: 2 ,precision: 15
       t.integer :no_of_emi
       t.decimal :emi,scale: 2 ,precision: 15
+      t.decimal :interest_amount , scale: 2 ,precision: 15
       t.string :status
       
 

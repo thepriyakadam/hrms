@@ -277,7 +277,7 @@ class SelfServicesController < ApplicationController
   end
 
   def internal
-    @vacancy_masters = VacancyMaster.where(vacancy_of: 'Internal')
+    @vacancy_masters = VacancyMaster.where(vacancy_of: 'Internal',is_confirmed: nil)
   end
 
   def show_internal_modal

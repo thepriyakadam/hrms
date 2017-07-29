@@ -767,6 +767,8 @@
     <ul class="treeview-menu">
        <li><a href="/employee_promotions"><i class="fa fa-tags"></i> Employee Promotion </a></li>
        <li><a href="/employee_promotions/employee_list"><i class="fa fa-tags"></i> Promotion History </a></li>
+       <li><a href="/change_designations/new"><i class="fa fa-tags"></i> Designation </a></li>
+       <li><a href="/change_designations/employee_list"><i class="fa fa-tags"></i> Designation History </a></li>
     </ul>
    </li>
 
@@ -903,20 +905,33 @@
   </li>
   
 
-   <li class="treeview" id="loan">
-    <a href=""><i class="fa fa-briefcase"></i> <span> Membership </span> <i class="fa fa-angle-left pull-right"></i></a>
+   <li class="treeview" id="membership_management">
+    <a href="#">
+      <i class="fa fa-briefcase"></i> <span> Membership Management </span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
     <ul class="treeview-menu">
-        
-       <li><a href="/membership_types/new"><i class="fa fa-tags"></i> Membership Type </a></li>
-       <li><a href="/memberships"><i class="fa fa-tags"></i> Member </a></li>
-       <li><a href="/membership_contributions"><i class="fa fa-fa fa-tags"></i> Membership Contribution </a></li>
-       <li><a href="/approval_processes/new"><i class="fa fa-fa fa-tags"></i> Approval Process </a></li>
-       <li><a href="/loan_types/new"><i class="fa fa-fa fa-tags"></i> Loan Type </a></li>
-       <li><a href="/loan_requests/new"><i class="fa fa-fa fa-tags"></i> Loan Request </a></li>
-       <li><a href="/loan_requests/loan_approval"><i class="fa fa-fa fa-tags"></i> Loan Approval </a></li>
-       <li><a href="/loan_requests/final_approve"><i class="fa fa-fa fa-tags"></i> Final Approval </a></li>
-    </ul>
-  </li>
+      <li id= "membership">
+            <a href="#"><i class="fa fa-edit"></i> Membership <i class="fa fa-angle-left pull-right"></i></a>
+            <ul class="treeview-menu">
+             <li><a href="/membership_types/new"><i class="fa fa-tags"></i> Membership Type </a></li>
+             <li><a href="/memberships"><i class="fa fa-tags"></i> Member </a></li>
+             <li><a href="/membership_contributions"><i class="fa fa-fa fa-tags"></i> Membership Contribution </a></li>
+             <li><a href="/approval_processes/new"><i class="fa fa-fa fa-tags"></i> Approval Process </a></li>
+            </ul>
+          </li>
+
+          <li id="loan">
+            <a href="#"><i class="fa fa-edit"></i> Loan <i class="fa fa-angle-left pull-right"></i></a>
+            <ul class="treeview-menu">
+            <li><a href="/loan_types/new"><i class="fa fa-fa fa-tags"></i> Loan Type </a></li>
+            <li><a href="/loan_requests/new"><i class="fa fa-fa fa-tags"></i> Loan Request </a></li>
+            <li><a href="/loan_requests/loan_approval"><i class="fa fa-fa fa-tags"></i> Loan Approval </a></li>
+            <li><a href="/loan_requests/final_approve"><i class="fa fa-fa fa-tags"></i> Final Approval </a></li>
+            </ul>
+          </li>
+         </ul>  
+        </li>  
 
 
 

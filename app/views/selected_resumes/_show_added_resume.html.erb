@@ -6,6 +6,7 @@
       <th>Contact No</th>
       <th>Status</th>
       <th>Resume</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
@@ -32,7 +33,9 @@
             <center><%= link_to '',download_resume_path(id: selected_resume.id),class: 'btn btn-xs fa fa-download',target: "_blank" %></center>
           <% end %>
         </td>
+        <td><%= link_to '', modal_show_selected_resume_selected_resumes_path(selected_resume,vacancy_master_id: @vacancy_master.id),class: 'btn btn-xs btn-default fa fa-eye',remote:true %></td>
  			</tr>
     <% end %>
   </tbody>
 </table>
+  <div id="myModal3" class="modal fade"></div>

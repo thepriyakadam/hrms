@@ -256,6 +256,11 @@ class SelfServicesController < ApplicationController
     @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id).order('day DESC')
   end
 
+  def employee_contact_library
+    @employees = Employee.where(status: "Active")
+    session[:active_tab] = "EmployeeSelfService"
+  end
+
   def create_self_attendance
     # @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
     employee_id = params[:salary][:employee_id]
@@ -279,6 +284,10 @@ class SelfServicesController < ApplicationController
     @vacancy_masters = VacancyMaster.where(vacancy_of: 'Internal')
   end
 
+  def show_internal_modal
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+    @selected_resume1 = SelectedResume.where(vacancy_master_id: @vacancy_master.id,add_by_id: current_user.employee_id)
+  end
   # def apply_internally
   #   @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
   # end

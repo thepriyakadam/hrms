@@ -41,7 +41,8 @@
                     <% end %>
                 </td>
                 <td>
-                  <%= link_to '', show_vacancy_shortlisted_list_vacancy_masters_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-default fa fa-eye' %>
+                <%= link_to '', modal_show_vacancy_page_vacancy_masters_path(vacancy_master),class: 'btn btn-xs btn-default fa fa-eye',remote:true %>
+                  <!-- <= link_to '', show_vacancy_shortlisted_list_vacancy_masters_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-default fa fa-eye' %> -->
                   <%= link_to 'Schedule Interview',shortlisted_resume_vacancy_masters_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-primary' %>
                 </td>
               </tr>
@@ -52,6 +53,8 @@
     </div>
   </div>
 </div>
+<div id="myModal" class="modal fade"></div>
+
 <script type="text/javascript">
   $(document).ready(function() {
     $('#example3').DataTable( {

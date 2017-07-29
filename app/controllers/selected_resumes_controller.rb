@@ -288,7 +288,6 @@ class SelectedResumesController < ApplicationController
     @selected_resume = SelectedResume.new
     @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
     @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
-    @selected_resume1 = SelectedResume.where(vacancy_master_id: @vacancy_master.id,add_by_id: current_user.employee_id)
     
     @emp = Employee.find_by(id: current_user.employee_id)
     @qualification = Qualification.where(employee_id: current_user.employee_id).last
@@ -299,10 +298,11 @@ class SelectedResumesController < ApplicationController
     qualification = Qualification.where(employee_id: current_user.employee_id).last
     @selected_resume = SelectedResume.new(selected_resume_params)
     @selected_resume.save
-    vacancy_master_id = @selected_resume.vacancy_master_id
+    #vacancy_master_id = @selected_resume.vacancy_master_id
     flash[:notice] = "Resume Updated!"
-    redirect_to internal_selected_resumes_path(vacancy_master_id: vacancy_master_id)
+    redirect_to internal_self_services_path
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

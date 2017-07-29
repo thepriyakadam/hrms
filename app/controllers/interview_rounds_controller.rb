@@ -162,10 +162,11 @@ class InterviewRoundsController < ApplicationController
       @interview_round_ids.each do |eid|
       @interview_round = InterviewRound.find(eid)
       @interview_round.update(interview_round_confirm: true) 
+      VacancyMasterMailer.round_info_to_candidate(@interview_schedule,@interview_round).deliver_now
       flash[:notice] = "Interview Round Confirmed Successfully"
-    end 
+      end 
      redirect_to new_interview_round_path(interview_schedule_id: @interview_schedule.id)
-   end
+    end
   end
 
   private

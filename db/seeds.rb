@@ -429,12 +429,12 @@ end
 
 # puts "Starting ..."
 
-# ex = Roo::Excel.new("#{Rails.root}/public/employee_span_pump.xls")
+# ex = Roo::Excel.new("#{Rails.root}/public/sp_employee.xls")
 # ex.default_sheet = ex.sheets[0] 
 # i=1
-# 2.upto(168) do |line|
+# 2.upto(83) do |line|
 # Employee.new do |e|
-#   e.manual_employee_code = ex.cell(line,'A')
+#   e.manual_employee_code = ex.cell(line,'A').to_i
 #   e.first_name = ex.cell(line,'B')
 #   e.middle_name = ex.cell(line,'C')
 #   e.last_name = ex.cell(line,'D')
@@ -461,24 +461,26 @@ end
 #   @religion = Religion.find_by_name(ex.cell(line,'T'))
 #   e.religion_id = @religion.id unless @religion.nil?
 #   e.contact_no = ex.cell(line,'U').to_i
-#   e.email = ex.cell(line,'V')
-#   e.handicap = ex.cell(line,'W')
-#   e.handicap_type = ex.cell(line, 'X')
+#   # e.contact_no = ex.cell(line,'V').to_i
+#   e.email = ex.cell(line,'W')
+#   # e.email = ex.cell(line,'X')
+#   e.handicap = ex.cell(line,'Y')
+#   e.handicap_type = ex.cell(line, 'Z')
   
-#   @type = EmployeeType.find_by_name(ex.cell(line,'Y'))
+#   @type = EmployeeType.find_by_name(ex.cell(line,'AA'))
 #   e.employee_type_id = @type.id unless @type.nil?
 
-#   e.status = ex.cell(line,'Z')
+#   e.status = ex.cell(line,'AB')
   
 #   # e.company_id = ex.cell(line,'AA').to_i
-#   @type1 = Company.find_by_name(ex.cell(line,'AA'))
+#   @type1 = Company.find_by_name(ex.cell(line,'AC'))
 #   e.company_id = @type1.id unless @type1.nil?
-#   @type1 = CompanyLocation.find_by_name(ex.cell(line,'AB'))
+#   @type1 = CompanyLocation.find_by_name(ex.cell(line,'AD'))
 #   e.company_location_id = @type1.id unless @type1.nil?
-#   @type2 = Department.find_by_name(ex.cell(line,'AC'))
+#   @type2 = Department.find_by_name(ex.cell(line,'AE'))
 #   e.department_id =  @type2.id unless @type2.nil?
 
-#   @code_master = EmployeeCodeMaster.find_by_name(ex.cell(line,'AD'))
+#   @code_master = EmployeeCodeMaster.find_by_name(ex.cell(line,'AF'))
 #   e.employee_code_master_id = @code_master.id unless @code_master.nil?
 
 #   e.save!
@@ -492,13 +494,13 @@ end
 
 # #========================= EMPLOYEE ON BOARDING DATA START ===================================
 
-# ex = Roo::Excel.new("#{Rails.root}/public/spjd.xls")
+# ex = Roo::Excel.new("#{Rails.root}/public/sp_onbording.xls")
 # ex.default_sheet = ex.sheets[0] #siya feb
 # i = 1
 # ActiveRecord::Base.transaction do
-# 2.upto(168) do |line| # siya Feb 2016
+# 2.upto(83) do |line| # siya Feb 2016
 #  puts "Starting Record --------------------------#{ex.cell(line,'A')}"
-#  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
+#  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 #  # JoiningDetail.where(id: @employee.id).update_all(is_da: true)
 #  unless @employee.nil?
 
@@ -537,21 +539,24 @@ end
 #==================================== EMPLOYEE ON BOARDING DATA END ====================================================#
 
 # puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/spbd.xls")
+# ex = Roo::Excel.new("#{Rails.root}/public/b_sp.xls")
 # ex.default_sheet = ex.sheets[0] 
 # i=1
-# 2.upto(155) do |line|
+# 2.upto(83) do |line|
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 # EmployeeBankDetail.new do |b|
 #   b.employee_id = @employee.id unless @employee.nil?
 #   b.account_no = ex.cell(line,'C').to_i
-#   b.bank_name = ex.cell(line,'D')
-#   b.branch_name = ex.cell(line,'E')
+#   b.bank_name = ex.cell(line,'B')
+#   b.branch_name = ex.cell(line,'D')
 #   b.address = ex.cell(line,'J')
-#   b.contact_no = ex.cell(line,'F').to_i
+#   b.contact_no = ex.cell(line,'H').to_i
 #   b.micr_code = ex.cell(line,'G')
-#   b.branch_code = ex.cell(line,'H')
-#   b.ifsc_code = ex.cell(line,'I')
+#   b.branch_code = ex.cell(line,'F')
+#   b.ifsc_code = ex.cell(line,'E')
+#   @bankname = Bank.find_by_name(ex.cell(line,'B'))
+#   b.bank_id = @bankname.id unless @bankname.nil?
+
 #   b.save!
 # end
 # puts "#{i} Record inserted.-----------------------------------------------"
@@ -559,30 +564,55 @@ end
 # end
 
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/spelb.xls")
-# ex.default_sheet = ex.sheets[0] 
-# i=1
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/sp_leave_bal.xls")
+ex.default_sheet = ex.sheets[0] 
+i=1
 
-# 2.upto(105) do |line|
-# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
-# puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
-# EmployeeLeavBalance.new do |j|
+2.upto(51) do |line|
+@employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
+EmployeeLeavBalance.new do |j|
 
-#   j.employee_id = @employee.id unless @employee.nil?
-#   puts "#{(ex.cell(line,'A'))} Record inserted........Employee ID #{@employee.id}-----------------------------------------------"
-#   j.leav_category_id = ex.cell(line,'C').to_i
-#   puts "#{(ex.cell(line,'C'))} Record inserted.-----------------------------------------------"
-#   j.no_of_leave = ex.cell(line,'D')
-#   j.expiry_date = ex.cell(line,'E')
-#   j.total_leave = ex.cell(line,'F')
-#   j.from_date = ex.cell(line,'G')
-#   j.to_date = ex.cell(line,'H')
-#   j.save!
-# end
-# puts "#{i} Record inserted.-----------------------------------------------"
-# i = i+1
-# end
+  j.employee_id = @employee.id unless @employee.nil?
+  puts "#{(ex.cell(line,'A'))} Record inserted........Employee ID #{@employee.id}-----------------------------------------------"
+  j.leav_category_id = ex.cell(line,'C').to_i
+  puts "#{(ex.cell(line,'C'))} Record inserted.-----------------------------------------------"
+  j.no_of_leave = ex.cell(line,'D')
+  j.expiry_date = ex.cell(line,'E')
+  j.total_leave = ex.cell(line,'F')
+  j.from_date = ex.cell(line,'G')
+  j.to_date = ex.cell(line,'H')
+  j.save!
+end
+puts "#{i} Record inserted.-----------------------------------------------"
+i = i+1
+end
+
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/sp_leave_bal.xls")
+ex.default_sheet = ex.sheets[1] 
+i=1
+
+2.upto(51) do |line|
+@employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
+EmployeeLeavBalance.new do |j|
+
+  j.employee_id = @employee.id unless @employee.nil?
+  puts "#{(ex.cell(line,'A'))} Record inserted........Employee ID #{@employee.id}-----------------------------------------------"
+  j.leav_category_id = ex.cell(line,'C').to_i
+  puts "#{(ex.cell(line,'C'))} Record inserted.-----------------------------------------------"
+  j.no_of_leave = ex.cell(line,'D')
+  j.expiry_date = ex.cell(line,'E')
+  j.total_leave = ex.cell(line,'F')
+  j.from_date = ex.cell(line,'G')
+  j.to_date = ex.cell(line,'H')
+  j.save!
+end
+puts "#{i} Record inserted.-----------------------------------------------"
+i = i+1
+end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/spelb.xls")
@@ -786,10 +816,6 @@ end
 #        w.total_coupan = ex.cell(line, 'D')
 #        w.food_coupan_master_id = ex.cell(line, 'E').to_i
 #        w.amount = ex.cell(line, 'F')
-<<<<<<< HEAD
- 
-=======
->>>>>>> 5000c82d699dd57b3e42bc89716f400f2807b278
 #        w.food_date = ex.cell(line, 'G')
 #        w.save!
 #      end
@@ -822,23 +848,16 @@ end
 #    end
 #    end
 # end
-<<<<<<< HEAD
-=======
-InterviewEvalution.destroy_all
-InterviewDecision.destroy_all
-InterviewAttribute.destroy_all
-SelectedResume.destroy_all
-InterviewRound.destroy_all
-InterviewType.destroy_all
-InterviewAnalysis.destroy_all
-InterviewRoundSchedule.destroy_all
-InterviewSchedule.destroy_all
-ParticularVacancyRequest.destroy_all
-ReportingMastersVacancyMaster.destroy_all
+# InterviewEvalution.destroy_all
+# InterviewDecision.destroy_all
+# InterviewAttribute.destroy_all
+# SelectedResume.destroy_all
+# InterviewRound.destroy_all
+# InterviewType.destroy_all
+# InterviewAnalysis.destroy_all
+# InterviewRoundSchedule.destroy_all
+# InterviewSchedule.destroy_all
+# ParticularVacancyRequest.destroy_all
+# ReportingMastersVacancyMaster.destroy_all
 
-VacancyMaster.destroy_all
-
-
-
-
->>>>>>> 5000c82d699dd57b3e42bc89716f400f2807b278
+# VacancyMaster.destroy_all

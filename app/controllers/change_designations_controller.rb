@@ -3,37 +3,6 @@ class ChangeDesignationsController < ApplicationController
 
   # GET /change_designations
   # GET /change_designations.json
-  def index
-     if current_user.class == Member
-      if current_user.role.name == 'GroupAdmin'
-        @change_designations= ChangeDesignation.all
-      elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-        @change_designations = ChangeDesignation.where(employee_id: @employees)
-      elsif current_user.role.name == 'Branch'
-        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @change_designations = ChangeDesignation.where(employee_id: @employees)
-      elsif current_user.role.name == 'HOD'
-        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
-        @change_designations = ChangeDesignation.where(employee_id: @employees)
-      elsif current_user.role.name == 'Supervisor'
-        @emp = Employee.find(current_user.employee_id)
-        @employees = @emp.subordinates
-        @change_designations = ChangeDesignation.where(employee_id: @employees)
-      else current_user.role.name == 'Employee'
-        @change_designations = ChangeDesignation.where(employee_id: current_user.employee_id)
-        redirect_to home_index_path
-      end
-    else
-      @employees = Employee.all
-    end
-    session[:active_tab] ="promotionmanagement"
-  end
-
-  # GET /change_designations/1
-  # GET /change_designations/1.json
-  def show
-  end
 
   # GET /change_designations/new
   def new
@@ -47,42 +16,85 @@ class ChangeDesignationsController < ApplicationController
   # POST /change_designations
   # POST /change_designations.json
   def create
-    @change_designation = ChangeDesignation.new(change_designation_params)
+    # byebug
+      @change_designation = ChangeDesignation.new(change_designation_params)
+      @employee = params[:change_designation][:employee_id]
+      @effective_from = params[:change_designation][:effective_from].to_date
+      @employee_designation_id = params[:change_designation][:employee_designation_id]
+      @change =  ChangeDesignation.where(employee_id: @employee).last 
+      ChangeDesignation.where(id: @change).update_all(effective_to: @effective_from,status: false)  
+      ChangeDesignation.create(employee_id: @change_designation.employee_id,effective_from: @effective_from,employee_designation_id: @change_designation.employee_designation_id,status: true,change_by_id: current_user.employee_id)
+      @joining_detail = JoiningDetail.find_by_employee_id(@employee)
+      @joining_detail.update(employee_designation_id: @employee_designation_id)
+      redirect_to employee_list_change_designations_path
+      session[:active_tab] = "promotionmanagement"
+  end
 
-    respond_to do |format|
-      if @change_designation.save
-        format.html { redirect_to @change_designation, notice: 'Change designation was successfully created.' }
-        format.json { render :show, status: :created, location: @change_designation }
-      else
-        format.html { render :new }
-        format.json { render json: @change_designation.errors, status: :unprocessable_entity }
+  def employee_list
+    @employees = Employee.where(status: "Active")
+    session[:active_tab] = "promotionmanagement"
+  end
+
+  def change_designation_history
+    @employee = Employee.find(params[:id])
+    employees = ChangeDesignation.where(id: @employee)
+    @change_designations = ChangeDesignation.where(employee_id: params[:id])
+  end
+
+  def modal
+    @change_designation = ChangeDesignation.find(params[:format])
+  end
+
+  def print_designation
+     # @employee = Employee.find(params[:id])
+      # @employee1 = EmployeePromotion.where(id: @employee)
+      @change_designations = ChangeDesignation.where(employee_id: params[:id])
+            respond_to do |f|
+            f.js
+            f.html
+            f.pdf do
+              render pdf: 'print_designation',
+              layout: 'pdf.html',
+              template: 'change_designations/print_designation.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:13,bottom:13,left:13,right:13 }
       end
     end
   end
 
-  # PATCH/PUT /change_designations/1
-  # PATCH/PUT /change_designations/1.json
-  def update
-    respond_to do |format|
-      if @change_designation.update(change_designation_params)
-        format.html { redirect_to @change_designation, notice: 'Change designation was successfully updated.' }
-        format.json { render :show, status: :ok, location: @change_designation }
-      else
-        format.html { render :edit }
-        format.json { render json: @change_designation.errors, status: :unprocessable_entity }
+  def excel_designation
+    # @employee = Employee.find(params[:id])
+
+    @change_designations = ChangeDesignation.where(employee_id: params[:id])
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'change_designations/excel_designation.xls.erb'}
+      f.html
+    end
+  end
+
+  def employee_record_detail
+    # byebug
+    @change_designation = ChangeDesignation.find(params[:format])
+    # @change_designations = ChangeDesignation.where(employee_id: params[:id])
+     # @change_designation =ChangeDesignation.find(id: @change_designations.id)
+    # @employee = Employee.find(params[:id])
+    # @change_designations = ChangeDesignation.where(employee_id: params[:id])
+    respond_to do |f|
+            f.js
+            f.html
+            f.pdf do
+              render pdf: 'employee_record_detail',
+              layout: 'pdf.html',
+              template: 'change_designations/employee_record_detail.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:13,bottom:13,left:13,right:13 }
       end
     end
   end
 
-  # DELETE /change_designations/1
-  # DELETE /change_designations/1.json
-  def destroy
-    @change_designation.destroy
-    respond_to do |format|
-      format.html { redirect_to change_designations_url, notice: 'Change designation was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

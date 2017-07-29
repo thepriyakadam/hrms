@@ -5,7 +5,7 @@
 <div class="box-header with-border">
  <h3 class="box-title"> Certificate Of Promotion </h3>
      <div class="pull-right">
-  <%= link_to "Print Certificate",print_certificate_employee_promotions_path(emp_promotion_id: @employee_promotion.id,format: "pdf") ,class: 'btn btn-primary btn-sm ',:target => "_blank"%>
+   <%= link_to "Print Certificate",print_certificate_employee_promotions_path(@employee_promotion,format: "pdf") ,class: 'btn btn-primary btn-sm ',:target => "_blank"%> 
   </div>
 
 </div>

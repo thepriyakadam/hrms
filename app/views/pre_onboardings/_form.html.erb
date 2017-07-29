@@ -1,0 +1,255 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Pre Onboarding Details</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= bootstrap_form_for(@pre_onboarding,html: {id: 'pre_onboarding'}) do |f| %>
+
+     <!--  <= f.hidden_field :selected_resume_id, value: nil %> -->
+      <div class="row">
+        <div class="col-sm-3">
+         <div class="form-group required">
+            <%= f.text_field :first_name  %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :middle_name, label: 'Middle Name' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :last_name , label: 'Last Name' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :birth_date, label: "Date Of Birth", class: 'birth_date'%>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :gender, ['Male','Female'],{ label: 'Gender',include_blank: " Select Gender"},class: 'form-control' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :marital_status, ['Married','UnMarried','Divorcee'],{label: 'Marital Status',include_blank: " Select Marital Status"},class: 'form-control' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :fathers_name,label:"Fathers Name" %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :nationality, all_nationality,{include_blank: " Select Nationality"} %>
+            <!-- <= f.text_field :nationality,label:"Nationality" %> -->
+          </div>
+        </div>
+      </div>
+      <div class="row">
+       <div class="col-sm-6">
+          <div class="form-group required">
+           <%= f.text_field :permanent_address, label: 'Permanent Address' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :city,label:"City" %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/companies/collect_states',a,function(response){});"}%>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_state_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+              <div id="states">
+                <%= render 'companies/state_dropdown' %> 
+              </div> 
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_district_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+              <div id="district">
+                <%= render 'companies/city_dropdown' %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :pin_code,label:"Pin/Zip Code",placeholder: "e.g : 400703"%>
+          </div>
+        </div>
+         <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :email,label:"Email" %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        
+        <div class="col-sm-6">
+          <div class="form-group required">
+            <%= f.text_field :current_address,label:"Current Address" %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :contact_no,label:"Contact No" %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :optional_no,label:"Optional No" %>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+       
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :pan_no, label: 'PAN Card No.',placeholder: "e.g : ABCDE12345B" %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :adhar_no, label: 'Aadhaar No.',placeholder: "e.g : 123456789012" %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Create Pre Onboarding",class: "btn btn-primary btn-sm" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript">
+ $(function(){
+    $('.birth_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+
+<script>
+$("#pre_onboarding").validate({
+    rules: {
+      "pre_onboarding[first_name]":{
+        required: true,
+        maxlength: 30,
+      },
+      "pre_onboarding[last_name]":{
+        maxlength: 30,
+        lettersOnly:true
+      },
+      "pre_onboarding[adhar_no]":{
+        maxlength: 12,
+        numbersOnly: true
+      },
+      "pre_onboarding[pan_no]":{
+        maxlength: 10
+      },
+      "pre_onboarding[permanent_address]":{
+        required: true
+      },
+
+      "pre_onboarding[country_id]":{
+        required: true
+      },
+      "company[state_id]":{
+        required: true
+      },
+      "company[district_id]":{
+        required: true
+      },
+      "pre_onboarding[pin_code]":{
+        maxlength: 6,
+        numbersOnly: true
+      },
+      "pre_onboarding[contact_no]":{
+        maxlength: 13,
+        mobileNo: true
+      },
+       "pre_onboarding[email]":{
+        required: true
+         },
+       "pre_onboarding[birth_date]":{
+        required: true
+      }
+    },
+    messages: {
+      "pre_onboarding[first_name]":{
+        required: "Please specify First name"
+      },
+      "pre_onboarding[last_name]":{
+        maxlength: "Name allows upto 30 alphabets"
+      },
+      "pre_onboarding[adhar_no]":{
+        maxlength: "Adhar no allows upto 12 characters"
+      },
+      "pre_onboarding[pan_no]":{
+        maxlength: "Pan no allows upto 10 characters"
+      },
+      "pre_onboarding[permanent_address]":{
+        required: "Please specify address"
+      },
+
+      "pre_onboarding[country_id]":{
+        required: "Please Specify Country"
+      },
+      "pre_onboarding[state_id]":{
+        required: "Please Specify State"
+      },
+      "pre_onboarding[district_id]":{
+        required: "Please Specify District"
+      },
+      "pre_onboarding[pin_code]":{
+        maxlength: "Please Enter Valid Pincode Details"
+      },
+      "pre_onboarding[contact_no]":{
+        maxlength: "Enter the Correct contact number"
+      },
+      "pre_onboarding[email]":{
+        required: "Please Specify Email ID"
+      },
+      "pre_onboarding[birth_date]":{
+        required: "Please Specify DOB"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+
+   });
+</script>

@@ -1,0 +1,38 @@
+<style>
+    th { text-align: left;}
+    tr {page-break-inside: avoid;}
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+    }
+</style>
+
+ 
+<table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
+<tr><th colspan="4"><center><strong><% if @change_designations.first.employee.company_location.company.company_logo == nil %>
+     <% else %>
+     <center> <%= wicked_pdf_image_tag @change_designations.first.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+     <%end%>
+<%= @change_designations.first.employee.company_location.company.try(:description) %><br> <%= @change_designations.first.employee.company_location.company.try(:address) %><br> <%= @change_designations.first.employee.company_location.try(:name) %></strong></center></th></tr>
+<tr><th colspan="4"><center> Designation Details of - <%= @change_designations.first.try(:employee).try(:manual_employee_code) %> - <%= full_name(@change_designations.first.try(:employee)) %></center></th></tr>
+ 
+
+     <tr>
+     	 <th>Sr. No.</th>
+     	 <th>Designation</th>
+     	 <th>Effective From</th>
+     	 <th>Effective To</th>
+     </tr>
+
+      <% i= 0 %>
+
+      <% @change_designations.each do |change_designation| %>
+       
+       
+       <tr>
+          <td><%= i= i+1 %></td>
+          <td><%= change_designation.employee_designation.try(:name) %></td>
+          <td><%= change_designation.effective_from %></td> 
+          <td><%= change_designation.effective_to %></td>
+       </tr>
+    <% end %>      

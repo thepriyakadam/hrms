@@ -186,6 +186,146 @@
       </div><!-- /.box -->
 
 
+       <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Leave Approval</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <div class="row">
+              <div class="col-sm-6">
+                <table id="example1" class="table no-margin">
+                  <thead>
+                    <tr><td colspan="2"><center>First Level Request</center></td></tr>
+                    <tr>
+                      <th>Employee</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <% @pending_employee_leav_requests.try(:each) do |employee_leav_request| %>
+                      <tr>
+                        <td><%= employee_leav_request.employee.try(:first_name) %> <%= employee_leav_request.employee.try(:middle_name) %> <%=employee_leav_request.employee.try(:last_name) %></td>
+                        <td>
+                          <%= link_to 'View', employee_history_with_current_leave_employee_leav_requests_path(employee_leav_request),class: 'btn btn-xs btn-info fa fa-eye' %>
+                          <%= link_to 'Approve', first_approve_leave_status_record_path(employee_leav_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-primary fa fa-check' %> 
+                          <%= link_to 'Reject', first_reject_leave_status_record_path(employee_leav_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-trash' %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="col-sm-6">
+                <table id="example1" class="table no-margin">
+                  <thead>
+                  <tr><td colspan="2"><center>Second Level Request</center></td></tr>
+                    <tr>
+                      <th>Employee</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <% @first_approved_employee_leav_requests.try(:each) do |employee_leav_request| %>
+                      <tr>
+                        <td><%= employee_leav_request.employee.try(:first_name) %> <%= employee_leav_request.employee.try(:middle_name) %> <%=employee_leav_request.employee.try(:last_name) %></td>
+                        <td>
+                          <%= link_to 'View', employee_history_with_current_leave_employee_leav_requests_path(employee_leav_request),class: 'btn btn-xs btn-info fa fa-eye' %>
+                          <%= link_to 'Approve', second_approve_leave_status_record_path(employee_leav_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-primary fa fa-check' %>
+                          <%= link_to 'Reject', second_reject_leave_status_record_path(employee_leav_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-trash' %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">OD Approval</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <div class="row">
+              <div class="col-sm-6">
+                <table id="example1" class="table no-margin">
+                  <thead>
+                   <tr><td colspan="2"><center>First Level Request</center></td></tr>
+                    <tr>
+                      <th>Employee</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <% @pending_on_duty_requests.try(:each) do |on_duty_request| %>
+                      <tr>
+                        <td><%= on_duty_request.employee.try(:first_name) %> <%= on_duty_request.employee.try(:middle_name) %> <%=on_duty_request.employee.try(:last_name) %></td>
+                        <td>
+                          <%= link_to 'View', employee_od_request_detail_on_duty_requests_path(on_duty_request),class: 'btn btn-xs btn-info fa fa-eye' %>
+                          <%= link_to 'Approve', first_approve_od_status_record_path(on_duty_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-primary fa fa-check' %>
+                          <%= link_to 'Reject', first_reject_od_status_record_path(on_duty_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-trash' %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="col-sm-6">
+                <table id="example1" class="table no-margin">
+                  <thead>
+                    <tr><td colspan="2"><center>Second Level Request</center></td></tr>
+                    <tr>
+                      <th>Employee</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <% @first_approved_on_duty_requests.try(:each) do |on_duty_request| %>
+                      <tr>
+                        <td><%= on_duty_request.employee.try(:first_name) %> <%= on_duty_request.employee.try(:middle_name) %> <%=on_duty_request.employee.try(:last_name) %></td>
+                        <td>
+                          <%= link_to 'View', employee_od_request_detail_on_duty_requests_path(on_duty_request),class: 'btn btn-xs btn-info fa fa-eye' %>
+                          <%= link_to 'Approve', second_approve_od_status_record_path(on_duty_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-primary fa fa-check' %>
+                          <%= link_to 'Reject', second_reject_od_status_record_path(on_duty_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-trash' %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+
     </section><!-- /.Left col -->
     <!-- right col (We are only adding the ID to make the widgets sortable)-->
     <section class="col-lg-5 connectedSortable">

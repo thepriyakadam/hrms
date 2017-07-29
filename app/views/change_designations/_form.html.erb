@@ -1,0 +1,105 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Change Designation</h3>
+    <div class="box-body">
+      <%= bootstrap_form_for(@change_designation,html: {id: 'change_designation'}) do |f| %>
+
+      <%= f.hidden_field :employee_id , value: @change_designation.employee_id %>
+      <div class="row">
+    
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.select :employee_designation_id,all_employee_designation,{label: 'Designation',include_blank: " Select Designation"} %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <div class="input-group">
+             <div class="input-group-addon">
+             <i class="fa fa-calendar"></i>
+             </div>
+            <div class="form-group required">
+           <%= f.text_field :effective_from, label: 'Effective From', class: 'change_designation'%>
+           </div>
+           </div>
+         </div>
+       </div>
+
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+          <%= f.select :change_by_id, all_active_employee_with_code, {include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
+          </div>
+          </div>
+
+ 
+   <div class="col-sm-3">
+        <div class="actions" style="padding: 20px">
+          <%= f.submit'Change Designation', :class => class_name, data: { disable_with: data_info } %> 
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <% end %>
+
+  <script type="text/javascript">
+  $(function(){
+    $('.change_designation').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+     });
+</script>
+
+
+<script>
+$("#change_designation").validate({
+    rules: {
+       "change_designation[employee_id]":{
+        required: true,
+      },
+      "change_designation[employee_designation_id]":{
+        required: true,
+      },
+      "change_designation[category]":{
+        required: true,
+      },
+      "change_designation[effective_from]":{
+        required: true,
+      },
+      "change_designation[effective_to]":{
+        required: true,
+      },
+      "change_designation[change_by_id]":{
+        required: true,
+      }
+    },
+    messages: {
+       "change_designation[employee_id]":{
+        required: "Please Select Employee",
+      },
+      "change_designation[employee_designation_id]":{
+        required: "Please select designation",
+      },
+      "change_designation[category]":{
+        required: "Please Specify Category",
+      },
+      "change_designation[effective_from]":{
+        required: "Please select date",
+      },
+      "change_designation[effective_to]":{
+        required: "Please select date",
+      },
+      "change_designation[change_by_id]":{
+        required: "Please select change by",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

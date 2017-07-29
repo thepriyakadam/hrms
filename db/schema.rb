@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170724071545) do
+ActiveRecord::Schema.define(version: 20170724105724) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -396,6 +396,20 @@ ActiveRecord::Schema.define(version: 20170724071545) do
 
   add_index "certifications", ["employee_id"], name: "index_certifications_on_employee_id", using: :btree
   add_index "certifications", ["year_id"], name: "index_certifications_on_year_id", using: :btree
+
+  create_table "change_designations", force: :cascade do |t|
+    t.integer  "employee_id",             limit: 4
+    t.integer  "employee_designation_id", limit: 4
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "status"
+    t.integer  "change_by_id",            limit: 4
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  add_index "change_designations", ["employee_designation_id"], name: "index_change_designations_on_employee_designation_id", using: :btree
+  add_index "change_designations", ["employee_id"], name: "index_change_designations_on_employee_id", using: :btree
 
   create_table "circulars", force: :cascade do |t|
     t.date     "date"
@@ -3982,6 +3996,8 @@ ActiveRecord::Schema.define(version: 20170724071545) do
   add_foreign_key "candidate_forms", "vacancy_requests"
   add_foreign_key "candidate_interview_schedules", "candidate_forms"
   add_foreign_key "candidate_interview_schedules", "interview_type_masters"
+  add_foreign_key "change_designations", "employee_designations"
+  add_foreign_key "change_designations", "employees"
   add_foreign_key "company_policies", "policy_types"
   add_foreign_key "employee_attendances", "holidays"
   add_foreign_key "employee_jc_lists", "employees"

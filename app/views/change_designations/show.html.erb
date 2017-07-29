@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @change_designation.employee %>
+</p>
+
+<p>
+  <strong>Employee designation:</strong>
+  <%= @change_designation.employee_designation %>
+</p>
+
+<p>
+  <strong>Effective from:</strong>
+  <%= @change_designation.effective_from %>
+</p>
+
+<p>
+  <strong>Effective to:</strong>
+  <%= @change_designation.effective_to %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @change_designation.status %>
+</p>
+
+<p>
+  <strong>Change by:</strong>
+  <%= @change_designation.change_by %>
+</p>
+
+<%= link_to 'Edit', edit_change_designation_path(@change_designation) %> |
+<%= link_to 'Back', change_designations_path %>

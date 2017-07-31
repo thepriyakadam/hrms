@@ -7,7 +7,10 @@ class InterviewSchedulesController < ApplicationController
   # GET /interview_schedules.json
   include QueryReport::Helper # need to include it
   def index
-    @interview_schedules = InterviewSchedule.all
+    @vacancy_master = VacancyMaster.where(recruiter_id: current_user.employee_id).pluck(:id)
+    @selected_resume = SelectedResume.where(vacancy_master_id: @vacancy_master).pluck(:id)
+
+    @interview_schedules = InterviewSchedule.where(selected_resume_id: @selected_resume)
     
     respond_to do |format|
       format.html
@@ -54,17 +57,16 @@ class InterviewSchedulesController < ApplicationController
     if @interview_schedule.save
      @selected_resume = SelectedResume.find(@interview_schedule.selected_resume_id)
      @selected_resume.update(status: "Interview Scheduled")
-      # InterviewScheduleMailer.sample_email(@interview_schedule).deliver_now
+      VacancyMasterMailer.mail_to_candidate(@interview_schedule).deliver_now
       @interview_schedule = InterviewSchedule.new
     end
     if @interview_schedule.email_id.nil?
       flash[:notice] = 'Interview Scheduled Successfully without Email'
       redirect_to interview_schedules_path
     else
-      # InterviewScheduleMailer.sample_email_to_candidate(@interview_schedule).deliver_now
+      VacancyMasterMailer.mail_to_candidate(@interview_schedule).deliver_now
       flash[:notice] = 'Interview Scheduled Successfully & Email also Sent.'
       redirect_to interview_schedules_path
-    # @interview_reschedule.save
     end
   end
 
@@ -74,7 +76,6 @@ class InterviewSchedulesController < ApplicationController
       if @interview_schedule.save
         @selected_resume = SelectedResume.find(@interview_schedule.selected_resume_id)
         @selected_resume.update(status: "Interview Scheduled")
-        # InterviewScheduleMailer.sample_email(@interview_schedule).deliver_now
         @interview_schedule = InterviewSchedule.new
       end
       if @interview_schedule.email_id.nil?
@@ -93,7 +94,7 @@ class InterviewSchedulesController < ApplicationController
   def update
     respond_to do |format|
       if @interview_schedule.update(interview_schedule_params)
-        InterviewScheduleMailer.sample_email(@interview_schedule).deliver_now
+        #InterviewScheduleMailer.sample_email(@interview_schedule).deliver_now
         format.html { redirect_to @interview_schedule, notice: 'Interview schedule was successfully updated.' }
         format.json { render :show, status: :ok, location: @interview_schedule }
       else
@@ -119,7 +120,7 @@ class InterviewSchedulesController < ApplicationController
       flash[:alert] = 'Email not Available'
       redirect_to interview_schedules_path
     else
-      InterviewScheduleMailer.sample_email_to_candidate(@interview_schedule).deliver_now
+      #InterviewScheduleMailer.sample_email_to_candidate(@interview_schedule).deliver_now
       flash[:notice] = 'Email Sent Successfully'
       redirect_to interview_schedules_path
       @interview_reschedule = InterviewReschedule.new(interview_reschedule_params)
@@ -149,7 +150,7 @@ class InterviewSchedulesController < ApplicationController
     if @employees.empty?
     else
     @employees.each do |e|
-      InterviewScheduleMailer.sample_email(e).deliver_now
+      #InterviewScheduleMailer.sample_email(e).deliver_now
       redirect_to interview_schedules_path
     end
   end

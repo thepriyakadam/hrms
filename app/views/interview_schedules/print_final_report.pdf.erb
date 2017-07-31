@@ -1,4 +1,4 @@
-<style>
+<!-- <style>
   th {
       text-align: left;
   }
@@ -7,8 +7,10 @@
      table {
     page-break-inside: avoid; 
   }
-</style>
-<table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
+</style> -->
+<div class="box">
+  <div class="box-body">
+<table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="5">
   <thead>
    <tr><th colspan="6"><center>Interview Schedule Details</center></th></tr>
     <tr>
@@ -35,7 +37,7 @@
   </tbody>
 </table>
 
-<table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
+<table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="5">
   <thead>
   <% @interview_rounds.each do |interview_round| %>
   <tr><th colspan="4"><center>Interview Rounds</center></th></tr>
@@ -73,22 +75,32 @@
       <%end%><br>
        <tr>
        <th colspan="2">Total Score</th>
-       <th colspan="2"><% interv_analy = InterviewAnalysis.where(interview_round_id: interview_round).pluck(:interview_decision_id)
-        interv_dec = InterviewDecision.where(id: interv_analy).pluck(:name).map {|i| i.to_i} %>
-        <%= interv_dec.sum %>
+       <th colspan="2">
+          <% interv_analy = InterviewAnalysis.where(interview_round_id: interview_round) %>
+          <% sum = 0 %>
+          <% interv_analy.each do |i| %>
+          <% interv_dec = InterviewDecision.find_by(id: i.interview_decision_id) %>
+          <% sum = interv_dec.name + sum %>
+          <% end %> 
+          <%= sum %>
        </th>
       </tr>
     <% end %>
     <tr>
       <th colspan="2">Overall Total Score</th>
-      <th colspan="2"><% interview_schedule = InterviewSchedule.where(id: @interview_schedule.id).pluck(:id)
-            inter_round = InterviewRound.where(interview_schedule_id: interview_schedule).pluck(:id)
-            interv_analy = InterviewAnalysis.where(interview_round_id: inter_round).pluck(:interview_decision_id)
-            interv_dec = InterviewDecision.where(id: interv_analy).pluck(:name).map {|i| i.to_i} %>
-            <%= interv_dec.sum %>
+      <th colspan="2">
+          <% interv_analy = InterviewAnalysis.where(interview_schedule_id: @interview_schedule.id) %>
+          <% sum = 0 %>
+          <% interv_analy.each do |i| %>
+          <% interv_dec = InterviewDecision.find_by(id: i.interview_decision_id) %>
+          <% sum = interv_dec.name + sum %>
+          <% end %> 
+          <%= sum %>
       </th>
     </tr>  
   </tbody>
 </table>
+</div>
+</div>
 <% end %>
 

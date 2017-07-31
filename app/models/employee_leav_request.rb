@@ -31,10 +31,20 @@ class EmployeeLeavRequest < ActiveRecord::Base
     flag
   end
 
+  # def is_salary_processed?
+  #   flag = 0
+  #   for i in self.start_date.to_date..self.end_date.to_date
+  #     flag = Workingday.exists?(year: i.year,month_name: i.strftime("%B"), employee_id: self.employee_id)
+  #     if flag == true
+  #       break
+  #     end
+  #   end
+  #   flag
+  # end
   def is_salary_processed?
     flag = 0
     for i in self.start_date.to_date..self.end_date.to_date
-      flag = Workingday.exists?(year: i.year,month_name: i.strftime("%B"), employee_id: self.employee_id)
+      flag = EmployeeAttendance.exists?(day: i.to_date, employee_id: self.employee_id,is_confirm: true)
       if flag == true
         break
       end
@@ -45,7 +55,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
   def is_salary_processed_coff?
     flag = 0
     for i in self.start_date.to_date..self.start_date.to_date
-      flag = Workingday.exists?(year: i.year,month_name: i.strftime("%B"), employee_id: self.employee_id)
+      flag = EmployeeAttendance.exists?(day: i.to_date, employee_id: self.employee_id,is_confirm: true)
       if flag == true
         break
       end

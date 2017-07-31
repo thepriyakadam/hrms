@@ -56,10 +56,54 @@ class VacancyMastersController < ApplicationController
 
   # POST /vacancy_masters
   # POST /vacancy_masters.json
-  
+  def select_reason
+    if params[:reason] == "Replacement"
+      @flag = true
+    else
+      @flag = false
+    end
+  end
+
+  def select_notice_period
+    if params[:notice_period] == "true"
+      @flag = true
+    else
+      @flag = false
+    end
+  end
+
+  def select_relocation
+    if params[:relocation_rerimbursement] == "true"
+      @flag = true
+    else
+      @flag = false
+    end
+  end
 
   def create
     @vacancy_master = VacancyMaster.new(vacancy_master_params)
+
+    if params[:rep_flag] == "Replacement"
+      @vacancy_master.replacement_id = params[:common][:replacement_id]
+      @replacement_textbox = true
+    else
+      @replacement_textbox = false
+    end
+
+    if params[:flag] == "true"
+      @vacancy_master.notice_period_day = params[:common][:notice_period_day]
+      @notice_period_textbox = true
+    else
+      @notice_period_textbox = false
+    end
+
+    if params[:flag] == "true"
+      @vacancy_master.relocation_cost = params[:common][:relocation_cost]
+      @relocation_textbox = true
+    else
+      @relocation_textbox = false
+    end
+
     a=current_user.employee_id
     employee = Employee.where(id: a).take
     # if @vacancy_master.is_there?
@@ -83,18 +127,13 @@ class VacancyMastersController < ApplicationController
           ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id, employee_id: @vacancy_master.employee_id, open_date: @vacancy_master.vacancy_post_date, fulfillment_date: @vacancy_master.vacancy_fullfillment_date,status: "Pending", employee_designation_id: @vacancy_master.employee_designation_id, vacancy_name: @vacancy_master.vacancy_name)
         end
         # client = Twilio::REST::Client.new(TWILIO_CONFIG['sid'], TWILIO_CONFIG['token'])
-      
       # Create and send an SMS message
         # client.account.sms.messages.create(
         #   from: TWILIO_CONFIG['from'],
         #   to: @vacancy_master.description,
         #   body: "@vacancy_master.id"
         # )
-
-
-      #   byebug
       #   emp=Employee.where(id: current_user.employee_id).take
-
       #   message = client.account.messages.create(
       #   :from => TWILIO_CONFIG['from'],
       #   :to => emp.contact_no,
@@ -106,7 +145,8 @@ class VacancyMastersController < ApplicationController
       
         # ReportingMastersVacancyMaster.create(reporting_master_id: @vacancy_master.reporting_master_id, vacancy_master_id: @vacancy_master.id)
         # VacancyRequestHistory.create(vacancy_master_id: @vacancy_master.id, vacancy_name: @vacancy_master.vacancy_name,no_of_position: @vacancy_master.no_of_position,description: @vacancy_master.description,vacancy_post_date: @vacancy_master.vacancy_post_date,budget: @vacancy_master.budget,department_id: @vacancy_master.department_id,employee_designation_id: @vacancy_master.employee_designation_id,company_location_id: @vacancy_master.company_location_id,degree_id: @vacancy_master.degree_id,degree_1_id: @vacancy_master.degree_1_id,degree_2_id: @vacancy_master.degree_2_id,experience: @vacancy_master.experience,keyword: @vacancy_master.keyword,other_organization: @vacancy_master.other_organization,industry: @vacancy_master.industry,reporting_master_id: @vacancy_master.reporting_master_id,current_status: @vacancy_master.current_status,employee_id: @vacancy_master.employee_id,justification: @vacancy_master.justification)
-        # VacancyMasterMailer.vacancy_request(@vacancy_master).deliver_now
+        VacancyMasterMailer.vacancy_request(@vacancy_master).deliver_now
+
         format.html { redirect_to @vacancy_master, notice: 'Vacancy Created Successfully.' }
         format.json { render :show, status: :created, location: @vacancy_master }
       else
@@ -200,6 +240,7 @@ end
     second_manager_id = employee.manager_2_id 
     @vacancy_master.update(reporting_master_id: second_manager_id,current_status: "FirstApproved")
     ReportingMastersVacancyMaster.create(reporting_master_id: current_user.employee_id, vacancy_master_id: @vacancy_master.id,vacancy_status: "FirstApproved")
+    VacancyMasterMailer.first_approve_email(@vacancy_master).deliver_now
     flash[:notice] = 'Vacancy Request Approved Successfully'
     redirect_to vacancy_history_vacancy_masters_path
   end
@@ -208,6 +249,7 @@ end
      @vacancy_master = VacancyMaster.find(params[:format])
      @vacancy_master.update(current_status: "Approved")
      ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id,reporting_master_id: current_user.employee_id,vacancy_status: "Approved")
+     VacancyMasterMailer.approve_vacancy_email(@vacancy_master).deliver_now
      flash[:notice] = 'Vacancy Request Approved Successfully'
      redirect_to vacancy_history_vacancy_masters_path
   end
@@ -216,6 +258,7 @@ end
     @vacancy_master = VacancyMaster.find(params[:format])
     @vacancy_master.update(current_status: "Rejected",reporting_master_id: current_user.employee_id)
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id,reporting_master_id: current_user.employee_id,vacancy_status: "Rejected")
+    VacancyMasterMailer.reject_vacancy_email(@vacancy_master).deliver_now
     flash[:alert] = 'Vacancy Request Rejected'
     redirect_to vacancy_history_vacancy_masters_path
   end
@@ -227,6 +270,7 @@ end
     first_manager_id = employee.manager_id
     @vacancy_master.update(reporting_master_id: first_manager_id,current_status: "Approved & Send Next")
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id,reporting_master_id: current_user.employee_id,vacancy_status: "Approved & Send Next")
+    VacancyMasterMailer.approve_and_send_next_email(@vacancy_master).deliver_now
     flash[:notice] = 'Vacancy Request Sent to Higher Authority for Approval'
     redirect_to vacancy_history_vacancy_masters_path
   end
@@ -376,12 +420,10 @@ end
 
   
   def modal2  
-    puts "--------------------"
     @particular_vacancy_request = ParticularVacancyRequest.find(params[:format])
   end
 
   def confirm_candidate
-      puts "-----------------"
       @particular_vacancy_request = ParticularVacancyRequest.find(params[:id])
       @candidate_name = params[:particular_vacancy_request][:candidate_name]
       @particular_vacancy_request.update(closed_date: Time.zone.now.to_date,is_complete: true,candidate_name: @candidate_name)
@@ -407,6 +449,7 @@ end
      @interview_schedule = InterviewSchedule.find(params[:format])
      InterviewSchedule.where(id: @interview_schedule.id).update_all(is_confirmed: true)
      @selected_resume = SelectedResume.where(id: @interview_schedule.selected_resume_id).take
+     #@selected_resume.update(status: "Confirmed")
      @vacancy_master = VacancyMaster.where(id: @selected_resume.vacancy_master_id).take
      a=ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id,is_complete: nil).first
      ParticularVacancyRequest.where(id: a.id).update_all(is_complete: true,candidate_name: @interview_schedule.candidate_name,closed_date: Time.zone.now.to_date)
@@ -599,25 +642,25 @@ end
 
       if current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
-        @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved")
+        @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved",recruiter_id: current_user.employee_id)
       elsif current_user.role.name == 'Admin'
         @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
         # @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"FinalApproved")
-        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved",recruiter_id: current_user.employee_id)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved",recruiter_id: current_user.employee_id)
       elsif current_user.role.name == 'HOD'
         @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
-        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved",recruiter_id: current_user.employee_id)
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
         @employees = @emp.subordinates
-        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved")
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved",recruiter_id: current_user.employee_id)
       elsif current_user.role.name == 'Recruitment'
-        @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved")
+        @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved",recruiter_id: current_user.employee_id)
       else current_user.role.name == 'Employee'
-        @vacancy_masters = VacancyMaster.where(employee_id: current_user.employee_id,current_status: "FinalApproved")
+        @vacancy_masters = VacancyMaster.where(employee_id: current_user.employee_id,current_status: "FinalApproved",recruiter_id: current_user.employee_id)
         redirect_to home_index_path
       end
     else
@@ -640,12 +683,13 @@ end
       redirect_to hr_resume_vacancy_masters_path(vacancy_master_id: @vacancy_master.id)
     else
       @selected_resume_ids.each do |eid|
-      @selected_resume = SelectedResume.find(eid)
-      @selected_resume.update(shortlist_for_interview: true) 
-      flash[:notice] = "Candidates Shortlisted For Interview"
-    end 
-     redirect_to hr_resume_vacancy_masters_path(vacancy_master_id: @vacancy_master.id)
-   end
+        @selected_resume = SelectedResume.find(eid)
+        @selected_resume.update(shortlist_for_interview: true) 
+        VacancyMasterMailer.shortlist_resume(@selected_resume).deliver_now
+        flash[:notice] = "Candidates Shortlisted For Interview"
+      end 
+      redirect_to hr_resume_vacancy_masters_path(vacancy_master_id: @vacancy_master.id)
+    end
   end
 
   def show_selected_resume

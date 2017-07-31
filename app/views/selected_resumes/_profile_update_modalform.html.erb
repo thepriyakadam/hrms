@@ -1,98 +1,137 @@
-<div class="modal-dialog"  style="height:3000px; max-height:500px; width:1000px; max-width:1200px;">
+<div class="modal-dialog">
   <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
     <div class="modal-body">
+
      <%= bootstrap_form_for :selected_resume,url:{action:"update_profile",id: @selected_resume.id,vacancy_master_id: @vacancy_master.id},html: {id: 'selected_resume'} do |f| %>
         <div class="row">
-  <div class="col-sm-3">
-    <div class="form-group required">
-      <%= f.text_field :name,label: 'Name' %>
-    </div>
-  </div>
-
-   <div class="col-sm-3">
-    <div class="field">
-    <%= f.text_field :job_title,readonly: true, label: 'Job Title' %>
-    </div>
-  </div>
-
-  <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :skillset,label: 'Skillset' %>
-      </div>
-  </div>
-
-   <div class="col-sm-3">
-      <label>Educational Qualification</label>
-      <div class="form-group required">
-        <div class="input-group">
-          <div class="input-group-addon">
-            <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+          <div class="col-sm-6">
+          <label>Name</label>
+            <div class="field">
+              <%= f.text_field :name,hide_label: true %>
+            </div>
           </div>
-          <%= f.select :degree_id, all_degree_list,{hide_label: true,include_blank: " Select Qualification"} %>
+
+
+           <div class="col-sm-6">
+           <label>Job Title</label>
+            <div class="field">
+            <%= f.text_field :job_title,readonly: true, hide_label: true %>
+            </div>
+          </div>
+          </div>
+
+        <div class="row">
+
+          <div class="col-sm-6">
+          <label>Skillset</label>
+              <div class="field">
+                <%= f.text_field :skillset,hide_label: true %>
+              </div>
+          </div>
+
+         <div class="col-sm-6">
+            <label>Educational Qualification</label>
+            <div class="form-group required">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+                </div>
+                <%= f.select :degree_id, all_degree_list,{hide_label: true,include_blank: " Select Qualification"} %>
+              </div>
+            </div>
+          </div>
+       </div>
+
+        <div class="row">
+
+          <div class="col-sm-6">
+          <label>Current CTC</label>
+              <div class="field">
+                <%= f.text_field :current_ctc, hide_label: true %>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+            <label>CTC</label>
+              <div class="field">
+                <%= f.text_field :ctc, hide_label: true %>
+              </div>
+            </div>
+           </div>
+
+          <div class="row">
+
+            <div class="col-sm-6">
+            <label>Experience</label>
+              <div class="field">
+                <%= f.text_field :experience, hide_label: true %>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+            <label>Notice Period</label>
+              <div class="field">
+                <%= f.text_field :notice_period, hide_label: true %>
+              </div>
+            </div>
+
+            </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+            <label>Contact No.</label>
+              <div class="field">
+                <%= f.text_field :contact_no,hide_label: true %>
+              </div>
+            </div>
+
+          <div class="col-sm-6">
+          <label>Alternate Contact No.</label>
+              <div class="field">
+                <%= f.text_field :contact_no2,hide_label: true %>
+              </div>
+            </div>
+            </div>
+
+        <div class="row">
+           <div class="col-sm-6">
+           <label>Email Id</label>
+              <div class="field">
+                <%= f.text_field :email_id, hide_label: true %>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+            <label>Resume Upload(only docx,pdf)</label>
+              <div class="field">
+                <%= f.file_field :avatar,hide_label: true %>
+              </div>
+           </div>
+          </div>
+
+          <div class="row">
+           <div class="col-sm-6">
+           <label>Photo Upload(only jpeg,jpg,png)</label>
+                <div class="field">
+                  <%= f.file_field :passport_photo,hide_label: true %>
+                </div>
+              </div>
+              </div>
+
+        <div class="row">
+           <div class="col-sm-6" style="padding-top: 20px;" >
+                      <%= f.submit "Update Profile", class: 'btn btn-sm btn-primary fa fa-modx' %>
+                    </div>
+                    </div>
+
+          <% end %>
+          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
         </div>
       </div>
-    </div>
-  </div>
-
-<div class="row">
-
-
-  <div class="col-sm-3">
-    <div class="field">
-      <%= f.text_field :ctc, label: 'CTC' %>
-    </div>
-  </div>
-
-  <div class="col-sm-3">
-    <div class="field">
-      <%= f.text_field :experience, label: 'Experience' %>
-    </div>
-  </div>
-
-  <div class="col-sm-3">
-    <div class="field">
-      <%= f.text_field :notice_period, label: 'Notice Period' %>
-    </div>
-  </div>
-
-  <div class="col-sm-3">
-    <div class="field">
-      <%= f.text_field :contact_no,label: 'Contact No.' %>
-    </div>
-  </div>
-</div>
-
-<div class="row">
- <div class="col-sm-3">
-    <div class="field">
-      <%= f.text_field :email_id, label: 'Email Id' %>
-    </div>
-  </div>
-
-  <div class="col-sm-3">
-    <div class="field">
-      <%= f.file_field :avatar,label: 'Resume Upload(only docx,pdf)' %>
-    </div>
- </div>
-
- <div class="col-sm-3">
-      <div class="field">
-        <%= f.file_field :passport_photo,label: 'Photo Upload(only jpeg,jpg,png)' %>
       </div>
-    </div>
-</div><br>
-
-<div class="row">
- <div class="col-sm-3">
-            <%= f.submit "Update Profile", class: 'btn btn-sm btn-primary fa fa-modx' %>
-          </div>
-          </div>
-
-      <% end %>
-      <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-    </div>
-  </div>
-  </div>
 <script>
 $("#trainee").validate({
     rules: {

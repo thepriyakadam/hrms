@@ -10,7 +10,7 @@ class InterviewSchedulesController < ApplicationController
     @vacancy_master = VacancyMaster.where(recruiter_id: current_user.employee_id).pluck(:id)
     @selected_resume = SelectedResume.where(vacancy_master_id: @vacancy_master).pluck(:id)
 
-    @interview_schedules = InterviewSchedule.where(selected_resume_id: @selected_resume)
+    @interview_schedules = InterviewSchedule.where(selected_resume_id: @selected_resume).order("id DESC")
     
     respond_to do |format|
       format.html
@@ -238,7 +238,7 @@ end
 
   def all_interview_schedule_list
      # @interview_schedules = InterviewSchedule.all
-     @interview_schedules = InterviewSchedule.where(is_confirmed: true)
+     @interview_schedules = InterviewSchedule.where(is_confirmed: true).order("id DESC")
      session[:active_tab] ="recruitment"
      session[:active_tab1] ="interview_sched"
   end

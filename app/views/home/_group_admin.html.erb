@@ -208,7 +208,9 @@
                   </thead>
 
                   <tbody>
+                    <% count = 0 %>
                     <% @pending_employee_leav_requests.try(:each) do |employee_leav_request| %>
+                    <% count += 1 %>
                       <tr>
                         <td><%= employee_leav_request.employee.try(:first_name) %> <%= employee_leav_request.employee.try(:middle_name) %> <%=employee_leav_request.employee.try(:last_name) %></td>
                         <td>
@@ -217,7 +219,9 @@
                           <%= link_to 'Reject', first_reject_leave_status_record_path(employee_leav_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-trash' %>
                         </td>
                       </tr>
+                    <% count %>
                     <% end %>
+                    <%= count %>
                   </tbody>
                 </table>
               </div>

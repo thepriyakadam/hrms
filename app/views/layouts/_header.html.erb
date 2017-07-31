@@ -33,36 +33,42 @@
       <!-- Messages: style can be found in dropdown.less-->
       <li class="dropdown messages-menu">
         <!-- Menu toggle button -->
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Messages">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Employee Leave Request">
           <i class="fa fa-envelope-o" ></i>
-          <span class="label label-success"> </span>
+          <span class="label label-success">
+            <% @pending_employee_leav_requests = EmployeeLeavRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false, first_reporter_id: current_user.employee_id) %>
+            <% @first_approved_employee_leav_requests = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false, second_reporter_id: current_user.employee_id) %>
+
+            <% count1 = 0 %>
+            <% @pending_employee_leav_requests.try(:each) do |employee_leav_request| %>
+            <% count1 += 1 %>
+            <% count1 %>
+            <% end %>
+            <% count1 %>
+
+            <% count2 = 0 %>
+            <% @first_approved_employee_leav_requests.try(:each) do |employee_leav_request| %>
+            <% count2 += 1 %>
+            <% count2 %>
+            <% end %>
+            <% count2 %>
+            <% count = count1 + count2 %>
+
+            <%= count %>
+
+           </span>
         </a>
         <ul class="dropdown-menu">
-          <li class="header">You have 4 messages</li>
+          <li class="header"> <a href="/manager_self_services/approved_or_rejected_leave_request"> Leave Request</a></li>
           <li>
             <!-- inner menu: contains the messages -->
-            <ul class="menu">
-              <li><!-- start message -->
-                <a href="#">
-                  <div class="pull-left">
-                    <!-- User Image -->
-                    <%= image_tag current_user.avatar.url(:medium),class: "img-circle"%>
-                  </div>
-                  <!-- Message title and timestamp -->
-                  <h4>
-                    Support Team
-                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                  </h4>
-                  <!-- The message -->
-                  <p>Why not buy a new awesome theme?</p>
-                 <!-- @pending_employee_leav_requests.try(:each) do |employee_leav_request| %>
-                   employee_leav_request.employee.try(:first_name) %>
-                   end %> -->
-                </a>
+            <ul class="products-list product-list-in-box">
+              <li class="item"><!-- start message -->
+                 <center> <small class="label label-success">  You Have <%= count %> Leave Request  </small></center>
               </li><!-- end message -->
             </ul><!-- /.menu -->
           </li>
-          <li class="footer"><a href="#">See All Messages</a></li>
+          <li class="footer"><a href="/manager_self_services/approved_or_rejected_leave_request">See All Request</a></li>
         </ul>
       </li><!-- /.messages-menu -->
 
@@ -71,21 +77,41 @@
         <!-- Menu toggle button -->
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Notification">
           <i class="fa fa-bell-o" ></i>
-          <span class="label label-warning"></span>
+          <span class="label label-warning">
+            
+            <%  @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: false, is_first_rejected: false, is_cancelled: false,employee_id: @employees) %> 
+            <% @first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,employee_id: @employees_ind) %>
+
+            <% count1 = 0 %>
+            <% @pending_on_duty_requests.try(:each) do |on_duty_request| %>
+            <% count1 += 1 %>
+            <% count1 %>
+            <% end %>
+            <% count1 %>
+
+            <% count2 = 0 %>
+            <% @first_approved_on_duty_requests.try(:each) do |on_duty_request| %>
+            <% count2 += 1 %>
+            <% count2 %>
+            <% end %>
+            <% count2 %>
+
+            <% count = count1 + count2 %>
+            <%= count %>
+
+          </span>
         </a>
         <ul class="dropdown-menu">
-          <li class="header">You have 10 notifications</li>
+          <li class="header"> <a href="/manager_self_services/request_approval_list"> On Duty Request</a></li>
           <li>
             <!-- Inner Menu: contains the notifications -->
-            <ul class="menu">
+            <ul class="products-list product-list-in-box">
               <li><!-- start notification -->
-                <a href="#">
-                  <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                </a>
+                 <center> <small class="label label-warning">  You Have <%= count %> On Duty Request  </small></center>
               </li><!-- end notification -->
             </ul>
           </li>
-          <li class="footer"><a href="#">View all</a></li>
+          <li class="footer"><a href="/manager_self_services/request_approval_list">See All Request</a></li>
         </ul>
       </li>
       <!-- Tasks Menu -->

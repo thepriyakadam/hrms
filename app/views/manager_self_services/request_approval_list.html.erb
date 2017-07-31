@@ -22,7 +22,9 @@
                 <td><%= on_duty_request.employee.try(:manual_employee_code) %></td>
                 <td><%= on_duty_request.employee.try(:first_name) %> <%= on_duty_request.employee.try(:middle_name) %> <%=on_duty_request.employee.try(:last_name) %></td>
                 <td>
-                  <%= link_to 'View Detail', employee_od_request_detail_on_duty_requests_path(on_duty_request),class: 'btn btn-sm btn-info' %>
+                  <%= link_to 'View', employee_od_request_detail_on_duty_requests_path(on_duty_request),class: 'btn btn-xs btn-info fa fa-check' %>
+                  <%= link_to 'Approve', first_approve_od_status_record_path(on_duty_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-info fa fa-check' %> 
+                  <%= link_to 'Reject', first_reject_od_status_record_path(on_duty_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-trash' %>
                 </td>
               </tr>
             <% end %>
@@ -49,7 +51,9 @@
                 <td><%= on_duty_request.employee.try(:first_name) %> <%= on_duty_request.employee.try(:middle_name) %> <%=on_duty_request.employee.try(:last_name) %></td>
                 <td><%= on_duty_request.no_of_day %></td>
                 <td>
-                  <%= link_to 'View Detail', employee_od_request_detail_on_duty_requests_path(on_duty_request),class: 'btn btn-sm btn-info' %>
+                  <%= link_to 'View', employee_od_request_detail_on_duty_requests_path(on_duty_request),class: 'btn btn-xs btn-info fa fa-check' %>
+                  <%= link_to 'Approve', second_approve_od_status_record_path(on_duty_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-info fa fa-check' %> 
+                  <%= link_to 'Reject', second_reject_od_status_record_path(on_duty_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-trash' %>
                 </td>
               </tr>
             <% end %>

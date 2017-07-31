@@ -18,8 +18,8 @@
             <td><%= employee.manual_employee_code %></td>
             <td><%= full_name(employee) %></td>
             <td>
-              <%= link_to 'Leave Request', from_hr_employee_leav_requests_path(employee), class: 'btn btn-sm btn-primary' %>
-              <%= link_to 'View Request', hr_view_request_employee_leav_requests_path(employee), class: 'btn btn-sm btn-info' %>
+              <%= link_to 'Leave Request', from_hr_employee_leav_requests_path(employee), class: 'btn btn-xs btn-primary' %>
+              <%= link_to 'View Request', hr_view_request_employee_leav_requests_path(employee), class: 'btn btn-xs btn-info' %>
             </td>
           </tr>
         <% end %>

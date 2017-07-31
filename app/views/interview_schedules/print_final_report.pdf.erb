@@ -1,4 +1,4 @@
-<style>
+<!-- <style>
   th {
       text-align: left;
   }
@@ -7,8 +7,10 @@
      table {
     page-break-inside: avoid; 
   }
-</style>
-<table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
+</style> -->
+<div class="box">
+  <div class="box-body">
+<table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="5">
   <thead>
    <tr><th colspan="6"><center>Interview Schedule Details</center></th></tr>
     <tr>
@@ -35,7 +37,7 @@
   </tbody>
 </table>
 
-<table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
+<table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="5">
   <thead>
   <% @interview_rounds.each do |interview_round| %>
   <tr><th colspan="4"><center>Interview Rounds</center></th></tr>
@@ -98,5 +100,7 @@
     </tr>  
   </tbody>
 </table>
+</div>
+</div>
 <% end %>
 

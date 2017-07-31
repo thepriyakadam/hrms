@@ -191,7 +191,7 @@ class EmployeeLeavRequestsController < ApplicationController
             flash[:alert] = "Request already has Approved"
             redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
           elsif @employee_leav_request.is_salary_processed?
-            flash[:alert] = "Salary Processed for this month"
+            flash[:alert] = "Attendance Confirm Please Contact to Admin"
             redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
           elsif @employee_leav_request.is_continue?
             flash[:alert] = "Leave Can't take continueously"

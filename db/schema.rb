@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170727052427) do
+ActiveRecord::Schema.define(version: 20170729093918) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1412,6 +1412,8 @@ ActiveRecord::Schema.define(version: 20170727052427) do
     t.string   "employee_company_location", limit: 255
     t.string   "employee_department",       limit: 255
     t.integer  "reporting_master_id",       limit: 4
+    t.date     "effective_from"
+    t.date     "effective_to"
   end
 
   add_index "employee_transfers", ["company_id"], name: "index_employee_transfers_on_company_id", using: :btree
@@ -2619,16 +2621,17 @@ ActiveRecord::Schema.define(version: 20170727052427) do
   add_index "loan_emis", ["loan_approval_id"], name: "index_loan_emis_on_loan_approval_id", using: :btree
 
   create_table "loan_requests", force: :cascade do |t|
-    t.integer  "membership_id", limit: 4
+    t.integer  "membership_id",   limit: 4
     t.date     "date"
-    t.integer  "loan_type_id",  limit: 4
-    t.integer  "request_to_id", limit: 4
-    t.decimal  "amount",                    precision: 15, scale: 2
-    t.integer  "no_of_emi",     limit: 4
-    t.decimal  "emi",                       precision: 15, scale: 2
-    t.string   "status",        limit: 255
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
+    t.integer  "loan_type_id",    limit: 4
+    t.integer  "request_to_id",   limit: 4
+    t.decimal  "amount",                      precision: 15, scale: 2
+    t.integer  "no_of_emi",       limit: 4
+    t.decimal  "emi",                         precision: 15, scale: 2
+    t.string   "status",          limit: 255
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.decimal  "interest_amount",             precision: 10
   end
 
   add_index "loan_requests", ["loan_type_id"], name: "index_loan_requests_on_loan_type_id", using: :btree
@@ -4071,6 +4074,8 @@ ActiveRecord::Schema.define(version: 20170727052427) do
     t.string   "employee_company_location", limit: 255
     t.string   "employee_department",       limit: 255
     t.integer  "reporting_master_id",       limit: 4
+    t.date     "effective_from"
+    t.date     "effective_to"
   end
 
   add_index "transfer_histories", ["company_id"], name: "index_transfer_histories_on_company_id", using: :btree

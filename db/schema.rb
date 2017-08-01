@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170727052427) do
+ActiveRecord::Schema.define(version: 20170729093918) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1412,6 +1412,8 @@ ActiveRecord::Schema.define(version: 20170727052427) do
     t.string   "employee_company_location", limit: 255
     t.string   "employee_department",       limit: 255
     t.integer  "reporting_master_id",       limit: 4
+    t.date     "effective_from"
+    t.date     "effective_to"
   end
 
   add_index "employee_transfers", ["company_id"], name: "index_employee_transfers_on_company_id", using: :btree
@@ -4083,6 +4085,8 @@ ActiveRecord::Schema.define(version: 20170727052427) do
     t.string   "employee_company_location", limit: 255
     t.string   "employee_department",       limit: 255
     t.integer  "reporting_master_id",       limit: 4
+    t.date     "effective_from"
+    t.date     "effective_to"
   end
 
   add_index "transfer_histories", ["company_id"], name: "index_transfer_histories_on_company_id", using: :btree

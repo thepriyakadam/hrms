@@ -44,7 +44,19 @@ class HomeController < ApplicationController
         @employee = Employee.find(current_user.employee_id)
       elsif current_user.role.name == 'Account'
         @employee = Employee.find(current_user.employee_id)
-      else current_user.role.name == 'NewEmployee'
+      elsif current_user.role.name == 'NewEmployee'
+        @employee = Employee.find(current_user.employee_id)
+      elsif current_user.role.name == 'Recruitment'
+        @employee = Employee.find(current_user.employee_id)
+      elsif current_user.role.name == 'GroupRecruiter'
+        @employee = Employee.find(current_user.employee_id)
+      elsif current_user.role.name == 'AdminRecruiter'
+        @employee = Employee.find(current_user.employee_id)
+      elsif current_user.role.name == 'TimeAndAttendance'
+        @employee = Employee.find(current_user.employee_id)
+      elsif current_user.role.name == 'GroupTimeManagement'
+        @employee = Employee.find(current_user.employee_id)
+      elsif current_user.role.name == 'AdminTimeManagement'
         @employee = Employee.find(current_user.employee_id)
       end
     else

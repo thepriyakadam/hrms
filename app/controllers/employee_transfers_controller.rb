@@ -25,7 +25,7 @@ class EmployeeTransfersController < ApplicationController
   # POST /employee_transfers
   # POST /employee_transfers.json
   def create
-    # byebug
+   # byebug
     @employee_transfer = EmployeeTransfer.new(employee_transfer_params)
     @employee = Employee.find(@employee_transfer.employee_id)
     @employee_transfer.reporting_master_id = @employee.manager_id
@@ -34,7 +34,7 @@ class EmployeeTransfersController < ApplicationController
     if @employee_transfer.is_available? 
       flash[:alert] = "Your Request already has been sent"
       redirect_to employee_transfers_path
-     else
+    else
     respond_to do |format|
       if @employee_transfer.save
         ReportingEmployeeTransfer.create(reporting_master_id: current_user.employee_id, employee_transfer_id: @employee_transfer.id, status: "Pending")
@@ -126,14 +126,18 @@ end
   end
 
   def final_approve_by_admin
+    # byebug
     employee_id = params[:employee_transfer][:employee_id]
     employee_designation_id = params[:employee_transfer][:employee_designation_id]
     employee_category_id = params[:employee_transfer][:employee_category_id]
     company_id = params[:employee_transfer][:company_id]
+    effective_from = params[:employee_transfer][:effective_from].to_date
     company_location_id = params[:employee] ? params[:employee][:company_location_id] : params[:company_location_id]
     department_id = params[:employee] ? params[:employee][:department_id] : params[:department_id]
     @emp = Employee.find_by(id: employee_id)
-    @employee_transfer = EmployeeTransfer.create(employee_id: employee_id,employee_designation_id: employee_designation_id,employee_category_id: employee_category_id,company_id: company_id,company_location_id: company_location_id,department_id: department_id,reporting_master_id: current_user.employee_id,current_status: "FinalApproved")
+    @employee_transfers = EmployeeTransfer.where(employee_id: employee_id).last
+    EmployeeTransfer.where(id: @employee_transfers).update_all(effective_to: effective_from)  
+    @employee_transfer = EmployeeTransfer.create(employee_id: employee_id,employee_designation_id: employee_designation_id,employee_category_id: employee_category_id,company_id: company_id,company_location_id: company_location_id,effective_from: effective_from,department_id: department_id,reporting_master_id: current_user.employee_id,current_status: "FinalApproved")
     @emp.update(company_id: company_id,company_location_id: company_location_id,department_id: department_id)
     @joining_detail= JoiningDetail.find_by_employee_id(employee_id)    
     @joining_detail.update(employee_designation_id: employee_designation_id,employee_category_id: employee_category_id)
@@ -148,14 +152,19 @@ end
   end
 
   def final_approve
+   # byebug
     @employee_id = params[:employee_transfer] ? params[:employee_transfer][:employee_id] : params[:employee_id]
     @employee_designation_id = params[:employee_transfer] ? params[:employee_transfer][:employee_designation_id] : params[:employee_designation_id]
     @employee_category_id = params[:employee_transfer] ? params[:employee_transfer][:employee_category_id] : params[:employee_category_id]
     @company = params[:employee_transfer] ? params[:employee_transfer][:company_id] : params[:company_id]
     @company_location_id = params[:employee] ? params[:employee][:company_location_id] : params[:company_location_id]
     @department_id = params[:employee] ? params[:employee][:department_id] : params[:department_id]
+    @employees = params[:employee_transfer][:employee_id]
+    @effective_from = params[:employee_transfer][:effective_from].to_date
     @employee_transfer = EmployeeTransfer.find(params[:employee_transfer_id])
-    @employee_transfer.update(current_status: "FinalApproved",reporting_master_id: current_user.employee_id,employee_designation_id: @employee_designation_id,employee_category_id: @employee_category_id,company_id: @company,company_location_id: @company_location_id,department_id: @department_id)
+    @employee_transfer.update(current_status: "FinalApproved",effective_from: @effective_from,reporting_master_id: current_user.employee_id,employee_designation_id: @employee_designation_id,employee_category_id: @employee_category_id,company_id: @company,company_location_id: @company_location_id,department_id: @department_id)
+    @transfer = EmployeeTransfer.last.id - 1
+    EmployeeTransfer.where(id: @transfer).update_all(effective_to: @effective_from)
     @joining_detail= JoiningDetail.find_by_employee_id(@employee_id)    
     @joining_detail.update(employee_designation_id: @employee_designation_id,employee_category_id: @employee_category_id)
     @employee = Employee.find_by_id(@employee_id)    
@@ -275,6 +284,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_transfer_params
-      params.require(:employee_transfer).permit(:employee_id, :reporting_master_id, :justification,:designation,:category,:employee_company,:employee_company_location,:employee_department,:employee_designation_id,:employee_category_id,:company_id,:company_location_id,:department_id)
+      params.require(:employee_transfer).permit(:employee_id, :reporting_master_id, :justification,:designation,:category,:employee_company,:employee_company_location,:employee_department,:employee_designation_id,:employee_category_id,:company_id,:company_location_id,:department_id,:effective_from,:effective_to)
     end
 end

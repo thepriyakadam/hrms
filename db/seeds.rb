@@ -568,6 +568,7 @@ require 'roo'
 # ex = Roo::Excel.new("#{Rails.root}/public/sp_leave_bal.xls")
 # ex.default_sheet = ex.sheets[0] 
 # i=1
+<<<<<<< HEAD
 
 # 2.upto(51) do |line|
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
@@ -599,6 +600,39 @@ require 'roo'
 # puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
 # EmployeeLeavBalance.new do |j|
 
+=======
+
+# 2.upto(51) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+# puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
+# EmployeeLeavBalance.new do |j|
+
+#   j.employee_id = @employee.id unless @employee.nil?
+#   puts "#{(ex.cell(line,'A'))} Record inserted........Employee ID #{@employee.id}-----------------------------------------------"
+#   j.leav_category_id = ex.cell(line,'C').to_i
+#   puts "#{(ex.cell(line,'C'))} Record inserted.-----------------------------------------------"
+#   j.no_of_leave = ex.cell(line,'D')
+#   j.expiry_date = ex.cell(line,'E')
+#   j.total_leave = ex.cell(line,'F')
+#   j.from_date = ex.cell(line,'G')
+#   j.to_date = ex.cell(line,'H')
+#   j.save!
+# end
+# puts "#{i} Record inserted.-----------------------------------------------"
+# i = i+1
+# end
+
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/sp_leave_bal.xls")
+# ex.default_sheet = ex.sheets[1] 
+# i=1
+
+# 2.upto(51) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+# puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
+# EmployeeLeavBalance.new do |j|
+
+>>>>>>> d27d4f46e2aaa275d63ac369acb03250202e4d6f
 #   j.employee_id = @employee.id unless @employee.nil?
 #   puts "#{(ex.cell(line,'A'))} Record inserted........Employee ID #{@employee.id}-----------------------------------------------"
 #   j.leav_category_id = ex.cell(line,'C').to_i
@@ -669,18 +703,18 @@ require 'roo'
 
 
 #==================================== EMPLOYEE BANK DETAILS DATA END  ===================================================#
-# ex = Roo::Excel.new("#{Rails.root}/public/joining_detail_report.xls")
-# ex.default_sheet = ex.sheets[1] #siya feb
+# ex = Roo::Excel.new("#{Rails.root}/public/sp_onbording.xls")
+# ex.default_sheet = ex.sheets[0] #siya feb
 # i = 1
 # ActiveRecord::Base.transaction do
-# 2.upto(169) do |line| # siya Feb 2016
+# 2.upto(83) do |line| # siya Feb 2016
 #  puts "Starting Record #{ex.cell(line,'B')}---------------------------------------"
-#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
+#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 #  puts "#{i} Record inserting.----------------------------"
 
 
-#   @type2 = Department.find_by_name(ex.cell(line,'B'))
-#  Employee.where(id: @employee).update_all(department_id: @type2)
+#   @type2 = EmployeeDesignation.find_by_name(ex.cell(line,'F'))
+#  JoiningDetail.where(employee_id: @employee).update_all(employee_designation_id: @type2)
 #  # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
 #  puts "#{i} Record inserted.-----------------------------------------------"
 #  i += 1
@@ -690,6 +724,7 @@ require 'roo'
 # ===========================
 
 
+<<<<<<< HEAD
 ex = Roo::Excel.new("#{Rails.root}/public/spep.xls")
 ex.default_sheet = ex.sheets[0]
 j = 1
@@ -699,6 +734,16 @@ ActiveRecord::Base.transaction do
   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
 
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+=======
+# ex = Roo::Excel.new("#{Rails.root}/public/sp_salary.xls")
+# ex.default_sheet = ex.sheets[0]
+# j = 1
+# gross_salary = 0
+# ActiveRecord::Base.transaction do
+# 2.upto(83) do |line|
+#   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+>>>>>>> d27d4f46e2aaa275d63ac369acb03250202e4d6f
   
   @salary_template = SalaryTemplate.find_by_id(ex.cell(line,'B'))
   @salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?
@@ -763,20 +808,36 @@ ActiveRecord::Base.transaction do
 
       puts "Children Education Allowance..................Salary"
 
+<<<<<<< HEAD
  elsif t.salary_component.name == "Program Allowance"
       est.monthly_amount = ex.cell(line,'I') unless ex.cell(line,'I').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       gross_salary = gross_salary + ex.cell(line,'I').to_i
+=======
+#  elsif t.salary_component.name == "Progressive Allowance"
+#       est.monthly_amount = ex.cell(line,'I') unless ex.cell(line,'I').nil?
+#       est.annual_amount = est.monthly_amount.to_i * 12
+#       gross_salary = gross_salary + ex.cell(line,'I').to_i
+>>>>>>> d27d4f46e2aaa275d63ac369acb03250202e4d6f
 
       puts "Program Allowance..................Salary"
 
 
+<<<<<<< HEAD
  elsif t.salary_component.name == "Transport Allowance"
       est.monthly_amount = ex.cell(line,'J') unless ex.cell(line,'J').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       gross_salary = gross_salary + ex.cell(line,'J').to_i
 
       puts "Transport Allowance..................Salary"
+=======
+#  # elsif t.salary_component.name == "Transport Allowance"
+#  #      est.monthly_amount = ex.cell(line,'J') unless ex.cell(line,'J').nil?
+#  #      est.annual_amount = est.monthly_amount.to_i * 12
+#  #      gross_salary = gross_salary + ex.cell(line,'J').to_i
+
+#  #      puts "Transport Allowance..................Salary"
+>>>>>>> d27d4f46e2aaa275d63ac369acb03250202e4d6f
 
       
     end
@@ -790,12 +851,12 @@ end
 end
 
 
-# ex = Roo::Excel.new("#{Rails.root}/public/rgfdj.xls")
-#  ex.default_sheet = ex.sheets[2] #siya feb
+# ex = Roo::Excel.new("#{Rails.root}/public/sp_food.xls")
+#  ex.default_sheet = ex.sheets[0] #siya feb
 #  i = 1
 #  ActiveRecord::Base.transaction do
 
-#  2.upto(84) do |line| # siya Feb 201
+#  2.upto(14) do |line| # siya Feb 201
 #    puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
 #    @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 #    unless @employee.nil?
@@ -816,29 +877,31 @@ end
 #    end
 #  end
 
-#  ex = Roo::Excel.new("#{Rails.root}/public/rgwdj.xls")
-#  ex.default_sheet = ex.sheets[8] #siya feb
-#  i = 1
-#  ActiveRecord::Base.transaction do
-
-#  2.upto(199) do |line| # siya Feb 201
-#    puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-#    @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-#    unless @employee.nil?
-
-#      Workingday.new do |w|
-#        w.employee_id = @employee.id
-#        w.month_name = ex.cell(line, 'B')
-#        w.year = ex.cell(line, 'C').to_i
-#        w.day_in_month = ex.cell(line, 'D')
-#        w.payable_day = ex.cell(line, 'E')
-#        w.save!
-#      end
-#      puts "#{i} Record inserted.-----------------------------------------------"
-#      i += 1
-#    end
-#    end
-# end
+ ex = Roo::Excel.new("#{Rails.root}/public/sp_working_day.xls")
+ ex.default_sheet = ex.sheets[0] #siya feb
+ i = 1
+ ActiveRecord::Base.transaction do
+ 2.upto(14) do |line| # siya Feb 201
+   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+   unless @employee.nil?
+     Workingday.new do |w|
+       w.employee_id = @employee.id
+       w.month_name = ex.cell(line, 'B')
+       w.year = ex.cell(line, 'C').to_i
+       w.day_in_month = ex.cell(line, 'D')
+       w.week_off_day = ex.cell(line, 'E').to_i
+       w.holiday_in_month = ex.cell(line, 'F')
+       w.pay_leave = ex.cell(line, 'G').to_i
+       w.nonpay_leave = ex.cell(line, 'K')
+       w.payable_day = ex.cell(line, 'L')
+       w.save!
+     end
+     puts "#{i} Record inserted.-----------------------------------------------"
+     i += 1
+   end
+   end
+end
 # InterviewEvalution.destroy_all
 # InterviewDecision.destroy_all
 # InterviewAttribute.destroy_all

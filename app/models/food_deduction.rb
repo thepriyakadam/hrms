@@ -8,15 +8,24 @@ class FoodDeduction < ActiveRecord::Base
   validates :food_coupan_master_id, presence: true
 
 def self.import_deduction_file(file)
-	spreadsheet = open_spreadsheet(file)
-	header = spreadsheet.row(1)
-  	(2..spreadsheet.last_row).each do |i|
+  spreadsheet = open_spreadsheet(file)
+    (2..spreadsheet.last_row).each do |i|
+        employee_id = spreadsheet.cell(i,'A')
+        food_date = spreadsheet.cell(i,'B')
+        no_of_coupan = spreadsheet.cell(i,'C')
+        food_coupan_master_id = spreadsheet.cell(i,'D')
+     
+        @food_deduction = FoodDeduction.create(employee_id: employee_id,food_date: food_date,no_of_coupan: no_of_coupan,food_coupan_master_id: food_coupan_master_id)
+    end
+	# spreadsheet = open_spreadsheet(file)
+	# header = spreadsheet.row(1)
+ #  	(2..spreadsheet.last_row).each do |i|
 
-  	  row = Hash[[header, spreadsheet.row(i)].transpose]
-  	  food_deduction = find_by_id(row['id']) || new
-  	  food_deduction.attributes = row.to_hash.slice(*row.to_hash.keys)
-  	  food_deduction.save!
-  	end
+ #  	  row = Hash[[header, spreadsheet.row(i)].transpose]
+ #  	  food_deduction = find_by_id(row['id']) || new
+ #  	  food_deduction.attributes = row.to_hash.slice(*row.to_hash.keys)
+ #  	  food_deduction.save!
+ #  	end
   end
 
   def self.open_spreadsheet(file)

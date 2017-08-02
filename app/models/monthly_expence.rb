@@ -16,10 +16,8 @@ class MonthlyExpence < ActiveRecord::Base
         amount = spreadsheet.cell(i,'C')
         expence_date = spreadsheet.cell(i,'D')
      
-        @monthly_expence = MonthlyExpence.create(:employee_id => employee_id, :expencess_type_id => expencess_type_id,:amount => expencess_type_id,:expence_date => expence_date)
+        @monthly_expence = MonthlyExpence.create(employee_id: employee_id,expencess_type_id: expencess_type_id,amount: amount,expence_date: expence_date)
     end
-
-
 
     # spreadsheet = open_spreadsheet(file)
     # header = spreadsheet.row(1)

@@ -1845,6 +1845,17 @@ ActiveRecord::Schema.define(version: 20170727052427) do
     t.datetime "updated_at",                 null: false
   end
 
+  create_table "greetings", force: :cascade do |t|
+    t.date     "date"
+    t.string   "greeting_type", limit: 255
+    t.integer  "sender_id",     limit: 4
+    t.integer  "receiver_id",   limit: 4
+    t.text     "message",       limit: 65535
+    t.boolean  "status"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
   create_table "groups", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
     t.string   "encrypted_password",     limit: 255, default: "", null: false
@@ -3217,6 +3228,15 @@ ActiveRecord::Schema.define(version: 20170727052427) do
     t.datetime "updated_at",                null: false
   end
 
+  create_table "recruiters", force: :cascade do |t|
+    t.integer  "employee_id", limit: 4
+    t.boolean  "status"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "recruiters", ["employee_id"], name: "index_recruiters_on_employee_id", using: :btree
+
   create_table "reimbursement_heads", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
@@ -3833,6 +3853,14 @@ ActiveRecord::Schema.define(version: 20170727052427) do
 
   add_index "texable_monthly_deductions", ["employee_id"], name: "index_texable_monthly_deductions_on_employee_id", using: :btree
   add_index "texable_monthly_deductions", ["salaryslip_id"], name: "index_texable_monthly_deductions_on_salaryslip_id", using: :btree
+
+  create_table "thoughts", force: :cascade do |t|
+    t.date     "date"
+    t.text     "thought",    limit: 65535
+    t.string   "thought_of", limit: 255
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "trainee_requests", force: :cascade do |t|
     t.integer  "training_request_id",      limit: 4
@@ -4531,6 +4559,7 @@ ActiveRecord::Schema.define(version: 20170727052427) do
   add_foreign_key "qualifications", "employees"
   add_foreign_key "qualifications", "universities"
   add_foreign_key "qualifications", "years"
+  add_foreign_key "recruiters", "employees"
   add_foreign_key "reimbursement_requests", "employees"
   add_foreign_key "reimbursement_requests", "reimbursement_heads"
   add_foreign_key "reimbursement_slabs", "employee_designations"

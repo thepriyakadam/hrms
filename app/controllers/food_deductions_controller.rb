@@ -325,6 +325,20 @@ class FoodDeductionsController < ApplicationController
     end
   end
   
+  def import_food_deduction
+  end
+
+  def import_deduction
+  file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_food_deduction_food_deductions_path
+    else
+    FoodDeduction.import_deduction_file(params[:file])
+    redirect_to import_food_deduction_food_deductions_path, notice: "File imported."
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

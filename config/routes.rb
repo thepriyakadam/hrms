@@ -1641,6 +1641,8 @@ end
       get :dynamic_report
       post :dynamic_report
       get :modal
+      get :import_monthly_expence
+      post :import
     end
   end
   resources :expencess_types do
@@ -1664,6 +1666,8 @@ end
       get :dynamic_report
       post :dynamic_report
       get :modal
+      get :import_food_deduction
+      post :import_deduction
     end
   end
   resources :reporting_masters do

@@ -10,10 +10,13 @@ class FoodDeduction < ActiveRecord::Base
 def self.import_deduction_file(file)
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-        employee_id = spreadsheet.cell(i,'A')
+
+        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'A').to_i)
+        employee_id = @employee.id
         food_date = spreadsheet.cell(i,'B')
         no_of_coupan = spreadsheet.cell(i,'C')
-        food_coupan_master_id = spreadsheet.cell(i,'D')
+        @food_coupan_master = FoodCoupanMaster.find_by_name(spreadsheet.cell(i,'D'))
+        food_coupan_master_id = @food_coupan_master.id
      
         @food_deduction = FoodDeduction.create(employee_id: employee_id,food_date: food_date,no_of_coupan: no_of_coupan,food_coupan_master_id: food_coupan_master_id)
     end

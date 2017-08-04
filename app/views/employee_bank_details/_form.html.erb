@@ -9,7 +9,7 @@
         <div class="row">
           <div class="col-sm-3">
             <div class="form-group required">
-              <%= f.text_field :account_no,label: 'Account No' %>
+              <%= f.text_field :account_no,label: 'Account No',placeholder: 'e.g. 012345678'%>
             </div>
           </div>
           <div class="col-sm-3">
@@ -20,13 +20,13 @@
 
           <div class="col-sm-3">
             <div class="field">
-                <%= f.text_field :branch_name,label: 'Branch Name' %>
+                <%= f.text_field :branch_name,label: 'Branch Name',placeholder: 'Branch Name' %>
             </div>
           </div>
 
           <div class="col-sm-3">
             <div class="field">
-              <%= f.text_field :address,label: 'Bank Address' %>
+              <%= f.text_field :address,label: 'Bank Address',placeholder: 'Bank Address' %>
             </div>
           </div>
         </div>
@@ -34,25 +34,25 @@
         <div class="row">
           <div class="col-sm-3">
             <div class="field">
-              <%= f.text_field :contact_no,label: 'Contact No' %>
+              <%= f.text_field :contact_no,label: 'Contact No',placeholder: 'Contact No' %>
             </div>
           </div>
 
           <div class="col-sm-3">
             <div class="field">
-              <%= f.text_field :micr_code,label: 'MICR Code' %>
+              <%= f.text_field :micr_code,label: 'MICR Code',placeholder: 'e.g. 123456789' %>
             </div>
           </div>
 
           <div class="col-sm-3">
             <div class="field">
-              <%= f.text_field :branch_code,label: 'Branch Code' %>
+              <%= f.text_field :branch_code,label: 'Branch Code',placeholder: 'Branch Code' %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :ifsc_code,label: 'IFSC Code' %>
+            <%= f.text_field :ifsc_code,label: 'IFSC Code',placeholder: 'e.g. CITI0000026' %>
           </div>
         </div>
       </div>

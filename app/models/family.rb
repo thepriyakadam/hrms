@@ -2,10 +2,11 @@ class Family < ActiveRecord::Base
   belongs_to :employee
   belongs_to :blood_group
   belongs_to :religion
+  belongs_to :relation_master
 
   has_many :employee_nominations
 
-  validates :relation, presence: true
+
   validates :f_name, presence: true
   validates :l_name, presence: true
 

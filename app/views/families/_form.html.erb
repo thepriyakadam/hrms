@@ -10,23 +10,24 @@
 <%= f.hidden_field :employee_id, value: @employee.id %>
   <div class="row">
       <div class="col-sm-3">
+      <label>Relation</label>
         <div class="form-group required">
-          <%= f.text_field :relation %>
+          <%= f.select :relation_master_id,all_relation_type,{hide_label:true,include_blank: " Select Relation"} %>
         </div>
     </div>
     <div class="col-sm-3">
         <div class="form-group required">
-         <%= f.text_field :f_name,label: 'First Name' %>
+         <%= f.text_field :f_name,label: 'First Name',placeholder: 'First Name' %>
         </div>
     </div>
     <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :m_name,label: 'Middle Name' %>
+         <%= f.text_field :m_name,label: 'Middle Name' ,placeholder: 'Middle Name'%>
         </div>
     </div>
      <div class="col-sm-3">
         <div class="form-group required">
-        <%= f.text_field :l_name,label: 'Last Name' %>
+        <%= f.text_field :l_name,label: 'Last Name',placeholder: 'Last Name' %>
         </div>
     </div>
 </div>
@@ -50,7 +51,7 @@
       </div>
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :contact_no,label: 'Contact No' %>
+          <%= f.text_field :contact_no,label: 'Contact No',placeholder: 'Contact No.' %>
         </div>
      </div>
      <div class="col-sm-3">
@@ -64,7 +65,7 @@
    
       <div class="col-sm-6">
         <div class="field">
-         <%= f.text_field :current_address,label: 'Current Address' %>
+         <%= f.text_field :current_address,label: 'Current Address' ,placeholder: 'Current Address'%>
         </div>
     </div>
 
@@ -84,13 +85,13 @@
 <div class="row">
     <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :adhar_no,label: 'Aadhaar Card No' %>
+          <%= f.text_field :adhar_no,label: 'Aadhaar Card No',placeholder: "e.g : 123456789012" %>
         </div>
     </div>
 
     <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :pan_no,label:"PAN Card No" %>
+          <%= f.text_field :pan_no,label:"PAN Card No" ,placeholder: 'e.g : ABCDE12345B'%>
         </div>
     </div>
     <div class="col-sm-3">
@@ -114,7 +115,7 @@
 
      <div class="col-sm-3">
         <div class="field">
-        <%= f.text_field :passport_no,label: 'Passport No' %>
+        <%= f.text_field :passport_no,label: 'Passport No',placeholder: 'e.g : J8369854' %>
        </div>
       </div>
 
@@ -164,14 +165,32 @@
         </div>
       </div>
   </div>
+    <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create", class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
 
-  <div class="row">
+ <!--  <div class="row">
       <div class="col-sm-3">
         <div class="actions">
-            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+            <= f.submit :class => class_name, data: { disable_with: data_info } %>
         </div>
     </div>
   </div>
+ -->
+<!--   <div class="row">
+    <div class="col-sm-6">
+      <div class="actions">
+            <= f.submit :class => class_name, data: { disable_with: data_info },class: 'btn btn-sm btn-primary' %>
+            < if params['controller'] == 'Families' and params['action'] == 'edit' %>
+            <= link_to 'Back',ajax_family_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-default',remote:true%>
+          <end%>
+      </div>
+    </div>
+  </div> -->
 <% end %>
 </div><!-- /.box-body -->
 </div><!-- /.box -->

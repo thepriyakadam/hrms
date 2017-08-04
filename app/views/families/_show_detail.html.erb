@@ -36,7 +36,7 @@
         <td><%= family.f_name+' '+family.m_name+' '+family.l_name %></td>
         <td><%= family.date_of_birth %></td>
         <td><%= family.contact_no %></td>
-        <td><%= family.relation %></td>
+        <td><%= family.relation_master.try(:name) %></td>
         <td><%= family.profession %></td>
         <td><%= family.blood_group.try(:name) %></td>
         <td>

@@ -12,19 +12,19 @@
     
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :loan_type_id,all_loan_type,label: 'Loan Type',include_blank: 'Select Loan Type'%>
+            <%= f.select :loan_type_id,all_loan_type,label: 'Loan Type',include_blank: 'Select Loan Type',id: "loan_type_interest_rate" %>
           </div>
         </div>
 
          <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :amount,label: 'Amount'%>
+            <%= f.text_field :amount,label: 'Amount', id: "loan_request_amount" %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :no_of_emi,label: 'No. of EMI'%>
+            <%= f.text_field :no_of_emi,label: 'No. of EMI', id: "loan_request_no_of_emi"%>
           </div>
         </div>
 
@@ -35,6 +35,13 @@
             <%= f.text_field :emi,label: 'EMI'%>
           </div>
         </div>
+
+         <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :interest_amount,label: 'Interest Amount' , disabled_id: "loan_request_interest_amount" %>
+          </div>
+        </div>
+
 
         <div class="col-sm-3">
           <div class="field">
@@ -60,7 +67,7 @@
 <% end %>
 </div>
 
-  <script type="text/javascript">
+<script type="text/javascript">
   $(function(){
     $('#loan_request_amount').on('input', function() {
       var loan_request_amount = parseFloat($('#loan_request_amount').val());
@@ -88,10 +95,28 @@
       }
       $('#loan_request_emi').val(ans);
     });
-  });
-  </script>
 
-  <script type="text/javascript">
+     $('#loan_type_interest_rate').on('input', function() {
+      var loan_request_no_of_emi = parseFloat($('#loan_request_no_of_emi').val());
+      var loan_request_amount = parseFloat($('#loan_request_amount').val());
+      var loan_type_interest_rate = parseFloat($('#loan_type_interest_rate').val());
+      var ans="";
+      if (isNaN(loan_request_amount) || isNaN(loan_request_no_of_emi) || isNaN(loan_type_interest_rate)) {
+        ans = ""
+      }
+      else{
+         ans = ((loan_request_amount * loan_request_no_of_emi * (loan_type_interest_rate/12))/100).toFixed(2);
+      }
+      $('#loan_request_interest_amount').val(ans);
+    });
+
+  });
+</script>
+
+
+
+
+<script type="text/javascript">
   $(function(){
     $('.loan_request').datepicker({
     changeYear:true,

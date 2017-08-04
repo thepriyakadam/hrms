@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170729093918) do
+ActiveRecord::Schema.define(version: 20170802054021) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1687,10 +1687,12 @@ ActiveRecord::Schema.define(version: 20170729093918) do
     t.integer  "religion_id",          limit: 4
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
+    t.integer  "relation_master_id",   limit: 4
   end
 
   add_index "families", ["blood_group_id"], name: "index_families_on_blood_group_id", using: :btree
   add_index "families", ["employee_id"], name: "index_families_on_employee_id", using: :btree
+  add_index "families", ["relation_master_id"], name: "index_families_on_relation_master_id", using: :btree
   add_index "families", ["religion_id"], name: "index_families_on_religion_id", using: :btree
 
   create_table "final_ratings", force: :cascade do |t|
@@ -4546,6 +4548,7 @@ ActiveRecord::Schema.define(version: 20170729093918) do
   add_foreign_key "experiences", "employees"
   add_foreign_key "families", "blood_groups"
   add_foreign_key "families", "employees"
+  add_foreign_key "families", "relation_masters"
   add_foreign_key "families", "religions"
   add_foreign_key "food_deductions", "employees"
   add_foreign_key "food_deductions", "food_coupan_masters"

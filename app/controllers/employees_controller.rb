@@ -640,8 +640,7 @@ end
         @employees = Employee.where(id: current_user.employee_id)
       end
     else
-       @employees = Employee.where(id: current_user.employee_id)
-        @employees = []
+        @employees = Employee.all
     if @employee_id.nil? || employee_id.empty?
       flash[:alert] = "Please Select the checkbox"
       redirect_to employee_list_report_employees_path

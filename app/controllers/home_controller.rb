@@ -13,16 +13,7 @@ class HomeController < ApplicationController
     @departments = Department.all
     #vacancy
     @vacancy_masters = VacancyMaster.where(vacancy_of: 'Refferal',is_confirmed: nil)
-    #leave_approval
-    @pending_employee_leav_requests = EmployeeLeavRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false, first_reporter_id: current_user.employee_id)
-    @first_approved_employee_leav_requests = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false, second_reporter_id: current_user.employee_id)
-    #OD_approval
-    @emp = Employee.find(current_user.employee_id)
-    @employees = @emp.subordinates
-    @employees_ind = @emp.indirect_subordinates
-    @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: false, is_first_rejected: false, is_cancelled: false,employee_id: @employees)
-    @first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,employee_id: @employees_ind)
-
+   
     #@employees = Employee.all
     if current_user.class == Member
       @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id, status: true)

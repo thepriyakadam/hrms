@@ -1,57 +1,51 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Revert Attendance</h3>
-  </div><!-- /.box-header -->
-  <%= bootstrap_form_for(:salary,html: {id: 'salary'}, url: { action: 'show_employee_list'}, remote: true) do |f| %>
-    <div class="box-body">
-    	<div class="row">
-        <div class="col-sm-3">
+    <h3 class="box-title"> Employee Attendance</h3>
+  </div>
+ <div class="box-body">
+  <%= bootstrap_form_for(:employee, url: { action: 'show_managerwise_average_attendance'},html: {id: "employee"}) do |f| %>
+     <div class="row">
+        <div class="col-sm-2">
           <label>From </label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= text_field :salary,:from,hide_label: true,class: 'request_date form-control'%>
+              <%= text_field :employee,:from,hide_label: true,class: 'request_date form-control'%>
             </div>
           </div>
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <label>To </label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= text_field :salary,:to,hide_label: true,class: 'request_date form-control'%>
+              <%= text_field :employee,:to,hide_label: true,class: 'request_date form-control'%>
             </div>
           </div>
         </div>
-           
+
         <div class="col-sm-3">
-        <label>Employee</label>
-          <div class="field">
-             <%= select :salary,:employee_id, all_employee_list,{include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+          <div class="form-group required">
+            <%= f.select :reporting_master, all_reporting_master_list, {include_blank: "Select Manager"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
           </div>
         </div>
-        <div class="col-sm-3" style="padding-top: 20px;">
-          <div class="actions">
-            <%= f.submit "Employees For Revert Attendance" ,class: 'btn btn-primary btn-sm',id: "buttonCtc" %>
-          </div>
+
+        <div class="col-sm-2" style="padding-top:20px;">
+          <%= f.submit "Show Employee List",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %>
         </div>
-      </div><br>
-    <% end %>
-    <div id="all_employee_list"></div>
-  </div>
+      </div>
+  <% end %>
 </div>
-
-
+</div>
 <script type="text/javascript">
   $("#buttonCtc").click(function(){
     $('.ajax-progress').show();
-    $("#employee_attendance").submit();
-    $('.ajax-progress').hide();
+    $("#advance_salary").submit();
   })
   
   $(function(){
@@ -64,27 +58,27 @@
 </script>
 
 <script>
-$("#salary").validate({
+$("#employee").validate({
     rules: {
-      "salary[from]":{
+      "employee[from]":{
         required: true,
       },
-      "salary[to]":{
+      "employee[to]":{
         required: true,
       },
-      "salary[employee_id]":{
+      "employee[reporting_master]":{
         required: true,
       }
        },
     messages: {
-      "salary[from]":{
+      "employee[from]":{
         required: "Please Specify From",
       },
-       "salary[to]":{
+       "employee[to]":{
         required: "Please Select To",
       },
-       "salary[employee_id]":{
-        required: "Please Select Employee",
+       "employee[reporting_master]":{
+        required: "Please Select Reporting Master",
       }
        },
     errorPlacement: function(error, element) {

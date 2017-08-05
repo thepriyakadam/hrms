@@ -637,6 +637,37 @@ require 'roo'
 # puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
 # EmployeeLeavBalance.new do |j|
 
+
+# 2.upto(51) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+# puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
+# EmployeeLeavBalance.new do |j|
+
+#   j.employee_id = @employee.id unless @employee.nil?
+#   puts "#{(ex.cell(line,'A'))} Record inserted........Employee ID #{@employee.id}-----------------------------------------------"
+#   j.leav_category_id = ex.cell(line,'C').to_i
+#   puts "#{(ex.cell(line,'C'))} Record inserted.-----------------------------------------------"
+#   j.no_of_leave = ex.cell(line,'D')
+#   j.expiry_date = ex.cell(line,'E')
+#   j.total_leave = ex.cell(line,'F')
+#   j.from_date = ex.cell(line,'G')
+#   j.to_date = ex.cell(line,'H')
+#   j.save!
+# end
+# puts "#{i} Record inserted.-----------------------------------------------"
+# i = i+1
+# end
+
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/sp_leave_bal.xls")
+# ex.default_sheet = ex.sheets[1] 
+# i=1
+
+# 2.upto(51) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+# puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
+# EmployeeLeavBalance.new do |j|
+
 #   j.employee_id = @employee.id unless @employee.nil?
 #   puts "#{(ex.cell(line,'A'))} Record inserted........Employee ID #{@employee.id}-----------------------------------------------"
 #   j.leav_category_id = ex.cell(line,'C').to_i
@@ -728,6 +759,15 @@ require 'roo'
 # ===========================
 
 
+ex = Roo::Excel.new("#{Rails.root}/public/spep.xls")
+ex.default_sheet = ex.sheets[0]
+j = 1
+gross_salary = 0
+ActiveRecord::Base.transaction do
+2.upto(168) do |line|
+  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+
+  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 # ex = Roo::Excel.new("#{Rails.root}/public/sp_salary.xls")
 # ex.default_sheet = ex.sheets[0]
 # j = 1
@@ -765,7 +805,6 @@ require 'roo'
 #       gross_salary = gross_salary + ex.cell(line,'D').to_i
 
 #       puts "HRA..................Salary"
-      
 #       elsif t.salary_component.name == "Convenience Allowance"
 #       est.monthly_amount = ex.cell(line,'E') unless ex.cell(line,'E').nil?
 #       est.annual_amount = est.monthly_amount.to_i * 12
@@ -800,14 +839,56 @@ require 'roo'
 
 #       puts "Children Education Allowance..................Salary"
 
+      elsif t.salary_component.name == "Convenience Allowance"
+      est.monthly_amount = ex.cell(line,'E') unless ex.cell(line,'E').nil?
+      est.annual_amount = est.monthly_amount.to_i * 12
+      gross_salary = gross_salary + ex.cell(line,'E').to_i
+      puts "Convenience Allowance..................Salary"
+
+      # elsif t.salary_component.name == "Other Allowance"
+      # est.monthly_amount = ex.cell(line,'E') unless ex.cell(line,'E').nil?
+      # est.annual_amount = est.monthly_amount.to_i * 12
+      # gross_salary = gross_salary + ex.cell(line,'E').to_i
+
+      # puts "Convenience Allowance..................Salary"
+
+      elsif t.salary_component.name == "Medical Reimbursement"
+      est.monthly_amount = ex.cell(line,'F') unless ex.cell(line,'F').nil?
+      est.annual_amount = est.monthly_amount.to_i * 12
+      gross_salary = gross_salary + ex.cell(line,'F').to_i
+
+      puts "Medical Reimbursement..................Salary"
+
+  elsif t.salary_component.name == "Leave Travel Allowance"
+      est.monthly_amount = ex.cell(line,'G') unless ex.cell(line,'G').nil?
+      est.annual_amount = est.monthly_amount.to_i * 12
+      gross_salary = gross_salary + ex.cell(line,'G').to_i
+
+      puts "Leave Travel Allowance..................Salary"
+
+  elsif t.salary_component.name == "Children Education Allowance"
+      est.monthly_amount = ex.cell(line,'H') unless ex.cell(line,'H').nil?
+      est.annual_amount = est.monthly_amount.to_i * 12
+      gross_salary = gross_salary + ex.cell(line,'H').to_i
+
+      puts "Children Education Allowance..................Salary"
+
+ elsif t.salary_component.name == "Program Allowance"
+      est.monthly_amount = ex.cell(line,'I') unless ex.cell(line,'I').nil?
+      est.annual_amount = est.monthly_amount.to_i * 12
+      gross_salary = gross_salary + ex.cell(line,'I').to_i
 #  elsif t.salary_component.name == "Progressive Allowance"
 #       est.monthly_amount = ex.cell(line,'I') unless ex.cell(line,'I').nil?
 #       est.annual_amount = est.monthly_amount.to_i * 12
 #       gross_salary = gross_salary + ex.cell(line,'I').to_i
 
 #       puts "Program Allowance..................Salary"
+ elsif t.salary_component.name == "Transport Allowance"
+      est.monthly_amount = ex.cell(line,'J') unless ex.cell(line,'J').nil?
+      est.annual_amount = est.monthly_amount.to_i * 12
+      gross_salary = gross_salary + ex.cell(line,'J').to_i
 
-
+      puts "Transport Allowance..................Salary"
 #  # elsif t.salary_component.name == "Transport Allowance"
 #  #      est.monthly_amount = ex.cell(line,'J') unless ex.cell(line,'J').nil?
 #  #      est.annual_amount = est.monthly_amount.to_i * 12

@@ -50,6 +50,12 @@
         <Cell ss:Index="40"><Data ss:Type="String">OT Option</Data></Cell>
         <Cell ss:Index="41"><Data ss:Type="String">Time Master</Data></Cell>
         <Cell ss:Index="42"><Data ss:Type="String">Time Adjusted</Data></Cell>
+        <Cell ss:Index="43"><Data ss:Type="String">Company RFID</Data></Cell>
+        <Cell ss:Index="44"><Data ss:Type="String">Gate RFID</Data></Cell>
+        <Cell ss:Index="45"><Data ss:Type="String">Status</Data></Cell>
+        <Cell ss:Index="46"><Data ss:Type="String">Society Member</Data></Cell>
+        <Cell ss:Index="47"><Data ss:Type="String">Date</Data></Cell>
+        <Cell ss:Index="48"><Data ss:Type="String">Notice Period After Probation</Data></Cell>
       </Row>
 
       <% i = 0 %>
@@ -91,13 +97,19 @@
         <Cell ss:Index="33"><Data ss:Type="String"><%= joining_detail.try(:is_employeer_pf) ? 'Yes' : 'No'%></Data></Cell>
         <Cell ss:Index="34"><Data ss:Type="String"><%= joining_detail.try(:is_employeer_esic) ? 'Yes' : 'No'%></Data></Cell>
         <Cell ss:Index="35"><Data ss:Type="String"><%= joining_detail.try(:is_insurance) ? 'Yes' : 'No'%></Data></Cell>
-        <Cell ss:Index="36"><Data ss:Type="String"><%= joining_detail.try(:is_family_pention) ? 'Yes' : 'No'%></Data></Cell>
+        <Cell ss:Index="36"><Data ss:Type="String"><%= joining_detail.try(:is_family_pension) ? 'Yes' : 'No'%></Data></Cell>
         <Cell ss:Index="37"><Data ss:Type="String"><%= joining_detail.try(:is_bonus) ? 'Yes' : 'No'%></Data></Cell>
         <Cell ss:Index="38"><Data ss:Type="String"><%= joining_detail.try(:basis_of_time) ? 'Yes' : 'No'%></Data></Cell>
         <Cell ss:Index="39"><Data ss:Type="String"><%= joining_detail.try(:ot_rate) %></Data></Cell>
         <Cell ss:Index="40"><Data ss:Type="String"><%= joining_detail.try(:ot_option) ? 'Yes' : 'No'%></Data></Cell>
         <Cell ss:Index="41"><Data ss:Type="String"><%= joining_detail.try(:time_master) ? 'Yes' : 'No' %></Data></Cell>
         <Cell ss:Index="42"><Data ss:Type="String"><%= joining_detail.try(:time_adjusted) ? 'Yes' : 'No' %></Data></Cell>
+        <Cell ss:Index="43"><Data ss:Type="String"><%= joining_detail.try(:company_rfid) %></Data></Cell>
+        <Cell ss:Index="44"><Data ss:Type="String"><%= joining_detail.try(:gate_rfid) %></Data></Cell>
+        <Cell ss:Index="45"><Data ss:Type="String"><%= joining_detail.try(:status) ? 'Yes' : 'No' %></Data></Cell>
+        <Cell ss:Index="46"><Data ss:Type="String"><%= joining_detail.try(:is_society_member) ? 'Yes' : 'No' %></Data></Cell>
+        <Cell ss:Index="47"><Data ss:Type="String"><%= joining_detail.try(:date) %></Data></Cell>
+        <Cell ss:Index="48"><Data ss:Type="String"><%= joining_detail.try(:notice_period_after_probation) %></Data></Cell>
 
       </Row><!-- Row -->
       <% end %><!-- slip -->

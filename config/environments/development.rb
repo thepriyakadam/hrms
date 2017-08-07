@@ -125,41 +125,41 @@
    # # openssl_verify_mode: 'none'
    # }
 
-   # config.action_mailer.default_url_options = { host: 'https://gmail.com', port: 3000}
+   config.action_mailer.default_url_options = { host: 'https://gmail.com', port: 3000}
   
   
-   # # config.domain = 'lvh.me'
-   # # config.action_mailer.perform_deliveries = true,
-   # ActionMailer::Base.delivery_method = :smtp
-   # ActionMailer::Base.smtp_settings = {
-   # address: 'mail.indibasolutions.com',
-   # port: 465,
-   # domain: 'mail.indibasolutions.com',
-   # user_name: 'hcmzone@indibasolutions.com',
-   # password: 'Indiba04',
-   # authentication: :plain,
-   # enable_starttls_auto: true,
-   # openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
-   # # openssl_verify_mode: 'none'
-   # }
-
-
-  config.action_mailer.default_url_options = { host: 'http://amaazia.co.in', port: 2095 }
-
-  # config.domain = 'lvh.me'
-  # config.action_mailer.perform_deliveries = true,
-  ActionMailer::Base.delivery_method = :smtp
-  ActionMailer::Base.smtp_settings = {
-  address: 'amaazia.co.in',
-  port:  587,
-  domain: 'amaazia.co.in',
-  user_name: 'hrms@rajgreen.co.in',
-  password: 'amaazia@123',
-  authentication: :plain,
-  enable_starttls_auto: true,
+   # config.domain = 'lvh.me'
+   # config.action_mailer.perform_deliveries = true,
+   ActionMailer::Base.delivery_method = :smtp
+   ActionMailer::Base.smtp_settings = {
+   address: 'mail.indibasolutions.com',
+   port: 465,
+   domain: 'mail.indibasolutions.com',
+   user_name: 'hcmzone@indibasolutions.com',
+   password: 'Indiba04',
+   authentication: :plain,
+   enable_starttls_auto: true,
    openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
    # openssl_verify_mode: 'none'
-  }
+   }
+
+
+  # config.action_mailer.default_url_options = { host: 'http://amaazia.co.in', port: 2095 }
+
+  # # config.domain = 'lvh.me'
+  # # config.action_mailer.perform_deliveries = true,
+  # ActionMailer::Base.delivery_method = :smtp
+  # ActionMailer::Base.smtp_settings = {
+  # address: 'amaazia.co.in',
+  # port:  587,
+  # domain: 'amaazia.co.in',
+  # user_name: 'hrms@rajgreen.co.in',
+  # password: 'amaazia@123',
+  # authentication: :plain,
+  # enable_starttls_auto: true,
+  #  openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+  #  # openssl_verify_mode: 'none'
+  # }
 
  
   # # config.domain = 'lvh.me'

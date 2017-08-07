@@ -12,22 +12,35 @@
           </div>
         </div>
         <div class="col-sm-3">
-          <label>Date </label>
+          <label>From </label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= text_field :salary,:day,hide_label: true,class: 'day_date form-control'%>
+              <%= text_field :salary,:from,hide_label: true,class: 'day_date form-control'%>
             </div>
           </div>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-3">
+          <label>To </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :salary,:to,hide_label: true,class: 'day_date form-control'%>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
         <label>Present </label>
           <div class="field">
             <%= select :salary,:present,['P','WO','WOP','A','HDL','H','HP','LWP','HD-LWP','PO','ACF'],{hide_label: true,include_blank: "Select Option"} ,{class: "form-control"}%>
           </div>
         </div> 
+      </div>
+      <div class="row">
         <div class="col-sm-3" style="padding-top:20px;">
           <div class="actions">
             <%= f.submit "Employees For Revert Attendance" ,class: 'btn btn-primary btn-sm' ,id: "buttonCtc" %>
@@ -60,7 +73,10 @@
       "salary[department_id]":{
         required: true
       },
-       "salary[day]":{
+       "salary[from]":{
+        required: true
+      },
+       "salary[to]":{
         required: true
       },
        "salary[present]":{
@@ -71,8 +87,11 @@
       "salary[department_id]":{
         required: "Please specify department_id"
       },
-      "salary[day]":{
-        required: "Please specify day"
+      "salary[from]":{
+        required: "Please specify From"
+      },
+      "salary[to]":{
+        required: "Please specify To"
       },
       "salary[present]":{
         required: "Please specify present"

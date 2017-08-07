@@ -22,7 +22,7 @@
                 <td><%= on_duty_request.employee.try(:manual_employee_code) %></td>
                 <td><%= full_name(on_duty_request.employee) %></td>
                 <td>
-                  <%= link_to 'View Detail', employee_od_request_detail_on_duty_requests_path(on_duty_request),class: 'btn btn-sm btn-info' %>
+                  <%= link_to 'View Detail', employee_od_request_detail_on_duty_requests_path(on_duty_request),class: 'btn btn-xs btn-info' %>
                 </td>
               </tr>
             <% end %>
@@ -47,7 +47,7 @@
                 <td><%= on_duty_request.employee.try(:manual_employee_code) %></td>
                 <td><%= on_duty_request.employee.try(:first_name) %> <%= on_duty_request.employee.try(:middle_name) %> <%=on_duty_request.employee.try(:last_name) %></td>
                 <td>
-                  <%= link_to 'View Detail', employee_od_request_detail_on_duty_requests_path(on_duty_request),class: 'btn btn-sm btn-info' %>
+                  <%= link_to 'View Detail', employee_od_request_detail_on_duty_requests_path(on_duty_request),class: 'btn btn-xs btn-info' %>
                 </td>
               </tr>
             <% end %>

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :sub_departments
   resources :change_designations do
     collection do
       get :employee_list
@@ -736,6 +737,12 @@ end
       get :reject_acf_request
       get :admin_level_acf
       post :admin_acf_approval
+      get :attendance_average_report
+      post :attendance_average_details
+      get :attendance_average_details
+      get :managerwise_average_report
+      post :show_managerwise_average_attendance
+      get :show_managerwise_average_attendance
     end
   end
   resources :salary_comp_mappings
@@ -1640,6 +1647,8 @@ end
       get :dynamic_report
       post :dynamic_report
       get :modal
+      get :import_monthly_expence
+      post :import
     end
   end
   resources :expencess_types do
@@ -1663,6 +1672,8 @@ end
       get :dynamic_report
       post :dynamic_report
       get :modal
+      get :import_food_deduction
+      post :import_deduction
     end
   end
   resources :reporting_masters do
@@ -2139,6 +2150,9 @@ end
       get :status_wise_request
       get :select_form
       get :select_admin_form
+      get :balancewise_report
+      post :show_balancewise_report
+      get :show_balancewise_report
     end
   end
   resources :company_leavs

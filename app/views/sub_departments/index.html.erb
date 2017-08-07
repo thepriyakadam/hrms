@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Sub Departments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Department</th>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sub_departments.each do |sub_department| %>
+      <tr>
+        <td><%= sub_department.department %></td>
+        <td><%= sub_department.code %></td>
+        <td><%= sub_department.name %></td>
+        <td><%= sub_department.status %></td>
+        <td><%= link_to 'Show', sub_department %></td>
+        <td><%= link_to 'Edit', edit_sub_department_path(sub_department) %></td>
+        <td><%= link_to 'Destroy', sub_department, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Sub department', new_sub_department_path %>

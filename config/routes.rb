@@ -736,6 +736,12 @@ end
       get :reject_acf_request
       get :admin_level_acf
       post :admin_acf_approval
+      get :attendance_average_report
+      post :attendance_average_details
+      get :attendance_average_details
+      get :managerwise_average_report
+      post :show_managerwise_average_attendance
+      get :show_managerwise_average_attendance
     end
   end
   resources :salary_comp_mappings
@@ -2143,6 +2149,9 @@ end
       get :status_wise_request
       get :select_form
       get :select_admin_form
+      get :balancewise_report
+      post :show_balancewise_report
+      get :show_balancewise_report
     end
   end
   resources :company_leavs

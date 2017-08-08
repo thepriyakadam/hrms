@@ -17,6 +17,7 @@ class EmployeeAttendance < ActiveRecord::Base
     flag
   end
   
+
   def self.collect_rolewise(current_user)
     if current_user.class == Group
       Employee.all.pluck(:id)

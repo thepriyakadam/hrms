@@ -781,6 +781,27 @@ class EmployeeLeavRequestsController < ApplicationController
     end
   end
 
+  def balancewise_report
+  end
+
+  def show_balancewise_report
+    @employee_id = params[:employee][:employee_id]
+    @employee = Employee.find_by(id: @employee_id)
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_leav_requests/balancewise_report.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'status_wise_request',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_leav_requests/balancewise_report.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

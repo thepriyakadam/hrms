@@ -724,7 +724,6 @@ require 'roo'
 # ===========================
 
 
-<<<<<<< HEAD
 ex = Roo::Excel.new("#{Rails.root}/public/spep.xls")
 ex.default_sheet = ex.sheets[0]
 j = 1
@@ -734,7 +733,6 @@ ActiveRecord::Base.transaction do
   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
 
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-=======
 # ex = Roo::Excel.new("#{Rails.root}/public/sp_salary.xls")
 # ex.default_sheet = ex.sheets[0]
 # j = 1
@@ -743,7 +741,6 @@ ActiveRecord::Base.transaction do
 # 2.upto(83) do |line|
 #   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
 #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
->>>>>>> d27d4f46e2aaa275d63ac369acb03250202e4d6f
   
   @salary_template = SalaryTemplate.find_by_id(ex.cell(line,'B'))
   @salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?

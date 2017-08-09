@@ -679,7 +679,7 @@ class EmployeeAttendancesController < ApplicationController
           diff_hours=emp_attend.sum(:difference_hrs).to_f
           calculated_diff=ot_hours-diff_hours
           # Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f / @payroll_overtime_masters.company_hrs.to_f)
-          # byebug
+         
           joining_detail = JoiningDetail.where(employee_id: x).take
         if try(:joining_detail).try(:ot_option) == true
           Workingday.where(employee_id: x).update_all(ot_hours: calculated_diff.to_f.round(2))

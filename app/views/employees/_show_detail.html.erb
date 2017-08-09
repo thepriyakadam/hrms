@@ -34,6 +34,8 @@
         <th><strong>Gender</strong></th>
         <td><%= @employee.gender %></td> 
       </tr>
+
+
       <tr>
         <th><strong>Marital Status</strong></th>
         <td><%= @employee.marital_status %></td>
@@ -72,29 +74,35 @@
       <tr>
 
         <th><strong>City</strong></th>
-        <td><%= @employee.city %></td>
+        <td colspan="3"><%= @employee.city %></td>
         
-        <th><strong>Contact No.</strong></th>
-        <td><%= @employee.contact_no %></td>
+       
       </tr>
       <tr>      
         <th><strong>Current Address</strong></th>
         <td colspan="3"><%= @employee.current_address %></td>
       </tr>
-        <tr>
-        <th><strong>Optional Contact</strong></th>
-        <td><%= @employee.optinal_contact_no %></td>
-
+       <tr>
         <th><strong>Email</strong></th>
         <td><%= @employee.email %></td>
-      </tr>
-      <tr>
+
         <th><strong>Optional Email</strong></th>
         <td><%= @employee.optional_email %></td>
+      </tr>
+        <tr>
+        <th><strong>Contact No.</strong></th>
+        <td><%= @employee.contact_no %></td>
+
+        <th><strong>Personal Contact No.</strong></th>
+        <td><%= @employee.optinal_contact_no %></td>
+      </tr>
+      <tr>
+        <th> Emergency Contact No.</th>
+        <td><%= @employee.try(:optional_contact_no) %></td>
 
         <th><strong>Religion</strong></th>
         <td><%= @employee.religion.try(:name) %></td>
-      </tr>
+     
       <tr>
         <th><strong>Differently Abled</strong></th>
         <td><%= @employee.handicap %></td>
@@ -118,8 +126,9 @@
       <tr>
         <th>Department</th>
         <td><%= @employee.try(:department).try(:name) %></td>
-        <th>Optional Contact No.</th>
-        <td><%= @employee.try(:optional_contact_no) %></td>
+
+        <th>Sub Department</th>
+        <td><%= @employee.try(:sub_department).try(:name) %></td>
       </tr>
      
     </table>

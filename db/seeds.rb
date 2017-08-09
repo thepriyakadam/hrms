@@ -576,30 +576,49 @@ require 'roo'
 
 #==================================== EMPLOYEE ON BOARDING DATA END ====================================================#
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/b_sp.xls")
-# ex.default_sheet = ex.sheets[0] 
-# i=1
-# 2.upto(83) do |line|
-# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-# EmployeeBankDetail.new do |b|
-#   b.employee_id = @employee.id unless @employee.nil?
-#   b.account_no = ex.cell(line,'C').to_i
-#   b.bank_name = ex.cell(line,'B')
-#   b.branch_name = ex.cell(line,'D')
-#   b.address = ex.cell(line,'J')
-#   b.contact_no = ex.cell(line,'H').to_i
-#   b.micr_code = ex.cell(line,'G')
-#   b.branch_code = ex.cell(line,'F')
-#   b.ifsc_code = ex.cell(line,'E')
-#   @bankname = Bank.find_by_name(ex.cell(line,'B'))
-#   b.bank_id = @bankname.id unless @bankname.nil?
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/sg_bank.xls")
+ex.default_sheet = ex.sheets[0] 
+i=1
+2.upto(358) do |line|
+@employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
+EmployeeBankDetail.new do |b|
+  b.employee_id = @employee.id unless @employee.nil?
+  b.account_no = ex.cell(line,'D').to_i
+  b.bank_name = ex.cell(line,'E')
+  b.branch_name = ex.cell(line,'F')
+  b.address = ex.cell(line,'K')
+  b.contact_no = ex.cell(line,'G').to_i
+  b.micr_code = ex.cell(line,'H')
+  b.branch_code = ex.cell(line,'I')
+  b.ifsc_code = ex.cell(line,'J')
+  @bankname = Bank.find_by_name(ex.cell(line,'E'))
+  b.bank_id = @bankname.id unless @bankname.nil?
 
-#   b.save!
-# end
-# puts "#{i} Record inserted.-----------------------------------------------"
-# i = i+1
-# end
+  b.save!
+end
+puts "#{i} Record inserted.-----------------------------------------------"
+i = i+1
+end
+
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/sg_cer.xls")
+ex.default_sheet = ex.sheets[0] 
+i=1
+2.upto(38) do |line|
+@employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
+Certification.new do |b|
+  b.employee_id = @employee.id unless @employee.nil?
+  b.name = ex.cell(line,'D')
+  @year = Year.find_by_name(ex.cell(line,'E'))
+  b.year_id = @year.id unless @year.nil?
+  b.duration = ex.cell(line,'F')
+  b.description = ex.cell(line,'G')
+  b.save!
+end
+puts "#{i} Record inserted.-----------------------------------------------"
+i = i+1
+end
 
 
 # puts "Starting ..."
@@ -636,8 +655,6 @@ require 'roo'
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 # puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
 # EmployeeLeavBalance.new do |j|
-
-
 # 2.upto(51) do |line|
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 # puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
@@ -667,7 +684,6 @@ require 'roo'
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 # puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
 # EmployeeLeavBalance.new do |j|
-
 #   j.employee_id = @employee.id unless @employee.nil?
 #   puts "#{(ex.cell(line,'A'))} Record inserted........Employee ID #{@employee.id}-----------------------------------------------"
 #   j.leav_category_id = ex.cell(line,'C').to_i
@@ -759,22 +775,15 @@ require 'roo'
 # ===========================
 
 
-ex = Roo::Excel.new("#{Rails.root}/public/spep.xls")
-ex.default_sheet = ex.sheets[0]
-j = 1
-gross_salary = 0
-ActiveRecord::Base.transaction do
-2.upto(168) do |line|
-  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
 
-  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-# ex = Roo::Excel.new("#{Rails.root}/public/sp_salary.xls")
+# ex = Roo::Excel.new("#{Rails.root}/public/spep.xls")
 # ex.default_sheet = ex.sheets[0]
 # j = 1
 # gross_salary = 0
 # ActiveRecord::Base.transaction do
-# 2.upto(83) do |line|
+# 2.upto(168) do |line|
 #   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+
 #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   
 #   @salary_template = SalaryTemplate.find_by_id(ex.cell(line,'B'))
@@ -839,62 +848,20 @@ ActiveRecord::Base.transaction do
 
 #       puts "Children Education Allowance..................Salary"
 
-      elsif t.salary_component.name == "Convenience Allowance"
-      est.monthly_amount = ex.cell(line,'E') unless ex.cell(line,'E').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      gross_salary = gross_salary + ex.cell(line,'E').to_i
-      puts "Convenience Allowance..................Salary"
 
-      # elsif t.salary_component.name == "Other Allowance"
-      # est.monthly_amount = ex.cell(line,'E') unless ex.cell(line,'E').nil?
-      # est.annual_amount = est.monthly_amount.to_i * 12
-      # gross_salary = gross_salary + ex.cell(line,'E').to_i
 
-      # puts "Convenience Allowance..................Salary"
-
-      elsif t.salary_component.name == "Medical Reimbursement"
-      est.monthly_amount = ex.cell(line,'F') unless ex.cell(line,'F').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      gross_salary = gross_salary + ex.cell(line,'F').to_i
-
-      puts "Medical Reimbursement..................Salary"
-
-  elsif t.salary_component.name == "Leave Travel Allowance"
-      est.monthly_amount = ex.cell(line,'G') unless ex.cell(line,'G').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      gross_salary = gross_salary + ex.cell(line,'G').to_i
-
-      puts "Leave Travel Allowance..................Salary"
-
-  elsif t.salary_component.name == "Children Education Allowance"
-      est.monthly_amount = ex.cell(line,'H') unless ex.cell(line,'H').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      gross_salary = gross_salary + ex.cell(line,'H').to_i
-
-      puts "Children Education Allowance..................Salary"
-
- elsif t.salary_component.name == "Program Allowance"
-      est.monthly_amount = ex.cell(line,'I') unless ex.cell(line,'I').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      gross_salary = gross_salary + ex.cell(line,'I').to_i
-#  elsif t.salary_component.name == "Progressive Allowance"
-#       est.monthly_amount = ex.cell(line,'I') unless ex.cell(line,'I').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       gross_salary = gross_salary + ex.cell(line,'I').to_i
+# #  elsif t.salary_component.name == "Progressive Allowance"
+# #       est.monthly_amount = ex.cell(line,'I') unless ex.cell(line,'I').nil?
+# #       est.annual_amount = est.monthly_amount.to_i * 12
+# #       gross_salary = gross_salary + ex.cell(line,'I').to_i
 
 #       puts "Program Allowance..................Salary"
- elsif t.salary_component.name == "Transport Allowance"
-      est.monthly_amount = ex.cell(line,'J') unless ex.cell(line,'J').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      gross_salary = gross_salary + ex.cell(line,'J').to_i
+# #  # elsif t.salary_component.name == "Transport Allowance"
+# #  #      est.monthly_amount = ex.cell(line,'J') unless ex.cell(line,'J').nil?
+# #  #      est.annual_amount = est.monthly_amount.to_i * 12
+# #  #      gross_salary = gross_salary + ex.cell(line,'J').to_i
 
-      puts "Transport Allowance..................Salary"
-#  # elsif t.salary_component.name == "Transport Allowance"
-#  #      est.monthly_amount = ex.cell(line,'J') unless ex.cell(line,'J').nil?
-#  #      est.annual_amount = est.monthly_amount.to_i * 12
-#  #      gross_salary = gross_salary + ex.cell(line,'J').to_i
-
-#  #      puts "Transport Allowance..................Salary"
+# #  #      puts "Transport Allowance..................Salary"
 
       
 #     end
@@ -938,7 +905,7 @@ ActiveRecord::Base.transaction do
 #  ex.default_sheet = ex.sheets[0] #siya feb
 #  i = 1
 #  ActiveRecord::Base.transaction do
-#  2.upto(14) do |line| # siya Feb 201
+#  2.upto(12) do |line| # siya Feb 201
 #    puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
 #    @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 #    unless @employee.nil?
@@ -952,6 +919,7 @@ ActiveRecord::Base.transaction do
 #        w.pay_leave = ex.cell(line, 'G').to_i
 #        w.nonpay_leave = ex.cell(line, 'K')
 #        w.payable_day = ex.cell(line, 'L')
+#          w.date = ex.cell(line, 'M')
 #        w.save!
 #      end
 #      puts "#{i} Record inserted.-----------------------------------------------"

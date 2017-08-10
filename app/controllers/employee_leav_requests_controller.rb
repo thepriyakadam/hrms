@@ -158,7 +158,6 @@ class EmployeeLeavRequestsController < ApplicationController
         end
     else#c_off
 
-
         @emp_leav_req = EmployeeLeavRequest.where(employee_id: @employee.id, start_date: start_date,end_date: end_date)
           if params[:flag] == "Full/Half"
             @employee_leav_request.last_half = params[:common][:last_half]

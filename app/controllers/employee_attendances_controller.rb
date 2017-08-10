@@ -687,7 +687,7 @@ class EmployeeAttendancesController < ApplicationController
           #   d.each do |f|
           #     f.update(calculated_payable_days: f.payable_day)
           #   end
-      end#emp1 loop
+        end#emp1 loop
           work=Workingday.where("ot_hours < ?", 0).pluck(:id)
           @workingdays = Workingday.where(id: work)
           @workingdays.each do |wor|

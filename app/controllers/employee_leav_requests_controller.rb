@@ -241,6 +241,10 @@ class EmployeeLeavRequestsController < ApplicationController
           
                 #leave_record
                       @employee_leav_request.leave_record_create(@employee_leav_request)
+                      
+                      # @leave_record = LeaveRecord.last
+                      # @leave_record = LeaveRecord.find_by(employee_leav_request_id: @employee_leav_request.id)
+                      # @employee_leav_request.update(leave_count: @leave_record.count)
                     
                     if @employee.manager.email.nil? or @employee.manager.email == ""
                       flash[:notice] = "Send request without email."
@@ -274,6 +278,11 @@ class EmployeeLeavRequestsController < ApplicationController
                       #emp_leav_bal_id
                           @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                           @employee_leav_request.leave_record_create(@employee_leav_request)
+
+                          # @leave_record = LeaveRecord.last
+                          # @leave_record = LeaveRecord.find_by(employee_leav_request_id: @employee_leav_request.id)
+                          # @employee_leav_request.update(leave_count: @leave_record.count)
+
                           @employee_leav_request.minus_leave(@employee_leav_request)
                           if @employee.manager.email.nil? || @employee.manager.email == ''
                             flash[:notice] = 'Send request without email.'
@@ -290,6 +299,12 @@ class EmployeeLeavRequestsController < ApplicationController
                           @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                         #leave_record
                           @employee_leav_request.leave_record_create(@employee_leav_request)
+
+                          # @leave_record = LeaveRecord.last
+                          # @leave_record = LeaveRecord.find_by(employee_leav_request_id: @employee_leav_request.id)
+                          # @employee_leav_request.update(leave_count: @leave_record.count)
+
+
                           @employee_leav_request.minus_leave(@employee_leav_request)
                           if @employee.manager.email.nil? || @employee.manager.email == ''
                             flash[:notice] = 'Send request without email.'
@@ -316,6 +331,12 @@ class EmployeeLeavRequestsController < ApplicationController
                           @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                         #leave_record
                           @employee_leav_request.leave_record_create(@employee_leav_request)
+
+                          # @leave_record = LeaveRecord.last
+                          # @leave_record = LeaveRecord.find_by(employee_leav_request_id: @employee_leav_request.id)
+                          # @employee_leav_request.update(leave_count: @leave_record.count)
+
+
                           #@employee_leav_request.manage_coff(@employee_leav_request)
                           @employee_leav_request.minus_leave(@employee_leav_request)
                           if @employee.manager.email.nil? || @employee.manager.email == ''
@@ -335,6 +356,12 @@ class EmployeeLeavRequestsController < ApplicationController
                           @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
               #leave_record
                       @employee_leav_request.leave_record_create(@employee_leav_request)
+
+                      # @leave_record = LeaveRecord.last
+                      # @leave_record = LeaveRecord.find_by(employee_leav_request_id: @employee_leav_request.id)
+                      # @employee_leav_request.update(leave_count: @leave_record.count)
+
+
                           @employee_leav_request.minus_leave(@employee_leav_request)
                           if @employee.manager.email.nil? || @employee.manager.email == ''
                             flash[:notice] = 'Send request without email.'
@@ -356,6 +383,11 @@ class EmployeeLeavRequestsController < ApplicationController
 
             #leave_record
                     @employee_leav_request.leave_record_create(@employee_leav_request)
+
+                      # @leave_record = LeaveRecord.last
+                      # @leave_record = LeaveRecord.find_by(employee_leav_request_id: @employee_leav_request.id)
+                      # @employee_leav_request.update(leave_count: @leave_record.count)
+
                         @employee_leav_request.minus_leave(@employee_leav_request)
                         if @employee.manager.email.nil? || @employee.manager.email == ''
                           flash[:notice] = 'Send request without email.'

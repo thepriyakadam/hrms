@@ -40,7 +40,7 @@
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :date_of_birth,hide_label:true, class: 'family_birth_date' %>
+            <%= f.text_field :date_of_birth,hide_label:true, class: 'family_birthdate' %>
           </div>
          </div>
         </div>
@@ -199,9 +199,9 @@
    $(function(){
     $('#family_date_of_birth').on('input', function() {
       var family_date_of_birth = parseFloat($('#family_date_of_birth').val());
-      date = Date.today
+      var date = Date.today
       var age = "";
-      if (isNaN(family_date_of_birth)) {
+      if isNaN(family_date_of_birth) {
         age = ""
       }
       else{
@@ -209,13 +209,28 @@
       }
       $('#family_age').val(age);
     });
-
-   
   });  
-</script>
 
+    $(function(){
+    $('.family_birthdate').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
 
-<script type="text/javascript">
+    $('.family_passport_issue_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.family_passport_expiry_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:+30',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+
 
    $("#family").validate({
   rules: {
@@ -241,26 +256,3 @@
   });
 </script>
 
-<script type="text/javascript">
-  $(function(){
-    $('.family_birth_date').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-200:-0',
-    dateFormat: 'dd-mm-yy' });
-
-    $('.family_passport_issue_date').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-200:-0',
-    dateFormat: 'dd-mm-yy' });
-
-    $('.family_passport_expiry_date').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-100:+30',
-    dateFormat: 'dd-mm-yy' });
-
-  }); 
-
-</script>

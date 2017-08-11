@@ -620,31 +620,51 @@ require 'roo'
 # i = i+1
 # end
 
+
 puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/sg_qualification.xls")
+ex = Roo::Excel.new("#{Rails.root}/public/sg_award.xls")
 ex.default_sheet = ex.sheets[0] 
 i=1
-2.upto(38) do |line|
+2.upto(19) do |line|
 @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
-Qualification.new do |b|
+Award.new do |b|
   b.employee_id = @employee.id unless @employee.nil?
-  @degree_type = DegreeType.find_by_name(ex.cell(line,'D'))
-  b.degree_type_id = @degree_type.id unless @degree_type.nil?
-  @degree = Degree.find_by_name(ex.cell(line,'E'))
-  b.degree_id = @degree.id unless @degree.nil?
-  @degree_stream = DegreeStream.find_by_name(ex.cell(line,'F'))
-  b.degree_stream_id = @degree_stream.id unless @degree_stream.nil?
-  @university = University.find_by_name(ex.cell(line,'J'))
-  b.university_id = @university.id unless @university.nil?
-  @year = Year.find_by_name(ex.cell(line,'H'))
+  b.award_name = ex.cell(line,'D')
+  @year = Year.find_by_name(ex.cell(line,'E'))
   b.year_id = @year.id unless @year.nil?
-  b.college = ex.cell(line,'I')
-  b.marks = ex.cell(line,'G')
+  b.award_from = ex.cell(line,'F')
+  b.description = ex.cell(line,'G')
   b.save!
 end
 puts "#{i} Record inserted.-----------------------------------------------"
 i = i+1
 end
+
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/sg_qualification.xls")
+# ex.default_sheet = ex.sheets[0] 
+# i=1
+# 2.upto(38) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
+# Qualification.new do |b|
+#   b.employee_id = @employee.id unless @employee.nil?
+#   @degree_type = DegreeType.find_by_name(ex.cell(line,'D'))
+#   b.degree_type_id = @degree_type.id unless @degree_type.nil?
+#   @degree = Degree.find_by_name(ex.cell(line,'E'))
+#   b.degree_id = @degree.id unless @degree.nil?
+#   @degree_stream = DegreeStream.find_by_name(ex.cell(line,'F'))
+#   b.degree_stream_id = @degree_stream.id unless @degree_stream.nil?
+#   @university = University.find_by_name(ex.cell(line,'J'))
+#   b.university_id = @university.id unless @university.nil?
+#   @year = Year.find_by_name(ex.cell(line,'H'))
+#   b.year_id = @year.id unless @year.nil?
+#   b.college = ex.cell(line,'I')
+#   b.marks = ex.cell(line,'G')
+#   b.save!
+# end
+# puts "#{i} Record inserted.-----------------------------------------------"
+# i = i+1
+# end
 
 
 # puts "Starting ..."

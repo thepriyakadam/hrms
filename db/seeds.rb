@@ -576,44 +576,70 @@ require 'roo'
 
 #==================================== EMPLOYEE ON BOARDING DATA END ====================================================#
 
-puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/sg_bank.xls")
-ex.default_sheet = ex.sheets[0] 
-i=1
-2.upto(358) do |line|
-@employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
-EmployeeBankDetail.new do |b|
-  b.employee_id = @employee.id unless @employee.nil?
-  b.account_no = ex.cell(line,'D').to_i
-  b.bank_name = ex.cell(line,'E')
-  b.branch_name = ex.cell(line,'F')
-  b.address = ex.cell(line,'K')
-  b.contact_no = ex.cell(line,'G').to_i
-  b.micr_code = ex.cell(line,'H')
-  b.branch_code = ex.cell(line,'I')
-  b.ifsc_code = ex.cell(line,'J')
-  @bankname = Bank.find_by_name(ex.cell(line,'E'))
-  b.bank_id = @bankname.id unless @bankname.nil?
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/sg_bank.xls")
+# ex.default_sheet = ex.sheets[0] 
+# i=1
+# 2.upto(358) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
+# EmployeeBankDetail.new do |b|
+#   b.employee_id = @employee.id unless @employee.nil?
+#   b.account_no = ex.cell(line,'D').to_i
+#   b.bank_name = ex.cell(line,'E')
+#   b.branch_name = ex.cell(line,'F')
+#   b.address = ex.cell(line,'K')
+#   b.contact_no = ex.cell(line,'G').to_i
+#   b.micr_code = ex.cell(line,'H')
+#   b.branch_code = ex.cell(line,'I')
+#   b.ifsc_code = ex.cell(line,'J')
+#   @bankname = Bank.find_by_name(ex.cell(line,'E'))
+#   b.bank_id = @bankname.id unless @bankname.nil?
 
-  b.save!
-end
-puts "#{i} Record inserted.-----------------------------------------------"
-i = i+1
-end
+#   b.save!
+# end
+# puts "#{i} Record inserted.-----------------------------------------------"
+# i = i+1
+# end
+
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/sg_cer.xls")
+# ex.default_sheet = ex.sheets[0] 
+# i=1
+# 2.upto(38) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
+# Certification.new do |b|
+#   b.employee_id = @employee.id unless @employee.nil?
+#   b.name = ex.cell(line,'D')
+#   @year = Year.find_by_name(ex.cell(line,'E'))
+#   b.year_id = @year.id unless @year.nil?
+#   b.duration = ex.cell(line,'F')
+#   b.description = ex.cell(line,'G')
+#   b.save!
+# end
+# puts "#{i} Record inserted.-----------------------------------------------"
+# i = i+1
+# end
 
 puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/sg_cer.xls")
+ex = Roo::Excel.new("#{Rails.root}/public/sg_qualification.xls")
 ex.default_sheet = ex.sheets[0] 
 i=1
 2.upto(38) do |line|
 @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
-Certification.new do |b|
+Qualification.new do |b|
   b.employee_id = @employee.id unless @employee.nil?
-  b.name = ex.cell(line,'D')
-  @year = Year.find_by_name(ex.cell(line,'E'))
+  @degree_type = DegreeType.find_by_name(ex.cell(line,'D'))
+  b.degree_type_id = @degree_type.id unless @degree_type.nil?
+  @degree = Degree.find_by_name(ex.cell(line,'E'))
+  b.degree_id = @degree.id unless @degree.nil?
+  @degree_stream = DegreeStream.find_by_name(ex.cell(line,'F'))
+  b.degree_stream_id = @degree_stream.id unless @degree_stream.nil?
+  @university = University.find_by_name(ex.cell(line,'J'))
+  b.university_id = @university.id unless @university.nil?
+  @year = Year.find_by_name(ex.cell(line,'H'))
   b.year_id = @year.id unless @year.nil?
-  b.duration = ex.cell(line,'F')
-  b.description = ex.cell(line,'G')
+  b.college = ex.cell(line,'I')
+  b.marks = ex.cell(line,'G')
   b.save!
 end
 puts "#{i} Record inserted.-----------------------------------------------"

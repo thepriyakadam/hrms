@@ -103,7 +103,10 @@
       <td><%= full_name(@joining_detail.try(:replacement).try(:employee)) %></td>
      </tr>
 
-    
+      <tr>
+        <th><strong>Compansatory Off</strong></th>
+        <td colspan="3"><%= @joining_detail.c_off ? "Yes" : "No" %></td>
+      </tr>
       
 
 

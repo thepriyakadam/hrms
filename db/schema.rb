@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170814060527) do
+ActiveRecord::Schema.define(version: 20170814075623) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -988,17 +988,17 @@ ActiveRecord::Schema.define(version: 20170814060527) do
     t.datetime "created_at",                                                                    null: false
     t.datetime "updated_at",                                                                    null: false
     t.integer  "holiday_id",               limit: 4
-    t.integer  "week_off_master_id",       limit: 4
+    t.integer  "employee_week_off_id",     limit: 4
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id", using: :btree
   add_index "employee_attendances", ["department_id"], name: "index_employee_attendances_on_department_id", using: :btree
   add_index "employee_attendances", ["employee_id"], name: "index_employee_attendances_on_employee_id", using: :btree
   add_index "employee_attendances", ["employee_leav_request_id"], name: "index_employee_attendances_on_employee_leav_request_id", using: :btree
+  add_index "employee_attendances", ["employee_week_off_id"], name: "index_employee_attendances_on_employee_week_off_id", using: :btree
   add_index "employee_attendances", ["holiday_id"], name: "index_employee_attendances_on_holiday_id", using: :btree
   add_index "employee_attendances", ["machine_attendance_id"], name: "index_employee_attendances_on_machine_attendance_id", using: :btree
   add_index "employee_attendances", ["on_duty_request_id"], name: "index_employee_attendances_on_on_duty_request_id", using: :btree
-  add_index "employee_attendances", ["week_off_master_id"], name: "index_employee_attendances_on_week_off_master_id", using: :btree
 
   create_table "employee_attributes", force: :cascade do |t|
     t.integer  "attribute_master_id",   limit: 4
@@ -3481,15 +3481,14 @@ ActiveRecord::Schema.define(version: 20170814060527) do
 
   create_table "reporting_masters_travel_requests", force: :cascade do |t|
     t.integer  "travel_request_id",   limit: 4
-    t.integer  "reporting_master_id", limit: 4
     t.string   "travel_status",       limit: 255
     t.boolean  "status"
     t.text     "daily_bill_comment",  limit: 65535
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
+    t.integer  "reporting_master_id", limit: 4
   end
 
-  add_index "reporting_masters_travel_requests", ["reporting_master_id"], name: "index_reporting_masters_travel_requests_on_reporting_master_id", using: :btree
   add_index "reporting_masters_travel_requests", ["travel_request_id"], name: "index_reporting_masters_travel_requests_on_travel_request_id", using: :btree
 
   create_table "reporting_masters_vacancy_masters", force: :cascade do |t|
@@ -4196,7 +4195,6 @@ ActiveRecord::Schema.define(version: 20170814060527) do
     t.text     "tour_purpose",        limit: 65535
     t.string   "place",               limit: 255
     t.decimal  "traveling_advance",                 precision: 15, scale: 2, default: 0.0
-    t.integer  "reporting_master_id", limit: 4
     t.string   "current_status",      limit: 255
     t.integer  "travel_option_id",    limit: 4
     t.integer  "travel_mode_id",      limit: 4
@@ -4209,10 +4207,10 @@ ActiveRecord::Schema.define(version: 20170814060527) do
     t.datetime "created_at",                                                               null: false
     t.datetime "updated_at",                                                               null: false
     t.decimal  "total_advance",                     precision: 10
+    t.integer  "reporting_master_id", limit: 4
   end
 
   add_index "travel_requests", ["employee_id"], name: "index_travel_requests_on_employee_id", using: :btree
-  add_index "travel_requests", ["reporting_master_id"], name: "index_travel_requests_on_reporting_master_id", using: :btree
   add_index "travel_requests", ["travel_mode_id"], name: "index_travel_requests_on_travel_mode_id", using: :btree
   add_index "travel_requests", ["travel_option_id"], name: "index_travel_requests_on_travel_option_id", using: :btree
 
@@ -4503,11 +4501,11 @@ ActiveRecord::Schema.define(version: 20170814060527) do
   add_foreign_key "employee_attendances", "company_time_masters"
   add_foreign_key "employee_attendances", "departments"
   add_foreign_key "employee_attendances", "employee_leav_requests"
+  add_foreign_key "employee_attendances", "employee_week_offs"
   add_foreign_key "employee_attendances", "employees"
   add_foreign_key "employee_attendances", "holidays"
   add_foreign_key "employee_attendances", "machine_attendances"
   add_foreign_key "employee_attendances", "on_duty_requests"
-  add_foreign_key "employee_attendances", "week_off_masters"
   add_foreign_key "employee_bank_details", "banks"
   add_foreign_key "employee_bank_details", "employees"
   add_foreign_key "employee_daily_activities", "employees"
@@ -4728,7 +4726,6 @@ ActiveRecord::Schema.define(version: 20170814060527) do
   add_foreign_key "reporting_masters_resigns", "reporting_masters"
   add_foreign_key "reporting_masters_training_reqs", "reporting_masters"
   add_foreign_key "reporting_masters_training_reqs", "training_requests"
-  add_foreign_key "reporting_masters_travel_requests", "reporting_masters"
   add_foreign_key "reporting_masters_travel_requests", "travel_requests"
   add_foreign_key "reporting_masters_vacancy_masters", "reporting_masters"
   add_foreign_key "reporting_masters_vacancy_masters", "vacancy_masters"
@@ -4808,7 +4805,6 @@ ActiveRecord::Schema.define(version: 20170814060527) do
   add_foreign_key "travel_request_histories", "travel_options"
   add_foreign_key "travel_request_histories", "travel_requests"
   add_foreign_key "travel_requests", "employees"
-  add_foreign_key "travel_requests", "reporting_masters"
   add_foreign_key "travel_requests", "travel_modes"
   add_foreign_key "travel_requests", "travel_options"
   add_foreign_key "vacancy_masters", "companies"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170808095750) do
+ActiveRecord::Schema.define(version: 20170812084726) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -2421,6 +2421,7 @@ ActiveRecord::Schema.define(version: 20170808095750) do
     t.datetime "created_at",                                                null: false
     t.datetime "updated_at",                                                null: false
     t.string   "notice_period_after_probation", limit: 255
+    t.boolean  "c_off"
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id", using: :btree
@@ -2464,23 +2465,25 @@ ActiveRecord::Schema.define(version: 20170808095750) do
   add_index "leav_cancelleds", ["employee_leav_request_id"], name: "index_leav_cancelleds_on_employee_leav_request_id", using: :btree
 
   create_table "leav_categories", force: :cascade do |t|
-    t.string   "code",           limit: 255
-    t.string   "name",           limit: 255
-    t.string   "description",    limit: 255
+    t.string   "code",             limit: 255
+    t.string   "name",             limit: 255
+    t.string   "description",      limit: 255
     t.boolean  "is_confirm"
     t.boolean  "is_payble"
-    t.decimal  "from",                       precision: 10
-    t.decimal  "to",                         precision: 10
+    t.decimal  "from",                         precision: 10
+    t.decimal  "to",                           precision: 10
     t.boolean  "is_active"
     t.boolean  "is_balance"
-    t.string   "limit",          limit: 255
+    t.string   "limit",            limit: 255
     t.boolean  "is_limit"
     t.boolean  "is_cashable"
     t.boolean  "assign_balance"
     t.boolean  "is_continuous"
-    t.decimal  "monthly_leave",              precision: 10
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.decimal  "monthly_leave",                precision: 10
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.boolean  "weekoff_sandwich"
+    t.boolean  "holiday_sandwich"
   end
 
   create_table "leav_rejecteds", force: :cascade do |t|
@@ -2498,16 +2501,17 @@ ActiveRecord::Schema.define(version: 20170808095750) do
     t.integer  "employee_id",      limit: 4
     t.date     "c_off_date"
     t.string   "c_off_type",       limit: 255
-    t.integer  "c_off_expire_day", limit: 4,                           default: 0
+    t.integer  "c_off_expire_day", limit: 4,                             default: 0
     t.boolean  "expiry_status"
-    t.boolean  "is_taken",                                             default: false
+    t.boolean  "is_taken",                                               default: false
     t.date     "expiry_date"
-    t.decimal  "leave_count",                  precision: 3, scale: 1
+    t.decimal  "leave_count",                    precision: 3, scale: 1
     t.boolean  "is_expire"
     t.boolean  "status"
     t.string   "current_status",   limit: 255
-    t.datetime "created_at",                                                           null: false
-    t.datetime "updated_at",                                                           null: false
+    t.datetime "created_at",                                                             null: false
+    t.datetime "updated_at",                                                             null: false
+    t.text     "comment",          limit: 65535
   end
 
   add_index "leave_c_offs", ["employee_id"], name: "index_leave_c_offs_on_employee_id", using: :btree

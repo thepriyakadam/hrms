@@ -26,6 +26,12 @@
         <%= f.text_field :employee_uan_no, label:'UAN No' %>
        </div>
      </div>
+
+       <div class="col-sm-3">
+      <div class="field">
+       <%= f.text_field :employee_pf_no, label:'PF No' %>
+      </div>
+    </div>
   
       <div class="col-sm-3">
         <label>Joining Date </label>
@@ -51,15 +57,18 @@
         </div>
         </div>
 
-      <div class="col-sm-3">
+     
+
+      </div>
+
+      <div class="row">
+
+       <div class="col-sm-3">
         <div class="form group-required">
            <%= f.select :employee_grade_id, all_employee_grade, {label: 'Employee Grade',include_blank: " Select Employee Grade"} %>
         </div>
       </div>
 
-      </div>
-
-      <div class="row">
       <div class="col-sm-3">
         <div class="form group-required">
           <%= f.select :employee_designation_id,all_employee_designation,{label: 'Designation',include_blank: " Select Employee Designation"} %>
@@ -78,13 +87,15 @@
         </div>
       </div>
 
-      <div class="col-sm-3">
+     
+      </div>
+      <div class="row">
+       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :probation_period,label: 'Probation Period' %>
         </div>
       </div> 
-      </div>
-      <div class="row">
+
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :notice_period,label: 'Notice Period' %>
@@ -103,6 +114,9 @@
        </div>
       </div>
 
+      
+      </div>
+      <div class="row">
       <div class="col-sm-3">
       <label>Passport Issue Date </label>
         <div class="field">
@@ -114,8 +128,7 @@
           </div>
         </div>
       </div>
-      </div>
-      <div class="row">
+
       <div class="col-sm-3">
       <label>Passport Expiry Date </label>
         <div class="field">
@@ -157,11 +170,11 @@
         </div>
       </div>
       
-      <div class="col-sm-3">
+     <!--  <div class="col-sm-3">
        <div class="field">
-         <%= f.select :medical_schem, ['Yes','No'],{label: 'Medical Insurance',include_blank: " Select Medical Insurance"} %>
+         <= f.select :medical_schem, ['Yes','No'],{label: 'Medical Insurance',include_blank: " Select Medical Insurance"} %>
       </div>
-     </div>
+     </div> -->
      </div>
 
     <!--   <div class="row">
@@ -177,78 +190,78 @@
         </div> 
       </div>
  -->
-     <div class="box-header with-border">
+     <!-- <div class="box-header with-border">
     <strong><font color='#0077b3'> EMPLOYEE PAYROLL DETAILS</font></strong>
-  </div><!-- /.box-header -->
+  </div>
      <div class="row">
      <div class="col-sm-3">
         <div class="field">
-          <%= f.select :payment_mode_id, all_payment_mode,{label: 'Payment Mode',include_blank: " Select Payment Mode"} %>
+          <= f.select :payment_mode_id, all_payment_mode,{label: 'Payment Mode',include_blank: " Select Payment Mode"} %>
         </div>
       </div>
 
       <div class="col-sm-3">
       <div class="field">
-        <%= f.check_box :basis_of_time, label: 'Basis Of Time'%>
+        <= f.check_box :basis_of_time, label: 'Basis Of Time'%>
       </div>
      </div>
 
      <div class="col-sm-3">
       <div class="field">
-        <%= f.select :is_employeer_pf,[['Yes','true'],['No','false']],{label: 'Employer PF',include_blank: " Select Employeer PF Option"} %>
+        <= f.select :is_employeer_pf,[['Yes','true'],['No','false']],{label: 'Employer PF',include_blank: " Select Employeer PF Option"} %>
       </div>
     </div>
 
       <div class="col-sm-3">
         <div class="field">
-          <%= f.select :select_pf,['Yes','No','Limit'],{label: 'Employee PF Option',include_blank: " Select PF"} %>
+          <= f.select :select_pf,['Yes','No','Limit'],{label: 'Employee PF Option',include_blank: " Select PF"} %>
        </div>
     </div> 
     </div>
     <div class="row">
      <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :pf_max_amount, label:'PF Max Amount' %>
+          <= f.text_field :pf_max_amount, label:'PF Max Amount' %>
        </div>
       </div> 
     <div class="col-sm-3">
       <div class="field">
-       <%= f.text_field :employee_pf_no, label:'PF No' %>
+       <= f.text_field :employee_pf_no, label:'PF No' %>
       </div>
     </div>
 
     <div class="col-sm-3">
       <div class="field">
-        <%= f.select :is_employeer_esic,[['Yes','true'],['No','false']],{label: 'Employer ESIC',include_blank: " Select Employer ESIC Option"} %>
+        <= f.select :is_employeer_esic,[['Yes','true'],['No','false']],{label: 'Employer ESIC',include_blank: " Select Employer ESIC Option"} %>
       </div>
     </div>
 
     <div class="col-sm-3">
         <div class="field">
-          <%= f.select :have_esic, [['Yes','true'],['No','false']],{label: 'ESIC Option',include_blank: " Select ESIC Option"} %>
+          <= f.select :have_esic, [['Yes','true'],['No','false']],{label: 'ESIC Option',include_blank: " Select ESIC Option"} %>
         </div>
       </div> 
       </div>
       <div class="row">
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :employee_efic_no, label:'ESIC No' %>
+          <= f.text_field :employee_efic_no, label:'ESIC No' %>
         </div>
       </div>
 
       <div class="col-sm-3">
         <div class="field">
-          <%= f.select :have_retention,[['Yes','true'],['No','false']],{label: 'Retention',include_blank: " Select Retention"} %>
+          <= f.select :have_retention,[['Yes','true'],['No','false']],{label: 'Retention',include_blank: " Select Retention"} %>
        </div>
     </div>
     <div class="col-sm-3">
       <div class="field">
-      <!--  <select :is_da,[['Yes','true'],['No','false']],{label: 'DA',include_blank: " Select DA"} %>     -->
+       <select :is_da,[['Yes','true'],['No','false']],{label: 'DA',include_blank: " Select DA"} %>    
       </div>
     </div>
     <div class="col-sm-3">
       <div class="field">
-        <%= f.select :is_insurance,[['Yes','true'],['No','false']],{label: 'Insurance',include_blank: " Select Insurance Option"} %>
+        <= f.select :is_insurance,[['Yes','true'],['No','false']],{label: 'Insurance',include_blank: " Select Insurance Option"} %>
       </div>
     </div>
     </div>
@@ -256,27 +269,27 @@
 
     <div class="col-sm-3">
       <div class="field">
-        <%= f.select :is_family_pension,[['Yes','true'],['No','false']],{label: 'Family Insurance',include_blank: " Select Family Pension Option"} %>
+        <= f.select :is_family_pension,[['Yes','true'],['No','false']],{label: 'Family Insurance',include_blank: " Select Family Pension Option"} %>
       </div>
     </div>
 
     <div class="col-sm-3">
       <div class="field">
-        <%= f.select :is_bonus,[['Yes','true'],['No','false']],{label: 'Bonus',include_blank: " Select Bonus Option"} %>
+        <= f.select :is_bonus,[['Yes','true'],['No','false']],{label: 'Bonus',include_blank: " Select Bonus Option"} %>
       </div>
     </div>
 
     <div class="col-sm-3">
       <div class="field">
-        <%= f.select :ot_option,[['Yes','true'],['No','false']],{label: 'OT Option',include_blank: " Select OT Option"} %>
+        <= f.select :ot_option,[['Yes','true'],['No','false']],{label: 'OT Option',include_blank: " Select OT Option"} %>
       </div>
     </div>
 
     <div class="col-sm-3">
         <div class="field">
-        <%= f.text_field :ot_rate, label:'OT Rate' %>
+        <= f.text_field :ot_rate, label:'OT Rate' %>
        </div>
-     </div>
+     </div> -->
     </div>
   <div class="row">
     <div class="col-sm-6">

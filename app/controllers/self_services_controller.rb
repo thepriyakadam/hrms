@@ -54,7 +54,7 @@ class SelfServicesController < ApplicationController
     note = params[:employee_resignation][:note]
 
     if resignation_date == "" || leaving_reason_id == "" || tentative_leaving_date == "" || reason == ""
-      flash[:alert] = "Please fill all mendetory fields!"
+      flash[:alert] = "Please fill all mandatory fields!"
     else
 
       @employees=Employee.find_by(id: employee_id)

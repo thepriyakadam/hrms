@@ -96,15 +96,30 @@
 
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :contact_no,label: 'Contact No.' %>
+           <%= f.text_field :contact_no,label: 'Extension Line 1' %>
           </div>
         </div>
 
          <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :optinal_contact_no,label: 'Optional Contact No.' %>
+           <%= f.text_field :optinal_contact_no1,label: 'Extension Line 2' %>
           </div>
         </div>
+
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :optinal_contact_no,label: 'Personal Contact No.' %>
+          </div>
+        </div>
+
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :extension_no,label: 'Emergency Contact No.' %>
+          </div>
+        </div>
+        </div>
+
+         <div class="row">
          <div class="col-sm-3">
           <div class="field">
             <%= f.select :religion_id, all_religions,{include_blank: " Select Religion"} %>
@@ -115,16 +130,18 @@
             <%= f.select :status,['Active','Inactive'],{include_blank: " Select Employee Status"} %>
         </div>
         </div>
+
+         <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :employee_type_id, all_employee_type,{include_blank: " Select Employee Type"} %>
+          </div>
+        </div>   
       
       </div>
       <div class="row">
 
        
-       <div class="col-sm-3">
-          <div class="field">
-            <%= f.select :employee_type_id, all_employee_type,{include_blank: " Select Employee Type"} %>
-          </div>
-        </div>   
+      
 
         <div class="col-sm-3">
           <div class="field">
@@ -149,19 +166,17 @@
             </div>
           </div>
         </div>
-        </div>
-
-      <div class="row">
-      
-      
-       <div class="col-sm-3">
+        <div class="col-sm-3">
           <div class="field">
             <%= f.select :blood_group_id, all_blood_group, {label: 'Blood Group',include_blank: " Select Blood Group"} %>
           </div>
         </div>
 
+        </div>
 
-         <div class="col-sm-6">
+      <div class="row">
+      
+         <div class="col-sm-9">
           <div class="form-group required">
            <%= f.text_field :permanent_address, label: 'Permanent Address' %>
           </div>

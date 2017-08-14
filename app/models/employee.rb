@@ -3,6 +3,7 @@ class Employee < ActiveRecord::Base
   belongs_to :department
   belongs_to :company_location
   belongs_to :company
+  belongs_to :sub_department
   belongs_to :nationality
   belongs_to :blood_group
   belongs_to :employee_type

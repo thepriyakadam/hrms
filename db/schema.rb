@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170805045810) do
+ActiveRecord::Schema.define(version: 20170810094343) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -857,12 +857,14 @@ ActiveRecord::Schema.define(version: 20170805045810) do
     t.string   "comment",                  limit: 255
     t.datetime "created_at",                                                                    null: false
     t.datetime "updated_at",                                                                    null: false
+    t.integer  "holiday_id",               limit: 4
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id", using: :btree
   add_index "employee_attendances", ["department_id"], name: "index_employee_attendances_on_department_id", using: :btree
   add_index "employee_attendances", ["employee_id"], name: "index_employee_attendances_on_employee_id", using: :btree
   add_index "employee_attendances", ["employee_leav_request_id"], name: "index_employee_attendances_on_employee_leav_request_id", using: :btree
+  add_index "employee_attendances", ["holiday_id"], name: "index_employee_attendances_on_holiday_id", using: :btree
   add_index "employee_attendances", ["machine_attendance_id"], name: "index_employee_attendances_on_machine_attendance_id", using: :btree
   add_index "employee_attendances", ["on_duty_request_id"], name: "index_employee_attendances_on_on_duty_request_id", using: :btree
 
@@ -1005,6 +1007,7 @@ ActiveRecord::Schema.define(version: 20170805045810) do
     t.string   "carry_forward",    limit: 255
     t.string   "leave_count",      limit: 255
     t.string   "collapse_value",   limit: 255
+    t.string   "working_day",      limit: 255
   end
 
   add_index "employee_leav_balances", ["employee_id"], name: "index_employee_leav_balances_on_employee_id", using: :btree
@@ -1335,6 +1338,7 @@ ActiveRecord::Schema.define(version: 20170805045810) do
     t.integer  "passport_photo_file_size",    limit: 4
     t.datetime "passport_photo_updated_at"
     t.integer  "sub_department_id",           limit: 4
+    t.string   "extension_no",                limit: 255
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id", using: :btree
@@ -1620,6 +1624,17 @@ ActiveRecord::Schema.define(version: 20170805045810) do
     t.boolean  "is_confirm"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+  end
+
+  create_table "greetings", force: :cascade do |t|
+    t.date     "date"
+    t.string   "greeting_type", limit: 255
+    t.integer  "sender_id",     limit: 4
+    t.integer  "receiver_id",   limit: 4
+    t.text     "message",       limit: 65535
+    t.boolean  "status"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "groups", force: :cascade do |t|
@@ -2876,6 +2891,15 @@ ActiveRecord::Schema.define(version: 20170805045810) do
     t.datetime "updated_at",                null: false
   end
 
+  create_table "recruiters", force: :cascade do |t|
+    t.integer  "employee_id", limit: 4
+    t.boolean  "status"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "recruiters", ["employee_id"], name: "index_recruiters_on_employee_id", using: :btree
+
   create_table "relation_masters", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
@@ -3434,6 +3458,14 @@ ActiveRecord::Schema.define(version: 20170805045810) do
   add_index "texable_monthly_deductions", ["employee_id"], name: "index_texable_monthly_deductions_on_employee_id", using: :btree
   add_index "texable_monthly_deductions", ["salaryslip_id"], name: "index_texable_monthly_deductions_on_salaryslip_id", using: :btree
 
+  create_table "thoughts", force: :cascade do |t|
+    t.date     "date"
+    t.text     "thought",    limit: 65535
+    t.string   "thought_of", limit: 255
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
   create_table "trainee_requests", force: :cascade do |t|
     t.integer  "training_request_id",      limit: 4
     t.integer  "employee_id",              limit: 4
@@ -3946,6 +3978,7 @@ ActiveRecord::Schema.define(version: 20170805045810) do
   add_foreign_key "employee_attendances", "departments"
   add_foreign_key "employee_attendances", "employee_leav_requests"
   add_foreign_key "employee_attendances", "employees"
+  add_foreign_key "employee_attendances", "holidays"
   add_foreign_key "employee_attendances", "machine_attendances"
   add_foreign_key "employee_attendances", "on_duty_requests"
   add_foreign_key "employee_bank_details", "banks"
@@ -4152,6 +4185,7 @@ ActiveRecord::Schema.define(version: 20170805045810) do
   add_foreign_key "qualifications", "employees"
   add_foreign_key "qualifications", "universities"
   add_foreign_key "qualifications", "years"
+  add_foreign_key "recruiters", "employees"
   add_foreign_key "rembursments", "employees"
   add_foreign_key "rembursments", "rembursmentmasters"
   add_foreign_key "reporting_employee_transfers", "employee_transfers"

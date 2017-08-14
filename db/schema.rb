@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170812084726) do
+ActiveRecord::Schema.define(version: 20170814060527) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -988,6 +988,7 @@ ActiveRecord::Schema.define(version: 20170812084726) do
     t.datetime "created_at",                                                                    null: false
     t.datetime "updated_at",                                                                    null: false
     t.integer  "holiday_id",               limit: 4
+    t.integer  "week_off_master_id",       limit: 4
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id", using: :btree
@@ -997,6 +998,7 @@ ActiveRecord::Schema.define(version: 20170812084726) do
   add_index "employee_attendances", ["holiday_id"], name: "index_employee_attendances_on_holiday_id", using: :btree
   add_index "employee_attendances", ["machine_attendance_id"], name: "index_employee_attendances_on_machine_attendance_id", using: :btree
   add_index "employee_attendances", ["on_duty_request_id"], name: "index_employee_attendances_on_on_duty_request_id", using: :btree
+  add_index "employee_attendances", ["week_off_master_id"], name: "index_employee_attendances_on_week_off_master_id", using: :btree
 
   create_table "employee_attributes", force: :cascade do |t|
     t.integer  "attribute_master_id",   limit: 4
@@ -4503,6 +4505,7 @@ ActiveRecord::Schema.define(version: 20170812084726) do
   add_foreign_key "employee_attendances", "holidays"
   add_foreign_key "employee_attendances", "machine_attendances"
   add_foreign_key "employee_attendances", "on_duty_requests"
+  add_foreign_key "employee_attendances", "week_off_masters"
   add_foreign_key "employee_bank_details", "banks"
   add_foreign_key "employee_bank_details", "employees"
   add_foreign_key "employee_daily_activities", "employees"

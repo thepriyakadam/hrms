@@ -142,7 +142,7 @@ class EmployeeLeavRequestsController < ApplicationController
                     @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                 end
                 flash[:notice] = "Created successfully!"
-                  #LeaveRequestMailer.pending(@employee_leav_request).deliver_now        
+                  LeaveRequestMailer.pending(@employee_leav_request).deliver_now        
             end
 
           else
@@ -257,7 +257,7 @@ class EmployeeLeavRequestsController < ApplicationController
                       flash[:notice] = "Send request without email."
                     else
                       flash[:notice] = 'Leave Request sent successfully.'
-                      #LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                      LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                     end
                     redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
 
@@ -302,7 +302,7 @@ class EmployeeLeavRequestsController < ApplicationController
                             flash[:notice] = 'Send request without email.'
                           else
                             flash[:notice] = 'Leave Request sent successfully..'
-                            #LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                            LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                           end
                         end
                           redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
@@ -329,7 +329,7 @@ class EmployeeLeavRequestsController < ApplicationController
                             flash[:notice] = 'Send request without email.'
                           else
                             flash[:notice] = 'Leave Request sent successfully..'
-                            #LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                            LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                           end
                           redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
                         else
@@ -367,7 +367,7 @@ class EmployeeLeavRequestsController < ApplicationController
                             flash[:notice] = 'Send request without email.'
                           else
                             flash[:notice] = 'Leave Request sent successfully !!'
-                            #LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                            LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                           end
                           redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
                         else
@@ -396,7 +396,7 @@ class EmployeeLeavRequestsController < ApplicationController
                             flash[:notice] = 'Send request without email.'
                           else
                             flash[:notice] = 'Leave Request sent successfully !'
-                            #LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                            LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                           end
                           redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
                         else
@@ -427,7 +427,7 @@ class EmployeeLeavRequestsController < ApplicationController
                           flash[:notice] = 'Send request without email.'
                         else
                           flash[:notice] = 'Leave Request sent successfully !'
-                          #LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                          LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                         end
                         redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
                       else

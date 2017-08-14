@@ -241,8 +241,6 @@ class EmployeeLeavRequestsController < ApplicationController
           
                 #leave_record
                       @employee_leav_request.leave_record_create(@employee_leav_request)
-                      
-                      # @leave_record = LeaveRecord.last
                       @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
                           total = 0
                           @leave_record.each do |l|
@@ -250,7 +248,6 @@ class EmployeeLeavRequestsController < ApplicationController
                           end
                           total
                           @employee_leav_request.update(leave_count: total)
-
 
                     
                     if @employee.manager.email.nil? or @employee.manager.email == ""

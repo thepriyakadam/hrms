@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :leave_transfers
   resources :sub_departments
   resources :change_designations do
     collection do
@@ -1449,6 +1450,7 @@ end
       get :admin_level_c_off_detail
       get :admin_approve_modal
       get :modal
+      get :detail_modal
     end
   end
 

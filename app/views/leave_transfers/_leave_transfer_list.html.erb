@@ -1,0 +1,28 @@
+<br>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Transfer to</th>
+      <th>Date</th>
+      <th>No of leave</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @leave_transfers.each do |leave_transfer| %>
+      <tr>
+        <td><%= full_name(leave_transfer.employee) %></td>
+        <td><%= full_name(leave_transfer.transfer_to) %></td>
+        <td><%= leave_transfer.date %></td>
+        <td><%= leave_transfer.no_of_leave %></td>
+        <td>
+        	<%= link_to '', edit_leave_transfer_path(leave_transfer),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <%= link_to '',  leave_transfer, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+           <%= link_to '', leave_transfer,class: 'btn btn-default btn-xs fa fa-eye' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

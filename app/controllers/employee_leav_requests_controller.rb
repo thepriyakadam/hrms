@@ -241,6 +241,8 @@ class EmployeeLeavRequestsController < ApplicationController
           
                 #leave_record
                       @employee_leav_request.leave_record_create(@employee_leav_request)
+
+                      @employee_leav_request.create_attendance_leave
                       @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
                           total = 0
                           @leave_record.each do |l|
@@ -282,6 +284,7 @@ class EmployeeLeavRequestsController < ApplicationController
                       #emp_leav_bal_id
                           @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                           @employee_leav_request.leave_record_create(@employee_leav_request)
+                      @employee_leav_request.create_attendance_leave
 
                           # @leave_record = LeaveRecord.last
                           @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
@@ -310,6 +313,7 @@ class EmployeeLeavRequestsController < ApplicationController
                           @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                         #leave_record
                           @employee_leav_request.leave_record_create(@employee_leav_request)
+                      @employee_leav_request.create_attendance_leave
 
                           # @leave_record = LeaveRecord.last
                           @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
@@ -347,6 +351,7 @@ class EmployeeLeavRequestsController < ApplicationController
                           @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                         #leave_record
                           @employee_leav_request.leave_record_create(@employee_leav_request)
+                      @employee_leav_request.create_attendance_leave
 
                           # @leave_record = LeaveRecord.last
                           @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
@@ -377,6 +382,7 @@ class EmployeeLeavRequestsController < ApplicationController
                           @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
               #leave_record
                       @employee_leav_request.leave_record_create(@employee_leav_request)
+                      @employee_leav_request.create_attendance_leave
 
                       # @leave_record = LeaveRecord.last
                       @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
@@ -409,6 +415,7 @@ class EmployeeLeavRequestsController < ApplicationController
 
             #leave_record
                     @employee_leav_request.leave_record_create(@employee_leav_request)
+                      @employee_leav_request.create_attendance_leave
 
                       # @leave_record = LeaveRecord.last
                       @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)

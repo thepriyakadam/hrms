@@ -687,7 +687,7 @@ class EmployeeAttendancesController < ApplicationController
           #   d.each do |f|
           #     f.update(calculated_payable_days: f.payable_day)
           #   end
-      end#emp1 loop
+        end#emp1 loop
           work=Workingday.where("ot_hours < ?", 0).pluck(:id)
           @workingdays = Workingday.where(id: work)
           @workingdays.each do |wor|
@@ -2375,6 +2375,6 @@ end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_attendance_params
-    params.require(:employee_attendance).permit(:employee_code,:employee_name,:employee_id, :day, :present, :in_time, :out_time)
+    params.require(:employee_attendance).permit(:week_off_master_id,:employee_code,:employee_name,:employee_id, :day, :present, :in_time, :out_time)
   end
 end

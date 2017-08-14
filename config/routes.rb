@@ -267,6 +267,9 @@ Rails.application.routes.draw do
       get :week_off_list
       get :edit_modal
       post :update_week_off
+      get :revert_week_off_master
+      post :show_weekoff_master_data
+      get :revert_master_data
     end
   end
   resources :machine_attendances do

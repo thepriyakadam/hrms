@@ -19,6 +19,13 @@
           <%= f.select :c_off_type,['Full Day'],{label: 'Compensatory Off Type',include_blank: " Select Compensatory Off Type"} %>
        </div>
       </div> 
+      <div class="col-sm-6">
+        <div class="form-group required">
+          <%= f.text_field :comment,label: 'Comment' %>
+       </div>
+      </div> 
+    </div>
+    <div class="row">
       <div class="col-sm-3" style="padding-top: 20px">
         <div class="actions">
           <%= f.submit "Create Compensatory Off",class: 'btn btn-sm btn-primary fa fa-modx' %>
@@ -47,7 +54,7 @@
     "leave_c_off[c_off_type]":{
       required: true
     },
-    "leave_c_off[c_off_expire_day]":{
+    "leave_c_off[comment]":{
       required: true
     }
   },

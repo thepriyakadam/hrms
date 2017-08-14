@@ -470,6 +470,6 @@ class LeaveCOffsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def leave_c_off_params
-    params.require(:leave_c_off).permit(:is_expire,:employee_id, :c_off_date, :c_off_type, :c_off_expire_day, :expiry_status, :expiry_date, :leave_count)
+    params.require(:leave_c_off).permit(:comment,:is_expire,:employee_id, :c_off_date, :c_off_type, :c_off_expire_day, :expiry_status, :expiry_date, :leave_count)
   end
 end

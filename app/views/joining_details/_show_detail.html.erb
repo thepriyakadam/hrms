@@ -104,7 +104,18 @@
       <td><%= full_name(@joining_detail.try(:replacement).try(:employee)) %></td>
      </tr>
 
-    <!-- <tr><th colspan="4"><center><font color='#0077b3'>EMPLOYEE PAYROLL DETAILS</font></center> </th></tr>
+
+      <tr>
+        <th><strong>Compansatory Off</strong></th>
+        <td colspan="3"><%= @joining_detail.c_off ? "Yes" : "No" %></td>
+      </tr>
+      
+
+
+      
+<!-- 
+
+    <tr><th colspan="4"><center><font color='#0077b3'>EMPLOYEE PAYROLL DETAILS</font></center> </th></tr>
 
     <tr>
       <th><strong>Payment Mode</strong></th>
@@ -171,8 +182,8 @@
       <th><strong>OT Rate</strong></th>
       <td><= @joining_detail.ot_rate %></td>
      </tr>
- -->
+
      
  </table>
-  </div><!-- /.box -->
-</div>
+  </div>
+</div> -->

@@ -1,6 +1,5 @@
 class EmployeeResignationMailer < ApplicationMailer
   def resignation_request(employee_resignation)
-    # byebug
       # @reporting_master = ReportingMaster.find(employee_resignation.reporting_master_id)
 	    @employee_resignation = EmployeeResignation.find(employee_resignation.id)
       @employee = Employee.find(@employee_resignation.reporting_master_id)
@@ -22,7 +21,7 @@ class EmployeeResignationMailer < ApplicationMailer
       @employee = Employee.find(@employee_resignation.employee_id)
       @reporting_master = Employee.find(@employee_resignation.reporting_master_id)
       @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
-      mail(to: @reporting_master.email, subject: 'Resignation Request Cancelled by Employee')
+      mail(to: @reporting_master.email,cc: @employee.company_location.email, subject: 'Resignation Request Cancelled by Employee')
   end
 
   def first_level_approval_email_to_employee(employee_resignation)
@@ -30,7 +29,7 @@ class EmployeeResignationMailer < ApplicationMailer
       @employee = Employee.find(@employee_resignation.employee_id)
       @reporting_master = Employee.find(@employee_resignation.reporting_master_id)
       @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
-      mail(to: @employee.email, subject: 'Resignation Request Approved at First Level')
+      mail(to: @employee.email,cc: @employee.company_location.email, subject: 'Resignation Request Approved at First Level')
   end
 	
  def second_level_approval_email_to_employee(employee_resignation)
@@ -38,7 +37,7 @@ class EmployeeResignationMailer < ApplicationMailer
       @employee = Employee.find(@employee_resignation.employee_id)
       @reporting_master = Employee.find(@employee_resignation.second_reporter_id)
       @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
-      mail(to: @employee.email, subject: 'Resignation Request Approved at Second Level')
+      mail(to: @employee.email,cc: @employee.company_location.email, subject: 'Resignation Request Approved at Second Level')
   end
 
   def second_level_request_email_to_reporting_manager(employee_resignation)
@@ -46,7 +45,7 @@ class EmployeeResignationMailer < ApplicationMailer
       @employee = Employee.find(@employee_resignation.employee_id)
       @reporting_master = Employee.find(@employee_resignation.second_reporter_id)
       @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
-      mail(to: @reporting_master.email, subject: 'Resignation Request Approval at Second Level')
+      mail(to: @reporting_master.email,cc: @employee.company_location.email, subject: 'Resignation Request Approval at Second Level')
   end
 
   def no_second_reporter_approval_email_to_employee(employee_resignation)
@@ -54,7 +53,7 @@ class EmployeeResignationMailer < ApplicationMailer
       @employee = Employee.find(@employee_resignation.employee_id)
       @reporting_master = Employee.find(@employee_resignation.reporting_master_id)
       @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
-      mail(to: @employee.email, subject: 'Resignation Request Sent for Final Approval')
+      mail(to: @employee.email,cc: @employee.company_location.email, subject: 'Resignation Request Sent for Final Approval')
   end
 
   def no_second_reporter_reject_email_to_employee(employee_resignation)
@@ -62,7 +61,7 @@ class EmployeeResignationMailer < ApplicationMailer
       @employee = Employee.find(@employee_resignation.employee_id)
       @reporting_master = Employee.find(@employee_resignation.reporting_master_id)
       @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
-      mail(to: @employee.email, subject: 'Resignation Request Rejected')
+      mail(to: @employee.email,cc: @employee.company_location.email, subject: 'Resignation Request Rejected')
   end
 
   def first_reject_email_to_employee(employee_resignation)
@@ -70,7 +69,7 @@ class EmployeeResignationMailer < ApplicationMailer
       @employee = Employee.find(@employee_resignation.employee_id)
       @reporting_master = Employee.find(@employee_resignation.reporting_master_id)
       @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
-      mail(to: @employee.email, subject: 'Resignation Request Rejected')
+      mail(to: @employee.email,cc: @employee.company_location.email, subject: 'Resignation Request Rejected')
   end
 
   def second_reject_email_to_employee(employee_resignation)
@@ -78,7 +77,7 @@ class EmployeeResignationMailer < ApplicationMailer
       @employee = Employee.find(@employee_resignation.employee_id)
       @reporting_master = Employee.find(@employee_resignation.second_reporter_id)
       @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
-      mail(to: @employee.email, subject: 'Resignation Request Rejected')
+      mail(to: @employee.email,cc: @employee.company_location.email, subject: 'Resignation Request Rejected')
   end
 
   def final_approval_email_to_employee(employee_resignation)
@@ -86,7 +85,7 @@ class EmployeeResignationMailer < ApplicationMailer
       @employee = Employee.find(@employee_resignation.employee_id)
       @reporting_master = Employee.find(@employee_resignation.final_reporter_id)
       @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
-      mail(to: @employee.email, subject: 'Resignation Request Finally Approved')
+      mail(to: @employee.email,cc: @employee.company_location.email, subject: 'Resignation Request Finally Approved')
   end
 
   def final_reject_email_to_employee(employee_resignation)
@@ -94,7 +93,7 @@ class EmployeeResignationMailer < ApplicationMailer
       @employee = Employee.find(@employee_resignation.employee_id)
       @reporting_master = Employee.find(@employee_resignation.final_reporter_id)
       @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
-      mail(to: @employee.email, subject: 'Resignation Request Finally Rejected')
+      mail(to: @employee.email,cc: @employee.company_location.email, subject: 'Resignation Request Finally Rejected')
   end
   
 
@@ -155,6 +154,6 @@ class EmployeeResignationMailer < ApplicationMailer
         @employee_resignation = EmployeeResignation.find(employee_resignation.id)
         @employee = Employee.find(@employee_resignation.employee_id)
         @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
-        mail(to: @employee.email, subject: ' Resignation Updated And Approved ')
+        mail(to: @employee.email,cc: @employe.company_location.email, subject: ' Resignation Updated And Approved ')
     end
 end

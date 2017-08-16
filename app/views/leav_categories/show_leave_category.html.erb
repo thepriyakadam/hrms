@@ -47,11 +47,16 @@
     </tr>
 
     <tr>
-     <th><strong>Status</strong></th>
-      <td><%= @leav_category.is_active ? "Yes" : "No" %></td>
+      <th><strong>Sandwich</strong></th>
+      <td><%= @leav_category.weekoff_sandwich ? "Yes" : "No" %></td>
 
+      <th><strong>Status</strong></th>
+      <td><%= @leav_category.is_active ? "Yes" : "No" %></td>
+    </tr>
+
+    <tr>
       <th><strong>Continue</strong></th>
-      <td> <%= @leav_category.is_continuous ? "Yes" : "No" %></td>
+      <td colspan="3"> <%= @leav_category.is_continuous ? "Yes" : "No" %></td>
     </tr>
      </table> <br>
 

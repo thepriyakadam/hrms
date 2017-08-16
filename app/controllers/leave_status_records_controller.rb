@@ -41,7 +41,6 @@ class LeaveStatusRecordsController < ApplicationController
 
   def first_approve
     ### if no second reporter available
-    #byebug
     if @employee_leav_request.employee.manager_2_id.nil?
       @leave_status = LeaveStatusRecord.new do |s|
         s.employee_leav_request_id = params[:id]

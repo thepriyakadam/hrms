@@ -1,11 +1,22 @@
 class SalaryReport
   attr_accessor :employee_name, :department_name, :code, :pf_no, :esic_no,:employee_designation,
-                :actual_basic, :actual_da, :actual_hra, :actual_convenience, :actual_other, :actual_special, :actual_washing, :actual_total,
-                :earned_basic, :earned_da, :earned_hra, :earned_convenience, :earned_other, :earned_special, :earned_washing, :earned_total,
-                :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, :welfair, :deduction_total, :net_payable, :other_deduction,
-                :total_leave, :pay_leave, :nonpay_leave, :gatepass, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff, :month, :year,
-                :pf_ctc, :esic_ctc, :bonus_ctc, :actual_driver, :actual_medical, :actual_child_edu, :actual_mra, :earned_driver, :earned_medical, :earned_child_edu,
-                :earned_mra,:actual_monthly_arrear,:earned_monthly_arrear
+                :actual_basic, :actual_da, :actual_hra, :actual_convenience, :actual_other, 
+                :earned_basic, :earned_da, :earned_hra, :earned_convenience, :earned_other, 
+                :actual_special, :actual_washing, :actual_total,:earned_mra,:actual_monthly_arrear,
+                :earned_special, :earned_washing, :earned_total,:earned_monthly_arrear,
+                :actual_medical,:actual_driver, :actual_child_edu, :actual_mra, :actual_medical_rem, 
+                :earned_medical,:earned_driver,  :earned_child_edu,:earned_mra ,:earned_medical_rem, 
+                :actual_lta,:actual_progressive_alw,:actual_transport_alw
+                :earned_lta,:earned_progressive_alw,:earned_transport_alw
+                
+
+                :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, 
+                :pantry_deduction,
+                :welfair, :deduction_total, :net_payable, :other_deduction,  :pf_ctc, :esic_ctc,:bonus_ctc, 
+
+                :total_leave, :pay_leave, :nonpay_leave, :gatepass, :day_in_month, :payable_day, 
+                :present_day, :absent_day, :holiday, :weekoff, :month, :year, 
+               
         
 
   def self.collect_data(e, j, sl)
@@ -72,6 +83,22 @@ class SalaryReport
         when "Monthly Arrear"
         sr.actual_monthly_arrear = a.actual_amount
         sr.earned_monthly_arrear = a.calculated_amount
+
+        when "Medical Rembursement"
+        sr.actual_medical_rem = a.actual_amount
+        sr.earned_medical_rem = a.calculated_amount
+
+        when "Leave Traval Allowance"
+        sr.actual_lta = a.actual_amount
+        sr.earned_lta = a.calculated_amount
+
+        when "Progressive Allowence"
+        sr.actual_progressive_alw = a.actual_amount
+        sr.earned_progressive_alw = a.calculated_amount
+
+        when "Transport Allowance"
+        sr.actual_transport_alw = a.actual_amount
+        sr.earned_transport_alw = a.calculated_amount
         
       end
     end
@@ -103,6 +130,8 @@ class SalaryReport
         sr.retention = d.calculated_amount
         when "WelFare"
         sr.welfair = d.calculated_amount
+        when "Pantry Deduction"
+        sr.pantry_deduction = d.calculated_amount
       end
     end
   
@@ -235,6 +264,18 @@ class SalaryReport
     array_actual_monthly_arrear = reports.collect {|r| r.try(:actual_monthly_arrear)}.compact
     @sum.actual_monthly_arrear = array_actual_monthly_arrear.inject(0){|sum,x| sum + x}
 
+    array_actual_medical_rem = reports.collect {|r| r.try(:actual_medical_rem)}.compact
+    @sum.actual_medical_rem = array_actual_medical_rem.inject(0){|sum,x| sum + x}
+
+    array_actual_lta = reports.collect {|r| r.try(:actual_lta)}.compact
+    @sum.actual_lta = array_actual_lta.inject(0){|sum,x| sum + x}
+
+    array_actual_pro = reports.collect {|r| r.try(:actual_pro)}.compact
+    @sum.actual_progressive_alw = array_actual_pro.inject(0){|sum,x| sum + x}
+
+    array_actual_transport_alw = reports.collect {|r| r.try(:actual_transport_alw)}.compact
+    @sum.actual_transport_alw = array_actual_transport_alw.inject(0){|sum,x| sum + x}
+
 
     array_actual_total = reports.collect {|r| r.try(:actual_total)}.compact
     @sum.actual_total = array_actual_total.inject(0){|sum,x| sum + x }
@@ -312,6 +353,9 @@ class SalaryReport
 
     array_wf = reports.collect {|r| r.try(:welfair)}.compact
     @sum.welfair = array_wf.inject(0){|sum,x| sum + x }
+
+    array_pantry_deduction = reports.collect {|r| r.try(:pantry_deduction)}.compact
+    @sum.pantry_deduction = array_pantry_deduction.inject(0){|sum,x| sum + x }
 
     array_deduction_total = reports.collect {|r| r.try(:deduction_total)}.compact
     @sum.deduction_total = array_deduction_total.inject(0){|sum,x| sum + x }
@@ -415,6 +459,18 @@ class SalaryReport
 
          when "Monthly Arrear"
         sr.actual_monthly_arrear = a.actual_amount
+
+        when "Medical Rembursement"
+        sr.actual_medical_rem = a.actual_amount
+
+        when "Leave Traval Allowance"
+        sr.actual_lta = a.actual_amount
+
+        when "Progressive Allowence"
+        sr.actual_progressive_alw = a.actual_amount
+
+        when "Transport Allowance"
+        sr.actual_transport_alw = a.actual_amount
         
       end
     end
@@ -494,6 +550,22 @@ class SalaryReport
         when "Monthly Arrear"
         sr.actual_monthly_arrear = a.actual_amount
         sr.earned_monthly_arrear = a.calculated_amount
+
+        when "Medical Rembursement"
+        sr.actual_medical_rem = a.actual_amount
+        sr.earned_medical_rem = a.calculated_amount
+
+        when "Leave Traval Allowance"
+        sr.actual_lta = a.actual_amount
+        sr.earned_lta = a.calculated_amount
+
+        when "Progressive Allowence"
+        sr.actual_progressive_alw = a.actual_amount
+        sr.earned_progressive_alw = a.calculated_amount
+
+        when "Transport Allowance"
+        sr.actual_transport_alw = a.actual_amount
+        sr.earned_transport_alw = a.calculated_amount
         
       end
     end
@@ -525,6 +597,8 @@ class SalaryReport
         sr.retention = d.calculated_amount
         when "WelFare"
         sr.welfair = d.calculated_amount
+         when "Pantry Deduction"
+        sr.pantry_deduction = d.calculated_amount
       end
     end
       

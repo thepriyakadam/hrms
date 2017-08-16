@@ -1302,6 +1302,8 @@ end
     get 'basic_details/employee_list'
     get 'basic_details/select_department'
     post 'basic_details/list_of_employee'
+    get 'basic_details/show_basic_detail'
+    post 'basic_details/show_basic_detail'
 
     get 'salaries/new'
     post 'salaries/date_range_report'

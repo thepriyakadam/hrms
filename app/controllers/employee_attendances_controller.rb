@@ -2342,6 +2342,22 @@ end
     end
   end
 
+  def datewise_attendance_with_options
+  session[:active_tab] ="TimeManagement"
+  session[:active_tab1] ="Attendance"
+  end
+
+  def datewise_all
+    from = params[:employee][:from]
+    to = params[:employee][:to]
+
+    if params[:save]
+      @employee_attendances = EmployeeAttendance.where(day: from.to_date..to.to_date)
+    else
+    @employee_attendances = EmployeeAttendance.where(day: from.to_date..to.to_date,present: "A")
+    end
+  end
+
 
   # def create_self_attendance
   #   @employee_attendance = EmployeeAttendance.new(employee_attendance_params)

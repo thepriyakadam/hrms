@@ -461,6 +461,10 @@ class LeaveCOffsController < ApplicationController
     @leave_c_offs = @employee.leave_c_offs.order("id DESC")
   end
 
+  def detail_modal
+    @leave_c_off = LeaveCOff.find(params[:format])
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

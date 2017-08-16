@@ -378,6 +378,20 @@ class EmployeeLeavRequest < ActiveRecord::Base
     end #self.is_present
   end #def
 
+
+  def create_attendance_leave
+    if self.is_present?
+    else
+      for i in self.start_date.to_date..self.end_date.to_date
+        if self.is_there(i)
+        else
+        EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'A',comment: "Leave Request Pending")
+        end
+      end
+    end #self.is_present
+  end #def
+
+
   def is_holiday?
     flag = 0
     for i in self.start_date.to_date..self.end_date.to_date

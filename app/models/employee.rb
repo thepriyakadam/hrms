@@ -91,6 +91,10 @@ class Employee < ActiveRecord::Base
   has_many :employee_jc_lists
   has_many :rembursments
   has_many :status_c_offs
+  has_many :leave_transfers
+
+  has_many :leave_transfers, class_name: "Employee",
+                          foreign_key: "transfer_to_id"
 
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',

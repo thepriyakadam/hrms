@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :leave_transfers
   resources :sub_departments
   resources :change_designations do
     collection do
@@ -747,6 +748,10 @@ end
       get :managerwise_average_report
       post :show_managerwise_average_attendance
       get :show_managerwise_average_attendance
+      get :datewise_attendance_with_options
+      post :datewise_all
+      post :datewise_absent
+      get :datewise_absent
     end
   end
   resources :salary_comp_mappings
@@ -1312,6 +1317,8 @@ end
     get 'basic_details/employee_list'
     get 'basic_details/select_department'
     post 'basic_details/list_of_employee'
+    get 'basic_details/show_basic_detail'
+    post 'basic_details/show_basic_detail'
 
     get 'salaries/new'
     post 'salaries/date_range_report'
@@ -1449,6 +1456,7 @@ end
       get :admin_level_c_off_detail
       get :admin_approve_modal
       get :modal
+      get :detail_modal
     end
   end
 

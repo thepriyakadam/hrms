@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 
+  transfer_to_id: 
+  date: 2017-08-14
+  no_of_leave: MyString
+  status: MyString
+  employee_leav_balance_id: 
+
+two:
+  employee_id: 
+  transfer_to_id: 
+  date: 2017-08-14
+  no_of_leave: MyString
+  status: MyString
+  employee_leav_balance_id: 

@@ -9,10 +9,12 @@
     <a href="">
       <i class="fa fa-user-plus"></i> <span><%= current_user.company_location.company.try(:name) %> Details</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu" >
-      <li><a href="/companies"><i class="fa fa-tags"></i> Companies </a></li>
-      <li><a href="/company_locations"><i class="fa fa-tags"></i> Locations </a></li>
-      <li><a href="/departments/new"><i class="fa fa-tags"></i> Departments </a></li>
-      <li><a href="/cost_centers/new"><i class="fa fa-tags"></i> Cost Center </a></li>
+
+      <li><a href="/companies" title="Company details"><i class="fa fa-tags"></i> Companies </a></li>
+      <li><a href="/company_locations" title="Company location details"><i class="fa fa-tags"></i> Locations </a></li>
+      <li><a href="/departments/new" title="Company department details"><i class="fa fa-tags"></i> Departments </a></li>
+      <li><a href="/sub_departments/new" title="Company sub department details"><i class="fa fa-tags"></i>Sub Departments </a></li>
+      <li><a href="/cost_centers/new" title="Company Cost Center Details"><i class="fa fa-tags"></i> Cost Center </a></li>
     </ul>
   </li>
   
@@ -397,6 +399,7 @@
         <i class="fa fa-edit"></i> Attendance <i class="fa fa-angle-left pull-right"></i>
       </a>
       <ul class="treeview-menu">
+<<<<<<< HEAD
        <li><a href="/employee_attendances/new"><i class="fa fa-tags"></i> Add Attendance </a></li>
       <li><a href="/employee_attendances/upload_daily_attendance"><i class="fa fa-tags"></i> Upload Punching Data </a></li>
       <li><a href="/employee_attendances/datewise_daily_attendance"><i class="fa fa-tags"></i> Show Attendance </a></li>
@@ -407,6 +410,20 @@
       <li><a href="/employee_attendances/daily_attendance_datewise"><i class="fa fa-tags"></i> Punching Detail </a></li>
       <!--  <li><a href="/employee_attendances/import_employee_attendance"><i class="fa fa-upload"></i> Upload Attendance File </a></li> -->
        <li><a href="/employee_attendances/admin_level_acf"><i class="fa fa-upload"></i> Admin ACF </a></li>
+=======
+       <li><a href="/employee_attendances/new" title="Creating the attendance cost centerwise"><i class="fa fa-tags"></i> Add Attendance </a></li>
+       <li><a href="/employee_attendances/revert_attendance_employeewise" title="For reverting the attendance of particular employee , month and year"><i class="fa fa-tags"></i> Revert Employee Wise </a></li>
+       <li><a href="/employee_attendances/revert_attendance" title="For reverting the attendance of employee of particular cost centerwise"><i class="fa fa-tags"></i> Revert Unit Wise </a></li>
+       <li><a href="/employee_attendances/datewise_daily_attendance" title="For updating the employee attendance of particular date"><i class="fa fa-tags"></i> Update Attendance </a></li>
+       <li><a href="/employee_attendances/select_date_and_employee" title="To view the attendance of particular employee"><i class="fa fa-tags"></i> Show Employee Wise </a></li>
+       <li><a href="/employee_attendances/upload_daily_attendance" title="For importing the daily attendance sheet"><i class="fa fa-upload"></i> Upload Punching Data </a></li>
+       <li><a href="/employee_attendances/destroy_daily_attendance" title="For destroying the daily attendance of a particular date, if the wrong sheet was imported"><i class="fa fa-tags"></i> Destroy Punching Data </a></li>
+       <li><a href="/employee_attendances/daily_attendance_datewise" title="To view the attendance sheet of particular date"><i class="fa fa-tags"></i> Punching Detail </a></li>
+      
+       <li><a href="/employee_attendances/import_employee_attendance" title="For upload daily attendance sheet"><i class="fa fa-upload"></i> Upload Attendance File </a></li>
+       <li><a href="/employee_attendances/admin_level_acf" title="For assigining the access card of particular date"><i class="fa fa-upload"></i> Admin ACF </a></li>
+       <li><a href="/employee_attendances/datewise_attendance_with_options" title="To view attendance all and selective"><i class="fa fa-tags"></i> Selective Attendance </a></li>
+>>>>>>> 2da4129d94865572ea843ff7bb4f6ea821c67ee4
        
      <!-- <li><a href="/workingdays/search_month_year"><i class="fa fa-tags"> </i>Attendace Update(Auto) </a></li> -->
      <!--  <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>

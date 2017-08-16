@@ -1,7 +1,7 @@
 <!-- SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Certifications Details</h3>
+    <h3 class="box-title">Employee Certification Details</h3>
   </div><!-- /.box-header -->
 
   <div class="box-body">
@@ -56,7 +56,7 @@
       <div class="row">
         <div class="col-sm-6">
           <div class="actions">
-            <%= f.submit :class => class_name, data: { disable_with: data_info },class: 'btn btn-sm btn-primary' %>
+            <%= f.submit :class => class_name, data: { disable_with: data_info },class: 'btn btn-sm btn-success' %>
             <% if params['controller'] == 'Certifications' and params['action'] == 'edit' %>
             <%= link_to 'Back',ajax_certification_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-default',remote:true%>
           <%end%>

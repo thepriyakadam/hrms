@@ -89,10 +89,10 @@
      <!--  <th><strong>Reserved Category</strong></th>
       <td>< @joining_detail.reserved_category.try(:name) %></td> -->
       <th><strong>Leaving Date</strong></th>
-      <td colspan="3"><%= @joining_detail.try(:leaving_date) %></td>
+      <td><%= @joining_detail.try(:leaving_date) %></td>
 
-      <!-- <th><strong>Medical Insurance</strong></th>
-      <td> <= @joining_detail.medical_schem %></td> -->
+      <th><strong>Retirment Date</strong></th>
+      <td> <%= @joining_detail.retirement_date %></td>
     </tr>
 
     <tr>
@@ -106,7 +106,7 @@
 
 
       <tr>
-        <th><strong>Compansatory Off</strong></th>
+        <th><strong>Compensatory Off</strong></th>
         <td colspan="3"><%= @joining_detail.c_off ? "Yes" : "No" %></td>
       </tr>
       

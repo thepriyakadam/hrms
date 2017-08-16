@@ -216,6 +216,7 @@ Rails.application.routes.draw do
       get :revert_selective
       post :show_employee_list
       post :revert_selective_week_off
+      post :revert_selective_data
     end
   end
   resources :late_mark_masters do

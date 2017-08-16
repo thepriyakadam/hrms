@@ -146,8 +146,9 @@ class WeekOffMastersController < ApplicationController
             if i.strftime("%a") == week_off_master.day
              @emp_attendance = EmployeeAttendance.where(employee_id: week_off_master.employee_id,day: i).take
               if @emp_attendance.try(:present) == nil
-                EmployeeAttendance.create(employee_id: week_off_master.employee_id,day: i,present: "WO",department_id: week_off_master.employee.department_id,is_confirm: false,week_off_master_id: wid)
-                EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                EmployeeAttendance.create(employee_id: week_off_master.employee_id,day: i,present: "WO",department_id: week_off_master.employee.department_id,is_confirm: false,employee_week_off_id: employee_week_off.id)
+                
               else
               end
             else
@@ -199,7 +200,8 @@ class WeekOffMastersController < ApplicationController
 
   def revert_master_data
     @week_off_master = WeekOffMaster.find(params[:week_off_master_id])
-    @employee_attendance = EmployeeAttendance.where(week_off_master_id: @week_off_master.id).destroy_all
+    @employee_week_off = EmployeeWeekOff.where(week_off_master_id: @week_off_master.id).pluck(:id)
+    @employee_attendance = EmployeeAttendance.where(employee_week_off_id: @employee_week_off).destroy_all
     @employee_week_offs = EmployeeWeekOff.where(week_off_master_id: @week_off_master.id).destroy_all
     @week_off_master.destroy
     flash[:notice] = 'Week Off Reverted '

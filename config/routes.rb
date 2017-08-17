@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  resources :leave_transfers
+  resources :leave_transfers do
+    collection do
+      get :leave_transfer_approval
+      get :show_detail_for_approval
+      get :approve
+      get :reject
+    end
+  end
   resources :sub_departments
   resources :change_designations do
     collection do

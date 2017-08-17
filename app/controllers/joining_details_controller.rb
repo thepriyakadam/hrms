@@ -120,6 +120,17 @@ class JoiningDetailsController < ApplicationController
     @value = params[:value]
   end
 
+  def certificate_print
+    @employee = Employee.find(params[:salary][:employee_id])
+    @certificate = params[:salary][:certificate]
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id) 
+  end
+
+  def joining_certificate
+
+  end
+    
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

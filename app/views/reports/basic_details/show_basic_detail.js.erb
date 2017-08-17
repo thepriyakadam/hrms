@@ -1,0 +1,11 @@
+$(".ajax-progress").hide();
+$("#employee_list").html("<%= j render 'list_of_basic_detail' %>")
+
+$(document).ready(function() {
+    $('#example3').DataTable( {
+      //"scrollY":        "200px",
+      "scrollX":        "1000px",
+      "scrollCollapse": true,
+      "paging":         true
+    } );
+  } );

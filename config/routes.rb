@@ -2185,6 +2185,9 @@ end
       get :search_by_joining_date
       get :import_xl
       post :import
+      get :certificate
+      post :certificate_print
+      get :joining_certificate
     end
   end
   resources :employee_grades do

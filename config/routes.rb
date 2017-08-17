@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  resources :leave_transfers
+  resources :leave_transfers do
+    collection do
+      get :leave_transfer_approval
+      get :show_detail_for_approval
+      get :approve
+      get :reject
+    end
+  end
   resources :sub_departments
   resources :change_designations do
     collection do
@@ -748,6 +755,10 @@ end
       get :managerwise_average_report
       post :show_managerwise_average_attendance
       get :show_managerwise_average_attendance
+      get :datewise_attendance_with_options
+      post :datewise_all
+      post :datewise_absent
+      get :datewise_absent
     end
   end
   resources :salary_comp_mappings

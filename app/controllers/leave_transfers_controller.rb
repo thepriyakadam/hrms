@@ -32,9 +32,12 @@ class LeaveTransfersController < ApplicationController
     leav_category_id = leave_transfer_params["leav_category_id"]
     @no_of_leave = leave_transfer_params["no_of_leave"]
     employee = Employee.find_by(id: employee_id)
+    transfer_to = Employee.find_by(id: transfer_to_id)
 
     employee_leav_balance = EmployeeLeavBalance.where(employee_id: current_user.employee_id,leav_category_id: leav_category_id,is_active: true).take
-    unless employee_leav_balance.nil? 
+    if employee_leav_balance.nil? 
+      flash[:alert] = "Leave Balance Not Available"
+    else
       if employee_leav_balance.no_of_leave.to_f >= @no_of_leave.to_f && @no_of_leave.to_f <= 5
         @leave_transfer.save
         @leave_transfer.update(status: "Pending",employee_leav_balance_id: employee_leav_balance.id)
@@ -43,13 +46,12 @@ class LeaveTransfersController < ApplicationController
         employee_leav_balance.update(no_of_leave: leave)
 
        
-        flash[:notice] = "Leave Transfered To #{employee.first_name}"
-        redirect_to new_leave_transfer_path
+        flash[:notice] = "Leave Transfered To #{transfer_to.first_name}"
       else
         flash[:alert] = "Leave Limit Extended!"
-        redirect_to new_leave_transfer_path
       end
-    end#unless
+    end#employee_leav_balance.nil? 
+        redirect_to new_leave_transfer_path
   end
 
   # PATCH/PUT /leave_transfers/1
@@ -63,6 +65,7 @@ class LeaveTransfersController < ApplicationController
   # DELETE /leave_transfers/1
   # DELETE /leave_transfers/1.json
   def destroy
+    byebug
      @leave_transfer
     employee_leav_balance = EmployeeLeavBalance.where(employee_id:  @leave_transfer.employee_id,leav_category_id:  @leave_transfer.leav_category_id,is_active: true).take
     leave = employee_leav_balance.no_of_leave.to_f + @no_of_leave.to_f
@@ -70,6 +73,7 @@ class LeaveTransfersController < ApplicationController
 
     @leave_transfer.destroy
     @leave_transfers = LeaveTransfer.all
+
   end
 
   def leave_transfer_approval

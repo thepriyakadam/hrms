@@ -29,6 +29,7 @@
         <td><%= interview_round.location %></td>
         <td><%= link_to '', resume_list_interview_schedules_path(interview_round),class: 'btn btn-xs fa fa-download' %></td>
         <td>
+        <% if %>
             <% if interview_round.is_confirm == true %>
               <%= link_to ' View', new_interview_analysis_path(interview_round_id: interview_round.id),class: 'btn btn-xs btn-info' %>
              <!--  <= link_to '', show_interview_round_list_interview_schedules_path(interview_round),class: 'btn btn-xs btn-default fa fa-eye' %> -->

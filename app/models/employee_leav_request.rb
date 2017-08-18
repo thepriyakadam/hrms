@@ -158,10 +158,10 @@ class EmployeeLeavRequest < ActiveRecord::Base
     @leave_records.each do |e|
       if e.count == 1
         employee_leav_request.particular_leave_records.create(employee_id: e.employee_id, leave_date: e.day, is_full: true, leav_category_id: e.leav_category_id)
-        EmployeeAttendance.where(employee_id: e.employee_id,day: e.day).update_all(present: e.try(:leav_category).try(:code),employee_leav_request_id: e.employee_leav_request_id,count: 1)
+        EmployeeAttendance.where(employee_id: e.employee_id,day: e.day).update_all(present: e.try(:leav_category).try(:code),employee_leav_request_id: e.employee_leav_request_id,count: 1,comment: nil)
       else
         employee_leav_request.particular_leave_records.create(employee_id: e.employee_id, leave_date: e.day, is_full: false, leav_category_id: e.leav_category_id)
-        EmployeeAttendance.where(employee_id: e.employee_id,day: e.day).update_all(present: "P/"+e.try(:leav_category).try(:code).to_s ,employee_leav_request_id: e.employee_leav_request_id,count: 0.5)
+        EmployeeAttendance.where(employee_id: e.employee_id,day: e.day).update_all(present: "P/"+e.try(:leav_category).try(:code).to_s ,employee_leav_request_id: e.employee_leav_request_id,count: 0.5,comment: nil)
       end
     end
   end

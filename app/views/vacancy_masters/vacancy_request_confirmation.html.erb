@@ -99,6 +99,15 @@
 <tr>
   <th><strong>Department</strong></th>
   <td><%= @vacancy_master.try(:department).try(:name) %></td>
+  
+  <th><strong>Sub Department</strong></th>
+  <td><%= @vacancy_master.try(:sub_department).try(:name) %></td>
+</tr>
+
+  <tr>
+  <th><strong>Cost Center</strong></th>
+  <td><%= @vacancy_master.try(:cost_center).try(:name) %></td>
+
   <th><strong>No. of Positions</strong></th>
   <td><%= @vacancy_master.no_of_position %></td> 
 </tr>

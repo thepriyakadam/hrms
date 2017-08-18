@@ -17,6 +17,7 @@
 				<Cell ss:Index="8"><Data ss:Type="String">MICR Code</Data></Cell>
 				<Cell ss:Index="9"><Data ss:Type="String">Branch Code</Data></Cell>
 				<Cell ss:Index="10"><Data ss:Type="String">IFSC Code</Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String">Address</Data></Cell>
 				</Row>
 
         <% i = 0 %>
@@ -32,6 +33,7 @@
           <Cell ss:Index="8"><Data ss:Type="String"><%= employee_bank_detail.micr_code %></Data></Cell>
           <Cell ss:Index="9"><Data ss:Type="String"><%= employee_bank_detail.branch_code %></Data></Cell>
           <Cell ss:Index="10"><Data ss:Type="String"><%= employee_bank_detail.ifsc_code %></Data></Cell>
+          <Cell ss:Index="10"><Data ss:Type="String"><%= employee_bank_detail.try(:address) %></Data></Cell>
            </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

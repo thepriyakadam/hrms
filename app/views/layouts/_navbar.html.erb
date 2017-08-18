@@ -68,6 +68,16 @@
               <%= render 'sidebars/account_admin' %>
             <% elsif current_user.role.name == 'Recruitment' %>
               <%= render 'sidebars/recruitment' %>
+            <% elsif current_user.role.name == 'GroupRecruiter' %>
+              <%= render 'sidebars/group_recruiter' %>
+            <% elsif current_user.role.name == 'AdminRecruiter' %>
+              <%= render 'sidebars/admin_recruiter' %>
+            <% elsif current_user.role.name == 'TimeAndAttendance' %>
+              <%= render 'sidebars/time_and_attendance' %>
+              <% elsif current_user.role.name == 'GroupTimeManagement' %>
+              <%= render 'sidebars/group_time_management' %>
+              <% elsif current_user.role.name == 'AdminTimeManagement' %>
+              <%= render 'sidebars/admin_time_management' %>
             <% else %>
               <%= render 'sidebars/employee' %>
             <% end %>

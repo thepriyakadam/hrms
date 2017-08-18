@@ -26,12 +26,13 @@ class FamiliesController < ApplicationController
 
   # POST /families
   # POST /families.json
+
   def create
     @family = Family.new(family_params)
     @employee = Employee.find(params[:family][:employee_id])
     respond_to do |format|
       if @family.save
-        format.html { redirect_to @family, notice: 'Family was successfully created.' }
+        format.html { redirect_to @family, notice: 'Asset was successfully created.' }
         format.json { render :show, status: :created, location: @family }
         @families = @employee.families
         format.js { @flag = true }
@@ -42,6 +43,29 @@ class FamiliesController < ApplicationController
       end
     end
   end
+
+  #  def create
+  #   @family = Family.new(family_params)
+  #   @employee = Employee.find(params[:family][:employee_id])
+  #   ActiveRecord::Base.transaction do
+  #     respond_to do |format|
+  #       if @family.save
+  #         len = params['family'].length - 4
+  #         for i in 2..len
+  #           Family.create(employee_id: params['family']['employee_id'],relation_master_id: params['family'][i.to_s]['relation_master_id'],f_name: params['family'][i.to_s]['f_name'],m_name: params['family'][i.to_s]['m_name'],l_name: params['family'][i.to_s]['l_name'],gender: params['family'][i.to_s]['gender'], date_of_birth: params['family'][i.to_s]['date_of_birth'] , age: params['family'][i.to_s]['age'],contact_no: params['family'][i.to_s]['contact_no'], email: params['family'][i.to_s]['email'],current_address: params['family'][i.to_s]['current_address'],marital: params['family'][i.to_s]['marital'],profession: params['family'][i.to_s]['profession'],adhar_no: params['family'][i.to_s]['adhar_no'],pan_no: params['family'][i.to_s]['pan_no'],have_passport: params['family'][i.to_s]['have_passport'],passport_no: params['family'][i.to_s]['passport_no'],passport_issue_date: params['family'][i.to_s]['passport_issue_date'],passport_expiry_date: params['family'][i.to_s]['passport_expiry_date'],medical_claim: params['family'][i.to_s]['medical_claim'],blood_group_id: params['family'][i.to_s]['blood_group_id'],is_handicap: params['family'][i.to_s]['is_handicap'],handicap_type: params['family'][i.to_s]['handicap_type'],religion_id: params['family'][i.to_s]['religion_id'])
+  #         end
+  #         @families = Family.where(employee_id: @employee.id)
+  #         format.html { redirect_to @family, notice: 'Family was successfully created.' }
+  #         format.json { render :show, status: :created, location: @family }
+  #         format.js { @flag = true }
+  #       else
+  #         format.html { render :new }
+  #         format.json { render json: @family.errors, status: :unprocessable_entity }
+  #         format.js { @flag = false }
+  #       end
+  #     end
+  #   end
+  # end
 
   # PATCH/PUT /families/1
   # PATCH/PUT /families/1.json
@@ -104,6 +128,6 @@ class FamiliesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def family_params
-    params.require(:family).permit(:employee_id, :no_of_member, :f_name, :m_name, :l_name, :date_of_birth, :age, :contact_no, :email, :current_address, :relation, :adhar_no, :pan_no, :passport_no, :medical_claim, :passport_expiry_date, :have_passport, :passport_issue_date, :marital, :blood_group_id, :religion_id, :handicap_type, :is_handicap, :profession, :gender)
+    params.require(:family).permit(:employee_id, :no_of_member, :f_name, :m_name, :l_name, :date_of_birth, :age, :contact_no, :email, :current_address, :relation, :adhar_no, :pan_no, :passport_no, :medical_claim, :passport_expiry_date, :have_passport, :passport_issue_date, :marital, :blood_group_id, :religion_id, :handicap_type, :is_handicap, :profession, :gender, :relation_master_id)
   end
 end

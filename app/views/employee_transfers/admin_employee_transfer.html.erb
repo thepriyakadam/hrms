@@ -48,6 +48,21 @@
               </div>
             </div>
           </div>
+
+      <div class="col-sm-3">
+          <div class="field">
+            <div class="input-group">
+             <div class="input-group-addon">
+             <i class="fa fa-calendar"></i>
+             </div>
+            <div class="form-group required">
+           <%= f.text_field :effective_from, label: 'Effective From', class: 'change_designation'%>
+           </div>
+           </div>
+         </div>
+       </div>
+    </div>
+
           <div class="col-sm-3" style="padding-top: 20px">
             <div class="actions">
               <%= f.submit 'Create' ,class: 'btn btn-primary btn-sm' %> 
@@ -59,6 +74,16 @@
     </div>
   </div>
 </div>
+
+  <script type="text/javascript">
+  $(function(){
+    $('.change_designation').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+     });
+</script>
 
 <script type="text/javascript" >
 $("#employee_transfer").validate({
@@ -75,10 +100,13 @@ $("#employee_transfer").validate({
        "employee_transfer[company_id]":{
         required: true,
       },
-       "employee_transfer[company_location_id]":{
+      "employee_transfer[company_location_id]":{
         required: true,
       },
-       "employee_transfer[department_id]":{
+      "employee_transfer[department_id]":{
+        required: true,
+      },
+      "employee_transfer[effective_from]":{
         required: true,
       }
     },
@@ -95,11 +123,14 @@ $("#employee_transfer").validate({
       "employee_transfer[company_id]":{
         required: "Please Select Company",
       },
-      "employee[company_location_id]":{
+      "employee_transfer[company_location_id]":{
         required: "Please Select Company Location",
       },
-      "employee[department_id]":{
+      "employee_transfer[department_id]":{
         required: "Please Select Department",
+      },
+      "employee_transfer[effective_from]":{
+        required: "Please Select Date",
       }
       },
     errorPlacement: function(error, element) {

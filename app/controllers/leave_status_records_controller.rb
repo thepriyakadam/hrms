@@ -41,7 +41,6 @@ class LeaveStatusRecordsController < ApplicationController
 
   def first_approve
     ### if no second reporter available
-    #byebug
     if @employee_leav_request.employee.manager_2_id.nil?
       @leave_status = LeaveStatusRecord.new do |s|
         s.employee_leav_request_id = params[:id]
@@ -51,6 +50,7 @@ class LeaveStatusRecordsController < ApplicationController
       end
       ActiveRecord::Base.transaction do
         if @leave_status.save
+
           @employee_leav_request.update(is_first_approved: true, current_status: 'FinalApproved')
           @employee_leav_request.create_single_record_for_leave(@employee_leav_request)
           @employee_leav_request.manage_coff(@employee_leav_request)

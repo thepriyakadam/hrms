@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  resources :leave_transfers do
+    collection do
+      get :leave_transfer_approval
+      get :show_detail_for_approval
+      get :approve
+      get :reject
+    end
+  end
+  resources :sub_departments
   resources :change_designations do
     collection do
       get :employee_list
@@ -216,6 +225,7 @@ Rails.application.routes.draw do
       get :revert_selective
       post :show_employee_list
       post :revert_selective_week_off
+      post :revert_selective_data
     end
   end
   resources :late_mark_masters do
@@ -267,6 +277,9 @@ Rails.application.routes.draw do
       get :week_off_list
       get :edit_modal
       post :update_week_off
+      get :revert_week_off_master
+      post :show_weekoff_master_data
+      get :revert_master_data
     end
   end
   resources :machine_attendances do
@@ -737,6 +750,16 @@ end
       get :reject_acf_request
       get :admin_level_acf
       post :admin_acf_approval
+      get :attendance_average_report
+      post :attendance_average_details
+      get :attendance_average_details
+      get :managerwise_average_report
+      post :show_managerwise_average_attendance
+      get :show_managerwise_average_attendance
+      get :datewise_attendance_with_options
+      post :datewise_all
+      post :datewise_absent
+      get :datewise_absent
     end
   end
   resources :salary_comp_mappings
@@ -1302,6 +1325,8 @@ end
     get 'basic_details/employee_list'
     get 'basic_details/select_department'
     post 'basic_details/list_of_employee'
+    get 'basic_details/show_basic_detail'
+    post 'basic_details/show_basic_detail'
 
     get 'salaries/new'
     post 'salaries/date_range_report'
@@ -1439,6 +1464,7 @@ end
       get :admin_level_c_off_detail
       get :admin_approve_modal
       get :modal
+      get :detail_modal
     end
   end
 
@@ -1641,6 +1667,8 @@ end
       get :dynamic_report
       post :dynamic_report
       get :modal
+      get :import_monthly_expence
+      post :import
     end
   end
   resources :expencess_types do
@@ -1664,6 +1692,8 @@ end
       get :dynamic_report
       post :dynamic_report
       get :modal
+      get :import_food_deduction
+      post :import_deduction
     end
   end
   resources :reporting_masters do
@@ -2140,6 +2170,9 @@ end
       get :status_wise_request
       get :select_form
       get :select_admin_form
+      get :balancewise_report
+      post :show_balancewise_report
+      get :show_balancewise_report
     end
   end
   resources :company_leavs
@@ -2160,6 +2193,9 @@ end
       get :search_by_joining_date
       get :import_xl
       post :import
+      get :certificate
+      post :certificate_print
+      get :joining_certificate
     end
   end
   resources :employee_grades do

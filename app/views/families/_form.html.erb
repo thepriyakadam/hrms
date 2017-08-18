@@ -10,23 +10,24 @@
 <%= f.hidden_field :employee_id, value: @employee.id %>
   <div class="row">
       <div class="col-sm-3">
+      <label>Relation</label>
         <div class="form-group required">
-          <%= f.text_field :relation %>
+          <%= f.select :relation_master_id,all_relation_type,{hide_label:true,include_blank: " Select Relation"} %>
         </div>
     </div>
     <div class="col-sm-3">
         <div class="form-group required">
-         <%= f.text_field :f_name,label: 'First Name' %>
+         <%= f.text_field :f_name,label: 'First Name',placeholder: 'First Name' %>
         </div>
     </div>
     <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :m_name,label: 'Middle Name' %>
+         <%= f.text_field :m_name,label: 'Middle Name' ,placeholder: 'Middle Name'%>
         </div>
     </div>
      <div class="col-sm-3">
         <div class="form-group required">
-        <%= f.text_field :l_name,label: 'Last Name' %>
+        <%= f.text_field :l_name,label: 'Last Name',placeholder: 'Last Name' %>
         </div>
     </div>
 </div>
@@ -39,18 +40,18 @@
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :date_of_birth,hide_label:true, class: 'family_birth_date' %>
+            <%= f.text_field :date_of_birth,hide_label:true, class: 'family_birthdate' %>
           </div>
          </div>
         </div>
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :age %>
+          <%= f.text_field :age, readonly:true %>
         </div>
       </div>
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :contact_no,label: 'Contact No' %>
+          <%= f.text_field :contact_no,label: 'Contact No',placeholder: 'Contact No.' %>
         </div>
      </div>
      <div class="col-sm-3">
@@ -64,7 +65,7 @@
    
       <div class="col-sm-6">
         <div class="field">
-         <%= f.text_field :current_address,label: 'Current Address' %>
+         <%= f.text_field :current_address,label: 'Current Address' ,placeholder: 'Current Address'%>
         </div>
     </div>
 
@@ -84,13 +85,13 @@
 <div class="row">
     <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :adhar_no,label: 'Aadhaar Card No' %>
+          <%= f.text_field :adhar_no,label: 'Aadhaar Card No',placeholder: "e.g : 123456789012" %>
         </div>
     </div>
 
     <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :pan_no,label:"PAN Card No" %>
+          <%= f.text_field :pan_no,label:"PAN Card No" ,placeholder: 'e.g : ABCDE12345B'%>
         </div>
     </div>
     <div class="col-sm-3">
@@ -114,7 +115,7 @@
 
      <div class="col-sm-3">
         <div class="field">
-        <%= f.text_field :passport_no,label: 'Passport No' %>
+        <%= f.text_field :passport_no,label: 'Passport No',placeholder: 'e.g : J8369854' %>
        </div>
       </div>
 
@@ -164,21 +165,54 @@
         </div>
       </div>
   </div>
+    <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create", class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
 
-  <div class="row">
+ <!--  <div class="row">
       <div class="col-sm-3">
         <div class="actions">
-            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+            <= f.submit :class => class_name, data: { disable_with: data_info } %>
         </div>
     </div>
   </div>
+ -->
+<!--   <div class="row">
+    <div class="col-sm-6">
+      <div class="actions">
+            <= f.submit :class => class_name, data: { disable_with: data_info },class: 'btn btn-sm btn-primary' %>
+            < if params['controller'] == 'Families' and params['action'] == 'edit' %>
+            <= link_to 'Back',ajax_family_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-default',remote:true%>
+          <end%>
+      </div>
+    </div>
+  </div> -->
 <% end %>
 </div><!-- /.box-body -->
 </div><!-- /.box -->
 
 <script type="text/javascript">
-  $(function(){
-    $('.family_birth_date').datepicker({
+   $(function(){
+    $('#family_date_of_birth').on('input', function() {
+      var family_date_of_birth = parseFloat($('#family_date_of_birth').val());
+      var date = Date.today
+      var age = "";
+      if isNaN(family_date_of_birth) {
+        age = ""
+      }
+      else{
+        age = (date.to_date - family_date_of_birth.to_date).toFixed(2);
+      }
+      $('#family_age').val(age);
+    });
+  });  
+
+    $(function(){
+    $('.family_birthdate').datepicker({
     changeYear:true,
     changeMonth: true,
     yearRange: '-200:-0',
@@ -195,6 +229,30 @@
     changeMonth: true,
     yearRange: '-100:+30',
     dateFormat: 'dd-mm-yy' });
-
   }); 
+
+
+   $("#family").validate({
+  rules: {
+    "family[date_of_birth]":{
+      required: true
+    },
+    "family[email]":{
+      required: true
+    },
+    "family[current_address]":{
+      required: true
+    }
+  },
+  
+  errorPlacement: function(error, element) {
+   error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+   error.insertAfter(element.parent(element));
+  }
+});
+
+   $(document).ready(function() {
+    $(".select2").select2();
+  });
 </script>
+

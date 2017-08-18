@@ -71,9 +71,24 @@ class EmployeeWeekOffsController < ApplicationController
 
   def revert_week_off
     @employee_week_off = EmployeeWeekOff.find(params[:format])
-    EmployeeAttendance.where(employee_id: @employee_week_off.employee_id,day: @employee_week_off.date).destroy_all
+    EmployeeAttendance.where(employee_week_off_id: @employee_week_off.id).destroy_all
     @employee_week_off.destroy
     flash[:notice] = "Revert successfully"
+    redirect_to employee_week_offs_path
+  end
+
+  def revert_selective_data
+    @employee_week_off_ids = params[:employee_week_off_ids]
+    if @employee_week_off_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+    else
+      @employee_week_off_ids.each do |eid|
+        @emp_week_off = EmployeeWeekOff.find_by_id(eid)
+        EmployeeAttendance.where(employee_week_off_id: eid).destroy_all 
+        @emp_week_off.destroy
+        flash[:notice] = "Revert successfully"
+      end
+    end
     redirect_to employee_week_offs_path
   end
 

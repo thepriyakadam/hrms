@@ -74,13 +74,13 @@ class EmployeeAttendancesController < ApplicationController
   def department_wise_employee_list
     @costcenter, @date = params[:salary][:name], params[:salary][:day].to_date
       if current_user.class == Member
-        if current_user.role.name == 'GroupAdmin'
+        if current_user.role.name == 'GroupAdmin' || current_user.role.name == "GroupTimeManagement" || current_user.role.name == "GroupRecruiter"
           joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
           @employees = Employee.where(status: "Active",id: joining_detail).filter_by_date_and_costcenter(@date, @costcenter, current_user)
-        elsif current_user.role.name == 'Admin'
+        elsif current_user.role.name == 'Admin'|| current_user.role.name == "AdminTimeManagement" || current_user.role.name == "AdminRecruiter"
           joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
           @employees = Employee.where(status: "Active",company_id: current_user.company_location.company_id,id: joining_detail).filter_by_date_and_costcenter(@date, @costcenter, current_user)
-        elsif current_user.role.name == 'Branch'
+        elsif current_user.role.name == 'Branch' || current_user.role.name == 'TimeAndAttendance' || current_user.role.name == 'Recruitment'
           joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
           @employees = Employee.where(status: "Active",company_location_id: current_user.company_location_id,id: joining_detail).filter_by_date_and_costcenter(@date, @costcenter, current_user)
         elsif current_user.role.name == 'Employee'
@@ -151,16 +151,21 @@ class EmployeeAttendancesController < ApplicationController
     @employees = Employee.where(status: 'Active').pluck(:id)
     @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id,employee_id: @employees).pluck(:employee_id)
     #@department_id = params[:salary][:department_id]
-    @day = params[:salary][:day]
+    @from = params[:salary][:from]
+    @to = params[:salary][:to]
+    @from_date = @from.to_date
+    @to_date = @to.to_date
+
     @present = params[:salary][:present]
-    @employee_attendances = EmployeeAttendance.where(present: @present ,employee_id: @costcenter).where(day: @day.to_date,is_confirm: false).group(:employee_id)
-    @employee_attendance_id = EmployeeAttendance.where(present: @present ,employee_id: @costcenter).where(day: @day.to_date,is_confirm: false).group(:employee_id).take
+    @employee_attendances = EmployeeAttendance.where(present: @present ,employee_id: @costcenter).where(day: @from_date..@to_date,is_confirm: false).group(:employee_id)
+    @employee_attendance_id = EmployeeAttendance.where(present: @present ,employee_id: @costcenter).where(day: @from_date..@to_date,is_confirm: false).group(:employee_id).take
   end
 
   def destroy_employee_attendance
     @costcenter_id =params[:costcenter_id]
     @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id).pluck(:employee_id)
-    @day = params[:day]
+    @from = params[:from]
+    @to = params[:to]
     @present = params[:present]
     @employee_attendance_ids = params[:employee_attendance_ids]
     if @employee_attendance_ids.nil?
@@ -169,7 +174,7 @@ class EmployeeAttendancesController < ApplicationController
     else
       @employee_attendance_ids.each do |eid|
         @employee_attendance = EmployeeAttendance.find(eid)
-        EmployeeAttendance.where(id: eid).destroy_all
+        EmployeeAttendance.where(id: eid,employee_leav_request_id: nil,on_duty_request_id: nil).destroy_all
       end
       flash[:notice] = "Revert successfully"
       redirect_to revert_attendance_employee_attendances_path
@@ -202,7 +207,7 @@ class EmployeeAttendancesController < ApplicationController
     @start_date = @date
     @end_date = @date.end_of_month
     if current_user.class == Member
-      if current_user.role.name == 'GroupAdmin'
+      if current_user.role.name == 'GroupAdmin' || current_user.role.name == 'GroupRecruiter' || current_user.role.name == 'GroupTimeManagement'
         if status == 'Active'
           @emp = Employee.where(status: 'Active').pluck(:id)
         elsif status == 'Inactive'
@@ -211,7 +216,7 @@ class EmployeeAttendancesController < ApplicationController
           @emp = Employee.all.pluck(:id)
         end
          @employees = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
-      elsif current_user.role.name == 'Admin'
+      elsif current_user.role.name == 'Admin'|| current_user.role.name == 'AdminRecruiter' || current_user.role.name == 'AdminTimeManagement'
         if status == 'Active'
           @emp = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
         elsif status == 'Inactive'
@@ -220,7 +225,7 @@ class EmployeeAttendancesController < ApplicationController
           @emp = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
         end
         @employees = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)   
-      elsif current_user.role.name == 'Branch'
+      elsif current_user.role.name == 'Branch' || current_user.role.name == 'TimeAndAttendance' || current_user.role.name == 'Recruitment'
         if status == 'Active'
           @emp = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
         elsif status == 'Inactive'
@@ -253,7 +258,7 @@ class EmployeeAttendancesController < ApplicationController
     #@start_date = @date
     #@end_date = @date.end_of_month
 
-    if current_user.class == Group
+    if current_user.class == Group 
       if company == ""
         if status == 'Active'
           @employees = Employee.where(status: 'Active').pluck(:id)
@@ -292,7 +297,7 @@ class EmployeeAttendancesController < ApplicationController
         @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
       end
     elsif current_user.class == Member
-      if current_user.role.name == 'GroupAdmin'
+      if current_user.role.name == 'GroupAdmin' || current_user.role.name == 'GroupRecruiter' || current_user.role.name == 'GroupTimeManagement'
         if company == ""
           if status == 'Active'
             @employees = Employee.where(status: 'Active').pluck(:id)
@@ -331,7 +336,7 @@ class EmployeeAttendancesController < ApplicationController
           end
           @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
         end
-        elsif current_user.role.name == 'Admin'
+        elsif current_user.role.name == 'Admin' || current_user.role.name == 'AdminRecruiter' || current_user.role.name == 'AdminTimeManagement'
          if company == ""
           if status == 'Active' 
             @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
@@ -369,7 +374,7 @@ class EmployeeAttendancesController < ApplicationController
           end
           @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
         end
-        elsif current_user.role.name == 'Branch'
+        elsif current_user.role.name == 'Branch' || current_user.role.name == 'Recruitment' || current_user.role.name == 'TimeAndAttendance'
           if company == "" || location == ""
             if status == 'Active' 
               @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
@@ -491,7 +496,7 @@ class EmployeeAttendancesController < ApplicationController
           @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
         end
       elsif current_user.class == Member
-        if current_user.role.name == 'GroupAdmin'
+        if current_user.role.name == 'GroupAdmin'|| current_user.role.name == 'GroupRecruiter' || current_user.role.name == 'GroupTimeManagement'
           if company == ""
             if status == 'Active'
               @employees = Employee.where(status: 'Active').pluck(:id)
@@ -529,7 +534,7 @@ class EmployeeAttendancesController < ApplicationController
             end
             @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
           end
-          elsif current_user.role.name == 'Admin'
+          elsif current_user.role.name == 'Admin' || current_user.role.name == 'AdminRecruiter' || current_user.role.name == 'AdminTimeManagement'
            if company == ""
             if status == 'Active' 
               @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
@@ -567,7 +572,7 @@ class EmployeeAttendancesController < ApplicationController
             end
             @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
           end
-          elsif current_user.role.name == 'Branch'
+          elsif current_user.role.name == 'Branch'|| current_user.role.name == 'Recruitment' || current_user.role.name == 'TimeAndAttendance'
             if company == "" || location == ""
               if status == 'Active' 
                 @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
@@ -677,7 +682,7 @@ class EmployeeAttendancesController < ApplicationController
           diff_hours=emp_attend.sum(:difference_hrs).to_f
           calculated_diff=ot_hours-diff_hours
           # Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f / @payroll_overtime_masters.company_hrs.to_f)
-          # byebug
+         
           joining_detail = JoiningDetail.where(employee_id: x).take
         if try(:joining_detail).try(:ot_option) == true
           Workingday.where(employee_id: x).update_all(ot_hours: calculated_diff.to_f.round(2))
@@ -685,7 +690,7 @@ class EmployeeAttendancesController < ApplicationController
           #   d.each do |f|
           #     f.update(calculated_payable_days: f.payable_day)
           #   end
-      end#emp1 loop
+        end#emp1 loop
           work=Workingday.where("ot_hours < ?", 0).pluck(:id)
           @workingdays = Workingday.where(id: work)
           @workingdays.each do |wor|
@@ -751,17 +756,18 @@ class EmployeeAttendancesController < ApplicationController
 
   def show_employee_list
     @employee_id = params[:salary][:employee_id]
-    @month = params[:salary][:month]
-    @year = params[:salary][:year]
-    @date = Date.new(@year.to_i, Workingday.months[@month])
-    @employee_attendance_id = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and is_confirm = ?", @date.strftime('%m/%Y'),@employee_id,false).take
-    @employee_attendances = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ? and is_confirm = ?", @date.strftime('%m/%Y'),@employee_id,false)
+    @from = params[:salary][:from]
+    @to = params[:salary][:to]
+    @from_date = @from.to_date
+    @to_date = @to.to_date
+    @employee_attendance_id = EmployeeAttendance.where(day: @from_date..@to_date,employee_id: @employee_id,is_confirm: false).take
+    @employee_attendances = EmployeeAttendance.where(day: @from_date..@to_date,employee_id: @employee_id,is_confirm: false)
   end
 
   def destroy_attendance_employeewise
     @employee_id = params[:employee_id]
-    @month = params[:month]
-    @year = params[:year]
+    @from = params[:from]
+    @to = params[:to]
     @employee_attendance_ids = params[:employee_attendance_ids]
       if @employee_attendance_ids.nil?
         flash[:alert] = "Please Select Employees"
@@ -884,7 +890,7 @@ class EmployeeAttendancesController < ApplicationController
 
       end
     elsif current_user.class == Member
-      if current_user.role.name == 'GroupAdmin'
+      if current_user.role.name == 'GroupAdmin'|| current_user.role.name == 'GroupRecruiter' || current_user.role.name == 'GroupTimeManagement'
         if company == ""
           if status == 'Active'
             @employees = Employee.where(status: 'Active').pluck(:id)
@@ -923,7 +929,7 @@ class EmployeeAttendancesController < ApplicationController
           end
           @employee_attendances = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ?", @date.strftime('%m/%Y')).where(employee_id: @employees).group(:employee_id)
         end
-      elsif current_user.role.name == 'Admin'
+      elsif current_user.role.name == 'Admin'|| current_user.role.name == 'AdminRecruiter' || current_user.role.name == 'AdminTimeManagement'
         if company == ""
           if status == 'Active'
             @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
@@ -961,7 +967,7 @@ class EmployeeAttendancesController < ApplicationController
           end
           @employee_attendances = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ?", @date.strftime('%m/%Y')).where(employee_id: @employees).group(:employee_id)
         end
-        elsif current_user.role.name == 'Branch'
+        elsif current_user.role.name == 'Branch'|| current_user.role.name == 'Recruitment' || current_user.role.name == 'TimeAndAttendance'
           if company == "" || location == ""
             if status == 'Active'
               @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
@@ -1084,7 +1090,7 @@ class EmployeeAttendancesController < ApplicationController
         @employee_attendance_id = EmployeeAttendance.where(day: @start.to_date..@end.to_date,employee_id: @employees).take
       end
     elsif current_user.class == Member
-      if current_user.role.name == 'GroupAdmin'
+      if current_user.role.name == 'GroupAdmin'|| current_user.role.name == 'GroupRecruiter' || current_user.role.name == 'GroupTimeManagement'
         if company == ""
           if status == 'Active'
             @employees = Employee.where(status: 'Active').pluck(:id)
@@ -1126,7 +1132,7 @@ class EmployeeAttendancesController < ApplicationController
           @employee_attendances = EmployeeAttendance.where(day: @start.to_date..@end.to_date,employee_id: @employees)
           @employee_attendance_id = EmployeeAttendance.where(day: @start.to_date..@end.to_date,employee_id: @employees).take
         end
-      elsif current_user.role.name == 'Admin'
+      elsif current_user.role.name == 'Admin'|| current_user.role.name == 'AdminRecruiter' || current_user.role.name == 'AdminTimeManagement'
         if company == ""
           if status == 'Active'
             @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
@@ -1168,7 +1174,7 @@ class EmployeeAttendancesController < ApplicationController
           @employee_attendances = EmployeeAttendance.where(day: @start.to_date..@end.to_date,employee_id: @employees)
           @employee_attendance_id = EmployeeAttendance.where(day: @start.to_date..@end.to_date,employee_id: @employees).take
         end
-        elsif current_user.role.name == 'Branch'
+        elsif current_user.role.name == 'Branch'|| current_user.role.name == 'Recruitment' || current_user.role.name == 'TimeAndAttendance'
           if company == "" || location == ""
             if status == 'Active'
               @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
@@ -1307,7 +1313,7 @@ class EmployeeAttendancesController < ApplicationController
         @employee_attendance_id = EmployeeAttendance.where(present: @present,day: @start.to_date..@end.to_date ,employee_id: @employees).take
       end
     elsif current_user.class == Member
-      if current_user.role.name == 'GroupAdmin'
+      if current_user.role.name == 'GroupAdmin'|| current_user.role.name == 'GroupRecruiter' || current_user.role.name == 'GroupTimeManagement'
         if company == ""
           if status == 'Active'
             @employees = Employee.where(status: 'Active').pluck(:id)
@@ -1349,7 +1355,7 @@ class EmployeeAttendancesController < ApplicationController
           @employee_attendances = EmployeeAttendance.where(present: @present,day: @start.to_date..@end.to_date,employee_id: @employees)
           @employee_attendance_id = EmployeeAttendance.where(present: @present,day: @start.to_date..@end.to_date ,employee_id: @employees).take
         end
-        elsif current_user.role.name == 'Admin'
+        elsif current_user.role.name == 'Admin'|| current_user.role.name == 'AdminRecruiter' || current_user.role.name == 'AdminTimeManagement'
          if company == ""
           if status == 'Active'
             @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
@@ -1391,7 +1397,7 @@ class EmployeeAttendancesController < ApplicationController
           @employee_attendances = EmployeeAttendance.where(present: @present,day: @start.to_date..@end.to_date ,employee_id: @employees)
           @employee_attendance_id = EmployeeAttendance.where(present: @present,day: @start.to_date..@end.to_date ,employee_id: @employees).take
         end
-        elsif current_user.role.name == 'Branch'
+        elsif current_user.role.name == 'Branch'|| current_user.role.name == 'Recruitment' || current_user.role.name == 'TimeAndAttendance'
           if company == "" || location == ""
             if status == 'Active'
               @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
@@ -1475,13 +1481,13 @@ class EmployeeAttendancesController < ApplicationController
     to = @to.to_date
 
     if current_user.class == Member
-      if current_user.role.name == 'GroupAdmin'
+      if current_user.role.name == 'GroupAdmin'|| current_user.role.name == 'GroupRecruiter' || current_user.role.name == 'GroupTimeManagement'
         @employee = Employee.where(status: 'Active').pluck(:id)
         @employees = EmployeeAttendance.where(day: from..to,employee_id: @employee)
-      elsif current_user.role.name == 'Admin'
+      elsif current_user.role.name == 'Admin'|| current_user.role.name == 'AdminRecruiter' || current_user.role.name == 'AdminTimeManagement'
         @employee = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
         @employees = EmployeeAttendance.where(day: from..to,employee_id: @employee)
-      elsif current_user.role.name == 'Branch'
+      elsif current_user.role.name == 'Branch'|| current_user.role.name == 'Recruitment' || current_user.role.name == 'TimeAndAttendance'
         @employee = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
         @employees = EmployeeAttendance.where(day: from..to,employee_id: @employee)
       elsif current_user.role.name == 'HOD'
@@ -1858,7 +1864,8 @@ end
 
     @from = params[:employee][:from]
     @to = params[:employee][:to]
-    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee)
+    @employee_id = params[:employee][:employee_id]
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id)
 
       respond_to do |format|
         format.js
@@ -1908,7 +1915,7 @@ end
         @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
       end
     elsif current_user.class == Member
-      if current_user.role.name == 'GroupAdmin'
+      if current_user.role.name == 'GroupAdmin'|| current_user.role.name == 'GroupRecruiter' || current_user.role.name == 'GroupTimeManagement'
         if @company_id == ""
           @employees = Employee.where(status: 'Active')
         @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
@@ -1922,7 +1929,7 @@ end
           @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
         @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
         end
-      elsif current_user.role.name == 'Admin'
+      elsif current_user.role.name == 'Admin'|| current_user.role.name == 'AdminRecruiter' || current_user.role.name == 'AdminTimeManagement'
         if @company_id == ""
           @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
         @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
@@ -1936,7 +1943,7 @@ end
           @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
         @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
         end
-      elsif current_user.role.name == 'Branch'
+      elsif current_user.role.name == 'Branch'|| current_user.role.name == 'Recruitment' || current_user.role.name == 'TimeAndAttendance'
         if @company_id == "" || @location == ""
           @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
         @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees)
@@ -2227,6 +2234,137 @@ end
   end
 
 
+def attendance_average_report
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Report"
+end
+
+def attendance_average_details
+  @from = params[:employee][:from]
+  @to = params[:employee][:to]
+  company = params[:employee][:company_id]
+  location = params[:employee][:company_location_id]
+  department = params[:employee][:department_id]
+  @from_date = @from.to_date
+  @to_date = @to.to_date
+
+  if current_user.class == Member
+    if current_user.role.name == 'GroupAdmin'
+      if company == ""
+        @employees = Employee.where(status: 'Active').pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+      elsif location == ""
+        @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+      elsif department == ""
+        @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+      else
+        @employees = Employee.where(status: 'Active',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+      end
+    elsif current_user.role.name == 'Admin'
+      if company == ""
+        @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+      elsif location == ""
+          @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
+          @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+      elsif department == ""
+        @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+      else
+        @employees = Employee.where(status: 'Active',company_id: company.to_i,company_location_id: @location.to_i,department_id: department.to_i).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+      end
+    elsif current_user.role.name == 'Branch'
+      if company == "" || location == ""
+        @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+      elsif department == "" 
+        @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+      else 
+        @employees = Employee.where(status: 'Active',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+      end
+    elsif current_user.role.name == 'HOD'
+      if company == "" || location == "" || department == ""
+        @employees = Employee.where(status: 'Active',department_id: current_user.department_id).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+      else 
+        @employees = Employee.where(status: 'Active',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+      end
+    elsif current_user.role.name == 'Superviser'
+    elsif current_user.role.name == 'Employee'
+    end
+  end#group
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_attendances/attendance_average.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'employee_attendance',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_attendances/attendance_average.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
+    end
+  #@employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+end
+
+  def managerwise_average_report
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Report"
+  end
+
+  def show_managerwise_average_attendance
+
+    @from = params[:employee][:from]
+    @to = params[:employee][:to]
+    reporting_master = params[:employee][:reporting_master]
+    @manager = ReportingMaster.find_by(id: reporting_master)
+    @emp = Employee.find_by(id: @manager.employee_id)
+    @employees = @emp.subordinates
+    @employees_ind = @emp.indirect_subordinates
+    @employee = @employees + @employees_ind
+
+    @from_date = @from.to_date
+    @to_date = @to.to_date
+    @employee_attendances = EmployeeAttendance.where(day: @from_date..@to_date,employee_id: @employee).group(:employee_id)
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_attendances/managerwise_attendance_average.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'employee_attendance',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_attendances/managerwise_attendance_average.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
+    end
+  end
+
+  def datewise_attendance_with_options
+  session[:active_tab] ="TimeManagement"
+  session[:active_tab1] ="Attendance"
+  end
+
+  def datewise_all
+    from = params[:employee][:from]
+    to = params[:employee][:to]
+
+    if params[:save]
+      @employee_attendances = EmployeeAttendance.where(day: from.to_date..to.to_date)
+    else
+    @employee_attendances = EmployeeAttendance.where(day: from.to_date..to.to_date,present: "A")
+    end
+  end
+
+
   # def create_self_attendance
   #   @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
   #   employee_id = params[:salary][:employee_id]
@@ -2256,6 +2394,6 @@ end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_attendance_params
-    params.require(:employee_attendance).permit(:employee_code,:employee_name,:employee_id, :day, :present, :in_time, :out_time)
+    params.require(:employee_attendance).permit(:employee_week_off_id,:employee_code,:employee_name,:employee_id, :day, :present, :in_time, :out_time)
   end
 end

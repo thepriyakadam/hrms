@@ -236,6 +236,20 @@ class MonthlyExpencesController < ApplicationController
     end
   end
 
+  def import_monthly_expence
+  end
+
+  def import
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_monthly_expence_monthly_expences_path
+    else
+    MonthlyExpence.import(params[:file])
+    redirect_to import_monthly_expence_monthly_expences_path, notice: "File imported."
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

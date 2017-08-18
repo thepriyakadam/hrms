@@ -22,7 +22,13 @@
               <td><%= a.try(:out_time) %></td>
               <td><%= a.try(:working_hrs) %></td>
               <td><%= a.try(:comment) %></td>
-              <td><%= link_to ' ',modal_edit_daily_attendance_employee_attendances_path(a),class: 'btn btn-success btn-xs fa fa-edit',remote: true %></td>
+              <td>
+                <% if  @leav_category = LeavCategory.exists?(code: a.try(:present)) %>
+                  <small class="label label-primary">Leave</small>
+                <% else %>
+                  <%= link_to ' ',modal_edit_daily_attendance_employee_attendances_path(a),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         </tbody>

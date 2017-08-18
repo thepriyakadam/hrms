@@ -93,6 +93,10 @@ class Employee < ActiveRecord::Base
   has_many :employee_jc_lists
   has_many :rembursments
   has_many :status_c_offs
+  has_many :leave_transfers
+
+  has_many :leave_transfers, class_name: "Employee",
+                          foreign_key: "transfer_to_id"
 
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',
@@ -155,7 +159,7 @@ class Employee < ActiveRecord::Base
 
   validates :manual_employee_code, presence: true, uniqueness: { case_sensitive: false }
   validates :first_name, presence: true
-  validates :email, presence: true
+  # validates :email, presence: true
 
   has_attached_file :passport_photo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'Profile11.jpg'
   validates_attachment_content_type :passport_photo,  :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'

@@ -1,0 +1,41 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Attendance</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+      <table id="example6" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Employee Name</th>
+            <th>Present</th>
+            <th>In Time</th>
+            <th>Out Time</th>
+            <th>Working Hours</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @employee_attendances.each do |a| %>
+            <tr>
+              <td><%= a.employee.manual_employee_code %></td>
+              <td><%= full_name(a.employee) %></td>
+              <td><%= a.try(:present) %></td>
+              <td><%= a.try(:in_time) %></td>
+              <td><%= a.try(:out_time) %></td>
+              <td><%= a.try(:working_hrs) %></td>
+              <td><%= a.try(:comment) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+       <%= link_to "Back",datewise_attendance_with_options_employee_attendances_path,class: "btn btn-sm btn-default" %>
+    </div>
+  </div> 
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

@@ -101,41 +101,41 @@
     @state = @employee.state
     @cities = @state.districts
 
-    # @company = @employee.company
-    # @company_locations = @company.try(:company_locations)
-    # @company_location = @employee.company_location
-    # @departments = @company_location.try(:departments)
+    @company = @employee.company
+    @company_locations = @company.try(:company_locations)
+    @company_location = @employee.company_location
+    @departments = @company_location.try(:departments)
 
-    if current_user.class == Group
-    @company_locations = CompanyLocation.all
-    else
-      if current_user.role.name == 'GroupAdmin'
-        @company_locations = CompanyLocation.where(company_id: current_user.company_location.company_id)
-        @company_locations.each do |cl|
-         @departments = Department.where(company_location_id: cl.id)
-        end
-      elsif current_user.role.name == 'Admin'
-        @company_locations = CompanyLocation.where(company_id: current_user.company_location.company_id)
-        @company_locations.each do |cl|
-         @departments = Department.where(company_location_id: cl.id)
-        end
-      elsif current_user.role.name == 'Branch'
-        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
-        @company_locations.each do |cl|
-         @departments = Department.where(company_location_id: cl.id)
-        end
-     elsif current_user.role.name == 'HOD'
-        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
-        @company_locations.each do |cl|
-         @departments = Department.where(company_location_id: cl.id)
-        end
-    elsif current_user.role.name == 'Supervisor'
-        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
-        @company_locations.each do |cl|
-         @departments = Department.where(company_location_id: cl.id)
-        end
-      end
-    end
+    # if current_user.class == Group
+    # @company_locations = CompanyLocation.all
+    # else
+    #   if current_user.role.name == 'GroupAdmin'
+    #     @company_locations = CompanyLocation.where(company_id: current_user.company_location.company_id)
+    #     @company_locations.each do |cl|
+    #      @departments = Department.where(company_location_id: cl.id)
+    #     end
+    #   elsif current_user.role.name == 'Admin'
+    #     @company_locations = CompanyLocation.where(company_id: current_user.company_location.company_id)
+    #     @company_locations.each do |cl|
+    #      @departments = Department.where(company_location_id: cl.id)
+    #     end
+    #   elsif current_user.role.name == 'Branch'
+    #     @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+    #     @company_locations.each do |cl|
+    #      @departments = Department.where(company_location_id: cl.id)
+    #     end
+    #  elsif current_user.role.name == 'HOD'
+    #     @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+    #     @company_locations.each do |cl|
+    #      @departments = Department.where(company_location_id: cl.id)
+    #     end
+    # elsif current_user.role.name == 'Supervisor'
+    #     @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+    #     @company_locations.each do |cl|
+    #      @departments = Department.where(company_location_id: cl.id)
+    #     end
+    #   end
+    # end
     @form = 'employee'
   end
 
@@ -640,8 +640,7 @@ end
         @employees = Employee.where(id: current_user.employee_id)
       end
     else
-       @employees = Employee.where(id: current_user.employee_id)
-        @employees = []
+        @employees = Employee.all
     if @employee_id.nil? || employee_id.empty?
       flash[:alert] = "Please Select the checkbox"
       redirect_to employee_list_report_employees_path

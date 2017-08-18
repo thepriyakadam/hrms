@@ -346,7 +346,7 @@
                       <% end %>
                     <% end %>
                   </div>
-                  <span class="users-list-date"><%= e.employee.try(:joining_detail).try(:cost_center).try(:name) %> <%= e.employee.department.try(:name) %> <%= e.employee.try(:sub_department).try(:name) %></span>
+                  <span class="users-list-date"><%= e.try(:employee).try(:joining_detail).try(:cost_center).try(:name) %> <%= e.try(:employee).try(:department).try(:name) %> <%= e.try(:employee).try(:sub_department).try(:name) %></span>
                 </div>
                  
                 <% end %>

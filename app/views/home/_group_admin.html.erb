@@ -302,7 +302,7 @@
                       <% end %>
                     <% end %>
                   </div>
-                  <span class="users-list-date"><%= e.employee.try(:joining_detail).try(:cost_center).try(:name) %> <%= e.employee.department.try(:name) %> <%= e.employee.try(:sub_department).try(:name) %></span>
+                  <span class="users-list-date"><%= e.try(:employee).try(:joining_detail).try(:cost_center).try(:name) %> <%= e.try(:employee).try(:department).try(:name) %> <%= e.try(:employee).try(:sub_department).try(:name) %></span>
                 </div>
                  
                 <% end %>
@@ -336,7 +336,7 @@
                 <%@employees.each do |e|%>
                 <tr>
                   <td><%= full_name(e) %></td>
-                  <td><%= e.employee.try(:joining_detail).try(:cost_center).try(:name) %> <%= e.employee.department.try(:name) %> <%= e.employee.try(:sub_department).try(:name) %></td>
+                  <td><%= e.try(:employee).try(:joining_detail).try(:cost_center).try(:name) %> <%= e.try(:employee).department.try(:name) %> <%= e.try(:employee).try(:sub_department).try(:name) %></td>
                 </tr>
                 <%end%>
               </tbody>
@@ -414,7 +414,7 @@
                     <div class="product-info">
                       <%= full_name(j.employee)%>
                       <span class="label label-info pull-right"><%= j.joining_date %></span>
-                      <span class="product-description"><%= j.employee.try(:joining_detail).try(:cost_center).try(:name) %> <%= j.employee.department.try(:name) %> <%= j.employee.try(:sub_department).try(:name) %></span>
+                      <span class="product-description"><%= j.try(:employee).try(:joining_detail).try(:cost_center).try(:name) %> <%= j.try(:employee).try(:department).try(:name) %> <%= j.try(:employee).try(:sub_department).try(:name) %></span>
                     </div>
                   </li><!-- /.item -->
                 <% else %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170814113006) do
+ActiveRecord::Schema.define(version: 20170817122856) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1294,53 +1294,57 @@ ActiveRecord::Schema.define(version: 20170814113006) do
   add_index "employee_week_offs", ["week_off_master_id"], name: "index_employee_week_offs_on_week_off_master_id", using: :btree
 
   create_table "employees", force: :cascade do |t|
-    t.string   "manual_employee_code",        limit: 255
-    t.string   "employee_code",               limit: 255
-    t.string   "employees",                   limit: 255
-    t.string   "prefix",                      limit: 255
-    t.string   "first_name",                  limit: 255
-    t.string   "middle_name",                 limit: 255
-    t.string   "last_name",                   limit: 255
+    t.string   "manual_employee_code",            limit: 255
+    t.string   "employee_code",                   limit: 255
+    t.string   "employees",                       limit: 255
+    t.string   "prefix",                          limit: 255
+    t.string   "first_name",                      limit: 255
+    t.string   "middle_name",                     limit: 255
+    t.string   "last_name",                       limit: 255
     t.date     "date_of_birth"
-    t.string   "gender",                      limit: 255
-    t.string   "contact_no",                  limit: 255
-    t.string   "optinal_contact_no",          limit: 255
-    t.string   "optinal_contact_no1",         limit: 255
-    t.string   "email",                       limit: 255
-    t.string   "optional_email",              limit: 255
-    t.text     "permanent_address",           limit: 65535
-    t.integer  "country_id",                  limit: 4
-    t.integer  "state_id",                    limit: 4
-    t.integer  "district_id",                 limit: 4
-    t.string   "city",                        limit: 255
-    t.integer  "pin_code",                    limit: 4
-    t.text     "current_address",             limit: 65535
-    t.string   "adhar_no",                    limit: 255
-    t.string   "pan_no",                      limit: 255
-    t.string   "licence_no",                  limit: 255
-    t.string   "marital_status",              limit: 255
-    t.integer  "blood_group_id",              limit: 4
-    t.integer  "employee_type_id",            limit: 4
-    t.integer  "nationality_id",              limit: 4
-    t.integer  "religion_id",                 limit: 4
-    t.string   "handicap",                    limit: 255
-    t.string   "handicap_type",               limit: 255
-    t.string   "status",                      limit: 255
-    t.integer  "manager_id",                  limit: 4
-    t.integer  "manager_2_id",                limit: 4
-    t.integer  "company_id",                  limit: 4
-    t.integer  "company_location_id",         limit: 4
-    t.integer  "department_id",               limit: 4
-    t.integer  "punch_card_id",               limit: 4
-    t.integer  "employee_code_master_id",     limit: 4
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
-    t.string   "passport_photo_file_name",    limit: 255
-    t.string   "passport_photo_content_type", limit: 255
-    t.integer  "passport_photo_file_size",    limit: 4
+    t.string   "gender",                          limit: 255
+    t.string   "contact_no",                      limit: 255
+    t.string   "optinal_contact_no",              limit: 255
+    t.string   "optinal_contact_no1",             limit: 255
+    t.string   "email",                           limit: 255
+    t.string   "optional_email",                  limit: 255
+    t.text     "permanent_address",               limit: 65535
+    t.integer  "country_id",                      limit: 4
+    t.integer  "state_id",                        limit: 4
+    t.integer  "district_id",                     limit: 4
+    t.string   "city",                            limit: 255
+    t.integer  "pin_code",                        limit: 4
+    t.text     "current_address",                 limit: 65535
+    t.string   "adhar_no",                        limit: 255
+    t.string   "pan_no",                          limit: 255
+    t.string   "licence_no",                      limit: 255
+    t.string   "marital_status",                  limit: 255
+    t.integer  "blood_group_id",                  limit: 4
+    t.integer  "employee_type_id",                limit: 4
+    t.integer  "nationality_id",                  limit: 4
+    t.integer  "religion_id",                     limit: 4
+    t.string   "handicap",                        limit: 255
+    t.string   "handicap_type",                   limit: 255
+    t.string   "status",                          limit: 255
+    t.integer  "manager_id",                      limit: 4
+    t.integer  "manager_2_id",                    limit: 4
+    t.integer  "company_id",                      limit: 4
+    t.integer  "company_location_id",             limit: 4
+    t.integer  "department_id",                   limit: 4
+    t.integer  "punch_card_id",                   limit: 4
+    t.integer  "employee_code_master_id",         limit: 4
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.string   "passport_photo_file_name",        limit: 255
+    t.string   "passport_photo_content_type",     limit: 255
+    t.integer  "passport_photo_file_size",        limit: 4
     t.datetime "passport_photo_updated_at"
-    t.integer  "sub_department_id",           limit: 4
-    t.string   "extension_no",                limit: 255
+    t.integer  "sub_department_id",               limit: 4
+    t.string   "extension_no",                    limit: 255
+    t.string   "employee_signature_file_name",    limit: 255
+    t.string   "employee_signature_content_type", limit: 255
+    t.integer  "employee_signature_file_size",    limit: 4
+    t.datetime "employee_signature_updated_at"
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id", using: :btree
@@ -3036,13 +3040,12 @@ ActiveRecord::Schema.define(version: 20170814113006) do
 
   create_table "reporting_masters_vacancy_masters", force: :cascade do |t|
     t.integer  "vacancy_master_id",   limit: 4
-    t.integer  "reporting_master_id", limit: 4
     t.string   "vacancy_status",      limit: 255
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+    t.integer  "reporting_master_id", limit: 4
   end
 
-  add_index "reporting_masters_vacancy_masters", ["reporting_master_id"], name: "index_reporting_masters_vacancy_masters_on_reporting_master_id", using: :btree
   add_index "reporting_masters_vacancy_masters", ["vacancy_master_id"], name: "index_reporting_masters_vacancy_masters_on_vacancy_master_id", using: :btree
 
   create_table "reserved_categories", force: :cascade do |t|
@@ -3341,6 +3344,8 @@ ActiveRecord::Schema.define(version: 20170814113006) do
     t.integer  "passport_photo_file_size",    limit: 4
     t.datetime "passport_photo_updated_at"
     t.integer  "add_by_id",                   limit: 4
+    t.decimal  "current_ctc",                               precision: 10
+    t.string   "contact_no2",                 limit: 255
   end
 
   add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id", using: :btree
@@ -3755,7 +3760,6 @@ ActiveRecord::Schema.define(version: 20170814113006) do
     t.integer  "degree_id",                 limit: 4
     t.integer  "degree_1_id",               limit: 4
     t.integer  "degree_2_id",               limit: 4
-    t.integer  "reporting_master_id",       limit: 4
     t.integer  "employee_id",               limit: 4
     t.string   "other_organization",        limit: 255
     t.string   "industry",                  limit: 255
@@ -3770,6 +3774,18 @@ ActiveRecord::Schema.define(version: 20170814113006) do
     t.date     "target_date"
     t.integer  "company_id",                limit: 4
     t.string   "vacancy_of",                limit: 255
+    t.string   "vacancy_type",              limit: 255
+    t.string   "string",                    limit: 255
+    t.string   "experince_max",             limit: 255
+    t.string   "budget_max",                limit: 255
+    t.string   "reason",                    limit: 255
+    t.integer  "replacement_id",            limit: 4
+    t.boolean  "notice_period"
+    t.string   "notice_period_day",         limit: 255
+    t.boolean  "relocation_rerimbursement"
+    t.string   "relocation_cost",           limit: 255
+    t.integer  "reporting_master_id",       limit: 4
+    t.integer  "recruiter_id",              limit: 4
   end
 
   add_index "vacancy_masters", ["company_id"], name: "index_vacancy_masters_on_company_id", using: :btree
@@ -3778,7 +3794,6 @@ ActiveRecord::Schema.define(version: 20170814113006) do
   add_index "vacancy_masters", ["department_id"], name: "index_vacancy_masters_on_department_id", using: :btree
   add_index "vacancy_masters", ["employee_designation_id"], name: "index_vacancy_masters_on_employee_designation_id", using: :btree
   add_index "vacancy_masters", ["employee_id"], name: "index_vacancy_masters_on_employee_id", using: :btree
-  add_index "vacancy_masters", ["reporting_master_id"], name: "index_vacancy_masters_on_reporting_master_id", using: :btree
 
   create_table "vacancy_request_histories", force: :cascade do |t|
     t.integer  "vacancy_master_id",       limit: 4
@@ -4224,7 +4239,6 @@ ActiveRecord::Schema.define(version: 20170814113006) do
   add_foreign_key "reporting_masters_training_reqs", "training_requests"
   add_foreign_key "reporting_masters_travel_requests", "reporting_masters"
   add_foreign_key "reporting_masters_travel_requests", "travel_requests"
-  add_foreign_key "reporting_masters_vacancy_masters", "reporting_masters"
   add_foreign_key "reporting_masters_vacancy_masters", "vacancy_masters"
   add_foreign_key "resignation_histories", "employee_resignations"
   add_foreign_key "resignation_histories", "employees"
@@ -4311,7 +4325,6 @@ ActiveRecord::Schema.define(version: 20170814113006) do
   add_foreign_key "vacancy_masters", "departments"
   add_foreign_key "vacancy_masters", "employee_designations"
   add_foreign_key "vacancy_masters", "employees"
-  add_foreign_key "vacancy_masters", "reporting_masters"
   add_foreign_key "vacancy_request_histories", "company_locations"
   add_foreign_key "vacancy_request_histories", "degrees"
   add_foreign_key "vacancy_request_histories", "departments"

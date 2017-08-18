@@ -1,0 +1,25 @@
+<div class="box-body">
+
+ <div style="width: 700px; height: 700px;
+          padding: 10px;
+          border: 5px solid gray;
+          margin: 10;">
+  <div style="float:left;">
+  <b><%= @employee.company_location.company.try(:description)%></b><br>
+  <%= @employee.company_location.company.try(:address)%><br>
+  <%= @employee.company_location.company.try(:contact_no)%><br>
+  <%= @employee.company_location.company.try(:email)%><br><br>
+  Date - <%= Time.zone.now.to_date %> </div>  <br><br><br><br><br><br><br>      
+
+  <p>Dear <%= @employee.first_name%> <%= @employee.middle_name%> <%= @employee.last_name%>,</p> 
+
+  <p>This is in continuation of our meeting, I am delighted to offer you the position of <b><%= @employee.joining_detail.employee_designation.try(:name)%></b> at <b><%= @employee.company_location.company.try(:name)%></b>.
+
+  <p>The terms of employement have been attached with this offer letter. We hope you enjoy your role and make significant contributions to the success of the business. Your employeement will commence on <b><%= @joining_detail.joining_date%></b>. You will be based at <b><%= @employee.company_location.company.try(:city)%></b> but may be required to work at other locations as well as resonably determined by the needs of the business. </p>
+  
+  <p>Best Regards,</b></p>
+
+  <P>HR</P>
+
+</div>
+</div>

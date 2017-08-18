@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  resources :leave_transfers
+  resources :leave_transfers do
+    collection do
+      get :leave_transfer_approval
+      get :show_detail_for_approval
+      get :approve
+      get :reject
+    end
+  end
   resources :sub_departments
   resources :change_designations do
     collection do
@@ -1574,10 +1581,12 @@ end
   match 'issue_requests/:id/download_screenshot/:id' => 'issue_requests#download_screenshot', :via => [:get], :as => :download_screenshot
   match 'companies/:id/download_company_logo/:id' => 'companies#download_company_logo', :via => [:get], :as => :download_company_logo
   
-   match 'candidate_forms/:id/document_1/:id' => 'candidate_forms#document_1', :via => [:get], :as => :document_1
-   match 'candidate_forms/:id/document_2/:id' => 'candidate_forms#document_2', :via => [:get], :as => :document_2
+  match 'candidate_forms/:id/document_1/:id' => 'candidate_forms#document_1', :via => [:get], :as => :document_1
+  match 'candidate_forms/:id/document_2/:id' => 'candidate_forms#document_2', :via => [:get], :as => :document_2
 
   match 'visitor_details/:id/download_person_image/:id' => 'visitor_details#download_person_image', :via => [:get], :as => :download_person_image
+
+  match 'employees/:id/download_employee_signature/:id' => 'employees#download_employee_signature', :via => [:get], :as => :download_employee_signature
   # get '/screenshot', to: 'issue_requests#download_screenshot', as: 'download_screenshot'
   # get '/download', to: 'issue_requests#download_screenshot_image', as: 'download_screenshot_image'
 
@@ -2185,6 +2194,9 @@ end
       get :search_by_joining_date
       get :import_xl
       post :import
+      get :certificate
+      post :certificate_print
+      get :joining_certificate
     end
   end
   resources :employee_grades do

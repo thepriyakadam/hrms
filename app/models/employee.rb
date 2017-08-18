@@ -162,6 +162,11 @@ class Employee < ActiveRecord::Base
   has_attached_file :passport_photo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'Profile11.jpg'
   validates_attachment_content_type :passport_photo,  :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
   validates_attachment_size :passport_photo, :less_than => 5.megabytes
+
+
+  has_attached_file :employee_signature, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'Profile11.jpg'
+  validates_attachment_content_type :employee_signature,  :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
+  validates_attachment_size :employee_signature, :less_than => 5.megabytes
   
   # validates :permanent_address, presence: true
   # validates :department_id,presence: true

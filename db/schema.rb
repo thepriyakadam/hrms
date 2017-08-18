@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170814113006) do
+ActiveRecord::Schema.define(version: 20170817122856) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -3033,13 +3033,12 @@ ActiveRecord::Schema.define(version: 20170814113006) do
 
   create_table "reporting_masters_vacancy_masters", force: :cascade do |t|
     t.integer  "vacancy_master_id",   limit: 4
-    t.integer  "reporting_master_id", limit: 4
     t.string   "vacancy_status",      limit: 255
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+    t.integer  "reporting_master_id", limit: 4
   end
 
-  add_index "reporting_masters_vacancy_masters", ["reporting_master_id"], name: "index_reporting_masters_vacancy_masters_on_reporting_master_id", using: :btree
   add_index "reporting_masters_vacancy_masters", ["vacancy_master_id"], name: "index_reporting_masters_vacancy_masters_on_vacancy_master_id", using: :btree
 
   create_table "reserved_categories", force: :cascade do |t|
@@ -3338,6 +3337,8 @@ ActiveRecord::Schema.define(version: 20170814113006) do
     t.integer  "passport_photo_file_size",    limit: 4
     t.datetime "passport_photo_updated_at"
     t.integer  "add_by_id",                   limit: 4
+    t.decimal  "current_ctc",                               precision: 10
+    t.string   "contact_no2",                 limit: 255
   end
 
   add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id", using: :btree
@@ -3752,7 +3753,6 @@ ActiveRecord::Schema.define(version: 20170814113006) do
     t.integer  "degree_id",                 limit: 4
     t.integer  "degree_1_id",               limit: 4
     t.integer  "degree_2_id",               limit: 4
-    t.integer  "reporting_master_id",       limit: 4
     t.integer  "employee_id",               limit: 4
     t.string   "other_organization",        limit: 255
     t.string   "industry",                  limit: 255
@@ -3767,6 +3767,18 @@ ActiveRecord::Schema.define(version: 20170814113006) do
     t.date     "target_date"
     t.integer  "company_id",                limit: 4
     t.string   "vacancy_of",                limit: 255
+    t.string   "vacancy_type",              limit: 255
+    t.string   "string",                    limit: 255
+    t.string   "experince_max",             limit: 255
+    t.string   "budget_max",                limit: 255
+    t.string   "reason",                    limit: 255
+    t.integer  "replacement_id",            limit: 4
+    t.boolean  "notice_period"
+    t.string   "notice_period_day",         limit: 255
+    t.boolean  "relocation_rerimbursement"
+    t.string   "relocation_cost",           limit: 255
+    t.integer  "reporting_master_id",       limit: 4
+    t.integer  "recruiter_id",              limit: 4
   end
 
   add_index "vacancy_masters", ["company_id"], name: "index_vacancy_masters_on_company_id", using: :btree
@@ -3775,7 +3787,6 @@ ActiveRecord::Schema.define(version: 20170814113006) do
   add_index "vacancy_masters", ["department_id"], name: "index_vacancy_masters_on_department_id", using: :btree
   add_index "vacancy_masters", ["employee_designation_id"], name: "index_vacancy_masters_on_employee_designation_id", using: :btree
   add_index "vacancy_masters", ["employee_id"], name: "index_vacancy_masters_on_employee_id", using: :btree
-  add_index "vacancy_masters", ["reporting_master_id"], name: "index_vacancy_masters_on_reporting_master_id", using: :btree
 
   create_table "vacancy_request_histories", force: :cascade do |t|
     t.integer  "vacancy_master_id",       limit: 4
@@ -4220,7 +4231,6 @@ ActiveRecord::Schema.define(version: 20170814113006) do
   add_foreign_key "reporting_masters_training_reqs", "training_requests"
   add_foreign_key "reporting_masters_travel_requests", "reporting_masters"
   add_foreign_key "reporting_masters_travel_requests", "travel_requests"
-  add_foreign_key "reporting_masters_vacancy_masters", "reporting_masters"
   add_foreign_key "reporting_masters_vacancy_masters", "vacancy_masters"
   add_foreign_key "resignation_histories", "employee_resignations"
   add_foreign_key "resignation_histories", "employees"
@@ -4307,7 +4317,6 @@ ActiveRecord::Schema.define(version: 20170814113006) do
   add_foreign_key "vacancy_masters", "departments"
   add_foreign_key "vacancy_masters", "employee_designations"
   add_foreign_key "vacancy_masters", "employees"
-  add_foreign_key "vacancy_masters", "reporting_masters"
   add_foreign_key "vacancy_request_histories", "company_locations"
   add_foreign_key "vacancy_request_histories", "degrees"
   add_foreign_key "vacancy_request_histories", "departments"

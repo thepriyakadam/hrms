@@ -145,7 +145,6 @@
       </div><!-- /.box -->
     <div id="event_detail" class="modal fade"></div>
 
-
            <div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title">Openings</h3>
@@ -230,7 +229,7 @@
                 <div class="pull-right">
                 <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today,receiver_id: e.employee_id,greeting_type: "Anniversary") %>
                   <% if e.employee_id == current_user.employee_id %>
-                      <small class="label label-success">Wish You A Very Happy Work Anniversary!</small>
+                      <small class="label label-success">Happy Work Anniversary!</small>
                   <% else %>
                     <% if @greeting.empty? %>
                         <%= link_to 'Wish', anniversary_mail_greetings_path(emp_id: e.employee_id),class: 'btn btn-xs btn-primary',remote:true %>
@@ -239,7 +238,7 @@
                     <% end %>
                   <% end %>
                 </div>
-                  <span class="users-list-date"><%= e.employee.department.try(:name) %></span>
+                  <span class="users-list-date"><%= e.employee.try(:joining_detail).try(:cost_center).try(:name) %> <%= e.employee.department.try(:name) %> <%= e.employee.try(:sub_department).try(:name) %></span>
                   </div>
                  
                 <% end %> <!-- do -->
@@ -303,7 +302,7 @@
                       <% end %>
                     <% end %>
                   </div>
-                  <span class="users-list-date"><%= e.contact_no %></span>
+                  <span class="users-list-date"><%= e.employee.try(:joining_detail).try(:cost_center).try(:name) %> <%= e.employee.department.try(:name) %> <%= e.employee.try(:sub_department).try(:name) %></span>
                 </div>
                  
                 <% end %>
@@ -337,7 +336,7 @@
                 <%@employees.each do |e|%>
                 <tr>
                   <td><%= full_name(e) %></td>
-                  <td><%= e.contact_no %></td>
+                  <td><%= e.employee.try(:joining_detail).try(:cost_center).try(:name) %> <%= e.employee.department.try(:name) %> <%= e.employee.try(:sub_department).try(:name) %></td>
                 </tr>
                 <%end%>
               </tbody>
@@ -415,7 +414,7 @@
                     <div class="product-info">
                       <%= full_name(j.employee)%>
                       <span class="label label-info pull-right"><%= j.joining_date %></span>
-                      <span class="product-description"><%= j.employee.department.try(:name) %></span>
+                      <span class="product-description"><%= j.employee.try(:joining_detail).try(:cost_center).try(:name) %> <%= j.employee.department.try(:name) %> <%= j.employee.try(:sub_department).try(:name) %></span>
                     </div>
                   </li><!-- /.item -->
                 <% else %>

@@ -23,7 +23,7 @@
     <div class="row">
      <div class="col-sm-3">
         <div class="field">
-        <%= f.text_field :employee_uan_no, label:'UAN No' %>
+        <%= f.text_field :employee_uan_no, label:'UAN No',placeholder: 'e.g. 01234567891011'%>
        </div>
      </div>
 
@@ -92,13 +92,13 @@
       <div class="row">
        <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :probation_period,label: 'Probation Period' %>
+          <%= f.text_field :probation_period,label: 'Probation Period',placeholder: 'e.g. 6 months' %>
         </div>
       </div> 
 
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :notice_period,label: 'Notice Period' %>
+          <%= f.text_field :notice_period,label: 'Notice Period',placeholder: 'e.g. 1 months' %>
         </div>
       </div> 
 
@@ -110,7 +110,7 @@
 
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :passport_no,label: 'Passport No' %>
+          <%= f.text_field :passport_no,label: 'Passport No' ,placeholder: 'e.g. J8369854'%>
        </div>
       </div>
 
@@ -227,12 +227,14 @@
     <div class="row">
      <div class="col-sm-3">
         <div class="field">
-          <= f.text_field :pf_max_amount, label:'PF Max Amount' %>
+
+          <= f.text_field :pf_max_amount, label:'PF Max Amount' ,placeholder: 'e.g.2000'%>
        </div>
       </div> 
     <div class="col-sm-3">
       <div class="field">
-       <= f.text_field :employee_pf_no, label:'PF No' %>
+
+       <= f.text_field :employee_pf_no, label:'PF No',placeholder: 'e.g.1234567' %>
       </div>
     </div>
 
@@ -251,7 +253,7 @@
       <div class="row">
       <div class="col-sm-3">
         <div class="field">
-          <= f.text_field :employee_efic_no, label:'ESIC No' %>
+          <= f.text_field :employee_efic_no, label:'ESIC No',placeholder: 'e.g.123456789' %>
         </div>
       </div>
 

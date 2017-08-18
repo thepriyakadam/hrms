@@ -262,13 +262,14 @@ class EmployeeLeavRequest < ActiveRecord::Base
   end
 
   def create_attendance
+    
     if self.is_present?
     else
         if self.leave_type == "Full Day"
           for i in self.start_date.to_date..self.end_date.to_date
             if self.is_there(i)
             else
-            EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s, count: 1, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+            EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s, count: 1, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id),comment: nil)
             end
           end
 
@@ -281,24 +282,24 @@ class EmployeeLeavRequest < ActiveRecord::Base
                 if self.is_there(i)
                 else
                   if self.present_status == false
-                    EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "A/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+                    EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "A/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id),comment: nil)
                   else
-                    EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+                    EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id),comment: nil)
                   end
                 end
               elsif i == end_date
                 if self.is_there(i)
                 else
                   if self.present_status == false
-                    EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s+"/A", count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+                    EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s+"/A", count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id),comment: nil)
                   else
-                    EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s+"/P", count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+                    EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s+"/P", count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id),comment: nil)
                   end
                 end
               else
                 if self.is_there(i)
                 else
-                EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s, count: 1, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+                EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s, count: 1, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id),comment: nil)
                 end
               end #i==start_date
             elsif self.last_half == true
@@ -306,15 +307,15 @@ class EmployeeLeavRequest < ActiveRecord::Base
                 if self.is_there(i)
                 else
                   if self.present_status == false
-                    EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "A/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+                    EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "A/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id),comment: nil)
                   else
-                    EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+                    EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id),comment: nil)
                   end
                 end
               else
                 if self.is_there(i)
                 else
-                EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s, count: 1, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+                EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s, count: 1, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id),comment: nil)
                 end
               end
             elsif self.first_half == true
@@ -322,15 +323,15 @@ class EmployeeLeavRequest < ActiveRecord::Base
                 if self.is_there(i)
                 else
                   if self.present_status == false
-                    EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s+"/A", count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+                    EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s+"/A", count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id),comment: nil)
                   else
-                    EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s+"/P", count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+                    EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s+"/P", count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id),comment: nil)
                   end
                 end
               else
                 if self.is_there(i)
                 else
-                EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s, count: 1, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+                EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s, count: 1, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id),comment: nil)
                 end
               end
             else
@@ -338,15 +339,15 @@ class EmployeeLeavRequest < ActiveRecord::Base
                 if self.is_there(i)
                 else
                   if self.present_status == false
-                    EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "A/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+                    EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "A/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id),comment: nil)
                   else
-                    EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+                    EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id),comment: nil)
                   end
                 end
               else
                 if self.is_there(i)
                 else
-                EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s, count: 1, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+                EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s, count: 1, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id),comment: nil)
                 end
               end
             end #self.first_half
@@ -358,18 +359,18 @@ class EmployeeLeavRequest < ActiveRecord::Base
               if self.is_there(i)
               else
                 if self.present_status == false
-                  EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s+"/A", count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+                  EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s+"/A", count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id),comment: nil)
                 else
-                  EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s+"/P", count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+                  EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s+"/P", count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id),comment: nil)
                 end
               end
             else
               if self.is_there(i)
               else
                 if self.present_status == false
-                  EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "A/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+                  EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "A/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id),comment: nil)
                 else
-                  EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+                  EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id),comment: nil)
                 end
               end
             end#first_half

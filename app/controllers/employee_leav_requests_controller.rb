@@ -104,8 +104,8 @@ class EmployeeLeavRequestsController < ApplicationController
               flash[:alert] = "C.Off Expire for that day"
             elsif @employee_leav_request.is_available_coff?
               flash[:alert] = "Your Leave Request already has been sent"
-            elsif @employee_leav_request.is_salary_processed_coff?
-              flash[:alert] = "Salary Processed for this month"
+            # elsif @employee_leav_request.is_salary_processed_coff?
+            #   flash[:alert] = "Salary Processed for this month"
             elsif @employee.manager_id.nil?
               flash[:alert] = 'Reporting manager not set please set Reporting Manager'
             else
@@ -190,9 +190,9 @@ class EmployeeLeavRequestsController < ApplicationController
           elsif @employee_leav_request.is_final_approved?
             flash[:alert] = "Request already has Approved"
             redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-          elsif @employee_leav_request.is_salary_processed?
-            flash[:alert] = "Salary Processed for this month"
-            redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+          # elsif @employee_leav_request.is_salary_processed?
+          #   flash[:alert] = "Salary Processed for this month"
+          #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
           elsif @employee_leav_request.is_continue?
             flash[:alert] = "Leave Can't take continueously"
             redirect_to hr_view_request_employee_leav_requests_path(@employee.id)

@@ -5,27 +5,19 @@
           border: 5px solid gray;
           margin: 10;">
   <div style="float:left;">
-  From,<br><br>
-  <%= @employee.company_location.company.try(:name)%><br>
+  <b><%= @employee.company_location.company.try(:description)%></b><br>
   <%= @employee.company_location.company.try(:address)%><br>
   <%= @employee.company_location.company.try(:contact_no)%><br>
   <%= @employee.company_location.company.try(:email)%><br><br>
-  Date - <%= Time.zone.now.to_date %> </div>  <br><br><br><br><br><br><br><br><br>      
-  <div style="float:left;">
-  To,<br><br>
-  <%= @employee.first_name%> <%= @employee.middle_name%> <%= @employee.last_name%><br>
-  Contact No. - <%= @employee.contact_no%><br>
-  Email - <%= @employee.email%><br><br>
-
-  <b>Subject - Employment certification letter</b><br><br>
+  Date - <%= Time.zone.now.to_date %> </div>  <br><br><br><br><br><br><br>      
 
   <p>Dear <%= @employee.first_name%> <%= @employee.middle_name%> <%= @employee.last_name%>,</p> 
 
-  <p>This letter is to inform you that the <%= @employee.department.try(:name)%> has found your application for the position of <%= @employee.joining_detail.employee_designation.try(:name)%> to be fitting with our requirements. We congratulate you on your selection.
- 
- <p>Welcome to the <%= @employee.company_location.company.try(:name)%> family!</p>
+  <p>This is in continuation of our meeting, I am delighted to offer you the position of <b><%= @employee.joining_detail.employee_designation.try(:name)%></b> at <b><%= @employee.company_location.company.try(:name)%></b>.
+
+  <p>The terms of employement have been attached with this offer letter. We hope you enjoy your role and make significant contributions to the success of the business. Your employeement will commence on <b><%= @joining_detail.joining_date%></b>. You will be based at <b><%= @employee.company_location.company.try(:city)%></b> but may be required to work at other locations as well as resonably determined by the needs of the business. </p>
   
-  <p>Best Regards</b></p>
+  <p>Best Regards,</b></p>
 
   <P>HR</P>
 

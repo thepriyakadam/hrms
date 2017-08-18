@@ -523,56 +523,56 @@ require 'roo'
 # end
 
 
-# #========================= EMPLOYEE BASIC DATA END ===========================================
+# # #========================= EMPLOYEE BASIC DATA END ===========================================
 
-# #========================= EMPLOYEE ON BOARDING DATA START ===================================
+# # #========================= EMPLOYEE ON BOARDING DATA START ===================================
 
-ex = Roo::Excel.new("#{Rails.root}/public/sg_bank.xls")
-ex.default_sheet = ex.sheets[2] #siya feb
-i = 1
-ActiveRecord::Base.transaction do
-2.upto(36) do |line| # siya Feb 2016
- puts "Starting Record --------------------------#{ex.cell(line,'A')}"
- @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
- # JoiningDetail.where(id: @employee.id).update_all(is_da: true)
- unless @employee.nil?
+# ex = Roo::Excel.new("#{Rails.root}/public/sg_bank.xls")
+# ex.default_sheet = ex.sheets[2] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(36) do |line| # siya Feb 2016
+#  puts "Starting Record --------------------------#{ex.cell(line,'A')}"
+#  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+#  # JoiningDetail.where(id: @employee.id).update_all(is_da: true)
+#  unless @employee.nil?
 
- @joining_details = JoiningDetail.where(employee_id: @employee.id)
-  @joining_details.new do |e|
-     e.employee_uan_no = ex.cell(line,'C').to_i
-     e.joining_date =  ex.cell(line,'D')
-     e.confirmation_date =  ex.cell(line,'E')
-     @designation = EmployeeDesignation.find_by_name(ex.cell(line,'F'))
-     e.employee_designation_id = @designation.id unless @designation.nil?
-      @grade = EmployeeGrade.find_by_name(ex.cell(line,'G'))
-     e.employee_grade_id = @grade.id unless @grade.nil?
-      @cost_unit = CostCenter.find_by_name(ex.cell(line,'H'))
-     e.cost_center_id = @cost_unit.id unless @cost_unit.nil?
-     # e.employee_pf_no = ex.cell(line,'F').to_i
-     @category = EmployeeCategory.find_by_name(ex.cell(line,'I'))
-     e.employee_category_id = @category.id unless @category.nil?
+#  @joining_details = JoiningDetail.where(employee_id: @employee.id)
+#   @joining_details.new do |e|
+#      e.employee_uan_no = ex.cell(line,'C').to_i
+#      e.joining_date =  ex.cell(line,'D')
+#      e.confirmation_date =  ex.cell(line,'E')
+#      @designation = EmployeeDesignation.find_by_name(ex.cell(line,'F'))
+#      e.employee_designation_id = @designation.id unless @designation.nil?
+#       @grade = EmployeeGrade.find_by_name(ex.cell(line,'G'))
+#      e.employee_grade_id = @grade.id unless @grade.nil?
+#       @cost_unit = CostCenter.find_by_name(ex.cell(line,'H'))
+#      e.cost_center_id = @cost_unit.id unless @cost_unit.nil?
+#      # e.employee_pf_no = ex.cell(line,'F').to_i
+#      @category = EmployeeCategory.find_by_name(ex.cell(line,'I'))
+#      e.employee_category_id = @category.id unless @category.nil?
 
-     # e.probation_period = ex.cell(line,'H').to_i
-     e.probation_period = ex.cell(line,'K').to_i
-     e.notice_period =     ex.cell(line,'L').to_i
-     e.notice_period_after_probation =     ex.cell(line,'M').to_i
+#      # e.probation_period = ex.cell(line,'H').to_i
+#      e.probation_period = ex.cell(line,'K').to_i
+#      e.notice_period =     ex.cell(line,'L').to_i
+#      e.notice_period_after_probation =     ex.cell(line,'M').to_i
 
-     e.have_passport = ex.cell(line,'N')
-     e.passport_no = ex.cell(line,'O').to_i
-     e.passport_issue_date = ex.cell(line,'P')
-     e.passport_expiry_date = ex.cell(line,'Q')
-     e.retirement_date = ex.cell(line,'R')
-     e.company_rfid = ex.cell(line,'S').to_i
-     e.gate_rfid = ex.cell(line,'T').to_i
-    e.save!
+#      e.have_passport = ex.cell(line,'N')
+#      e.passport_no = ex.cell(line,'O').to_i
+#      e.passport_issue_date = ex.cell(line,'P')
+#      e.passport_expiry_date = ex.cell(line,'Q')
+#      e.retirement_date = ex.cell(line,'R')
+#      e.company_rfid = ex.cell(line,'S').to_i
+#      e.gate_rfid = ex.cell(line,'T').to_i
+#     e.save!
 
-    puts "Save...."
-   end
-   puts "#{i} Record inserted.------#{ex.cell(line,'B')}--------#{ex.cell(line,'C')}---------#{ex.cell(line,'D')}.....#{ex.cell(line,'E')}......#{ex.cell(line,'G')}"
-   i += 1
- end
- end
-end
+#     puts "Save...."
+#    end
+#    puts "#{i} Record inserted.------#{ex.cell(line,'B')}--------#{ex.cell(line,'C')}---------#{ex.cell(line,'D')}.....#{ex.cell(line,'E')}......#{ex.cell(line,'G')}"
+#    i += 1
+#  end
+#  end
+# end
 
 #==================================== EMPLOYEE ON BOARDING DATA END ====================================================#
 
@@ -667,30 +667,31 @@ end
 # end
 
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/sp_leave_bal.xls")
-# ex.default_sheet = ex.sheets[0] 
-# i=1
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/sg_leave_balance.xls")
+ex.default_sheet = ex.sheets[0] 
+i=1
 
-# 2.upto(51) do |line|
-# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-# puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
-# EmployeeLeavBalance.new do |j|
+2.upto(457) do |line|
+@employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
+EmployeeLeavBalance.new do |j|
 
-#   j.employee_id = @employee.id unless @employee.nil?
-#   puts "#{(ex.cell(line,'A'))} Record inserted........Employee ID #{@employee.id}-----------------------------------------------"
-#   j.leav_category_id = ex.cell(line,'C').to_i
-#   puts "#{(ex.cell(line,'C'))} Record inserted.-----------------------------------------------"
-#   j.no_of_leave = ex.cell(line,'D')
-#   j.expiry_date = ex.cell(line,'E')
-#   j.total_leave = ex.cell(line,'F')
-#   j.from_date = ex.cell(line,'G')
-#   j.to_date = ex.cell(line,'H')
-#   j.save!
-# end
-# puts "#{i} Record inserted.-----------------------------------------------"
-# i = i+1
-# end
+  j.employee_id = @employee.id unless @employee.nil?
+  puts "#{(ex.cell(line,'A'))} Record inserted........Employee ID #{@employee.id}-----------------------------------------------"
+  j.leav_category_id = ex.cell(line,'C').to_i
+  puts "#{(ex.cell(line,'C'))} Record inserted.-----------------------------------------------"
+  j.no_of_leave = ex.cell(line,'D').to_f
+  # j.expiry_date = ex.cell(line,'E')
+  j.total_leave = ex.cell(line,'E').to_f
+  j.from_date = ex.cell(line,'F')
+  j.to_date = ex.cell(line,'G')
+
+  j.save!
+end
+puts "#{i} Record inserted.-----------------------------------------------"
+i = i+1
+end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/sp_leave_bal.xls")

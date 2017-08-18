@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170817121331) do
+ActiveRecord::Schema.define(version: 20170818051544) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -589,7 +589,10 @@ ActiveRecord::Schema.define(version: 20170817121331) do
     t.string   "document_content_type", limit: 255
     t.integer  "document_file_size",    limit: 4
     t.datetime "document_updated_at"
+    t.integer  "policy_type_id",        limit: 4
   end
+
+  add_index "company_policies", ["policy_type_id"], name: "index_company_policies_on_policy_type_id", using: :btree
 
   create_table "company_shifts", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -4493,6 +4496,7 @@ ActiveRecord::Schema.define(version: 20170817121331) do
   add_foreign_key "company_locations", "countries"
   add_foreign_key "company_locations", "districts"
   add_foreign_key "company_locations", "states"
+  add_foreign_key "company_policies", "policy_types"
   add_foreign_key "company_time_masters", "shift_masters"
   add_foreign_key "daily_bill_detail_histories", "daily_bill_details"
   add_foreign_key "daily_bill_detail_histories", "travel_expence_types"

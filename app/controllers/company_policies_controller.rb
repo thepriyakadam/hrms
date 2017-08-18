@@ -91,9 +91,10 @@ class CompanyPoliciesController < ApplicationController
     @status = params[:company_policy][:status]
     @description= params[:company_policy] [:description]
     @company_policy_type_id = params[:company_policy][:policy_type_id]
+    @document = params[:company_policy][:document]
     # @company_policy = params[:company_policy_id]
     @company_policy1 = CompanyPolicy.find(params[:id])
-    @company_policy1.update(name: @name,effective_from: @effective_from,effective_to: @effective_to,status: @status,description: @description,policy_type_id: @company_policy_type_id)  
+    @company_policy1.update(document: @document,name: @name,effective_from: @effective_from,effective_to: @effective_to,status: @status,description: @description,policy_type_id: @company_policy_type_id)  
     flash[:notice] = 'Company Policy Updated Successfully' 
     redirect_to policy_type_detail_company_policies_path(company_policy_id: @company_policy1.id)
   end

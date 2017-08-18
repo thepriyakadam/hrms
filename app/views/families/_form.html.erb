@@ -46,17 +46,17 @@
         </div>
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :age, readonly:true %>
+          <%= f.text_field :age, readonly:true,placeholder: 'e.g. 25' %>
         </div>
       </div>
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :contact_no,label: 'Contact No',placeholder: 'Contact No.' %>
+          <%= f.text_field :contact_no,label: 'Contact No',placeholder: 'e.g.123456789' %>
         </div>
      </div>
      <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :email %>
+         <%= f.text_field :email,placeholder: 'e.g.abc@gmail.com' %>
         </div>
     </div>
 </div>
@@ -65,7 +65,7 @@
    
       <div class="col-sm-6">
         <div class="field">
-         <%= f.text_field :current_address,label: 'Current Address' ,placeholder: 'Current Address'%>
+         <%= f.text_field :current_address,label: 'Current Address' ,placeholder: 'e.g.Pentagone - 5,pune'%>
         </div>
     </div>
 
@@ -109,7 +109,7 @@
 <div class="row">
      <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :profession %>
+          <%= f.text_field :profession ,placeholder: 'e.g. Engineer'%>
         </div>
       </div>
 

@@ -33,6 +33,28 @@ module EmployeesHelper
     end
   end
 
+   def role_employee_list
+     if current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @employees = Employee.all
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id).collect { |e| [e.manual_employee_code + '  ' + e.try(:prefix).to_s + ' ' +e.try(:first_name).to_s + ' ' +e.try(:middle_name).to_s+' '+ e.try(:last_name).to_s, e.id] }
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id).collect { |e| [e.manual_employee_code + '  ' + e.try(:prefix).to_s + ' ' +e.try(:first_name).to_s + ' ' +e.try(:middle_name).to_s+' '+ e.try(:last_name).to_s, e.id] }
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id).collect { |e| [e.manual_employee_code + '  ' + e.try(:prefix).to_s + ' ' +e.try(:first_name).to_s + ' ' +e.try(:middle_name).to_s+' '+ e.try(:last_name).to_s, e.id] }
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id).collect { |e| [e.manual_employee_code + '  ' + e.try(:prefix).to_s + ' ' +e.try(:first_name).to_s + ' ' +e.try(:middle_name).to_s+' '+ e.try(:last_name).to_s, e.id] }
+        @employees = @emp.subordinates
+      else current_user.role.name == 'Employee'
+        @employees = Employee.where(id: current_user.employee_id).collect { |e| [e.manual_employee_code + '  ' + e.try(:prefix).to_s + ' ' +e.try(:first_name).to_s + ' ' +e.try(:middle_name).to_s+' '+ e.try(:last_name).to_s, e.id] }
+        redirect_to home_index_path
+      end
+    else
+      @employees = Employee.all
+    end
+  end
+
   def full_name(emp)
     emp.try(:prefix).to_s + ' ' +emp.try(:first_name).to_s + ' ' + emp.try(:middle_name).to_s + ' ' + emp.try(:last_name).to_s
   end

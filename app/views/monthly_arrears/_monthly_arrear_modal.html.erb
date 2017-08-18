@@ -5,15 +5,15 @@
       <h4 class="modal-title"><center> Monthly Arrear Detail </center></h4>
     </div>
     <div class="modal-body">
-    <table class="table table-bordered table-hover table-condensed">
+<table class="table table-bordered table-hover table-condensed">
   <thead>
-  <tr>
+    <tr>
       <th>ID</th>
       <td><%= @monthly_arrear.employee.try(:manual_employee_code) %></td>  
       <th>Employee Name</th>
       <td><%= full_name(@monthly_arrear.employee) %></td>
-   </tr>
-   <tr>   
+    </tr>
+    <tr>   
       <th>Date</th>
       <td><%= @monthly_arrear.day %></td>
       <th>Amount</th>
@@ -22,8 +22,8 @@
     <tr>  
       <th>Description</th>
        <td colspan="3"><%= @monthly_arrear.description %></td>
-   </tr>
-         </thead>
+    </tr>
+  </thead>
 </table>
 </div>
 <div class="modal-footer"></div>

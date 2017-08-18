@@ -12,23 +12,23 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.select :asset_type_id,all_asset_type,{include_blank: " Assest Type"} %>
+        <%= f.select :asset_type_id,all_asset_type,{label: 'Asset Type',include_blank: " Asset Type"} %>
       </div>
     </div>
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :assets_detail,placeholder:"Assest Detail" %>
+        <%= f.text_field :assets_detail,label: 'Asset Detail',placeholder:"Asset Detail" %>
       </div>
     </div>
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :assets_id,placeholder:"Assest Id" %>
+        <%= f.text_field :assets_id,label: 'Asset ID',placeholder:"Asset Id" %>
       </div>
     </div>
 
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :assets_value,placeholder:"Assest Value" %>
+        <%= f.text_field :assets_value,label: 'Asset Value',placeholder:"Asset Value" %>
       </div>
     </div>
   </div>
@@ -36,7 +36,7 @@
     
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :assest_status,placeholder:"Assest Status" %>
+        <%= f.text_field :assest_status,label: 'Asset Status',placeholder:"Asset Status" %>
       </div>
     </div>
 
@@ -46,7 +46,7 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :issue_date, label: "Issue Date:", class: 'issue_date'%>
+          <%= f.text_field :issue_date, label: "Issue Date", class: 'issue_date'%>
         </div>
       </div>
     </div>
@@ -65,14 +65,14 @@
 
     <div class="col-sm-6">
       <div class="field">
-        <%= f.text_field :remarks,placeholder:"Remarks" %>
+        <%= f.text_field :remarks,label: 'Remarks',placeholder:"Remarks" %>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-sm-3">
       <div class="actions">
-        <%= f.submit "Create", class: "btn btn-primary btn-sm" %>
+        <%= f.submit "Create", class: "btn btn-success btn-sm" %>
       </div>
     </div>
   </div>

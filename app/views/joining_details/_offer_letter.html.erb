@@ -5,11 +5,22 @@
           border: 5px solid gray;
           margin: 10;">
   <div style="float:left;">
+
+       <tr>
+        <td>
+         <% if @employee.company_location.company.company_logo == nil %>
+      <% else %>
+        <center> <%= image_tag @employee.company_location.company.company_logo.url, :size => "100x50" %></center><br>
+        <%end%>
+          <center><strong><%= @employee.company_location.company.try(:description) %></strong><br><%= @employee.company_location.try(:address) %>, <%= @employee.company_location.try(:name) %>.  </center>
+        </td>           
+       </tr>
+
   <b><%= @employee.company_location.company.try(:description)%></b><br>
   <%= @employee.company_location.company.try(:address)%><br>
   <%= @employee.company_location.company.try(:contact_no)%><br>
   <%= @employee.company_location.company.try(:email)%><br><br>
-  Date - <%= Time.zone.now.to_date %> </div>  <br><br><br><br><br><br><br>      
+  Date - <%= Time.zone.now.to_date %> </div><br><br><br><br>
 
   <p>Dear <%= @employee.first_name%> <%= @employee.middle_name%> <%= @employee.last_name%>,</p> 
 

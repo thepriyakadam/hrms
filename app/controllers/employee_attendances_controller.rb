@@ -1859,7 +1859,8 @@ end
 
     @from = params[:employee][:from]
     @to = params[:employee][:to]
-    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee)
+    @employee_id = params[:employee][:employee_id]
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id)
 
       respond_to do |format|
         format.js
@@ -2347,18 +2348,19 @@ end
   session[:active_tab1] ="Attendance"
   end
 
-  def datewise_all
+  def show_datewise_all
     from = params[:employee][:from]
     to = params[:employee][:to]
 
     if params[:save]
       @employee_attendances = EmployeeAttendance.where(day: from.to_date..to.to_date)
+    elsif params[:absent]
+      @employee_attendances = EmployeeAttendance.where(day: from.to_date..to.to_date,present: "A")
     else
-    @employee_attendances = EmployeeAttendance.where(day: from.to_date..to.to_date,present: "A")
+      @employee_attendances = EmployeeAttendance.where(day: from.to_date..to.to_date).where.not(employee_leav_request_id: nil)
     end
   end
-
-
+  
   # def create_self_attendance
   #   @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
   #   employee_id = params[:salary][:employee_id]

@@ -756,9 +756,7 @@ end
       post :show_managerwise_average_attendance
       get :show_managerwise_average_attendance
       get :datewise_attendance_with_options
-      post :datewise_all
-      post :datewise_absent
-      get :datewise_absent
+      post :show_datewise_all
     end
   end
   resources :salary_comp_mappings

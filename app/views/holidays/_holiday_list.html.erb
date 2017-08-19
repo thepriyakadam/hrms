@@ -5,6 +5,7 @@
       <th>Name</th>
       <th>Description</th>
       <th>Holiday date</th>
+      <th>Type</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -16,6 +17,7 @@
           <td><%= holiday.name %></td>
           <td><%= holiday.description %></td>
           <td><%= holiday.holiday_date %></td>
+          <td><%= holiday.holiday_type %></td>
           <td>
             <!-- < if holiday.is_send == true %>
               <small class="label label-primary">Already Set</small>

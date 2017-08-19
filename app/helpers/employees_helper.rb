@@ -84,4 +84,19 @@ module EmployeesHelper
       end
     end
   end
+
+  def role_employee_list
+    if current_user.class == Member
+      if current_user.role.name == 'Supervisor' || current_user.role.name == 'GroupAdmin' || current_user.role.name == 'Admin' || current_user.role.name == 'Branch' || current_user.role.name == 'HOD'
+        @emp = Employee.find_by(id: current_user.employee_id)
+        @employees = @emp.subordinates.collect { |e| [e.manual_employee_code + '  ' + e.try(:prefix).to_s + ' ' +e.try(:first_name).to_s + ' ' +e.try(:middle_name).to_s+' '+ e.try(:last_name).to_s, e.id] }
+      else current_user.role.name == 'Employee'
+        @employees = Employee.where(id: current_user.employee_id).collect { |e| [e.manual_employee_code + '  ' + e.try(:prefix).to_s + ' ' +e.try(:first_name).to_s + ' ' +e.try(:middle_name).to_s+' '+ e.try(:last_name).to_s, e.id] }
+        redirect_to home_index_path
+      end
+    else
+      @employees = Employee.all
+    end
+  end
+  
 end

@@ -29,7 +29,7 @@
       <div class="info-box-content">
         <span class="info-box-text">Departments</span>
         <span class="info-box-number"><%= @departments.try(:count) %></span>
-      </div><!-- /.info-box-content --> 
+      </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
   </div><!-- /.col -->
   <div class="col-md-3 col-sm-6 col-xs-12">
@@ -231,12 +231,12 @@
                    <%end%> <!-- unless -->
                    </td>
                        <td><%= full_name(e.employee) %>
-                        <span class="users-list-date"><%= e.employee.department.try(:name) %></span>
+                        <span class="users-list-date"><%= e.employee.try(:joining_detail).try(:cost_center).try(:name) %> <%= e.employee.try(:sub_department).try(:name) %> <%= e.employee.try(:department).try(:name) %></span>
                        </td>
                        <td>
                        <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today,receiver_id: e.employee_id,greeting_type: "Anniversary") %>
                   <% if e.employee_id == current_user.employee_id %>
-                      <small class="label label-success">Wish You A Very Happy Work Anniversary!</small>
+                      <small class="label label-success">Happy Work Anniversary!</small>
                   <% else %>
                     <% if @greeting.empty? %>
                         <%= link_to 'Wish', anniversary_mail_greetings_path(emp_id: e.employee_id),class: 'btn btn-xs btn-primary',remote:true %>
@@ -337,7 +337,7 @@
                        <td>
                        <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today,receiver_id: e.id,greeting_type: "Birthday") %>
                     <% if e.id == current_user.employee_id %>
-                      <small class="label label-success">Wish You A Very Happy Birthday!</small>
+                      <small class="label label-success">Happy Birthday!</small>
                     <% else %>
                       <% if @greeting.empty? %>
                         <%= link_to '', modal_for_mail_greetings_path(emp_id: e.id),class: 'btn btn-xs fa fa-birthday-cake',remote:true %>
@@ -424,11 +424,11 @@
                       <%else%>
                         <%= image_tag "user.jpg",class: "img-circle", alt: "User Image", size: "25x25" %>
                       <%end%>
-                    </div> 
+                    </div>
                     <div class="product-info">
                       <%= full_name(j.employee)%>
                       <span class="label label-info pull-right"><%= j.joining_date %></span>
-                      <span class="product-description"><%= j.employee.department.try(:name) %></span>
+                      <span class="product-description"><%= j.employee.try(:joining_detail).try(:cost_center).try(:name) %> <%= j.try(:employee).try(:sub_department).try(:name) %> <%= j.employee.try(:department).try(:name) %></span>
                     </div>
                   </li><!-- /.item -->
                 <% else %>

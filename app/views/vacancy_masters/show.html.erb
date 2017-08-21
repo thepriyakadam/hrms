@@ -30,8 +30,16 @@
       </tr>
 
       <tr>
+        <th><strong> Sub Department</strong></th>
+        <td><%= @vacancy_master.try(:sub_department).try(:name) %></td>
+
         <th><strong>Designation</strong></th>
         <td><%= @vacancy_master.employee_designation.name %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Cost Center</strong></th>
+        <td><%= @vacancy_master.try(:cost_center).try(:name) %></td>
 
         <th><strong>Vacancy Name</strong></th>
         <td><%= @vacancy_master.vacancy_name %></td>

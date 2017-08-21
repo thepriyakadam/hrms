@@ -121,9 +121,11 @@ class JoiningDetailsController < ApplicationController
   end
 
   def certificate_print
+    # byebug
     @employee = Employee.find(params[:salary][:employee_id])
     @certificate = params[:salary][:certificate]
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id) 
+    # redirect_to certificate_joining_details_path
   end
 
   def joining_certificate

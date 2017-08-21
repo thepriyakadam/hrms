@@ -34,8 +34,8 @@
         </td>
         <td>
         	<!-- <= link_to '', edit_leave_transfer_path(leave_transfer),class: 'btn btn-success btn-xs fa fa-edit',remote:true %> -->
-          <% unless leave_transfer.status == "Approved" %>
-          <%= link_to '',  leave_transfer, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+          <% if leave_transfer.status == "Pending" %>
+          <%= link_to 'Cancel',  leave_transfer, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-warning btn-xs ' %>
           <% end %>
           <%= link_to '', leave_transfer,class: 'btn btn-default btn-xs fa fa-eye' %>
         </td>

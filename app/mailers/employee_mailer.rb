@@ -7,8 +7,25 @@ class EmployeeMailer < ApplicationMailer
     mail(to: @employees, subject: 'Birthday Wishes')
    # end
   end
+ 
+  def user_confirmation(emp,pwd)
+    @password = pwd
+    @employee = emp
+    @emp = Employee.find_by(id: @employee.id)
+    mail(to: @emp.email, subject: 'HRMS Password Details')
+  end
 
-  # def birthday_invitation
+  def manager_detail(manager_1,emp)
+    @manager_1 = manager_1
+    @employee = emp
+    @joining_detail = JoiningDetail.find_by(employee_id: @employee.id)
+    @emp = Employee.find_by(id: @employee.id)
+    @manager = Employee.find_by(id: @manager_1)
+    mail(to: @manager.email, subject: 'HRMS Reporting Details')
+  end
+
+  # def birthday_invitationBirthday Wishes
+
   #   date = Date.today
   #   @employees = Employee.where.not("status = ? AND strftime('%d/%m', date_of_birth) = ?", "Active" , date.strftime('%d/%m')).pluck(:email)
   #   # @employees_bday = Employee.where("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m')).pluck(:first_name,:middle_name,:last_name)

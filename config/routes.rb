@@ -5,6 +5,9 @@ Rails.application.routes.draw do
       get :show_detail_for_approval
       get :approve
       get :reject
+      get :employee_wise_report
+      post :show_employeewise_detail
+      get :show_employeewise_detail
     end
   end
   resources :sub_departments

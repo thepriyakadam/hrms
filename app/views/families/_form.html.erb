@@ -46,7 +46,7 @@
         </div>
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :age %>
+          <%= f.text_field :age, readonly:true %>
         </div>
       </div>
       <div class="col-sm-3">
@@ -196,6 +196,52 @@
 </div><!-- /.box -->
 
 <script type="text/javascript">
+   $(function(){
+    $('#family_date_of_birth').on('input', function() {
+      var family_date_of_birth = parseFloat($('#family_date_of_birth').val());
+      date = Date.today
+      var age = "";
+      if (isNaN(family_date_of_birth)) {
+        age = ""
+      }
+      else{
+        age = (date.to_date - family_date_of_birth.to_date).toFixed(2);
+      }
+      $('#family_age').val(age);
+    });
+
+   
+  });  
+</script>
+
+
+<script type="text/javascript">
+
+   $("#family").validate({
+  rules: {
+    "family[date_of_birth]":{
+      required: true
+    },
+    "family[email]":{
+      required: true
+    },
+    "family[current_address]":{
+      required: true
+    }
+  },
+  
+  errorPlacement: function(error, element) {
+   error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+   error.insertAfter(element.parent(element));
+  }
+});
+
+   $(document).ready(function() {
+    $(".select2").select2();
+  });
+</script>
+
+<script type="text/javascript">
   $(function(){
     $('.family_birth_date').datepicker({
     changeYear:true,
@@ -216,4 +262,5 @@
     dateFormat: 'dd-mm-yy' });
 
   }); 
+
 </script>

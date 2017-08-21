@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170808095750) do
+ActiveRecord::Schema.define(version: 20170809114810) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -2464,23 +2464,25 @@ ActiveRecord::Schema.define(version: 20170808095750) do
   add_index "leav_cancelleds", ["employee_leav_request_id"], name: "index_leav_cancelleds_on_employee_leav_request_id", using: :btree
 
   create_table "leav_categories", force: :cascade do |t|
-    t.string   "code",           limit: 255
-    t.string   "name",           limit: 255
-    t.string   "description",    limit: 255
+    t.string   "code",             limit: 255
+    t.string   "name",             limit: 255
+    t.string   "description",      limit: 255
     t.boolean  "is_confirm"
     t.boolean  "is_payble"
-    t.decimal  "from",                       precision: 10
-    t.decimal  "to",                         precision: 10
+    t.decimal  "from",                         precision: 10
+    t.decimal  "to",                           precision: 10
     t.boolean  "is_active"
     t.boolean  "is_balance"
-    t.string   "limit",          limit: 255
+    t.string   "limit",            limit: 255
     t.boolean  "is_limit"
     t.boolean  "is_cashable"
     t.boolean  "assign_balance"
     t.boolean  "is_continuous"
-    t.decimal  "monthly_leave",              precision: 10
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.decimal  "monthly_leave",                precision: 10
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.boolean  "weekoff_sandwich"
+    t.boolean  "holiday_sandwich"
   end
 
   create_table "leav_rejecteds", force: :cascade do |t|

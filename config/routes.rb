@@ -2194,7 +2194,9 @@ end
       post :import
       get :certificate
       post :certificate_print
+      get :certificate_print
       get :joining_certificate
+      get :offer_letter_prin
     end
   end
   resources :employee_grades do

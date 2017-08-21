@@ -1,1 +1,18 @@
-Approved
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h4>Your leave transfer request Approved By</h4>
+    <p> <%= @current_user.manual_employee_code %> - <%= @current_user.first_name %> <%= @current_user.last_name %> </p>
+    <h4>Your leave transfer request</h4>
+	    <p>
+	      Transfer By : <%= @leave_transfer.employee.manual_employee_code %> - <%= @leave_transfer.employee.try(:prefix) %> <%= @leave_transfer.employee.first_name %> <%= @leave_transfer.employee.last_name %><br>
+	      Transfer To : <%= @leave_transfer.transfer_to.manual_employee_code %> - <%= @leave_transfer.transfer_to.try(:prefix) %> <%= @leave_transfer.transfer_to.first_name %> <%= @leave_transfer.transfer_to.last_name %><br>
+	      Leave Category : <%= @leave_transfer.leav_category.try(:name) %><br>
+	      Date <%= @leave_transfer.date.to_date %><br>
+	      No of Days : <%= @leave_transfer.no_of_leave %><br>
+	    </p>
+  </body>
+</html>

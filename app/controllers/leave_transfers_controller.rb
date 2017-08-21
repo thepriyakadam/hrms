@@ -97,7 +97,8 @@ class LeaveTransfersController < ApplicationController
       @leave = transfer_to_balance.no_of_leave.to_f + current_request.no_of_leave.to_f
       transfer_to_balance.update(no_of_leave: @leave)
     end
-     LeaveTransferMailer.approved(current_request).deliver_now   
+    employee = Employee.find_by(id: current_user.employee_id)
+     LeaveTransferMailer.approved(current_request,employee).deliver_now   
     current_request.update(status: "Approved")
     redirect_to leave_transfer_approval_leave_transfers_path
   end
@@ -108,7 +109,8 @@ class LeaveTransfersController < ApplicationController
     @leave = employee_leav_balance.no_of_leave.to_f + current_request.no_of_leave.to_f
     employee_leav_balance.update(no_of_leave: @leave)
     current_request.update(status: "Rejected")
-    LeaveTransferMailer.rejected(current_request).deliver_now
+    employee = Employee.find_by(id: current_user.employee_id)
+    LeaveTransferMailer.rejected(current_request,employee).deliver_now
     redirect_to leave_transfer_approval_leave_transfers_path
   end
 

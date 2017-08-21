@@ -4,6 +4,7 @@ class PunchMastersController < ApplicationController
   # GET /punch_masters
   # GET /punch_masters.json
   def index
+    @punch_master = PunchMaster.new
     @punch_masters = PunchMaster.all
   end
 
@@ -15,6 +16,9 @@ class PunchMastersController < ApplicationController
   # GET /punch_masters/new
   def new
     @punch_master = PunchMaster.new
+    @punch_masters = PunchMaster.all
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="AttendanceSetup"
   end
 
   # GET /punch_masters/1/edit
@@ -25,14 +29,14 @@ class PunchMastersController < ApplicationController
   # POST /punch_masters.json
   def create
     @punch_master = PunchMaster.new(punch_master_params)
-
+    @punch_masters = PunchMaster.all
     respond_to do |format|
       if @punch_master.save
-        format.html { redirect_to @punch_master, notice: 'Punch master was successfully created.' }
-        format.json { render :show, status: :created, location: @punch_master }
+         @punch_master = PunchMaster.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @punch_master.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'About Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +44,16 @@ class PunchMastersController < ApplicationController
   # PATCH/PUT /punch_masters/1
   # PATCH/PUT /punch_masters/1.json
   def update
-    respond_to do |format|
-      if @punch_master.update(punch_master_params)
-        format.html { redirect_to @punch_master, notice: 'Punch master was successfully updated.' }
-        format.json { render :show, status: :ok, location: @punch_master }
-      else
-        format.html { render :edit }
-        format.json { render json: @punch_master.errors, status: :unprocessable_entity }
-      end
-    end
+    @punch_master.update(punch_master_params)
+    @punch_master = PunchMaster.new
+    @punch_masters = PunchMaster.all
   end
 
   # DELETE /punch_masters/1
   # DELETE /punch_masters/1.json
   def destroy
     @punch_master.destroy
-    respond_to do |format|
-      format.html { redirect_to punch_masters_url, notice: 'Punch master was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @punch_masters = PunchMaster.all
   end
 
   private

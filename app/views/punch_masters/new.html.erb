@@ -1,5 +1,14 @@
-<h1>New Punch Master</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', punch_masters_path %>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Punch Master</h3>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="punch_list">
+			<%= render 'punch_list' %>
+		</div>
+	</div><!-- /.box-body -->
+</div><!-- /.box -->

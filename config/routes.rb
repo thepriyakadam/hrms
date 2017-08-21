@@ -2319,6 +2319,7 @@ end
       get :collect_company_location
       get :collect_company_location_dropdown_with_label
       get :collect_department
+      get :collect_sub_department
       get :display_emp_code_master
       post :update_mgr
       get :index_xls

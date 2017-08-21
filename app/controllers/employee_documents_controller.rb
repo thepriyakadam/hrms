@@ -49,7 +49,7 @@ class EmployeeDocumentsController < ApplicationController
         format.json { render json: @employee_document.errors, status: :unprocessable_entity }
         format.js { @flag = false }
       end
-    end
+  end
 
     end
   end

@@ -4299,14 +4299,18 @@ ActiveRecord::Schema.define(version: 20170818121249) do
     t.string   "relocation_cost",           limit: 255
     t.integer  "reporting_master_id",       limit: 4
     t.integer  "recruiter_id",              limit: 4
+    t.integer  "sub_department_id",         limit: 4
+    t.integer  "cost_center_id",            limit: 4
   end
 
   add_index "vacancy_masters", ["company_id"], name: "index_vacancy_masters_on_company_id", using: :btree
   add_index "vacancy_masters", ["company_location_id"], name: "index_vacancy_masters_on_company_location_id", using: :btree
+  add_index "vacancy_masters", ["cost_center_id"], name: "index_vacancy_masters_on_cost_center_id", using: :btree
   add_index "vacancy_masters", ["degree_id"], name: "index_vacancy_masters_on_degree_id", using: :btree
   add_index "vacancy_masters", ["department_id"], name: "index_vacancy_masters_on_department_id", using: :btree
   add_index "vacancy_masters", ["employee_designation_id"], name: "index_vacancy_masters_on_employee_designation_id", using: :btree
   add_index "vacancy_masters", ["employee_id"], name: "index_vacancy_masters_on_employee_id", using: :btree
+  add_index "vacancy_masters", ["sub_department_id"], name: "index_vacancy_masters_on_sub_department_id", using: :btree
 
   create_table "vacancy_request_histories", force: :cascade do |t|
     t.integer  "vacancy_master_id",       limit: 4
@@ -4854,10 +4858,12 @@ ActiveRecord::Schema.define(version: 20170818121249) do
   add_foreign_key "travel_requests", "travel_options"
   add_foreign_key "vacancy_masters", "companies"
   add_foreign_key "vacancy_masters", "company_locations"
+  add_foreign_key "vacancy_masters", "cost_centers"
   add_foreign_key "vacancy_masters", "degrees"
   add_foreign_key "vacancy_masters", "departments"
   add_foreign_key "vacancy_masters", "employee_designations"
   add_foreign_key "vacancy_masters", "employees"
+  add_foreign_key "vacancy_masters", "sub_departments"
   add_foreign_key "vacancy_request_histories", "company_locations"
   add_foreign_key "vacancy_request_histories", "degrees"
   add_foreign_key "vacancy_request_histories", "departments"

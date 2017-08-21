@@ -41,9 +41,9 @@
     <br>
     <%= link_to 'Back',employee_attendance_manager_self_services_path,class: 'btn btn-default btn-sm fa fa-arrow-left'%>
 
-     <%= link_to " Excel Report ",manager_self_service_attendance_employee_attendances_path(:employee => {:from => params[:employee][:from],:to => params[:employee][:to]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+     <%= link_to " Excel Report ",manager_self_service_attendance_employee_attendances_path(:employee => {:from => params[:employee][:from],:to => params[:employee][:to],:employee_id => params[:employee][:employee_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
  
-     <%= link_to " Print Report ",manager_self_service_attendance_employee_attendances_path(:employee => {:from => params[:employee][:from],:to =>  params[:employee][:to]},format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %> 
+     <%= link_to " Print Report ",manager_self_service_attendance_employee_attendances_path(:employee => {:from => params[:employee][:from],:to =>  params[:employee][:to],:employee_id => params[:employee][:employee_id]},format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %> 
      
   </div>
 </div>

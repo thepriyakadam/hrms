@@ -8,6 +8,7 @@ class EmployeeLeavRequestsController < ApplicationController
     @employee = Employee.find(current_user.employee_id)
     @employee_leav_requests = EmployeeLeavRequest.where('employee_id = ?', current_user.try(:employee_id)).order("id DESC")
     @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
+    #@leave_c_offs = LeaveCOff.where(employee_id: current_user.employee_id)
     session[:active_tab] ="EmployeeSelfService"
   end
 

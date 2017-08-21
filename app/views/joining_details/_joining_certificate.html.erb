@@ -4,6 +4,17 @@
           padding: 10px;
           border: 5px solid gray;
           margin: 10;">
+
+      <tr>
+        <td>
+         <% if @employee.company_location.company.company_logo == nil %>
+      <% else %>
+        <center> <%= image_tag @employee.company_location.company.company_logo.url, :size => "100x50" %></center><br>
+        <%end%>
+          <center><strong><%= @employee.company_location.company.try(:description) %></strong><br><%= @employee.company_location.try(:address) %>, <%= @employee.company_location.try(:name) %>.  </center>
+        </td>           
+       </tr>
+
   <div style="float:left;">
   From,<br><br>
   <%= @employee.company_location.company.try(:name)%><br>
@@ -15,7 +26,7 @@
   To,<br><br>
   <%= @employee.first_name%> <%= @employee.middle_name%> <%= @employee.last_name%><br>
   Contact No. - <%= @employee.contact_no%><br>
-  Email - <%= @employee.email%><br><br>
+  Email - <%= @employee.email%></div><br><br><br><br><br><br>
 
   <b>Subject - Employment certification letter</b><br><br>
 

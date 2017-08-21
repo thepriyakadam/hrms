@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170818095147) do
+ActiveRecord::Schema.define(version: 20170818121249) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1676,6 +1676,8 @@ ActiveRecord::Schema.define(version: 20170818095147) do
     t.boolean  "is_send",                    default: false
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
+    t.boolean  "c_off"
+    t.string   "holiday_type", limit: 255
   end
 
   create_table "illness_types", force: :cascade do |t|

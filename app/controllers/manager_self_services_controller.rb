@@ -105,7 +105,8 @@ class ManagerSelfServicesController < ApplicationController
 
     @from = params[:employee][:from]
     @to = params[:employee][:to]
-    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee)
+    @employee_id = params[:employee][:employee_id]
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id)
   end
 
   def investment_declaration

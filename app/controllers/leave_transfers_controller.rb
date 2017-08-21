@@ -45,7 +45,7 @@ class LeaveTransfersController < ApplicationController
         leave = employee_leav_balance.no_of_leave.to_f - @no_of_leave.to_f
         employee_leav_balance.update(no_of_leave: leave)
 
-       
+       LeaveTransferMailer.pending(@leave_transfer).deliver_now        
         flash[:notice] = "Leave Transfered To #{transfer_to.first_name}"
       else
         flash[:alert] = "Leave Limit Extended!"
@@ -60,16 +60,16 @@ class LeaveTransfersController < ApplicationController
     @leave_transfer.update(leave_transfer_params)
     @leave_transfer = LeaveTransfer.new
     @leave_transfers = LeaveTransfer.all
+        redirect_to new_leave_transfer_path
   end
 
   # DELETE /leave_transfers/1
   # DELETE /leave_transfers/1.json
   def destroy
-    byebug
-     @leave_transfer
+    @leave_transfer
     employee_leav_balance = EmployeeLeavBalance.where(employee_id:  @leave_transfer.employee_id,leav_category_id:  @leave_transfer.leav_category_id,is_active: true).take
-    leave = employee_leav_balance.no_of_leave.to_f + @no_of_leave.to_f
-        employee_leav_balance.update(no_of_leave: leave)
+    leave = employee_leav_balance.no_of_leave.to_f + @leave_transfer.no_of_leave.to_f
+    employee_leav_balance.update(no_of_leave: leave)
 
     @leave_transfer.destroy
     @leave_transfers = LeaveTransfer.all
@@ -97,7 +97,10 @@ class LeaveTransfersController < ApplicationController
       @leave = transfer_to_balance.no_of_leave.to_f + current_request.no_of_leave.to_f
       transfer_to_balance.update(no_of_leave: @leave)
     end
+    employee = Employee.find_by(id: current_user.employee_id)
+     LeaveTransferMailer.approved(current_request,employee).deliver_now   
     current_request.update(status: "Approved")
+    redirect_to leave_transfer_approval_leave_transfers_path
   end
 
   def reject
@@ -105,7 +108,10 @@ class LeaveTransfersController < ApplicationController
     employee_leav_balance = EmployeeLeavBalance.find_by(id: current_request.employee_leav_balance_id)
     @leave = employee_leav_balance.no_of_leave.to_f + current_request.no_of_leave.to_f
     employee_leav_balance.update(no_of_leave: @leave)
-    current_request.update(status: "Approved")
+    current_request.update(status: "Rejected")
+    employee = Employee.find_by(id: current_user.employee_id)
+    LeaveTransferMailer.rejected(current_request,employee).deliver_now
+    redirect_to leave_transfer_approval_leave_transfers_path
   end
 
   private

@@ -2601,6 +2601,22 @@ ActiveRecord::Schema.define(version: 20170818121249) do
 
   add_index "leave_status_records", ["employee_leav_request_id"], name: "index_leave_status_records_on_employee_leav_request_id", using: :btree
 
+  create_table "leave_transfers", force: :cascade do |t|
+    t.integer  "employee_id",              limit: 4
+    t.integer  "transfer_to_id",           limit: 4
+    t.date     "date"
+    t.string   "no_of_leave",              limit: 255
+    t.string   "status",                   limit: 255
+    t.integer  "employee_leav_balance_id", limit: 4
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.integer  "leav_category_id",         limit: 4
+  end
+
+  add_index "leave_transfers", ["employee_id"], name: "index_leave_transfers_on_employee_id", using: :btree
+  add_index "leave_transfers", ["employee_leav_balance_id"], name: "index_leave_transfers_on_employee_leav_balance_id", using: :btree
+  add_index "leave_transfers", ["leav_category_id"], name: "index_leave_transfers_on_leav_category_id", using: :btree
+
   create_table "leaving_reasons", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
@@ -4674,6 +4690,9 @@ ActiveRecord::Schema.define(version: 20170818121249) do
   add_foreign_key "leave_records", "employees"
   add_foreign_key "leave_records", "leav_categories"
   add_foreign_key "leave_status_records", "employee_leav_requests"
+  add_foreign_key "leave_transfers", "employee_leav_balances"
+  add_foreign_key "leave_transfers", "employees"
+  add_foreign_key "leave_transfers", "leav_categories"
   add_foreign_key "loan_approvals", "loan_requests"
   add_foreign_key "loan_approvals", "loan_types"
   add_foreign_key "loan_approvals", "memberships"

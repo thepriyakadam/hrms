@@ -175,8 +175,8 @@ class SelfServicesController < ApplicationController
         if @leave_c_off.is_week_off_present_for_coff(@employee_id,@c_off_date) || @leave_c_off.is_holiday_present_for_coff(@employee_id,@c_off_date)
           @employee_attendance = EmployeeAttendance.where(employee_id: @employee_id,present: "WOP",day: @c_off_date.to_date).take
           
-          if @employee_attendance.working_hrs.to_s < "07:00"
-            flash[:alert] = "Working hrs. less than 7,Please contact to Admin"
+          if @employee_attendance.working_hrs.to_s < "09:00"
+            flash[:alert] = "Working hrs. less than 9,Please contact to Admin"
           else
             if leav_category.nil?
             else

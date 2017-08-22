@@ -68,7 +68,11 @@ class HolidaysController < ApplicationController
         @emp = Employee.find_by_id(eid)
         @emp_attendance = EmployeeAttendance.where(employee_id: eid,day: holiday.holiday_date).take
         if @emp_attendance.try(:present) == nil
-          EmployeeAttendance.create(holiday_id: holiday.id,employee_id: eid, day: holiday.holiday_date, present: "H", department_id: @emp.department_id, is_confirm: false, count: 1)
+          if holiday.holiday_type == "National"
+            EmployeeAttendance.create(holiday_id: holiday.id,employee_id: eid, day: holiday.holiday_date, present: "H", department_id: @emp.department_id, is_confirm: false, count: 1)
+          else
+            EmployeeAttendance.create(holiday_id: holiday.id,employee_id: eid, day: holiday.holiday_date, present: "H", department_id: @emp.department_id, is_confirm: false, count: 1)
+          end
         else
           @date = holiday.holiday_date
           @emp_attendances = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ? AND present = ?", @date.strftime('%m/%Y'), "H")

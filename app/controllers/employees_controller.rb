@@ -247,10 +247,10 @@
       employee = Employee.find(e)
       if r == ''
         flash[:alert] = 'Select Role'
-        redirect_to assign_role_employees_path
+        #redirect_to assign_role_employees_path
       elsif m1 == ''
         flash[:alert] = 'Select Manager 1'
-        redirect_to assign_role_employees_path
+        #redirect_to assign_role_employees_path
       else
         employee = Employee.find(params['login']['employee_id'])
         # @department = Department.find(params["login"]["department_id"])
@@ -260,7 +260,7 @@
                     else
                       employee.email
                     end
-          u.password = '12345678'
+          u.password = employee.first_name+'-'+employee.manual_employee_code
           u.employee_id = employee.id
           u.department_id = employee.department_id
           u.company_id = employee.company_location.company_id
@@ -272,7 +272,7 @@
         end
         ActiveRecord::Base.transaction do
           if user.save
-
+            password = user.password
             manager_id = params[:manager_id]
             manager_2_id = params[:manager_2_id]
 
@@ -287,18 +287,20 @@
             employee.update_attributes(manager_id: @reporting_master1.employee_id, manager_2_id: @reporting_master2.try(:employee_id))
 
             ManagerHistory.create(employee_id: employee.id,manager_id: manager_1,manager_2_id: manager_2,effective_from: params["login"]["effec_date"])
-            
+            EmployeeMailer.user_confirmation(employee,password).deliver_now
+            EmployeeMailer.manager_detail(manager_1,employee).deliver_now
             flash[:notice] = "Employee assigned successfully."
-            redirect_to assign_role_employees_path
+            #redirect_to assign_role_employees_path
             # UserPasswordMailer.welcome_email(company,pass).deliver_now
           else
             p user.errors
             flash[:alert] = 'Employee not assigned'
-            redirect_to assign_role_employees_path
+            #redirect_to assign_role_employees_path
           end
-        end
+        end#do
       end #validation
     end #do
+    redirect_to assign_role_employees_path
   end
 
   # def index_xls

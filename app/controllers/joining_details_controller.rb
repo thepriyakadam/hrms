@@ -121,16 +121,55 @@ class JoiningDetailsController < ApplicationController
   end
 
   def certificate_print
-    # byebug
     @employee = Employee.find(params[:salary][:employee_id])
     @certificate = params[:salary][:certificate]
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id) 
+    @employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employee.id)
+
+    respond_to do |format|
+        format.html
+        format.pdf do
+        render :pdf => 'certificate_print',
+        layout: '/layouts/pdf.html.erb',
+        :template => 'joining_details/offer_letter_print.pdf.erb',
+        :orientation      => 'Landscape', # default , Landscape
+        :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 20,
+                      :left   => 20,
+                      :right  => 20},
+        :show_as_html => params[:debug].present?
+        end
+     end
     # redirect_to certificate_joining_details_path
   end
 
   def joining_certificate
 
   end
+
+  # def offer_letter_print
+  #   @employee = Employee.find(params[:employee_id])
+  #   @certificate = [:certificate]
+  #   @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+  #   respond_to do |format|
+  #       format.html
+  #       format.pdf do
+  #       render :pdf => 'certificate_print',
+  #       layout: '/layouts/pdf.html.erb',
+  #       :template => 'joining_details/offer_letter_print.pdf.erb',
+  #       :orientation      => 'Landscape', # default , Landscape
+  #       :page_height      => 1000,
+  #       :dpi              => '300',
+  #       :margin           => {:top    => 20, # default 10 (mm)
+  #                     :bottom => 20,
+  #                     :left   => 20,
+  #                     :right  => 20},
+  #       :show_as_html => params[:debug].present?
+  #       end
+  #    end
+  # end
     
 
   private

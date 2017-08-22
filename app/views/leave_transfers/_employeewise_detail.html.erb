@@ -1,0 +1,38 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Leave Transfer Detail</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  	<table id="example2" class="table table-bordered table-hover table-condensed">
+		  <thead>
+		    <tr>
+		      <th>Transfer From</th>
+		      <th>Transfer to</th>
+		      <th>Date</th>
+		      <th>Leave Category</th>
+		      <th>No of leave</th>
+		    </tr>
+		  </thead>
+
+		  <tbody>
+		    <% @leave_transfers.each do |leave_transfer| %>
+		      <tr>
+		        <td><%= full_name(leave_transfer.employee) %></td>
+		        <td><%= full_name(leave_transfer.transfer_to) %></td>
+		        <td><%= leave_transfer.date %></td>
+		        <td><%= leave_transfer.leav_category.code %></td>
+		        <td><%= leave_transfer.no_of_leave %></td>
+		      </tr>
+		    <% end %>
+		      <tr>
+		      	<th colspan="4">Total</th>
+		      	<td><%= @leave_transfers.sum(:no_of_leave) %></td>
+		      </tr>
+		  </tbody>
+	</table>
+<br>
+ <%= link_to " Excel Report ",show_employeewise_detail_leave_transfers_path(:employee => {:employee_id => params[:employee][:employee_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <%= link_to "PDF Report", show_employeewise_detail_leave_transfers_path(:employee => {:employee_id => params[:employee][:employee_id]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+  </div>
+</div>

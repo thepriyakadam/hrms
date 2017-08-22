@@ -177,6 +177,13 @@
           </div>
         </div>
 
+        <div class="col-sm-3">
+         <div class="form-group required">
+          <!--   <label>Job Title</label> -->
+            <%= f.select :billable,["Billable","Non Billable"],{label: 'Resource',include_blank: " Select Resource"} %>
+          </div>
+        </div>
+
          <div class="col-sm-3">
          <div class="form-group required">
           <!-- <label>Qualification I</label> -->
@@ -189,7 +196,11 @@
           </div>
         </div>     
 
-        <div class="col-sm-3">
+
+      </div>
+
+          <div class="row">
+           <div class="col-sm-3">
           <label>Qualification II</label>
           <div class="field">
             <div class="input-group">
@@ -200,9 +211,7 @@
             </div>
           </div>
         </div>
-      </div>
 
-          <div class="row">
 
               <div class="col-sm-3">
           <label>Qualification III</label>
@@ -350,6 +359,9 @@ $("#vacancy_master").validate({
       },
       "vacancy_master[target_company_id]":{
         required: true,
+      },
+      "vacancy_master[billable]":{
+        required: true,
       }
     },
     messages: {
@@ -403,6 +415,9 @@ $("#vacancy_master").validate({
       },
       "vacancy_master[target_company_id]":{
         required: "Please select target company",
+      },
+      "vacancy_master[billable]":{
+        required: "Please select resource",
       }
       
     },

@@ -123,7 +123,10 @@
 
       <tr>
         <th><strong>Recruiter</strong></th>
-        <td colspan="3"><%= full_name(@vacancy_master.recruiter) %></td>
+        <td><%= full_name(@vacancy_master.recruiter) %></td>
+
+        <th><strong>Resource</strong></th>
+        <td><%= @vacancy_master.billable %></td>
       </tr>
 
       <tr>

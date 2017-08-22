@@ -9,6 +9,7 @@ class VacancyMaster < ActiveRecord::Base
   belongs_to :company
   belongs_to :sub_department
   belongs_to :cost_center
+  belongs_to :target_company
   belongs_to :recruiter,class_name: 'Employee'
   belongs_to :replacement,class_name: 'Employee'
   has_many :capture_resumes

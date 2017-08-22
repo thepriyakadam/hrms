@@ -12,16 +12,24 @@
 
     <div class="col-sm-3">  
       <div class="form-group required">
-        <%= f.select :leav_category_id, all_leav_category,{label: 'Leave Category',include_blank: " Select Leave Category"}  %>
+        <%= f.select :leav_category_id, leav_category_transfer,{label: 'Leave Category',include_blank: " Select Leave Category"}  %>
       </div>
     </div>
 
-    <div class="col-sm-3">
+    <div class="col-sm-2">
       <div class="form-group required">
         <%= f.text_field :no_of_leave %>
       </div>
     </div>
-  
+
+        <div class="col-sm-4">
+      <div class="field">
+        <%= f.text_field :reason %>
+      </div>
+    </div>
+    </div>
+
+  <div class="row">
     <div class="col-sm-3" style="padding-top: 20px;">
       <div class="actions">
         <%= f.submit 'Create Leave Transfer',class: 'btn btn-sm btn-primary' %>

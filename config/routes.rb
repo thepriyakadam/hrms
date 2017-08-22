@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :target_companies
   resources :leave_transfers do
     collection do
       get :leave_transfer_approval

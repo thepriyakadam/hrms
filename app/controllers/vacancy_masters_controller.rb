@@ -799,6 +799,6 @@ end
 
   # Never trust param eters from the scary internet, only allow the white list through.
   def vacancy_master_params
-    params.require(:vacancy_master).permit(:vacancy_of,:target_date,:recruiter_id,:company_id,:vacancy_type,:employee_designation_id,:justification,:employee_id,:vacancy_code,:vacancy_fullfillment_date,:is_confirmed,:current_status,:experience,:experince_max,:degree_1_id,:degree_2_id,:reporting_master_id,:keyword,:other_organization, :department_id, :degree_id, :company_location_id, :vacancy_name, :no_of_position, :description, :vacancy_post_date, :budget,:budget_max,:reason,:replacement_id,:notice_period,:notice_period_day,:relocation_rerimbursement,:relocation_cost,:sub_department_id,:cost_center_id)
+    params.require(:vacancy_master).permit(:vacancy_of,:target_date,:recruiter_id,:company_id,:vacancy_type,:employee_designation_id,:justification,:employee_id,:vacancy_code,:vacancy_fullfillment_date,:is_confirmed,:current_status,:experience,:experince_max,:degree_1_id,:degree_2_id,:reporting_master_id,:keyword,:other_organization, :department_id, :degree_id, :company_location_id, :vacancy_name, :no_of_position, :description, :vacancy_post_date, :budget,:budget_max,:reason,:replacement_id,:notice_period,:notice_period_day,:relocation_rerimbursement,:relocation_cost,:sub_department_id,:cost_center_id,:target_company_id,:secondary_skill)
   end
 end

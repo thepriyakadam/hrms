@@ -67,7 +67,7 @@
 
          <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :vacancy_type,["Permanent","Contract","Freelancer","Internship"],{label: 'vacancy Type',include_blank:"Select vacancy Type"}%>
+            <%= f.select :vacancy_type,["Permanent","Contract","Freelancer","Internship"],{label: 'Vacancy Type',include_blank:"Select vacancy Type"}%>
           </div>
         </div> 
       </div>
@@ -130,8 +130,14 @@
         <div class="row">
 
          <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
              <%= f.text_field :keyword,label: 'Primary Skill'%>
+          </div>
+        </div> 
+
+        <div class="col-sm-3">
+          <div class="field">
+             <%= f.text_field :secondary_skill,label: 'Secondary Skill'%>
           </div>
         </div> 
 
@@ -144,7 +150,14 @@
 
          <div id="relocation_textbox"></div>
 
-         <div class="col-sm-3">
+
+
+     
+     
+        </div>
+
+      <div class="row">
+               <div class="col-sm-3">
           <div class="form-group required">
           <!-- <label>Vacancy Fulfillment Date </label> -->
         
@@ -157,19 +170,21 @@
           </div>
         </div> 
 
-     
-     
+          <div class="col-sm-3">
+         <div class="form-group required">
+          <!--   <label>Job Title</label> -->
+            <%= f.select :target_company_id,all_target_company,{label: 'Target Company',include_blank: " Select Target Company"} %>
+          </div>
         </div>
 
-      <div class="row">   
          <div class="col-sm-3">
-          <label>Qualification I</label>
-          <div class="form-group required">
+         <div class="form-group required">
+          <!-- <label>Qualification I</label> -->
             <div class="input-group">
               <div class="input-group-addon">
                 <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
               </div>
-               <%= f.select :degree_id, all_degree, {hide_label: true,include_blank: " Select Qualification"}, class: 'input_degree_stream_id' %>
+               <%= f.select :degree_id, all_degree, {label: 'Qualification I',include_blank: " Select Qualification"}, class: 'input_degree_stream_id' %>
             </div>
           </div>
         </div>     
@@ -185,8 +200,11 @@
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="col-sm-3">
+          <div class="row">
+
+              <div class="col-sm-3">
           <label>Qualification III</label>
           <div class="field">
             <div class="input-group">
@@ -197,7 +215,8 @@
             </div>
           </div>
         </div>
-      </div>
+        </div>
+
       <div class="row">
         <div class="col-sm-12">
           <div class="field">
@@ -325,6 +344,12 @@ $("#vacancy_master").validate({
       },
       "vacancy_master[cost_center_id]":{
         required: true,
+      },
+      "vacancy_master[keyword]":{
+        required: true,
+      },
+      "vacancy_master[target_company_id]":{
+        required: true,
       }
     },
     messages: {
@@ -372,6 +397,12 @@ $("#vacancy_master").validate({
       },
       "vacancy_master[cost_center_id]":{
         required: "Please select cost center",
+      },
+      "vacancy_master[keyword]":{
+        required: "Please specify primary skill",
+      },
+      "vacancy_master[target_company_id]":{
+        required: "Please select target company",
       }
       
     },

@@ -14,25 +14,40 @@
           border: 1px solid gray;
           margin: 5;">
 <div class="box-header">
-   <center> <h5 class="box-title">Employee Information</h5></center>
-    <div class="pull-right" style="float:right">
-    <%= wicked_pdf_image_tag @employee.passport_photo.url, :size => "70x70" %>
-    </div>
   </div>
    <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1000 cellpadding="10">
       <!-- <thead><tr><th colspan="4"><center>Employee Profile</center></th> --><!-- <th><= wicked_pdf_image_tag @employee.passport_photo.url, :size => "70x70" %></th> --><!-- /tr> -->
-        <tr></table>
-        <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1000 cellpadding="10">
-          <td colspan="2"><b>Name :</b> <%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td></tr>
+      <thead>
+             <tr>
+        <td colspan="2">
+         <% if @employee.company_location.company.company_logo == nil %>
+      <% else %>
+        <center> <%= wicked_pdf_image_tag @employee.company_location.company.company_logo.url, :size => "100x50" %></center><br>
+        <%end%>
+          <center><strong><%= @employee.company_location.company.try(:description) %></strong><br><%= @employee.company_location.try(:address) %>, <%= @employee.company_location.try(:name) %>.
+          </center>
+              <%= wicked_pdf_image_tag @employee.passport_photo.url, :size => "70x70" %><br>
+        </td>           
+      </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="2"><b>Name :</b> <%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td>
+        </tr>
 
-          <tr><td colspan="2"><b>Address : </b><%= @employee.permanent_address %></td></tr>
-         <tr> <td><b>Contact No. :</b> <%= @employee.contact_no %></td>
-          <td><b>Email :</b> <%= @employee.email %></td></tr>
-
-         <tr> <td><b>DOB : </b><%= @employee.date_of_birth %></td>
-              <td><b> Marital Status : </b> <%= @employee.marital_status%></td>
+          <tr>
+          <td colspan="2"><b>Address : </b><%= @employee.permanent_address %></td>
+          </tr>
+         <tr> 
+           <td><b>Contact No. :</b> <%= @employee.contact_no %></td>
+          <td><b>Email :</b> <%= @employee.email %></td>
          </tr>
-          <tr> <td><b>Nationality : </b><%= @employee.nationality.try(:name) %> </td>
+         <tr> 
+            <td><b>DOB : </b><%= @employee.date_of_birth %></td>
+            <td><b> Marital Status : </b> <%= @employee.marital_status%></td>
+         </tr>
+          <tr> 
+           <td><b>Nationality : </b><%= @employee.nationality.try(:name) %> </td>
            <td><b>Current Experience : </b>
               <% if @employee.joining_detail.joining_date == nil %>
                 <%= %>
@@ -44,7 +59,8 @@
                   <%= day2.to_i %><%= "month" %>
                 <% end %>
               <% end %>
-          </td></tr>
+           </td>
+          </tr>
       </tbody>
  </table>
 

@@ -26,6 +26,8 @@ class Reports::BasicDetailsController < ApplicationController
   end 
 
   def employee_basic_report
+    @company_location = params[:salary][:company_location_id]
+    @employees = Employee.where(company_location_id: @company_location)
     if current_user.class == Group
       if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
         @employees = Employee.all

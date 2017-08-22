@@ -26,7 +26,7 @@
 
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :first_name , label: 'First Name' %>
+            <%= f.text_field :first_name , label: 'First Name',placeholder: 'First Name' %>
           </div>
         </div>
       </div>
@@ -36,13 +36,13 @@
 
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :middle_name, label: 'Middle Name' %>
+           <%= f.text_field :middle_name, label: 'Middle Name',placeholder: 'Middle Name' %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :last_name, label: 'Last Name' %>
+           <%= f.text_field :last_name, label: 'Last Name',placeholder: 'Last Name' %>
           </div>
         </div>
 
@@ -54,7 +54,7 @@
         
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :email %>
+           <%= f.text_field :email,placeholder: 'e.g.abc@gmail.com' %>
           </div>
         </div>
       </div>
@@ -67,7 +67,7 @@
 
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :optional_email %>
+           <%= f.text_field :optional_email, placeholder: 'e.g.abc@gmail.com'%>
           </div>
         </div>
 
@@ -86,7 +86,7 @@
 
       <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :licence_no, label: 'Driving Licence No.' %>
+           <%= f.text_field :licence_no, label: 'Driving Licence No.',placeholder: 'e.g.TN75 2013 0008800' %>
           </div>
         </div>
       </div>
@@ -96,13 +96,13 @@
 
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :contact_no,label: 'Contact No.' %>
+           <%= f.text_field :contact_no,label: 'Contact No.',placeholder: 'e.g.123456789' %>
           </div>
         </div>
 
          <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :optinal_contact_no,label: 'Optional Contact No.' %>
+           <%= f.text_field :optinal_contact_no,label: 'Optional Contact No.',placeholder: 'e.g.123456789' %>
           </div>
         </div>
          <div class="col-sm-3">
@@ -163,7 +163,7 @@
 
          <div class="col-sm-6">
           <div class="form-group required">
-           <%= f.text_field :permanent_address, label: 'Permanent Address' %>
+           <%= f.text_field :permanent_address, label: 'Permanent Address',placeholder: 'e.g. sector - c,pune' %>
           </div>
         </div>
          <div class="col-sm-3">
@@ -214,7 +214,7 @@
       <div class="row">
         <div class="col-sm-6">
           <div class="field">
-            <%= f.text_field :current_address, label: 'Current Address' %>
+            <%= f.text_field :current_address, label: 'Current Address',placeholder: 'e.g. sector - c,pune' %>
           </div>
         </div>
         <div class="col-sm-3">
@@ -231,6 +231,12 @@
             </div>
           </div>
         </div>
+
+         <div class="col-sm-3">
+            <div class="field">
+              <%= f.file_field :employee_signature,label: 'Upload Signature' %>
+            </div>
+          </div> 
       </div>
       <div class="row">
           <div class="col-sm-3">

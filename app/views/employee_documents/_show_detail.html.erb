@@ -22,8 +22,7 @@
     <thead>
       <tr><th colspan="10"><center><font color='#0077b3'>Employee Document Detail</font></center> </th></tr>
     <tr>
-      <th>Employee ID</th>
-      <th>Document Name</th>
+      <th>Document</th>
       <th>Download Document</th>
       <th>Download Image</th>
       <th>Status</th>
@@ -33,7 +32,6 @@
   <tbody>
     <% @employee_documents.each do |employee_document| %>
       <tr>
-        <td><%= employee_document.employee.try(:manual_employee_code) %></td>
         <td><%= employee_document.name %></td>
         <td>
           <% if employee_document.document_file_name == nil %>

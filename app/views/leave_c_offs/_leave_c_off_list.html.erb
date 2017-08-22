@@ -3,7 +3,8 @@
    <tr>
     	<th>ID</th>
       <th>Employee</th>
-    	<th>C.Off Date</th>
+    	<th>Comp.Off Date</th>
+      <th>Comment</th>
     	<th>Action</th>
    </tr>
   </thead>
@@ -15,6 +16,7 @@
         <td><%= leave_c_off.employee.try(:manual_employee_code) %></td>
         <td><%= leave_c_off.employee.try(:first_name) %> <%= leave_c_off.employee.try(:middle_name) %> <%= leave_c_off.employee.try(:last_name) %></td>
         <td><%= leave_c_off.c_off_date %></td>
+        <td><%= leave_c_off.comment %></td>
         <td>
             <!-- <= f.hidden_field :leave_c_off_id, value: leave_c_off.id %> -->
             <% if leave_c_off.is_taken == true %>

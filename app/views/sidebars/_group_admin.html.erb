@@ -9,11 +9,11 @@
     <a href="">
       <i class="fa fa-user-plus"></i> <span><%= current_user.company_location.company.try(:name) %> Details</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu" >
-      <li><a href="/companies" title="Company Details"><i class="fa fa-tags"></i> Companies </a></li>
-      <li><a href="/company_locations" title="Comapny Location Details"><i class="fa fa-tags"></i> Locations </a></li>
-      <li><a href="/departments/new" title="comapany Department Details"><i class="fa fa-tags"></i> Departments </a></li>
-      <li><a href="/sub_departments/new" title="comapany sub department Details"><i class="fa fa-tags"></i>Sub Departments </a></li>
-      <li><a href="/cost_centers/new" title="comapany Cost Center Details"><i class="fa fa-tags"></i> Cost Center </a></li>
+      <li><a href="/companies" title="Company details"><i class="fa fa-tags"></i> Companies </a></li>
+      <li><a href="/company_locations" title="Company location details"><i class="fa fa-tags"></i> Locations </a></li>
+      <li><a href="/departments/new" title="Company department details"><i class="fa fa-tags"></i> Departments </a></li>
+      <li><a href="/sub_departments/new" title="Company sub department details"><i class="fa fa-tags"></i>Sub Departments </a></li>
+      <li><a href="/cost_centers/new" title="Company Cost Center Details"><i class="fa fa-tags"></i> Cost Center </a></li>
     </ul>
   </li>
   
@@ -216,10 +216,10 @@
       <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu" >
-      <li><a href="/employees/all_emp_list"><i class="fa fa-tags"></i> Access Control </a></li>
-      <li><a href="/reporting_masters/new"><i class="fa fa-tags"></i> Reporting Manager </a></li>
-      <li><a href="/employees/assign_role"><i class="fa fa-tags"></i> Create New User </a></li>
-      <li><a href="/home/created_user"><i class="fa fa-tags"></i> View Users </a></li>
+      <li><a href="/employees/all_emp_list" title="Used for activation or deactivation of employee"><i class="fa fa-tags"></i> Access Control </a></li>
+      <li><a href="/reporting_masters/new" title="Used for creating the reporting manager"><i class="fa fa-tags"></i> Reporting Manager </a></li>
+      <li><a href="/employees/assign_role" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Create New User </a></li>
+      <li><a href="/home/created_user" title="To view the details of creating user"><i class="fa fa-tags"></i> View Users </a></li>
       <li><a href="/roles/role_edit_list"><i class="fa fa-tags"></i> Update User Role </a></li>
       <li><a href="/employees/manager"><i class="fa fa-tags"></i> Update Manager </a></li>
       <li><a href="/reporting_masters/update_reporting_manager"><i class="fa fa-tags"></i> Replace Manager </a></li>
@@ -318,7 +318,7 @@
       <li class="treeview" id="LeaveReports">
         <a href="#" title="All reports related to leave"><i class="fa fa-line-chart"></i> Leave Reports <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-        <li><a href="/employee_leav_requests/leave_r`equest_report"><i class="fa fa-tags"></i> Leave Request </a></li>
+        <li><a href="/employee_leav_requests/leave_request_report"><i class="fa fa-tags"></i> Leave Request </a></li>
         <li><a href="/employee_leav_requests/leave_req_status_report"><i class="fa fa-tags"></i> Status Wise Leave </a></li>
         <li><a href="/particular_leave_records/leave_approval_report"><i class="fa fa-thumbs-up"></i> Leave Approved </a></li>
         <li><a href="/leave_c_offs/search_by_c_off_date"><i class="fa fa-tags"></i> Comp. Off Report </a></li>
@@ -376,6 +376,7 @@
        <li><a href="/week_off_masters/week_off_list" title="For confirming the week off, which is assigned to employees"><i class="fa fa-tags"></i> Confirm Week Off </a></li>
        <li><a href="/employee_week_offs" title="For reverting the week off of employee"><i class="fa fa-tags"></i> Revert Employee Wise </a></li>
        <li><a href="/employee_week_offs/revert_selective" title="For reverting the week off effective from to effective to of a particular date "><i class="fa fa-tags"></i> Revert Date Wise </a></li>
+       <li><a href="/week_off_masters/revert_week_off_master" title="For reverting the week off master data "><i class="fa fa-tags"></i> Revert Master </a></li>
        <li><a href="/employee_week_offs/date_wise_week_off" title="Employee list of week of report"><i class="fa fa-tags"></i> Week Off Report </a></li>
      </ul>
       </li> 
@@ -385,6 +386,7 @@
         <i class="fa fa-edit"></i> Attendance <i class="fa fa-angle-left pull-right"></i>
       </a>
       <ul class="treeview-menu">
+       <li><a href="/punch_masters/new"><i class="fa fa-tags"> </i> Punch Master </a></li>
        <li><a href="/employee_attendances/new" title="Creating the attendance cost centerwise"><i class="fa fa-tags"></i> Add Attendance </a></li>
        <li><a href="/employee_attendances/revert_attendance_employeewise" title="For reverting the attendance of particular employee , month and year"><i class="fa fa-tags"></i> Revert Employee Wise </a></li>
        <li><a href="/employee_attendances/revert_attendance" title="For reverting the attendance of employee of particular cost centerwise"><i class="fa fa-tags"></i> Revert Unit Wise </a></li>
@@ -396,6 +398,7 @@
       
        <li><a href="/employee_attendances/import_employee_attendance" title="For upload daily attendance sheet"><i class="fa fa-upload"></i> Upload Attendance File </a></li>
        <li><a href="/employee_attendances/admin_level_acf" title="For assigining the access card of particular date"><i class="fa fa-upload"></i> Admin ACF </a></li>
+       <li><a href="/employee_attendances/datewise_attendance_with_options" title="To view attendance all and selective"><i class="fa fa-tags"></i> Attendance Report </a></li>
        
      <!-- <li><a href="/workingdays/search_month_year"><i class="fa fa-tags"> </i>Attendace Update(Auto) </a></li> -->
      <!--  <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>

@@ -267,7 +267,8 @@ class LeaveCOffsController < ApplicationController
   end
 
   def modal
-   @leave_c_off = LeaveCOff.find_by(params[:id])
+   @employee = Employee.find(params[:employee_id])
+   @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
   end
 
   def approve_c_off
@@ -461,6 +462,10 @@ class LeaveCOffsController < ApplicationController
     @leave_c_offs = @employee.leave_c_offs.order("id DESC")
   end
 
+  def detail_modal
+    @leave_c_off = LeaveCOff.find(params[:format])
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -470,6 +475,6 @@ class LeaveCOffsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def leave_c_off_params
-    params.require(:leave_c_off).permit(:is_expire,:employee_id, :c_off_date, :c_off_type, :c_off_expire_day, :expiry_status, :expiry_date, :leave_count)
+    params.require(:leave_c_off).permit(:comment,:is_expire,:employee_id, :c_off_date, :c_off_type, :c_off_expire_day, :expiry_status, :expiry_date, :leave_count)
   end
 end

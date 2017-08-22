@@ -22,15 +22,18 @@ module EmployeeAttendancesHelper
     start_date.step(end_date).each do |d|
       attendance_record = EmployeeAttendance.where(day: d, employee_id: e.employee_id).take
       if attendance_record.nil?
-        unless joining_detail.joining_date <  d
-          exist[d] = "UJ"
-        end
-        unless joining_detail.retirement_date.nil?
-          unless joining_detail.retirement_date > d
-            exist[d] = "RD"
+        unless joining_detail.nil?
+          unless joining_detail.joining_date.nil?
+            unless joining_detail.joining_date <  d
+              exist[d] = "UJ"
+            end
+          end
+          unless joining_detail.retirement_date.nil?
+            unless joining_detail.retirement_date > d
+              exist[d] = "RD"
+            end
           end
         end
-        
       elsif
         exist[d] = attendance_record.present
       end

@@ -130,6 +130,18 @@
         <th>Sub Department</th>
         <td><%= @employee.try(:sub_department).try(:name) %></td>
       </tr>
+
+     <tr>
+      <th><strong>Signature</strong></th>
+    <td colspan="3">
+ <!--  < if @employee.employee_signature_file_name == nil %>
+    <small class="label label-default">Not Available</small>
+      < else %>
+    <center><= link_to '',download_employee_signature_path(@employee),class: 'btn btn-xs fa fa-picture-o' %></center> -->
+    <%= image_tag @employee.employee_signature.url, :size => "120x30" %><br><br>
+  <!-- <end %> -->
+  </td>
+</tr>
      
     </table>
   </div><!-- /.box -->

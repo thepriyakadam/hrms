@@ -1859,7 +1859,8 @@ end
 
     @from = params[:employee][:from]
     @to = params[:employee][:to]
-    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee)
+    @employee_id = params[:employee][:employee_id]
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id)
 
       respond_to do |format|
         format.js
@@ -2342,7 +2343,24 @@ end
     end
   end
 
+  def datewise_attendance_with_options
+  session[:active_tab] ="TimeManagement"
+  session[:active_tab1] ="Attendance"
+  end
 
+  def show_datewise_all
+    from = params[:employee][:from]
+    to = params[:employee][:to]
+
+    if params[:save]
+      @employee_attendances = EmployeeAttendance.where(day: from.to_date..to.to_date)
+    elsif params[:absent]
+      @employee_attendances = EmployeeAttendance.where(day: from.to_date..to.to_date,present: "A")
+    else
+      @employee_attendances = EmployeeAttendance.where(day: from.to_date..to.to_date).where.not(employee_leav_request_id: nil)
+    end
+  end
+  
   # def create_self_attendance
   #   @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
   #   employee_id = params[:salary][:employee_id]
@@ -2372,6 +2390,6 @@ end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_attendance_params
-    params.require(:employee_attendance).permit(:employee_code,:employee_name,:employee_id, :day, :present, :in_time, :out_time)
+    params.require(:employee_attendance).permit(:employee_week_off_id,:employee_code,:employee_name,:employee_id, :day, :present, :in_time, :out_time)
   end
 end

@@ -1,5 +1,5 @@
  class EmployeesController < ApplicationController
-  before_action :set_employee, only: [:show, :edit, :update, :destroy, :ajax_joining_detail, :ajax_bank_detail, :ajax_qualification_detail, :ajax_new_qualification, :ajax_experience_detail, :ajax_new_experience, :ajax_skillset_detail, :ajax_new_skillset, :ajax_certification_detail, :ajax_new_certification, :ajax_award_detail, :ajax_new_award, :ajax_physical_detail, :ajax_family_detail, :ajax_new_family]
+  before_action :set_employee, only: [:show, :edit, :update, :destroy, :ajax_joining_detail, :ajax_bank_detail, :ajax_qualification_detail, :ajax_new_qualification, :ajax_experience_detail, :ajax_new_experience, :ajax_skillset_detail, :ajax_new_skillset, :ajax_certification_detail, :ajax_new_certification, :ajax_award_detail, :ajax_new_award, :ajax_physical_detail, :ajax_family_detail, :ajax_new_family,:ajax_employee_document_detail,:ajax_new_employee_document]
   # load_and_authorize_resource
   # GET /employees
   # GET /employees.json
@@ -397,13 +397,11 @@
 
   def ajax_employee_document_detail
     @employee_document = EmployeeDocument.new
-    @employee = Employee.find(params[:id])
     #@employee_documents = EmployeeDocument.all
   end
 
   def ajax_new_employee_document
     @employee_document = EmployeeDocument.new
-    @employee = Employee.find(params[:id])
     #@employee_documents = EmployeeDocument.all
   end
 
@@ -1436,6 +1434,14 @@ def show_all_record
   #   redirect_to destroy_employee_employees_path
   # end
 
+  def download_employee_signature
+    @employee = Employee.find(params[:id])
+    send_file @employee.employee_signature.path,
+              filename: @employee.employee_signature_file_name,
+              type: @employee.employee_signature_content_type,
+              disposition: 'attachment'
+  end
+
 
   private
 
@@ -1451,7 +1457,7 @@ def show_all_record
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_params
     # params.require(:employee).permit(:department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :district, :state, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender)
-    params.require(:employee).permit(:optional_email,:optinal_contact_no,:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id)
+    params.require(:employee).permit(:optional_email,:optinal_contact_no,:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id,:employee_signature)
     # joining_detail_attributes: [:joining_date, :reference_from, :admin_hr, :tech_hr, :designation, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem])
   end
 end

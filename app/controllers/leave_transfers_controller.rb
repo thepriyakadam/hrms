@@ -16,6 +16,7 @@ class LeaveTransfersController < ApplicationController
   def new
     @leave_transfer = LeaveTransfer.new
     @leave_transfers = LeaveTransfer.all
+    @total_leaves = EmployeeLeavBalance.where('employee_id = ?', current_user.employee_id)
     session[:active_tab] ="EmployeeSelfService"
   end
 

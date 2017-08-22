@@ -949,8 +949,8 @@ require 'roo'
 #  end
 
 puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/skillsetlist.xls")
-ex.default_sheet = ex.sheets[1]
+ex = Roo::Excel.new("#{Rails.root}/public/skillset.xls")
+ex.default_sheet = ex.sheets[0]
 i=1
 2.upto(133) do |line|
 InterviewAttribute.new do |ia|

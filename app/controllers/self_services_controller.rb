@@ -162,7 +162,8 @@ class SelfServicesController < ApplicationController
     @employee_id = params[:employee_id]
     @c_off_date = params[:leave_c_off][:c_off_date]
     @c_off_type = params[:leave_c_off][:c_off_type]
-    if @c_off_type == nil
+    @comment = params[:leave_c_off][:comment]
+    if @c_off_type == nil || @c_off_type == ""
       @c_off_type = "Full Day"
     end
     @joining_detail = JoiningDetail.find_by(employee_id: @employee_id)
@@ -200,12 +201,12 @@ class SelfServicesController < ApplicationController
               end#c_off.nil?
 
               if @c_off_type == 'Full Day' || @c_off_type == "" || @c_off_type == nil
-                @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending")
+                @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending",comment: @comment)
                 StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
                 flash[:notice] = "Your COff Created Successfully!"
                 COffMailer.pending(@leave_c_off).deliver_now
               else
-                @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending")
+                @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending",comment: @comment)
                 StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
                 flash[:notice] = "Your COff Created Successfully!"
                 COffMailer.pending(@leave_c_off).deliver_now

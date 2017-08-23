@@ -4,7 +4,6 @@
    <tr>
       <th>Sr.No.</th>
     	<th>Date</th>
-    	<th>C.Off </th>
       <th>Comment</th>
     	<th>Action</th>
    </tr>
@@ -15,7 +14,6 @@
       <tr>
         <td><%= i = i + 1 %></td>
         <td><%= leave_c_off.c_off_date %></td>
-        <td><%= leave_c_off.leave_count %></td>
         <td><%= leave_c_off.comment %></td>
         <td>
          <% if leave_c_off.current_status == "Pending" %>

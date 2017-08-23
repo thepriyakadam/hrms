@@ -2247,6 +2247,7 @@ end
       get :ajax_show_passport_detail_textbox
       get :import_xl
       post :import
+      get :collect_age
     end
   end
   resources :employees do

@@ -46,7 +46,7 @@
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :confirmation_date,hide_label: true, class: 'confirm_date'%>
+            <%= f.text_field :confirmation_date,hide_label: true, class: 'confirm_date',readonly: true %>
           </div>
         </div>
         </div>
@@ -329,6 +329,29 @@
     yearRange: '-100:+5',
     dateFormat: 'dd-mm-yy' });
   }); 
+
+ 
+    $('#joining_detail_joining_date').on('input', function() {
+      var joining_detail_joining_date = parseFloat($('#joining_detail_joining_date').val());
+      var joining_detail_probation_period = parseFloat($('#joining_detail_probation_period').val());
+      var ans="";
+     
+        ans = (joining_detail_joining_date.to_date + joining_detail_probation_period);
+     
+      $('#joining_detail_confirmation_date').val(ans);
+    });
+
+    $('#joining_detail_probation_period').on('input', function() {
+      var joining_detail_probation_period = parseFloat($('#joining_detail_probation_period').val());
+      var joining_detail_joining_date = parseFloat($('#joining_detail_joining_date').val());
+      var ans="";
+      
+        ans = (joining_detail_joining_date.to_date + joining_detail_probation_period);
+     
+      $('#joining_detail_confirmation_date').val(ans);
+    });
+
+
 </script>
 
 <script>
@@ -345,6 +368,9 @@ $("#joining_detail").validate({
       },
        "joining_detail[employee_category_id]":{
         required: true,
+      },
+       "joining_detail[probation_period]":{
+        required: true,
       }
        },
     messages: {
@@ -359,6 +385,9 @@ $("#joining_detail").validate({
       },
       "joining_detail[employee_category_id]":{
         required: "Please Specify Employee Category",
+      },
+      "joining_detail[probation_period]":{
+        required: "Please Specify Probation Period",
       }
        },
     errorPlacement: function(error, element) {

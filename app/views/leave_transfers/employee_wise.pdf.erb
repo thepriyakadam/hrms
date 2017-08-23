@@ -1,0 +1,51 @@
+<div class="box">
+  <div class="box-body">
+    <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+    <thead>
+        <tr>
+          <td colspan="4"><center> 
+            <% if current_user.employee.company_location.company.company_logo == nil %>
+            <%else %>
+              <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+            <%end%> 
+              <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+          </td>
+        </tr>
+        <tr>
+        <th colspan="4"><center>Employee : <%= full_name(@leave_transfers.first.transfer_to) %></center></th>
+        </tr>
+        <tr>
+          <th>Transfer From</th>
+          <th>Date</th>
+          <th>Leave Category</th>
+          <th>No of leave</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @leave_transfers.each do |leave_transfer| %>
+          <tr>
+            <td><%= full_name(leave_transfer.employee) %></td>
+            <td><%= leave_transfer.date %></td>
+            <td><%= leave_transfer.leav_category.code %></td>
+            <td><%= leave_transfer.no_of_leave %></td>
+          </tr>
+           <% end %>
+          <tr>
+            <th colspan="3" align="left">Total Leave</th>
+            <td><%= @leave_transfers.sum(:no_of_leave) %></td>
+          </tr>
+      </tbody>
+  </table>
+   </div>
+  </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true,
+        "scrollY": 500
+    } );
+} );
+</script>

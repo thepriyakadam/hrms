@@ -5,6 +5,9 @@ Rails.application.routes.draw do
       get :show_detail_for_approval
       get :approve
       get :reject
+      get :employee_wise_report
+      post :show_employeewise_detail
+      get :show_employeewise_detail
     end
   end
   resources :sub_departments
@@ -517,6 +520,7 @@ end
       get :transfer_employee_name_report_xls
       get :admin_employee_transfer
       post :final_approve_by_admin
+      get :collect_company
     end
   end
 
@@ -2319,6 +2323,7 @@ end
       get :collect_company_location
       get :collect_company_location_dropdown_with_label
       get :collect_department
+      get :collect_sub_department
       get :display_emp_code_master
       post :update_mgr
       get :index_xls

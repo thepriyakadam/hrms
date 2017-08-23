@@ -266,16 +266,24 @@
             </div>
             </div>
           </div>
+        
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :sub_department_id, all_sub_department, {label: 'Sub Department',include_blank: " Select Sub Department"} %>
+          </div>
+        </div>
 
-          <div class="col-sm-3">
-            <div class="field">
-              <%= f.file_field :passport_photo,label: 'Upload Photo' %>
-            </div>
-          </div> 
       </div>
 
       <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.file_field :passport_photo,label: 'Upload Photo' %>
+          </div>
+        </div> 
+
         <div class="col-sm-6">
+        <label></label>
           <div class="actions">
             <%= f.submit "Create Employee",class: "btn btn-primary btn-sm" %>
             <% if params['controller'] == 'employees' and params['action'] == 'edit' %>

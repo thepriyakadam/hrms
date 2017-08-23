@@ -146,11 +146,12 @@
     @employee_type = EmployeeType.find_by(name: "Probation")
     @employees = Employee.where(employee_type_id: @employee_type.id)
     @department = Department.find(@employee.department_id)
+    @sub_department = SubDepartment.find(@employee.sub_department_id)
     authorize! :create, @employee
       if @employee.save
         @emp1=params[:employee][:employee_code_master_id]
         EmployeeCodeMaster.where(id: @emp1).update_all(last_range: @employee.manual_employee_code)
-        @employee.update(company_location_id: @department.company_location_id,company_id: @department.company_location.company_id)
+        @employee.update(company_location_id: @department.company_location_id,company_id: @department.company_location.company_id,sub_department_id: @sub_department.department.company_location.company_id)
         @employees.each do |e|
           if e.joining_detail.try(:confirmation_date) != nil && e.joining_detail.try(:confirmation_date) <= Date.today
             employee_type = EmployeeType.find_by(name: "Permanent")
@@ -245,10 +246,10 @@
       employee = Employee.find(e)
       if r == ''
         flash[:alert] = 'Select Role'
-        redirect_to assign_role_employees_path
+        #redirect_to assign_role_employees_path
       elsif m1 == ''
         flash[:alert] = 'Select Manager 1'
-        redirect_to assign_role_employees_path
+        #redirect_to assign_role_employees_path
       else
         employee = Employee.find(params['login']['employee_id'])
         # @department = Department.find(params["login"]["department_id"])
@@ -258,7 +259,7 @@
                     else
                       employee.email
                     end
-          u.password = '12345678'
+          u.password = employee.first_name+'-'+employee.manual_employee_code
           u.employee_id = employee.id
           u.department_id = employee.department_id
           u.company_id = employee.company_location.company_id
@@ -270,7 +271,7 @@
         end
         ActiveRecord::Base.transaction do
           if user.save
-
+            password = user.password
             manager_id = params[:manager_id]
             manager_2_id = params[:manager_2_id]
 
@@ -285,18 +286,20 @@
             employee.update_attributes(manager_id: @reporting_master1.employee_id, manager_2_id: @reporting_master2.try(:employee_id))
 
             ManagerHistory.create(employee_id: employee.id,manager_id: manager_1,manager_2_id: manager_2,effective_from: params["login"]["effec_date"])
-            
+            EmployeeMailer.user_confirmation(employee,password).deliver_now
+            EmployeeMailer.manager_detail(manager_1,employee).deliver_now
             flash[:notice] = "Employee assigned successfully."
-            redirect_to assign_role_employees_path
+            #redirect_to assign_role_employees_path
             # UserPasswordMailer.welcome_email(company,pass).deliver_now
           else
             p user.errors
             flash[:alert] = 'Employee not assigned'
-            redirect_to assign_role_employees_path
+            #redirect_to assign_role_employees_path
           end
-        end
+        end#do
       end #validation
     end #do
+    redirect_to assign_role_employees_path
   end
 
   # def index_xls
@@ -567,6 +570,12 @@ end
          @departments = Department.where(company_location_id: @company_location.id)
          @form = params[:form]
       # end
+  end
+
+  def collect_sub_department
+    @department = Department.find(params[:id])
+    @sub_departments = SubDepartment.where(sub_department_id: @department.id)
+    @form = params[:form]
   end
 
   def collect_employee
@@ -1457,7 +1466,7 @@ def show_all_record
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_params
     # params.require(:employee).permit(:department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :district, :state, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender)
-    params.require(:employee).permit(:optional_email,:optinal_contact_no,:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id,:employee_signature)
+    params.require(:employee).permit(:optional_email,:optinal_contact_no,:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id,:sub_department_id,:first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id,:employee_signature)
     # joining_detail_attributes: [:joining_date, :reference_from, :admin_hr, :tech_hr, :designation, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem])
   end
 end

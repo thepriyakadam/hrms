@@ -18,7 +18,7 @@ class PunchMastersController < ApplicationController
     @punch_master = PunchMaster.new
     @punch_masters = PunchMaster.all
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="AttendanceSetup"
+    session[:active_tab1] ="Attendance"
   end
 
   # GET /punch_masters/1/edit

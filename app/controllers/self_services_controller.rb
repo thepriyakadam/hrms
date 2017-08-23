@@ -162,6 +162,9 @@ class SelfServicesController < ApplicationController
     @employee_id = params[:employee_id]
     @c_off_date = params[:leave_c_off][:c_off_date]
     @c_off_type = params[:leave_c_off][:c_off_type]
+    if @c_off_type == nil
+      @c_off_type = "Full Day"
+    end
     @joining_detail = JoiningDetail.find_by(employee_id: @employee_id)
 
     if @joining_detail.c_off == true
@@ -175,8 +178,8 @@ class SelfServicesController < ApplicationController
         if @leave_c_off.is_week_off_present_for_coff(@employee_id,@c_off_date) || @leave_c_off.is_holiday_present_for_coff(@employee_id,@c_off_date)
           @employee_attendance = EmployeeAttendance.where(employee_id: @employee_id,present: "WOP",day: @c_off_date.to_date).take
           
-          if @employee_attendance.working_hrs.to_s < "07:00"
-            flash[:alert] = "Working hrs. less than 7,Please contact to Admin"
+          if @employee_attendance.working_hrs.to_s < "09:00"
+            flash[:alert] = "Working hrs. less than 9,Please contact to Admin"
           else
             if leav_category.nil?
             else

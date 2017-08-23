@@ -16,6 +16,8 @@ class LeaveTransfersController < ApplicationController
   def new
     @leave_transfer = LeaveTransfer.new
     @leave_transfers = LeaveTransfer.all
+    @total_leaves = EmployeeLeavBalance.where('employee_id = ?', current_user.employee_id)
+    session[:active_tab] ="EmployeeSelfService"
   end
 
   # GET /leave_transfers/1/edit
@@ -34,19 +36,31 @@ class LeaveTransfersController < ApplicationController
     employee = Employee.find_by(id: employee_id)
     transfer_to = Employee.find_by(id: transfer_to_id)
 
+    leave_transfers = LeaveTransfer.where(transfer_to_id: transfer_to_id).where.not(status: "Rejected")
+    count = 0
+    leave_transfers.each do |l|
+      count = count.to_f + l.no_of_leave.to_f
+    end
+    total = count.to_f + @no_of_leave.to_f
+
+
     employee_leav_balance = EmployeeLeavBalance.where(employee_id: current_user.employee_id,leav_category_id: leav_category_id,is_active: true).take
     if employee_leav_balance.nil? 
       flash[:alert] = "Leave Balance Not Available"
     else
       if employee_leav_balance.no_of_leave.to_f >= @no_of_leave.to_f && @no_of_leave.to_f <= 5
-        @leave_transfer.save
-        @leave_transfer.update(status: "Pending",employee_leav_balance_id: employee_leav_balance.id)
-        
-        leave = employee_leav_balance.no_of_leave.to_f - @no_of_leave.to_f
-        employee_leav_balance.update(no_of_leave: leave)
+        if total <= 15
+          @leave_transfer.save
+          @leave_transfer.update(status: "Pending",employee_leav_balance_id: employee_leav_balance.id)
+          
+          leave = employee_leav_balance.no_of_leave.to_f - @no_of_leave.to_f
+          employee_leav_balance.update(no_of_leave: leave)
 
-       LeaveTransferMailer.pending(@leave_transfer).deliver_now        
-        flash[:notice] = "Leave Transfered To #{transfer_to.first_name}"
+          LeaveTransferMailer.pending(@leave_transfer).deliver_now        
+          flash[:notice] = "Leave Transfered To #{transfer_to.first_name} #{transfer_to.last_name}"
+        else
+          flash[:alert] = "Limit(i.e 15) is extended for #{transfer_to.first_name} #{transfer_to.last_name}"
+        end
       else
         flash[:alert] = "Leave Limit Extended!"
       end
@@ -78,6 +92,8 @@ class LeaveTransfersController < ApplicationController
 
   def leave_transfer_approval
     @pending_leave_transfers = LeaveTransfer.where(status: "Pending")
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="leaveadministration"
   end
 
   def show_detail_for_approval
@@ -112,6 +128,29 @@ class LeaveTransfersController < ApplicationController
     employee = Employee.find_by(id: current_user.employee_id)
     LeaveTransferMailer.rejected(current_request,employee).deliver_now
     redirect_to leave_transfer_approval_leave_transfers_path
+  end
+
+  def employee_wise_report
+  end
+
+  def show_employeewise_detail
+    @employee_id = params[:employee][:employee_id]
+    @leave_transfers = LeaveTransfer.where(transfer_to_id: @employee_id,status: "Approved")
+    
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'leave_transfers/employee_wise.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'status_wise_request',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'leave_transfers/employee_wise.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+
   end
 
   private

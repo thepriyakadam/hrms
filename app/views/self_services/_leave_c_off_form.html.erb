@@ -14,18 +14,13 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-3">
-        <div class="form-group required">
-          <%= f.select :c_off_type,['Full Day','Half Day'],{label: 'C.Off Type',include_blank: " Select C.Off Type"} %>
-       </div>
-      </div> 
+          <% f.select :c_off_type,['Full Day'],{label: 'C.Off Type',include_blank: " Select C.Off Type"} %>
+       
       <div class="col-sm-6">
         <div class="form-group required">
           <%= f.text_field :comment,label: 'Comment' %>
        </div>
       </div> 
-    </div>
-    <div class="row">
       <div class="col-sm-3" style="padding-top: 20px">
         <div class="actions">
           <%= f.submit "Add Compensatory Off",class: 'btn btn-sm btn-primary fa fa-modx' %>
@@ -49,9 +44,6 @@
   $("#leave_c_off").validate({
   rules: {
     "leave_c_off[c_off_date]":{
-      required: true
-    },
-    "leave_c_off[c_off_type]":{
       required: true
     },
     "leave_c_off[comment]":{

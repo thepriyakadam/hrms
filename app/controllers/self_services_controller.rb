@@ -162,6 +162,9 @@ class SelfServicesController < ApplicationController
     @employee_id = params[:employee_id]
     @c_off_date = params[:leave_c_off][:c_off_date]
     @c_off_type = params[:leave_c_off][:c_off_type]
+    if @c_off_type == nil
+      @c_off_type = "Full Day"
+    end
     @joining_detail = JoiningDetail.find_by(employee_id: @employee_id)
 
     if @joining_detail.c_off == true

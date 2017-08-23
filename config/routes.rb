@@ -520,6 +520,7 @@ end
       get :transfer_employee_name_report_xls
       get :admin_employee_transfer
       post :final_approve_by_admin
+      get :collect_company
     end
   end
 

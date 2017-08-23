@@ -4,10 +4,16 @@
     <div class="box-body">
       <%= bootstrap_form_for(:employee_transfer,html: {id: 'employee_transfer'},url: {action: 'final_approve_by_admin'}) do |f| %>
 
+
+      <div id="company_detail"></div>
+
+      
         <div class="row">
           <div class="col-sm-3">
             <div class="form-group required">
-            <%= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
+
+            <%= f.select :employee_id, all_active_employee_with_code,{include_blank: "Select Employee"},{onchange:"var a={id:$(this).val()}; $.get('/employee_transfers/collect_company',a,function(response){});", :class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}%>
+
             </div>
           </div>
 

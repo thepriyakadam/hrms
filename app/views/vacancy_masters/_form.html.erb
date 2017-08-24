@@ -172,8 +172,13 @@
 
           <div class="col-sm-3">
          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_target_company_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
           <!--   <label>Job Title</label> -->
             <%= f.select :target_company_id,all_target_company,{label: 'Target Company',include_blank: " Select Target Company"} %>
+            </div>
           </div>
         </div>
 

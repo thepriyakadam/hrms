@@ -768,6 +768,7 @@ end
     collection do
       get :event_detail
       get :show_event
+      get :email
     end
   end
   resources :employee_task_to_dos do

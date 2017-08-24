@@ -297,6 +297,10 @@ class SelfServicesController < ApplicationController
     @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
     @selected_resume1 = SelectedResume.where(vacancy_master_id: @vacancy_master.id,add_by_id: current_user.employee_id)
   end
+
+  def modal_contact_library
+    @employee = Employee.find(params[:format])
+  end
   # def apply_internally
   #   @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
   # end

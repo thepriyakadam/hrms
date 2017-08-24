@@ -18,11 +18,11 @@
         <tr>
          <th>Salary Template</th>
          <td><%= @employee_salary_templates.first.employee_template.try(:salary_template).try(:description)  %></td>
-         <th>Active Date</th>
+         <th>From Date</th>
          <td><%= @employee_salary_templates.first.employee_template.try(:start_date)  %></td>
          </tr>
          <tr>
-         <th>Inactive Date</th>
+         <th>To Date</th>
          <td><%= @employee_salary_templates.first.employee_template.try(:end_date)  %></td>
          <th>Status</th>
          <td><%= @employee_salary_templates.first.employee_template.is_active ? "Active" : "Inactive"  %></td>

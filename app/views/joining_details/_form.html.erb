@@ -333,8 +333,8 @@
 
   $(function(){
     $('#joining_detail_joining_date').on('input', function() {
-      var joining_detail_joining_date = parseDate($('#joining_detail_joining_date').val());
-      var joining_detail_probation_period = parseInt($('#joining_detail_probation_period').val());
+      var joining_detail_joining_date = parseFloat($('#joining_detail_joining_date').val());
+      var joining_detail_probation_period = parseFloat($('#joining_detail_probation_period').val());
       var joining_detail_confirmation_date = "";
       
       if (isNaN(joining_detail_joining_date) || isNaN(joining_detail_probation_period)) {
@@ -342,21 +342,21 @@
       }
       else{
 
-        joining_detail_confirmation_date = (joining_detail_joining_date.to_date + joining_detail_probation_period.to_days).to_s;
+        joining_detail_confirmation_date = (joining_detail_joining_date.getDate() + parseInt(joining_detail_probation_period)).to_s;
       }
       $('#joining_detail_confirmation_date').val(joining_detail_confirmation_date);
     });
 
     $('#joining_detail_probation_period').on('input', function() {
-      var joining_detail_joining_date = parseDate($('#joining_detail_joining_date').val());
-      var joining_detail_probation_period = parseInt($('#joining_detail_probation_period').val());
+      var joining_detail_joining_date = parseFloat($('#joining_detail_joining_date').val());
+      var joining_detail_probation_period = parseFloat($('#joining_detail_probation_period').val());
       var joining_detail_confirmation_date = "";
       
       if (isNaN(joining_detail_joining_date) || isNaN(joining_detail_probation_period)) {
         joining_detail_confirmation_date = "";
       }
       else{
-        joining_detail_confirmation_date = (joining_detail_joining_date.to_date + joining_detail_probation_period.to_days).to_s;
+        joining_detail_confirmation_date = (joining_detail_joining_date.getDate() + parseInt(joining_detail_probation_period)).to_s;
       }
       $('#joining_detail_confirmation_date').val(joining_detail_confirmation_date);
     });

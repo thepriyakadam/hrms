@@ -34,16 +34,17 @@
 
 <div class="row">
      <div class="col-sm-3">
-     <label>Birth Date: </label>
          <div class="form-group required">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :date_of_birth,hide_label:true, class: 'family_birthdate' %>
+            <%= f.text_field :date_of_birth,{onchange:"var a={date_of_birth:$(this).val()}; $.get('/families/collect_age',a,function(response){});", :class=>"family_birthday",:style=>"width: 100%;",:tabindex=>"-1"} %>
           </div>
          </div>
         </div>
+
+
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :age, readonly:true,placeholder: 'e.g. 25' %>
@@ -196,40 +197,20 @@
 </div><!-- /.box -->
 
 <script type="text/javascript">
-   $(function(){
-    $('#family_date_of_birth').on('input', function() {
-      var family_date_of_birth = parseFloat($('#family_date_of_birth').val());
-      var date = Date.today
-      var age = "";
-      if isNaN(family_date_of_birth) {
-        age = ""
-      }
-      else{
-        age = (date.to_date - family_date_of_birth.to_date).toFixed(2);
-      }
-      $('#family_age').val(age);
-    });
-  });  
-
-    $(function(){
-    $('.family_birthdate').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-200:-0',
-    dateFormat: 'dd-mm-yy' });
-
-    $('.family_passport_issue_date').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-200:-0',
-    dateFormat: 'dd-mm-yy' });
-
-    $('.family_passport_expiry_date').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-100:+30',
-    dateFormat: 'dd-mm-yy' });
-  }); 
+  //  $(function(){
+  //   $('#family_date_of_birth').on('input', function() {
+  //     var family_date_of_birth = parseFloat($('#family_date_of_birth').val());
+  //     var todays_date = Date.today
+  //     var age = "";
+  //     if isNaN(family_date_of_birth) {
+  //       age = ""
+  //     }
+  //     else{
+  //       age = (todays_date.to_date - family_date_of_birth.to_date).toFixed(2);
+  //     }
+  //     $('#family_age').val(age);
+  //   });
+  // });  
 
 
    $("#family").validate({
@@ -256,3 +237,24 @@
   });
 </script>
 
+<script type="text/javascript">
+  $(function(){
+    $('.family_birthday').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.family_passport_issue_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.family_passport_expiry_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:+30',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

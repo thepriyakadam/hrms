@@ -55,8 +55,11 @@
     </tr>
 
     <tr>
+      <th><strong>Transfer</strong></th>
+      <td> <%= @leav_category.transfer ? "Yes" : "No" %></td>
+
       <th><strong>Continue</strong></th>
-      <td colspan="3"> <%= @leav_category.is_continuous ? "Yes" : "No" %></td>
+      <td> <%= @leav_category.is_continuous ? "Yes" : "No" %></td>
     </tr>
      </table> <br>
 

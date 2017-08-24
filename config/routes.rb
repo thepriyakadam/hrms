@@ -520,6 +520,7 @@ end
       get :transfer_employee_name_report_xls
       get :admin_employee_transfer
       post :final_approve_by_admin
+      get :collect_company
     end
   end
 
@@ -2246,6 +2247,7 @@ end
       get :ajax_show_passport_detail_textbox
       get :import_xl
       post :import
+      get :collect_age
     end
   end
   resources :employees do

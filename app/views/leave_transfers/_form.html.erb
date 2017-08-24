@@ -3,6 +3,28 @@
   <%= f.hidden_field :employee_id, value: current_user.employee_id  %>
   <%= f.hidden_field :date, value: Date.today  %>
 
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="field">
+          <table class="table table-bordered table-hover table-condensed'">
+            <thead>
+              <tr><th colspan="2"><center> Leave Balance </center></th></tr>
+              <tr>
+                <th>Leave Type</th>
+                <th>Leave Available</th>
+              </tr>
+            </thead>
+            <% @total_leaves.where(is_active: true).each do |l| %>
+              <tr>
+                <td><%= l.leav_category.try(:name) %></td>
+                <td><%= l.no_of_leave %></td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+
   <div class="row">
     <div class="col-sm-3">  
       <div class="form-group required">
@@ -12,7 +34,7 @@
 
     <div class="col-sm-3">  
       <div class="form-group required">
-        <%= f.select :leav_category_id, all_leav_category,{label: 'Leave Category',include_blank: " Select Leave Category"}  %>
+        <%= f.select :leav_category_id, leav_category_transfer,{label: 'Leave Category',include_blank: " Select Leave Category"}  %>
       </div>
     </div>
 

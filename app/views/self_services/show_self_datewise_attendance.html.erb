@@ -7,25 +7,26 @@
     <% i = 0%>
       <thead>
       <tr>
-          <td colspan="5"><center> 
+          <td colspan="7"><center> 
             <% if current_user.try(:employee).try(:company_location).try(:company).try(:company_logo) == nil %>
             <% else %>
-              <center> <%= image_tag current_user.try(:employee).try(:company_location).try(:company).try(:company_logo).url, :size => "90x50" %></center>
+              <center> <%= image_tag current_user.try(:employee).try(:company_location).try(:company).try(:company_logo).url, :size => "100x80" %></center><br>
             <%end%> 
               <strong><%=current_user.try(:employee).try(:company_location).try(:company).try(:description)%></strong> <br> <%= current_user.try(:employee).try(:company_location).try(:company).try(:address)%> <br>
               
               </center>
           </td>
         </tr>
-        <tr><th colspan="6"><center> Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
+        <tr><th colspan="7"><center> Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
       <tr>
         <td>ID : <%= current_user.employee.manual_employee_code %></td>
-        <td colspan="2">Employee : <%= full_name(current_user.employee) %></td>
-        <td colspan="3">Department : <%= current_user.employee.company_location.try(:name) %> - <%= current_user.employee.department.try(:name) %></td>
+        <td colspan="3">Employee : <%= full_name(current_user.employee) %></td>
+        <td colspan="4">Department : <%= current_user.employee.company_location.try(:name) %> - <%= current_user.employee.department.try(:name) %></td>
       </tr>
         <tr>
           <th>Sr.No.</th>
           <th>Date</th>
+          <th>Day</th>
           <th>In Time</th>
           <th>Out Time</th>
           <th>Working Hrs.</th>
@@ -38,6 +39,7 @@
           <tr>
             <td><%= i = i + 1 %></td>
             <td><%= employee_attendance.try(:day) %></td>
+            <th><%= employee_attendance.try(:day).strftime("%A") %></th>
             <td><%= employee_attendance.try(:in_time) %></td>
             <td><%= employee_attendance.try(:out_time) %></td>
             <td><%= employee_attendance.try(:working_hrs) %></td>

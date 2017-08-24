@@ -161,6 +161,6 @@ class LeaveTransfersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def leave_transfer_params
-      params.require(:leave_transfer).permit(:leav_category_id,:employee_id, :transfer_to_id, :date, :no_of_leave, :status, :employee_leav_balance_id)
+      params.require(:leave_transfer).permit(:leav_category_id,:employee_id, :transfer_to_id, :date, :no_of_leave, :status, :employee_leav_balance_id,:reason)
     end
 end

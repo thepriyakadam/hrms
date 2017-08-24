@@ -61,6 +61,19 @@ class CompanyEventsController < ApplicationController
     end
   end
 
+  def email
+    @company_event = CompanyEvent.find(params[:format])
+    if @company_event.email == ""   
+    flash[:alert] = "Email is not available"
+    else
+    CompanyEventMailer.send_email(@company_event).deliver_now
+    CompanyEvent.find_by(id: @company_event.id).update(send_email: true)    
+    flash[:notice] = "Email Sent Successfully"
+  end
+    redirect_to new_company_event_path
+  end
+
+
   def event_detail
     @company_event = CompanyEvent.find(params[:id])
   end
@@ -73,6 +86,6 @@ class CompanyEventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_event_params
-      params.require(:company_event).permit(:event_name, :event_date, :description, :location, :status, :time)
+      params.require(:company_event).permit(:event_name, :event_date, :description, :location, :status, :time,:email,:send_email)
     end
 end

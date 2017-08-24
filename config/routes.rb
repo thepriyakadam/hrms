@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :target_companies
   resources :leave_transfers do
     collection do
       get :leave_transfer_approval
@@ -768,6 +769,7 @@ end
     collection do
       get :event_detail
       get :show_event
+      get :email
     end
   end
   resources :employee_task_to_dos do
@@ -2198,7 +2200,9 @@ end
       post :import
       get :certificate
       post :certificate_print
+      get :certificate_print
       get :joining_certificate
+      get :offer_letter_prin
     end
   end
   resources :employee_grades do

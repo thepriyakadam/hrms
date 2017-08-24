@@ -26,6 +26,7 @@
         <tr>
           <th>Sr.No.</th>
           <th>Date</th>
+          <th>Day</th>
           <th>In Time</th>
           <th>Out Time</th>
           <th>Present</th>
@@ -37,6 +38,7 @@
           <tr>
             <td><%= i = i + 1 %></td>
             <td><%= employee_attendance.try(:day) %></td>
+            <th><%= employee_attendance.try(:day).strftime("%A") %></th>
             <td><%= employee_attendance.try(:in_time) %></td>
             <td><%= employee_attendance.try(:out_time) %></td>
             <td><%= employee_attendance.try(:present) %></td>

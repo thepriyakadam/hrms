@@ -34,6 +34,12 @@
         <th><strong>Employee leav balance</strong></th>
         <td><%= @leave_transfer.employee_leav_balance.from_date %> to <%= @leave_transfer.employee_leav_balance.to_date %></td>
       </tr>
+
+      <tr>
+        <th><strong>Reason</strong></th>
+        <td><%= @leave_transfer.reason %></td>
+      </tr>
+
     </table> <br>
 
     <%= link_to 'Back', new_leave_transfer_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>

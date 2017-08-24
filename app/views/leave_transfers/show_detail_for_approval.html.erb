@@ -124,8 +124,11 @@
           <td><%= @current_request.date.to_date %></td>
         </tr>
         <tr>
+          <th> Reason</th>
+          <td><%= @current_request.reason %></td>
+
            <th> Current Status</th>
-          <td colspan="3"><%= @current_request.try(:current_status) %></td>
+          <td><%= @current_request.try(:current_status) %></td>
         </tr>
         <tr>
            <th colspan="4">   

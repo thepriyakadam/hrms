@@ -521,6 +521,7 @@ end
       get :transfer_employee_name_report_xls
       get :admin_employee_transfer
       post :final_approve_by_admin
+      get :collect_company
     end
   end
 
@@ -768,6 +769,7 @@ end
     collection do
       get :event_detail
       get :show_event
+      get :email
     end
   end
   resources :employee_task_to_dos do

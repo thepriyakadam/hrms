@@ -99,6 +99,19 @@ class CompanyPoliciesController < ApplicationController
     redirect_to policy_type_detail_company_policies_path(company_policy_id: @company_policy1.id)
   end
 
+  def email
+    @company_policy = CompanyPolicy.find(params[:format])
+    if @company_policy.email == ""   
+    flash[:alert] = "Email is not available"
+    else
+    CompanyPolicyMailer.send_email(@company_policy).deliver_now
+    CompanyPolicy.find_by(id: @company_policy.id).update(send_email: true)    
+    flash[:notice] = "Email Sent Successfully"
+  end
+    redirect_to new_company_policy_path
+    
+  end
+
 
 
 	private
@@ -108,6 +121,6 @@ class CompanyPoliciesController < ApplicationController
 	  end
 
     def company_policy_params
-      params.require(:company_policy).permit(:name, :effective_from, :effective_to, :status, :document, :description,:policy_type_id)
+      params.require(:company_policy).permit(:name, :effective_from, :effective_to, :status, :document, :description,:policy_type_id,:email,:send_email)
 	  end
 end

@@ -581,6 +581,7 @@ end
       get :policy_type_dashboard
       get :modal
       post :update_company_policy
+      get :email
     end
   end
 
@@ -639,6 +640,7 @@ end
   resources :circulars do
     collection do
       get :is_confirm
+      get :email
     end
   end
 
@@ -1506,6 +1508,7 @@ end
       get :internal
       get :show_internal_modal
       get :employee_contact_library
+      get :modal_contact_library
     end
   end
 

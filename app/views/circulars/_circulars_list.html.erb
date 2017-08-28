@@ -4,6 +4,7 @@
     <tr>  
       <th>Circular Date</th>
       <th>Subject</th>
+      <th>Email</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -12,15 +13,18 @@
       <tr>
         <td><%= circular.date %></td>
         <td><%= circular.subject %></td>
+        <td><%= circular.email %></td>
+
         <!-- <td><%= circular.avatar_file_name %></td> -->
         <td>
-          <% if circular.is_confirm == true %>
-            <small class= "label label-primary">Confirmed</small>
-          <% else %>
+        <% if circular.send_email == true %>
+        <small class= "label label-primary">Email Sent</small>
+        <%= link_to '', circular,class: 'btn btn-default btn-xs fa fa-eye' %>
+        <%else%>
           <%= link_to '', edit_circular_path(circular),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
           <%= link_to '',  circular, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
-           <%= link_to '', is_confirm_circulars_path(circular: circular),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-           <%= link_to '', circular,class: 'btn btn-default btn-xs fa fa-eye' %>
+
+            <%= link_to 'Send Email', email_circulars_path(circular),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-success' %>
             <% end %>
         </td>
       </tr>

@@ -40,12 +40,12 @@
 
     <div class="col-sm-2">
       <div class="form-group required">
-        <%= f.text_field :no_of_leave %>
+        <%= f.text_field :no_of_leave ,label: 'No. of Leaves'%>
       </div>
     </div>
 
         <div class="col-sm-4">
-      <div class="field">
+      <div class="form-group required">
         <%= f.text_field :reason %>
       </div>
     </div>
@@ -74,6 +74,9 @@ $("#leave_transfer").validate({
       },
       "leave_transfer[leav_category_id]":{
         required: true
+      },
+      "leave_transfer[reason]":{
+        required: true
       }
     },
     messages: {
@@ -84,10 +87,13 @@ $("#leave_transfer").validate({
         required: "Please specify Date"
       },
       "leave_transfer[no_of_leave]":{
-        required: "Please specify no_of_leave"
+        required: "Please specify no. of leaves"
       },
       "leave_transfer[leav_category_id]":{
         required: "Please specify Leave Category"
+      },
+      "leave_transfer[reason]":{
+        required: "Please specify Reason"
       }
     },
     errorPlacement: function(error, element) {

@@ -33,6 +33,7 @@ div.nobreak{ page-break-inside: avoid;
           <tr>
             <th>Sr.No.</th>
             <th>Date</th>
+            <th>Day</th>
             <th>In Time</th>
             <th>Out Time</th>
             <th>Working Hrs.</th>
@@ -44,6 +45,7 @@ div.nobreak{ page-break-inside: avoid;
             <tr>
               <td><%= i = i + 1 %></td>
               <td><%= a.try(:day) %></td>
+              <th><%= a.try(:day).strftime("%A") %></th>
               <td><%= a.try(:in_time) %></td>
               <td><%= a.try(:out_time) %></td>
               <td><%= a.try(:working_hrs) %></td>

@@ -346,27 +346,37 @@
     dateFormat: 'dd-mm-yy' });
   }); 
 
- 
+
+  $(function(){
     $('#joining_detail_joining_date').on('input', function() {
       var joining_detail_joining_date = parseFloat($('#joining_detail_joining_date').val());
       var joining_detail_probation_period = parseFloat($('#joining_detail_probation_period').val());
-      var ans="";
-     
-        ans = (joining_detail_joining_date.to_date + joining_detail_probation_period);
-     
-      $('#joining_detail_confirmation_date').val(ans);
+      var joining_detail_confirmation_date = "";
+      
+      if (isNaN(joining_detail_joining_date) || isNaN(joining_detail_probation_period)) {
+        joining_detail_confirmation_date = "";
+      }
+      else{
+
+        joining_detail_confirmation_date = (joining_detail_joining_date.getDate() + parseInt(joining_detail_probation_period)).to_s;
+      }
+      $('#joining_detail_confirmation_date').val(joining_detail_confirmation_date);
     });
 
     $('#joining_detail_probation_period').on('input', function() {
-      var joining_detail_probation_period = parseFloat($('#joining_detail_probation_period').val());
       var joining_detail_joining_date = parseFloat($('#joining_detail_joining_date').val());
-      var ans="";
+      var joining_detail_probation_period = parseFloat($('#joining_detail_probation_period').val());
+      var joining_detail_confirmation_date = "";
       
-        ans = (joining_detail_joining_date.to_date + joining_detail_probation_period);
-     
-      $('#joining_detail_confirmation_date').val(ans);
+      if (isNaN(joining_detail_joining_date) || isNaN(joining_detail_probation_period)) {
+        joining_detail_confirmation_date = "";
+      }
+      else{
+        joining_detail_confirmation_date = (joining_detail_joining_date.getDate() + parseInt(joining_detail_probation_period)).to_s;
+      }
+      $('#joining_detail_confirmation_date').val(joining_detail_confirmation_date);
     });
-
+  });  
 
 </script>
 

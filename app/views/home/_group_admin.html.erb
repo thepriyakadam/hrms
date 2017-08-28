@@ -266,7 +266,7 @@
                   <% elsif e.employee.gender == "Female" && e.employee.member.avatar_file_name == nil  %>
                   <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
                    <%else%>
-                   <%= image_tag e.employee.member.avatar.url(:medium),class: "img-circle"%>
+                   <%= image_tag e.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
                   <%end%> <!-- if -->
                    <%end%> <!-- unless -->
                    </td>
@@ -357,7 +357,7 @@
                   <% elsif e.gender == "Female" && e.member.avatar_file_name == nil  %>
                   <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
                    <%else%>
-                   <%= image_tag e.member.avatar.url(:medium),class: "img-circle", size: "25x25"%>
+                   <%= image_tag e.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
                   <%end%>
                    <%end%>
                    </td>

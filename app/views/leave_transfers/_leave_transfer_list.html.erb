@@ -2,10 +2,8 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th>Employee</th>
-      <th>Transfer to</th>
-      <th>Date</th>
-      <th>No of leave</th>
+      <th>Transfer To</th>
+      <th>No. of Leaves</th>
       <th>Status</th>
       <th>Action</th>
     </tr>
@@ -14,9 +12,7 @@
   <tbody>
     <% @leave_transfers.each do |leave_transfer| %>
       <tr>
-        <td><%= full_name(leave_transfer.employee) %></td>
         <td><%= full_name(leave_transfer.transfer_to) %></td>
-        <td><%= leave_transfer.date %></td>
         <td><%= leave_transfer.no_of_leave %></td>
         <td>
           <% case leave_transfer.status %>

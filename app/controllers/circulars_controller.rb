@@ -121,6 +121,18 @@ class CircularsController < ApplicationController
     redirect_to new_bank_path
   end
 
+   def email
+    @circular = Circular.find(params[:format])
+    if @circular.email == ""   
+    flash[:alert] = "Email is not available"
+    else
+    CircularMailer.send_email(@circular).deliver_now
+    Circular.find_by(id: @circular.id).update(send_email: true)    
+    flash[:notice] = "Email Sent Successfully"
+  end
+    redirect_to new_circular_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_circular
@@ -129,6 +141,6 @@ class CircularsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def circular_params
-      params.require(:circular).permit(:avatar, :date, :subject,:is_active,:is_confirm,:document)
+      params.require(:circular).permit(:avatar, :date, :subject,:is_active,:is_confirm,:document,:email,:send_email)
     end
 end

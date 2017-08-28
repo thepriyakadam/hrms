@@ -44,6 +44,14 @@ class FamiliesController < ApplicationController
     end
   end
 
+  def collect_age
+    date_of_birth = params[:date_of_birth]
+    todays_date = Date.today
+    d = todays_date.to_date - date_of_birth.to_date
+    age = d.to_i/365
+    @age = age
+  end
+
   #  def create
   #   @family = Family.new(family_params)
   #   @employee = Employee.find(params[:family][:employee_id])

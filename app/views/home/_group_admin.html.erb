@@ -155,7 +155,7 @@
         </div><!-- /.box-header -->
         <div class="box-body">
           <div class="table-responsive">
-            <table id="example1" class="table no-margin">
+            <table id="example" class="table no-margin">
             <thead>
               <tr>
                 <th>Code</th>
@@ -271,7 +271,7 @@
                    <%end%> <!-- unless -->
                    </td>
                        <td><%= full_name(e.employee) %>
-                        <span class="users-list-date"><%= e.try(:joining_detail).try(:cost_center).try(:name) %> <%= e.try(:sub_department).try(:name) %> <%= e.try(:department).try(:name) %></span>
+                        <span class="users-list-date"><%= e.employee.try(:joining_detail).try(:cost_center).try(:name) %> <%= e.employee.try(:sub_department).try(:name) %> <%= e.employee.try(:department).try(:name) %></span>
                        </td>
                        <td>
                        <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today,receiver_id: e.employee_id,greeting_type: "Anniversary") %>
@@ -305,6 +305,13 @@
         "scrollX": true,
         "scrollY": 100
     } );
+     $(document).ready(function() {
+
+    $('#example3').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true,
+        "scrollY": 100
+    } );
 } );
 </script>
 
@@ -332,8 +339,8 @@
             <% if @employees.empty? %>
              
             <%else%>
-            <table id="birthday" class="table no-margin">
-                   <thead>
+            <table id="example3" class="table no-margin">
+            <thead>
               <tr>
                 <th></th>
                 <th>Employee</th>
@@ -350,7 +357,7 @@
                   <% elsif e.gender == "Female" && e.member.avatar_file_name == nil  %>
                   <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
                    <%else%>
-                   <%= image_tag e.member.avatar.url(:medium),class: "img-circle"%>
+                   <%= image_tag e.member.avatar.url(:medium),class: "img-circle", size: "25x25"%>
                   <%end%>
                    <%end%>
                    </td>

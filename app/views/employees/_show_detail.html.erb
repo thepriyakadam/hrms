@@ -122,6 +122,14 @@
         <th><strong>Employee Status</strong></th>
         <td colspan="3"><%= @employee.status%></td>
       </tr>
+
+      <tr>
+        <th><strong>Service Master</strong></th>
+        <td><%= @employee.try(:service_master).try(:name) %></td>
+        <th>Resource Pool</th>
+        <td><%= @employee.try(:resource_pool_master).try(:name) %></td>
+      </tr>
+
       <tr>
         <th><strong>Company</strong></th>
         <td><%= @employee.try(:company).try(:name) %></td>

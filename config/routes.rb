@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :resource_pool_masters
+  resources :service_masters
   resources :target_companies
   resources :leave_transfers do
     collection do

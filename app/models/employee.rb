@@ -13,6 +13,8 @@ class Employee < ActiveRecord::Base
   belongs_to :district
   belongs_to :religion
   belongs_to :employee_code_master
+  belongs_to :service_master
+  belongs_to :resource_pool_master
   # has_many :employee_resignations
   has_many :trainees
   has_many :exit_interviews

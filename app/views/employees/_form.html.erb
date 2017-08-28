@@ -137,12 +137,22 @@
           <div class="field">
             <%= f.select :employee_type_id, all_employee_type,{include_blank: " Select Employee Type"} %>
           </div>
-        </div>   
+        </div>  
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :service_master_id, all_service_master,{include_blank: " Select Service Master"} %>
+          </div>
+        </div> 
       
       </div>
       <div class="row">
 
-       
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :resource_pool_master_id, all_resource_pool,{label: 'Resource Pool',include_blank: " Select Resource Pool"} %>
+          </div>
+        </div>
       
 
         <div class="col-sm-3">
@@ -168,17 +178,19 @@
             </div>
           </div>
         </div>
+
+
+        </div>
+
+      <div class="row">
+
         <div class="col-sm-3">
           <div class="field">
             <%= f.select :blood_group_id, all_blood_group, {label: 'Blood Group',include_blank: " Select Blood Group"} %>
           </div>
         </div>
-
-        </div>
-
-      <div class="row">
       
-         <div class="col-sm-9">
+         <div class="col-sm-6">
           <div class="form-group required">
            <%= f.text_field :permanent_address, label: 'Permanent Address',placeholder: 'e.g. sector - c,pune' %>
           </div>
@@ -392,8 +404,14 @@ $("#employee").validate({
       },
        "employee[email]":{
         required: true
-         },
+      },
        "employee[date_of_birth]":{
+        required: true
+      },
+       "employee[service_master_id]":{
+        required: true
+      },
+       "employee[resource_pool_master_id]":{
         required: true
       }
     },
@@ -462,9 +480,15 @@ $("#employee").validate({
       },
       "employee[email]":{
         required: "Please Specify Email Id"
-         },
+      },
       "employee[date_of_birth]":{
         required: "Please Specify DOB"
+      },
+      "employee[service_master_id]":{
+        required: "Please Select Service Master"
+      },
+      "employee[resource_pool_master_id]":{
+        required: "Please Select Resource Pool"
       }
     },
     errorPlacement: function(error, element) {

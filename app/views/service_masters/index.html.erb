@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Service Masters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @service_masters.each do |service_master| %>
+      <tr>
+        <td><%= service_master.code %></td>
+        <td><%= service_master.name %></td>
+        <td><%= service_master.description %></td>
+        <td><%= service_master.status %></td>
+        <td><%= link_to 'Show', service_master %></td>
+        <td><%= link_to 'Edit', edit_service_master_path(service_master) %></td>
+        <td><%= link_to 'Destroy', service_master, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Service master', new_service_master_path %>

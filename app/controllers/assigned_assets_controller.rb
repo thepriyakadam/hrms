@@ -104,6 +104,10 @@ class AssignedAssetsController < ApplicationController
     redirect_to root_url, notice: "File imported."
   end
 
+  def asset_modal
+    @assigned_asset = AssignedAsset.find(params[:format])
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

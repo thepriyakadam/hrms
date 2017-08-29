@@ -1174,6 +1174,7 @@ end
     get :update_asset
     get :import_xl
     post :import
+    get :asset_modal
     end
   end
   resources :asset_types do
@@ -2257,6 +2258,7 @@ end
       post :import
       get :modal
       post :update_qualification
+      get :qualification_modal
      end
    end
   resources :families do

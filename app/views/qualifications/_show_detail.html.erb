@@ -43,6 +43,7 @@
           <td><%= qualification.university.try(:name) %></td>
           <td>
              <%= link_to ' ',modal_qualifications_path(qualification),class: 'btn btn-success btn-sm fa fa-edit',remote: true %>
+             <%= link_to ' ',qualification_modal_qualifications_path(qualification),class: 'btn btn-default btn-sm fa fa-eye',remote: true %>
           </td>
       </tr>
         <%end%>
@@ -50,5 +51,5 @@
   </div><!-- /.box -->
 </div>
  
-
+<div id="qualification_modal" class="modal fade"></div>
 

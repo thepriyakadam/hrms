@@ -49,3 +49,40 @@
 <% end %>
 </div><!-- /.box-body -->
 </div><!-- /.box -->
+
+<script type="text/javascript">
+ $("#employee_physical").validate({
+    rules: {
+      "employee_physical[height]":{
+        required: true
+      },
+      "employee_physical[weight]":{
+        required: true
+        },
+      "employee_physical[size]":{
+        required: true
+        },
+      "employee_physical[trouser_size]":{
+        required: true
+      }
+    },
+    messages: {
+      "employee_physical[height]":{
+        required: "Please specify height"
+      },
+      "employee_physical[weight]":{
+        required: "Please specify weight"
+        },
+      "employee_physical[size]":{
+        required: "Please specify t-shirt size"
+        },
+      "employee_physical[trouser_size]":{
+        required: "Please specify trouser size"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

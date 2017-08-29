@@ -97,6 +97,10 @@ class QualificationsController < ApplicationController
       @flag = false 
     end
   end
+
+  def qualification_modal
+    @qualification = Qualification.find(params[:format])
+  end
   
   private
 

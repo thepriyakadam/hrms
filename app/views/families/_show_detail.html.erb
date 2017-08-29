@@ -22,11 +22,8 @@
      <tr><th colspan="7"><center><font color='#0077b3'>Employee Family Details</font></center> </th></tr>
       <tr>
         <th>Name</th>
-        <th>Birth Date</th>
-        <th>Contact no</th>
         <th>Relation</th>
         <th>Profession</th>
-        <th>Blood Group</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -34,14 +31,11 @@
     <% @families.each do |family| %>
       <tr>
         <td><%= family.f_name+' '+family.m_name+' '+family.l_name %></td>
-        <td><%= family.date_of_birth %></td>
-        <td><%= family.contact_no %></td>
         <td><%= family.relation_master.try(:name) %></td>
         <td><%= family.profession %></td>
-        <td><%= family.blood_group.try(:name) %></td>
         <td>
-        <%= link_to '', family,class: 'btn btn-default fa btn-xs fa-eye',remote: true %>
         <%= link_to '', edit_family_path(family),class: 'btn btn-xs btn-success fa fa-edit',remote: true %>
+        <%= link_to '', family,class: 'btn btn-default fa btn-xs fa-eye',remote: true %>
         </td>
       </tr>
       <% end %>

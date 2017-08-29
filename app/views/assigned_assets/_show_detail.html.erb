@@ -21,41 +21,31 @@
   <thead>
    <tr><th colspan="10"><center><font color='#0077b3'>Employee Asset Detail</font></center> </th></tr>
     <tr>
-	    
+	    <th>Sr.No.</th>
       <th>Asset Type</th>
-      <th>Asset Detail</th>
       <th>Asset</th>
-      <th>Asset Value</th>
-      <th>Asset Status</th>
-      <th>Issue Date</th>
-      <th>Valid Till</th>
       <th>Returned On</th> 
-      <th>Remarks</th>
-     <!--  <th>Action</th> -->
+      <th>Action</th>
     </tr>
   </thead>
 
 	<tbody>
+  <% i = 0 %>
 	<% @assigned_assets.each do |assigned_asset| %>
       <tr>
-        
+        <td><%= i = i+1%></td>
         <td><%= assigned_asset.asset_type.try(:name) %></td>
-        <td><%= assigned_asset.assets_detail %></td>
         <td><%= assigned_asset.assets_id %></td>
-        <td><%= assigned_asset.assets_value %></td>
-        <td><%= assigned_asset.assest_status %></td>
-        <td><%= assigned_asset.issue_date %></td>
-        <td><%= assigned_asset.valid_till %></td>
         <td>
           <% if assigned_asset.returned_on == nil %>
             <%= link_to ' ',modal_assigned_assets_path(assigned_asset),class: 'btn btn-info btn-sm fa fa-arrow-right',remote: true %></td>
           <% else %> 
             <%= assigned_asset.returned_on %>
           <% end %>
-        <td><%= assigned_asset.remarks %></td>
         <td>
-          <!-- <= link_to ' ',modal_edit_assigned_assets_path(assigned_asset),class: 'btn btn-success btn-sm fa fa-edit',remote: true %> --></td>
-        </td>
+         <!--  <= link_to ' ',modal_edit_assigned_assets_path(assigned_asset),class: 'btn btn-success btn-sm fa fa-edit',remote: true %> -->
+          <%= link_to ' ',asset_modal_assigned_assets_path(assigned_asset),class: 'btn btn-default btn-sm fa fa-eye',remote:true %>
+         </td>
       </tr>
     <% end %>
   </tbody>
@@ -64,6 +54,8 @@
 </div>
 
 <div id="myModal" class="modal fade"></div>
+<div id="asset_modal" class="modal fade"></div>
+
 
 <script type="text/javascript">
   $(document).ready(function() {

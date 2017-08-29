@@ -32,7 +32,7 @@
     </tr>
     <tr>  
       <th>Department</th>
-       <td><%= @employee.department.try(:name) %> <%= @employee.try(:sub_department).try(:name) %></td>
+       <td><%= @employee.try(:joining_detail).try(:cost_center).try(:name) %> - <%= @employee.department.try(:name) %> <%= @employee.try(:sub_department).try(:name) %></td>
        </tr>
       
   </thead>

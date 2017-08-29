@@ -104,7 +104,20 @@
     "esic_master[max_limit]":{
       required: true
     }
-  },
+  }, messages: {
+      "esic_master[date_effective]":{
+        required: "Please specify date effective",
+      },
+       "esic_master[esic]":{
+        required: "Please specify esic",
+      },
+      "esic_master[percentage]":{
+        required: "Please specify percentage",
+      },
+      "esic_master[max_limit]":{
+        required: "Please specify max limit",
+      }
+       },
   
   errorPlacement: function(error, element) {
    error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})

@@ -23,24 +23,19 @@
       <th colspan="8"><center><font color='#0077b3'>Qualification Detail </font></center></th>
     </tr>
       <tr>
-        <th>Qualification Level</th>
+      <th>Sr.No.</th>
         <th>Qualification</th>
-        <th>Qualification Specialization</th>
         <th>Marks</th>
         <th>Passout Year</th>
-        <th>College/School</th>
-        <th>University/Institute</th>
         <th>Action</th>
       </tr>
+      <%i=0%>
        <% @qualifications.each do |qualification| %>
       <tr>
-          <td><%= qualification.degree_type.try(:name) %></td>
+      <td><%=i=i+1%></td>
           <td><%= qualification.degree.try(:name) %></td>
-          <td><%= qualification.degree_stream.try(:name) %></td>
           <td><%= qualification.marks %></td>
           <td><%= qualification.year.try(:name) %></td>
-          <td><%= qualification.college %></td>
-          <td><%= qualification.university.try(:name) %></td>
           <td>
              <%= link_to ' ',modal_qualifications_path(qualification),class: 'btn btn-success btn-sm fa fa-edit',remote: true %>
              <%= link_to ' ',qualification_modal_qualifications_path(qualification),class: 'btn btn-default btn-sm fa fa-eye',remote: true %>

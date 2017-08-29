@@ -1,0 +1,89 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Leave Type Detail </center></h4>
+    </div>
+    <div class="modal-body">
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+  <tr>
+      <th><strong>Code</strong></th>
+      <td><%= @leav_category.code %></td>
+   </tr>
+   <tr> 
+      <th><strong>Name</strong></th>
+      <td><%= @leav_category.name %></td>
+    </tr>
+ 
+ 
+    <tr>
+     <th><strong>Description</strong></th>
+      <td><%= @leav_category.description %></td>
+   </tr>
+   <tr> 
+      <th><strong>From</strong></th>
+      <td> <%= @leav_category.from %></td>
+    </tr>
+
+    <tr>
+     <th><strong>To</strong></th>
+      <td><%= @leav_category.to %></td>
+   </tr>
+   <tr> 
+      <th><strong>Monthly Leave Limit</strong></th>
+      <td> <%= @leav_category.monthly_leave %></td>
+    </tr>
+
+    <tr>
+    	<th><strong>Limit</strong></th>
+    	<td><%= @leav_category.is_limit ? "Yes" : "No" %></td>
+    </tr>
+
+    <tr> 
+      <th><strong>Continue</strong></th>
+      <td> <%= @leav_category.is_continuous ? "Yes" : "No" %></td>
+    </tr>
+
+    <tr>
+     <th><strong>Payble</strong></th>
+      <td><%= @leav_category.is_payble ? "Yes" : "No" %></td>
+   </tr>
+   <tr> 
+      <th><strong>Balance Required</strong></th>
+      <td> <%= @leav_category.is_balance ? "Yes" : "No" %></td>
+    </tr>
+
+    <tr> 
+      <th><strong>Assign Balance</strong></th>
+      <td> <%= @leav_category.assign_balance ? "Yes" : "No" %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Sandwich</strong></th>
+      <td><%= @leav_category.weekoff_sandwich ? "Yes" : "No" %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Transfer</strong></th>
+      <td> <%= @leav_category.transfer ? "Yes" : "No" %></td>
+   </tr>
+
+     <tr>
+     <th><strong>Cashable</strong></th>
+      <td><%= @leav_category.is_cashable ? "Yes" : "No" %></td>
+   </tr>
+
+   <tr> 
+      <th><strong>Status</strong></th>
+      <td><%= @leav_category.is_active ? "Yes" : "No" %></td>
+    </tr>
+
+
+
+  </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

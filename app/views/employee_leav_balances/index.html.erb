@@ -2,7 +2,7 @@
   <div class="box-header">
     <h3 class="box-title">Employee Leave Assignment</h3>
     <div class="pull-right">
-      <%= link_to "New Employee leave balance", new_employee_leav_balance_path, class: 'btn btn-primary' %>
+      <%= link_to "New Employee Leave Balance", new_employee_leav_balance_path, class: 'btn btn-primary' %>
      
     </div>
     
@@ -29,7 +29,8 @@
               <% else %>
                 <%= link_to '',leave_balance_modal_employee_leav_balances_path(employee_leav_balance),class: 'btn btn btn-xs btn-success fa fa-edit',remote: true %>
                 <%= link_to '', is_confirm_leave_employee_leav_balances_path(emp_leav_bal_id: employee_leav_balance ),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-                <%= link_to '', employee_leav_balance,class: 'btn btn-default btn-xs fa fa-eye' %>
+                <%= link_to '',modal_balance_detail_employee_leav_balances_path(employee_leav_balance),class: 'btn btn-default btn-xs fa fa-eye',remote: true %>
+                <!-- <= link_to '', employee_leav_balance,class: 'btn btn-default btn-xs fa fa-eye' %> -->
               <% end %>
           </td>
         </tr>
@@ -38,6 +39,8 @@
   </table>
 </div>
 </div>
+
+<div id="modal_balance_detail" class="modal fade"></div>
 
 <script type="text/javascript">
 $(document).ready(function() {

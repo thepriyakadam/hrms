@@ -2,7 +2,7 @@
 	  <div class="row">
 			<div class="col-sm-3">
 				<div class="form-group required">
-					<%= f.select :leav_category_id,all_leav_category,{label: 'Leave Category',include_blank: 'Please Select Leave Category'} %>
+					<%= f.select :leav_category_id,all_leav_category,{label: 'Leave Category',include_blank: 'Select Leave Category'} %>
 				</div>
 			</div>
 			<div class="col-sm-3">
@@ -24,12 +24,12 @@
 		<div class="row">
 			<div class="col-sm-3">
 				<div class="form-group required">
-					<%= f.text_field :no_of_leave,label:'No. of Leave', placeholder: 'No. of Leave' %>
+					<%= f.text_field :no_of_leave,label:'No. of Leaves', placeholder: 'No. of Leaves' %>
 				</div>
 			</div>
 			<div class="col-sm-3">
-				<div class="field">
-					<%= f.check_box :is_carry_forward, label: 'Is Carry-forward' %>
+				<div class="field" style="padding: 10px">
+					<%= f.check_box :is_carry_forward, label: 'Carry-forward' %>
 				</div>
 			</div>
 			<div class="col-sm-3">
@@ -37,11 +37,8 @@
 					<%= f.text_field :limit,label:'Limit', placeholder: 'Limit' %>
 				</div>
 			</div>
-
-		</div>
-		<div class="row">
 			<div class="col-sm-3">
-				<div class="actions">
+				<div class="actions" style="padding: 20px">
 					<%= f.submit 'Create Leave Master', :class => class_name, data: { disable_with: data_info } %>
 				</div>
 			</div>
@@ -63,13 +60,13 @@ $("#leave_master").validate({
     },
     messages: {
       "leave_master[leav_category_id]":{
-        required: "Please specify leave category."
+        required: "Please specify leave category"
       },
       "leave_master[period]":{
         required: "Please specify Period"
       },
       "leave_master[no_of_leave]":{
-        required: "Please specify no_of_leave"
+        required: "Please specify no of leaves"
       }
     },
     errorPlacement: function(error, element) {

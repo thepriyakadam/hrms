@@ -466,6 +466,11 @@ class LeaveCOffsController < ApplicationController
     @leave_c_off = LeaveCOff.find(params[:format])
   end
 
+  def modal_c_off
+    # byebug
+    @leave_c_off = LeaveCOff.find(params[:format])
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

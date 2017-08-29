@@ -16,18 +16,16 @@
 
         <td><%= leav_category.is_active ? "Active" : "Inactive" %></td> 
         <td>
-          <% if leav_category.is_confirm == true %>
-            <small class= "label label-primary">Confirmed</small>
-             <%= link_to '', edit_leav_category_path(leav_category),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
-            <%= link_to '', show_leave_category_leav_categories_path(leav_category: leav_category),class: 'btn btn-default btn-xs fa fa-eye' %>
-          <% else %>
+          <!-- < if leav_category.is_confirm == true %> -->
+            <!-- <small class= "label label-primary">Confirmed</small> -->
             <%= link_to '', edit_leav_category_path(leav_category),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
-            <%= link_to '', show_leave_category_leav_categories_path(leav_category: leav_category),class: 'btn btn-default btn-xs fa fa-eye' %>
+            <!-- <= link_to '', show_leave_category_leav_categories_path(leav_category: leav_category),class: 'btn btn-default btn-xs fa fa-eye' %> -->
             <%= link_to '',  leav_category, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
-            <%= link_to '', is_confirm_leav_categories_path(leav_category: leav_category),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-          <% end %>
+            <%= link_to '', leave_category_modal_leav_categories_path(leav_category), class: 'btn btn-xs btn-default fa fa-eye',remote: true%>
+          <!--   <= link_to '', is_confirm_leav_categories_path(leav_category: leav_category),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %> -->
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<div id="leave_category_modal" class="modal fade"></div>

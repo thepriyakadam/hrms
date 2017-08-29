@@ -55,6 +55,10 @@ class LeaveMastersController < ApplicationController
     @leave_masters = LeaveMaster.all
   end
 
+  def modal_leave_master
+    @leave_master = LeaveMaster.find(params[:format])
+  end
+
   # def select_textbox
   #   if params[:is_carry_forward] == true
   #     @flag = true

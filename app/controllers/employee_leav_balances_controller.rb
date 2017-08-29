@@ -431,6 +431,10 @@ def create
     redirect_to employee_leav_balances_path
   end
 
+  def modal_balance_detail
+    @employee_leav_balance = EmployeeLeavBalance.find(params[:format])
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

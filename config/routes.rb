@@ -438,7 +438,11 @@ Rails.application.routes.draw do
   end
 end
 
-  resources :leave_masters
+  resources :leave_masters do
+    collection do
+      get :modal_leave_master
+    end
+  end
 
   resources :employee_code_masters do
     collection do
@@ -1470,6 +1474,7 @@ end
       get :admin_approve_modal
       get :modal
       get :detail_modal
+      get :modal_c_off
     end
   end
 
@@ -2151,6 +2156,7 @@ end
       patch :update_leave_balance
       get :is_confirm_leave
       patch :update_leave_auto
+      get :modal_balance_detail
     end
   end
 
@@ -2188,6 +2194,7 @@ end
     collection do
       get :is_confirm
       get :show_leave_category
+      get :leave_category_modal
     end
   end
   resources :employee_physicals do

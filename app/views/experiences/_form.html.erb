@@ -3,7 +3,7 @@
     <h3 class="box-title">Employee Experience</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-  <%= bootstrap_form_for(@experience,html: {id: 'experince'},remote:true) do |f| %>
+  <%= bootstrap_form_for(@experience,html: {id: 'experience'},remote:true) do |f| %>
     <%= f.hidden_field :employee_id, value: @employee.id %>
     <div id="entry1" class="clonedInput">
       <div class="row">
@@ -11,7 +11,7 @@
 
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :company_name, class: 'input_company_name',placeholder: 'e.g. IBSl' %>
+            <%= f.text_field :company_name,label:'Company Name', class: 'input_company_name',placeholder: 'e.g. IBSl' %>
           </div>
         </div>
 
@@ -61,27 +61,27 @@
   </div><!-- /.box -->
 
 <script>
-$("#experince").validate({
+$("#experience").validate({
     rules: {
-      "experince[company_name]":{
+      "experience[company_name]":{
         required: true,
       },
-      "experince[designation]":{
+      "experience[designation]":{
         required: true,
       },
-      "experince[no_of_year]":{
+      "experience[no_of_year]":{
         required: true,
         numbersOnly: true,
       }
        },
     messages: {
-      "experince[company_name]":{
+      "experience[company_name]":{
         required: "Please Specify Company Name",
       },
-       "experince[designation]":{
+       "experience[designation]":{
         required: "Please Specify Designation ",
       },
-      "experince[no_of_year]":{
+      "experience[no_of_year]":{
         required: "Please Specify Experience Year",
       }
        },

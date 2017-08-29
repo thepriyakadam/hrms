@@ -656,6 +656,10 @@ class OnDutyRequestsController < ApplicationController
       end
     end
   end
+
+  def request_modal
+    @on_duty_request = OnDutyRequest.find(params[:format])
+  end
       
 
   private

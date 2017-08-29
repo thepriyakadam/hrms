@@ -1,0 +1,43 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Compensatory Off Detail </center></h4>
+    </div>
+    <div class="modal-body">
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th><strong>Date</strong></th>
+      <td> <%= @leave_c_off.c_off_date %></td>
+    </tr>  
+    <tr>
+     <th><strong>Compensatory Off</strong></th>
+      <td><%= @leave_c_off.leave_count %></td>
+    </tr>
+    <tr>
+      <th><strong>Expiry Date</strong></th>
+      <td> <%= @leave_c_off.expiry_date %></td>
+    </tr>
+    <tr>
+     <th><strong>Expired</strong></th>
+      <td><%= @leave_c_off.is_expire ? "Yes" : "No" %></td>
+    </tr>
+    <tr>
+      <th><strong>Taken</strong></th>
+      <td> <%= @leave_c_off.is_taken ? "Yes" : "No" %></td>
+    </tr>
+    <tr>
+     <th><strong>Taken Date</strong></th>
+      <td><%= @leave_c_off.taken_date %></td>
+    </tr> 
+    <tr>
+      <th><strong>Comment</strong></th>
+      <td><%= @leave_c_off.comment %></td>
+    </tr> 
+  </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

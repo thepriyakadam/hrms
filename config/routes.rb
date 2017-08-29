@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get :employee_wise_report
       post :show_employeewise_detail
       get :show_employeewise_detail
+      get :modal_transfer_detail
     end
   end
   resources :sub_departments
@@ -178,6 +179,7 @@ Rails.application.routes.draw do
       get :approved_record_list
       get :show_approved_record
       post :show_approved_record
+      get :request_modal
     end
   end
 
@@ -1514,6 +1516,7 @@ end
       get :show_internal_modal
       get :employee_contact_library
       get :modal_contact_library
+      get :modal_c_off
     end
   end
 
@@ -2187,6 +2190,7 @@ end
       get :balancewise_report
       post :show_balancewise_report
       get :show_balancewise_report
+      get :leave_request_modal
     end
   end
   resources :company_leavs

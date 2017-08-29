@@ -1,35 +1,28 @@
 <%= bootstrap_form_for @employee_leav_balance, html: {id: "employee_leav_balance"} do |f| %>
   <div class="row">
-    <div class="col-sm-3">
-      <div class="field">
-        <%= label "employee_leav_balance","Leave Category"%>
-        <%= text_field "employee_leav_balance","category_name", value: @leav_category.try(:name),class: "form-control", readonly:true %>
-      </div>
-    </div>
+        <% text_field "employee_leav_balance","category_name",value: @leav_category.try(:name),label: 'Leave Category' ,class: "form-control", readonly:true %>
+     
     <%= hidden_field "employee_leav_balance","leav_category_id", value: @leav_category.id%>
     <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :no_of_leave %>
+      <div class="form-group required">
+        <%= f.text_field :no_of_leave,label: 'No. of Leaves' %>
       </div>
     </div>
 
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :total_leave, readonly:true %>
+        <%= f.text_field :total_leave,label: 'Total Leaves' ,readonly:true %>
       </div>
     </div>
   
     <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :from_date, class: "expiry_date" %>
+      <div class="form-group required">
+        <%= f.text_field :from_date,label: 'From Date' ,class: "expiry_date" %>
       </div>
     </div>
-  </div>
-
-  <div class="row">
      <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :to_date, class: "expiry_date" %>
+      <div class="form-group required">
+        <%= f.text_field :to_date,label: 'To Date' ,class: "expiry_date" %>
       </div>
     </div>
   </div>
@@ -65,7 +58,7 @@
       <div class="actions">
         <%= f.submit "Create Employee Leave Balance",class: 'btn btn-sm btn-primary' %>
 
-        <%= link_to 'Back', employee_leav_balances_path,class: 'btn btn-sm btn-default fa fa-arrow' %>
+        <%= link_to 'Back', employee_leav_balances_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
       </div>
     </div>
   </div>

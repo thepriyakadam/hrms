@@ -37,16 +37,20 @@ class LeavCategoriesController < ApplicationController
     @leav_categories = LeavCategory.all
   end
 
-  def is_confirm
-    @leav_category = LeavCategory.find(params[:leav_category])
-    LeavCategory.find(@leav_category.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_leav_category_path
-  end
+  # def is_confirm
+  #   @leav_category = LeavCategory.find(params[:leav_category])
+  #   LeavCategory.find(@leav_category.id).update(is_confirm: true)
+  #   flash[:notice] = "Confirmed Successfully"
+  #   redirect_to new_leav_category_path
+  # end
   
   def show_leave_category
     @leav_category = LeavCategory.find(params[:leav_category])
     
+  end
+
+  def leave_category_modal
+    @leav_category = LeavCategory.find(params[:format])
   end
 
   private

@@ -4,10 +4,6 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed'">
-    <tr> 
-      <th colspan="2"></th>
-      <th colspan="2"></th>
-    </tr>
 
     <tr>
     	<th><strong>Employee</strong></th>
@@ -20,7 +16,7 @@
     	<th><strong>Leave Category</strong></th>
     	<td><%=  @employee_leav_balance.leav_category.try(:code) %> - <%= @employee_leav_balance.leav_category.try(:name) %></td>
    
-    	<th><strong>No. of Leave</strong></th>
+    	<th><strong>No. of Leaves</strong></th>
     	<td> <%= @employee_leav_balance.no_of_leave %></td>
     </tr>
 
@@ -29,7 +25,7 @@
     <td colspan="3"> <%= @employee_leav_balance.employee.try(:company_location).try(:name) %></td>
     </tr>
 
-    </table>
+    </table><br>
     <%= link_to 'Edit', edit_employee_leav_balance_path(@employee_leav_balance),class: 'btn btn-sm btn-success fa fa-edit' %> |
     <%= link_to 'Back', employee_leav_balances_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
   </div><!-- /.box-body -->

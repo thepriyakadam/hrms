@@ -872,6 +872,10 @@ class EmployeeLeavRequestsController < ApplicationController
     end
   end
 
+  def leave_request_modal
+    @employee_leav_request = EmployeeLeavRequest.find(params[:format])
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

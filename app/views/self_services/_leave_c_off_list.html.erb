@@ -17,7 +17,8 @@
          <% if leave_c_off.current_status == "Pending" %>
                   <small class="label label-primary">Pending</small>
                 <%= link_to '', destroy_self_leave_c_offs_path(leave_c_off), data: { confirm: 'Are you sure?' },class: 'btn btn-xs  btn-danger fa fa-close' %>
-                <%= link_to '', show_leave_c_off_list_self_services_path(leave_c_off),class: 'btn btn-default btn-xs fa fa-eye' %>
+                <!-- <= link_to '', show_leave_c_off_list_self_services_path(leave_c_off),class: 'btn btn-default btn-xs fa fa-eye' %> -->
+                <%= link_to '', modal_c_off_self_services_path(leave_c_off),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
               <% else %>
               
           <% leave_c_off.status_c_offs.try(:each) do |r| %>
@@ -34,7 +35,8 @@
                   <small class="label label-warning">Cancelled</small>
                 <%end%>
               <%end%>
-             <%= link_to '', show_leave_c_off_list_self_services_path(leave_c_off),class: 'btn btn-default btn-xs fa fa-eye' %>
+              <%= link_to '', modal_c_off_self_services_path(leave_c_off),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
+             <!-- <= link_to '', show_leave_c_off_list_self_services_path(leave_c_off),class: 'btn btn-default btn-xs fa fa-eye' %> -->
           <%end%>
         </td>
       </tr>
@@ -42,6 +44,7 @@
   </tbody>
 </table>
 <div id="myModal" class="modal fade"></div>
+<div id="modal_c_off" class="modal fade"></div>
 
 <script type="text/javascript">
 $(document).ready(function() {

@@ -301,6 +301,10 @@ class SelfServicesController < ApplicationController
   def modal_contact_library
     @employee = Employee.find(params[:format])
   end
+
+  def modal_c_off
+    @leave_c_off = LeaveCOff.find(params[:format])
+  end
   # def apply_internally
   #   @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
   # end

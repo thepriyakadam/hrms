@@ -31,11 +31,12 @@
         <td>
         	<!-- <= link_to '', edit_leave_transfer_path(leave_transfer),class: 'btn btn-success btn-xs fa fa-edit',remote:true %> -->
           <% if leave_transfer.status == "Pending" %>
-          <%= link_to 'Cancel',  leave_transfer, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-warning btn-xs ' %>
+          <%= link_to '',  leave_transfer, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-trash ' %>
           <% end %>
-          <%= link_to '', leave_transfer,class: 'btn btn-default btn-xs fa fa-eye' %>
+          <%= link_to '', modal_transfer_detail_leave_transfers_path(leave_transfer),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<div id="modal_transfer_detail" class="modal fade"></div>

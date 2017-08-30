@@ -2230,6 +2230,7 @@ end
       get :add_award_field
       get :import_xl
       post :import
+      get :award_modal
     end
   end
   resources :skillsets  do
@@ -2268,6 +2269,7 @@ end
       get :import_xl
       post :import
       get :collect_age
+      get :family_modal
     end
   end
   resources :employees do

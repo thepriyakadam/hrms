@@ -93,6 +93,10 @@ class AwardsController < ApplicationController
     redirect_to root_url, notice: "File imported."
   end
 
+  def award_modal
+    @award = Award.find(params[:format])
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

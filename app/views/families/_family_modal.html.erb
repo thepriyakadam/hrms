@@ -1,0 +1,108 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Family Member Detail </center></h4>
+    </div>
+    <div class="modal-body">
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+<tr>
+  <th><strong>Employee</strong></th>
+  <td><%= full_name(@family.employee) %></td>
+</tr>
+<tr>
+  <th> <strong>Relation</strong></th>
+  <td><%= @family.relation %></td>
+</tr>
+<tr>
+
+  <th><strong>First Name</strong></th>
+  <td><%= @family.f_name %></td>
+  </tr>
+<tr>
+  <th><strong>Middle Name</strong></th>
+  <td><%= @family.m_name %></td>
+</tr>
+<tr>
+  <th><strong>Last Name</strong></th>
+  <td><%= @family.l_name %></td>
+</tr>
+<tr>
+  <th> <strong>Date Of Birth</strong></th>
+  <td><%= @family.date_of_birth %></td>
+</tr>
+<tr>
+  <th> <strong>Current Address</strong></th>
+  <td><%= @family.current_address %></td>
+</tr>
+<tr>
+  <th><strong>Age</strong></th>
+  <td><%= @family.age %></td>
+</tr>
+<tr>
+  <th> <strong>Contact No.</strong></th>
+  <td><%= @family.contact_no %></td>
+</tr>
+<tr>
+  <th> <strong>Email</strong></th>
+  <td><%= @family.email %></td>
+</tr>
+<tr>
+  <th><strong>Aadhaar No.</strong></th>
+  <td> <%= @family.adhar_no %></td>
+</tr>
+<tr>
+  <th> <strong>PAN Card No.</strong></th>
+  <td><%= @family.pan_no %></td>
+</tr>
+<tr>
+  <th><strong>Passport No.</strong></th>
+  <td><%= @family.passport_no %></td>
+</tr>
+<tr>
+  <th><strong>Passport Issue Date</strong></th>
+  <td><%= @family.passport_issue_date %></td>
+</tr>
+<tr>
+  <th><strong>Passport Expiry Date</strong></th>
+  <td><%= @family.passport_expiry_date %></td>
+</tr>
+<tr>
+  <th><strong>Gender</strong></th>
+  <td><%= @family.gender %></td>
+</tr>
+<tr>
+  <th><strong>Marital Status</strong></th>
+  <td><%= @family.marital %></td>
+</tr>
+<tr>
+  <th> <strong>Blood Group</strong></th>
+  <td><%= @family.blood_group.try(:name) %></td>
+</tr>
+<tr>
+  <th> <strong>Religion</strong></th>
+  <td><%= @family.religion.try(:name) %></td>
+</tr>
+<tr>
+  <th> <strong>Profession</strong></th>
+  <td><%= @family.profession %></td>
+</tr>
+<tr>
+  <th><strong>Medical Insurance</strong></th>
+  <td><%= @family.medical_claim %></td>
+</tr>
+<tr>
+  <th><strong>Differently Abled</strong></th>
+  <td><%= @family.is_handicap %></td>
+</tr>
+<tr>
+  <th><strong>Disability Type</strong></th>
+  <td><%= @family.handicap_type %></td>
+</tr>
+  </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

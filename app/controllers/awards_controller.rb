@@ -26,15 +26,16 @@ class AwardsController < ApplicationController
   # POST /awards
   # POST /awards.json
   def create
+    # byebug
     @award = Award.new(award_params)
     @employee = Employee.find(params[:award][:employee_id])
     @year = Year.find(params[:award][:year_id])
     ActiveRecord::Base.transaction do
       respond_to do |format|
         if @award.save
-          len = params['award'].length - 3
-          for i in 2..len
-            Award.create(employee_id: params['award']['employee_id'], award_name: params['award'][i.to_s]['award_name'], year_id: params['award'][i.to_s]['year_id'], award_from: params['award'][i.to_s]['award_from'])
+          len = params['award'].length - 4
+          for i in 3..len
+            Award.create(employee_id: params['award']['employee_id'], award_name: params['award'][i.to_s]['award_name'], year_id: params['award'][i.to_s]['year_id'], award_from: params['award'][i.to_s]['award_from'], description: params['award'][i.to_s]['description'])
           end
           @awards = Award.where(employee_id: @employee.id)
           format.html { redirect_to @award, notice: 'Award was successfully created.' }
@@ -106,6 +107,6 @@ class AwardsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def award_params
-    params.require(:award).permit(:employee_id, :award_name, :year_id, :award_from)
+    params.require(:award).permit(:employee_id, :award_name, :year_id, :award_from,:description)
   end
 end

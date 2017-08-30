@@ -2251,6 +2251,7 @@ end
     collection do
       get :import_xl
       post :import
+      get :certificate_modal
     end
   end
   resources :qualifications do

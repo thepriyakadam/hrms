@@ -1,8 +1,16 @@
 <div class="box box-default">
   <div class="box-header with-border">
  <div class="row">
-  <div class="col-sm-1">
+   <div class="col-sm-1">
+  <% if @skillsets.first.employee.passport_photo_file_name == nil %>
+  <% if @skillsets.first.employee.gender == "Female" %>
+   <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%else%>
+   <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%end%>
+ <%else%>
       <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+      <%end%>
   </div>
     <div class="col-sm-6">
      <font color='#0077b3'>
@@ -13,8 +21,8 @@
   </div>
 
     <div class="box-tools pull-right">
-      <%= link_to "Add Skill Set", ajax_new_skillset_employees_path(id: @employee.id), class: 'btn btn-sm btn-primary',remote:true %>
-      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      <%= link_to "Add Skill Set", ajax_new_skillset_employees_path(id: @employee.id), class: 'btn btn-xs btn-primary',remote:true %>
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-xs fa fa-arrow-left' %>
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
@@ -31,7 +39,7 @@
         <td><%= skillset.name %></td>
         <td><%= skillset.skill_level %></td>
         <td>
-          <%= link_to '', edit_skillset_path(skillset),class: 'btn btn-sm btn-success fa fa-edit',remote:true %>
+          <%= link_to '', edit_skillset_path(skillset),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
           <!--  link_to '', skillset, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-close' %> -->
         </td>
       </tr>

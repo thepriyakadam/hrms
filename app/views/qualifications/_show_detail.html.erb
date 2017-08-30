@@ -2,8 +2,16 @@
   <div class="box-header with-border">
 
  <div class="row">
-  <div class="col-sm-1">
+   <div class="col-sm-1">
+  <% if @qualifications.first.employee.passport_photo_file_name == nil %>
+  <% if @qualifications.first.employee.gender == "Female" %>
+   <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%else%>
+   <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%end%>
+ <%else%>
       <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+      <%end%>
   </div>
     <div class="col-sm-6">
      <font color='#0077b3'> 
@@ -13,18 +21,18 @@
     </div>
   </div>
     <div class="box-tools pull-right">
-      <%= link_to "Add Qualification", ajax_new_qualification_employees_path(id: @employee.id), class: 'btn btn-sm btn-primary',remote:true %>
-      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      <%= link_to "Add Qualification", ajax_new_qualification_employees_path(id: @employee.id), class: 'btn btn-xs btn-primary',remote:true %>
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-xs fa fa-arrow-left' %>
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
     <tr>
-      <th colspan="8"><center><font color='#0077b3'>Qualification Detail </font></center></th>
+      <th colspan="5"><center><font color='#0077b3'>Qualification Detail </font></center></th>
     </tr>
       <tr>
         <th>Sr.No.</th>
-        <th>Qualification</th>
+        <th>Degree</th>
         <th>Marks</th>
         <th>Passout Year</th>
         <th>Action</th>
@@ -37,8 +45,9 @@
           <td><%= qualification.marks %></td>
           <td><%= qualification.year.try(:name) %></td>
           <td>
-             <%= link_to ' ',modal_qualifications_path(qualification),class: 'btn btn-success btn-sm fa fa-edit',remote: true %>
-             <%= link_to ' ',qualification_modal_qualifications_path(qualification),class: 'btn btn-default btn-sm fa fa-eye',remote: true %>
+             <!-- <= link_to ' ',modal_qualifications_path(qualification),class: 'btn btn-success btn-sm fa fa-edit',remote: true %> -->
+             <%= link_to '', edit_qualification_path(qualification),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+             <%= link_to ' ',qualification_modal_qualifications_path(qualification),class: 'btn btn-default btn-xs fa fa-eye',remote: true %>
           </td>
       </tr>
         <%end%>

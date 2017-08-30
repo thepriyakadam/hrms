@@ -6,16 +6,14 @@
     </div>
     <div class="modal-body">
 <table class="table table-bordered table-hover table-condensed">
-    <%= bootstrap_form_for :qualification,url:{action:"update_qualification",id: @qualification.id},remote:true do |f| %>
+    <%= bootstrap_form_for :qualification,url:{action:"update_qualification",id: @qualification.id},html: {id: 'qualification'}  do |f| %>
       <div class="row">
         <div class="col-sm-6">
           <div class="field">
             <%= f.select :degree_type_id, all_degree_type, {include_blank: "Select Qualification",label:"Qualification"}, class: 'input_degree_type_id' %>
           </div>
         </div>
-      </div>
-      
-      <div class="row">
+     
         <div class="col-sm-6">
           <div class="field">
             <%= f.select :degree_id, all_degree, {include_blank: "Select Degree",label:"Degree"}, class: 'input_degree_id' %>
@@ -29,9 +27,7 @@
             <%= f.select :degree_stream_id, all_degree_stream, {include_blank: " Select Specialization",label:"Specialization"}, class: 'input_degree_stream_id' %>
           </div>
         </div>
-      </div>
-
-     <div class="row">
+     
         <div class="col-sm-6">
           <div class="field">
             <%= f.text_field :marks, label: 'Marks(CGPA / %)', class: 'input_marks' %>
@@ -45,9 +41,7 @@
            <%= f.select :year_id, all_year,{include_blank: " Select Passing Year",label: "Passout Year"},class: 'input_year_id' %>
           </div>
         </div>
-      </div>
-       
-     <div class="row">  
+    
         <div class="col-sm-6">
           <div class="field">
           <%= f.text_field :college,label:"College/School", class: 'input_college' %>
@@ -61,10 +55,11 @@
            <%= f.select :university_id, all_university,{include_blank: " Select University/Institute",label:"University/Institute"},class: 'input_university_id' %>
           </div>
           </div>
-       </div>   
-        <div class="row">
+      
            <div class="col-sm-6">
-            <%= f.submit "Update Qualification", class: 'btn btn-sm btn-warning fa fa-modx' %>
+            <div class="field" style="padding: 20px">
+            <%= f.submit "Update Qualification", class: 'btn btn-sm btn-success fa fa-modx' %>
+          </div>
           </div>
           </div> 
           </div>
@@ -73,3 +68,4 @@
         </table>
 </div>
 </div>
+<div id="myModal" class="modal fade"></div>

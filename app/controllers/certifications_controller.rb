@@ -93,6 +93,10 @@ class CertificationsController < ApplicationController
     redirect_to root_url, notice: "File imported."
   end
 
+  def certificate_modal
+    @certification = Certification.find(params[:format])
+  end
+
 
   private
 

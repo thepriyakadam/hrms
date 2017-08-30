@@ -3,8 +3,16 @@
    
  <!-- /.box-header -->
    <div class="row">
-  <div class="col-sm-1">
+   <div class="col-sm-1">
+  <% if @joining_detail.employee.passport_photo_file_name == nil %>
+  <% if @joining_detail.employee.gender == "Female" %>
+   <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%else%>
+   <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%end%>
+ <%else%>
       <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+      <%end%>
   </div>
     <div class="col-sm-6">
      <font color='#0077b3'>
@@ -14,8 +22,8 @@
     </div>
   </div>
    <div class="box-tools pull-right">
-      <%= link_to 'Edit',  edit_joining_detail_path(@joining_detail),class: 'btn btn-success fa fa-edit',remote:true %>
-      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      <%= link_to 'Edit',  edit_joining_detail_path(@joining_detail),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-xs fa fa-arrow-left' %>
     </div>
      </div>
   <div class="box-body">

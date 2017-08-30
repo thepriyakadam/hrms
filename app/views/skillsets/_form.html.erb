@@ -34,7 +34,7 @@
       
         <div class="col-sm-6">
           <div class="actions" style="padding: 20px">
-            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+            <%=f.submit "Create Skill Set",class: "btn btn-primary btn-sm" %>
             <% if params['controller'] == 'skillsets' and params['action'] == 'edit' %>
             <%= link_to 'Back',ajax_skillset_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-default',remote:true%>
           <%end%>

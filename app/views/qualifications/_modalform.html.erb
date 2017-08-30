@@ -1,59 +1,75 @@
-<!-- <meta http-equiv="refresh" content="7">   
- --><div class="modal-dialog"  style="height:2000px; max-height:400px; width:630px; max-width:630px;">
-  <div class="modal-content"> 
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Update Qualification</center></h4>
+    </div>
     <div class="modal-body">
+<table class="table table-bordered table-hover table-condensed">
     <%= bootstrap_form_for :qualification,url:{action:"update_qualification",id: @qualification.id},remote:true do |f| %>
-        <div class="row">
-        <div class="col-sm-3">
+      <div class="row">
+        <div class="col-sm-6">
           <div class="field">
-            <%= f.select :degree_type_id, all_degree_type, {include_blank: "Select Qualification Level",label:"Qualification Level"}, class: 'input_degree_type_id' %>
+            <%= f.select :degree_type_id, all_degree_type, {include_blank: "Select Qualification",label:"Qualification"}, class: 'input_degree_type_id' %>
           </div>
         </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="field">
+            <%= f.select :degree_id, all_degree, {include_blank: "Select Degree",label:"Degree"}, class: 'input_degree_id' %>
+          </div>
+        </div>
+      </div>
 
-        <div class="col-sm-3">
+       <div class="row">
+        <div class="col-sm-6">
           <div class="field">
-            <%= f.select :degree_id, all_degree, {include_blank: "Select Qualification",label:"Qualification"}, class: 'input_degree_id' %>
+            <%= f.select :degree_stream_id, all_degree_stream, {include_blank: " Select Specialization",label:"Specialization"}, class: 'input_degree_stream_id' %>
           </div>
         </div>
+      </div>
 
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.select :degree_stream_id, all_degree_stream, {include_blank: " Select Qualification Specialization",label:"Qualification Specialization"}, class: 'input_degree_stream_id' %>
-          </div>
-        </div>
-    
-        <div class="col-sm-3">
+     <div class="row">
+        <div class="col-sm-6">
           <div class="field">
             <%= f.text_field :marks, label: 'Marks(CGPA / %)', class: 'input_marks' %>
           </div>
         </div>
-    </div>    
+    </div>
+
    <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-6">
           <div class="field">
            <%= f.select :year_id, all_year,{include_blank: " Select Passing Year",label: "Passout Year"},class: 'input_year_id' %>
           </div>
         </div>
+      </div>
        
-        <div class="col-sm-3">
+     <div class="row">  
+        <div class="col-sm-6">
           <div class="field">
           <%= f.text_field :college,label:"College/School", class: 'input_college' %>
            </div>
         </div>
-
-        <div class="col-sm-3">
+      </div>
+        
+    <div class="row">  
+        <div class="col-sm-6">
           <div class="field">
            <%= f.select :university_id, all_university,{include_blank: " Select University/Institute",label:"University/Institute"},class: 'input_university_id' %>
           </div>
+          </div>
+       </div>   
         <div class="row">
-           <div class="col-sm-2">
+           <div class="col-sm-6">
             <%= f.submit "Update Qualification", class: 'btn btn-sm btn-warning fa fa-modx' %>
           </div>
           </div> 
           </div>
           <% end %>
         </div>
-</div>
-</div>
+        </table>
 </div>
 </div>

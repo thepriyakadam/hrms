@@ -12,7 +12,7 @@
  <td>  <%= full_name(@qualification.employee) %></td>
 </tr>
 <tr>
- <th><strong>Degree Type</strong></th>
+ <th><strong>Qualification</strong></th>
   <td><%= @qualification.degree_type_id.try(:name) %></td>
  </tr>
  <tr>
@@ -20,7 +20,7 @@
   <td><%= @qualification.degree_id.try(:name) %></td>
 </tr>
 <tr>
-  <th><strong>Degree Stream</strong></th>
+  <th><strong>Specialization</strong></th>
   <td><%= @qualification.degree_stream_id.try(:name) %></td>
 </tr>
 <tr>

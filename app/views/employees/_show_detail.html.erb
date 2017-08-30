@@ -90,19 +90,23 @@
         <td><%= @employee.optional_email %></td>
       </tr>
         <tr>
-        <th><strong>Contact No.</strong></th>
+        <th><strong>Official Contact No.</strong></th>
         <td><%= @employee.contact_no %></td>
 
-        <th><strong>Personal Contact No.</strong></th>
+        <th><strong>Extension No.</strong></th>
         <td><%= @employee.optinal_contact_no %></td>
       </tr>
       <tr>
-        <th> Emergency Contact No.</th>
-        <td><%= @employee.try(:optional_contact_no) %></td>
+        <th> Personal Contact No.</th>
+        <td><%= @employee.try(:optional_contact_no1) %></td>
 
+        <th> Emergency Contact No.</th>
+        <td><%= @employee.try(:emergency_contact_no) %></td>
+      </tr>
+      <tr>
         <th><strong>Religion</strong></th>
-        <td><%= @employee.religion.try(:name) %></td>
-     
+        <td colspan="3"><%= @employee.religion.try(:name) %></td>
+     </tr>
       <tr>
         <th><strong>Differently Abled</strong></th>
         <td><%= @employee.handicap %></td>

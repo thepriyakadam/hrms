@@ -1,8 +1,16 @@
 <div class="box box-default">
   <div class="box-header with-border">
   <div class="row">
-  <div class="col-sm-1">
+    <div class="col-sm-1">
+  <% if @employee_documents.first.employee.passport_photo_file_name == nil %>
+  <% if @employee_documents.first.employee.gender == "Female" %>
+   <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%else%>
+   <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%end%>
+ <%else%>
       <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+      <%end%>
   </div>
     <div class="col-sm-6">
      <font color='#0077b3'>
@@ -12,8 +20,8 @@
     </div>
   </div>
     <div class="box-tools pull-right">
-    <%= link_to "Add Document", ajax_new_employee_document_employees_path(id: @employee.id), class: 'btn btn-primary btn-sm',remote:true %>
-    <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+    <%= link_to "Add Document", ajax_new_employee_document_employees_path(id: @employee.id), class: 'btn btn-primary btn-xs',remote:true %>
+    <%= link_to 'Back', employees_path,class: 'btn btn-default btn-xs fa fa-arrow-left' %>
       
     </div>
   </div><!-- /.box-header --><br>
@@ -25,7 +33,6 @@
       <th>Document</th>
       <th>Download Document</th>
       <th>Download Image</th>
-      <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -47,10 +54,9 @@
             <center><%= link_to '',download_pic_path(id: employee_document.id),class: 'btn btn-xs fa fa-picture-o' %></center>
           <% end %>
         </td>
-        <td><%= employee_document.status ? "Active" : "Inactive" %></td>
         <td>
         <!-- <= link_to '', employee_document,class: 'btn btn-default fa btn-xs fa-eye',remote: true%> -->
-             <%= link_to ' ',modal_employee_documents_path(employee_document),class: 'btn btn-success btn-sm fa fa-edit',remote: true %>
+             <%= link_to ' ',modal_employee_documents_path(employee_document),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
           <!--  link_to '', employee_document, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-danger fa fa-close' %> -->
         </td>
       </tr>

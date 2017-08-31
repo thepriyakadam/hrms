@@ -127,6 +127,10 @@ class FamiliesController < ApplicationController
     @value = params[:id]
   end
 
+  def family_modal
+    @family = Family.find(params[:format])
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

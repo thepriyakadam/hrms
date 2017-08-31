@@ -1,8 +1,16 @@
 <div class="box box-default">
   <div class="box-header with-border">
    <div class="row">
-  <div class="col-sm-1">
+    <div class="col-sm-1">
+  <% if @assigned_assets.first.employee.passport_photo_file_name == nil %>
+  <% if @assigned_assets.first.employee.gender == "Female" %>
+   <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%else%>
+   <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%end%>
+ <%else%>
       <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+      <%end%>
   </div>
     <div class="col-sm-6">
      <font color='#0077b3'>
@@ -12,14 +20,15 @@
     </div>
   </div>
     <div class="box-tools pull-right">
-      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
-      <%= link_to "Assign Asset", ajax_new_assigned_asset_employees_path(id: @employee.id), class: 'btn btn-primary',remote:true %>
+      <%= link_to "Assign Asset", ajax_new_assigned_asset_employees_path(id: @employee.id), class: 'btn btn-primary btn btn-xs',remote:true %>
+    <%= link_to 'Back', employees_path,class: 'btn btn-default btn-xs fa fa-arrow-left' %>
+
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
-   <tr><th colspan="10"><center><font color='#0077b3'>Employee Asset Detail</font></center> </th></tr>
+   <tr><th colspan="5"><center><font color='#0077b3'>Employee Asset Detail</font></center> </th></tr>
     <tr>
 	    <th>Sr.No.</th>
       <th>Asset Type</th>
@@ -38,13 +47,13 @@
         <td><%= assigned_asset.assets_id %></td>
         <td>
           <% if assigned_asset.returned_on == nil %>
-            <%= link_to ' ',modal_assigned_assets_path(assigned_asset),class: 'btn btn-info btn-sm fa fa-arrow-right',remote: true %></td>
+            <%= link_to ' ',modal_assigned_assets_path(assigned_asset),class: 'btn btn-info btn-xs fa fa-arrow-right',remote: true %></td>
           <% else %> 
             <%= assigned_asset.returned_on %>
           <% end %>
         <td>
          <!--  <= link_to ' ',modal_edit_assigned_assets_path(assigned_asset),class: 'btn btn-success btn-sm fa fa-edit',remote: true %> -->
-          <%= link_to ' ',asset_modal_assigned_assets_path(assigned_asset),class: 'btn btn-default btn-sm fa fa-eye',remote:true %>
+          <%= link_to ' ',asset_modal_assigned_assets_path(assigned_asset),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
          </td>
       </tr>
     <% end %>

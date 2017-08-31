@@ -50,10 +50,26 @@ class QualificationsController < ApplicationController
 
   # PATCH/PUT /qualifications/1
   # PATCH/PUT /qualifications/1.json
-  def update
-    @qualification.update(qualification_params)
-    @qualifications = Qualification.all
-    @qualification = Qualification.new
+  # def update
+  #   @qualification.update(qualification_params)
+  #   @qualifications = Qualification.all
+  #   @qualification = Qualification.new
+  # end
+
+   def update
+    @employee = Employee.find(params['qualification']['employee_id'])
+    respond_to do |format|
+      if @qualification.update(qualification_params)
+        # format.html { redirect_to @skillset, notice: 'Skillset was successfully updated.' }
+        # format.json { render :show, status: :ok, location: @skillset }
+        @qualifications = @employee.qualifications
+        format.js { @flag = true }
+      else
+        # format.html { render :edit }
+        # format.json { render json: @skillset.errors, status: :unprocessable_entity }
+        format.js { @flag = false }
+      end
+    end
   end
 
   # DELETE /qualifications/1
@@ -90,10 +106,10 @@ class QualificationsController < ApplicationController
     @qualification = Qualification.find(params[:id])
     @employee = Employee.find(@qualification.employee_id)
     if @qualification.update(qualification_params)
-      @qualifications = Qualification.where(employee_id:@employee.id)
+      @qualifications = Qualification.where(employee_id: @employee.id)
       @flag = true
     else
-      @qualifications = Qualification.where(employee_id:@employee.id)
+      @qualifications = Qualification.where(employee_id: @employee.id)
       @flag = false 
     end
   end

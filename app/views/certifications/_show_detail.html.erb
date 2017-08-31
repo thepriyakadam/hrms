@@ -1,8 +1,16 @@
 <div class="box box-default">
   <div class="box-header with-border">
    <div class="row">
-  <div class="col-sm-1">
+    <div class="col-sm-1">
+  <% if @certifications.first.employee.passport_photo_file_name == nil %>
+  <% if @certifications.first.employee.gender == "Female" %>
+   <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%else%>
+   <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%end%>
+ <%else%>
       <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+      <%end%>
   </div>
     <div class="col-sm-6">
      <font color='#0077b3'>
@@ -12,28 +20,28 @@
     </div>
   </div>
     <div class="box-tools pull-right">
-      <%= link_to "Add Certification", ajax_new_certification_employees_path(id: @employee.id), class: 'btn btn-sm btn-primary',remote:true %>
-      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      <%= link_to "Add Certification", ajax_new_certification_employees_path(id: @employee.id), class: 'btn btn-xs btn-primary',remote:true %>
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-xs fa fa-arrow-left' %>
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
-     <tr><th colspan="5"><center><font color='#0077b3'>Certificate Detail</font></center> </th></tr>
+     <tr><th colspan="4"><center><font color='#0077b3'>Certification Detail</font></center> </th></tr>
    <tr>
+      <th>Sr.No.</th>
       <th>Name</th>
-      <th>Year</th>
       <th>Duration</th>
-      <th>Description</th>
       <th>Action</th>
     </tr>
+    <%i=0%>
      <% @certifications.each do |certification| %>
       <tr>
+        <td><%= i=i+1%></td>
         <td><%= certification.name %></td>
-        <td><%= certification.year.try(:name) %></td>
         <td><%= certification.duration %></td>
-        <td><%= certification.description %></td>
         <td>
-           <%= link_to '', edit_certification_path(certification),class: 'btn btn-success btn-sm fa fa-edit',remote:true %>
+           <%= link_to '', edit_certification_path(certification),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+           <%= link_to '', certificate_modal_certifications_path(certification),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
            <!-- link_to '', certification, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-close' %> --> 
         </td>
       </tr>
@@ -41,3 +49,4 @@
     </table>
   </div><!-- /.box -->
 </div>
+<div id="certificate_modal" class="modal fade"></div>

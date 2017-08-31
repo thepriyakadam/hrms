@@ -13,7 +13,7 @@
 </tr>
 <tr>
   <th> <strong>Relation</strong></th>
-  <td><%= @family.relation %></td>
+  <td><%= @family.relation_master.try(:name) %></td>
 </tr>
 <tr>
 

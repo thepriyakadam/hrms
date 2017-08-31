@@ -1603,6 +1603,8 @@ end
   match 'visitor_details/:id/download_person_image/:id' => 'visitor_details#download_person_image', :via => [:get], :as => :download_person_image
 
   match 'employees/:id/download_employee_signature/:id' => 'employees#download_employee_signature', :via => [:get], :as => :download_employee_signature
+  match 'employees/:id/download_employee_profile_picture/:id' => 'employees#download_employee_profile_picture', :via => [:get], :as => :download_employee_profile_picture
+
   # get '/screenshot', to: 'issue_requests#download_screenshot', as: 'download_screenshot'
   # get '/download', to: 'issue_requests#download_screenshot_image', as: 'download_screenshot_image'
 
@@ -2245,6 +2247,7 @@ end
       post :import
       get :modal_experience
       post :update_experience
+      get :exp_modal
     end
   end
   resources :certifications do

@@ -28,24 +28,26 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
-     <tr><th colspan="5"><center><font color='#0077b3'>Exerience Detail</font></center> </th></tr>
+     <tr><th colspan="5"><center><font color='#0077b3'>Exerience Details</font></center> </th></tr>
      <tr>
+      <th>Sr.No.</th>
       <th>Company Name</th>
       <th>Designation</th>
       <th>Experience</th>
-      <th>CTC</th>
       <th>Action</th>
     </tr>
+    <%i = 0 %>
      <% @experiences.each do |experience| %>
       <tr>
+        <td><%= i = i+1 %></td>
         <td><%= experience.company_name %></td>
         <td><%= experience.designation %></td>
         <td><%= experience.no_of_year %></td>
-        <td><%= experience.ctc %></td>
         <td>
          <div id="myModal" class="modal fade"></div>
            <!-- <= link_to '',modal_experience_experiences_path(experience),class: 'btn btn-sm btn-success fa fa-edit',remote: true %> -->
            <%= link_to '' ,edit_experience_path(experience),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+           <%= link_to '' ,exp_modal_experiences_path(experience),class: 'btn btn-xs btn-default fa fa-eye',remote:true %>
           <!-- link_to '', experience, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-close'  -->
         </td>
       </tr>
@@ -53,3 +55,4 @@
     </table>
   </div><!-- /.box -->
 </div>
+ <div id="exp_modal" class="modal fade"></div>

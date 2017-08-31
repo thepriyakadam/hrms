@@ -21,17 +21,26 @@
           </div>
         </div>
 
-        <div class="col-sm-3">
-          <div class="form-group required">
-            <%= f.text_field :no_of_year,label: "No. Of Years", class: 'input_no_of_year',placeholder: 'e.g. 8 ' %>
+         <div class="col-sm-3">
+      <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
           </div>
+          <%= f.text_field :start_date,label: "From Date", class: 'effective_from'%>
         </div>
-
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :ctc,label: "CTC", class: 'input_ctc' ,placeholder: 'e.g. 8.5'%>
+      </div>
+    </div>
+   <div class="col-sm-3">
+      <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
           </div>
+          <%= f.text_field :end_date,label: "To Date", class: 'effective_to'%>
         </div>
+      </div>
+    </div>
       </div>
     </div>  
     <!--< unless params['controller'] == 'experiences' and params['action'] == 'edit' %>
@@ -46,7 +55,27 @@
       </div><br>
     <end%>  -->
     <div class="row">
-      <div class="col-sm-6">
+            <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :no_of_year,label: "No. Of Years", class: 'input_no_of_year',placeholder: 'e.g. 8 ' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :ctc,label: "CTC", class: 'input_ctc' ,placeholder: 'e.g. 8.5'%>
+          </div>
+        </div>
+
+       <div class="col-sm-6">
+          <div class="field">
+            <%= f.text_field :description,label: "Description"%>
+          </div>
+        </div>
+     </div>   
+
+ <div class="row">
+      <div class="col-sm-3">
         <div class="actions">
           <%= f.submit :class => class_name, data: { disable_with: data_info } %>
           <% if params['controller'] == 'experiences' and params['action'] == 'edit' %>
@@ -59,6 +88,25 @@
   <% end %>
   </div><!-- /.box-body -->
   </div><!-- /.box -->
+
+  <script>     
+    $(function(){
+    $('.effective_from').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-20:+10',
+    dateFormat: 'dd-mm-yy' });
+  });
+</script>
+<script>
+   $(function(){
+    $('.effective_to').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-20:+10',
+    dateFormat: 'dd-mm-yy' });
+  });
+</script>
 
 <script>
 $("#experience").validate({

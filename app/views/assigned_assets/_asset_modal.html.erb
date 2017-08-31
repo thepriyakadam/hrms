@@ -16,7 +16,7 @@
   <td><%= @assigned_asset.asset_type.try(:name) %></td>
  </tr>
  <tr>
-  <th><strong>Asset Details</strong></th>
+  <th><strong>Asset Detail</strong></th>
   <td><%= @assigned_asset.assets_detail %></td>
  </tr>
   <th><strong>Asset </strong></th>
@@ -34,10 +34,6 @@
   <th><strong>Issue Date</strong></th>
   <td><%= @assigned_asset.issue_date%></td>
 </tr>
-<tr>
-  <th><strong>Valid Till</strong></th>
-  <td><%= @assigned_asset.valid_till %></td>
-</tr>
 
 <tr>
 <th><strong>Returned On</strong></th>
@@ -45,7 +41,7 @@
 </tr>
 <tr>
 <th><strong>Remarks</strong></th>
-<th><%= @assigned_asset.returned_on %></th>
+<th><%= @assigned_asset.remarks %></th>
 </tr>
    </thead>
 </table>

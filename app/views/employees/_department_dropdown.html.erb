@@ -25,3 +25,7 @@
 <%else %>
 	<%= select :company,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},class: "form-control"%>
 <%end%>
+
+
+
+<!-- <= select :employee,:company_location_id,(@company_locations.present? ? (@company_locations.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Company Location",hide_label:true},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_department',a,function(response){});",class: "form-control"}%> -->

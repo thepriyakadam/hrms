@@ -26,15 +26,18 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
-    <tr><th colspan="4"><center><font color='#0077b3'>Award Detail</font></center> </th></tr>
+    <tr><th colspan="5"><center><font color='#0077b3'>Award Detail</font></center> </th></tr>
       <tr>
+      <th>Sr.No.</th>
       <th>Award Name</th>
       <th>Year</th>
       <th>Award From</th>
       <th>Action</th>
     </tr>
+    <% i=0%>
     <% @awards.each do |award| %>
       <tr>
+        <td><%= i=i+1%></td>
         <td><%= award.award_name %></td>
         <td><%= award.year.name %></td>
         <td><%= award.award_from %></td>

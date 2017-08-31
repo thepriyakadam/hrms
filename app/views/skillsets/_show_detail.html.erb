@@ -29,13 +29,15 @@
     <table id="example2" class="table table-bordered table-hover table-condensed">
     <tr><th colspan="3"><center><font color='#0077b3'>Skill Set Detail</font></center> </th></tr>
    <tr>
+      <th>Sr.No.</th>
       <th>Name</th>
       <th>Skill Level</th>
       <th>Action</th>
     </tr>
-  
+  <% i = 0%>
     <% @skillsets.each do |skillset| %>
       <tr>
+        <td><%= i = i+1 %></td>
         <td><%= skillset.name %></td>
         <td><%= skillset.skill_level %></td>
         <td>

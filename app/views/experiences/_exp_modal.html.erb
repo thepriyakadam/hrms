@@ -24,7 +24,13 @@
 
     <tr>
       <th> <strong>Date</strong></th>
-      <td> <%= @experience.start_date %> To  <%= @experience.end_date %></td>
+      <td><% if @experience.start_date == nil %>
+      <%elsif @experience.end_date == nil %>
+       <%= @experience.start_date %> To <small class= "label label-success">To be continuing </small>
+      <% else%>
+      <%= @experience.start_date %> To  <%= @experience.end_date %>
+      <%end%>
+      </td>
     </tr>
     <tr>
       <th> <strong>Experience</strong></th>

@@ -30,18 +30,20 @@
     <tr><th colspan="4"><center><font color='#0077b3'>Physical Detail</font></center> </th></tr>
 
     <tr>
-        <th> <strong>Trouser Size(cm)</strong></th>
-        <td> <%= @employee_physical.trouser_size %></td>
-
-        <th> <strong>Height(inches):</strong></th>
+        <th> <strong>Height(inches)</strong></th>
         <td> <%= @employee_physical.height %></td>
+       
+        <th><strong>Weight(kg)</strong></th>
+        <td><%= @employee_physical.weight %></td>
     </tr>
      <tr>
-        <th><strong>Weight(kg):</strong></th>
-        <td><%= @employee_physical.weight %></td>
 
         <th> <strong>T-Shirt Size</strong></th>
         <td> <%= @employee_physical.size %></td>
+
+          <th> <strong>Trouser Size(cm)</strong></th>
+        <td> <%= @employee_physical.trouser_size %></td>
+
     </tr>
     </table>
   </div><!-- /.box -->

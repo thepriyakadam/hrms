@@ -21,7 +21,7 @@ class AssignedAssetsController < ApplicationController
 
   # GET /assigned_assets/1/edit
   def edit
-     @form = 'assigned_asset'
+     # @form = 'assigned_asset'
      @employee = @assigned_asset.employee
   end
 
@@ -61,6 +61,8 @@ class AssignedAssetsController < ApplicationController
       end
     end
   end
+
+  
 
   # DELETE /assigned_assets/1
   # DELETE /assigned_assets/1.json

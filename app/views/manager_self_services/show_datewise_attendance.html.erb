@@ -6,7 +6,7 @@
     <table id="example1" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
-          <td colspan="6"><center> 
+          <td colspan="7"><center> 
             <% if current_user.employee.company_location.company.company_logo == nil %>
             <% else %>
               <center> <%= image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
@@ -14,11 +14,12 @@
               <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
           </td>
         </tr>
-        <tr><th colspan="6"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
+        <tr><th colspan="7"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
         <tr>
           <th>ID</th>
           <th>Employee</th>
           <th>Date</th>
+          <th>Day</th>
           <th>In Time</th>
           <th>Out Time</th>
           <th>Present</th>
@@ -31,6 +32,7 @@
             <td><%= employee_attendance.employee.try(:manual_employee_code) %></td>
             <td><%= full_name(employee_attendance.try(:employee)) %></td>
             <td><%= employee_attendance.try(:day) %></td>
+            <td><%= employee_attendance.try(:day).strftime('%A') %></td>
             <td><%= employee_attendance.try(:in_time) %></td>
             <td><%= employee_attendance.try(:out_time) %></td>
             <td><%= employee_attendance.try(:present) %></td>

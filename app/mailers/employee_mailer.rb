@@ -24,16 +24,84 @@ class EmployeeMailer < ApplicationMailer
     mail(to: @manager.email, subject: 'HRMS Reporting Details')
   end
 
-  # def birthday_invitationBirthday Wishes
+  def employee_create(employee)
+    @emp = Employee.find_by(id: employee.id)
+    mail(to: @emp.company_location.email, subject: 'Employee Details')
+  end
 
-  #   date = Date.today
-  #   @employees = Employee.where.not("status = ? AND strftime('%d/%m', date_of_birth) = ?", "Active" , date.strftime('%d/%m')).pluck(:email)
-  #   # @employees_bday = Employee.where("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m')).pluck(:first_name,:middle_name,:last_name)
-  #   # @employees.each do |e|
-  #   attachments.inline['bday.jpg'] = File.read("#{Rails.root}/app/assets/images/bday.jpg")
-  #   mail(to: @employees, subject: 'Birthday Invitation')
-  # end
+  def joining_create(employee)
+    @emp = Employee.find_by(id: employee.id)
+    mail(to: @emp.company_location.email, subject: 'Joining Details')
+  end
 
+  def bank_create(employee)
+    @emp = Employee.find_by(id: employee.id)
+    @location = CompanyLocation.find_by(id: @emp.company_location_id)
+    mail(to: @location.email, subject: 'Bank Details')
+  end
+
+  def qualification_create(employee)
+    @employee = employee
+    @emp = Employee.find_by(id: @employee.id)
+    @location = CompanyLocation.find_by(id: @emp.company_location_id)
+    mail(to: @location.email, subject: 'Qualification Details')
+  end
+
+  def experience_create(employee)
+    @employee = employee
+    @emp = Employee.find_by(id: @employee.id)
+    @location = CompanyLocation.find_by(id: @emp.company_location_id)
+    mail(to: @location.email, subject: 'Experience Details')
+  end
+
+  def skillset_create(employee)
+    @employee = employee
+    @emp = Employee.find_by(id: @employee.id)
+    @location = CompanyLocation.find_by(id: @emp.company_location_id)
+    mail(to: @location.email, subject: 'Skillset Details')
+  end
+
+  def certification_create(employee)
+    @employee = employee
+    @emp = Employee.find_by(id: @employee.id)
+    @location = CompanyLocation.find_by(id: @emp.company_location_id)
+    mail(to: @location.email, subject: 'Certification Details')
+  end
+
+  def award_create(employee)
+    @employee = employee
+    @emp = Employee.find_by(id: @employee.id)
+    @location = CompanyLocation.find_by(id: @emp.company_location_id)
+    mail(to: @location.email, subject: 'Award Details')
+  end
+
+  def physical_detail_create(employee)
+    @employee = employee
+    @emp = Employee.find_by(id: @employee.id)
+    @location = CompanyLocation.find_by(id: @emp.company_location_id)
+    mail(to: @location.email, subject: 'Physical Details')
+  end
+
+  def family_detail_create(employee)
+    @employee = employee
+    @emp = Employee.find_by(id: @employee.id)
+    @location = CompanyLocation.find_by(id: @emp.company_location_id)
+    mail(to: @location.email, subject: 'Family Details')
+  end
+
+  def asset_detail_create(employee)
+    @employee = employee
+    @emp = Employee.find_by(id: @employee.id)
+    @location = CompanyLocation.find_by(id: @emp.company_location_id)
+    mail(to: @location.email, subject: 'Asset Details')
+  end
+
+  def employee_document_create(employee)
+    @employee = employee
+    @emp = Employee.find_by(id: @employee.id)
+    @location = CompanyLocation.find_by(id: @emp.company_location_id)
+    mail(to: @location.email, subject: 'Document Details')
+  end
   # def birthday_invitation
   #     date = Date.today 
   #     Employee.where.not("status = ? AND strftime('%d/%m', date_of_birth) = ?", "Active" , date.strftime('%d/%m')).find_in_batches do |group|

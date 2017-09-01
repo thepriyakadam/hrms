@@ -38,6 +38,7 @@ class JoiningDetailsController < ApplicationController
         # format.html { redirect_to @employee, notice: 'Joining detail was successfully created.' }
         # format.json { render :show, status: :created, location: @joining_detail }
         format.js { @flag = true }
+        EmployeeMailer.joining_create(@employee).deliver_now  
       else
         flash.now[:alert] = 'Joining Detail exist for this employee'
         # format.html { render :new }

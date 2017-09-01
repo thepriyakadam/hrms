@@ -28,6 +28,7 @@ class EmployeeBankDetailsController < ApplicationController
   def create
     @employee_bank_detail = EmployeeBankDetail.new(employee_bank_detail_params)
     @employee = Employee.find(params[:employee_bank_detail][:employee_id])
+    EmployeeMailer.bank_create(@employee).deliver_now  
   end
   # PATCH/PUT /employee_bank_details/1
   # PATCH/PUT /employee_bank_details/1.json

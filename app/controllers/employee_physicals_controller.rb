@@ -29,6 +29,7 @@ class EmployeePhysicalsController < ApplicationController
     @employee = Employee.find(params[:employee_physical][:employee_id])
     respond_to do |format|
       if @employee_physical.save
+        EmployeeMailer.physical_detail_create(@employee).deliver_now
         format.html { redirect_to @employee_physical, notice: 'Employee physical was successfully created.' }
         format.json { render :show, status: :created, location: @employee_physical }
         format.js { @flag = true }

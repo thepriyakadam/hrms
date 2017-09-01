@@ -144,12 +144,19 @@
       </tr>
 
      <tr>
+     <th><strong>Download Profile Picture</strong></th>
+     <td><% if @employee.passport_photo_file_name == nil %>
+        <small class="label label-default">Not Available</small>
+        <% else %>
+        <center><%= link_to '',download_employee_profile_picture_path(@employee),class: 'btn btn-xs btn btn-primary fa fa-download' %></center>
+       <%end %>
+    </td>
+
       <th><strong>Signature</strong></th>
-    <td colspan="3">
-  <% if @employee.employee_signature_file_name == nil %>
+    <td><% if @employee.employee_signature_file_name == nil %>
    <%= image_tag "white_signature.png",class: "img", alt: "User Image", size: "120x30"  %>
       <% else %>
-    <center><%= link_to '',download_employee_signature_path(@employee),class: 'btn btn-xs fa fa-picture-o' %></center>
+    <!-- <center><= link_to '',download_employee_signature_path(@employee),class: 'btn btn-xs fa fa-picture-o' %></center> -->
     <%= image_tag @employee.employee_signature.url, :size => "120x30" %><br><br>
   <%end %>
   </td>

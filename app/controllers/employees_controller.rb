@@ -1451,6 +1451,14 @@ def show_all_record
               disposition: 'attachment'
   end
 
+    def download_employee_profile_picture
+    @employee = Employee.find(params[:id])
+    send_file @employee.passport_photo.path,
+              filename: @employee.passport_photo_file_name,
+              type: @employee.passport_photo_content_type,
+              disposition: 'attachment'
+  end
+
 
   private
 

@@ -30,9 +30,9 @@ class ExperiencesController < ApplicationController
     ActiveRecord::Base.transaction do
       respond_to do |format|
         if @experience.save
-          len = params['experience'].length - 4
+          len = params['experience'].length - 7
           for i in 2..len
-            Experience.create(employee_id: params['experience']['employee_id'], no_of_year: params['experience'][i.to_s]['no_of_year'], company_name: params['experience'][i.to_s]['company_name'], designation: params['experience'][i.to_s]['designation'], ctc: params['experience'][i.to_s]['ctc'])
+            Experience.create(employee_id: params['experience']['employee_id'], no_of_year: params['experience'][i.to_s]['no_of_year'], company_name: params['experience'][i.to_s]['company_name'], designation: params['experience'][i.to_s]['designation'], ctc: params['experience'][i.to_s]['ctc'],start_date: params['experience'][i.to_s]['start_date'],end_date: params['experience'][i.to_s]['end_date'],description: params['experience'][i.to_s]['description'])
           end
           @experiences = @employee.experiences
         EmployeeMailer.experience_create(@employee).deliver_now
@@ -104,6 +104,10 @@ class ExperiencesController < ApplicationController
     redirect_to root_url, notice: "File imported."
   end
 
+  def exp_modal
+    @experience = Experience.find(params[:format])
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -113,6 +117,6 @@ class ExperiencesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def experience_params
-    params.require(:experience).permit(:employee_id, :no_of_year, :company_name, :designation, :ctc)
+    params.require(:experience).permit(:employee_id, :no_of_year, :company_name, :designation, :ctc,:start_date,:end_date,:description)
   end
 end

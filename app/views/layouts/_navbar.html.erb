@@ -78,8 +78,11 @@
               <%= render 'sidebars/group_time_management' %>
               <% elsif current_user.role.name == 'AdminTimeManagement' %>
               <%= render 'sidebars/admin_time_management' %>
+               <% elsif current_user.role.name == 'NewEmployee' %>
+              <%= render 'sidebars/new_employee' %>
             <% else %>
               <%= render 'sidebars/employee' %>
+              
             <% end %>
           <%end%>
           

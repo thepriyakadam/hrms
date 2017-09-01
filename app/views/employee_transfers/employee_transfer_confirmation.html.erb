@@ -51,12 +51,7 @@
 
      <table id="example1" class="table table-bordered table-hover table-condensed">
 <tbody>
-            <tr><td colspan="4"><font color='red'><center>Previous Detail's of Employee</center></font></td></tr>
-            <tr><th> Employee ID </th>
-              <td><%= @employee_transfer.try(:employee).try(:manual_employee_code) %></td>
-              <th>Employee Name</th>
-              <td><%= full_name(@employee_transfer.employee) %></td>
-            </tr>
+            <tr><td colspan="4"><font color='label-primary'><center>Previous Detail's of <%= @employee_transfer.employee.try(:manual_employee_code) %> - <%= full_name(@employee_transfer.employee) %></center></font></td></tr>
 
             <tr>
               <th>Employee Designation</th>
@@ -82,13 +77,7 @@
 
 <table id="example1" class="table table-bordered table-hover table-condensed">
 <tbody>
-            <tr><td colspan="4"><font color='red'><center>Current Detail's of Employee</center></font></td></tr>
-            <tr>
-            <th> Employee ID </th>
-            <td><%= @employee_transfer.try(:employee).try(:manual_employee_code) %></td>
-            <th>Employee Name</th>
-            <td><%= full_name(@employee_transfer.employee) %></td>
-            </tr>
+            <tr><td colspan="4"><font color='label-primary'><center>Current Transfer Request Detail of <%= @employee_transfer.employee.try(:manual_employee_code) %> - <%= full_name(@employee_transfer.employee) %></center></font></td></tr>
 
             <tr>
               <th>Request To</th>

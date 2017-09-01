@@ -1095,6 +1095,7 @@ end
       get :final_approved_list
       get :confirm_resignation
       get :cancel_resignation_list
+      get :modal_resignation_detail
   end
 end
   resources :travel_options do

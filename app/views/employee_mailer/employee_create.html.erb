@@ -1,1 +1,39 @@
-New Employee
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  
+  <body>
+     <h4>Employee Basic Information</h4>
+    <p>
+    	ID : <%= @emp.manual_employee_code %><br>
+    	Code : <%= @emp.employee_code %><br>
+    	Employee : <%= @emp.prefix %> <%= @emp.first_name %> <%= @emp.last_name %><br>
+    	Date Of Birth : <%= @emp.date_of_birth %><br>
+    	Contact No : <%= @emp.contact_no %><br>
+    	Email : <%= @emp.try(:email) %><br>
+    	Permanent Address : <%= @emp.permanent_address %><br>
+    	Country : <%= @emp.country.name %><br>
+    	State : <%= @emp.state.name %><br>
+    	District : <%= @emp.district.name %><br>
+    	City : <%= @emp.try(:city) %><br>
+    	Pin Code : <% @emp.try(:pin_code) %><br>
+    	Current Address : <%= @emp.try(:current_address) %><br>
+    	Adhar No : <%= @emp.try(:adhar_no) %><br>
+    	Pan No : <%= @emp.try(:pan_no) %><br>
+    	Licence No : <% @emp.try(:licence_no) %><br>
+    	Marital Status : <%= @emp.try(:marital_status) %><br>
+    	Blood Group : <%= @emp.try(:blood_group).try(:name) %><br>
+    	Employee Type : <%= @emp.try(:employee_type).try(:name) %><br>
+    	Nationality : <%= @emp.try(:nationality).try(:name) %><br>
+    	Religion : <%= @emp.try(:religion).try(:name) %><br>
+    	Manager : <%= @emp.try(:manager).try(:name) %><br>
+    	Manager2 : <%= @emp.try(:manager2).try(:name) %><br>
+    	Company : <%= @emp.try(:company).try(:name) %><br>
+    	Company Location : <%= @emp.try(:company_location).try(:name) %><br>
+    	Department : <%= @emp.department.try(:name) %><br>
+    	Sub Department : <%= @emp.sub_department.try(:name) %><br>
+    </p>
+  </body>
+</html>

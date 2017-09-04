@@ -1023,6 +1023,7 @@ end
       get :print_employee_promotion
       get :display_certificate
       get :print_certificate
+      get :modal_promotion
     end
   end
   resources :accident_masters

@@ -41,7 +41,7 @@ class EmployeeDocumentsController < ApplicationController
      respond_to do |format|
       if @employee_document.save
         @employee_documents = EmployeeDocument.where(employee_id: @employee.id)
-        EmployeeMailer.employee_document_create(@employee).deliver_now
+        EmployeeMailer.employee_document_create(@employee,@employee_document).deliver_now
         format.html { redirect_to @employee_document, notice: 'Employee Document saved Successfully.' }
         format.json { render :show, status: :created, location: @employee_document }
         format.js { @flag = true }

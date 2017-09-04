@@ -1,1 +1,46 @@
-qualification_create
+ <!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+     <h4>Employee Qualification Detail</h4>
+    <p>
+      <table id="example2" class="table table-bordered table-hover table-condensed">
+        <tr> 
+          <th colspan="2"></th>
+          <th colspan="2"></th>
+        </tr>
+
+        <tr>
+          <th><strong>Employee:</strong></th>
+          <td>  <%= @qualification.employee %></td>
+
+          <th><strong>Degree Type:</strong></th>
+          <td><%= @qualification.degree_type_id.try(:name) %></td>
+        </tr>
+        <tr>
+          <th><strong>Degree</strong></th>
+          <td><%= @qualification.degree_id.try(:name) %></td>
+
+          <th><strong>Degree Stream</strong></th>
+          <td><%= @qualification.degree_stream_id.try(:name) %></td>
+        </tr>
+        <tr>
+          <th><strong>College</strong></th>
+          <td><%= @qualification.college %></td>
+
+          <th><strong>Marks</strong></th>
+          <td><%= @qualification.marks %></td>
+        </tr>
+        <tr>
+          <th><strong>Passing Year</strong></th>
+          <td><%= @qualification.year_id%></td>
+
+          <th><strong>University</strong></th>
+          <td><%= @qualification.university_id.try(:name) %></td>
+        </tr>
+        </table>
+    </p>
+  </body>
+</html>

@@ -1,1 +1,162 @@
-Joining Detail
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  
+  <body>
+     <h4>Employee Joining Information</h4>
+    <p>
+    	
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+   <tr><th colspan="4"><center><font color='#0077b3'>Employee On Boarding Detail</font></center> </th></tr>
+
+    <tr>
+      <th><strong>UAN No.</strong></th>
+      <td><%= @joining_detail.employee_uan_no %></td>
+      <th></th>
+      <td></td>
+    </tr>
+
+
+    <tr>
+      <th> <strong>Joining Date</strong></th>
+      <td><%= @joining_detail.joining_date %></td>
+
+      <th> <strong>Confirmation Date</strong></th>
+      <td><%= @joining_detail.confirmation_date %></td>
+    </tr>
+  
+    <tr>
+      <th><strong>Employee Grade</strong></th>
+      <td><%= @joining_detail.employee_grade.try(:name) %></td>
+
+      <th><strong>Employee Designation</strong></th>
+      <td><%= @joining_detail.employee_designation.try(:name) %></td>
+    </tr>
+    <tr>
+      <th><strong>Employee Category</strong></th>
+      <td><%= @joining_detail.employee_category.try(:name) %></td>
+
+      <th><strong>Cost Center</strong></th>
+      <td><%= @joining_detail.cost_center.try(:name) %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Probation Period</strong></th>
+      <td><%= @joining_detail.probation_period %></td>
+   
+      <th><strong>Notice Period</strong></th>
+      <td><%= @joining_detail.notice_period %></td>
+    </tr> 
+
+     <tr>
+      <th><strong>Passport</strong></th>
+      <td><%= @joining_detail.have_passport %></td>
+
+      <th><strong>Passport No.</strong></th>
+      <td><%= @joining_detail.passport_no %></td>
+    </tr> 
+
+    <tr>
+      <th><strong>Passport Issue Date</strong></th>
+      <td><%= @joining_detail.passport_issue_date %></td>
+
+      <th> <strong>Passport Expiry Date</strong></th>
+      <td> <%= @joining_detail.passport_expiry_date %></td>
+    </tr>
+
+    <tr>
+     <!--  <th><strong>Reserved Category</strong></th>
+      <td>< @joining_detail.reserved_category.try(:name) %></td> -->
+      <th><strong>Leaving Date</strong></th>
+      <td><%= @joining_detail.try(:leaving_date) %></td>
+
+      <th><strong>Medical Insurance</strong></th>
+      <td> <%= @joining_detail.medical_schem %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Employee Option</strong></th>
+      <td><%= @joining_detail.is_new ? "New" : "Replacement" %></td>
+
+
+      <th><strong>Employee Replacement</strong></th>
+      <td><%= @joining_detail.try(:replacement).try(:employee).try(:first_name) %> <%= @joining_detail.try(:replacement).try(:employee).try(:last_name) %></td>
+     </tr>
+
+      <tr>
+        <th><strong>Compansatory Off</strong></th>
+        <td colspan="3"><%= @joining_detail.c_off ? "Yes" : "No" %></td>
+      </tr>
+      
+    <tr><th colspan="4"><center><font color='#0077b3'>Employee Payroll Detail</font></center> </th></tr>
+
+    <tr>
+      <th><strong>Payment Mode</strong></th>
+      <td><%= @joining_detail.payment_mode.try(:name) %></td>
+
+      <th>Basis Of Time</th>
+      <td><%= @joining_detail.basis_of_time ? "Yes" : "No" %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Employer PF</strong></th>
+      <td><%= @joining_detail.is_employeer_pf ? "Yes" : "No" %></td>
+
+      <th><strong>Employee PF</strong></th>
+      <td><%= @joining_detail.select_pf %></td>
+    </tr>
+
+    <tr>
+      <th><strong>PF No.</strong></th>
+      <td><%= @joining_detail.employee_pf_no %></td>
+
+      <th><strong>PF Max Amount</strong></th>
+      <td><%= @joining_detail.pf_max_amount %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Employer ESIC</strong></th>
+      <td><%= @joining_detail.is_employeer_esic ? "Yes" : "No" %></td>
+
+      <th><strong>Employee ESIC</strong></th>
+      <td><%= @joining_detail.have_esic ? "Yes" : "No" %></td>
+    </tr>
+     
+    <tr>
+      <th><strong>ESIC No.</strong></th>
+      <td><%= @joining_detail.employee_efic_no %></td>
+
+      <th><strong>Retention</strong></th>
+      <td><%= @joining_detail.have_retention ? "Yes" : "No" %></td>
+    </tr>
+
+     <tr>
+      <th><strong>Insurance</strong></th>
+      <td><%= @joining_detail.is_insurance ? "Yes" : "No" %></td>
+
+      <th><strong>Family Insurance</strong></th>
+      <td><%= @joining_detail.is_family_pension ? "Yes" : "No" %></td>   
+     </tr>
+
+     <tr>
+      <th><strong>DA</strong></th>
+      <td></td>
+
+      <th><strong>Bonus</strong></th>
+      <td><%= @joining_detail.is_bonus ? "Yes" : "No" %></td>   
+     </tr>
+
+      <tr>
+      <th><strong>OT Option</strong></th>
+      <td><%= @joining_detail.ot_option ? "Yes" : "No" %></td>
+
+
+      <th><strong>OT Rate</strong></th>
+      <td><%= @joining_detail.ot_rate %></td>
+     </tr>
+     </table>
+    </p>
+  </body>
+</html>

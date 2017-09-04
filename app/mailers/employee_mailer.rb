@@ -29,74 +29,85 @@ class EmployeeMailer < ApplicationMailer
     mail(to: @emp.company_location.email, subject: 'Employee Details')
   end
 
-  def joining_create(employee)
+  def joining_create(employee,joining_detail)
+    @joining_detail = joining_detail
     @emp = Employee.find_by(id: employee.id)
     mail(to: @emp.company_location.email, subject: 'Joining Details')
   end
 
-  def bank_create(employee)
+  def bank_create(employee,employee_bank_detail)
+    @employee_bank_detail = employee_bank_detail
     @emp = Employee.find_by(id: employee.id)
     @location = CompanyLocation.find_by(id: @emp.company_location_id)
     mail(to: @location.email, subject: 'Bank Details')
   end
 
-  def qualification_create(employee)
+  def qualification_create(employee,qualification)
+    @qualification = qualification
     @employee = employee
     @emp = Employee.find_by(id: @employee.id)
     @location = CompanyLocation.find_by(id: @emp.company_location_id)
     mail(to: @location.email, subject: 'Qualification Details')
   end
 
-  def experience_create(employee)
+  def experience_create(employee,experience)
+    @experience = experience
     @employee = employee
     @emp = Employee.find_by(id: @employee.id)
     @location = CompanyLocation.find_by(id: @emp.company_location_id)
     mail(to: @location.email, subject: 'Experience Details')
   end
 
-  def skillset_create(employee)
+  def skillset_create(employee,skillset)
+    @skillset = skillset
     @employee = employee
     @emp = Employee.find_by(id: @employee.id)
     @location = CompanyLocation.find_by(id: @emp.company_location_id)
     mail(to: @location.email, subject: 'Skillset Details')
   end
 
-  def certification_create(employee)
+  def certification_create(employee,certification)
+    @certification = certification
     @employee = employee
     @emp = Employee.find_by(id: @employee.id)
     @location = CompanyLocation.find_by(id: @emp.company_location_id)
     mail(to: @location.email, subject: 'Certification Details')
   end
 
-  def award_create(employee)
+  def award_create(employee,award)
+    @award = award
     @employee = employee
     @emp = Employee.find_by(id: @employee.id)
     @location = CompanyLocation.find_by(id: @emp.company_location_id)
     mail(to: @location.email, subject: 'Award Details')
   end
 
-  def physical_detail_create(employee)
+  def physical_detail_create(employee,employee_physical)
+    @employee_physical = employee_physical
     @employee = employee
     @emp = Employee.find_by(id: @employee.id)
     @location = CompanyLocation.find_by(id: @emp.company_location_id)
     mail(to: @location.email, subject: 'Physical Details')
   end
 
-  def family_detail_create(employee)
+  def family_detail_create(employee,family)
+    @family = family
     @employee = employee
     @emp = Employee.find_by(id: @employee.id)
     @location = CompanyLocation.find_by(id: @emp.company_location_id)
     mail(to: @location.email, subject: 'Family Details')
   end
 
-  def asset_detail_create(employee)
+  def asset_detail_create(employee,assigned_asset)
+    @assigned_asset = assigned_asset
     @employee = employee
     @emp = Employee.find_by(id: @employee.id)
     @location = CompanyLocation.find_by(id: @emp.company_location_id)
     mail(to: @location.email, subject: 'Asset Details')
   end
 
-  def employee_document_create(employee)
+  def employee_document_create(employee,employee_document)
+    @employee_document = employee_document
     @employee = employee
     @emp = Employee.find_by(id: @employee.id)
     @location = CompanyLocation.find_by(id: @emp.company_location_id)

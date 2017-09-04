@@ -1,1 +1,43 @@
-bank_create.html.erb
+ <!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>
+      <table id="example2" class="table table-bordered table-hover table-condensed'">
+        <tr>
+          <th colspan="4"><center><font color='#0077b3'>Bank Detail </font></center></th>
+        </tr>
+
+        <tr>
+          <th> <strong>Account No.</strong></th>
+          <td><%= @employee_bank_detail.account_no %></td>
+          <th><strong>Bank Name</strong></th>
+          <td><%= @employee_bank_detail.bank.try(:name) %></td>
+        </tr>
+
+        <tr>
+          <th><strong>Branch Name</strong></th>
+          <td><%= @employee_bank_detail.branch_name %></td>
+          <th><strong>IFSC Code</strong></th>
+          <td><%= @employee_bank_detail.ifsc_code %></td>
+        </tr>
+
+        <tr>
+          <th><strong>MICR Code</strong></th>
+          <td><%= @employee_bank_detail.micr_code %></td>
+          <th><strong>Branch Code</strong></th>
+          <td> <%= @employee_bank_detail.branch_code %></td>
+        </tr>
+
+        <tr>
+         <th><strong>Address</strong></th>
+          <td> <%= @employee_bank_detail.address %></td>
+          <th><strong>Contact No.</strong></th>
+          <td> <%= @employee_bank_detail.contact_no %></td>
+        <tr>
+      </table>
+    </p>
+  </body>
+</html>

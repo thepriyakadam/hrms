@@ -1,1 +1,30 @@
-physical_detail_create.html.erb
+		 <!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>
+	<table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr><th colspan="4"><center><font color='#0077b3'>Physical Detail</font></center> </th></tr>
+
+	    <tr>
+	        <th> <strong>Height(inches)</strong></th>
+	        <td> <%= @employee_physical.height %></td>
+	       
+	        <th><strong>Weight(kg)</strong></th>
+	        <td><%= @employee_physical.weight %></td>
+	    </tr>
+	     <tr>
+
+	        <th> <strong>T-Shirt Size</strong></th>
+	        <td> <%= @employee_physical.size %></td>
+
+	          <th> <strong>Trouser Size(cm)</strong></th>
+	        <td> <%= @employee_physical.trouser_size %></td>
+
+	    </tr>
+	    </table>
+    </p>
+  </body>
+</html>

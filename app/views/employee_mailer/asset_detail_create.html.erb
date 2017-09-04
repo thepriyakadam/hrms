@@ -1,1 +1,53 @@
-asset_detail_create.html.erb
+ <!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+   <h4>Employee Asset Detail</h4>
+    <p>
+      <table id="example2" class="table table-bordered table-hover table-condensed">
+	  
+    	<tr>
+		  <th><strong>Employee</strong></th>
+		 <td>  <%= @assigned_asset.employee.first_name %> <%= @assigned_asset.employee.last_name %></td>
+
+		 <th><strong>Asset Type</strong></th>
+		  <td><%= @assigned_asset.asset_type %></td>
+		 </tr>
+		 <tr>
+		  <th><strong>Asset Details</strong></th>
+		  <td><%= @assigned_asset.assets_detail %></td>
+
+		  <th><strong>Asset </strong></th>
+		  <td><%= @assigned_asset.assets_id %></td>
+		</tr>
+		<tr>
+		  <th><strong>Asset Value</strong></th>
+		  <td><%= @ assigned_asset.assets_value %></td>
+
+		  <th><strong>Asset Status</strong></th>
+		  <td><%= @assigned_asset.assest_status %></td>
+		</tr>
+
+		<tr>
+		  <th><strong>Issue Date</strong></th>
+		  <td><%= @assigned_asset.issue_date%></td>
+
+		  <th><strong>Valid Till</strong></th>
+		  <td><%= @assigned_asset.valid_till %></td>
+		</tr>
+
+		<tr>
+		<th><strong>Returned On</strong></th>
+		<th><%= @assigned_asset.returned_on %></th>
+
+		<tr>
+		<th><strong>Remarks</strong></th>
+		<th><%= @assigned_asset.returned_on %></th>
+
+		</tr>
+	  </table>
+    </p>
+  </body>
+</html>

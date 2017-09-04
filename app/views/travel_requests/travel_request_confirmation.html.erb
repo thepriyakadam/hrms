@@ -1,6 +1,6 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Travel Request Confirmation List</h3>
+    <h3 class="box-title">Travel Request Confirmation Detail</h3>
   </div>
 <div class="box-body">
  <table id="example1" class="table table-bordered table-hover table-condensed">
@@ -37,27 +37,15 @@
   </tbody>
 </table><br>
 
-<div class="row">
-      <div class="col-sm-12"><strong> <font color='green'>Note - * Row is the latest row to approve/reject </font></strong></div>
-  </div><br>
-
  <table id="example1" class="table table-bordered table-hover table-condensed">
     <tbody>
-      <tr><td colspan="4"><font color='red'><center>Current Travel Request Detail</center></font></td></tr>
+      <tr><td colspan="4"><font color='label-primary'><center>Current Travel Request Detail of <%= @travel_request.employee.try(:manual_employee_code) %> - <%= full_name(@travel_request.employee) %></center></font></td></tr>
     <tr>
       <th>Traveling Request ID</th>
       <td><%= @travel_request.id %></td>
 
       <th><strong>Application Date</strong></th>
       <td><%= @travel_request.application_date %></td>
-    </tr>
-
-    <tr>
-      <th><strong>Employee ID</strong></th>
-      <td><%= @travel_request.employee.try(:manual_employee_code) %></td>
-
-      <th><strong>Employee Name</strong></th>
-      <td><%= @travel_request.employee.try(:first_name) %> <%= @travel_request.employee.try(:middle_name) %> <%= @travel_request.employee.try(:last_name) %></td>
     </tr>
 
     <tr>
@@ -89,7 +77,7 @@
       <th><strong>To Date</strong></th>
       <td><%= @travel_request.to %></td>
   
-      <th><strong>Day</strong></th>
+      <th><strong>Days</strong></th>
       <td><%= @travel_request.day %></td>
       
     </tr>

@@ -245,11 +245,21 @@
            </div>
           </div>
         </div>
-        <div class="col-sm-3">
-          <div class="form-group required">
-            <%= f.select :sub_department_id, all_sub_department, {label: 'Sub Department',include_blank: " Select Sub Department"} %>
+         <div class="col-sm-3">
+            <div class="form-group required">
+            <div class="input-group">
+              <div id="sub_department">
+                <%= render 'employees/sub_department_dropdown' %> 
+              </div> 
+           </div>
           </div>
         </div>
+
+        <!-- <div class="col-sm-3">
+          <div class="form-group required">
+            <= f.select :sub_department_id, all_sub_department, {label: 'Sub Department',include_blank: " Select Sub Department"} %>
+          </div>
+        </div> -->
      </div>
 
       <div class="row">

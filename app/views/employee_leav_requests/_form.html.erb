@@ -5,7 +5,7 @@
   </div><!-- /.box-header -->
 
   <div class="box-body">
-    <%= bootstrap_form_for(@employee_leav_request,html: {id: 'employee_leav_request'}) do |f| %>
+    <%= bootstrap_form_for(@employee_leav_request) do |f| %>
      <%= hidden_field :employee_id, value: @employee.id %>
      <div class="row">
       <div class="col-sm-6">
@@ -68,33 +68,3 @@
   </div><!-- /.box-body -->
   </div>
 <br>
-<script type="text/javascript">
-$("#employee_leav_request").validate({
-    rules: {
-      "employee_leav_request[leav_category_id]":{
-        required: true
-      }
-    },
-    messages: {
-      "employee_leav_request[leav_category_id]":{
-        required: "Please specify leave category."
-      }
-    },
-    errorPlacement: function(error, element) {
-     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
-     error.insertAfter(element.parent(element));
-    }
-  });
-
-// $('#employee_leav_request_leav_category_id').on('change', function() {
-//     if ($('#employee_leav_request_leav_category_id').val() ==  @leav_id.inject{|n| n} ){
-//       $("#c_off_form").show();
-//       $("#normal_form").hide();
-//     }
-//     else{
-      
-//       $("#normal_form").show();
-//       $("#c_off_form").hide();
-//     }
-//   });
-</script>

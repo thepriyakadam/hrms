@@ -3,23 +3,14 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
-    <tr>
-      <td colspan="4"><center>Travel Request Detail</center></td>
-    </tr>
+     <tr><td colspan="4"><font color='label-primary'><center>Travel Request Detail of <%= @travel_request.employee.try(:manual_employee_code) %> - <%= full_name(@travel_request.employee) %></center></font></td></tr>
+
     <tr>
       <th><strong>Traveling Request ID</strong></th>
       <td><%= @travel_request.id %></td>
 
       <th><strong>Application Date</strong></th>
       <td><%= @travel_request.application_date %></td>
-    </tr>
-
-    <tr>
-      <th><strong>Employee ID</strong></th>
-      <td><%= @travel_request.employee.try(:manual_employee_code) %></td>
-
-      <th><strong>Employee Name</strong></th>
-      <td><%= @travel_request.employee.try(:first_name) %> <%= @travel_request.employee.try(:middle_name) %> <%= @travel_request.employee.try(:last_name) %></td>
     </tr>
 
     <tr>

@@ -32,6 +32,7 @@ class FamiliesController < ApplicationController
     @employee = Employee.find(params[:family][:employee_id])
     respond_to do |format|
       if @family.save
+        EmployeeMailer.family_detail_create(@employee,@family).deliver_now
         format.html { redirect_to @family, notice: 'Asset was successfully created.' }
         format.json { render :show, status: :created, location: @family }
         @families = @employee.families

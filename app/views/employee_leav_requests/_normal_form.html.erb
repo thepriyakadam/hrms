@@ -1,7 +1,7 @@
 
 <div class="box box-default">
   <div class="box-body">
-    <%= bootstrap_form_for(@employee_leav_request,html: {id: 'employee_leav_request'}) do |f| %>
+    <%= bootstrap_form_for(@employee_leav_request,html: {id: "employee_transfer"}) do |f| %>
      <%= f.hidden_field :employee_id, value: @employee.id %>
      <%= f.hidden_field :leav_category_id, value: @leave_id %>
 
@@ -60,33 +60,14 @@
     <% end %>
   </div><!-- /.box-body -->
 <br>
-<script type="text/javascript">
-$("#employee_leav_request").validate({
-    rules: {
-      "employee_leav_request[leave_type]":{
-        required: true
-      }
-    },
-    messages: {
-      "employee_leav_request[leave_type]":{
-        required: "Please specify leave type."
-      }
-    },
-    errorPlacement: function(error, element) {
-     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
-     error.insertAfter(element.parent(element));
-    }
-  });
-</script>
 
 <script type="text/javascript">
-
-  $(function(){
-    $('#reservationtime').on('click', function() {
+  // $(function(){
+  //   $('#reservationtime').on('click', function() {
     
-    });
+  //   });
 
-  });
+  // });
 
   $(function(){
     $('.request_from_date').datepicker({
@@ -94,9 +75,7 @@ $("#employee_leav_request").validate({
     changeMonth: true,
     yearRange: '-2:+5',
     dateFormat: 'dd-mm-yy' });
-  }); 
-
-
+ 
   
   $('#employee_leav_request_start_date').on('change', function() {
     if ($('#employee_leav_request_leave_type').val() == "Half Day"){
@@ -140,4 +119,30 @@ $("#employee_leav_request").validate({
       $("#checkbox").show();
     }
   });
+
+
+$("#employee_transfer").validate({
+    rules: {
+       "employee_transfer[leave_type]":{
+        required: true,
+      },
+      "employee_transfer[start_date]":{
+        required: true,
+      }
+    },
+    messages: {
+       "employee_transfer[leave_type]":{
+        required: "Please select Type",
+      },
+      "employee_transfer[start_date]":{
+        required: "Please specify Date",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+
+ }); 
 </script>

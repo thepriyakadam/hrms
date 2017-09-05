@@ -162,6 +162,7 @@
         @joining_checklist_master.each do |jc|
         EmployeeJcList.create(joining_checklist_master_id: jc.id,employee_id: @employee.id,status: false)
         end
+        EmployeeMailer.employee_create(@employee).deliver_now   
         redirect_to @employee    
       else
         render :new
@@ -574,12 +575,11 @@ end
 
   def collect_sub_department
     @department = Department.find(params[:id])
-    @sub_departments = SubDepartment.where(sub_department_id: @department.id)
+    @sub_departments = SubDepartment.where(department_id: @department.id)
     @form = params[:form]
   end
 
   def collect_employee
-    # byebug
      @department = Department.find(params[:id])
      @employees = Employee.where(department_id: @department.id)
      @form = params[:form]

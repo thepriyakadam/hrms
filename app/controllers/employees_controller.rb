@@ -1186,8 +1186,6 @@ def show_all_record
   end
 
   def update_gps
-    # byebug
-    # Member.find(params[:id])
     @emp = params[:member][:employee_id]
     @latitude = params[:member][:latitude]
     @longitude = params[:member][:longitude]
@@ -1211,7 +1209,6 @@ def show_all_record
   end
 
   def display_employee_details
-    # byebug
      @emp = params[:employee] ? params[:employee][:id] : params[:id]
      @employee = Employee.where(id: @emp).take
      @families = Family.where(employee_id: @emp)

@@ -8,18 +8,18 @@
     <p>
       <table id="example2" class="table table-bordered table-hover table-condensed">
 	   <tr>
-    	<th><strong>Employee:</strong></th>
-    	<td><%= @award.employee.first_name %> <%= @award.employee.last_name %></td>
+    	<th><strong>Employee</strong></th>
+    	<td><%= @award.employee.first_name %> <%= @award.employee.first_name %> <%= @award.employee.last_name %></td>
 
-    	<th><strong>Award name:</strong></th>
+    	<th><strong>Award name</strong></th>
     	<td><%= @award.award_name %></td>
     </tr>
 
      <tr>
-    	<th> <strong>Year:</strong></th>
-    	<td><%= @year.name %></td>
+    	<th> <strong>Year</strong></th>
+    	<td><%= @award.try(:year).try(:name) %></td>
 
-    	<th> <strong>Award from:</strong></th>
+    	<th> <strong>Award From</strong></th>
     	<td> <%= @award.award_from %></td>
     </tr>
      </table>

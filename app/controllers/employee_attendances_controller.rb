@@ -243,12 +243,12 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def display_attendance_2
-    @from = params[:from] ? params[:employee][:from] : params[:from]
-    @to = params[:to] ? params[:employee][:to] : params[:to]
-    company = params[:company_id] ? params[:employee][:company_id] : params[:company_id]
-    location = params[:company_location_id] ? params[:employee][:company_location_id] : params[:company_location_id]
-    department = params[:department_id] ? params[:employee][:department_id] : params[:department_id]
-    status =params[:status] ? params[:employee][:status] : params[:status]
+    @from = params[:employee][:from]
+    @to = params[:employee][:to]
+    company = params[:employee][:company_id]
+    location = params[:employee][:company_location_id]
+    department = params[:employee][:department_id]
+    status = params[:employee][:status]
     @from_date = @from.to_date
     @to_date = @to.to_date
     #@date = Date.new(@year.to_i, Workingday.months[@month])
@@ -1709,8 +1709,6 @@ def upload
             end
           end#employee.nil?
   end#do
-  DailyAttendance.where(date: last.date.to_date).destroy_all
-
   #remaining employees attendance creation
     @employees = Employee.where(status: "Active")
     @employees.each do |e|

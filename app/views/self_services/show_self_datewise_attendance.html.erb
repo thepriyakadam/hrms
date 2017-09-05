@@ -7,7 +7,7 @@
     <% i = 0%>
       <thead>
       <tr>
-          <td colspan="6"><center> 
+          <td colspan="7"><center> 
             <% if current_user.try(:employee).try(:company_location).try(:company).try(:company_logo) == nil %>
             <% else %>
               <center> <%= image_tag current_user.try(:employee).try(:company_location).try(:company).try(:company_logo).url, :size => "100x80" %></center><br>
@@ -17,11 +17,11 @@
               </center>
           </td>
         </tr>
-        <tr><th colspan="6"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
+        <tr><th colspan="7"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
       <tr>
         <td>ID : <%= current_user.employee.manual_employee_code %></td>
         <td colspan="2">Employee : <%= full_name(current_user.employee) %></td>
-        <td colspan="3">Department : <%= current_user.employee.company_location.try(:name) %> - <%= current_user.employee.department.try(:name) %></td>
+        <td colspan="4">Department : <%= current_user.employee.company_location.try(:name) %> - <%= current_user.employee.department.try(:name) %></td>
       </tr>
         <tr>
           <th>Sr.No.</th>

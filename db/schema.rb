@@ -1349,12 +1349,9 @@ ActiveRecord::Schema.define(version: 20170904054444) do
     t.string   "employee_signature_content_type", limit: 255
     t.integer  "employee_signature_file_size",    limit: 4
     t.datetime "employee_signature_updated_at"
-<<<<<<< HEAD
     t.integer  "service_master_id",               limit: 4
     t.integer  "resource_pool_master_id",         limit: 4
-=======
     t.string   "emergency_contact_no",            limit: 255
->>>>>>> 1b28df5563addcac24700a624aac264f79926514
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id", using: :btree

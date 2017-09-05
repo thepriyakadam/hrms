@@ -1,0 +1,104 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Employee Resignation Detail </center></h4>
+    </div>
+    <div class="modal-body">
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+<tr>
+ <th><strong>ID</strong></th>
+ <td><%= @employee_resignation.employee.try (:manual_employee_code )%></td>
+</tr>
+<tr>
+  <th><strong>Employee Name</strong></th>
+ <td><%= full_name(@employee_resignation.employee)%></td>
+ 
+</tr>
+
+ <tr>
+    <td><b>Reporting Manager 1</b></td>
+    <td><%= @employee_resignation.employee.manager.try(:first_name) %> <%= @employee_resignation.employee.manager.try(:middle_name) %> <%= @employee_resignation.employee.manager.try(:last_name) %></td>
+</tr>
+<tr>
+    <td><b>Reporting Manager 2</b></td>
+    <td><%= @employee_resignation.employee.try(:manager_2).try(:first_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:middle_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:last_name) %></td>
+ </tr>
+
+<tr>
+  <th><strong>Resignation Date</strong></th>
+  <td><%= @employee_resignation.resignation_date %></td>
+  </tr>
+
+<tr>
+
+ <th><strong>Leaving Reason</strong></th>
+ <td><%= @employee_resignation.leaving_reason.try(:name)%></td>
+</tr>
+
+<tr>
+ <th><strong>Notice Period (In Months)</strong></th>
+  <td><%= @employee_resignation.notice_period %></td>
+  
+ </tr>
+
+<tr>
+  <th><strong>Short Notice Period</strong></th>
+  <td><%= @employee_resignation.short_notice_period %></td>
+</tr>
+
+
+
+<tr>
+ <th><strong>Requested Releaving Date</strong></th>
+ <td><%= @employee_resignation.tentative_leaving_date %></td>
+ 
+ </tr>
+
+<tr>
+ <th><strong>Exit Interview Date</strong></th>
+  <td><%= @employee_resignation.exit_interview_date %></td>
+  
+</tr>
+
+<tr>
+
+  <th><strong>Leaving Date</strong></th>
+  <td><%= @employee_resignation.leaving_date %></td>
+   </tr>
+
+<tr>
+ <th><strong>Settled On</strong></th>
+ <td><%= @employee_resignation.settled_on %></td>
+
+</tr>
+
+<tr>
+ 
+ <th><strong>Reason</strong></th>
+  <td><%= @employee_resignation.reason %></td>
+
+
+</tr>
+
+<tr>
+ <th><strong>Note</strong></th>
+  <td><%= @employee_resignation.note %></td>
+
+  <!-- <th><strong>Remark</strong></th>
+ <td><%= @employee_resignation.remark %></td> -->
+</tr>
+
+<tr>
+
+  <th><strong>Status</strong></th>
+  <td><%= @employee_resignation.resign_status %></td>
+
+</tr>
+  </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

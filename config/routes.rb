@@ -1023,6 +1023,7 @@ end
       get :print_employee_promotion
       get :display_certificate
       get :print_certificate
+      get :modal_promotion
     end
   end
   resources :accident_masters
@@ -1095,6 +1096,7 @@ end
       get :final_approved_list
       get :confirm_resignation
       get :cancel_resignation_list
+      get :modal_resignation_detail
   end
 end
   resources :travel_options do

@@ -9,13 +9,13 @@
     </div>
     <div class="row">
       <div class="col-sm-3">
-        <label>Date </label>
+        <!-- <label>Date </label> -->
         <div class="form-group required">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :c_off_date,hide_label: true,class: 'c_off_date'%>
+            <%= f.text_field :c_off_date,label: 'Date',class: 'c_off_date'%>
           </div>
         </div>
       </div>
@@ -24,10 +24,9 @@
           <%= f.select :c_off_type,['Full Day','Half Day'],{label: 'Compensatory Off Type',include_blank: " Select Compensatory Off Type"} %>
        </div>
       </div> 
-       <div class="col-sm-2">
-       <label>Is Expire</label>
-        <div class="field" id="checker">
-         <%= f.check_box :expiry_status %>
+       <div class="col-sm-3">
+        <div class="field" id="checker" style="padding: 10px">
+         <%= f.check_box :expiry_status,label: 'Expiry' %>
         </div>
       </div>
     
@@ -39,9 +38,14 @@
      
     </div>
     <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group required">
+              <%= f.text_field :comment, label:'Comment' %>
+        </div>
+      </div>
       <div class="col-sm-3">
-        <div class="actions">
-          <%= f.submit "Create Compensatory Off Leave",:class => class_name, data: { disable_with: data_info } %>
+        <div class="actions" style="padding: 20px">
+          <%= f.submit "Create Compensatory Off",:class => class_name, data: { disable_with: data_info } %>
         </div>
       </div>
     </div>
@@ -71,6 +75,9 @@
       required: true
     },
     "leave_c_off[c_off_expire_day]":{
+      required: true
+      },
+    "leave_c_off[comment]":{
       required: true
     }
   },

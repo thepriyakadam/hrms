@@ -32,6 +32,7 @@ class FamiliesController < ApplicationController
     @employee = Employee.find(params[:family][:employee_id])
     respond_to do |format|
       if @family.save
+        EmployeeMailer.family_detail_create(@employee,@family).deliver_now
         format.html { redirect_to @family, notice: 'Asset was successfully created.' }
         format.json { render :show, status: :created, location: @family }
         @families = @employee.families
@@ -125,6 +126,10 @@ class FamiliesController < ApplicationController
 
   def ajax_show_passport_detail_textbox
     @value = params[:id]
+  end
+
+  def family_modal
+    @family = Family.find(params[:format])
   end
 
   private

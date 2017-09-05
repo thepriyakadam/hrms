@@ -18,7 +18,9 @@ class EmployeeLeavRequest < ActiveRecord::Base
 
   # belongs_to :first_reporter, :class_name => "Employee", :foreign_key => :first_reporter_id
   # belongs_to :second_reporter, :class_name => "Employee", :foreign_key => :second_reporter_id
-
+  # validates :leave_type, presence: true
+  # validates :start_date, presence: true
+  # validates :end_date, presence: true
   #validates :date_range, uniqueness: { scope: [:date_range, :employee_id] }
 
   # CURRENT_STATUSS = [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]]
@@ -553,9 +555,11 @@ class EmployeeLeavRequest < ActiveRecord::Base
                 LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 1,leav_category_id: employee_leav_request.leav_category_id)
               end
             end
-          else#Half_day
+          elsif employee_leav_request.leave_type == 'Half Day'
             LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 0.5,leav_category_id: employee_leav_request.leav_category_id)
-          end#Half_day
+          else
+            LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 1,leav_category_id: employee_leav_request.leav_category_id)
+          end#Full day
 
         end#self.weekoff_present(i,employee)
 
@@ -592,8 +596,10 @@ class EmployeeLeavRequest < ActiveRecord::Base
               LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 1,leav_category_id: employee_leav_request.leav_category_id)
             end
           end
-        else#Half_day
+        elsif employee_leav_request.leave_type == 'Half Day'
           LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 0.5,leav_category_id: employee_leav_request.leav_category_id)
+        else
+          LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 1,leav_category_id: employee_leav_request.leav_category_id)
         end#Half_day
 
       end#leav_category.weekoff_sandwich == true

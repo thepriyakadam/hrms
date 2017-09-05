@@ -491,6 +491,10 @@ class EmployeeResignationsController < ApplicationController
     session[:active_tab1] = "resignation"
   end
 
+  def modal_resignation_detail
+    @employee_resignation = EmployeeResignation.find(params[:format])
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_employee_resignation

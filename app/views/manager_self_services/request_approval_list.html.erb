@@ -8,7 +8,7 @@
       <div class="col-sm-6">
         <table id="example6" class="table table-bordered table-hover table-condensed">
           <thead>
-           <tr><td colspan="5"><center>First Level Request</center></td></tr>
+           <tr><td colspan="3"><center>First Level Request</center></td></tr>
             <tr>
               <th>ID</th>
               <th>Employee</th>
@@ -22,9 +22,9 @@
                 <td><%= on_duty_request.employee.try(:manual_employee_code) %></td>
                 <td><%= on_duty_request.employee.try(:first_name) %> <%= on_duty_request.employee.try(:middle_name) %> <%=on_duty_request.employee.try(:last_name) %></td>
                 <td>
-                  <%= link_to 'View', employee_od_request_detail_on_duty_requests_path(on_duty_request),class: 'btn btn-xs btn-info fa fa-check' %>
                   <%= link_to 'Approve', first_approve_od_status_record_path(on_duty_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-primary fa fa-check' %> 
                   <%= link_to 'Reject', first_reject_od_status_record_path(on_duty_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-trash' %>
+                  <%= link_to '', employee_od_request_detail_on_duty_requests_path(on_duty_request),class: 'btn btn-xs btn-default fa fa-eye' %>
                 </td>
               </tr>
             <% end %>
@@ -35,11 +35,10 @@
        <div class="col-sm-6">
         <table id="example7" class="table table-bordered table-hover table-condensed">
           <thead>
-          <tr><td colspan="5"><center>Second Level Request</center></td></tr>
+          <tr><td colspan="3"><center>Second Level Request</center></td></tr>
             <tr>
               <th>ID</th>
-              <th>Employee Name</th>
-              <th>Day</th>
+              <th>Employee</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -51,9 +50,9 @@
                 <td><%= on_duty_request.employee.try(:first_name) %> <%= on_duty_request.employee.try(:middle_name) %> <%=on_duty_request.employee.try(:last_name) %></td>
                 <td><%= on_duty_request.no_of_day %></td>
                 <td>
-                  <%= link_to 'View', employee_od_request_detail_on_duty_requests_path(on_duty_request),class: 'btn btn-xs btn-info fa fa-check' %>
                   <%= link_to 'Approve', second_approve_od_status_record_path(on_duty_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-primary fa fa-check' %> 
                   <%= link_to 'Reject', second_reject_od_status_record_path(on_duty_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-trash' %>
+                  <%= link_to '', employee_od_request_detail_on_duty_requests_path(on_duty_request),class: 'btn btn-xs btn-default fa fa-eye' %>
                 </td>
               </tr>
             <% end %>

@@ -163,6 +163,7 @@
         @joining_checklist_master.each do |jc|
         EmployeeJcList.create(joining_checklist_master_id: jc.id,employee_id: @employee.id,status: false)
         end
+        EmployeeMailer.employee_create(@employee).deliver_now   
         redirect_to @employee    
       else
         render :new
@@ -575,12 +576,11 @@ end
 
   def collect_sub_department
     @department = Department.find(params[:id])
-    @sub_departments = SubDepartment.where(sub_department_id: @department.id)
+    @sub_departments = SubDepartment.where(department_id: @department.id)
     @form = params[:form]
   end
 
   def collect_employee
-    # byebug
      @department = Department.find(params[:id])
      @employees = Employee.where(department_id: @department.id)
      @form = params[:form]
@@ -1452,6 +1452,14 @@ def show_all_record
               disposition: 'attachment'
   end
 
+    def download_employee_profile_picture
+    @employee = Employee.find(params[:id])
+    send_file @employee.passport_photo.path,
+              filename: @employee.passport_photo_file_name,
+              type: @employee.passport_photo_content_type,
+              disposition: 'attachment'
+  end
+
 
   private
 
@@ -1467,7 +1475,8 @@ def show_all_record
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_params
     # params.require(:employee).permit(:department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :district, :state, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender)
-    params.require(:employee).permit(:optional_email,:optinal_contact_no,:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id,:sub_department_id,:first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id,:employee_signature,:service_master_id,:resource_pool_master_id)
+
+    params.require(:employee).permit(:optional_email,:optinal_contact_no,:optinal_contact_no1,:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id,:sub_department_id,:first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id,:employee_signature,:emergency_contact_no)
     # joining_detail_attributes: [:joining_date, :reference_from, :admin_hr, :tech_hr, :designation, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem])
   end
 end

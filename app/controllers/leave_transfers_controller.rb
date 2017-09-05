@@ -153,6 +153,10 @@ class LeaveTransfersController < ApplicationController
 
   end
 
+  def modal_transfer_detail
+    @leave_transfer = LeaveTransfer.find(params[:format])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_leave_transfer

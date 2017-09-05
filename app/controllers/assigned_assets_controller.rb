@@ -21,7 +21,7 @@ class AssignedAssetsController < ApplicationController
 
   # GET /assigned_assets/1/edit
   def edit
-     @form = 'assigned_asset'
+     # @form = 'assigned_asset'
      @employee = @assigned_asset.employee
   end
 
@@ -32,6 +32,7 @@ class AssignedAssetsController < ApplicationController
     @employee = Employee.find(params[:assigned_asset][:employee_id])
     respond_to do |format|
       if @assigned_asset.save
+        EmployeeMailer.asset_detail_create(@employee,@assigned_asset).deliver_now
         format.html { redirect_to @assigned_asset, notice: 'Asset was successfully created.' }
         format.json { render :show, status: :created, location: @assigned_asset }
         @assigned_assets = @employee.assigned_assets
@@ -61,6 +62,8 @@ class AssignedAssetsController < ApplicationController
       end
     end
   end
+
+  
 
   # DELETE /assigned_assets/1
   # DELETE /assigned_assets/1.json
@@ -102,6 +105,10 @@ class AssignedAssetsController < ApplicationController
     # byebug
     AssignedAsset.import(params[:file])
     redirect_to root_url, notice: "File imported."
+  end
+
+  def asset_modal
+    @assigned_asset = AssignedAsset.find(params[:format])
   end
 
 

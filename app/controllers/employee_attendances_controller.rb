@@ -1712,6 +1712,8 @@ def upload
             end
           end#employee.nil?
   end#do
+  DailyAttendance.where(date: last.date.to_date).destroy_all
+
   #remaining employees attendance creation
     @employees = Employee.where(status: "Active")
     @employees.each do |e|

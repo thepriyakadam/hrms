@@ -2,7 +2,15 @@
   <div class="box-header with-border">
  <div class="row">
   <div class="col-sm-1">
+  <% if @employee_bank_detail.employee.passport_photo_file_name == nil %>
+  <% if @employee_bank_detail.employee.gender == "Female" %>
+   <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%else%>
+   <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%end%>
+ <%else%>
       <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+      <%end%>
   </div>
     <div class="col-sm-6">
      <font color='#0077b3'> 
@@ -14,8 +22,8 @@
 
 
     <div class="box-tools pull-right">
-      <%= link_to 'Edit', edit_employee_bank_detail_path(@employee_bank_detail),class: 'btn btn-sm btn-success fa fa-edit', remote:true %>
-      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      <%= link_to 'Edit', edit_employee_bank_detail_path(@employee_bank_detail),class: 'btn btn-xs btn-success fa fa-edit', remote:true %>
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-xs fa fa-arrow-left' %>
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
@@ -26,7 +34,7 @@
     </tr>
 
     <tr>
-      <th> <strong>Account No</strong></th>
+      <th> <strong>Account No.</strong></th>
       <td><%= @employee_bank_detail.account_no %></td>
         <th><strong>Bank Name</strong></th>
       <td><%= @employee_bank_detail.bank.try(:name) %></td>
@@ -35,24 +43,29 @@
     <tr>
       <th><strong>Branch Name</strong></th>
       <td><%= @employee_bank_detail.branch_name %></td>
-       <th><strong>Address</strong></th>
-      <td> <%= @employee_bank_detail.address %></td>
+      <th><strong>IFSC Code</strong></th>
+      <td><%= @employee_bank_detail.ifsc_code %></td>
+       
 
     </tr>
 
     <tr>
-      <th><strong>Contact No</strong></th>
-      <td> <%= @employee_bank_detail.contact_no %></td>
-        <th><strong>MICR Code</strong></th>
+     <th><strong>MICR Code</strong></th>
       <td><%= @employee_bank_detail.micr_code %></td>
+       <th><strong>Branch Code</strong></th>
+      <td> <%= @employee_bank_detail.branch_code %></td>
     </tr>
-
+    <tr>
+      
+    </tr>
+     <th><strong>Address</strong></th>
+      <td> <%= @employee_bank_detail.address %></td>
+      <th><strong>Contact No.</strong></th>
+      <td> <%= @employee_bank_detail.contact_no %></td>
     <tr>
     
-      <th><strong>Branch Code</strong></th>
-      <td> <%= @employee_bank_detail.branch_code %></td>
-       <th><strong>IFSC Code</strong></th>
-      <td><%= @employee_bank_detail.ifsc_code %></td>
+     
+
     </tr>
     </table><br/>
   </div><!-- /.box -->

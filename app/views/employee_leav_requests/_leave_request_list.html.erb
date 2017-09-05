@@ -40,7 +40,8 @@
             <%= link_to 'Revert',show_leave_record_particular_leave_records_path(employee_leav_request), class: 'btn btn-danger btn-xs' %>
           <% else %>
           <% end %>
-          <%= link_to '', employee_leav_request,class: 'btn btn-default btn-xs fa fa-eye' %>
+          <%= link_to '', leave_request_modal_employee_leav_requests_path(employee_leav_request),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
+          <!-- <= link_to '', employee_leav_request,class: 'btn btn-default btn-xs fa fa-eye' %> -->
         </td>
       </tr>
     <% end %>
@@ -55,3 +56,4 @@
 } );
 </script>
 <div id="myModal" class="modal fade"></div>
+<div id="leave_request_modal" class="modal fade"></div>

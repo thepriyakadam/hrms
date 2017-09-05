@@ -32,7 +32,7 @@
         </div>
 
         <div class="col-sm-2" style="padding-top:20px;">
-          <%= f.submit "Show",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %>
+          <%= f.submit "Show Attendance",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %>
         </div>
       </div>
      </div>
@@ -68,10 +68,10 @@ $("#employee").validate({
        },
     messages: {
       "employee[from]":{
-        required: "Please Specify From",
+        required: "Please Specify From Date",
       },
        "employee[to]":{
-        required: "Please Select To",
+        required: "Please Select To Date",
       }
        },
     errorPlacement: function(error, element) {

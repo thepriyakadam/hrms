@@ -1,0 +1,56 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Compensatory Off Detail </center></h4>
+    </div>
+    <div class="modal-body">
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+ <tr>
+      <th>ID</th>
+      <td><%= @leave_c_off.employee.try(:manual_employee_code) %></td>
+    </tr>
+    <tr>    
+      <th>Employee Name</th>
+      <td><%= full_name(@leave_c_off.employee) %></td>
+    </tr>
+        <tr>   
+      <th>Date</th>
+      <td><%= @leave_c_off.c_off_date %></td>
+    </tr>
+    <tr>   
+      <th>Day</th>
+      <td><%= @leave_c_off.c_off_date.strftime("%A") %></td>
+    </tr>
+    <tr>
+      <th>Compensatory Off</th>
+      <td><%= @leave_c_off.leave_count %></td>
+    </tr>
+
+    <tr>   
+      <th>Expiry Days</th>
+      <td><%= @leave_c_off.c_off_expire_day %></td>
+    </tr>
+    <tr>   
+      <th>Expiry Date</th>
+      <td><%= @leave_c_off.expiry_date %></td>
+    </tr>
+    <tr>   
+      <th>Taken</th>
+      <td><%= @leave_c_off.is_taken ? "Yes" : "No" %></td>
+    </tr>
+    <tr>   
+      <th>Taken Date</th>
+      <td><%= @leave_c_off.taken_date %></td>
+    </tr>
+    <tr>
+      <th>Comment</th>
+      <td><%= @leave_c_off.comment %></td>
+    </tr>  
+  </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

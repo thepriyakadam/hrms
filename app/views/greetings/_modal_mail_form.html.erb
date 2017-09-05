@@ -6,13 +6,19 @@
       <h4 class="modal-title"><center> Say happy birthday </center></h4>
     </div>
     <div class="modal-body">
-    <%= bootstrap_form_for @greeting,url:{action: "send_mail",employee_id: @employee.id} do |f| %>
+    <%= bootstrap_form_for @greeting,html: {id: 'greeting'},url:{action: "send_mail",employee_id: @employee.id} do |f| %>
         <div class="row">
+        <div class="form-group required">
           <div class="col-sm-6">
             <%= f.text_area :message,placeholder: "Wishes" %>
           </div>
-
-          <div class="col-sm-3" style="padding-top:40px;">
+          </div>
+<!--           <div class="col-sm-3">
+            <div class="field">
+              <= f.file_field :birthday_image,label: 'Upload Image' %>
+            </div>
+          </div>  -->
+          <div class="col-sm-3" style="padding-top:20px;">
             <%= f.submit "Send", class: 'btn btn-success btn-sm' %>
           </div>
         </div>
@@ -23,3 +29,21 @@
 </div><!-- /.modal-dialog -->
 
 
+<script>
+$("#greeting").validate({
+    rules: {
+      "greeting[message]":{
+        required: true,
+      }
+       },
+    messages: {
+      "greeting[message]":{
+        required: "Please write message",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

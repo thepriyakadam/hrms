@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       get :employee_wise_report
       post :show_employeewise_detail
       get :show_employeewise_detail
+      get :modal_transfer_detail
     end
   end
   resources :sub_departments
@@ -180,6 +181,7 @@ Rails.application.routes.draw do
       get :approved_record_list
       get :show_approved_record
       post :show_approved_record
+      get :request_modal
     end
   end
 
@@ -440,7 +442,11 @@ Rails.application.routes.draw do
   end
 end
 
-  resources :leave_masters
+  resources :leave_masters do
+    collection do
+      get :modal_leave_master
+    end
+  end
 
   resources :employee_code_masters do
     collection do
@@ -1019,6 +1025,7 @@ end
       get :print_employee_promotion
       get :display_certificate
       get :print_certificate
+      get :modal_promotion
     end
   end
   resources :accident_masters
@@ -1091,6 +1098,7 @@ end
       get :final_approved_list
       get :confirm_resignation
       get :cancel_resignation_list
+      get :modal_resignation_detail
   end
 end
   resources :travel_options do
@@ -1170,6 +1178,7 @@ end
     get :update_asset
     get :import_xl
     post :import
+    get :asset_modal
     end
   end
   resources :asset_types do
@@ -1472,6 +1481,7 @@ end
       get :admin_approve_modal
       get :modal
       get :detail_modal
+      get :modal_c_off
     end
   end
 
@@ -1511,6 +1521,7 @@ end
       get :show_internal_modal
       get :employee_contact_library
       get :modal_contact_library
+      get :modal_c_off
     end
   end
 
@@ -1596,6 +1607,8 @@ end
   match 'visitor_details/:id/download_person_image/:id' => 'visitor_details#download_person_image', :via => [:get], :as => :download_person_image
 
   match 'employees/:id/download_employee_signature/:id' => 'employees#download_employee_signature', :via => [:get], :as => :download_employee_signature
+  match 'employees/:id/download_employee_profile_picture/:id' => 'employees#download_employee_profile_picture', :via => [:get], :as => :download_employee_profile_picture
+
   # get '/screenshot', to: 'issue_requests#download_screenshot', as: 'download_screenshot'
   # get '/download', to: 'issue_requests#download_screenshot_image', as: 'download_screenshot_image'
 
@@ -2153,6 +2166,7 @@ end
       patch :update_leave_balance
       get :is_confirm_leave
       patch :update_leave_auto
+      get :modal_balance_detail
     end
   end
 
@@ -2183,6 +2197,7 @@ end
       get :balancewise_report
       post :show_balancewise_report
       get :show_balancewise_report
+      get :leave_request_modal
     end
   end
   resources :company_leavs
@@ -2190,6 +2205,7 @@ end
     collection do
       get :is_confirm
       get :show_leave_category
+      get :leave_category_modal
     end
   end
   resources :employee_physicals do
@@ -2220,6 +2236,7 @@ end
       get :add_award_field
       get :import_xl
       post :import
+      get :award_modal
     end
   end
   resources :skillsets  do
@@ -2234,12 +2251,14 @@ end
       post :import
       get :modal_experience
       post :update_experience
+      get :exp_modal
     end
   end
   resources :certifications do
     collection do
       get :import_xl
       post :import
+      get :certificate_modal
     end
   end
   resources :qualifications do
@@ -2248,6 +2267,7 @@ end
       post :import
       get :modal
       post :update_qualification
+      get :qualification_modal
      end
    end
   resources :families do
@@ -2257,6 +2277,7 @@ end
       get :import_xl
       post :import
       get :collect_age
+      get :family_modal
     end
   end
   resources :employees do

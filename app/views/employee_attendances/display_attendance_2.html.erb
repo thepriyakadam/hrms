@@ -3,19 +3,13 @@
       <table id="example6" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
-            <th>ID</th>
+          <th>ID</th>
             <th>Employee</th>
-              <% for i in @from_date.strftime("%d")..@to_date.strftime("%d") %>
-                <th><%= i %></th>
-              <%end%>
-          <th colspan="12"><center> Total </center></th>
-          </tr>
-          <tr>
-            <th colspan="4">Day</th>
-              <% @from_date.step(@to_date).each do |l| %>
-                <th><%= l.strftime("%a") %></th>
-              <%end%>
              
+              <% @from_date.step(@to_date).each do |l| %>
+                <th><%= l.strftime("%a") %> <%= l.strftime("%d") %> </th>
+              <%end%>
+            
               <th>P</th>
               <th>WOP</th>
               <th>HP</th>
@@ -31,14 +25,13 @@
           <% exist = {} %>
           <% @employee_attendances.each do |e| %>
             <tr>
-
             <td><%= e.employee.try(:manual_employee_code) %></td>
               <td><%= full_name(e.employee) %></td>
               <% sorted_exists = calculate_attendance_datewise(@from_date,@to_date, exist, e)%>
               <% sorted_exists.each do |k,v|%>
                 <td><%= v %></td>
               <% end %>
-            
+           
             <% holiday_in_month = holiday_in_month_count(exist) %>
             <% week_off_day = week_off_day_count(exist) %>
             <% od_day = od_day_count(exist) %>
@@ -63,10 +56,10 @@
               <td><%= week_off_day %></td>
               <td><%= holiday_in_month %></td>
               <td><%= od_day %></td>
-              <td><%= absent_count.to_f %></td> 
+              <td><%= absent_count.to_f %></td>
 
               <% payable_leave = el_leave_count.to_f + cl_leave_count.to_f + coff_leave_count.to_f + advance_leave_count.to_f + pl_leave_count.to_f + sl_leave_count.to_f + leave_count.to_f + wfh_leave_count.to_f + ml_leave_count.to_f %>
-              
+             
               <% nonpayable_leave = lwp_leave_count.to_f + esic_leave_count.to_f %>
               <td><%= payable_leave %></td>
               <td><%= nonpayable_leave %></td>
@@ -84,7 +77,7 @@
 
               <td><%= payable_day %></td>
               <!-- <td><= nonpayable_day %></td> -->
-            </tr>           
+            </tr>          
             <% exist.clear %>
 
           <%end%>
@@ -93,7 +86,7 @@
       <%= link_to " Excel Report ",display_attendance_2_employee_attendances_path(format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
 
       <%= link_to " PDF Report ",display_attendance_2_employee_attendances_path(format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
-      
+     
       <%= link_to "Back",emp_attendance_employee_attendances_path,class: "btn btn-sm btn-default" %>
   </div>
 </div>

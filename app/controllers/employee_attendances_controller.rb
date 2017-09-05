@@ -243,12 +243,12 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def display_attendance_2
-    @from = params[:employee][:from]
-    @to = params[:employee][:to]
-    company = params[:employee][:company_id]
-    location = params[:employee][:company_location_id]
-    department = params[:employee][:department_id]
-    status = params[:employee][:status]
+    @from = params[:from] ? params[:employee][:from] : params[:from]
+    @to = params[:to] ? params[:employee][:to] : params[:to]
+    company = params[:company_id] ? params[:employee][:company_id] : params[:company_id]
+    location = params[:company_location_id] ? params[:employee][:company_location_id] : params[:company_location_id]
+    department = params[:department_id] ? params[:employee][:department_id] : params[:department_id]
+    status =params[:status] ? params[:employee][:status] : params[:status]
     @from_date = @from.to_date
     @to_date = @to.to_date
     #@date = Date.new(@year.to_i, Workingday.months[@month])

@@ -128,9 +128,10 @@ Rails.application.routes.draw do
   resources :employee_gps do
     collection do
       get :employee_wise_gps
-      post :show_employeewise
-      post :modal_set_gps
+      post :show_set_gps_employeewise
       post :set_employeewise_gps
+      get :employeewise_daily_gps
+      post :show_employeewise_daily_gps
     end
   end
   resources :payroll_periods

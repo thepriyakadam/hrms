@@ -2,7 +2,7 @@
   <div class="box-header">
     <h5 class="box-title"> GPS </h5>
     <div class="box-body">
-      <%= bootstrap_form_for(:employee_gp, url: { action: 'modal_set_gps'},html: {id: "employee_gp"},remote: true) do |f| %>
+      <%= bootstrap_form_for(:employee_gp, url: { action: 'show_set_gps_employeewise'},html: {id: "employee_gp"},remote: true) do |f| %>
         <div class="row">
           <div class="col-sm-3">
             <div class="form-group required">
@@ -38,9 +38,14 @@
           <!-- <= submit_tag 'Show GPS' %> -->
           </div>
         </div>
-
-            <div id="modal_set_gps_form" class="modal fade"></div>
     <% end %>
+       <div class="ajax-progress"></div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div id="set_gps_employeewise"></div>    
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

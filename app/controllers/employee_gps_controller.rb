@@ -64,14 +64,10 @@ class EmployeeGpsController < ApplicationController
   def employee_wise_gps
   end
 
-  def show_employeewise
-  end
-
-  def modal_set_gps
-      @from = params[:employee_gp][:from]
-      @to = params[:employee_gp][:to]
-      @employee_id = params[:employee_gp][:employee_id]
-  
+  def show_set_gps_employeewise
+    @employee_id = params[:employee_gp][:employee_id]
+    @from = params[:employee_gp][:from]
+    @to = params[:employee_gp][:to]
   end
 
  def set_employeewise_gps
@@ -84,10 +80,8 @@ class EmployeeGpsController < ApplicationController
     @location = params[:employee_gp][:location]
 
     Member.where(employee_id: @emp).update_all(latitude: @latitude,longitude: @longitude,location: @location,is_gps: true)
-    member=Member.where(employee_id: @emp).take
+ 
     @employee_gp = EmployeeGp.create(employee_id: @emp,latitude: @latitude,longitude: @longitude,location: @location,from_date: @from.to_date,to_date: @to.to_date)
-    @gps_history = EmployeeGp.where(member_id: member.id).last(2).first
-    EmployeeGp.where(id: @gps_history.id).update_all(to_date: @gps_history.from_date)
       for i in @from.to_date..@to.to_date
         GpsDaily.create(employee_id: @emp,employee_gp_id: @employee_gp.id,latitude: @latitude,longitude: @longitude,location: @location,date: i)
       end
@@ -95,6 +89,15 @@ class EmployeeGpsController < ApplicationController
     redirect_to employee_wise_gps_employee_gps_path
   end
 
+  def employeewise_daily_gps
+  end
+
+  def show_employeewise_daily_gps
+    @employee_id = params[:employee_gp][:employee_id]
+    @employee = Employee.find_by(id: @employee_id)
+    @gps_daily = GpsDaily.where(employee_id: @employee_id)
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_gp

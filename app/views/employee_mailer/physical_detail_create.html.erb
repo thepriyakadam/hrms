@@ -7,20 +7,24 @@
     <p>
 	<table id="example2" class="table table-bordered table-hover table-condensed">
     <tr><th colspan="4"><center><font color='#0077b3'>Physical Detail</font></center> </th></tr>
+    	<tr>
+    		<td><strong>Employee</strong></td>
+    		<td colspan="3"><%= @employee_physical.employee.prefix %> <%= @employee_physical.employee.first_name %> <%= @employee_physical.employee.last_name %></td>
+    	</tr>
 
 	    <tr>
-	        <th> <strong>Height(inches)</strong></th>
+	        <td> <strong>Height(inches)</strong></td>
 	        <td> <%= @employee_physical.height %></td>
 	       
-	        <th><strong>Weight(kg)</strong></th>
+	        <td><strong>Weight(kg)</strong></td>
 	        <td><%= @employee_physical.weight %></td>
 	    </tr>
 	     <tr>
 
-	        <th> <strong>T-Shirt Size</strong></th>
+	        <td> <strong>T-Shirt Size</strong></td>
 	        <td> <%= @employee_physical.size %></td>
 
-	          <th> <strong>Trouser Size(cm)</strong></th>
+	          <td> <strong>Trouser Size(cm)</strong></td>
 	        <td> <%= @employee_physical.trouser_size %></td>
 
 	    </tr>

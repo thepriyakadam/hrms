@@ -9,42 +9,42 @@
       <table id="example2" class="table table-bordered table-hover table-condensed">
 	  
     	<tr>
-		  <th><strong>Employee</strong></th>
-		 <td>  <%= @assigned_asset.employee.first_name %> <%= @assigned_asset.employee.last_name %></td>
+		  <td><strong>Employee</strong></td>
+		 <td><%= @assigned_asset.employee.prefix %> <%= @assigned_asset.employee.first_name %> <%= @assigned_asset.employee.last_name %></td>
 
-		 <th><strong>Asset Type</strong></th>
+		 <td><strong>Asset Type</strong></td>
 		  <td><%= @assigned_asset.asset_type %></td>
 		 </tr>
 		 <tr>
-		  <th><strong>Asset Details</strong></th>
+		  <td><strong>Asset Details</strong></td>
 		  <td><%= @assigned_asset.assets_detail %></td>
 
-		  <th><strong>Asset </strong></th>
+		  <td><strong>Asset </strong></td>
 		  <td><%= @assigned_asset.assets_id %></td>
 		</tr>
 		<tr>
-		  <th><strong>Asset Value</strong></th>
-		  <td><%= @ assigned_asset.assets_value %></td>
+		  <td><strong>Asset Value</strong></td>
+		  <td><%= @assigned_asset.assets_value %></td>
 
-		  <th><strong>Asset Status</strong></th>
+		  <td><strong>Asset Status</strong></td>
 		  <td><%= @assigned_asset.assest_status %></td>
 		</tr>
 
 		<tr>
-		  <th><strong>Issue Date</strong></th>
+		  <td><strong>Issue Date</strong></td>
 		  <td><%= @assigned_asset.issue_date%></td>
 
-		  <th><strong>Valid Till</strong></th>
+		  <td><strong>Valid Till</strong></td>
 		  <td><%= @assigned_asset.valid_till %></td>
 		</tr>
 
 		<tr>
-		<th><strong>Returned On</strong></th>
-		<th><%= @assigned_asset.returned_on %></th>
+		<td><strong>Returned On</strong></td>
+		<td><%= @assigned_asset.returned_on %></td>
 
 		<tr>
-		<th><strong>Remarks</strong></th>
-		<th><%= @assigned_asset.returned_on %></th>
+		<td><strong>Remarks</strong></td>
+		<td><%= @assigned_asset.returned_on %></td>
 
 		</tr>
 	  </table>

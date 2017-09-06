@@ -8,22 +8,23 @@
     <p>
       <table id="example2" class="table table-bordered table-hover table-condensed">
 	   <tr>
-	   	<th><strong>Employee:</strong></th>
-	   	<td><%= @certification.employee.first_name %> <%= @certification.employee.last_name %></td>
-          <th><strong>Name:</strong></th>
+	   		<td><strong>Employee</strong></td>
+	   		<td><%= @certification.employee.first_name %> <%= @certification.employee.last_name %></td>
+
+          <td><strong>Name</strong></td>
 	      <td><%= @certification.name %></td>
 	    </tr>
 
 	    <tr>
-	      <th><strong>Year:</strong></th>
+	      <td><strong>Year</strong></td>
 	      <td><%= @certification.year_id %></td>
 
-	      <th><strong>Duration:</strong></th>
+	      <td><strong>Duration</strong></td>
 	      <td><%= @certification.duration %></td>
 	    </tr>
 
 	    <tr>
-	      <th><strong>description:</strong></th>
+	      <td><strong>Description</strong></td>
 	      <td colspan="3"><%= @certification.description %></td>
 	   </tr>
 	  </table>

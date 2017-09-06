@@ -125,7 +125,14 @@ Rails.application.routes.draw do
   resources :rembursmentmasters
   resources :employee_jc_lists
   resources :joining_checklist_masters
-  resources :employee_gps
+  resources :employee_gps do
+    collection do
+      get :employee_wise_gps
+      post :show_employeewise
+      post :modal_set_gps
+      post :set_employeewise_gps
+    end
+  end
   resources :payroll_periods
   resources :visitor_details do
     collection do

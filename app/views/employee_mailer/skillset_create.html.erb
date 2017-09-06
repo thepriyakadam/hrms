@@ -8,14 +8,14 @@
     <p>
       <table id="example2" class="table table-bordered table-hover table-condensed">
 	   <tr>
-	    <th><strong>Employee:</strong></th>
-	   	<td><%= @skillset.employee.first_name %> <%= @skillset.employee.last_name %></td>
+	    <td><strong>Employee</strong></td>
+	   	<td><%= @skillset.try(:employee).try(:prefix) %> <%= @skillset.try(:employee).try(:first_name) %> <%= @skillset.try(:employee).try(:last_name) %></td>
 
-	    <th> <strong>Name:</strong></th>
+	    <td> <strong>Name</strong></td>
 	   	<td> <%= @skillset.name %></td>
 	   	</tr>
 	   	<tr>
-	   	<th><strong>Skill level:</strong></th>
+	   	<td><strong>Skill level</strong></td>
 	   	<td colspan="3"> <%= @skillset.skill_level %></td>
 	   </tr>
 	  </table>

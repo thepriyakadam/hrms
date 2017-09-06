@@ -26,7 +26,6 @@ class AwardsController < ApplicationController
   # POST /awards
   # POST /awards.json
   def create
-    # byebug
     @award = Award.new(award_params)
     @employee = Employee.find(params[:award][:employee_id])
     @year = Year.find(params[:award][:year_id])

@@ -8,88 +8,88 @@
     <p>
 	<table id="example2" class="table table-bordered table-hover table-condensed">
 
-	  <tr>
-  <th><strong>Employee</strong></th>
-  <td><%= @family.employee.try(:first_name) %></td>
+<tr>
+  <td><strong>Employee</strong></td>
+  <td><%= @family.employee.try(:prefix) %> <%= @family.employee.try(:first_name) %> <%= @family.employee.try(:last_name) %></td>
 
-  <th> <strong>Relation</strong></th>
+  <td> <strong>Relation</strong></td>
   <td><%= @family.relation %></td>
 </tr>
 <tr>
 
-  <th><strong>First Name</strong></th>
+  <td><strong>First Name</strong></td>
   <td><%= @family.f_name %></td>
   
-  <th><strong>Middle Name</strong></th>
+  <td><strong>Middle Name</strong></td>
   <td><%= @family.m_name %></td>
 </tr>
 <tr>
-  <th><strong>Last Name</strong></th>
+  <td><strong>Last Name</strong></td>
   <td><%= @family.l_name %></td>
 
-  <th> <strong>Date Of Birth</strong></th>
+  <td> <strong>Date Of Birth</strong></td>
   <td><%= @family.date_of_birth %></td>
 </tr>
 <tr>
-  <th> <strong>Current Address</strong></th>
+  <td> <strong>Current Address</strong></td>
   <td><%= @family.current_address %></td>
 
-  <th><strong>Age</strong></th>
+  <td><strong>Age</strong></td>
   <td><%= @family.age %></td>
 </tr>
 <tr>
-  <th> <strong>Contact No.</strong></th>
+  <td> <strong>Contact No.</strong></td>
   <td><%= @family.contact_no %></td>
 
-  <th> <strong>Email</strong></th>
+  <td> <strong>Email</strong></td>
   <td><%= @family.email %></td>
 </tr>
 <tr>
-  <th><strong>Aadhaar No</strong></th>
+  <td><strong>Aadhaar No</strong></td>
   <td> <%= @family.adhar_no %></td>
 
-  <th> <strong>PAN Card No</strong></th>
+  <td> <strong>PAN Card No</strong></td>
   <td><%= @family.pan_no %></td>
 </tr>
 <tr>
-  <th><strong>Passport No</strong></th>
+  <td><strong>Passport No</strong></td>
   <td><%= @family.passport_no %></td>
 
-  <th><strong>Passport Issue Date</strong></th>
+  <td><strong>Passport Issue Date</strong></td>
   <td><%= @family.passport_issue_date %></td>
 </tr>
 <tr>
-  <th><strong>Passport Expiry Date</strong></th>
+  <td><strong>Passport Expiry Date</strong></td>
   <td><%= @family.passport_expiry_date %></td>
 
-  <th><strong>Gender</strong></th>
+  <td><strong>Gender</strong></td>
   <td><%= @family.gender %></td>
 </tr>
 <tr>
-  <th><strong>Marital Status</strong></th>
+  <td><strong>Marital Status</strong></td>
   <td><%= @family.marital %></td>
 
-  <th> <strong>Blood Group</strong></th>
+  <td> <strong>Blood Group</strong></td>
   <td><%= @family.blood_group.try(:name) %></td>
 </tr>
 <tr>
-  <th> <strong>Religion</strong></th>
+  <td> <strong>Religion</strong></td>
   <td><%= @family.religion.try(:name) %></td>
 
-  <th> <strong>Profession</strong></th>
+  <td> <strong>Profession</strong></td>
   <td><%= @family.profession %></td>
 </tr>
 <tr>
-  <th><strong>Medical Insurance</strong></th>
+  <td><strong>Medical Insurance</strong></td>
   <td><%= @family.medical_claim %></td>
 
-  <th><strong>Differently Abled</strong></th>
+  <td><strong>Differently Abled</strong></td>
   <td><%= @family.is_handicap %></td>
 </tr>
 <tr>
-  <th><strong>Disability Type</strong></th>
+  <td><strong>Disability Type</strong></td>
   <td><%= @family.handicap_type %></td>
-  <th></th>
+  <td></td>
   <td></td>
 </tr> 
 </table>

@@ -6,38 +6,34 @@
   <body>
      <h4>Employee Qualification Detail</h4>
     <p>
-      <table id="example2" class="table table-bordered table-hover table-condensed">
-        <tr> 
-          <th colspan="2"></th>
-          <th colspan="2"></th>
-        </tr>
-
+      <table class="table table-bordered table-hover table-condensed">
+      
         <tr>
-          <th><strong>Employee:</strong></th>
-          <td>  <%= @qualification.employee %></td>
+          <td><strong>Employee</strong></td>
+          <td><%= @qualification.employee.try(:prefix) %> <%= @qualification.employee.try(:first_name) %> <%= @qualification.employee.try(:last_name) %></td>
 
-          <th><strong>Degree Type:</strong></th>
+          <td><strong>Degree Type</strong></td>
           <td><%= @qualification.degree_type_id.try(:name) %></td>
         </tr>
         <tr>
-          <th><strong>Degree</strong></th>
+          <td><strong>Degree</strong></td>
           <td><%= @qualification.degree_id.try(:name) %></td>
 
-          <th><strong>Degree Stream</strong></th>
+          <td><strong>Degree Stream</strong></td>
           <td><%= @qualification.degree_stream_id.try(:name) %></td>
         </tr>
         <tr>
-          <th><strong>College</strong></th>
+          <td><strong>College</strong></td>
           <td><%= @qualification.college %></td>
 
-          <th><strong>Marks</strong></th>
+          <td><strong>Marks</strong></td>
           <td><%= @qualification.marks %></td>
         </tr>
         <tr>
-          <th><strong>Passing Year</strong></th>
+          <td><strong>Passing Year</strong></td>
           <td><%= @qualification.year_id%></td>
 
-          <th><strong>University</strong></th>
+          <td><strong>University</strong></td>
           <td><%= @qualification.university_id.try(:name) %></td>
         </tr>
         </table>

@@ -5,35 +5,135 @@
   </head>
   
   <body>
-     <h4>Employee Basic Information</h4>
-    <p>
-    	ID : <%= @emp.manual_employee_code %><br>
-    	Code : <%= @emp.employee_code %><br>
-    	Employee : <%= @emp.prefix %> <%= @emp.first_name %> <%= @emp.last_name %><br>
-    	Date Of Birth : <%= @emp.date_of_birth %><br>
-    	Contact No : <%= @emp.contact_no %><br>
-    	Email : <%= @emp.try(:email) %><br>
-    	Permanent Address : <%= @emp.permanent_address %><br>
-    	Country : <%= @emp.country.name %><br>
-    	State : <%= @emp.state.name %><br>
-    	District : <%= @emp.district.name %><br>
-    	City : <%= @emp.try(:city) %><br>
-    	Pin Code : <% @emp.try(:pin_code) %><br>
-    	Current Address : <%= @emp.try(:current_address) %><br>
-    	Adhar No : <%= @emp.try(:adhar_no) %><br>
-    	Pan No : <%= @emp.try(:pan_no) %><br>
-    	Licence No : <% @emp.try(:licence_no) %><br>
-    	Marital Status : <%= @emp.try(:marital_status) %><br>
-    	Blood Group : <%= @emp.try(:blood_group).try(:name) %><br>
-    	Employee Type : <%= @emp.try(:employee_type).try(:name) %><br>
-    	Nationality : <%= @emp.try(:nationality).try(:name) %><br>
-    	Religion : <%= @emp.try(:religion).try(:name) %><br>
-    	Manager : <%= @emp.try(:manager).try(:name) %><br>
-    	Manager2 : <%= @emp.try(:manager2).try(:name) %><br>
-    	Company : <%= @emp.try(:company).try(:name) %><br>
-    	Company Location : <%= @emp.try(:company_location).try(:name) %><br>
-    	Department : <%= @emp.department.try(:name) %><br>
-    	Sub Department : <%= @emp.sub_department.try(:name) %><br>
-    </p>
+  <p>
+  <table>
+      <tr><td colspan="4"><center><font color='#0077b3'>Basic Detail</font></center> </td></tr>
+      <tr>
+        <td><strong>ID</strong></td>
+        <td><%= @employee.manual_employee_code %></td>
+
+        <td><strong>Code</strong></td>
+        <td><%= @employee.employee_code %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Employee</strong></td>
+        <td><%= @employee.prefix %> <%= @employee.first_name %> <%= @employee.last_name %></td>
+
+        <td><strong>Date of Birth</strong></td>
+        <td><%= @employee.date_of_birth %></td>
+      </tr>
+
+       <tr>
+        <td><strong>Personal Contact No</strong></td>
+        <td><%= @employee.try(:optinal_contact_no1) %></td>
+
+        <td><strong>Emergency Contact No</strong></td>
+        <td><%= @employee.try(:emergency_contact_no) %></td>
+      </tr>
+
+       <tr>
+        <td><strong>Email</strong></td>
+        <td><%= @employee.email %></td>
+
+        <td><strong>Optional Email</strong></td>
+        <td><%= @employee.optional_email %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Permanent Address</strong></td>
+        <td colspan="3"><%= @employee.permanent_address %></td>  
+      </tr>
+      <tr>
+        <td><strong>Pin/Zip Code</strong></td>
+        <td><%= @employee.pin_code %></td>
+
+        <td><strong>Country</strong></td>
+        <td><%= @employee.country.try(:name) %></td> 
+      </tr>
+      <tr>
+      <td><strong>State</strong></td>
+        <td><%= @employee.state.try(:name) %></td>
+
+        <td><strong>District</strong></td>
+        <td><%= @employee.district.try(:name) %></td>
+      </tr>
+      <tr>
+        <td><strong>City</strong></td>
+        <td colspan="3"><%= @employee.city %></td>
+      </tr>
+      <tr>      
+        <td><strong>Current Address</strong></td>
+        <td colspan="3"><%= @employee.current_address %></td>
+      </tr>
+      <tr>
+        <td><strong>PAN Card No</strong></td>
+        <td><%= @employee.pan_no %></td>
+
+        <td><strong>Aadhar Card No</strong></td>
+        <td><%= @employee.adhar_no %></td>
+      </tr>
+
+      <tr>
+        <td><strong>License No</strong></td>
+        <td><%= @employee.licence_no %></td>
+
+        <td><strong>Gender</strong></td>
+        <td><%= @employee.gender %></td> 
+      </tr>
+      <tr>
+        <td><strong>Marital Status</strong></td>
+        <td><%= @employee.marital_status %></td>
+
+        <td><strong>Nationality</strong></td>
+        <td><%= @employee.nationality.try(:name) %></td>
+      </tr>
+      <tr>
+        <td><strong>Religion</strong></td>
+        <td colspan="3"><%= @employee.religion.try(:name) %></td>
+
+        <td><strong>Blood Group</strong></td>
+        <td><%= @employee.blood_group.try(:name) %></td>
+      </tr>
+
+      
+      <tr>
+        <td><strong>Official Contact No.</strong></td>
+        <td><%= @employee.contact_no %></td>
+
+        <td><strong>Extension No.</strong></td>
+        <td><%= @employee.optinal_contact_no %></td>
+      </tr>
+     
+      <tr>
+        <td><strong>Differently Abled</strong></td>
+        <td><%= @employee.handicap %></td>
+
+        <td><strong>Disability Type</strong></td>
+        <td><%= @employee.handicap_type %></td>
+      </tr>
+      <tr>
+        <td><strong>Employment Type</strong></td>
+        <td><%= @employee.employee_type.try(:name) %></td>
+
+        <td><strong>Employee Status</strong></td>
+        <td><%= @employee.status%></td>
+      </tr>
+      <tr>
+        <td><strong>Company</strong></td>
+        <td><%= @employee.try(:company).try(:name) %></td>
+
+        <td><strong>Location</strong></td>
+        <td><%= @employee.try(:company_location).try(:name) %></td>
+      </tr>
+      <tr>
+        <td><strong>Department</strong></td>
+        <td><%= @employee.try(:department).try(:name) %></td>
+
+        <td><strong>Sub Department</strong></td>
+        <td><%= @employee.try(:sub_department).try(:name) %></td>
+      </tr>
+    </table>
+   </p>
   </body>
 </html>

@@ -6,32 +6,32 @@
   <body>
      <h4>Employee Experience Detail</h4>
     <p>
-      <table id="example2" class="table table-bordered table-hover table-condensed">
+      <table class="table table-bordered table-hover table-condensed">
        	<tr>
-		      <th><strong>Employee:</strong></th>
-		      <td> <%= @experience.employee.first_name %> <%= @experience.employee.last_name %></td>
+		      <td><strong>Employee</strong></td>
+		      <td><%= @experience.employee.prefix %> <%= @experience.employee.first_name %> <%= @experience.employee.last_name %></td>
 
-		      <th> <strong>No of year experince:</strong></th>
+		      <td> <strong>No of year experince</strong></td>
 		      <td> <%= @experience.no_of_year %></td>
 		    </tr>
 
 		    <tr>
-		      <th><strong>Company name:</strong></th>
+		      <td><strong>Company</strong></td>
 		      <td> <%= @experience.company_name %></td>
 
-		      <th> <strong>Designation:</strong></th>
+		      <td> <strong>Designation</strong></td>
 		      <td> <%= @experience.designation %></td>
 		    </tr>
 		    
 		    <tr>
-		      <th><strong>Ctc:</strong></th>
+		      <td><strong>CTC</strong></td>
 		      <td> <%= @experience.ctc %></td>
 		     
-      		<th> <strong>Date</strong></th>
+      		<td> <strong>Date</strong></td>
       		<td><%= @experience.start_date %> To  <%= @experience.end_date %></td>
 		    </tr>
 		    <tr>
-		      <th><strong>Description</strong></th>
+		      <td><strong>Description</strong></td>
 		      <td colspan="3"> <%= @experience.description %></td>
 		    </tr>
 	    </table>

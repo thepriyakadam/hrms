@@ -12,7 +12,7 @@ class EmployeeMailer < ApplicationMailer
     @password = pwd
     @employee = emp
     @emp = Employee.find_by(id: @employee.id)
-    mail(to: @emp.email, subject: 'HRMS Password Details')
+    mail(to: @emp.email, subject: 'HRMS Password Detail')
   end
 
   def manager_detail(manager_1,emp)
@@ -25,21 +25,21 @@ class EmployeeMailer < ApplicationMailer
   end
 
   def employee_create(employee)
-    @emp = Employee.find_by(id: employee.id)
-    mail(to: @emp.company_location.email, subject: 'Employee Details')
+    @employee = Employee.find_by(id: employee.id)
+    mail(to: @employee.company_location.email, subject: 'Employee Detail')
   end
 
   def joining_create(employee,joining_detail)
     @joining_detail = joining_detail
     @emp = Employee.find_by(id: employee.id)
-    mail(to: @emp.company_location.email, subject: 'Joining Details')
+    mail(to: @emp.company_location.email, subject: 'OnBoarding Detail')
   end
 
   def bank_create(employee,employee_bank_detail)
     @employee_bank_detail = employee_bank_detail
     @emp = Employee.find_by(id: employee.id)
     @location = CompanyLocation.find_by(id: @emp.company_location_id)
-    mail(to: @location.email, subject: 'Bank Details')
+    mail(to: @location.email, subject: 'Bank Detail')
   end
 
   def qualification_create(employee,qualification)
@@ -47,7 +47,7 @@ class EmployeeMailer < ApplicationMailer
     @employee = employee
     @emp = Employee.find_by(id: @employee.id)
     @location = CompanyLocation.find_by(id: @emp.company_location_id)
-    mail(to: @location.email, subject: 'Qualification Details')
+    mail(to: @location.email, subject: 'Qualification Detail')
   end
 
   def experience_create(employee,experience)
@@ -55,7 +55,7 @@ class EmployeeMailer < ApplicationMailer
     @employee = employee
     @emp = Employee.find_by(id: @employee.id)
     @location = CompanyLocation.find_by(id: @emp.company_location_id)
-    mail(to: @location.email, subject: 'Experience Details')
+    mail(to: @location.email, subject: 'Experience Detail')
   end
 
   def skillset_create(employee,skillset)
@@ -63,7 +63,7 @@ class EmployeeMailer < ApplicationMailer
     @employee = employee
     @emp = Employee.find_by(id: @employee.id)
     @location = CompanyLocation.find_by(id: @emp.company_location_id)
-    mail(to: @location.email, subject: 'Skillset Details')
+    mail(to: @location.email, subject: 'Skillset Detail')
   end
 
   def certification_create(employee,certification)
@@ -71,7 +71,7 @@ class EmployeeMailer < ApplicationMailer
     @employee = employee
     @emp = Employee.find_by(id: @employee.id)
     @location = CompanyLocation.find_by(id: @emp.company_location_id)
-    mail(to: @location.email, subject: 'Certification Details')
+    mail(to: @location.email, subject: 'Certification Detail')
   end
 
   def award_create(employee,award)
@@ -79,7 +79,7 @@ class EmployeeMailer < ApplicationMailer
     @employee = employee
     @emp = Employee.find_by(id: @employee.id)
     @location = CompanyLocation.find_by(id: @emp.company_location_id)
-    mail(to: @location.email, subject: 'Award Details')
+    mail(to: @location.email, subject: 'Award Detail')
   end
 
   def physical_detail_create(employee,employee_physical)
@@ -87,7 +87,7 @@ class EmployeeMailer < ApplicationMailer
     @employee = employee
     @emp = Employee.find_by(id: @employee.id)
     @location = CompanyLocation.find_by(id: @emp.company_location_id)
-    mail(to: @location.email, subject: 'Physical Details')
+    mail(to: @location.email, subject: 'Physical Detail')
   end
 
   def family_detail_create(employee,family)
@@ -95,7 +95,7 @@ class EmployeeMailer < ApplicationMailer
     @employee = employee
     @emp = Employee.find_by(id: @employee.id)
     @location = CompanyLocation.find_by(id: @emp.company_location_id)
-    mail(to: @location.email, subject: 'Family Details')
+    mail(to: @location.email, subject: 'Family Detail')
   end
 
   def asset_detail_create(employee,assigned_asset)
@@ -103,7 +103,7 @@ class EmployeeMailer < ApplicationMailer
     @employee = employee
     @emp = Employee.find_by(id: @employee.id)
     @location = CompanyLocation.find_by(id: @emp.company_location_id)
-    mail(to: @location.email, subject: 'Asset Details')
+    mail(to: @location.email, subject: 'Asset Detail')
   end
 
   def employee_document_create(employee,employee_document)
@@ -111,7 +111,7 @@ class EmployeeMailer < ApplicationMailer
     @employee = employee
     @emp = Employee.find_by(id: @employee.id)
     @location = CompanyLocation.find_by(id: @emp.company_location_id)
-    mail(to: @location.email, subject: 'Document Details')
+    mail(to: @location.email, subject: 'Document Detail')
   end
   # def birthday_invitation
   #     date = Date.today 

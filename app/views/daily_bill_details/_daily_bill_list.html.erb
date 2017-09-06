@@ -4,9 +4,8 @@
       <tr>
       <td colspan="5"><center><font color='label-primary'>Expense Claim List</center></td>
     </tr>
-        <tr>  
-<!--           <th><input type="checkbox" id="selectAll" value="selectAll"></th>
- -->      <th>Expense Date</th>
+        <tr>
+          <th>Date</th>
           <th>Place</th>
           <th>Expense Type</th>
           <th>Expense Amount</th>
@@ -16,10 +15,6 @@
       <tbody>
         <% @daily_bill_details.each do |daily_bill_detail| %>
           <tr>
-          <!--   <td>
-              < if daily_bill_detail.is_confirm == true %>
-              < else %><= check_box_tag "daily_bill_detail_ids[]",daily_bill_detail.id %>< end %>
-            </td> -->
             <td><%= daily_bill_detail.expence_date %></td>
             <td><%= daily_bill_detail.e_place %></td>
             <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>

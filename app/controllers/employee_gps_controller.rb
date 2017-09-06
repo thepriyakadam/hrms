@@ -61,6 +61,40 @@ class EmployeeGpsController < ApplicationController
     end
   end
 
+  def employee_wise_gps
+  end
+
+  def show_employeewise
+  end
+
+  def modal_set_gps
+      @from = params[:employee_gp][:from]
+      @to = params[:employee_gp][:to]
+      @employee_id = params[:employee_gp][:employee_id]
+  
+  end
+
+ def set_employeewise_gps
+    @emp = params[:employee_gp][:employee_id]
+    @from = params[:employee_gp][:from]
+    @to = params[:employee_gp][:to]
+
+    @latitude = params[:employee_gp][:latitude]
+    @longitude = params[:employee_gp][:longitude]
+    @location = params[:employee_gp][:location]
+
+    Member.where(employee_id: @emp).update_all(latitude: @latitude,longitude: @longitude,location: @location,is_gps: true)
+    member=Member.where(employee_id: @emp).take
+    @employee_gp = EmployeeGp.create(employee_id: @emp,latitude: @latitude,longitude: @longitude,location: @location,from_date: @from.to_date,to_date: @to.to_date)
+    @gps_history = EmployeeGp.where(member_id: member.id).last(2).first
+    EmployeeGp.where(id: @gps_history.id).update_all(to_date: @gps_history.from_date)
+      for i in @from.to_date..@to.to_date
+        GpsDaily.create(employee_id: @emp,employee_gp_id: @employee_gp.id,latitude: @latitude,longitude: @longitude,location: @location,date: i)
+      end
+    flash[:notice] = "GPS Setting Saved Successfully"
+    redirect_to employee_wise_gps_employee_gps_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_gp

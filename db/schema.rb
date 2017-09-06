@@ -1536,10 +1536,13 @@ ActiveRecord::Schema.define(version: 20170905112646) do
     t.integer  "passport_photo_file_size",        limit: 4
     t.datetime "passport_photo_updated_at"
     t.integer  "sub_department_id",               limit: 4
+    t.string   "extension_no",                    limit: 255
     t.string   "employee_signature_file_name",    limit: 255
     t.string   "employee_signature_content_type", limit: 255
     t.integer  "employee_signature_file_size",    limit: 4
     t.datetime "employee_signature_updated_at"
+    t.integer  "service_master_id",               limit: 4
+    t.integer  "resource_pool_master_id",         limit: 4
     t.string   "emergency_contact_no",            limit: 255
   end
 
@@ -1554,6 +1557,8 @@ ActiveRecord::Schema.define(version: 20170905112646) do
   add_index "employees", ["employee_type_id"], name: "index_employees_on_employee_type_id", using: :btree
   add_index "employees", ["nationality_id"], name: "index_employees_on_nationality_id", using: :btree
   add_index "employees", ["religion_id"], name: "index_employees_on_religion_id", using: :btree
+  add_index "employees", ["resource_pool_master_id"], name: "index_employees_on_resource_pool_master_id", using: :btree
+  add_index "employees", ["service_master_id"], name: "index_employees_on_service_master_id", using: :btree
   add_index "employees", ["state_id"], name: "index_employees_on_state_id", using: :btree
   add_index "employees", ["sub_department_id"], name: "index_employees_on_sub_department_id", using: :btree
 
@@ -3607,6 +3612,15 @@ ActiveRecord::Schema.define(version: 20170905112646) do
 
   add_index "resignation_status_records", ["employee_resignation_id"], name: "index_resignation_status_records_on_employee_resignation_id", using: :btree
 
+  create_table "resource_pool_masters", force: :cascade do |t|
+    t.string   "code",        limit: 255
+    t.string   "name",        limit: 255
+    t.text     "description", limit: 65535
+    t.boolean  "status"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
   create_table "retention_moneys", force: :cascade do |t|
     t.boolean  "have_retention"
     t.decimal  "amount",                     precision: 15, scale: 2
@@ -3884,6 +3898,15 @@ ActiveRecord::Schema.define(version: 20170905112646) do
 
   add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id", using: :btree
   add_index "selected_resumes", ["vacancy_master_id"], name: "index_selected_resumes_on_vacancy_master_id", using: :btree
+
+  create_table "service_masters", force: :cascade do |t|
+    t.string   "code",        limit: 255
+    t.string   "name",        limit: 255
+    t.text     "description", limit: 65535
+    t.boolean  "status"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
 
   create_table "shift_masters", force: :cascade do |t|
     t.integer  "code",        limit: 4
@@ -4330,6 +4353,7 @@ ActiveRecord::Schema.define(version: 20170905112646) do
     t.boolean  "relocation_rerimbursement"
     t.string   "relocation_cost",           limit: 255
     t.integer  "reporting_master_id",       limit: 4
+    t.integer  "recruiter_id",              limit: 4
     t.integer  "sub_department_id",         limit: 4
     t.integer  "cost_center_id",            limit: 4
     t.integer  "target_company_id",         limit: 4
@@ -4645,6 +4669,8 @@ ActiveRecord::Schema.define(version: 20170905112646) do
   add_foreign_key "employees", "employee_types"
   add_foreign_key "employees", "nationalities"
   add_foreign_key "employees", "religions"
+  add_foreign_key "employees", "resource_pool_masters"
+  add_foreign_key "employees", "service_masters"
   add_foreign_key "employees", "states"
   add_foreign_key "employees", "sub_departments"
   add_foreign_key "employer_contributions", "employees"

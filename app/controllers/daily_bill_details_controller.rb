@@ -28,7 +28,7 @@ class DailyBillDetailsController < ApplicationController
     @daily_bill_detail = DailyBillDetail.new
     
     @travel_request = TravelRequest.find(params[:travel_request_id])
-    @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
+    @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id).order("expence_date ASC")
 
     @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
 

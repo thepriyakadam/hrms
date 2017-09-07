@@ -1789,7 +1789,7 @@ def update_daily_attendance
 
   @employee_attendance.update(in_time: in_time,out_time: out_time,present: present,comment: comment,working_hrs: working_hrs,comment: "User Updated")
   flash[:notice] = "Updated Successfully!"
-  redirect_to datewise_daily_attendances_employee_attendances_path
+  redirect_to datewise_daily_attendance_employee_attendances_path
 end
 
 def import

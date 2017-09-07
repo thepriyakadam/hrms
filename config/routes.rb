@@ -211,6 +211,9 @@ Rails.application.routes.draw do
       get :investment_declaration_list
       post :reject_declaration
       get :leave_c_off
+      get :subordinate_attendance
+      post :show_subordinate_attendance
+      get :show_subordinate_attendance
     end
   end
 

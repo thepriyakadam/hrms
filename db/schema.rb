@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170905112646) do
+ActiveRecord::Schema.define(version: 20170907051748) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -3531,14 +3531,13 @@ ActiveRecord::Schema.define(version: 20170905112646) do
 
   create_table "reporting_masters_training_reqs", force: :cascade do |t|
     t.integer  "training_request_id", limit: 4
-    t.integer  "reporting_master_id", limit: 4
     t.string   "training_status",     limit: 255
     t.string   "employee_training",   limit: 255
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+    t.integer  "reporting_master_id", limit: 4
   end
 
-  add_index "reporting_masters_training_reqs", ["reporting_master_id"], name: "index_reporting_masters_training_reqs_on_reporting_master_id", using: :btree
   add_index "reporting_masters_training_reqs", ["training_request_id"], name: "index_reporting_masters_training_reqs_on_training_request_id", using: :btree
 
   create_table "reporting_masters_travel_requests", force: :cascade do |t|
@@ -4116,17 +4115,16 @@ ActiveRecord::Schema.define(version: 20170905112646) do
     t.string   "no_of_hrs",                limit: 255
     t.string   "place",                    limit: 255
     t.integer  "training_topic_master_id", limit: 4
-    t.integer  "training_request_id",      limit: 4
     t.string   "trainer_num",              limit: 255
     t.text     "about_trainer",            limit: 65535
     t.integer  "period_id",                limit: 4
     t.string   "trainer_email",            limit: 255
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
+    t.integer  "training_request_id",      limit: 4
   end
 
   add_index "training_plans", ["period_id"], name: "index_training_plans_on_period_id", using: :btree
-  add_index "training_plans", ["training_request_id"], name: "index_training_plans_on_training_request_id", using: :btree
   add_index "training_plans", ["training_topic_master_id"], name: "index_training_plans_on_training_topic_master_id", using: :btree
 
   create_table "training_records", force: :cascade do |t|
@@ -4147,7 +4145,6 @@ ActiveRecord::Schema.define(version: 20170905112646) do
     t.integer  "employee_id",              limit: 4
     t.string   "training_period",          limit: 255
     t.date     "training_date"
-    t.integer  "reporting_master_id",      limit: 4
     t.integer  "training_topic_master_id", limit: 4
     t.text     "description",              limit: 65535
     t.integer  "no_of_employee",           limit: 4
@@ -4157,10 +4154,10 @@ ActiveRecord::Schema.define(version: 20170905112646) do
     t.text     "comment",                  limit: 65535
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
+    t.integer  "reporting_master_id",      limit: 4
   end
 
   add_index "training_requests", ["employee_id"], name: "index_training_requests_on_employee_id", using: :btree
-  add_index "training_requests", ["reporting_master_id"], name: "index_training_requests_on_reporting_master_id", using: :btree
   add_index "training_requests", ["training_topic_master_id"], name: "index_training_requests_on_training_topic_master_id", using: :btree
 
   create_table "training_topic_masters", force: :cascade do |t|
@@ -4833,7 +4830,6 @@ ActiveRecord::Schema.define(version: 20170905112646) do
   add_foreign_key "reporting_masters", "employees"
   add_foreign_key "reporting_masters_resigns", "employee_resignations"
   add_foreign_key "reporting_masters_resigns", "reporting_masters"
-  add_foreign_key "reporting_masters_training_reqs", "reporting_masters"
   add_foreign_key "reporting_masters_training_reqs", "training_requests"
   add_foreign_key "reporting_masters_travel_requests", "travel_requests"
   add_foreign_key "reporting_masters_vacancy_masters", "vacancy_masters"
@@ -4891,12 +4887,10 @@ ActiveRecord::Schema.define(version: 20170905112646) do
   add_foreign_key "training_approvals", "training_requests"
   add_foreign_key "training_approvals", "training_topic_masters"
   add_foreign_key "training_plans", "periods"
-  add_foreign_key "training_plans", "training_requests"
   add_foreign_key "training_plans", "training_topic_masters"
   add_foreign_key "training_records", "employees"
   add_foreign_key "training_records", "training_topic_masters"
   add_foreign_key "training_requests", "employees"
-  add_foreign_key "training_requests", "reporting_masters"
   add_foreign_key "training_requests", "training_topic_masters"
   add_foreign_key "transfer_histories", "companies"
   add_foreign_key "transfer_histories", "company_locations"

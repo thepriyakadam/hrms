@@ -1,5 +1,5 @@
 module TargetCompaniesHelper
    def all_target_company
-		TargetCompany.all.collect { |t| [t.name, t.id] }
+		TargetCompany.where(status: true).collect { |t| [t.name, t.id] }
 	end
 end

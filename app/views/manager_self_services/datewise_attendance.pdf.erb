@@ -23,28 +23,28 @@ div.nobreak{ page-break-inside: avoid;
               <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
           </td>
         </tr>
-        <tr><th colspan="7"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
+        <tr><th colspan="6"><center>Attendance Report of <%= @employee_attendances.first.employee.try(:manual_employee_code) %> <%= full_name(@employee_attendances.first.employee) %> <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
 
           <tr>
-            <th>ID</th>
-            <th>Employee</th>
             <th>Date</th>
             <th>Day</th>
+            <th>Present</th>
             <th>In Time</th>
             <th>Out Time</th>
-            <th>Present</th>
+            <th>Working Hrs.</th>
+            
           </tr>
         </thead>
         <tbody>
           <% @employee_attendances.each do |a| %>
             <tr>
-              <td><%= a.employee.manual_employee_code %></td>
-              <td><%= full_name(a.employee) %></td>
               <td><%= a.try(:day) %></td>
               <td><%= a.try(:day).strftime('%A') %></td>
+              <td><%= a.try(:present) %></td>
               <td><%= a.try(:in_time) %></td>
               <td><%= a.try(:out_time) %></td>
-              <td><%= a.try(:present) %></td>
+              <td><%= a.try(:working_hrs) %></td>
+              
             </tr>
           <% end %>
         </tbody>

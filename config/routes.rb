@@ -1232,6 +1232,7 @@ end
     get :expence_date_report_list
     get :expence_date_report
     get :modal_expense_claim_list
+    get :modal_travel_request_process
     end
   end
   resources :travel_requests do

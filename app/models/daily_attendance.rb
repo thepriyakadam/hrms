@@ -8,14 +8,19 @@ class DailyAttendance < ActiveRecord::Base
 
   def self.import(file)
 	spreadsheet = open_spreadsheet(file)
-	header = spreadsheet.row(1)
-  	(2..spreadsheet.last_row).each do |i|
+   (2..spreadsheet.last_row).each do |i|
 
-  	  row = Hash[[header, spreadsheet.row(i)].transpose]
-  	  employee_attendance = find_by_id(row['id']) || new
-  	  employee_attendance.attributes = row.to_hash.slice(*row.to_hash.keys)
-  	  employee_attendance.save!
-  	end
+        sr_no = spreadsheet.cell(i,'A')
+        date = spreadsheet.cell(i,'B')
+        time = spreadsheet.cell(i,'C')
+        #@employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'D').to_i)
+        employee_code = spreadsheet.cell(i,'D') #@employee.id
+        card_no = spreadsheet.cell(i,'E')
+        employee_name = spreadsheet.cell(i,'F')
+        controller = spreadsheet.cell(i,'G')
+        reader_name = spreadsheet.cell(i,'H')
+        access_status = spreadsheet.cell(i,'I') 
+    end
   end
 
   def self.open_spreadsheet(file)

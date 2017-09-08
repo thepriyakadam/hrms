@@ -62,17 +62,17 @@ require 'roo'
 # end
 
 puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/service_master.xls")
+ex = Roo::Excel.new("#{Rails.root}/public/resource_pool.xls")
 ex.default_sheet = ex.sheets[0]
 i=1
-1.upto(32) do |line|
-ServiceMaster.new do |tc|
+2.upto(470) do |line|
+ResourcePoolMaster.new do |tc|
   tc.code = ex.cell(line,'A')
   tc.name = ex.cell(line,'B')
   tc.description = ex.cell(line,'C')
   tc.save!
 end
-puts "#{i} ServiceMaster inserted.-----------------------------------------------"
+puts "#{i} ResourcePoolMaster inserted.-----------------------------------------------"
 i = i+1
 end
 

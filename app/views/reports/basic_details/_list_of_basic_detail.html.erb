@@ -54,8 +54,8 @@
 		  <td><%= employee.try(:manual_employee_code) %></td>
 		  <td><%= full_name(employee) %></td>
 		  <td><%= employee.gender %></td>
-		  <td><%= employee.reporting_manager.try(:name) %></td>
-		  <td><%= employee.reporting_manager_2.try(:name) %></td>
+		  <td><%= employee.manager.try(:name) %></td>
+		  <td><%= employee.manager_2.try(:name) %></td>
 		  <td><%= employee.adhar_no %></td>
 		  <td><%= employee.pan_no %></td>
 		  <td><%= employee.licence_no %></td>

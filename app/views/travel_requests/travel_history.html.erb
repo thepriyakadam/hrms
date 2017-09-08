@@ -28,7 +28,7 @@
          <% if travel_request.current_status == "Pending" %>
          <%= link_to 'Approve', travel_request_confirmation_travel_requests_path(travel_request),class: 'btn btn-xs btn-primary' %>
          <% elsif travel_request.current_status == "Approved & Send Next" %>
-         <%= link_to 'Approve / Reject', travel_request_confirmation_travel_requests_path(travel_request),class: 'btn btn-xs btn-primary' %>
+         <%= link_to 'Approve', travel_request_confirmation_travel_requests_path(travel_request),class: 'btn btn-xs btn-primary' %>
          <% elsif travel_request.current_status == "Edit And Approved" %>
          <small class="label label-success">Edit And Approved</small>
          <% elsif travel_request.current_status == "Approved" %>

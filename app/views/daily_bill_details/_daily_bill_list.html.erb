@@ -5,8 +5,7 @@
       <td colspan="5"><center><font color='label-primary'>Expense Claim List</center></td>
     </tr>
         <tr>  
-<!--           <th><input type="checkbox" id="selectAll" value="selectAll"></th>
- -->      <th>Expense Date</th>
+          <th>Expense Date</th>
           <th>Place</th>
           <th>Expense Type</th>
           <th>Expense Amount</th>
@@ -32,7 +31,7 @@
                 <%= link_to '', edit_daily_bill_detail_path(daily_bill_detail),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
                 <!-- <= link_to '', daily_bill_detail,class: 'btn btn-xs btn-default fa fa-eye' %> -->
                 <%= link_to '',  daily_bill_detail, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-danger fa fa-close' %>
-                <%= link_to '', daily_bill_detail,class: 'btn btn-default btn-xs fa fa-eye' %>
+                <%= link_to '', modal_expense_claim_list_daily_bill_details_path(daily_bill_detail),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
               <% end %>
               <% if daily_bill_detail.request_status == "Approved" %>
                 <small class="label label-success">Approved</small>
@@ -69,3 +68,5 @@
       </div>
     </div>
   <% end %>
+
+  <div id="modal_expense_claim_list" class="modal fade"></div>

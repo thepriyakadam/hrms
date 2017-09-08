@@ -9,20 +9,22 @@
     </tr>
       <tr>
         <th><strong>Employee Name</strong></th>
-        <td><%= @training_request.employee.try(:manual_employee_code) %> - <%= @training_request.employee.try(:first_name) %> <%= @training_request.employee.try(:middle_name) %> <%= @training_request.employee.try(:last_name) %></td>
+        <td colspan="3"><%= @training_request.employee.try(:manual_employee_code) %> - <%= @training_request.employee.try(:first_name) %> <%= @training_request.employee.try(:middle_name) %> <%= @training_request.employee.try(:last_name) %></td>
       
-        <th><strong>Training Topic</strong></th>
-        <td><%= @training_request.training_topic_master.try(:name) %></td>
+       
       </tr>
 
       <tr>
+       <th><strong>Training Topic</strong></th>
+        <td><%= @training_request.training_topic_master.try(:name) %></td>
+
         <th><strong>Request Date</strong></th>
         <td><%= @training_request.training_date %></td>
       
-       <th><strong>Request To</strong></th>
-        <% training_req = TrainingRequest.where(id: @training_request.id).take
+      <!--  <th><strong>Request To</strong></th>
+        < training_req = TrainingRequest.where(id: @training_request.id).take
         emp = Employee.where(id: training_req.reporting_master_id).take %>
-        <td><%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
+        <td><= emp.try(:first_name) %> <= emp.try(:middle_name) %> <= emp.try(:last_name) %></td> -->
       </tr>
       <tr>
         <th><strong>No. Of Trainee</strong></th>

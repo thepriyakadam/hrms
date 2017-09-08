@@ -483,6 +483,10 @@ elsif current_user.role.name == 'Branch'
         end
   end
 
+  def modal_expense_claim_list
+    @daily_bill_detail = DailyBillDetail.find(params[:format])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_daily_bill_detail

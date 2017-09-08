@@ -46,6 +46,21 @@ require 'roo'
 # i = i+1
 # end
 
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/target_company.xls")
+ex.default_sheet = ex.sheets[0]
+i=1
+2.upto(37) do |line|
+TargetCompany.new do |tc|
+  tc.code = ex.cell(line,'A')
+  tc.name = ex.cell(line,'B')
+  tc.description = ex.cell(line,'C')
+  tc.save!
+end
+puts "#{i} TargetCompany inserted.-----------------------------------------------"
+i = i+1
+end
+
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
 # ex.default_sheet = ex.sheets[3]
@@ -668,11 +683,11 @@ require 'roo'
 
 
 # puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/sg_leave_balance.xls")
+# ex = Roo::Excel.new("#{Rails.root}/public/sglb.xls")
 # ex.default_sheet = ex.sheets[0] 
 # i=1
 
-# 2.upto(457) do |line|
+# 2.upto(460) do |line|
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 # puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
 # EmployeeLeavBalance.new do |j|
@@ -948,20 +963,20 @@ require 'roo'
 #    end
 #  end
 
-puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/skillset.xls")
-ex.default_sheet = ex.sheets[0]
-i=1
-2.upto(133) do |line|
-InterviewAttribute.new do |ia|
-  ia.code = ex.cell(line,'A')
-  ia.name = ex.cell(line,'B')
-  ia.description = ex.cell(line,'C')
-  ia.save!
-end
-puts "#{i} Interview Attribute inserted.-----------------------------------------------"
-i = i+1
-end
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/skillset.xls")
+# ex.default_sheet = ex.sheets[0]
+# i=1
+# 2.upto(133) do |line|
+# InterviewAttribute.new do |ia|
+#   ia.code = ex.cell(line,'A')
+#   ia.name = ex.cell(line,'B')
+#   ia.description = ex.cell(line,'C')
+#   ia.save!
+# end
+# puts "#{i} Interview Attribute inserted.-----------------------------------------------"
+# i = i+1
+# end
 
 #  ex = Roo::Excel.new("#{Rails.root}/public/sp_working_day.xls")
 #  ex.default_sheet = ex.sheets[0] #siya feb

@@ -488,6 +488,9 @@ elsif current_user.role.name == 'Branch'
   end
 
   def modal_travel_request_process
+    # byebug
+    @travel_request = TravelRequest.find(params[:format])
+    # @travel_requests = TravelRequest.find(@daily_bill_detail.travel_request_id)
     @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
   end
 

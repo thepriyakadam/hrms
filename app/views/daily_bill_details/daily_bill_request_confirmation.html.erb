@@ -2,7 +2,7 @@
   <div class="box-header">
     <h3 class="box-title">Expense Claim Request Confirmation</h3>
     <div class="pull-right">
-      <%= link_to "Travel Request Process", modal_travel_request_process_daily_bill_details_path(@reporting_masters_travel_requests1), class: 'btn btn-sm btn-primary',remote: true %>
+      <%= link_to "Request Status", modal_travel_request_process_daily_bill_details_path(@travel_request), class: 'btn btn-sm btn-primary',remote: true %>
     </div>
   </div>
   <div class="box-body">
@@ -10,9 +10,9 @@
       <div>
         <%= render 'show_travel_request' %>
       </div>
-      <div>
-      <%= render 'show_reporting_masters_travel_request' %>
-      </div>
+      <!-- <div>
+      <= render 'show_reporting_masters_travel_request' %>
+      </div> -->
 
       <table id="example" class="table table-bordered table-hover table-condensed">
         <thead>

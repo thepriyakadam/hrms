@@ -25,6 +25,12 @@ class Reports::BasicDetailsController < ApplicationController
     @department = @company_location.departments 
   end 
 
+  def show_basic_detail
+    @company_location = params[:company_location]
+    @employees = Employee.where(company_location_id: @company_location)
+
+  end
+
   def employee_basic_report
     @company_location = params[:salary][:company_location_id]
     @employees = Employee.where(company_location_id: @company_location)

@@ -46,18 +46,33 @@ require 'roo'
 # i = i+1
 # end
 
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/target_company.xls")
+# ex.default_sheet = ex.sheets[0]
+# i=1
+# 2.upto(37) do |line|
+# TargetCompany.new do |tc|
+#   tc.code = ex.cell(line,'A')
+#   tc.name = ex.cell(line,'B')
+#   tc.description = ex.cell(line,'C')
+#   tc.save!
+# end
+# puts "#{i} TargetCompany inserted.-----------------------------------------------"
+# i = i+1
+# end
+
 puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/target_company.xls")
+ex = Roo::Excel.new("#{Rails.root}/public/resource_pool.xls")
 ex.default_sheet = ex.sheets[0]
 i=1
-2.upto(37) do |line|
-TargetCompany.new do |tc|
+2.upto(470) do |line|
+ResourcePoolMaster.new do |tc|
   tc.code = ex.cell(line,'A')
   tc.name = ex.cell(line,'B')
   tc.description = ex.cell(line,'C')
   tc.save!
 end
-puts "#{i} TargetCompany inserted.-----------------------------------------------"
+puts "#{i} ResourcePoolMaster inserted.-----------------------------------------------"
 i = i+1
 end
 

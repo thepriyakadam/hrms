@@ -1709,6 +1709,15 @@ def upload
             end
           end#employee.nil?
   end#do
+
+    @daily_attendances = DailyAttendance.where(date: last.date.to_date)
+    @daily_attendances.each do |d|
+      @emp = Employee.exists?(manual_employee_code: d.employee_code)
+      if @emp == true
+        d.destroy
+      end
+    end
+
   #remaining employees attendance creation
     @employees = Employee.where(status: "Active")
     @employees.each do |e|

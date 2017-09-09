@@ -19,7 +19,8 @@ class DailyAttendance < ActiveRecord::Base
         employee_name = spreadsheet.cell(i,'F')
         controller = spreadsheet.cell(i,'G')
         reader_name = spreadsheet.cell(i,'H')
-        access_status = spreadsheet.cell(i,'I') 
+        access_status = spreadsheet.cell(i,'I')
+        @daily_attendace = DailyAttendance.create(sr_no: sr_no,date: date,time: time,employee_code: employee_code,card_no: card_no,employee_name: employee_name,controller: controller,reader_name: reader_name,access_status: access_status) 
     end
   end
 

@@ -262,6 +262,8 @@ class SelfServicesController < ApplicationController
   end
 
   def add_attendance
+    #@employee_attendance = EmployeeAttendance.new(employee_attendance_params)
+    @emp_attendance = EmployeeAttendance.where(employee_id: current_user.employee_id,day: Date.today).take
     @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id).order('day DESC')
   end
 
@@ -270,16 +272,15 @@ class SelfServicesController < ApplicationController
     session[:active_tab] = "EmployeeSelfService"
   end
 
-  def create_self_attendance
+  def create_in_time
     # @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
     employee_id = params[:salary][:employee_id]
     day = params[:salary][:day]
-    present = params[:salary][:present]
     @emp = Employee.find_by(id: employee_id)
-    # if @employee_attendance.is_present(day,employee_id)
+     # if @employee_attendance.is_present(day,employee_id)
     #   flash[:notice] = "Already Exist"
     # else
-      @emp_atten = EmployeeAttendance.create(employee_id: employee_id,day: day,present: present, is_confirm: false)  
+      @emp_atten = EmployeeAttendance.create(employee_id: employee_id,day: Date.today,present: 'P',in_time: Time.now, is_confirm: false)  
       if @emp_atten.save
         flash[:notice] = "Created successfully"
       else
@@ -287,6 +288,18 @@ class SelfServicesController < ApplicationController
       end
     # end
     redirect_to add_attendance_self_services_path
+  end
+
+  def create_out_time
+    in_time = params[:in_time]
+    out_time = Time.now
+    working_hrs = out_time.to_time - in_time.to_time
+    if working_hrs > 8 
+    elsif working_hrs < 8
+    elsif working_hrs < 4
+    else
+    end
+
   end
 
   def internal
@@ -307,6 +320,9 @@ class SelfServicesController < ApplicationController
   end
   # def apply_internally
   #   @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+  # end
+  #  def employee_attendance_params
+  #   params.require(:employee_attendance).permit(:employee_id, :day, :present, :in_time)
   # end
 
   def leave_c_off_params

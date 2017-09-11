@@ -5,37 +5,35 @@
   <%= bootstrap_form_for(:employee, url: { action: 'show_datewise_attendance'},html: {id: "employee"}) do |f| %>
     <div class="row">
         <div class="col-sm-3">
-          <label>From </label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= text_field :employee,:from,hide_label: true,class: 'request_date form-control'%>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm-3">
-          <label>To </label>
-          <div class="form-group required">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-              <%= text_field :employee,:to,hide_label: true,class: 'request_date form-control'%>
+              <%= text_field :employee,:from,hide_label: true,placeholder: "From Date",class: 'request_date form-control'%>
             </div>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.select :employee_id, role_employee_list, {label: 'Employee ',include_blank: " Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :employee,:to,hide_label: true,placeholder: "To Date",class: 'request_date form-control'%>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.select :employee_id, role_employee_list, {hide_label: true,include_blank: " Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
            </div>
         </div>
 
-        <div class="col-sm-2" style="padding-top:20px;">
-          <%= f.submit "Show Employee List",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %>
+        <div class="col-sm-3">
+          <%= f.submit "Show Employee Attendance",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %>
         </div>
       </div>
      </div>

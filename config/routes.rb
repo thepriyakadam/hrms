@@ -125,7 +125,14 @@ Rails.application.routes.draw do
   resources :rembursmentmasters
   resources :employee_jc_lists
   resources :joining_checklist_masters
-  resources :employee_gps
+  resources :employee_gps do
+    collection do
+      get :employee_wise_gps
+      post :show_employeewise
+      post :modal_set_gps
+      post :set_employeewise_gps
+    end
+  end
   resources :payroll_periods
   resources :visitor_details do
     collection do
@@ -1023,6 +1030,7 @@ end
       get :print_employee_promotion
       get :display_certificate
       get :print_certificate
+      get :modal_promotion
     end
   end
   resources :accident_masters
@@ -1095,6 +1103,7 @@ end
       get :final_approved_list
       get :confirm_resignation
       get :cancel_resignation_list
+      get :modal_resignation_detail
   end
 end
   resources :travel_options do
@@ -1174,6 +1183,7 @@ end
     get :update_asset
     get :import_xl
     post :import
+    get :asset_modal
     end
   end
   resources :asset_types do
@@ -1221,6 +1231,8 @@ end
     get :print_expence_date_report
     get :expence_date_report_list
     get :expence_date_report
+    get :modal_expense_claim_list
+    get :modal_travel_request_process
     end
   end
   resources :travel_requests do
@@ -1602,6 +1614,8 @@ end
   match 'visitor_details/:id/download_person_image/:id' => 'visitor_details#download_person_image', :via => [:get], :as => :download_person_image
 
   match 'employees/:id/download_employee_signature/:id' => 'employees#download_employee_signature', :via => [:get], :as => :download_employee_signature
+  match 'employees/:id/download_employee_profile_picture/:id' => 'employees#download_employee_profile_picture', :via => [:get], :as => :download_employee_profile_picture
+
   # get '/screenshot', to: 'issue_requests#download_screenshot', as: 'download_screenshot'
   # get '/download', to: 'issue_requests#download_screenshot_image', as: 'download_screenshot_image'
 
@@ -2229,6 +2243,7 @@ end
       get :add_award_field
       get :import_xl
       post :import
+      get :award_modal
     end
   end
   resources :skillsets  do
@@ -2243,12 +2258,14 @@ end
       post :import
       get :modal_experience
       post :update_experience
+      get :exp_modal
     end
   end
   resources :certifications do
     collection do
       get :import_xl
       post :import
+      get :certificate_modal
     end
   end
   resources :qualifications do
@@ -2257,6 +2274,7 @@ end
       post :import
       get :modal
       post :update_qualification
+      get :qualification_modal
      end
    end
   resources :families do
@@ -2266,6 +2284,7 @@ end
       get :import_xl
       post :import
       get :collect_age
+      get :family_modal
     end
   end
   resources :employees do

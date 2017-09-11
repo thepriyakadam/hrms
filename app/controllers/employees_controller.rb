@@ -162,6 +162,7 @@
         @joining_checklist_master.each do |jc|
         EmployeeJcList.create(joining_checklist_master_id: jc.id,employee_id: @employee.id,status: false)
         end
+        EmployeeMailer.employee_create(@employee).deliver_now   
         redirect_to @employee    
       else
         render :new
@@ -574,12 +575,11 @@ end
 
   def collect_sub_department
     @department = Department.find(params[:id])
-    @sub_departments = SubDepartment.where(sub_department_id: @department.id)
+    @sub_departments = SubDepartment.where(department_id: @department.id)
     @form = params[:form]
   end
 
   def collect_employee
-    # byebug
      @department = Department.find(params[:id])
      @employees = Employee.where(department_id: @department.id)
      @form = params[:form]
@@ -1185,22 +1185,42 @@ def show_all_record
      @member = Member.find(params[:format])
   end
 
-  def update_gps
-    # byebug
-    # Member.find(params[:id])
-    @emp = params[:member][:employee_id]
-    @latitude = params[:member][:latitude]
-    @longitude = params[:member][:longitude]
-    @location = params[:member][:location]
-    @gps = params[:member][:is_gps]
+  def set_employeewise_gps
+    byebug
+    @emp = params[:employee_gp][:employee_id]
+    @from = params[:employee_gp][:from]
+    @to = params[:employee_gp][:to]
+
+    @latitude = params[:employee_gp][:latitude]
+    @longitude = params[:employee_gp][:longitude]
+    @location = params[:employee_gp][:location]
+
     Member.where(employee_id: @emp).update_all(latitude: @latitude,longitude: @longitude,location: @location,is_gps: true)
     member=Member.where(employee_id: @emp).take
-    EmployeeGpsHistory.create(member_id: member.id,latitude: @latitude,longitude: @longitude,location: @location,from_date: Date.today)
-    @gps_history = EmployeeGpsHistory.where(member_id: member.id).last(2).first
-    EmployeeGpsHistory.where(id: @gps_history.id).update_all(to_date: @gps_history.from_date)
+    @employee_gp = EmployeeGp.create(employee_id: @emp,latitude: @latitude,longitude: @longitude,location: @location,from_date: @from.to_date,to_date: @to.to_date)
+    @gps_history = EmployeeGp.where(member_id: member.id).last(2).first
+    EmployeeGp.where(id: @gps_history.id).update_all(to_date: @gps_history.from_date)
+      for i in @from.to_date..@to.to_date
+        GpsDaily.create(employee_id: @emp,employee_gp_id: @employee_gp.id,latitude: @latitude,longitude: @longitude,location: @location,date: i)
+      end
     flash[:notice] = "GPS Setting Saved Successfully"
-    redirect_to employee_gps_setting_list_employees_path
+    redirect_to employee_wise_gps_employee_gps_path
   end
+
+  # def update_gps
+  #   @emp = params[:member][:employee_id]
+  #   @latitude = params[:member][:latitude]
+  #   @longitude = params[:member][:longitude]
+  #   @location = params[:member][:location]
+  #   @gps = params[:member][:is_gps]
+  #   Member.where(employee_id: @emp).update_all(latitude: @latitude,longitude: @longitude,location: @location,is_gps: true)
+  #   member=Member.where(employee_id: @emp).take
+  #   EmployeeGpsHistory.create(member_id: member.id,latitude: @latitude,longitude: @longitude,location: @location,from_date: Date.today)
+  #   @gps_history = EmployeeGpsHistory.where(member_id: member.id).last(2).first
+  #   EmployeeGpsHistory.where(id: @gps_history.id).update_all(to_date: @gps_history.from_date)
+  #   flash[:notice] = "GPS Setting Saved Successfully"
+  #   redirect_to employee_gps_setting_list_employees_path
+  # end
 
   def modal
     @employee = Employee.find(params[:format])
@@ -1211,7 +1231,6 @@ def show_all_record
   end
 
   def display_employee_details
-    # byebug
      @emp = params[:employee] ? params[:employee][:id] : params[:id]
      @employee = Employee.where(id: @emp).take
      @families = Family.where(employee_id: @emp)
@@ -1451,6 +1470,14 @@ def show_all_record
               disposition: 'attachment'
   end
 
+    def download_employee_profile_picture
+    @employee = Employee.find(params[:id])
+    send_file @employee.passport_photo.path,
+              filename: @employee.passport_photo_file_name,
+              type: @employee.passport_photo_content_type,
+              disposition: 'attachment'
+  end
+
 
   private
 
@@ -1466,7 +1493,7 @@ def show_all_record
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_params
     # params.require(:employee).permit(:department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :district, :state, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender)
-    params.require(:employee).permit(:optional_email,:optinal_contact_no,:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id,:sub_department_id,:first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id,:employee_signature)
+    params.require(:employee).permit(:optional_email,:optinal_contact_no,:optinal_contact_no1,:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id,:sub_department_id,:first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id,:employee_signature,:emergency_contact_no)
     # joining_detail_attributes: [:joining_date, :reference_from, :admin_hr, :tech_hr, :designation, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem])
   end
 end

@@ -1,0 +1,34 @@
+		 <!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>
+	<table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr><th colspan="4"><center><font color='#0077b3'>Physical Detail</font></center> </th></tr>
+    	<tr>
+    		<td><strong>Employee</strong></td>
+    		<td colspan="3"><%= @employee_physical.employee.prefix %> <%= @employee_physical.employee.first_name %> <%= @employee_physical.employee.last_name %></td>
+    	</tr>
+
+	    <tr>
+	        <td> <strong>Height(inches)</strong></td>
+	        <td> <%= @employee_physical.height %></td>
+	       
+	        <td><strong>Weight(kg)</strong></td>
+	        <td><%= @employee_physical.weight %></td>
+	    </tr>
+	     <tr>
+
+	        <td> <strong>T-Shirt Size</strong></td>
+	        <td> <%= @employee_physical.size %></td>
+
+	          <td> <strong>Trouser Size(cm)</strong></td>
+	        <td> <%= @employee_physical.trouser_size %></td>
+
+	    </tr>
+	    </table>
+    </p>
+  </body>
+</html>

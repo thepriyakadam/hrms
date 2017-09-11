@@ -1,8 +1,16 @@
 <div class="box box-default">
   <div class="box-header with-border">
      <div class="row">
-  <div class="col-sm-1">
+    <div class="col-sm-1">
+  <% if @awards.first.employee.passport_photo_file_name == nil %>
+  <% if @awards.first.employee.gender == "Female" %>
+   <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%else%>
+   <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%end%>
+ <%else%>
       <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+      <%end%>
   </div>
     <div class="col-sm-6">
      <font color='#0077b3'>
@@ -12,26 +20,30 @@
     </div>
   </div>
     <div class="box-tools pull-right">
-      <%= link_to "Add Award", ajax_new_award_employees_path(id: @employee.id), class: 'btn btn-primary btn-sm',remote:true %>
-      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      <%= link_to "Add Award", ajax_new_award_employees_path(id: @employee.id), class: 'btn btn-primary btn-xs',remote:true %>
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-xs fa fa-arrow-left' %>
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
-    <tr><th colspan="4"><center><font color='#0077b3'>Award Detail</font></center> </th></tr>
+    <tr><th colspan="5"><center><font color='#0077b3'>Award Details</font></center> </th></tr>
       <tr>
-      <th>Award name</th>
+      <th>Sr.No.</th>
+      <th>Award Name</th>
       <th>Year</th>
-      <th>Award from</th>
+      <th>Award From</th>
       <th>Action</th>
     </tr>
+    <% i=0%>
     <% @awards.each do |award| %>
       <tr>
+        <td><%= i=i+1%></td>
         <td><%= award.award_name %></td>
         <td><%= award.year.name %></td>
         <td><%= award.award_from %></td>
         <td>
-          <%= link_to '', edit_award_path(award),class: 'btn btn-success fa fa-edit btn-sm',remote:true %>
+          <%= link_to '', edit_award_path(award),class: 'btn btn-success fa fa-edit btn-xs',remote:true %>
+          <%= link_to '', award_modal_awards_path(award),class: 'btn btn-default fa fa-eye btn-xs',remote:true %>
            <!-- link_to '', award, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close btn-sm' %> -->
         </td>
       </tr>
@@ -39,3 +51,5 @@
     </table>
   </div><!-- /.box -->
 </div>
+
+<div id="award_modal" class="modal fade"></div>

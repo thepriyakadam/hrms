@@ -20,7 +20,7 @@
           <td><%= employee_promotion.employee.try(:first_name) %> <%= employee_promotion.employee.try(:middle_name) %> <%= employee_promotion.employee.try(:last_name) %></td>
           <td>
            <%= link_to 'Promotion', edit_employee_promotion_path(employee_promotion),class: 'btn btn-primary btn-xs' %>
-            <%= link_to '', employee_promotion,class: 'btn btn-default btn-xs fa fa-eye' %>
+            <%= link_to '', modal_promotion_employee_promotions_path(employee_promotion),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
 
           </td> 
         </tr>
@@ -36,3 +36,4 @@ $(document).ready(function() {
     } );
 } );
 </script>
+<div id="modal_promotion" class="modal fade"></div>

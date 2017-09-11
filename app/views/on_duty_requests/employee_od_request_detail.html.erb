@@ -1,40 +1,32 @@
 <div class="box">
   <div class="box-body">
 
-  <table id="example1" class="table table-bordered table-hover table-condensed">
-    <tr><th colspan="4"><center>Employee  Detail</center></th></tr>
-      <tbody>
-        <tr>
-          <th>ID</th>
-          <td><%= @current_request.employee.try(:manual_employee_code) %></td>
-
-          <th>Employee</th>
-          <td><%= full_name(@current_request.employee) %></td>
-        </tr>
-        <tr>
-          <th>Department</th>
-          <td><%= @current_request.employee.try(:department).try(:name) %></td>
-
-          <th>Designation</th>
-          <td><%= @current_request.employee.try(:joining_detail).try(:employee_designation).try(:name) %></td>
-        </tr>
-        <tr>
-          <th>Manager 1</th>
-          <td><%= @current_request.employee.manager.try(:manual_employee_code) %> - <%= full_name(@current_request.employee.try(:manager)) %></td>
-       
-          <th>Manager 2</th>
-          <td><%= @current_request.employee.manager_2.try(:manual_employee_code) %> - <%= full_name(@current_request.employee.try(:manager_2)) %></td>
-        </tr>
-
-      </tbody>
-    </table>
+         <table class="table table-bordered table-hover table-condensed'">
+           <thead>
+              <tr>
+                <th colspan="2"><center> On Duty Process </center></th>
+              </tr>
+              <tr>
+                <th> Employee </th>
+                <td><%= @employee.manual_employee_code %> - <%= full_name(@employee) %></td>
+              </tr>
+              <tr>
+                <th>Manager 1 </th>
+                <td><%= @employee.manager.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager)) %></td>
+              </tr>
+              <tr>
+                <th>Manager 2 </th>
+                <td><%= @employee.manager_2.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager_2)) %></td>
+              </tr>
+           </thead>
+         </table>
     <br>
 
    <table id="example6" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
           <th>ID</th>
-          <th>OD Type</th>
+          <th>On Duty Type</th>
           <th>No. Of Days</th>
           <th>Status</th>
         </tr>
@@ -77,43 +69,40 @@
     <br>
   <table id="example1" class="table table-bordered table-hover table-condensed">
     <tbody>
-      <tr><td colspan="4"><font color='red'><center>Employee Current OD Detail</center></font></td></tr>
+      <tr><td colspan="4"><font color='label-primary'><center>Current On Duty Request Detail of <%= @current_request.employee.try(:manual_employee_code) %> - <%= full_name(@employee) %></center></font></td></tr>
       <tr>
-        <th>ID</th>
-        <td><%= @current_request.employee.try(:manual_employee_code) %></td>
-
-        <th>Employee Name</th>
-        <td><%= full_name(@current_request.employee) %></td>
+        <th>Date</th>
+        <td colspan="3"><%= @current_request.start_date.to_date %> to <%= @current_request.end_date.to_date %></td>
       </tr>
       <tr>
-        <th>From Date</th>
-        <td><%= @current_request.start_date.to_date %></td>
-
-        <th>To Date</th>
-        <td><%= @current_request.end_date.to_date %></td>
-      </tr>
-      <tr>
-        <th>No. of Day</th>
+        <th>No. of Days</th>
         <td><%= @current_request.no_of_day %></td>
 
-        <th>Current Status</th>
+        <th>Status</th>
         <td><%= @current_request.try(:current_status) %></td>
       </tr>
       <tr>
         <th>Reason</th>
         <td colspan="3"><%= @current_request.try(:reason) %></td>
       </tr>
-    </tbody>
-  </table>
-  <br>
-     <%= link_to 'Back', request_approval_list_on_duty_requests_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %> |
+ 
+    <tr>
+    <td colspan="4"><center>
+
+     
     <% if @current_request.current_status == "Pending" %>
-        <%= link_to 'Approve', first_approve_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> |
+        <%= link_to 'Approve', first_approve_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> 
         <%= link_to 'Reject', first_reject_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
       <% else %>
-        <%= link_to 'Approve', second_approve_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> |
+        <%= link_to 'Approve', second_approve_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> 
         <%= link_to 'Reject', second_reject_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
       <% end %>
+       <%= link_to 'Back', request_approval_list_on_duty_requests_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+      </center>
+      </td>
+      </tr>
+     </tbody>
+  </table>
   </div>
 </div>
 <script type="text/javascript">

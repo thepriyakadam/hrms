@@ -4,8 +4,8 @@
  <div class="box-body">
   <%= bootstrap_form_for(:employee, url: { action: 'display_attendance_2'},html: {id: "employee"}) do |f| %>
      <div class="row">
-        <div class="col-sm-2">
-          <label>From </label>
+        <div class="col-sm-3">
+        <label>From Date</label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
@@ -16,34 +16,36 @@
           </div>
         </div>
 
-        <div class="col-sm-2">
-          <label>To </label>
+        <div class="col-sm-3">
           <div class="form-group required">
+          <label>To Date</label>
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= text_field :employee,:to,hide_label: true,class: 'request_date form-control'%>
+              <%= text_field :employee,:to,label: "To Date",class: 'request_date form-control'%>
             </div>
           </div>
         </div>
 
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <label>Company</label>
           <div class="form-group required">
             <%= f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
           </div>
         </div>
 
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <div class="field">
             <div id="company_location_with_label">
               <%= render 'employees/company_location_dropdown_with_label' %> 
           </div>
           </div>
         </div>
-
-        <div class="col-sm-2">
+        </div>
+      
+      <div class="row">
+        <div class="col-sm-3">
           <div class="field">
             <div class="input-group">
               <div id="department">
@@ -53,16 +55,14 @@
           </div>
         </div>
 
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <label>Status</label>
           <div class="field">
             <%= select :employee,:status, ['Active','Inactive','All'],{label: 'Select Status',include_blank: " Select"}, class: "form-control" %>
          </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col-sm-2" style="padding-top:20px;">
+        <div class="col-sm-3" style="padding-top:20px;">
           <%= f.submit "Show Employee List",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %>
         </div>
       </div>

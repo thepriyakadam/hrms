@@ -8,9 +8,7 @@
   </div>
   <div class="box-body">
    <table id="example2" class="table table-bordered table-hover table-condensed'">
-   <tr>
-      <th colspan="4"><center>Employee Resignation Request of : <%= @employee_resignation.employee.try(:manual_employee_code) %> <%= @employee_resignation.employee.try(:first_name) %> <%= @employee_resignation.employee.try(:middle_name) %> <%= @employee_resignation.employee.try(:last_name) %></center></th>
-    </tr>
+  <tr><td colspan="4"><font color='label-primary'><center>Resignation Request of <%= @employee_resignation.employee.try(:manual_employee_code) %> - <%= full_name(@employee_resignation.employee) %></center></font></td></tr>
 
 <tr>
 
@@ -145,7 +143,7 @@
     <table id="example2" class="table table-bordered table-hover table-condensed'">
       <thead>
       <tr>
-      <th colspan="4"><center>Employee Resignation Process</center></th>
+      <th colspan="4"><center><font color='label-primary'>Employee Resignation Process</font></center></th>
       </tr>
         <tr>
           <th>ID</th>

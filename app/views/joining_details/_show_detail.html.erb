@@ -3,8 +3,16 @@
    
  <!-- /.box-header -->
    <div class="row">
-  <div class="col-sm-1">
+   <div class="col-sm-1">
+  <% if @joining_detail.employee.passport_photo_file_name == nil %>
+  <% if @joining_detail.employee.gender == "Female" %>
+   <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%else%>
+   <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%end%>
+ <%else%>
       <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+      <%end%>
   </div>
     <div class="col-sm-6">
      <font color='#0077b3'>
@@ -14,13 +22,13 @@
     </div>
   </div>
    <div class="box-tools pull-right">
-      <%= link_to 'Edit',  edit_joining_detail_path(@joining_detail),class: 'btn btn-success fa fa-edit',remote:true %>
-      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      <%= link_to 'Edit',  edit_joining_detail_path(@joining_detail),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-xs fa fa-arrow-left' %>
     </div>
      </div>
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
-   <tr><th colspan="4"><center><font color='#0077b3'>EMPLOYEE ONBOARDING DETAILS</font></center> </th></tr>
+   <tr><th colspan="4"><center><font color='#0077b3'>Employee On Boarding Detail</font></center> </th></tr>
 
     <!--  <tr>
       <th><strong>Company RFID</strong></th>
@@ -30,7 +38,7 @@
     </tr> -->
 
     <tr>
-      <th><strong>UAN No</strong></th>
+      <th><strong>UAN No.</strong></th>
       <td><%= @joining_detail.employee_uan_no %></td>
       <th></th>
       <td></td>
@@ -49,7 +57,7 @@
       <th><strong>Employee Grade</strong></th>
       <td><%= @joining_detail.employee_grade.try(:name) %></td>
 
-      <th><strong>Designation</strong></th>
+      <th><strong>Employee Designation</strong></th>
       <td><%= @joining_detail.employee_designation.try(:name) %></td>
     </tr>
     <tr>
@@ -72,7 +80,7 @@
       <th><strong>Passport</strong></th>
       <td><%= @joining_detail.have_passport %></td>
 
-      <th><strong>Passport No</strong></th>
+      <th><strong>Passport No.</strong></th>
       <td><%= @joining_detail.passport_no %></td>
     </tr> 
 
@@ -99,7 +107,7 @@
       <td><%= @joining_detail.is_new ? "New" : "Replacement" %></td>
 
 
-      <th><strong>Employee Replacement of</strong></th>
+      <th><strong>Employee Replacement</strong></th>
       <td><%= full_name(@joining_detail.try(:replacement).try(:employee)) %></td>
      </tr>
 
@@ -113,7 +121,7 @@
       
 
 
-    <tr><th colspan="4"><center><font color='#0077b3'>EMPLOYEE PAYROLL DETAILS</font></center> </th></tr>
+    <tr><th colspan="4"><center><font color='#0077b3'>Employee Payroll Detail</font></center> </th></tr>
 
     <tr>
       <th><strong>Payment Mode</strong></th>
@@ -132,7 +140,7 @@
     </tr>
 
     <tr>
-      <th><strong>PF No</strong></th>
+      <th><strong>PF No.</strong></th>
       <td><%= @joining_detail.employee_pf_no %></td>
 
       <th><strong>PF Max Amount</strong></th>
@@ -148,7 +156,7 @@
     </tr>
      
     <tr>
-      <th><strong>ESIC No</strong></th>
+      <th><strong>ESIC No.</strong></th>
       <td><%= @joining_detail.employee_efic_no %></td>
 
       <th><strong>Retention</strong></th>

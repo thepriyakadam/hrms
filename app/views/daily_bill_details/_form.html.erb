@@ -21,13 +21,11 @@
 
        <div class="col-sm-3">
           <div class="form-group required">
-          <!-- <label>Vacancy Fulfillment Date </label> -->
-           <label>Expense Date </label>
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-               <%= f.text_field :expence_date, hide_label: true,class: 'input_expence_date'%>
+               <%= f.text_field :expence_date, label: 'Date',class: 'input_expence_date'%>
             </div>
           </div>
         </div>      
@@ -38,19 +36,18 @@
         </div>
       </div>
       <div class="col-sm-3">
-          <label>Expence Type</label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
                 <%= link_to "", new_travel_expence_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
               </div>
-               <%= f.select :travel_expence_type_id, all_travel_expence_type, {hide_label: true,include_blank: " Select Expense Type"} %>
+               <%= f.select :travel_expence_type_id, all_travel_expence_type, {label: 'Expense Type',include_blank: " Select Expense Type"} %>
             </div>
           </div>
         </div>
       <div class="col-sm-3">
         <div class="form-group required">
-          <%= f.text_field :travel_expence,label: 'Expense Amount',class: 'input_travel_expence'  %>
+          <%= f.text_field :travel_expence,label:'Expense Amount'  %>
         </div>
       </div>
     </div>
@@ -77,7 +74,6 @@
       <%= f.file_field :passport_photo,label: 'Image(only jpeg,jpg,png)' %>
     </div>
    </div>
-   </div>
 
    <!-- unless params['controller'] == 'daily_bill_details' and params['action'] == 'edit' %> -->
     <!-- <div class="row">
@@ -91,10 +87,9 @@
     </div><br> -->
   <!-- end%> -->
 
-  <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-3" style="padding: 20px">
       <div class="actions">
-        <%= f.submit "Create Expense Claim Detail",:class => class_name, data: { disable_with: data_info }  %>
+        <%= f.submit "Add Expense Claim",:class => class_name, data: { disable_with: data_info }  %>
       </div>
     </div>
   </div>
@@ -109,6 +104,7 @@
     changeMonth: true,
     yearRange: '-200:+1',
     dateFormat: 'dd-mm-yy' });
+
     $("#daily_bill_detail").validate({
       rules: {
         "daily_bill_detail[expence_date]":{

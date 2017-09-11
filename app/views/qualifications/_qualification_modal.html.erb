@@ -1,0 +1,48 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Qualification Detail </center></h4>
+    </div>
+    <div class="modal-body">
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+ <tr>
+  <th><strong>Employee</strong></th>
+ <td>  <%= full_name(@qualification.employee) %></td>
+</tr>
+<tr>
+ <th><strong>Qualification</strong></th>
+  <td><%= @qualification.degree_type.try(:name) %></td>
+ </tr>
+ <tr>
+  <th><strong>Degree</strong></th>
+  <td><%= @qualification.degree.try(:name) %></td>
+</tr>
+<tr>
+  <th><strong>Specialization</strong></th>
+  <td><%= @qualification.degree_stream.try(:name) %></td>
+</tr>
+<tr>
+  <th><strong>College</strong></th>
+  <td><%= @qualification.college %></td>
+</tr>
+<tr>
+  <th><strong>Marks</strong></th>
+  <td><%= @qualification.marks %></td>
+</tr>
+
+<tr>
+  <th><strong>Passing Year</strong></th>
+  <td><%= @qualification.year.try(:name)%></td>
+</tr>
+<tr>
+  <th><strong>University</strong></th>
+  <td><%= @qualification.university.try(:name) %></td>
+</tr>
+  </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

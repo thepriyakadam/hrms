@@ -11,7 +11,7 @@
            <tr><td colspan="3"><center>First Level Request</center></td></tr>
             <tr>
               <th>ID</th>
-              <th>Employee Name</th>
+              <th>Employee</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -22,7 +22,7 @@
                 <td><%= pending_resignation_request.employee.try(:manual_employee_code) %></td>
                 <td><%= pending_resignation_request.employee.try(:first_name) %> <%= pending_resignation_request.employee.try(:middle_name) %> <%=pending_resignation_request.employee.try(:last_name) %></td>
                 <td>
-                  <%= link_to 'View Detail',employee_resignation_confirmation_employee_resignations_path(pending_resignation_request),class: 'btn btn-sm btn-primary' %>
+                  <%= link_to 'View Detail',employee_resignation_confirmation_employee_resignations_path(pending_resignation_request),class: 'btn btn-xs btn-primary' %>
 
                 </td>
               </tr>
@@ -37,7 +37,7 @@
           <tr><td colspan="3"><center>Second Level Request</center></td></tr>
             <tr>
               <th>ID</th>
-              <th>Employee Name</th>
+              <th>Employee</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -48,7 +48,7 @@
                 <td><%= first_approved_resignation_request.employee.try(:manual_employee_code) %></td>
                 <td><%= first_approved_resignation_request.employee.try(:first_name) %> <%= first_approved_resignation_request.employee.try(:middle_name) %> <%=first_approved_resignation_request.employee.try(:last_name) %></td>
                 <td>
-                  <%= link_to 'View Detail',employee_resignation_confirmation_employee_resignations_path(first_approved_resignation_request),class: 'btn btn-sm btn-primary' %>
+                  <%= link_to 'View Detail',employee_resignation_confirmation_employee_resignations_path(first_approved_resignation_request),class: 'btn btn-xs btn-primary' %>
 
                 </td>
               </tr>

@@ -281,7 +281,9 @@ class SelfServicesController < ApplicationController
      # if @employee_attendance.is_present(day,employee_id)
     #   flash[:notice] = "Already Exist"
     # else
-      @emp_atten = EmployeeAttendance.create(employee_id: current_user.employee_id,day: Date.today,present: 'P',in_time: Time.now, is_confirm: false)  
+    time = Time.now
+    working_hrs = Time.at(time).utc.strftime("%H:%M")
+      @emp_atten = EmployeeAttendance.create(employee_id: current_user.employee_id,day: Date.today,present: 'P',in_time: in_time, is_confirm: false)  
       if @emp_atten.save
         flash[:notice] = "Created successfully"
       else
@@ -294,7 +296,8 @@ class SelfServicesController < ApplicationController
   def create_out_time
     in_time = params[:in_time]
     out_time = Time.now
-    working_hrs = out_time.to_time - in_time.to_time
+    total_hrs = out_time.to_time - in_time.to_time
+    working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
     if working_hrs > 8 
     elsif working_hrs < 8
     elsif working_hrs < 4

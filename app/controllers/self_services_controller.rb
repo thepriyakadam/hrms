@@ -101,7 +101,7 @@ class SelfServicesController < ApplicationController
     @from = params[:employee][:from]
     @to = params[:employee][:to]
     @employee_id = params[:employee][:employee_id]
-    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day")
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day DESC")
   end
 
   def investment_declaration
@@ -261,15 +261,15 @@ class SelfServicesController < ApplicationController
     redirect_to employee_rembursment_self_services_path
   end
 
+  def employee_contact_library
+    @employees = Employee.where(status: "Active")
+    session[:active_tab] = "EmployeeSelfService"
+  end
+
   def add_attendance
     #@employee_attendance = EmployeeAttendance.new(employee_attendance_params)
     @emp_attendance = EmployeeAttendance.where(employee_id: current_user.employee_id,day: Date.today).take
     @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id).order('day DESC')
-  end
-
-  def employee_contact_library
-    @employees = Employee.where(status: "Active")
-    session[:active_tab] = "EmployeeSelfService"
   end
 
   def create_in_time
@@ -294,16 +294,22 @@ class SelfServicesController < ApplicationController
   end
 
   def create_out_time
-    in_time = params[:in_time]
+    emp_attendance = params[:emp_attendance]
+    @employee_attendance = EmployeeAttendance.find_by(id: emp_attendance)
+    in_time = @employee_attendance.in_time
     out_time = Time.now
     total_hrs = out_time.to_time - in_time.to_time
     working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
     if working_hrs > 8 
+      @employee_attendance.update(out_time: out_time,working_hrs: working_hrs,present: 'P')
     elsif working_hrs < 8
+      @employee_attendance.update(out_time: out_time,working_hrs: working_hrs,present: 'SD')
     elsif working_hrs < 4
-    else
+      @employee_attendance.update(out_time: out_time,working_hrs: working_hrs,present: 'A')
+    
     end
-
+    flash[:notice] = "Out time created successfully"
+    redirect_to add_attendance_self_services_path
   end
 
   def internal

@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "hrms@sganalytics.com"
+  default from: "hcmzone@indibasolutions.com"
   layout 'mailer'
 end

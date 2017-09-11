@@ -781,6 +781,8 @@ end
       get :show_managerwise_average_attendance
       get :datewise_attendance_with_options
       post :show_datewise_all
+      get :create_in_time
+      get :create_out_time
     end
   end
   resources :salary_comp_mappings

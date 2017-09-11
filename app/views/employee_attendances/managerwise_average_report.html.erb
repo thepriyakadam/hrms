@@ -5,7 +5,7 @@
  <div class="box-body">
   <%= bootstrap_form_for(:employee, url: { action: 'show_managerwise_average_attendance'},html: {id: "employee"}) do |f| %>
      <div class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <label>From </label>
           <div class="form-group required">
             <div class="input-group">
@@ -17,7 +17,7 @@
           </div>
         </div>
 
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <label>To </label>
           <div class="form-group required">
             <div class="input-group">
@@ -31,7 +31,7 @@
 
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :reporting_master, all_reporting_master_list, {include_blank: "Select Manager"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
+            <%= f.select :reporting_master, all_reporting_master_list, {include_blank: "Select Manager",label: "Manager"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
           </div>
         </div>
 

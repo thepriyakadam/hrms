@@ -155,8 +155,8 @@ class Employee < ActiveRecord::Base
   # before_create :add_department
   # before_update :add_department
 
-  validates :manual_employee_code, presence: true, uniqueness: { case_sensitive: false }
-  validates :first_name, presence: true
+  # validates :manual_employee_code, presence: true, uniqueness: { case_sensitive: false }
+  # validates :first_name, presence: true
   # validates :email, presence: true
 
   has_attached_file :passport_photo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'Profile11.jpg'

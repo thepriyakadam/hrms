@@ -274,13 +274,14 @@ class SelfServicesController < ApplicationController
 
   def create_in_time
     # @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
-    employee_id = params[:salary][:employee_id]
-    day = params[:salary][:day]
-    @emp = Employee.find_by(id: employee_id)
+    # employee_id = params[:salary][:employee_id]
+    # day = params[:salary][:day]
+    # in_time = params[:salary][:in_time]
+    # @emp = Employee.find_by(id: employee_id)
      # if @employee_attendance.is_present(day,employee_id)
     #   flash[:notice] = "Already Exist"
     # else
-      @emp_atten = EmployeeAttendance.create(employee_id: employee_id,day: Date.today,present: 'P',in_time: Time.now, is_confirm: false)  
+      @emp_atten = EmployeeAttendance.create(employee_id: current_user.employee_id,day: Date.today,present: 'P',in_time: Time.now, is_confirm: false)  
       if @emp_atten.save
         flash[:notice] = "Created successfully"
       else

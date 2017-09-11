@@ -1534,6 +1534,8 @@ end
       get :employee_contact_library
       get :modal_contact_library
       get :modal_c_off
+      get :create_in_time
+      get :create_out_time
     end
   end
 

@@ -1,13 +1,14 @@
 
       <%= bootstrap_form_for(:salary, url: { action: 'create_in_time'}) do |f| %>
-     <!--  <= f.hidden_field :employee_id, value: current_user.employee_id %>
+<!--       <= f.hidden_field :employee_id, value: current_user.employee_id %>
       <= f.hidden_field :day, value: Date.today %>
       <= f.hidden_field :in_time, value: Time.now %> -->
 
         <div class="row">
           <div class="col-sm-3" style="padding-top:20px;">
             <div class="actions">
-              <% if @emp_attendance == nil %><!-- 
+              <% if @emp_attendance == nil %>
+              <!-- 
                 <= f.submit "IN" ,class: 'btn btn-primary btn-sm', id: "buttonCtc" %> -->
                 <%= link_to 'IN', create_in_time_self_services_path,class: 'btn btn-default btn-xs' %>
               <% else %>

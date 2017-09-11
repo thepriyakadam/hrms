@@ -1,9 +1,9 @@
 <%= bootstrap_form_for @daily_bill_detail do |f| %>
     <table id="example2" class="table table-bordered table-hover table-condensed">
-      <thead>
+   <thead>
       <tr>
-      <td colspan="5"><center><font color='label-primary'>Expense Claim List</center></td>
-    </tr>
+        <td colspan="5"><center><font color='label-primary'>Expense Claim List</center></td>
+      </tr>
         <tr>
           <th>Date</th>
           <th>Place</th>
@@ -11,30 +11,30 @@
           <th>Expense Amount</th>
           <th>Action</th>
         </tr>
-      </thead>
-      <tbody>
-        <% @daily_bill_details.each do |daily_bill_detail| %>
-          <tr>
+    </thead>
+    <tbody>
+      <% @daily_bill_details.each do |daily_bill_detail| %>
+        <tr>
             <td><%= daily_bill_detail.expence_date %></td>
             <td><%= daily_bill_detail.e_place %></td>
             <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
             <td><%= daily_bill_detail.travel_expence %></td>
       
-            <td>
-              <% if daily_bill_detail.is_confirm == true %>
-                <small class="label label-info">Confirmed</small>
-              <% else %>
+          <td>
+            <% if daily_bill_detail.is_confirm == true %>
+              <small class="label label-info">Confirmed</small>
+            <% else %>
                 <%= link_to '', edit_daily_bill_detail_path(daily_bill_detail),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
                 <!-- <= link_to '', daily_bill_detail,class: 'btn btn-xs btn-default fa fa-eye' %> -->
                 <%= link_to '',  daily_bill_detail, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-danger fa fa-close' %>
-                <%= link_to '', daily_bill_detail,class: 'btn btn-default btn-xs fa fa-eye' %>
+                <%= link_to '', modal_expense_claim_list_daily_bill_details_path(daily_bill_detail),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
               <% end %>
               <% if daily_bill_detail.request_status == "Approved" %>
                 <small class="label label-success">Approved</small>
               <% else %>
               <% end %>
-            </td>
-          </tr>
+          </td>
+        </tr>
         <% end %>
         <tr>
               <th colspan="3">Total</th>
@@ -64,3 +64,5 @@
       </div>
     </div>
   <% end %>
+
+  <div id="modal_expense_claim_list" class="modal fade"></div>

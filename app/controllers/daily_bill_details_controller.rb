@@ -483,6 +483,17 @@ elsif current_user.role.name == 'Branch'
         end
   end
 
+  def modal_expense_claim_list
+    @daily_bill_detail = DailyBillDetail.find(params[:format])
+  end
+
+  def modal_travel_request_process
+    # byebug
+    @travel_request = TravelRequest.find(params[:format])
+    # @travel_requests = TravelRequest.find(@daily_bill_detail.travel_request_id)
+    @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_daily_bill_detail

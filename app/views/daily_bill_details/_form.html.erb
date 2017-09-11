@@ -47,7 +47,7 @@
         </div>
       <div class="col-sm-3">
         <div class="form-group required">
-          <%= f.text_field :travel_expence,label: 'Expense Amount',class: 'input_travel_expence'  %>
+          <%= f.text_field :travel_expence,label:'Expense Amount'  %>
         </div>
       </div>
     </div>
@@ -104,6 +104,7 @@
     changeMonth: true,
     yearRange: '-200:+1',
     dateFormat: 'dd-mm-yy' });
+
     $("#daily_bill_detail").validate({
       rules: {
         "daily_bill_detail[expence_date]":{

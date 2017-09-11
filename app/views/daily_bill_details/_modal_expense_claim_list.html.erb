@@ -1,0 +1,55 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Daily Bill Details </center></h4>
+    </div>
+    <div class="modal-body">
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+<tr>
+  <th><strong>Expense Date</strong></th>
+  <td><%= @daily_bill_detail.expence_date %></td>
+   <th><strong>Place</strong></th>
+  <td><%= @daily_bill_detail.e_place %></td>
+  </tr>
+
+  <tr>
+  <th><strong>Expense Amount</strong></th>
+  <td><%= @daily_bill_detail.travel_expence %></td>
+  <th><strong>Expense Type</strong></th>
+  <td><%= @daily_bill_detail.travel_expence_type.try(:name) %></td>
+  </tr>
+
+  <tr>
+  <th><strong>Currency Type</strong></th>
+  <td><%= @daily_bill_detail.currency_master.try(:name) %></td>
+  <th><strong>Download Document</strong></th>
+  <td> 
+    <% if @daily_bill_detail.avatar_file_file_name == nil %>
+      <small class="label label-default">Not Available</small>
+       <% else %>
+        <%= link_to '',download_doc_path(@daily_bill_detail),class: 'btn btn-xs fa fa-download',:target => "_blank" %>
+      <% end %>
+  </td>
+  </tr>
+
+  <tr>
+    <th><strong>Download Image</strong></th>
+     <td colspan="3">
+                <% if @daily_bill_detail.passport_photo_file_name == nil %>
+                  <small class="label label-default">Not Available</small>
+                <% else %>
+                  <%= link_to '',download_pics_path(@daily_bill_detail),class: 'btn btn-xs fa fa-picture-o' %>
+                  <!-- <div id="myModal2" class="modal fade"></div>
+                  <= link_to 'View',image_modal_daily_bill_details_path(daily_bill_detail),remote: true %>  -->
+                <% end %>
+            </td>
+  </tr>
+  </thead>
+</table>
+<%= image_tag @daily_bill_detail.try(:passport_photo).try(:url), :size => "100x100" %><br><br>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

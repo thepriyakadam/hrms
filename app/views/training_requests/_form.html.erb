@@ -22,7 +22,7 @@
             <td>    
               <div class="form-group required">
                 <div class="input-group">
-                 <%= f.select :training_topic_master_id, all_training_topic,{hide_label: true,include_blank: " Select Training Course"}%>
+                 <%= f.select :training_topic_master_id, all_training_topic,{hide_label: true,include_blank: " Select Training Topic"}%>
                 </div>
               </div>
             </td>
@@ -59,15 +59,15 @@
          <table class="table table-bordered table-hover table-condensed'">
            <thead>
            <tr>
-           <th colspan="2"><center> Reporting Manager </center></th>
+           <th colspan="2"><center> Approval Process </center></th>
            </tr>
            <tr>
               <th>Manager 1 </th>
-              <td><%= employ_1.try(:manager).try(:manual_employee_code) %> - <% employ_1.try(:manager).try(:first_name) %> <%= employ_1.try(:manager).try(:middle_name) %> <%= employ_1.try(:manager).try(:last_name) %></td>
+              <td><%= employ_1.try(:manager).try(:manual_employee_code) %> - <%= employ_1.try(:manager).try(:first_name) %> <%= employ_1.try(:manager).try(:middle_name) %> <%= employ_1.try(:manager).try(:last_name) %></td>
             </tr>
             <tr>
               <th>Manager 2 </th>
-              <td><%= employ_1.try(:manager_2).try(:manual_employee_code) %> - <% employ_1.try(:manager_2).try(:first_name) %> <%= employ_1.try(:manager_2).try(:middle_name) %> <%= employ_1.try(:manager_2).try(:last_name) %></td>
+              <td><%= employ_1.try(:manager_2).try(:manual_employee_code) %> - <%= employ_1.try(:manager_2).try(:first_name) %> <%= employ_1.try(:manager_2).try(:middle_name) %> <%= employ_1.try(:manager_2).try(:last_name) %></td>
             </tr>
            </thead>
          </table>

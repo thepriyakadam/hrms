@@ -294,6 +294,7 @@ class SelfServicesController < ApplicationController
   end
 
   def create_out_time
+    
     emp_attendance = params[:emp_attendance]
     @employee_attendance = EmployeeAttendance.find_by(id: emp_attendance)
     in_time = @employee_attendance.in_time

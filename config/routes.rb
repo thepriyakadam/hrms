@@ -2021,6 +2021,7 @@ end
     collection do
       post :assign_to_employee
       post :employee_list
+      get :modal
     end
   end
 

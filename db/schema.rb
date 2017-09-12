@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170907051748) do
+ActiveRecord::Schema.define(version: 20170912114820) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -2642,6 +2642,7 @@ ActiveRecord::Schema.define(version: 20170907051748) do
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.integer  "leav_category_id",         limit: 4
+    t.string   "reason",                   limit: 255
   end
 
   add_index "leave_transfers", ["employee_id"], name: "index_leave_transfers_on_employee_id", using: :btree

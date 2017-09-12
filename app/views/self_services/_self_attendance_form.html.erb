@@ -9,9 +9,11 @@
             <div class="actions">
               <% if @emp_attendance == nil %><!-- 
                 <= f.submit "IN" ,class: 'btn btn-primary btn-sm', id: "buttonCtc" %> -->
-              <%= link_to 'IN', create_in_time_self_services_path,class: 'btn btn-default btn-xs' %>
+                <%= link_to 'IN', create_in_time_self_services_path,class: 'btn btn-default btn-xs' %>
               <% else %>
-               <%= link_to 'OUT', create_out_time_self_services_path(emp_attendance: @emp_attendance.id),class: 'btn btn-default btn-xs' %>
+                <% if @emp_attendance.out_time == nil %>
+                  <%= link_to 'OUT', create_out_time_self_services_path(emp_attendance: @emp_attendance.id),class: 'btn btn-default btn-xs' %>
+                <% end %>
               <% end %>
             </div>
           </div>

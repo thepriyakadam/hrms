@@ -281,7 +281,9 @@ class SelfServicesController < ApplicationController
      # if @employee_attendance.is_present(day,employee_id)
     #   flash[:notice] = "Already Exist"
     # else
-      @emp_atten = EmployeeAttendance.create(employee_id: current_user.employee_id,day: Date.today,present: 'P',in_time: Time.now, is_confirm: false)  
+    time = Time.now
+    in_time = Time.at(time).strftime("%H:%M")
+      @emp_atten = EmployeeAttendance.create(employee_id: current_user.employee_id,day: Date.today,present: 'P',in_time: in_time, is_confirm: false)  
       if @emp_atten.save
         flash[:notice] = "Created successfully"
       else
@@ -296,13 +298,16 @@ class SelfServicesController < ApplicationController
     emp_attendance = params[:emp_attendance]
     @employee_attendance = EmployeeAttendance.find_by(id: emp_attendance)
     in_time = @employee_attendance.in_time
-    out_time = Time.now
-    working_hrs = out_time.to_time - in_time.to_time
-    if working_hrs > 8 
+    time = Time.now
+    out_time = Time.at(time).strftime("%H:%M")
+    
+    total_hrs = out_time.to_time - in_time.to_time
+    working_hrs = Time.at(total_hrs).strftime("%H:%M")
+    if working_hrs.to_s > "8" 
       @employee_attendance.update(out_time: out_time,working_hrs: working_hrs,present: 'P')
-    elsif working_hrs < 8
+    elsif working_hrs.to_s < "8"
       @employee_attendance.update(out_time: out_time,working_hrs: working_hrs,present: 'SD')
-    elsif working_hrs < 4
+    elsif working_hrs.to_s < "4"
       @employee_attendance.update(out_time: out_time,working_hrs: working_hrs,present: 'A')
     
     end

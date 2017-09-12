@@ -76,9 +76,9 @@
           <%end%>
         </tbody>
       </table>
-      <%= link_to " Excel Report ",show_costcenter_wise_attendance_employee_attendances_path(from: params[:from], to: params[:to],costcenter: params[:costcenter], status: params[:status], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-      <%= link_to " PDF Report",show_costcenter_wise_attendance_employee_attendances_path(from: params[:from],costcenter: params[:costcenter], to: params[:to], status: params[:status], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
-
+      <!-- <= link_to " Excel Report ",show_costcenter_wise_attendance_employee_attendances_path(:salary => {:from => params[:salary][:from], :to params[:salary][:to],costcenter: params[:costcenter], status: params[:status], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      <= link_to " PDF Report",show_costcenter_wise_attendance_employee_attendances_path(:salary => {:from => params[:salary][:from],costcenter: params[:costcenter], to: params[:to], status: params[:status], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+ -->
     <% end %>
   </div>
 

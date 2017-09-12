@@ -12,15 +12,18 @@
             <th>ID</th>
             <th>Employee</th>
             <th>Cost Center</th>
-            <% for i in @from_date.strftime("%d")..@to_date.strftime("%d") %>
-              <th><%= i %></th>
+            <% for i in @from_date.to_date..@to_date.to_date %>
+              <th colspan="4"><%= i %> - <%= i.strftime("%A") %></th>
             <%end%>
           </tr>
           <tr>
-            <th colspan="3">Day</th>
-              <% @from_date.step(@to_date).each do |l| %>
-                <th><%= l.strftime("%a") %></th>
-              <%end%>
+            <th colspan="3"></th>
+              <%  for i in @from_date.to_date..@to_date.to_date %>
+                <th>Present</th>
+                <th>In Time</th>
+                <th>Out Time</th>
+                <th>Working Hrs.</th> 
+              <%end%>             
           </tr>
         </thead>
         <tbody>
@@ -33,6 +36,9 @@
               <% sorted_exists = calculate_attendance_datewise(@from_date,@to_date, exist, e)%>
               <% sorted_exists.each do |k,v|%>
                 <td><%= v %></td>
+                <td><%= e.try(:in_time )%></td>
+                <td><%= e.try(:out_time )%></td>
+                <td><%= e.try(:working_hrs )%></td>
               <%end%>
             </tr>
             <% absent_day_count = absent_day_count(exist) %>
@@ -76,8 +82,10 @@
           <%end%>
         </tbody>
       </table>
-      <%= link_to " Excel Report ",show_costcenter_wise_attendance_employee_attendances_path(from: params[:from], to: params[:to],costcenter: params[:costcenter], status: params[:status], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-      <%= link_to " PDF Report",show_costcenter_wise_attendance_employee_attendances_path(from: params[:from],costcenter: params[:costcenter], to: params[:to], status: params[:status], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+
+      <%= link_to " Excel Report ",show_costcenter_wise_attendance_employee_attendances_path(:salary => {:from => params[:salary][:from], :to  => params[:salary][:to],:costcenter => params[:salary][:costcenter], :status => params[:salary][:status]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%= link_to " PDF Report",show_costcenter_wise_attendance_employee_attendances_path(:salary => {:from => params[:salary][:from],:costcenter => params[:salary][:costcenter], :to => params[:salary][:to], :status => params[:salary][:status]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 
     <% end %>
   </div>
@@ -101,8 +109,7 @@
 $(document).ready(function() {
     $('#example5').DataTable( {
         "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
-        "scrollX": true,
-        "scrollY": 500
+        "scrollX": true
     } );
 } );
 </script>

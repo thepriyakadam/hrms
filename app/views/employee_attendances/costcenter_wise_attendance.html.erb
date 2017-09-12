@@ -35,16 +35,16 @@
           <%= select :salary,:status, ['Active','Inactive','All'],{label: 'Select Status',include_blank: " Select"}, class: "form-control" %>
          </div>
       </div>
-    </div>
 
-    <div class="row">
       <div class="col-sm-3">
           <label>Cost Center </label>
         <div class="field">
            <%= select :salary, :costcenter, all_cost_center,{include_blank: 'Select Cost Center'},class: 'form-control' %>
         </div>
       </div>
+    </div>
 
+    <div class="row">
       <div class="col-sm-3" style="padding-top:20px;">
         <div class="actions">
           <%= f.submit "Create Attendance" ,class: 'btn btn-primary btn-sm', id: "buttonCtc" %>

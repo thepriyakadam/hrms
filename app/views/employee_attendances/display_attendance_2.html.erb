@@ -3,20 +3,29 @@
       <table id="example6" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
-          <th>ID</th>
+            <th>ID</th>
             <th>Employee</th>
-              <% @from_date.step(@to_date).each do |l| %>
-                <th><%= l.strftime("%a") %> <%= l.strftime("%d") %> </th>
+            <% @from_date.step(@to_date).each do |l| %>
+            <th colspan="4"><%= l %> - <%= l.strftime("%A") %></th>
               <%end%>
-            
-              <th>P</th>
-              <th>WOP</th>
-              <th>HP</th>
-              <th>OD</th>
-               <th>A</th>
-              <th>Payable Leave</th>
-              <th>Non Payable Leave</th>
-              <th>Payable Day</th>
+            <th colspan="8"></th>
+            </tr>
+            <tr> 
+            <th colspan="2"></th>
+              <% @from_date.step(@to_date).each do |l| %>
+                <th>Present</th>
+                <th>In Time</th>
+                <th>Out Time</th>
+                <th>Working Hrs.</th> 
+              <%end%>             
+                <th>P</th>
+                <th>WOP</th>
+                <th>HP</th>
+                <th>OD</th>
+                <th>A</th>
+                <th>Payable Leave</th>
+                <th>Non Payable Leave</th>
+                <th>Payable Day</th>
               <!-- <th>Non Payable Day</th> -->
           </tr>
         </thead>
@@ -29,7 +38,10 @@
               <% sorted_exists = calculate_attendance_datewise(@from_date,@to_date, exist, e)%>
               <% sorted_exists.each do |k,v|%>
                 <td><%= v %></td>
-              <% end %>
+                <td><%= e.try(:in_time )%></td>
+                <td><%= e.try(:out_time )%></td>
+                <td><%= e.try(:working_hrs )%></td>
+              <%end%>
            
             <% holiday_in_month = holiday_in_month_count(exist) %>
             <% week_off_day = week_off_day_count(exist) %>

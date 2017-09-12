@@ -130,9 +130,10 @@ Rails.application.routes.draw do
   resources :employee_gps do
     collection do
       get :employee_wise_gps
-      post :show_employeewise
-      post :modal_set_gps
+      post :show_set_gps_employeewise
       post :set_employeewise_gps
+      get :employeewise_daily_gps
+      post :show_employeewise_daily_gps
     end
   end
   resources :payroll_periods
@@ -212,6 +213,9 @@ Rails.application.routes.draw do
       get :investment_declaration_list
       post :reject_declaration
       get :leave_c_off
+      get :subordinate_attendance
+      post :show_subordinate_attendance
+      get :show_subordinate_attendance
     end
   end
 
@@ -779,6 +783,8 @@ end
       get :show_managerwise_average_attendance
       get :datewise_attendance_with_options
       post :show_datewise_all
+      get :create_in_time
+      get :create_out_time
     end
   end
   resources :salary_comp_mappings
@@ -1531,6 +1537,8 @@ end
       get :employee_contact_library
       get :modal_contact_library
       get :modal_c_off
+      get :create_in_time
+      get :create_out_time
     end
   end
 

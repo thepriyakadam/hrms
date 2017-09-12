@@ -3,6 +3,9 @@
     <tr>
       <th>Present</th>
       <th>Day</th>
+      <th>In Time</th>
+      <th>Out Time</th>
+      <th>Working Hrs</th>
     </tr>
   </thead>
   <tbody>
@@ -10,6 +13,9 @@
       <tr>
         <td><%= e.try(:present) %></td>
         <td><%= e.try(:day) %></td>
+        <td><%= e.try(:in_time) %></td>
+        <td><%= e.try(:out_time) %></td>
+        <td><%= e.try(:working_hrs) %></td>
       </tr>
     <% end %>
   </tbody>

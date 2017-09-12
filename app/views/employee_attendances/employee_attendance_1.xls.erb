@@ -1,19 +1,23 @@
  <table id="example5" class="table table-bordered table-hover table-condensed">
         <thead>
+          
           <tr>
-            <th>ID</th>
+             <th>ID</th>
             <th>Employee</th>
-            <% for i in @from_date.strftime("%d")..@to_date.strftime("%d") %>
-              <th><%= i %></th>
-            <%end%>
-            <th colspan="12"> Total </th>
-          </tr>
-          <tr>
-            <th colspan="2">Day</th>
-              <% @from_date.step(@to_date).each do |l| %>
-                <th><%= l.strftime("%a") %></th>
+            <% @from_date.step(@to_date).each do |l| %>
+            <th colspan="4"><%= l %> - <%= l.strftime("%A") %></th>
               <%end%>
-            
+
+          </tr>
+          <tr> 
+          <th colspan="2"></th>
+
+            <% @from_date.step(@to_date).each do |l| %>
+              <th>Present</th>
+               <th>In Time</th>
+               <th>Out Time</th>
+               <th>Working Hrs.</th> 
+            <%end%>             
               <th>P</th>
               <th>WOP</th>
               <th>HP</th>
@@ -35,6 +39,9 @@
               <% sorted_exists = calculate_attendance_datewise(@from_date,@to_date, exist, e)%>
               <% sorted_exists.each do |k,v|%>
                 <td><%= v %></td>
+                <td><%= e.try(:in_time )%></td>
+                <td><%= e.try(:out_time )%></td>
+                <td><%= e.try(:working_hrs )%></td>
               <%end%>
             
             <% holiday_in_month = holiday_in_month_count(exist) %>

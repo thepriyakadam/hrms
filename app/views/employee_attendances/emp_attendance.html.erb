@@ -56,6 +56,17 @@
         </div>
 
         <div class="col-sm-3">
+            <div class="field">
+            <div class="input-group">
+              <div id="sub_department">
+                <%= render 'employees/sub_department_dropdown' %> 
+              </div> 
+           </div>
+          </div>
+        </div>
+
+
+        <div class="col-sm-3">
           <label>Status</label>
           <div class="field">
             <%= select :employee,:status, ['Active','Inactive','All'],{label: 'Select Status',include_blank: " Select"}, class: "form-control" %>

@@ -715,9 +715,10 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def show_costcenter_wise_attendance
-    @to, @from = params[:to], params[:from]
-    @costcenter_id =params[:costcenter]
-    @status =params[:status]
+   
+    @to, @from = params[:salary][:to], params[:salary][:from]
+    @costcenter_id =params[:salary][:costcenter]
+    @status =params[:salary][:status]
     @from_date = @from.to_date
     @to_date = @to.to_date
     
@@ -1709,6 +1710,15 @@ def upload
             end
           end#employee.nil?
   end#do
+
+    @daily_attendances = DailyAttendance.where(date: last.date.to_date)
+    @daily_attendances.each do |d|
+      @emp = Employee.exists?(manual_employee_code: d.employee_code)
+      if @emp == true
+        d.destroy
+      end
+    end
+
   #remaining employees attendance creation
     @employees = Employee.where(status: "Active")
     @employees.each do |e|
@@ -1787,7 +1797,7 @@ def update_daily_attendance
 
   @employee_attendance.update(in_time: in_time,out_time: out_time,present: present,comment: comment,working_hrs: working_hrs,comment: "User Updated")
   flash[:notice] = "Updated Successfully!"
-  redirect_to datewise_daily_attendances_employee_attendances_path
+  redirect_to datewise_daily_attendance_employee_attendances_path
 end
 
 def import
@@ -2359,6 +2369,12 @@ end
     else
       @employee_attendances = EmployeeAttendance.where(day: from.to_date..to.to_date).where.not(employee_leav_request_id: nil)
     end
+  end
+  
+
+   def add_attendance
+    @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
+    @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id).order('day DESC')
   end
   
   # def create_self_attendance

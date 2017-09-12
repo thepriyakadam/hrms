@@ -1,10 +1,9 @@
 <div class="box">
   <div class="box-header">
     <h3 class="box-title"> Employee Attendance</h3>
-  </div>
  <div class="box-body">
-  <%= bootstrap_form_for(:employee, url: { action: 'show_managerwise_average_attendance'},html: {id: "employee"}) do |f| %>
-     <div class="row">
+  <%= bootstrap_form_for(:employee, url: { action: 'show_subordinate_attendance'},html: {id: "employee"}) do |f| %>
+    <div class="row">
         <div class="col-sm-3">
           <label>From </label>
           <div class="form-group required">
@@ -29,16 +28,11 @@
           </div>
         </div>
 
-        <div class="col-sm-3">
-          <div class="form-group required">
-            <%= f.select :reporting_master, all_reporting_master_list, {include_blank: "Select Manager",label: "Manager"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
-          </div>
-        </div>
-
         <div class="col-sm-2" style="padding-top:20px;">
           <%= f.submit "Show Employee List",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %>
         </div>
       </div>
+     </div>
   <% end %>
 </div>
 </div>
@@ -47,7 +41,9 @@
     $('.ajax-progress').show();
     $("#advance_salary").submit();
   })
-  
+</script>
+
+<script type="text/javascript">
   $(function(){
     $('.request_date').datepicker({
     changeYear:true,
@@ -65,9 +61,6 @@ $("#employee").validate({
       },
       "employee[to]":{
         required: true,
-      },
-      "employee[reporting_master]":{
-        required: true,
       }
        },
     messages: {
@@ -76,9 +69,6 @@ $("#employee").validate({
       },
        "employee[to]":{
         required: "Please Select To",
-      },
-       "employee[reporting_master]":{
-        required: "Please Select Reporting Master",
       }
        },
     errorPlacement: function(error, element) {

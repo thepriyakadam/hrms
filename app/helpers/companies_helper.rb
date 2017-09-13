@@ -15,6 +15,8 @@ module CompaniesHelper
         Company.where(id: current_user.company_location.company_id).collect { |x| [x.name, x.id] }
       elsif current_user.role.name == 'Recruitment'
         Company.all.collect { |x| [x.name, x.id] }
+      elsif current_user.role.name == 'NewEmployee' || current_user.role.name == 'Employee'
+        Company.where(id: current_user.company_location.company_id).collect { |x| [x.name, x.id] }
       end
     end
   end

@@ -16,6 +16,8 @@
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
         @employees = @emp.subordinates
+      elsif current_user.role.name == 'NewEmployee'
+        @employees = Employee.where(id: current_user.employee_id)
       else current_user.role.name == 'Employee'
         @employees = Employee.where(id: current_user.employee_id)
         redirect_to home_index_path

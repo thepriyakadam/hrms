@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170912114820) do
+ActiveRecord::Schema.define(version: 20170913054017) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1539,6 +1539,7 @@ ActiveRecord::Schema.define(version: 20170912114820) do
     t.integer  "employee_signature_file_size",    limit: 4
     t.datetime "employee_signature_updated_at"
     t.string   "emergency_contact_no",            limit: 255
+    t.string   "optinal_contact_no1",             limit: 255
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id", using: :btree

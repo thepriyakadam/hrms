@@ -16,6 +16,8 @@
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
         @employees = @emp.subordinates
+      elsif current_user.role.name == 'NewEmployee'
+        @employees = Employee.where(id: current_user.employee_id)
       else current_user.role.name == 'Employee'
         @employees = Employee.where(id: current_user.employee_id)
         redirect_to home_index_path
@@ -1245,7 +1247,7 @@ def show_all_record
       f.pdf do
         render pdf: 'display_employee_details',
         layout: 'pdf.html',
-        orientation: 'Landscape',
+        orientation: 'portrait',
         template: 'employees/employee_details.pdf.erb',
         :page_height      => 1000,
             :dpi              => '300',

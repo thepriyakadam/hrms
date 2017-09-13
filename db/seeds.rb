@@ -439,7 +439,7 @@ require 'roo'
 # end
 
 
-ex = Roo::Excel.new("#{Rails.root}/public/Employee Wise_Resource Pool.xls")
+ex = Roo::Excel.new("#{Rails.root}/public/Employee Wise_Service Master.xls")
 ex.default_sheet = ex.sheets[0] #siya feb
 i = 1
 ActiveRecord::Base.transaction do
@@ -448,8 +448,8 @@ ActiveRecord::Base.transaction do
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
  puts "#{i} Record inserting.----------------------------"
 
- @type2 = ResourcePoolMaster.find_by_code(ex.cell(line,'C'))
- Employee.where(id: @employee).update_all(resource_pool_master_id: @type2.id)
+ @type2 = ServiceMaster.find_by_name(ex.cell(line,'C'))
+ Employee.where(id: @employee).update_all(service_master_id: @type2.id)
  # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
  puts "#{i} Record inserted.-----------------------------------------------"
  i += 1

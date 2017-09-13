@@ -156,6 +156,14 @@
         <td><%= @employee.try(:sub_department).try(:name) %></td>
       </tr>
 
+      <tr>
+        <th>Reporting Manager 1</th>
+        <td><% emp=Employee.where(id: @employee.manager_id).take %><%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
+
+        <th>Reporting Manager 2</th>
+        <td><% emp=Employee.where(id: @employee.manager_2_id).take %><%= emp.try(:first_name) %><%= emp.try(:middle_name) %><%= emp.try(:last_name) %></td>
+      </tr>
+
      <tr>
      <th><strong>Download Profile Picture</strong></th>
      <td><% if @employee.passport_photo_file_name == nil %>

@@ -1908,6 +1908,20 @@ ActiveRecord::Schema.define(version: 20170907051748) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "gps_dailies", force: :cascade do |t|
+    t.integer  "employee_id",    limit: 4
+    t.integer  "employee_gp_id", limit: 4
+    t.float    "latitude",       limit: 24
+    t.float    "longitude",      limit: 24
+    t.string   "location",       limit: 255
+    t.date     "date"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "gps_dailies", ["employee_gp_id"], name: "index_gps_dailies_on_employee_gp_id", using: :btree
+  add_index "gps_dailies", ["employee_id"], name: "index_gps_dailies_on_employee_id", using: :btree
+
   create_table "gratuities", force: :cascade do |t|
     t.integer  "employee_id",        limit: 4
     t.integer  "gratuity_master_id", limit: 4
@@ -4651,6 +4665,8 @@ ActiveRecord::Schema.define(version: 20170907051748) do
   add_foreign_key "goal_ratings", "performance_calendars"
   add_foreign_key "goal_ratings", "periods"
   add_foreign_key "goal_ratings", "training_topic_masters"
+  add_foreign_key "gps_dailies", "employee_gps"
+  add_foreign_key "gps_dailies", "employees"
   add_foreign_key "gratuities", "employees"
   add_foreign_key "gratuities", "gratuity_masters"
   add_foreign_key "induction_activities", "employees"
@@ -4852,7 +4868,6 @@ ActiveRecord::Schema.define(version: 20170907051748) do
   add_foreign_key "training_records", "employees"
   add_foreign_key "training_records", "training_topic_masters"
   add_foreign_key "training_requests", "employees"
-  add_foreign_key "training_requests", "reporting_masters"
   add_foreign_key "training_requests", "training_topic_masters"
   add_foreign_key "transfer_histories", "companies"
   add_foreign_key "transfer_histories", "company_locations"

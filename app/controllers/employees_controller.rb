@@ -1246,7 +1246,7 @@ def show_all_record
       f.pdf do
         render pdf: 'display_employee_details',
         layout: 'pdf.html',
-        orientation: 'Landscape',
+        orientation: 'portrait',
         template: 'employees/employee_details.pdf.erb',
         :page_height      => 1000,
             :dpi              => '300',

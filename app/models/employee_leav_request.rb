@@ -18,7 +18,9 @@ class EmployeeLeavRequest < ActiveRecord::Base
 
   # belongs_to :first_reporter, :class_name => "Employee", :foreign_key => :first_reporter_id
   # belongs_to :second_reporter, :class_name => "Employee", :foreign_key => :second_reporter_id
-
+  # validates :leave_type, presence: true
+  # validates :start_date, presence: true
+  # validates :end_date, presence: true
   #validates :date_range, uniqueness: { scope: [:date_range, :employee_id] }
 
   # CURRENT_STATUSS = [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]]
@@ -158,10 +160,10 @@ class EmployeeLeavRequest < ActiveRecord::Base
     @leave_records.each do |e|
       if e.count == 1
         employee_leav_request.particular_leave_records.create(employee_id: e.employee_id, leave_date: e.day, is_full: true, leav_category_id: e.leav_category_id)
-        EmployeeAttendance.where(employee_id: e.employee_id,day: e.day).update_all(present: e.try(:leav_category).try(:code),employee_leav_request_id: e.employee_leav_request_id,count: 1)
+        EmployeeAttendance.where(employee_id: e.employee_id,day: e.day).update_all(present: e.try(:leav_category).try(:code),employee_leav_request_id: e.employee_leav_request_id,count: 1,comment: nil)
       else
         employee_leav_request.particular_leave_records.create(employee_id: e.employee_id, leave_date: e.day, is_full: false, leav_category_id: e.leav_category_id)
-        EmployeeAttendance.where(employee_id: e.employee_id,day: e.day).update_all(present: "P/"+e.try(:leav_category).try(:code).to_s ,employee_leav_request_id: e.employee_leav_request_id,count: 0.5)
+        EmployeeAttendance.where(employee_id: e.employee_id,day: e.day).update_all(present: "P/"+e.try(:leav_category).try(:code).to_s ,employee_leav_request_id: e.employee_leav_request_id,count: 0.5,comment: nil)
       end
     end
   end
@@ -553,9 +555,11 @@ class EmployeeLeavRequest < ActiveRecord::Base
                 LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 1,leav_category_id: employee_leav_request.leav_category_id)
               end
             end
-          else#Half_day
+          elsif employee_leav_request.leave_type == 'Half Day'
             LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 0.5,leav_category_id: employee_leav_request.leav_category_id)
-          end#Half_day
+          else
+            LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 1,leav_category_id: employee_leav_request.leav_category_id)
+          end#Full day
 
         end#self.weekoff_present(i,employee)
 
@@ -592,8 +596,10 @@ class EmployeeLeavRequest < ActiveRecord::Base
               LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 1,leav_category_id: employee_leav_request.leav_category_id)
             end
           end
-        else#Half_day
+        elsif employee_leav_request.leave_type == 'Half Day'
           LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 0.5,leav_category_id: employee_leav_request.leav_category_id)
+        else
+          LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 1,leav_category_id: employee_leav_request.leav_category_id)
         end#Half_day
 
       end#leav_category.weekoff_sandwich == true

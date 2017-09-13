@@ -6,8 +6,8 @@
   <body>
     <h4>You have one leave transfer request from</h4>
     <p>
-      Transfer By : <%= @leave_transfer.employee.manual_employee_code %> - <%= @leave_transfer.employee.try(:prefix).to_s+' '+@leave_transfer.employee.first_name.to_s+' '+@leave_transfer.employee.last_name.to_s %><br>
-      Transfer To : <%= @leave_transfer.transfer_to.manual_employee_code %> - <% @leave_transfer.transfer_to.try(:prefix).to_s+' '+@leave_transfer.transfer_to.first_name.to_s+' '+@leave_transfer.transfer_to.last_name.to_s %><br>
+      Transfer By : <%= @leave_transfer.employee.manual_employee_code %> - <%= @leave_transfer.employee.try(:prefix) %> <%= @leave_transfer.employee.first_name %> <%= @leave_transfer.employee.last_name %><br>
+      Transfer To : <%= @leave_transfer.transfer_to.manual_employee_code %> - <%= @leave_transfer.transfer_to.try(:prefix) %> <%= @leave_transfer.transfer_to.first_name %> <%= @leave_transfer.transfer_to.last_name %><br>
       Leave Category : <%= @leave_transfer.leav_category.try(:name) %><br>
       Date <%= @leave_transfer.date.to_date %><br>
       No of Days : <%= @leave_transfer.no_of_leave %><br>

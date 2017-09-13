@@ -8,7 +8,7 @@
     
      
     <tr>
-      <th><strong>Leave category</strong></th>
+      <th><strong>Leave Category</strong></th>
       <td colspan="3"><%= @leave_master.leav_category.try(:code) %> - <%= @leave_master.leav_category.try(:name) %></td>
     </tr>
 
@@ -25,12 +25,12 @@
      <th><strong>Company Workingday</strong></th>
       <td><%= @leave_master.company_workingday %></td>
 
-      <th><strong>No of leave</strong></th>
+      <th><strong>No. of Leaves</strong></th>
       <td> <%= @leave_master.no_of_leave %></td>
     </tr>
 
     <tr>
-     <th><strong>Is carry forward ?</strong></th>
+     <th><strong>Carry Forward</strong></th>
       <td><%= @leave_master.is_carry_forward ? 'Yes' : 'No' %></td>
 
       <th><strong>Limit</strong></th>

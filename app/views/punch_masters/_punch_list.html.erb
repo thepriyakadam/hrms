@@ -1,0 +1,30 @@
+<br>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Reader In</th>
+      <th>Reader Out</th>
+      <th>Full Day Hrs.</th>
+      <th>Half Day Hrs.</th>
+      <th>Status</th>
+      <th>Action</th>
+ 
+  <tbody>
+    <% @punch_masters.each do |punch_master| %>
+        <td><%= punch_master.start_time %></td>
+        <td><%= punch_master.end_time %></td>
+        <td><%= punch_master.reader_in %></td>
+        <td><%= punch_master.reader_out %></td>
+        <td><%= punch_master.full_day_hrs %></td>
+        <td><%= punch_master.half_day_hrs %></td>
+        <td><%= punch_master.status ? "Active" : "Inactive" %></td>
+        <td>
+            <%= link_to '', edit_punch_master_path(punch_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  punch_master, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

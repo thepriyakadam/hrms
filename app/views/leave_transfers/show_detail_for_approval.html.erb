@@ -33,7 +33,7 @@
             <thead>
               <tr><th colspan="2"><center> Leave Balance </center></th></tr>
               <tr>
-                <th>Leave Type</th>
+                <th>Leave Category</th>
                 <th>Leave Available</th>
               </tr>
             </thead>
@@ -56,7 +56,7 @@
           <th>Transfer To</th>
           <th>Date</th>
           <th>Leave Category</th>
-          <th>No Of Day</th>
+          <th>No. Of Days</th>
           <th>Status</th>
         </tr>
       </thead>
@@ -101,14 +101,7 @@
 
     <table id="example1" class="table table-bordered table-hover table-condensed">
       <tbody>
-        <tr><td colspan="4"><font color='red'><center>Current Leave Request Detail</center></font></td></tr>
-        <tr>
-          <th>ID</th>
-          <td><%= @current_request.employee.try(:manual_employee_code) %></td>
-
-          <th>Employee Name</th>
-          <td><%= full_name(@employee) %></td>
-        </tr>
+        <tr><td colspan="4"><font color='label-primary'><center>Current Leave Transfer Detail of <%= @current_request.employee.try(:manual_employee_code) %> - <%= full_name(@employee) %></center></font></td></tr>
         <tr>
           <th>Transfer To</th>
           <td><%= full_name(@transfer_to) %></td>
@@ -117,18 +110,21 @@
           <td><%= @current_request.leav_category.name %></td>
         </tr>
         <tr>
-         <th>No. of Day</th>
+         <th>No. of Days</th>
           <td><%= @current_request.no_of_leave %></td>
 
           <th>Date</th>
           <td><%= @current_request.date.to_date %></td>
         </tr>
         <tr>
+          <th> Reason</th>
+          <td><%= @current_request.reason %></td>
+
            <th> Current Status</th>
-          <td colspan="3"><%= @current_request.try(:current_status) %></td>
+          <td><%= @current_request.try(:status) %></td>
         </tr>
         <tr>
-           <th>   
+           <th colspan="4">   
            <%= link_to 'Approve', approve_leave_transfers_path(current_request_id: @current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> 
            <%= link_to 'Reject', reject_leave_transfers_path(current_request_id: @current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
            <%= link_to 'Back', leave_transfer_approval_leave_transfers_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %></center>

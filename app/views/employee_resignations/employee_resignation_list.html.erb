@@ -18,7 +18,7 @@
         <tr>
         <td><%= g.employee.try(:manual_employee_code)%></td>
         <td> <%= full_name(g.employee)%></td>
-        <td> <%= link_to '', g,class: 'btn btn-xs btn-default fa fa-eye' %> 
+        <td> <%= link_to '', modal_resignation_detail_employee_resignations_path(g), class: 'btn btn-default fa fa-eye btn-xs ',remote:true %> 
          <%= link_to 'Exit Interview', new_exit_interview_path(g),class: 'btn btn-xs btn-primary' %> </td>
         </tr>
         <% end %>
@@ -26,3 +26,4 @@
     </table>
   </div>
 </div>
+<div id="modal_resignation_detail" class="modal fade"></div>

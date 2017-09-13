@@ -16,20 +16,29 @@
         <%= f.text_field :subject, label: 'Subject' %>
       </div>
     </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :email %>
+      </div>
+    </div>
+
+
     <div class="col-sm-3">
     <div class="form-group required">
       <%= f.file_field :document,label: 'Document' %>
     </div>
    </div>
-    <div class="col-sm-3">
+ 
+    </div>
+    <div class="row">
+
+       <div class="col-sm-3">
     <div class="field">
       <%= f.file_field :avatar,label: 'Picture' %>
     </div>
    </div>
-
-  
-    </div>
-    <div class="row">
+   
      <div class="col-sm-3">
       <label>Status </label>
       <div class="field">
@@ -68,13 +77,13 @@ $("#circular").validate({
     },
     messages: {
       "circular[subject]":{
-        required: "Please Specify Subject",
+        required: "Please specify subject",
       },
        "circular[date]":{
-        required: "Please Select Date",
+        required: "Please select date",
       },
        "circular[document]":{
-        required: "Please Upload Document",
+        required: "Please upload document",
       }
     },
     errorPlacement: function(error, element) {

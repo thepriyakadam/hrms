@@ -37,16 +37,20 @@ class LeavCategoriesController < ApplicationController
     @leav_categories = LeavCategory.all
   end
 
-  def is_confirm
-    @leav_category = LeavCategory.find(params[:leav_category])
-    LeavCategory.find(@leav_category.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_leav_category_path
-  end
+  # def is_confirm
+  #   @leav_category = LeavCategory.find(params[:leav_category])
+  #   LeavCategory.find(@leav_category.id).update(is_confirm: true)
+  #   flash[:notice] = "Confirmed Successfully"
+  #   redirect_to new_leav_category_path
+  # end
   
   def show_leave_category
     @leav_category = LeavCategory.find(params[:leav_category])
     
+  end
+
+  def leave_category_modal
+    @leav_category = LeavCategory.find(params[:format])
   end
 
   private
@@ -58,6 +62,6 @@ class LeavCategoriesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def leav_category_params
-    params.require(:leav_category).permit(:monthly_leave,:is_continuous,:assign_balance,:is_cashable,:is_limit,:limit,:is_balance,:is_confirm,:from,:to,:is_active,:is_payble,:code, :name, :description)
+    params.require(:leav_category).permit(:transfer,:monthly_leave,:is_continuous,:assign_balance,:is_cashable,:is_limit,:limit,:is_balance,:is_confirm,:from,:to,:is_active,:is_payble,:code, :name, :description)
   end
 end

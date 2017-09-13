@@ -1,27 +1,38 @@
-<!-- <meta http-equiv="refresh" content="7">   
- --><div class="modal-dialog"  style="height:2000px; max-height:400px; width:630px; max-width:630px;">
-  <div class="modal-content"> 
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Update Document </center></h4>
+    </div>
     <div class="modal-body">
-    <%= bootstrap_form_for :employee_document,url:{action:"update_document",id: @employee_document.id},remote:true do |f| %>
+      <%= bootstrap_form_for :employee_document,url:{action:"update_document",id: @employee_document.id},remote:true do |f| %>
+   
         <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-6">
           <div class="form-group required">
             <%= f.text_field :name,label:'Document Name', placeholder: 'Name' %>
           </div>
         </div>
-        <div class="col-sm-3">
-          <label>Status</label>
-          <div class="field">
-            <%= f.check_box :status , label:'Active'%>
+         <div class="col-sm-6">
+          <div class="form-group required">
+            <%= f.file_field :document,label: 'Document(doc,docx,pdf only)' %>
           </div>
         </div>
+      </div>
+       <div class="row">  
+
+        <div class="col-sm-6">
+          <div class="field">
+            <%= f.file_field :image,label: 'Upload Photo(only jpeg,jpg,png)' %>
+          </div>
         </div>
-        <div class="row">
-           <div class="col-sm-2">
+        <div class="col-sm-2">
+        <div class="field" style="padding: 20px">
             <%= f.submit "Update Document", class: 'btn btn-sm btn-success fa fa-modx' %>
           </div>
           </div> 
           <% end %>
-          </div>
-        </div>
-</div>
+    </div>
+    <div class="modal-footer"></div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

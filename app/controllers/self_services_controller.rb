@@ -101,7 +101,7 @@ class SelfServicesController < ApplicationController
     @from = params[:employee][:from]
     @to = params[:employee][:to]
     @employee_id = params[:employee][:employee_id]
-    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day")
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day DESC")
   end
 
   def investment_declaration
@@ -162,6 +162,10 @@ class SelfServicesController < ApplicationController
     @employee_id = params[:employee_id]
     @c_off_date = params[:leave_c_off][:c_off_date]
     @c_off_type = params[:leave_c_off][:c_off_type]
+    @comment = params[:leave_c_off][:comment]
+    if @c_off_type == nil || @c_off_type == ""
+      @c_off_type = "Full Day"
+    end
     @joining_detail = JoiningDetail.find_by(employee_id: @employee_id)
 
 
@@ -176,8 +180,8 @@ class SelfServicesController < ApplicationController
         if @leave_c_off.is_week_off_present_for_coff(@employee_id,@c_off_date) || @leave_c_off.is_holiday_present_for_coff(@employee_id,@c_off_date)
           @employee_attendance = EmployeeAttendance.where(employee_id: @employee_id,present: "WOP",day: @c_off_date.to_date).take
           
-          if @employee_attendance.working_hrs.to_s < "07:00"
-            flash[:alert] = "Working hrs. less than 7,Please contact to Admin"
+          if @employee_attendance.working_hrs.to_s < "09:00"
+            flash[:alert] = "Working hrs. less than 9,Please contact to Admin"
           else
             if leav_category.nil?
             else
@@ -198,12 +202,12 @@ class SelfServicesController < ApplicationController
               end#c_off.nil?
 
               if @c_off_type == 'Full Day' || @c_off_type == "" || @c_off_type == nil
-                @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending")
+                @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending",comment: @comment)
                 StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
                 flash[:notice] = "Your COff Created Successfully!"
                 COffMailer.pending(@leave_c_off).deliver_now
               else
-                @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending")
+                @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending",comment: @comment)
                 StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
                 flash[:notice] = "Your COff Created Successfully!"
                 COffMailer.pending(@leave_c_off).deliver_now
@@ -258,31 +262,57 @@ class SelfServicesController < ApplicationController
     redirect_to employee_rembursment_self_services_path
   end
 
-  def add_attendance
-    @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id).order('day DESC')
-  end
-
   def employee_contact_library
     @employees = Employee.where(status: "Active")
     session[:active_tab] = "EmployeeSelfService"
   end
 
-  def create_self_attendance
+  def add_attendance
+    #@employee_attendance = EmployeeAttendance.new(employee_attendance_params)
+    @emp_attendance = EmployeeAttendance.where(employee_id: current_user.employee_id,day: Date.today).take
+    @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id).order('day DESC')
+  end
+
+  def create_in_time
     # @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
-    employee_id = params[:salary][:employee_id]
-    day = params[:salary][:day]
-    present = params[:salary][:present]
-    @emp = Employee.find_by(id: employee_id)
-    # if @employee_attendance.is_present(day,employee_id)
+    # employee_id = params[:salary][:employee_id]
+    # day = params[:salary][:day]
+    # in_time = params[:salary][:in_time]
+    # @emp = Employee.find_by(id: employee_id)
+     # if @employee_attendance.is_present(day,employee_id)
     #   flash[:notice] = "Already Exist"
     # else
-      @emp_atten = EmployeeAttendance.create(employee_id: employee_id,day: day,present: present, is_confirm: false)  
+    time = Time.now
+    in_time = Time.at(time).strftime("%H:%M")
+      @emp_atten = EmployeeAttendance.create(employee_id: current_user.employee_id,day: Date.today,present: 'P',in_time: in_time, is_confirm: false)  
       if @emp_atten.save
         flash[:notice] = "Created successfully"
       else
         flash[:alert] = "Already Exist"
       end
     # end
+    redirect_to add_attendance_self_services_path
+  end
+
+  def create_out_time
+    
+    emp_attendance = params[:emp_attendance]
+    @employee_attendance = EmployeeAttendance.find_by(id: emp_attendance)
+    in_time = @employee_attendance.in_time
+    time = Time.now
+    out_time = Time.at(time).strftime("%H:%M")
+    
+    total_hrs = out_time.to_time - in_time.to_time
+    working_hrs = Time.at(total_hrs).strftime("%H:%M")
+    if working_hrs.to_s > "8" 
+      @employee_attendance.update(out_time: out_time,working_hrs: working_hrs,present: 'P')
+    elsif working_hrs.to_s < "8"
+      @employee_attendance.update(out_time: out_time,working_hrs: working_hrs,present: 'SD')
+    elsif working_hrs.to_s < "4"
+      @employee_attendance.update(out_time: out_time,working_hrs: working_hrs,present: 'A')
+    
+    end
+    flash[:notice] = "Out time created successfully"
     redirect_to add_attendance_self_services_path
   end
 
@@ -294,8 +324,19 @@ class SelfServicesController < ApplicationController
     @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
     @selected_resume1 = SelectedResume.where(vacancy_master_id: @vacancy_master.id,add_by_id: current_user.employee_id)
   end
+
+  def modal_contact_library
+    @employee = Employee.find(params[:format])
+  end
+
+  def modal_c_off
+    @leave_c_off = LeaveCOff.find(params[:format])
+  end
   # def apply_internally
   #   @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+  # end
+  #  def employee_attendance_params
+  #   params.require(:employee_attendance).permit(:employee_id, :day, :present, :in_time)
   # end
 
   def leave_c_off_params

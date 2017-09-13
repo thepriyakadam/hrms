@@ -9,7 +9,7 @@
         <div class="row">
           <div class="col-sm-3">
             <div class="form-group required">
-              <%= f.text_field :account_no,label: 'Account No',placeholder: 'e.g. 012345678'%>
+              <%= f.text_field :account_no,label: 'Account No.',placeholder: 'e.g. 012345678'%>
             </div>
           </div>
           <div class="col-sm-3">
@@ -20,23 +20,19 @@
 
           <div class="col-sm-3">
             <div class="field">
-                <%= f.text_field :branch_name,label: 'Branch Name',placeholder: 'Branch Name' %>
+                <%= f.text_field :branch_name,label: 'Branch Name',placeholder: 'e.g. Pune' %>
             </div>
           </div>
 
-          <div class="col-sm-3">
-            <div class="field">
-              <%= f.text_field :address,label: 'Bank Address',placeholder: 'Bank Address' %>
-            </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :ifsc_code,label: 'IFSC Code',placeholder: 'e.g. CITI0000026' %>
           </div>
+        </div>
         </div>
 
         <div class="row">
-          <div class="col-sm-3">
-            <div class="field">
-              <%= f.text_field :contact_no,label: 'Contact No',placeholder: 'Contact No' %>
-            </div>
-          </div>
+
 
           <div class="col-sm-3">
             <div class="field">
@@ -46,20 +42,27 @@
 
           <div class="col-sm-3">
             <div class="field">
-              <%= f.text_field :branch_code,label: 'Branch Code',placeholder: 'Branch Code' %>
+              <%= f.text_field :branch_code,label: 'Branch Code',placeholder: 'e.g. 00000026 ' %>
           </div>
         </div>
 
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :ifsc_code,label: 'IFSC Code',placeholder: 'e.g. CITI0000026' %>
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :address,label: 'Bank Address',placeholder: 'e.g.18-2, Pancharatna Apartments,Wanewari, Near Bhairoba Nala, Pune, Maharashtra 411013' %>
+            </div>
           </div>
-        </div>
+
+        <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :contact_no,label: 'Contact No.',placeholder: 'e.g.123456789' %>
+            </div>
+          </div>
+
       </div>
       <div class="row">
         <div class="col-sm-6">
           <div class="actions">
-            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+            <%= f.submit 'Create Bank Detail',:class => class_name, data: { disable_with: data_info } %>
             <% if params['controller'] == 'employee_bank_details' and params['action'] == 'edit' %>
               <%= link_to 'Back',ajax_bank_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-default', remote:true%>
             <%end%>
@@ -78,14 +81,20 @@ $("#employee_bank_detail").validate({
       },
       "employee_bank_detail[account_no]":{
         required: true
+      },
+      "employee_bank_detail[ifsc_code]":{
+        required: true
       }
     },
     messages: {
       "employee_bank_detail[bank_id]":{
-        required: "Please specify Bank Name "
+        required: "Please select bank name "
       },
       "employee_bank_detail[account_no]":{
-        required: "Please Select Account No"
+        required: "Please specify account no."
+      },
+      "employee_bank_detail[ifsc_code]":{
+        required: "Please specify IFSC code"
       }
     },
     errorPlacement: function(error, element) {

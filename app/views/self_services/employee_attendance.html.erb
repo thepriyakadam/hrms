@@ -14,7 +14,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-                <%= text_field :employee,:from,hide_label: true,class: 'request_date form-control'%>
+                <%= text_field :employee,:from,hide_label: true,placeholder: "From Date",class: 'request_date form-control'%>
             </div>
           </div>
         </div>
@@ -26,7 +26,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= text_field :employee,:to,hide_label: true,class: 'request_date form-control'%>
+              <%= text_field :employee,:to,hide_label: true,placeholder: "To Date",class: 'request_date form-control'%>
             </div>
           </div>
         </div>
@@ -68,10 +68,10 @@ $("#employee").validate({
        },
     messages: {
       "employee[from]":{
-        required: "Please Specify From",
+        required: "Please Specify From Date",
       },
        "employee[to]":{
-        required: "Please Select To",
+        required: "Please Select To Date",
       }
        },
     errorPlacement: function(error, element) {

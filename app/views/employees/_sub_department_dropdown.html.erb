@@ -1,0 +1,12 @@
+
+<label class="control-label required" for="company_district" aria-required="true">Sub Department</label>
+
+<% if @form == 'company' %>
+	<%= select :company,:sub_department_id,(@sub_departments.present? ? (@sub_departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Sub Department",hide_label:true},class: "form-control"%>
+<% elsif @form == 'company_location' %>
+	<%= select :company_location,:sub_department_id,(@sub_departments.present? ? (@sub_departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Sub Department",hide_label:true},class: "form-control"%>
+<% elsif @form == 'employee' %>
+	<%= select :employee,:sub_department_id,(@sub_departments.present? ? (@sub_departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Sub Department",hide_label:true},class: "form-control"%>
+<% else %>
+	<%= select :employee,:sub_department_id,(@sub_departments.present? ? (@sub_departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Sub Department",hide_label:true},class: "form-control"%>
+<% end %>

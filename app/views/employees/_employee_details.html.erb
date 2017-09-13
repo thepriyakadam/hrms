@@ -4,17 +4,26 @@
           padding: 10px;
           border: 5px solid gray;
           margin: 10;">
-    <div style="float:left;"></div>
-<div class="box-header">
-   <center> <h3 class="box-title">Employee Information</h3></center>
-    <div class="pull-right">
-    <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+    <div style="float:left;">
+       
     </div>
-  </div><!-- /.box-header -->
-    <!-- <center><b>PERSONAL </b><br><br></center> -->
 
     <table id="example2" class="table table-bordered table-hover table-condensed">
       <thead>
+       <tr>
+        <td colspan="2">
+         <% if @employee.company_location.company.company_logo == nil %>
+      <% else %>
+        <center> <%= image_tag @employee.company_location.company.company_logo.url, :size => "100x50" %></center><br>
+        <%end%>
+          <center><strong><%= @employee.company_location.company.try(:description) %></strong><br><%= @employee.company_location.try(:address) %>, <%= @employee.company_location.try(:name) %>.  </center>
+            <div class="pull-right">
+    <%= image_tag @employee.passport_photo.url, :size => "70x70" %><br>
+    </div>
+        </td>           
+      </tr>
+      </thead>
+      <tbody>
         <tr>
           <td colspan="2"><b>Name :</b> <%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td></tr>
 

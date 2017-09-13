@@ -10,9 +10,14 @@
 <%= f.hidden_field :employee_id, value: @employee.id %>
   <div class="row">
       <div class="col-sm-3">
-      <label>Relation</label>
-        <div class="form-group required">
-          <%= f.select :relation_master_id,all_relation_type,{hide_label:true,include_blank: " Select Relation"} %>
+<!--       <label>Relation</label>
+ -->        <div class="form-group required">
+           <div class="input-group">
+           <div class="input-group-addon">
+                <%= link_to "", new_relation_master_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+          <%= f.select :relation_master_id,all_relation_type,{label:'Relation',include_blank: " Select Relation"} %>
+        </div>
         </div>
     </div>
     <div class="col-sm-3">
@@ -34,29 +39,30 @@
 
 <div class="row">
      <div class="col-sm-3">
-     <label>Birth Date: </label>
          <div class="form-group required">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :date_of_birth,hide_label:true, class: 'family_birthdate' %>
+            <%= f.text_field :date_of_birth,{onchange:"var a={date_of_birth:$(this).val()}; $.get('/families/collect_age',a,function(response){});", :class=>"family_birthday",:style=>"width: 100%;",:tabindex=>"-1"} %>
           </div>
          </div>
         </div>
+
+
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :age, readonly:true %>
+          <%= f.text_field :age, readonly:true,placeholder: 'e.g. 25' %>
         </div>
       </div>
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :contact_no,label: 'Contact No',placeholder: 'Contact No.' %>
+          <%= f.text_field :contact_no,label: 'Contact No',placeholder: 'e.g.123456789' %>
         </div>
      </div>
      <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :email %>
+         <%= f.text_field :email,placeholder: 'e.g.abc@gmail.com' %>
         </div>
     </div>
 </div>
@@ -64,20 +70,25 @@
 <div class="row">
    
       <div class="col-sm-6">
-        <div class="field">
-         <%= f.text_field :current_address,label: 'Current Address' ,placeholder: 'Current Address'%>
+        <div class="form-group required">
+         <%= f.text_field :current_address,label: 'Current Address' ,placeholder: 'e.g.Pentagone - 5,pune'%>
         </div>
     </div>
 
     <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
          <%= f.select :gender,['Male','Female'],{label: 'Gender',include_blank: " Select Gender"} %>
         </div>
     </div>
 
     <div class="col-sm-3">
         <div class="field">
+          <div class="input-group">
+           <div class="input-group-addon">
+                <%= link_to "", new_blood_group_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
         <%= f.select :blood_group_id, all_blood_group,{label: 'Blood Group',include_blank: " Select Blood Group"} %>
+        </div>
         </div>
       </div>
 </div>
@@ -96,7 +107,7 @@
     </div>
     <div class="col-sm-3">
         <div class="field">
-        <%= f.select :marital, ['Married','UnMarried'],{label: 'Marital Status',include_blank: " Select Marital Status"}%>
+        <%= f.select :marital, ['Married','UnMarried','Divorced'],{label: 'Marital Status',include_blank: " Select Marital Status"}%>
         </div>
     </div>
 
@@ -109,7 +120,7 @@
 <div class="row">
      <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :profession %>
+          <%= f.text_field :profession ,placeholder: 'e.g. Engineer'%>
         </div>
       </div>
 
@@ -145,7 +156,13 @@
     <div class="row">  
       <div class="col-sm-3">
         <div class="field">
+                 <div class="input-group">
+           <div class="input-group-addon">
+                <%= link_to "", new_religion_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+
           <%= f.select :religion_id, all_religions,{include_blank: " Select Religion"} %>
+        </div>
         </div>
       </div>
  
@@ -168,7 +185,7 @@
     <div class="row">
     <div class="col-sm-3">
       <div class="actions">
-        <%= f.submit "Create", class: "btn btn-primary btn-sm" %>
+        <%= f.submit "Create", class: "btn btn-success btn-sm" %>
       </div>
     </div>
   </div>
@@ -195,24 +212,58 @@
 </div><!-- /.box-body -->
 </div><!-- /.box -->
 
-<script type="text/javascript">
-   $(function(){
-    $('#family_date_of_birth').on('input', function() {
-      var family_date_of_birth = parseFloat($('#family_date_of_birth').val());
-      var date = Date.today
-      var age = "";
-      if isNaN(family_date_of_birth) {
-        age = ""
+<script>
+$("#family").validate({
+    rules: {
+      "family[date_of_birth]":{
+        required: true,
+      },
+      "family[current_address]":{
+        required: true,
+      },
+      "family[f_name]":{
+        required: true,
+         },
+      "family[l_name]":{
+        required: true,
+         },
+      "family[relation_master_id]":{
+        required: true,
+        },
+      "family[gender]":{
+        required: true,
       }
-      else{
-        age = (date.to_date - family_date_of_birth.to_date).toFixed(2);
+       },
+    messages: {
+      "family[date_of_birth]":{
+        required: "Please specify date of birth",
+      },
+       "family[current_address]":{
+        required: "Please specify current address ",
+      },
+      "family[f_name]":{
+        required: "Please specify first name",
+        },
+      "family[l_name]":{
+        required: "Please specify last name",
+        },
+      "family[relation_master_id]":{
+        required: "Please select relation",
+         },
+      "family[gender]":{
+        required: "Please specify gender",
       }
-      $('#family_age').val(age);
-    });
-  });  
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
 
-    $(function(){
-    $('.family_birthdate').datepicker({
+<script type="text/javascript">
+  $(function(){
+    $('.family_birthday').datepicker({
     changeYear:true,
     changeMonth: true,
     yearRange: '-200:-0',
@@ -230,29 +281,4 @@
     yearRange: '-100:+30',
     dateFormat: 'dd-mm-yy' });
   }); 
-
-
-   $("#family").validate({
-  rules: {
-    "family[date_of_birth]":{
-      required: true
-    },
-    "family[email]":{
-      required: true
-    },
-    "family[current_address]":{
-      required: true
-    }
-  },
-  
-  errorPlacement: function(error, element) {
-   error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
-   error.insertAfter(element.parent(element));
-  }
-});
-
-   $(document).ready(function() {
-    $(".select2").select2();
-  });
 </script>
-

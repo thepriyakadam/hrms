@@ -21,9 +21,11 @@
         <td> 
         <% if  g.employee.joining_detail.leaving_date == nil %>
          <%= link_to 'Confirm',confirm_resignation_employee_resignations_path(g),class: 'btn btn-xs btn-primary' %>
-         <%= link_to '', g,class: 'btn btn-xs btn-default fa fa-eye' %>
+         <!-- <= link_to '', g,class: 'btn btn-xs btn-default fa fa-eye' %> -->
+         <%= link_to '', modal_resignation_detail_employee_resignations_path(g), class: 'btn btn-default fa fa-eye btn-xs ',remote:true %>
          <% else %>
-         <%= link_to '', g,class: 'btn btn-xs btn-default fa fa-eye' %>
+         <%= link_to '', modal_resignation_detail_employee_resignations_path(g), class: 'btn btn-default fa fa-eye btn-xs ',remote:true %>
+         <!-- <= link_to '', g,class: 'btn btn-xs btn-default fa fa-eye' %> -->
          <small class="label label-primary">Confirmed</small>
          <% end %>
           </td>
@@ -33,3 +35,4 @@
     </table>
   </div>
 </div>
+<div id="modal_resignation_detail" class="modal fade"></div>

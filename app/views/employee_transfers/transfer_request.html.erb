@@ -21,7 +21,7 @@
             <td><%= employee_transfer.employee.try(:manual_employee_code) %></td>
             <td><%= full_name(employee_transfer.employee) %></td>
             <td>
-            <%= link_to 'Approve', employee_transfer_confirmation_employee_transfers_path(employee_transfer),class: 'btn btn-sm btn-primary' %>
+            <%= link_to 'View Detail', employee_transfer_confirmation_employee_transfers_path(employee_transfer),class: 'btn btn-xs btn-primary' %>
            </td>
           </tr>
         <% end %>

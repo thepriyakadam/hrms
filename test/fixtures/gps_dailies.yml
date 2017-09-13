@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 
+  employee_gp_id: 
+  latitude: 1.5
+  longitude: 1.5
+  location: MyString
+  date: 2017-09-05
+
+two:
+  employee_id: 
+  employee_gp_id: 
+  latitude: 1.5
+  longitude: 1.5
+  location: MyString
+  date: 2017-09-05

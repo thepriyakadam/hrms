@@ -2,7 +2,15 @@
   <div class="box-header with-border">
   <div class="row">
   <div class="col-sm-1">
+  <% if @employee.passport_photo_file_name == nil %>
+  <% if @employee.gender == "Female" %>
+   <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%else%>
+   <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%end%>
+ <%else%>
       <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+      <%end%>
   </div>
     <div class="col-sm-6">
      <font color='#0077b3'>
@@ -12,8 +20,8 @@
     </div>
   </div>
   <div class="box-tools pull-right">
-    <%= link_to 'Edit', edit_employee_path(@employee),class: 'btn btn-sm btn-success fa fa-edit', remote:true %>
-    <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+    <%= link_to 'Edit', edit_employee_path(@employee),class: 'btn btn-xs btn-success fa fa-edit', remote:true %>
+    <%= link_to 'Back', employees_path,class: 'btn btn-default btn-xs fa fa-arrow-left' %>
   </div>
     
   </div><!-- /.box-header -->
@@ -90,19 +98,23 @@
         <td><%= @employee.optional_email %></td>
       </tr>
         <tr>
-        <th><strong>Contact No.</strong></th>
+        <th><strong>Official Contact No.</strong></th>
         <td><%= @employee.contact_no %></td>
 
-        <th><strong>Personal Contact No.</strong></th>
+        <th><strong>Extension No.</strong></th>
         <td><%= @employee.optinal_contact_no %></td>
       </tr>
       <tr>
-        <th> Emergency Contact No.</th>
-        <td><%= @employee.try(:optional_contact_no) %></td>
+        <th> Personal Contact No.</th>
+        <td><%= @employee.try(:optinal_contact_no1) %></td>
 
+        <th> Emergency Contact No.</th>
+        <td><%= @employee.try(:emergency_contact_no) %></td>
+      </tr>
+      <tr>
         <th><strong>Religion</strong></th>
-        <td><%= @employee.religion.try(:name) %></td>
-     
+        <td colspan="3"><%= @employee.religion.try(:name) %></td>
+     </tr>
       <tr>
         <th><strong>Differently Abled</strong></th>
         <td><%= @employee.handicap %></td>
@@ -130,6 +142,33 @@
         <th>Sub Department</th>
         <td><%= @employee.try(:sub_department).try(:name) %></td>
       </tr>
+
+      <tr>
+        <th>Reporting Manager 1</th>
+        <td><% emp=Employee.where(id: @employee.manager_id).take %><%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
+
+        <th>Reporting Manager 2</th>
+        <td><% emp=Employee.where(id: @employee.manager_2_id).take %><%= emp.try(:first_name) %><%= emp.try(:middle_name) %><%= emp.try(:last_name) %></td>
+      </tr>
+
+     <tr>
+     <th><strong>Download Profile Picture</strong></th>
+     <td><% if @employee.passport_photo_file_name == nil %>
+        <small class="label label-default">Not Available</small>
+        <% else %>
+        <center><%= link_to '',download_employee_profile_picture_path(@employee),class: 'btn btn-xs btn btn-primary fa fa-download' %></center>
+       <%end %>
+    </td>
+
+      <th><strong>Signature</strong></th>
+    <td><% if @employee.employee_signature_file_name == nil %>
+   <%= image_tag "white_signature.png",class: "img", alt: "User Image", size: "120x30"  %>
+      <% else %>
+    <!-- <center><= link_to '',download_employee_signature_path(@employee),class: 'btn btn-xs fa fa-picture-o' %></center> -->
+    <%= image_tag @employee.employee_signature.url, :size => "120x30" %><br><br>
+  <%end %>
+  </td>
+</tr>
      
     </table>
   </div><!-- /.box -->

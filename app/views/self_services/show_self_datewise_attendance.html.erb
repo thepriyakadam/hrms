@@ -7,7 +7,7 @@
     <% i = 0%>
       <thead>
       <tr>
-          <td colspan="5"><center> 
+          <td colspan="6"><center> 
             <% if current_user.try(:employee).try(:company_location).try(:company).try(:company_logo) == nil %>
             <% else %>
               <center> <%= image_tag current_user.try(:employee).try(:company_location).try(:company).try(:company_logo).url, :size => "90x50" %></center>
@@ -17,15 +17,16 @@
               </center>
           </td>
         </tr>
-        <tr><th colspan="5"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
+        <tr><th colspan="6"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
       <tr>
         <td>ID : <%= current_user.employee.manual_employee_code %></td>
         <td colspan="2">Employee : <%= full_name(current_user.employee) %></td>
-        <td colspan="2">Department : <%= current_user.employee.company_location.try(:name) %> - <%= current_user.employee.department.try(:name) %></td>
+        <td colspan="3">Department : <%= current_user.employee.company_location.try(:name) %> - <%= current_user.employee.try(:joining_detail).try(:cost_center).try(:name) %> - <%= current_user.employee.try(:department).try(:name) %> <%= current_user.employee.try(:sub_department).try(:name) %></td>
       </tr>
         <tr>
-          <th>Sr No</th>
+          <th>Sr.No.</th>
           <th>Date</th>
+          <th>Day</th>
           <th>In Time</th>
           <th>Out Time</th>
           <th>Present</th>
@@ -37,6 +38,7 @@
           <tr>
             <td><%= i = i + 1 %></td>
             <td><%= employee_attendance.try(:day) %></td>
+            <th><%= employee_attendance.try(:day).strftime("%A") %></th>
             <td><%= employee_attendance.try(:in_time) %></td>
             <td><%= employee_attendance.try(:out_time) %></td>
             <td><%= employee_attendance.try(:present) %></td>

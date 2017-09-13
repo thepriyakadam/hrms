@@ -7,11 +7,9 @@
   <div class="box-body"><br><br>
     <table id="example2" class="table table-bordered table-hover table-condensed">
     <thead>
-    <tr>
-      <th colspan="5"><center>Designation Details of - <%= @change_designations.try(:first).try(:employee).try(:manual_employee_code) %> - <%= full_name(@change_designations.try(:first).try(:employee)) %></center></th>
-    </tr>
+     <tr><td colspan="5"><font color='label-primary'><center>Designation Detail's of <%= @change_designations.try(:first).employee.try(:manual_employee_code) %> - <%= full_name(@change_designations.try(:first).employee) %></center></font></td></tr>
       <tr>
-        <th>Sr. No.</th>
+        <th>Sr.No.</th>
         <th>Designation</th>
         <th>Effective From</th>
         <th>Effective To</th>

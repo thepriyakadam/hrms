@@ -1,42 +1,61 @@
-<div class="modal-dialog" style="height:1000px; max-height:100px; width:900px; max-width:900px;">
+<div class="modal-dialog">
   <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
     <div class="modal-body">
-     <%= bootstrap_form_for @employee_leav_balance,url:{action:"update_leave_balance",id:@employee_leav_balance.id} do |f| %>
-        <div class="row">
-        <div class="col-sm-3">
-         <div class="field">
-        <%= label "employee_leav_balance","Leave Category"%>
-        <%= text_field "employee_leav_balance","category_name", value: @leav_category.try(:name),class: "form-control", readonly:true %>
-      </div>
-      </div>
 
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :no_of_leave %>
-          </div>
-        </div>
-
-          <div class="col-sm-3">
-            <div class="field">
-              <%= f.text_field :total_leave %>
-            </div>
-          </div>
-
-          <div class="col-sm-3">
-            <div class="field">
-              <%= f.text_field :expiry_date, class: "expiry_date" %>
-            </div>
-          </div>
-          </div><br>
+       <%= bootstrap_form_for @employee_leav_balance,url:{action:"update_leave_balance",id:@employee_leav_balance.id} do |f| %>
           <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-6">
+              <div class="field">
+                <%= label "employee_leav_balance","Leave Category"%>
+                <%= text_field "employee_leav_balance","category_name", value: @leav_category.try(:name),class: "form-control", readonly:true %>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="field">
+                <%= f.text_field :no_of_leave,label: 'No. of Leaves' %>
+              </div>
+            </div>
+          </div><br>
+
+          <div class="row">
+            <div class="col-sm-6">
+            <label>Total</label>
+              <div class="field">
+                <%= f.text_field :total_leave,hide_label: true %>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+            <label>From</label>
+              <div class="field">
+                <%= f.text_field :from_date, hide_label: true,class: "expiry_date" %>
+              </div>
+            </div>
+          </div><br>
+
+            <label>To</label>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="field">
+                <%= f.text_field :to_date, hide_label: true, class: "expiry_date" %>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
               <%= f.submit "Update Leave Balance", class: 'btn btn-sm btn-primary fa fa-modx' %>
             </div>
           </div>
-      <% end %>
-    </div>
-  </div>
-</div>
+        <% end %>
+
+      </div>
+    <div class="modal-footer"></div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+
 <script type="text/javascript">
   $(function(){
     $('.expiry_date').datepicker({

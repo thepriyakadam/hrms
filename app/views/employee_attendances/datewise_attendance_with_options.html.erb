@@ -2,7 +2,7 @@
 	<div class="box-header">
 	  <h3 class="box-title"> Attendance List </h3>
 		<div class="box-body">
-      <%= bootstrap_form_for(:employee, url: { action: 'datewise_all'},html: {id: "employee"}) do |f| %>
+      <%= bootstrap_form_for(:employee, url: { action: 'show_datewise_all'},html: {id: "employee"},remote: true) do |f| %>
       <!-- <= bootstrap_form_for(:employee, url: { action: 'datewise_absent'},html: {id: "employee"}) do |g| %> -->
 		  	<div class="row">
 		      <div class="col-sm-3">
@@ -27,17 +27,18 @@
             </div>
           </div>
 
-	        <div class="col-sm-2">
+	        <div class="col-sm-6">
           <%= submit_tag 'All', name: 'save'%>
-          <%= submit_tag 'Absent' %>
+          <%= submit_tag 'Absent', name: 'absent' %>
+          <%= submit_tag 'Leave' %>
           <!-- <= f.submit " All ",class: "btn btn-sm btn-primary fa fa-print",id: "buttonCtc" %> -->
           <!-- <= f.submit " Absent ",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %> -->
 	         <!--  <= link_to " All",datewise_all_employee_attendances_path(from: params[:employee][:from], to: params[:employee][:to]), class: "btn btn-xl btn-info" %> -->
-
             <!-- <= link_to " Absent ",datewise_absent_employee_attendances_path(from: params[:from], to: params[:to]), class: "btn btn-xs btn-success" %> -->
 	        </div>
 		    </div>
 
+          <div id="datewise_all"></div>
     <% end %>
 		</div>
 	</div>

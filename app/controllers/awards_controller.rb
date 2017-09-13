@@ -38,6 +38,7 @@ class AwardsController < ApplicationController
           # end
 
           @awards = Award.where(employee_id: @employee.id)
+        EmployeeMailer.award_create(@employee,@award).deliver_now
           format.html { redirect_to @award, notice: 'Award was successfully created.' }
           format.json { render :show, status: :created, location: @award }
           format.js { @flag = true }
@@ -94,6 +95,10 @@ class AwardsController < ApplicationController
     redirect_to root_url, notice: "File imported."
   end
 
+  def award_modal
+    @award = Award.find(params[:format])
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -103,6 +108,10 @@ class AwardsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def award_params
+<<<<<<< HEAD
     params.require(:award).permit(:employee_id, :award_name, :year_id, :award_from, :description)
+=======
+    params.require(:award).permit(:employee_id, :award_name, :year_id, :award_from,:description)
+>>>>>>> 20390ecd6302fc1071fc5913d1b4fdad7f020133
   end
 end

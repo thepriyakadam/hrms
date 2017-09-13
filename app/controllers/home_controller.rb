@@ -49,6 +49,8 @@ class HomeController < ApplicationController
         @employee = Employee.find(current_user.employee_id)
       elsif current_user.role.name == 'AdminTimeManagement'
         @employee = Employee.find(current_user.employee_id)
+      elsif current_user.role.name == 'NewEmployee'
+        @employee = Employee.find(current_user.employee_id)
       end
     else
       #@employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id, status: true)

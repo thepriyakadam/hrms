@@ -3,6 +3,7 @@
     <h3 class="box-title">Cost Center Wise Employee Attendance</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
+  <%= bootstrap_form_for(:salary, url: { action: 'show_costcenter_wise_attendance'},html: {id: "salary"},remote: true) do |f| %>
   	<div class="row">
         <div class="col-sm-3">
           <label>From </label>
@@ -34,16 +35,32 @@
           <%= select :salary,:status, ['Active','Inactive','All'],{label: 'Select Status',include_blank: " Select"}, class: "form-control" %>
          </div>
       </div>
+
       <div class="col-sm-3">
           <label>Cost Center </label>
         <div class="field">
-           <%= select :salary, :costcenter, all_cost_center,{include_blank: 'Select Cost Center'},{onchange:"var a={costcenter:$(this).val(),to:$('#salary_to').val(),from:$('#salary_from').val(),status:$('#salary_status').val()};$('.ajax-progress').show(); $.get('/employee_attendances/show_costcenter_wise_attendance',a,function(response){});",class: 'form-control'} %>
+           <%= select :salary, :costcenter, all_cost_center,{include_blank: 'Select Cost Center'},class: 'form-control' %>
         </div>
       </div>
-    </div><br>
-    <div id="employee_list"></div>
-  </div>
-</div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3" style="padding-top:20px;">
+        <div class="actions">
+          <%= f.submit "Create Attendance" ,class: 'btn btn-primary btn-sm', id: "buttonCtc" %>
+        </div>
+      </div>
+    <% end %>
+
+      <div class="ajax-progress"></div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div id="employee_list"></div>    
+        </div>
+      </div>
+    </div><!-- /.box-body -->
+  </div><!-- /.box -->
+
 
 <script type="text/javascript">
   $(function(){
@@ -61,6 +78,9 @@ $("#salary").validate({
       },
       "salary[to]":{
         required: true,
+      },
+      "salary[costcenter]":{
+        required: true,
       }
        },
     messages: {
@@ -69,6 +89,9 @@ $("#salary").validate({
       },
        "salary[to]":{
         required: "Please Select To",
+      },
+       "salary[costcenter]":{
+        required: "Please Select costcenter",
       }
        },
     errorPlacement: function(error, element) {

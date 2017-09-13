@@ -12,23 +12,28 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.select :asset_type_id,all_asset_type,{include_blank: " Assest Type"} %>
+        <div class="input-group">
+           <div class="input-group-addon">
+                <%= link_to "", new_asset_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+        <%= f.select :asset_type_id,all_asset_type,{label: 'Asset Type',include_blank: " Asset Type"} %>
+      </div>
       </div>
     </div>
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :assets_detail,placeholder:"Assest Detail" %>
+        <%= f.text_field :assets_detail,label: 'Asset Detail',placeholder:"e.g.HP Pavillion G3" %>
       </div>
     </div>
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :assets_id,placeholder:"Assest Id" %>
+        <%= f.text_field :assets_id,label: 'Asset ID',placeholder:"e.g.A12" %>
       </div>
     </div>
 
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :assets_value,placeholder:"Assest Value" %>
+        <%= f.text_field :assets_value,label: 'Asset Value',placeholder:"e.g. 1" %>
       </div>
     </div>
   </div>
@@ -36,7 +41,7 @@
     
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :assest_status,placeholder:"Assest Status" %>
+        <%= f.text_field :assest_status,label: 'Asset Status',placeholder:"e.g.Active" %>
       </div>
     </div>
 
@@ -46,7 +51,7 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :issue_date, label: "Issue Date:", class: 'issue_date'%>
+          <%= f.text_field :issue_date, label: "Issue Date", class: 'issue_date'%>
         </div>
       </div>
     </div>
@@ -65,14 +70,14 @@
 
     <div class="col-sm-6">
       <div class="field">
-        <%= f.text_field :remarks,placeholder:"Remarks" %>
+        <%= f.text_field :remarks,label: 'Remarks',placeholder:"Remarks" %>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-sm-3">
       <div class="actions">
-        <%= f.submit "Create", class: "btn btn-primary btn-sm" %>
+        <%= f.submit "Create", class: "btn btn-success btn-sm" %>
       </div>
     </div>
   </div>
@@ -107,10 +112,10 @@
     },
     messages: {
       "assigned_asset[asset_type_id]":{
-        required: "Please specify Asset Type"
+        required: "Please specify asset type"
       },
       "assigned_asset[issue_date]":{
-        required: "Please specify Issue Date"
+        required: "Please specify issue date"
       }
     },
     errorPlacement: function(error, element) {

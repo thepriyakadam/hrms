@@ -1,19 +1,21 @@
 <table id="example6" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th>ID</th>
-      <th>Employee</th>
       <th>Present</th>
       <th>Day</th>
+      <th>In Time</th>
+      <th>Out Time</th>
+      <th>Working Hrs</th>
     </tr>
   </thead>
   <tbody>
     <% @employee_attendances.each do |e| %>
       <tr>
-        <td><%= e.employee.manual_employee_code %></td>
-        <td><%= full_name(e.employee) %></td>
         <td><%= e.try(:present) %></td>
         <td><%= e.try(:day) %></td>
+        <td><%= e.try(:in_time) %></td>
+        <td><%= e.try(:out_time) %></td>
+        <td><%= e.try(:working_hrs) %></td>
       </tr>
     <% end %>
   </tbody>

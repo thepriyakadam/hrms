@@ -101,7 +101,7 @@ class EmployeeLeavRequestsController < ApplicationController
           @leave_c_off = LeaveCOff.find_by(id: @leave_c_off_id)
         if start_date.to_date > @leave_c_off.c_off_date.to_date
             if @leave_c_off.expiry_date < Date.today || @leave_c_off.expiry_date < start_date.to_date
-              flash[:alert] = "Compensatory off expired for this day"
+              flash[:alert] = "C.Off Expire for that day"
             elsif @employee_leav_request.is_available_coff?
               flash[:alert] = "Your Leave Request already has been sent"
             # elsif @employee_leav_request.is_salary_processed_coff?
@@ -114,6 +114,7 @@ class EmployeeLeavRequestsController < ApplicationController
               @employee_leav_request.current_status = 'Pending'
               if @leave_c_off.leave_count == 1.0 || @leave_c_off.leave_count == 0.0
                 @employee_leav_request.leave_count = 1
+                
                 @employee_leav_request.leave_type = "Full Day"
               else
                 @employee_leav_request.leave_count = 0.5
@@ -142,7 +143,7 @@ class EmployeeLeavRequestsController < ApplicationController
                     @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                 end
                 flash[:notice] = "Created successfully!"
-                  LeaveRequestMailer.pending(@employee_leav_request).deliver_now        
+                  #LeaveRequestMailer.pending(@employee_leav_request).deliver_now        
             end
 
           else
@@ -157,6 +158,7 @@ class EmployeeLeavRequestsController < ApplicationController
           redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
         end
     else#c_off
+
 
         @emp_leav_req = EmployeeLeavRequest.where(employee_id: @employee.id, start_date: start_date,end_date: end_date)
           if params[:flag] == "Full/Half"
@@ -189,15 +191,9 @@ class EmployeeLeavRequestsController < ApplicationController
           elsif @employee_leav_request.is_final_approved?
             flash[:alert] = "Request already has Approved"
             redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-<<<<<<< HEAD
           # elsif @employee_leav_request.is_salary_processed?
           #   flash[:alert] = "Salary Processed for this month"
           #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-=======
-          elsif @employee_leav_request.is_salary_processed?
-            flash[:alert] = "Attendance Confirm Please Contact to Admin"
-            redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
->>>>>>> e524c34c3da2799ed7f5f6180646e5d8c771d032
           elsif @employee_leav_request.is_continue?
             flash[:alert] = "Leave Can't take continueously"
             redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
@@ -247,16 +243,6 @@ class EmployeeLeavRequestsController < ApplicationController
           
                 #leave_record
                       @employee_leav_request.leave_record_create(@employee_leav_request)
-
-                      @employee_leav_request.create_attendance_leave
-                      @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
-                          total = 0
-                          @leave_record.each do |l|
-                            total = total + l.count
-                          end
-                          total
-                          @employee_leav_request.update(leave_count: total)
-
                     
                     if @employee.manager.email.nil? or @employee.manager.email == ""
                       flash[:notice] = "Send request without email."
@@ -290,19 +276,6 @@ class EmployeeLeavRequestsController < ApplicationController
                       #emp_leav_bal_id
                           @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                           @employee_leav_request.leave_record_create(@employee_leav_request)
-                      @employee_leav_request.create_attendance_leave
-
-                          # @leave_record = LeaveRecord.last
-                          @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
-                          total = 0
-                          @leave_record.each do |l|
-                            total = total + l.count
-                          end
-                          total
-                          @employee_leav_request.update(leave_count: total)
-
-
-
                           @employee_leav_request.minus_leave(@employee_leav_request)
                           if @employee.manager.email.nil? || @employee.manager.email == ''
                             flash[:notice] = 'Send request without email.'
@@ -319,18 +292,6 @@ class EmployeeLeavRequestsController < ApplicationController
                           @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                         #leave_record
                           @employee_leav_request.leave_record_create(@employee_leav_request)
-                      @employee_leav_request.create_attendance_leave
-
-                          # @leave_record = LeaveRecord.last
-                          @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
-                          total = 0
-                          @leave_record.each do |l|
-                            total = total + l.count
-                          end
-                          total
-                          @employee_leav_request.update(leave_count: total)
-
-
                           @employee_leav_request.minus_leave(@employee_leav_request)
                           if @employee.manager.email.nil? || @employee.manager.email == ''
                             flash[:notice] = 'Send request without email.'
@@ -357,25 +318,13 @@ class EmployeeLeavRequestsController < ApplicationController
                           @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                         #leave_record
                           @employee_leav_request.leave_record_create(@employee_leav_request)
-                      @employee_leav_request.create_attendance_leave
-
-                          # @leave_record = LeaveRecord.last
-                          @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
-                          total = 0
-                          @leave_record.each do |l|
-                            total = total + l.count
-                          end
-                          total
-                          @employee_leav_request.update(leave_count: total)
-
-
                           #@employee_leav_request.manage_coff(@employee_leav_request)
                           @employee_leav_request.minus_leave(@employee_leav_request)
                           if @employee.manager.email.nil? || @employee.manager.email == ''
                             flash[:notice] = 'Send request without email.'
                           else
                             flash[:notice] = 'Leave Request sent successfully !!'
-                            LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                            #LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                           end
                           redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
                         else
@@ -388,18 +337,6 @@ class EmployeeLeavRequestsController < ApplicationController
                           @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
               #leave_record
                       @employee_leav_request.leave_record_create(@employee_leav_request)
-                      @employee_leav_request.create_attendance_leave
-
-                      # @leave_record = LeaveRecord.last
-                      @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
-                          total = 0
-                          @leave_record.each do |l|
-                            total = total + l.count
-                          end
-                          total
-                          @employee_leav_request.update(leave_count: total)
-
-
                           @employee_leav_request.minus_leave(@employee_leav_request)
                           if @employee.manager.email.nil? || @employee.manager.email == ''
                             flash[:notice] = 'Send request without email.'
@@ -421,17 +358,6 @@ class EmployeeLeavRequestsController < ApplicationController
 
             #leave_record
                     @employee_leav_request.leave_record_create(@employee_leav_request)
-                      @employee_leav_request.create_attendance_leave
-
-                      # @leave_record = LeaveRecord.last
-                      @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
-                          total = 0
-                          @leave_record.each do |l|
-                            total = total + l.count
-                          end
-                          total
-                          @employee_leav_request.update(leave_count: total)
-
                         @employee_leav_request.minus_leave(@employee_leav_request)
                         if @employee.manager.email.nil? || @employee.manager.email == ''
                           flash[:notice] = 'Send request without email.'
@@ -850,27 +776,6 @@ class EmployeeLeavRequestsController < ApplicationController
         layout: 'pdf.html',
         orientation: 'Landscape',
         template: 'employee_leav_requests/status_wise.pdf.erb',
-        show_as_html: params[:debug].present?
-        #margin:  { top:1,bottom:1,left:1,right:1 }
-      end
-    end
-  end
-
-  def balancewise_report
-  end
-
-  def show_balancewise_report
-    @employee_id = params[:employee][:employee_id]
-    @employee = Employee.find_by(id: @employee_id)
-    respond_to do |f|
-      f.js
-      f.xls {render template: 'employee_leav_requests/balancewise_report.xls.erb'}
-      f.html
-      f.pdf do
-        render pdf: 'status_wise_request',
-        layout: 'pdf.html',
-        orientation: 'Landscape',
-        template: 'employee_leav_requests/balancewise_report.pdf.erb',
         show_as_html: params[:debug].present?
         #margin:  { top:1,bottom:1,left:1,right:1 }
       end

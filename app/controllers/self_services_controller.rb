@@ -164,19 +164,7 @@ class SelfServicesController < ApplicationController
     @c_off_type = params[:leave_c_off][:c_off_type]
     @joining_detail = JoiningDetail.find_by(employee_id: @employee_id)
 
-<<<<<<< HEAD
-    if @leave_c_off.is_self_present(@employee_id,@c_off_date)
-      flash[:alert] = "Your COff already set for that day"
-    else
-      @leave_c_off = LeaveCOff.new(leave_c_off_params)
-      @leave_c_offs = LeaveCOff.all
-      leav_category = LeavCategory.find_by(code: 'C.Off')
-      if @leave_c_off.is_week_off_present(@employee_id) || @leave_c_off.is_holiday_present(@employee_id)
 
-        if leav_category.nil?
-        else
-          if leav_category.nil?
-=======
     if @joining_detail.c_off == true
       if @leave_c_off.is_self_present(@employee_id,@c_off_date)
         flash[:alert] = "Your COff already set for that day"
@@ -190,23 +178,9 @@ class SelfServicesController < ApplicationController
           
           if @employee_attendance.working_hrs.to_s < "07:00"
             flash[:alert] = "Working hrs. less than 7,Please contact to Admin"
->>>>>>> e524c34c3da2799ed7f5f6180646e5d8c771d032
           else
             if leav_category.nil?
             else
-<<<<<<< HEAD
-              @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: @c_off_type,c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending")
-              StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
-              flash[:notice] = "Your COff Created Successfully!"
-              COffMailer.pending(@leave_c_off).deliver_now
-            end#@c_off_type
-          end#leav_category.nil?
-        end#@employee_attendance.working_hrs.to_f < "7:00"
-      else
-        flash[:alert] = "Working details not available"
-      end#is_week_off_present
-    end#@leave_c_off.is_self_present?
-=======
               @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
               if @c_off.nil?
               else
@@ -244,7 +218,6 @@ class SelfServicesController < ApplicationController
     else
       flash[:alert] = "You are not applicable for compansatory off!"
     end
->>>>>>> e524c34c3da2799ed7f5f6180646e5d8c771d032
     redirect_to leave_c_off_self_services_path
   end#def
 

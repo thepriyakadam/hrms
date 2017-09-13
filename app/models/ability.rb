@@ -55,7 +55,7 @@ class Ability
         can :manage, TravelRequest, employee_id: user.employee_id
         can [:read, :create, :update], DailyBillDetail, travel_request_id: user.employee_id
       elsif user.role.name == 'NewEmployee'
-        can :read, Employee, id: user.employee_id
+        can :manage, Employee, id: user.employee_id
         can :manage, [JoiningDetail, Qualification, Experience, Skillset, EmployeePhysical, Family], employee_id: user.employee_id
         can :manage,EmployeeBankDetail, employee_id: user.employee_id
         cannot [:destroy,:update,:create],EmployeeBankDetail

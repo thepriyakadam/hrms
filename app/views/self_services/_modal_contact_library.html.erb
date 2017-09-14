@@ -19,6 +19,11 @@
 
     <tr>
       <th>Extension Line 2</th>
+      <td><%= @employee.try(:optinal_contact_no1) %></td>
+    </tr>
+
+    <tr>
+      <th>Personal Contact No.</th>
       <td><%= @employee.optinal_contact_no %></td>
     </tr>
 

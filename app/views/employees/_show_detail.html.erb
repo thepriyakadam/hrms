@@ -98,15 +98,15 @@
         <td><%= @employee.optional_email %></td>
       </tr>
         <tr>
-        <th><strong>Official Contact No.</strong></th>
+        <th><strong>Extension No. 1</strong></th>
         <td><%= @employee.contact_no %></td>
 
-        <th><strong>Extension No.</strong></th>
-        <td><%= @employee.optinal_contact_no %></td>
+        <th><strong>Extension No. 2</strong></th>
+        <td><%= @employee.try(:optinal_contact_no1) %></td>
       </tr>
       <tr>
         <th> Personal Contact No.</th>
-        <td><%= @employee.try(:optinal_contact_no1) %></td>
+        <td><%= @employee.optinal_contact_no %></td>
 
         <th> Emergency Contact No.</th>
         <td><%= @employee.try(:emergency_contact_no) %></td>
@@ -139,7 +139,7 @@
         <th><strong>Service Master</strong></th>
         <td><%= @employee.try(:service_master).try(:name) %></td>
         <th>Resource Pool</th>
-        <td><%= @employee.try(:resource_pool_master).try(:name) %></td>
+        <td><%= @employee.try(:resource_pool_master).try(:code) %></td>
       </tr>
 
       <tr>

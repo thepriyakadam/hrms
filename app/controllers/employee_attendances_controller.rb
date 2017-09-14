@@ -1549,36 +1549,40 @@ def upload
             first_record_time = first_record.time.to_time
           end
 #operation
+
           employee_attendance = EmployeeAttendance.where(employee_id: employee.id,day: previous_date.to_date).take
+        #byebug
             if employee_attendance.nil?
             else
               if last_record.nil?
               else
-                if last_record_time <= employee_attendance.in_time.to_time
-                  last_re = last_record.time.to_time + 24*60*60
-                  total_hrs = last_re.to_time - employee_attendance.in_time.to_time
-                  working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
-                    if working_hrs.to_s <  "04:30"
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "A",comment: "System Updated")
-
-                    elsif working_hrs.to_s < "07:00"
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "HDL",comment: "System Updated")
-                    else
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P",comment: "System Updated")
-                    end
+                if employee_attendance.in_time == nil
+                  employee_attendance.update(comment: "In Time Not Available")
                 else
-                  total_hrs = last_record.time.to_time - employee_attendance.in_time.to_time
-                  working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+                    if last_record_time <= employee_attendance.try(:in_time).to_time
+                      last_re = last_record.try(:time).to_time + 24*60*60
+                      total_hrs = last_re.to_time - employee_attendance.try(:in_time).to_time
+                      working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
 
-                    if working_hrs.to_s <  "04:30"
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "A",comment: "System Updated")
-                    elsif working_hrs.to_s < "07:00"
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "HDL",comment: "System Updated")
+                        if working_hrs.to_s < "04:30"
+                          employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "A",comment: "System Updated")
+                        elsif working_hrs.to_s < "07:00"
+                          employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "HDL",comment: "System Updated")
+                        else
+                          employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P",comment: "System Updated")
+                        end
                     else
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P",comment: "System Updated")
-
-                    end
-                end
+                      total_hrs = last_record.time.to_time - employee_attendance.try(:in_time).to_time
+                      working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+                        if working_hrs.to_s <  "04:30"
+                          employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "A",comment: "System Updated")
+                        elsif working_hrs.to_s < "07:00"
+                          employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "HDL",comment: "System Updated")
+                        else
+                          employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P",comment: "System Updated")
+                        end
+                    end#last_record_time <= 
+                end#employee_attendance.in_time == nil
               end#last_record.nil?
             end#employee_attendance.nil?
 

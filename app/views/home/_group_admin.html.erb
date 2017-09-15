@@ -244,7 +244,9 @@
                 <div class="box-body">
            
                     <% date = Date.today %>
-                    <% @employees = JoiningDetail.where("DATE_FORMAT(joining_date,'%d/%m') = ?", date.strftime('%d/%m'))%>
+                    <% @employee = Employee.where(status: "Active") %>
+                    <% @employees = JoiningDetail.where("DATE_FORMAT(joining_date,'%d/%m') = ? AND employee_id = ?", date.strftime('%d/%m'),@employee) %>
+
                    <% if @employees.empty? %>
              
                    <%else%>

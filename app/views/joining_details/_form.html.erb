@@ -23,18 +23,17 @@
     <div class="row">
      <div class="col-sm-3">
         <div class="field">
-        <%= f.text_field :employee_uan_no, label:'UAN No' %>
+        <%= f.text_field :employee_uan_no, label:'UAN No',placeholder: 'e.g. 01234567891011'%>
        </div>
      </div>
   
       <div class="col-sm-3">
-        <label>Joining Date </label>
-          <div class="form group-required">
+          <div class="form-group required">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :joining_date,hide_label: true,class: 'joining_date'%>
+            <%= f.text_field :joining_date,label: 'Joining Date',class: 'joining_date'%>
           </div>
         </div>
       </div>
@@ -46,13 +45,13 @@
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :confirmation_date,hide_label: true, class: 'confirm_date'%>
+            <%= f.text_field :confirmation_date,hide_label: true, class: 'confirm_date',readonly: true %>
           </div>
         </div>
         </div>
 
       <div class="col-sm-3">
-        <div class="form group-required">
+        <div class="form-group required">
            <%= f.select :employee_grade_id, all_employee_grade, {label: 'Employee Grade',include_blank: " Select Employee Grade"} %>
         </div>
       </div>
@@ -61,13 +60,13 @@
 
       <div class="row">
       <div class="col-sm-3">
-        <div class="form group-required">
-          <%= f.select :employee_designation_id,all_employee_designation,{label: 'Designation',include_blank: " Select Employee Designation"} %>
+        <div class="form-group required">
+          <%= f.select :employee_designation_id,all_employee_designation,{label: 'Employee Designation',include_blank: " Select Employee Designation"} %>
         </div>
       </div>
 
       <div class="col-sm-3">
-        <div class="form group-required">
+        <div class="form-group required">
            <%= f.select :employee_category_id, all_employee_category, {label: 'Employee Category',include_blank: " Select Employee Category"} %>
         </div>
       </div>
@@ -79,15 +78,15 @@
       </div>
 
       <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :probation_period,label: 'Probation Period' %>
+        <div class="form-group required">
+          <%= f.text_field :probation_period,label: 'Probation Period',placeholder: 'e.g. 6 months' %>
         </div>
       </div> 
       </div>
       <div class="row">
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :notice_period,label: 'Notice Period' %>
+          <%= f.text_field :notice_period,label: 'Notice Period',placeholder: 'e.g. 1 months' %>
         </div>
       </div> 
 
@@ -99,7 +98,7 @@
 
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :passport_no,label: 'Passport No' %>
+          <%= f.text_field :passport_no,label: 'Passport No.' ,placeholder: 'e.g. J8369854'%>
        </div>
       </div>
 
@@ -163,20 +162,26 @@
       </div>
      </div>
      </div>
-
-      <div class="row">
+     <div class="row">
+      <div class="col-sm-3">
+      <div class="field">
+        <%= f.check_box :c_off, label: 'Compansatory Off'%>
+      </div>
+     </div>
+     </div>
+    <!--   <div class="row">
         <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :company_rfid,label: 'Company RFID' %>
+            <= f.text_field :company_rfid,label: 'Company RFID' %>
           </div>
         </div> 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :gate_rfid,label: 'Gate RFID' %>
+            <= f.text_field :gate_rfid,label: 'Gate RFID' %>
           </div>
         </div> 
       </div>
-
+ -->
      <div class="box-header with-border">
     <strong><font color='#0077b3'> EMPLOYEE PAYROLL DETAILS</font></strong>
   </div><!-- /.box-header -->
@@ -188,7 +193,7 @@
       </div>
 
       <div class="col-sm-3">
-      <div class="field">
+      <div class="field" style="padding: 10pxselect">
         <%= f.check_box :basis_of_time, label: 'Basis Of Time'%>
       </div>
      </div>
@@ -208,12 +213,12 @@
     <div class="row">
      <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :pf_max_amount, label:'PF Max Amount' %>
+          <%= f.text_field :pf_max_amount, label:'PF Max Amount' ,placeholder: 'e.g.2000'%>
        </div>
       </div> 
     <div class="col-sm-3">
       <div class="field">
-       <%= f.text_field :employee_pf_no, label:'PF No' %>
+       <%= f.text_field :employee_pf_no, label:'PF No.',placeholder: 'e.g.1234567' %>
       </div>
     </div>
 
@@ -232,7 +237,7 @@
       <div class="row">
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :employee_efic_no, label:'ESIC No' %>
+          <%= f.text_field :employee_efic_no, label:'ESIC No.',placeholder: 'e.g.123456789' %>
         </div>
       </div>
 
@@ -241,24 +246,26 @@
           <%= f.select :have_retention,[['Yes','true'],['No','false']],{label: 'Retention',include_blank: " Select Retention"} %>
        </div>
     </div>
-    <div class="col-sm-3">
+<!--     <div class="col-sm-3">
       <div class="field">
-      <!--  <select :is_da,[['Yes','true'],['No','false']],{label: 'DA',include_blank: " Select DA"} %>     -->
+       <= f.select :is_da,[['Yes','true'],['No','false']],{label: 'DA',include_blank: " Select DA"} %>    
       </div>
-    </div>
+    </div> -->
     <div class="col-sm-3">
       <div class="field">
         <%= f.select :is_insurance,[['Yes','true'],['No','false']],{label: 'Insurance',include_blank: " Select Insurance Option"} %>
       </div>
     </div>
-    </div>
-    <div class="row">
 
-    <div class="col-sm-3">
+        <div class="col-sm-3">
       <div class="field">
         <%= f.select :is_family_pension,[['Yes','true'],['No','false']],{label: 'Family Insurance',include_blank: " Select Family Pension Option"} %>
       </div>
     </div>
+    </div>
+    <div class="row">
+
+
 
     <div class="col-sm-3">
       <div class="field">
@@ -281,7 +288,7 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="actions">
-        <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+        <%= f.submit 'Create On Boarding Detail',:class => class_name, data: { disable_with: data_info } %>
         <% if params['controller'] == 'joining_details' and params['action'] == 'edit' %>
           <%= link_to 'Back',ajax_joining_detail_employees_path(id: @employee.id),class: 'btn btn-default', remote:true%>
         <%end%>
@@ -325,6 +332,39 @@
     yearRange: '-100:+5',
     dateFormat: 'dd-mm-yy' });
   }); 
+
+
+  $(function(){
+    $('#joining_detail_joining_date').on('input', function() {
+      var joining_detail_joining_date = parseFloat($('#joining_detail_joining_date').val());
+      var joining_detail_probation_period = parseFloat($('#joining_detail_probation_period').val());
+      var joining_detail_confirmation_date = "";
+      
+      if (isNaN(joining_detail_joining_date) || isNaN(joining_detail_probation_period)) {
+        joining_detail_confirmation_date = "";
+      }
+      else{
+
+        joining_detail_confirmation_date = (joining_detail_joining_date.getDate() + parseInt(joining_detail_probation_period)).to_s;
+      }
+      $('#joining_detail_confirmation_date').val(joining_detail_confirmation_date);
+    });
+
+    $('#joining_detail_probation_period').on('input', function() {
+      var joining_detail_joining_date = parseFloat($('#joining_detail_joining_date').val());
+      var joining_detail_probation_period = parseFloat($('#joining_detail_probation_period').val());
+      var joining_detail_confirmation_date = "";
+      
+      if (isNaN(joining_detail_joining_date) || isNaN(joining_detail_probation_period)) {
+        joining_detail_confirmation_date = "";
+      }
+      else{
+        joining_detail_confirmation_date = (joining_detail_joining_date.getDate() + parseInt(joining_detail_probation_period)).to_s;
+      }
+      $('#joining_detail_confirmation_date').val(joining_detail_confirmation_date);
+    });
+  });  
+
 </script>
 
 <script>
@@ -341,20 +381,26 @@ $("#joining_detail").validate({
       },
        "joining_detail[employee_category_id]":{
         required: true,
+      },
+       "joining_detail[probation_period]":{
+        required: true,
       }
        },
     messages: {
       "joining_detail[joining_date]":{
-        required: "Please Select Joining Date",
+        required: "Please select joining date",
       },
        "joining_detail[employee_designation_id]":{
-        required: "Please Specify Designation ",
+        required: "Please select employee designation ",
       },
       "joining_detail[employee_grade_id]":{
-        required: "Please Specify Grade",
+        required: "Please select employee grade",
       },
       "joining_detail[employee_category_id]":{
-        required: "Please Specify Employee Category",
+        required: "Please select employee category",
+      },
+      "joining_detail[probation_period]":{
+        required: "Please specify probation period",
       }
        },
     errorPlacement: function(error, element) {

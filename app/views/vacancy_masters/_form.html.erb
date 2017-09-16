@@ -36,15 +36,29 @@
          </div>
         </div>
 
-        <div class="col-sm-3">
-         <div class="form-group required">
+      <div class="col-sm-3">
+         <div class="field">
           <!--   <label>Job Title</label> -->
-            <%= f.select :employee_designation_id,all_employee_designation,{label: 'Designation',include_blank: " Select Designation"} %>
+            <%= f.select :sub_department_id,all_sub_department,{label: 'Sub Department',include_blank: " Select Sub Department"} %>
           </div>
         </div>
       </div>
         
       <div class="row">
+       <div class="col-sm-3">
+         <div class="form-group required">
+          <!--   <label>Job Title</label> -->
+            <%= f.select :employee_designation_id,all_employee_designation,{label: 'Designation',include_blank: " Select Designation"} %>
+          </div>
+        </div>
+
+      <div class="col-sm-3">
+         <div class="form-group required">
+          <!--   <label>Job Title</label> -->
+            <%= f.select :cost_center_id,all_cost_center,{label: 'Cost Center',include_blank: " Select Cost Center"} %>
+          </div>
+        </div>
+
         <div class="col-sm-3">
           <div class="form-group required">
            <%= f.text_field :vacancy_name,label: 'Vacancy Name'%>
@@ -53,21 +67,9 @@
 
          <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :vacancy_type,["Permanent","Contract","Freelancer","Internship"],{label: 'vacancy Type',include_blank:"Select vacancy Type"}%>
-          </div>
-        </div>
-      
-        <div class="col-sm-3">
-          <div class="form-group required">
-             <%= f.text_field :no_of_position,label: 'No. of Positions'%>
+            <%= f.select :vacancy_type,["Permanent","Contract","Freelancer","Internship"],{label: 'Vacancy Type',include_blank:"Select vacancy Type"}%>
           </div>
         </div> 
-
-         <div class="col-sm-3">
-          <div class="field">
-             <%= f.text_field :keyword,label: 'Primary Skill'%>
-          </div>
-        </div>  
       </div>
 
        <div class="row">
@@ -98,6 +100,12 @@
         </div>
 
          <div class="row">
+         
+           <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.text_field :no_of_position,label: 'No. of Positions'%>
+          </div>
+        </div> 
 
           <div class="col-sm-3">
           <div class="form-group required">
@@ -120,6 +128,19 @@
 
          </div>
         <div class="row">
+
+         <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.text_field :keyword,label: 'Primary Skill'%>
+          </div>
+        </div> 
+
+        <div class="col-sm-3">
+          <div class="field">
+             <%= f.text_field :secondary_skill,label: 'Secondary Skill'%>
+          </div>
+        </div> 
+
          <div class="col-sm-3">
           <div class="form-group required">
 
@@ -129,10 +150,15 @@
 
          <div id="relocation_textbox"></div>
 
-         <div class="col-sm-3">
-          <div class="form-group required">
-          <!-- <label>Vacancy Fulfillment Date </label> -->
-        
+
+
+     
+     
+        </div>
+
+      <div class="row">
+               <div class="col-sm-3">
+          <div class="form-group required">        
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
@@ -142,22 +168,42 @@
           </div>
         </div> 
 
+          <div class="col-sm-3">
+         <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_target_company_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+          <!--   <label>Job Title</label> -->
+            <%= f.select :target_company_id,all_target_company,{label: 'Target Company',include_blank: " Select Target Company"} %>
+            </div>
+          </div>
+        </div>
+
         <div class="col-sm-3">
-          <label>Qualification I</label>
-          <div class="form-group required">
+         <div class="form-group required">
+          <!--   <label>Job Title</label> -->
+            <%= f.select :billable,["Billable","Non Billable"],{label: 'Billable/Non Billable',include_blank: " Select Resource"} %>
+          </div>
+        </div>
+
+         <div class="col-sm-3">
+         <div class="form-group required">
+          <!-- <label>Qualification I</label> -->
             <div class="input-group">
               <div class="input-group-addon">
                 <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
               </div>
-               <%= f.select :degree_id, all_degree, {hide_label: true,include_blank: " Select Qualification"}, class: 'input_degree_stream_id' %>
+               <%= f.select :degree_id, all_degree, {label: 'Qualification I',include_blank: " Select Qualification"}, class: 'input_degree_stream_id' %>
             </div>
           </div>
         </div>     
-     
-        </div>
 
-      <div class="row">       
-        <div class="col-sm-3">
+
+      </div>
+
+          <div class="row">
+           <div class="col-sm-3">
           <label>Qualification II</label>
           <div class="field">
             <div class="input-group">
@@ -169,7 +215,8 @@
           </div>
         </div>
 
-        <div class="col-sm-3">
+
+              <div class="col-sm-3">
           <label>Qualification III</label>
           <div class="field">
             <div class="input-group">
@@ -180,7 +227,8 @@
             </div>
           </div>
         </div>
-      </div>
+        </div>
+
       <div class="row">
         <div class="col-sm-12">
           <div class="field">
@@ -305,6 +353,21 @@ $("#vacancy_master").validate({
       },
       "vacancy_master[degree_id]":{
         required: true,
+      },
+      "vacancy_master[cost_center_id]":{
+        required: true,
+      },
+      "vacancy_master[keyword]":{
+        required: true,
+      },
+      "vacancy_master[target_company_id]":{
+        required: true,
+      },
+      "vacancy_master[billable]":{
+        required: true,
+      },
+      "vacancy_master[vacancy_fullfillment_date]":{
+        required: true,
       }
     },
     messages: {
@@ -346,9 +409,24 @@ $("#vacancy_master").validate({
       },
       "vacancy_master[relocation_rerimbursement]":{
         required: "Please specify relocation reimbursment",
-        },
+      },
       "vacancy_master[degree_id]":{
         required: "Please select qualification",
+      },
+      "vacancy_master[cost_center_id]":{
+        required: "Please select cost center",
+      },
+      "vacancy_master[keyword]":{
+        required: "Please specify primary skill",
+      },
+      "vacancy_master[target_company_id]":{
+        required: "Please select target company",
+      },
+      "vacancy_master[billable]":{
+        required: "Please select resource",
+      },
+      "vacancy_master[vacancy_fullfillment_date]":{
+        required: "Please select vacancy fulfillment date",
       }
       
     },

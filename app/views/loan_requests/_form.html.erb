@@ -67,7 +67,7 @@
 <% end %>
 </div>
 
-  <script type="text/javascript">
+<script type="text/javascript">
   $(function(){
     $('#loan_request_amount').on('input', function() {
       var loan_request_amount = parseFloat($('#loan_request_amount').val());
@@ -95,61 +95,28 @@
       }
       $('#loan_request_emi').val(ans);
     });
+
+     $('#loan_type_interest_rate').on('input', function() {
+      var loan_request_no_of_emi = parseFloat($('#loan_request_no_of_emi').val());
+      var loan_request_amount = parseFloat($('#loan_request_amount').val());
+      var loan_type_interest_rate = parseFloat($('#loan_type_interest_rate').val());
+      var ans="";
+      if (isNaN(loan_request_amount) || isNaN(loan_request_no_of_emi) || isNaN(loan_type_interest_rate)) {
+        ans = ""
+      }
+      else{
+         ans = ((loan_request_amount * loan_request_no_of_emi * (loan_type_interest_rate/12))/100).toFixed(2);
+      }
+      $('#loan_request_interest_amount').val(ans);
+    });
+
   });
-  </script>
+</script>
+
+
+
 
 <script type="text/javascript">
-   $(function(){
-    $('#loan_request_amount').on('input', function() {
-      var loan_request_amount = parseFloat($('#loan_request_amount').val());
-      var loan_request_no_of_emi = parseFloat($('#loan_request_no_of_emi').val());
-      var loan_type_interest_rate = parseFloat($('#loan_type_interest_rate').val());
-
-      var ans="";
-      if (isNaN(loan_request_amount) || isNaN(loan_request_no_of_emi) || isNaN(loan_type_interest_rate)) {
-        ans = ""
-      }
-      else{
-        ans = ((loan_request_amount * loan_request_no_of_emi * (loan_type_interest_rate/12))/100).toFixed(2);
-      }
-      $('#loan_request_interest_amount').val(ans);
-
-    });
-
-    $('#loan_request_no_of_emi').on('input', function() {
-      var loan_request_no_of_emi = parseFloat($('#loan_request_no_of_emi').val());
-      var loan_request_amount = parseFloat($('#loan_request_amount').val());
-      var loan_type_interest_rate = parseFloat($('#loan_type_interest_rate').val());
-
-      var ans="";
-      if (isNaN(loan_request_amount) || isNaN(loan_request_no_of_emi) || isNaN(loan_type_interest_rate)) {
-        ans = ""
-      }
-      else{
-        ans = ((loan_request_amount * loan_request_no_of_emi * (loan_type_interest_rate/12))/100).toFixed(2);
-      }
-      $('#loan_request_interest_amount').val(ans);
-    });
-
-    $('#loan_type_interest_rate').on('input', function() {
-      var loan_type_interest_rate = parseFloat($('#loan_type_interest_rate').val());
-      var loan_request_no_of_emi = parseFloat($('#loan_request_no_of_emi').val());
-      var loan_request_amount = parseFloat($('#loan_request_amount').val());
-
-      var ans="";
-      if (isNaN(loan_request_amount) || isNaN(loan_request_no_of_emi) || isNaN(loan_type_interest_rate)) {
-        ans = ""
-      }
-      else{
-        ans = ((loan_request_amount * loan_request_no_of_emi * (loan_type_interest_rate/12))/100).toFixed(2);
-      }
-      $('#loan_request_interest_amount').val(ans);
-   });
-  });
-  </script>
-
-
-  <script type="text/javascript">
   $(function(){
     $('.loan_request').datepicker({
     changeYear:true,

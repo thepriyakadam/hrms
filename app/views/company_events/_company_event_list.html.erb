@@ -3,6 +3,8 @@
   <thead>
     <tr>
       <th>Event Name</th>
+      <th>Date</th>
+      <th>Email</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -10,11 +12,20 @@
     <% @company_events.each do |company_event| %>
       <tr>
         <td><%= company_event.event_name %></td>
+        <td><%= company_event.event_date %></td>
+        <td><%= company_event.email %></td>
         
         <td>
+        <% if company_event.send_email == true %>
+        <small class= "label label-primary">Email Sent</small>
+        
+          <%= link_to '',show_event_company_events_path(company_event) ,class: 'btn btn-xs btn-default fa fa-eye' %>
+          <%else%>
           <%= link_to '', edit_company_event_path(company_event),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
         
           <%= link_to '',show_event_company_events_path(company_event) ,class: 'btn btn-xs btn-default fa fa-eye' %>
+          <%= link_to 'Send Email', email_company_events_path(company_event),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-success' %>
+          <%end%>
         </td>
       </tr>
     <% end %>

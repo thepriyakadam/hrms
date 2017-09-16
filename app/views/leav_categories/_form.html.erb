@@ -2,12 +2,12 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :code,hide_label:true, placeholder: 'Leave Code' %>
+        <%= f.text_field :code,hide_label:true, placeholder: 'Leave Code e.g. CL' %>
       </div>
     </div>
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :name,hide_label:true, placeholder: 'Leave Type' %>
+        <%= f.text_field :name,hide_label:true, placeholder: 'Leave Type e.g. Casual Leave' %>
       </div>
     </div>
     <div class="col-sm-3">
@@ -32,50 +32,92 @@
         <%= f.text_field :monthly_leave,hide_label:true, placeholder: 'Monthly Leave Limit' %>
       </div>
     </div>
+
     <div class="col-sm-3">
       <div class="field">
-        <%= f.check_box :is_payble, label: 'Is Payble'%>
+        <%= f.check_box :is_limit, label: 'Limit'%>
       </div>
     </div>
-    <div class="col-sm-2">
+
+    <div class="col-sm-3">
       <div class="field">
-        <%= f.check_box :is_balance, label: 'Is Balance Required'%>
+        <%= f.check_box :is_continuous, label: 'Continuous'%>
       </div>
     </div>
   </div>
+
   <div class="row">
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <div class="field">
-        <%= f.check_box :is_cashable, label: 'Is Cashable'%>
+        <%= f.check_box :is_payble, label: 'Payble'%>
       </div>
     </div>
-    <div class="col-sm-2">
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.check_box :is_balance, label: 'Balance Required'%>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
       <div class="field">
         <%= f.check_box :assign_balance, label: 'Assign Balance'%>
       </div>
     </div>
-    <div class="col-sm-2">
+
+    <div class="col-sm-3">
       <div class="field">
-        <%= f.check_box :is_active, label: 'Is Active'%>
+          <%= f.check_box :weekoff_sandwich, label: 'Sandwich'%>
       </div>
     </div>
-     <div class="col-sm-2">
-      <div class="field">
-        <%= f.check_box :is_limit, label: 'Is Limit'%>
-      </div>
-    </div>
-    <div class="col-sm-2">
-      <div class="field">
-        <%= f.check_box :is_continuous, label: 'Is Continuous'%>
-      </div>
+</div>
+
+ <div class="row">
+  <div class="col-sm-3">
+    <div class="field">
+        <%= f.check_box :transfer, label: 'Transfer'%>
     </div>
   </div>
-    <div class="row">
     <div class="col-sm-3">
-      <div class="actions">
+      <div class="field">
+        <%= f.check_box :is_cashable, label: 'Cashable'%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.check_box :is_active, label: 'Active'%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="actions" style="padding: 10px">
         <%= f.submit "Create Leave Type",:class => class_name, data: { disable_with: data_info } %>
       </div>
     </div>
   </div>
 <% end %>
 <br>
+
+<script>
+$("#leav_category").validate({
+    rules: {
+      "leav_category[code]":{
+        required: true,
+      },
+      "leav_category[name]":{
+        required: true,
+      }
+    },
+    messages: {
+      "leav_category[code]":{
+        required: "Please specify code",
+      },
+      "leav_category[name]":{
+        required: "Please specify type",
+      }        
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

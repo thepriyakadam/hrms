@@ -9,21 +9,23 @@
     <table class="table table-bordered table-hover table-condensed">
       <thead>
             <tr>
-              <th colspan="2">Goal Perspective</th>
-              <td colspan="2"><%= @goal_rating.goal_perspective.try(:name) %></td>
+              <th>Goal Perspective</th>
+              <td><%= @goal_rating.goal_perspective.try(:name) %></td>
             </tr>
             <tr>
             	<th>Measure</th>
-               <td colspan="3"><%= @goal_rating.goal_measure %></td>
+               <td><%= @goal_rating.goal_measure %></td>
             </tr>
             <tr>   
               <th>Target</th>
-               <td colspan="3"><%= @goal_rating.target %></td>
+               <td><%= @goal_rating.target %></td>
              
             </tr>
             <tr> 
              <th>Weightage</th>
                <td><%= @goal_rating.goal_weightage %></td>  
+               </tr>
+               <tr>
               <th>Aligned</th>
               <td><%= @goal_rating.aligned %></td>
             </tr>

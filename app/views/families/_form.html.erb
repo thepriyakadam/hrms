@@ -10,52 +10,54 @@
 <%= f.hidden_field :employee_id, value: @employee.id %>
   <div class="row">
       <div class="col-sm-3">
-        <div class="form-group required">
-          <%= f.text_field :relation %>
+<!--       <label>Relation</label>
+ -->        <div class="form-group required">
+          <%= f.select :relation_master_id,all_relation_type,{label:'Relation',include_blank: " Select Relation"} %>
         </div>
     </div>
     <div class="col-sm-3">
         <div class="form-group required">
-         <%= f.text_field :f_name,label: 'First Name' %>
+         <%= f.text_field :f_name,label: 'First Name',placeholder: 'First Name' %>
         </div>
     </div>
     <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :m_name,label: 'Middle Name' %>
+         <%= f.text_field :m_name,label: 'Middle Name' ,placeholder: 'Middle Name'%>
         </div>
     </div>
      <div class="col-sm-3">
         <div class="form-group required">
-        <%= f.text_field :l_name,label: 'Last Name' %>
+        <%= f.text_field :l_name,label: 'Last Name',placeholder: 'Last Name' %>
         </div>
     </div>
 </div>
 
 <div class="row">
      <div class="col-sm-3">
-     <label>Birth Date: </label>
          <div class="form-group required">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :date_of_birth,hide_label:true, class: 'family_birth_date' %>
+            <%= f.text_field :date_of_birth,{onchange:"var a={date_of_birth:$(this).val()}; $.get('/families/collect_age',a,function(response){});", :class=>"family_birthday",:style=>"width: 100%;",:tabindex=>"-1"} %>
           </div>
          </div>
         </div>
+
+
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :age %>
+          <%= f.text_field :age, readonly:true,placeholder: 'e.g. 25' %>
         </div>
       </div>
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :contact_no,label: 'Contact No' %>
+          <%= f.text_field :contact_no,label: 'Contact No',placeholder: 'e.g.123456789' %>
         </div>
      </div>
      <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :email %>
+         <%= f.text_field :email,placeholder: 'e.g.abc@gmail.com' %>
         </div>
     </div>
 </div>
@@ -63,13 +65,13 @@
 <div class="row">
    
       <div class="col-sm-6">
-        <div class="field">
-         <%= f.text_field :current_address,label: 'Current Address' %>
+        <div class="form-group required">
+         <%= f.text_field :current_address,label: 'Current Address' ,placeholder: 'e.g.Pentagone - 5,pune'%>
         </div>
     </div>
 
     <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
          <%= f.select :gender,['Male','Female'],{label: 'Gender',include_blank: " Select Gender"} %>
         </div>
     </div>
@@ -84,18 +86,18 @@
 <div class="row">
     <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :adhar_no,label: 'Aadhaar Card No' %>
+          <%= f.text_field :adhar_no,label: 'Aadhaar Card No',placeholder: "e.g : 123456789012" %>
         </div>
     </div>
 
     <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :pan_no,label:"PAN Card No" %>
+          <%= f.text_field :pan_no,label:"PAN Card No" ,placeholder: 'e.g : ABCDE12345B'%>
         </div>
     </div>
     <div class="col-sm-3">
         <div class="field">
-        <%= f.select :marital, ['Married','UnMarried'],{label: 'Marital Status',include_blank: " Select Marital Status"}%>
+        <%= f.select :marital, ['Married','UnMarried','Divorced'],{label: 'Marital Status',include_blank: " Select Marital Status"}%>
         </div>
     </div>
 
@@ -108,13 +110,13 @@
 <div class="row">
      <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :profession %>
+          <%= f.text_field :profession ,placeholder: 'e.g. Engineer'%>
         </div>
       </div>
 
      <div class="col-sm-3">
         <div class="field">
-        <%= f.text_field :passport_no,label: 'Passport No' %>
+        <%= f.text_field :passport_no,label: 'Passport No',placeholder: 'e.g : J8369854' %>
        </div>
       </div>
 
@@ -164,21 +166,88 @@
         </div>
       </div>
   </div>
+    <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create", class: "btn btn-success btn-sm" %>
+      </div>
+    </div>
+  </div>
 
-  <div class="row">
+ <!--  <div class="row">
       <div class="col-sm-3">
         <div class="actions">
-            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+            <= f.submit :class => class_name, data: { disable_with: data_info } %>
         </div>
     </div>
   </div>
+ -->
+<!--   <div class="row">
+    <div class="col-sm-6">
+      <div class="actions">
+            <= f.submit :class => class_name, data: { disable_with: data_info },class: 'btn btn-sm btn-primary' %>
+            < if params['controller'] == 'Families' and params['action'] == 'edit' %>
+            <= link_to 'Back',ajax_family_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-default',remote:true%>
+          <end%>
+      </div>
+    </div>
+  </div> -->
 <% end %>
 </div><!-- /.box-body -->
 </div><!-- /.box -->
 
+<script>
+$("#family").validate({
+    rules: {
+      "family[date_of_birth]":{
+        required: true,
+      },
+      "family[current_address]":{
+        required: true,
+      },
+      "family[f_name]":{
+        required: true,
+         },
+      "family[l_name]":{
+        required: true,
+         },
+      "family[relation_master_id]":{
+        required: true,
+        },
+      "family[gender]":{
+        required: true,
+      }
+       },
+    messages: {
+      "family[date_of_birth]":{
+        required: "Please specify date of birth",
+      },
+       "family[current_address]":{
+        required: "Please specify current address ",
+      },
+      "family[f_name]":{
+        required: "Please specify first name",
+        },
+      "family[l_name]":{
+        required: "Please specify last name",
+        },
+      "family[relation_master_id]":{
+        required: "Please select relation",
+         },
+      "family[gender]":{
+        required: "Please specify gender",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
 <script type="text/javascript">
   $(function(){
-    $('.family_birth_date').datepicker({
+    $('.family_birthday').datepicker({
     changeYear:true,
     changeMonth: true,
     yearRange: '-200:-0',
@@ -195,6 +264,5 @@
     changeMonth: true,
     yearRange: '-100:+30',
     dateFormat: 'dd-mm-yy' });
-
   }); 
 </script>

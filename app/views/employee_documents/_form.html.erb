@@ -1,22 +1,23 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Documents Details</h3>
+    <h3 class="box-title">Employee Document Details</h3>
   </div><!-- /.box-header -->
 
   <div class="box-body">
 
  <%= bootstrap_form_for(@employee_document,html: {id: 'employee_document'},remote:true) do |f| %>
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
     <%= f.hidden_field :employee_id, value: @employee.id %> 
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :name,label:'Document Name', placeholder: 'Name' %>
+            <%= f.text_field :name,label:'Document Name', placeholder: 'e.g.PAN CARD' %>
           </div>
         </div>
 
         <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
             <%= f.file_field :document,label: 'Document(doc,docx,pdf only)' %>
           </div>
         </div>
@@ -26,18 +27,9 @@
             <%= f.file_field :image,label: 'Upload Photo(only jpeg,jpg,png)' %>
           </div>
         </div>
-
         <div class="col-sm-3">
-          <label>Status</label>
-          <div class="field">
-            <%= f.check_box :status , label:'Active'%>
-          </div>
-        </div>
-      </div><br><br>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="actions">
-            <%= f.submit 'Create Employee Document',:class => class_name, data: { disable_with: data_info } %>
+          <div class="actions" style="padding: 20px">
+          <%= f.submit 'Create Employee Document',:class => class_name, data: { disable_with: data_info } %>
             <% if params['controller'] == 'employee_documents' and params['action'] == 'edit' %>
             <%= link_to 'Back',ajax_employee_document_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-default',remote:true%>
           <%end%>
@@ -45,4 +37,30 @@
         </div>
       </div>
   <% end %> 
+
+  <script>
+$("#employee_document").validate({
+    rules: {
+      "employee_document[name]":{
+        required: true,
+      },
+      "employee_document[document]":{
+        required: true,
+      }
+       },
+    messages: {
+      "employee_document[name]":{
+        required: "Please specify document name",
+      },
+       "employee_document[document]":{
+        required: "Please upload document",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
    

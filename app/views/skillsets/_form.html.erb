@@ -10,7 +10,7 @@
         <div class="row">
           <div class="col-sm-3">
             <div class="form-group required">
-              <%= f.text_field :name, class: 'input_name' %>
+              <%= f.text_field :name, class: 'input_name',placeholder: 'e.g. Communication' %>
             </div>
           </div>
 
@@ -34,7 +34,7 @@
       
         <div class="col-sm-6">
           <div class="actions" style="padding: 20px">
-            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+            <%=f.submit "Create Skill Set",class: "btn btn-primary btn-sm" %>
             <% if params['controller'] == 'skillsets' and params['action'] == 'edit' %>
             <%= link_to 'Back',ajax_skillset_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-default',remote:true%>
           <%end%>
@@ -94,11 +94,11 @@ $("#skillset").validate({
     },
     messages: {
       "skillset[name]":{
-        required: "Please specify Employee Name",
+        required: "Please specify skill set",
         maxlength: "Employee Name allows upto 30 characters"
       },
       "skillset[skill_level]":{
-        required: "Please specify Skill Level"
+        required: "Please specify skill level"
       }
     },
     errorPlacement: function(error, element) {

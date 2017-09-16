@@ -1,0 +1,151 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Leave Transfer</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="field">
+         <table class="table table-bordered table-hover table-condensed'">
+           <thead>
+              <tr>
+                <th colspan="2"><center> Employee </center></th>
+              </tr>
+              <tr>
+                <th> Employee </th>
+                <td><%= @employee.manual_employee_code %> - <%= full_name(@employee) %></td>
+              </tr>
+              <tr>
+                <th>Manager 1 </th>
+                <td><%= @employee.manager.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager)) %></td>
+              </tr>
+              <tr>
+                <th>Manager 2 </th>
+                <td><%= @employee.manager_2.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager_2)) %></td>
+              </tr>
+           </thead>
+         </table>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="field">
+          <table class="table table-bordered table-hover table-condensed'">
+            <thead>
+              <tr><th colspan="2"><center> Leave Balance </center></th></tr>
+              <tr>
+                <th>Leave Type</th>
+                <th>Leave Available</th>
+              </tr>
+            </thead>
+              <% @total_leaves.where(is_active: true).each do |l| %>
+              <tr>
+                <td><%= l.leav_category.try(:name) %></td>
+                <td><%= l.no_of_leave %></td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <table id="example1" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Employee</th>
+          <th>Transfer To</th>
+          <th>Date</th>
+          <th>Leave Category</th>
+          <th>No Of Day</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @leave_transfers.each do |leave_transfer| %>
+          <tr>
+            <% if @current_request.id == leave_transfer.id %>
+            <th><font color='green'>*<%= leave_transfer.employee.try(:manual_employee_code) %> </font></th>
+            <th><font color='green'>*<%= full_name(leave_transfer.employee) %> </font></th>
+            <th><font color='green'><%= full_name(leave_transfer.transfer_to)  %></th></font>
+            <th><font color='green'><%= leave_transfer.date %></th></font>
+            <th><font color='green'><%= leave_transfer.leav_category.try(:name) %></th></font>
+            <th><font color='green'><%= leave_transfer.no_of_leave %></th></font>
+            <%else%>
+            <td><%= leave_transfer.employee.try(:manual_employee_code) %></td>
+            <td><%= full_name(leave_transfer.employee) %></td>
+            <td><%= full_name(leave_transfer.transfer_to) %></td>
+            <td><%= leave_transfer.date.to_date %></td>
+            <td><%= leave_transfer.leav_category.try(:name) %></td>
+            <td><%= leave_transfer.no_of_leave %></td>
+
+            <%end%>
+            <td>
+                <% case leave_transfer.status %>
+                  <% when "Pending" %>
+                    <small class="label label-default">Pending</small>
+                  <% when "Approved" %>
+                    <small class="label label-primary">Approved</small>
+                  <% when "Rejected" %>
+                    <small class="label label-danger">Rejected</small>
+                  <% when "Cancelled" %>
+                    <small class="label label-warning">Cancelled</small>
+                  <% else %>
+                    <small class="label label-info">Else</small>
+                <%end%>
+            </td> 
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <table id="example1" class="table table-bordered table-hover table-condensed">
+      <tbody>
+        <tr><td colspan="4"><font color='red'><center>Current Leave Request Detail</center></font></td></tr>
+        <tr>
+          <th>ID</th>
+          <td><%= @current_request.employee.try(:manual_employee_code) %></td>
+
+          <th>Employee Name</th>
+          <td><%= full_name(@employee) %></td>
+        </tr>
+        <tr>
+          <th>Transfer To</th>
+          <td><%= full_name(@transfer_to) %></td>
+
+          <th>Category</th>
+          <td><%= @current_request.leav_category.name %></td>
+        </tr>
+        <tr>
+         <th>No. of Day</th>
+          <td><%= @current_request.no_of_leave %></td>
+
+          <th>Date</th>
+          <td><%= @current_request.date.to_date %></td>
+        </tr>
+        <tr>
+          <th> Reason</th>
+          <td><%= @current_request.reason %></td>
+
+           <th> Current Status</th>
+          <td><%= @current_request.try(:current_status) %></td>
+        </tr>
+        <tr>
+           <th colspan="4">   
+           <%= link_to 'Approve', approve_leave_transfers_path(current_request_id: @current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> 
+           <%= link_to 'Reject', reject_leave_transfers_path(current_request_id: @current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
+           <%= link_to 'Back', leave_transfer_approval_leave_transfers_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %></center>
+           </th>
+        </tr>
+     </tbody>
+    </table>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example1').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

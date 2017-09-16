@@ -1,5 +1,6 @@
 class EmployeeDocumentsController < ApplicationController
   before_action :set_employee_document, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /employee_documents
   # GET /employee_documents.json
@@ -36,17 +37,21 @@ class EmployeeDocumentsController < ApplicationController
      @employee_document = EmployeeDocument.new(employee_document_params)
      #@employee_documents = EmployeeDocument.all
      @employee = Employee.find(params[:employee_document][:employee_id])
+     ActiveRecord::Base.transaction do
      respond_to do |format|
       if @employee_document.save
+        @employee_documents = EmployeeDocument.where(employee_id: @employee.id)
+        EmployeeMailer.employee_document_create(@employee,@employee_document).deliver_now
         format.html { redirect_to @employee_document, notice: 'Employee Document saved Successfully.' }
         format.json { render :show, status: :created, location: @employee_document }
-        @employee_documents = @employee.employee_documents
         format.js { @flag = true }
       else
         format.html { render :new }
         format.json { render json: @employee_document.errors, status: :unprocessable_entity }
         format.js { @flag = false }
       end
+  end
+
     end
   end
   # PATCH/PUT /employee_documents/1

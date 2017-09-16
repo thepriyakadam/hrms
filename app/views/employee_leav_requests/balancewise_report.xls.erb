@@ -1,0 +1,53 @@
+<table id="example5" class="table table-bordered table-hover table-condensed">
+  <thead>
+   <thead>
+        <tr>
+              <th colspan="7">Employee : <%= @employee.try(:manual_employee_code) %> - <%= full_name(@employee) %></th>
+          </tr>
+       
+      </thead>
+
+      <tbody>
+        <% @employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employee_id) %>
+        <% @employee_leav_balances.each do |employee_leav_balance| %>
+        <tr><th colspan="7"><center>Employee Leave Balance</center></th></tr>
+        <tr>
+          <th>Leave Type</th>
+          <td colspan="7"><%= employee_leav_balance.leav_category.try(:name) %></td>
+          </tr>
+          <tr>
+          <th>Date</th>
+          <td><%= employee_leav_balance.from_date.to_date %> to <%= employee_leav_balance.to_date.to_date %></td>
+
+          <th>Total</th>
+          <td><%= employee_leav_balance.total_leave %></td>
+          <th>Balance</th>
+          <td><%= employee_leav_balance.no_of_leave %></td>
+        </tr>
+        <tr>
+          <th>Carry Forward</th>
+          <td><%= employee_leav_balance.carry_forward %></td>
+          <th>Collapse Value</th>
+          <td><%= employee_leav_balance.collapse_value %></td>
+          <th>New Balance</th>
+          <td><%= employee_leav_balance.leave_count %></td>
+        </tr>
+
+        <% @employee_leav_requests = EmployeeLeavRequest.where(employee_leav_balance_id: employee_leav_balance.id) %>
+          <tr><td colspan="7"><center>Employee Leave Request</center></td></tr>
+          <tr>
+            <th>Leave Type</th>
+            <th>Date</th>
+            <th colspan="5">Status</th>
+          </tr>
+          <% @employee_leav_requests.each do |employee_leav_request| %> 
+            <tr>
+              <td><%= employee_leav_request.leave_type %></td>
+              <td><%= employee_leav_request.start_date.to_date %> to <%= employee_leav_request.end_date.to_date %></td>
+              <td colspan="5"><%= employee_leav_request.current_status %></td>
+            </tr>
+          <% end %>
+        <% end %>
+
+       </tbody>
+  </table>

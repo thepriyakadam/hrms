@@ -1,4 +1,18 @@
 Rails.application.routes.draw do
+  resources :target_companies
+  resources :leave_transfers do
+    collection do
+      get :leave_transfer_approval
+      get :show_detail_for_approval
+      get :approve
+      get :reject
+      get :employee_wise_report
+      post :show_employeewise_detail
+      get :show_employeewise_detail
+      get :modal_transfer_detail
+    end
+  end
+  resources :sub_departments
   resources :change_designations do
     collection do
       get :employee_list
@@ -111,7 +125,15 @@ Rails.application.routes.draw do
   resources :rembursmentmasters
   resources :employee_jc_lists
   resources :joining_checklist_masters
-  resources :employee_gps
+  resources :employee_gps do
+    collection do
+      get :employee_wise_gps
+      post :show_set_gps_employeewise
+      post :set_employeewise_gps
+      get :employeewise_daily_gps
+      post :show_employeewise_daily_gps
+    end
+  end
   resources :payroll_periods
   resources :visitor_details do
     collection do
@@ -165,6 +187,7 @@ Rails.application.routes.draw do
       get :approved_record_list
       get :show_approved_record
       post :show_approved_record
+      get :request_modal
     end
   end
 
@@ -188,6 +211,9 @@ Rails.application.routes.draw do
       get :investment_declaration_list
       post :reject_declaration
       get :leave_c_off
+      get :subordinate_attendance
+      post :show_subordinate_attendance
+      get :show_subordinate_attendance
     end
   end
 
@@ -215,6 +241,7 @@ Rails.application.routes.draw do
       get :revert_selective
       post :show_employee_list
       post :revert_selective_week_off
+      post :revert_selective_data
     end
   end
   resources :late_mark_masters do
@@ -266,6 +293,9 @@ Rails.application.routes.draw do
       get :week_off_list
       get :edit_modal
       post :update_week_off
+      get :revert_week_off_master
+      post :show_weekoff_master_data
+      get :revert_master_data
     end
   end
   resources :machine_attendances do
@@ -421,7 +451,11 @@ Rails.application.routes.draw do
   end
 end
 
-  resources :leave_masters
+  resources :leave_masters do
+    collection do
+      get :modal_leave_master
+    end
+  end
 
   resources :employee_code_masters do
     collection do
@@ -504,6 +538,7 @@ end
       get :transfer_employee_name_report_xls
       get :admin_employee_transfer
       post :final_approve_by_admin
+      get :collect_company
     end
   end
 
@@ -563,6 +598,7 @@ end
       get :policy_type_dashboard
       get :modal
       post :update_company_policy
+      get :email
     end
   end
 
@@ -621,6 +657,7 @@ end
   resources :circulars do
     collection do
       get :is_confirm
+      get :email
     end
   end
 
@@ -736,6 +773,16 @@ end
       get :reject_acf_request
       get :admin_level_acf
       post :admin_acf_approval
+      get :attendance_average_report
+      post :attendance_average_details
+      get :attendance_average_details
+      get :managerwise_average_report
+      post :show_managerwise_average_attendance
+      get :show_managerwise_average_attendance
+      get :datewise_attendance_with_options
+      post :show_datewise_all
+      get :create_in_time
+      get :create_out_time
     end
   end
   resources :salary_comp_mappings
@@ -743,6 +790,7 @@ end
     collection do
       get :event_detail
       get :show_event
+      get :email
     end
   end
   resources :employee_task_to_dos do
@@ -988,6 +1036,7 @@ end
       get :print_employee_promotion
       get :display_certificate
       get :print_certificate
+      get :modal_promotion
     end
   end
   resources :accident_masters
@@ -1060,6 +1109,7 @@ end
       get :final_approved_list
       get :confirm_resignation
       get :cancel_resignation_list
+      get :modal_resignation_detail
   end
 end
   resources :travel_options do
@@ -1139,6 +1189,7 @@ end
     get :update_asset
     get :import_xl
     post :import
+    get :asset_modal
     end
   end
   resources :asset_types do
@@ -1186,6 +1237,8 @@ end
     get :print_expence_date_report
     get :expence_date_report_list
     get :expence_date_report
+    get :modal_expense_claim_list
+    get :modal_travel_request_process
     end
   end
   resources :travel_requests do
@@ -1301,6 +1354,8 @@ end
     get 'basic_details/employee_list'
     get 'basic_details/select_department'
     post 'basic_details/list_of_employee'
+    get 'basic_details/show_basic_detail'
+    post 'basic_details/show_basic_detail'
 
     get 'salaries/new'
     post 'salaries/date_range_report'
@@ -1438,6 +1493,8 @@ end
       get :admin_level_c_off_detail
       get :admin_approve_modal
       get :modal
+      get :detail_modal
+      get :modal_c_off
     end
   end
 
@@ -1476,6 +1533,10 @@ end
       get :internal
       get :show_internal_modal
       get :employee_contact_library
+      get :modal_contact_library
+      get :modal_c_off
+      get :create_in_time
+      get :create_out_time
     end
   end
 
@@ -1555,10 +1616,14 @@ end
   match 'issue_requests/:id/download_screenshot/:id' => 'issue_requests#download_screenshot', :via => [:get], :as => :download_screenshot
   match 'companies/:id/download_company_logo/:id' => 'companies#download_company_logo', :via => [:get], :as => :download_company_logo
   
-   match 'candidate_forms/:id/document_1/:id' => 'candidate_forms#document_1', :via => [:get], :as => :document_1
-   match 'candidate_forms/:id/document_2/:id' => 'candidate_forms#document_2', :via => [:get], :as => :document_2
+  match 'candidate_forms/:id/document_1/:id' => 'candidate_forms#document_1', :via => [:get], :as => :document_1
+  match 'candidate_forms/:id/document_2/:id' => 'candidate_forms#document_2', :via => [:get], :as => :document_2
 
   match 'visitor_details/:id/download_person_image/:id' => 'visitor_details#download_person_image', :via => [:get], :as => :download_person_image
+
+  match 'employees/:id/download_employee_signature/:id' => 'employees#download_employee_signature', :via => [:get], :as => :download_employee_signature
+  match 'employees/:id/download_employee_profile_picture/:id' => 'employees#download_employee_profile_picture', :via => [:get], :as => :download_employee_profile_picture
+
   # get '/screenshot', to: 'issue_requests#download_screenshot', as: 'download_screenshot'
   # get '/download', to: 'issue_requests#download_screenshot_image', as: 'download_screenshot_image'
 
@@ -1640,6 +1705,8 @@ end
       get :dynamic_report
       post :dynamic_report
       get :modal
+      get :import_monthly_expence
+      post :import
     end
   end
   resources :expencess_types do
@@ -1663,6 +1730,8 @@ end
       get :dynamic_report
       post :dynamic_report
       get :modal
+      get :import_food_deduction
+      post :import_deduction
     end
   end
   resources :reporting_masters do
@@ -2112,6 +2181,7 @@ end
       patch :update_leave_balance
       get :is_confirm_leave
       patch :update_leave_auto
+      get :modal_balance_detail
     end
   end
 
@@ -2139,6 +2209,10 @@ end
       get :status_wise_request
       get :select_form
       get :select_admin_form
+      get :balancewise_report
+      post :show_balancewise_report
+      get :show_balancewise_report
+      get :leave_request_modal
     end
   end
   resources :company_leavs
@@ -2146,6 +2220,7 @@ end
     collection do
       get :is_confirm
       get :show_leave_category
+      get :leave_category_modal
     end
   end
   resources :employee_physicals do
@@ -2159,6 +2234,11 @@ end
       get :search_by_joining_date
       get :import_xl
       post :import
+      get :certificate
+      post :certificate_print
+      get :certificate_print
+      get :joining_certificate
+      get :offer_letter_prin
     end
   end
   resources :employee_grades do
@@ -2171,6 +2251,7 @@ end
       get :add_award_field
       get :import_xl
       post :import
+      get :award_modal
     end
   end
   resources :skillsets  do
@@ -2185,12 +2266,14 @@ end
       post :import
       get :modal_experience
       post :update_experience
+      get :exp_modal
     end
   end
   resources :certifications do
     collection do
       get :import_xl
       post :import
+      get :certificate_modal
     end
   end
   resources :qualifications do
@@ -2199,6 +2282,7 @@ end
       post :import
       get :modal
       post :update_qualification
+      get :qualification_modal
      end
    end
   resources :families do
@@ -2207,6 +2291,8 @@ end
       get :ajax_show_passport_detail_textbox
       get :import_xl
       post :import
+      get :collect_age
+      get :family_modal
     end
   end
   resources :employees do
@@ -2283,6 +2369,7 @@ end
       get :collect_company_location
       get :collect_company_location_dropdown_with_label
       get :collect_department
+      get :collect_sub_department
       get :display_emp_code_master
       post :update_mgr
       get :index_xls

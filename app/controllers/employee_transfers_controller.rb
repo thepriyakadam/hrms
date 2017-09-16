@@ -126,7 +126,6 @@ end
   end
 
   def final_approve_by_admin
-    # byebug
     employee_id = params[:employee_transfer][:employee_id]
     employee_designation_id = params[:employee_transfer][:employee_designation_id]
     employee_category_id = params[:employee_transfer][:employee_category_id]
@@ -245,6 +244,16 @@ end
   #   flash[:notice] = 'Transfer Request Successfully Updated & send to Higher Authority.'  
 
   # end
+
+   def collect_company
+    @employee = Employee.find(params[:id])
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @company_id = @employee.try(:company).try(:name)
+    @company_location_id = @employee.try(:company_location).try(:name)
+    @department_id = @employee.try(:department).try(:name)
+    @designation_id = @joining_detail.try(:employee_designation).try(:name)
+    @category_id = @joining_detail.try(:employee_category).try(:name)
+  end
 
   def print_transfer_employee_name_report
 

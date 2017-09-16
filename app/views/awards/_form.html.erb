@@ -11,7 +11,7 @@
       <div class="row">
         <div class="col-sm-3">
             <div class="form-group required">
-              <%= f.text_field :award_name, label: 'Award Name', class: 'input_award_name' %>
+              <%= f.text_field :award_name, label: 'Award Name',placeholder: 'e.g. Employee Appreciation Day',class: 'input_award_name' %>
             </div>
           </div>
 
@@ -23,9 +23,11 @@
 
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :award_from, label: 'Award From', class: 'input_award_from' %>
+            <%= f.text_field :award_from, label: 'Award From',placeholder: 'e.g. Company' ,class: 'input_award_from' %>
           </div>
         </div>
+        </div>
+
    <!-- < unless params['controller'] == 'awards' and params['action'] == 'edit' %>
       <div class="row">
         <div class="col-sm-2">
@@ -37,6 +39,13 @@
         </div>
       </div><br>
     <end%>-->
+    <div class="row">
+        <div class="col-sm-6">
+          <div class="field">
+            <%= f.text_field :description, label: 'Description' %>
+          </div>
+        </div>
+
       <div class="col-sm-3">
         <div class="actions" style="padding: 20px">
           <%= f.submit :class => class_name, data: { disable_with: data_info } %>
@@ -108,13 +117,13 @@ $("#award").validate({
     },
     messages: {
       "award[award_name]":{
-        required: "Please Specify Award Name"
+        required: "Please specify award name"
       },
       "award[year_id]":{
-        required: "Please Select Year"
+        required: "Please select year"
       },
       "award[award_from]":{
-        required: "Please Specify Award From"
+        required: "Please specify award from"
       }
     },
     errorPlacement: function(error, element) {

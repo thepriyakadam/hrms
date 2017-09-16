@@ -1,3 +1,8 @@
+<div class="box box-default">
+<div class="box-header with-border">
+<h3 class="box-title">Company Policy</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <% i = 0 %>
     <% @company_policies.each do |company_policy| %>
@@ -36,6 +41,8 @@
         </tr>
     <% end %>
   </tbody>
-</table>
+</table><br>
 <%= link_to 'Back', new_company_policy_path,class: 'btn btn-default fa fa-arrow-left' %>
   <div id="myModal" class="modal fade"></div>
+</div>
+</div>

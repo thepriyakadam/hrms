@@ -30,8 +30,16 @@
       </tr>
 
       <tr>
+        <th><strong> Sub Department</strong></th>
+        <td><%= @vacancy_master.try(:sub_department).try(:name) %></td>
+
         <th><strong>Designation</strong></th>
         <td><%= @vacancy_master.employee_designation.name %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Cost Center</strong></th>
+        <td><%= @vacancy_master.try(:cost_center).try(:name) %></td>
 
         <th><strong>Vacancy Name</strong></th>
         <td><%= @vacancy_master.vacancy_name %></td>
@@ -47,16 +55,22 @@
 
       <tr>  
         <th><strong>Primary Skill</strong></th>
-        <td><%= @vacancy_master.keyword %></td> 
+        <td><%= @vacancy_master.keyword %></td>
 
+        <th><strong>Secondary Skill</strong></th>
+        <td><%= @vacancy_master.secondary_skill %></td>
+
+      </tr>
+        
+      <tr>
         <th><strong>Qualification I</strong></th>
-        <td><%= @vacancy_master.degree.try(:name) %></td>
+        <td colspan="3"><%= @vacancy_master.degree.try(:name) %></td>
       </tr>
 
       <tr>
         <th><strong>Qualification II</strong></th>
         <td><%= @vacancy_master.degree_1.try(:name) %></td>
-
+      
         <th><strong>Qualification III</strong></th>
         <td><%= @vacancy_master.degree_2.try(:name) %></td>
       </tr>
@@ -112,9 +126,17 @@
       <tr>
         <th><strong>Recruiter</strong></th>
         <td><%= full_name(@vacancy_master.recruiter) %></td>
-      
+
+        <th><strong>Resource</strong></th>
+        <td><%= @vacancy_master.billable %></td>
+      </tr>
+
+      <tr>      
         <th><strong>Target Date</strong></th>
         <td><%= @vacancy_master.target_date %></td>
+
+        <th><strong>Target Company</strong></th>
+        <td><%= @vacancy_master.target_company.try(:name) %></td>
       </tr>
 
       <tr>

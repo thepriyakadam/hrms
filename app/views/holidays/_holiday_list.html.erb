@@ -5,7 +5,9 @@
       <th>Name</th>
       <th>Description</th>
       <th>Holiday date</th>
+      <th>Type</th>
       <th>Action</th>
+      <th>Department</th>
     </tr>
   </thead>
   <tbody>
@@ -16,17 +18,17 @@
           <td><%= holiday.name %></td>
           <td><%= holiday.description %></td>
           <td><%= holiday.holiday_date %></td>
+          <td><%= holiday.holiday_type %></td>
           <td>
             <!-- < if holiday.is_send == true %>
               <small class="label label-primary">Already Set</small>
             < else %> -->
               <%= link_to '', edit_holiday_path(holiday),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
               <%= link_to '',  holiday, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
-
-              <td><%= select_tag 'department_id[]',options_for_select(all_department_list),{class: "form-control", hide_label: true,include_blank: " Select Department"} %></td>
-            <!-- <end %>  -->
           </td>
-           <td><%= f.submit "+", class: 'btn btn-primary btn-sm fa fa-user-plus' %></td>
+
+              <td><%= select_tag 'department_id[]',options_for_select(all_department_list),{class: "form-control", hide_label: true,include_blank: " Select Department"} %>
+              <%= f.submit "+", class: 'btn btn-primary btn-sm fa fa-user-plus' %></td>
         </tr>
       <% end %>
     <% end %>

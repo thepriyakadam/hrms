@@ -1,40 +1,72 @@
 <div class="box box-default">
 	<div class="box-body">
 		
-	 <table id="example6" class="table table-bordered table-hover table-condensed">
-      <thead>
-      <tr>
-         	<td>ID : <%= @employee_week_offs.first.try(:employee).try(:manual_employee_code) %></td> <td>Employee : <%= full_name(@employee_week_offs.first.try(:employee)) %></td>
-         	<td>Department : <%= @employee_week_offs.first.try(:employee).try(:department).try(:name) %></td>
-        	</tr>
-        <tr>
-          <th>Day</th>
-          <th>Date</th>
-          <th>Action</th>
-        </tr>
-      </thead>
+    <%= bootstrap_form_for :employee_week_off,html: {id: "employee_week_offs"}, url: { action: 'revert_selective_data'} do |f| %>
 
-      <tbody>
-        <% @employee_week_offs.each do |employee_week_off| %>
+  	 <table id="example6" class="table table-bordered table-hover table-condensed">
+        <thead>
           <tr>
-            <td><%= employee_week_off.day %></td>
-            <td><%= employee_week_off.date %></td>
-            <td>
-              <% if employee_week_off.is_confirm == true %>
-                <small class="label label-info">Attendance Confirmed</small>
-              <% else %>
-    						<%= link_to '', edit_week_off_modal_employee_week_offs_path(employee_week_off),class:'btn btn-xs btn-success fa fa-edit',remote: true %>
-                <%= link_to 'Revert', revert_week_off_employee_week_offs_path(employee_week_off),class:'btn-danger btn-xs' %></td>
-              <% end %>
+           	<td>ID : <%= @employee_week_offs.first.try(:employee).try(:manual_employee_code) %></td> 
+            <td>Employee : <%= full_name(@employee_week_offs.first.try(:employee)) %></td>
+           	<td colspan="2">Department : <%= @employee_week_offs.first.try(:employee).try(:department).try(:name) %></td>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+          <tr>
+            <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+            <th>Day</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @employee_week_offs.each do |employee_week_off| %>
+            <tr>
+              <td><%= check_box_tag "employee_week_off_ids[]",employee_week_off.id %></td>
+              <td><%= employee_week_off.day %></td>
+              <td><%= employee_week_off.date %></td>
+              <td>
+                <% if employee_week_off.is_confirm == true %>
+                  <small class="label label-info">Attendance Confirmed</small>
+                <% else %>
+      						<%= link_to '', edit_week_off_modal_employee_week_offs_path(employee_week_off),class:'btn btn-xs btn-success fa fa-edit',remote: true %>
+                  <%= link_to 'Revert', revert_week_off_employee_week_offs_path(employee_week_off),class:'btn-danger btn-xs' %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <br>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Revert" ,class: 'btn btn-primary btn-sm' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
 	</div>
 </div>
 <div id="myModal" class="modal fade"></div>
+
+
 <script type="text/javascript">
-	$(document).ready(function() {
+ $('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;
+      });
+    }
+    else {
+      $(':checkbox').each(function() {
+        this.checked = false;
+      });
+    }
+  });
+
+  $(document).ready(function() {
     $('#example6').DataTable( {
         "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
     } );

@@ -8,6 +8,7 @@ class EmployeeLeavRequestsController < ApplicationController
     @employee = Employee.find(current_user.employee_id)
     @employee_leav_requests = EmployeeLeavRequest.where('employee_id = ?', current_user.try(:employee_id)).order("id DESC")
     @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
+    #@leave_c_offs = LeaveCOff.where(employee_id: current_user.employee_id)
     session[:active_tab] ="EmployeeSelfService"
   end
 
@@ -95,69 +96,74 @@ class EmployeeLeavRequestsController < ApplicationController
     #c_off
     if @leav_category.id == leav_category.id
 
-    end_date = params['employee_leav_request']['start_date']
-      if  start_date.to_date >= payroll_period.from.to_date && start_date.to_date <= payroll_period.to.to_date        
-          @leave_c_off_id = params[:leave_c_off][:c_off_date]
-          @leave_c_off = LeaveCOff.find_by(id: @leave_c_off_id)
-        if start_date.to_date > @leave_c_off.c_off_date.to_date
-            if @leave_c_off.expiry_date < Date.today || @leave_c_off.expiry_date < start_date.to_date
-              flash[:alert] = "C.Off Expire for that day"
-            elsif @employee_leav_request.is_available_coff?
-              flash[:alert] = "Your Leave Request already has been sent"
-            elsif @employee_leav_request.is_salary_processed_coff?
-              flash[:alert] = "Salary Processed for this month"
-            elsif @employee.manager_id.nil?
-              flash[:alert] = 'Reporting manager not set please set Reporting Manager'
-            else
-              @employee_leav_request.first_reporter_id = @employee.manager_id
-              @employee_leav_request.is_pending = true
-              @employee_leav_request.current_status = 'Pending'
-              if @leave_c_off.leave_count == 1.0 || @leave_c_off.leave_count == 0.0
-                @employee_leav_request.leave_count = 1
-                @employee_leav_request.leave_type = "Full Day"
-              else
-                @employee_leav_request.leave_count = 0.5
-                @employee_leav_request.leave_type = "Half Day"
-              end
-                @employee_leav_request.is_cancelled = false
-                @employee_leav_request.is_first_approved = false
-                @employee_leav_request.is_first_rejected = false
-                @employee_leav_request.is_second_approved = false
-                @employee_leav_request.is_second_rejected = false
-                @employee_leav_request.end_date = start_date
-                @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ? AND is_active = ?', @employee.id, @employee_leav_request.leav_category_id,true).take
-                LeaveCOff.find_by(id: @leave_c_off_id).update(taken_date: start_date)
-                @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)
-                @employee_leav_request.save
-                @employee_leav_request.leave_record_create_coff(@employee_leav_request)
-                unless @emp_leave_bal.nil?
-                  if @employee_leav_request.leave_count == 0.5
-                    no_of_leave = @emp_leave_bal.no_of_leave.to_f - @employee_leav_request.leave_count.to_f
-                    @emp_leave_bal.update(no_of_leave: no_of_leave)
+      end_date = params['employee_leav_request']['start_date']
+      @leave_c_off_id = params[:leave_c_off][:c_off_date]
+  #nil fields
+        if end_date == "" || @leave_c_off_id == "" || @leave_c_off_id == nil
+          flash[:alert] = "Please Fill mendatory Fields"
+        else#end_date == nil
+          if  start_date.to_date >= payroll_period.from.to_date && start_date.to_date <= payroll_period.to.to_date        
+              @leave_c_off_id = params[:leave_c_off][:c_off_date]
+              @leave_c_off = LeaveCOff.find_by(id: @leave_c_off_id)
+            if start_date.to_date > @leave_c_off.c_off_date.to_date
+                if @leave_c_off.expiry_date < Date.today || @leave_c_off.expiry_date < start_date.to_date
+                  flash[:alert] = "Compensatory off expired for this day"
+                elsif @employee_leav_request.is_available_coff?
+                  flash[:alert] = "Your Leave Request already has been sent"
+                elsif @employee_leav_request.is_salary_processed_coff?
+                  flash[:alert] = "Salary Processed for this month"
+                elsif @employee.manager_id.nil?
+                  flash[:alert] = 'Reporting manager not set please set Reporting Manager'
+                else
+                  @employee_leav_request.first_reporter_id = @employee.manager_id
+                  @employee_leav_request.is_pending = true
+                  @employee_leav_request.current_status = 'Pending'
+                  if @leave_c_off.leave_count == 1.0 || @leave_c_off.leave_count == 0.0
+                    @employee_leav_request.leave_count = 1
+                    @employee_leav_request.leave_type = "Full Day"
                   else
-                    no_of_leave = @emp_leave_bal.no_of_leave.to_f - @employee_leav_request.leave_count.to_f
-                    @emp_leave_bal.update(no_of_leave: no_of_leave)
+                    @employee_leav_request.leave_count = 0.5
+                    @employee_leav_request.leave_type = "Half Day"
                   end
-#emp_leav_bal_id
-                    @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
+                    @employee_leav_request.is_cancelled = false
+                    @employee_leav_request.is_first_approved = false
+                    @employee_leav_request.is_first_rejected = false
+                    @employee_leav_request.is_second_approved = false
+                    @employee_leav_request.is_second_rejected = false
+                    @employee_leav_request.end_date = start_date
+                    @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ? AND is_active = ?', @employee.id, @employee_leav_request.leav_category_id,true).take
+                    LeaveCOff.find_by(id: @leave_c_off_id).update(taken_date: start_date)
+                    @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)
+                    @employee_leav_request.save
+                    @employee_leav_request.leave_record_create_coff(@employee_leav_request)
+                    unless @emp_leave_bal.nil?
+                      if @employee_leav_request.leave_count == 0.5
+                        no_of_leave = @emp_leave_bal.no_of_leave.to_f - @employee_leav_request.leave_count.to_f
+                        @emp_leave_bal.update(no_of_leave: no_of_leave)
+                      else
+                        no_of_leave = @emp_leave_bal.no_of_leave.to_f - @employee_leav_request.leave_count.to_f
+                        @emp_leave_bal.update(no_of_leave: no_of_leave)
+                      end
+    #emp_leav_bal_id
+                        @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
+                    end
+                    flash[:notice] = "Created successfully!"
+                      LeaveRequestMailer.pending(@employee_leav_request).deliver_now        
                 end
-                flash[:notice] = "Created successfully!"
-                  #LeaveRequestMailer.pending(@employee_leav_request).deliver_now        
+
+              else
+                flash[:alert] = "C.Off Not Available For #{start_date}"
+              end#c_off_date
+            else
+              flash[:alert] = "Please Select Date Within Payroll Period"
             end
-
-          else
-            flash[:alert] = "C.Off Not Available For #{start_date}"
-          end#c_off_date
-        else
-          flash[:alert] = "Please Select Date Within Payroll Period"
-        end
-        if current_user.employee_id == @employee_leav_request.employee_id
-          redirect_to employee_leav_requests_path
-        else
-          redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-        end
+          end#end_date == nil
+            if current_user.employee_id == @employee_leav_request.employee_id
+              redirect_to employee_leav_requests_path
+            else
+              redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+            end
     else#c_off
-
 
         @emp_leav_req = EmployeeLeavRequest.where(employee_id: @employee.id, start_date: start_date,end_date: end_date)
           if params[:flag] == "Full/Half"
@@ -175,231 +181,317 @@ class EmployeeLeavRequestsController < ApplicationController
         flash[:alert] = "Payroll Period Not set!"
         redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
       else
-        if  start_date.to_date >= payroll_period.from.to_date && end_date.to_date <= payroll_period.to.to_date
-        # if start_date == payroll_period.from.to_date..payroll_period.to.to_date && end_date == payroll_period.from.to_date..payroll_period.to.to_date
+  #nil fields
+        if start_date == "" || end_date == ""
+          flash[:alert] = "Please fill all mandatory fields "
+        redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+        else
+            if  start_date.to_date >= payroll_period.from.to_date && end_date.to_date <= payroll_period.to.to_date
+            # if start_date == payroll_period.from.to_date..payroll_period.to.to_date && end_date == payroll_period.from.to_date..payroll_period.to.to_date
 
-          if @employee_leav_request.end_date == nil 
-            flash[:alert] = "please Fill all mendatory fields"
-            redirect_to new_employee_leav_request_path
-          elsif @employee_leav_request.is_available?
-            flash[:alert] = "Your Leave Request already has been sent status is Pending"
-            redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-          elsif @employee_leav_request.is_first_approved?
-            flash[:alert] = "Your Leave Request already has been sent status is First Approved"
-            redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-          elsif @employee_leav_request.is_final_approved?
-            flash[:alert] = "Request already has Approved"
-            redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-          elsif @employee_leav_request.is_salary_processed?
-            flash[:alert] = "Attendance Confirm Please Contact to Admin"
-            redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-          elsif @employee_leav_request.is_continue?
-            flash[:alert] = "Leave Can't take continueously"
-            redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-          elsif @employee.manager_id.nil?
-            flash[:alert] = 'Reporting manager not set please set Reporting Manager'
-            redirect_to root_url
-          # elsif @employee_leav_request.is_out_of_limit(@employee_leav_request)
-          #   flash[:alert] = "Leave "
-          #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-          else
-            @employee_leav_request.first_reporter_id = @employee.manager_id
-            @employee_leav_request.is_pending = true
-            @employee_leav_request.current_status = 'Pending'
-            if @employee_leav_request.leave_type == 'Full Day'
-              @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 1
-            elsif @employee_leav_request.leave_type == 'Full/Half'
-              if @employee_leav_request.first_half == true && @employee_leav_request.last_half == true
-                @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f
-              elsif @employee_leav_request.first_half == true
-                @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 0.5
-              elsif @employee_leav_request.last_half == true
-                @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 0.5
+              if @employee_leav_request.end_date == nil 
+                flash[:alert] = "please Fill all mendatory fields"
+                redirect_to new_employee_leav_request_path
+              elsif @employee_leav_request.is_available?
+                flash[:alert] = "Your Leave Request already has been sent status is Pending"
+                redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+              elsif @employee_leav_request.is_first_approved?
+                flash[:alert] = "Your Leave Request already has been sent status is First Approved"
+                redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+              elsif @employee_leav_request.is_final_approved?
+                flash[:alert] = "Request already has Approved"
+                redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+              elsif @employee_leav_request.is_salary_processed?
+                flash[:alert] = "Attendance Confirm Please Contact to Admin"
+                redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+              elsif @employee_leav_request.is_continue?
+                flash[:alert] = "Leave Can't take continueously"
+                redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+              elsif @employee.manager_id.nil?
+                flash[:alert] = 'Reporting manager not set please set Reporting Manager'
+                redirect_to root_url
+              # elsif @employee_leav_request.is_out_of_limit(@employee_leav_request)
+              #   flash[:alert] = "Leave "
+              #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
               else
-                @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 0.5
-              end
-            else
-              @employee_leav_request.leave_count = 0.5
-            end
-              @employee_leav_request.is_cancelled = false
-              @employee_leav_request.is_first_approved = false
-              @employee_leav_request.is_first_rejected = false
-              @employee_leav_request.is_second_approved = false
-              @employee_leav_request.is_second_rejected = false
-
-              @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ? AND is_active = ?', @employee.id, @employee_leav_request.leav_category_id,true).take
-              type = LeavCategory.find(@employee_leav_request.leav_category_id).is_payble 
-      #leave_limit
-              @leav_category = LeavCategory.find_by(id: @employee_leav_request.leav_category_id)
-              monthly_count = @employee_leav_request.leave_monthly_limit(@employee_leav_request)
-              
-                if @leav_category.monthly_leave != nil && monthly_count > @leav_category.monthly_leave.to_f 
-                  flash[:alert] = "Leave Monthly Limit Extended !"
-                  redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-                elsif type == false
-                  @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)
-                    @employee_leav_request.save
-          
-                #leave_record
-                      @employee_leav_request.leave_record_create(@employee_leav_request)
-                    
-                    if @employee.manager.email.nil? or @employee.manager.email == ""
-                      flash[:notice] = "Send request without email."
-                    else
-                      flash[:notice] = 'Leave Request sent successfully.'
-                      LeaveRequestMailer.pending(@employee_leav_request).deliver_now
-                    end
-                    redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-
-                elsif @leav_category.is_limit == true && @employee_leav_request.is_out_of_limit(@employee_leav_request)
-                  flash[:alert] = "Leave Range for #{@leav_category.code} is #{@leav_category.from} - #{@leav_category.to}" 
-                  redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+                @employee_leav_request.first_reporter_id = @employee.manager_id
+                @employee_leav_request.is_pending = true
+                @employee_leav_request.current_status = 'Pending'
+                if @employee_leav_request.leave_type == 'Full Day'
+                  @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 1
+                elsif @employee_leav_request.leave_type == 'Full/Half'
+                  if @employee_leav_request.first_half == true && @employee_leav_request.last_half == true
+                    @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f
+                  elsif @employee_leav_request.first_half == true
+                    @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 0.5
+                  elsif @employee_leav_request.last_half == true
+                    @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 0.5
+                  else
+                    @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 0.5
+                  end
+                elsif @employee_leav_request.leave_type == 'Half Day'
+                  @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 0.5
+                elsif @employee_leav_request.leave_type == ''
+                  
+                  @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 1
                 else
-                  @leave_category = LeavCategory.where(id: @employee_leav_request.leav_category_id,is_active: true).take
-                  if @leave_category.is_balance == true
-                      if @emp_leave_bal.nil?
-                          @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
-                          flash.now[:alert] = 'Leave balance not set- contact to admin.'
-                          render :new
-                      elsif @employee_leav_request.leave_count.to_f > @emp_leave_bal.try(:no_of_leave).to_f
-                        @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
-                        flash.now[:alert] = 'Not Allowed. You exceed the leave limit.'
-                        render :new
-                      elsif @employee_leav_request.try(:start_date).try(:to_date) < @emp_leave_bal.try(:from_date).try(:to_date)
-                        @emp_leave_bal1 =  EmployeeLeavBalance.where(employee_id: @employee.id,leav_category_id: @employee_leav_request.leav_category_id,is_active: false).last
-                        if @employee_leav_request.leave_count.to_f > @emp_leave_bal1.try(:no_of_leave).to_f
-                          flash[:alert] = 'You Have No Balance For This Date'
-                        else
-                          @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
-                          @employee_leav_request.save
-                      #emp_leav_bal_id
-                          @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
-                          @employee_leav_request.leave_record_create(@employee_leav_request)
-                          @employee_leav_request.minus_leave(@employee_leav_request)
-                          if @employee.manager.email.nil? || @employee.manager.email == ''
-                            flash[:notice] = 'Send request without email.'
-                          else
-                            flash[:notice] = 'Leave Request sent successfully..'
-                            LeaveRequestMailer.pending(@employee_leav_request).deliver_now
-                          end
-                        end
-                          redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-                      elsif @leav_category.from.nil? or @leav_category.to.nil?
-                        @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
-                        if @employee_leav_request.save
-                    #emp_leav_bal_id
-                          @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
-                        #leave_record
-                          @employee_leav_request.leave_record_create(@employee_leav_request)
-                          @employee_leav_request.minus_leave(@employee_leav_request)
-                          if @employee.manager.email.nil? || @employee.manager.email == ''
-                            flash[:notice] = 'Send request without email.'
-                          else
-                            flash[:notice] = 'Leave Request sent successfully..'
-                            LeaveRequestMailer.pending(@employee_leav_request).deliver_now
-                          end
-                          redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-                        else
-                          render :new
-                        end
-          # #from-to limit
-          #           elsif
-          #               @employee_leav_request.leave_count < @leav_category.from or @employee_leav_request.leave_count > @leav_category.to 
-          #               @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
-          #               flash.now[:alert] = "Leave Range for #{@leav_category.code} is #{@leav_category.from} - #{@leav_category.to} "
-          #               render :new
+                  @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 1
+                end
+                  @employee_leav_request.is_cancelled = false
+                  @employee_leav_request.is_first_approved = false
+                  @employee_leav_request.is_first_rejected = false
+                  @employee_leav_request.is_second_approved = false
+                  @employee_leav_request.is_second_rejected = false
 
-                        #@leave_coff = LeaveCOff.where(employee_id: @employee.id)
-                    elsif type == 'C.Off'
-                        @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
-                        if @employee_leav_request.save
-                      #emp_leav_bal_id
-                          @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
-                        #leave_record
+                  @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ? AND is_active = ?', @employee.id, @employee_leav_request.leav_category_id,true).take
+                  type = LeavCategory.find(@employee_leav_request.leav_category_id).is_payble 
+          #leave_limit
+                  @leav_category = LeavCategory.find_by(id: @employee_leav_request.leav_category_id)
+                  monthly_count = @employee_leav_request.leave_monthly_limit(@employee_leav_request)
+                  
+                    if @leav_category.monthly_leave != nil && monthly_count > @leav_category.monthly_leave.to_f 
+                      flash[:alert] = "Leave Monthly Limit Extended !"
+                      redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+                    elsif type == false
+
+                     
+                      @employee_leav_request.save
+                      @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)
+                        @employee_leav_request.save
+              
+                    #leave_record
                           @employee_leav_request.leave_record_create(@employee_leav_request)
-                          #@employee_leav_request.manage_coff(@employee_leav_request)
-                          @employee_leav_request.minus_leave(@employee_leav_request)
-                          if @employee.manager.email.nil? || @employee.manager.email == ''
-                            flash[:notice] = 'Send request without email.'
-                          else
-                            flash[:notice] = 'Leave Request sent successfully !!'
-                            #LeaveRequestMailer.pending(@employee_leav_request).deliver_now
-                          end
-                          redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-                        else
-                          render :new
-                        end
-                    else
-                        @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
-                        if @employee_leav_request.save
-                      #emp_leav_bal_id
-                          @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
-              #leave_record
-                      @employee_leav_request.leave_record_create(@employee_leav_request)
-                          @employee_leav_request.minus_leave(@employee_leav_request)
-                          if @employee.manager.email.nil? || @employee.manager.email == ''
-                            flash[:notice] = 'Send request without email.'
-                          else
-                            flash[:notice] = 'Leave Request sent successfully !'
-                            LeaveRequestMailer.pending(@employee_leav_request).deliver_now
-                          end
-                          redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-                        else
-                          render :new
-                        end
-                    end#balance.nil?
 
-                else #is_balance == true
-                      @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
-                      if @employee_leav_request.save
-                     #emp_leav_bal_id
-                          #@employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
+                          @employee_leav_request.create_attendance_leave
+                          @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
+                              total = 0
+                              @leave_record.each do |l|
+                                total = total + l.count
+                              end
+                              total
+                              @employee_leav_request.update(leave_count: total)
 
-            #leave_record
-                    @employee_leav_request.leave_record_create(@employee_leav_request)
-                        @employee_leav_request.minus_leave(@employee_leav_request)
-                        if @employee.manager.email.nil? || @employee.manager.email == ''
-                          flash[:notice] = 'Send request without email.'
+
+                              @employee_leav_request.minus_leave(@employee_leav_request)
+                        
+                        if @employee.manager.email.nil? or @employee.manager.email == ""
+                          flash[:notice] = "Send request without email."
                         else
-                          flash[:notice] = 'Leave Request sent successfully !'
+                          flash[:notice] = 'Leave Request sent successfully.'
                           LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                         end
                         redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-                      else
-                        render :new
-                      end
-                end #@leave_category.is_balance == true
-            end #monthly_count > @leav_category.monthly_leave.to_f
-          end #@employee_leav_request.end_date == nil 
 
-            if @employee_leav_request.id != nil
-              if @employee_leav_request.leave_type == 'Full/Half'
-                if @employee_leav_request.first_half == false && @employee_leav_request.last_half == false
-                  @employee_leav_request.update(first_half: false,last_half: true)
-                end
-              end
+                    elsif @leav_category.is_limit == true && @employee_leav_request.is_out_of_limit(@employee_leav_request)
+                      flash[:alert] = "Leave Range for #{@leav_category.code} is #{@leav_category.from} - #{@leav_category.to}" 
+                      redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+                    else
+                      @leave_category = LeavCategory.where(id: @employee_leav_request.leav_category_id,is_active: true).take
+                      if @leave_category.is_balance == true
+                          if @emp_leave_bal.nil?
+                              @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
+                              flash.now[:alert] = 'Leave balance not set- contact to admin.'
+                              render :new
+                          elsif @employee_leav_request.leave_count.to_f > @emp_leave_bal.try(:no_of_leave).to_f
+                            @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
+                            flash.now[:alert] = 'Not Allowed. You exceed the leave limit.'
+                            render :new
+                          elsif @employee_leav_request.try(:start_date).try(:to_date) < @emp_leave_bal.try(:from_date).try(:to_date)
+                            @emp_leave_bal1 =  EmployeeLeavBalance.where(employee_id: @employee.id,leav_category_id: @employee_leav_request.leav_category_id,is_active: false).last
+                            if @employee_leav_request.leave_count.to_f > @emp_leave_bal1.try(:no_of_leave).to_f
+                              flash[:alert] = 'You Have No Balance For This Date'
+                            else
+                              @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
+                              @employee_leav_request.save
+                          #emp_leav_bal_id
+                              @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
+                              @employee_leav_request.leave_record_create(@employee_leav_request)
+                          @employee_leav_request.create_attendance_leave
 
-              if @employee_leav_request.leave_type == 'Half Day'
-                if @employee_leav_request.first_half == true && @employee_leav_request.last_half == true
-                  @employee_leav_request.update(first_half: true,last_half: false)
-                elsif @employee_leav_request.first_half == false && @employee_leav_request.last_half == false
-                  @employee_leav_request.update(first_half: true,last_half: false)
-                else @employee_leav_request.first_half == true || @employee_leav_request.last_half == true
-                  @employee_leav_request.save
+                              # @leave_record = LeaveRecord.last
+                              @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
+                              total = 0
+                              @leave_record.each do |l|
+                                total = total + l.count
+                              end
+                              total
+                              @employee_leav_request.update(leave_count: total)
+
+
+
+                              @employee_leav_request.minus_leave(@employee_leav_request)
+                              if @employee.manager.email.nil? || @employee.manager.email == ''
+                                flash[:notice] = 'Send request without email.'
+                              else
+                                flash[:notice] = 'Leave Request sent successfully..'
+                                LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                              end
+                            end
+                              redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+                          elsif @leav_category.from.nil? or @leav_category.to.nil?
+                            @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
+                            if @employee_leav_request.save
+                        #emp_leav_bal_id
+                              @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
+                            #leave_record
+                              @employee_leav_request.leave_record_create(@employee_leav_request)
+                          @employee_leav_request.create_attendance_leave
+
+                              # @leave_record = LeaveRecord.last
+                              @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
+                              total = 0
+                              @leave_record.each do |l|
+                                total = total + l.count
+                              end
+                              total
+                              @employee_leav_request.update(leave_count: total)
+
+
+                              @employee_leav_request.minus_leave(@employee_leav_request)
+                              if @employee.manager.email.nil? || @employee.manager.email == ''
+                                flash[:notice] = 'Send request without email.'
+                              else
+                                flash[:notice] = 'Leave Request sent successfully..'
+                                LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                              end
+                              redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+                            else
+                              render :new
+                            end
+              # #from-to limit
+              #           elsif
+              #               @employee_leav_request.leave_count < @leav_category.from or @employee_leav_request.leave_count > @leav_category.to 
+              #               @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
+              #               flash.now[:alert] = "Leave Range for #{@leav_category.code} is #{@leav_category.from} - #{@leav_category.to} "
+              #               render :new
+
+                            #@leave_coff = LeaveCOff.where(employee_id: @employee.id)
+                        elsif type == 'C.Off'
+                            @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
+                            if @employee_leav_request.save
+                          #emp_leav_bal_id
+                              @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
+                            #leave_record
+                              @employee_leav_request.leave_record_create(@employee_leav_request)
+                          @employee_leav_request.create_attendance_leave
+
+                              # @leave_record = LeaveRecord.last
+                              @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
+                              total = 0
+                              @leave_record.each do |l|
+                                total = total + l.count
+                              end
+                              total
+                              @employee_leav_request.update(leave_count: total)
+
+
+                              #@employee_leav_request.manage_coff(@employee_leav_request)
+                              @employee_leav_request.minus_leave(@employee_leav_request)
+                              if @employee.manager.email.nil? || @employee.manager.email == ''
+                                flash[:notice] = 'Send request without email.'
+                              else
+                                flash[:notice] = 'Leave Request sent successfully !!'
+                                LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                              end
+                              redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+                            else
+                              render :new
+                            end
+                        else
+                            @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
+                            if @employee_leav_request.save
+                          #emp_leav_bal_id
+                              @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
+                  #leave_record
+                          @employee_leav_request.leave_record_create(@employee_leav_request)
+                          @employee_leav_request.create_attendance_leave
+
+                          # @leave_record = LeaveRecord.last
+                          @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
+                              total = 0
+                              @leave_record.each do |l|
+                                total = total + l.count
+                              end
+                              total
+                              @employee_leav_request.update(leave_count: total)
+
+
+                              @employee_leav_request.minus_leave(@employee_leav_request)
+                              if @employee.manager.email.nil? || @employee.manager.email == ''
+                                flash[:notice] = 'Send request without email.'
+                              else
+                                flash[:notice] = 'Leave Request sent successfully !'
+                                LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                              end
+                              redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+                            else
+                              render :new
+                            end
+                        end#balance.nil?
+
+                    else #is_balance == true
+                          @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
+                          if @employee_leav_request.save
+                         #emp_leav_bal_id
+                              #@employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
+
+                #leave_record
+                        @employee_leav_request.leave_record_create(@employee_leav_request)
+                          @employee_leav_request.create_attendance_leave
+
+                          # @leave_record = LeaveRecord.last
+                          @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
+                              total = 0
+                              @leave_record.each do |l|
+                                total = total + l.count
+                              end
+                              total
+                              @employee_leav_request.update(leave_count: total)
+
+                            @employee_leav_request.minus_leave(@employee_leav_request)
+                            if @employee.manager.email.nil? || @employee.manager.email == ''
+                              flash[:notice] = 'Send request without email.'
+                            else
+                              flash[:notice] = 'Leave Request sent successfully !'
+                              LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                            end
+                            redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+                          else
+                            render :new
+                          end
+                    end #@leave_category.is_balance == true
+                end #monthly_count > @leav_category.monthly_leave.to_f
+              end #@employee_leav_request.end_date == nil 
+
+                if @employee_leav_request.id != nil
+                  if @employee_leav_request.leave_type == 'Full/Half'
+                    if @employee_leav_request.first_half == false && @employee_leav_request.last_half == false
+                      @employee_leav_request.update(first_half: false,last_half: true)
+                    end
+                  end
+
+                  if @employee_leav_request.leave_type == 'Half Day'
+                    if @employee_leav_request.first_half == true && @employee_leav_request.last_half == true
+                      @employee_leav_request.update(first_half: true,last_half: false)
+                    elsif @employee_leav_request.first_half == false && @employee_leav_request.last_half == false
+                      @employee_leav_request.update(first_half: true,last_half: false)
+                    else @employee_leav_request.first_half == true || @employee_leav_request.last_half == true
+                      @employee_leav_request.save
+                    end
+                  end
+                else
                 end
-              end
-            else
+            else #start_date == payroll_period.from.to_date
+               if current_user.employee_id == @employee_leav_request.employee_id
+                flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+                redirect_to employee_leav_requests_path
+              else
+                flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+                redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+                #redirect_to employee_list_on_duty_requests_path
+              end  
             end
-        else #start_date == payroll_period.from.to_date
-           if current_user.employee_id == @employee_leav_request.employee_id
-            flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
-            redirect_to employee_leav_requests_path
-          else
-            flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
-            redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-            #redirect_to employee_list_on_duty_requests_path
-          end  
-        end
+          end#start_date == nil
       end#if payroll_period.nil?
     end#c_off
   end
@@ -779,6 +871,31 @@ class EmployeeLeavRequestsController < ApplicationController
         #margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
+  end
+
+  def balancewise_report
+  end
+
+  def show_balancewise_report
+    @employee_id = params[:employee][:employee_id]
+    @employee = Employee.find_by(id: @employee_id)
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_leav_requests/balancewise_report.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'status_wise_request',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_leav_requests/balancewise_report.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
+
+  def leave_request_modal
+    @employee_leav_request = EmployeeLeavRequest.find(params[:format])
   end
 
   private

@@ -1,0 +1,47 @@
+ <!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>
+      <table>
+        <tr>
+          <td colspan="4"><center><font color='#0077b3'>Bank Detail </font></center></td>
+        </tr>
+
+        <tr>
+          <td><strong>Employee</strong></td>
+          <td colspan="3"><%= @employee_bank_detail.employee.try(:prefix) %> <%= @employee_bank_detail.employee.try(:first_name) %> <%= @employee_bank_detail.employee.try(:last_name) %></td>
+        </tr>
+        <tr>
+          <td><strong>Account No.</strong></td>
+          <td><%= @employee_bank_detail.account_no %></td>
+          <td><strong>Bank Name</strong></td>
+          <td><%= @employee_bank_detail.bank.try(:name) %></td>
+        </tr>
+
+        <tr>
+          <td><strong>Branch Name</strong></td>
+          <td><%= @employee_bank_detail.branch_name %></td>
+          <td><strong>IFSC Code</strong></td>
+          <td><%= @employee_bank_detail.ifsc_code %></td>
+        </tr>
+
+        <tr>
+          <td><strong>MICR Code</strong></td>
+          <td><%= @employee_bank_detail.micr_code %></td>
+          <td><strong>Branch Code</strong></td>
+          <td><%= @employee_bank_detail.branch_code %></td>
+        </tr>
+
+        <tr>
+         <td><strong>Address</strong></td>
+          <td><%= @employee_bank_detail.address %></td>
+          <td><strong>Contact No.</strong></td>
+          <td><%= @employee_bank_detail.contact_no %></td>
+        <tr>
+      </table>
+    </p>
+  </body>
+</html>

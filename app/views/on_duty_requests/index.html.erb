@@ -1,5 +1,6 @@
 <div class="box">
   <div class="box-header">
+   <h3 class="box-title">On Duty</h3>
     <div class="pull-right">
       <%= link_to "New OD Request", new_on_duty_request_path, class: 'btn btn-sm btn-primary' %> 
     </div>
@@ -66,7 +67,7 @@
                   <%end%>
               </td>
               <td>
-                <%= link_to '', on_duty_request, class: 'btn btn-default btn-xs fa fa-eye' %>
+                <%= link_to '', request_modal_on_duty_requests_path(on_duty_request), class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
                 <% if on_duty_request.current_status == "Pending" %>
                   <%= link_to '', cancel_od_status_record_path(on_duty_request), data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-trash' %>
                 <% elsif on_duty_request.current_status == "FinalApproved" %>
@@ -82,6 +83,8 @@
     </div>
   </div>
 </div>
+<div id="request_modal" class="modal fade"></div>
+
 <script type="text/javascript">
   $(document).ready(function() {
     $('#example').DataTable( {

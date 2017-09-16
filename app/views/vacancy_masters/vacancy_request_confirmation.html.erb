@@ -99,38 +99,56 @@
 <tr>
   <th><strong>Department</strong></th>
   <td><%= @vacancy_master.try(:department).try(:name) %></td>
+  
+  <th><strong>Sub Department</strong></th>
+  <td><%= @vacancy_master.try(:sub_department).try(:name) %></td>
+</tr>
+
+  <tr>
+  <th><strong>Cost Center</strong></th>
+  <td><%= @vacancy_master.try(:cost_center).try(:name) %></td>
+
   <th><strong>No. of Positions</strong></th>
   <td><%= @vacancy_master.no_of_position %></td> 
 </tr>
 
 <tr>  
-   <th><strong>Primary Skill</strong></th>
+  <th><strong>Primary Skill</strong></th>
   <td><%= @vacancy_master.keyword %></td> 
+
+  <th><strong>Secondary Skill</strong></th>
+  <td><%= @vacancy_master.secondary_skill %></td> 
+</tr>
+
+
+  <tr>
   <th><strong>Minimum Experience</strong></th>
   <td><%= @vacancy_master.experience %></td>
   
-</tr>
-<tr>
-
-<tr>
  <th><strong>Maximum Experience</strong></th>
   <td><%= @vacancy_master.experince_max %></td>
+  </tr>
+
+  <tr>
   <th><strong>Minimum Budget</strong></th>
   <td><%= @vacancy_master.budget %></td>
-</tr>
 
-<tr>
    <th><strong>Maximum Budget</strong></th>
   <td><%= @vacancy_master.budget_max %></td>
-   <th><strong>Fulfillment Date</strong></th>
-  <td><%= @vacancy_master.vacancy_post_date %></td>
-</tr>
+  </tr>
 
-<tr>
+   
+   <tr>
+  <th><strong>Fulfillment Date</strong></th>
+  <td><%= @vacancy_master.vacancy_post_date %></td>
+
   <th><strong>Reason for requirement </strong></th>
   <td><%= @vacancy_master.reason %></td>
+  </tr>
+
+   <tr>
    <th><strong>Replacement</strong></th>
-  <td><%= @vacancy_master.replacement_id %></td>
+  <td colspan="3"><%= @vacancy_master.replacement_id %></td>
 </tr>
 
 <tr>  
@@ -165,8 +183,16 @@
   <th><strong>Recruiter</strong></th>
   <td><%= full_name(@vacancy_master.recruiter.try(:employee)) %></td>
 
+    <th><strong>Resource</strong></th>
+  <td><%= @vacancy_master.billable %></td>
+</tr>
+
+<tr>  
   <th><strong>Target Date</strong></th>
   <td><%= @vacancy_master.target_date %></td>
+
+    <th><strong>Target Company</strong></th>
+  <td><%= @vacancy_master.target_company.try(:name) %></td>
 </tr>
 
 <tr>

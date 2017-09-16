@@ -1,0 +1,64 @@
+ <%= bootstrap_form_for(@sub_department,html: {id: 'sub_department'},remote:true) do |f| %>
+      <div class="row">
+       <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.select :department_id,all_department_type_list1,{label:'Department',include_blank: 'Select Department' ,placeholder: 'Select Department'} %>
+            </div>
+        </div> 
+        <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :code,label:'Code', placeholder: 'Code' %>
+            </div>
+        </div> 
+           <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :name,label:'Name', placeholder: 'Name' %>
+              </div>
+              </div>
+           
+            <div class="col-sm-3">
+            <label>Status</label>
+            <div class="field">
+            <%= f.check_box :status , label:'Active'%>
+          </div>
+          </div>
+          </div>
+           <div class="row">
+          <div class="col-sm-3">
+            <div class="actions">
+              <%= f.submit 'Create Sub Departments',:class => class_name, data: { disable_with: data_info } %>
+            </div>
+          </div>
+        </div>
+<% end %>
+
+<script>
+$("#sub_department").validate({
+    rules: {
+      "sub_department[code]":{
+        required: true,
+      },
+      "sub_department[name]":{
+        required: true,
+      },
+      "sub_department[department_id]":{
+        required: true,
+      }
+       },
+    messages: {
+      "sub_department[code]":{
+        required: "Please Specify Code",
+      },
+       "sub_department[name]":{
+        required: "Please Specify name",
+      },
+      "sub_department[department_id]":{
+        required: "Please Select department",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

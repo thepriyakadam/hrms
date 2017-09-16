@@ -4,7 +4,7 @@
      <%= bootstrap_form_for :trainee,url:{action:"update_feedback",id: @trainee.id},html: {id: 'trainee'} do |f| %>
         <div class="row">
           <div class="col-sm-6">
-            <%= f.text_area :feedback,label: 'Feedback',placeholder: "Please Enter your Training Feedback...." %>
+            <%= f.text_area :feedback,label: 'Feedback',placeholder: "Please enter your training feedback...." %>
           </div>
           <div class="col-sm-3" style="padding-top:40px;">
             <%= f.submit "Create Feedback", class: 'btn btn-primary fa fa-modx' %>

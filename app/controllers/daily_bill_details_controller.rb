@@ -24,10 +24,11 @@ class DailyBillDetailsController < ApplicationController
 
   # GET /daily_bill_details/new
   def new
+    # byebug
     @daily_bill_detail = DailyBillDetail.new
     
     @travel_request = TravelRequest.find(params[:travel_request_id])
-    @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
+    @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id).order("expence_date ASC")
 
     @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
 
@@ -480,6 +481,17 @@ elsif current_user.role.name == 'Branch'
               :show_as_html => params[:debug].present?
           end
         end
+  end
+
+  def modal_expense_claim_list
+    @daily_bill_detail = DailyBillDetail.find(params[:format])
+  end
+
+  def modal_travel_request_process
+    # byebug
+    @travel_request = TravelRequest.find(params[:format])
+    # @travel_requests = TravelRequest.find(@daily_bill_detail.travel_request_id)
+    @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
   end
 
   private

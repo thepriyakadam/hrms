@@ -61,6 +61,52 @@ class EmployeeGpsController < ApplicationController
     end
   end
 
+  def employee_wise_gps
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="GpsSetup"
+  end
+
+  def show_set_gps_employeewise
+    @employee_id = params[:employee_gp][:employee_id]
+    @from = params[:employee_gp][:from]
+    @to = params[:employee_gp][:to]
+  end
+
+ def set_employeewise_gps
+    @employee_gp = EmployeeGp.new(employee_gp_params)
+    @emp = params[:employee_gp][:employee_id]
+    @from = params[:employee_gp][:from]
+    @to = params[:employee_gp][:to]
+
+    @latitude = params[:employee_gp][:latitude]
+    @longitude = params[:employee_gp][:longitude]
+    @location = params[:employee_gp][:location]
+
+    if @employee_gp.is_present(@emp,@from,@to)
+      flash[:alert] = "Already Exist !"
+    else
+      Member.where(employee_id: @emp).update_all(latitude: @latitude,longitude: @longitude,location: @location,is_gps: true)
+   
+      @employee_gp = EmployeeGp.create(employee_id: @emp,latitude: @latitude,longitude: @longitude,location: @location,from_date: @from.to_date,to_date: @to.to_date)
+        for i in @from.to_date..@to.to_date
+          GpsDaily.create(employee_id: @emp,employee_gp_id: @employee_gp.id,latitude: @latitude,longitude: @longitude,location: @location,date: i)
+        end
+      flash[:notice] = "GPS Setting Saved Successfully"
+    end#is_present
+    redirect_to employee_wise_gps_employee_gps_path
+  end
+
+  def employeewise_daily_gps
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="GpsSetup"
+  end
+
+  def show_employeewise_daily_gps
+    @employee_id = params[:employee_gp][:employee_id]
+    @employee = Employee.find_by(id: @employee_id)
+    @gps_daily = GpsDaily.where(employee_id: @employee_id)
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_gp

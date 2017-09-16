@@ -6,21 +6,36 @@
     <div class="box-body">
     	<div class="row">
         <div class="col-sm-3">
-          <div class="field">
-            <%= select :salary,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
-           </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="field">
-            <%= select :salary,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"},{class: 'form-control'} %>
+          <label>From </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :salary,:from,hide_label: true,class: 'request_date form-control'%>
+            </div>
           </div>
         </div>
+
         <div class="col-sm-3">
+          <label>To </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :salary,:to,hide_label: true,class: 'request_date form-control'%>
+            </div>
+          </div>
+        </div>
+           
+        <div class="col-sm-3">
+        <label>Employee</label>
           <div class="field">
              <%= select :salary,:employee_id, all_employee_list,{include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
           </div>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-3" style="padding-top: 20px;">
           <div class="actions">
             <%= f.submit "Employees For Revert Attendance" ,class: 'btn btn-primary btn-sm',id: "buttonCtc" %>
           </div>
@@ -38,4 +53,43 @@
     $("#employee_attendance").submit();
     $('.ajax-progress').hide();
   })
+  
+  $(function(){
+    $('.request_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+
+<script>
+$("#salary").validate({
+    rules: {
+      "salary[from]":{
+        required: true,
+      },
+      "salary[to]":{
+        required: true,
+      },
+      "salary[employee_id]":{
+        required: true,
+      }
+       },
+    messages: {
+      "salary[from]":{
+        required: "Please Specify From",
+      },
+       "salary[to]":{
+        required: "Please Select To",
+      },
+       "salary[employee_id]":{
+        required: "Please Select Employee",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
 </script>

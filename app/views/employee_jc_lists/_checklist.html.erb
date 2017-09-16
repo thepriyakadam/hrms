@@ -1,8 +1,16 @@
 <div class="box box-default">
   <div class="box-header with-border">
   <div class="row">
-  <div class="col-sm-1">
-      <%= image_tag @employee.passport_photo.try(:url), :size => "70x70" %>
+    <div class="col-sm-1">
+  <% if @employee_jc_lists.first.employee.passport_photo_file_name == nil %>
+  <% if @employee_jc_lists.first.employee.gender == "Female" %>
+   <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%else%>
+   <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%end%>
+ <%else%>
+      <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+      <%end%>
   </div>
     <div class="col-sm-6">
      <font color='#0077b3'>

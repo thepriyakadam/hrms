@@ -25,26 +25,26 @@
     <div id="entry1" class="clonedInput ">
       <div class="row">
         <div class="col-sm-3">
-          <div class="form group-required">
-            <%= f.select :degree_type_id, all_degree_type, {include_blank: "Select Qualification Level",label:"Qualification Level"}, class: 'input_degree_type_id' %>
+          <div class="form-group required">
+            <%= f.select :degree_type_id, all_degree_type, {include_blank: "Select Qualification",label:"Qualification"}, class: 'input_degree_type_id' %>
           </div>
         </div>
 
         <div class="col-sm-3">
-          <div class="form group-required">
-            <%= f.select :degree_id, all_degree, {include_blank: "Select Qualification",label:"Qualification"}, class: 'input_degree_id' %>
+          <div class="form-group required">
+            <%= f.select :degree_id, all_degree, {include_blank: "Select Degree",label:"Degree"}, class: 'input_degree_id' %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :degree_stream_id, all_degree_stream, {include_blank: " Select Qualification Specialization",label:"Qualification Specialization"}, class: 'input_degree_stream_id' %>
+            <%= f.select :degree_stream_id, all_degree_stream, {include_blank: " Select Specialization",label:"Specialization"}, class: 'input_degree_stream_id' %>
           </div>
         </div>
     
-        <div class="col-sm-2">
-          <div class="form group-required">
-            <%= f.text_field :marks, label: 'Marks(CGPA / %)', class: 'input_marks' %>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :marks, label: 'Marks(CGPA / %)', placeholder: 'e.g. 8.5',class: 'input_marks' %>
           </div>
         </div>
       </div>    
@@ -55,20 +55,19 @@
           </div>
         </div>
        
-        <div class="col-sm-4">
+        <div class="col-sm-3">
           <div class="field">
-          <%= f.text_field :college,label:"College/School", class: 'input_college' %>
+          <%= f.text_field :college,label:"College/School", placeholder: 'e.g. MIT',class: 'input_college' %>
            </div>
         </div>
 
-        <div class="col-sm-4">
+        <div class="col-sm-3">
           <div class="field">
            <%= f.select :university_id, all_university,{include_blank: " Select University/Institute",label:"University/Institute"},class: 'input_university_id' %>
           </div>
         </div>
-      </div>
-      <hr>
-    </div>
+        </div>
+    
 
     <!-- < unless params['controller'] == 'qualifications' and params['action'] == 'edit' %>  
       <div class="row">
@@ -88,8 +87,8 @@
       </div><br>
     < end %>  
  -->
-    <div class="row">
-      <div class="col-sm-6">
+  <div class="row">
+      <div class="col-sm-3">
         <div class="actions">
           <%= f.submit :class => class_name, data: { disable_with: data_info } %>
           <% if params['controller'] == 'qualifications' and params['action'] == 'edit' %>
@@ -148,8 +147,6 @@
   // Disable the "remove" button
   $('#btnDel').attr('disabled', true);
 });
-
-
 </script>
 
 <script>
@@ -167,13 +164,13 @@ $("#qualification").validate({
        },
     messages: {
       "qualification[degree_type_id]":{
-        required: "Please Specify Qualification Level",
+        required: "Please select qualification",
       },
        "qualification[degree_id]":{
-        required: "Please Select Qualification ",
+        required: "Please select degree ",
       },
       "qualification[marks]":{
-        required: "Please Specify Marks",
+        required: "Please specify marks",
       }
        },
     errorPlacement: function(error, element) {

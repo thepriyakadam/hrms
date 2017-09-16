@@ -1,0 +1,29 @@
+
+<div class="box">
+  <div class="box-header">
+    <h5 class="box-title">Daily Gps</h5>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  	  <table id="example5" class="table table-bordered table-hover table-condensed">
+      <thead>
+      <tr><th colspan="4">Employee : <%= @employee.manual_employee_code %> - <%= full_name(@employee) %></th></tr>
+        <tr>
+          <th>Latitude</th>
+          <th>Longitude</th>
+          <th>Location</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @gps_daily.each do |g| %>
+          <tr>
+            <td><%= g.latitude %></td>
+             <td><%= g.longitude %></td>
+             <td><%= g.location %></td>
+             <td><%= g.date %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  </div>

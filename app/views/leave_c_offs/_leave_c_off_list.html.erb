@@ -3,7 +3,7 @@
    <tr>
     	<th>ID</th>
       <th>Employee</th>
-    	<th>C.Off Date</th>
+    	<th>Date</th>
     	<th>Action</th>
    </tr>
   </thead>
@@ -26,7 +26,8 @@
             <% else %>
             <%= link_to '', edit_leave_c_off_path(leave_c_off), class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '', leave_c_off, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs  btn-danger fa fa-close',remote:true %>
-            <%= link_to '', leave_c_off,class: 'btn btn-default btn-xs fa fa-eye' %>
+            <%= link_to '',modal_c_off_leave_c_offs_path(leave_c_off),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
+            <!-- <= link_to '', leave_c_off,class: 'btn btn-default btn-xs fa fa-eye' %> -->
             <% end %>
         </td>
       </tr>
@@ -34,6 +35,7 @@
   <% end %>
   </tbody>
 </table>
+<div id="modal_c_off" class="modal fade"></div>
 
 <script type="text/javascript">
 $(document).ready(function() {

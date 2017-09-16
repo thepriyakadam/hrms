@@ -38,6 +38,7 @@ class JoiningDetailsController < ApplicationController
         # format.html { redirect_to @employee, notice: 'Joining detail was successfully created.' }
         # format.json { render :show, status: :created, location: @joining_detail }
         format.js { @flag = true }
+        EmployeeMailer.joining_create(@employee,@joining_detail).deliver_now  
       else
         flash.now[:alert] = 'Joining Detail exist for this employee'
         # format.html { render :new }
@@ -120,6 +121,58 @@ class JoiningDetailsController < ApplicationController
     @value = params[:value]
   end
 
+  def certificate_print
+    @employee = Employee.find(params[:salary][:employee_id])
+    @certificate = params[:salary][:certificate]
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id) 
+    @employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employee.id)
+
+    respond_to do |format|
+        format.html
+        format.pdf do
+        render :pdf => 'certificate_print',
+        layout: '/layouts/pdf.html.erb',
+        :template => 'joining_details/offer_letter_print.pdf.erb',
+        :orientation      => 'Landscape', # default , Landscape
+        :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 20,
+                      :left   => 20,
+                      :right  => 20},
+        :show_as_html => params[:debug].present?
+        end
+     end
+    # redirect_to certificate_joining_details_path
+  end
+
+  def joining_certificate
+
+  end
+
+  # def offer_letter_print
+  #   @employee = Employee.find(params[:employee_id])
+  #   @certificate = [:certificate]
+  #   @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+  #   respond_to do |format|
+  #       format.html
+  #       format.pdf do
+  #       render :pdf => 'certificate_print',
+  #       layout: '/layouts/pdf.html.erb',
+  #       :template => 'joining_details/offer_letter_print.pdf.erb',
+  #       :orientation      => 'Landscape', # default , Landscape
+  #       :page_height      => 1000,
+  #       :dpi              => '300',
+  #       :margin           => {:top    => 20, # default 10 (mm)
+  #                     :bottom => 20,
+  #                     :left   => 20,
+  #                     :right  => 20},
+  #       :show_as_html => params[:debug].present?
+  #       end
+  #    end
+  # end
+    
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -129,6 +182,6 @@ class JoiningDetailsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def joining_detail_params
-    params.require(:joining_detail).permit(:company_rfid,:gate_rfid,:leaving_date,:employee_id, :ot_rate, :ot_option, :is_new,:replacement_id,:joining_date, :basis_of_time, :employee_grade_id, :confirmation_date, :employee_uan_no, :employee_pf_no, :employee_efic_no, :probation_period, :notice_period, :medical_schem, :employee_designation_id, :passport_no, :passport_issue_date, :passport_expiry_date, :select_pf, :pf_max_amount, :have_esic, :payment_mode_id, :cost_center_id, :employee_category_id, :department_id, :have_retention, :retirement_date, :reserved_category_id, :is_da,:is_employeer_pf,:is_employeer_esic,:is_insurance,:have_passport, :is_family_pension, :is_bonus)
+    params.require(:joining_detail).permit(:c_off,:company_rfid,:gate_rfid,:leaving_date,:employee_id, :ot_rate, :ot_option, :is_new,:replacement_id,:joining_date, :basis_of_time, :employee_grade_id, :confirmation_date, :employee_uan_no, :employee_pf_no, :employee_efic_no, :probation_period, :notice_period, :medical_schem, :employee_designation_id, :passport_no, :passport_issue_date, :passport_expiry_date, :select_pf, :pf_max_amount, :have_esic, :payment_mode_id, :cost_center_id, :employee_category_id, :department_id, :have_retention, :retirement_date, :reserved_category_id, :is_da,:is_employeer_pf,:is_employeer_esic,:is_insurance,:have_passport, :is_family_pension, :is_bonus)
   end
 end

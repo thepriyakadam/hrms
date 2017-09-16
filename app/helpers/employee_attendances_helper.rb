@@ -18,9 +18,23 @@ module EmployeeAttendancesHelper
   def calculate_attendance_datewise(from,to, exist, e)
     start_date = from.to_date
     end_date = to.to_date
+    joining_detail = JoiningDetail.find_by(employee_id: e.employee_id)
     start_date.step(end_date).each do |d|
       attendance_record = EmployeeAttendance.where(day: d, employee_id: e.employee_id).take
-      unless attendance_record.nil?
+      if attendance_record.nil?
+        unless joining_detail.nil?
+          unless joining_detail.joining_date.nil?
+            unless joining_detail.joining_date <  d
+              exist[d] = "UJ"
+            end
+          end
+          unless joining_detail.retirement_date.nil?
+            unless joining_detail.retirement_date > d
+              exist[d] = "RD"
+            end
+          end
+        end
+      elsif
         exist[d] = attendance_record.present
       end
 

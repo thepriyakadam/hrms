@@ -78,8 +78,11 @@
               <%= render 'sidebars/group_time_management' %>
               <% elsif current_user.role.name == 'AdminTimeManagement' %>
               <%= render 'sidebars/admin_time_management' %>
+               <% elsif current_user.role.name == 'NewEmployee' %>
+              <%= render 'sidebars/new_employee' %>
             <% else %>
               <%= render 'sidebars/employee' %>
+              
             <% end %>
           <%end%>
           
@@ -117,7 +120,7 @@
           Help Line No. +91-9028013279/+91-9970868601
         </div>
         <!-- Default to the left -->
-        <strong> Copyright © 2015 <a href="#">HCM-ZONE</a>.</strong> All Right Reserved.| Powered By : Indiba Business Solution.
+        <strong> Copyright © 2015 <a href="#">HCM-ZONE</a>.</strong> All Right Reserved.| Powered By : Indiba Business Solutions.
       </footer>
       <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->

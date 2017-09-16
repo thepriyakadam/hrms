@@ -2,15 +2,13 @@
   <div class="box-header with-border">
     <h3 class="box-title">Create Employee</h3>
   
-  <div class="pull-right">
-
-   </div>
+  <div class="pull-right"></div>
   <div class="box-body">
     <%= bootstrap_form_for(@employee,html: {id: 'employee'}) do |f| %>
       <div class="row">
       <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :employee_code_master_id, all_employee_code_master,{include_blank: "Select Employee Contract Type",label: "Employee Contract Type"},{onchange:"var a={id:$(this).val()}; $.get('/employees/display_emp_code_master',a,function(response){});"}%>
+            <%= f.select :employee_code_master_id, all_employee_code_master,{include_blank: "Select Code Serial",label: "Code Serial"},{onchange:"var a={id:$(this).val()}; $.get('/employees/display_emp_code_master',a,function(response){});"}%>
           </div>
         </div>  
         <div class="col-sm-3">
@@ -26,48 +24,38 @@
 
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :first_name , label: 'First Name' %>
+            <%= f.text_field :first_name , label: 'First Name',placeholder: 'First Name' %>
           </div>
         </div>
       </div>
 
       <div class="row">
-    
-
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :middle_name, label: 'Middle Name' %>
+           <%= f.text_field :middle_name, label: 'Middle Name',placeholder: 'Middle Name' %>
           </div>
         </div>
-
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :last_name, label: 'Last Name' %>
+           <%= f.text_field :last_name, label: 'Last Name',placeholder: 'Last Name' %>
           </div>
         </div>
-
-          <div class="col-sm-3">
+        <div class="col-sm-3">
           <div class="field">
             <%= f.select :gender, ['Male','Female'],{label: 'Select Gender',include_blank: " Select Gender"} %>
           </div>
         </div>
-        
         <div class="col-sm-3">
-          <div class="field">
-           <%= f.text_field :email %>
+          <div class="form-group required">
+           <%= f.text_field :email,placeholder: 'e.g.abc@gmail.com' %>
           </div>
         </div>
       </div>
 
-
-
       <div class="row">
-
-     
-
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :optional_email %>
+           <%= f.text_field :optional_email, label: 'Optional Email',placeholder: 'e.g.abc@gmail.com'%>
           </div>
         </div>
 
@@ -82,56 +70,60 @@
             <%= f.text_field :pan_no, label: 'PAN Card No.',placeholder: "e.g : ABCDE12345B" %>
           </div>
         </div>
-     
-
-      <div class="col-sm-3">
+        <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :licence_no, label: 'Driving Licence No.' %>
+           <%= f.text_field :licence_no, label: 'Driving Licence No.',placeholder: 'e.g.TN75 2013 0008800' %>
           </div>
         </div>
       </div>
 
       <div class="row">
-       
-
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :contact_no,label: 'Contact No.' %>
+           <%= f.text_field :contact_no,label: 'Official Contact No.',placeholder: 'e.g.123456789' %>
           </div>
         </div>
-
          <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :optinal_contact_no,label: 'Optional Contact No.' %>
+           <%= f.text_field :optinal_contact_no,label: 'Extension No.',placeholder: 'e.g.123456789' %>
           </div>
         </div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :optinal_contact_no1,label: 'Personal Contact No.',placeholder: 'e.g.123456789' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :emergency_contact_no,label: 'Emergency Contact No.',placeholder: 'e.g.123456789' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
          <div class="col-sm-3">
           <div class="field">
             <%= f.select :religion_id, all_religions,{include_blank: " Select Religion"} %>
           </div>
         </div>
         <div class="col-sm-3">
-        <div class="field">
-            <%= f.select :status,['Active','Inactive'],{include_blank: " Select Employee Status"} %>
+          <div class="form-group required">
+            <%= f.select :status,['Active','Inactive'],{label: 'Status',include_blank: " Select Employee Status"} %>
+          </div>
         </div>
-        </div>
-      
-      </div>
-      <div class="row">
-
-       
        <div class="col-sm-3">
           <div class="field">
-            <%= f.select :employee_type_id, all_employee_type,{include_blank: " Select Employee Type"} %>
+            <%= f.select :employee_type_id, all_employee_type,{label: "Employement Type ",include_blank: " Select Employee Type"} %>
           </div>
         </div>   
-
         <div class="col-sm-3">
           <div class="field">
             <%= f.select :marital_status, ['Married','UnMarried','Divorcee'],{label: 'Marital Status',include_blank: " Select Marital Status"} %>
           </div>
         </div>
+      </div>
 
+       <div class="row">
           <div class="col-sm-3">
           <div class="field">
             <%= f.select :nationality_id, all_nationality,{include_blank: " Select Nationality"} %>
@@ -139,43 +131,36 @@
         </div>
 
         <div class="col-sm-3">
-          <label>Date of Birth: </label>
-          <div class="field">
+          <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :date_of_birth, hide_label: true, class: 'birth_date'%>
+              <%= f.text_field :date_of_birth, label: 'Date of Birth', class: 'birth_date'%>
             </div>
-          </div>
-        </div>
-        </div>
-
-      <div class="row">
-      
-      
-       <div class="col-sm-3">
-          <div class="field">
-            <%= f.select :blood_group_id, all_blood_group, {label: 'Blood Group',include_blank: " Select Blood Group"} %>
-          </div>
-        </div>
-
-
-         <div class="col-sm-6">
-          <div class="form-group required">
-           <%= f.text_field :permanent_address, label: 'Permanent Address' %>
           </div>
         </div>
          <div class="col-sm-3">
           <div class="field">
+            <%= f.select :blood_group_id, all_blood_group, {label: 'Blood Group',include_blank: " Select Blood Group"} %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-9">
+          <div class="form-group required">
+           <%= f.text_field :permanent_address, label: 'Permanent Address',placeholder: 'e.g. sector - c,pune' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
             <%= f.text_field :pin_code,label:"Pin/Zip Code",placeholder: "e.g : 400703"%>
           </div>
         </div>
-        </div>
+      </div>
    
-         <div class="row">
-
-        
+      <div class="row">
           <div class="col-sm-3">
           <div class="form-group required">
             <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/companies/collect_states',a,function(response){});"}%>
@@ -193,28 +178,29 @@
             </div>
             </div>
           </div>
-          <div class="col-sm-3">
-            <div class="form-group required">
+        <div class="col-sm-3">
+          <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
                 <%= link_to "", new_district_path,class: "fa fa-plus fa-success",:target => "_blank" %>
               </div>
              <div id="district">
                <%= render 'companies/city_dropdown' %>
+             </div>
            </div>
-           </div>
-            </div>
           </div>
+        </div>
           <div class="col-sm-3">
             <div class="field">
               <%= f.text_field :city %>
             </div>
           </div>
-        </div>
+      </div>
+
       <div class="row">
         <div class="col-sm-6">
           <div class="field">
-            <%= f.text_field :current_address, label: 'Current Address' %>
+            <%= f.text_field :current_address, label: 'Current Address',placeholder: 'e.g. sector - c,pune' %>
           </div>
         </div>
         <div class="col-sm-3">
@@ -232,6 +218,7 @@
           </div>
         </div>
       </div>
+
       <div class="row">
           <div class="col-sm-3">
             <div class="form-group required">
@@ -240,47 +227,64 @@
             </div>
             </div>
           </div>
-
           <div class="col-sm-3">
             <div class="form-group required">
             <div class="input-group">
               <div id="company_location_with_label">
                 <%= render 'employees/company_location_dropdown_with_label' %> 
-            </div> 
+              </div> 
             </div>
             </div>
           </div>
-
           <div class="col-sm-3">
             <div class="form-group required">
             <div class="input-group">
               <div id="department">
                 <%= render 'employees/department_dropdown' %> 
-            </div> 
-            </div>
-            </div>
+              </div> 
+           </div>
           </div>
+        </div>
+         <div class="col-sm-3">
+            <div class="form-group required">
+            <div class="input-group">
+              <div id="sub_department">
+                <%= render 'employees/sub_department_dropdown' %> 
+              </div> 
+           </div>
+          </div>
+        </div>
 
-          <div class="col-sm-3">
-            <div class="field">
-              <%= f.file_field :passport_photo,label: 'Upload Photo' %>
-            </div>
-          </div> 
-      </div>
+        <!-- <div class="col-sm-3">
+          <div class="form-group required">
+            <= f.select :sub_department_id, all_sub_department, {label: 'Sub Department',include_blank: " Select Sub Department"} %>
+          </div>
+        </div> -->
+     </div>
 
       <div class="row">
+              <div class="col-sm-3">
+          <div class="field">
+            <%= f.file_field :passport_photo,label: 'Upload Photo' %>
+          </div>
+        </div> 
+               <div class="col-sm-3">
+            <div class="field">
+              <%= f.file_field :employee_signature,label: 'Upload Signature' %>
+            </div>
+          </div> 
         <div class="col-sm-6">
+        <label></label>
           <div class="actions">
             <%= f.submit "Create Employee",class: "btn btn-primary btn-sm" %>
-            <% if params['controller'] == 'employees' and params['action'] == 'edit' %>
-            
+            <% if params['controller'] == 'employees' and params['action'] == 'edit' %>      
             <%end%>
             <%= link_to 'Back', employees_path,class:"btn btn-sm btn-default fa fa-arrow-left" %>
           </div>
         </div>
       </div>
-    <% end %>
-  </div><!-- /.box-body -->
+      <% end %>
+   </div><!-- /.box-body -->
 </div><!-- /.box-->
 
 <script type="text/javascript">
@@ -293,7 +297,7 @@
   }); 
 </script>
 
-<script>
+<!-- <script>
 $("#employee").validate({
     rules: {
       "employee[manual_employee_code]":{
@@ -356,6 +360,9 @@ $("#employee").validate({
       "employee[department_id]":{
         required: true
       },
+       "employee[sub_department_id]":{
+        required: true
+      },
        "employee[email]":{
         required: true
          },
@@ -368,10 +375,10 @@ $("#employee").validate({
         required: "Please specify employee code"
       },
       "employee[employee_code_master_id]":{
-        required: "Please Select Employee Contract Type"
+        required: "Please select code serial"
       },
       "employee[first_name]":{
-        required: "Please specify Your First Name",
+        required: "Please specify first name",
         maxlength: "Name allows upto 30 alphabets"
       },
       "employee[last_name]":{
@@ -391,16 +398,16 @@ $("#employee").validate({
       },
 
       "employee[country_id]":{
-        required: "Please Specify Country"
+        required: "Please select country"
       },
       "employee[state_id]":{
-        required: "Please Specify State"
+        required: "Please select state"
       },
       "employee[city]":{
         maxlength: "Enter the City upto 30 char max"
       },
       "employee[district_id]":{
-        required: "Please Specify District"
+        required: "Please select district"
       },
       "employee[pin_code]":{
         maxlength: "Please Enter Valid Pincode Details"
@@ -409,25 +416,28 @@ $("#employee").validate({
         maxlength: "Enter the Correct contact number"
       },
       "employee[status]":{
-        required: "Please Specify Status"
+        required: "Please select status"
       },
       "employee[email]":{
-        required: "Please Specify Email ID"
+        required: "Please specify email id"
       },
       "employee[company_id]":{
-        required: "Please Specify Company"
+        required: "Please select company"
       },
       "employee[company_location_id]":{
-        required: "Please Specify Company Location"
+        required: "Please select company location"
       },
       "employee[department_id]":{
-        required: "Please Specify Department"
+        required: "Please select department"
+      },
+      "employee[sub_department_id]":{
+        required: "Please select sub department"
       },
       "employee[email]":{
-        required: "Please Specify Email Id"
+        required: "Please specify email id"
          },
       "employee[date_of_birth]":{
-        required: "Please Specify DOB"
+        required: "Please specify date of birth"
       }
     },
     errorPlacement: function(error, element) {
@@ -436,4 +446,4 @@ $("#employee").validate({
     }
 
    });
-</script>
+</script> -->

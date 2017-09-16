@@ -1,0 +1,97 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Information Report</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+      <%= bootstrap_form_for(:employee, url: { action: 'employee_basic_report'}) do |f| %>
+	  <table id="example1" class="table table-bordered table-hover table-condensed">
+		  <thead>
+		    <tr>
+		<th>Sr. No.</th>
+		<th>Employee ID</th>
+		<th>Employee Name</th>
+		<th>Gender</th>
+		<th>Reporting Manager 1</th>
+		<th>Reporting Manager 2</th>
+		<th>Aadhar Card No.</th>
+		<th>Pan Card No.</th>
+		<th>Licence No.</th>
+		<th>Marital Status</th>
+        <th>Nationality</th>>
+        <th>Date of Birth</th>
+        <th>Blood Group</th>
+        <th>Permanent Address</th>
+        <th>Pin Code</th>
+        <th>Country</th>
+        <th>State</th>
+        <th>District</th>
+        <th>City</th>
+        <th>Current Address</th>
+        <th>Religion</th>
+        <th>Contact No.</th>
+        <th>Optional Contact No.1</th>
+        <th>Optional Contact No.2</th>
+        <th>Email</th>
+        <th>Optional Email</th>
+        <th>Differently Abled</th>
+        <th>Disability Type</th>
+        <th>Employement Type</th>
+        <th>Employee Status</th>
+        <th>Company</th>
+        <th>Company Location</th>
+        <th>Department</th>
+        <th>Sub Department</th>
+        <th>Punch Card</th>
+        <th>Employee Code</th>
+		    </tr>
+		  </thead>
+
+		  <tbody>
+		    <% @employees.each do |employee| %>
+		     <% i = 0 %>
+		      <tr>
+		  <td><%= i=i+1 %></td>
+		  <td><%= employee.try(:manual_employee_code) %></td>
+		  <td><%= full_name(employee) %></td>
+		  <td><%= employee.gender %></td>
+		  <td><%= employee.manager.try(:name) %></td>
+		  <td><%= employee.manager_2.try(:name) %></td>
+		  <td><%= employee.adhar_no %></td>
+		  <td><%= employee.pan_no %></td>
+		  <td><%= employee.licence_no %></td>
+		  <td><%= employee.marital_status %></td>
+          <td><%= employee.nationality.try(:name) %></td>
+          <td><%= employee.date_of_birth %></td>
+          <td><%= employee.blood_group.try(:name) %></td>
+          <td><%= employee.permanent_address %></td>
+          <td><%= employee.pin_code %></td>
+          <td><%= employee.country.try(:name) %></td>
+          <td><%= employee.state.try(:name) %></td>
+          <td><%= employee.district.try(:name) %></td>
+          <td><%= employee.city %></td>
+          <td><%= employee.current_address %></td>
+          <td><%= employee.religion.try(:name) %></td>
+          <td><%= employee.contact_no %></td>
+          <td><%= employee.try(:optional_contact_no) %></td>
+          <td><%= employee.try(:optional_contact_no1) %></td>
+          <td><%= employee.email %></td>
+          <td><%= employee.optional_email %></td>
+          <td><%= employee.handicap %></td>
+          <td><%= employee.handicap_type %></td>
+          <td><%= employee.employee_type.try(:name) %></td>
+          <td><%= employee.status %></td>
+          <td><%= employee.company.try(:name) %></td>
+          <td><%= employee.company_location.try(:name) %></td>
+          <td><%= employee.department.try(:name) %></td>
+          <td><%= employee.try(:sub_department).try(:name) %></td>
+          <td><%= employee.try(:punch_card).try(:name) %></td>
+          <td><%= employee.employee_code_master.try(:name) %></td>
+
+		      </tr>
+		    <% end %>
+		   </tbody>
+		  </table>
+		   <% end %>
+		  <br>
+	 </div>
+	</div>

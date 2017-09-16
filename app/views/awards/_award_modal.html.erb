@@ -1,0 +1,37 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Award Detail </center></h4>
+    </div>
+    <div class="modal-body">
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+ <tr>
+    	<th><strong>Employee</strong></th>
+    	<td><%= full_name(@award.employee) %></td>
+</tr>
+<tr>
+    	<th><strong>Award Name</strong></th>
+    	<td><%= @award.award_name %></td>
+</tr>
+
+     <tr>
+    	<th> <strong>Year</strong></th>
+    	<td><%= @award.year.try(:name) %></td>
+</tr>
+<tr>
+    	<th> <strong>Award From</strong></th>
+    	<td> <%= @award.award_from %></td>
+    </tr>
+    <tr>
+    	<th><strong>Description</strong></th>
+    	<td> <%= @award.description %></td>
+    </tr>
+
+  </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

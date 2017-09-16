@@ -420,6 +420,7 @@ Rails.application.routes.draw do
       post :memberwise_report_list
       get :memberwise_report_list_xls
       get :memberwise_report_list_pdf
+      get :select_description
 
     end
    end
@@ -428,6 +429,7 @@ Rails.application.routes.draw do
       get :collect_issues
        get :is_confirm
        get :modal
+       
     end
   end
   resources :issue_types do

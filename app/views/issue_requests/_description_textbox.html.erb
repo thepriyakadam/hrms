@@ -1,0 +1,2 @@
+<label class="control-label required" for="issue_tracker" aria-required="true">Description</label>
+	<%= text_field :issue_request,:issue_master_id,(@issue_masters.present? ? (@issue_masters.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Type ",label: "Support Type"},class: "form-control"%>

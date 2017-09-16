@@ -125,11 +125,11 @@ require 'roo'
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[6]
+# ex.default_sheet = ex.sheets[8]
 # i=1
 # 2.upto(13) do |line|
 # Role.new do |ec|
-#   ec.code = ex.cell(line,'A').to_i
+#   ec.code = ex.cell(line,'A')
 #   ec.name = ex.cell(line,'B')
 #   ec.description = ex.cell(line,'C')
 #   ec.save!
@@ -140,11 +140,11 @@ require 'roo'
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[7]
+# ex.default_sheet = ex.sheets[9]
 # i=1
-# 2.upto(2) do |line|
+# 2.upto(5) do |line|
 # Nationality.new do |ec|
-#   ec.code = ex.cell(line,'A').to_i
+#   ec.code = ex.cell(line,'A')
 #   ec.name = ex.cell(line,'B')
 #   ec.description = ex.cell(line,'C')
 #   ec.save!
@@ -170,11 +170,11 @@ require 'roo'
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[9]
+# ex.default_sheet = ex.sheets[11]
 # i=1
-# 2.upto(7) do |line|
+# 2.upto(9) do |line|
 # Religion.new do |ec|
-#   ec.code = ex.cell(line,'A').to_i
+#   ec.code = ex.cell(line,'A')
 #   ec.name = ex.cell(line,'B')
 #   ec.description = ex.cell(line,'C')
 #   ec.save!
@@ -185,11 +185,11 @@ require 'roo'
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[10]
+# ex.default_sheet = ex.sheets[12]
 # i=1
-# 2.upto(9) do |line|
+# 2.upto(14) do |line|
 # RelationMaster.new do |ec|
-#   ec.code = ex.cell(line,'A').to_i
+#   ec.code = ex.cell(line,'A')
 #   ec.name = ex.cell(line,'B')
 #   ec.description = ex.cell(line,'C')
 #   ec.save!
@@ -200,9 +200,9 @@ require 'roo'
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[11]
+# ex.default_sheet = ex.sheets[13]
 # i=1
-# 2.upto(9) do |line|
+# 2.upto(10) do |line|
 # BloodGroup.new do |ec|
 #   ec.name = ex.cell(line,'B')
 #   ec.save!
@@ -214,11 +214,11 @@ require 'roo'
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[12]
+# ex.default_sheet = ex.sheets[14]
 # i=1
 # 2.upto(45) do |line|
 # Degree.new do |ec|
-#   ec.code = ex.cell(line,'A').to_i
+#   ec.code = ex.cell(line,'A')
 #   ec.name = ex.cell(line,'B')
 #   ec.description = ex.cell(line,'C')
 #   ec.save!
@@ -230,11 +230,11 @@ require 'roo'
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[13]
+# ex.default_sheet = ex.sheets[15]
 # i=1
-# 2.upto(11) do |line|
+# 2.upto(8) do |line|
 # DegreeType.new do |ec|
-#   ec.code = ex.cell(line,'A').to_i
+#   ec.code = ex.cell(line,'A')
 #   ec.name = ex.cell(line,'B')
 #   ec.description = ex.cell(line,'C')
 #   ec.save!
@@ -245,16 +245,46 @@ require 'roo'
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[14]
+# ex.default_sheet = ex.sheets[16]
 # i=1
 # 2.upto(26) do |line|
 # DegreeStream.new do |ec|
-#   ec.code = ex.cell(line,'A').to_i
+#   ec.code = ex.cell(line,'A')
 #   ec.name = ex.cell(line,'B')
 #   ec.description = ex.cell(line,'C')
 #   ec.save!
 # end
 # puts "#{i} DgreeStream inserted.-----------------------------------------------"
+# i = i+1
+# end
+
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
+# ex.default_sheet = ex.sheets[6]
+# i=1
+# 2.upto(6) do |line|
+# EmployeeType.new do |ec|
+#   ec.code = ex.cell(line,'A')
+#   ec.name = ex.cell(line,'B')
+#   ec.description = ex.cell(line,'C')
+#   ec.save!
+# end
+# puts "#{i} EmployeeType inserted.-----------------------------------------------"
+# i = i+1
+# end
+
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
+# ex.default_sheet = ex.sheets[5]
+# i=1
+# 2.upto(8) do |line|
+# EmployeeGrade.new do |ec|
+#   ec.code = ex.cell(line,'A')
+#   ec.name = ex.cell(line,'B')
+#   ec.description = ex.cell(line,'C')
+#   ec.save!
+# end
+# puts "#{i} EmployeeType inserted.-----------------------------------------------"
 # i = i+1
 # end
 
@@ -388,7 +418,7 @@ require 'roo'
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[23]
+# ex.default_sheet = ex.sheets[25]
 # i=1
 # 2.upto(67) do |line|
 # Year.new do |ec|
@@ -398,6 +428,8 @@ require 'roo'
 # puts " #{i} Year inserted.-----------------------------------------------"
 # i = i+1
 # end
+
+
 
 #================================== HCM MASTER END===============================# 
 
@@ -439,22 +471,22 @@ require 'roo'
 # end
 
 
-ex = Roo::Excel.new("#{Rails.root}/public/Employee Wise_Service Master.xls")
-ex.default_sheet = ex.sheets[0] #siya feb
-i = 1
-ActiveRecord::Base.transaction do
-2.upto(402) do |line| # siya Feb 2016
- puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
- puts "#{i} Record inserting.----------------------------"
+# ex = Roo::Excel.new("#{Rails.root}/public/Employee Wise_Service Master.xls")
+# ex.default_sheet = ex.sheets[0] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(402) do |line| # siya Feb 2016
+#  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+#  puts "#{i} Record inserting.----------------------------"
 
- @type2 = ServiceMaster.find_by_name(ex.cell(line,'C'))
- Employee.where(id: @employee).update_all(service_master_id: @type2.id)
- # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
- puts "#{i} Record inserted.-----------------------------------------------"
- i += 1
- end
- end
+#  @type2 = ServiceMaster.find_by_name(ex.cell(line,'C'))
+#  Employee.where(id: @employee).update_all(service_master_id: @type2.id)
+#  # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
+#  puts "#{i} Record inserted.-----------------------------------------------"
+#  i += 1
+#  end
+#  end
 
 #============================== DEPARTMENT END =====================================#
 # puts "Starting ..."

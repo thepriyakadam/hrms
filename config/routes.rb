@@ -2546,7 +2546,9 @@ end
 
   namespace :api do
     resources :user_auths,:only => [:create], defaults: {format: 'json'}
-    post 'user_auths/user_sign_up' => 'user_auths#user_sign_up', defaults: {format: 'json'}
-    get 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
-  end
+    post 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
+    # get 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
+    get 'user_auths/employee_list' => 'user_auths#employee_list', defaults:{format: 'json'}
+end
+
 end

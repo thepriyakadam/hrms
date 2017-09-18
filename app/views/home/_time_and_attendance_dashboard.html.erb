@@ -345,7 +345,8 @@
             
 
               <% date = Date.today %>
-             <% @employees = JoiningDetail.where("DATE_FORMAT(joining_date,'%d/%m') = ?", date.strftime('%d/%m'))%>
+             <% @employee = Employee.where(status: "Active") %>
+              <% @employees = JoiningDetail.where("DATE_FORMAT(joining_date,'%d/%m') = ?", date.strftime('%d/%m')).where(employee_id: @employee) %>
             <% if @employees.empty? %>
              
             <%else%>

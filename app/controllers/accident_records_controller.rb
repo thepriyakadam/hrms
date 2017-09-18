@@ -27,7 +27,6 @@ class AccidentRecordsController < ApplicationController
   # POST /accident_records
   # POST /accident_records.json
   def create
-    # byebug
     # @employee = Employee.find(params[:accident_record][:employee_id])
     @accident_record = AccidentRecord.new(accident_record_params)
     respond_to do |format|

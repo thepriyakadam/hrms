@@ -6,4 +6,5 @@ class IssueMaster < ActiveRecord::Base
   validates :name, presence: true
   validates :issue_tracker_group_id, presence: true
   validates :issue_type_id, presence: true
+  validates_uniqueness_of :issue_tracker_group_id, :scope => :issue_type_id
 end

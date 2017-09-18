@@ -47,6 +47,7 @@ class AssignedAssetsController < ApplicationController
 
   # PATCH/PUT /assigned_assets/1
   # PATCH/PUT /assigned_assets/1.json
+
   def update
     @employee = Employee.find(params['assigned_asset']['employee_id'])
     respond_to do |format|

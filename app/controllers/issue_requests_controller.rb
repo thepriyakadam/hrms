@@ -36,6 +36,7 @@ class IssueRequestsController < ApplicationController
   def create
      # byebug
    @issue_request = IssueRequest.new(issue_request_params)
+
     respond_to do |format|
       if @issue_request.save
         # byebug
@@ -54,6 +55,12 @@ class IssueRequestsController < ApplicationController
         format.json { render json: @issue_request.errors, status: :unprocessable_entity }  
       end
     end
+  end
+
+  def select_description
+    @issue_master_id = params[:issue_master_id]
+    @issue_master = IssueMaster.find_by(id: @issue_master_id)
+    @des = @issue_master.description
   end
 
   # PATCH/PUT /issue_requests/1

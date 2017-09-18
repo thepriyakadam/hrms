@@ -36,13 +36,7 @@ class DepartmentTypesController < ApplicationController
     @department_type.destroy
     @department_types = DepartmentType.all
   end
-
-  def is_confirm
-    @department_type = DepartmentType.find(params[:department_type])
-    DepartmentType.find(@department_type.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_department_type_path
-  end
+  
   private
 
   def set_department_type
@@ -50,6 +44,6 @@ class DepartmentTypesController < ApplicationController
   end
 
   def department_type_params
-    params.require(:department_type).permit(:is_confirm,:name)
+    params.require(:department_type).permit(:is_confirm,:name,:code,:description)
   end
 end

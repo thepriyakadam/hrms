@@ -37,13 +37,6 @@ class EmployeeTypesController < ApplicationController
     @employee_type.destroy
     @employee_types = EmployeeType.all
   end
-
-  def is_confirm
-    @employee_type = EmployeeType.find(params[:employee_type])
-    EmployeeType.find(@employee_type.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_employee_type_path
-  end
   
   private
 
@@ -54,6 +47,6 @@ class EmployeeTypesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_type_params
-    params.require(:employee_type).permit(:is_confirm,:name ,:code)
+    params.require(:employee_type).permit(:is_confirm,:name ,:code,:description)
   end
 end

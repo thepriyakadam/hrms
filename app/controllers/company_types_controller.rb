@@ -54,13 +54,6 @@ class CompanyTypesController < ApplicationController
             end
   end
 
-  def is_confirm
-    @company_type = CompanyType.find(params[:company_type])
-    CompanyType.find(@company_type.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_company_type_path
-  end
-
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -70,6 +63,6 @@ class CompanyTypesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def company_type_params
-    params.require(:company_type).permit(:is_confirm,:name)
+    params.require(:company_type).permit(:is_confirm,:name,:code,:description)
   end
 end

@@ -59,6 +59,6 @@ class DegreeTypesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def degree_type_params
-    params.require(:degree_type).permit(:is_confirm,:name)
+    params.require(:degree_type).permit(:is_confirm,:name,:code,:description)
   end
 end

@@ -2,7 +2,8 @@
   <thead>
     <tr>
       <th>Code</th>
-      <th>Type</th>
+      <th>Name</th>
+      <th>Description</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -11,14 +12,10 @@
       <tr>
         <td><%= employee_type.code %></td>
         <td><%= employee_type.name %></td>
+        <td><%= employee_type.description %></td>
         <td>
-          <% if employee_type.is_confirm == true %>
-            <small class= "label label-primary">Confirmed</small>
-          <% else %>
             <%= link_to '', edit_employee_type_path(employee_type),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '',  employee_type, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
-            <%= link_to '', is_confirm_employee_types_path(employee_type: employee_type),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-          <% end %>
         </td>
       </tr>
     <% end %>

@@ -52,15 +52,17 @@
         </div>
         -->
       </div>
-
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">
             <%= f.submit "Create Advance Salary",:class => class_name, data: { disable_with: data_info } %>
+          </div>
+        </div>
+      </div>
+<br>
             <%= link_to 'Back', advance_salaries_path ,class: 'btn btn-sm btn-default fa fa-arrow-left'%>
-            </div>
-            </div>
-            </div>
+
+            
             </div>
             </div>
           </div>
@@ -72,15 +74,42 @@
 
 <script type="text/javascript">
   $(function(){
-    $('#advance_salary_advance_amount').on('input', function() {
+
+     $('#advance_salary_advance_type_id').on('input', function() {
+      var advance_salary_advance_type_id = parseFloat($('#advance_salary_advance_type_id').val());
+
+
+      var advance_type = AdvanceType.find_by(id: advance_salary_advance_type_id)
+      var advance_salary_interest = advance_type.rate ;
+
+
       var advance_salary_advance_amount = parseFloat($('#advance_salary_advance_amount').val());
       var advance_salary_no_of_instalment = parseFloat($('#advance_salary_no_of_instalment').val());
       var ans="";
-      if (isNaN(advance_salary_advance_amount) || isNaN(advance_salary_no_of_instalment)) {
+      if (isNaN(advance_salary_advance_amount) || isNaN(advance_salary_no_of_instalment) || isNaN(advance_salary_interest)) {
         ans = ""
       }
       else{
-        ans = (advance_salary_advance_amount / advance_salary_no_of_instalment).toFixed(2);
+
+        ans = ((advance_salary_advance_amount / advance_salary_no_of_instalment) * advance_salary_advance_type.rate).toFixed(2);
+      }
+      $('#advance_salary_instalment_amount').val(ans);
+    });
+
+
+
+
+    $('#advance_salary_advance_amount').on('input', function() {
+      var advance_salary_advance_amount = parseFloat($('#advance_salary_advance_amount').val());
+      var advance_salary_no_of_instalment = parseFloat($('#advance_salary_no_of_instalment').val());
+      var advance_salary_advance_type_id = parseFloat($('#advance_salary_advance_type_id').val());
+      var ans="";
+      if (isNaN(advance_salary_advance_amount) || isNaN(advance_salary_no_of_instalment) || isNaN(advance_salary_advance_type_id)) {
+
+        ans = ""
+      }
+      else{
+        ans = ((advance_salary_advance_amount / advance_salary_no_of_instalment) * advance_salary_advance_type.rate).toFixed(2);
       }
       $('#advance_salary_instalment_amount').val(ans);
 
@@ -89,15 +118,19 @@
     $('#advance_salary_no_of_instalment').on('input', function() {
       var advance_salary_no_of_instalment = parseFloat($('#advance_salary_no_of_instalment').val());
       var advance_salary_advance_amount = parseFloat($('#advance_salary_advance_amount').val());
+      var advance_salary_advance_type_id = parseFloat($('#advance_salary_advance_type_id').val());
       var ans="";
-      if (isNaN(advance_salary_advance_amount) || isNaN(advance_salary_no_of_instalment)) {
+      if (isNaN(advance_salary_advance_amount) || isNaN(advance_salary_no_of_instalment) || isNaN(advance_salary_advance_type_id)) {
+
         ans = ""
       }
       else{
-        ans = (advance_salary_advance_amount / advance_salary_no_of_instalment).toFixed(2);
+        ans = ((advance_salary_advance_amount / advance_salary_no_of_instalment) * advance_salary_advance_type.rate).toFixed(2);
       }
       $('#advance_salary_instalment_amount').val(ans);
     });
+
+
   });
 
    $("#advance_salary").validate({

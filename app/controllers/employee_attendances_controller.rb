@@ -2367,10 +2367,10 @@ end
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "A")
     elsif params[:holiday]
       @name = params[:holiday]
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where("present = ? OR present = ?","H", "HP")
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where("present = ? OR present = ?","H", "HP").where.not(holiday_id: nil)
     elsif params[:weekoff]
       @name = params[:weekoff]
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where("present = ? OR present = ?","WO", "WOP")
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where("present = ? OR present = ?","WO", "WOP").where.not(employee_week_off_id: nil)
     else
       @name = params[:leave]
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)

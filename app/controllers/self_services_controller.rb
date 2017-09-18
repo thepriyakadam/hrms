@@ -284,6 +284,13 @@ class SelfServicesController < ApplicationController
     time = Time.now
     in_time = Time.at(time).strftime("%H:%M")
       @emp_atten = EmployeeAttendance.create(employee_id: current_user.employee_id,day: Date.today,present: 'P',in_time: in_time, is_confirm: false)  
+      date = Date.today
+      previous_date = (date - 1).to_date
+      @employee_attendances = EmployeeAttendance.where(day: previous_date, out_time: nil,comment: nil).where.not(in_time: nil)
+      @employee_attendances.each do |ea|
+        ea.update(present: 'A',comment: 'Out time not available')
+      end
+
       if @emp_atten.save
         flash[:notice] = "Created successfully"
       else

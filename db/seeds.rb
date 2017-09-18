@@ -364,7 +364,7 @@ end
 #   ec.account_code = ex.cell(line,'D')
 #   ec.is_deducted = ex.cell(line,'E')
 #   ec.is_active = ex.cell(line,'F')
-#   ec.is_base = ex.cell(line,'G') 
+#   ec.is_base = ex.cell(line,'G')
 #   ec.save!
 # end
 # puts "#{i} SalaryComponent inserted.-----------------------------------------------"
@@ -431,7 +431,7 @@ end
 
 
 
-#================================== HCM MASTER END===============================# 
+#================================== HCM MASTER END===============================#
 
 #================================== DEPARTMENT ==================================#
 
@@ -521,7 +521,7 @@ end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/employee_span_pump.xls")
-# ex.default_sheet = ex.sheets[1] 
+# ex.default_sheet = ex.sheets[1]
 # i=1
 # 2.upto(95) do |line|
 # Employee.new do |e|
@@ -558,12 +558,12 @@ end
 #   e.optional_email = ex.cell(line,'Y')
 #   e.handicap = ex.cell(line,'Z')
 #   e.handicap_type = ex.cell(line, 'AA')
-  
+ 
 #   @employee_type = EmployeeType.find_by_name(ex.cell(line,'AB'))
 #   e.employee_type_id = @employee_type.id unless @employee_type.nil?
 
 #   e.status = ex.cell(line,'AC')
-  
+ 
 #   # e.company_id = ex.cell(line,'AA').to_i
 #   @company_name = Company.find_by_name(ex.cell(line,'AD'))
 #   e.company_id = @company_name.id unless @company_name.nil?
@@ -639,7 +639,7 @@ end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/sg_bank.xls")
-# ex.default_sheet = ex.sheets[0] 
+# ex.default_sheet = ex.sheets[0]
 # i=1
 # 2.upto(358) do |line|
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
@@ -664,7 +664,7 @@ end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/sg_cer.xls")
-# ex.default_sheet = ex.sheets[0] 
+# ex.default_sheet = ex.sheets[0]
 # i=1
 # 2.upto(38) do |line|
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
@@ -684,7 +684,7 @@ end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/sg_award.xls")
-# ex.default_sheet = ex.sheets[0] 
+# ex.default_sheet = ex.sheets[0]
 # i=1
 # 2.upto(19) do |line|
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
@@ -703,7 +703,7 @@ end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/sg_qualification.xls")
-# ex.default_sheet = ex.sheets[0] 
+# ex.default_sheet = ex.sheets[0]
 # i=1
 # 2.upto(38) do |line|
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
@@ -730,7 +730,7 @@ end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/sglb.xls")
-# ex.default_sheet = ex.sheets[0] 
+# ex.default_sheet = ex.sheets[0]
 # i=1
 
 # 2.upto(460) do |line|
@@ -756,7 +756,7 @@ end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/sp_leave_bal.xls")
-# ex.default_sheet = ex.sheets[1] 
+# ex.default_sheet = ex.sheets[1]
 # i=1
 
 # 2.upto(51) do |line|
@@ -785,7 +785,7 @@ end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/sp_leave_bal.xls")
-# ex.default_sheet = ex.sheets[1] 
+# ex.default_sheet = ex.sheets[1]
 # i=1
 
 # 2.upto(51) do |line|
@@ -809,7 +809,7 @@ end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/spelb.xls")
-# ex.default_sheet = ex.sheets[1] 
+# ex.default_sheet = ex.sheets[1]
 # i=1
 
 # 2.upto(173) do |line|
@@ -834,7 +834,7 @@ end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/spelb.xls")
-# ex.default_sheet = ex.sheets[2] 
+# ex.default_sheet = ex.sheets[2]
 # i=1
 # 15.upto(31) do |line|
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
@@ -893,7 +893,7 @@ end
 #   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
 
 #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-  
+ 
 #   @salary_template = SalaryTemplate.find_by_id(ex.cell(line,'B'))
 #   @salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?
 
@@ -903,7 +903,7 @@ end
 #     EmployeeSalaryTemplate.new do |est|
 #       est.employee_id = @employee.id
 #       est.salary_template_id = @salary_template.id
-#       est.salary_component_id = t.salary_component_id 
+#       est.salary_component_id = t.salary_component_id
 #       est.is_deducted = t.is_deducted
 #       est.parent_salary_component_id
 #       est.percentage = t.is_deducted

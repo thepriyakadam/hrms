@@ -2367,10 +2367,10 @@ end
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "A")
     elsif params[:holiday]
       @name = params[:holiday]
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "H")
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where("present = ? OR present = ?","H", "HP")
     elsif params[:weekoff]
       @name = params[:weekoff]
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "WO")
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where("present = ? OR present = ?","WO", "WOP")
     else
       @name = params[:leave]
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
@@ -2412,12 +2412,43 @@ end
 
   end
 
-
    def add_attendance
     @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
     @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id).order('day DESC')
   end
   
+  def in_out_summary
+  end
+
+  def show_in_out_summary
+    @date = params[:salary][:date]
+    @employee_attendance = EmployeeAttendance.where(day: @date.to_date)
+    in_count = 0
+    out_count = 0
+    @employee_attendance.each do |a|
+      
+      if a.in_time == nil
+      else
+        in_count = in_count + 1
+      end
+      @in_count = in_count
+
+      if a.out_time == nil
+        @nil_out = a
+      else
+        out_count = out_count + 1
+      end
+      @out_count = out_count
+    end
+    @in_time = @in_count
+    @out_time = @out_count
+  end
+
+  def modal_missing_record
+    date = params[:date]
+    @employee_attendances = EmployeeAttendance.where(day: date.to_date).where("in_time = ? OR out_time = ?",nil,nil)
+  end
+
   # def create_self_attendance
   #   @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
   #   employee_id = params[:salary][:employee_id]

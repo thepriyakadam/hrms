@@ -271,7 +271,6 @@ class EmployeeLeavRequestsController < ApplicationController
                               total
                               @employee_leav_request.update(leave_count: total)
 
-
                               @employee_leav_request.minus_leave(@employee_leav_request)
                         
                         if @employee.manager.email.nil? or @employee.manager.email == ""
@@ -306,7 +305,7 @@ class EmployeeLeavRequestsController < ApplicationController
                           #emp_leav_bal_id
                               @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                               @employee_leav_request.leave_record_create(@employee_leav_request)
-                          @employee_leav_request.create_attendance_leave
+                              @employee_leav_request.create_attendance_leave
 
                               # @leave_record = LeaveRecord.last
                               @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)

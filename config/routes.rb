@@ -785,6 +785,9 @@ end
       get :show_datewise_all_report
       get :create_in_time
       get :create_out_time
+      get :in_out_summary
+      post :show_in_out_summary
+      get :modal_missing_record
     end
   end
   resources :salary_comp_mappings

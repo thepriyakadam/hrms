@@ -273,20 +273,20 @@ end
 # i = i+1
 # end
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[5]
-# i=1
-# 2.upto(8) do |line|
-# EmployeeGrade.new do |ec|
-#   ec.code = ex.cell(line,'A')
-#   ec.name = ex.cell(line,'B')
-#   ec.description = ex.cell(line,'C')
-#   ec.save!
-# end
-# puts "#{i} EmployeeType inserted.-----------------------------------------------"
-# i = i+1
-# end
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
+ex.default_sheet = ex.sheets[5]
+i=1
+2.upto(8) do |line|
+EmployeeGrade.new do |ec|
+  ec.code = ex.cell(line,'A')
+  ec.name = ex.cell(line,'B')
+  ec.description = ex.cell(line,'C')
+  ec.save!
+end
+puts "#{i} EmployeeType inserted.-----------------------------------------------"
+i = i+1
+end
 
 
 # puts "Starting ..."

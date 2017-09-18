@@ -16,12 +16,14 @@
     <tr>  
       <th>Support</th>
       <td><%= @issue_master.name %></td>
-      <th>Description</th>
-      <td><%= @issue_master.description %></td>
+      <th>Status</th>
+     <td><%= @issue_master.status ? "Active" : "Inactive" %></td>
+      
     </tr>
     <tr>  
-      <th>Status</th>
-     <td colspan="3"><%= @issue_master.status ? "Active" : "Inactive" %></td>
+    <th>Description</th>
+    <td colspan="3"><%= @issue_master.description %></td>
+      
    </tr>
   </thead>
 </table>

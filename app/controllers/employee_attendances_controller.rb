@@ -1582,6 +1582,8 @@ def upload
                           employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P",comment: "System Updated")
                         end
                     end#last_record_time <= 
+                    
+                    
                 end#employee_attendance.in_time == nil
               end#last_record.nil?
             end#employee_attendance.nil?
@@ -2345,18 +2347,7 @@ end
     @from_date = @from.to_date
     @to_date = @to.to_date
     @employee_attendances = EmployeeAttendance.where(day: @from_date..@to_date,employee_id: @employee).group(:employee_id)
-    respond_to do |f|
-      f.js
-      f.xls {render template: 'employee_attendances/managerwise_attendance_average.xls.erb'}
-      f.html
-      f.pdf do
-        render pdf: 'employee_attendance',
-        layout: 'pdf.html',
-        orientation: 'Landscape',
-        template: 'employee_attendances/managerwise_attendance_average.pdf.erb',
-        show_as_html: params[:debug].present?
-      end
-    end
+   datewise_attendance_with_options
   end
 
   def datewise_attendance_with_options
@@ -2365,18 +2356,62 @@ end
   end
 
   def show_datewise_all
-    from = params[:employee][:from]
-    to = params[:employee][:to]
+    @from = params[:employee][:from]
+    @to = params[:employee][:to]
 
     if params[:save]
-      @employee_attendances = EmployeeAttendance.where(day: from.to_date..to.to_date)
+      @name = params[:save]
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
     elsif params[:absent]
-      @employee_attendances = EmployeeAttendance.where(day: from.to_date..to.to_date,present: "A")
+      @name = params[:absent]
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "A")
+    elsif params[:holiday]
+      @name = params[:holiday]
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "H")
+    elsif params[:weekoff]
+      @name = params[:weekoff]
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "WO")
     else
-      @employee_attendances = EmployeeAttendance.where(day: from.to_date..to.to_date).where.not(employee_leav_request_id: nil)
+      @name = params[:leave]
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
     end
   end
   
+  def show_datewise_all_report
+    @from = params[:from]
+    @to = params[:to]
+    @name = params[:name]
+
+    if @name == "All"
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
+    elsif @name == "Absent"
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "A")
+    elsif @name == "Holiday"
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where("present = ? OR present = ?","H", "HP")
+    elsif @name == "Week Off"
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where("present = ? OR present = ?","WOP", "WO")
+    elsif @name == "Leave"
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
+    else
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
+    end
+
+
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_attendances/datewise_attendance_with_option.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'employee_attendance',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_attendances/datewise_attendance_with_option.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
+    end
+
+  end
+
 
    def add_attendance
     @employee_attendance = EmployeeAttendance.new(employee_attendance_params)

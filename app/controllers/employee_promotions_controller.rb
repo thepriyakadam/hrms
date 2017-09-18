@@ -178,14 +178,14 @@ class EmployeePromotionsController < ApplicationController
   def print_certificate
      # @employee_promotion = EmployeePromotion.find(params[:emp_promotion_id])
      # @employee_promotions = EmployeePromotion.where(id: @employee_promotion.id)
-     @employee_promotion = PromotionHistory.find(params[:format])
+     @employee_promotion = PromotionHistory.find(params[:id])
      respond_to do |format|
         format.html
         format.pdf do
         render :pdf => 'print_certificate',
         layout: '/layouts/pdf.html.erb',
         :template => 'employee_promotions/print_certificate.pdf.erb',
-        :orientation      => 'Landscape', # default , Landscape
+        :orientation      => 'portrait', # default , Landscape
         :page_height      => 1000,
         :dpi              => '300',
         :margin           => {:top    => 20, # default 10 (mm)

@@ -420,6 +420,7 @@ Rails.application.routes.draw do
       post :memberwise_report_list
       get :memberwise_report_list_xls
       get :memberwise_report_list_pdf
+      get :select_description
 
     end
    end
@@ -428,6 +429,7 @@ Rails.application.routes.draw do
       get :collect_issues
        get :is_confirm
        get :modal
+       
     end
   end
   resources :issue_types do
@@ -781,6 +783,8 @@ end
       get :show_managerwise_average_attendance
       get :datewise_attendance_with_options
       post :show_datewise_all
+      get :show_datewise_all
+      get :show_datewise_all_report
       get :create_in_time
       get :create_out_time
     end
@@ -2021,6 +2025,7 @@ end
     collection do
       post :assign_to_employee
       post :employee_list
+      get :modal
     end
   end
 
@@ -2545,7 +2550,9 @@ end
 
   namespace :api do
     resources :user_auths,:only => [:create], defaults: {format: 'json'}
-    post 'user_auths/user_sign_up' => 'user_auths#user_sign_up', defaults: {format: 'json'}
-    get 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
-  end
+    post 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
+    # get 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
+
+    get 'user_auths/employee_list' => 'user_auths#employee_list', defaults:{format: 'json'}
+end
 end

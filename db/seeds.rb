@@ -1,34 +1,34 @@
 require 'rubygems'
 require 'roo'
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[0]
-# i=1
-# 2.upto(4) do |line|
-# CompanyType.new do |ct|
-#   ct.code = ex.cell(line,'A').to_i
-#   ct.name = ex.cell(line,'B')
-#   ct.description = ex.cell(line,'C')
-#   ct.save!
-# end
-# puts "#{i} Company Type inserted.-----------------------------------------------"
-# i = i+1
-# end
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
+ex.default_sheet = ex.sheets[2]
+i=1
+2.upto(5) do |line|
+CompanyType.new do |ct|
+  ct.code = ex.cell(line,'A')
+  ct.name = ex.cell(line,'B')
+  ct.description = ex.cell(line,'C')
+  ct.save!
+end
+puts "#{i} Company Type inserted.-----------------------------------------------"
+i = i+1
+end
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[1]
-# i=1
-# 2.upto(4) do |line|
-# DepartmentType.new do |dt|
-#   dt.code = ex.cell(line,'A').to_i
-#   dt.name = ex.cell(line,'B')
-#   dt.description = ex.cell(line,'C')
-#   dt.save!
-# end
-# puts "#{i} Departmnet Type inserted.-----------------------------------------------"
-# i = i+1
-# end
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
+ex.default_sheet = ex.sheets[3]
+i=1
+2.upto(4) do |line|
+DepartmentType.new do |dt|
+  dt.code = ex.cell(line,'A')
+  dt.name = ex.cell(line,'B')
+  dt.description = ex.cell(line,'C')
+  dt.save!
+end
+puts "#{i} Departmnet Type inserted.-----------------------------------------------"
+i = i+1
+end
 
 
 # puts "Starting ..."
@@ -76,36 +76,36 @@ require 'roo'
 # i = i+1
 # end
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[3]
-# i=1
-# 2.upto(2) do |line|
-# EmployeeGrade.new do |eg|
-#   eg.code = ex.cell(line,'A').to_i
-#   eg.name = ex.cell(line,'B')
-#   eg.description = ex.cell(line,'C')
-#   eg.save!
-# end
-# puts "#{i} EmployeeGrade inserted.-----------------------------------------------"
-# i = i+1
-# end
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
+ex.default_sheet = ex.sheets[5]
+i=1
+2.upto(8) do |line|
+EmployeeGrade.new do |eg|
+  eg.code = ex.cell(line,'A')
+  eg.name = ex.cell(line,'B')
+  eg.description = ex.cell(line,'C')
+  eg.save!
+end
+puts "#{i} EmployeeGrade inserted.-----------------------------------------------"
+i = i+1
+end
 
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[4]
-# i=1
-# 2.upto(6) do |line|
-# EmployeeType.new do |et|
-#   et.code = ex.cell(line,'A').to_i
-#   et.name = ex.cell(line,'B')
-#   et.description = ex.cell(line,'C')
-#   et.save!
-# end
-# puts "#{i} EmployeeType inserted.-----------------------------------------------"
-# i = i+1
-# end
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
+ex.default_sheet = ex.sheets[6]
+i=1
+2.upto(6) do |line|
+EmployeeType.new do |et|
+  et.code = ex.cell(line,'A')
+  et.name = ex.cell(line,'B')
+  et.description = ex.cell(line,'C')
+  et.save!
+end
+puts "#{i} EmployeeType inserted.-----------------------------------------------"
+i = i+1
+end
 
 
 # puts "Starting ..."
@@ -123,35 +123,35 @@ require 'roo'
 # i = i+1
 # end
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[6]
-# i=1
-# 2.upto(13) do |line|
-# Role.new do |ec|
-#   ec.code = ex.cell(line,'A').to_i
-#   ec.name = ex.cell(line,'B')
-#   ec.description = ex.cell(line,'C')
-#   ec.save!
-# end
-# puts "#{i} Role inserted.-----------------------------------------------"
-# i = i+1
-# end
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
+ex.default_sheet = ex.sheets[8]
+i=1
+2.upto(13) do |line|
+Role.new do |ec|
+  ec.code = ex.cell(line,'A')
+  ec.name = ex.cell(line,'B')
+  ec.description = ex.cell(line,'C')
+  ec.save!
+end
+puts "#{i} Role inserted.-----------------------------------------------"
+i = i+1
+end
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[7]
-# i=1
-# 2.upto(2) do |line|
-# Nationality.new do |ec|
-#   ec.code = ex.cell(line,'A').to_i
-#   ec.name = ex.cell(line,'B')
-#   ec.description = ex.cell(line,'C')
-#   ec.save!
-# end
-# puts "#{i} Nationality inserted.-----------------------------------------------"
-# i = i+1
-# end
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
+ex.default_sheet = ex.sheets[9]
+i=1
+2.upto(5) do |line|
+Nationality.new do |ec|
+  ec.code = ex.cell(line,'A')
+  ec.name = ex.cell(line,'B')
+  ec.description = ex.cell(line,'C')
+  ec.save!
+end
+puts "#{i} Nationality inserted.-----------------------------------------------"
+i = i+1
+end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
@@ -168,93 +168,123 @@ require 'roo'
 # i = i+1
 # end
 
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
+ex.default_sheet = ex.sheets[11]
+i=1
+2.upto(9) do |line|
+Religion.new do |ec|
+  ec.code = ex.cell(line,'A')
+  ec.name = ex.cell(line,'B')
+  ec.description = ex.cell(line,'C')
+  ec.save!
+end
+puts "#{i} Religion inserted.-----------------------------------------------"
+i = i+1
+end
+
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
+ex.default_sheet = ex.sheets[12]
+i=1
+2.upto(14) do |line|
+RelationMaster.new do |ec|
+  ec.code = ex.cell(line,'A')
+  ec.name = ex.cell(line,'B')
+  ec.description = ex.cell(line,'C')
+  ec.save!
+end
+puts "#{i} Relation inserted.-----------------------------------------------"
+i = i+1
+end
+
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
+ex.default_sheet = ex.sheets[13]
+i=1
+2.upto(10) do |line|
+BloodGroup.new do |ec|
+  ec.name = ex.cell(line,'B')
+  ec.save!
+end
+puts "#{i} BloodGroup inserted.-----------------------------------------------"
+i = i+1
+end
+
+
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
+ex.default_sheet = ex.sheets[14]
+i=1
+2.upto(45) do |line|
+Degree.new do |ec|
+  ec.code = ex.cell(line,'A')
+  ec.name = ex.cell(line,'B')
+  ec.description = ex.cell(line,'C')
+  ec.save!
+end
+puts "#{i} Dgree inserted.-----------------------------------------------"
+i = i+1
+end
+
+
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
+ex.default_sheet = ex.sheets[15]
+i=1
+2.upto(8) do |line|
+DegreeType.new do |ec|
+  ec.code = ex.cell(line,'A')
+  ec.name = ex.cell(line,'B')
+  ec.description = ex.cell(line,'C')
+  ec.save!
+end
+puts "#{i} DgreeType inserted.-----------------------------------------------"
+i = i+1
+end
+
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
+ex.default_sheet = ex.sheets[16]
+i=1
+2.upto(26) do |line|
+DegreeStream.new do |ec|
+  ec.code = ex.cell(line,'A')
+  ec.name = ex.cell(line,'B')
+  ec.description = ex.cell(line,'C')
+  ec.save!
+end
+puts "#{i} DgreeStream inserted.-----------------------------------------------"
+i = i+1
+end
+
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[9]
+# ex.default_sheet = ex.sheets[6]
 # i=1
-# 2.upto(7) do |line|
-# Religion.new do |ec|
-#   ec.code = ex.cell(line,'A').to_i
+# 2.upto(6) do |line|
+# EmployeeType.new do |ec|
+#   ec.code = ex.cell(line,'A')
 #   ec.name = ex.cell(line,'B')
 #   ec.description = ex.cell(line,'C')
 #   ec.save!
 # end
-# puts "#{i} Religion inserted.-----------------------------------------------"
+# puts "#{i} EmployeeType inserted.-----------------------------------------------"
 # i = i+1
 # end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[10]
+# ex.default_sheet = ex.sheets[5]
 # i=1
-# 2.upto(9) do |line|
-# RelationMaster.new do |ec|
-#   ec.code = ex.cell(line,'A').to_i
+# 2.upto(8) do |line|
+# EmployeeGrade.new do |ec|
+#   ec.code = ex.cell(line,'A')
 #   ec.name = ex.cell(line,'B')
 #   ec.description = ex.cell(line,'C')
 #   ec.save!
 # end
-# puts "#{i} Relation inserted.-----------------------------------------------"
-# i = i+1
-# end
-
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[11]
-# i=1
-# 2.upto(9) do |line|
-# BloodGroup.new do |ec|
-#   ec.name = ex.cell(line,'B')
-#   ec.save!
-# end
-# puts "#{i} BloodGroup inserted.-----------------------------------------------"
-# i = i+1
-# end
-
-
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[12]
-# i=1
-# 2.upto(45) do |line|
-# Degree.new do |ec|
-#   ec.code = ex.cell(line,'A').to_i
-#   ec.name = ex.cell(line,'B')
-#   ec.description = ex.cell(line,'C')
-#   ec.save!
-# end
-# puts "#{i} Dgree inserted.-----------------------------------------------"
-# i = i+1
-# end
-
-
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[13]
-# i=1
-# 2.upto(11) do |line|
-# DegreeType.new do |ec|
-#   ec.code = ex.cell(line,'A').to_i
-#   ec.name = ex.cell(line,'B')
-#   ec.description = ex.cell(line,'C')
-#   ec.save!
-# end
-# puts "#{i} DgreeType inserted.-----------------------------------------------"
-# i = i+1
-# end
-
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[14]
-# i=1
-# 2.upto(26) do |line|
-# DegreeStream.new do |ec|
-#   ec.code = ex.cell(line,'A').to_i
-#   ec.name = ex.cell(line,'B')
-#   ec.description = ex.cell(line,'C')
-#   ec.save!
-# end
-# puts "#{i} DgreeStream inserted.-----------------------------------------------"
+# puts "#{i} EmployeeType inserted.-----------------------------------------------"
 # i = i+1
 # end
 
@@ -305,21 +335,21 @@ require 'roo'
 # i = i+1
 # end
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[18]
-# i=1
-# 2.upto(7) do |line|
-# LeavCategory.new do |ec|
-#   ec.code = ex.cell(line,'A')
-#   ec.name = ex.cell(line,'B')
-#   ec.description = ex.cell(line,'C')
-#   ec.is_payble = ex.cell(line,'D')
-#   ec.save!
-# end
-# puts "#{i} LeaveCategory inserted.-----------------------------------------------"
-# i = i+1
-# end
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
+ex.default_sheet = ex.sheets[20]
+i=1
+2.upto(12) do |line|
+LeavCategory.new do |ec|
+  ec.code = ex.cell(line,'A')
+  ec.name = ex.cell(line,'B')
+  ec.description = ex.cell(line,'C')
+  ec.is_payble = ex.cell(line,'D')
+  ec.save!
+end
+puts "#{i} LeaveCategory inserted.-----------------------------------------------"
+i = i+1
+end
 
 
 # puts "Starting ..."
@@ -334,26 +364,26 @@ require 'roo'
 #   ec.account_code = ex.cell(line,'D')
 #   ec.is_deducted = ex.cell(line,'E')
 #   ec.is_active = ex.cell(line,'F')
-#   ec.is_base = ex.cell(line,'G') 
+#   ec.is_base = ex.cell(line,'G')
 #   ec.save!
 # end
 # puts "#{i} SalaryComponent inserted.-----------------------------------------------"
 # i = i+1
 # end
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[20]
-# i=1
-# 2.upto(2) do |line|
-# Country.new do |ec|
-#   ec.code = ex.cell(line,'A')
-#   ec.name = ex.cell(line,'B')
-#   ec.save!
-# end
-# puts "#{i} Country inserted.-----------------------------------------------"
-# i = i+1
-# end
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
+ex.default_sheet = ex.sheets[22]
+i=1
+2.upto(6) do |line|
+Country.new do |ec|
+  ec.code = ex.cell(line,'A')
+  ec.name = ex.cell(line,'B')
+  ec.save!
+end
+puts "#{i} Country inserted.-----------------------------------------------"
+i = i+1
+end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
@@ -388,7 +418,7 @@ require 'roo'
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[23]
+# ex.default_sheet = ex.sheets[25]
 # i=1
 # 2.upto(67) do |line|
 # Year.new do |ec|
@@ -399,7 +429,9 @@ require 'roo'
 # i = i+1
 # end
 
-#================================== HCM MASTER END===============================# 
+
+
+#================================== HCM MASTER END===============================#
 
 #================================== DEPARTMENT ==================================#
 
@@ -439,18 +471,17 @@ require 'roo'
 # end
 
 
-# ex = Roo::Excel.new("#{Rails.root}/public/update_dep.xls")
+# ex = Roo::Excel.new("#{Rails.root}/public/Employee Wise_Service Master.xls")
 # ex.default_sheet = ex.sheets[0] #siya feb
 # i = 1
 # ActiveRecord::Base.transaction do
-# 2.upto(424) do |line| # siya Feb 2016
+# 2.upto(402) do |line| # siya Feb 2016
 #  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
 #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 #  puts "#{i} Record inserting.----------------------------"
 
-
-#   @type2 = Department.find_by_name(ex.cell(line,'B'))
-#  Employee.where(id: @employee).update_all(department_id: @type2.id)
+#  @type2 = ServiceMaster.find_by_name(ex.cell(line,'C'))
+#  Employee.where(id: @employee).update_all(service_master_id: @type2.id)
 #  # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
 #  puts "#{i} Record inserted.-----------------------------------------------"
 #  i += 1
@@ -490,7 +521,8 @@ require 'roo'
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/employee_span_pump.xls")
-# ex.default_sheet = ex.sheets[1] 
+
+# ex.default_sheet = ex.sheets[1]
 # i=1
 # 2.upto(95) do |line|
 # Employee.new do |e|
@@ -527,12 +559,10 @@ require 'roo'
 #   e.optional_email = ex.cell(line,'Y')
 #   e.handicap = ex.cell(line,'Z')
 #   e.handicap_type = ex.cell(line, 'AA')
-  
 #   @employee_type = EmployeeType.find_by_name(ex.cell(line,'AB'))
 #   e.employee_type_id = @employee_type.id unless @employee_type.nil?
 
 #   e.status = ex.cell(line,'AC')
-  
 #   # e.company_id = ex.cell(line,'AA').to_i
 #   @company_name = Company.find_by_name(ex.cell(line,'AD'))
 #   e.company_id = @company_name.id unless @company_name.nil?
@@ -608,7 +638,7 @@ require 'roo'
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/sg_bank.xls")
-# ex.default_sheet = ex.sheets[0] 
+# ex.default_sheet = ex.sheets[0]
 # i=1
 # 2.upto(358) do |line|
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
@@ -633,7 +663,7 @@ require 'roo'
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/sg_cer.xls")
-# ex.default_sheet = ex.sheets[0] 
+# ex.default_sheet = ex.sheets[0]
 # i=1
 # 2.upto(38) do |line|
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
@@ -653,7 +683,7 @@ require 'roo'
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/sg_award.xls")
-# ex.default_sheet = ex.sheets[0] 
+# ex.default_sheet = ex.sheets[0]
 # i=1
 # 2.upto(19) do |line|
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
@@ -672,7 +702,7 @@ require 'roo'
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/sg_qualification.xls")
-# ex.default_sheet = ex.sheets[0] 
+# ex.default_sheet = ex.sheets[0]
 # i=1
 # 2.upto(38) do |line|
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
@@ -698,8 +728,8 @@ require 'roo'
 
 
 # puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/LeaveBank.xls")
-# ex.default_sheet = ex.sheets[0] 
+# ex = Roo::Excel.new("#{Rails.root}/public/sglb.xls")
+# ex.default_sheet = ex.sheets[0]
 # i=1
 # 73.upto(167) do |line|
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
@@ -723,7 +753,7 @@ require 'roo'
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/sp_leave_bal.xls")
-# ex.default_sheet = ex.sheets[1] 
+# ex.default_sheet = ex.sheets[1]
 # i=1
 
 # 2.upto(51) do |line|
@@ -752,7 +782,7 @@ require 'roo'
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/sp_leave_bal.xls")
-# ex.default_sheet = ex.sheets[1] 
+# ex.default_sheet = ex.sheets[1]
 # i=1
 
 # 2.upto(51) do |line|
@@ -776,7 +806,7 @@ require 'roo'
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/spelb.xls")
-# ex.default_sheet = ex.sheets[1] 
+# ex.default_sheet = ex.sheets[1]
 # i=1
 
 # 2.upto(173) do |line|
@@ -801,7 +831,7 @@ require 'roo'
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/spelb.xls")
-# ex.default_sheet = ex.sheets[2] 
+# ex.default_sheet = ex.sheets[2]
 # i=1
 # 15.upto(31) do |line|
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
@@ -860,7 +890,7 @@ require 'roo'
 #   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
 
 #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-  
+ 
 #   @salary_template = SalaryTemplate.find_by_id(ex.cell(line,'B'))
 #   @salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?
 
@@ -870,7 +900,7 @@ require 'roo'
 #     EmployeeSalaryTemplate.new do |est|
 #       est.employee_id = @employee.id
 #       est.salary_template_id = @salary_template.id
-#       est.salary_component_id = t.salary_component_id 
+#       est.salary_component_id = t.salary_component_id
 #       est.is_deducted = t.is_deducted
 #       est.parent_salary_component_id
 #       est.percentage = t.is_deducted

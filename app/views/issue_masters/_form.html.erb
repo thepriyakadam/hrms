@@ -16,13 +16,14 @@
             <%= f.text_field :name,label:'Support', placeholder: 'Support' %>
           </div>
         </div>
-        <div class="col-sm-3">
-          <div class="group">
-            <%= f.text_field :description ,label:'Description', placeholder: 'Description'%>
-          </div>
-        </div>
       </div>
       <div class="row">
+
+        <div class="col-sm-6">
+          <div class="form-group required">
+            <%= f.text_area :description ,label:'Description', placeholder: 'Description'%>
+          </div>
+        </div>
        <div class="col-sm-3">
           <label>Status</label>
             <%= f.check_box :status,label:'Active' %>
@@ -48,6 +49,9 @@ $("#issue_master").validate({
       },
       "issue_master[name]":{
         required: true,
+      },
+      "issue_master[description]":{
+        required: true,
       }
        },
     messages: {
@@ -59,6 +63,9 @@ $("#issue_master").validate({
       },
       "issue_master[name]":{
         required: "Please Specify Support",
+      },
+      "issue_master[description]":{
+        required: "Please Specify Description",
       }
        },
     errorPlacement: function(error, element) {

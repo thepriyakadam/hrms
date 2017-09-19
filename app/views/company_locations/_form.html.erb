@@ -105,3 +105,22 @@
       </div>
         </div><!-- /.box-body -->
 </div><!-- /.box -->
+
+<script>
+$("#company_location").validate({
+    rules: {
+      "company_location[email]":{
+        required: true,
+      }
+    },
+    messages: {
+      "company_location[email]":{
+        required: "Please specify state",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

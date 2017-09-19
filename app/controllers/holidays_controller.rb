@@ -95,6 +95,10 @@ class HolidaysController < ApplicationController
     redirect_to new_holiday_path
   end
 
+  def modal
+    @holiday = Holiday.find(params[:format])
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

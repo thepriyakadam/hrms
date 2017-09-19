@@ -1,22 +1,21 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>  
+      <th>Code</th>
       <th>Name</th>
+      <th>Description</th>
       <th>Action</th>
     </tr>
   </thead>
   <tbody>
    <% @religions.each do |religion| %>
       <tr>
+        <td><%= religion.code %></td>
         <td><%= religion.name %></td>
+        <td><%= religion.description %></td>
         <td> 
-          <% if religion.is_confirm == true %>
-            <small class= "label label-primary">Confirmed</small>
-          <% else %>
             <%= link_to '', edit_religion_path(religion),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '',  religion, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
-            <%= link_to '', is_confirm_religions_path(religion: religion),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-          <% end %>
         </td>
       </tr>
     <% end %>

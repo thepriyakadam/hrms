@@ -306,7 +306,7 @@ class SelfServicesController < ApplicationController
     if working_hrs.to_s > "8" 
       @employee_attendance.update(out_time: out_time,working_hrs: working_hrs,present: 'P')
     elsif working_hrs.to_s < "8"
-      @employee_attendance.update(out_time: out_time,working_hrs: working_hrs,present: 'SD')
+      @employee_attendance.update(out_time: out_time,working_hrs: working_hrs,present: 'HD')
     elsif working_hrs.to_s < "4"
       @employee_attendance.update(out_time: out_time,working_hrs: working_hrs,present: 'A')
     

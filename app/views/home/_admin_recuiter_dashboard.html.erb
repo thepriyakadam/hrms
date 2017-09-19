@@ -239,13 +239,10 @@
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
           </div>
         </div><!-- /.box-header -->
-
-               
-                <div class="box-body">
-           
-                    <% date = Date.today %>
-                    <% @employees = JoiningDetail.where("DATE_FORMAT(joining_date,'%d/%m') = ?", date.strftime('%d/%m'))%>
-                   <% if @employees.empty? %>
+              <% date = Date.today %>
+             <% @employee = Employee.where(status: "Active") %>
+              <% @employees = JoiningDetail.where("DATE_FORMAT(joining_date,'%d/%m') = ?", date.strftime('%d/%m')).where(employee_id: @employee) %>
+            <% if @employees.empty? %>
              
                    <%else%>
                     <table id="example2" class="table no-margin">

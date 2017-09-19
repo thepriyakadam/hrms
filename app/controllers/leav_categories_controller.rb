@@ -46,7 +46,6 @@ class LeavCategoriesController < ApplicationController
   
   def show_leave_category
     @leav_category = LeavCategory.find(params[:leav_category])
-    
   end
 
   def leave_category_modal

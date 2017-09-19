@@ -15,6 +15,12 @@
     </div>
 
     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Employment Decription' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
       <div class="actions">
         <%= f.submit "Create Employee Type",:class => class_name, data: { disable_with: data_info } %>
       </div>

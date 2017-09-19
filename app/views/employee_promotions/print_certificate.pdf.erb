@@ -1,14 +1,14 @@
 <div class="box-body">
- <div style="width: 550px; height: 590px;
+ <div style="width: 500px; height: 850px;
  font-size: 15px;
           padding: 10px;
-          border: 2px solid gray;
-
-    margin-right: 150px;
-    margin-left: 150px;">
+   
+    margin-right: 20px;
+    margin-left: 20px;">
 
 
 <!-- <tr><div style="float:right;"> </div><br><br></tr> -->
+<!-- <div style="font-size: 10px"> -->
   <td colspan="4"><b><b><center>Certificate Of Promotion</center></b></b></td><hr>
   <tr><td colspan="4"><center><strong><%= @employee_promotion.employee.company_location.company.try(:description) %></strong> <br>
         <%= @employee_promotion.employee.company_location.company.try(:address) %><br> 
@@ -18,7 +18,7 @@
 
  <p>This is in continuation to your application for the internal job posting for the post of <b><%= @employee_promotion.department.try(:name) %> </b>and your subsequent interview with our Board of Directors.</p>
 
- <p>We are extremely pleased to inform you that the Board has considered you suitable for the post. You have therefore been promoted to <b><%= @employee_promotion.employee_designation.try(:name) %></b> with effect from<b><%= @employee_promotion.effective_from %></b> </p>
+ <p>We are extremely pleased to inform you that the Board has considered you suitable for the post. You have therefore been promoted to <b><%= @employee_promotion.employee_designation.try(:name) %></b> with effect from <b><%= @employee_promotion.effective_from %></b> </p>
 
  <p>By becoming the <b><%= @employee_promotion.employee_designation.try(:name) %></b> your CTC will now be Rs. <b><%= @employee_promotion.employee_ctc %></b> (per annum). Please contact the HR department for a break up of the CTC.</p>
 

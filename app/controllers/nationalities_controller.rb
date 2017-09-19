@@ -53,6 +53,6 @@ class NationalitiesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def nationality_params
-    params.require(:nationality).permit(:is_confirm,:name)
+    params.require(:nationality).permit(:is_confirm,:name,:code,:description)
   end
 end

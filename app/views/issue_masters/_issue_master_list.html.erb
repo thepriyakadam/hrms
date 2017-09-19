@@ -4,7 +4,7 @@
       <th>Group</th>
       <th>Support Type</th>
       <th>Support</th>
-      <!-- <th>Description</th> -->
+      <th>Description</th>
       <th>Status</th>
       <th>Action</th>
     </tr>
@@ -16,7 +16,7 @@
        <td><%= issue_master.issue_tracker_group.try(:name) %></td>
         <td><%= issue_master.issue_type.try(:name) %></td>
         <td><%= issue_master.name %></td>
-        <!-- <td><%= issue_master.description %></td> -->
+        <td><%= issue_master.description %></td>
         <td><%= issue_master.status ? "Active" : "Inactive" %></td>
         
          <td>

@@ -60,6 +60,6 @@ class EmployeeGradesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_grade_params
-    params.require(:employee_grade).permit(:is_confirm,:name)
+    params.require(:employee_grade).permit(:is_confirm,:name,:code,:description)
   end
 end

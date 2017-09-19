@@ -1,24 +1,31 @@
-<table id="example2" class="table table-bordered table-hover table-condensed'">
+<table id="example6" class="table table-bordered table-hover table-condensed'">
   <thead>
     <tr>  
+      <th>Code</th>
       <th>Name</th>
+      <th>Decription</th>
       <th>Action</th>
     </tr>
   </thead>
   <tbody>
     <% @degrees.each do |degree| %>
       <tr>
+        <td><%= degree.code %></td>
         <td><%= degree.name %></td>
+        <td><%= degree.description %></td>
         <td>
-          <% if degree.is_confirm == true %>
-            <small class= "label label-primary">Confirmed</small>
-          <% else %>
             <%= link_to '', edit_degree_path(degree),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '',  degree, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
-            <%= link_to '', is_confirm_degrees_path(degree: degree),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-          <% end %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

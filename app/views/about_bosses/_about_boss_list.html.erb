@@ -22,6 +22,7 @@
             <%= link_to '', edit_about_boss_path(about_boss),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  about_boss, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
             <%= link_to '', is_confirm_about_bosses_path(about_boss: about_boss),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+            
           <% end %>
         </td>
       </tr>

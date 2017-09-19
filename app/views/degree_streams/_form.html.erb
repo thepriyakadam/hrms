@@ -2,7 +2,17 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :name,hide_label:true, placeholder: 'Qualification Specialization' %>
+        <%= f.text_field :code,hide_label:true, placeholder: 'Qualification Code' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Qualification Name' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Qualification Description' %>
       </div>
     </div>
 
@@ -17,13 +27,19 @@
 <script>
 $("#degree_stream").validate({
     rules: {
+      "degree_stream[code]":{
+        required: true,
+      },
       "degree_stream[name]":{
         required: true,
       }
        },
     messages: {
-      "degree_stream[name]":{
-        required: "Please specify qualification specialization",
+      "degree_stream[code]":{
+        required: "Please specify code",
+      },
+       "degree_stream[name]":{
+        required: "Please specify name",
       }
        },
     errorPlacement: function(error, element) {
@@ -32,9 +48,3 @@ $("#degree_stream").validate({
     }
    });
 </script>
-
-
-
-
-
-

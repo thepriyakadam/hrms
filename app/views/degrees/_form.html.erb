@@ -2,7 +2,19 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :name,hide_label:true, placeholder: 'Qualification' %>
+        <%= f.text_field :code,hide_label:true, placeholder: 'Code' %>
+      </div>
+    </div>
+
+        <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Name' %>
+      </div>
+    </div>
+
+        <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
       </div>
     </div>
 
@@ -17,13 +29,19 @@
 <script>
 $("#degree").validate({
     rules: {
+      "degree[code]":{
+        required: true,
+      },
       "degree[name]":{
         required: true,
       }
        },
     messages: {
-      "degree[name]":{
-        required: "Please specify qualification",
+      "degree[code]":{
+        required: "Please specify code",
+      },
+       "degree[name]":{
+        required: "Please specify name",
       }
        },
     errorPlacement: function(error, element) {
@@ -32,6 +50,3 @@ $("#degree").validate({
     }
    });
 </script>
-
-
-

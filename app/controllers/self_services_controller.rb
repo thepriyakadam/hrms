@@ -312,6 +312,7 @@ class SelfServicesController < ApplicationController
     working_hrs = Time.at(total_hrs).strftime("%H:%M")
     if working_hrs.to_s > "08:00" 
       @employee_attendance.update(out_time: out_time,working_hrs: working_hrs,present: 'P')
+
     elsif working_hrs.to_s < "04:00"
       @employee_attendance.update(out_time: out_time,working_hrs: working_hrs,present: 'A')
     elsif working_hrs.to_s < "08:00"

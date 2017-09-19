@@ -59,6 +59,6 @@ class DegreeStreamsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def degree_stream_params
-    params.require(:degree_stream).permit(:is_confirm,:name)
+    params.require(:degree_stream).permit(:is_confirm,:name,:code,:description)
   end
 end

@@ -2,7 +2,19 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :name,hide_label:true, placeholder: 'Department Type' %>
+        <%= f.text_field :code,hide_label:true, placeholder: 'Department Code' %>
+      </div>
+      </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Department Name' %>
+      </div>
+      </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Department Description' %>
       </div>
     </div>
 
@@ -13,3 +25,28 @@
     </div>
   </div>
 <% end %>
+
+<script>
+$("#department_type").validate({
+    rules: {
+      "department_type[code]":{
+        required: true,
+      },
+      "department_type[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "department_type[code]":{
+        required: "Please specify code",
+      },
+       "department_type[name]":{
+        required: "Please specify name",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

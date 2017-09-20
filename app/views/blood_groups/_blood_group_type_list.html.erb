@@ -9,14 +9,14 @@
     <% @blood_groups.each do |blood_group| %>
       <tr>
         <td><%= blood_group.name %></td>
-        <td>
-          <% if blood_group.is_confirm == true %>
+        <td><!-- 
+          < if blood_group.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>
-          <% else %>
+          < else %> -->
             <%= link_to '', edit_blood_group_path(blood_group),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  blood_group, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
-            <%= link_to '', is_confirm_blood_groups_path(blood_group: blood_group),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-          <% end %>
+            <!-- <= link_to '', is_confirm_blood_groups_path(blood_group: blood_group),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %> -->
+
         </td>
       </tr>
     <% end %>

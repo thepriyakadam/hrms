@@ -654,6 +654,7 @@ end
   resources :attribute_masters do
     collection do
       get :is_confirm
+      get :modal
     end
   end
   resources :circulars do
@@ -976,6 +977,7 @@ end
   resources :goal_perspectives do
     collection do
       get :is_confirm
+      get :modal
     end
   end
   resources :ratings do
@@ -2086,16 +2088,22 @@ end
   resources :universities do
     collection do
       get :is_confirm
+      get :university_master
+      post :university_master
     end
   end
   resources :degree_streams do
     collection do
       get :is_confirm
+      get :specialization_master
+      post :specialization_master
     end
   end
   resources :degree_types do
     collection do
       get :is_confirm
+      get :qualification_level_master
+      post :qualification_level_master
     end
   end
   resources :districts
@@ -2115,11 +2123,18 @@ end
   resources :degrees do
     collection do
       get :is_confirm
+      get :print_qualification
+      post :print_qualification
     end
   end
   resources :universities
   resources :degree_streams
-  resources :degree_types
+  resources :degree_types do
+    collection do
+  get :qualification_level_master
+  post :qualification_level_master
+  end
+end
   resources :districts do
     collection do
       get :list_district
@@ -2462,6 +2477,7 @@ end
     collection do
       get :department_list_xls
       get :is_confirm
+      get :modal
     end
   end
 

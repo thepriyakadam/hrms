@@ -9,7 +9,7 @@
 
   <center><strong><%= @workingdays.try(:first).try(:employee).try(:company_location).try(:company).try(:description) %></strong> <br>
         <%= @workingdays.try(:first).try(:employee).try(:company_location).try(:company).try(:address) %><br>
-        <b> <%= @from_date.strftime("%B %Y") %> To  <%= @to_date.strftime("%B %Y") %></b>
+        <b> <%= @from_date.to_date %> To  <%= @to_date.to_date %></b>
         </center></td>
   </tr>
   <tr>

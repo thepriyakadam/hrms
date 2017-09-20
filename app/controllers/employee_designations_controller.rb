@@ -69,6 +69,6 @@ class EmployeeDesignationsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_designation_params
-    params.require(:employee_designation).permit(:is_confirm,:name,:description)
+    params.require(:employee_designation).permit(:is_confirm,:name,:description,:code)
   end
 end

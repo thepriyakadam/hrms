@@ -1,8 +1,20 @@
-<%= bootstrap_form_for(@cost_center,html: {id: 'cost center'},remote:true) do |f| %>
+<%= bootstrap_form_for(@cost_center,html: {id: 'cost_center'},remote:true) do |f| %>
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Code' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
         <%= f.text_field :name,hide_label:true, placeholder: 'Cost Center' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
       </div>
     </div>
 
@@ -13,3 +25,28 @@
     </div>
   </div>
 <% end %>
+
+<script>
+$("#cost_center").validate({
+    rules: {
+      "cost_center[code]":{
+        required: true,
+      },
+      "cost_center[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "cost_center[code]":{
+        required: "Please specify code",
+      },
+       "cost_center[name]":{
+        required: "Please specify name",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

@@ -463,6 +463,8 @@ end
     collection do
        get :is_confirm
       get :select_textbox
+      get :employee_code_master
+      post :employee_code_master
     end
    end
   get 'download_pdf/index'
@@ -620,6 +622,8 @@ end
   resources :illness_types do
     collection do
       get :is_confirm
+      get :illness_type_master
+      post :illness_type_master
     end
   end
   resources :performance_calendars do
@@ -1212,11 +1216,15 @@ end
   resources :nomination_masters do
     collection do
       get :is_confirm
+      get :nomination_master
+      post :nomination_master
     end
   end
   resources :relation_masters do
     collection do
       get :is_confirm
+      get :relation_master
+      post :relation_master
     end
   end
   resources :particular_vacancy_requests
@@ -1685,6 +1693,8 @@ end
   resources :reserved_categories do
     collection do
       get :is_confirm
+      get :reserved_category_master
+      post :reserved_category_master
     end
   end
   resources :pf_masters do
@@ -1718,11 +1728,15 @@ end
   resources :expencess_types do
     collection do
       get :is_confirm
+      get :expence_type_master
+      post :expence_type_master
     end
   end
   resources :food_coupan_masters do
     collection do
       get :is_confirm
+      get :food_coupan_master
+      post :food_coupan_master
     end
   end
   resources :food_deductions do
@@ -1766,6 +1780,8 @@ end
   resources :advance_types do
     collection do
       get :is_confirm
+      get :advance_type_master
+      post :advance_type_master
     end
   end
   resources :employee_templates do
@@ -1803,6 +1819,8 @@ end
   resources :payment_modes do
     collection do
       get :is_confirm
+      get :payment_mode_master
+      post :payment_mode_master
     end
   end
   resources :excel_exports do
@@ -1823,6 +1841,8 @@ end
   resources :employee_categories do
     collection do
       get :is_confirm
+      get :employee_category_master
+      post :employee_category_master
     end
   end
   resources :other_salary_components do
@@ -2064,11 +2084,15 @@ end
   resources :religions do
     collection do
       get :is_confirm
+      get :religion_master
+      post :religion_master
     end
   end
   resources :banks do
     collection do
       get :is_confirm
+      get :bank_master
+      post :bank_master
     end
   end
   # resources :employee_annual_salaries do
@@ -2177,6 +2201,8 @@ end
       get :dynamic_form
       get :role_edit_list
       get :is_confirm
+      get :role_master
+      post :role_master
     end
 
     member do
@@ -2264,6 +2290,8 @@ end
   resources :employee_grades do
     collection do
       get :is_confirm
+      get :employee_grade_master
+      post :employee_grade_master
     end
   end
   resources :awards do
@@ -2449,21 +2477,29 @@ end
   resources :blood_groups do
     collection do
       get :is_confirm
+      get :blood_group_master
+      post :blood_group_master
     end
   end
   resources :nationalities do
     collection do
       get :is_confirm
+      get :nationality_master
+      post :nationality_master
     end
   end
   resources :employee_types do
     collection do
       get :is_confirm
+      get :employee_type_master
+      post :employee_type_master
     end
   end
   resources :department_types do
     collection do
       get :is_confirm
+      get :department_type_master
+      post :department_type_master
     end
   end
   resources :company_types do
@@ -2471,6 +2507,8 @@ end
       get :add_company_type
       post :create_company_type
       get :is_confirm
+      get :company_type_master
+      post :company_type_master
     end
   end
   resources :departments do

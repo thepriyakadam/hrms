@@ -14,13 +14,8 @@
         <td><%= advance_type.name %></td>
         <td><%= advance_type.description %></td>
         <td>
-          <% if advance_type.is_confirm == true %>
-            <small class= "label label-primary">Confirmed</small>
-          <% else %>
             <%= link_to '', edit_advance_type_path(advance_type),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  advance_type, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
-            <%= link_to '', is_confirm_advance_types_path(advance_type: advance_type),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-          <% end %>
         </td>
       </tr>
     <% end %>

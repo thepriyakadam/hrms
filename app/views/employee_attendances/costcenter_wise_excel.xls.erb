@@ -39,9 +39,9 @@
             <% workingday = create_leave_datewise(@from_date,@to_date, e) %>
             <%= hidden_field_tag "attendances[]", e.id %>
             <%= hidden_field e.employee_id, 'employee_id', value: e.employee_id %>
-            <%= hidden_field e.employee_id, 'month_name', value: @date.strftime("%B") %>
-            <%= hidden_field e.employee_id, 'year', value: @date.strftime("%Y") %>
-            <%= hidden_field e.employee_id, 'day_in_month', value: count_day(@day,e.employee_id) %>
+           <!--  <= hidden_field e.employee_id, 'month_name', value: @date.strftime("%B") %>
+            <= hidden_field e.employee_id, 'year', value: @date.strftime("%Y") %>
+            <= hidden_field e.employee_id, 'day_in_month', value: count_day(@day,e.employee_id) %> -->
             <%= hidden_field e.employee_id, 'present_day', value: present_day.to_f + process_off.to_f + access_card_forgotten.to_f + workingday[2] %>
             <%= hidden_field e.employee_id, 'od_day', value: od_day %>
             <%= hidden_field e.employee_id, 'total_leave', value: workingday[0] + workingday[1] %>

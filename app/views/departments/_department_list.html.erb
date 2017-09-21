@@ -15,11 +15,9 @@
         <td><%= department.manual_department_code %></td>
         <td><%= department.name %></td>
         <td>
-            
              <%= link_to '', edit_department_path(department), class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
-             <!-- link_to '', department, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-sm  btn-danger fa fa-close' -->
-            <!-- <= link_to '', is_confirm_departments_path(department: department),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %> -->
-            <%= link_to '', department,class: 'btn btn-default btn-xs fa fa-eye' %>
+             <%= link_to '', modal_departments_path(department), class: 'btn btn-xs btn-default fa fa-eye',remote:true %>
+            <!-- <= link_to '', department,class: 'btn btn-default btn-sm fa fa-eye' %> -->
           </td>
         </tr>
       <% end %>
@@ -33,3 +31,4 @@
     } );
 } );
 </script>
+<div id="myModal" class="modal fade"></div>

@@ -57,11 +57,8 @@ class AttributeMastersController < ApplicationController
     @attribute_masters = AttributeMaster.all
   end
 
-  def is_confirm
-    @attribute_master = AttributeMaster.find(params[:attribute_master])
-    AttributeMaster.find(@attribute_master.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_attribute_master_path
+  def modal
+    @attribute_master = AttributeMaster.find(params[:format])
   end
   
   private

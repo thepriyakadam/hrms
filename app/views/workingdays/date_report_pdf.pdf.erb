@@ -7,24 +7,23 @@
 </style>
 
 <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
-  <tr><td colspan="8"><center><strong>
-         <% if @workingdays.first.employee.company_location.company.company_logo == nil %>
-      <% else %>
-        <center> <%= wicked_pdf_image_tag @workingdays.first.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+  <tr><td colspan="8">
+        <% if @workingdays.try(:first).try(:employee).try(:company_location).try(:company).try(:company_logo) == nil %>
+        <% else %>
+            <center> <%= image_tag @workingdays.try(:first).try(:employee).try(:company_location).try(:company).try(:company_logo).url, :size => "90x50" %></center>
         <%end%>
 
-
-  <%= @workingdays.first.employee.company_location.company.try(:description) %></strong> <br>
-        <%= @workingdays.first.employee.company_location.company.try(:address) %><br>
-           <b> <%= @from_date.strftime("%B%Y") %> To  <%= @to_date.strftime("%B%Y") %>
-           </b></center>
+        <center><strong><%= @workingdays.try(:first).try(:employee).try(:company_location).try(:company).try(:description) %></strong> <br>
+          <%= @workingdays.try(:first).try(:employee).try(:company_location).try(:company).try(:address) %><br>
+        <b> <%= @from_date.to_date %> To  <%= @to_date.to_date %></b>
+        </center>
         </td>
   </tr>
   <tr>
-    <td colspan="2"> <b>ID</b> : <%= @workingdays.first.employee.try(:manual_employee_code) %></td>
-    <td colspan="4"> <b>Name</b> : <%= full_name(@workingdays.first.employee) %>  
+    <td colspan="2"> <b>ID</b> : <%= @workingdays.try(:first).try(:employee).try(:manual_employee_code) %></td>
+    <td colspan="4"> <b>Name</b> : <%= full_name(@workingdays.try(:first).try(:employee)) %>
     </td>
-    <td colspan="2"> <b>Department</b> : <%= @workingdays.first.employee.department.try(:name) %></td>
+    <td colspan="2"> <b>Department</b> : <%= @workingdays.try(:first).try(:employee).try(:department).try(:name) %></td>
   </tr>
   <tr>
   <th>Month Name</th>

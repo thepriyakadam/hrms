@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170905074326) do
+ActiveRecord::Schema.define(version: 20170919120217) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -850,6 +850,7 @@ ActiveRecord::Schema.define(version: 20170905074326) do
     t.datetime "created_at",                                                                    null: false
     t.datetime "updated_at",                                                                    null: false
     t.integer  "employee_week_off_id",     limit: 4
+    t.integer  "holiday_id",               limit: 4
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id", using: :btree
@@ -857,6 +858,7 @@ ActiveRecord::Schema.define(version: 20170905074326) do
   add_index "employee_attendances", ["employee_id"], name: "index_employee_attendances_on_employee_id", using: :btree
   add_index "employee_attendances", ["employee_leav_request_id"], name: "index_employee_attendances_on_employee_leav_request_id", using: :btree
   add_index "employee_attendances", ["employee_week_off_id"], name: "index_employee_attendances_on_employee_week_off_id", using: :btree
+  add_index "employee_attendances", ["holiday_id"], name: "index_employee_attendances_on_holiday_id", using: :btree
   add_index "employee_attendances", ["machine_attendance_id"], name: "index_employee_attendances_on_machine_attendance_id", using: :btree
   add_index "employee_attendances", ["on_duty_request_id"], name: "index_employee_attendances_on_on_duty_request_id", using: :btree
 
@@ -1329,11 +1331,14 @@ ActiveRecord::Schema.define(version: 20170905074326) do
     t.integer  "passport_photo_file_size",        limit: 4
     t.datetime "passport_photo_updated_at"
     t.integer  "sub_department_id",               limit: 4
+    t.string   "extension_no",                    limit: 255
+    t.string   "emergency_contact_no",            limit: 255
     t.string   "employee_signature_file_name",    limit: 255
     t.string   "employee_signature_content_type", limit: 255
     t.integer  "employee_signature_file_size",    limit: 4
     t.datetime "employee_signature_updated_at"
-    t.string   "emergency_contact_no",            limit: 255
+    t.integer  "service_master_id",               limit: 4
+    t.integer  "resource_pool_master_id",         limit: 4
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id", using: :btree
@@ -1347,6 +1352,8 @@ ActiveRecord::Schema.define(version: 20170905074326) do
   add_index "employees", ["employee_type_id"], name: "index_employees_on_employee_type_id", using: :btree
   add_index "employees", ["nationality_id"], name: "index_employees_on_nationality_id", using: :btree
   add_index "employees", ["religion_id"], name: "index_employees_on_religion_id", using: :btree
+  add_index "employees", ["resource_pool_master_id"], name: "index_employees_on_resource_pool_master_id", using: :btree
+  add_index "employees", ["service_master_id"], name: "index_employees_on_service_master_id", using: :btree
   add_index "employees", ["state_id"], name: "index_employees_on_state_id", using: :btree
   add_index "employees", ["sub_department_id"], name: "index_employees_on_sub_department_id", using: :btree
 
@@ -2942,6 +2949,15 @@ ActiveRecord::Schema.define(version: 20170905074326) do
 
   add_index "resignation_status_records", ["employee_resignation_id"], name: "index_resignation_status_records_on_employee_resignation_id", using: :btree
 
+  create_table "resource_pool_masters", force: :cascade do |t|
+    t.string   "code",        limit: 255
+    t.string   "name",        limit: 255
+    t.text     "description", limit: 65535
+    t.boolean  "status"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
   create_table "retention_moneys", force: :cascade do |t|
     t.boolean  "have_retention"
     t.decimal  "amount",                     precision: 15, scale: 2
@@ -3191,6 +3207,15 @@ ActiveRecord::Schema.define(version: 20170905074326) do
 
   add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id", using: :btree
   add_index "selected_resumes", ["vacancy_master_id"], name: "index_selected_resumes_on_vacancy_master_id", using: :btree
+
+  create_table "service_masters", force: :cascade do |t|
+    t.string   "code",        limit: 255
+    t.string   "name",        limit: 255
+    t.text     "description", limit: 65535
+    t.boolean  "status"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
 
   create_table "shift_masters", force: :cascade do |t|
     t.integer  "code",        limit: 4
@@ -3622,9 +3647,9 @@ ActiveRecord::Schema.define(version: 20170905074326) do
     t.string   "vacancy_of",                limit: 255
     t.integer  "sub_department_id",         limit: 4
     t.integer  "cost_center_id",            limit: 4
-    t.integer  "target_company_id",         limit: 4
     t.string   "secondary_skill",           limit: 255
     t.string   "billable",                  limit: 255
+    t.integer  "target_company_id",         limit: 4
   end
 
   add_index "vacancy_masters", ["company_id"], name: "index_vacancy_masters_on_company_id", using: :btree
@@ -3854,6 +3879,7 @@ ActiveRecord::Schema.define(version: 20170905074326) do
   add_foreign_key "employee_attendances", "employee_leav_requests"
   add_foreign_key "employee_attendances", "employee_week_offs"
   add_foreign_key "employee_attendances", "employees"
+  add_foreign_key "employee_attendances", "holidays"
   add_foreign_key "employee_attendances", "machine_attendances"
   add_foreign_key "employee_attendances", "on_duty_requests"
   add_foreign_key "employee_bank_details", "banks"
@@ -3915,6 +3941,8 @@ ActiveRecord::Schema.define(version: 20170905074326) do
   add_foreign_key "employees", "employee_types"
   add_foreign_key "employees", "nationalities"
   add_foreign_key "employees", "religions"
+  add_foreign_key "employees", "resource_pool_masters"
+  add_foreign_key "employees", "service_masters"
   add_foreign_key "employees", "states"
   add_foreign_key "employees", "sub_departments"
   add_foreign_key "employer_contributions", "employees"

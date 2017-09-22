@@ -8,10 +8,10 @@ class Family < ActiveRecord::Base
 
 
   validates :f_name, presence: true
-  validates :l_name, presence: true
+  # validates :l_name, presence: true
 
-  validate :adhar_no_regex
-  validate :pan_no_regex
+  # validate :adhar_no_regex
+  # validate :pan_no_regex
 
 
   def self.to_csv(options = {})

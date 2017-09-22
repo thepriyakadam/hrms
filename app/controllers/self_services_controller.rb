@@ -58,7 +58,7 @@ class SelfServicesController < ApplicationController
     if resignation_date == "" || leaving_reason_id == "" || tentative_leaving_date == "" || reason == ""
       flash[:alert] = "Please fill all mendetory fields!"
     else
-      if @employee_resignation.is_there?
+      if @employee_resignation.is_there_self(employee_id)
       flash[:alert] = "Your Request already has been sent"
      else
         @employees=Employee.find_by(id: employee_id)

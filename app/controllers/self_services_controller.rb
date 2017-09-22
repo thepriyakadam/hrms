@@ -44,6 +44,8 @@ class SelfServicesController < ApplicationController
   end
 
   def create_self_resignation
+    @employee_resignation = EmployeeResignation.new
+
     employee_id = params[:employee_id]
     application_date = params[:application_date]
     resignation_date = params[:employee_resignation][:resignation_date]
@@ -56,14 +58,17 @@ class SelfServicesController < ApplicationController
     if resignation_date == "" || leaving_reason_id == "" || tentative_leaving_date == "" || reason == ""
       flash[:alert] = "Please fill all mendetory fields!"
     else
+      if @employee_resignation.is_there?
+      flash[:alert] = "Your Request already has been sent"
+     else
+        @employees=Employee.find_by(id: employee_id)
+        @date_diff = (tentative_leaving_date.to_date - resignation_date.to_date).to_i
 
-      @employees=Employee.find_by(id: employee_id)
-      @date_diff = (tentative_leaving_date.to_date - resignation_date.to_date).to_i
-
-      @employee_resignation = EmployeeResignation.create(short_notice_period: @date_diff,reporting_master_id: @employees.manager_id,is_pending: true,resign_status: "Pending",is_first_approved: false,is_first_rejected: false, is_cancelled: false,employee_id: employee_id,resignation_date: resignation_date,application_date: application_date,reason: reason,note: note,leaving_reason_id: leaving_reason_id,notice_period: notice_period,tentative_leaving_date: tentative_leaving_date)  
-      @resignation_status_record = ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Pending",change_date: Date.today)
-      EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
-      flash[:notice] = "created Successfully!"
+        @employee_resignation = EmployeeResignation.create(short_notice_period: @date_diff,reporting_master_id: @employees.manager_id,is_pending: true,resign_status: "Pending",is_first_approved: false,is_first_rejected: false, is_cancelled: false,employee_id: employee_id,resignation_date: resignation_date,application_date: application_date,reason: reason,note: note,leaving_reason_id: leaving_reason_id,notice_period: notice_period,tentative_leaving_date: tentative_leaving_date)  
+        @resignation_status_record = ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Pending",change_date: Date.today)
+        EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
+        flash[:notice] = "created Successfully!"
+      end#is_there?
     end#nil
       redirect_to employee_resignation_self_services_path
   end

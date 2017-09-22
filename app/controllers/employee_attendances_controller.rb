@@ -2449,6 +2449,16 @@ end
     @employee_attendances = EmployeeAttendance.where(day: date.to_date).where("in_time = ? OR out_time = ?",nil,nil)
   end
 
+  def attendance_summary
+  end
+
+  def show_attendance_summary
+    @from = params[:salary][:from]
+    @to = params[:salary][:to]
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).group(:day)
+   
+  end
+
   # def create_self_attendance
   #   @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
   #   employee_id = params[:salary][:employee_id]
@@ -2478,6 +2488,6 @@ end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_attendance_params
-    params.require(:employee_attendance).permit(:employee_week_off_id,:employee_code,:employee_name,:employee_id, :day, :present, :in_time, :out_time)
+    params.require(:employee_attendance).permit(:holiday_id,:employee_week_off_id,:employee_code,:employee_name,:employee_id, :day, :present, :in_time, :out_time)
   end
 end

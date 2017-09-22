@@ -790,6 +790,9 @@ end
       get :in_out_summary
       post :show_in_out_summary
       get :modal_missing_record
+      get :attendance_summary
+      post :show_attendance_summary
+      get :show_attendance_summary
     end
   end
   resources :salary_comp_mappings

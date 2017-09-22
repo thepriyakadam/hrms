@@ -12,6 +12,7 @@ class EmployeeMailer < ApplicationMailer
     @password = pwd
     @employee = emp
     @emp = Employee.find_by(id: @employee.id)
+    attachments.inline['logo1.jpg'] = File.read('app/assets/images/logo1.jpg')
     mail(to: @emp.email, subject: 'HRMS Password Detail')
   end
 

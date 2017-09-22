@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :frequest_questions do
+    collection do
+      get :frequest_question_modal
+      get :list_of_faq
+    end
+  end
   resources :target_companies
   resources :leave_transfers do
     collection do
@@ -124,7 +130,12 @@ Rails.application.routes.draw do
   end
   resources :rembursmentmasters
   resources :employee_jc_lists
-  resources :joining_checklist_masters
+  resources :joining_checklist_masters do
+    collection do
+      get :joining_checklist_master
+      post :joining_checklist_master
+    end
+  end
   resources :employee_gps do
     collection do
       get :employee_wise_gps
@@ -617,6 +628,8 @@ end
   resources :currency_masters do
     collection do
       get :is_confirm
+      get :currency_master
+      post :currency_master
     end
   end
   resources :illness_types do
@@ -659,6 +672,8 @@ end
     collection do
       get :is_confirm
       get :modal
+      get :attribute_master
+      post :attribute_master
     end
   end
   resources :circulars do
@@ -982,16 +997,22 @@ end
     collection do
       get :is_confirm
       get :modal
+      get :goal_perspective_master
+      post :goal_perspective_master
     end
   end
   resources :ratings do
     collection do
       get :is_confirm
+      get :rating_master
+      post :rating_master
     end
   end
   resources :periods do
     collection do
       get :is_confirm
+      get :period_master
+      post :period_master
     end
   end
   resources :overall_ratings do
@@ -1053,11 +1074,15 @@ end
   resources :travel_expence_types do
     collection do
       get :is_confirm
+      get :travel_expence_type_master
+      post :travel_expence_type_master
     end
   end
   resources :travel_modes do
     collection do
       get :is_confirm
+      get :travel_mode_master
+      post :travel_mode_master
     end
   end
   resources :interview_analyses do
@@ -1125,6 +1150,8 @@ end
   resources :travel_options do
     collection do
       get :is_confirm
+      get :travel_option_master
+      post :travel_option_master
     end
   end
   resources :training_plans  do
@@ -1205,6 +1232,8 @@ end
   resources :asset_types do
     collection do
       get :is_confirm
+      get :asset_type_master
+      post :asset_type_master
     end
   end
   resources :employee_nominations do
@@ -2137,6 +2166,8 @@ end
     collection do
       get :is_confirm
       get :employee_designation_list
+      get :employee_designation_master
+      post :employee_designation_master
     end
   end
   resources :cost_centers do

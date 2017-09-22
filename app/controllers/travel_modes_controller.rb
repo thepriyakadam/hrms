@@ -55,11 +55,21 @@ class TravelModesController < ApplicationController
     @travel_modes = TravelMode.all
   end
 
-  def is_confirm
-    @travel_mode = TravelMode.find(params[:travel_mode])
-    TravelMode.find(@travel_mode.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_travel_mode_path
+   def travel_mode_master
+      @travel_modes = TravelMode.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'travel_modes/travel_mode_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'travel_mode_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'travel_modes/travel_mode_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
   end
   
   private

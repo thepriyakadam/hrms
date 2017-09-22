@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170921084601) do
+ActiveRecord::Schema.define(version: 20170922092726) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1496,6 +1496,18 @@ ActiveRecord::Schema.define(version: 20170921084601) do
   add_index "families", ["relation_master_id"], name: "index_families_on_relation_master_id", using: :btree
   add_index "families", ["religion_id"], name: "index_families_on_religion_id", using: :btree
 
+  create_table "faqs", force: :cascade do |t|
+    t.string   "code",        limit: 255
+    t.string   "question",    limit: 255
+    t.string   "answer",      limit: 255
+    t.integer  "employee_id", limit: 4
+    t.boolean  "status"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "faqs", ["employee_id"], name: "index_faqs_on_employee_id", using: :btree
+
   create_table "food_coupan_masters", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
@@ -1521,6 +1533,18 @@ ActiveRecord::Schema.define(version: 20170921084601) do
 
   add_index "food_deductions", ["employee_id"], name: "index_food_deductions_on_employee_id", using: :btree
   add_index "food_deductions", ["food_coupan_master_id"], name: "index_food_deductions_on_food_coupan_master_id", using: :btree
+
+  create_table "frequest_questions", force: :cascade do |t|
+    t.string   "code",        limit: 255
+    t.text     "question",    limit: 65535
+    t.text     "answer",      limit: 65535
+    t.integer  "employee_id", limit: 4
+    t.boolean  "status"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "frequest_questions", ["employee_id"], name: "index_frequest_questions_on_employee_id", using: :btree
 
   create_table "goal_bunches", force: :cascade do |t|
     t.integer  "employee_id",             limit: 4
@@ -3954,8 +3978,10 @@ ActiveRecord::Schema.define(version: 20170921084601) do
   add_foreign_key "families", "employees"
   add_foreign_key "families", "relation_masters"
   add_foreign_key "families", "religions"
+  add_foreign_key "faqs", "employees"
   add_foreign_key "food_deductions", "employees"
   add_foreign_key "food_deductions", "food_coupan_masters"
+  add_foreign_key "frequest_questions", "employees"
   add_foreign_key "goal_bunches", "employees"
   add_foreign_key "goal_bunches", "performance_calendars"
   add_foreign_key "goal_bunches", "periods"

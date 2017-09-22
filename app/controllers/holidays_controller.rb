@@ -55,6 +55,8 @@ class HolidaysController < ApplicationController
       @emp = EmployeeAttendance.where(department_id: department_id,day: @holiday.holiday_date).pluck(:employee_id)
       @employees = Employee.where(department_id: department_id).where.not(id: @emp)
     end
+    # flash[:notice] = "Holiday Assigned Successfully!"
+    # redirect_to new_holiday_path
   end
 
   def assign_to_employee

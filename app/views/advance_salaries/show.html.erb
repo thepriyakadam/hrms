@@ -50,7 +50,7 @@
     <div class="col-sm-10"><h5>Installment Details</h5></div>
     <div class="col-sm-2">
       <div class="box-tools pull-right">
-        <% if change_total < total %>
+        <% if change_total.to_i < total.to_i %>
           <% unless @instalments.where(is_complete: true).sum('instalment_amount').to_i >= @advance_salary.advance_amount.to_i %>
             <%= link_to "Add Instalment", new_instalment_path(@advance_salary),class: "btn btn-primary btn-sm" %>
           <% end %>

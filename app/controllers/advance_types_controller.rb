@@ -69,6 +69,6 @@ class AdvanceTypesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def advance_type_params
-    params.require(:advance_type).permit(:is_confirm,:code, :name, :description)
+    params.require(:advance_type).permit(:interest,:rate,:is_confirm,:code, :name, :description)
   end
 end

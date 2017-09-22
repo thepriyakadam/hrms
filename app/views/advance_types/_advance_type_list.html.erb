@@ -3,6 +3,8 @@
     <tr>  
       <th>Code</th>
       <th>Name</th>
+      <th>Interest</th>
+      <th>Rate</th>
       <th>Description</th>
       <th>Action</th>
     </tr>
@@ -12,6 +14,8 @@
       <tr>
         <td><%= advance_type.code %></td>
         <td><%= advance_type.name %></td>
+        <td><%= advance_type.interest %></td>
+        <td><%= advance_type.rate %></td>
         <td><%= advance_type.description %></td>
         <td>
             <%= link_to '', edit_advance_type_path(advance_type),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>

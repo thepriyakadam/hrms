@@ -10,7 +10,7 @@
   </thead>
   <tbody>
     <% @holidays.each do |holiday| %>
-      <%= bootstrap_form_for :holiday, url: {action: 'employee_list',holiday_id: holiday.id}, html: {id: 'holiday'} do |f| %>
+      <%= bootstrap_form_for :holiday, url: {action: 'employee_list',holiday_id: holiday.id} do |f| %>
         <tr>
           <td><%= holiday.code %></td>
           <td><%= holiday.name %></td>

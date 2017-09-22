@@ -55,12 +55,22 @@ end
     @employee_categories = EmployeeCategory.all
   end
 
-  def is_confirm
-    @employee_category = EmployeeCategory.find(params[:employee_category])
-    EmployeeCategory.find(@employee_category.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_employee_category_path
-  end
+    def employee_category_master
+     @employee_categories = EmployeeCategory.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_categories/employee_category_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' employee_category_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_categories/employee_category_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+    end
   
   private
 

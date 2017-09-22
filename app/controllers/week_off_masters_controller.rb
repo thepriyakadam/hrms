@@ -195,7 +195,15 @@ class WeekOffMastersController < ApplicationController
     from = params[:employee][:from]
     to = params[:employee][:to]
     day = params[:employee][:day]
-    @week_off_masters = WeekOffMaster.where(employee_id: @employee_id,from: from.to_date,to: to.to_date,day: day)
+     if @employee_id == "" && from == nil && to == nil
+        @week_off_masters = WeekOffMaster.where(day: day)
+     elsif @employee_id == "" 
+      @week_off_masters = WeekOffMaster.where(from: from.to_date,to: to.to_date,day: day)
+     elsif from == nil || to == nil
+      @week_off_masters = WeekOffMaster.where(employee_id: @employee_id,day: day)
+     else
+      @week_off_masters = WeekOffMaster.where(employee_id: @employee_id,from: from.to_date,to: to.to_date,day: day)
+    end
   end
 
   def revert_master_data

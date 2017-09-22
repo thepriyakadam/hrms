@@ -1,5 +1,11 @@
  <%= bootstrap_form_for(@employee_designation,html: {id: 'employee_designation'},remote:true) do |f| %>
   <div class="row">
+
+      <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Code' %>
+      </div>
+    </div>
     <div class="col-sm-3">
       <div class="form-group required">
         <%= f.text_field :name,hide_label:true, placeholder: 'Employee Designation' %>
@@ -23,13 +29,19 @@
 <script>
 $("#employee_designation").validate({
     rules: {
-      "employee_designation[name]":{
+      "employee_designation[code]":{
+        required: true,
+      },
+       "employee_designation[name]":{
         required: true,
       }
        },
     messages: {
-      "employee_designation[name]":{
-        required: "Please specify employee designation",
+      "employee_designation[code]":{
+        required: "Please specify code",
+      },
+       "employee_designation[name]":{
+        required: "Please specify name",
       }
        },
     errorPlacement: function(error, element) {

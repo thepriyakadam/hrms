@@ -37,6 +37,23 @@ class EmployeeTypesController < ApplicationController
     @employee_type.destroy
     @employee_types = EmployeeType.all
   end
+
+   def employee_type_master
+     @employee_types = EmployeeType.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_types/employee_type_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' employee_type_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_types/employee_type_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+    end
   
   private
 

@@ -43,13 +43,24 @@ class ExpencessTypesController < ApplicationController
     @expencess_type.destroy
     @expencess_types = ExpencessType.all
   end
+   
+    def expence_type_master
+     @expencess_types = ExpencessType.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'expencess_types/expence_type_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' expence_type_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'expencess_types/expence_type_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+    end
 
-  def is_confirm
-    @expencess_type = ExpencessType.find(params[:expencess_type])
-    ExpencessType.find(@expencess_type.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_expencess_type_path
-  end
   private
 
   # Use callbacks to share common setup or constraints between actions.

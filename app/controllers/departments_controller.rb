@@ -54,6 +54,10 @@ class DepartmentsController < ApplicationController
     end
   end
 
+  def modal
+    @department = Department.find(params[:format])
+  end
+
   def is_confirm
     @department = Department.find(params[:department])
     Department.find(@department.id).update(is_confirm: true)

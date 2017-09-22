@@ -1,8 +1,20 @@
 <%= bootstrap_form_for(@university,html: {id: 'university'},remote:true) do |f| %>
   <div class="row">
+      <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: "Code" %>
+      </div>
+    </div>
+
     <div class="col-sm-3">
       <div class="form-group required">
         <%= f.text_field :name,hide_label:true, placeholder: 'University / Institution' %>
+      </div>
+    </div>
+
+        <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
       </div>
     </div>
 
@@ -17,13 +29,19 @@
 <script>
 $("#university").validate({
     rules: {
-      "university[name]":{
+      "university[code]":{
+        required: true,
+      },
+       "university[name]":{
         required: true,
       }
        },
     messages: {
+      "university[code]":{
+        required: "Please specify code",
+      },
       "university[name]":{
-        required: "Please Specify University / Institution",
+        required: "Please specify name",
       }
        },
     errorPlacement: function(error, element) {

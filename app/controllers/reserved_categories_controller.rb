@@ -44,12 +44,22 @@ class ReservedCategoriesController < ApplicationController
     @reserved_categories = ReservedCategory.all
   end
 
-  def is_confirm
-    @reserved_category = ReservedCategory.find(params[:reserved_category])
-    ReservedCategory.find(@reserved_category.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_reserved_category_path
-  end
+  def reserved_category_master
+     @reserved_categories = ReservedCategory.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'reserved_categories/reserved_category_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' reserved_category_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'reserved_categories/reserved_category_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+    end
   
   private
 

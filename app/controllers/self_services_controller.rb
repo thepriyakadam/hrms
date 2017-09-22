@@ -44,6 +44,8 @@ class SelfServicesController < ApplicationController
   end
 
   def create_self_resignation
+    @employee_resignation = EmployeeResignation.new
+
     employee_id = params[:employee_id]
     application_date = params[:application_date]
     resignation_date = params[:employee_resignation][:resignation_date]
@@ -56,14 +58,17 @@ class SelfServicesController < ApplicationController
     if resignation_date == "" || leaving_reason_id == "" || tentative_leaving_date == "" || reason == ""
       flash[:alert] = "Please fill all mandatory fields!"
     else
+      if @employee_resignation.is_there_self(employee_id)
+      flash[:alert] = "Your Request already has been sent"
+     else
+        @employees=Employee.find_by(id: employee_id)
+        @date_diff = (tentative_leaving_date.to_date - resignation_date.to_date).to_i
 
-      @employees=Employee.find_by(id: employee_id)
-      @date_diff = (tentative_leaving_date.to_date - resignation_date.to_date).to_i
-
-      @employee_resignation = EmployeeResignation.create(short_notice_period: @date_diff,reporting_master_id: @employees.manager_id,is_pending: true,resign_status: "Pending",is_first_approved: false,is_first_rejected: false, is_cancelled: false,employee_id: employee_id,resignation_date: resignation_date,application_date: application_date,reason: reason,note: note,leaving_reason_id: leaving_reason_id,notice_period: notice_period,tentative_leaving_date: tentative_leaving_date)  
-      @resignation_status_record = ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Pending",change_date: Date.today)
-      EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
-      flash[:notice] = "created Successfully!"
+        @employee_resignation = EmployeeResignation.create(short_notice_period: @date_diff,reporting_master_id: @employees.manager_id,is_pending: true,resign_status: "Pending",is_first_approved: false,is_first_rejected: false, is_cancelled: false,employee_id: employee_id,resignation_date: resignation_date,application_date: application_date,reason: reason,note: note,leaving_reason_id: leaving_reason_id,notice_period: notice_period,tentative_leaving_date: tentative_leaving_date)  
+        @resignation_status_record = ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Pending",change_date: Date.today)
+        EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
+        flash[:notice] = "created Successfully!"
+      end#is_there?
     end#nil
       redirect_to employee_resignation_self_services_path
   end
@@ -74,8 +79,8 @@ class SelfServicesController < ApplicationController
   end
 
   def show_resignation_detail
-    @employee_resignations = EmployeeResignation.find_by_employee_id(params[:emp_id])
-    # @employee_resignations = EmployeeResignation.where(id: @employee_resignation_id.id)
+    @employee_resignation = EmployeeResignation.find_by_id(params[:id])
+   # @employee_resignation = EmployeeResignation.find_by(id: @employee_resignations.id)
   end
 
   def employee_transfer
@@ -284,6 +289,13 @@ class SelfServicesController < ApplicationController
     time = Time.now
     in_time = Time.at(time).strftime("%H:%M")
       @emp_atten = EmployeeAttendance.create(employee_id: current_user.employee_id,day: Date.today,present: 'P',in_time: in_time, is_confirm: false)  
+      date = Date.today
+      previous_date = (date - 1).to_date
+      @employee_attendances = EmployeeAttendance.where(day: previous_date, out_time: nil,comment: nil).where.not(in_time: nil)
+      @employee_attendances.each do |ea|
+        ea.update(present: 'A',comment: 'Out time not available')
+      end
+
       if @emp_atten.save
         flash[:notice] = "Created successfully"
       else
@@ -293,8 +305,7 @@ class SelfServicesController < ApplicationController
     redirect_to add_attendance_self_services_path
   end
 
-  def create_out_time
-    
+  def create_out_time 
     emp_attendance = params[:emp_attendance]
     @employee_attendance = EmployeeAttendance.find_by(id: emp_attendance)
     in_time = @employee_attendance.in_time
@@ -303,13 +314,13 @@ class SelfServicesController < ApplicationController
     
     total_hrs = out_time.to_time - in_time.to_time
     working_hrs = Time.at(total_hrs).strftime("%H:%M")
-    if working_hrs.to_s > "8" 
+    if working_hrs.to_s > "08:00" 
       @employee_attendance.update(out_time: out_time,working_hrs: working_hrs,present: 'P')
-    elsif working_hrs.to_s < "8"
-      @employee_attendance.update(out_time: out_time,working_hrs: working_hrs,present: 'HD')
-    elsif working_hrs.to_s < "4"
+
+    elsif working_hrs.to_s < "04:00"
       @employee_attendance.update(out_time: out_time,working_hrs: working_hrs,present: 'A')
-    
+    elsif working_hrs.to_s < "08:00"
+      @employee_attendance.update(out_time: out_time,working_hrs: working_hrs,present: 'HD')
     end
     flash[:notice] = "Out time created successfully"
     redirect_to add_attendance_self_services_path

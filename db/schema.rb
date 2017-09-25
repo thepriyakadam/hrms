@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170908033746) do
+ActiveRecord::Schema.define(version: 20170920061829) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -2552,6 +2552,7 @@ ActiveRecord::Schema.define(version: 20170908033746) do
     t.datetime "created_at",                                                             null: false
     t.datetime "updated_at",                                                             null: false
     t.text     "comment",          limit: 65535
+    t.date     "taken_date"
   end
 
   add_index "leave_c_offs", ["employee_id"], name: "index_leave_c_offs_on_employee_id", using: :btree

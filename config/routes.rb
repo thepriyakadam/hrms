@@ -1100,16 +1100,22 @@ end
   resources :interview_decisions do
     collection do
       get :is_confirm
+      get :interview_decision_master
+      post :interview_decision_master
     end
   end
   resources :interview_attributes do
     collection do
       get :is_confirm
+      get :interview_attribute_master
+      post :interview_attribute_master
     end
   end
   resources :interview_evalutions do
     collection do
       get :is_confirm
+      get :interview_evalution_master
+      post :interview_evalution_master
     end
   end
   resources :training_topic_masters do

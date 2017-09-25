@@ -22,7 +22,7 @@
 
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :leaving_reason_id, all_leaving_reason,{label: 'Reason of Leaving',include_blank: " Select Reason of Leaving"} %>
+            <%= f.select :leaving_reason_id, all_leaving_reason,{label: 'Reason of Leaving',include_blank: " Select Reason of Leaving"},class: 'employee_resignation' %>
           </div>
         </div>
 
@@ -82,6 +82,12 @@ $("#employee_resignation").validate({
       },
       "employee_resignation[reason]":{
         required: true,
+      },
+      "employee_resignation[leaving_reason_id]":{
+        required: true,
+      },
+      "employee_resignation[tentative_leaving_date]":{
+        required: true,
       }
     },
     messages: {
@@ -89,7 +95,13 @@ $("#employee_resignation").validate({
         required: "Please select resignation date",
       },
       "employee_resignation[reason]":{
-        required: "Please Specify reason",
+        required: "Please specify reason",
+      },
+      "employee_resignation[leaving_reason_id]":{
+        required: "Please select leaving reason",
+      },
+      "employee_resignation[tentative_leaving_date]":{
+        required: "Please select tentative date",
       }
     },
     errorPlacement: function(error, element) {

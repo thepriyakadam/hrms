@@ -5,11 +5,13 @@
   </head>
   
   <body>
-     <h4>Confirmation Email</h4>
-    <p>
-     <td> Welcome in HRMS of <%= @emp.company.name %> !!
-     This is to inform you that your default password is <b><%= @password %></b>
-     You can change your password.</td>
-    </p>
+    <p><center><%= image_tag  attachments['mail_signature.png'].url  -%></center></p>
+
+    <p><center><b> Welcome to the <%= @emp.company.name %> Family!!</b></center>
+
+    <p>You can access all employee related services and post your suggestions/grievances on the HRMS.</p>
+
+    <p>This is to inform you that your default password is <b><%= @password %></b>.
+     You can change your password by going to the My Profile  section -> Add the current password and new password and click on update profile.</p><br>
   </body>
 </html>

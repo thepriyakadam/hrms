@@ -15,13 +15,8 @@
         <td><%= food_coupan_master.try(:name) %></td>
         <td><%= food_coupan_master.price %></td>
         <td>
-          <% if food_coupan_master.is_confirm == true %>
-            <small class= "label label-primary">Confirmed</small>
-          <% else %>
             <%= link_to '', edit_food_coupan_master_path(food_coupan_master),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '',  food_coupan_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
-            <%= link_to '', is_confirm_food_coupan_masters_path(food_coupan_master: food_coupan_master),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-          <% end %>
         </td>
       </tr>
     <% end %>

@@ -1,0 +1,37 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">FAQ's</h3>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+<table id="example6" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Code</th>
+      <th>Question</th>
+      <th>Action</th>
+    </tr> 
+    </thead>
+  <tbody>
+    <% @frequest_questions.each do |frequest_question| %>
+      <tr>
+        <td><%= frequest_question.code %></td>
+        <td><%= frequest_question.question %></td>
+        <td>
+            <%= link_to '', frequest_question_modal_frequest_questions_path(frequest_question),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>
+
+<div id="frequest_question_modal" class="modal fade"></div>
+
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

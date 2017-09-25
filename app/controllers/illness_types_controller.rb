@@ -49,12 +49,22 @@ class IllnessTypesController < ApplicationController
     @illness_types = IllnessType.all
   end
 
-  def is_confirm
-    @illness_type = IllnessType.find(params[:illness_type])
-    IllnessType.find(@illness_type.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_illness_type_path
-  end
+  def illness_type_master
+     @illness_types = IllnessType.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'illness_types/illness_type_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' illness_type_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'illness_types/illness_type_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+    end
   
   private
     # Use callbacks to share common setup or constraints between actions.

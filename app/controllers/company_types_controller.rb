@@ -54,6 +54,23 @@ class CompanyTypesController < ApplicationController
             end
   end
 
+  def company_type_master
+    @company_types = CompanyType.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'company_types/company_type_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'company_type_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'company_types/company_type_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

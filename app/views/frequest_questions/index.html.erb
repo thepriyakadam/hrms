@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Frequest Questions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Question</th>
+      <th>Answer</th>
+      <th>Employee</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @frequest_questions.each do |frequest_question| %>
+      <tr>
+        <td><%= frequest_question.code %></td>
+        <td><%= frequest_question.question %></td>
+        <td><%= frequest_question.answer %></td>
+        <td><%= frequest_question.employee %></td>
+        <td><%= frequest_question.status %></td>
+        <td><%= link_to 'Show', frequest_question %></td>
+        <td><%= link_to 'Edit', edit_frequest_question_path(frequest_question) %></td>
+        <td><%= link_to 'Destroy', frequest_question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Frequest question', new_frequest_question_path %>

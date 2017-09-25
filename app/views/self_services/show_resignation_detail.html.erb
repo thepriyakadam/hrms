@@ -16,16 +16,18 @@
             <td colspan="3"><%= @employee_resignation.reason %></td>
           </tr>
           <tr>
+         <!--  <th>Notice Period</th>
+            <td><= @employee_resignation.is_notice_period ? "Yes" : "No" %></td> -->
           <th>Notice Period</th>
-            <td><%= @employee_resignation.is_notice_period %></td>
-          <th>Notice Period</th>
-            <td><%= @employee_resignation.notice_period %></td>
+            <td colspan="3"><%= @employee_resignation.notice_period %></td>
           </tr>
           <tr>
           <th>Tentative Leaving Date</th>
-            <td><%= @employee_resignation.tentative_leaving_date %></td>
+            <td colspan="3"><%= @employee_resignation.tentative_leaving_date %></td>
+          </tr> 
+          <tr> 
             <th>Exit Interview Date</th>
-            <td><%= @employee_resignation.exit_interview_date %></td>
+            <td colspan="3"><%= @employee_resignation.exit_interview_date %></td>
             </tr>
             <tr>
           <th>Remark</th>

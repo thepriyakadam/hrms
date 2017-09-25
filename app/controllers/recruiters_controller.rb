@@ -79,6 +79,23 @@ class RecruitersController < ApplicationController
     end
   end
 
+  def recruiter_master
+      @recruiters = Recruiter.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'recruiters/recruiter_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'recruiter_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'recruiters/recruiter_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_recruiter

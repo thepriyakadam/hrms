@@ -518,7 +518,7 @@
                 <div class="product-info">
                  <%= full_name(j.employee)%>
                   <span class="label label-info pull-right"><%= j.joining_date %></span>
-                  <span class="product-description"><%= j.employee.department.try(:name) %></span>
+                  <span class="product-description"><%= j.employee.department.try(:name) %> (<%= j.employee.manager.try(:first_name) %> <%= j.employee.manager.try(:middle_name) %> <%= j.employee.manager.try(:last_name) %> )</span>
                   </div>
                 <% end %>
             </li><!-- /.item -->

@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :contact_details do
+    collection do
+      get :contact_description
+    end
+  end
   resources :frequest_questions do
     collection do
       get :frequest_question_modal

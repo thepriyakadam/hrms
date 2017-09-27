@@ -215,6 +215,7 @@ class EmployeeResignationsController < ApplicationController
   end
 
   def final_approve
+    @exit_interview_date = params[:employee_resignation][:]
     @employee_resignation = EmployeeResignation.find(params[:format])
     @employee_resignation.update(final_reporter_id: current_user.employee_id,is_final_approved: true,resign_status: "FinalApproved")
     ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "FinalApproved",change_date: Date.today)
@@ -227,6 +228,10 @@ class EmployeeResignationsController < ApplicationController
       flash[:notice] = 'Resignation Request Approved Successfully'
       redirect_to resignation_history_employee_resignations_path
     end
+  end
+
+  def final_approve_modal
+    @employee_resignation = EmployeeResignation.find(params[:format])
   end
 
   def first_reject

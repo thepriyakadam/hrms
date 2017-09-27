@@ -141,7 +141,6 @@
       
 
   <% elsif @employee_resignation.resign_status == "SecondApproved" %>
-  
     <%= link_to 'Approve',final_approve_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-primary fa fa-check' %> 
       <%= link_to 'Reject',final_reject_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-danger fa fa-trash' %> 
       <%= link_to 'Back', resignation_history_employee_resignations_path,class: 'btn btn-default fa fa-arrow-left' %> 

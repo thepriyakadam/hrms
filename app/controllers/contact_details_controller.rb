@@ -5,6 +5,7 @@ class ContactDetailsController < ApplicationController
   # GET /contact_details.json
   def index
     @contact_details = ContactDetail.where(status: true)
+    session[:active_tab] ="EmployeeSelfService"
   end
 
   # GET /contact_details/1
@@ -16,8 +17,8 @@ class ContactDetailsController < ApplicationController
   def new
     @contact_detail = ContactDetail.new
     @contact_details = ContactDetail.all
-    session[:active_tab] ="GlobalSetup"
-    session[:active_tab1] ="EmployeeProfile"
+    session[:active_tab] = "InformationManagement"
+    session[:active_tab1] = "Events" 
   end
 
   # GET /contact_details/1/edit

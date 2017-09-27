@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170926072224) do
+ActiveRecord::Schema.define(version: 20170927105529) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -552,6 +552,11 @@ ActiveRecord::Schema.define(version: 20170926072224) do
     t.boolean  "status"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.string   "role1",       limit: 255
+    t.string   "role2",       limit: 255
+    t.string   "role3",       limit: 255
+    t.string   "role4",       limit: 255
+    t.string   "role5",       limit: 255
   end
 
   add_index "contact_details", ["employee_id"], name: "index_contact_details_on_employee_id", using: :btree

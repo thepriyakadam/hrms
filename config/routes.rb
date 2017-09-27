@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :contact_details do
     collection do
-      get :contact_description
+      get :modal_contact_detail
     end
   end
   resources :frequest_questions do
@@ -1194,6 +1194,7 @@ end
       get :confirm_resignation
       get :cancel_resignation_list
       get :modal_resignation_detail
+      get :final_approve_modal
   end
 end
   resources :travel_options do

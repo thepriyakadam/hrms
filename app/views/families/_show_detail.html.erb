@@ -40,7 +40,7 @@
     <% @families.each do |family| %>
       <tr>
         <td><%= i=i+1%></td>
-        <td><%= family.f_name+' '+family.m_name+' '+family.l_name %></td>
+        <td><%= family.f_name %> <%= family.m_name %> <%= family.l_name %></td>
         <td><%= family.relation_master.try(:name) %></td>
         <td>
         <%= link_to '', edit_family_path(family),class: 'btn btn-xs btn-success fa fa-edit',remote: true %>

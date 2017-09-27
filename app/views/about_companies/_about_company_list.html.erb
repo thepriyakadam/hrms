@@ -17,13 +17,8 @@
         <td><%= about_company.description %></td>
         <td><%= about_company.status ? "Active" : "Inactive" %></td>
         <td>
-          <% if about_company.is_confirm == true %>
-            <small class= "label label-primary">Confirmed</small>
-          <% else %>
             <%= link_to '', edit_about_company_path(about_company),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  about_company, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
-            <%= link_to '', is_confirm_about_companies_path(about_company: about_company),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-          <% end %>
         </td>
       </tr>
     <% end %>

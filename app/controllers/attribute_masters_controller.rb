@@ -60,6 +60,23 @@ class AttributeMastersController < ApplicationController
   def modal
     @attribute_master = AttributeMaster.find(params[:format])
   end
+
+  def attribute_master
+      @attribute_masters = AttributeMaster.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'attribute_masters/attribute_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'attribute_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'attribute_masters/attribute_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+  end
   
   private
     # Use callbacks to share common setup or constraints between actions.

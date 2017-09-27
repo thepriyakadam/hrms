@@ -189,7 +189,7 @@
 
         <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">Openings</h3>
+          <h3 class="box-title">Job Openings</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -453,7 +453,7 @@
                     <div class="product-info">
                       <%= full_name(j.employee)%>
                       <span class="label label-info pull-right"><%= j.joining_date %></span>
-                      <span class="product-description"><%= j.employee.try(:joining_detail).try(:cost_center).try(:name) %> - <%= j.employee.try(:department).try(:name) %> <%= j.try(:employee).try(:sub_department).try(:name) %></span>
+                      <span class="product-description"><%= j.employee.try(:joining_detail).try(:cost_center).try(:name) %> - <%= j.employee.try(:department).try(:name) %> <%= j.try(:employee).try(:sub_department).try(:name) %> (<%= j.employee.manager.try(:first_name) %> <%= j.employee.manager.try(:middle_name) %> <%= j.employee.manager.try(:last_name) %> )</span>
                     </div>
                   </li><!-- /.item -->
                 <% else %>

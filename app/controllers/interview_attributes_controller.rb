@@ -55,11 +55,21 @@ class InterviewAttributesController < ApplicationController
     @interview_attributes = InterviewAttribute.all
   end
 
-  def is_confirm
-    @interview_attribute = InterviewAttribute.find(params[:interview_attribute])
-    InterviewAttribute.find(@interview_attribute.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_interview_attribute_path
+  def interview_attribute_master
+      @interview_attributes = InterviewAttribute.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'interview_attributes/interview_attribute_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'interview_attribute_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'interview_attributes/interview_attribute_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
   end
   
   private

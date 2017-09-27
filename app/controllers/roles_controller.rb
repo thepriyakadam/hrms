@@ -67,13 +67,22 @@ class RolesController < ApplicationController
     end
   end
 
-
-  def is_confirm
-    @role = Role.find(params[:role])
-    Role.find(@role.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_role_path
-  end
+  def role_master
+     @roles = Role.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'roles/role_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' role_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'roles/role_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+    end
   
   private
 

@@ -14,13 +14,8 @@
         <td><%= training_topic_master.name %></td>
         <td><%= training_topic_master.description %></td>
         <td>
-          <% if training_topic_master.is_confirm == true %>
-            <small class= "label label-primary">Confirmed</small>
-          <% else %>
             <%= link_to '', edit_training_topic_master_path(training_topic_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  training_topic_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
-            <%= link_to '', is_confirm_training_topic_masters_path(training_topic_master: training_topic_master),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-          <% end %>
         </td>
       </tr>
     <% end %>

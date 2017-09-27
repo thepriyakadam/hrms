@@ -1,6 +1,10 @@
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Attribute Definition</h3>
+     <div class="pull-right">
+    <%= link_to " PDF ", attribute_master_attribute_masters_path(id: @attribute_master.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
+    
+    <%= link_to " XLS ", attribute_master_attribute_masters_path(id: @attribute_master.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
   </div><!-- /.box-header -->
 	<div class="box-body">
 		<div id="form">

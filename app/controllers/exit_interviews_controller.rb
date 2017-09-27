@@ -14,7 +14,7 @@ class ExitInterviewsController < ApplicationController
 
   # GET /exit_interviews/new
   def new
-    # byebug
+   # byebug
     @exit_interview = ExitInterview.new
     @employee = params[:exit_interview] ? params[:exit_interview][:employee_id] : params[:employee_id]
     @employee_resignation = EmployeeResignation.find(params[:format])

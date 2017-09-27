@@ -428,7 +428,8 @@
                         <span class="users-list-date"><%= e.try(:joining_detail).try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
 
                        </td>
-                       <td><%= e.date_of_birth %></td>
+                       <td> <%= e.date_of_birth.strftime("%d %b") %></td>
+
                     <% end %> <!-- do -->
                      </tr>
                       <%end%> <!-- if employee.empty? -->
@@ -457,11 +458,11 @@
                     <div class="product-img">
                       <%unless j.nil? or j.employee.nil? or  j.employee.member.nil? or j.employee.member.avatar.nil? %>
                         <% if j.employee.gender == "Male" && j.employee.member.avatar_file_name == nil  %>
-                          <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                        <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
                         <% elsif j.employee.gender == "Female" && j.employee.member.avatar_file_name == nil  %>
-                          <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                        <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
                         <%else%>
-                          <%= image_tag j.employee.member.avatar.url(:medium),class: "img-circle"%>
+                          <%= image_tag j.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
                         <%end%>
                       <%else%>
                         <%= image_tag "user.jpg",class: "img-circle", alt: "User Image", size: "25x25" %>
@@ -470,7 +471,8 @@
                     <div class="product-info">
                       <%= full_name(j.employee)%>
                       <span class="label label-info pull-right"><%= j.joining_date %></span>
-                      <span class="product-description"><%= j.employee.try(:joining_detail).try(:cost_center).try(:name) %> - <%= j.employee.try(:department).try(:name) %> <%= j.try(:employee).try(:sub_department).try(:name) %> (<%= j.employee.manager.try(:first_name) %> <%= j.employee.manager.try(:middle_name) %> <%= j.employee.manager.try(:last_name) %> )</span>
+                      <span class="product-description"><%= j.employee.try(:joining_detail).try(:cost_center).try(:name) %> - <%= j.employee.try(:department).try(:name) %> <%= j.try(:employee).try(:sub_department).try(:name) %>  </span>
+                      <span class="product-description"><%= full_name(j.employee.try(:manager)) %></span>
                     </div>
                   </li><!-- /.item -->
                 <% else %>

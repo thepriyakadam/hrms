@@ -1045,11 +1045,9 @@ ActiveRecord::Schema.define(version: 20170926072224) do
     t.boolean  "present_status"
     t.datetime "created_at",                                                   null: false
     t.datetime "updated_at",                                                   null: false
-    t.integer  "EmployeeLeavBalance_id",   limit: 4
     t.integer  "employee_leav_balance_id", limit: 4
   end
 
-  add_index "employee_leav_requests", ["EmployeeLeavBalance_id"], name: "index_employee_leav_requests_on_EmployeeLeavBalance_id", using: :btree
   add_index "employee_leav_requests", ["employee_id"], name: "index_employee_leav_requests_on_employee_id", using: :btree
   add_index "employee_leav_requests", ["employee_leav_balance_id"], name: "index_employee_leav_requests_on_employee_leav_balance_id", using: :btree
   add_index "employee_leav_requests", ["leav_category_id"], name: "index_employee_leav_requests_on_leav_category_id", using: :btree
@@ -1508,18 +1506,6 @@ ActiveRecord::Schema.define(version: 20170926072224) do
   add_index "families", ["employee_id"], name: "index_families_on_employee_id", using: :btree
   add_index "families", ["relation_master_id"], name: "index_families_on_relation_master_id", using: :btree
   add_index "families", ["religion_id"], name: "index_families_on_religion_id", using: :btree
-
-  create_table "faqs", force: :cascade do |t|
-    t.string   "code",        limit: 255
-    t.string   "question",    limit: 255
-    t.string   "answer",      limit: 255
-    t.integer  "employee_id", limit: 4
-    t.boolean  "status"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-  end
-
-  add_index "faqs", ["employee_id"], name: "index_faqs_on_employee_id", using: :btree
 
   create_table "food_coupan_masters", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -3687,7 +3673,6 @@ ActiveRecord::Schema.define(version: 20170926072224) do
     t.integer  "cost_center_id",            limit: 4
     t.string   "secondary_skill",           limit: 255
     t.string   "billable",                  limit: 255
-    t.integer  "employee_leav_balance_id",  limit: 4
   end
 
   add_index "vacancy_masters", ["company_id"], name: "index_vacancy_masters_on_company_id", using: :btree
@@ -3697,7 +3682,6 @@ ActiveRecord::Schema.define(version: 20170926072224) do
   add_index "vacancy_masters", ["department_id"], name: "index_vacancy_masters_on_department_id", using: :btree
   add_index "vacancy_masters", ["employee_designation_id"], name: "index_vacancy_masters_on_employee_designation_id", using: :btree
   add_index "vacancy_masters", ["employee_id"], name: "index_vacancy_masters_on_employee_id", using: :btree
-  add_index "vacancy_masters", ["employee_leav_balance_id"], name: "index_vacancy_masters_on_employee_leav_balance_id", using: :btree
   add_index "vacancy_masters", ["reporting_master_id"], name: "index_vacancy_masters_on_reporting_master_id", using: :btree
   add_index "vacancy_masters", ["sub_department_id"], name: "index_vacancy_masters_on_sub_department_id", using: :btree
 
@@ -3992,7 +3976,6 @@ ActiveRecord::Schema.define(version: 20170926072224) do
   add_foreign_key "families", "employees"
   add_foreign_key "families", "relation_masters"
   add_foreign_key "families", "religions"
-  add_foreign_key "faqs", "employees"
   add_foreign_key "food_deductions", "employees"
   add_foreign_key "food_deductions", "food_coupan_masters"
   add_foreign_key "frequest_questions", "employees"
@@ -4201,7 +4184,6 @@ ActiveRecord::Schema.define(version: 20170926072224) do
   add_foreign_key "vacancy_masters", "degrees"
   add_foreign_key "vacancy_masters", "departments"
   add_foreign_key "vacancy_masters", "employee_designations"
-  add_foreign_key "vacancy_masters", "employee_leav_balances"
   add_foreign_key "vacancy_masters", "employees"
   add_foreign_key "vacancy_masters", "reporting_masters"
   add_foreign_key "vacancy_masters", "sub_departments"

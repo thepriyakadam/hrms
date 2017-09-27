@@ -69,27 +69,40 @@ class EmployeeAttendance < ActiveRecord::Base
   end
 
   def self.import(file)
-    #allowed_attributes = ["employee_id","day","in_time","out_time","present"]
-     #if file.columnname("employee_id","day","in_time","out_time","present")
-        spreadsheet = open_spreadsheet(file)
-        header = spreadsheet.row(1)
-        (2..spreadsheet.last_row).each do |i|
-          row = Hash[[header, spreadsheet.row(i)].transpose]
-          employee_attendance = find_by_id(row['id']) || new
-          employee_attendance.attributes = row.to_hash.slice(*row.to_hash.keys)
-          employee_attendance.save!
+     spreadsheet = open_spreadsheet(file)
+      (2..spreadsheet.last_row).each do |i|
 
-          @employee_attendance = EmployeeAttendance.last
-          employee = Employee.find_by_manual_employee_code(@employee_attendance.employee_code)
-          @employee_attendance.update(employee_id: employee.id)
+        employee_code = spreadsheet.cell(i,'A')
+        employee_name = spreadsheet.cell(i,'B')
+        day = spreadsheet.cell(i,'C')
+        in_tme = spreadsheet.cell(i,'D') #@employee.id
+        out_time = spreadsheet.cell(i,'E')
+        present = spreadsheet.cell(i,'F')
+        @employee_attendance = EmployeeAttendance.create(employee_name: employee_name,day: day,in_time: in_time,out_time: out_time,present: present) 
+      end
         EmployeeAttendance.where(employee_id: nil).destroy_all
-        end
+
+        # spreadsheet = open_spreadsheet(file)
+        # header = spreadsheet.row(1)
+        # (2..spreadsheet.last_row).each do |i|
+        #   row = Hash[[header, spreadsheet.row(i)].transpose]
+        #   employee_attendance = find_by_id(row['id']) || new
+        #   employee_attendance.attributes = row.to_hash.slice(*row.to_hash.keys)
+        #   employee_attendance.save!
+
+        #   @employee_attendance = EmployeeAttendance.last
+        #   employee = Employee.find_by_manual_employee_code(@employee_attendance.employee_code)
+        #   @employee_attendance.update(employee_id: employee.id)
+        # EmployeeAttendance.where(employee_id: nil).destroy_all
+        # end 
          @employee_attendance = EmployeeAttendance.last
       @employees = Employee.where(status: "Active")
         @employees.each do |e|
           employee_atten = EmployeeAttendance.where(employee_id: e.id,day: @employee_attendance.day.to_date).take
           if employee_atten.nil?
             EmployeeAttendance.create(employee_id: e.id,day: @employee_attendance.day.to_date.to_date,present: "A")
+          # else
+          #   employee_atten.update(present: " ")
           end
         end
      

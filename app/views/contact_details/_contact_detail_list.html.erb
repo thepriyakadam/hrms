@@ -1,0 +1,25 @@
+<br>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Employee Name</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Action</th>
+ 
+  <tbody>
+    <% @contact_details.each do |contact_detail| %>
+      <tr>
+        <td><%= full_name(contact_detail.employee) %></td>
+        <td><%= contact_detail.name %></td>
+        <td><%= contact_detail.description %></td>
+         <td><%= contact_detail.status ? "Active" : "Inactive" %></td>
+        <td>
+            <%= link_to '', edit_contact_detail_path(contact_detail),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  contact_detail, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

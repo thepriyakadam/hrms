@@ -147,7 +147,11 @@
 
       <div class="box box-info">
         <div class="box-header with-border">
+<<<<<<< HEAD
           <h3 class="box-title">Policy Corner</h3>
+=======
+          <h3 class="box-title">Job Openings</h3>
+>>>>>>> bdc0177485e088f25ddd210a5ea636c835056acb
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -437,32 +441,29 @@
         </div><!-- /.box-header -->
         <div class="box-body">
           <ul class="products-list product-list-in-box">
-              <% JoiningDetail.all.order("id desc").limit(5).each do |j| %>
-                <% if j.employee.status == "Active" %>
-                  <li class="item">
-                    <div class="product-img">
-                      <%unless j.nil? or j.employee.nil? or  j.employee.member.nil? or j.employee.member.avatar.nil? %>
-                        <% if j.employee.gender == "Male" && j.employee.member.avatar_file_name == nil  %>
-                          <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                        <% elsif j.employee.gender == "Female" && j.employee.member.avatar_file_name == nil  %>
-                          <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                        <%else%>
-                          <%= image_tag j.employee.member.avatar.url(:medium),class: "img-circle"%>
-                        <%end%>
-                      <%else%>
-                        <%= image_tag "user.jpg",class: "img-circle", alt: "User Image", size: "25x25" %>
-                      <%end%>
-                    </div>
-                    <div class="product-info">
-                      <%= full_name(j.employee)%>
-                      <span class="label label-info pull-right"><%= j.joining_date %></span>
-                      <span class="product-description"><%= j.employee.try(:joining_detail).try(:cost_center).try(:name) %> <%= j.try(:employee).try(:sub_department).try(:name) %> <%= j.employee.try(:department).try(:name) %></span>
-                    </div>
-                  </li><!-- /.item -->
-                <% else %>
-                
-                <% end %> <!-- j.employee.status == "Active"  -->
-              <% end %>
+                <% JoiningDetail.all.order("id desc").limit(5).each do |j| %>
+                <li class="item">
+                 <div class="product-img">
+
+                 <%unless j.nil? or j.employee.nil? or  j.employee.member.nil? or j.employee.member.avatar.nil? %>
+                 <% if j.employee.gender == "Male" && j.employee.member.avatar_file_name == nil  %>
+                 <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                  <% elsif j.employee.gender == "Female" && j.employee.member.avatar_file_name == nil  %>
+                  <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                   <%else%>
+                   <%= image_tag j.employee.member.avatar.url(:medium),class: "img-circle"%>
+                  <%end%>
+                   <%else%>
+                     <%= image_tag "user.jpg",class: "img-circle", alt: "User Image", size: "25x25" %>
+                   <%end%>
+                </div> 
+                <div class="product-info">
+                 <%= full_name(j.employee)%>
+                  <span class="label label-info pull-right"><%= j.joining_date %></span>
+                  <span class="product-description"><%= j.employee.department.try(:name) %> (<%= j.employee.manager.try(:first_name) %> <%= j.employee.manager.try(:middle_name) %> <%= j.employee.manager.try(:last_name) %> )</span>
+                  </div>
+                <% end %>
+            </li><!-- /.item -->
           </ul>
         </div><!-- /.box-body -->
       </div><!-- /.box -->

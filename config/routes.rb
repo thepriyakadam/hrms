@@ -1,13 +1,23 @@
 Rails.application.routes.draw do
   resources :resource_pool_masters
   resources :service_masters
+  resources :contact_details do
+    collection do
+      get :contact_description
+    end
+  end
   resources :frequest_questions do
     collection do
       get :frequest_question_modal
       get :list_of_faq
     end
   end
-  resources :target_companies
+  resources :target_companies do
+    collection do
+      get :target_company_master
+      post :target_company_master
+    end
+  end
   resources :leave_transfers do
     collection do
       get :leave_transfer_approval
@@ -55,6 +65,8 @@ Rails.application.routes.draw do
     collection do
       get :final_approve_modal
       post :final_approve_request
+      get :recruiter_master
+      post :recruiter_master
     end
   end
   resources :candidate_interview_schedules do
@@ -74,7 +86,7 @@ Rails.application.routes.draw do
   resources :thoughts
   resources :candidate_interview_schedules
   resources :interview_type_masters
-  resources :interview_types
+  resources :interview_types 
   resources :candidate_forms
   resources :vacancy_request_statuses
   resources :interview_types
@@ -97,7 +109,13 @@ Rails.application.routes.draw do
       post :final_approve
     end
   end
-  resources :policy_types
+  resources :policy_types do 
+    collection do 
+      get :policy_type_master
+      post :policy_type_master
+    end
+  end
+
   resources :reimbursement_requests do
     collection do
       get :send_for_approval
@@ -130,7 +148,12 @@ Rails.application.routes.draw do
       get :cancel
     end
   end
-  resources :rembursmentmasters
+  resources :rembursmentmasters do
+    collection do
+      get :rembursment_master
+      get :rembursment_master
+    end
+  end
   resources :employee_jc_lists
   resources :joining_checklist_masters do
     collection do
@@ -697,6 +720,8 @@ end
   resources :interview_types do
     collection do
       get :is_confirm
+      get  :interview_type_master
+      post :interview_type_master
     end
   end
   resources :employee_attendances do
@@ -835,6 +860,8 @@ end
   resources :leaving_reasons do
     collection do
       get :is_confirm
+      get :leaving_reason_master
+      post :leaving_reason_master
     end
   end
   resources :training_records
@@ -1046,22 +1073,30 @@ end
   resources :about_companies do
     collection do
       get :is_confirm
+      get :about_company_master
+      post :about_company_master
     end
   end
   resources :about_bosses do
     collection do
       get :is_confirm
+      get :about_boss_master
+      post :about_boss_master
     end
   end
   resources :question_masters do
     collection do
       get :is_confirm
+      get :question_master
+      post :question_master
     end
   end
   resources :training_records
   resources :leaving_reasons do
     collection do
       get :is_confirm
+      get :leaving_reason_master
+      post :leaving_reason_master
     end
   end
   resources :training_approvals
@@ -1102,21 +1137,29 @@ end
   resources :interview_decisions do
     collection do
       get :is_confirm
+      get :interview_decision_master
+      post :interview_decision_master
     end
   end
   resources :interview_attributes do
     collection do
       get :is_confirm
+      get :interview_attribute_master
+      post :interview_attribute_master
     end
   end
   resources :interview_evalutions do
     collection do
       get :is_confirm
+      get :interview_evalution_master
+      post :interview_evalution_master
     end
   end
   resources :training_topic_masters do
     collection do
       get :is_confirm
+      get :training_topic_master
+      post :training_topic_master
     end
   end
 

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Sr.No.</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Employee ID</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Employee Name</Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">Status</Data></Cell>
+    </Row>
+
+        <% i = 0 %>
+        <% @recruiters.each do |degree| %>
+        <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= degree.employee.try(:manual_employee_code) %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= full_name(degree.employee) %></Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="String"><%= degree.status ? "Active" : "Inactive" %></Data></Cell>
+           </Row><!-- Row -->
+      <% end %><!-- slip -->
+    </Table>
+  </Worksheet>
+</Workbook>

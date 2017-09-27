@@ -57,6 +57,25 @@ class PolicyTypesController < ApplicationController
     @policy_types = PolicyType.all
   end
 
+  
+  def policy_type_master
+      @policy_types = PolicyType.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'policy_types/policy_type_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'policy_type_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'policy_types/policy_type_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+  end
+  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_policy_type

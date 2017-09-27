@@ -1,0 +1,49 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Contact Detail</h3>
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example6" class="table table-bordered table-hover table-condensed">
+
+  <tbody>
+    <% @contact_details.each do |contact_detail| %>
+    <div class="row">
+      <div class="col-sm-3">
+    <tr>
+      <td> 
+      <% if contact_detail.employee.passport_photo_file_name == nil %>
+      <% if contact_detail.employee.gender == "Female" %>
+      <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "150x150" %>
+      <%else%>
+      <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "150x150" %>
+      <%end%>
+      <%else%>
+      <%= image_tag contact_detail.employee.passport_photo.url, :size => "150x150" %>
+      <%end%>
+      </td>
+  
+    </div>
+     <div class="col-sm-6">
+        <th><%= full_name(contact_detail.employee) %><br><br>
+          <%= contact_detail.employee.joining_detail.employee_designation.try(:name) %> <br><br>
+          <%= contact_detail.employee.contact_no %><br><br>
+          <%= contact_detail.employee.email %><br><br>
+          <%= contact_detail.description %><br><br>
+        </th>
+      </tr>
+      </div>
+      </div>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

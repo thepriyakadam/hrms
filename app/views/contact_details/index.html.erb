@@ -22,15 +22,20 @@
       <%= image_tag contact_detail.employee.passport_photo.url, :size => "150x150" %>
       <%end%>
       </td>
-  
+
     </div>
      <div class="col-sm-6">
-        <th><%= full_name(contact_detail.employee) %><br><br>
-          <%= contact_detail.employee.joining_detail.employee_designation.try(:name) %> <br><br>
-          <%= contact_detail.employee.contact_no %><br><br>
-          <%= contact_detail.employee.email %><br><br>
-          <%= contact_detail.description %><br><br>
-        </th>
+        <td><b><%= full_name(contact_detail.employee) %></b><br>
+          <%= contact_detail.employee.joining_detail.employee_designation.try(:name) %><br>
+          <%= contact_detail.employee.contact_no %><br>
+          <%= contact_detail.employee.email %><br>
+          <%= contact_detail.role1 %><br>
+          <%= contact_detail.role2 %><br>
+          <%= contact_detail.role3 %><br>
+          <%= contact_detail.role4 %><br>
+          <%= contact_detail.role5 %><br>
+          <%= contact_detail.description %><br>
+        </td>
       </tr>
       </div>
       </div>

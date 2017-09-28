@@ -4,7 +4,7 @@
     <tr>  
       <th>Employee Name</th>
       <th>Name</th>
-      <th>Description</th>
+      <th>Link</th>
       <th>Status</th>
       <th>Action</th>
  
@@ -18,8 +18,11 @@
         <td>
             <%= link_to '', edit_contact_detail_path(contact_detail),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  contact_detail, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
+            <%= link_to '',  modal_contact_detail_contact_details_path(contact_detail),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<div id="modal_contact_detail" class="modal fade"></div>

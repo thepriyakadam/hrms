@@ -5,6 +5,7 @@ class ContactDetailsController < ApplicationController
   # GET /contact_details.json
   def index
     @contact_details = ContactDetail.where(status: true)
+    session[:active_tab] ="EmployeeSelfService"
   end
 
   # GET /contact_details/1
@@ -16,8 +17,8 @@ class ContactDetailsController < ApplicationController
   def new
     @contact_detail = ContactDetail.new
     @contact_details = ContactDetail.all
-    session[:active_tab] ="GlobalSetup"
-    session[:active_tab1] ="EmployeeProfile"
+    session[:active_tab] = "InformationManagement"
+    session[:active_tab1] = "Events" 
   end
 
   # GET /contact_details/1/edit
@@ -55,6 +56,10 @@ class ContactDetailsController < ApplicationController
     @contact_details = ContactDetail.all
   end
 
+  def modal_contact_detail
+    @contact_detail = ContactDetail.find(params[:format])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_contact_detail
@@ -63,6 +68,6 @@ class ContactDetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def contact_detail_params
-      params.require(:contact_detail).permit(:employee_id, :name, :description, :status)
+      params.require(:contact_detail).permit(:employee_id, :name, :description, :status,:role1,:role2,:role3,:role4,:role5)
     end
 end

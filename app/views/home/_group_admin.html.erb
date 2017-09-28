@@ -414,7 +414,7 @@
               <tr>
               <th></th>
                 <th>Name</th>
-                <th>Contact No.</th>
+                <th>Date</th>
                 </tr>
               </thead>
               <tbody>
@@ -435,7 +435,7 @@
                         <span class="users-list-date"><%= e.try(:joining_detail).try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
 
                        </td>
-                       <td><%= e.date_of_birth %></td>
+                       <td><%= e.date_of_birth %> </td>
                     <% end %> <!-- do -->
                      </tr>
                       <%end%> <!-- if employee.empty? -->

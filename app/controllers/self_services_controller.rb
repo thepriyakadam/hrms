@@ -147,7 +147,7 @@ class SelfServicesController < ApplicationController
   def holiday_setup
     # byebug
     @day = params[:day]
-    @employee_attendances = EmployeeAttendance.where(present: 'H',employee_id: current_user.employee_id)
+    @employee_attendances = EmployeeAttendance.where(present: 'H',employee_id: current_user.employee_id).order("day ASC")
     session[:active_tab] = "EmployeeSelfService"
   end
 
@@ -155,7 +155,7 @@ class SelfServicesController < ApplicationController
   def leave_c_off
     session[:active_tab] ="EmployeeSelfService"
     @leave_c_off = LeaveCOff.new
-    @leave_c_offs = LeaveCOff.where(employee_id: current_user.employee_id).order("id DESC")
+    @leave_c_offs = LeaveCOff.where(employee_id: current_user.employee_id).order("id ASC")
   end
 
   def show_leave_c_off_list

@@ -1,0 +1,32 @@
+<div class="box box-default">
+<div class="box-header with-border">
+    <h3 class="box-title">Vacancy Request Detail</h3>
+  </div><!-- /.box-header -->
+ <div class="box-body">
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <tr>
+  <th><strong>Code</strong></th>
+  <td><%= @frequest_question.code %></td>
+  </tr>
+  
+  <tr> 
+  <th><strong>Question</strong></th>
+  <td><%= @frequest_question.question %></td>  
+   
+  </tr>
+
+  <tr>
+  <th><strong>Aswer</strong></th>
+  <td><%= @frequest_question.answer %></td>
+  </tr>
+
+  <tr>
+   <th><strong>Status</strong></th>
+  <td><%= @frequest_question.status ? "Active" : "Inactive" %></td>
+  </tr>
+
+</table><br>
+<!--<= link_to 'Edit', edit_vacancy_master_path(@vacancy_master),class: 'btn btn-success btn-sm fa fa-edit' %> -->
+<%= link_to 'Back', new_frequest_question_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+</div>
+</div>

@@ -1,0 +1,38 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Department Detail </center></h4>
+    </div>
+    <div class="modal-body">
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+   <tr>
+   	<th>Department Code</th>
+   	<td><%= @department.try(:department_code)%></td>
+
+   	<th>Department Location</th>
+   	<td><%= @department.company_location.company.try(:name) %> - <%= @department.company_location.try(:name) %></td>
+   </tr>
+
+   <tr>
+   	<th>Department Name</th>
+   	<td><%= @department.name%></td>
+
+   	<th>Department Type</th>
+   	<td><%= @department.department_type.try(:name)%></td>
+   </tr>
+
+    <tr>
+   	<th>Contact No.</th>
+   	<td><%= @department.contact_no%></td>
+
+   	<th>Description</th>
+   	<td><%= @department.description%></td>
+   </tr>
+  </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

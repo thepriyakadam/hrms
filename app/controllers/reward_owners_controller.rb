@@ -44,13 +44,6 @@ class RewardOwnersController < ApplicationController
     @reward_owner.destroy
     @reward_owners = RewardOwner.all
   end
-
-  def is_confirm
-    @reward_owner = RewardOwner.find(params[:reward_owner])
-    RewardOwner.find(@reward_owner.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_reward_owner_path
-  end
   
   private
     # Use callbacks to share common setup or constraints between actions.

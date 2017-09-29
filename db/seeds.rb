@@ -46,6 +46,22 @@ require 'roo'
 # # i = i+1
 # # end
 
+
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/FAQs.xls")
+ex.default_sheet = ex.sheets[0]
+i=1
+2.upto(33) do |line|
+FrequestQuestion.new do |pm|
+  pm.code = ex.cell(line,'A')
+  pm.question = ex.cell(line,'B')
+  pm.answer = ex.cell(line,'C')
+  pm.save!
+end
+puts "#{i} PaymentMode inserted.----#{ex.cell(line,'A')}------------#{ex.cell(line,'B')}-----"
+i = i+1
+end
+
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
 # ex.default_sheet = ex.sheets[27]
@@ -471,17 +487,58 @@ require 'roo'
 # end
 
 
-# ex = Roo::Excel.new("#{Rails.root}/public/Employee Wise_Service Master.xls")
+# ex = Roo::Excel.new("#{Rails.root}/public/adhar_no.xls")
 # ex.default_sheet = ex.sheets[0] #siya feb
 # i = 1
 # ActiveRecord::Base.transaction do
-# 2.upto(402) do |line| # siya Feb 2016
+# 2.upto(452) do |line| # siya Feb 2016
 #  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
 #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 #  puts "#{i} Record inserting.----------------------------"
+#  @employee.update(adhar_no: ex.cell(line, 'B'))
+#  # @type2 = ServiceMaster.find_by_name(ex.cell(line,'C'))
+#  # Employee.where(id: @employee).update_all(service_master_id: @type2.id)
+#  # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
+#  puts "#{i} Record inserted.-----------------------------------------------"
+#  i += 1
+#  end
+#  end
 
-#  @type2 = ServiceMaster.find_by_name(ex.cell(line,'C'))
-#  Employee.where(id: @employee).update_all(service_master_id: @type2.id)
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/qualification.xls")
+# ex.default_sheet = ex.sheets[0] 
+# i=1
+# 2.upto(692) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
+# Qualification.new do |b|
+#   b.employee_id = @employee.id unless @employee.nil?
+#   @degree_type = DegreeType.find_by_name(ex.cell(line,'D'))
+#   b.degree_type_id = @degree_type.id unless @degree_type.nil?
+#   @degree = Degree.find_by_name(ex.cell(line,'E'))
+#   b.degree_id = @degree.id unless @degree.nil?
+#   @degree_stream = DegreeStream.find_by_name(ex.cell(line,'F'))
+#   b.degree_stream_id = @degree_stream.id unless @degree_stream.nil?
+#   @university = University.find_by_name(ex.cell(line,'J'))
+#   b.university_id = @university.id unless @university.nil?
+#   @year = Year.find_by_name(ex.cell(line,'H'))
+#   b.year_id = @year.id unless @year.nil?
+#   b.college = ex.cell(line,'I')
+#   b.marks = ex.cell(line,'G')
+#   b.save!
+# end
+# puts "#{i} Record inserted.-----------------------------------------------"
+# i = i+1
+# end
+
+# ex = Roo::Excel.new("#{Rails.root}/public/Employee PF No Details.xls")
+# ex.default_sheet = ex.sheets[0] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(452) do |line| # siya Feb 2016
+#  puts "Starting Record #{ex.cell(line,'B')}---------------------------------------"
+#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+#  puts "#{i} Record inserting.----------------------------"
+#  JoiningDetail.where(employee_id: @employee).update_all(employee_pf_no: ex.cell(line,'D'))
 #  # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
 #  puts "#{i} Record inserted.-----------------------------------------------"
 #  i += 1
@@ -519,72 +576,71 @@ require 'roo'
 # end
 #================================ EMPLOYEE BASIC DETAIL START =========================
 
-
-puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/sg_employee.xls")
-ex.default_sheet = ex.sheets[0]
-i=1
-2.upto(452) do |line|
-Employee.new do |e|
-  e.manual_employee_code = ex.cell(line,'A')
-  e.prefix = ex.cell(line,'B')
-  e.first_name = ex.cell(line,'C')
-  e.middle_name = ex.cell(line,'D')
-  e.last_name = ex.cell(line,'E')
-  e.gender = ex.cell(line,'F')
-  e.adhar_no = ex.cell(line,'G').to_i
-  e.pan_no = ex.cell(line,'H')
-  e.licence_no = ex.cell(line,'I')
-  e.marital_status = ex.cell(line,'J')
-  @nation = Nationality.find_by_name(ex.cell(line,'K'))
-  e.nationality_id = @nation.id unless @nation.nil?
-  e.date_of_birth = ex.cell(line,'L')
-  @blood = BloodGroup.find_by_name(ex.cell(line,'M'))
-  e.blood_group_id = @blood.id unless @blood.nil?
-  e.permanent_address = ex.cell(line,'N')
-  e.pin_code = ex.cell(line,'O').to_i
-  @country = Country.find_by_name(ex.cell(line,'P'))
-  e.country_id = @country.id unless @country.nil?
-  @state = State.find_by_name(ex.cell(line,'Q'))
-  e.state_id = @state.id unless @state.nil?
-  @district = District.find_by_name(ex.cell(line,'R'))
-  e.district_id =  @district.id unless @district.nil?
-  e.city = ex.cell(line,'S')
-  e.current_address = ex.cell(line,'T')
-  @religion = Religion.find_by_name(ex.cell(line,'U'))
-  e.religion_id = @religion.id unless @religion.nil?
-  e.contact_no = ex.cell(line,'V').to_i
-  e.optinal_contact_no = ex.cell(line,'W').to_i 
-  e.optinal_contact_no1 = ex.cell(line,'X').to_i
-  e.emergency_contact_no = ex.cell(line,'Y').to_i
-  e.email = ex.cell(line,'Z')
-  e.optional_email = ex.cell(line,'AA')
-  e.handicap = ex.cell(line,'AB')
-  e.handicap_type = ex.cell(line, 'AC')
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/sg_employee.xls")
+# ex.default_sheet = ex.sheets[0]
+# i=1
+# 2.upto(452) do |line|
+# Employee.new do |e|
+#   e.manual_employee_code = ex.cell(line,'A')
+#   e.prefix = ex.cell(line,'B')
+#   e.first_name = ex.cell(line,'C')
+#   e.middle_name = ex.cell(line,'D')
+#   e.last_name = ex.cell(line,'E')
+#   e.gender = ex.cell(line,'F')
+#   e.adhar_no = ex.cell(line,'G').to_i
+#   e.pan_no = ex.cell(line,'H')
+#   e.licence_no = ex.cell(line,'I')
+#   e.marital_status = ex.cell(line,'J')
+#   @nation = Nationality.find_by_name(ex.cell(line,'K'))
+#   e.nationality_id = @nation.id unless @nation.nil?
+#   e.date_of_birth = ex.cell(line,'L')
+#   @blood = BloodGroup.find_by_name(ex.cell(line,'M'))
+#   e.blood_group_id = @blood.id unless @blood.nil?
+#   e.permanent_address = ex.cell(line,'N')
+#   e.pin_code = ex.cell(line,'O').to_i
+#   @country = Country.find_by_name(ex.cell(line,'P'))
+#   e.country_id = @country.id unless @country.nil?
+#   @state = State.find_by_name(ex.cell(line,'Q'))
+#   e.state_id = @state.id unless @state.nil?
+#   @district = District.find_by_name(ex.cell(line,'R'))
+#   e.district_id =  @district.id unless @district.nil?
+#   e.city = ex.cell(line,'S')
+#   e.current_address = ex.cell(line,'T')
+#   @religion = Religion.find_by_name(ex.cell(line,'U'))
+#   e.religion_id = @religion.id unless @religion.nil?
+#   e.contact_no = ex.cell(line,'V').to_i
+#   e.optinal_contact_no = ex.cell(line,'W').to_i 
+#   e.optinal_contact_no1 = ex.cell(line,'X').to_i
+#   e.emergency_contact_no = ex.cell(line,'Y').to_i
+#   e.email = ex.cell(line,'Z')
+#   e.optional_email = ex.cell(line,'AA')
+#   e.handicap = ex.cell(line,'AB')
+#   e.handicap_type = ex.cell(line, 'AC')
  
-  @employee_type = EmployeeType.find_by_name(ex.cell(line,'AD'))
-  e.employee_type_id = @employee_type.id unless @employee_type.nil?
+#   @employee_type = EmployeeType.find_by_name(ex.cell(line,'AD'))
+#   e.employee_type_id = @employee_type.id unless @employee_type.nil?
 
-  e.status = ex.cell(line,'AE')
+#   e.status = ex.cell(line,'AE')
  
-  # e.company_id = ex.cell(line,'AA').to_i
-  @company_name = Company.find_by_name(ex.cell(line,'AF'))
-  e.company_id = @company_name.id unless @company_name.nil?
-  @company_location_name = CompanyLocation.find_by_name(ex.cell(line,'AG'))
-  e.company_location_id = @company_location_name.id unless @company_location_name.nil?
-  @department_name = Department.find_by_name(ex.cell(line,'AH'))
-  e.department_id =  @department_name.id unless @department_name.nil?
-  @sub_department_name = SubDepartment.find_by_name(ex.cell(line,'AI'))
-  e.sub_department_id =  @sub_department_name.id unless @sub_department_name.nil?
+#   # e.company_id = ex.cell(line,'AA').to_i
+#   @company_name = Company.find_by_name(ex.cell(line,'AF'))
+#   e.company_id = @company_name.id unless @company_name.nil?
+#   @company_location_name = CompanyLocation.find_by_name(ex.cell(line,'AG'))
+#   e.company_location_id = @company_location_name.id unless @company_location_name.nil?
+#   @department_name = Department.find_by_name(ex.cell(line,'AH'))
+#   e.department_id =  @department_name.id unless @department_name.nil?
+#   @sub_department_name = SubDepartment.find_by_name(ex.cell(line,'AI'))
+#   e.sub_department_id =  @sub_department_name.id unless @sub_department_name.nil?
 
-  @code_master = EmployeeCodeMaster.find_by_name(ex.cell(line,'AJ'))
-  e.employee_code_master_id = @code_master.id unless @code_master.nil?
+#   @code_master = EmployeeCodeMaster.find_by_name(ex.cell(line,'AJ'))
+#   e.employee_code_master_id = @code_master.id unless @code_master.nil?
 
-  e.save!
-end
-puts "#{i} Employee inserted.-------------#{ex.cell(line,'A')}----------------------------------"
-i = i+1
-end
+#   e.save!
+# end
+# puts "#{i} Employee inserted.-------------#{ex.cell(line,'A')}----------------------------------"
+# i = i+1
+# end
 
 # # #========================= EMPLOYEE BASIC DATA END ===========================================
 
@@ -597,71 +653,9 @@ end
 # 2.upto(36) do |line| # siya Feb 2016
 #  puts "Starting Record --------------------------#{ex.cell(line,'A')}"
 #  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-#  # JoiningDetail.where(id: @employee.id).update_all(is_da: true)
-#  unless @employee.nil?
-
-#  @joining_details = JoiningDetail.where(employee_id: @employee.id)
-#   @joining_details.new do |e|
-#      e.employee_uan_no = ex.cell(line,'C').to_i
-#      e.joining_date =  ex.cell(line,'D')
-#      e.confirmation_date =  ex.cell(line,'E')
-#      @designation = EmployeeDesignation.find_by_name(ex.cell(line,'F'))
-#      e.employee_designation_id = @designation.id unless @designation.nil?
-#       @grade = EmployeeGrade.find_by_name(ex.cell(line,'G'))
-#      e.employee_grade_id = @grade.id unless @grade.nil?
-#       @cost_unit = CostCenter.find_by_name(ex.cell(line,'H'))
-#      e.cost_center_id = @cost_unit.id unless @cost_unit.nil?
-#      # e.employee_pf_no = ex.cell(line,'F').to_i
-#      @category = EmployeeCategory.find_by_name(ex.cell(line,'I'))
-#      e.employee_category_id = @category.id unless @category.nil?
-
-#      # e.probation_period = ex.cell(line,'H').to_i
-#      e.probation_period = ex.cell(line,'K').to_i
-#      e.notice_period =     ex.cell(line,'L').to_i
-#      e.notice_period_after_probation =     ex.cell(line,'M').to_i
-
-#      e.have_passport = ex.cell(line,'N')
-#      e.passport_no = ex.cell(line,'O').to_i
-#      e.passport_issue_date = ex.cell(line,'P')
-#      e.passport_expiry_date = ex.cell(line,'Q')
-#      e.retirement_date = ex.cell(line,'R')
-#      e.company_rfid = ex.cell(line,'S').to_i
-#      e.gate_rfid = ex.cell(line,'T').to_i
-#     e.save!
-
-#     puts "Save...."
-#    end
-#    puts "#{i} Record inserted.------#{ex.cell(line,'B')}--------#{ex.cell(line,'C')}---------#{ex.cell(line,'D')}.....#{ex.cell(line,'E')}......#{ex.cell(line,'G')}"
-#    i += 1
-#  end
-#  end
-# end
-
-#==================================== EMPLOYEE ON BOARDING DATA END ====================================================#
-
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/sg_bank.xls")
-# ex.default_sheet = ex.sheets[0]
-# i=1
-# 2.upto(358) do |line|
-# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
-# EmployeeBankDetail.new do |b|
-#   b.employee_id = @employee.id unless @employee.nil?
-#   b.account_no = ex.cell(line,'D').to_i
-#   b.bank_name = ex.cell(line,'E')
-#   b.branch_name = ex.cell(line,'F')
-#   b.address = ex.cell(line,'K')
-#   b.contact_no = ex.cell(line,'G').to_i
-#   b.micr_code = ex.cell(line,'H')
-#   b.branch_code = ex.cell(line,'I')
-#   b.ifsc_code = ex.cell(line,'J')
-#   @bankname = Bank.find_by_name(ex.cell(line,'E'))
-#   b.bank_id = @bankname.id unless @bankname.nil?
-
-#   b.save!
-# end
-# puts "#{i} Record inserted.-----------------------------------------------"
-# i = i+1
+# (ex.cell(line,'B').to_i)
+#  Employee.where(id: @employee.id).update_all(adhar_no: true)
+ 
 # end
 
 # puts "Starting ..."
@@ -685,7 +679,7 @@ end
 
 
 # puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/sg_award.xls")
+# ex = Roo::Excel.new("#{Rails.root}/public/employee_award.xls")
 # ex.default_sheet = ex.sheets[0]
 # i=1
 # 2.upto(19) do |line|
@@ -699,15 +693,72 @@ end
 #   b.description = ex.cell(line,'G')
 #   b.save!
 # end
-# puts "#{i} Record inserted.-----------------------------------------------"
+# puts "#{i} Record inserted.-------------#{ex.cell(line,'A')}----------------------------------"
 # i = i+1
 # end
 
 # puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/sg_qualification.xls")
+# ex = Roo::Excel.new("#{Rails.root}/public/family_detail.xls")
 # ex.default_sheet = ex.sheets[0]
 # i=1
-# 2.upto(38) do |line|
+# 2.upto(532) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
+# Family.new do |b|
+#   b.employee_id = @employee.id unless @employee.nil?
+#   @relation = RelationMaster.find_by_name(ex.cell(line,'c'))
+#   b.relation_master_id = @relation.id unless @relation.nil?
+#   b.f_name = ex.cell(line,'D')
+#   b.m_name = ex.cell(line,'E')
+#   b.l_name = ex.cell(line,'F')
+#   b.date_of_birth = ex.cell(line,'G')
+#   b.current_address = ex.cell(line,'H')
+#   b.age = ex.cell(line,'I')
+#   b.contact_no = ex.cell(line,'J')
+#   b.email = ex.cell(line,'K')
+#   b.adhar_no = ex.cell(line,'L')
+#   b.pan_no = ex.cell(line,'M')
+#   b.passport_no = ex.cell(line,'N')
+#   b.passport_issue_date = ex.cell(line,'O')
+#   b.passport_expiry_date = ex.cell(line,'P')
+#   b.gender = ex.cell(line,'Q')
+#   b.marital = ex.cell(line,'R')
+#   @blood = BloodGroup.find_by_name(ex.cell(line,'S'))
+#   b.blood_group_id = @blood.id unless @blood.nil?
+#   @religion = Religion.find_by_name(ex.cell(line,'T'))
+#   b.religion_id = @religion.id unless @religion.nil?
+#   b.profession = ex.cell(line,'U')
+#   b.medical_claim = ex.cell(line,'v')
+#   b.is_handicap = ex.cell(line,'W')
+#   b.handicap_type = ex.cell(line,'X')
+#   b.save!
+# end
+# puts "#{i} Record inserted.-------------#{ex.cell(line,'A')}----------------------------------"
+# i = i+1
+# end
+
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/exep.xls")
+# ex.default_sheet = ex.sheets[0]
+# i=1
+# 2.upto(305) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
+# Experience.new do |b|
+#   b.employee_id = @employee.id unless @employee.nil?
+#   b.company_name = ex.cell(line,'D')
+#   b.designation = ex.cell(line,'E')
+#   b.no_of_year = ex.cell(line,'F')
+#   b.ctc = ex.cell(line,'G')
+#   b.save!
+# end
+# puts "#{i} Record inserted.-------------#{ex.cell(line,'A')}----------------------------------"
+# i = i+1
+# end
+
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/qualification.xls")
+# ex.default_sheet = ex.sheets[0]
+# i=1
+# 2.upto(715) do |line|
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
 # Qualification.new do |b|
 #   b.employee_id = @employee.id unless @employee.nil?
@@ -725,9 +776,36 @@ end
 #   b.marks = ex.cell(line,'G')
 #   b.save!
 # end
-# puts "#{i} Record inserted.-----------------------------------------------"
+# puts "#{i} Record inserted.-------------#{ex.cell(line,'A')}----------------------------------"
 # i = i+1
 # end
+
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/sg_qualification.xls")
+ex.default_sheet = ex.sheets[0]
+i=1
+8.upto(692) do |line|
+@employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
+Qualification.new do |b|
+  b.employee_id = @employee.id unless @employee.nil?
+  @degree_type = DegreeType.find_by_name(ex.cell(line,'D'))
+  b.degree_type_id = @degree_type.id unless @degree_type.nil?
+  @degree = Degree.find_by_name(ex.cell(line,'E'))
+  b.degree_id = @degree.id unless @degree.nil?
+  @degree_stream = DegreeStream.find_by_name(ex.cell(line,'F'))
+  b.degree_stream_id = @degree_stream.id unless @degree_stream.nil?
+  @university = University.find_by_name(ex.cell(line,'J'))
+  b.university_id = @university.id unless @university.nil?
+  @year = Year.find_by_name(ex.cell(line,'H'))
+  b.year_id = @year.id unless @year.nil?
+  b.college = ex.cell(line,'I')
+  b.marks = ex.cell(line,'G')
+  b.save!
+end
+puts "#{i} Record inserted.-----------------------------------------------"
+i = i+1
+end
+
 
 
 # puts "Starting ..."

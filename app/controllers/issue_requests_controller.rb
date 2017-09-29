@@ -57,8 +57,9 @@ class IssueRequestsController < ApplicationController
     end
   end
 
+
   def select_description
-    @issue_master_id = params[:issue_master_id]
+    @issue_master_id = IssueMaster.find(params[:issue_master_id])
     @issue_master = IssueMaster.find_by(id: @issue_master_id)
     @des = @issue_master.description
   end

@@ -14,13 +14,8 @@
         <td><%= payment_mode.name %></td>
         <td><%= payment_mode.description %></td>
         <td>
-          <% if payment_mode.is_confirm == true %>
-            <small class= "label label-primary">Confirmed</small>
-            <% else %>
             <%= link_to '', edit_payment_mode_path(payment_mode) ,class: 'btn btn-sm btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  payment_mode, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
-            <%= link_to '', is_confirm_payment_modes_path(payment_mode: payment_mode),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-          <% end %>
         </td>
       </tr>
     <% end %>

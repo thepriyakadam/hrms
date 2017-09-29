@@ -2347,7 +2347,26 @@ end
     @from_date = @from.to_date
     @to_date = @to.to_date
     @employee_attendances = EmployeeAttendance.where(day: @from_date..@to_date,employee_id: @employee).group(:employee_id)
-   datewise_attendance_with_options
+   
+       respond_to do |format|
+      format.js
+      format.xls {render template: 'employee_attendances/managerwise_attendance_average.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'show_datewise_report',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'employee_attendances/managerwise_attendance_average.pdf.erb',
+              # show_as_html: params[:debug].present?,
+              :page_height      => 1000,
+              :dpi              => '300',
+              :margin           => {:top    => 10, # default 10 (mm)
+                            :bottom => 10,
+                            :left   => 20,
+                            :right  => 20},
+              :show_as_html => params[:debug].present?
+          end
+         end
   end
 
   def datewise_attendance_with_options
@@ -2367,10 +2386,10 @@ end
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "A")
     elsif params[:holiday]
       @name = params[:holiday]
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "H")
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where("present = ? OR present = ?","H", "HP").where.not(holiday_id: nil)
     elsif params[:weekoff]
       @name = params[:weekoff]
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "WO")
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where("present = ? OR present = ?","WO", "WOP").where.not(employee_week_off_id: nil)
     else
       @name = params[:leave]
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
@@ -2412,12 +2431,53 @@ end
 
   end
 
-
    def add_attendance
     @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
     @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id).order('day DESC')
   end
   
+  def in_out_summary
+  end
+
+  def show_in_out_summary
+    @date = params[:salary][:date]
+    @employee_attendance = EmployeeAttendance.where(day: @date.to_date)
+    in_count = 0
+    out_count = 0
+    @employee_attendance.each do |a|
+      
+      if a.in_time == nil
+      else
+        in_count = in_count + 1
+      end
+      @in_count = in_count
+
+      if a.out_time == nil
+        @nil_out = a
+      else
+        out_count = out_count + 1
+      end
+      @out_count = out_count
+    end
+    @in_time = @in_count
+    @out_time = @out_count
+  end
+
+  def modal_missing_record
+    date = params[:date]
+    @employee_attendances = EmployeeAttendance.where(day: date.to_date).where("in_time = ? OR out_time = ?",nil,nil)
+  end
+
+  def attendance_summary
+  end
+
+  def show_attendance_summary
+    @from = params[:salary][:from]
+    @to = params[:salary][:to]
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).group(:day)
+   
+  end
+
   # def create_self_attendance
   #   @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
   #   employee_id = params[:salary][:employee_id]
@@ -2447,6 +2507,6 @@ end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_attendance_params
-    params.require(:employee_attendance).permit(:employee_week_off_id,:employee_code,:employee_name,:employee_id, :day, :present, :in_time, :out_time)
+    params.require(:employee_attendance).permit(:holiday_id,:employee_week_off_id,:employee_code,:employee_name,:employee_id, :day, :present, :in_time, :out_time)
   end
 end

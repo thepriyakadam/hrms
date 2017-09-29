@@ -1,5 +1,21 @@
 Rails.application.routes.draw do
-  resources :target_companies
+  resources :contact_details do
+    collection do
+      get :modal_contact_detail
+    end
+  end
+  resources :frequest_questions do
+    collection do
+      get :frequest_question_modal
+      get :list_of_faq
+    end
+  end
+  resources :target_companies do
+    collection do
+      get :target_company_master
+      post :target_company_master
+    end
+  end
   resources :leave_transfers do
     collection do
       get :leave_transfer_approval
@@ -47,6 +63,8 @@ Rails.application.routes.draw do
     collection do
       get :final_approve_modal
       post :final_approve_request
+      get :recruiter_master
+      post :recruiter_master
     end
   end
   resources :candidate_interview_schedules do
@@ -66,7 +84,7 @@ Rails.application.routes.draw do
   resources :thoughts
   resources :candidate_interview_schedules
   resources :interview_type_masters
-  resources :interview_types
+  resources :interview_types 
   resources :candidate_forms
   resources :vacancy_request_statuses
   resources :interview_types
@@ -89,7 +107,13 @@ Rails.application.routes.draw do
       post :final_approve
     end
   end
-  resources :policy_types
+  resources :policy_types do 
+    collection do 
+      get :policy_type_master
+      post :policy_type_master
+    end
+  end
+
   resources :reimbursement_requests do
     collection do
       get :send_for_approval
@@ -122,9 +146,19 @@ Rails.application.routes.draw do
       get :cancel
     end
   end
-  resources :rembursmentmasters
+  resources :rembursmentmasters do
+    collection do
+      get :rembursment_master
+      get :rembursment_master
+    end
+  end
   resources :employee_jc_lists
-  resources :joining_checklist_masters
+  resources :joining_checklist_masters do
+    collection do
+      get :joining_checklist_master
+      post :joining_checklist_master
+    end
+  end
   resources :employee_gps do
     collection do
       get :employee_wise_gps
@@ -463,6 +497,8 @@ end
     collection do
        get :is_confirm
       get :select_textbox
+      get :employee_code_master
+      post :employee_code_master
     end
    end
   get 'download_pdf/index'
@@ -615,11 +651,15 @@ end
   resources :currency_masters do
     collection do
       get :is_confirm
+      get :currency_master
+      post :currency_master
     end
   end
   resources :illness_types do
     collection do
       get :is_confirm
+      get :illness_type_master
+      post :illness_type_master
     end
   end
   resources :performance_calendars do
@@ -654,6 +694,9 @@ end
   resources :attribute_masters do
     collection do
       get :is_confirm
+      get :modal
+      get :attribute_master
+      post :attribute_master
     end
   end
   resources :circulars do
@@ -675,6 +718,8 @@ end
   resources :interview_types do
     collection do
       get :is_confirm
+      get  :interview_type_master
+      post :interview_type_master
     end
   end
   resources :employee_attendances do
@@ -787,6 +832,12 @@ end
       get :show_datewise_all_report
       get :create_in_time
       get :create_out_time
+      get :in_out_summary
+      post :show_in_out_summary
+      get :modal_missing_record
+      get :attendance_summary
+      post :show_attendance_summary
+      get :show_attendance_summary
     end
   end
   resources :salary_comp_mappings
@@ -807,6 +858,8 @@ end
   resources :leaving_reasons do
     collection do
       get :is_confirm
+      get :leaving_reason_master
+      post :leaving_reason_master
     end
   end
   resources :training_records
@@ -976,16 +1029,23 @@ end
   resources :goal_perspectives do
     collection do
       get :is_confirm
+      get :modal
+      get :goal_perspective_master
+      post :goal_perspective_master
     end
   end
   resources :ratings do
     collection do
       get :is_confirm
+      get :rating_master
+      post :rating_master
     end
   end
   resources :periods do
     collection do
       get :is_confirm
+      get :period_master
+      post :period_master
     end
   end
   resources :overall_ratings do
@@ -1011,22 +1071,30 @@ end
   resources :about_companies do
     collection do
       get :is_confirm
+      get :about_company_master
+      post :about_company_master
     end
   end
   resources :about_bosses do
     collection do
       get :is_confirm
+      get :about_boss_master
+      post :about_boss_master
     end
   end
   resources :question_masters do
     collection do
       get :is_confirm
+      get :question_master
+      post :question_master
     end
   end
   resources :training_records
   resources :leaving_reasons do
     collection do
       get :is_confirm
+      get :leaving_reason_master
+      post :leaving_reason_master
     end
   end
   resources :training_approvals
@@ -1047,11 +1115,15 @@ end
   resources :travel_expence_types do
     collection do
       get :is_confirm
+      get :travel_expence_type_master
+      post :travel_expence_type_master
     end
   end
   resources :travel_modes do
     collection do
       get :is_confirm
+      get :travel_mode_master
+      post :travel_mode_master
     end
   end
   resources :interview_analyses do
@@ -1063,21 +1135,29 @@ end
   resources :interview_decisions do
     collection do
       get :is_confirm
+      get :interview_decision_master
+      post :interview_decision_master
     end
   end
   resources :interview_attributes do
     collection do
       get :is_confirm
+      get :interview_attribute_master
+      post :interview_attribute_master
     end
   end
   resources :interview_evalutions do
     collection do
       get :is_confirm
+      get :interview_evalution_master
+      post :interview_evalution_master
     end
   end
   resources :training_topic_masters do
     collection do
       get :is_confirm
+      get :training_topic_master
+      post :training_topic_master
     end
   end
 
@@ -1114,11 +1194,14 @@ end
       get :confirm_resignation
       get :cancel_resignation_list
       get :modal_resignation_detail
+      get :final_approve_modal
   end
 end
   resources :travel_options do
     collection do
       get :is_confirm
+      get :travel_option_master
+      post :travel_option_master
     end
   end
   resources :training_plans  do
@@ -1199,6 +1282,8 @@ end
   resources :asset_types do
     collection do
       get :is_confirm
+      get :asset_type_master
+      post :asset_type_master
     end
   end
   resources :employee_nominations do
@@ -1210,11 +1295,15 @@ end
   resources :nomination_masters do
     collection do
       get :is_confirm
+      get :nomination_master
+      post :nomination_master
     end
   end
   resources :relation_masters do
     collection do
       get :is_confirm
+      get :relation_master
+      post :relation_master
     end
   end
   resources :particular_vacancy_requests
@@ -1683,6 +1772,8 @@ end
   resources :reserved_categories do
     collection do
       get :is_confirm
+      get :reserved_category_master
+      post :reserved_category_master
     end
   end
   resources :pf_masters do
@@ -1716,11 +1807,15 @@ end
   resources :expencess_types do
     collection do
       get :is_confirm
+      get :expence_type_master
+      post :expence_type_master
     end
   end
   resources :food_coupan_masters do
     collection do
       get :is_confirm
+      get :food_coupan_master
+      post :food_coupan_master
     end
   end
   resources :food_deductions do
@@ -1764,6 +1859,8 @@ end
   resources :advance_types do
     collection do
       get :is_confirm
+      get :advance_type_master
+      post :advance_type_master
     end
   end
   resources :employee_templates do
@@ -1801,6 +1898,8 @@ end
   resources :payment_modes do
     collection do
       get :is_confirm
+      get :payment_mode_master
+      post :payment_mode_master
     end
   end
   resources :excel_exports do
@@ -1821,6 +1920,8 @@ end
   resources :employee_categories do
     collection do
       get :is_confirm
+      get :employee_category_master
+      post :employee_category_master
     end
   end
   resources :other_salary_components do
@@ -2062,11 +2163,15 @@ end
   resources :religions do
     collection do
       get :is_confirm
+      get :religion_master
+      post :religion_master
     end
   end
   resources :banks do
     collection do
       get :is_confirm
+      get :bank_master
+      post :bank_master
     end
   end
   # resources :employee_annual_salaries do
@@ -2086,16 +2191,22 @@ end
   resources :universities do
     collection do
       get :is_confirm
+      get :university_master
+      post :university_master
     end
   end
   resources :degree_streams do
     collection do
       get :is_confirm
+      get :specialization_master
+      post :specialization_master
     end
   end
   resources :degree_types do
     collection do
       get :is_confirm
+      get :qualification_level_master
+      post :qualification_level_master
     end
   end
   resources :districts
@@ -2105,6 +2216,8 @@ end
     collection do
       get :is_confirm
       get :employee_designation_list
+      get :employee_designation_master
+      post :employee_designation_master
     end
   end
   resources :cost_centers do
@@ -2115,11 +2228,18 @@ end
   resources :degrees do
     collection do
       get :is_confirm
+      get :print_qualification
+      post :print_qualification
     end
   end
   resources :universities
   resources :degree_streams
-  resources :degree_types
+  resources :degree_types do
+    collection do
+  get :qualification_level_master
+  post :qualification_level_master
+  end
+end
   resources :districts do
     collection do
       get :list_district
@@ -2162,6 +2282,8 @@ end
       get :dynamic_form
       get :role_edit_list
       get :is_confirm
+      get :role_master
+      post :role_master
     end
 
     member do
@@ -2249,6 +2371,8 @@ end
   resources :employee_grades do
     collection do
       get :is_confirm
+      get :employee_grade_master
+      post :employee_grade_master
     end
   end
   resources :awards do
@@ -2434,21 +2558,29 @@ end
   resources :blood_groups do
     collection do
       get :is_confirm
+      get :blood_group_master
+      post :blood_group_master
     end
   end
   resources :nationalities do
     collection do
       get :is_confirm
+      get :nationality_master
+      post :nationality_master
     end
   end
   resources :employee_types do
     collection do
       get :is_confirm
+      get :employee_type_master
+      post :employee_type_master
     end
   end
   resources :department_types do
     collection do
       get :is_confirm
+      get :department_type_master
+      post :department_type_master
     end
   end
   resources :company_types do
@@ -2456,12 +2588,15 @@ end
       get :add_company_type
       post :create_company_type
       get :is_confirm
+      get :company_type_master
+      post :company_type_master
     end
   end
   resources :departments do
     collection do
       get :department_list_xls
       get :is_confirm
+      get :modal
     end
   end
 

@@ -1,4 +1,4 @@
-class AboutBossesController < ApplicationController
+  class AboutBossesController < ApplicationController
   before_action :set_about_boss, only: [:show, :edit, :update, :destroy]
 
   # GET /about_bosses

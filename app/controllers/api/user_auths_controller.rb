@@ -1,6 +1,7 @@
 class Api::UserAuthsController < ApplicationController
   skip_before_action :load_filter
   skip_before_action :authenticate!
+  # response.headers['X-Tracking-ID'] = '123456'
   include ActionController::MimeResponds
   include ActionController::Cookies
   include ActionView::Helpers::DateHelper

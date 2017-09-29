@@ -47,20 +47,20 @@ require 'roo'
 # # end
 
 
-puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/FAQs.xls")
-ex.default_sheet = ex.sheets[0]
-i=1
-2.upto(33) do |line|
-FrequestQuestion.new do |pm|
-  pm.code = ex.cell(line,'A')
-  pm.question = ex.cell(line,'B')
-  pm.answer = ex.cell(line,'C')
-  pm.save!
-end
-puts "#{i} PaymentMode inserted.----#{ex.cell(line,'A')}------------#{ex.cell(line,'B')}-----"
-i = i+1
-end
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/FAQs.xls")
+# ex.default_sheet = ex.sheets[0]
+# i=1
+# 2.upto(33) do |line|
+# FrequestQuestion.new do |pm|
+#   pm.code = ex.cell(line,'A')
+#   pm.question = ex.cell(line,'B')
+#   pm.answer = ex.cell(line,'C')
+#   pm.save!
+# end
+# puts "#{i} PaymentMode inserted.----#{ex.cell(line,'A')}------------#{ex.cell(line,'B')}-----"
+# i = i+1
+# end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
@@ -780,31 +780,31 @@ end
 # i = i+1
 # end
 
-puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/sg_qualification.xls")
-ex.default_sheet = ex.sheets[0]
-i=1
-8.upto(692) do |line|
-@employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
-Qualification.new do |b|
-  b.employee_id = @employee.id unless @employee.nil?
-  @degree_type = DegreeType.find_by_name(ex.cell(line,'D'))
-  b.degree_type_id = @degree_type.id unless @degree_type.nil?
-  @degree = Degree.find_by_name(ex.cell(line,'E'))
-  b.degree_id = @degree.id unless @degree.nil?
-  @degree_stream = DegreeStream.find_by_name(ex.cell(line,'F'))
-  b.degree_stream_id = @degree_stream.id unless @degree_stream.nil?
-  @university = University.find_by_name(ex.cell(line,'J'))
-  b.university_id = @university.id unless @university.nil?
-  @year = Year.find_by_name(ex.cell(line,'H'))
-  b.year_id = @year.id unless @year.nil?
-  b.college = ex.cell(line,'I')
-  b.marks = ex.cell(line,'G')
-  b.save!
-end
-puts "#{i} Record inserted.-----------------------------------------------"
-i = i+1
-end
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/sg_qualification.xls")
+# ex.default_sheet = ex.sheets[0]
+# i=1
+# 8.upto(692) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
+# Qualification.new do |b|
+#   b.employee_id = @employee.id unless @employee.nil?
+#   @degree_type = DegreeType.find_by_name(ex.cell(line,'D'))
+#   b.degree_type_id = @degree_type.id unless @degree_type.nil?
+#   @degree = Degree.find_by_name(ex.cell(line,'E'))
+#   b.degree_id = @degree.id unless @degree.nil?
+#   @degree_stream = DegreeStream.find_by_name(ex.cell(line,'F'))
+#   b.degree_stream_id = @degree_stream.id unless @degree_stream.nil?
+#   @university = University.find_by_name(ex.cell(line,'J'))
+#   b.university_id = @university.id unless @university.nil?
+#   @year = Year.find_by_name(ex.cell(line,'H'))
+#   b.year_id = @year.id unless @year.nil?
+#   b.college = ex.cell(line,'I')
+#   b.marks = ex.cell(line,'G')
+#   b.save!
+# end
+# puts "#{i} Record inserted.-----------------------------------------------"
+# i = i+1
+# end
 
 
 
@@ -832,34 +832,55 @@ end
 # i = i+1
 # end
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/sp_leave_bal.xls")
-# ex.default_sheet = ex.sheets[1]
-# i=1
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/leave_balance.xls")
+ex.default_sheet = ex.sheets[0]
+i=1
+2.upto(528) do |line|
+@employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
+EmployeeLeavBalance.new do |j|
 
-# 2.upto(51) do |line|
-# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-# puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
-# EmployeeLeavBalance.new do |j|
-# 2.upto(51) do |line|
-# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-# puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
-# EmployeeLeavBalance.new do |j|
+  j.employee_id = @employee.id unless @employee.nil?
+  puts "#{(ex.cell(line,'A'))} Record inserted........Employee ID #{@employee.id}-----------------------------------------------"
+  j.leav_category_id = ex.cell(line,'C').to_i
+  puts "#{(ex.cell(line,'C'))} Record inserted.-----------------------------------------------"
+  j.no_of_leave = ex.cell(line,'D')
+  j.expiry_date = ex.cell(line,'E')
+  j.total_leave = ex.cell(line,'F')
+  j.from_date = ex.cell(line,'G')
+  j.to_date = ex.cell(line,'H')
+  j.save!
+end
+puts "#{i} Record inserted.------------------#{(ex.cell(line,'A'))}-----------------------------"
+i = i+1
+end
 
-#   j.employee_id = @employee.id unless @employee.nil?
-#   puts "#{(ex.cell(line,'A'))} Record inserted........Employee ID #{@employee.id}-----------------------------------------------"
-#   j.leav_category_id = ex.cell(line,'C').to_i
-#   puts "#{(ex.cell(line,'C'))} Record inserted.-----------------------------------------------"
-#   j.no_of_leave = ex.cell(line,'D')
-#   j.expiry_date = ex.cell(line,'E')
-#   j.total_leave = ex.cell(line,'F')
-#   j.from_date = ex.cell(line,'G')
-#   j.to_date = ex.cell(line,'H')
-#   j.save!
-# end
-# puts "#{i} Record inserted.-----------------------------------------------"
-# i = i+1
-# end
+ex = Roo::Excel.new("#{Rails.root}/public/coff.xls")
+ ex.default_sheet = ex.sheets[0] #siya feb
+ i = 1
+ ActiveRecord::Base.transaction do
+
+ 2.upto(158) do |line| # siya Feb 201
+   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
+   unless @employee.nil?
+
+     LeaveCOff.new do |w|
+       w.employee_id = @employee.id
+       w.c_off_date = ex.cell(line, 'D')
+       w.c_off_type = ex.cell(line, 'E')
+       w.c_off_expire_day = ex.cell(line, 'F').to_i
+       w.expiry_date = ex.cell(line, 'G')
+       w.save!
+     end
+     puts "#{i} Record inserted.-------#{ex.cell(line,'D')}-----#{ex.cell(line,'G')}-----------------------------------"
+     i += 1
+   end
+   end
+ end
+
+
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/sp_leave_bal.xls")
@@ -1086,6 +1107,31 @@ end
 #    end
 #    end
 #  end
+
+
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/sglb.xls")
+# ex.default_sheet = ex.sheets[0]
+# i=1
+# 73.upto(167) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+# puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
+# EmployeeLeavBalance.new do |j|
+#   j.employee_id = @employee.id unless @employee.nil?
+#   puts "#{(ex.cell(line,'A'))} Record inserted........Employee ID #{@employee.id}-----------------------------------------------"
+#   j.leav_category_id = ex.cell(line,'C').to_i
+#   puts "#{(ex.cell(line,'C'))} Record inserted.-----------------------------------------------"
+#   j.no_of_leave = ex.cell(line,'D').to_f
+#   # j.expiry_date = ex.cell(line,'E')
+#   j.total_leave = ex.cell(line,'E').to_f
+#   j.from_date = ex.cell(line,'F')
+#   j.to_date = ex.cell(line,'G')
+
+#   j.save!
+# end
+# puts "#{i} Record inserted.-----------------------------------------------"
+# i = i+1
+# end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/skillset.xls")

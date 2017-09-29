@@ -247,7 +247,7 @@
         <div class="box-body">
           <ul class="products-list product-list-in-box">
 
-                <% JoiningDetail.all.order("id desc").limit(5).each do |j| %>
+                <% JoiningDetail.all.order("joining_date desc").limit(5).each do |j| %>
                 <li class="item">
                  <div class="product-img">
 

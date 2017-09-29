@@ -155,7 +155,7 @@
         </div><!-- /.box-header -->
         <div class="box-body">
           <div class="table-responsive">
-            <table id="example" class="table no-margin">
+            <table id="example1" class="table no-margin">
             <thead>
               <tr>
                 <th>Code</th>
@@ -307,13 +307,6 @@
         "scrollX": true,
         "scrollY": 100
     } );
-     $(document).ready(function() {
-
-    $('#example3').DataTable( {
-        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
-        "scrollX": true,
-        "scrollY": 100
-    } );
 } );
 </script>
 
@@ -341,8 +334,8 @@
             <% if @employees.empty? %>
              
             <%else%>
-            <table id="example3" class="table no-margin">
-            <thead>
+            <table id="birthday" class="table no-margin">
+                   <thead>
               <tr>
                 <th></th>
                 <th>Employee</th>
@@ -412,13 +405,13 @@
             <table id="birthday" class="table no-margin">
             <thead>
               <tr>
-              <th></th>
-                <th>Name</th>
+                <th></th>
+                <th>Employee</th>
                 <th>Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                <%@employees.each do |e|%>
+              </tr>
+            </thead>
+                  
+              <% @employees.each do |e| %>
                 <tr>
                    <td>
                      <%unless e.nil? or e.nil? or  e.member.nil? or e.member.avatar.nil? %>
@@ -435,7 +428,8 @@
                         <span class="users-list-date"><%= e.try(:joining_detail).try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
 
                        </td>
-                       <td><%= e.date_of_birth %> </td>
+                       <td> <%= e.date_of_birth.strftime("%d %b") %></td>
+
                     <% end %> <!-- do -->
                      </tr>
                       <%end%> <!-- if employee.empty? -->
@@ -458,17 +452,17 @@
         </div><!-- /.box-header -->
         <div class="box-body">
           <ul class="products-list product-list-in-box">
-              <% JoiningDetail.all.order("id desc").limit(5).each do |j| %>
+              <% JoiningDetail.all.order("joining_date desc").limit(5).each do |j| %>
                 <% if j.employee.status == "Active" %>
                   <li class="item">
                     <div class="product-img">
                       <%unless j.nil? or j.employee.nil? or  j.employee.member.nil? or j.employee.member.avatar.nil? %>
                         <% if j.employee.gender == "Male" && j.employee.member.avatar_file_name == nil  %>
-                          <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                        <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
                         <% elsif j.employee.gender == "Female" && j.employee.member.avatar_file_name == nil  %>
-                          <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                        <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
                         <%else%>
-                          <%= image_tag j.employee.member.avatar.url(:medium),class: "img-circle"%>
+                          <%= image_tag j.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
                         <%end%>
                       <%else%>
                         <%= image_tag "user.jpg",class: "img-circle", alt: "User Image", size: "25x25" %>
@@ -477,7 +471,8 @@
                     <div class="product-info">
                       <%= full_name(j.employee)%>
                       <span class="label label-info pull-right"><%= j.joining_date %></span>
-                      <span class="product-description"><%= j.employee.try(:joining_detail).try(:cost_center).try(:name) %> - <%= j.employee.try(:department).try(:name) %> <%= j.try(:employee).try(:sub_department).try(:name) %> (<%= j.employee.manager.try(:first_name) %> <%= j.employee.manager.try(:middle_name) %> <%= j.employee.manager.try(:last_name) %> )</span>
+                      <span class="product-description"><%= j.employee.try(:joining_detail).try(:cost_center).try(:name) %> - <%= j.employee.try(:department).try(:name) %> <%= j.try(:employee).try(:sub_department).try(:name) %>  </span>
+                      <span class="product-description"><%= full_name(j.employee.try(:manager)) %></span>
                     </div>
                   </li><!-- /.item -->
                 <% else %>

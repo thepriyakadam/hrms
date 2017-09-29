@@ -1,0 +1,93 @@
+<%= bootstrap_form_for(@contact_detail,html: {id: 'contact_detail'},remote:true) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+         <div class="form-group required">
+           <%= f.select :employee_id, all_employee_list, {label: "Employee",include_blank: "Select Employee"},{:class=>"select2 ",:style=>"width: 100%;",:tabindex=>"-1"} %>
+         </div>
+        </div>
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :name,label:'Name', placeholder: 'Name' %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :role1,label:'Role 1', placeholder: 'Role 1' %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :role2,label:'Role 2', placeholder: 'Role 2' %>
+            </div>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :role3,label:'Role 3', placeholder: 'Role 3' %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :role4,label:'Role 4', placeholder: 'Role 4' %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :role5,label:'Role 5', placeholder: 'Role 5' %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :description,label:'Link', placeholder: 'Link' %>
+            </div>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col-sm-3">
+            <label>Status</label>
+            <div class="field">
+              <%= f.check_box :status , label:'Active'%>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="actions" style="padding: 20px">
+              <%= f.submit 'Create Contact Detail',:class => class_name, data: { disable_with: data_info } %>
+            </div>
+          </div>
+      </div>
+<% end %>
+
+<script>
+$("#contact_detail").validate({
+    rules: {
+      "contact_detail[employee_id]":{
+        required: true,
+      },
+      "contact_detail[name]":{
+        required: true,
+       }
+       },
+    messages: {
+      "contact_detail[employee_id]":{
+        required: "Please select employee",
+      },
+       "contact_detail[name]":{
+        required: "Please select employee",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

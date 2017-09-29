@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170922092726) do
+ActiveRecord::Schema.define(version: 20170927105529) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -544,6 +544,22 @@ ActiveRecord::Schema.define(version: 20170922092726) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
+
+  create_table "contact_details", force: :cascade do |t|
+    t.integer  "employee_id", limit: 4
+    t.string   "name",        limit: 255
+    t.text     "description", limit: 65535
+    t.boolean  "status"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "role1",       limit: 255
+    t.string   "role2",       limit: 255
+    t.string   "role3",       limit: 255
+    t.string   "role4",       limit: 255
+    t.string   "role5",       limit: 255
+  end
+
+  add_index "contact_details", ["employee_id"], name: "index_contact_details_on_employee_id", using: :btree
 
   create_table "cost_centers", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -3880,6 +3896,7 @@ ActiveRecord::Schema.define(version: 20170922092726) do
   add_foreign_key "company_locations", "states"
   add_foreign_key "company_policies", "policy_types"
   add_foreign_key "company_time_masters", "shift_masters"
+  add_foreign_key "contact_details", "employees"
   add_foreign_key "daily_bill_detail_histories", "daily_bill_details"
   add_foreign_key "daily_bill_detail_histories", "travel_expence_types"
   add_foreign_key "daily_bill_details", "currency_masters"

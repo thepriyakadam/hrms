@@ -284,7 +284,7 @@
         <div class="box-body">
           <ul class="products-list product-list-in-box">
 
-                <% JoiningDetail.all.order("id desc").limit(5).each do |j| %>
+                <% JoiningDetail.all.order("joining_date desc").limit(5).each do |j| %>
                 <li class="item">
                  <div class="product-img">
 
@@ -303,7 +303,7 @@
                 <div class="product-info">
                   <%= j.employee.try(:manual_employee_code) %> <%= j.employee.try(:first_name) %> <%= j.employee.try(:middle_name) %> <%= j.employee.try(:last_name) %>
                   <span class="label label-info pull-right"><%= j.joining_date %></span>
-                  <span class="product-description"><%= j.employee_designation.try(:name) %></span>
+                  <span class="product-description"><%= j.employee_designation.try(:name) %> (<%= j.employee.manager.try(:first_name) %> <%= j.employee.manager.try(:middle_name) %> <%= j.employee.manager.try(:last_name) %> )</span>
                   </div>
                 <% end %>
             </li><!-- /.item -->

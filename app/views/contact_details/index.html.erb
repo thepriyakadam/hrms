@@ -29,15 +29,41 @@
           <%= contact_detail.employee.joining_detail.employee_designation.try(:name) %><br>
           <%= contact_detail.employee.contact_no %><br>
           <%= contact_detail.employee.email %><br>
-          <%="1."%> <%= contact_detail.role1 %><br>
-          <%="2."%> <%= contact_detail.role2 %><br>
-          <%="3."%> <%= contact_detail.role3 %><br>
-          <%="4."%> <%= contact_detail.role4 %><br>
-          <%="5."%> <%= contact_detail.role5 %><br>
-          <%="6."%> <%= contact_detail.role6 %><br>
-          <%="7."%> <%= contact_detail.role7 %><br>
-          <%="8."%> <%= contact_detail.role8 %><br>
-          <%= contact_detail.description %><br>
+          <ul style="list-style-type:disc">
+          <% if contact_detail.role1 == ""%>
+          <% else %>
+          <li> <%= contact_detail.role1 %></li>
+          <% end%>
+          <% if contact_detail.role2 == ""%>
+          <% else %>
+          <li> <%= contact_detail.role2 %></li>
+          <% end%>
+          <% if contact_detail.role3 == ""%>
+          <% else %>
+          <li> <%= contact_detail.role3 %></li>
+          <% end%>
+          <% if contact_detail.role4 == ""%>
+          <% else %>
+          <li> <%= contact_detail.role4 %></li>
+          <% end%>
+          <% if contact_detail.role5 == ""%>
+          <% else %>
+          <li> <%= contact_detail.role5 %></li>
+          <% end%>
+          <% if contact_detail.role6 == ""%>
+          <% else %>
+          <li> <%= contact_detail.role6 %></li>
+          <% end%>
+          <% if contact_detail.role7 == ""%>
+          <% else %>
+          <li> <%= contact_detail.role7 %></li>
+          <% end%>
+          <% if contact_detail.role8 == ""%>
+          <% else %>
+          <li> <%= contact_detail.role8 %></li>
+          <% end%>
+          </ul>
+          <%= contact_detail.description %>
         </td>
       </tr>
       </div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171003105850) do
+ActiveRecord::Schema.define(version: 20171003123359) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1514,18 +1514,6 @@ ActiveRecord::Schema.define(version: 20171003105850) do
   add_index "families", ["employee_id"], name: "index_families_on_employee_id", using: :btree
   add_index "families", ["relation_master_id"], name: "index_families_on_relation_master_id", using: :btree
   add_index "families", ["religion_id"], name: "index_families_on_religion_id", using: :btree
-
-  create_table "faqs", force: :cascade do |t|
-    t.string   "code",        limit: 255
-    t.string   "question",    limit: 255
-    t.string   "answer",      limit: 255
-    t.integer  "employee_id", limit: 4
-    t.boolean  "status"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-  end
-
-  add_index "faqs", ["employee_id"], name: "index_faqs_on_employee_id", using: :btree
 
   create_table "food_coupan_masters", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -4005,7 +3993,6 @@ ActiveRecord::Schema.define(version: 20171003105850) do
   add_foreign_key "families", "employees"
   add_foreign_key "families", "relation_masters"
   add_foreign_key "families", "religions"
-  add_foreign_key "faqs", "employees"
   add_foreign_key "food_deductions", "employees"
   add_foreign_key "food_deductions", "food_coupan_masters"
   add_foreign_key "frequest_questions", "employees"

@@ -1512,6 +1512,7 @@ def upload
     DailyAttendance.import(params[:file])
     redirect_to root_url, notice: "File imported."
   end
+  # byebug
   last = DailyAttendance.last
   @daily_attendances = DailyAttendance.where(date: last.date.to_date)
 
@@ -1729,7 +1730,7 @@ def upload
     end
 
   #remaining employees attendance creation
-    @employees = Employee.where(status: "Active")
+    @employees = Employee.where(company_location_id: current_user.company_location_id, status: "Active")
     @employees.each do |e|
       employee_atten = EmployeeAttendance.where(employee_id: e.id,day: last.date.to_date).take
       if employee_atten.nil?
@@ -1812,7 +1813,7 @@ end
 def import
   file = params[:file]
   if file.nil?
-    flash[:alert] = "Please Select File!"
+  flash[:alert] = "Please Select File!"
   redirect_to import_employee_attendance_employee_attendances_path
   else
   EmployeeAttendance.import(params[:file])

@@ -68,6 +68,6 @@ class ContactDetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def contact_detail_params
-      params.require(:contact_detail).permit(:employee_id, :name, :description, :status,:role1,:role2,:role3,:role4,:role5)
+      params.require(:contact_detail).permit(:employee_id, :name, :description, :status,:role1,:role2,:role3,:role4,:role5,:role6,:role7,:role8)
     end
 end

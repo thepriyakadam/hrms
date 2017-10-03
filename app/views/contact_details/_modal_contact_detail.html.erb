@@ -7,7 +7,7 @@
     <div class="modal-body">
 <table class="table table-bordered table-hover table-condensed">
   <thead>
-  
+  <tr>
   	<th>Employee Name</th>
   	<td><%= full_name(@contact_detail.employee) %></td>
   	<th>Name</th>
@@ -31,13 +31,22 @@
    <tr>
    	<th>Role 5</th>
    	<td><%= @contact_detail.role5 %></td>
-   	<th>Link</th>
-   	<td><%= @contact_detail.description %></td>
+    <th>Role 6</th>
+    <td><%= @contact_detail.role6 %></td>
    </tr>
 
    <tr>
+    <th>Role 7</th>
+    <td><%= @contact_detail.role7 %></td>
+    <th>Role 8</th>
+    <td><%= @contact_detail.role8 %></td>
+   </tr>
+
+    <tr>   
+   	<th>Link</th>
+   	<td><%= @contact_detail.description %></td>
    	<th>Status</th>
-   	<td colspan="3"><%= @contact_detail.status ? "Active" : "Inactive" %></td>
+   	<td><%= @contact_detail.status ? "Active" : "Inactive" %></td>
    </tr>
 
   </thead>

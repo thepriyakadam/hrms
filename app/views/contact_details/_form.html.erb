@@ -27,19 +27,19 @@
 
       <div class="row">
           <div class="col-sm-3">
-            <div class="form-group required">
+            <div class="field">
               <%= f.text_field :role3,label:'Role 3', placeholder: 'Role 3' %>
             </div>
           </div>
 
           <div class="col-sm-3">
-            <div class="form-group required">
+            <div class="field">
               <%= f.text_field :role4,label:'Role 4', placeholder: 'Role 4' %>
             </div>
           </div>
 
           <div class="col-sm-3">
-            <div class="form-group required">
+            <div class="field">
               <%= f.text_field :role5,label:'Role 5', placeholder: 'Role 5' %>
             </div>
           </div>
@@ -95,6 +95,12 @@ $("#contact_detail").validate({
       },
       "contact_detail[name]":{
         required: true,
+         },
+      "contact_detail[role1]":{
+        required: true,
+         },
+      "contact_detail[role2]":{
+        required: true,
        }
        },
     messages: {
@@ -102,6 +108,12 @@ $("#contact_detail").validate({
         required: "Please select employee",
       },
        "contact_detail[name]":{
+        required: "Please select employee",
+        },
+       "contact_detail[role1]":{
+        required: "Please select employee",
+        },
+       "contact_detail[role2]":{
         required: "Please select employee",
       }
        },

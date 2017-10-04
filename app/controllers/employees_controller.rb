@@ -262,7 +262,7 @@
                     else
                       employee.email
                     end
-          u.password = employee.first_name+'-'+employee.manual_employee_code
+          u.password = employee.first_name+'-123'+employee.manual_employee_code
           u.employee_id = employee.id
           u.department_id = employee.department_id
           u.company_id = employee.company_location.company_id

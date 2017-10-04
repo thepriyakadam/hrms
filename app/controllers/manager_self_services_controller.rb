@@ -180,60 +180,10 @@ class ManagerSelfServicesController < ApplicationController
 
   end
 
-   def create
-    @vacancy_master = VacancyMaster.new(vacancy_master_params)
-
-    if params[:rep_flag] == "Replacement"
-      @vacancy_master.replacement_id = params[:common][:replacement_id]
-      @replacement_textbox = true
-    else
-      @replacement_textbox = false
-    end
-
-    if params[:flag] == "true"
-      @vacancy_master.notice_period_day = params[:common][:notice_period_day]
-      @notice_period_textbox = true
-    else
-      @notice_period_textbox = false
-    end
-
-    if params[:flag] == "true"
-      @vacancy_master.relocation_cost = params[:common][:relocation_cost]
-      @relocation_textbox = true
-    else
-      @relocation_textbox = false
-    end
-
-    a=current_user.employee_id
-    employee = Employee.where(id: a).take
-    # if @vacancy_master.is_there?
-    #   flash[:alert] = "Your Request already has been sent"
-    #   redirect_to new_vacancy_master_path
-    #  else
-    if employee.try(:manager_id).nil?
-        flash[:alert] = "Reporting Manager not set please set Reporting Manager"
-        redirect_to new_vacancy_master_path
-      else
-        @vacancy_master.current_status = "Pending"
-        @vacancy_master.reporting_master_id = employee.manager_id
-        respond_to do |format|
-      if @vacancy_master.save
-        ReportingMastersVacancyMaster.create(reporting_master_id: current_user.employee_id, vacancy_master_id: @vacancy_master.id,vacancy_status: "Pending")
-        for i in 1..@vacancy_master.no_of_position.to_i
-          ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id, employee_id: @vacancy_master.employee_id, open_date: @vacancy_master.vacancy_post_date, fulfillment_date: @vacancy_master.vacancy_fullfillment_date,status: "Pending", employee_designation_id: @vacancy_master.employee_designation_id, vacancy_name: @vacancy_master.vacancy_name)
-        end
-      
-        # VacancyMasterMailer.vacancy_request(@vacancy_master).deliver_now
-
-        format.html { redirect_to @vacancy_master, notice: 'Vacancy Created Successfully.' }
-        format.json { render :show, status: :created, location: @vacancy_master }
-      else
-        format.html { render :new }
-        format.json { render json: @vacancy_master.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-end
+  def vacancy_request
+    byebug
+    @employee_designation = params[:vacancy_master][:employee_designation_id]
+   end
 
 
 end

@@ -56,8 +56,8 @@ class Api::UserAuthsController < ApplicationController
     #   render :status => 400,
     #          :json => {:status=>"Failure",:message=>"User Id or Authentication Token is required."}
     # end
-    employee = params[:id]
-    employees = Employee.all 
+    @employee = params[:employee_id]
+    employees = Employee.where(id: @employee) 
       render :json => employees.present? ? employees.collect{|s| {:id => s.id,:first_name => s.first_name}} : []
       
       # emp = params[:id]

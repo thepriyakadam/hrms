@@ -1787,7 +1787,8 @@ end
 
 def show_datewise_daily_attendance
   @date = params[:employee][:date]
-  @employee_attendances = EmployeeAttendance.where(day: @date.to_date)
+  @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+  @employee_attendances = EmployeeAttendance.where(day: @date.to_date).where(employee_id: @employees).group(:employee_id)
 end
 
 def modal_edit_daily_attendance 

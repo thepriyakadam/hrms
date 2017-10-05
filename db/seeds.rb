@@ -530,20 +530,22 @@ require 'roo'
 # i = i+1
 # end
 
-# ex = Roo::Excel.new("#{Rails.root}/public/Employee PF No Details.xls")
-# ex.default_sheet = ex.sheets[0] #siya feb
-# i = 1
-# ActiveRecord::Base.transaction do
-# 2.upto(452) do |line| # siya Feb 2016
-#  puts "Starting Record #{ex.cell(line,'B')}---------------------------------------"
-#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-#  puts "#{i} Record inserting.----------------------------"
-#  JoiningDetail.where(employee_id: @employee).update_all(employee_pf_no: ex.cell(line,'D'))
-#  # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
-#  puts "#{i} Record inserted.-----------------------------------------------"
-#  i += 1
-#  end
-#  end
+ex = Roo::Excel.new("#{Rails.root}/public/notice_period.xls")
+ex.default_sheet = ex.sheets[0] #siya feb
+i = 1
+ActiveRecord::Base.transaction do
+2.upto(453) do |line| # siya Feb 2016
+ puts "Starting Record #{ex.cell(line,'B')}---------------------------------------"
+  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+ puts "#{i} Record inserting.----------------------------"
+ JoiningDetail.where(employee_id: @employee).update_all(probation_period: ex.cell(line,'C'))
+ JoiningDetail.where(employee_id: @employee).update_all(notice_period_after_probation: ex.cell(line,'D').to_i)
+ JoiningDetail.where(employee_id: @employee).update_all(notice_period: ex.cell(line,'E').to_i)
+ # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
+ puts "#{i} Record inserted.------#{ex.cell(line,'C')}-----#{ex.cell(line,'D')}---------------------#{ex.cell(line,'E')}---------------"
+ i += 1
+ end
+ end
 
 #============================== DEPARTMENT END =====================================#
 # puts "Starting Designation..."
@@ -832,53 +834,53 @@ require 'roo'
 # i = i+1
 # end
 
-puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/leave_balance.xls")
-ex.default_sheet = ex.sheets[0]
-i=1
-2.upto(528) do |line|
-@employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
-EmployeeLeavBalance.new do |j|
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/leave_balance.xls")
+# ex.default_sheet = ex.sheets[0]
+# i=1
+# 2.upto(528) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+# puts "#{(ex.cell(line,'A'))} Record inserted. #{@employee.id}-----------------------------------------------"
+# EmployeeLeavBalance.new do |j|
 
-  j.employee_id = @employee.id unless @employee.nil?
-  puts "#{(ex.cell(line,'A'))} Record inserted........Employee ID #{@employee.id}-----------------------------------------------"
-  j.leav_category_id = ex.cell(line,'C').to_i
-  puts "#{(ex.cell(line,'C'))} Record inserted.-----------------------------------------------"
-  j.no_of_leave = ex.cell(line,'D')
-  j.expiry_date = ex.cell(line,'E')
-  j.total_leave = ex.cell(line,'F')
-  j.from_date = ex.cell(line,'G')
-  j.to_date = ex.cell(line,'H')
-  j.save!
-end
-puts "#{i} Record inserted.------------------#{(ex.cell(line,'A'))}-----------------------------"
-i = i+1
-end
+#   j.employee_id = @employee.id unless @employee.nil?
+#   puts "#{(ex.cell(line,'A'))} Record inserted........Employee ID #{@employee.id}-----------------------------------------------"
+#   j.leav_category_id = ex.cell(line,'C').to_i
+#   puts "#{(ex.cell(line,'C'))} Record inserted.-----------------------------------------------"
+#   j.no_of_leave = ex.cell(line,'D')
+#   j.expiry_date = ex.cell(line,'E')
+#   j.total_leave = ex.cell(line,'F')
+#   j.from_date = ex.cell(line,'G')
+#   j.to_date = ex.cell(line,'H')
+#   j.save!
+# end
+# puts "#{i} Record inserted.------------------#{(ex.cell(line,'A'))}-----------------------------"
+# i = i+1
+# end
 
-ex = Roo::Excel.new("#{Rails.root}/public/coff.xls")
- ex.default_sheet = ex.sheets[0] #siya feb
- i = 1
- ActiveRecord::Base.transaction do
+# ex = Roo::Excel.new("#{Rails.root}/public/coff.xls")
+#  ex.default_sheet = ex.sheets[0] #siya feb
+#  i = 1
+#  ActiveRecord::Base.transaction do
 
- 2.upto(158) do |line| # siya Feb 201
-   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
-   unless @employee.nil?
+#  2.upto(158) do |line| # siya Feb 201
+#    puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#    @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
+#    unless @employee.nil?
 
-     LeaveCOff.new do |w|
-       w.employee_id = @employee.id
-       w.c_off_date = ex.cell(line, 'D')
-       w.c_off_type = ex.cell(line, 'E')
-       w.c_off_expire_day = ex.cell(line, 'F').to_i
-       w.expiry_date = ex.cell(line, 'G')
-       w.save!
-     end
-     puts "#{i} Record inserted.-------#{ex.cell(line,'D')}-----#{ex.cell(line,'G')}-----------------------------------"
-     i += 1
-   end
-   end
- end
+#      LeaveCOff.new do |w|
+#        w.employee_id = @employee.id
+#        w.c_off_date = ex.cell(line, 'D')
+#        w.c_off_type = ex.cell(line, 'E')
+#        w.c_off_expire_day = ex.cell(line, 'F').to_i
+#        w.expiry_date = ex.cell(line, 'G')
+#        w.save!
+#      end
+#      puts "#{i} Record inserted.-------#{ex.cell(line,'D')}-----#{ex.cell(line,'G')}-----------------------------------"
+#      i += 1
+#    end
+#    end
+#  end
 
 
 

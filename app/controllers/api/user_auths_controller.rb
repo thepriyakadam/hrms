@@ -42,7 +42,7 @@ class Api::UserAuthsController < ApplicationController
           render :status=>401, :json=>{:status=>"Failure", :message=>"You are not in correct location"}
         end
       else
-        render :status=>200, :json=>{:status=>"Success"}
+        render :status=>200, :json=>@user.employee_id
       end
     end
   end

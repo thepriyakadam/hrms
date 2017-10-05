@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :events
   resources :contact_details do
     collection do
       get :modal_contact_detail
@@ -248,6 +249,8 @@ Rails.application.routes.draw do
       get :subordinate_attendance
       post :show_subordinate_attendance
       get :show_subordinate_attendance
+      post :vacancy_request
+      get :vacancy_request
     end
   end
 

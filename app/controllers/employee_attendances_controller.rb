@@ -1,5 +1,6 @@
 require 'query_report/helper'  # need to require the helper
 class EmployeeAttendancesController < ApplicationController
+  respond_to :html, :json  # to just in place edit and update
   before_action :set_employee_attendance, only: [:show, :edit, :update, :destroy]
   before_action :check_params, only: [:create_attendance]
   include QueryReport::Helper  # need to include it
@@ -48,15 +49,18 @@ class EmployeeAttendancesController < ApplicationController
   # PATCH/PUT /employee_attendances/1
   # PATCH/PUT /employee_attendances/1.json
   def update
-    respond_to do |format|
-      if @employee_attendance.update(employee_attendance_params)
-        format.html { redirect_to @employee_attendance, notice: 'Employee attendance was successfully updated.' }
-        format.json { render :show, status: :ok, location: @employee_attendance }
-      else
-        format.html { render :edit }
-        format.json { render json: @employee_attendance.errors, status: :unprocessable_entity }
-      end
-    end
+    # respond_to do |format|
+    #   if @employee_attendance.update(employee_attendance_params)
+    #     format.html { redirect_to @employee_attendance, notice: 'Employee attendance was successfully updated.' }
+    #     format.json { render :show, status: :ok, location: @employee_attendance }
+    #   else
+    #     format.html { render :edit }
+    #     format.json { render json: @employee_attendance.errors, status: :unprocessable_entity }
+    #   end
+    # end
+    @employee_attendance = EmployeeAttendance.find(params[:id])
+    @employee_attendance.update_attributes(employee_attendance_params)
+    respond_with(@employee_attendances)
   end
 
   # DELETE /employee_attendances/1

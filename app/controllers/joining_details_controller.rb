@@ -28,6 +28,8 @@ class JoiningDetailsController < ApplicationController
 
   # POST /joining_details
   # POST /joining_details.json
+  
+
   def create
     @joining_detail = JoiningDetail.new(joining_detail_params)
     @employee = Employee.find(params[:joining_detail][:employee_id])

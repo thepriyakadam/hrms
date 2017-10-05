@@ -5,6 +5,8 @@ class EmployeeAttendance < ActiveRecord::Base
   belongs_to :company_time_master
   belongs_to :holiday
   validates :day, uniqueness: { scope: [:employee_id] }
+  # validates_format_of :in_time, :with => /(([0][0-9]|[1][0-2])|[0-9]):([0-5][0-9])( *)((AM|PM)|(A|P))/,
+  #   :message => "Only Proper HH:MM time allowed"
   #attr_accessible :employee_id, :day, :present, :in_time, :out_time
   # extend ActiveModel::Naming
   # include ActiveModel::Conversion

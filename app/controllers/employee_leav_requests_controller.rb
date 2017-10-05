@@ -106,8 +106,11 @@ class EmployeeLeavRequestsController < ApplicationController
               @leave_c_off_id = params[:leave_c_off][:c_off_date]
               @leave_c_off = LeaveCOff.find_by(id: @leave_c_off_id)
             if start_date.to_date > @leave_c_off.c_off_date.to_date
-                if @leave_c_off.expiry_date < Date.today || @leave_c_off.expiry_date < start_date.to_date
+                if @leave_c_off.expiry_date < start_date.to_date
                   flash[:alert] = "Compensatory off expired for this day"
+                elsif @leave_c_off.c_off_date > start_date.to_date
+                  flash[:alert] = "Please check Compensatory off day"
+
                 elsif @employee_leav_request.is_available_coff?
                   flash[:alert] = "Your Leave Request already has been sent"
                 elsif @employee_leav_request.is_salary_processed_coff?
@@ -118,13 +121,13 @@ class EmployeeLeavRequestsController < ApplicationController
                   @employee_leav_request.first_reporter_id = @employee.manager_id
                   @employee_leav_request.is_pending = true
                   @employee_leav_request.current_status = 'Pending'
-                  if @leave_c_off.leave_count == 1.0 || @leave_c_off.leave_count == 0.0
+                  # if @leave_c_off.leave_count == 1.0 || @leave_c_off.leave_count == 0.0
                     @employee_leav_request.leave_count = 1
                     @employee_leav_request.leave_type = "Full Day"
-                  else
-                    @employee_leav_request.leave_count = 0.5
-                    @employee_leav_request.leave_type = "Half Day"
-                  end
+                  # else
+                  #   @employee_leav_request.leave_count = 0.5
+                  #   @employee_leav_request.leave_type = "Half Day"
+                  # end
                     @employee_leav_request.is_cancelled = false
                     @employee_leav_request.is_first_approved = false
                     @employee_leav_request.is_first_rejected = false
@@ -137,13 +140,13 @@ class EmployeeLeavRequestsController < ApplicationController
                     @employee_leav_request.save
                     @employee_leav_request.leave_record_create_coff(@employee_leav_request)
                     unless @emp_leave_bal.nil?
-                      if @employee_leav_request.leave_count == 0.5
+                      # if @employee_leav_request.leave_count == 0.5
+                      #   no_of_leave = @emp_leave_bal.no_of_leave.to_f - @employee_leav_request.leave_count.to_f
+                      #   @emp_leave_bal.update(no_of_leave: no_of_leave)
+                      # else
                         no_of_leave = @emp_leave_bal.no_of_leave.to_f - @employee_leav_request.leave_count.to_f
                         @emp_leave_bal.update(no_of_leave: no_of_leave)
-                      else
-                        no_of_leave = @emp_leave_bal.no_of_leave.to_f - @employee_leav_request.leave_count.to_f
-                        @emp_leave_bal.update(no_of_leave: no_of_leave)
-                      end
+                      # end
     #emp_leav_bal_id
                         @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                     end
@@ -220,6 +223,7 @@ class EmployeeLeavRequestsController < ApplicationController
                 if @employee_leav_request.leave_type == 'Full Day'
                   @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 1
                 elsif @employee_leav_request.leave_type == 'Full/Half'
+
                   if @employee_leav_request.first_half == true && @employee_leav_request.last_half == true
                     @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f
                   elsif @employee_leav_request.first_half == true
@@ -330,6 +334,7 @@ class EmployeeLeavRequestsController < ApplicationController
                           elsif @leav_category.from.nil? or @leav_category.to.nil?
                             @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
                             if @employee_leav_request.save
+                              #byebug
                         #emp_leav_bal_id
                               @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                             #leave_record
@@ -340,9 +345,9 @@ class EmployeeLeavRequestsController < ApplicationController
                               @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
                               total = 0
                               @leave_record.each do |l|
-                                total = total + l.count
+                                total = total.to_f + l.count.to_f
                               end
-                              total
+                              total.to_f
                               @employee_leav_request.update(leave_count: total)
 
 

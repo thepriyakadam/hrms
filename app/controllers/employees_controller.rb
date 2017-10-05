@@ -201,6 +201,7 @@
          format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
          format.json { render :show, status: :ok, location: @employee }
        end
+      EmployeeMailer.employee_create(@employee).deliver_now   
      else
        format.html { render :edit }
        format.json { render json: @employee.errors, status: :unprocessable_entity }

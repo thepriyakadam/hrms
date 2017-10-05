@@ -48,6 +48,8 @@ Rails.application.configure do
     # when problems arise.
     config.log_level = :debug
 
+    # config.static_cache_control = 'public, max-age=1000'
+
    #  config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
   
   

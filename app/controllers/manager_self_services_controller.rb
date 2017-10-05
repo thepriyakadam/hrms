@@ -179,5 +179,10 @@ class ManagerSelfServicesController < ApplicationController
 
   end
 
+  def vacancy_request
+    byebug
+    @employee_designation = params[:vacancy_master][:employee_designation_id]
+   end
+
 
 end

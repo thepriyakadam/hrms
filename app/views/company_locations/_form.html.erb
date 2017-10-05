@@ -109,13 +109,43 @@
 <script>
 $("#company_location").validate({
     rules: {
+      "company_location[manual_company_location_code]":{
+        required: true,
+      },
+      "company_location[name]":{
+        required: true,
+      },
       "company_location[email]":{
+        required: true,
+        },
+      "company_location[pin_code]":{
+        required: true,
+        },
+      "company_location[country_id]":{
+        required: true,
+        },
+      "company_location[city]":{
         required: true,
       }
     },
     messages: {
-      "company_location[email]":{
-        required: "Please specify state",
+      "company_location[manual_company_location_code]":{
+        required: "Please specify company location code",
+      },
+       "company_location[name]":{
+        required: "Please specify location name",
+      },
+       "company_location[email]":{
+        required: "Please specify email",
+         },
+       "company_location[pin_code]":{
+        required: "Please specify pin code",
+         },
+       "company_location[country_id]":{
+        required: "Please select country",
+        },
+       "company_location[city]":{
+        required: "Please specify city",
       }
     },
     errorPlacement: function(error, element) {

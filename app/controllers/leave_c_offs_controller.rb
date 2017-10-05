@@ -272,16 +272,18 @@ class LeaveCOffsController < ApplicationController
   end
 
   def approve_c_off
+
     @leave_c_off = LeaveCOff.find(params[:leave_c_off_id])
-    expiry_status = params[:leave_c_off][:expiry_status]
-    @leave_c_off.update(expiry_status: expiry_status)
-    c_off_expire_day = params[:leave_c_off][:c_off_expire_day]
+    #expiry_status = params[:leave_c_off][:expiry_status]
+    @leave_c_off.update(expiry_status: true)
+    #c_off_expire_day = params[:leave_c_off][:c_off_expire_day]
+    c_off_expire_day = 45
     leav_category = LeavCategory.find_by_code('C.Off')
-    if @leave_c_off.expiry_status == true
+    #if @leave_c_off.expiry_status == true
       @expiry_date = @leave_c_off.c_off_date + c_off_expire_day.to_i
-    else
-      @expiry_date = nil
-    end
+    # else
+    #   @expiry_date = nil
+    # end
     #@status_c_off = StatusCOff.find_by(leave_c_off_id: @leave_c_off.id)
     if @leave_c_off.employee.manager_2_id == nil
       @leave_c_off.update(c_off_expire_day: c_off_expire_day,expiry_date: @expiry_date,current_status: "FinalApproved")
@@ -334,21 +336,22 @@ class LeaveCOffsController < ApplicationController
     leav_category = LeavCategory.find_by_code('C.Off')
     @current_emp = Employee.find_by(id: current_user.employee_id)
 
-    if @leave_c_off.current_status != "FirstApproved"
-      expiry_status = params[:leave_c_off][:expiry_status]
-      @leave_c_off.update(expiry_status: expiry_status)
-      c_off_expire_day = params[:leave_c_off][:c_off_expire_day]
-      if @leave_c_off.expiry_status == true
+    # if @leave_c_off.current_status != "FirstApproved"
+    #   #expiry_status = params[:leave_c_off][:expiry_status]
+      @leave_c_off.update(expiry_status: true)
+      # c_off_expire_day = params[:leave_c_off][:c_off_expire_day]
+      c_off_expire_day = 45
+      # if @leave_c_off.expiry_status == true
         @expiry_date = @leave_c_off.c_off_date + c_off_expire_day.to_i
-      else
-        @expiry_date = nil
-      end
+      # else
+      #   @expiry_date = nil
+      # end
         @leave_c_off.update(status: true,current_status: "FinalApproved",expiry_date: @expiry_date,c_off_expire_day: c_off_expire_day)
         StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FinalApproved")
-    else
-        @leave_c_off.update(status: true,current_status: "FinalApproved")
-        StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FinalApproved")     
-    end#@leave_c_off.current_status != "FirstApproved" 
+    # else
+    #     @leave_c_off.update(status: true,current_status: "FinalApproved")
+    #     StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FinalApproved")     
+    # end#@leave_c_off.current_status != "FirstApproved" 
 
         is_exist = EmployeeLeavBalance.exists?(employee_id: @leave_c_off.employee_id, leav_category_id: leav_category.id)
         if is_exist
@@ -432,7 +435,7 @@ class LeaveCOffsController < ApplicationController
       flash[:notice] = "Approved successfully"
       COffMailer.final_approved(@leave_c_off,@current_emp).deliver_now
     @emp = Employee.find_by(id: @leave_c_off.employee_id)
-    if @emp.manager_2_id == current_user.employee_id
+    if @emp.manager_id == current_user.employee_id
       redirect_to leave_c_off_manager_self_services_path
     else
       redirect_to admin_c_off_approval_leave_c_offs_path

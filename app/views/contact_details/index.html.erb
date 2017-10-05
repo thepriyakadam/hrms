@@ -1,0 +1,86 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Contact Detail</h3>
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example6" class="table table-bordered table-hover table-condensed">
+
+  <tbody>
+    <% @contact_details.each do |contact_detail| %>
+    <div class="row">
+      <div class="col-sm-2">
+    <tr>
+      <td> 
+      <% if contact_detail.employee.passport_photo_file_name == nil %>
+      <% if contact_detail.employee.gender == "Female" %>
+      <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "150x150" %>
+      <%else%>
+      <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "150x150" %>
+      <%end%>
+      <%else%>
+      <%= image_tag contact_detail.employee.passport_photo.url, :size => "150x150" %>
+      <%end%>
+      </td>
+
+    </div>
+     <div class="col-sm-4">
+        <td><b><%= full_name(contact_detail.employee) %></b><br>
+          <%= contact_detail.employee.joining_detail.employee_designation.try(:name) %><br>
+          <%= contact_detail.employee.contact_no %><br>
+          <%= contact_detail.employee.email %><br>
+          <ul style="list-style-type:disc">
+          <% if contact_detail.role1 == "" || contact_detail.role1 == nil || contact_detail.role1 == " " %>
+          <% else %>
+          <li> <%= contact_detail.role1 %></li>
+          <% end%>
+          <% if contact_detail.role2 == "" || contact_detail.role2 == nil || contact_detail.role2 == " " %>
+          <% else %>
+          <li> <%= contact_detail.role2 %></li>
+          <% end%>
+          <% if contact_detail.role3 == "" || contact_detail.role3 == nil || contact_detail.role3 == " " %>
+          <% else %>
+          <li> <%= contact_detail.role3 %></li>
+          <% end%>
+          <% if contact_detail.role4 == "" || contact_detail.role4 == nil || contact_detail.role4 == " " %>
+          <% else %>
+          <li> <%= contact_detail.role4 %></li>
+          <% end%>
+          <% if contact_detail.role5 == "" || contact_detail.role5 == nil || contact_detail.role5 == " " %>
+          <% else %>
+          <li> <%= contact_detail.role5 %></li>
+          <% end%>
+          <% if contact_detail.role6 == "" || contact_detail.role6 == nil || contact_detail.role6 == " " %>
+          <% else %>
+          <li> <%= contact_detail.role6 %></li>
+          <% end%>
+          <% if contact_detail.role7 == "" || contact_detail.role7 == nil || contact_detail.role7 == " " %>
+          <% else %>
+          <li> <%= contact_detail.role7 %></li>
+          <% end%>
+          <% if contact_detail.role8 == "" || contact_detail.role8 == nil || contact_detail.role8 == " " %>
+          <% else %>
+          <li> <%= contact_detail.role8 %></li>
+          <% end%>
+          </ul>
+          <%= contact_detail.description %>
+        </td>
+      </tr>
+      </div>
+      <div class="col-sm-6">
+      </div>
+      
+    <% end %>
+      </div>
+  </tbody>
+</table>
+</div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

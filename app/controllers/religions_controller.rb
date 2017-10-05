@@ -44,12 +44,22 @@ class ReligionsController < ApplicationController
     @religions = Religion.all
   end
 
-  def is_confirm
-    @religion = Religion.find(params[:religion])
-    Religion.find(@religion.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_religion_path
-  end
+  def religion_master
+     @religions = Religion.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'religions/religion_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' religion_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'religions/religion_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+    end
   
   private
 

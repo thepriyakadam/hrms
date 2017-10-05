@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170924042052) do
+ActiveRecord::Schema.define(version: 20171003123359) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -544,6 +544,25 @@ ActiveRecord::Schema.define(version: 20170924042052) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
+
+  create_table "contact_details", force: :cascade do |t|
+    t.integer  "employee_id", limit: 4
+    t.string   "name",        limit: 255
+    t.text     "description", limit: 65535
+    t.boolean  "status"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "role1",       limit: 255
+    t.string   "role2",       limit: 255
+    t.string   "role3",       limit: 255
+    t.string   "role4",       limit: 255
+    t.string   "role5",       limit: 255
+    t.string   "role6",       limit: 255
+    t.string   "role7",       limit: 255
+    t.string   "role8",       limit: 255
+  end
+
+  add_index "contact_details", ["employee_id"], name: "index_contact_details_on_employee_id", using: :btree
 
   create_table "cost_centers", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1521,6 +1540,18 @@ ActiveRecord::Schema.define(version: 20170924042052) do
 
   add_index "food_deductions", ["employee_id"], name: "index_food_deductions_on_employee_id", using: :btree
   add_index "food_deductions", ["food_coupan_master_id"], name: "index_food_deductions_on_food_coupan_master_id", using: :btree
+
+  create_table "frequest_questions", force: :cascade do |t|
+    t.string   "code",        limit: 255
+    t.text     "question",    limit: 65535
+    t.text     "answer",      limit: 65535
+    t.integer  "employee_id", limit: 4
+    t.boolean  "status"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "frequest_questions", ["employee_id"], name: "index_frequest_questions_on_employee_id", using: :btree
 
   create_table "goal_bunches", force: :cascade do |t|
     t.integer  "employee_id",             limit: 4
@@ -3632,7 +3663,6 @@ ActiveRecord::Schema.define(version: 20170924042052) do
     t.integer  "degree_id",                 limit: 4
     t.integer  "degree_1_id",               limit: 4
     t.integer  "degree_2_id",               limit: 4
-    t.integer  "reporting_master_id",       limit: 4
     t.integer  "employee_id",               limit: 4
     t.string   "other_organization",        limit: 255
     t.string   "industry",                  limit: 255
@@ -3651,6 +3681,16 @@ ActiveRecord::Schema.define(version: 20170924042052) do
     t.integer  "cost_center_id",            limit: 4
     t.string   "secondary_skill",           limit: 255
     t.string   "billable",                  limit: 255
+    t.string   "vacancy_type",              limit: 255
+    t.string   "experince_max",             limit: 255
+    t.string   "budget_max",                limit: 255
+    t.text     "reason",                    limit: 65535
+    t.string   "notice_period",             limit: 255
+    t.integer  "target_company_id",         limit: 4
+    t.integer  "replacement_id",            limit: 4
+    t.integer  "reporting_master_id",       limit: 4
+    t.string   "relocation_cost",           limit: 255
+    t.boolean  "relocation_rerimbursement"
   end
 
   add_index "vacancy_masters", ["company_id"], name: "index_vacancy_masters_on_company_id", using: :btree
@@ -3660,8 +3700,8 @@ ActiveRecord::Schema.define(version: 20170924042052) do
   add_index "vacancy_masters", ["department_id"], name: "index_vacancy_masters_on_department_id", using: :btree
   add_index "vacancy_masters", ["employee_designation_id"], name: "index_vacancy_masters_on_employee_designation_id", using: :btree
   add_index "vacancy_masters", ["employee_id"], name: "index_vacancy_masters_on_employee_id", using: :btree
-  add_index "vacancy_masters", ["reporting_master_id"], name: "index_vacancy_masters_on_reporting_master_id", using: :btree
   add_index "vacancy_masters", ["sub_department_id"], name: "index_vacancy_masters_on_sub_department_id", using: :btree
+  add_index "vacancy_masters", ["target_company_id"], name: "index_vacancy_masters_on_target_company_id", using: :btree
 
   create_table "vacancy_request_histories", force: :cascade do |t|
     t.integer  "vacancy_master_id",       limit: 4
@@ -3853,6 +3893,7 @@ ActiveRecord::Schema.define(version: 20170924042052) do
   add_foreign_key "company_locations", "states"
   add_foreign_key "company_policies", "policy_types"
   add_foreign_key "company_time_masters", "shift_masters"
+  add_foreign_key "contact_details", "employees"
   add_foreign_key "daily_bill_detail_histories", "daily_bill_details"
   add_foreign_key "daily_bill_detail_histories", "travel_expence_types"
   add_foreign_key "daily_bill_details", "currency_masters"
@@ -3955,6 +3996,7 @@ ActiveRecord::Schema.define(version: 20170924042052) do
   add_foreign_key "families", "religions"
   add_foreign_key "food_deductions", "employees"
   add_foreign_key "food_deductions", "food_coupan_masters"
+  add_foreign_key "frequest_questions", "employees"
   add_foreign_key "goal_bunches", "employees"
   add_foreign_key "goal_bunches", "performance_calendars"
   add_foreign_key "goal_bunches", "periods"
@@ -4161,8 +4203,8 @@ ActiveRecord::Schema.define(version: 20170924042052) do
   add_foreign_key "vacancy_masters", "departments"
   add_foreign_key "vacancy_masters", "employee_designations"
   add_foreign_key "vacancy_masters", "employees"
-  add_foreign_key "vacancy_masters", "reporting_masters"
   add_foreign_key "vacancy_masters", "sub_departments"
+  add_foreign_key "vacancy_masters", "target_companies"
   add_foreign_key "vacancy_request_histories", "company_locations"
   add_foreign_key "vacancy_request_histories", "degrees"
   add_foreign_key "vacancy_request_histories", "departments"

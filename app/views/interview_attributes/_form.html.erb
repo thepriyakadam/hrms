@@ -23,27 +23,28 @@
     </div>
   </div>
 <% end %>
-<!-- <script>
+
+<script>
 $("#interview_attribute").validate({
     rules: {
       "interview_attribute[code]":{
-        required: true
-              },
-      "interview_attribute[name]":{
-        required: true
+        required: true,
+      },
+       "interview_attribute[name]":{
+        required: true,
       }
-    },
+       },
     messages: {
       "interview_attribute[code]":{
-        required: "Please specify Code"
+        required: "Please specify code",
       },
       "interview_attribute[name]":{
-        required: "Please specify Name"
+        required: "Please specify name",
       }
-    },
+       },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
    });
-</script> -->
+</script>

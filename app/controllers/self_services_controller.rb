@@ -79,8 +79,8 @@ class SelfServicesController < ApplicationController
   end
 
   def show_resignation_detail
-    @employee_resignations = EmployeeResignation.find_by_employee_id(params[:emp_id])
-    # @employee_resignations = EmployeeResignation.where(id: @employee_resignation_id.id)
+    @employee_resignation = EmployeeResignation.find_by_id(params[:id])
+   # @employee_resignation = EmployeeResignation.find_by(id: @employee_resignations.id)
   end
 
   def employee_transfer
@@ -182,11 +182,15 @@ class SelfServicesController < ApplicationController
         leav_category = LeavCategory.find_by(code: 'C.Off')
 
         if @leave_c_off.is_week_off_present_for_coff(@employee_id,@c_off_date) || @leave_c_off.is_holiday_present_for_coff(@employee_id,@c_off_date)
-          @employee_attendance = EmployeeAttendance.where(employee_id: @employee_id,present: "WOP",day: @c_off_date.to_date).take
-          @employee_attendance_1 = EmployeeAttendance.where(employee_id: @employee_id,present: "HP",day: @c_off_date.to_date).take
+          # @employee_attendance = EmployeeAttendance.where(employee_id: @employee_id,present: "WOP",day: @c_off_date.to_date).take
+          # @employee_attendance_1 = EmployeeAttendance.where(employee_id: @employee_id,present: "HP",day: @c_off_date.to_date).take
+          
+          @emp_attendance = EmployeeAttendance.where("present = ? OR present = ?", "WOP","HP").where(employee_id: @employee_id,day: @c_off_date.to_date).take
 
-          if @employee_attendance.working_hrs.to_s < "09:00" || @employee_attendance_1.working_hrs.to_s < "09:00"
-            flash[:alert] = "Working hrs. less than 9,Please contact to Admin"
+          if @emp_attendance.working_hrs.to_s < "07:00"
+            flash[:alert] = "Working hrs. less than 7,Please contact to Admin"
+          # elsif @employee_attendance_1.working_hrs.to_s < "07:00"
+          #   flash[:alert] = "Working hrs. less than 9,Please contact to Admin"
           else
             if leav_category.nil?
             else
@@ -306,8 +310,7 @@ class SelfServicesController < ApplicationController
     redirect_to add_attendance_self_services_path
   end
 
-  def create_out_time
-    
+  def create_out_time 
     emp_attendance = params[:emp_attendance]
     @employee_attendance = EmployeeAttendance.find_by(id: emp_attendance)
     in_time = @employee_attendance.in_time

@@ -13,17 +13,13 @@
         <td><%= goal_perspective.name %></td>
         <td><%= goal_perspective.goal_weightage ? "Yes" : "No" %></td>
         <td>
-          <% if goal_perspective.is_confirm == true %>
-          <%= link_to '', edit_goal_perspective_path(goal_perspective),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
-            <small class= "label label-primary">Confirmed</small>
-          <% else %>
             <%= link_to '', edit_goal_perspective_path(goal_perspective),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  goal_perspective, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
-            <%= link_to '', is_confirm_goal_perspectives_path(goal_perspective: goal_perspective),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-             <%= link_to '', goal_perspective,class: 'btn btn-default btn-xs fa fa-eye' %>
-          <% end %>
+             <%= link_to '', modal_goal_perspectives_path(goal_perspective),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<div id="myModal" class="modal fade"></div>

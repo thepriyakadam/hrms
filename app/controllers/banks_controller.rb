@@ -44,12 +44,23 @@ class BanksController < ApplicationController
     @banks = Bank.all
   end
 
-  def is_confirm
-    @bank = Bank.find(params[:bank])
-    Bank.find(@bank.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_bank_path
-  end
+  def bank_master
+     @banks = Bank.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'banks/bank_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' bank_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'banks/bank_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+    end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

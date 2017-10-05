@@ -36,6 +36,23 @@ class DepartmentTypesController < ApplicationController
     @department_type.destroy
     @department_types = DepartmentType.all
   end
+
+    def department_type_master
+    @department_types = DepartmentType.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'department_types/department_type_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'department_type_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'department_types/department_type_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+  end
   
   private
 

@@ -56,11 +56,21 @@ class TravelOptionsController < ApplicationController
     @travel_options = TravelOption.all
   end
 
-  def is_confirm
-    @travel_option = TravelOption.find(params[:travel_option])
-    TravelOption.find(@travel_option.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_travel_option_path
+   def travel_option_master
+      @travel_options = TravelOption.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'travel_options/travel_option_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'travel_option_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'travel_options/travel_option_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
   end
   
   private

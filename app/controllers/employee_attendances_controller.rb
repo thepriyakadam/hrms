@@ -1512,6 +1512,7 @@ def upload
     DailyAttendance.import(params[:file])
     redirect_to root_url, notice: "File imported."
   end
+  # byebug
   last = DailyAttendance.last
   @daily_attendances = DailyAttendance.where(date: last.date.to_date)
 
@@ -1728,7 +1729,7 @@ def upload
     end
 
   #remaining employees attendance creation
-    @employees = Employee.where(status: "Active")
+    @employees = Employee.where(company_location_id: current_user.company_location_id, status: "Active")
     @employees.each do |e|
       employee_atten = EmployeeAttendance.where(employee_id: e.id,day: last.date.to_date).take
       if employee_atten.nil?
@@ -1786,7 +1787,8 @@ end
 
 def show_datewise_daily_attendance
   @date = params[:employee][:date]
-  @employee_attendances = EmployeeAttendance.where(day: @date.to_date)
+  @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+  @employee_attendances = EmployeeAttendance.where(day: @date.to_date).where(employee_id: @employees).group(:employee_id)
 end
 
 def modal_edit_daily_attendance 
@@ -2347,7 +2349,26 @@ end
     @from_date = @from.to_date
     @to_date = @to.to_date
     @employee_attendances = EmployeeAttendance.where(day: @from_date..@to_date,employee_id: @employee).group(:employee_id)
-   datewise_attendance_with_options
+   
+       respond_to do |format|
+      format.js
+      format.xls {render template: 'employee_attendances/managerwise_attendance_average.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'show_datewise_report',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'employee_attendances/managerwise_attendance_average.pdf.erb',
+              # show_as_html: params[:debug].present?,
+              :page_height      => 1000,
+              :dpi              => '300',
+              :margin           => {:top    => 10, # default 10 (mm)
+                            :bottom => 10,
+                            :left   => 20,
+                            :right  => 20},
+              :show_as_html => params[:debug].present?
+          end
+         end
   end
 
   def datewise_attendance_with_options

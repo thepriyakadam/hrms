@@ -8,10 +8,12 @@ class EmployeeMailer < ApplicationMailer
    # end
   end
  
-  def user_confirmation(emp,pwd)
+  def user_confirmation(emp,pwd,code)
     @password = pwd
     @employee = emp
+    @manual_employee_code = code
     @emp = Employee.find_by(id: @employee.id)
+    attachments.inline['mail_signature.png'] = File.read('app/assets/images/mail_signature.png')
     mail(to: @emp.email, subject: 'HRMS Password Detail')
   end
 

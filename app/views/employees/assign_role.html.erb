@@ -40,7 +40,7 @@
               <!-- 
               <td><= select_tag 'role_id[]'options_for_select(all_role_list),{class: "form-control", hide_label: true,include_blank: " Select Role"} %></td> -->
 
-              <td><%= select_tag 'manager_id[]',options_for_select(all_reporting_master_list), {class: "form-control",include_blank: 'Select Manager 1'} %></td>
+              <td><%= select_tag 'manager_id[]',options_for_select(all_reporting_master_list), {class: "form-control",include_blank: 'Select Manager 1'}%></td>
               <td><%= select_tag 'manager_2_id[]',options_for_select(all_reporting_master_list),{class: "form-control",include_blank: 'select Manager 2'} %></td>
               <%= hidden_field_tag 'employee_ids[]',"",value: employee.id %>
 

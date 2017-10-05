@@ -262,7 +262,7 @@
                     else
                       employee.email
                     end
-          u.password = employee.first_name+'-'+employee.manual_employee_code
+          u.password = employee.first_name+'-123'+employee.manual_employee_code
           u.employee_id = employee.id
           u.department_id = employee.department_id
           u.company_id = employee.company_location.company_id
@@ -275,6 +275,8 @@
         ActiveRecord::Base.transaction do
           if user.save
             password = user.password
+            manual_employee_code = employee.manual_employee_code
+
             manager_id = params[:manager_id]
             manager_2_id = params[:manager_2_id]
 
@@ -289,7 +291,7 @@
             employee.update_attributes(manager_id: @reporting_master1.employee_id, manager_2_id: @reporting_master2.try(:employee_id))
 
             ManagerHistory.create(employee_id: employee.id,manager_id: manager_1,manager_2_id: manager_2,effective_from: params["login"]["effec_date"])
-            EmployeeMailer.user_confirmation(employee,password).deliver_now
+            EmployeeMailer.user_confirmation(employee,password,manual_employee_code).deliver_now
             EmployeeMailer.manager_detail(manager_1,employee).deliver_now
             flash[:notice] = "Employee assigned successfully."
             #redirect_to assign_role_employees_path

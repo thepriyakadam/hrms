@@ -530,19 +530,33 @@ require 'roo'
 # i = i+1
 # end
 
-ex = Roo::Excel.new("#{Rails.root}/public/notice_period.xls")
+# ex = Roo::Excel.new("#{Rails.root}/public/notice_period.xls")
+# ex.default_sheet = ex.sheets[0] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(453) do |line| # siya Feb 2016
+#  puts "Starting Record #{ex.cell(line,'B')}---------------------------------------"
+#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+#  puts "#{i} Record inserting.----------------------------"
+#  JoiningDetail.where(employee_id: @employee).update_all(probation_period: ex.cell(line,'C'))
+#  JoiningDetail.where(employee_id: @employee).update_all(notice_period_after_probation: ex.cell(line,'D').to_i)
+#  JoiningDetail.where(employee_id: @employee).update_all(notice_period: ex.cell(line,'E').to_i)
+#  # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
+#  puts "#{i} Record inserted.------#{ex.cell(line,'C')}-----#{ex.cell(line,'D')}---------------------#{ex.cell(line,'E')}---------------"
+#  i += 1
+#  end
+#  end
+
+ex = Roo::Excel.new("#{Rails.root}/public/c_off.xls")
 ex.default_sheet = ex.sheets[0] #siya feb
 i = 1
 ActiveRecord::Base.transaction do
-2.upto(453) do |line| # siya Feb 2016
+2.upto(33) do |line| # siya Feb 2016
  puts "Starting Record #{ex.cell(line,'B')}---------------------------------------"
-  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
  puts "#{i} Record inserting.----------------------------"
- JoiningDetail.where(employee_id: @employee).update_all(probation_period: ex.cell(line,'C'))
- JoiningDetail.where(employee_id: @employee).update_all(notice_period_after_probation: ex.cell(line,'D').to_i)
- JoiningDetail.where(employee_id: @employee).update_all(notice_period: ex.cell(line,'E').to_i)
- # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
- puts "#{i} Record inserted.------#{ex.cell(line,'C')}-----#{ex.cell(line,'D')}---------------------#{ex.cell(line,'E')}---------------"
+ JoiningDetail.where(employee_id: @employee).update_all(c_off: false)
+ puts "#{i} Record inserted.---------------------"
  i += 1
  end
  end

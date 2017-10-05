@@ -21,9 +21,8 @@
 
 //= require chartkick
 //= require moment 
-
 //= require fullcalendar
-//= require moment
+
 //= require bootstrap-datetimepicker
 
 //= require_tree .
@@ -47,6 +46,11 @@ $(document).ready(function() {
     })
 
 });
+
+
+
+
+
 
  $(document).ready(function() {
    

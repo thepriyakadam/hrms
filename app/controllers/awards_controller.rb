@@ -60,6 +60,7 @@ class AwardsController < ApplicationController
         # format.json { render :show, status: :ok, location: @award }
         @awards = @employee.awards
         format.js { @flag = true }
+        EmployeeMailer.award_create(@employee,@award).deliver_now
       else
         # format.html { render :edit }
         # format.json { render json: @award.errors, status: :unprocessable_entity }

@@ -547,19 +547,19 @@ require 'roo'
 #  end
 #  end
 
-ex = Roo::Excel.new("#{Rails.root}/public/c_off.xls")
-ex.default_sheet = ex.sheets[0] #siya feb
-i = 1
-ActiveRecord::Base.transaction do
-2.upto(33) do |line| # siya Feb 2016
- puts "Starting Record #{ex.cell(line,'B')}---------------------------------------"
-  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
- puts "#{i} Record inserting.----------------------------"
- JoiningDetail.where(employee_id: @employee).update_all(c_off: false)
- puts "#{i} Record inserted.---------------------"
- i += 1
- end
- end
+# ex = Roo::Excel.new("#{Rails.root}/public/c_off.xls")
+# ex.default_sheet = ex.sheets[0] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(33) do |line| # siya Feb 2016
+#  puts "Starting Record #{ex.cell(line,'B')}---------------------------------------"
+#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
+#  puts "#{i} Record inserting.----------------------------"
+#  JoiningDetail.where(employee_id: @employee).update_all(c_off: false)
+#  puts "#{i} Record inserted.---------------------"
+#  i += 1
+#  end
+#  end
 
 #============================== DEPARTMENT END =====================================#
 # puts "Starting Designation..."

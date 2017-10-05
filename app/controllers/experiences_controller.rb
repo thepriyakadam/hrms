@@ -59,6 +59,7 @@ class ExperiencesController < ApplicationController
 
         @experiences = @employee.experiences
         format.js { @flag = true }
+        EmployeeMailer.experience_create(@employee,@experience).deliver_now
       else
         # format.html { render :edit }
         # format.json { render json: @experience.errors, status: :unprocessable_entity }

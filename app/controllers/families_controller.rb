@@ -86,6 +86,7 @@ class FamiliesController < ApplicationController
         # format.json { render :show, status: :ok, location: @family }
         @families = @employee.families
         format.js { @flag = true }
+        EmployeeMailer.family_detail_create(@employee,@family).deliver_now
       else
         # format.html { render :edit }
         # format.json { render json: @family.errors, status: :unprocessable_entity }

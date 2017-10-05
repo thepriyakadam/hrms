@@ -27,40 +27,60 @@
 
       <div class="row">
           <div class="col-sm-3">
-            <div class="form-group required">
+            <div class="field">
               <%= f.text_field :role3,label:'Role 3', placeholder: 'Role 3' %>
             </div>
           </div>
 
           <div class="col-sm-3">
-            <div class="form-group required">
+            <div class="field">
               <%= f.text_field :role4,label:'Role 4', placeholder: 'Role 4' %>
             </div>
           </div>
 
           <div class="col-sm-3">
-            <div class="form-group required">
+            <div class="field">
               <%= f.text_field :role5,label:'Role 5', placeholder: 'Role 5' %>
             </div>
           </div>
 
           <div class="col-sm-3">
             <div class="field">
+              <%= f.text_field :role6,label:'Role 6', placeholder: 'Role 6' %>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+                  <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :role7,label:'Role 7', placeholder: 'Role 7' %>
+            </div>
+          </div>
+                    <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :role8,label:'Role 8', placeholder: 'Role 8' %>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="field">
               <%= f.text_field :description,label:'Link', placeholder: 'Link' %>
             </div>
           </div>
-      </div>
-
-      <div class="row">
+     
           <div class="col-sm-3">
             <label>Status</label>
             <div class="field">
               <%= f.check_box :status , label:'Active'%>
             </div>
           </div>
+          </div>
+
+           <div class="row">
 
           <div class="col-sm-3">
-            <div class="actions" style="padding: 20px">
+            <div class="actions">
               <%= f.submit 'Create Contact Detail',:class => class_name, data: { disable_with: data_info } %>
             </div>
           </div>
@@ -75,6 +95,12 @@ $("#contact_detail").validate({
       },
       "contact_detail[name]":{
         required: true,
+         },
+      "contact_detail[role1]":{
+        required: true,
+         },
+      "contact_detail[role2]":{
+        required: true,
        }
        },
     messages: {
@@ -82,6 +108,12 @@ $("#contact_detail").validate({
         required: "Please select employee",
       },
        "contact_detail[name]":{
+        required: "Please select employee",
+        },
+       "contact_detail[role1]":{
+        required: "Please select employee",
+        },
+       "contact_detail[role2]":{
         required: "Please select employee",
       }
        },

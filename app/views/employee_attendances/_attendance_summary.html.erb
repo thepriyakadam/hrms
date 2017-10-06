@@ -29,13 +29,16 @@
               <%= emp %>
             </td>
             <td>
-              <% @employee_attendance = EmployeeAttendance.where(day: e.day).where("present = ? OR present = ? OR present = ?",'HDL','HD','P') %> 
+              <% @employee_attendance = EmployeeAttendance.where(day: e.day).where("present = ? OR present = ? OR present = ? OR count = ?",'HDL','HD','P',0.5) %> 
               <% pre = 0 %>
               <% @employee_attendance.each do |a| %>
                 <% if a.present == "HD" %>
                   <% pre = pre + 0.5 %>
                   <% pre %>
                 <% elsif a.present == "HDL" %>
+                  <% pre = pre + 0.5 %>
+                  <% pre %>
+                <% elsif a.count == 0.5 %>
                   <% pre = pre + 0.5 %>
                   <% pre %>
                 <% else %>
@@ -84,8 +87,13 @@
                 <% @employee_attendance = EmployeeAttendance.where(day: e.day).where.not(employee_leav_request_id: nil) %> 
                 <% leave = 0 %>
                 <% @employee_attendance.each do |a| %>
-                  <% leave = leave + 1 %>
-                  <% leave %>
+                  <% if a.count == 0.5 %>
+                    <% leave = leave + 0.5 %>
+                    <% leave %>
+                  <% else %>
+                    <% leave = leave + 1 %>
+                    <% leave %>
+                  <% end %>
                 <% end %>
                 <%= leave %>
             </td>

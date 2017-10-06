@@ -69,6 +69,7 @@ class JoiningDetailsController < ApplicationController
         # format.json { render json: @joining_detail.errors, status: :unprocessable_entity }
         format.js { @flag = true }
       end
+        EmployeeMailer.joining_create(@employee,@joining_detail).deliver_now  
     end
   end
 

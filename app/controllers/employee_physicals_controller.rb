@@ -48,6 +48,7 @@ class EmployeePhysicalsController < ApplicationController
       if @employee_physical.update(employee_physical_params)
         # format.html { redirect_to @employee_physical, notice: 'Employee physical was successfully updated.' }
         # format.json { render :show, status: :ok, location: @employee_physical }
+        EmployeeMailer.physical_detail_create(@employee,@employee_physical).deliver_now
         format.js { @flag = true }
          EmployeeMailer.physical_detail_create(@employee,@employee_physical).deliver_now
       else

@@ -249,7 +249,7 @@ Rails.application.routes.draw do
       get :subordinate_attendance
       post :show_subordinate_attendance
       get :show_subordinate_attendance
-      post :vacancy_request
+      post :vacancy_request_create
       get :vacancy_request
     end
   end

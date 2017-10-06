@@ -45,7 +45,7 @@ class EmployeeBankDetailsController < ApplicationController
         @employee = @employee_bank_detail.employee
         format.js { @flag = false }
       end
-      # EmployeeMailer.bank_create(@employee,@employee_bank_detail).deliver_now 
+    EmployeeMailer.bank_create(@employee,@employee_bank_detail).deliver_now 
     end
   end
 

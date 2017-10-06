@@ -2446,27 +2446,28 @@ end
   end
 
   def show_in_out_summary
-    @date = params[:salary][:date]
-    @employee_attendance = EmployeeAttendance.where(day: @date.to_date)
-    in_count = 0
-    out_count = 0
-    @employee_attendance.each do |a|
+    @from = params[:salary][:from]
+    @to = params[:salary][:to]
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).group(:day)
+    # in_count = 0
+    # out_count = 0
+    # @employee_attendance.each do |a|
       
-      if a.in_time == nil
-      else
-        in_count = in_count + 1
-      end
-      @in_count = in_count
+    #   if a.in_time == nil
+    #   else
+    #     in_count = in_count + 1
+    #   end
+    #   @in_count = in_count
 
-      if a.out_time == nil
-        @nil_out = a
-      else
-        out_count = out_count + 1
-      end
-      @out_count = out_count
-    end
-    @in_time = @in_count
-    @out_time = @out_count
+    #   if a.out_time == nil
+    #     @nil_out = a
+    #   else
+    #     out_count = out_count + 1
+    #   end
+    #   @out_count = out_count
+    # end
+    # @in_time = @in_count
+    # @out_time = @out_count
   end
 
   def modal_missing_record

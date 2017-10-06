@@ -48,23 +48,18 @@ class Api::UserAuthsController < ApplicationController
   end
 
   def employee_list
-    # if params[:authentication_token].present?
-    #   member = Member.find_by_authentication_token(params[:authentication_token])
-      # employees = Employee.all if member.present?
-      # render :json => employees.collect{|s| {:id => s.id,:first_name => s.first_name} : []
-    # else
-    #   render :status => 400,
-    #          :json => {:status=>"Failure",:message=>"User Id or Authentication Token is required."}
-    # end
-    employee = params[:id]
-    employees = Employee.all 
-      render :json => employees.present? ? employees.collect{|s| {:id => s.id,:first_name => s.first_name}} : []
-      
-      # emp = params[:id]
-      # render :json => {emp} : []
-      # @employees = Employee.where(:id => @emp)
-      # render :json => @employees.present? ? @employees.collect{|s| {:id => s.id,:first_name => s.first_name}} : []
-    end
-
-
+ 
+    @employee = params[:employee_id]
+    employees = Employee.where(id: @employee) 
+      render :json => employees.present? ? employees.collect{|e| {:id => e.id,:manual_employee_code => e.manual_employee_code,:first_name => e.first_name,:middle_name => e.middle_name,:last_name => e.last_name,:date_of_birth => e.date_of_birth,
+:gender => e.gender,:contact_no => e.contact_no,:optinal_contact_no => e.optinal_contact_no,:optinal_contact_no1 => e.optinal_contact_no1,:email => e.email,:optional_email => e.optional_email,:permanent_address => e.permanent_address,:country_id => e.country_id,:state_id => e.state_id,:district_id => e.district_id,:city => e.city,:pin_code => e.pin_code,:current_address => e.current_address,:adhar_no => e.adhar_no,:pan_no => e.pan_no,:licence_no => e.licence_no,:marital_status => e.marital_status,:blood_group_id => e.blood_group_id,:employee_type_id => e.employee_type_id,:nationality_id => e.nationality_id,:religion_id => e.religion_id,:handicap => e.handicap,:handicap_type => e.handicap_type,:status => e.status,:manager_id => e.manager_id,:manager_2_id => e.manager_2_id,:company_id => e.company_id,:company_location_id => e.company_location_id,:department_id => e.department_id,:sub_department_id => e.sub_department_id,:extension_no => e.extension_no,:emergency_contact_no => e.emergency_contact_no}} : []
+  end
+    
+ def  leave_request
+    @leave_user = params[:employee_id]
+    @employee = Employee.where(id: @leave_user)
+    # @employee_leav_requests = EmployeeLeavRequest.where('employee_id = ?', @leave_user.try(:employee_id)).order("id DESC")
+    employee_leav_balances = EmployeeLeavBalance.where(employee_id: @leave_user)
+    render :json => employee_leav_balances.present? ? employee_leav_balances.collect{|elb| {:id => elb.id, :leav_category_id => elb.leav_category.name}} : []
+   end
 end

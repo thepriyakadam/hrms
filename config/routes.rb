@@ -2692,5 +2692,6 @@ end
     # get 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
 
     get 'user_auths/employee_list' => 'user_auths#employee_list', defaults:{format: 'json'}
+    get 'user_auths/leave_request' => 'user_auths#leave_request', defaults:{format: 'json'}
 end
 end

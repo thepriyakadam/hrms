@@ -57,6 +57,7 @@ class SkillsetsController < ApplicationController
       if @skillset.update(skillset_params)
         # format.html { redirect_to @skillset, notice: 'Skillset was successfully updated.' }
         # format.json { render :show, status: :ok, location: @skillset }
+        EmployeeMailer.skillset_create(@employee,@skillset).deliver_now
         @skillsets = @employee.skillsets
         format.js { @flag = true }
       else

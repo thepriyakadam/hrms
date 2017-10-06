@@ -201,6 +201,7 @@
          format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
          format.json { render :show, status: :ok, location: @employee }
        end
+      EmployeeMailer.employee_create(@employee).deliver_now   
      else
        format.html { render :edit }
        format.json { render json: @employee.errors, status: :unprocessable_entity }
@@ -262,7 +263,7 @@
                     else
                       employee.email
                     end
-          u.password = employee.first_name+'-'+employee.manual_employee_code
+          u.password = employee.first_name+'-123'+employee.manual_employee_code
           u.employee_id = employee.id
           u.department_id = employee.department_id
           u.company_id = employee.company_location.company_id

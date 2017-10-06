@@ -8,31 +8,32 @@
       <%= bootstrap_form_for :issue_request,url:{action:"solved_request", id: @issue_request.id},html: {id: 'issue_request'} do |f| %>
 
         <div class="row">
-          <div class="col-sm-3">
+          <div class="col-sm-6">
             <div class="field">
                <%= f.select :issue_root_cause_id,all_issue_root_cause,{label: "Support Root Cause",include_blank: "Select Support Root Cause"} %>
             </div>
           </div>
-          </div>
-           <div class="row">
-          <div class="col-sm-3">
+
+          <div class="col-sm-6">
             <div class="field">
               <%= f.text_area :comment,label: "Description",class: "form-control"%>
             </div>
          </div>
          </div>
+
          <div class="row">
-         <div class="col-sm-3">
+         <div class="col-sm-6">
             <div class="form-group required">
               <%= f.text_field :effort_time,label: "Effort Time",class: "form-control"%>
             </div>
          </div>
-         </div>
-          <div class="row">
-          <div class="col-sm-3" style="padding-top:20px;" >
+          
+        <div class="col-sm-6">
+          <div class="field" style="padding-top:20px;" >
             <%= f.submit "Submit" ,class: 'btn btn-sm btn-primary fa fa-modx' %>
           </div>
 
+        </div>
         </div>
      <% end %>
   

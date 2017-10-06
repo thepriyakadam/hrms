@@ -58,6 +58,7 @@ class AwardsController < ApplicationController
       if @award.update(award_params)
         # format.html { redirect_to @award, notice: 'Award was successfully updated.' }
         # format.json { render :show, status: :ok, location: @award }
+        EmployeeMailer.award_create(@employee,@award).deliver_now
         @awards = @employee.awards
         format.js { @flag = true }
       else

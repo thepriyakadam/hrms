@@ -1516,6 +1516,7 @@ def upload
     DailyAttendance.import(params[:file])
     redirect_to root_url, notice: "File imported."
   end
+  # byebug
   last = DailyAttendance.last
   @daily_attendances = DailyAttendance.where(date: last.date.to_date)
 
@@ -1732,7 +1733,7 @@ def upload
     end
 
   #remaining employees attendance creation
-    @employees = Employee.where(status: "Active")
+    @employees = Employee.where(company_location_id: current_user.company_location_id, status: "Active")
     @employees.each do |e|
       employee_atten = EmployeeAttendance.where(employee_id: e.id,day: last.date.to_date).take
       if employee_atten.nil?
@@ -1790,7 +1791,8 @@ end
 
 def show_datewise_daily_attendance
   @date = params[:employee][:date]
-  @employee_attendances = EmployeeAttendance.where(day: @date.to_date)
+  @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+  @employee_attendances = EmployeeAttendance.where(day: @date.to_date).where(employee_id: @employees).group(:employee_id)
 end
 
 def modal_edit_daily_attendance 
@@ -2444,27 +2446,28 @@ end
   end
 
   def show_in_out_summary
-    @date = params[:salary][:date]
-    @employee_attendance = EmployeeAttendance.where(day: @date.to_date)
-    in_count = 0
-    out_count = 0
-    @employee_attendance.each do |a|
+    @from = params[:salary][:from]
+    @to = params[:salary][:to]
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).group(:day)
+    # in_count = 0
+    # out_count = 0
+    # @employee_attendance.each do |a|
       
-      if a.in_time == nil
-      else
-        in_count = in_count + 1
-      end
-      @in_count = in_count
+    #   if a.in_time == nil
+    #   else
+    #     in_count = in_count + 1
+    #   end
+    #   @in_count = in_count
 
-      if a.out_time == nil
-        @nil_out = a
-      else
-        out_count = out_count + 1
-      end
-      @out_count = out_count
-    end
-    @in_time = @in_count
-    @out_time = @out_count
+    #   if a.out_time == nil
+    #     @nil_out = a
+    #   else
+    #     out_count = out_count + 1
+    #   end
+    #   @out_count = out_count
+    # end
+    # @in_time = @in_count
+    # @out_time = @out_count
   end
 
   def modal_missing_record

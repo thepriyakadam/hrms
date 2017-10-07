@@ -217,14 +217,14 @@
  
  
   # config.domain = 'lvh.me'
-  # config.action_mailer.perform_deliveries = true,
+   config.action_mailer.perform_deliveries = true,
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
   address: 'smtp.logix.in',
   port:  587,
   domain: 'smtp.logix.in',
   user_name: 'hrms@sganalytics.com',
-  password: 'Hrms@2o!7',
+  password: 'Dev@2017',
   authentication: :plain,
   enable_starttls_auto: true,
    openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE

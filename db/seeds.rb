@@ -561,6 +561,22 @@ require 'roo'
 #  end
 #  end
 
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/skillsets.xls")
+ex.default_sheet = ex.sheets[0]
+i=1
+2.upto(8777) do |line|
+@employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+Skillset.new do |b|
+ b.employee_id = @employee.id unless @employee.nil?
+ b.name = ex.cell(line,'C')
+ b.skill_level = ex.cell(line,'D')
+ b.save!
+end
+puts "#{i} Record inserted.-------------#{ex.cell(line,'A')}------#{ex.cell(line,'C')}---#{ex.cell(line,'D')}-------------------------"
+i = i+1
+end
+
 #============================== DEPARTMENT END =====================================#
 # puts "Starting Designation..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171005170040) do
+ActiveRecord::Schema.define(version: 20171009071841) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -848,7 +848,7 @@ ActiveRecord::Schema.define(version: 20171005170040) do
 
   create_table "employee_attendances", force: :cascade do |t|
     t.integer  "employee_id",              limit: 4
-    t.date     "day"
+    t.datetime "day"
     t.string   "present",                  limit: 255
     t.datetime "in_time"
     t.datetime "out_time"
@@ -1447,7 +1447,7 @@ ActiveRecord::Schema.define(version: 20171005170040) do
   create_table "events", force: :cascade do |t|
     t.string   "title",       limit: 255
     t.text     "description", limit: 65535
-    t.datetime "start_time"
+    t.date     "start_time"
     t.datetime "end_time"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false

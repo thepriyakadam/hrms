@@ -1,4 +1,5 @@
 class EmployeeAttendance < ActiveRecord::Base
+  # has_fullcalendar
   belongs_to :employee
   belongs_to :employee_leav_request
   belongs_to :machine_attendance

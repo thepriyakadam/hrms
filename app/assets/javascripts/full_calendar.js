@@ -12,7 +12,10 @@ initialize_calendar = function() {
       selectHelper: true,
       editable: true,
       eventLimit: true,
-      events: '/events.json',
+      eventSources: [ '/employee_attendances.json',
+      '/employee_attendance.json'
+      
+      ],
 
       select: function(start, end) {
         $.getScript('/events/new', function() {});
@@ -25,7 +28,8 @@ initialize_calendar = function() {
           event: {
             id: event.id,
             start: event.start.format(),
-            end: event.end.format()
+            end: event.end.format(),
+            
           }
         };
         $.ajax({

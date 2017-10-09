@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  resources :events
+  resources :events  # do
+  #   collection do
+  #     get :user_events
+  #   end
+  # end
+
   resources :contact_details do
     collection do
       get :modal_contact_detail
@@ -841,6 +846,7 @@ end
       get :attendance_summary
       post :show_attendance_summary
       get :show_attendance_summary
+      get :employee_attendance
     end
   end
   resources :salary_comp_mappings

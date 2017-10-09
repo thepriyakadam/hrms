@@ -27,14 +27,19 @@
     < end %>
   </tbody>
 </table> -->
+<!-- <br>  
+  <= link_to 'User Events', user_events_path %>
+  <= link_to 'All Users Events', events_path %> -->
 
 <div id="calendar"></div>
 <br>
 
-<%= link_to 'New Event', new_event_path %>
+<!-- <= link_to 'New Event', new_event_path %> -->
+<%= link_to 'New Event', new_employee_attendance_path %>
+
 
 <script type="text/javascript">
-$('#calendar').fullCalendar(
+$('#calendar').fullCalendar({
   events: '/events.json'
-  );
+  });
 </script>

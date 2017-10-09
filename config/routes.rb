@@ -2692,5 +2692,7 @@ end
 
     get 'user_auths/employee_list' => 'user_auths#employee_list', defaults:{format: 'json'}
     get 'user_auths/leave_request' => 'user_auths#leave_request', defaults:{format: 'json'}
+    post 'user_auths/employee_leave_request' => 'user_auths#employee_leave_request', defaults:{format: 'json'}
+    get 'user_auths/leave_category' => 'user_auths#leave_category', defaults:{format: 'json'}
 end
 end

@@ -3,7 +3,7 @@
     <h3 class="box-title">Requisition Form</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-  <%= bootstrap_form_for(:vacancy_master,url: { action: 'vacancy_request'},html: {id: 'vacancy_master'}) do |f| %>
+  <%= bootstrap_form_for(:vacancy_master,url: { action: 'vacancy_request_create'},html: {id: 'vacancy_master'}) do |f| %>
   <%= f.hidden_field :employee_id, :value => current_user.employee_id %>
   <%= f.hidden_field :vacancy_post_date, value: Date.today %>
    <%= f.hidden_field :company_id, :value => current_user.company_id  %>

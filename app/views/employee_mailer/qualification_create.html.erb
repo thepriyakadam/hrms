@@ -13,14 +13,14 @@
           <td><%= @qualification.employee.try(:prefix) %> <%= @qualification.employee.try(:first_name) %> <%= @qualification.employee.try(:last_name) %></td>
 
           <td><strong>Degree Type</strong></td>
-          <td><%= @qualification.degree_type_id.try(:name) %></td>
+          <td><%= @qualification.degree_type.try(:name) %></td>
         </tr>
         <tr>
           <td><strong>Degree</strong></td>
-          <td><%= @qualification.degree_id.try(:name) %></td>
+          <td><%= @qualification.degree.try(:name) %></td>
 
           <td><strong>Degree Stream</strong></td>
-          <td><%= @qualification.degree_stream_id.try(:name) %></td>
+          <td><%= @qualification.degree_stream.try(:name) %></td>
         </tr>
         <tr>
           <td><strong>College</strong></td>
@@ -31,10 +31,10 @@
         </tr>
         <tr>
           <td><strong>Passing Year</strong></td>
-          <td><%= @qualification.year_id%></td>
+          <td><%= @qualification.year.try(:name)%></td>
 
           <td><strong>University</strong></td>
-          <td><%= @qualification.university_id.try(:name) %></td>
+          <td><%= @qualification.university.try(:name) %></td>
         </tr>
         </table>
     </p>

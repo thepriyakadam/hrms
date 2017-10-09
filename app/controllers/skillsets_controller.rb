@@ -60,6 +60,7 @@ class SkillsetsController < ApplicationController
         EmployeeMailer.skillset_create(@employee,@skillset).deliver_now
         @skillsets = @employee.skillsets
         format.js { @flag = true }
+        EmployeeMailer.skillset_create(@employee,@skillset).deliver_now
       else
         # format.html { render :edit }
         # format.json { render json: @skillset.errors, status: :unprocessable_entity }

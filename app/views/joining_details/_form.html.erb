@@ -84,11 +84,19 @@
       </div> 
       </div>
       <div class="row">
-      <div class="col-sm-3">
+        <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :notice_period,label: 'Notice Period',placeholder: 'e.g. 1 months' %>
         </div>
       </div> 
+
+            <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :notice_period_after_probation,label: 'Notice Period After Probation',placeholder: 'e.g. 1 months' %>
+        </div>
+      </div> 
+
+    
 
       <div class="col-sm-3">
         <div class="field">
@@ -102,7 +110,10 @@
        </div>
       </div>
 
-      <div class="col-sm-3">
+
+      </div>
+      <div class="row">
+            <div class="col-sm-3">
       <label>Passport Issue Date </label>
         <div class="field">
           <div class="input-group">
@@ -113,8 +124,6 @@
           </div>
         </div>
       </div>
-      </div>
-      <div class="row">
       <div class="col-sm-3">
       <label>Passport Expiry Date </label>
         <div class="field">
@@ -156,13 +165,14 @@
         </div>
       </div>
       
-      <div class="col-sm-3">
+
+     </div>
+     <div class="row">
+           <div class="col-sm-3">
        <div class="field">
          <%= f.select :medical_schem, ['Yes','No'],{label: 'Medical Insurance',include_blank: " Select Medical Insurance"} %>
       </div>
      </div>
-     </div>
-     <div class="row">
       <div class="col-sm-3">
       <div class="field">
         <%= f.check_box :c_off, label: 'Compansatory Off'%>

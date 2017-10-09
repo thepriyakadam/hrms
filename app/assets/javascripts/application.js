@@ -14,14 +14,16 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.purr
+//= require best_in_place
 //= require jquery-ui
 //= require jquery.validate
 //= require jquery.validate.additional-methods
 
 //= require chartkick
+//= require moment 
+//= require fullcalendar
 
 
-//= require moment
 //= require bootstrap-datetimepicker
 
 //= require_tree .
@@ -35,10 +37,27 @@
 //   setTimeout(updateComments, 10000);
 // }
 
-// $(document).ready(function() {
-//    Activating Best In Place
-//   jQuery(".best_in_place").best_in_place();
-// });
+$(document).ready(function() {
+
+    // page is now ready, initialize the calendar...
+
+    $('#calendar').fullCalendar({
+        // put your options and callbacks here
+        events: '/events.json'
+    })
+
+});
+
+
+
+
+
+
+ $(document).ready(function() {
+   
+   jQuery(".best_in_place").best_in_place();
+ });
+
 
   $("#example1").DataTable();
   $('#example2').DataTable({

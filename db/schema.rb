@@ -1444,6 +1444,15 @@ ActiveRecord::Schema.define(version: 20171005170040) do
     t.datetime "updated_at",                                                        null: false
   end
 
+  create_table "events", force: :cascade do |t|
+    t.string   "title",       limit: 255
+    t.text     "description", limit: 65535
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
   create_table "exit_interviews", force: :cascade do |t|
     t.integer  "employee_id",        limit: 4
     t.integer  "question_master_id", limit: 4
@@ -1514,6 +1523,18 @@ ActiveRecord::Schema.define(version: 20171005170040) do
   add_index "families", ["employee_id"], name: "index_families_on_employee_id", using: :btree
   add_index "families", ["relation_master_id"], name: "index_families_on_relation_master_id", using: :btree
   add_index "families", ["religion_id"], name: "index_families_on_religion_id", using: :btree
+
+  create_table "faqs", force: :cascade do |t|
+    t.string   "code",        limit: 255
+    t.string   "question",    limit: 255
+    t.string   "answer",      limit: 255
+    t.integer  "employee_id", limit: 4
+    t.boolean  "status"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "faqs", ["employee_id"], name: "index_faqs_on_employee_id", using: :btree
 
   create_table "food_coupan_masters", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -3236,6 +3257,8 @@ ActiveRecord::Schema.define(version: 20171005170040) do
     t.integer  "passport_photo_file_size",    limit: 4
     t.datetime "passport_photo_updated_at"
     t.integer  "add_by_id",                   limit: 4
+    t.string   "current_ctc",                 limit: 255
+    t.string   "contact_no2",                 limit: 255
   end
 
   add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id", using: :btree
@@ -3691,6 +3714,8 @@ ActiveRecord::Schema.define(version: 20171005170040) do
     t.integer  "reporting_master_id",       limit: 4
     t.string   "relocation_cost",           limit: 255
     t.boolean  "relocation_rerimbursement"
+    t.string   "notice_period_day",         limit: 255
+    t.integer  "recruiter_id",              limit: 4
   end
 
   add_index "vacancy_masters", ["company_id"], name: "index_vacancy_masters_on_company_id", using: :btree
@@ -3763,6 +3788,7 @@ ActiveRecord::Schema.define(version: 20171005170040) do
     t.integer  "recruiter_id",            limit: 4
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
+    t.string   "notice_period_day",       limit: 255
   end
 
   add_index "vacancy_requests", ["department_id"], name: "index_vacancy_requests_on_department_id", using: :btree
@@ -3994,6 +4020,7 @@ ActiveRecord::Schema.define(version: 20171005170040) do
   add_foreign_key "families", "employees"
   add_foreign_key "families", "relation_masters"
   add_foreign_key "families", "religions"
+  add_foreign_key "faqs", "employees"
   add_foreign_key "food_deductions", "employees"
   add_foreign_key "food_deductions", "food_coupan_masters"
   add_foreign_key "frequest_questions", "employees"

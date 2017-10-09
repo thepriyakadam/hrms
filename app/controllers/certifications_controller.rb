@@ -60,6 +60,7 @@ class CertificationsController < ApplicationController
         EmployeeMailer.certification_create(@employee,@certification).deliver_now
         @certifications = @employee.certifications
         format.js { @flag = true }
+        EmployeeMailer.certification_create(@employee,@certification).deliver_now
       else
         # format.html { render :edit }
         # format.json { render json: @certification.errors, status: :unprocessable_entity }

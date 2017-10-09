@@ -55,6 +55,7 @@
       </Row>
 
       <% i = 0 %>
+      
       <% @employee_ids.each do |e| %>
         <% @employee = Employee.find_by(id: e) %>
         <% @qualification = Qualification.where(employee_id: @employee.id).last %>

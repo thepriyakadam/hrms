@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :events
   resources :contact_details do
     collection do
       get :modal_contact_detail

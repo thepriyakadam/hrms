@@ -50,6 +50,7 @@ class EmployeePhysicalsController < ApplicationController
         # format.json { render :show, status: :ok, location: @employee_physical }
         EmployeeMailer.physical_detail_create(@employee,@employee_physical).deliver_now
         format.js { @flag = true }
+         EmployeeMailer.physical_detail_create(@employee,@employee_physical).deliver_now
       else
         # format.html { render :edit }
         # format.json { render json: @employee_physical.errors, status: :unprocessable_entity }

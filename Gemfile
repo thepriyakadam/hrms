@@ -7,6 +7,7 @@ gem 'rails', '4.2.4'
 gem 'mysql2', '~> 0.3.18'
  #gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
 
+
 gem "rack-timeout", require:"rack/timeout/base"
 
 gem 'ruby-graphviz', '~> 1.2', '>= 1.2.2'
@@ -30,7 +31,8 @@ gem 'bootstrap-datepicker-rails'
 gem 'awesome_print'
 gem 'datagrid', '~> 1.4', '>= 1.4.1'
 gem 'quiet_assets'
-
+gem 'fullcalendar-rails'
+gem 'momentjs-rails'
 gem 'tzinfo-data', '~> 1.2016', '>= 1.2016.10'
 
 gem 'paperclip', '~> 4.3', '>= 4.3.6'
@@ -70,7 +72,8 @@ gem 'selenium-webdriver', '~> 3.0', '>= 3.0.5'
 gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
 
 #inline edit
-gem 'best_in_place', '~> 3.0.1'
+
+gem 'best_in_place'
 
 gem 'bcrypt-ruby', '~> 3.0.0', :require => 'bcrypt'
 gem 'bcrypt'

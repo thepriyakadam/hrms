@@ -57,6 +57,7 @@ class AssignedAssetsController < ApplicationController
         @assigned_assets = @employee.assigned_assets
         EmployeeMailer.asset_detail_create(@employee,@assigned_asset).deliver_now
         format.js { @flag = true }
+         EmployeeMailer.asset_detail_create(@employee,@assigned_asset).deliver_now
       else
         # format.html { render :edit }
         # format.json { render json: @assigned_asset.errors, status: :unprocessable_entity }

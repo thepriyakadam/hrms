@@ -443,10 +443,12 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def payroll_report
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Report"
   end
 
   def payroll_show
-    
+
     @from = params[:employee] ? params[:employee][:from] : params[:from] 
     @to = params[:employee] ? params[:employee][:to] : params[:to]
     company = params[:employee] ? params[:employee][:company_id] : params[:company_id]

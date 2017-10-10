@@ -1,0 +1,94 @@
+<style>
+th {
+    text-align: left;
+}
+tr {
+    page-break-inside: avoid;
+}
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak{ page-break-inside: avoid;
+  /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+}
+</style>
+<table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Employee</th>
+              <% @from_date.step(@to_date).each do |l| %>
+                <th><%= l.strftime("%d") %></th>
+              <%end%>          
+                <th>P</th>
+                <th>WOP</th>
+                <th>HP</th>
+                <th>OD</th>
+                <th>A</th>
+                <th>Payable Leave</th>
+                <th>Non Payable Leave</th>
+                <th>Payable Day</th>
+              <!-- <th>Non Payable Day</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <% exist = {} %>
+          <% @employee_attendances.each do |e| %>
+            <tr>
+            <td><%= e.employee.try(:manual_employee_code) %></td>
+              <td><%= full_name(e.employee) %></td>
+              <% sorted_exists = calculate_attendance_datewise(@from_date,@to_date, exist, e)%>
+              <% sorted_exists.each do |k,v|%>
+                <td><%= v %></td>
+              <%end%>
+           
+            <% holiday_in_month = holiday_in_month_count(exist) %>
+            <% week_off_day = week_off_day_count(exist) %>
+            <% od_day = od_day_count(exist) %>
+            <% present_count = present_count(exist) %>
+            <% absent_count = absent_count(exist) %>
+            <% el_leave_count = el_leave_count(exist) %>
+            <% cl_leave_count = cl_leave_count(exist) %>
+            <% coff_leave_count = coff_leave_count(exist) %>
+            <% advance_leave_count = advance_leave_count(exist) %>
+            <% lwp_leave_count = lwp_leave_count(exist) %>
+            <% esic_leave_count = esic_leave_count(exist) %>
+            <% pl_leave_count = pl_leave_count(exist) %>
+            <% sl_leave_count = sl_leave_count(exist) %>
+            <% leave_count = leave_count(exist) %>
+            <% ml_leave_count = ml_leave_count(exist) %>
+            <% wfh_leave_count = wfh_leave_count(exist) %>
+            <% process_off = process_off_count(exist) %>
+            <% access_card_forgotten = access_card_forgotten_count(exist) %>
+
+
+              <td><%= present_count.to_f + process_off.to_f + access_card_forgotten.to_f %></td>
+              <td><%= week_off_day %></td>
+              <td><%= holiday_in_month %></td>
+              <td><%= od_day %></td>
+              <td><%= absent_count.to_f %></td>
+
+              <% payable_leave = el_leave_count.to_f + cl_leave_count.to_f + coff_leave_count.to_f + advance_leave_count.to_f + pl_leave_count.to_f + sl_leave_count.to_f + leave_count.to_f + wfh_leave_count.to_f + ml_leave_count.to_f %>
+             
+              <% nonpayable_leave = lwp_leave_count.to_f + esic_leave_count.to_f %>
+              <td><%= payable_leave %></td>
+              <td><%= nonpayable_leave %></td>
+                <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+                  <% payable_day = present_count.to_f + process_off.to_f + access_card_forgotten.to_f + od_day.to_f + holiday_in_month.to_f + cl_leave_count.to_f + el_leave_count.to_f + coff_leave_count.to_f %>
+                <% else %>
+                  <% payable_day = present_count.to_f + process_off.to_f + access_card_forgotten.to_f + od_day.to_f + holiday_in_month.to_f + week_off_day.to_f + cl_leave_count.to_f + el_leave_count.to_f + coff_leave_count.to_f %>
+                <% end %>
+
+                <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+                  <% nonpayable_day = absent_count.to_f+ lwp_leave_count.to_f + esic_leave_count.to_f + week_off_day.to_f %>
+                <% else %>
+                  <% nonpayable_day = absent_count.to_f+ lwp_leave_count.to_f + esic_leave_count.to_f  %>
+                <% end %>
+
+              <td><%= payable_day %></td>
+              <!-- <td><= nonpayable_day %></td> -->
+            </tr>          
+            <% exist.clear %>
+
+          <%end%>
+        </tbody>
+      </table> 

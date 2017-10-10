@@ -754,6 +754,7 @@ end
       get :emp_attendance
       get :display_attendance_2
       post :display_attendance_2
+      get :payroll_report
       get :costcenter_wise_excel1
       get :costcenter_wise_pdf
       get :employee_attendance_excel_report
@@ -841,6 +842,8 @@ end
       get :attendance_summary
       post :show_attendance_summary
       get :show_attendance_summary
+      post :payroll_show
+      get :payroll_show
     end
   end
   resources :salary_comp_mappings

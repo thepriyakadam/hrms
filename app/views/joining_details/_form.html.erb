@@ -96,19 +96,27 @@
 
       <div class="col-sm-3">
         <div class="field">
+          <%= f.text_field :notice_period_after_probation,label: 'Notice Period After Probation',placeholder: 'e.g. 1 months' %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="field">
           <%= f.select :have_passport,['Yes','No'],{label: 'Passport',include_blank: " Select Passport Option"} %>
        </div>
     </div> 
 
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :passport_no,label: 'Passport No.' ,placeholder: 'e.g. J8369854'%>
-       </div>
-      </div>
+     
 
       
       </div>
       <div class="row">
+       <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :passport_no,label: 'Passport No.' ,placeholder: 'e.g. J8369854'%>
+       </div>
+      </div> 
+
       <div class="col-sm-3">
       <label>Passport Issue Date </label>
         <div class="field">
@@ -143,6 +151,9 @@
           </div>
         </div>
       </div>
+     
+     </div>
+     <div class="row">
        <div class="col-sm-3">
       <label>Retirement Date </label>
         <div class="field">
@@ -154,16 +165,14 @@
           </div>
         </div>
       </div>
-     </div>
-     <div class="row">
-      <div class="col-sm-3">
-      <div class="field" style="padding: 10px">
-        <%= f.check_box :c_off, label: 'Compensatory Off'%>
-      </div>
-      </div>
+      <!-- <div class="col-sm-3">
+      <div class="field" style="padding: 10px"> -->
+       <!--  < f.check_box :c_off, label: 'Compensatory Off'%> -->
+      <!-- </div>
+      </div> -->
     
     <div class="col-sm-6">
-      <div class="actions" style="padding: 10px">
+      <div class="actions" style="padding: 20px">
         <%= f.submit 'Create On Boarding Detail',:class => class_name, data: { disable_with: data_info } %>
         <% if params['controller'] == 'joining_details' and params['action'] == 'edit' %>
           <%= link_to 'Back',ajax_joining_detail_employees_path(id: @employee.id),class: 'btn btn-default', remote:true%>

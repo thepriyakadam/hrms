@@ -35,7 +35,7 @@ class ExperiencesController < ApplicationController
             Experience.create(employee_id: params['experience']['employee_id'], no_of_year: params['experience'][i.to_s]['no_of_year'], company_name: params['experience'][i.to_s]['company_name'], designation: params['experience'][i.to_s]['designation'], ctc: params['experience'][i.to_s]['ctc'],start_date: params['experience'][i.to_s]['start_date'],end_date: params['experience'][i.to_s]['end_date'],description: params['experience'][i.to_s]['description'])
           end
           @experiences = @employee.experiences
-        EmployeeMailer.experience_create(@employee,@experience).deliver_now
+        # EmployeeMailer.experience_create(@employee,@experience).deliver_now
           format.html { redirect_to @experience, notice: 'Experience was successfully created.' }
           format.json { render :show, status: :created, location: @experience }
           format.js { @flag = true }
@@ -59,6 +59,7 @@ class ExperiencesController < ApplicationController
 
         @experiences = @employee.experiences
         format.js { @flag = true }
+        # EmployeeMailer.experience_create(@employee,@experience).deliver_now
       else
         # format.html { render :edit }
         # format.json { render json: @experience.errors, status: :unprocessable_entity }

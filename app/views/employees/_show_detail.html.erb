@@ -91,10 +91,10 @@
         <td colspan="3"><%= @employee.current_address %></td>
       </tr>
        <tr>
-        <th><strong>Email</strong></th>
+        <th><strong>Official Email</strong></th>
         <td><%= @employee.email %></td>
 
-        <th><strong>Optional Email</strong></th>
+        <th><strong>Personal Email</strong></th>
         <td><%= @employee.optional_email %></td>
       </tr>
         <tr>
@@ -123,7 +123,7 @@
         <td><%= @employee.handicap_type %></td>
       </tr>
       <tr>
-        <th><strong>Employment Type</strong></th>
+        <th><strong>Employment Status</strong></th>
         <td><%= @employee.employee_type.try(:name) %></td>
 
         <th><strong>Religion</strong></th>
@@ -152,8 +152,13 @@
         <th>Department</th>
         <td><%= @employee.try(:department).try(:name) %></td>
 
+        <th>Cost Center</th>
+        <td><%= @employee.try(:cost_center).try(:name) %></td>
+      </tr>
+
+      <tr>
         <th>Sub Department</th>
-        <td><%= @employee.try(:sub_department).try(:name) %></td>
+        <td colspan="3"><%= @employee.try(:sub_department).try(:name) %></td>
       </tr>
 
       <tr>

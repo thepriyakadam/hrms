@@ -61,6 +61,7 @@ class JoiningDetailsController < ApplicationController
         # format.html { redirect_to @joining_detail, notice: 'Joining detail was successfully updated.' }
         # format.json { render :show, status: :ok, location: @joining_detail }
         format.js { @flag = true }
+        # EmployeeMailer.joining_create(@employee,@joining_detail).deliver_now  
       else
         # format.html { render :edit }
         # format.json { render json: @joining_detail.errors, status: :unprocessable_entity }

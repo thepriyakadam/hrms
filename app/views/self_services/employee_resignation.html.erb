@@ -22,7 +22,7 @@
 
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :leaving_reason_id, all_leaving_reason,{label: 'Reason of Leaving',include_blank: " Select Reason of Leaving"},class: 'employee_resignation' %>
+            <%= f.select :leaving_reason_id, active_leaving_reason,{label: 'Reason of Leaving',include_blank: " Select Reason of Leaving"},class: 'employee_resignation' %>
           </div>
         </div>
 
@@ -32,7 +32,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :tentative_leaving_date, class: 'employee_resignation',label:'Requested Releaving Date'%>
+              <%= f.text_field :tentative_leaving_date, class: 'employee_resignation',label:'Requested Relieving Date'%>
             </div>
           </div>
         </div>

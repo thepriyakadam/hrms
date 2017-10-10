@@ -175,17 +175,18 @@ class SelfServicesController < ApplicationController
 
     if @joining_detail.c_off == true
       if @leave_c_off.is_self_present(@employee_id,@c_off_date)
-        flash[:alert] = "Your COff already set for that day"
+        flash[:alert] = "
+        Your COff already set for that day"
       else
         @leave_c_off = LeaveCOff.new(leave_c_off_params)
         @leave_c_offs = LeaveCOff.all
         leav_category = LeavCategory.find_by(code: 'C.Off')
 
         if @leave_c_off.is_week_off_present_for_coff(@employee_id,@c_off_date) || @leave_c_off.is_holiday_present_for_coff(@employee_id,@c_off_date)
-          @employee_attendance = EmployeeAttendance.where(employee_id: @employee_id,present: "WOP",day: @c_off_date.to_date).take
-          
-          if @employee_attendance.working_hrs.to_s < "09:00"
-            flash[:alert] = "Working hrs. less than 9,Please contact to Admin"
+          @emp_attendance = EmployeeAttendance.where("present = ? OR present = ?", "WOP","HP").where(employee_id: @employee_id,day: @c_off_date.to_date).take
+
+          if @emp_attendance.working_hrs.to_s < "07:00"
+            flash[:alert] = "Working hrs. less than 7,Please contact to Admin"
           else
             if leav_category.nil?
             else

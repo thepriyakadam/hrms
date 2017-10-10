@@ -106,7 +106,7 @@ class EmployeeLeavRequestsController < ApplicationController
               @leave_c_off_id = params[:leave_c_off][:c_off_date]
               @leave_c_off = LeaveCOff.find_by(id: @leave_c_off_id)
             if start_date.to_date > @leave_c_off.c_off_date.to_date
-                if @leave_c_off.expiry_date < Date.today || @leave_c_off.expiry_date < start_date.to_date
+                if @leave_c_off.expiry_date < start_date.to_date
                   flash[:alert] = "Compensatory off expired for this day"
                 elsif @employee_leav_request.is_available_coff?
                   flash[:alert] = "Your Leave Request already has been sent"
@@ -118,13 +118,13 @@ class EmployeeLeavRequestsController < ApplicationController
                   @employee_leav_request.first_reporter_id = @employee.manager_id
                   @employee_leav_request.is_pending = true
                   @employee_leav_request.current_status = 'Pending'
-                  if @leave_c_off.leave_count == 1.0 || @leave_c_off.leave_count == 0.0
+                  # if @leave_c_off.leave_count == 1.0 || @leave_c_off.leave_count == 0.0
                     @employee_leav_request.leave_count = 1
                     @employee_leav_request.leave_type = "Full Day"
-                  else
-                    @employee_leav_request.leave_count = 0.5
-                    @employee_leav_request.leave_type = "Half Day"
-                  end
+                  # else
+                  #   @employee_leav_request.leave_count = 0.5
+                  #   @employee_leav_request.leave_type = "Half Day"
+                  # end
                     @employee_leav_request.is_cancelled = false
                     @employee_leav_request.is_first_approved = false
                     @employee_leav_request.is_first_rejected = false

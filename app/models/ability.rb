@@ -35,7 +35,7 @@ class Ability
         can :manage, [OnDutyRequest, ParticularOdRecord]
       elsif user.role.name == 'Supervisor'
         can :read, Employee
-        can :read, [JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family]
+        can :manage, [Employee, JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family,Award,Certification]
         can :read, [EmployeeTemplate, EmployeeSalaryTemplate]
         can :manage, EmployeeLeavRequest
         can :manage, [GoalBunch, GoalRating]
@@ -43,7 +43,7 @@ class Ability
         can :manage, [OnDutyRequest, ParticularOdRecord]
       elsif user.role.name == 'Employee'
         can :read, Employee, id: user.employee_id
-        can :manage, [JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family], employee_id: user.employee_id
+        can :manage, [JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family,Award,Certification], employee_id: user.employee_id
         cannot [:destroy,:update,:create], [JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family]
         can :read, [EmployeeTemplate, EmployeeSalaryTemplate]
         can :manage, EmployeeLeavRequest, employee_id: user.employee_id
@@ -56,7 +56,7 @@ class Ability
         can [:read, :create, :update], DailyBillDetail, travel_request_id: user.employee_id
       elsif user.role.name == 'NewEmployee'
         can :manage, Employee, id: user.employee_id
-        can :manage, [JoiningDetail, Qualification, Experience, Skillset, EmployeePhysical, Certification,Family], employee_id: user.employee_id
+        can :manage, [JoiningDetail, Qualification, Experience, Skillset, EmployeePhysical, Certification,Family,Award], employee_id: user.employee_id
         can :manage,EmployeeBankDetail, employee_id: user.employee_id
         cannot [:destroy,:update,:create],EmployeeBankDetail
         can :read, [EmployeeTemplate, EmployeeSalaryTemplate]

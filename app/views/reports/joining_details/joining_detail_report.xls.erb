@@ -30,32 +30,13 @@
         <Cell ss:Index="21"><Data ss:Type="String">Reserved Category</Data></Cell> 
 
         <Cell ss:Index="22"><Data ss:Type="String">Cost Center</Data></Cell>
-        <Cell ss:Index="23"><Data ss:Type="String">Payment Mode</Data></Cell>
-        <Cell ss:Index="24"><Data ss:Type="String">UAN No.</Data></Cell>
-        <Cell ss:Index="25"><Data ss:Type="String">PF</Data></Cell>
-        <Cell ss:Index="26"><Data ss:Type="String">PF No.</Data></Cell>
-        <Cell ss:Index="27"><Data ss:Type="String">PF Max Amount</Data></Cell>
-        <Cell ss:Index="28"><Data ss:Type="String">ESIC</Data></Cell>
-        <Cell ss:Index="29"><Data ss:Type="String">ESIC No.</Data></Cell>
-        <Cell ss:Index="30"><Data ss:Type="String">Retention</Data></Cell>
-        <Cell ss:Index="31"><Data ss:Type="String">Society Member</Data></Cell>
-        <Cell ss:Index="32"><Data ss:Type="String">DA</Data></Cell>
-        <Cell ss:Index="33"><Data ss:Type="String">Employer PF</Data></Cell>
-        <Cell ss:Index="34"><Data ss:Type="String">Employer ESIC</Data></Cell>
-        <Cell ss:Index="35"><Data ss:Type="String">Insurance</Data></Cell>
-        <Cell ss:Index="36"><Data ss:Type="String">Pension Fund</Data></Cell>
-        <Cell ss:Index="37"><Data ss:Type="String">Bonus</Data></Cell>
-        <Cell ss:Index="38"><Data ss:Type="String">Basis Of Time</Data></Cell>
-        <Cell ss:Index="39"><Data ss:Type="String">OT Rate</Data></Cell>
-        <Cell ss:Index="40"><Data ss:Type="String">OT Option</Data></Cell>
-        <Cell ss:Index="41"><Data ss:Type="String">Time Master</Data></Cell>
-        <Cell ss:Index="42"><Data ss:Type="String">Time Adjusted</Data></Cell>
-        <Cell ss:Index="43"><Data ss:Type="String">Company RFID</Data></Cell>
-        <Cell ss:Index="44"><Data ss:Type="String">Gate RFID</Data></Cell>
-        <Cell ss:Index="45"><Data ss:Type="String">Status</Data></Cell>
-        <Cell ss:Index="46"><Data ss:Type="String">Society Member</Data></Cell>
-        <Cell ss:Index="47"><Data ss:Type="String">Date</Data></Cell>
-        <Cell ss:Index="48"><Data ss:Type="String">Notice Period After Probation</Data></Cell>
+        <Cell ss:Index="23"><Data ss:Type="String">PF No.</Data></Cell>
+        <Cell ss:Index="24"><Data ss:Type="String">Company RFID</Data></Cell>
+        <Cell ss:Index="25"><Data ss:Type="String">Gate RFID</Data></Cell>
+        <Cell ss:Index="26"><Data ss:Type="String">Date</Data></Cell>
+        <Cell ss:Index="27"><Data ss:Type="String">C.off</Data></Cell>
+        <Cell ss:Index="28"><Data ss:Type="String">Notice Period After Probation</Data></Cell>
+        <Cell ss:Index="29"><Data ss:Type="String">Update Time</Data></Cell>
       </Row>
 
       <% i = 0 %>
@@ -82,34 +63,16 @@
         <Cell ss:Index="19"><Data ss:Type="String"><%= joining_detail.try(:passport_issue_date) %></Data></Cell>
         <Cell ss:Index="20"><Data ss:Type="String"><%= joining_detail.try(:passport_expiry_date) %></Data></Cell>
         <Cell ss:Index="21"><Data ss:Type="String"><%= joining_detail.try(:reserved_category).try(:name) %></Data></Cell>
-        <Cell ss:Index="22"><Data ss:Type="String"><%= joining_detail.try(:cost_center).try(:name) %></Data></Cell>
-        <Cell ss:Index="23"><Data ss:Type="String"><%= joining_detail.try(:payment_mode).try(:name) %></Data></Cell>
-        <Cell ss:Index="24"><Data ss:Type="String"><%= joining_detail.try(:employee_uan_no) %></Data></Cell>
+        <Cell ss:Index="22"><Data ss:Type="String"><%= joining_detail.try(:employee_uan_no) %></Data></Cell>
 
-        <Cell ss:Index="25"><Data ss:Type="String"><%= joining_detail.try(:select_pf) %></Data></Cell>
-        <Cell ss:Index="26"><Data ss:Type="String"><%= joining_detail.try(:employee_pf_no) %></Data></Cell>
-        <Cell ss:Index="27"><Data ss:Type="String"><%= joining_detail.try(:pf_max_amount) %></Data></Cell>
-        <Cell ss:Index="28"><Data ss:Type="String"><%= joining_detail.try(:have_esic) ? 'Yes' : 'No' %></Data></Cell>
-        <Cell ss:Index="29"><Data ss:Type="String"><%= joining_detail.try(:employee_efic_no) %></Data></Cell>
-        <Cell ss:Index="30"><Data ss:Type="String"><%= joining_detail.try(:have_retention) ? 'Yes' : 'No' %></Data></Cell>
-        <Cell ss:Index="31"><Data ss:Type="String"><%= joining_detail.try(:is_society_member) %></Data></Cell>
-        <Cell ss:Index="32"><Data ss:Type="String"><%= joining_detail.try(:is_da) ? 'Yes' : 'No'%></Data></Cell>
-        <Cell ss:Index="33"><Data ss:Type="String"><%= joining_detail.try(:is_employeer_pf) ? 'Yes' : 'No'%></Data></Cell>
-        <Cell ss:Index="34"><Data ss:Type="String"><%= joining_detail.try(:is_employeer_esic) ? 'Yes' : 'No'%></Data></Cell>
-        <Cell ss:Index="35"><Data ss:Type="String"><%= joining_detail.try(:is_insurance) ? 'Yes' : 'No'%></Data></Cell>
-        <Cell ss:Index="36"><Data ss:Type="String"><%= joining_detail.try(:is_family_pension) ? 'Yes' : 'No'%></Data></Cell>
-        <Cell ss:Index="37"><Data ss:Type="String"><%= joining_detail.try(:is_bonus) ? 'Yes' : 'No'%></Data></Cell>
-        <Cell ss:Index="38"><Data ss:Type="String"><%= joining_detail.try(:basis_of_time) ? 'Yes' : 'No'%></Data></Cell>
-        <Cell ss:Index="39"><Data ss:Type="String"><%= joining_detail.try(:ot_rate) %></Data></Cell>
-        <Cell ss:Index="40"><Data ss:Type="String"><%= joining_detail.try(:ot_option) ? 'Yes' : 'No'%></Data></Cell>
-        <Cell ss:Index="41"><Data ss:Type="String"><%= joining_detail.try(:time_master) ? 'Yes' : 'No' %></Data></Cell>
-        <Cell ss:Index="42"><Data ss:Type="String"><%= joining_detail.try(:time_adjusted) ? 'Yes' : 'No' %></Data></Cell>
-        <Cell ss:Index="43"><Data ss:Type="String"><%= joining_detail.try(:company_rfid) %></Data></Cell>
-        <Cell ss:Index="44"><Data ss:Type="String"><%= joining_detail.try(:gate_rfid) %></Data></Cell>
-        <Cell ss:Index="45"><Data ss:Type="String"><%= joining_detail.try(:status) ? 'Yes' : 'No' %></Data></Cell>
-        <Cell ss:Index="46"><Data ss:Type="String"><%= joining_detail.try(:is_society_member) ? 'Yes' : 'No' %></Data></Cell>
-        <Cell ss:Index="47"><Data ss:Type="String"><%= joining_detail.try(:date) %></Data></Cell>
-        <Cell ss:Index="48"><Data ss:Type="String"><%= joining_detail.try(:notice_period_after_probation) %></Data></Cell>
+        <Cell ss:Index="23"><Data ss:Type="String"><%= joining_detail.try(:employee_pf_no) %></Data></Cell>
+        <Cell ss:Index="24"><Data ss:Type="String"><%= joining_detail.try(:company_rfid) %></Data></Cell>
+        <Cell ss:Index="25"><Data ss:Type="String"><%= joining_detail.try(:gate_rfid) %></Data></Cell>
+        <Cell ss:Index="26"><Data ss:Type="String"><%= joining_detail.try(:status) ? 'Yes' : 'No' %></Data></Cell>
+        <Cell ss:Index="27"><Data ss:Type="String"><%= joining_detail.try(:date) %></Data></Cell>
+
+        <Cell ss:Index="28"><Data ss:Type="String"><%= joining_detail.try(:c_off) ? 'Yes' : 'No' %></Data></Cell>
+        <Cell ss:Index="29"><Data ss:Type="String"><%= joining_detail.try(:updated_at).to_date %></Data></Cell>
 
       </Row><!-- Row -->
       <% end %><!-- slip -->

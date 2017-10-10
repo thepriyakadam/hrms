@@ -15,6 +15,7 @@ class Employee < ActiveRecord::Base
   belongs_to :employee_code_master
   belongs_to :service_master
   belongs_to :resource_pool_master
+  belongs_to :cost_center
   # has_many :employee_resignations
   has_many :trainees
   has_many :gps_dailies

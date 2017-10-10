@@ -16,6 +16,7 @@ class EmployeeAttendancesController < ApplicationController
 
   def employee_attendance
     @employee_attendances = EmployeeAttendance.where(employee_id: current_user.try(:employee_id))
+    
   end
 
   # GET /employee_attendances/1

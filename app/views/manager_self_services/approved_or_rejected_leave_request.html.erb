@@ -21,9 +21,13 @@
                 <td><%= employee_leav_request.employee.try(:manual_employee_code) %></td>
                 <td><%= employee_leav_request.employee.try(:first_name) %> <%= employee_leav_request.employee.try(:middle_name) %> <%=employee_leav_request.employee.try(:last_name) %></td>
                 <td>
+                  <% if employee_leav_request.current_status == "FinalApproved" %>
+                  <%= link_to '', employee_history_with_current_leave_employee_leav_requests_path(employee_leav_request),class: 'btn btn-xs btn-default fa fa-eye' %>
+                  <% else %>
                   <%= link_to 'Approve', second_approve_leave_status_record_path(employee_leav_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-primary fa fa-check' %> 
-               <%= link_to 'Reject', second_reject_leave_status_record_path(employee_leav_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-trash' %>
-               <%= link_to '', employee_history_with_current_leave_employee_leav_requests_path(employee_leav_request),class: 'btn btn-xs btn-default fa fa-eye' %>
+                  <%= link_to 'Reject', second_reject_leave_status_record_path(employee_leav_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-trash' %>
+                  <%= link_to '', employee_history_with_current_leave_employee_leav_requests_path(employee_leav_request),class: 'btn btn-xs btn-default fa fa-eye' %>
+                  <% end %>
                 </td>
               </tr>
             <% end %>

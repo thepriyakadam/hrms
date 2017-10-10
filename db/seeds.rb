@@ -548,6 +548,10 @@ require 'roo'
 #  end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> e6ceff05b4a19205d03541312ac4abe8ea4244a5
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/skillsets.xls")
 # ex.default_sheet = ex.sheets[0]
@@ -563,7 +567,7 @@ require 'roo'
 # puts "#{i} Record inserted.-------------#{ex.cell(line,'A')}------#{ex.cell(line,'C')}---#{ex.cell(line,'D')}-------------------------"
 # i = i+1
 # end
-=======
+
 # ex = Roo::Excel.new("#{Rails.root}/public/c_off.xls")
 # ex.default_sheet = ex.sheets[0] #siya feb
 # i = 1
@@ -593,7 +597,11 @@ end
 puts "#{i} Record inserted.-------------#{ex.cell(line,'A')}------#{ex.cell(line,'C')}---#{ex.cell(line,'D')}-------------------------"
 i = i+1
 end
+<<<<<<< HEAD
 >>>>>>> 45c2c5c6207f61073a09df8bdec7cd2af4a323dc
+=======
+
+>>>>>>> e6ceff05b4a19205d03541312ac4abe8ea4244a5
 
 #============================== DEPARTMENT END =====================================#
 # puts "Starting Designation..."

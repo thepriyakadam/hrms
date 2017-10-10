@@ -8,7 +8,7 @@ class EventsController < ApplicationController
      @events = Event.all
      # @employee_attendances = EmployeeAttendance.group("strftime('%Y',day)")
     # @employee_attendances = EmployeeAttendance.all
-    @employee_attendances = EmployeeAttendance.where(employee_id: current_user.try(:id))
+    @employee_attendances = EmployeeAttendance.where(employee_id: current_user.try(:employee_id))
   end
 
   # GET /events/1
@@ -99,7 +99,7 @@ class EventsController < ApplicationController
   end
 
     def employee_attendance_params
-    params.require(:employee_attendance).permit(:id, :present, :day, :in_time, :out_time)
+    params.require(:employee_attendance).permit(:id, :present, :day, :in_time, :out_time,:title)
   end
 
 

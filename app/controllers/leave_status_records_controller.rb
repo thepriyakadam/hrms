@@ -127,7 +127,7 @@ class LeaveStatusRecordsController < ApplicationController
         LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FinalApproved")
         #LeaveRequestMailer.second_approve(@employee_leav_request).deliver_now
         LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
-        if @employee_leav_request.first_reporter_id == current_user.employee_id
+        if @employee_leav_request.second_reporter_id == current_user.employee_id
           redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
           flash[:notice] = 'Leave Request Approved Successfully.'
         else
@@ -135,7 +135,7 @@ class LeaveStatusRecordsController < ApplicationController
           flash[:notice] = 'Leave Request Approved Successfully by Admin.'
         end
       else
-        if @employee_leav_request.first_reporter_id == current_user.employee_id
+        if @employee_leav_request.second_reporter_id == current_user.employee_id
           flash[:alert] = 'Leave Already Approved. Please refresh page.'
           redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
         else

@@ -20,8 +20,6 @@
 //= require jquery.validate.additional-methods
 
 //= require chartkick
-//= require moment 
-//= require fullcalendar
 
 
 //= require bootstrap-datetimepicker

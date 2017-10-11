@@ -36,7 +36,7 @@ class CertificationsController < ApplicationController
             Certification.create(employee_id: params['certification']['employee_id'], name: params['certification'][i.to_s]['name'], year_id: params['certification'][i.to_s]['year_id'], duration: params['certification'][i.to_s]['duration'], description: params['certification'][i.to_s]['description'])
           end
           @certifications = Certification.where(employee_id: @employee.id)
-        EmployeeMailer.certification_create(@employee,@certification).deliver_now
+        # EmployeeMailer.certification_create(@employee,@certification).deliver_now
           format.html { redirect_to @certification, notice: 'Certification was successfully created.' }
           format.json { render :show, status: :created, location: @certification }
           format.js { @flag = true }
@@ -60,7 +60,7 @@ class CertificationsController < ApplicationController
         EmployeeMailer.certification_create(@employee,@certification).deliver_now
         @certifications = @employee.certifications
         format.js { @flag = true }
-        EmployeeMailer.certification_create(@employee,@certification).deliver_now
+        # EmployeeMailer.certification_create(@employee,@certification).deliver_now
       else
         # format.html { render :edit }
         # format.json { render json: @certification.errors, status: :unprocessable_entity }

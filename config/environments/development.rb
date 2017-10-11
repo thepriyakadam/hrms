@@ -213,7 +213,7 @@
   #  # openssl_verify_mode: 'none'
   # }
 
-  config.action_mailer.default_url_options = { host: 'https://webmail.logix.in/', port: 443 }
+ config.action_mailer.default_url_options = { host: 'https://webmail.logix.in/', port: 443 }
  
  
   # config.domain = 'lvh.me'

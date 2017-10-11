@@ -29,13 +29,13 @@
         <Cell ss:Index="20"><Data ss:Type="String">Current Address</Data></Cell>
         <Cell ss:Index="21"><Data ss:Type="String">Email</Data></Cell>
         <Cell ss:Index="22"><Data ss:Type="String">Optional Email</Data></Cell>
-        <Cell ss:Index="23"><Data ss:Type="String">Official Contact No.</Data></Cell>
-        <Cell ss:Index="24"><Data ss:Type="String">Extension Contact No.</Data></Cell>
+        <Cell ss:Index="23"><Data ss:Type="String">Extension Line 1</Data></Cell>
+        <Cell ss:Index="24"><Data ss:Type="String">Extension Line 2</Data></Cell>
         <Cell ss:Index="25"><Data ss:Type="String">Personal Contact No.</Data></Cell>
         <Cell ss:Index="26"><Data ss:Type="String">Emergency Contact No.</Data></Cell>
         <Cell ss:Index="27"><Data ss:Type="String">Religion</Data></Cell>
         <Cell ss:Index="28"><Data ss:Type="String">Differently Abled</Data></Cell>
-        <Cell ss:Index="29"><Data ss:Type="String">Disability Type</Data></Cell>
+        <Cell ss:Index="39"><Data ss:Type="String">Disability Type</Data></Cell>
         <Cell ss:Index="30"><Data ss:Type="String">Employement Type</Data></Cell>
         <Cell ss:Index="31"><Data ss:Type="String">Employee Status</Data></Cell>
         <Cell ss:Index="32"><Data ss:Type="String">Company</Data></Cell>
@@ -45,7 +45,10 @@
         <Cell ss:Index="36"><Data ss:Type="String">Reporting Manager 1</Data></Cell>
         <Cell ss:Index="37"><Data ss:Type="String">Reporting Manager 2</Data></Cell>
         <Cell ss:Index="38"><Data ss:Type="String">Punch Card</Data></Cell>
-        <Cell ss:Index="39"><Data ss:Type="String">Employee Code</Data></Cell>
+        <Cell ss:Index="39"><Data ss:Type="String">Resource Pool</Data></Cell>
+        <Cell ss:Index="40"><Data ss:Type="String">Service</Data></Cell>
+        <Cell ss:Index="41"><Data ss:Type="String">Cost Center</Data></Cell>
+        <Cell ss:Index="42"><Data ss:Type="String">Update Time</Data></Cell>
         </Row>
 
         <% i = 0 %>
@@ -74,8 +77,8 @@
           <Cell ss:Index="21"><Data ss:Type="String"><%= employee.email %></Data></Cell>
           <Cell ss:Index="22"><Data ss:Type="String"><%= employee.optional_email %></Data></Cell>
           <Cell ss:Index="23"><Data ss:Type="String"><%= employee.contact_no %></Data></Cell>
-          <Cell ss:Index="24"><Data ss:Type="String"><%= employee.optinal_contact_no %></Data></Cell>
-          <Cell ss:Index="25"><Data ss:Type="String"><%= employee.try(:optinal_contact_no1) %></Data></Cell>
+          <Cell ss:Index="24"><Data ss:Type="String"><%= employee.try(:optinal_contact_no1) %></Data></Cell>
+          <Cell ss:Index="25"><Data ss:Type="String"><%= employee.try(:optinal_contact_no) %></Data></Cell>
           <Cell ss:Index="26"><Data ss:Type="String"><%= employee.try(:emergency_contact_no) %></Data></Cell>
           <Cell ss:Index="27"><Data ss:Type="String"><%= employee.religion.try(:name) %></Data></Cell>
           <Cell ss:Index="28"><Data ss:Type="String"><%= employee.handicap %></Data></Cell>
@@ -89,7 +92,9 @@
           <Cell ss:Index="36"><Data ss:Type="String"><% emp=Employee.where(id: employee.manager_id).take %><%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></Data></Cell>
           <Cell ss:Index="37"><Data ss:Type="String"><% emp=Employee.where(id: employee.manager_2_id).take %><%= emp.try(:first_name) %><%= emp.try(:middle_name) %><%= emp.try(:last_name) %></Data></Cell>
           <Cell ss:Index="38"><Data ss:Type="String"><%= employee.try(:punch_card).try(:name) %></Data></Cell>
-          <Cell ss:Index="39"><Data ss:Type="String"><%= employee.employee_code_master.try(:name) %></Data></Cell>
+          <Cell ss:Index="39"><Data ss:Type="String"><%= employee.try(:resource_pool_master).try(:code) %></Data></Cell>
+          <Cell ss:Index="40"><Data ss:Type="String"><%= employee.try(:service_master).try(:name) %></Data></Cell>
+          <Cell ss:Index="41"><Data ss:Type="String"><%= employee.try(:updated_at).to_date %></Data></Cell>
      </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

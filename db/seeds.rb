@@ -547,6 +547,7 @@ require 'roo'
 #  end
 #  end
 
+<<<<<<< HEAD
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/skillsets.xls")
@@ -565,11 +566,19 @@ require 'roo'
 # end
 
 # ex = Roo::Excel.new("#{Rails.root}/public/c_off.xls")
+=======
+#  ex = Roo::Excel.new("#{Rails.root}/public/c_off.xls")
+>>>>>>> 8ac5169d418641d12d501b711430cd131f3697fe
 # ex.default_sheet = ex.sheets[0] #siya feb
 # i = 1
 # ActiveRecord::Base.transaction do
 # 2.upto(33) do |line| # siya Feb 2016
+<<<<<<< HEAD
 #  puts "Starting Record #{ex.cell(line,'B')}---------------------------------------"
+=======
+#  puts "Starting Record
+# {ex.cell(line,'B')}---------------------------------------"
+>>>>>>> 8ac5169d418641d12d501b711430cd131f3697fe
 #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
 #  puts "#{i} Record inserting.----------------------------"
 #  JoiningDetail.where(employee_id: @employee).update_all(c_off: false)
@@ -578,6 +587,7 @@ require 'roo'
 #  end
 #  end
 
+<<<<<<< HEAD
 puts "Starting ..."
 ex = Roo::Excel.new("#{Rails.root}/public/skillsets.xls")
 ex.default_sheet = ex.sheets[0]
@@ -594,6 +604,8 @@ puts "#{i} Record inserted.-------------#{ex.cell(line,'A')}------#{ex.cell(line
 i = i+1
 end
 
+=======
+>>>>>>> 8ac5169d418641d12d501b711430cd131f3697fe
 
 #============================== DEPARTMENT END =====================================#
 # puts "Starting Designation..."
@@ -803,6 +815,22 @@ end
 # puts "#{i} Record inserted.-------------#{ex.cell(line,'A')}----------------------------------"
 # i = i+1
 # end
+
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/skillsets.xls")
+ex.default_sheet = ex.sheets[0]
+i=1
+2.upto(8777) do |line|
+@employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+Skillset.new do |b|
+  b.employee_id = @employee.id unless @employee.nil?
+  b.name = ex.cell(line,'C')
+  b.skill_level = ex.cell(line,'D')
+  b.save!
+end
+puts "#{i} Record inserted.-------------#{ex.cell(line,'A')}------#{ex.cell(line,'C')}---#{ex.cell(line,'D')}-------------------------"
+i = i+1
+end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/qualification.xls")

@@ -14,6 +14,7 @@
         <Cell ss:Index="5"><Data ss:Type="String">Last Name</Data></Cell>
         <Cell ss:Index="6"><Data ss:Type="String">Skill</Data></Cell>
         <Cell ss:Index="7"><Data ss:Type="String">Level</Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String">Update Time</Data></Cell>
       </Row>
 
         <% i = 0 %>
@@ -26,6 +27,7 @@
           <Cell ss:Index="5"><Data ss:Type="String"><%= skillset.employee.try(:last_name ) %></Data></Cell>
           <Cell ss:Index="6"><Data ss:Type="String"><%= skillset.name %></Data></Cell>
           <Cell ss:Index="7"><Data ss:Type="String"><%= skillset.skill_level %></Data></Cell>
+          <Cell ss:Index="8"><Data ss:Type="String"><%= skillset.try(:updated_at).to_date %></Data></Cell>
         </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

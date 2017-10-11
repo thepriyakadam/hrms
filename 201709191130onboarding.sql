@@ -1,4 +1,6 @@
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 -- MySQL dump 10.13  Distrib 5.5.56, for Win64 (AMD64)
 --
 -- Host: localhost    Database: hrms_development
@@ -8837,6 +8839,7 @@ UNLOCK TABLES;
 
 -- Dump completed on 2017-09-19 11:31:07
 =======
+>>>>>>> ae2c8679df3f61c13558ac4676dbea9d3036e773
 -- MySQL dump 10.13  Distrib 5.5.56, for Win64 (AMD64)
 --
 -- Host: localhost    Database: hrms_development
@@ -17674,4 +17677,7 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2017-09-19 11:31:07
+<<<<<<< HEAD
+=======
 >>>>>>> 355441c817b52bd369e26f5ad84d3f2565af2151
+>>>>>>> ae2c8679df3f61c13558ac4676dbea9d3036e773

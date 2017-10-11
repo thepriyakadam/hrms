@@ -1624,6 +1624,7 @@ def upload
               end
               if working_hrs.to_s <  "04:30"
                 EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "A")
+
               elsif working_hrs.to_s < "07:00"
                 EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "HDL")
               else
@@ -1785,8 +1786,9 @@ def daily_attendance_datewise
 end
 
 def show_daily_attendance_datewise
-  date = params[:employee][:date]
-  @daily_attendances = DailyAttendance.where(date: date.to_date)
+  @date = params[:employee][:date]
+  @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+  @employee_attendances = EmployeeAttendance.where(day: @date.to_date).where(employee_id: @employees).group(:employee_id)
 end
 
 def datewise_daily_attendance
@@ -1822,7 +1824,7 @@ end
 def import
   file = params[:file]
   if file.nil?
-    flash[:alert] = "Please Select File!"
+  flash[:alert] = "Please Select File!"
   redirect_to import_employee_attendance_employee_attendances_path
   else
   EmployeeAttendance.import(params[:file])
@@ -2078,7 +2080,7 @@ end
     employee_attendance = EmployeeAttendance.where(employee_id: @employee.id,day: @date.to_date).take
     
     if @daily_attendance.nil?
-      flash[:alert] = "Please Check Date and Crad Details!"
+      flash[:alert] = "Please Check Date and Card Details!"
     else
 
       if first_in.nil? && last_out.nil?
@@ -2134,7 +2136,7 @@ end
     manager = Employee.find_by(id: current_user.employee_id)
 
     if @daily_attendance.nil?
-      flash[:alert] = "Please Check Date and Crad Details!"
+      flash[:alert] = "Please Check Date and Card Details!"
     else
 
       if first_in.nil? && last_out.nil?
@@ -2220,7 +2222,7 @@ end
     date = params[:date]
     DailyAttendance.where(date: date.to_date).destroy_all
     #EmployeeAttendance.where(day: date.to_date,is_confirm: false).destroy_all
-    flash[:notice] = "Attendance destroyed successfully!"
+    flash[:notice] = "Attendance Reverted successfully!"
     redirect_to destroy_daily_attendance_employee_attendances_path
   end
 

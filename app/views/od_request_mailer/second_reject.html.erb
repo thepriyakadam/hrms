@@ -4,9 +4,9 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h4>OD Request Rejected</h4>
+    <h4>On Duty Request Rejected</h4>
     <p>
-      You have one OD request is Rejected From
+      You have one on duty request is Rejected From
       <% @employee = Employee.find(@od_request.first_reporter_id) %>
 
       ID : <%= @manager.try(:manual_employee_code) %><br>

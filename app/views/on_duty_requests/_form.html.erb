@@ -33,7 +33,7 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :leave_type,['Full Day','Half Day','Full/Half'],{label:"OD Type",include_blank: "Select OD Type"},{onchange:"var a={leave_type:$(this).val()}; $.get('/on_duty_requests/select_checkbox',a,function(response){});",class: 'form-control'} %>
+            <%= f.select :leave_type,['Full Day','Half Day'],{label:"OD Type",include_blank: "Select OD Type"},{onchange:"var a={leave_type:$(this).val()}; $.get('/on_duty_requests/select_checkbox',a,function(response){});",class: 'form-control'} %>
           </div>
         </div>
 
@@ -77,7 +77,7 @@
         <div class="col-sm-6">
         <label></label>
           <div class="actions">
-            <%= f.submit 'Create OD Request', :class => class_name, data: { disable_with: data_info } %> | 
+            <%= f.submit 'Create On Duty Request', :class => class_name, data: { disable_with: data_info } %> | 
             <%= link_to ' Back', on_duty_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
           </div>
         </div>

@@ -6,7 +6,7 @@
   <body>
      <h4>Resignation Request Rejected</h4>
     <p>
-      Dear, <%= @employee.prefix %><%= @employee.first_name.to_s %> <%= @employee.last_name.to_s %> <%= @employee.middle_name.to_s %><br><br>
+      Dear, <%= @employee.try(:prefix) %><%= @employee.first_name.to_s %> <%= @employee.last_name.to_s %> <%= @employee.middle_name.to_s %><br><br>
       This is to inform you that your Resignation Request has been Rejected.
       <br><br>
      </p>

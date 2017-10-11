@@ -645,6 +645,7 @@ a:focus {
     display: block;
     margin-left: -15px;
     margin-right: -15px;
+    color: red;
     font-size: 18px;
   }
   .sidebar-mini.sidebar-collapse .main-header .logo > .logo-lg {

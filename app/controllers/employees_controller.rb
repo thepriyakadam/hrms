@@ -521,8 +521,6 @@ end
     redirect_to change_password_form_employees_path
   end
 
-
-
   def collect_company_location
     # byebug
     @company = Company.find(params[:id])
@@ -651,8 +649,7 @@ end
         @employees = Employee.where(department_id: current_user.department_id)
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
-        @employees1 = @emp.subordinates
-        @employees = Employee.where.not(id: @emp.id)
+        @employees = @emp.subordinates
       else current_user.role.name == 'Employee'
         @employees = Employee.where(id: current_user.employee_id)
       end
@@ -1486,6 +1483,55 @@ def show_all_record
               filename: @employee.passport_photo_file_name,
               type: @employee.passport_photo_content_type,
               disposition: 'attachment'
+  end
+
+  def new_employee_list
+     if current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @employees = Employee.all
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
+      elsif current_user.role.name == 'NewEmployee'
+        @employees = Employee.where(id: current_user.employee_id)
+      else current_user.role.name == 'Employee'
+        @employees = Employee.where(id: current_user.employee_id)
+        redirect_to home_index_path
+      end
+    else
+      @employees = Employee.all
+    end
+  end
+
+  def skillset_employee_list
+     @employee = Employee.find(params[:format])
+     @skillsets = Skillset.where(employee_id: @employee.id)
+  end
+
+  # def update_skillset
+  #   @name = params[:name]
+  #   @skill_level = params[:skill_level]
+
+  # end
+
+  def reporting_manager_list
+    @emp = current_user.employee_id
+    @employees = Employee.where("manager_id = ? OR manager_2_id = ?", @emp,@emp).where.not(manager_id: @emp)
+  end
+
+  def employee_asset
+    @employees = Employee.all
+  end
+
+  def admin_asset_employee_list
+     @employee = Employee.find(params[:format])
+     @assigned_assets = AssignedAsset.where(employee_id: @employee.id)
   end
 
 

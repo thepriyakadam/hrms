@@ -14,6 +14,11 @@ class EmployeeAttendancesController < ApplicationController
 
   end
 
+  def employee_attendance
+    @employee_attendances = EmployeeAttendance.where(employee_id: current_user.try(:employee_id))
+    
+  end
+
   # GET /employee_attendances/1
   # GET /employee_attendances/1.json
   def show
@@ -2383,6 +2388,11 @@ end
     session[:active_tab] = "ManagerSelfService"
   end
 
+  def admin_access_card_approval
+    @pending_requests = EmployeeAttendance.where(comment: "ACF Request")
+    session[:active_tab] = "ManagerSelfService"
+  end
+
   def view_access_card_detail
     @pending_request = EmployeeAttendance.find(params[:pending_request])
   end
@@ -2395,20 +2405,30 @@ end
     #   @pending_request.update(present: "",comment: "ACF Approved")
     # else
       manager = Employee.find_by(id: current_user.employee_id)
+      employee = Employee.find_by(id: @pending_request.employee_id)
       @pending_request.update(present: "ACF",comment: "ACF Approved")
       EmployeeAttendanceMailer.approved(@pending_request,manager).deliver_now
     # end
     flash[:notice] = "ACF Request Approved!"
+    if(manager == employee.manager_id)
     redirect_to access_card_approval_employee_attendances_path
+    else
+      redirect_to admin_access_card_approval_employee_attendances_path
+    end
   end
 
   def reject_acf_request
     @pending_request = EmployeeAttendance.find(params[:format])
     manager = Employee.find_by(id: current_user.employee_id)
+    employee = Employee.find_by(id: @pending_request.employee_id)
     @pending_request.update(present: "A",comment: "ACF Rejected")
     EmployeeAttendanceMailer.rejected(@pending_request,manager).deliver_now
     flash[:notice] = "ACF Request Rejected!"
+    if(manager == employee.manager_id)
     redirect_to access_card_approval_employee_attendances_path
+  else
+     redirect_to admin_access_card_approval_employee_attendances_path
+  end
   end
 
   def destroy_daily_attendance

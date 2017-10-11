@@ -4,6 +4,6 @@
 #
 #
 
-$('#calendar').fullCalendar(
+$('#calendar').fullCalendar({
     events: '/events.json'
-);
+});

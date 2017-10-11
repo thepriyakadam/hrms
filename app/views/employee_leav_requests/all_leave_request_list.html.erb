@@ -4,11 +4,8 @@
     <div class="pull-right"></div>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <div class="row">
-      <div class="col-sm-6">
         <table id="example6" class="table table-bordered table-hover table-condensed">
           <thead>
-           <tr><td colspan="5"><center>First Level Request</center></td></tr>
             <tr>
               <th>ID</th>
               <th>Employee</th>
@@ -28,9 +25,7 @@
             <% end %>
           </tbody>
         </table>
-      </div>
-
-       <div class="col-sm-6">
+        <!-- 
         <table id="example7" class="table table-bordered table-hover table-condensed">
           <thead>
           <tr><td colspan="5"><center>Second Level Request</center></td></tr>
@@ -42,19 +37,17 @@
           </thead>
 
           <tbody>
-            <% @second_level_request_lists.try(:each) do |sl| %>
+            < @second_level_request_lists.try(:each) do |sl| %>
               <tr>
-                <td><%= sl.employee.try(:manual_employee_code) %></td>
-                <td><%= full_name(sl.employee) %></td>
+                <td><= sl.employee.try(:manual_employee_code) %></td>
+                <td><= full_name(sl.employee) %></td>
                 <td>
-                  <%= link_to 'View Detail', admin_employee_history_with_current_leave_employee_leav_requests_path(sl),class: 'btn btn-xs btn-info' %>
+                  <= link_to 'View Detail', admin_employee_history_with_current_leave_employee_leav_requests_path(sl),class: 'btn btn-xs btn-info' %>
                 </td>
               </tr>
-            <% end %>
+            < end %>
           </tbody>
-        </table>
-      </div>
-    </div>
+        </table> -->
   </div>
 </div>
 

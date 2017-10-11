@@ -821,6 +821,7 @@ end
       get :access_record
       post :access_card_list
       get :access_card_approval
+      get :admin_access_card_approval
       get :view_access_card_detail
       get :approve_acf_request
       get :reject_acf_request
@@ -846,6 +847,7 @@ end
       get :show_attendance_summary
       post :payroll_show
       get :payroll_show
+      get :employee_attendance
     end
   end
   resources :salary_comp_mappings

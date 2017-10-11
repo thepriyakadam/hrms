@@ -48,6 +48,7 @@
              <!-- <= link_to ' ',modal_qualifications_path(qualification),class: 'btn btn-success btn-sm fa fa-edit',remote: true %> -->
              <%= link_to '', edit_qualification_path(qualification),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
              <%= link_to ' ',qualification_modal_qualifications_path(qualification),class: 'btn btn-default btn-xs fa fa-eye',remote: true %>
+             <%= link_to '',  qualification, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
           </td>
       </tr>
         <%end%>

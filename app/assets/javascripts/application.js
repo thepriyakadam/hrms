@@ -21,7 +21,6 @@
 
 //= require chartkick
 
-
 //= require bootstrap-datetimepicker
 
 //= require_tree .
@@ -35,16 +34,16 @@
 //   setTimeout(updateComments, 10000);
 // }
 
-$(document).ready(function() {
+// $(document).ready(function() {
 
-    // page is now ready, initialize the calendar...
+//     // page is now ready, initialize the calendar...
 
-    $('#calendar').fullCalendar({
-        // put your options and callbacks here
-        events: '/events.json'
-    })
+//     $('#calendar').fullCalendar({
+//         // put your options and callbacks here
+//         events: '/events.json'
+//     })
 
-});
+// });
 
 
 

@@ -1,4 +1,4 @@
-class AddColumnToVacancyMaster < ActiveRecord::Migration
+class AddColInToVacancyMasters < ActiveRecord::Migration
   def change
     add_column :vacancy_masters, :vacancy_of, :string
   end

@@ -20,6 +20,9 @@
 //= require jquery.validate.additional-methods
 
 //= require chartkick
+//= require moment 
+//= require fullcalendar
+
 
 //= require bootstrap-datetimepicker
 
@@ -34,16 +37,16 @@
 //   setTimeout(updateComments, 10000);
 // }
 
-// $(document).ready(function() {
+$(document).ready(function() {
 
-//     // page is now ready, initialize the calendar...
+    // page is now ready, initialize the calendar...
 
-//     $('#calendar').fullCalendar({
-//         // put your options and callbacks here
-//         events: '/events.json'
-//     })
+    $('#calendar').fullCalendar({
+        // put your options and callbacks here
+        events: '/events.json'
+    })
 
-// });
+});
 
 
 

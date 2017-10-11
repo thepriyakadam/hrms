@@ -131,6 +131,10 @@ GEM
     execjs (2.7.0)
     ffi (1.9.18)
     ffi (1.9.18-x64-mingw32)
+    fullcalendar-rails (3.4.0.0)
+      jquery-rails (>= 4.0.5, < 5.0.0)
+      jquery-ui-rails (>= 5.0.2)
+      momentjs-rails (>= 2.9.0)
     geocoder (1.4.3)
     gherkin (4.1.1)
     globalid (0.3.7)
@@ -367,6 +371,7 @@ DEPENDENCIES
   datagrid (~> 1.4, >= 1.4.1)
   devise
   email_verifier
+  fullcalendar-rails
   geocoder
   globalid (~> 0.3.7)
   hirb
@@ -378,6 +383,7 @@ DEPENDENCIES
   kaminari (~> 0.16.3)
   local-subdomain
   mime-types-data (~> 3.2016, >= 3.2016.0521)
+  momentjs-rails
   mysql2 (~> 0.3.18)
   paperclip (~> 4.3, >= 4.3.6)
   pdfkit (~> 0.8.2)
@@ -411,6 +417,3 @@ DEPENDENCIES
   wirble
   wkhtmltopdf-binary (~> 0.9.9.3)
   yaml_db
-
-BUNDLED WITH
-   1.15.1

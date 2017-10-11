@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171010133927) do
+ActiveRecord::Schema.define(version: 20171005170040) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1360,13 +1360,11 @@ ActiveRecord::Schema.define(version: 20171010133927) do
     t.datetime "employee_signature_updated_at"
     t.integer  "service_master_id",               limit: 4
     t.integer  "resource_pool_master_id",         limit: 4
-    t.integer  "cost_center_id",                  limit: 4
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id", using: :btree
   add_index "employees", ["company_id"], name: "index_employees_on_company_id", using: :btree
   add_index "employees", ["company_location_id"], name: "index_employees_on_company_location_id", using: :btree
-  add_index "employees", ["cost_center_id"], name: "index_employees_on_cost_center_id", using: :btree
   add_index "employees", ["country_id"], name: "index_employees_on_country_id", using: :btree
   add_index "employees", ["department_id"], name: "index_employees_on_department_id", using: :btree
   add_index "employees", ["district_id"], name: "index_employees_on_district_id", using: :btree
@@ -1525,6 +1523,18 @@ ActiveRecord::Schema.define(version: 20171010133927) do
   add_index "families", ["employee_id"], name: "index_families_on_employee_id", using: :btree
   add_index "families", ["relation_master_id"], name: "index_families_on_relation_master_id", using: :btree
   add_index "families", ["religion_id"], name: "index_families_on_religion_id", using: :btree
+
+  create_table "faqs", force: :cascade do |t|
+    t.string   "code",        limit: 255
+    t.string   "question",    limit: 255
+    t.string   "answer",      limit: 255
+    t.integer  "employee_id", limit: 4
+    t.boolean  "status"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "faqs", ["employee_id"], name: "index_faqs_on_employee_id", using: :btree
 
   create_table "food_coupan_masters", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -3778,6 +3788,7 @@ ActiveRecord::Schema.define(version: 20171010133927) do
     t.integer  "recruiter_id",            limit: 4
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
+    t.string   "notice_period_day",       limit: 255
   end
 
   add_index "vacancy_requests", ["department_id"], name: "index_vacancy_requests_on_department_id", using: :btree
@@ -3990,7 +4001,6 @@ ActiveRecord::Schema.define(version: 20171010133927) do
   add_foreign_key "employees", "blood_groups"
   add_foreign_key "employees", "companies"
   add_foreign_key "employees", "company_locations"
-  add_foreign_key "employees", "cost_centers"
   add_foreign_key "employees", "countries"
   add_foreign_key "employees", "departments"
   add_foreign_key "employees", "districts"
@@ -4010,6 +4020,7 @@ ActiveRecord::Schema.define(version: 20171010133927) do
   add_foreign_key "families", "employees"
   add_foreign_key "families", "relation_masters"
   add_foreign_key "families", "religions"
+  add_foreign_key "faqs", "employees"
   add_foreign_key "food_deductions", "employees"
   add_foreign_key "food_deductions", "food_coupan_masters"
   add_foreign_key "frequest_questions", "employees"

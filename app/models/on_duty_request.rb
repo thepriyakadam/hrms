@@ -28,7 +28,102 @@ class OnDutyRequest < ActiveRecord::Base
     flag
   end
 
+  #  def is_present?
+  #   flag = 0
+  #   for i in self.start_date.to_date..self.end_date.to_date
+  #     flag = EmployeeAttendance.exists?(day: i, employee_id: self.employee_id)
+  #   end
+  #   flag
+  # end
+
+  def weekoff_present(i,employee)
+    flag = 0
+    flag = EmployeeAttendance.exists?(day: i,employee_id: employee,present: "WO")
+    flag
+  end
+
+  def holiday_present(i,employee)
+    flag = 0
+    flag = EmployeeAttendance.exists?(day: i,employee_id: employee,present: "H")
+    flag
+  end
+
+
+  def weekoff_present_p(i,employee)
+    flag = 0
+    flag = EmployeeAttendance.exists?(day: i,employee_id: employee,present: "WOP")
+    flag
+  end
+
+  def holiday_present_p(i,employee)
+    flag = 0
+    flag = EmployeeAttendance.exists?(day: i,employee_id: employee,present: "HP")
+    flag
+  end
+
+  def is_there(i)
+    flag = 0
+    flag = EmployeeAttendance.exists?(day: i,employee_id: self.employee_id)
+    flag
+  end
+
+   def create_attendance_od
+    flag1 = 0
+    flag2 = 0
+    flag3 = 0
+      for i in self.start_date.to_date..self.end_date.to_date
+        if self.is_there(i)
+          flag1 = EmployeeAttendance.exists?(day: i,employee_id: self.employee_id,employee_leav_request_id: nil)
+          flag2 = EmployeeAttendance.exists?(day: i,employee_id: self.employee_id,employee_week_off_id: nil)
+          flag3 = EmployeeAttendance.exists?(day: i,employee_id: self.employee_id,holiday_id: nil)
+          if flag1 == true && flag2 == true && flag3 == true
+
+            @employee_attendance = EmployeeAttendance.where(employee_id: self.employee_id,day: i).take
+            @employee_attendance.update(present: 'A',count: 1,department_id: self.employee.try(:department_id),on_duty_request_id: self.id,comment: "OD Request Pending")
+          OdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,status: "Pending", day: i)
+          else
+          end
+        else
+          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'A',count: 1,department_id: self.employee.try(:department_id),on_duty_request_id: self.id,comment: "OD Request Pending",)
+          OdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,status: "Pending", day: i)
+         
+        end
+      end#for i in self
+  end #def
+
+  # def od_record_create(on_duty_request)
+  #   for i in on_duty_request.start_date.to_date..on_duty_request.end_date.to_date 
+  #     if self.weekoff_present(i,employee) || self.holiday_present(i,employee) || self.holiday_present_p(i,employee) || self.holiday_present_p(i,employee)
+          
+  #       else
+  #           OdRecord.create(employee_id: on_duty_request.employee_id,on_duty_request_id: on_duty_request.id,status: "Pending", day: i)
+         
+  #       end
+  #   end
+  # end
+
   def create_od_in_attendance
+    flag1 = 0
+    flag2 = 0
+    flag3 = 0
+    for i in self.start_date.to_date..self.end_date.to_date
+      flag = EmployeeAttendance.exists?(day: i,employee_id: self.employee_id)
+      if flag == true
+        flag1 = EmployeeAttendance.exists?(day: i,employee_id: self.employee_id,employee_leav_request_id: nil)
+        flag2 = EmployeeAttendance.exists?(day: i,employee_id: self.employee_id,employee_week_off_id: nil)
+        flag3 = EmployeeAttendance.exists?(day: i,employee_id: self.employee_id,holiday_id: nil)
+        if flag1 == true && flag2 == true && flag3 == true
+          @emp_attendance = EmployeeAttendance.where(day: i,employee_id: self.employee_id).take
+          @emp_attendance.update(employee_id: self.employee_id, day: i, present: 'OD',comment: nil)
+          ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: true)
+             
+        else
+        end
+      end#flag == true
+    end#i in
+  end
+
+  def create_od_in_attendanc
     flag = 0
     flag1 = 0
     for i in self.start_date.to_date..self.end_date.to_date

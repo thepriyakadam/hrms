@@ -79,8 +79,8 @@
   <br>
      <%= link_to 'Back', od_request_list_on_duty_requests_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %> |
     <% if @current_request.current_status == "Pending" %>
-        <%= link_to 'Approve', first_approve_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> |
-        <%= link_to 'Reject', first_reject_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
+        <%= link_to 'Approve', second_approve_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> |
+        <%= link_to 'Reject', second_reject_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
       <% else %>
         <%= link_to 'Approve', second_approve_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> |
         <%= link_to 'Reject', second_reject_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>

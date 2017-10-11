@@ -56,7 +56,7 @@ class SelfServicesController < ApplicationController
     note = params[:employee_resignation][:note]
 
     if resignation_date == "" || leaving_reason_id == "" || tentative_leaving_date == "" || reason == ""
-      flash[:alert] = "Please fill all mendetory fields!"
+      flash[:alert] = "Please fill all mandatory fields!"
     else
       if @employee_resignation.is_there_self(employee_id)
       flash[:alert] = "Your Request already has been sent"
@@ -147,7 +147,7 @@ class SelfServicesController < ApplicationController
   def holiday_setup
     # byebug
     @day = params[:day]
-    @employee_attendances = EmployeeAttendance.where(present: 'H',employee_id: current_user.employee_id)
+    @employee_attendances = EmployeeAttendance.where(present: 'H',employee_id: current_user.employee_id).order("day ASC")
     session[:active_tab] = "EmployeeSelfService"
   end
 
@@ -155,7 +155,7 @@ class SelfServicesController < ApplicationController
   def leave_c_off
     session[:active_tab] ="EmployeeSelfService"
     @leave_c_off = LeaveCOff.new
-    @leave_c_offs = LeaveCOff.where(employee_id: current_user.employee_id).order("id DESC")
+    @leave_c_offs = LeaveCOff.where(employee_id: current_user.employee_id).order("id ASC")
   end
 
   def show_leave_c_off_list
@@ -175,22 +175,19 @@ class SelfServicesController < ApplicationController
 
     if @joining_detail.c_off == true
       if @leave_c_off.is_self_present(@employee_id,@c_off_date)
-        flash[:alert] = "Your COff already set for that day"
+        flash[:alert] = "
+        Your COff already set for that day"
       else
         @leave_c_off = LeaveCOff.new(leave_c_off_params)
         @leave_c_offs = LeaveCOff.all
         leav_category = LeavCategory.find_by(code: 'C.Off')
 
         if @leave_c_off.is_week_off_present_for_coff(@employee_id,@c_off_date) || @leave_c_off.is_holiday_present_for_coff(@employee_id,@c_off_date)
-          # @employee_attendance = EmployeeAttendance.where(employee_id: @employee_id,present: "WOP",day: @c_off_date.to_date).take
-          # @employee_attendance_1 = EmployeeAttendance.where(employee_id: @employee_id,present: "HP",day: @c_off_date.to_date).take
-          
+ 
           @emp_attendance = EmployeeAttendance.where("present = ? OR present = ?", "WOP","HP").where(employee_id: @employee_id,day: @c_off_date.to_date).take
 
           if @emp_attendance.working_hrs.to_s < "07:00"
             flash[:alert] = "Working hrs. less than 7,Please contact to Admin"
-          # elsif @employee_attendance_1.working_hrs.to_s < "07:00"
-          #   flash[:alert] = "Working hrs. less than 9,Please contact to Admin"
           else
             if leav_category.nil?
             else

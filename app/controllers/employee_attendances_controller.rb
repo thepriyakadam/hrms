@@ -113,8 +113,13 @@ class EmployeeAttendancesController < ApplicationController
     @employee_ids = params[:employee_ids]
     day = params[:employee_attendances][:day]
     present = params[:employee_attendances][:present]
+    in_time = params[:employee_attendance][:in_time]
+    out_time = params[:employee_attendance][:out_time]
     #department = params[:employee_attendances][:department_id]
     @employee = Employee.where(id: @employee_ids)
+
+     total_hrs = out_time.to_time - in_time.to_time
+     working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
     
     if @employee_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
@@ -122,7 +127,7 @@ class EmployeeAttendancesController < ApplicationController
       @employee_ids.each do |eid|
         @emp = Employee.find_by_id(eid)
 
-      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id, is_confirm: false)  
+      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id, is_confirm: false,in_time: in_time,out_time: out_time,working_hrs: working_hrs,comment: "Manually Created")  
       #Holiday.where(holiday_date: day).update_all(is_taken: true)
       flash[:notice] = "Created successfully"
       end
@@ -1822,6 +1827,7 @@ def upload
               end
               if working_hrs.to_s <  "04:30"
                 EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "A")
+
               elsif working_hrs.to_s < "07:00"
                 EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "HDL")
               else
@@ -1955,7 +1961,7 @@ def date_and_employeewise_attendance
   from = params[:employee][:from]
   to = params[:employee][:to]
   employee_id = params[:employee][:employee_id]
-  @employee_attendances = EmployeeAttendance.where(employee_id: employee_id,day: from.to_date..to.to_date).order("day ASC")
+  @employee_attendances = EmployeeAttendance.where(employee_id: employee_id,day: from.to_date..to.to_date).order("day DESC")
 end
 
 def modal_edit_for_show
@@ -1983,8 +1989,9 @@ def daily_attendance_datewise
 end
 
 def show_daily_attendance_datewise
-  date = params[:employee][:date]
-  @daily_attendances = DailyAttendance.where(date: date.to_date)
+  @date = params[:employee][:date]
+  @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+  @employee_attendances = EmployeeAttendance.where(day: @date.to_date).where(employee_id: @employees).group(:employee_id)
 end
 
 def datewise_daily_attendance
@@ -2020,7 +2027,7 @@ end
 def import
   file = params[:file]
   if file.nil?
-    flash[:alert] = "Please Select File!"
+  flash[:alert] = "Please Select File!"
   redirect_to import_employee_attendance_employee_attendances_path
   else
   EmployeeAttendance.import(params[:file])
@@ -2276,7 +2283,7 @@ end
     employee_attendance = EmployeeAttendance.where(employee_id: @employee.id,day: @date.to_date).take
     
     if @daily_attendance.nil?
-      flash[:alert] = "Please Check Date and Crad Details!"
+      flash[:alert] = "Please Check Date and Card Details!"
     else
 
       if first_in.nil? && last_out.nil?
@@ -2332,7 +2339,7 @@ end
     manager = Employee.find_by(id: current_user.employee_id)
 
     if @daily_attendance.nil?
-      flash[:alert] = "Please Check Date and Crad Details!"
+      flash[:alert] = "Please Check Date and Card Details!"
     else
 
       if first_in.nil? && last_out.nil?
@@ -2418,7 +2425,7 @@ end
     date = params[:date]
     DailyAttendance.where(date: date.to_date).destroy_all
     #EmployeeAttendance.where(day: date.to_date,is_confirm: false).destroy_all
-    flash[:notice] = "Attendance destroyed successfully!"
+    flash[:notice] = "Attendance Reverted successfully!"
     redirect_to destroy_daily_attendance_employee_attendances_path
   end
 

@@ -91,11 +91,11 @@ class LeaveStatusRecordsController < ApplicationController
           
           if @employee_leav_request.first_reporter_id == current_user.employee_id
             redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
-            LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
+            #LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
             flash[:notice] = 'Leave Request Approved Successfully.'
           else
             redirect_to all_leave_request_list_employee_leav_requests_path
-            LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
+            #LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
             flash[:notice] = 'Leave Request Approved Successfully by Admin.'
           end
         else

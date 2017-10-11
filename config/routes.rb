@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   resources :events
+  resources :resource_pool_masters
+  resources :service_masters
   resources :contact_details do
     collection do
       get :modal_contact_detail
@@ -1582,10 +1584,10 @@ end
       get :search_by_c_off_date
       get :add_coff
       get :destroy_self
+      get :approve_c_off
       post :approve_c_off
       get :reject_c_off
       get :approve_modal
-      post :final_approve
       get :final_approve
       get :final_reject
       get :admin_c_off_approval
@@ -2696,5 +2698,7 @@ end
 
     get 'user_auths/employee_list' => 'user_auths#employee_list', defaults:{format: 'json'}
     get 'user_auths/leave_request' => 'user_auths#leave_request', defaults:{format: 'json'}
+    post 'user_auths/employee_leave_request' => 'user_auths#employee_leave_request', defaults:{format: 'json'}
+    get 'user_auths/leave_category' => 'user_auths#leave_category', defaults:{format: 'json'}
 end
 end

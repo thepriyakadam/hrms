@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title"> Employee Resignation </h3>
+    <h3 class="box-title"> Initiate Resignation </h3>
   </div><!-- /.box-header -->
   <div class="box-body">
     <%= bootstrap_form_for(@employee_resignation,url: {action: 'create_self_resignation'},html: {id: 'employee_resignation'}) do |f| %>
@@ -22,7 +22,7 @@
 
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :leaving_reason_id, all_leaving_reason,{label: 'Reason of Leaving',include_blank: " Select Reason of Leaving"},class: 'employee_resignation' %>
+            <%= f.select :leaving_reason_id, active_leaving_reason,{label: 'Reason of Leaving',include_blank: " Select Reason of Leaving"},class: 'employee_resignation' %>
           </div>
         </div>
 
@@ -32,7 +32,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :tentative_leaving_date, class: 'employee_resignation',label:'Requested Releaving Date'%>
+              <%= f.text_field :tentative_leaving_date, class: 'employee_resignation',label:'Requested Relieving Date'%>
             </div>
           </div>
         </div>
@@ -45,16 +45,14 @@
           </div>
         </div>
         
-        <div class="col-sm-6">
+       <!--  <div class="col-sm-6">
           <div class="field">
-            <%= f.text_area :note, label:'Note' %>
+            <= f.text_area :note, label:'Note' %>
           </div>
-        </div>
-      </div>
-    
-      <div class="row">
+        </div> -->
+      
         <div class="col-sm-6">
-          <div class="actions">
+          <div class="actions" style="padding: 20px">
             <%= f.submit 'Create Employee Resignation',class: "btn btn-primary btn-sm"  %>
             <!-- <= link_to 'Back', employee_resignations_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %> -->
           </div>

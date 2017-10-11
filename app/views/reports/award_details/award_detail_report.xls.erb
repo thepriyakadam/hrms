@@ -15,6 +15,7 @@
         <Cell ss:Index="6"><Data ss:Type="String">Award name</Data></Cell>
         <Cell ss:Index="7"><Data ss:Type="String">Year</Data></Cell>
         <Cell ss:Index="8"><Data ss:Type="String">Award from</Data></Cell>
+        <Cell ss:Index="9"><Data ss:Type="String">Update Time</Data></Cell>
       </Row>
          <% i = 0 %>
         <% @awards.each do |award| %>
@@ -27,6 +28,7 @@
           <Cell ss:Index="6"><Data ss:Type="String"><%= award.award_name %></Data></Cell>
           <Cell ss:Index="7"><Data ss:Type="Number"><%= award.year.try(:name) %></Data></Cell>
           <Cell ss:Index="8"><Data ss:Type="String"><%= award.award_from %></Data></Cell>
+          <Cell ss:Index="9"><Data ss:Type="String"><%= award.try(:updated_at).to_date %></Data></Cell>
           </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

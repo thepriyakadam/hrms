@@ -34,6 +34,7 @@
         <Cell ss:Index="25"><Data ss:Type="String">Medical Insurance</Data></Cell>
         <Cell ss:Index="26"><Data ss:Type="String">Differently Abled</Data></Cell>
         <Cell ss:Index="27"><Data ss:Type="String">Disability Type</Data></Cell>
+        <Cell ss:Index="28"><Data ss:Type="String">Update Time</Data></Cell>
       </Row>
 
         <% i = 0 %>
@@ -66,6 +67,7 @@
          <Cell ss:Index="25"><Data ss:Type="String"><%= family.medical_claim %></Data></Cell>
          <Cell ss:Index="26"><Data ss:Type="String"><%= family.is_handicap %></Data></Cell>
          <Cell ss:Index="27"><Data ss:Type="String"><%= family.handicap_type %></Data></Cell>
+         <Cell ss:Index="28"><Data ss:Type="String"><%= family.try(:updated_at).to_date %></Data></Cell>
           </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

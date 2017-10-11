@@ -31,8 +31,6 @@ gem 'bootstrap-datepicker-rails'
 gem 'awesome_print'
 gem 'datagrid', '~> 1.4', '>= 1.4.1'
 gem 'quiet_assets'
-gem 'fullcalendar-rails'
-gem 'momentjs-rails'
 gem 'tzinfo-data', '~> 1.2016', '>= 1.2016.10'
 
 gem 'paperclip', '~> 4.3', '>= 4.3.6'

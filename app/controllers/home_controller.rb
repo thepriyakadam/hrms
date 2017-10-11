@@ -11,6 +11,7 @@ class HomeController < ApplicationController
     @companies = Company.all
     @company_locations = CompanyLocation.all
     @departments = Department.all
+    @employees = Employee.all
     #vacancy
     @vacancy_masters = VacancyMaster.where(vacancy_of: 'Refferal',is_confirmed: nil)
    

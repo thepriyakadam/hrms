@@ -38,7 +38,7 @@ class EmployeeBankDetailsController < ApplicationController
         # format.html { redirect_to @employee_bank_detail, notice: 'Employee bank detail was successfully updated.' }
         # format.json { render :show, status: :ok, location: @employee_bank_detail }
         format.js { @flag = true }
-
+         # EmployeeMailer.bank_create(@employee,@employee_bank_detail).deliver_now  
       else
         # format.html { render :edit }
         # format.json { render json: @employee_bank_detail.errors, status: :unprocessable_entity }

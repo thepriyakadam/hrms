@@ -107,6 +107,9 @@
     @company_locations = @company.try(:company_locations)
     @company_location = @employee.company_location
     @departments = @company_location.try(:departments)
+    @department = @employee.department
+    @sub_departments = @department.try(:sub_departments)
+
 
     # if current_user.class == Group
     # @company_locations = CompanyLocation.all
@@ -201,8 +204,7 @@
          format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
          format.json { render :show, status: :ok, location: @employee }
        end
-       EmployeeMailer.employee_create(@employee).deliver_now  
-
+        # EmployeeMailer.employee_create(@employee).deliver_now  
      else
        format.html { render :edit }
        format.json { render json: @employee.errors, status: :unprocessable_entity }
@@ -264,7 +266,7 @@
                     else
                       employee.email
                     end
-          u.password = employee.first_name+'-123'+employee.manual_employee_code
+          u.password = employee.first_name+'hrms'+employee.manual_employee_code
           u.employee_id = employee.id
           u.department_id = employee.department_id
           u.company_id = employee.company_location.company_id
@@ -632,6 +634,7 @@ end
   def reset_password
     @member = Member.find(params[:id])
     @member_password_reset = Member.find_by(manual_member_code: @member.manual_member_code).update(password: "12345678")
+    EmployeeMailer.employee_reset_password(@member).deliver_now
     flash[:notice] = "Password Changed Successfully"
     redirect_to member_list_for_update_password_employees_path
   end
@@ -648,7 +651,8 @@ end
         @employees = Employee.where(department_id: current_user.department_id)
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
-        @employees = @emp.subordinates
+        @employees1 = @emp.subordinates
+        @employees = Employee.where.not(id: @emp.id)
       else current_user.role.name == 'Employee'
         @employees = Employee.where(id: current_user.employee_id)
       end
@@ -1499,7 +1503,8 @@ def show_all_record
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_params
     # params.require(:employee).permit(:department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :district, :state, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender)
-    params.require(:employee).permit(:optional_email,:optinal_contact_no,:optinal_contact_no1,:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id,:sub_department_id,:first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id,:employee_signature,:emergency_contact_no)
+
+    params.require(:employee).permit(:optional_email,:optinal_contact_no,:optinal_contact_no1,:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id,:sub_department_id,:first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id,:employee_signature,:emergency_contact_no,:cost_center_id)
     # joining_detail_attributes: [:joining_date, :reference_from, :admin_hr, :tech_hr, :designation, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem])
   end
 end

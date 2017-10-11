@@ -6,8 +6,8 @@
   <li class="active treeview">
 
     <a href="">
-      <i class="fa fa-user-plus"></i> <span>Employee Self Services</span> <i class="fa fa-angle-left pull-right"></i>
-    </a>
+       <a href="/home"> <Center> <% if current_user.class == Member %><%= current_user.company_location.company.try(:name) %>
+    <%else%><%= current_user.subdomain %> - <%= current_user.class %> <%end%>DASHBOARD</Center></a>
 
     <ul class="treeview-menu">
       <li><a href="/self_services/employee"><i class="fa fa-tags"></i>Employees</a></li>

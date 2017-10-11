@@ -11,7 +11,7 @@
       <th>Employee Name</th>
       <td><%= full_name(@employee) %></td>
     </tr>
-
+    
       <tr>  
       <th>Reporting Manager</th>
       <td><% emp=Employee.where(id: @employee.manager_id).take %><%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
@@ -24,6 +24,11 @@
 <!-- 
     <tr>
       <th>Extension Line 2</th>
+      <td><= @employee.try(:optinal_contact_no1) %></td>
+    </tr>
+
+    <tr>
+      <th>Personal Contact No.</th>
       <td><%= @employee.optinal_contact_no %></td>
     </tr>
  -->

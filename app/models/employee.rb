@@ -4,6 +4,7 @@ class Employee < ActiveRecord::Base
   belongs_to :sub_department
   belongs_to :company_location
   belongs_to :company
+  belongs_to :sub_department
   belongs_to :nationality
   belongs_to :blood_group
   belongs_to :employee_type
@@ -12,6 +13,9 @@ class Employee < ActiveRecord::Base
   belongs_to :district
   belongs_to :religion
   belongs_to :employee_code_master
+  belongs_to :service_master
+  belongs_to :resource_pool_master
+  belongs_to :cost_center
   # has_many :employee_resignations
   has_many :trainees
   has_many :gps_dailies

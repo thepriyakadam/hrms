@@ -4,10 +4,9 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h4>OD Request Cancelled</h4>
+    <h4>On Duty Request Cancelled</h4>
     <p>
       OD request is Cancelled by
-
       ID : <%= @od_request.employee.manual_employee_code %><br>
 
       Employee : <%= @od_request.employee.try(:first_name) %> <% @od_request.employee.try(:middle_name) %> <% @od_request.employee.try(:last_name) %><br>

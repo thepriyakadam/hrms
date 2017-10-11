@@ -37,7 +37,9 @@ class OnDutyRequest < ActiveRecord::Base
         flag = EmployeeAttendance.exists?(day: i,employee_id: self.employee_id)
       if flag == true
           flag1 = EmployeeAttendance.exists?(day: i,employee_id: self.employee_id,employee_leav_request_id: nil)
-        if flag1 == true
+          flag2 = EmployeeAttendance.exists?(day: i,employee_id: self.employee_id,employee_week_off_id: nil)
+          flag3 = EmployeeAttendance.exists?(day: i,employee_id: self.employee_id,holiday_id: nil)
+        if flag1 == true && flag2 == true && flag3 == true
             @emp_attendance = EmployeeAttendance.where(day: i,employee_id: self.employee_id).take
             if self.leave_type == "Full Day"
               @emp_attendance.update(employee_id: self.employee_id, day: i, present: 'OD', count: 1,department_id: self.employee.try(:department_id),on_duty_request_id: self.id)

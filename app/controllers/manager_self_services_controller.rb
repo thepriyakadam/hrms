@@ -28,7 +28,7 @@ class ManagerSelfServicesController < ApplicationController
       @pending_employee_leav_requests = EmployeeLeavRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false)
       @first_approved_employee_leav_requests = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false)
     else
-      @pending_employee_leav_requests = EmployeeLeavRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false, first_reporter_id: current_user.employee_id)
+      @pending_employee_leav_requests = EmployeeLeavRequest.where(current_status: "Pending", first_reporter_id: current_user.employee_id)
       @first_approved_employee_leav_requests = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false, second_reporter_id: current_user.employee_id)
     end
     session[:active_tab] ="ManagerSelfService"

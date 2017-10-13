@@ -36,6 +36,7 @@ class Ability
       elsif user.role.name == 'Supervisor'
         can :read, Employee
         can :manage, [Employee, JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family,Award,Certification]
+
         can :read, [EmployeeTemplate, EmployeeSalaryTemplate]
         can :manage, EmployeeLeavRequest
         can :manage, [GoalBunch, GoalRating]

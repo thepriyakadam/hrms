@@ -872,6 +872,7 @@ ActiveRecord::Schema.define(version: 20171010133927) do
     t.datetime "updated_at",                                                                    null: false
     t.integer  "employee_week_off_id",     limit: 4
     t.integer  "holiday_id",               limit: 4
+    t.string   "title",                    limit: 255
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id", using: :btree

@@ -55,7 +55,9 @@ class AssignedAssetsController < ApplicationController
         # format.html { redirect_to @assigned_asset, notice: 'assigned asset was successfully updated.' }
         # format.json { render :show, status: :ok, location: @assigned_asset }
         @assigned_assets = @employee.assigned_assets
+        EmployeeMailer.asset_detail_create(@employee,@assigned_asset).deliver_now
         format.js { @flag = true }
+         EmployeeMailer.asset_detail_create(@employee,@assigned_asset).deliver_now
       else
         # format.html { render :edit }
         # format.json { render json: @assigned_asset.errors, status: :unprocessable_entity }

@@ -162,9 +162,15 @@
       </tr>
 
       <tr>
-        <th>Reporting Manager 1</th>
-        <td><% emp=Employee.where(id: @employee.manager_id).take %><%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
+     
 
+        <th>Reporting Manager 1</th>
+        <td>
+           <% if @employee.id == @employee.manager_id%>
+       
+        <%else%>
+         <% emp=Employee.where(id: @employee.manager_id).take %><%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
+        <%end%>
         <th>Reporting Manager 2</th>
         <td><% emp=Employee.where(id: @employee.manager_2_id).take %><%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
       </tr>

@@ -217,7 +217,7 @@
  
  
   # config.domain = 'lvh.me'
-  config.action_mailer.perform_deliveries = true,
+   config.action_mailer.perform_deliveries = true,
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
   address: 'smtp.logix.in',

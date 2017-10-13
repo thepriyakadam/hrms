@@ -183,6 +183,7 @@ class SelfServicesController < ApplicationController
         leav_category = LeavCategory.find_by(code: 'C.Off')
 
         if @leave_c_off.is_week_off_present_for_coff(@employee_id,@c_off_date) || @leave_c_off.is_holiday_present_for_coff(@employee_id,@c_off_date)
+ 
           @emp_attendance = EmployeeAttendance.where("present = ? OR present = ?", "WOP","HP").where(employee_id: @employee_id,day: @c_off_date.to_date).take
 
           if @emp_attendance.working_hrs.to_s < "07:00"

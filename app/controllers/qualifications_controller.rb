@@ -63,6 +63,7 @@ class QualificationsController < ApplicationController
       if @qualification.update(qualification_params)
         # format.html { redirect_to @skillset, notice: 'Skillset was successfully updated.' }
         # format.json { render :show, status: :ok, location: @skillset }
+        EmployeeMailer.qualification_create(@employee,@qualification).deliver_now  
         @qualifications = @employee.qualifications
         format.js { @flag = true }
         # EmployeeMailer.qualification_create(@employee,@qualification).deliver_now  
@@ -79,7 +80,7 @@ class QualificationsController < ApplicationController
   def destroy
     @qualification.destroy
     respond_to do |format|
-      format.html { redirect_to qualifications_url, notice: 'Qualification was successfully destroyed.' }
+      #format.html { redirect_to qualifications_url, notice: 'Qualification was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

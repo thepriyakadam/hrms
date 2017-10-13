@@ -28,6 +28,8 @@ class JoiningDetailsController < ApplicationController
 
   # POST /joining_details
   # POST /joining_details.json
+  
+
   def create
     @joining_detail = JoiningDetail.new(joining_detail_params)
     @employee = Employee.find(params[:joining_detail][:employee_id])
@@ -67,6 +69,7 @@ class JoiningDetailsController < ApplicationController
         # format.json { render json: @joining_detail.errors, status: :unprocessable_entity }
         format.js { @flag = true }
       end
+        EmployeeMailer.joining_create(@employee,@joining_detail).deliver_now  
     end
   end
 

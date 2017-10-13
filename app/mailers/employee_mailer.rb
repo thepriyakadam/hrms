@@ -35,7 +35,7 @@ class EmployeeMailer < ApplicationMailer
 
   def employee_create(employee)
     @employee = Employee.find_by(id: employee.id)
-    mail(to: @employee.company_location.email, subject: 'Employee Detail')
+    mail(to: "onboarding@sganalytics.com",cc: @employee.company_location.email,subject: 'Employee Detail')
   end
 
   def joining_create(employee,joining_detail)

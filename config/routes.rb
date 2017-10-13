@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :events
   resources :resource_pool_masters
   resources :service_masters
   resources :contact_details do
@@ -250,7 +251,7 @@ Rails.application.routes.draw do
       get :subordinate_attendance
       post :show_subordinate_attendance
       get :show_subordinate_attendance
-      post :vacancy_request
+      post :vacancy_request_create
       get :vacancy_request
     end
   end
@@ -755,6 +756,7 @@ end
       get :emp_attendance
       get :display_attendance_2
       post :display_attendance_2
+      get :payroll_report
       get :costcenter_wise_excel1
       get :costcenter_wise_pdf
       get :employee_attendance_excel_report
@@ -819,6 +821,7 @@ end
       get :access_record
       post :access_card_list
       get :access_card_approval
+      get :admin_access_card_approval
       get :view_access_card_detail
       get :approve_acf_request
       get :reject_acf_request
@@ -842,6 +845,9 @@ end
       get :attendance_summary
       post :show_attendance_summary
       get :show_attendance_summary
+      post :payroll_show
+      get :payroll_show
+      get :employee_attendance
     end
   end
   resources :salary_comp_mappings
@@ -2699,5 +2705,8 @@ end
     # get 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
 
     get 'user_auths/employee_list' => 'user_auths#employee_list', defaults:{format: 'json'}
+    get 'user_auths/leave_request' => 'user_auths#leave_request', defaults:{format: 'json'}
+    post 'user_auths/employee_leave_request' => 'user_auths#employee_leave_request', defaults:{format: 'json'}
+    get 'user_auths/leave_category' => 'user_auths#leave_category', defaults:{format: 'json'}
 end
 end

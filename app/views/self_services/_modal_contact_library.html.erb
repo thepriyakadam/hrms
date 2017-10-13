@@ -11,8 +11,8 @@
       <th>Employee Name</th>
       <td><%= full_name(@employee) %></td>
     </tr>
-
-   <tr>  
+    
+      <tr>  
       <th>Reporting Manager</th>
       <td><% emp=Employee.where(id: @employee.manager_id).take %><%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
     </tr>

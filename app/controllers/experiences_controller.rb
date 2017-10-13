@@ -56,6 +56,7 @@ class ExperiencesController < ApplicationController
       if @experience.update(experience_params)
         # format.html { redirect_to @experience, notice: 'Experience was successfully updated.' }
         # format.json { render :show, status: :ok, location: @experience }
+        EmployeeMailer.experience_create(@employee,@experience).deliver_now
 
         @experiences = @employee.experiences
         format.js { @flag = true }

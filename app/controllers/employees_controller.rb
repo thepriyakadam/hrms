@@ -168,7 +168,7 @@
         EmployeeJcList.create(joining_checklist_master_id: jc.id,employee_id: @employee.id,status: false)
         end
         EmployeeMailer.employee_create(@employee).deliver_now   
-        redirect_to @employee    
+        redirect_to @employee
       else
         render :new
       end
@@ -682,7 +682,6 @@ end
   end
 
   def selected_employee_pdf
-
     @employee_id = params[:employee_id]
       @employees = Employee.where(id: @employee_id)
       @employee_id.each do |e|

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171010020618) do
+ActiveRecord::Schema.define(version: 20171012055810) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1361,11 +1361,13 @@ ActiveRecord::Schema.define(version: 20171010020618) do
     t.datetime "employee_signature_updated_at"
     t.integer  "service_master_id",               limit: 4
     t.integer  "resource_pool_master_id",         limit: 4
+    t.integer  "cost_center_id",                  limit: 4
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id", using: :btree
   add_index "employees", ["company_id"], name: "index_employees_on_company_id", using: :btree
   add_index "employees", ["company_location_id"], name: "index_employees_on_company_location_id", using: :btree
+  add_index "employees", ["cost_center_id"], name: "index_employees_on_cost_center_id", using: :btree
   add_index "employees", ["country_id"], name: "index_employees_on_country_id", using: :btree
   add_index "employees", ["department_id"], name: "index_employees_on_department_id", using: :btree
   add_index "employees", ["district_id"], name: "index_employees_on_district_id", using: :btree
@@ -4002,6 +4004,7 @@ ActiveRecord::Schema.define(version: 20171010020618) do
   add_foreign_key "employees", "blood_groups"
   add_foreign_key "employees", "companies"
   add_foreign_key "employees", "company_locations"
+  add_foreign_key "employees", "cost_centers"
   add_foreign_key "employees", "countries"
   add_foreign_key "employees", "departments"
   add_foreign_key "employees", "districts"

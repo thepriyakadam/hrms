@@ -15,7 +15,14 @@
         @employees = Employee.where(department_id: current_user.department_id)
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
-        @employees = @emp.subordinates
+        @employee_id =@emp.id
+        @manager_id = @emp.manager_id
+         @employees = Employee.where(manager_id: @emp)
+          elsif current_user.role.name == 'CEO'
+        @emp = Employee.find(current_user.employee_id)
+        @employee_id =@emp.id
+        @manager_id = @emp.manager_id
+         @employees = Employee.where(manager_id: @emp).where.not(id: 1)
       elsif current_user.role.name == 'NewEmployee'
         @employees = Employee.where(id: current_user.employee_id)
       else current_user.role.name == 'Employee'

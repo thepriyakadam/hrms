@@ -1207,7 +1207,7 @@ end
       get :final_approve_modal
       get :list_for_settelment
       get :settelment_date
-      post :settelment_date
+      post :settelment_date_create
   end
 end
 

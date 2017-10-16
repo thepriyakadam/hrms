@@ -1,6 +1,6 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title"> Final Approval- Resignation List</h3>
+    <h3 class="box-title"> Settelment Date</h3>
     <div class="pull-right">
     </div>
   </div><!-- /.box-header -->
@@ -21,7 +21,7 @@
             <td><%= employee_resignation.employee.try(:manual_employee_code) %></td>
             <td><%= full_name(employee_resignation.employee) %></td>
             <td><%= employee_resignation.resignation_date %></td>
-            <td><%= link_to 'Final Approve',settelment_date_employee_resignations_path(employee_resignation),class: 'btn btn btn-sm btn-primary fa fa-check',remote: true %></td>
+            <td><%= link_to 'Settelment Date',settelment_date_employee_resignations_path(employee_resignation),class: 'btn btn btn-sm btn-primary',remote: true %></td>
           </tr>
         <% end %>
       </tbody>

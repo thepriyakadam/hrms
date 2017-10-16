@@ -1205,8 +1205,12 @@ end
       get :cancel_resignation_list
       get :modal_resignation_detail
       get :final_approve_modal
+      get :list_for_settelment
+      get :settelment_date
+      post :settelment_date
   end
 end
+
   resources :travel_options do
     collection do
       get :is_confirm

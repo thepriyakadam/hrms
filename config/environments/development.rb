@@ -125,23 +125,23 @@
    # # openssl_verify_mode: 'none'
    # }
 
-   # config.action_mailer.default_url_options = { host: 'https://gmail.com', port: 3000}
+   config.action_mailer.default_url_options = { host: 'https://gmail.com', port: 3000}
   
   
-   # # config.domain = 'lvh.me'
-   # # config.action_mailer.perform_deliveries = true,
-   # ActionMailer::Base.delivery_method = :smtp
-   # ActionMailer::Base.smtp_settings = {
-   # address: 'mail.indibasolutions.com',
-   # port: 465,
-   # domain: 'mail.indibasolutions.com',
-   # user_name: 'hcmzone@indibasolutions.com',
-   # password: 'Indiba04',
-   # authentication: :plain,
-   # enable_starttls_auto: true,
-   # openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
-   # # openssl_verify_mode: 'none'
-   # }
+   # config.domain = 'lvh.me'
+   # config.action_mailer.perform_deliveries = true,
+   ActionMailer::Base.delivery_method = :smtp
+   ActionMailer::Base.smtp_settings = {
+   address: 'mail.indibasolutions.com',
+   port: 465,
+   domain: 'mail.indibasolutions.com',
+   user_name: 'hcmzone@indibasolutions.com',
+   password: 'Indiba04',
+   authentication: :plain,
+   enable_starttls_auto: true,
+   openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+   # openssl_verify_mode: 'none'
+   }
 
 
   # config.action_mailer.default_url_options = { host: 'http://gmail.com', port: 3000 }
@@ -213,23 +213,23 @@
   #  # openssl_verify_mode: 'none'
   # }
 
- config.action_mailer.default_url_options = { host: 'https://webmail.logix.in/', port: 443 }
+ # config.action_mailer.default_url_options = { host: 'https://webmail.logix.in/', port: 443 }
  
  
-  # config.domain = 'lvh.me'
-   config.action_mailer.perform_deliveries = true,
-  ActionMailer::Base.delivery_method = :smtp
-  ActionMailer::Base.smtp_settings = {
-  address: 'smtp.logix.in',
-  port:  587,
-  domain: 'smtp.logix.in',
-  user_name: 'hrms@sganalytics.com',
-  password: 'Dev@2017',
-  authentication: :plain,
-  enable_starttls_auto: true,
-   openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
-   # openssl_verify_mode: 'none'
-  }
+ #  # config.domain = 'lvh.me'
+ #   config.action_mailer.perform_deliveries = true,
+ #  ActionMailer::Base.delivery_method = :smtp
+ #  ActionMailer::Base.smtp_settings = {
+ #  address: 'smtp.logix.in',
+ #  port:  587,
+ #  domain: 'smtp.logix.in',
+ #  user_name: 'hrms@sganalytics.com',
+ #  password: 'Dev@2017',
+ #  authentication: :plain,
+ #  enable_starttls_auto: true,
+ #   openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+ #   # openssl_verify_mode: 'none'
+ #  }
 
 # config.action_mailer.delivery_method = :smtp
 

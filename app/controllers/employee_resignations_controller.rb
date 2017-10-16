@@ -508,6 +508,17 @@ class EmployeeResignationsController < ApplicationController
     @employee_resignation = EmployeeResignation.find(params[:format])
   end
 
+  def list_for_settelment
+    @employee_resignations = EmployeeResignation.where(resign_status: "FinalApproved",settled_on: nil)
+  end
+
+  def settelment_date
+    @employee_resignation = EmployeeResignation.find_by(resign_status: "FinalApproved")
+    @settled_on = params[:settled_on]
+    @employee_resignation.update(settled_on: @settled_on)
+    # redirect_to list_for_settelment_employee_resignations_path
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_employee_resignation

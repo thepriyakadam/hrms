@@ -65,19 +65,13 @@
       <th><strong>Employee Category</strong></th>
       <td><%= @joining_detail.employee_category.try(:name) %></td>
 
-      <th><strong>Cost Center</strong></th>
-      <td><%= @joining_detail.cost_center.try(:name) %></td>
-    </tr>
-
-    <tr>
       <th><strong>Probation Period</strong></th>
       <td><%= @joining_detail.probation_period %></td>
-
+      </tr>
+    <tr>
       <th><strong>Notice Period After Probation</strong></th>
       <td><%= @joining_detail.notice_period_after_probation %></td> 
-    </tr> 
-
-    <tr>
+    
      <th><strong>Notice Period (During Probation)</strong></th>
       <td colspan="3"><%= @joining_detail.notice_period %></td>
     </tr>

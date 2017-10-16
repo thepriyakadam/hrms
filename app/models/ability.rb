@@ -58,7 +58,6 @@ class Ability
       elsif user.role.name == 'NewEmployee'
         can :manage, Employee, id: user.employee_id
         can :manage, [JoiningDetail, Qualification, Experience, Skillset, EmployeePhysical, Certification,Family,Award,AssignedAsset,EmployeeDocument], employee_id: user.employee_id
-
         can :manage,EmployeeBankDetail, employee_id: user.employee_id
         cannot [:destroy,:update,:create],EmployeeBankDetail
         can :read, [EmployeeTemplate, EmployeeSalaryTemplate]

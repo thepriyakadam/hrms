@@ -2553,6 +2553,12 @@ end
       get :is_confirm
       get :modal
       get :update_manager_modal
+      get :new_employee_list
+      get :skillset_employee_list
+      get :update_skillset_modal
+      get :reporting_manager_list
+      get :employee_asset
+      get :admin_asset_employee_list
     end
     member do
       get :edit_manager

@@ -521,8 +521,6 @@ end
     redirect_to change_password_form_employees_path
   end
 
-
-
   def collect_company_location
     # byebug
     @company = Company.find(params[:id])
@@ -651,8 +649,7 @@ end
         @employees = Employee.where(department_id: current_user.department_id)
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
-        @employees1 = @emp.subordinates
-        @employees = Employee.where.not(id: @emp.id)
+        @employees = @emp.subordinates
       else current_user.role.name == 'Employee'
         @employees = Employee.where(id: current_user.employee_id)
       end
@@ -1487,6 +1484,55 @@ def show_all_record
               disposition: 'attachment'
   end
 
+  def new_employee_list
+     if current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @employees = Employee.all
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
+      elsif current_user.role.name == 'NewEmployee'
+        @employees = Employee.where(id: current_user.employee_id)
+      else current_user.role.name == 'Employee'
+        @employees = Employee.where(id: current_user.employee_id)
+        redirect_to home_index_path
+      end
+    else
+      @employees = Employee.all
+    end
+  end
+
+  def skillset_employee_list
+     @employee = Employee.find(params[:format])
+     @skillsets = Skillset.where(employee_id: @employee.id)
+  end
+
+  # def update_skillset
+  #   @name = params[:name]
+  #   @skill_level = params[:skill_level]
+
+  # end
+
+  def reporting_manager_list
+    @emp = current_user.employee_id
+    @employees = Employee.where("manager_id = ? OR manager_2_id = ?", @emp,@emp).where.not(manager_id: @emp)
+  end
+
+  def employee_asset
+    @employees = Employee.all
+  end
+
+  def admin_asset_employee_list
+     @employee = Employee.find(params[:format])
+     @assigned_assets = AssignedAsset.where(employee_id: @employee.id)
+  end
+
 
   private
 
@@ -1503,7 +1549,7 @@ def show_all_record
   def employee_params
     # params.require(:employee).permit(:department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :district, :state, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender)
 
-    params.require(:employee).permit(:optional_email,:optinal_contact_no,:optinal_contact_no1,:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id,:sub_department_id,:first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id,:employee_signature,:emergency_contact_no,:cost_center_id)
+    params.require(:employee).permit(:optional_email,:optinal_contact_no,:optinal_contact_no1,:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id,:sub_department_id,:first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id,:employee_signature,:emergency_contact_no,:cost_center_id,:service_master_id,:resource_pool_master_id)
     # joining_detail_attributes: [:joining_date, :reference_from, :admin_hr, :tech_hr, :designation, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem])
   end
 end

@@ -63,7 +63,7 @@
         <Cell ss:Index="19"><Data ss:Type="String"><%= joining_detail.try(:passport_issue_date) %></Data></Cell>
         <Cell ss:Index="20"><Data ss:Type="String"><%= joining_detail.try(:passport_expiry_date) %></Data></Cell>
         <Cell ss:Index="21"><Data ss:Type="String"><%= joining_detail.try(:reserved_category).try(:name) %></Data></Cell>
-        <Cell ss:Index="22"><Data ss:Type="String"><%= joining_detail.try(:employee_uan_no) %></Data></Cell>
+        <Cell ss:Index="22"><Data ss:Type="String"><%= joining_detail.try(:cost_center).try(:name) %></Data></Cell>
 
         <Cell ss:Index="23"><Data ss:Type="String"><%= joining_detail.try(:employee_pf_no) %></Data></Cell>
         <Cell ss:Index="24"><Data ss:Type="String"><%= joining_detail.try(:company_rfid) %></Data></Cell>

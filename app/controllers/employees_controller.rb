@@ -14,8 +14,8 @@
       elsif current_user.role.name == 'HOD'
         @employees = Employee.where(department_id: current_user.department_id)
       elsif current_user.role.name == 'Supervisor'
-        @emp = Employee.find(current_user.employee_id)
-        @employees = @emp.subordinates
+       @emp = current_user.employee_id
+       @employees = Employee.where(manager_id: @emp).where.not(id: 1)
       elsif current_user.role.name == 'NewEmployee'
         @employees = Employee.where(id: current_user.employee_id)
       else current_user.role.name == 'Employee'
@@ -86,6 +86,7 @@
     authorize! :show, @employee
     # @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
   end
+
 
   # GET /employees/new
   def new

@@ -19,24 +19,24 @@
         <Cell ss:Index="10"><Data ss:Type="String">Confirmation Date</Data></Cell>
         <Cell ss:Index="11"><Data ss:Type="String">Probation Period</Data></Cell>
         <Cell ss:Index="12"><Data ss:Type="String">Notice Period</Data></Cell>
-        <Cell ss:Index="13"><Data ss:Type="String">Retirement Date</Data></Cell>
-        <Cell ss:Index="14"><Data ss:Type="String">Leaving Date</Data></Cell>
-        <Cell ss:Index="15"><Data ss:Type="String">Mediclaim</Data></Cell>
-        <Cell ss:Index="16"><Data ss:Type="String">Medical Scheme</Data></Cell>
-        <Cell ss:Index="17"><Data ss:Type="String">Passport</Data></Cell>
-        <Cell ss:Index="18"><Data ss:Type="String">Passport No.</Data></Cell>
-        <Cell ss:Index="19"><Data ss:Type="String">Passport Issue Date</Data></Cell>
-        <Cell ss:Index="20"><Data ss:Type="String">Passport Expiry Date</Data></Cell>
-        <Cell ss:Index="21"><Data ss:Type="String">Reserved Category</Data></Cell> 
+        <Cell ss:Index="13"><Data ss:Type="String">Notice Period After Probation</Data></Cell>
+        <Cell ss:Index="14"><Data ss:Type="String">Retirement Date</Data></Cell>
+        <Cell ss:Index="15"><Data ss:Type="String">Leaving Date</Data></Cell>
+        <Cell ss:Index="16"><Data ss:Type="String">Mediclaim</Data></Cell>
+        <Cell ss:Index="17"><Data ss:Type="String">Medical Scheme</Data></Cell>
+        <Cell ss:Index="18"><Data ss:Type="String">Passport</Data></Cell>
+        <Cell ss:Index="19"><Data ss:Type="String">Passport No.</Data></Cell>
+        <Cell ss:Index="20"><Data ss:Type="String">Passport Issue Date</Data></Cell>
+        <Cell ss:Index="21"><Data ss:Type="String">Passport Expiry Date</Data></Cell>
+        <Cell ss:Index="22"><Data ss:Type="String">Reserved Category</Data></Cell> 
 
-        <Cell ss:Index="22"><Data ss:Type="String">Cost Center</Data></Cell>
         <Cell ss:Index="23"><Data ss:Type="String">PF No.</Data></Cell>
         <Cell ss:Index="24"><Data ss:Type="String">Company RFID</Data></Cell>
         <Cell ss:Index="25"><Data ss:Type="String">Gate RFID</Data></Cell>
         <Cell ss:Index="26"><Data ss:Type="String">Date</Data></Cell>
         <Cell ss:Index="27"><Data ss:Type="String">C.off</Data></Cell>
-        <Cell ss:Index="28"><Data ss:Type="String">Notice Period After Probation</Data></Cell>
-        <Cell ss:Index="29"><Data ss:Type="String">Update Time</Data></Cell>
+        
+        <Cell ss:Index="28"><Data ss:Type="String">Update Time</Data></Cell>
       </Row>
 
       <% i = 0 %>
@@ -54,25 +54,25 @@
         <Cell ss:Index="10"><Data ss:Type="String"><%= joining_detail.try(:confirmation_date) %></Data></Cell>
         <Cell ss:Index="11"><Data ss:Type="String"><%= joining_detail.try(:probation_period) %></Data></Cell>
         <Cell ss:Index="12"><Data ss:Type="String"><%= joining_detail.try(:notice_period) %></Data></Cell>
-        <Cell ss:Index="13"><Data ss:Type="String"><%= joining_detail.try(:retirement_date) %></Data></Cell>
-        <Cell ss:Index="14"><Data ss:Type="String"><%= joining_detail.try(:leaving_date) %></Data></Cell>
-        <Cell ss:Index="15"><Data ss:Type="String"><%= joining_detail.try(:is_mediclaim) %></Data></Cell>
-        <Cell ss:Index="16"><Data ss:Type="String"><%= joining_detail.try(:medical_schem) %></Data></Cell>
-        <Cell ss:Index="17"><Data ss:Type="String"><%= joining_detail.try(:have_passport) %></Data></Cell>
-        <Cell ss:Index="18"><Data ss:Type="String"><%= joining_detail.try(:passport_no) %></Data></Cell>
-        <Cell ss:Index="19"><Data ss:Type="String"><%= joining_detail.try(:passport_issue_date) %></Data></Cell>
-        <Cell ss:Index="20"><Data ss:Type="String"><%= joining_detail.try(:passport_expiry_date) %></Data></Cell>
-        <Cell ss:Index="21"><Data ss:Type="String"><%= joining_detail.try(:reserved_category).try(:name) %></Data></Cell>
-        <Cell ss:Index="22"><Data ss:Type="String"><%= joining_detail.try(:cost_center).try(:name) %></Data></Cell>
+        <Cell ss:Index="13"><Data ss:Type="String"><%= joining_detail.try(:notice_period_after_probation) %></Data></Cell>
+        <Cell ss:Index="14"><Data ss:Type="String"><%= joining_detail.try(:retirement_date) %></Data></Cell>
+        <Cell ss:Index="15"><Data ss:Type="String"><%= joining_detail.try(:leaving_date) %></Data></Cell>
+        <Cell ss:Index="16"><Data ss:Type="String"><%= joining_detail.try(:is_mediclaim) ? 'Yes' : 'No'%></Data></Cell>
+        <Cell ss:Index="17"><Data ss:Type="String"><%= joining_detail.try(:medical_schem) %></Data></Cell>
+        <Cell ss:Index="18"><Data ss:Type="String"><%= joining_detail.try(:have_passport) %></Data></Cell>
+        <Cell ss:Index="19"><Data ss:Type="String"><%= joining_detail.try(:passport_no) %></Data></Cell>
+        <Cell ss:Index="20"><Data ss:Type="String"><%= joining_detail.try(:passport_issue_date) %></Data></Cell>
+        <Cell ss:Index="21"><Data ss:Type="String"><%= joining_detail.try(:passport_expiry_date) %></Data></Cell>
+        <Cell ss:Index="22"><Data ss:Type="String"><%= joining_detail.try(:reserved_category).try(:name) %></Data></Cell>
+       
 
         <Cell ss:Index="23"><Data ss:Type="String"><%= joining_detail.try(:employee_pf_no) %></Data></Cell>
         <Cell ss:Index="24"><Data ss:Type="String"><%= joining_detail.try(:company_rfid) %></Data></Cell>
         <Cell ss:Index="25"><Data ss:Type="String"><%= joining_detail.try(:gate_rfid) %></Data></Cell>
-        <Cell ss:Index="26"><Data ss:Type="String"><%= joining_detail.try(:status) ? 'Yes' : 'No' %></Data></Cell>
-        <Cell ss:Index="27"><Data ss:Type="String"><%= joining_detail.try(:date) %></Data></Cell>
-
-        <Cell ss:Index="28"><Data ss:Type="String"><%= joining_detail.try(:c_off) ? 'Yes' : 'No' %></Data></Cell>
-        <Cell ss:Index="29"><Data ss:Type="String"><%= joining_detail.try(:updated_at).to_date %></Data></Cell>
+        <Cell ss:Index="26"><Data ss:Type="String"><%= joining_detail.try(:date) %></Data></Cell>
+        <Cell ss:Index="27"><Data ss:Type="String"><%= joining_detail.try(:c_off) ? 'Yes' : 'No' %></Data></Cell>
+      
+        <Cell ss:Index="28"><Data ss:Type="String"><%= joining_detail.try(:updated_at).to_date %></Data></Cell>
 
       </Row><!-- Row -->
       <% end %><!-- slip -->

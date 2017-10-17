@@ -2,8 +2,8 @@
   <div class="box-header with-border">
   <div class="row">
     <div class="col-sm-1">
-  <% if @employee_jc_lists.first.employee.passport_photo_file_name == nil %>
-  <% if @employee_jc_lists.first.employee.gender == "Female" %>
+  <% if @employee.passport_photo_file_name == nil %>
+  <% if @employee.gender == "Female" %>
    <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "70x70" %>
   <%else%>
    <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "70x70" %>
@@ -35,7 +35,7 @@
        
         <td><%= i = i+1 %> </td>
         <td><%= employee_jc_list.joining_checklist_master.try(:name)%></td>
-        <td><%= employee_jc_list.admin.first_name %> <%= employee_jc_list.admin.middle_name %> <%= employee_jc_list.admin.last_name %></td>
+        <td><%= employee_jc_list.try(:admin).try(:first_name) %> <%= employee_jc_list.try(:admin).try(:middle_name) %> <%= employee_jc_list.try(:admin).try(:last_name) %></td>
         <td>
         <% if employee_jc_list.status == true %>
         <small class= "label label-primary">Check</small>

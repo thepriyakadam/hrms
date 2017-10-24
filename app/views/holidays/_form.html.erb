@@ -29,7 +29,7 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.select :holiday_type ,['National','Public'] ,{ hide_label: true,include_blank: "Select Type"} %>
+        <%= f.select :holiday_type ,['National','Public','Client'] ,{ hide_label: true,include_blank: "Select Type"} %>
       </div>
     </div>
 
@@ -68,6 +68,9 @@ $("#holiday").validate({
       },
       "holiday[type]":{
         required: true,
+      },
+      "holiday[holiday_type]":{
+        required: true,
       }
        },
     messages: {
@@ -78,7 +81,10 @@ $("#holiday").validate({
         required: "Please Specify Name ",
       },
       "holiday[type]":{
-        required: "Please Specify type",
+        required: "Please Specify Type",
+      },
+      "holiday[holiday_type]":{
+        required: "Please Specify Holiday Type",
       }
        },
     errorPlacement: function(error, element) {

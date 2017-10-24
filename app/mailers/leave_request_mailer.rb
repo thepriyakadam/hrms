@@ -3,8 +3,12 @@ class LeaveRequestMailer < ApplicationMailer
     @leave_request = request
     @manager = Employee.find(@leave_request.employee.try(:manager_id))
     @emp = Employee.find_by(id: @leave_request.employee_id)
+    if @emp == @manager
+       mail(to: 'time@sganalytics.com', subject: 'Leave Request')
+    else
     email = @manager.email
     mail(to: email,cc: @emp.company_location.email, subject: 'Leave Request')
+  end
   end
 
   def first_approve(request)

@@ -4,7 +4,7 @@ class OdRequestMailer < ApplicationMailer
     @manager = Employee.find(@od_request.employee.try(:manager_id))
     @emp = Employee.find_by(id: request.employee_id)
     email = @manager.email
-    mail(to: email ,cc: @emp.company_location.email, subject: 'OD Request')
+    mail(to: email ,cc: @emp.company_location.email, subject: 'On duty request pending for approval')
 	end
 
   def first_approve_final(request)
@@ -13,7 +13,7 @@ class OdRequestMailer < ApplicationMailer
     @manager = Employee.find(@od_request.first_reporter_id)
     @emp = Employee.find_by(id: request.employee_id)
     email = @employee.try(:email)
-    mail(to: email ,cc: @emp.company_location.email, subject: 'OD Final Approved')
+    mail(to: email ,cc: @emp.company_location.email, subject: 'Your on duty request has been approved')
   end
 
 	def first_approve(request)
@@ -31,7 +31,7 @@ class OdRequestMailer < ApplicationMailer
     @manager = Employee.find(@od_request.first_reporter_id)
     @emp = Employee.find_by(id: request.employee_id)
     email = @employee.try(:email)
-    mail(to: email ,cc: @emp.company_location.email, subject: 'OD Approved Successfully')
+    mail(to: email ,cc: @emp.company_location.email, subject: 'Your on duty request has been approved')
   end
 
   def first_reject(request)

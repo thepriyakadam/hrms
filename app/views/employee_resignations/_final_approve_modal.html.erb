@@ -5,7 +5,7 @@
       <h4 class="modal-title"><center> Update Resignation Details </center></h4>
     </div>
     <div class="modal-body">
-     <%= bootstrap_form_for :employee_resignation,url:{action:"final_approve", resignation_id: @employee_resignation.id} do |f| %>
+     <%= bootstrap_form_for :employee_resignation,url:{action:"update_dates", resignation_id: @employee_resignation.id} do |f| %>
     <div class="row">
       <div class="col-sm-6">
        <div class="form-group required">
@@ -22,13 +22,8 @@
      </div>
 
      <div class="row">
-      <div class="col-sm-6">
-        <div class="field">
-            <%= f.text_field :settled_on,label: "Settled On", class: 'settled_on'%>
-          </div>
-      </div>
      <div class="col-sm-6" style="padding-top:20px;">
-        <%= link_to 'Final Approve',final_approve_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-success fa fa-check' %> 
+        <%= f.submit 'Final Approve',class: 'btn btn-sm btn-success' %> 
       </div>
     </div>
       <% end %>

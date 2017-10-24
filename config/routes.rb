@@ -1208,6 +1208,8 @@ end
       get :list_for_settelment
       get :settelment_date
       post :settelment_date_create
+      post :update_dates
+      get :collect_date
   end
 end
 

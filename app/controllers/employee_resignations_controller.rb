@@ -81,7 +81,7 @@ class EmployeeResignationsController < ApplicationController
               EmployeeResignationMailer.no_second_reporter_approval_email_to_employee(@employee_resignation).deliver_now
               EmployeeResignationMailer.final_approval_email_to_employee(@employee_resignation).deliver_now
 
-            format.html { redirect_to @employee_resignation, notice: 'Employee Resignation was successfully Created.' }
+            format.html { redirect_to @employee_resignation, notice: 'Employee has been separated from the system' }
             format.json { render :show, status: :created, location: @employee_resignation }
           else
             format.html { render :new }
@@ -474,7 +474,17 @@ class EmployeeResignationsController < ApplicationController
   def display_notice_period
     @employee = Employee.find(params[:id])
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
-    @notice_period = @joining_detail.notice_period
+    @notice_period = @joining_detail.notice_period_after_probation
+  end
+
+   def collect_date
+    @employee = Employee.find(params[:id])
+    @resignation_date = params[:resignation_date]
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @notice_period_after_probation = @joining_detail.notice_period_after_probation
+    @a = @resignation_date.to_i
+    d = @a + @notice_period_after_probation.to_i
+    @d = d
   end
 
   def all_employee_resignation_list
@@ -522,6 +532,15 @@ class EmployeeResignationsController < ApplicationController
     @emp_resig.update(settled_on: @settled_on)
     flash[:notice] = 'Created Successfully!'
     redirect_to list_for_settelment_employee_resignations_path
+  end
+
+  def update_dates
+    @employee_resignation = EmployeeResignation.find(params[:resignation_id])
+    @exit_interview_date = params[:employee_resignation][:exit_interview_date]
+    @leaving_date = params[:employee_resignation][:leaving_date]
+    @employee_resignation.update(exit_interview_date: @exit_interview_date,leaving_date: @leaving_date,resign_status: "FinalApproved")
+    flash[:notice] = 'Updated Successfully!'
+    redirect_to final_approval_emp_resignation_list_employee_resignations_path
   end
 
   private

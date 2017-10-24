@@ -8,12 +8,15 @@
     <p> 
       Dear <%= @employee.try(:prefix) %><%= @employee.try(:first_name).to_s %> <%= @employee.try(:last_name).to_s %> <%= @employee.try(:middle_name).to_s %>, </p><br>
 
-      <p>Please accept this message as notification that I <b><%= @emp.employee.prefix %><%= @emp.employee.try(:first_name).to_s %> <%= @emp.employee.try(:last_name).to_s %> <%= @emp.employee.try(:middle_name).to_s %></b> am leaving my position with <b><%= @employee.company.try(:name) %></b></p>
+      <p>Please accept this message as notification that I <b><%= @emp.employee.prefix %><%= @emp.employee.try(:first_name).to_s %> <%= @emp.employee.try(:middle_name).to_s %> <%= @emp.employee.try(:last_name).to_s %> (ID <%= @emp.employee.try(:manual_employee_code)%>)</b>, would like to resign from my position with <b><%= @employee.company.try(:name)%>.</b></p>
 
-      <p>I appreciate the opportunities I have been given at <b><%= @employee.company.try(:name) %></b> and your professional guidance and support. I wish you and the company success in the future.Requested relieving date is <b><%= @employee_resignation.tentative_leaving_date %></b>. And the reason of leaving the organization is <b><%= @employee_resignation.reason %></p></b>
+      <p>I appreciate the opportunities I have been given at <b><%= @employee.company.try(:name) %></b> and your professional guidance and support. I wish you and the company success in the future. Requested relieving date is <b><%= @employee_resignation.tentative_leaving_date %></b>. The reason of leaving the organization is <b><%= @employee_resignation.reason %>.</p></b>
 
-      <p>Please let me know what to expect as far as my final work schedule, accrued vacation leave, and my employee benefits.</p>
+      <p>For more details on the request, kindly check the People First HRMS portal.</p>
 
-  Best Regards
+      <p>Can we have a discussion on how we can handle this mutually regarding my exit plan, backup and handovers.</p>
+
+   Best Regards,
+  <p><%= @emp.employee.prefix %><%= @emp.employee.try(:first_name).to_s %> <%= @emp.employee.try(:middle_name).to_s %> <%= @emp.employee.try(:last_name).to_s %></p>
   </body>
 </html>

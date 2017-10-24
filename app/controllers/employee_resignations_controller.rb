@@ -477,16 +477,6 @@ class EmployeeResignationsController < ApplicationController
     @notice_period = @joining_detail.notice_period_after_probation
   end
 
-   def collect_date
-    @employee = Employee.find(params[:id])
-    @resignation_date = params[:resignation_date]
-    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
-    @notice_period_after_probation = @joining_detail.notice_period_after_probation
-    @a = @resignation_date.to_i
-    d = @a + @notice_period_after_probation.to_i
-    @d = d
-  end
-
   def all_employee_resignation_list
     @employee = Employee.find(params[:emp_id])
     @employee_resignations = EmployeeResignation.where(employee_id: @employee.id)
@@ -534,13 +524,22 @@ class EmployeeResignationsController < ApplicationController
     redirect_to list_for_settelment_employee_resignations_path
   end
 
-  def update_dates
+
+    def update_dates
     @employee_resignation = EmployeeResignation.find(params[:resignation_id])
     @exit_interview_date = params[:employee_resignation][:exit_interview_date]
     @leaving_date = params[:employee_resignation][:leaving_date]
     @employee_resignation.update(exit_interview_date: @exit_interview_date,leaving_date: @leaving_date,resign_status: "FinalApproved")
     flash[:notice] = 'Updated Successfully!'
     redirect_to final_approval_emp_resignation_list_employee_resignations_path
+  end
+
+  def collect_date
+    resignation_date = params[:resignation_date]
+    todays_date = Date.today
+    d = todays_date.to_date - resignation_date.to_date
+    age = d.to_i/365
+    @age = age
   end
 
   private

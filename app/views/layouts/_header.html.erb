@@ -242,7 +242,7 @@
             <p>
               <% if current_user.class == Member %>
                 <small> ID : <%= current_user.manual_member_code %><br></small>
-                <small> Role Level : <%= current_user.role.name %> <br></small>
+                <small> System Role  : <%= current_user.role.name %> <br></small>
                 <small> Name : <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:last_name) %></small>
               <%else%>
                 <%= current_user.subdomain %>-

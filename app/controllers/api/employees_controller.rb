@@ -1,5 +1,5 @@
 require 'open-uri'
-class Api::EmployeesController < ApplicationController
+class Api::EmployeesController < ApiController
 	 def employee_list
     @employee = params[:employee_id]
     employees = Employee.where(id: @employee) 

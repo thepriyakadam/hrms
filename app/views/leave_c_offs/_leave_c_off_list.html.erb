@@ -21,9 +21,11 @@
             <small class= "label label-primary">Taken</small>
             <% elsif leave_c_off.is_expire == true %>
             <small class= "label label-warning">Expired</small>
+            <%= link_to '',modal_c_off_leave_c_offs_path(leave_c_off),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
             <!-- <= f.submit "Revert", class: 'btn btn-info btn-xs' %> -->
             <%= link_to 'Revert', add_coff_leave_c_offs_path(id: leave_c_off), class: 'btn btn-xs btn-info' %>
-            <% else %>
+          
+            <%else%>
             <%= link_to '', edit_leave_c_off_path(leave_c_off), class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '', leave_c_off, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs  btn-danger fa fa-close',remote:true %>
             <%= link_to '',modal_c_off_leave_c_offs_path(leave_c_off),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>

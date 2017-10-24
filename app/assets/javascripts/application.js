@@ -26,14 +26,6 @@
 
 //= require_tree .
 
-// $(function () {
-//   setTimeout(updateComments, 10000);
-// });
-
-// function updateComments() {
-//   $.getScript('/employee_leav_requests/approved_or_rejected_leave_request');
-//   setTimeout(updateComments, 10000);
-// }
 
 $(document).ready(function() {
 

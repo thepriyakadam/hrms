@@ -1,6 +1,6 @@
 class LeavCancelledsController < ApplicationController
   before_action :set_leav_cancelled, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
   # GET /leav_cancelleds
   # GET /leav_cancelleds.json
   def index

@@ -73,6 +73,12 @@ class SelfServicesController < ApplicationController
       redirect_to employee_resignation_self_services_path
   end
 
+  def display_notice_period
+    @employee = Employee.find(params[:id])
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @notice_period = @joining_detail.notice_period_after_probation
+  end
+
   def resignation_history
     @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
     session[:active_tab] ="EmployeeSelfService"

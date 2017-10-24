@@ -1,7 +1,7 @@
 class OnDutyRequestsController < ApplicationController
   before_action :set_on_duty_request, only: [:show, :edit, :update, :destroy]
   
-  load_and_authorize_resource
+  ##load_and_authorize_resource
 
   # GET /on_duty_requests
   # GET /on_duty_requests.json

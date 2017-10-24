@@ -2,7 +2,7 @@ require 'query_report/helper'  # need to require the helper
 
 class EmployeeLeavBalancesController < ApplicationController
   before_action :set_employee_leav_balance, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
   include QueryReport::Helper  # need to include it
   # GET /employee_leav_balances
   # GET /employee_leav_balances.json

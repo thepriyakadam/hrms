@@ -2,7 +2,7 @@ require 'query_report/helper' # need to require the helper
 class AdvanceSalariesController < ApplicationController
   before_action :set_advance_salary, only: [:show, :edit, :update, :destroy]
   before_filter only: [:index]
-  load_and_authorize_resource
+  # ##load_and_authorize_resource
   # GET /advance_salaries
   # GET /advance_salaries.json
   include QueryReport::Helper # need to include it

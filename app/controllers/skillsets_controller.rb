@@ -1,6 +1,6 @@
 class SkillsetsController < ApplicationController
   before_action :set_skillset, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
   # GET /skillsets
   # GET /skillsets.json
   def index

@@ -9,7 +9,23 @@ class ApplicationController < ActionController::Base
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
   helper_method :user_signed_in?
   helper_method :current_user
+  before_action :check_request
   # include LocalSubdomain
+
+  def check_request
+    i = 0
+    req_array = []
+    if params[:controller] == 'members/sessions'
+      req_array << Time.now 
+      i = i + 1
+      if i > 10
+        i = 0
+        if (req_array.last - req_array.first) <= 30
+          redirect_to root_url
+        end
+      end
+    end
+  end
 
   def after_sign_in_path_for(resource)
     # binding.pry

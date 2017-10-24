@@ -4,19 +4,20 @@ class LeaveRequestMailer < ApplicationMailer
     @manager = Employee.find(@leave_request.employee.try(:manager_id))
     @emp = Employee.find_by(id: @leave_request.employee_id)
     if @emp == @manager
-       mail(to: 'time@sganalytics.com', subject: 'Leave Request')
+
+    mail(to: 'time@sganalytics.com',cc: @emp.company_location.email, subject: 'Leave request pending for approval')
     else
     email = @manager.email
     mail(to: email,cc: @emp.company_location.email, subject: 'Leave request pending for approval')
-  end
+    end
   end
 
   def first_approve(request)
     @leave_request = request
     @from_manager = Employee.find(@leave_request.first_reporter_id)
-    to_manager = Employee.find(@leave_request.second_reporter_id)
+    to_manager = Employee.find(@leave_request.first_reporter_id)
     @emp = Employee.find_by(id: request.employee_id)
-    email = to_manager.try(:email)
+    email = @employee.try(:email)
     mail(to: email,cc: @emp.company_location.email, subject: 'Your leave request has been approved')
   end
 
@@ -31,9 +32,9 @@ class LeaveRequestMailer < ApplicationMailer
   def second_approve(request)
     @leave_request = request
     @employee = Employee.find(@leave_request.employee_id)
-    @manager = Employee.find(@leave_request.second_reporter_id)
+    @manager = Employee.find(@leave_request.first_reporter_id)
     email = @employee.try(:email)
-    mail(to: email,cc: @employee.company_location.email, subject: 'Leave Approved Successfully')
+    mail(to: email,cc: @employee.company_location.email, subject: 'Your leave request has been approved')
   end
 
   def first_reject(request)
@@ -56,8 +57,13 @@ class LeaveRequestMailer < ApplicationMailer
     @leave_request = request
     @employee = Employee.find(@leave_request.employee_id)
     @manager = Employee.find(@leave_request.first_reporter_id)
+
     email = @manager.try(:email)
-    mail(to: email,cc: @employee.company_location.email, subject: 'Leave Cancelled By Employee')
+    if @emp == @manager
+    mail(to: 'time@sganalytics.com',cc: @emp.company_location.email, subject: 'Leave request cancellation by your direct reportee')
+    else
+    mail(to: email,cc: @employee.company_location.email, subject: 'Leave request cancellation by your direct reportee')
+  end
   end
 
   def pending_mail_to_first_reporter

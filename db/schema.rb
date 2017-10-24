@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171010133927) do
+ActiveRecord::Schema.define(version: 20171023161227) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -2286,9 +2286,9 @@ ActiveRecord::Schema.define(version: 20171010133927) do
     t.boolean  "is_confirm"
     t.date     "day"
     t.string   "status",                   limit: 255
-    t.decimal  "count",                                precision: 10
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
+    t.decimal  "count",                                precision: 2, scale: 1
+    t.datetime "created_at",                                                   null: false
+    t.datetime "updated_at",                                                   null: false
   end
 
   add_index "leave_records", ["employee_id"], name: "index_leave_records_on_employee_id", using: :btree

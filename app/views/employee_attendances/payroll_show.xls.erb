@@ -8,8 +8,8 @@
               <%end%>
                         
                 <th>P</th>
-                <th>WO</th>
-                <th>H</th>
+                <th>WOP</th>
+                <th>HP</th>
                 <th>OD</th>
                 <th>A</th>
                 <th>Payable Leave</th>
@@ -29,8 +29,12 @@
                 <td><%= v %></td>
               <%end%>
            
-            <% holiday_in_month = holiday_in_month_count(exist) %>
+           <% holiday_in_month = holiday_in_month_count(exist) %>
+            <% holiday_present_in_month = holiday_present_in_month_count(exist) %>
+             <% no_of_holiday_present_in_month = no_of_holiday_present_in_month_count(exist) %>
             <% week_off_day = week_off_day_count(exist) %>
+            <% week_off_present_day = week_off_present_day_count(exist) %>
+            <% no_of_week_off_present_day = no_of_week_off_present_day_count(exist) %>
             <% od_day = od_day_count(exist) %>
             <% present_count = present_count(exist) %>
             <% absent_count = absent_count(exist) %>
@@ -50,8 +54,8 @@
 
 
               <td><%= present_count.to_f + process_off.to_f + access_card_forgotten.to_f %></td>
-              <td><%= week_off_day %></td>
-              <td><%= holiday_in_month %></td>
+              <td><%= no_of_week_off_present_day %></td>
+              <td><%= no_of_holiday_present_in_month %></td>
               <td><%= od_day %></td>
               <td><%= absent_count.to_f %></td>
 
@@ -63,7 +67,7 @@
                 <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
                   <% payable_day = present_count.to_f + process_off.to_f + access_card_forgotten.to_f + od_day.to_f + holiday_in_month.to_f + cl_leave_count.to_f + el_leave_count.to_f + coff_leave_count.to_f %>
                 <% else %>
-                  <% payable_day = present_count.to_f + process_off.to_f + access_card_forgotten.to_f + od_day.to_f + holiday_in_month.to_f + week_off_day.to_f + cl_leave_count.to_f + el_leave_count.to_f + coff_leave_count.to_f %>
+                  <% payable_day = present_count.to_f + process_off.to_f + access_card_forgotten.to_f + od_day.to_f + holiday_in_month.to_f + week_off_day.to_f + cl_leave_count.to_f + el_leave_count.to_f + coff_leave_count.to_f + holiday_present_in_month.to_f  %>
                 <% end %>
 
                 <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>

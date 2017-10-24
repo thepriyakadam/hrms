@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
 
   # before_action :set_home, only: [:show]
-  # load_and_authorize_resource
+  # ##load_and_authorize_resource
   require 'date'
 
   def index
@@ -28,6 +28,9 @@ class HomeController < ApplicationController
       elsif current_user.role.name == 'HOD'
         @employees = Employee.where(department_id: current_user.department_id)
       elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
+      elsif current_user.role.name == 'CEO'
         @emp = Employee.find(current_user.employee_id)
         @employees = @emp.subordinates
       elsif current_user.role.name == 'Employee'

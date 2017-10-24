@@ -3,7 +3,11 @@
     <div class="modal-body"> -->
       <%= bootstrap_form_for @member,url: {controller: 'roles',action: 'update_role', id: @member.id},remote:true do |f| %>
         <div class="row">
-          <div class="col-sm-4">
+          <div class="col-sm-3">
+            <strong><%= @member.employee.try(:first_name)%> <%= @member.employee.try(:middle_name)%> <%= @member.employee.try(:last_name)%></strong> 
+          </div>
+
+          <div class="col-sm-3">
             <%= f.select :role_id,(@roles.present? ? (@roles.collect {|b| [b.name,b.id]}) : {}),{include_blank: "Select Role",hide_label:true},class: "form-control"%> 
           </div>
           <div class="col-sm-2">

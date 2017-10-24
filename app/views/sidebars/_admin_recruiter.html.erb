@@ -5,8 +5,7 @@
    <a href="/home"> <Center> <% if current_user.class == Member %><%= current_user.company_location.company.try(:name) %>
     <%else%><%= current_user.subdomain %> - <%= current_user.class %> <%end%>DASHBOARD</Center></a>
   </li>
- 
- 
+
     <li class="treeview" id="EmployeeSelfService">
     <a href="">
       <i class="fa fa-user-plus"></i> <span> Employee Self Service </span><i class="fa fa-angle-left pull-right"></i>

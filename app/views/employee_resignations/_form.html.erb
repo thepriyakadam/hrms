@@ -21,47 +21,41 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :resignation_date,class: 'resignation',label:'Resignation Date'%>
+              <%= f.text_field :resignation_date,id: "employee_resignation_resignation_date",class: 'company_start_date'%>
             </div>
           </div>
         </div>
 
-        <div class="col-sm-3">
+       <div class="col-sm-3">
+         <div class="form-group required">
+           <%= f.text_field :notice_period,id: "employee_resignation_notice_period" ,label:'Notice Period',readonly: true %>
+         </div>
+        </div> 
+
+            <div class="col-sm-3">
           <div class="form-group required">
            <%= f.select :leaving_reason_id, all_leaving_reason,{label: 'Reason of Leaving',include_blank: " Select Reason of Leaving"} %>
           </div>
-        </div>
+        </div>  
+        
 
-        <div class="col-sm-3">
-         <div class="form-group required">
-           <%= f.text_field :notice_period, label:'Notice Period (in days)',readonly: true %>
-         </div>
-        </div> 
-      </div>  
+      
 
-    <div class="row">
-        <div class="col-sm-12">
-         <div class="form-group required">
-          <%= f.text_area :reason, label: "Reason" %>
-        </div>
-      </div>
     </div>
 
       <div class="row">
 
-    <!--   <div class="col-sm-3">
-       <div class="field">
-         < f.text_field :short_notice_period, label:'Short Notice Period (in days)' %>
-       </div>
-      </div>
- -->
+
+     
+
+
       <div class="col-sm-3">
        <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :tentative_leaving_date, class: 'resignation',label:'Requested Relieving Date'%>
+          <%= f.text_field :tentative_leaving_date, class: 'company_start_date',label:'Requested Relieving Date'%>
         </div>
        </div>
       </div>
@@ -78,8 +72,14 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :exit_interview_date, class: 'resignation',label:'Exit Interview Date'%>
+          <%= f.text_field :exit_interview_date, class: 'company_start_date',label:'Exit Interview Date'%>
         </div>
+       </div>
+      </div>
+
+        <div class="col-sm-3">
+       <div class="field">
+         <%= f.text_field :short_notice_period,disabled_id: "employee_resignation_short_notice_period",label:'Leaving Date (As per notice period)',readonly: true  %>
        </div>
       </div>
 
@@ -89,23 +89,21 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :leaving_date, class: 'resignation',label:'Leaving Date'%>
+          <%= f.text_field :leaving_date, class: 'company_start_date',label:'Lieving Date'%>
         </div>
        </div>
       </div>
-
-      <div class="col-sm-3">
-        <div class="form-group required">
-          <div class="input-group">
-            <div class="input-group-addon">
-              <i class="fa fa-calendar"></i>
-            </div>
-            <%= f.text_field :settled_on,label:'Settled On', class: 'resignation'%>
-          </div>
-        </div>
-      </div>
     
       </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+         <div class="form-group required">
+          <%= f.text_area :reason,label: "Reason" %>
+        </div>
+      </div>
+    </div>
+
 
       <div class="row">
       
@@ -116,14 +114,6 @@
        </div>
       </div>
 
-
-      <!-- <div class="col-sm-3">
-      <label>Stop Payment Request</label>
-        <div class="field">
-          <= f.check_box :is_stop_pay_request, label:'Stop Payment Request' %>
-       </div>
-      </div>
-    -->
 
      </div>
     
@@ -140,83 +130,23 @@
   </div><!-- /.box-body -->
 </div><!--box -->
 
-
-
-
 <script type="text/javascript">
-  $(function(){
-    $('.resignation').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-5:+10',
-    dateFormat: 'dd-mm-yy' });
-  }); 
-</script>
+   $(function(){
+    $('#employee_resignation_resignation_date').on('change', function() {
+      var employee_resignation_resignation_date = parseInt($('#employee_resignation_resignation_date').val());
+      var employee_resignation_notice_period = parseInt($('#employee_resignation_notice_period').val());
 
-<script>
-$("#employee_resignation").validate({
-    rules: {
-      "employee_resignation[resignation_date]":{
-        required: true,
-      },
-      "employee_resignation[employee_id]":{
-        required: true,
-      },
-      "employee_resignation[notice_period]":{
-        required: true,
-      },
-      "employee_resignation[tentative_leaving_date]":{
-        required: true,
-      },
-      "employee_resignation[exit_interview_date]":{
-        required: true,
-      },
-      "employee_resignation[leaving_date]":{
-        required: true,
-      },
-      
-      "employee_resignation[note]":{
-        required: true,
-      },
-      "employee_resignation[leaving_reason_id]":{
-        required: true,
-      },
-      "employee_resignation[reason]":{
-        required: true,
+      var ans="";
+      if (isNaN(employee_resignation_resignation_date) || isNaN(employee_resignation_notice_period)) {
+        ans = ""
       }
-    },
-    messages: {
-      "employee_resignation[resignation_date]":{
-        required: "Please select date",
-      },
-      "employee_resignation[employee_id]":{
-        required: "Please select Employee ",
-      },
-      "employee_resignation[notice_period]":{
-        required: "Please select notice period ",
-      },
-      "employee_resignation[tentative_leaving_date]":{
-        required: "Please select leaving date ",
-      },
-      "employee_resignation[exit_interview_date]":{
-        required: "Please select exit interview date ",
-      },
-      "employee_resignation[leaving_date]":{
-        required: "Please select leaving date ",
-      },
-      "employee_resignation[note]":{
-        required: "Please select note ",
-      },
-      "employee_resignation[leaving_reason_id]":{
-        required: "Please select leaving reason ",
-      },
-      "employee_resignation[reason]":{
-        required: "Please specify reason",
-      }  
-    },
-    errorPlacement: function(error, element) {
-     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
-     error.insertAfter(element.parent(element));
-    }
-   });
+      else{
+        ans = (employee_resignation_resignation_date + employee_resignation_notice_period);
+        var date = new Date ()
+        date.setDate(ans);
+      }
+      $('#employee_resignation_short_notice_period').val(date);
+
+    });
+  });
 </script>

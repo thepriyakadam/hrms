@@ -1,6 +1,6 @@
 class DepartmentTypesController < ApplicationController
   before_action :set_department_type, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
 
   def new
     @department_type = DepartmentType.new

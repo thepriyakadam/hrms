@@ -1,5 +1,5 @@
 class LeavApprovedsController < ApplicationController
-  # load_and_authorize_resource
+  # ##load_and_authorize_resource
   # POST /leav_aproveds
   # POST /leav_aproveds.json
   def create

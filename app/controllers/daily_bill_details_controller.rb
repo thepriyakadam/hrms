@@ -1,6 +1,6 @@
 class DailyBillDetailsController < ApplicationController
   before_action :set_daily_bill_detail, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
   # GET /daily_bill_details
   # GET /daily_bill_details.json
   def index

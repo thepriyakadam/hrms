@@ -1,4 +1,4 @@
-class Api::UserAuthsController < ApplicationController
+class Api::UserAuthsController < ApiController
   skip_before_action :load_filter
   skip_before_action :authenticate!
   # response.headers['X-Tracking-ID'] = '123456'

@@ -1205,8 +1205,14 @@ end
       get :cancel_resignation_list
       get :modal_resignation_detail
       get :final_approve_modal
+      get :list_for_settelment
+      get :settelment_date
+      post :settelment_date_create
+      post :update_dates
+      get :collect_date
   end
 end
+
   resources :travel_options do
     collection do
       get :is_confirm
@@ -1640,6 +1646,7 @@ end
       get :modal_c_off
       get :create_in_time
       get :create_out_time
+      get :display_notice_period
     end
   end
 
@@ -2699,14 +2706,14 @@ end
   #     resources :products
   #   end
 
-  namespace :api do
-    resources :user_auths,:only => [:create], defaults: {format: 'json'}
-    post 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
-    # get 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
+#   namespace :api do
+#     resources :user_auths,:only => [:create], defaults: {format: 'json'}
+#     post 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
+#     # get 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
 
-    get 'user_auths/employee_list' => 'user_auths#employee_list', defaults:{format: 'json'}
-    get 'user_auths/leave_request' => 'user_auths#leave_request', defaults:{format: 'json'}
-    post 'user_auths/employee_leave_request' => 'user_auths#employee_leave_request', defaults:{format: 'json'}
-    get 'user_auths/leave_category' => 'user_auths#leave_category', defaults:{format: 'json'}
-end
+#     get 'user_auths/employee_list' => 'user_auths#employee_list', defaults:{format: 'json'}
+#     get 'user_auths/leave_request' => 'user_auths#leave_request', defaults:{format: 'json'}
+#     post 'user_auths/employee_leave_request' => 'user_auths#employee_leave_request', defaults:{format: 'json'}
+#     get 'user_auths/leave_category' => 'user_auths#leave_category', defaults:{format: 'json'}
+# end
 end

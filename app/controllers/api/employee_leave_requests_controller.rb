@@ -1,4 +1,4 @@
-class Api::EmployeeLeaveRequestsController < ApplicationController
+class Api::EmployeeLeaveRequestsController < ApiController
 
 def  leave_request
     @leave_user = params[:employee_id]

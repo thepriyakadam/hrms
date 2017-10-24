@@ -1,7 +1,7 @@
 require 'query_report/helper'  # need to require the helper
 class EmployeeLeavRequestsController < ApplicationController
   before_action :set_employee_leav_request, only: [:show, :edit,:update, :destroy]
-  load_and_authorize_resource
+  # ##load_and_authorize_resource
   include QueryReport::Helper  # need to include it
 
   def index
@@ -707,6 +707,18 @@ class EmployeeLeavRequestsController < ApplicationController
           @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Supervisor'
+        if @company_id == "" || @location == "" || @department == ""
+          @emp = Employee.find(current_user.employee_id)
+          @employees = @emp.subordinates
+          @employee_leav_request_id = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+       else
+          @emp = Employee.find(current_user.employee_id)
+          @employees = @emp.subordinates
+          @employee_leav_request_id = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        end
+      elsif current_user.role.name == 'CEO'
         if @company_id == "" || @location == "" || @department == ""
           @emp = Employee.find(current_user.employee_id)
           @employees = @emp.subordinates

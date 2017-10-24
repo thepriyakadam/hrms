@@ -25,12 +25,12 @@ module EmployeeAttendancesHelper
         unless joining_detail.nil?
           unless joining_detail.joining_date.nil?
             unless joining_detail.joining_date <  d
-              exist[d] = "UJ"
+              exist[d] = "UD"
             end
           end
           unless joining_detail.retirement_date.nil?
             unless joining_detail.retirement_date > d
-              exist[d] = "RD"
+              exist[d] = "R"
             end
           end
         end

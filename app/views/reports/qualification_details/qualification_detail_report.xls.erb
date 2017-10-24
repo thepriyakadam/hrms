@@ -19,6 +19,7 @@
         <Cell ss:Index="10"><Data ss:Type="String">Passout Year</Data></Cell>
         <Cell ss:Index="11"><Data ss:Type="String">College/School</Data></Cell>
         <Cell ss:Index="12"><Data ss:Type="String">University/Institute</Data></Cell>
+        <Cell ss:Index="13"><Data ss:Type="String">Update Time</Data></Cell>
         </Row>
 
         <% i = 0 %>
@@ -36,6 +37,7 @@
           <Cell ss:Index="10"><Data ss:Type="String"><%= qualification.year.try(:name) %></Data></Cell>
           <Cell ss:Index="11"><Data ss:Type="String"><%= qualification.college %></Data></Cell>
           <Cell ss:Index="12"><Data ss:Type="String"><%= qualification.university.try(:name) %></Data></Cell>
+          <Cell ss:Index="13"><Data ss:Type="String"><%= qualification.try(:updated_at).to_date %></Data></Cell>
            </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

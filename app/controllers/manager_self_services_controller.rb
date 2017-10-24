@@ -160,6 +160,7 @@ class ManagerSelfServicesController < ApplicationController
   end
 
   def leave_c_off
+    # byebug
     session[:active_tab] ="ManagerSelfService"
     current_login = Employee.find_by(id: current_user.employee_id)
     @sub = current_login.subordinates
@@ -175,7 +176,6 @@ class ManagerSelfServicesController < ApplicationController
   end
 
   def vacancy_request_create
-    #byebug
     @employee_designation = params[:vacancy_master][:employee_designation_id]
     flash[:notice] = "Vacancy Request Created!"
     redirect_to vacancy_request_manager_self_services_path   

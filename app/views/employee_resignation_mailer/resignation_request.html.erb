@@ -6,21 +6,17 @@
   <body>
      <h4>Resignation Request</h4>
     <p> 
-      Dear,<%= @employee.prefix %><%= @employee.try(:first_name).to_s %> <%= @employee.try(:last_name).to_s %> <%= @employee.try(:middle_name).to_s %><br><br>
-      This is to inform you that you have a Employee Resignation Request at First Level.<br><br>
-       1. <b>Employee Name :-</b> <%= @emp.employee.prefix %><%= @emp.employee.try(:first_name).to_s %> <%= @emp.employee.try(:last_name).to_s %> <%= @emp.employee.try(:middle_name).to_s %><br><br>
-       2. <b>Resignation Date :-</b> <%= @employee_resignation.resignation_date %><br><br>
-       3. <b>Reason For Leaving :-</b> <%= @employee_resignation.reason %><br><br>
-       4. <b>Notice Period :-</b> <%= @employee_resignation.notice_period %><br><br>
-       5. <b>Short Notice Period :-</b> <%= @employee_resignation.short_notice_period %><br><br>
-       6. <b>Requested Releaving Date :-</b> <%= @employee_resignation.tentative_leaving_date %><br><br>
-       7. <b>Remark:-</b> <%= @employee_resignation.remark %><br><br>
-       8. <b>Interview Date:-</b> <%= @employee_resignation.exit_interview_date %><br><br>
-       9. <b>Note:-</b> <%= @employee_resignation.note %><br><br>
-       10. <b>Leaving Date:-</b> <%= @employee_resignation.leaving_date %><br><br>
-       11. <b>Settled On:-</b> <%= @employee_resignation.settled_on %><br><br>
-       12. <b>Reason:-</b> <%= @employee_resignation.reason %><br><br>
-        <br><br>
-     </p>
+      Dear <%= @employee.try(:prefix) %><%= @employee.try(:first_name).to_s %> <%= @employee.try(:last_name).to_s %> <%= @employee.try(:middle_name).to_s %>, </p><br>
+
+      <p>Please accept this message as notification that I <b><%= @emp.employee.prefix %><%= @emp.employee.try(:first_name).to_s %> <%= @emp.employee.try(:middle_name).to_s %> <%= @emp.employee.try(:last_name).to_s %> (ID <%= @emp.employee.try(:manual_employee_code)%>)</b>, would like to resign from my position with <b><%= @employee.company.try(:name)%>.</b></p>
+
+      <p>I appreciate the opportunities I have been given at <b><%= @employee.company.try(:name) %></b> and your professional guidance and support. I wish you and the company success in the future. Requested relieving date is <b><%= @employee_resignation.tentative_leaving_date %></b>. The reason of leaving the organization is <b><%= @employee_resignation.reason %>.</p></b>
+
+      <p>For more details on the request, kindly check the People First HRMS portal.</p>
+
+      <p>Can we have a discussion on how we can handle this mutually regarding my exit plan, backup and handovers.</p>
+
+   Best Regards,
+  <p><%= @emp.employee.prefix %><%= @emp.employee.try(:first_name).to_s %> <%= @emp.employee.try(:middle_name).to_s %> <%= @emp.employee.try(:last_name).to_s %></p>
   </body>
 </html>

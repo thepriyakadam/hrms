@@ -125,7 +125,7 @@ class OnDutyRequestsController < ApplicationController
           #   OdRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',day: i)
           # end
 
-                          @on_duty_request.create_attendance_od
+            @on_duty_request.create_attendance_od
             OdStatusRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',change_date: Date.today)
 
             if @employee.manager.email.nil? or @employee.manager.email == ""

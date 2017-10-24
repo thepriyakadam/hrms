@@ -1,10 +1,7 @@
 Rails.application.routes.draw do
-  resources :events  # do
-  #   collection do
-  #     get :user_events
-  #   end
-  # end
-
+  resources :events
+  resources :resource_pool_masters
+  resources :service_masters
   resources :contact_details do
     collection do
       get :modal_contact_detail
@@ -759,6 +756,7 @@ end
       get :emp_attendance
       get :display_attendance_2
       post :display_attendance_2
+      get :payroll_report
       get :costcenter_wise_excel1
       get :costcenter_wise_pdf
       get :employee_attendance_excel_report
@@ -823,6 +821,7 @@ end
       get :access_record
       post :access_card_list
       get :access_card_approval
+      get :admin_access_card_approval
       get :view_access_card_detail
       get :approve_acf_request
       get :reject_acf_request
@@ -846,6 +845,8 @@ end
       get :attendance_summary
       post :show_attendance_summary
       get :show_attendance_summary
+      post :payroll_show
+      get :payroll_show
       get :employee_attendance
     end
   end
@@ -1204,8 +1205,14 @@ end
       get :cancel_resignation_list
       get :modal_resignation_detail
       get :final_approve_modal
+      get :list_for_settelment
+      get :settelment_date
+      post :settelment_date_create
+      post :update_dates
+      get :collect_date
   end
 end
+
   resources :travel_options do
     collection do
       get :is_confirm
@@ -1585,10 +1592,10 @@ end
       get :search_by_c_off_date
       get :add_coff
       get :destroy_self
+      get :approve_c_off
       post :approve_c_off
       get :reject_c_off
       get :approve_modal
-      post :final_approve
       get :final_approve
       get :final_reject
       get :admin_c_off_approval
@@ -2548,6 +2555,12 @@ end
       get :is_confirm
       get :modal
       get :update_manager_modal
+      get :new_employee_list
+      get :skillset_employee_list
+      get :update_skillset_modal
+      get :reporting_manager_list
+      get :employee_asset
+      get :admin_asset_employee_list
     end
     member do
       get :edit_manager

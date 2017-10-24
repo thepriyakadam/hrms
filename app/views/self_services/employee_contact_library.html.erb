@@ -10,6 +10,7 @@
     	<tr>
     		<th>Employee Name</th>
     		<th>Extension Line 1</th>
+            <!-- <th>Extension Line 2</th> -->
             <th>Action</th>
     	</tr>
     </thead>
@@ -19,6 +20,7 @@
     	<tr>
     		<td><%= full_name(employee) %></td>
     		<td><%= employee.contact_no %></td>
+           <!--  <td><= employee.try(:optinal_contact_no1) %></td> -->
             <td><%= link_to '', modal_contact_library_self_services_path(employee), class: 'btn btn-xs btn-default fa fa-eye',remote: true%></td>
     	</tr>
     	<% end %>

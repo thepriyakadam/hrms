@@ -155,7 +155,7 @@
         </div><!-- /.box-header -->
         <div class="box-body">
           <div class="table-responsive">
-            <table id="example1" class="table no-margin">
+            <table class="table no-margin">
             <thead>
               <tr>
                 <th>Code</th>
@@ -273,7 +273,7 @@
                    <%end%> <!-- unless -->
                    </td>
                        <td><%= full_name(e.employee) %>
-                        <span class="users-list-date"><%= e.employee.try(:joining_detail).try(:cost_center).try(:name) %> - <%= e.employee.try(:department).try(:name) %> <%= e.employee.try(:sub_department).try(:name) %></span>
+                        <span class="users-list-date"><%= e.employee.try(:cost_center).try(:name) %> - <%= e.employee.try(:department).try(:name) %> <%= e.employee.try(:sub_department).try(:name) %></span>
                        </td>
                        <td>
                        <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today,receiver_id: e.employee_id,greeting_type: "Anniversary") %>
@@ -357,7 +357,7 @@
                    <%end%>
                    </td>
                        <td> <%= full_name(e) %>
-                        <span class="users-list-date"><%= e.try(:joining_detail).try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
+                        <span class="users-list-date"><%= e.try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
 
                        </td>
                        <td>
@@ -425,7 +425,7 @@
                    <%end%>
                    </td>
                        <td> <%= full_name(e) %>
-                        <span class="users-list-date"><%= e.try(:joining_detail).try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
+                        <span class="users-list-date"><%= e.try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
 
                        </td>
                        <td> <%= e.date_of_birth.strftime("%d %b") %></td>
@@ -471,7 +471,7 @@
                     <div class="product-info">
                       <%= full_name(j.employee)%>
                       <span class="label label-info pull-right"><%= j.joining_date %></span>
-                      <span class="product-description"><%= j.employee.try(:joining_detail).try(:cost_center).try(:name) %> - <%= j.employee.try(:department).try(:name) %> <%= j.try(:employee).try(:sub_department).try(:name) %>  </span>
+                      <span class="product-description"><%= j.employee.try(:cost_center).try(:name) %> - <%= j.employee.try(:department).try(:name) %> <%= j.try(:employee).try(:sub_department).try(:name) %>  </span>
                       <span class="product-description"><%= full_name(j.employee.try(:manager)) %></span>
                     </div>
                   </li><!-- /.item -->
@@ -479,7 +479,6 @@
                 
                 <% end %> <!-- j.employee.status == "Active"  -->
               <% end %>
-
           </ul>
         </div><!-- /.box-body -->
       </div><!-- /.box -->

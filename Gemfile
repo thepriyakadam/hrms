@@ -7,8 +7,7 @@ gem 'rails', '4.2.4'
 gem 'mysql2', '~> 0.3.18'
  #gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
 
-
-gem "rack-timeout", require:"rack/timeout/base"
+# gem "rack-timeout", require:"rack/timeout/base"
 
 gem 'ruby-graphviz', '~> 1.2', '>= 1.2.2'
 
@@ -31,16 +30,14 @@ gem 'bootstrap-datepicker-rails'
 gem 'awesome_print'
 gem 'datagrid', '~> 1.4', '>= 1.4.1'
 gem 'quiet_assets'
-gem 'fullcalendar-rails'
-gem 'momentjs-rails'
+
 gem 'tzinfo-data', '~> 1.2016', '>= 1.2016.10'
 
 gem 'paperclip', '~> 4.3', '>= 4.3.6'
 
 gem 'mime-types-data', '~> 3.2016', '>= 3.2016.0521'
 gem 'globalid', '~> 0.3.7'
- # gem 'rails-assets-fullcalendar'
- # gem 'rails-assets-momentjs'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -72,8 +69,7 @@ gem 'selenium-webdriver', '~> 3.0', '>= 3.0.5'
 gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
 
 #inline edit
-
-gem 'best_in_place'
+gem 'best_in_place', '~> 3.0.1'
 
 gem 'bcrypt-ruby', '~> 3.0.0', :require => 'bcrypt'
 gem 'bcrypt'

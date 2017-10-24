@@ -719,6 +719,18 @@ class EmployeeLeavRequestsController < ApplicationController
           @employee_leav_request_id = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
           @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
         end
+      elsif current_user.role.name == 'CEO'
+        if @company_id == "" || @location == "" || @department == ""
+          @emp = Employee.find(current_user.employee_id)
+          @employees = @emp.subordinates
+          @employee_leav_request_id = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+       else
+          @emp = Employee.find(current_user.employee_id)
+          @employees = @emp.subordinates
+          @employee_leav_request_id = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        end
       elsif current_user.role.name == 'Employee'
       end #current_user.role
     end #current_user.class

@@ -487,22 +487,20 @@ require 'roo'
 # end
 
 
-# ex = Roo::Excel.new("#{Rails.root}/public/adhar_no.xls")
-# ex.default_sheet = ex.sheets[0] #siya feb
-# i = 1
-# ActiveRecord::Base.transaction do
-# 2.upto(452) do |line| # siya Feb 2016
-#  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-#  puts "#{i} Record inserting.----------------------------"
-#  @employee.update(adhar_no: ex.cell(line, 'B'))
-#  # @type2 = ServiceMaster.find_by_name(ex.cell(line,'C'))
-#  # Employee.where(id: @employee).update_all(service_master_id: @type2.id)
-#  # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
-#  puts "#{i} Record inserted.-----------------------------------------------"
-#  i += 1
-#  end
-#  end
+ex = Roo::Excel.new("#{Rails.root}/public/Cost Center.xls")
+ex.default_sheet = ex.sheets[0] #siya feb
+i = 1
+ActiveRecord::Base.transaction do
+2.upto(466) do |line| # siya Feb 2016
+ puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
+ puts "#{i} Record inserting.----------------------------"
+ @type2 = CostCenter.find_by_name(ex.cell(line,'C'))
+ Employee.where(id: @employee).update_all(cost_center_id: @type2.id)
+ puts "#{i} Record inserted.-----------------------------------------------"
+ i += 1
+ end
+ end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/qualification.xls")
@@ -547,11 +545,6 @@ require 'roo'
 #  end
 #  end
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> e6ceff05b4a19205d03541312ac4abe8ea4244a5
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/skillsets.xls")
 # ex.default_sheet = ex.sheets[0]
@@ -573,7 +566,8 @@ require 'roo'
 # i = 1
 # ActiveRecord::Base.transaction do
 # 2.upto(33) do |line| # siya Feb 2016
-#  puts "Starting Record #{ex.cell(line,'B')}---------------------------------------"
+#  puts "Starting Record
+# {ex.cell(line,'B')}---------------------------------------"
 #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
 #  puts "#{i} Record inserting.----------------------------"
 #  JoiningDetail.where(employee_id: @employee).update_all(c_off: false)
@@ -582,26 +576,7 @@ require 'roo'
 #  end
 #  end
 
-puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/skillsets.xls")
-ex.default_sheet = ex.sheets[0]
-i=1
-2.upto(8777) do |line|
-@employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-Skillset.new do |b|
- b.employee_id = @employee.id unless @employee.nil?
- b.name = ex.cell(line,'C')
- b.skill_level = ex.cell(line,'D')
- b.save!
-end
-puts "#{i} Record inserted.-------------#{ex.cell(line,'A')}------#{ex.cell(line,'C')}---#{ex.cell(line,'D')}-------------------------"
-i = i+1
-end
-<<<<<<< HEAD
->>>>>>> 45c2c5c6207f61073a09df8bdec7cd2af4a323dc
-=======
 
->>>>>>> e6ceff05b4a19205d03541312ac4abe8ea4244a5
 
 #============================== DEPARTMENT END =====================================#
 # puts "Starting Designation..."
@@ -809,6 +784,22 @@ end
 #   b.save!
 # end
 # puts "#{i} Record inserted.-------------#{ex.cell(line,'A')}----------------------------------"
+# i = i+1
+# end
+
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/skillsets.xls")
+# ex.default_sheet = ex.sheets[0]
+# i=1
+# 2.upto(8777) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+# Skillset.new do |b|
+#   b.employee_id = @employee.id unless @employee.nil?
+#   b.name = ex.cell(line,'C')
+#   b.skill_level = ex.cell(line,'D')
+#   b.save!
+# end
+# puts "#{i} Record inserted.-------------#{ex.cell(line,'A')}------#{ex.cell(line,'C')}---#{ex.cell(line,'D')}-------------------------"
 # i = i+1
 # end
 
@@ -1247,38 +1238,38 @@ end
 # VacancyMaster.destroy_all
 
 
-x = Roo::Excel.new("#{Rails.root}/public/onboarding_dewas2.xls")
-ex.default_sheet = ex.sheets[0] #siya feb
-i = 1
-ActiveRecord::Base.transaction do
-2.upto(28) do |line| # siya Feb 2016
- puts "Starting Record --------------------------#{ex.cell(line,'A')}"
- @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
- # JoiningDetail.where(id: @employee.id).update_all(is_da: true)
- unless @employee.nil?
- @joining_details = JoiningDetail.where(employee_id: @employee.id)
+# x = Roo::Excel.new("#{Rails.root}/public/onboarding_dewas2.xls")
+# ex.default_sheet = ex.sheets[0] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(28) do |line| # siya Feb 2016
+#  puts "Starting Record --------------------------#{ex.cell(line,'A')}"
+#  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
+#  # JoiningDetail.where(id: @employee.id).update_all(is_da: true)
+#  unless @employee.nil?
+#  @joining_details = JoiningDetail.where(employee_id: @employee.id)
 
-  @joining_details.each do |e|
-     e.employee_uan_no = ex.cell(line,'B').to_i
-     e.joining_date =  ex.cell(line,'C')
-     e.confirmation_date =  ex.cell(line,'D')
-     @employee_designation = EmployeeDesignation.find_by_name(ex.cell(line,'E'))
-     e.employee_designation_id = @employee_designation.id unless @employee_designation.nil?
-     e.employee_pf_no = ex.cell(line,'F').to_i
-     e.retirement_date = ex.cell(line,'G')
-     @payment_mode = PaymentMode.find_by_name(ex.cell(line,'H'))
-     e.payment_mode_id = @payment_mode.id unless @payment_mode.nil?
-     e.pf_max_amount = ex.cell(line,'I')
-     e.probation_period = ex.cell(line,'J').to_i
-     e.notice_period =     ex.cell(line,'K').to_i
-     e.passport_no = ex.cell(line,'M').to_i
-     e.have_passport = ex.cell(line,'L')
-     e.passport_issue_date = ex.cell(line,'N')
-     e.passport_expiry_date = ex.cell(line,'O')
-    e.save!
-   end
-   puts "#{i} Record inserted.------#{ex.cell(line,'B')}--------------------#{ex.cell(line,'C')}--------------"
-   i += 1
- end
- end
-end
+#   @joining_details.each do |e|
+#      e.employee_uan_no = ex.cell(line,'B').to_i
+#      e.joining_date =  ex.cell(line,'C')
+#      e.confirmation_date =  ex.cell(line,'D')
+#      @employee_designation = EmployeeDesignation.find_by_name(ex.cell(line,'E'))
+#      e.employee_designation_id = @employee_designation.id unless @employee_designation.nil?
+#      e.employee_pf_no = ex.cell(line,'F').to_i
+#      e.retirement_date = ex.cell(line,'G')
+#      @payment_mode = PaymentMode.find_by_name(ex.cell(line,'H'))
+#      e.payment_mode_id = @payment_mode.id unless @payment_mode.nil?
+#      e.pf_max_amount = ex.cell(line,'I')
+#      e.probation_period = ex.cell(line,'J').to_i
+#      e.notice_period =     ex.cell(line,'K').to_i
+#      e.passport_no = ex.cell(line,'M').to_i
+#      e.have_passport = ex.cell(line,'L')
+#      e.passport_issue_date = ex.cell(line,'N')
+#      e.passport_expiry_date = ex.cell(line,'O')
+#     e.save!
+#    end
+#    puts "#{i} Record inserted.------#{ex.cell(line,'B')}--------------------#{ex.cell(line,'C')}--------------"
+#    i += 1
+#  end
+#  end
+# end

@@ -6,8 +6,8 @@ class SalaryReport
                 :earned_special, :earned_washing, :earned_total,:earned_monthly_arrear,
                 :actual_medical,:actual_driver, :actual_child_edu, :actual_mra, :actual_medical_rem, 
                 :earned_medical,:earned_driver,  :earned_child_edu,:earned_mra ,:earned_medical_rem, 
-                :actual_lta,:actual_progressive_alw,:actual_transport_alw
-                :earned_lta,:earned_progressive_alw,:earned_transport_alw
+                :actual_lta,:actual_progressive_alw,:actual_transport_alw,
+                :earned_lta,:earned_progressive_alw,:earned_transport_alw,
                 
 
                 :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, 

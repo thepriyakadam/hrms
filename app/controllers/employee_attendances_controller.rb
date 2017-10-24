@@ -451,6 +451,209 @@ class EmployeeAttendancesController < ApplicationController
       end
     end
   end
+
+  def payroll_report
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Report"
+  end
+
+  def payroll_show
+
+    @from = params[:employee] ? params[:employee][:from] : params[:from] 
+    @to = params[:employee] ? params[:employee][:to] : params[:to]
+    company = params[:employee] ? params[:employee][:company_id] : params[:company_id]
+    location = params[:employee] ? params[:employee][:company_location_id] : params[:company_location_id]
+    department = params[:employee] ? params[:employee][:department_id] : params[:department_id]
+    status = params[:employee] ? params[:employee][:status] : params[:status]
+    @from_date = @from.to_date
+    @to_date = @to.to_date
+    #@date = Date.new(@year.to_i, Workingday.months[@month])
+    #@day = @date.end_of_month.day
+    #@start_date = @date
+    #@end_date = @date.end_of_month
+
+    if current_user.class == Group 
+      if company == ""
+        if status == 'Active'
+          @employees = Employee.where(status: 'Active').pluck(:id)
+        elsif status == 'Inactive'
+          @employees = Employee.where(status: 'Inactive').pluck(:id)
+        else
+          @employees = Employee.all.pluck(:id)
+        end
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+      elsif location == ""
+        if status == 'Active'
+          @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
+        elsif status == 'Inactive'
+          @employees = Employee.where(status: 'Inactive',company_id: company.to_i).pluck(:id)
+        else
+          @employees = Employee.where(company_id: company.to_i).pluck(:id)
+        end
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+      elsif department == ""
+        if status == 'Active'
+          @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
+        elsif status == 'Inactive'
+          @employees = Employee.where(status: 'Inactive',company_location_id: location.to_i).pluck(:id)
+        else
+          @employees = Employee.where(company_location_id: location.to_i).pluck(:id)
+        end
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+      else
+        if status == 'Active'
+           @employees = Employee.where(status: 'Active',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+        elsif status == 'Inactive'
+          @employees = Employee.where(status: 'Inactive',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+        else
+           @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+        end
+        @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+      end
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin' || current_user.role.name == 'GroupRecruiter' || current_user.role.name == 'GroupTimeManagement'
+        if company == ""
+          if status == 'Active'
+            @employees = Employee.where(status: 'Active').pluck(:id)
+          elsif status == 'Inactive'
+            @employees = Employee.where(status: 'Inactive').pluck(:id)
+          else
+            @employees = Employee.all.pluck(:id)
+          end
+          @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+        elsif location == ""
+          if status == 'Active'
+            @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
+          elsif status == 'Inactive'
+            @employees = Employee.where(status: 'Inactive',company_id: company.to_i).pluck(:id)
+          else
+            @employees = Employee.where(company_id: company.to_i).pluck(:id)
+          end
+          @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+        elsif department == ""
+          if status == 'Active'
+            @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
+          elsif status == 'Inactive'
+            @employees = Employee.where(status: 'Inactive',company_location_id: location.to_i).pluck(:id)
+          else
+            @employees = Employee.where(company_location_id: location.to_i).pluck(:id)
+          end
+          @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+        else
+          if status == 'Active'
+           @employees = Employee.where(status: 'Active',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+          elsif status == 'Inactive'
+            @employees = Employee.where(status: 'Inactive',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+          else
+           @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+          end
+          @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+        end
+        elsif current_user.role.name == 'Admin' || current_user.role.name == 'AdminRecruiter' || current_user.role.name == 'AdminTimeManagement'
+         if company == ""
+          if status == 'Active' 
+            @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
+          elsif status == 'Inactive' 
+            @employees = Employee.where(status: 'Inactive',company_id: current_user.company_location.company_id).pluck(:id)
+          else
+            @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+          end
+          @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+        elsif location == ""
+          if status == 'Active' 
+            @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
+          elsif status == 'Inactive' 
+            @employees = Employee.where(status: 'Inactive',company_id: company.to_i).pluck(:id)
+          else
+            @employees = Employee.where(company_id: company.to_i).pluck(:id)
+          end
+          @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+        elsif department == ""
+          if status == 'Active' 
+            @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
+          elsif status == 'Inactive' 
+            @employees = Employee.where(status: 'Inactive',company_location_id: location.to_i).pluck(:id)
+          else
+            @employees = Employee.where(company_location_id: location.to_i).pluck(:id)
+          end
+          @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+        else
+          if status == 'Active' 
+            @employees = Employee.where(status: 'Active',company_id: company.to_i,company_location_id: @location.to_i,department_id: department.to_i).pluck(:id)
+          elsif status == 'Inactive' 
+            @employees = Employee.where(status: 'Inactive',company_id: company.to_i,company_location_id: @location.to_i,department_id: department.to_i).pluck(:id)
+          else
+            @employees = Employee.where(company_id: company.to_i,company_location_id: @location.to_i,department_id: department.to_i).pluck(:id)
+          end
+          @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+        end
+        elsif current_user.role.name == 'Branch' || current_user.role.name == 'Recruitment' || current_user.role.name == 'TimeAndAttendance'
+          if company == "" || location == ""
+            if status == 'Active' 
+              @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
+            elsif status == 'Inactive' 
+              @employees = Employee.where(status: 'Inactive',company_location_id: current_user.company_location_id).pluck(:id)
+            else
+              @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+            end
+          @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+         elsif department == ""
+            if status == 'Active' 
+              @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
+            elsif status == 'Inactive' 
+              @employees = Employee.where(status: 'Inactive',company_location_id: location.to_i).pluck(:id)
+            else
+              @employees = Employee.where(company_location_id: location.to_i).pluck(:id)
+            end
+            @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+          else 
+            if status == 'Active' 
+              @employees = Employee.where(status: 'Active',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+            elsif status == 'Inactive' 
+              @employees = Employee.where(status: 'Inactive',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+            else
+              @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+            end
+          @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+        end
+        elsif current_user.role.name == 'HOD'
+          if company == "" || location == "" || department == ""
+            if status == 'Active' 
+              @employees = Employee.where(status: 'Active',department_id: current_user.department_id).pluck(:id)
+            elsif status == 'Inactive' 
+              @employees = Employee.where(status: 'Inactive',department_id: current_user.department_id).pluck(:id)
+            else
+              @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+            end
+          @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+        else 
+           if status == 'Active' 
+              @employees = Employee.where(status: 'Active',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+            elsif status == 'Inactive' 
+              @employees = Employee.where(status: 'Inactive',company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+            else
+              @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
+            end
+          @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
+        end
+      elsif current_user.role.name == 'Superviser'
+      elsif current_user.role.name == 'Employee'
+      end
+    end
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_attendances/payroll_show.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'employee_attendance',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_attendances/payroll_show.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
+    end
+
+  end
   
   def datewise_attendance
     session[:active_tab] ="TimeManagement"
@@ -1629,6 +1832,7 @@ def upload
               end
               if working_hrs.to_s <  "04:30"
                 EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "A")
+
               elsif working_hrs.to_s < "07:00"
                 EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "HDL")
               else
@@ -1790,8 +1994,9 @@ def daily_attendance_datewise
 end
 
 def show_daily_attendance_datewise
-  date = params[:employee][:date]
-  @daily_attendances = DailyAttendance.where(date: date.to_date)
+  @date = params[:employee][:date]
+  @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+  @employee_attendances = EmployeeAttendance.where(day: @date.to_date).where(employee_id: @employees).group(:employee_id)
 end
 
 def datewise_daily_attendance
@@ -1827,7 +2032,7 @@ end
 def import
   file = params[:file]
   if file.nil?
-    flash[:alert] = "Please Select File!"
+  flash[:alert] = "Please Select File!"
   redirect_to import_employee_attendance_employee_attendances_path
   else
   EmployeeAttendance.import(params[:file])
@@ -2083,7 +2288,7 @@ end
     employee_attendance = EmployeeAttendance.where(employee_id: @employee.id,day: @date.to_date).take
     
     if @daily_attendance.nil?
-      flash[:alert] = "Please Check Date and Crad Details!"
+      flash[:alert] = "Please Check Date and Card Details!"
     else
 
       if first_in.nil? && last_out.nil?
@@ -2139,7 +2344,7 @@ end
     manager = Employee.find_by(id: current_user.employee_id)
 
     if @daily_attendance.nil?
-      flash[:alert] = "Please Check Date and Crad Details!"
+      flash[:alert] = "Please Check Date and Card Details!"
     else
 
       if first_in.nil? && last_out.nil?
@@ -2183,6 +2388,11 @@ end
     session[:active_tab] = "ManagerSelfService"
   end
 
+  def admin_access_card_approval
+    @pending_requests = EmployeeAttendance.where(comment: "ACF Request")
+    session[:active_tab] = "ManagerSelfService"
+  end
+
   def view_access_card_detail
     @pending_request = EmployeeAttendance.find(params[:pending_request])
   end
@@ -2195,20 +2405,30 @@ end
     #   @pending_request.update(present: "",comment: "ACF Approved")
     # else
       manager = Employee.find_by(id: current_user.employee_id)
+      employee = Employee.find_by(id: @pending_request.employee_id)
       @pending_request.update(present: "ACF",comment: "ACF Approved")
       EmployeeAttendanceMailer.approved(@pending_request,manager).deliver_now
     # end
     flash[:notice] = "ACF Request Approved!"
+    if(manager == employee.manager_id)
     redirect_to access_card_approval_employee_attendances_path
+    else
+      redirect_to admin_access_card_approval_employee_attendances_path
+    end
   end
 
   def reject_acf_request
     @pending_request = EmployeeAttendance.find(params[:format])
     manager = Employee.find_by(id: current_user.employee_id)
+    employee = Employee.find_by(id: @pending_request.employee_id)
     @pending_request.update(present: "A",comment: "ACF Rejected")
     EmployeeAttendanceMailer.rejected(@pending_request,manager).deliver_now
     flash[:notice] = "ACF Request Rejected!"
+    if(manager == employee.manager_id)
     redirect_to access_card_approval_employee_attendances_path
+  else
+     redirect_to admin_access_card_approval_employee_attendances_path
+  end
   end
 
   def destroy_daily_attendance
@@ -2225,7 +2445,7 @@ end
     date = params[:date]
     DailyAttendance.where(date: date.to_date).destroy_all
     #EmployeeAttendance.where(day: date.to_date,is_confirm: false).destroy_all
-    flash[:notice] = "Attendance destroyed successfully!"
+    flash[:notice] = "Attendance Reverted successfully!"
     redirect_to destroy_daily_attendance_employee_attendances_path
   end
 

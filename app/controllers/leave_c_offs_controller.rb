@@ -332,7 +332,7 @@ class LeaveCOffsController < ApplicationController
   end
 
   def final_approve
-    @leave_c_off = LeaveCOff.find(params[:leave_c_off_id])
+    @leave_c_off = LeaveCOff.find(params[:format])
     leav_category = LeavCategory.find_by_code('C.Off')
     @current_emp = Employee.find_by(id: current_user.employee_id)
 

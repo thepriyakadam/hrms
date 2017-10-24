@@ -30,7 +30,7 @@ end
        @employee_category = EmployeeCategory.new
       format.js { @flag = true }
       else
-        flash.now[:alert] = 'Degree Already Exist.'
+        flash.now[:alert] = 'Leave Category Already Exist.'
         format.js { @flag = false }
       end
     end

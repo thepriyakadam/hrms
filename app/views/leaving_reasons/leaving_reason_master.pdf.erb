@@ -14,7 +14,7 @@
 <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
   <thead>
         <tr>
-          <td colspan="4"><center> 
+          <td colspan="5"><center> 
             <% if current_user.employee.company_location.company.company_logo == nil %>
             <%else %>
               <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
@@ -22,13 +22,14 @@
               <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
           </td>
         </tr>
-         <tr><th colspan="4"><center>Leaving Reason Master</center></th></tr>
+         <tr><th colspan="5"><center>Leaving Reason Master</center></th></tr>
 
     <tr> 
       <th>Sr.No.</th> 
       <th>Code</th>
       <th>Name</th>
       <th>Decription</th>
+      <th>Status</th>
     </tr>
   </thead>
   <tbody>
@@ -39,6 +40,7 @@
         <td><%= degree.code %></td>
         <td><%= degree.name %></td>
         <td><%= degree.description %></td>
+        <td><%= degree.is_confirm ? "Active" : "Inactive" %></td>
    </tr>
    <%end%>
    </tbody>

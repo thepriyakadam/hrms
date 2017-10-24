@@ -35,7 +35,7 @@ class QualificationsController < ApplicationController
           for i in 2..len
             Qualification.create(employee_id: params['qualification']['employee_id'], degree_type_id: params['qualification'][i.to_s]['degree_type_id'], degree_id: params['qualification'][i.to_s]['degree_id'], degree_stream_id: params['qualification'][i.to_s]['degree_stream_id'], marks: params['qualification'][i.to_s]['marks'], year_id: params['qualification'][i.to_s]['year_id'], college: params['qualification'][i.to_s]['college'], university_id: params['qualification'][i.to_s]['university_id'])
           end
-        EmployeeMailer.qualification_create(@employee,@qualification).deliver_now  
+        # EmployeeMailer.qualification_create(@employee,@qualification).deliver_now  
           @qualifications = Qualification.where(employee_id: @employee.id)
           format.html { redirect_to @qualification, notice: 'Qualification was successfully created.' }
           format.json { render :show, status: :created, location: @qualification }
@@ -66,7 +66,7 @@ class QualificationsController < ApplicationController
         EmployeeMailer.qualification_create(@employee,@qualification).deliver_now  
         @qualifications = @employee.qualifications
         format.js { @flag = true }
-        EmployeeMailer.qualification_create(@employee,@qualification).deliver_now
+        # EmployeeMailer.qualification_create(@employee,@qualification).deliver_now  
       else
         # format.html { render :edit }
         # format.json { render json: @skillset.errors, status: :unprocessable_entity }
@@ -80,7 +80,7 @@ class QualificationsController < ApplicationController
   def destroy
     @qualification.destroy
     respond_to do |format|
-      format.html { redirect_to qualifications_url, notice: 'Qualification was successfully destroyed.' }
+      #format.html { redirect_to qualifications_url, notice: 'Qualification was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

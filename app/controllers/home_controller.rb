@@ -11,6 +11,7 @@ class HomeController < ApplicationController
     @companies = Company.all
     @company_locations = CompanyLocation.all
     @departments = Department.all
+    @employees = Employee.all
     #vacancy
     @vacancy_masters = VacancyMaster.where(vacancy_of: 'Refferal',is_confirmed: nil)
    
@@ -50,6 +51,8 @@ class HomeController < ApplicationController
       elsif current_user.role.name == 'AdminTimeManagement'
         @employee = Employee.find(current_user.employee_id)
       elsif current_user.role.name == 'NewEmployee'
+        @employee = Employee.find(current_user.employee_id)
+      elsif current_user.role.name == 'CEO'
         @employee = Employee.find(current_user.employee_id)
       end
     else

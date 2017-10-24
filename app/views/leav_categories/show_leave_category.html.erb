@@ -53,8 +53,11 @@
       <th><strong>Status</strong></th>
       <td><%= @leav_category.is_active ? "Yes" : "No" %></td>
     </tr>
-
-    <tr>
+ <tr>
+      <th><strong>Limit</strong></th>
+      <td> <%= @leav_category.is_limit ? "Yes" : "No" %></td>
+ </tr>     
+<tr>
       <th><strong>Transfer</strong></th>
       <td> <%= @leav_category.transfer ? "Yes" : "No" %></td>
 

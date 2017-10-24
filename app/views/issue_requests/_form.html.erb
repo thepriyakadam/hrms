@@ -24,7 +24,7 @@
       </div>
 
       <div class="col-sm-6">
-        <div class="group">
+        <div class="field">
           <%= f.text_area :description ,{label: "Description",readonly:true} %>
         </div>
       </div>
@@ -37,12 +37,12 @@
         </div>
       </div>
       <div class="col-sm-6">
-        <div class="field">
-          <%= f.text_field :description ,{label: "Description"} %>
+        <div class="form-group required">
+          <%= f.text_area :description ,{label: "Description (Please fill the description which are prescribed above)"} %>
         </div>
       </div>
       <div class="col-sm-3">
-          <div class="field">
+          <div class="field" style="padding: 15px">
             <%= f.file_field :document1,label: 'Upload Document(only docx,pdf)' %>
           </div>
       </div>
@@ -80,6 +80,9 @@ $("#issue_request").validate({
       },
       "issue_request[issue_priority]":{
         required: true,
+         },
+      "issue_request[description]":{
+        required: true,
       },
        },
     messages: {
@@ -91,6 +94,9 @@ $("#issue_request").validate({
       },
       "issue_request[issue_priority]":{
         required: "Please Select Priority",
+      },
+      "issue_request[description]":{
+        required: "Please Specify The Description",
       },
        },
     errorPlacement: function(error, element) {

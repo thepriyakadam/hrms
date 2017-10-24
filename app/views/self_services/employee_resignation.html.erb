@@ -15,7 +15,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :resignation_date,{onchange:"var a={id:$(this).val()}; $.get('/self_services/display_notice_period',a,function(response){});" ,class: 'company_start_date',id: "employee_resignation_resignation_date"}%>
+              <%= f.text_field :resignation_date,{onchange:"var a={id:$(this).val()}; $.get('/self_services/display_notice_period',a,function(response){});" ,class: 'company_start_date'}%>
             </div>
           </div>
         </div>
@@ -28,13 +28,13 @@
 
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :leaving_reason_id, active_leaving_reason,{label: 'Reason of Leaving',include_blank: " Select Reason of Leaving"},class: 'employee_resignation' %>
+            <%= f.select :leaving_reason_id, active_leaving_reason,{label: 'Reason of Leaving',include_blank: " Select Reason of Leaving",id: "employee_resignation_leaving_reason_id"},class: 'employee_resignation' %>
           </div>
         </div>
 
            <div class="col-sm-3">
        <div class="field">
-         <%= f.text_field :short_notice_period,disabled_id: "employee_resignation_short_notice_period",label:'Leaving Date (As per notice period)',readonly: true  %>
+         <% f.text_field :short_notice_period,disabled_id: "employee_resignation_short_notice_period",label:'Leaving Date (As per notice period)',readonly: true  %>
        </div>
       </div>
 
@@ -78,16 +78,16 @@
 
 <script type="text/javascript">
    $(function(){
-    $('#employee_resignation_resignation_date').on('change', function() {
-      var employee_resignation_resignation_date = parseInt($('#employee_resignation_resignation_date').val());
+    $('#employee_resignation_leaving_reason_id').on('change', function() {
+      var employee_resignation_leaving_reason_id = parseInt($('#employee_resignation_leaving_reason_id').val());
       var employee_resignation_notice_period = parseInt($('#employee_resignation_notice_period').val());
 
       var ans="";
-      if (isNaN(employee_resignation_resignation_date) || isNaN(employee_resignation_notice_period)) {
+      if (isNaN(employee_resignation_leaving_reason_id) || isNaN(employee_resignation_notice_period)) {
         ans = ""
       }
       else{
-        ans = (employee_resignation_resignation_date + employee_resignation_notice_period);
+        ans = (employee_resignation_leaving_reason_id + employee_resignation_notice_period);
         var date = new Date ()
         date.setDate(ans);
       }

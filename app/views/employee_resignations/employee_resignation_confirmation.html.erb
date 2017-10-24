@@ -9,7 +9,7 @@
   <thead>
     <tr>
       <th>Resignation Date</th>
-      <th>Tentative leaving date</th>
+      <th>Requested Relieving Date</th>
       <th>Status</th>
     </tr>
   </thead>
@@ -67,10 +67,7 @@
 
     <tr>
       <th>Notice Period (In Months)</th>
-      <td><%= @employee_resignation.notice_period %></td>
-   
-      <th>Short Notice Period</th>
-      <td><%= @employee_resignation.short_notice_period %></td>
+      <td colspan="3"><%= @employee_resignation.notice_period %></td>
     </tr>
       
   <tr>

@@ -334,6 +334,11 @@ class SelfServicesController < ApplicationController
     redirect_to add_attendance_self_services_path
   end
 
+  def exit_interview
+    @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
+    session[:active_tab] ="EmployeeSelfService"
+  end
+
   def internal
     @vacancy_masters = VacancyMaster.where(vacancy_of: 'Internal',is_confirmed: nil)
   end

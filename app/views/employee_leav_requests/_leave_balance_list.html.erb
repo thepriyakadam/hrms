@@ -11,9 +11,6 @@
            <td><%= @employee.manual_employee_code %> - <%= full_name(@employee) %></td>
            </tr>
            <tr>
-           <% if @employee.id == @employee.manager_id %>
-           <th colspan="2"> <center>Time & Attendance Team </center></th>
-           <%else%>
               <th>Manager 1 </th>
               <%if @employee.id == @employee.manager_id %>
              

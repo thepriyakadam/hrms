@@ -1,29 +1,24 @@
- 
+
 <div class="modal-dialog">
   <div class="modal-content">
-  <div class="modal-header">
+    <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Leaving Date </center></h4>
     </div>
-    <div class="modal-body" style="height:1000px; max-height:100px; width:630px; max-width:630px;">
+    <div class="modal-body">
      <%= bootstrap_form_for :employee_resignation,url:{action:"first_approve", emp_resignation_id: @employee_resignation.id},html: {id: 'employee_resignation'} do |f| %>
          <div class="row">
-	 				<div class="col-sm-4">
-	       		<div class="form-group required">
-			        <div class="input-group">
-			          <div class="input-group-addon">
-			            <i class="fa fa-calendar"></i>
-			          </div>
-			          <%= f.text_field :leaving_date, class: 'request_from_date',label:'Leaving Date'%>
-			        </div>
-			      </div>
-			    </div>
+          <div class="col-sm-6">
+            <div class="form-group required">
+                <%= f.text_field :leaving_date, class: 'request_from_date',label:'Leaving Date'%>
+              </div>
+            </div>
 
-          <div class="col-sm-3" style="padding-top: 20px">
-            <%= f.submit "Submit", class: 'btn btn-sm btn-warning fa fa-modx' %>
+          <div class="col-sm-6" style="padding-top: 20px">
+            <%= f.submit "Approve",class: 'btn btn-sm btn-success' %>
           </div>
         </div>
       <% end %>
-     <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
   </div>
 </div>
@@ -49,7 +44,6 @@ $("#employee_resignation").validate({
 </script>
 
 <script type="text/javascript">
-	
   $(function(){
     $('.request_from_date').datepicker({
     changeYear:true,

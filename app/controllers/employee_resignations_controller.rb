@@ -78,7 +78,7 @@ class EmployeeResignationsController < ApplicationController
              EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
               @emp = Employee.find_by(id: @employee_resignation.employee_id)
               @emp.update(status: "Inactive")
-              EmployeeResignationMailer.no_second_reporter_approval_email_to_employee(@employee_resignation).deliver_now
+              # EmployeeResignationMailer.no_second_reporter_approval_email_to_employee(@employee_resignation).deliver_now
               EmployeeResignationMailer.final_approval_email_to_employee(@employee_resignation).deliver_now
 
             format.html { redirect_to @employee_resignation, notice: 'Employee has been separated from the system' }
@@ -217,6 +217,22 @@ class EmployeeResignationsController < ApplicationController
     flash[:notice] = 'Resignation Request Approved Successfully'
     redirect_to resignation_history_employee_resignations_path
   end
+
+  # def first_approve
+  #   @employee_resignation = EmployeeResignation.find(params[:format])
+  #   if @employee_resignation.employee.manager_2_id.nil?
+  #     @employee_resignation.update(is_pending:true,is_first_approved: true,is_second_approved: true,resign_status: "SecondApproved")
+  #     ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "SecondApproved",change_date: Date.today)
+  #     EmployeeResignationMailer.no_second_reporter_approval_email_to_employee(@employee_resignation).deliver_now
+  #   else
+  #     @employee_resignation.update(is_pending:true,is_first_approved: true,second_reporter_id: @employee_resignation.employee.manager_2_id,resign_status: "FirstApproved",is_second_approved: false,is_second_rejected: false, is_cancelled: false)
+  #     ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "FirstApproved",change_date: Date.today)
+  #     EmployeeResignationMailer.first_level_approval_email_to_employee(@employee_resignation).deliver_now
+  #     EmployeeResignationMailer.second_level_request_email_to_reporting_manager(@employee_resignation).deliver_now
+  #   end
+  #   flash[:notice] = 'Resignation Request Approved Successfully'
+  #   redirect_to resignation_history_employee_resignations_path
+  # end
 
   def second_approve
     @employee_resignation = EmployeeResignation.find(params[:format])

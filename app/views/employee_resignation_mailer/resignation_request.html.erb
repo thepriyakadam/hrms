@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -14,10 +16,12 @@
 @emp.employee.try(:middle_name).to_s %> <%=
 @emp.employee.try(:last_name).to_s %> (ID <%=
 @emp.employee.try(:manual_employee_code)%>)</b>, would like to resign
-from my position with <b><%= @employee.company.try(:name)%>.</b></p>
+from my position with <%= @employee.company.try(:name)%></p>
 
-      <p>I appreciate the opportunities I have been given at <b><%=
-@employee.company.try(:name) %></b> and your professional guidance and
+      <p>I appreciate the opportunities I have been given at 
+
+      <%=
+@employee.company.try(:name) %> and your professional guidance and
 support. I wish you and the company success in the future. Requested
 relieving date is <b><%= @employee_resignation.tentative_leaving_date
 %></b>. The reason of leaving the organization is <b><%=
@@ -29,10 +33,8 @@ First HRMS portal.</p>
       <p>Can we have a discussion on how we can handle this mutually
 regarding my exit plan, backup and handovers.</p>
 
-   Best Regards,
-  <p><%= @emp.employee.prefix %><%=
-@emp.employee.try(:first_name).to_s %> <%=
-@emp.employee.try(:middle_name).to_s %> <%=
+   <p>Best Regards,</p>
+<p><%=@emp.employee.try(:first_name).to_s %> <%=
 @emp.employee.try(:last_name).to_s %></p>
   </body>
 </html>

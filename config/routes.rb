@@ -1196,6 +1196,7 @@ end
       get :final_approval_emp_resignation_list
       get :final_approve
       get :first_reject
+      get :first_approve_modal
       get :second_reject
       get :final_reject
       get :first_approve_modal

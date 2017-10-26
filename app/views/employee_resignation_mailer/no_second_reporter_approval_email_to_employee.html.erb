@@ -6,7 +6,7 @@
  <body>
     <h4><center>Your resignation request has been approved</center></h4>
    <p>
-    This is to inform that the resignation request created by  <b><%= @employee_resignation.try(:employee).try(:prefix) %>  <%= @employee_resignation.try(:employee).try(:first_name) %> <%= @employee_resignation.try(:employee).try(:middle_name) %> <%= @employee_resignation.try(:employee).try(:last_name) %>  </b>  on <b> <%= @employee_resignation.try(:resignation_date) %> </b>, has been approved by your reporting manager <b><%= @reporting_master.try(:employee).try(:prefix)%> <%= @reporting_master.try(:employee).try(:first_name)%> <%= @reporting_master.try(:employee).try(:middle_name)%> <%= @reporting_master.try(:employee).try(:last_name)%></b></p>
+    This is to inform that the resignation request created by  <b><%= @employee_resignation.try(:employee).try(:prefix) %>  <%= @employee_resignation.try(:employee).try(:first_name) %>  <%= @employee_resignation.try(:employee).try(:middle_name) %> </b> <%= @employee_resignation.try(:employee).try(:last_name) %>  on <b> <%= @employee_resignation.try(:resignation_date) %> </b>, has been approved by your reporting manager <b><%= @reporting_master.try(:employee).try(:prefix)%> <%= @reporting_master.try(:employee).try(:first_name)%> <%= @reporting_master.try(:employee).try(:middle_name)%> <%= @reporting_master.try(:employee).try(:last_name)%></b></p>
     <p>As part of the separation process, your resignation has now been sent to the HR Head,</p>
 
    <p>For further details, kindly contact your reporting manager or the HR Team.</p>

@@ -347,6 +347,11 @@ class SelfServicesController < ApplicationController
     @employee = Employee.find(params[:format])
   end
 
+   def exit_interview
+    @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
+    session[:active_tab] ="EmployeeSelfService"
+  end
+
   def modal_c_off
     @leave_c_off = LeaveCOff.find(params[:format])
   end

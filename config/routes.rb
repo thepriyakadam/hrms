@@ -1190,11 +1190,12 @@ end
       post :edit_n_approve
       get :edit_n_approve_modal
       get :display_notice_period
-      get :first_approve
+      post :first_approve
       get :second_approve
       get :final_approval_emp_resignation_list
       get :final_approve
       get :first_reject
+      get :first_approve_modal
       get :second_reject
       get :final_reject
       get :all_employee_resignation_list
@@ -1647,6 +1648,7 @@ end
       get :create_in_time
       get :create_out_time
       get :display_notice_period
+      get :exit_interview
     end
   end
 

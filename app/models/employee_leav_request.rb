@@ -524,6 +524,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
       if leav_category.weekoff_sandwich == true || leav_category.holiday_sandwich == true
 
         if self.weekoff_present(i,employee) || self.holiday_present(i,employee)
+          
         else
           if employee_leav_request.leave_type == 'Full Day'
           LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 1,leav_category_id: employee_leav_request.leav_category_id)

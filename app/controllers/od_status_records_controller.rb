@@ -33,8 +33,8 @@ class OdStatusRecordsController < ApplicationController
     @on_duty_request.create_od_in_attendance
     OdRequestMailer.second_approve(@on_duty_request).deliver_now
   	flash[:notice] = "Approved Successfully"
-  	if @on_duty_request.second_reporter_id == current_user.employee_id
-     redirect_to request_approval_list_on_duty_requests_path
+  	if @on_duty_request.first_reporter_id == current_user.employee_id
+     redirect_to request_approval_list_manager_self_services_path
     else
       redirect_to od_request_list_on_duty_requests_path
     end
@@ -62,8 +62,8 @@ class OdStatusRecordsController < ApplicationController
     OdStatusRecord.create(on_duty_request_id: @on_duty_request.id,employee_id: current_user.employee_id,status: 'Rejected',change_date: Date.today)
     OdRequestMailer.second_reject(@on_duty_request).deliver_now
     flash[:notice] = "Rejected Successfully"
-    if @on_duty_request.second_reporter_id == current_user.employee_id
-     redirect_to request_approval_list_on_duty_requests_path
+    if @on_duty_request.first_reporter_id == current_user.employee_id
+     redirect_to request_approval_list_manager_self_services_path
     else
       redirect_to od_request_list_on_duty_requests_path
     end

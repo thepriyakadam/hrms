@@ -1,0 +1,7 @@
+// $('#info').html("<%= j render 'modal_employee_plan_details'%>")
+<% if EmployeePlan.exists?(employee_plan: params[:id]) %>
+<%@employee_plan = EmployeePlan.find_by_employee_plan(params[:id])%>
+$('#info').html("<%= j render 'modal_employee_plan_details' %>")
+<%else%>
+$('#info').html("<%= j render 'form' %>")
+<%end%>

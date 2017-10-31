@@ -5,7 +5,7 @@ class EmployeePlansController < ApplicationController
   # GET /employee_plans.json
   def index
     # @employee_plan = EmployeePlan.new
-    @employee_plans = EmployeePlan.all
+    @employee_plans = EmployeePlan.where(employee_id: current_user.employee_id)
   end
 
   # GET /employee_plans/1
@@ -27,7 +27,7 @@ class EmployeePlansController < ApplicationController
     # @employee_plans = EmployeePlan.all
     respond_to do |format|
       if @employee_plan.save
-        format.html { redirect_to @employee_plan, notice: 'Employee plan was successfully created.' }
+        format.html { redirect_to employee_plans_url, notice: 'Employee plan was successfully created.' }
         format.json { render :show, status: :created, location: @employee_plan }
       else
         format.html { render :new }
@@ -45,7 +45,7 @@ class EmployeePlansController < ApplicationController
   def update
     respond_to do |format|
       if @employee_plan.update(employee_plan_params)
-        format.html { redirect_to @employee_plan, notice: 'Employee plan was successfully updated.' }
+        format.html { redirect_to employee_plans_url, notice: 'Employee plan was successfully updated.' }
         format.json { render :show, status: :ok, location: @employee_plan }
       else
         format.html { render :edit }

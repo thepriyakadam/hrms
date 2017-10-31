@@ -2716,5 +2716,8 @@ end
     get 'user_auths/employee_plan_list' => 'user_auths#employee_plan_list', defaults:{format: 'json'}
     post 'user_auths/update_employee_plan' => 'user_auths#update_employee_plan', defaults:{format: 'json'}
     get 'user_auths/destroy_employee_plan' => 'user_auths#destroy_employee_plan', defaults:{format: 'json'}
+    get 'user_auths/holiday_setup' => 'user_auths#holiday_setup', defaults:{format: 'json'}
+    get 'user_auths/employee_contact_library' => 'user_auths#employee_contact_library', defaults:{format: 'json'}
+    get 'user_auths/employee_details' => 'user_auths#employee_details', defaults:{format: 'json'}
   end
 end

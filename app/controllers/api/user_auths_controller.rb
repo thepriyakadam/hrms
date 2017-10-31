@@ -150,7 +150,7 @@ class Api::UserAuthsController < ApplicationController
       if @employee_leav_request.employee.manager_2_id.nil?
         @leave_status = LeaveStatusRecord.new do |s|
           s.employee_leav_request_id = employee_leav_request
-          s.change_status_employee_id = current_user.employee_id unless current_user.class == Group
+          s.change_status_employee_id = employee_id unless Member.find(employee_id).class == Group
           s.status = 'FinalApproved'
           s.change_date = Time.now
         end
@@ -161,7 +161,7 @@ class Api::UserAuthsController < ApplicationController
             @employee_leav_request.manage_coff(@employee_leav_request)
             @employee_leav_request.create_attendance
             LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FinalApproved")
-            if @employee_leav_request.first_reporter_id == current_user.employee_id
+            if @employee_leav_request.first_reporter_id == employee_id
               # redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
               LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
               # flash[:notice] = 'Leave Request Approved Successfully.'
@@ -173,7 +173,7 @@ class Api::UserAuthsController < ApplicationController
               render :status=>200, :json=>{:status=>"Leave Request Approved Successfully by Admin."}
             end
           else
-            if @employee_leav_request.first_reporter_id == current_user.employee_id
+            if @employee_leav_request.first_reporter_id == employee_id
               # redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
               # flash[:alert] = 'Leave Already Approved. Please refresh page.'
               render :status=>200, :json=>{:status=>"Leave Already Approved. Please refresh page."}
@@ -188,7 +188,7 @@ class Api::UserAuthsController < ApplicationController
       else
         @leave_status = LeaveStatusRecord.new do |s|
           s.employee_leav_request_id = employee_leav_request
-          s.change_status_employee_id = employee_id unless current_user.class == Group
+          s.change_status_employee_id = employee_id unless Member.find(employee_id).class == Group
           s.status = 'FirstApproved'
           s.change_date = Time.now
           LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FirstApproved") 
@@ -223,7 +223,7 @@ class Api::UserAuthsController < ApplicationController
     else
       @leave_status = LeaveStatusRecord.new do |s|
         s.employee_leav_request_id = employee_leav_request
-        s.change_status_employee_id = employee_id unless current_user.class == Group
+        s.change_status_employee_id = employee_id unless Member.find(employee_id).class == Group
         s.status = 'FinalApproved'
         s.change_date = Time.now
       end
@@ -783,14 +783,13 @@ class Api::UserAuthsController < ApplicationController
     meeting_with = params[:meeting_with]
     location = params[:location]
     meeting_agenda = params[:meeting_agenda]
-    lat = params[:lat]
-    lng = params[:lng]
+    latitude = params[:latitude]
+    longitude = params[:longitude]
     conform = params[:conform]
     status = params[:status]
     current_status = params[:current_status]
     manager_id = params[:manager].to_i
-
-    employee_plan = EmployeePlan.new(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, lat: lat, lng: lng, conform: conform, status: status, current_status: current_status, manager_id: manager_id)
+    employee_plan = EmployeePlan.new(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, conform: conform, status: status, current_status: current_status, manager_id: manager_id)
     if employee_plan.save
       render :status=>200, :json=>{:status=>"Employee plan was successfully created"}
     else
@@ -801,8 +800,8 @@ class Api::UserAuthsController < ApplicationController
   def employee_plan_list
     employee_id = params[:employee_id].to_i
     date = params[:date]
-    employee_plan = EmployeePlan.where(employee_id).where("? BETWEEN from_date AND from_date", date)
-    render :json => employee_plan.present? ? employee_plan.collect{|epl| {:id => epl.id, :employee_id => epl.employee_id,:from_date => epl.from_date, :to_date => epl.to_date, :from_time => epl.from_time, :to_time => epl.to_time, :meeting_with => epl.meeting_with, :location => epl.location, :meeting_agenda => epl.meeting_agenda, :lat => epl.lat, :lng => epl.lng, :conform => epl.conform, :status => epl.status, :current_status => epl.current_status, :manager_id => epl.manager_id  }} : []
+    employee_plan = EmployeePlan.where(employee_id: employee_id).where("? BETWEEN from_date AND from_date", date)
+    render :json => employee_plan.present? ? employee_plan.collect{|epl| {:id => epl.id, :employee_id => epl.employee_id,:from_date => epl.from_date, :to_date => epl.to_date, :from_time => epl.from_time, :to_time => epl.to_time, :meeting_with => epl.meeting_with, :location => epl.location, :meeting_agenda => epl.meeting_agenda, :latitude => epl.latitude, :longitude => epl.longitude, :conform => epl.conform, :status => epl.status, :current_status => epl.current_status, :manager_id => epl.manager_id  }} : []
   end
 
   def update_employee_plan
@@ -814,15 +813,15 @@ class Api::UserAuthsController < ApplicationController
     meeting_with = params[:meeting_with]
     location = params[:location]
     meeting_agenda = params[:meeting_agenda]
-    lat = params[:lat]
-    lng = params[:lng]
+    latitude = params[:latitude]
+    longitude = params[:longitude]
     conform = params[:conform]
     status = params[:status]
     current_status = params[:current_status]
     manager_id = params[:manager].to_i
     plan_id = params[:plan_id].to_i
     @employee_plan = EmployeePlan.find(plan_id)
-    updated_plan = @employee_plan.update(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, lat: lat, lng: lng, conform: conform, status: status, current_status: current_status, manager_id: manager_id)
+    updated_plan = @employee_plan.update(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, conform: conform, status: status, current_status: current_status, manager_id: manager_id)
     render :status=>200, :json=>{:status=>"Employee plan was successfully updated."}
   end
 
@@ -832,4 +831,23 @@ class Api::UserAuthsController < ApplicationController
     @employee_plan.destroy
     render :status=>200, :json=>{:status=>"Employee plan was successfully destroyed."}
   end
+
+  def holiday_setup
+    employee_id = params[:employee_id].to_i
+    @day = params[:day]
+    employee_attendances = EmployeeAttendance.where(present: 'H', employee_id: employee_id)
+    render :json => employee_attendances.present? ? employee_attendances.collect{|eat| {:id => eat.id, :employee_id => eat.employee_id, :day => eat.day, :present => eat.present, :in_time => eat.in_time, :out_time => eat.out_time, :machine_attendance_id => eat.machine_attendance_id, :is_confirm => eat.is_confirm, :department_id => eat.department_id, :count => eat.count, :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :company_time_master_id => eat.company_time_master_id, :working_hrs => eat.working_hrs, :rest_time => eat.rest_time, :holiday_id => eat.holiday.name }} : []
+  end
+
+  def employee_contact_library
+    employees = Employee.where(status: "Active")
+    render :json => employees.present? ? employees.collect{|emp| {:id => emp.id, :prefix => emp.prefix, :first_name => emp.first_name, :middle_name => emp.middle_name, :last_name => emp.last_name, :contact_no => emp.contact_no }} : []
+  end
+  
+  def employee_details
+    employee_id = params[:employee_id]
+    employee = Employee.where(id: employee_id)
+    render :json => employee.present? ? employee.collect{|emp| {:id => emp.id, :prefix => emp.prefix, :first_name => emp.first_name, :middle_name => emp.middle_name, :last_name => emp.last_name, :contact_no => emp.contact_no, :email => emp.email, :department_id => emp.department.name, :employee_designation => emp.joining_detail.employee_designation.name  }} : []
+  end
+  
 end

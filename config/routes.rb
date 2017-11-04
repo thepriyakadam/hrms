@@ -1,7 +1,21 @@
 Rails.application.routes.draw do
+
   resources :events
   resources :resource_pool_masters
   resources :service_masters
+  resources :employee_plans do
+    collection do
+      get :modal_employee_plan_detail
+      get :employee_plan_detail_list
+      get :ajax_employee_plan_details
+    end
+  end
+  resources :events  # do
+  #   collection do
+  #     get :user_events
+  #   end
+  # end
+
   resources :contact_details do
     collection do
       get :modal_contact_detail
@@ -2723,14 +2737,25 @@ end
   #     resources :products
   #   end
 
-#   namespace :api do
-#     resources :user_auths,:only => [:create], defaults: {format: 'json'}
-#     post 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
-#     # get 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
-
-#     get 'user_auths/employee_list' => 'user_auths#employee_list', defaults:{format: 'json'}
-#     get 'user_auths/leave_request' => 'user_auths#leave_request', defaults:{format: 'json'}
-#     post 'user_auths/employee_leave_request' => 'user_auths#employee_leave_request', defaults:{format: 'json'}
-#     get 'user_auths/leave_category' => 'user_auths#leave_category', defaults:{format: 'json'}
-# end
+  namespace :api do
+    resources :user_auths,:only => [:create], defaults: {format: 'json'}
+    post 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
+    get 'user_auths/employee_list' => 'user_auths#employee_list', defaults:{format: 'json'}
+    get 'user_auths/leave_request' => 'user_auths#leave_request', defaults:{format: 'json'}
+    post 'user_auths/employee_leave_request' => 'user_auths#employee_leave_request', defaults:{format: 'json'}
+    get 'user_auths/leave_category' => 'user_auths#leave_category', defaults:{format: 'json'}
+    get 'user_auths/all_leave_request_list' => 'user_auths#all_leave_request_list', defaults:{format: 'json'}
+    get 'user_auths/cancel_leave_request' => 'user_auths#cancel_leave_request', defaults:{format: 'json'}
+    get 'user_auths/leave_approval_list' => 'user_auths#leave_approval_list', defaults:{format: 'json'}
+    get 'user_auths/first_approved_employee_leave_requests' => 'user_auths#first_approved_employee_leave_requests', defaults:{format: 'json'}
+    get 'user_auths/approve_leave_request' => 'user_auths#approve_leave_request', defaults:{format: 'json'} 
+    get 'user_auths/reject_leave_request' => 'user_auths#reject_leave_request', defaults:{format: 'json'}
+    post 'user_auths/employee_plan' => 'user_auths#employee_plan', defaults:{format: 'json'}
+    get 'user_auths/employee_plan_list' => 'user_auths#employee_plan_list', defaults:{format: 'json'}
+    post 'user_auths/update_employee_plan' => 'user_auths#update_employee_plan', defaults:{format: 'json'}
+    get 'user_auths/destroy_employee_plan' => 'user_auths#destroy_employee_plan', defaults:{format: 'json'}
+    get 'user_auths/holiday_setup' => 'user_auths#holiday_setup', defaults:{format: 'json'}
+    get 'user_auths/employee_contact_library' => 'user_auths#employee_contact_library', defaults:{format: 'json'}
+    get 'user_auths/employee_details' => 'user_auths#employee_details', defaults:{format: 'json'}
+  end
 end

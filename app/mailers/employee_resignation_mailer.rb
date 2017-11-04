@@ -9,6 +9,25 @@ class EmployeeResignationMailer < ApplicationMailer
 
   end
 
+  def hr_request_to_employee(employee_resignation)
+    @employee_resignation = EmployeeResignation.find(employee_resignation.id)
+    @employee = Employee.find(@employee_resignation.employee_id)
+    mail(to: @employee.email,subject: 'Resignation Request')
+
+  end
+
+  def hr_request_to_manager_one(employee_resignation)
+    @employee_resignation = EmployeeResignation.find(employee_resignation.id)
+    @employee = Employee.find(@employee_resignation.reporting_master_id)
+    mail(to: @employee.email,subject: 'Resignation Request')
+  end
+
+  def hr_request_to_manager_two(employee_resignation)
+      @employee_resignation = employee_resignation
+      @employee = Employee.find(@employee_resignation.employee_id)
+      @manager = Employee.find(@employee.manager_2_id)
+      mail(to: @manager.email,subject: 'Resignation Request')
+  end
 
   # def cancel_resignation_email(employee_resignation)
   #    @employee_resignation = EmployeeResignation.find(employee_resignation.id)

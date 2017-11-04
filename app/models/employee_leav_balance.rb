@@ -62,6 +62,11 @@ class EmployeeLeavBalance < ActiveRecord::Base
     LeaveMaster.exists?(leav_category_id: e.leav_category_id)
   end
 
+  # def is_present_for_leave_balance(e)
+  #   LeaveMaster.exists?(leav_category_id: e.leav_category_id)
+  # end
+
+
   def emp_available(e)
     from_date = e.from_date
     to_date = e.to_date

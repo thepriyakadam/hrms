@@ -3,37 +3,43 @@
       <table id="example6" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>Sr.No.</th>
             <th>Employee</th>
+            <th>ID</th>
+            <th>Department</th>
+            <th>Joining Date</th>
+            <th>Payable Day</th>
+            <th>LWP</th>
+            <th>Opening Balance</th>
+            <th>Leave</th>
+            <th>Closing Balance</th>
+          
+            <th>C.Off</th>
+            <th>ACF</th>
+            <th>HP</th>
               <% @from_date.step(@to_date).each do |l| %>
                 <th><%= l.strftime("%d") %></th>
               <%end%>
-             
-                        
-                <th>P</th>
-                <th>WO</th>
-                <th>H</th>
-                <th>OD</th>
-                <th>A</th>
-                <th>Payable Leave</th>
-                <th>Non Payable Leave</th>
-                <th>Payable Day</th>
-              <!-- <th>Non Payable Day</th> -->
             </tr>
         </thead>
         <tbody>
           <% exist = {} %>
+           <%i = 0%>
           <% @employee_attendances.each do |e| %>
             <tr>
-            <td><%= e.employee.try(:manual_employee_code) %></td>
+             <td><%= i=i+1 %></td>
               <td><%= full_name(e.employee) %></td>
+              <td><%= e.employee.try(:manual_employee_code) %></td>
+              <td><%= e.employee.department.try(:description) %> <% if e.employee.sub_department.try(:name) == "NA"%>  <% else %> <%= e.employee.sub_department.try(:name) %><%end%></td>
+              <td><%= e.employee.joining_detail.try(:joining_date) %></td>
+
               <% sorted_exists = calculate_attendance_datewise(@from_date,@to_date, exist, e)%>
-              <% sorted_exists.each do |k,v|%>
-                <td><%= v %></td>
-              <%end%>
-           
+              
             <% holiday_in_month = holiday_in_month_count(exist) %>
+            <% holiday_present_in_month = holiday_present_in_month_count(exist) %>
+            <% no_of_holiday_present_in_month = no_of_holiday_present_in_month_count(exist) %>
             <% week_off_day = week_off_day_count(exist) %>
+           
             <% od_day = od_day_count(exist) %>
             <% present_count = present_count(exist) %>
             <% absent_count = absent_count(exist) %>
@@ -52,21 +58,14 @@
             <% access_card_forgotten = access_card_forgotten_count(exist) %>
 
 
-              <td><%= present_count.to_f + process_off.to_f + access_card_forgotten.to_f %></td>
-              <td><%= week_off_day %></td>
-              <td><%= holiday_in_month %></td>
-              <td><%= od_day %></td>
-              <td><%= absent_count.to_f %></td>
-
               <% payable_leave = el_leave_count.to_f + cl_leave_count.to_f + coff_leave_count.to_f + advance_leave_count.to_f + pl_leave_count.to_f + sl_leave_count.to_f + leave_count.to_f + wfh_leave_count.to_f + ml_leave_count.to_f %>
              
               <% nonpayable_leave = lwp_leave_count.to_f + esic_leave_count.to_f %>
-              <td><%= payable_leave %></td>
-              <td><%= nonpayable_leave %></td>
+       
                 <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
                   <% payable_day = present_count.to_f + process_off.to_f + access_card_forgotten.to_f + od_day.to_f + holiday_in_month.to_f + cl_leave_count.to_f + el_leave_count.to_f + coff_leave_count.to_f %>
                 <% else %>
-                  <% payable_day = present_count.to_f + process_off.to_f + access_card_forgotten.to_f + od_day.to_f + holiday_in_month.to_f + week_off_day.to_f + cl_leave_count.to_f + el_leave_count.to_f + coff_leave_count.to_f %>
+                  <% payable_day = present_count.to_f + process_off.to_f + access_card_forgotten.to_f + od_day.to_f + holiday_in_month.to_f + week_off_day.to_f + cl_leave_count.to_f + el_leave_count.to_f + coff_leave_count.to_f  + holiday_present_in_month.to_f %>
                 <% end %>
 
                 <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
@@ -76,7 +75,18 @@
                 <% end %>
 
               <td><%= payable_day %></td>
+             
+              <td><%= nonpayable_leave %></td>
+              <td></td>
+               <td><%= payable_leave %></td>
+              <td></td>
+              <td><%= coff_leave_count %></td>
+              <td><%= access_card_forgotten %></td>
+              <td><%= no_of_holiday_present_in_month %></td>
               <!-- <td><= nonpayable_day %></td> -->
+              <% sorted_exists.each do |k,v|%>
+                <td><%= v %></td>
+              <%end%>
             </tr>          
             <% exist.clear %>
 

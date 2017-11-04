@@ -14,12 +14,12 @@
       </div>
 
 
-      <div class="col-sm-6">
+      <!-- <div class="col-sm-6">
        <div class="form-group required">
-          <%= f.text_field :leaving_date,label: "Leaving Date", class: 'leaving_date'%>
+          <%#= f.text_field :leaving_date,label: "Leaving Date", class: 'leaving_date'%>
         </div>
       </div>
-     </div>
+     </div> -->
 
      <div class="row">
      <div class="col-sm-6" style="padding-top:20px;">
@@ -55,4 +55,24 @@
     dateFormat: 'dd-mm-yy' });
 
   }); 
+</script>
+
+<script>
+$("#exit_interview_date").validate({
+    rules: {
+      "exit_interview_date[exit_interview_date]":{
+        required: true,
+      }
+    },
+    messages: {
+      "exit_interview_date[exit_interview_date]":{
+        required: "Please Select Exit Interview Date",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
 </script>

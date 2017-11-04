@@ -253,6 +253,7 @@ Rails.application.routes.draw do
       get :show_subordinate_attendance
       post :vacancy_request_create
       get :vacancy_request
+      get :final_approve_modal
     end
   end
 
@@ -729,6 +730,8 @@ end
   end
   resources :employee_attendances do
     collection do
+      get :employee_not_found
+      post :not_found
       post :department_wise_employee_list
       post :all_emp_list
       post :create_employee_attendance
@@ -1198,7 +1201,7 @@ end
       get :second_reject
       get :final_reject
       get :all_employee_resignation_list
-      get :show_resignation_status_detail
+      get :modal_show_resignation_status_detail
       get :show_resignation_detail
       get :final_approved_list
       get :confirm_resignation
@@ -1209,6 +1212,7 @@ end
       get :settelment_date
       post :settelment_date_create
       post :update_dates
+      post :first_approve_update_dates
       get :collect_date
   end
 end
@@ -1646,6 +1650,7 @@ end
       get :modal_c_off
       get :create_in_time
       get :create_out_time
+      get :display_notice_period
     end
   end
 
@@ -2325,6 +2330,8 @@ end
       get :is_confirm_leave
       patch :update_leave_auto
       get :modal_balance_detail
+      get :leave_balance
+      post :leave
     end
   end
 
@@ -2352,6 +2359,7 @@ end
       get :status_wise_request
       get :select_form
       get :select_admin_form
+      get :admin_c_off_form
       get :balancewise_report
       post :show_balancewise_report
       get :show_balancewise_report

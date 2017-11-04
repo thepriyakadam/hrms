@@ -65,6 +65,23 @@ class EmployeeLeavRequestsController < ApplicationController
     end
   end
 
+  def admin_c_off_form
+     @employee_leav_request = EmployeeLeavRequest.new
+    employee = params[:employee_id]
+    @employee = Employee.find_by(id: employee)
+    @leave_id = params[:leav_category_id]
+
+    leav_category = LeavCategory.find_by(code: "C.Off")
+    @leav_category_id = leav_category.id
+    @leav_id = @leav_category_id.to_s.split('')
+
+    if params[:leav_category_id] == @leav_id.inject{|n| n}
+      @flag = true
+    else
+      @flag = false
+    end
+  end
+
   def select_form
     @employee_leav_request = EmployeeLeavRequest.new
     @employee = Employee.find_by(id: current_user.employee_id)

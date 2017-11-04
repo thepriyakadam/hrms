@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171024102322) do
+ActiveRecord::Schema.define(version: 20171023161227) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -848,7 +848,7 @@ ActiveRecord::Schema.define(version: 20171024102322) do
 
   create_table "employee_attendances", force: :cascade do |t|
     t.integer  "employee_id",              limit: 4
-    t.datetime "day"
+    t.date     "day"
     t.string   "present",                  limit: 255
     t.datetime "in_time"
     t.datetime "out_time"
@@ -2307,9 +2307,9 @@ ActiveRecord::Schema.define(version: 20171024102322) do
     t.boolean  "is_confirm"
     t.date     "day"
     t.string   "status",                   limit: 255
+    t.decimal  "count",                                precision: 2, scale: 1
     t.datetime "created_at",                                                   null: false
     t.datetime "updated_at",                                                   null: false
-    t.decimal  "count",                                precision: 5, scale: 1
   end
 
   add_index "leave_records", ["employee_id"], name: "index_leave_records_on_employee_id", using: :btree
@@ -3200,14 +3200,13 @@ ActiveRecord::Schema.define(version: 20171024102322) do
   create_table "salaryslip_components", force: :cascade do |t|
     t.integer  "salaryslip_id",        limit: 4
     t.integer  "salary_component_id",  limit: 4
-    t.decimal  "actual_amount",                    precision: 15, scale: 2
-    t.decimal  "calculated_amount",                precision: 15, scale: 2
+    t.decimal  "actual_amount",                  precision: 15, scale: 2
+    t.decimal  "calculated_amount",              precision: 15, scale: 2
     t.boolean  "is_deducted"
     t.integer  "employee_template_id", limit: 4
     t.boolean  "is_arrear"
-    t.datetime "created_at",                                                null: false
-    t.datetime "updated_at",                                                null: false
-    t.string   "other_component_name", limit: 255
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
   end
 
   add_index "salaryslip_components", ["employee_template_id"], name: "index_salaryslip_components_on_employee_template_id", using: :btree
@@ -3277,8 +3276,6 @@ ActiveRecord::Schema.define(version: 20171024102322) do
     t.integer  "passport_photo_file_size",    limit: 4
     t.datetime "passport_photo_updated_at"
     t.integer  "add_by_id",                   limit: 4
-    t.string   "current_ctc",                 limit: 255
-    t.string   "contact_no2",                 limit: 255
   end
 
   add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id", using: :btree
@@ -3734,8 +3731,6 @@ ActiveRecord::Schema.define(version: 20171024102322) do
     t.integer  "reporting_master_id",       limit: 4
     t.string   "relocation_cost",           limit: 255
     t.boolean  "relocation_rerimbursement"
-    t.string   "notice_period_day",         limit: 255
-    t.integer  "recruiter_id",              limit: 4
   end
 
   add_index "vacancy_masters", ["company_id"], name: "index_vacancy_masters_on_company_id", using: :btree
@@ -3808,7 +3803,6 @@ ActiveRecord::Schema.define(version: 20171024102322) do
     t.integer  "recruiter_id",            limit: 4
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
-    t.string   "notice_period_day",       limit: 255
   end
 
   add_index "vacancy_requests", ["department_id"], name: "index_vacancy_requests_on_department_id", using: :btree

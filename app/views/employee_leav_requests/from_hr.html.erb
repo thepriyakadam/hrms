@@ -54,14 +54,15 @@
        <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :leav_category_id,options_for_select(all_leav_category),{label: 'Leave Category',include_blank: "Select Leave" },{onchange:"var a={leav_category_id:$(this).val(),employee_id:$('#employee_leav_request_employee_id').val()};$('.ajax-progress').show(); $.get('/employee_leav_requests/select_admin_form',a,function(response){});",class: 'form-control'} %>
+            <%= f.select :leav_category_id,options_for_select(all_leav_category),{label: 'Leave Category',include_blank: "Select Leave" },{onchange:"var a={leav_category_id:$(this).val(),employee_id:$('#employee_leav_request_employee_id').val()};$('.ajax-progress').show(); $.get('/employee_leav_requests/admin_c_off_form',a,function(response){});",class: 'form-control'} %>
           </div>
         </div>
       </div>
 
       <div class="row">
          <div id="normal_form"></div>
-         <div id="c_off_form"></div>
+         <!-- <div id="c_off_form"></div> -->
+         <div id="admin_c_off_form"></div>
       </div>
       <%end%>
   </div><!-- /.box-body -->

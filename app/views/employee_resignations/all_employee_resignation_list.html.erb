@@ -21,7 +21,8 @@
         <td> <%= full_name(g.employee)%></td>
         <td><%= g.resign_status %></td>
 <!--        <= link_to '', g,class: 'btn btn-xs btn-default fa fa-eye' %> 
- -->         <td><%= link_to '', show_resignation_status_detail_employee_resignations_path(g),class: 'btn btn-xs btn-default fa fa-eye' %> </td>
+ -->         
+     <td><%= link_to '', modal_show_resignation_status_detail_employee_resignations_path(g),class: 'btn btn-xs btn-default fa fa-eye',remote:true %> </td>
         </tr>
         <% end %>
       </tbody>
@@ -29,3 +30,5 @@
     <%= link_to 'Back', emp_resignation_history_employee_resignations_path,class: 'btn btn-default fa fa-arrow-left' %>
   </div>
 </div>
+
+<div id="modal_show_resignation_status_detail" class="modal fade"></div>

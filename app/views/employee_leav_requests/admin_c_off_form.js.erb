@@ -1,0 +1,9 @@
+<% if @flag %>
+$("#admin_c_off_form").html("<%= j render 'admin_c_off_form' %>");
+$("#normal_form").hide();
+$("#c_off_form").show();
+<% else %>
+$("#normal_form").html("<%= j render 'normal_form' %>");
+$("#admin_c_off_form").hide();
+$("#normal_form").show();
+<% end %>

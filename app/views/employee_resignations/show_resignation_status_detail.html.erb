@@ -10,33 +10,26 @@
    <table id="example2" class="table table-bordered table-hover table-condensed'">
   <tr><td colspan="4"><font color='label-primary'><center>Resignation Request of <%= @employee_resignation.employee.try(:manual_employee_code) %> - <%= full_name(@employee_resignation.employee) %></center></font></td></tr>
 
-<tr>
-
+    <!-- <tr>
       <th>Resignation Code</th>
       <td colspan="3"><%= @employee_resignation.id %></td>
-    
-     <!--  <th>Employee Name</th>
-      <td><%= full_name(@employee_resignation.employee) %></td> -->
-    </tr>
+     <th>Employee Name</th>
+      <td><%= full_name(@employee_resignation.employee) %></td> 
+    </tr> -->
     <tr>
       <th>Reporting Manager 1</th>
-      <td colspan="3"><%= @employee_resignation.employee.manager.try(:first_name) %> <%= @employee_resignation.employee.manager.try(:middle_name) %> <%= @employee_resignation.employee.manager.try(:last_name) %></td>
-    </tr>
-    <tr>
+      <td><%= @employee_resignation.employee.manager.try(:first_name) %> <%= @employee_resignation.employee.manager.try(:middle_name) %> <%= @employee_resignation.employee.manager.try(:last_name) %></td>
+  
       <th>Reporting Manager 2</th>
-      <td colspan="3"><%= @employee_resignation.employee.try(:manager_2).try(:first_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:middle_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:last_name) %></td>
+      <td><%= @employee_resignation.employee.try(:manager_2).try(:first_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:middle_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:last_name) %></td>
     </tr>
 
     <tr>
-
     <th>Resignation Date</th>
-      <td><%= @employee_resignation.resignation_date %></td>
+    <td><%= @employee_resignation.resignation_date %></td>
 
-      <!-- <td><b>Exit interview date</b></td>
-      <td><%= @employee_resignation.exit_interview_date %></td> -->
-      
-      <th><strong>Leaving Reason</strong></th>
-      <td><%= @employee_resignation.leaving_reason.try(:name)%></td>
+    <th><strong>Leaving Reason</strong></th>
+    <td><%= @employee_resignation.leaving_reason.try(:name)%></td>
     </tr>
     <tr>
 
@@ -47,50 +40,32 @@
       <th>Short Notice Period</th>
       <td><%= @employee_resignation.short_notice_period %></td>
     </tr>
-      
-  <tr>
-      <th>Reason</th>
-      <td colspan="3"><%= @employee_resignation.reason %></td>
-    </tr>
-
 
     <tr>
      <th><strong>Requested Relieving Date</strong></th>
      <td><%= @employee_resignation.tentative_leaving_date %></td>
      
+     <th><strong>Leaving Date</strong></th>
+     <td><%= @employee_resignation.leaving_date %></td>
+    </tr>
 
-     <th><strong>Exit Interview Date</strong></th>
-      <td><%= @employee_resignation.exit_interview_date %></td>
-  
-  </tr>
+    <tr>
+      <th>Reason</th>
+      <td colspan="3"><%= @employee_resignation.reason %></td>
+    </tr>
 
-  <tr>
-
-      <th><strong>Leaving Date</strong></th>
-      <td><%= @employee_resignation.leaving_date %></td>
-      
-     <th><strong>Settled On</strong></th>
-     <td><%= @employee_resignation.settled_on %></td>
-
-  </tr>
+    <tr>
+     <th><strong>Note</strong></th>
+     <td colspan="3"><%= @employee_resignation.note %></td>
+    </tr>
 
   <tr>
- <th><strong>Note</strong></th>
-  <td colspan="3"><%= @employee_resignation.note %></td>
+    <th><strong>Exit Interview Date</strong></th>
+    <td><%= @employee_resignation.exit_interview_date %></td>
 
-  <!-- <th><strong>Remark</strong></th>
- <td><%= @employee_resignation.remark %></td> -->
-</tr>
-
-<tr>
-
-  <th><strong>Current Status</strong></th>
-  <td><%= @employee_resignation.resign_status %></td>
-  
- <th></th>
- <td></td>
-
-</tr>
+    <th><strong>Current Status</strong></th>
+    <td><%= @employee_resignation.resign_status %></td>
+  </tr>
 
 
    <!--  <tr>

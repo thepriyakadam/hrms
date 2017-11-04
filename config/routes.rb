@@ -1260,6 +1260,9 @@ end
       get :final_approval_training_list
       get :final_approve
       post :selected_employee_training_list
+      get :training_request_form
+      post :training_create_form
+      # post :training_request_form
     end
   end
   resources :selected_resumes  do
@@ -1619,7 +1622,7 @@ end
       get :attendance
       get :employee_resignation
       get :resignation_history
-      get :show_resignation_detail
+      get :modal_show_resignation_detail
       get :employee_transfer
       get :travel_request
       get :employee_attendance
@@ -2230,8 +2233,16 @@ end
       post :qualification_level_master
     end
   end
-  resources :districts
-  resources :states
+  resources :districts do
+    collection do
+      get :district_master
+    end
+  end
+  resources :states do
+    collection do
+      get :state_master
+    end
+  end
   resources :countries
   resources :employee_designations do
     collection do
@@ -2330,6 +2341,8 @@ end
       get :is_confirm_leave
       patch :update_leave_auto
       get :modal_balance_detail
+      get :leave_balance
+      post :leave
     end
   end
 

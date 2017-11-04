@@ -9,7 +9,7 @@
       <%= hidden_field_tag :notice_period, @notice_period %>
 
       <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
@@ -20,29 +20,23 @@
           </div>
         </div>
 
-          <div class="col-sm-3">
+          <div class="col-sm-4">
          <div class="form-group required">
-           <% f.text_field :notice_period,id: "employee_resignation_notice_period" ,label:'Notice Period',readonly: true %>
+           <%= f.text_field :notice_period,id: "employee_resignation_notice_period" ,label:'Notice Period',readonly: true %>
          </div>
         </div> 
 
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <div class="form-group required">
             <%= f.select :leaving_reason_id, active_leaving_reason,{label: 'Reason of Leaving',include_blank: " Select Reason of Leaving",id: "employee_resignation_leaving_reason_id"},class: 'employee_resignation' %>
           </div>
         </div>
 
-           <div class="col-sm-3">
-       <div class="field">
-         <%= f.text_field :short_notice_period,disabled_id: "employee_resignation_short_notice_period",label:'Leaving Date (As per notice period)',readonly: true  %>
-       </div>
-      </div>
-
-      
+        
       </div>  
 
       <div class="row">
-        <div class="col-sm-3">
+       <div class="col-sm-4">
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
@@ -53,9 +47,18 @@
           </div>
         </div>
 
-        <div class="col-sm-6">
+        <div class="col-sm-4">
+       <div class="field">
+         <%= f.text_field :short_notice_period,disabled_id: "employee_resignation_short_notice_period",label:'Leaving Date (As per notice period)',readonly: true  %>
+       </div>
+      </div>
+       </div>
+        <div class="row">
+       
+
+        <div class="col-sm-12">
           <div class="form-group required">
-            <%= f.text_area :reason, label: "Reason" %>
+            <%= f.text_field :reason, label: "Reason" %>
           </div>
         </div>
         
@@ -66,8 +69,8 @@
         </div> -->
       
         <div class="col-sm-6">
-          <div class="actions" style="padding: 20px">
-            <%= f.submit 'Create Employee Resignation',class: "btn btn-primary btn-sm"  %>
+          <div class="actions" style="top-padding: 20px">
+            <%= f.submit 'Initiate Resignation',class: "btn btn-primary btn-sm"  %>
             <!-- <= link_to 'Back', employee_resignations_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %> -->
           </div>
         </div>

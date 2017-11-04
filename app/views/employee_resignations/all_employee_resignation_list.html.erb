@@ -27,7 +27,11 @@
         <% end %>
       </tbody>
     </table><br>
-    <%= link_to 'Back', emp_resignation_history_employee_resignations_path,class: 'btn btn-default fa fa-arrow-left' %>
+      <% if @employee.manager_id == current_user.employee_id || @employee.manager_2_id == current_user.employee_id %>
+        <%= link_to 'Back', employee_resignation_history_manager_self_services_path,class: 'btn btn-default fa fa-arrow-left' %>
+      <% else %>
+        <%= link_to 'Back', emp_resignation_history_employee_resignations_path,class: 'btn btn-default fa fa-arrow-left' %>
+      <% end %>
   </div>
 </div>
 

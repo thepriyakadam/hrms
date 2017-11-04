@@ -273,7 +273,7 @@ class LeaveCOffsController < ApplicationController
 
   def approve_c_off
 
-    @leave_c_off = LeaveCOff.find(params[:leave_c_off_id])
+    @leave_c_off = LeaveCOff.find(params[:format])
     #expiry_status = params[:leave_c_off][:expiry_status]
     @leave_c_off.update(expiry_status: true)
     #c_off_expire_day = params[:leave_c_off][:c_off_expire_day]

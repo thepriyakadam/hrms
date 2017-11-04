@@ -34,12 +34,16 @@
               <td><%= e.employee.joining_detail.try(:joining_date) %></td>
 
               <% sorted_exists = calculate_attendance_datewise(@from_date,@to_date, exist, e)%>
-              
+
+              <% sorted_exists.each do |k,v|%>
+                <td><%= v %></td>
+              <%end%>
             <% holiday_in_month = holiday_in_month_count(exist) %>
             <% holiday_present_in_month = holiday_present_in_month_count(exist) %>
-            <% no_of_holiday_present_in_month = no_of_holiday_present_in_month_count(exist) %>
+             <% no_of_holiday_present_in_month = no_of_holiday_present_in_month_count(exist) %>
             <% week_off_day = week_off_day_count(exist) %>
-           
+            <% week_off_present_day = week_off_present_day_count(exist) %>
+            <% no_of_week_off_present_day = no_of_week_off_present_day_count(exist) %>
             <% od_day = od_day_count(exist) %>
             <% present_count = present_count(exist) %>
             <% absent_count = absent_count(exist) %>
@@ -56,8 +60,7 @@
             <% wfh_leave_count = wfh_leave_count(exist) %>
             <% process_off = process_off_count(exist) %>
             <% access_card_forgotten = access_card_forgotten_count(exist) %>
-
-
+            
               <% payable_leave = el_leave_count.to_f + cl_leave_count.to_f + coff_leave_count.to_f + advance_leave_count.to_f + pl_leave_count.to_f + sl_leave_count.to_f + leave_count.to_f + wfh_leave_count.to_f + ml_leave_count.to_f %>
              
               <% nonpayable_leave = lwp_leave_count.to_f + esic_leave_count.to_f %>

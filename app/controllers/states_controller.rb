@@ -66,6 +66,24 @@ class StatesController < ApplicationController
     end
   end
 
+
+  def state_master
+    @states = State.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'states/state_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' state_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'states/state_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

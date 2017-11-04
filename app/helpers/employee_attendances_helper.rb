@@ -87,7 +87,8 @@ module EmployeeAttendancesHelper
   end
 
   def holiday_present_in_month_count(exist)
-    ((exist.select {|k,v| v == "HP" }.count)*2.to_f)
+
+    (exist.select {|k,v| v == "HP" }.count)*2.to_f
   end
 
    def no_of_holiday_present_in_month_count(exist)
@@ -95,7 +96,16 @@ module EmployeeAttendancesHelper
   end
 
   def week_off_day_count(exist)
-    exist.select {|k,v| v == "WO" || v =="WOP"}.count
+
+    exist.select {|k,v| v == "WO" }.count
+  end
+
+   def week_off_present_day_count(exist)
+    (exist.select {|k,v|v =="WOP" }.count)*2.to_f
+  end
+
+    def no_of_week_off_present_day_count(exist)
+    exist.select {|k,v|v =="WOP" }.count
   end
 
 

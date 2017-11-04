@@ -1,6 +1,6 @@
 class BloodGroupsController < ApplicationController
   before_action :set_blood_group, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
 
   def new
     @blood_group = BloodGroup.new

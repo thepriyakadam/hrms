@@ -39,11 +39,11 @@
 <table id="example1" class="table table-bordered table-hover table-condensed">
 <tbody>
     <tr><td colspan="4"><font color='label-primary'><center>Current Resignation Request Detail of <%= @employee_resignation.employee.try(:manual_employee_code) %> - <%= full_name(@employee_resignation.employee) %></center></font></td></tr></tbody>
-    <tr>
+   <!--  <tr>
 
       <th>Resignation Code</th>
       <td colspan="3"><%= @employee_resignation.id %></td>
-    </tr>
+    </tr> -->
     <tr>
       <td><b>Reporting Manager 1</b></td>
       <td><%= @employee_resignation.employee.try(:manager).try(:first_name) %> <%= @employee_resignation.employee.try(:manager).try(:middle_name) %> <%= @employee_resignation.employee.try(:manager).try(:last_name) %></td>
@@ -54,50 +54,31 @@
 
     <tr>
 
-    <th>Resignation Date</th>
-      <td><%= @employee_resignation.resignation_date %></td>
+     <th>Resignation Date</th>
+     <td><%= @employee_resignation.resignation_date %></td>
 
-      <!-- <td><b>Exit interview date</b></td>
-      <td><%= @employee_resignation.exit_interview_date %></td> -->
-      
+     
       <th><strong>Leaving Reason</strong></th>
       <td><%= @employee_resignation.leaving_reason.try(:name)%></td>
     </tr>
     <tr>
 
     <tr>
-      <th>Notice Period (In Months)</th>
-      <td><%= @employee_resignation.notice_period %></td>
-   
-      <th>Short Notice Period</th>
-      <td><%= @employee_resignation.short_notice_period %></td>
+      <th>Notice Period (In Days)</th>
+      <td colspan="3"><%= @employee_resignation.notice_period %></td>
     </tr>
       
-  <tr>
-      <th>Reason</th>
-      <td colspan="3"><%= @employee_resignation.reason %></td>
-    </tr>
-
-
     <tr>
      <th>Requested Relieving Date</th>
      <td><%= @employee_resignation.tentative_leaving_date %></td>
      
-
-     <th>Exit Interview Date</th>
-      <td><%= @employee_resignation.exit_interview_date %></td>
+     <th>Leaving Date</th>
+      <td><%= @employee_resignation.leaving_date %></td>
+      
+     
   
   </tr>
 
-  <tr>
-
-      <th>Leaving Date</th>
-      <td><%= @employee_resignation.leaving_date %></td>
-      
-     <th>Settled On</th>
-     <td><%= @employee_resignation.settled_on %></td>
-
-  </tr>
 
   <tr>
  <th>Note</th>
@@ -106,28 +87,32 @@
   <!-- <th><strong>Remark</strong></th>
  <td><%= @employee_resignation.remark %></td> -->
 </tr>
+ <tr>
+      <th>Reason</th>
+      <td colspan="3"><%= @employee_resignation.reason %></td>
+</tr>
 
 <tr>
+  <th>Exit Interview Date</th>
+  <td><%= @employee_resignation.exit_interview_date %></td>
 
   <th>Current Status</th>
   <td><%= @employee_resignation.resign_status %></td>
   
- <th></th>
- <td></td>
-
 </tr>
 
-</table><br>
+
 <div id="myModal" class="modal fade"></div>
 <div id="myModal1" class="modal fade"></div>
 <div id="myModal2" class="modal fade"></div>
 <div id="final_approve_modal" class="modal fade"></div>
-<div id="final_approve_modal" class="modal fade"></div>
-<div id="first_approve" class="modal fade"></div>
 
+<div id="first_approve_modal" class="modal fade"></div>
+<tr>
+<td colspan="4"><center>
 
   <% if @employee_resignation.resign_status == "Pending" %> 
-     <%= link_to 'Approve',first_approve_employee_resignations_path(@employee_resignation), class: 'btn btn-sm btn-primary fa fa-check', remote: true %> 
+     <%= link_to 'Approve',first_approve_modal_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-primary fa fa-check',remote:true %> 
       <%= link_to 'Reject',first_reject_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-danger fa fa-trash' %> 
        <%= link_to 'Back', resignation_history_employee_resignations_path,class: 'btn btn-default fa fa-arrow-left' %> 
       <!-- <= link_to 'Approve & Send next',modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %>  |
@@ -135,7 +120,6 @@
       <!-- <= link_to 'Edit & Approve',edit_n_approve_modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %> -->
 
   <% elsif @employee_resignation.resign_status == "FirstApproved" %>
- 
     <%= link_to 'Approve',second_approve_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-primary fa fa-check' %> 
       <%= link_to 'Reject',second_reject_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-danger fa fa-trash' %> 
         <%= link_to 'Back', resignation_history_employee_resignations_path,class: 'btn btn-default fa fa-arrow-left' %> 
@@ -153,7 +137,8 @@
       <!-- <= link_to 'Edit & Approve',edit_n_approve_modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %> -->
 
   <% end %>
-
+  </center></td></tr>
+</table><br>
  
 </div>
 </div>

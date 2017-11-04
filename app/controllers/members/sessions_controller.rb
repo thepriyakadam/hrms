@@ -4,14 +4,35 @@ class Members::SessionsController < Devise::SessionsController
   # GET /resource/sign_in
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    super
+    # member_id = current_user.id
+    # count = Member.find(member_id).login_count
+    # count = count + 1
+    # if user_signed_in?
+    #   member = Member.find(member_id)
+    #   member.update(:is_active => "true", :login_count => count)
+    # end
+  end
 
   # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
+  def destroy
+    # member_id = current_user.id
+    # count = Member.find(member_id).login_count
+    # count = count - 1
+    # if count <= 0 
+    #   if user_signed_in? == true
+    #     member = Member.find(member_id)
+    #     member.update(:is_active => "false", :login_count=> 0)
+    #   end
+    # else
+    #   if user_signed_in?
+    #     member = Member.find(member_id)
+    #     member.update(:is_active => "true", :login_count=> count)
+    #   end
+    # end 
+    super
+  end
 
   # protected
   

@@ -1,6 +1,6 @@
 class CertificationsController < ApplicationController
   before_action :set_certification, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
   # GET /certifications
   # GET /certifications.json
   def index

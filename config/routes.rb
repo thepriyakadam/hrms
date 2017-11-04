@@ -1,7 +1,21 @@
 Rails.application.routes.draw do
+
   resources :events
   resources :resource_pool_masters
   resources :service_masters
+  resources :employee_plans do
+    collection do
+      get :modal_employee_plan_detail
+      get :employee_plan_detail_list
+      get :ajax_employee_plan_details
+    end
+  end
+  resources :events  # do
+  #   collection do
+  #     get :user_events
+  #   end
+  # end
+
   resources :contact_details do
     collection do
       get :modal_contact_detail
@@ -254,6 +268,7 @@ Rails.application.routes.draw do
       post :vacancy_request_create
       get :vacancy_request
       get :final_approve_modal
+      get :employee_resignation_history
     end
   end
 
@@ -1193,13 +1208,15 @@ end
       post :edit_n_approve
       get :edit_n_approve_modal
       get :display_notice_period
-      get :first_approve
+      post :first_approve
       get :second_approve
       get :final_approval_emp_resignation_list
       get :final_approve
       get :first_reject
+      get :first_approve_modal
       get :second_reject
       get :final_reject
+      get :first_approve_modal
       get :all_employee_resignation_list
       get :modal_show_resignation_status_detail
       get :show_resignation_detail
@@ -1261,6 +1278,9 @@ end
       get :final_approval_training_list
       get :final_approve
       post :selected_employee_training_list
+      get :training_request_form
+      post :training_create_form
+      # post :training_request_form
     end
   end
   resources :selected_resumes  do
@@ -1620,7 +1640,7 @@ end
       get :attendance
       get :employee_resignation
       get :resignation_history
-      get :show_resignation_detail
+      get :modal_show_resignation_detail
       get :employee_transfer
       get :travel_request
       get :employee_attendance
@@ -1651,6 +1671,7 @@ end
       get :create_in_time
       get :create_out_time
       get :display_notice_period
+      get :exit_interview
     end
   end
 
@@ -2230,8 +2251,16 @@ end
       post :qualification_level_master
     end
   end
-  resources :districts
-  resources :states
+  resources :districts do
+    collection do
+      get :district_master
+    end
+  end
+  resources :states do
+    collection do
+      get :state_master
+    end
+  end
   resources :countries
   resources :employee_designations do
     collection do
@@ -2716,11 +2745,22 @@ end
   namespace :api do
     resources :user_auths,:only => [:create], defaults: {format: 'json'}
     post 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
-    # get 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
-
     get 'user_auths/employee_list' => 'user_auths#employee_list', defaults:{format: 'json'}
     get 'user_auths/leave_request' => 'user_auths#leave_request', defaults:{format: 'json'}
     post 'user_auths/employee_leave_request' => 'user_auths#employee_leave_request', defaults:{format: 'json'}
     get 'user_auths/leave_category' => 'user_auths#leave_category', defaults:{format: 'json'}
-end
+    get 'user_auths/all_leave_request_list' => 'user_auths#all_leave_request_list', defaults:{format: 'json'}
+    get 'user_auths/cancel_leave_request' => 'user_auths#cancel_leave_request', defaults:{format: 'json'}
+    get 'user_auths/leave_approval_list' => 'user_auths#leave_approval_list', defaults:{format: 'json'}
+    get 'user_auths/first_approved_employee_leave_requests' => 'user_auths#first_approved_employee_leave_requests', defaults:{format: 'json'}
+    get 'user_auths/approve_leave_request' => 'user_auths#approve_leave_request', defaults:{format: 'json'} 
+    get 'user_auths/reject_leave_request' => 'user_auths#reject_leave_request', defaults:{format: 'json'}
+    post 'user_auths/employee_plan' => 'user_auths#employee_plan', defaults:{format: 'json'}
+    get 'user_auths/employee_plan_list' => 'user_auths#employee_plan_list', defaults:{format: 'json'}
+    post 'user_auths/update_employee_plan' => 'user_auths#update_employee_plan', defaults:{format: 'json'}
+    get 'user_auths/destroy_employee_plan' => 'user_auths#destroy_employee_plan', defaults:{format: 'json'}
+    get 'user_auths/holiday_setup' => 'user_auths#holiday_setup', defaults:{format: 'json'}
+    get 'user_auths/employee_contact_library' => 'user_auths#employee_contact_library', defaults:{format: 'json'}
+    get 'user_auths/employee_details' => 'user_auths#employee_details', defaults:{format: 'json'}
+  end
 end

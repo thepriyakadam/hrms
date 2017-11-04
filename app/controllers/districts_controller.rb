@@ -54,6 +54,23 @@ class DistrictsController < ApplicationController
     end
   end
 
+  def district_master
+    @districts = District.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'districts/district_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' district_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'districts/district_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+  end
+
 
   private
 

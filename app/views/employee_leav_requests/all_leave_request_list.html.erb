@@ -9,6 +9,7 @@
             <tr>
               <th>ID</th>
               <th>Employee</th>
+              <th>Manager</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -17,7 +18,9 @@
             <% @first_level_request_lists.try(:each) do |fl| %>
               <tr>
                 <td><%= fl.employee.try(:manual_employee_code) %></td>
+
                 <td><%= full_name(fl.employee) %></td>
+                <td><%= fl.employee.try(:manager).try(:first_name) %> <%= fl.employee.try(:manager).try(:middle_name) %> <%= fl.employee.try(:manager).try(:last_name) %></td>
                 <td>
                   <%= link_to 'View Detail', admin_employee_history_with_current_leave_employee_leav_requests_path(fl),class: 'btn btn-xs btn-info' %>
                 </td>
@@ -25,29 +28,31 @@
             <% end %>
           </tbody>
         </table>
-        <!-- 
+        
         <table id="example7" class="table table-bordered table-hover table-condensed">
           <thead>
           <tr><td colspan="5"><center>Second Level Request</center></td></tr>
             <tr>
               <th>ID</th>
               <th>Employee</th>
+               <th>Manager</th>
               <th>Action</th>
             </tr>
           </thead>
 
           <tbody>
-            < @second_level_request_lists.try(:each) do |sl| %>
+            <% @second_level_request_lists.try(:each) do |sl| %>
               <tr>
-                <td><= sl.employee.try(:manual_employee_code) %></td>
-                <td><= full_name(sl.employee) %></td>
+                <td><%= sl.employee.try(:manual_employee_code) %></td>
+                <td><%= full_name(sl.employee) %></td>
+                 <td><%= sl.employee.try(:manager_2).try(:first_name) %> <%= sl.employee.try(:manager_2).try(:middle_name) %> <%= sl.employee.try(:manager_2).try(:last_name) %></td>
                 <td>
-                  <= link_to 'View Detail', admin_employee_history_with_current_leave_employee_leav_requests_path(sl),class: 'btn btn-xs btn-info' %>
+                  <%= link_to 'View Detail', admin_employee_history_with_current_leave_employee_leav_requests_path(sl),class: 'btn btn-xs btn-info' %>
                 </td>
               </tr>
-            < end %>
+            <% end %>
           </tbody>
-        </table> -->
+        </table>
   </div>
 </div>
 

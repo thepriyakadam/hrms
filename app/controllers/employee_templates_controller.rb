@@ -1,6 +1,6 @@
 require 'query_report/helper'  # need to require the helper
 class EmployeeTemplatesController < ApplicationController
-  load_and_authorize_resource except: [:template_list]
+  ##load_and_authorize_resource except: [:template_list]
   include QueryReport::Helper  # need to include it
   def index
     if current_user.class == Group

@@ -18,9 +18,13 @@
            <th> Employee </th>
            <td><%= @employee.manual_employee_code %> - <%= full_name(@employee) %></td>
            </tr>
-           <tr>
-              <th>Manager 1 </th>
+          <tr>
+            <th>Manager 1 </th>
+            <%if @employee.id == @employee.manager_id %>
+               <td>Time & Attendance Team</td>
+             <%else%>
               <td><%= @employee.manager.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager)) %></td>
+              <%end%>
             </tr>
             <tr>
               <th>Manager 2 </th>

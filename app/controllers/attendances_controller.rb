@@ -1,7 +1,7 @@
 require 'query_report/helper' # need to require the helper
 class AttendancesController < ApplicationController
   before_action :set_attendance, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
   # GET /attendances
   # GET /attendances.json
   include QueryReport::Helper # need to include it

@@ -4,7 +4,8 @@
   </div><!-- /.box-header -->
 
   <div class="box-body">
-<%= bootstrap_form_for (:employee_leav_balance),url:{action:"leave" },html: {id: "employee_leav_balance"} do |f| %>
+
+<%= bootstrap_form_for (:employee_leav_balance),url: {actions: "leave"} ,html: {id: "employee_leav_balance"} do |f| %>
   <div class="row">
 
 <div class="col-sm-3">

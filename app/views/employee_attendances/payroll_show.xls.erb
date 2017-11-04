@@ -1,7 +1,7 @@
  <table id="example5" class="table table-bordered table-hover table-condensed">
        <thead>
           <tr>
-          <th>Sr.No.</th>
+            <th>Sr.No.</th>
             <th>Employee</th>
             <th>ID</th>
             <th>Department</th>
@@ -32,12 +32,14 @@
               <td><%= e.employee.joining_detail.try(:joining_date) %></td>
 
               <% sorted_exists = calculate_attendance_datewise(@from_date,@to_date, exist, e)%>
+
               
             <% holiday_in_month = holiday_in_month_count(exist) %>
             <% holiday_present_in_month = holiday_present_in_month_count(exist) %>
             <% no_of_holiday_present_in_month = no_of_holiday_present_in_month_count(exist) %>
             <% week_off_day = week_off_day_count(exist) %>
            
+
             <% od_day = od_day_count(exist) %>
             <% present_count = present_count(exist) %>
             <% absent_count = absent_count(exist) %>
@@ -64,6 +66,7 @@
                   <% payable_day = present_count.to_f + process_off.to_f + access_card_forgotten.to_f + od_day.to_f + holiday_in_month.to_f + cl_leave_count.to_f + el_leave_count.to_f + coff_leave_count.to_f %>
                 <% else %>
                   <% payable_day = present_count.to_f + process_off.to_f + access_card_forgotten.to_f + od_day.to_f + holiday_in_month.to_f + week_off_day.to_f + cl_leave_count.to_f + el_leave_count.to_f + coff_leave_count.to_f  + holiday_present_in_month.to_f %>
+
                 <% end %>
 
                 <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>

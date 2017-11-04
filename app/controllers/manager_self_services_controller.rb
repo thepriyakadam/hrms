@@ -172,6 +172,15 @@ class ManagerSelfServicesController < ApplicationController
 
   end
 
+  def employee_resignation_history
+    @emp = Employee.find(current_user.employee_id)
+    @sub = @emp.subordinates
+    @ind_sub = @emp.indirect_subordinates
+    @employee = @sub + @ind_sub
+
+    @employee_resignations = EmployeeResignation.where(employee_id: @employee).group(:employee_id)
+  end
+
   def vacancy_request
   end
 

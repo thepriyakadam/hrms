@@ -1,7 +1,7 @@
 require 'query_report/helper'
 class GoalBunchesController < ApplicationController
   before_action :set_goal_bunch, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
 
   #before_filter :authenticate_user!
  include QueryReport::Helper  # need to include it

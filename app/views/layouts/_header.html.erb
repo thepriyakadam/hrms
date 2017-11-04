@@ -1,12 +1,10 @@
 <!-- Main Header -->
 <header class="main-header">
-
 <!-- Logo -->
 <a href="/home" class="logo">
  <span class="logo-mini"><b>SGA</b></span>
   <span class="logo-lg"><b>
    <% if current_user.class == Member %>
-
        <% if current_user.employee.company.company_logo_file_name == nil %>
         <small class="label label-default">Not Available</small>
         <% else %>
@@ -243,7 +241,7 @@
             <p>
               <% if current_user.class == Member %>
                 <small> ID : <%= current_user.manual_member_code %><br></small>
-                <small> Role Level : <%= current_user.role.name %> <br></small>
+                <small> System Role  : <%= current_user.role.name %> <br></small>
                 <small> Name : <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:last_name) %></small>
               <%else%>
                 <%= current_user.subdomain %>-
@@ -287,12 +285,15 @@
                 <%= link_to "Profile", edit_member_registration_path,class: "btn btn-default btn-flat" %>
               </div>
               <div class="pull-right">
-                <%= link_to 'Logout', destroy_member_session_path, :method => :delete ,class: "btn btn-default btn-flat" %>
+                <%= link_to 'Logout', destroy_member_session_path, :method => :delete ,class: "btn btn-default btn-flat", :id => 'example' %>
               </div>
             </li>
           <% end %>
         </ul>
       </li>
+
+
+
       <!-- Control Sidebar Toggle Button -->
       <!-- <li>
         <a href="#" data-toggle="control-sidebar" title = "Recent Activity">

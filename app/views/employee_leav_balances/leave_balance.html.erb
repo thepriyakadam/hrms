@@ -4,8 +4,14 @@
   </div><!-- /.box-header -->
 
   <div class="box-body">
-<%= bootstrap_form_for (:employee_leav_balance),url: {actions: "leave"} ,html: {id: "employee_leav_balance"} do |f| %>
+<%= bootstrap_form_for (:salary),url:{action:"leave" } ,html: {id: "employee_leav_balance"} do |f| %>
   <div class="row">
+
+          <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :leav_category_id,options_for_select(all_leav_category),{label: 'Leave Category',include_blank: "Select Leave" }%>
+          </div>
+        </div>
 
 <div class="col-sm-3">
 <!--     <label>Traveling Date </label>

@@ -2358,6 +2358,7 @@ end
       patch :update_leave_auto
       get :modal_balance_detail
       get :leave_balance
+      # post :leave_balance
       post :leave
     end
   end

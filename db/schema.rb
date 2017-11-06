@@ -1298,6 +1298,29 @@ ActiveRecord::Schema.define(version: 20171023161227) do
 
   add_index "employee_physicals", ["employee_id"], name: "index_employee_physicals_on_employee_id", using: :btree
 
+  create_table "employee_plans", force: :cascade do |t|
+    t.integer  "employee_id",    limit: 4
+    t.date     "from_date"
+    t.date     "to_date"
+    t.time     "from_time"
+    t.time     "to_time"
+    t.string   "meeting_with",   limit: 255
+    t.string   "location",       limit: 255
+    t.text     "meeting_agenda", limit: 65535
+    t.string   "lat",            limit: 255
+    t.string   "lng",            limit: 255
+    t.boolean  "conform"
+    t.boolean  "status"
+    t.string   "current_status", limit: 255
+    t.integer  "manager_id",     limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.float    "latitude",       limit: 24
+    t.float    "longitude",      limit: 24
+  end
+
+  add_index "employee_plans", ["employee_id"], name: "index_employee_plans_on_employee_id", using: :btree
+
   create_table "employee_promotions", force: :cascade do |t|
     t.string   "designation",             limit: 255
     t.string   "current",                 limit: 255
@@ -2853,7 +2876,6 @@ ActiveRecord::Schema.define(version: 20171023161227) do
     t.string   "avatar_content_type",    limit: 255
     t.integer  "avatar_file_size",       limit: 4
     t.datetime "avatar_updated_at"
-    t.boolean  "current_status"
   end
 
   add_index "members", ["company_id"], name: "index_members_on_company_id", using: :btree
@@ -3858,13 +3880,14 @@ ActiveRecord::Schema.define(version: 20171023161227) do
   create_table "salaryslip_components", force: :cascade do |t|
     t.integer  "salaryslip_id",        limit: 4
     t.integer  "salary_component_id",  limit: 4
-    t.decimal  "actual_amount",                  precision: 15, scale: 2
-    t.decimal  "calculated_amount",              precision: 15, scale: 2
+    t.decimal  "actual_amount",                    precision: 15, scale: 2
+    t.decimal  "calculated_amount",                precision: 15, scale: 2
     t.boolean  "is_deducted"
     t.integer  "employee_template_id", limit: 4
     t.boolean  "is_arrear"
-    t.datetime "created_at",                                              null: false
-    t.datetime "updated_at",                                              null: false
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
+    t.string   "other_component_name", limit: 255
   end
 
   add_index "salaryslip_components", ["employee_template_id"], name: "index_salaryslip_components_on_employee_template_id", using: :btree
@@ -4672,6 +4695,7 @@ ActiveRecord::Schema.define(version: 20171023161227) do
   add_foreign_key "employee_nominations", "relation_masters"
   add_foreign_key "employee_nominations", "states"
   add_foreign_key "employee_physicals", "employees"
+  add_foreign_key "employee_plans", "employees"
   add_foreign_key "employee_promotions", "departments"
   add_foreign_key "employee_promotions", "employee_designations"
   add_foreign_key "employee_promotions", "employee_grades"

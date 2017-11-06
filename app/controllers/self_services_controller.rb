@@ -49,10 +49,7 @@ class SelfServicesController < ApplicationController
     application_date = params[:application_date]
     resignation_date = params[:employee_resignation][:resignation_date]
     leaving_reason_id = params[:employee_resignation][:leaving_reason_id]
-<<<<<<< HEAD
     # notice_period = params[:notice_period]
-=======
->>>>>>> 842ca4401bc5123a88576b811bc12d761969241e
     tentative_leaving_date = params[:employee_resignation][:tentative_leaving_date]
     reason = params[:employee_resignation][:reason]
     note = params[:employee_resignation][:note]
@@ -79,11 +76,8 @@ class SelfServicesController < ApplicationController
       redirect_to employee_resignation_self_services_path
   end
 
-<<<<<<< HEAD
- def display_notice_period
-=======
+
   def display_notice_period
->>>>>>> 842ca4401bc5123a88576b811bc12d761969241e
     @employee = Employee.find_by(id: current_user.employee_id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @notice_period = @joining_detail.notice_period_after_probation
@@ -96,11 +90,9 @@ class SelfServicesController < ApplicationController
 
   def modal_show_resignation_detail
     @employee_resignation = EmployeeResignation.find(params[:format])
-<<<<<<< HEAD
-=======
+
     @resignation_status_records = ResignationStatusRecord.where(employee_resignation_id: @employee_resignation.id)
     @employee_resignations = EmployeeResignation.where(id: @employee_resignation.id).take
->>>>>>> 842ca4401bc5123a88576b811bc12d761969241e
     # @employee_resignation = EmployeeResignation.find_by_id(params[:id])
    # @employee_resignation = EmployeeResignation.find_by(id: @employee_resignations.id)
     @resignation_status_records = ResignationStatusRecord.where(employee_resignation_id: @employee_resignation.id)

@@ -9,8 +9,6 @@ gem 'mysql2', '~> 0.3.18'
 
 # gem "rack-timeout", require:"rack/timeout/base"
 
-# gem 'coffee-rails', '~> 4.1.0'
-# gem 'coffee-rails', '~> 4.1.0'
 gem 'ruby-graphviz', '~> 1.2', '>= 1.2.2'
 
 gem 'twilio-ruby', '~> 4.11', '>= 4.11.1'

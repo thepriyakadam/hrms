@@ -253,6 +253,7 @@ Rails.application.routes.draw do
       get :show_subordinate_attendance
       post :vacancy_request_create
       get :vacancy_request
+      get :employee_resignation_history
     end
   end
 
@@ -729,6 +730,8 @@ end
   end
   resources :employee_attendances do
     collection do
+      get :employee_not_found
+      post :not_found
       post :department_wise_employee_list
       post :all_emp_list
       post :create_employee_attendance
@@ -1199,7 +1202,7 @@ end
       get :second_reject
       get :final_reject
       get :all_employee_resignation_list
-      get :show_resignation_status_detail
+      get :modal_show_resignation_status_detail
       get :show_resignation_detail
       get :final_approved_list
       get :confirm_resignation
@@ -1617,7 +1620,7 @@ end
       get :attendance
       get :employee_resignation
       get :resignation_history
-      get :show_resignation_detail
+      get :modal_show_resignation_detail
       get :employee_transfer
       get :travel_request
       get :employee_attendance
@@ -2355,6 +2358,7 @@ end
       get :status_wise_request
       get :select_form
       get :select_admin_form
+      get :admin_c_off_form
       get :balancewise_report
       post :show_balancewise_report
       get :show_balancewise_report
@@ -2643,7 +2647,7 @@ end
 
   root 'home#index'
 
-  devise_for :members, controllers: { registrations: 'members/registrations', sessions: 'members/sessions', passwords: 'groups/passwords' }
+  devise_for :members, controllers: { registrations: 'members/registrations', sessions: 'members/sessions', passwords: 'members/passwords' }
   devise_for :groups, controllers: { registrations: 'groups/registrations', sessions: 'groups/sessions', passwords: 'groups/passwords' }
 
   devise_scope :group do

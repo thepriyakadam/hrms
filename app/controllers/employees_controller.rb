@@ -12,9 +12,9 @@
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'HOD'
-        @employees = Employee.where(department_id: current_user.department_id)
+          @emp = Employee.find(current_user.employee_id)
+         @employees = Employee.where(manager_id: @emp)
       elsif current_user.role.name == 'Supervisor'
-
         @emp = Employee.find(current_user.employee_id)
          @employees = Employee.where(manager_id: @emp)
       elsif current_user.role.name == 'CEO'
@@ -161,7 +161,7 @@
       if @employee.save
         @emp1=params[:employee][:employee_code_master_id]
         EmployeeCodeMaster.where(id: @emp1).update_all(last_range: @employee.manual_employee_code)
-        @employee.update(company_location_id: @department.company_location_id,company_id: @department.company_location.company_id,sub_department_id: @sub_department.department.company_location.company_id)
+        # @employee.update(company_location_id: @department.company_location_id,company_id: @department.company_location.company_id,sub_department_id: @sub_department.department.company_location.company_id)
         @employees.each do |e|
           if e.joining_detail.try(:confirmation_date) != nil && e.joining_detail.try(:confirmation_date) <= Date.today
             employee_type = EmployeeType.find_by(name: "Permanent")

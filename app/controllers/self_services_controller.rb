@@ -50,10 +50,13 @@ class SelfServicesController < ApplicationController
     application_date = params[:application_date]
     resignation_date = params[:employee_resignation][:resignation_date]
     leaving_reason_id = params[:employee_resignation][:leaving_reason_id]
-    notice_period = params[:notice_period]
     tentative_leaving_date = params[:employee_resignation][:tentative_leaving_date]
     reason = params[:employee_resignation][:reason]
     note = params[:employee_resignation][:note]
+
+    @employee = Employee.find_by(id: current_user.employee_id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @notice_period = @joining_detail.notice_period_after_probation
 
     if resignation_date == "" || leaving_reason_id == "" || tentative_leaving_date == "" || reason == ""
       flash[:alert] = "Please fill all mandatory fields!"
@@ -64,7 +67,7 @@ class SelfServicesController < ApplicationController
         @employees=Employee.find_by(id: employee_id)
         @date_diff = (tentative_leaving_date.to_date - resignation_date.to_date).to_i
 
-        @employee_resignation = EmployeeResignation.create(short_notice_period: @date_diff,reporting_master_id: @employees.manager_id,is_pending: true,resign_status: "Pending",is_first_approved: false,is_first_rejected: false, is_cancelled: false,employee_id: employee_id,resignation_date: resignation_date,application_date: application_date,reason: reason,note: note,leaving_reason_id: leaving_reason_id,notice_period: notice_period,tentative_leaving_date: tentative_leaving_date)  
+        @employee_resignation = EmployeeResignation.create(short_notice_period: @date_diff,reporting_master_id: @employees.manager_id,is_pending: true,resign_status: "Pending",is_first_approved: false,is_first_rejected: false, is_cancelled: false,employee_id: employee_id,resignation_date: resignation_date,application_date: application_date,reason: reason,note: note,leaving_reason_id: leaving_reason_id,notice_period: @notice_period,tentative_leaving_date: tentative_leaving_date)  
         @resignation_status_record = ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Pending",change_date: Date.today)
         EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
         flash[:notice] = "created Successfully!"
@@ -74,7 +77,7 @@ class SelfServicesController < ApplicationController
   end
 
   def display_notice_period
-    @employee = Employee.find(params[:id])
+    @employee = Employee.find_by(id: current_user.employee_id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @notice_period = @joining_detail.notice_period_after_probation
   end
@@ -84,8 +87,11 @@ class SelfServicesController < ApplicationController
     session[:active_tab] ="EmployeeSelfService"
   end
 
-  def show_resignation_detail
-    @employee_resignation = EmployeeResignation.find_by_id(params[:id])
+  def modal_show_resignation_detail
+    @employee_resignation = EmployeeResignation.find(params[:format])
+    @resignation_status_records = ResignationStatusRecord.where(employee_resignation_id: @employee_resignation.id)
+    @employee_resignations = EmployeeResignation.where(id: @employee_resignation.id).take
+    # @employee_resignation = EmployeeResignation.find_by_id(params[:id])
    # @employee_resignation = EmployeeResignation.find_by(id: @employee_resignations.id)
   end
 

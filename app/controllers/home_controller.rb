@@ -2,7 +2,7 @@ class HomeController < ApplicationController
 
   # before_action :set_home, only: [:show]
   # ##load_and_authorize_resource
-  require 'date'
+  # require 'date'
 
   def index
     @circulars = Circular.where(is_active: true)
@@ -15,9 +15,9 @@ class HomeController < ApplicationController
     #vacancy
     @vacancy_masters = VacancyMaster.where(vacancy_of: 'Refferal',is_confirmed: nil)
    
-    #@employees = Employee.all
+    @employees = Employee.all
     if current_user.class == Member
-      @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id, status: true)
+      # @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id, status: true)
       
       if current_user.role.name == 'GroupAdmin'
         @employees = Employee.all
@@ -26,7 +26,8 @@ class HomeController < ApplicationController
       elsif current_user.role.try(:name) == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'HOD'
-        @employees = Employee.where(department_id: current_user.department_id)
+       @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
         @employees = @emp.subordinates
@@ -89,7 +90,4 @@ class HomeController < ApplicationController
   def event_detail
     @company_event = CompanyEvent.find(params[:id])
   end
-
-  
- 
 end

@@ -20,10 +20,10 @@
           <% @employee_resignations.each do |employee_resignation| %>
           <tr>
           <td><%= employee_resignation.employee.try(:manual_employee_code) %></td>
-          <td><%= full_name(employee_resignation.employee)%></td>
-          <td><%= employee_resignation.resignation_date%></td>
-          <td><%= employee_resignation.resign_status%></td>
-          <td><%= link_to '', modal_show_resignation_detail_self_services_path(employee_resignation), class: 'btn btn-default fa fa-eye btn-sm',remote:true %></td>
+            <td><%= full_name(employee_resignation.employee)%></td>
+             <td><%= employee_resignation.resignation_date%></td>
+              <td><%= employee_resignation.resign_status%></td>
+            <td><%= link_to '', modal_show_resignation_detail_self_services_path(employee_resignation), class: 'btn btn-default fa fa-eye btn-sm',remote:true %></td>
           </tr>
           <% end %>
       </tbody>

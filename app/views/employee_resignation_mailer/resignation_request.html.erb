@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -9,8 +7,9 @@
      <h4><center>Resignation Request</center></h4>
     <p>
       Dear <%= @employee.try(:prefix) %><%=
-@employee.try(:first_name).to_s %> <%= @employee.try(:last_name).to_s
-%> <%= @employee.try(:middle_name).to_s %>, </p>
+
+@employee.try(:first_name).to_s %>  <%= @employee.try(:middle_name).to_s %> <%= @employee.try(:last_name).to_s
+%>, </p>
       <p>Please accept this message as notification that I <b><%=
 @emp.employee.prefix %><%= @emp.employee.try(:first_name).to_s %> <%=
 @emp.employee.try(:middle_name).to_s %> <%=

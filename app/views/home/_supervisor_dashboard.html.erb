@@ -36,7 +36,7 @@
       <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
       <div class="info-box-content">
         <span class="info-box-text">Direct Reportees</span>
-        <span class="info-box-number"><% a= @employees.try(:count) %> <%= a-1%></span>
+        <span class="info-box-number"><%= @employees.try(:count) %> </span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
   </div><!-- /.col -->

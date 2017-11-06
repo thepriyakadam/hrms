@@ -65,6 +65,23 @@ class EmployeeLeavRequestsController < ApplicationController
     end
   end
 
+  def admin_c_off_form
+    @employee_leav_request = EmployeeLeavRequest.new
+    employee = params[:employee_id]
+    @employee = Employee.find_by(id: employee)
+    @leave_id = params[:leav_category_id]
+
+    leav_category = LeavCategory.find_by(code: "C.Off")
+    @leav_category_id = leav_category.id
+    @leav_id = @leav_category_id.to_s.split('')
+
+    if params[:leav_category_id] == @leav_id.inject{|n| n}
+      @flag = true
+    else
+      @flag = false
+    end
+  end
+
   def select_form
     @employee_leav_request = EmployeeLeavRequest.new
     @employee = Employee.find_by(id: current_user.employee_id)
@@ -152,7 +169,7 @@ class EmployeeLeavRequestsController < ApplicationController
                         @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                     end
                     flash[:notice] = "Created successfully!"
-                      LeaveRequestMailer.pending(@employee_leav_request).deliver_now        
+                      # LeaveRequestMailer.pending(@employee_leav_request).deliver_now        
                 end
 
               else
@@ -282,7 +299,7 @@ class EmployeeLeavRequestsController < ApplicationController
                           flash[:notice] = "Send request without email."
                         else
                           flash[:notice] = 'Leave Request sent successfully.'
-                          LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                          # LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                         end
                         redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
 
@@ -328,7 +345,7 @@ class EmployeeLeavRequestsController < ApplicationController
                                 flash[:notice] = 'Send request without email.'
                               else
                                 flash[:notice] = 'Leave Request sent successfully..'
-                                LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                                # LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                               end
                             end
                               redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
@@ -357,7 +374,7 @@ class EmployeeLeavRequestsController < ApplicationController
                                 flash[:notice] = 'Send request without email.'
                               else
                                 flash[:notice] = 'Leave Request sent successfully..'
-                                LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                                # LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                               end
                               redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
                             else
@@ -396,7 +413,7 @@ class EmployeeLeavRequestsController < ApplicationController
                                 flash[:notice] = 'Send request without email.'
                               else
                                 flash[:notice] = 'Leave Request sent successfully !!'
-                                LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                                # LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                               end
                               redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
                             else
@@ -426,7 +443,7 @@ class EmployeeLeavRequestsController < ApplicationController
                                 flash[:notice] = 'Send request without email.'
                               else
                                 flash[:notice] = 'Leave Request sent successfully !'
-                                LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                                # LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                               end
                               redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
                             else
@@ -458,7 +475,7 @@ class EmployeeLeavRequestsController < ApplicationController
                               flash[:notice] = 'Send request without email.'
                             else
                               flash[:notice] = 'Leave Request sent successfully !'
-                              LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                              # LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                             end
                             redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
                           else
@@ -534,7 +551,7 @@ class EmployeeLeavRequestsController < ApplicationController
 
   def all_leave_request_list
     
-      @first_level_request_lists = EmployeeLeavRequest.where(is_pending: true, is_second_approved: false,is_first_rejected: false, is_cancelled: false)
+      @first_level_request_lists = EmployeeLeavRequest.where(is_pending: true, is_second_approved: false,is_first_rejected: false, is_cancelled: false, is_second_rejected: false)
       @emp_leav_req = EmployeeLeavRequest.where.not(second_reporter_id: false).pluck(:second_reporter_id)
       @second_level_request_lists = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,second_reporter_id: @emp_leav_req)
     # @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")

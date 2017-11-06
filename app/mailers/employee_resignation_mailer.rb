@@ -88,7 +88,8 @@ class EmployeeResignationMailer < ApplicationMailer
       @employee = Employee.find(@employee_resignation.employee_id)
       @reporting_master = Employee.find(@employee_resignation.final_reporter_id)
       @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
-      mail(to: @employee.email,cc: "design@indibasolutions.com",bcc: @employee.company_location.email, subject: 'Resignation Request Finally Approved')
+
+      mail(to: @employee.email,cc: "design@indibasolutions.com",bcc: @employee.company_location.email, subject: 'Your resignation request has been approved')
   end
 
   def final_reject_email_to_employee(employee_resignation)
@@ -96,7 +97,8 @@ class EmployeeResignationMailer < ApplicationMailer
       @employee = Employee.find(@employee_resignation.employee_id)
       @reporting_master = Employee.find(@employee_resignation.final_reporter_id)
       @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
-      mail(to: @employee.email,cc: "design@indibasolutions.com",bcc: @employee.company_location.email, subject: 'Resignation Request Finally Rejected')
+
+      mail(to: @employee.email,cc: "design@indibasolutions.com",bcc: @employee.company_location.email, subject: 'Your resignation request has been rejected')
   end
   
 

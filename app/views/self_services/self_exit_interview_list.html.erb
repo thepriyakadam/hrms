@@ -1,0 +1,33 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Exit Interview List</h3>
+    <div class="pull-right">  
+    </div>
+  </div>
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+     <thead>
+        <tr>
+        <th>ID</th>
+        <th>Employee Name</th>
+        <th>Date</th>
+        <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @exit_interviews.each do |exit_interview| %>
+        <tr>
+        <td><%= exit_interview.employee.try(:manual_employee_code)%></td>
+        <td> <%= full_name(exit_interview.employee)%></td>
+        <td><%= exit_interview.question %></td>
+        <td><%= exit_interview.answer %></td>
+
+        </tr>
+           
+        <% end %>
+      </tbody>
+    </table><br>
+
+  </div>
+</div>
+

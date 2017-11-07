@@ -566,6 +566,24 @@ class EmployeeResignationsController < ApplicationController
     @age = age
   end
 
+  def exit_interview_employee_list
+    @employee_resignations = EmployeeResignation.where(resign_status: "FinalApproved")
+  end
+
+  def exit_interview
+   
+    @employee = params[:employee_id]
+    @question_master = QuestionMaster.all
+     @question_master.each do |qc|
+    ExitInterview.create(question_master_id: qc.id,employee_id: @employee)
+
+  end
+     @employee_resignations = EmployeeResignation.where(employee_id: @employee,resign_status: "FinalApproved")
+     @employee_resignations.update_all(exit_interview_status: true)
+    flash[:notice] = "Created Successfully"
+    redirect_to exit_interview_employee_list_employee_resignations_path
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_employee_resignation
@@ -577,6 +595,6 @@ class EmployeeResignationsController < ApplicationController
   end
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_resignation_params
-    params.require(:employee_resignation).permit(:employee_id, :resign_status,:application_date,:reporting_master_id, :resignation_date, :reason, :is_notice_period, :notice_period, :short_notice_period, :tentative_leaving_date, :remark, :exit_interview_date, :note, :leaving_date, :settled_on, :has_left, :notice_served, :rehired , :leaving_reason_id, :is_stop_pay_request)
+    params.require(:employee_resignation).permit(:employee_id, :resign_status,:application_date,:reporting_master_id, :resignation_date, :reason, :is_notice_period, :notice_period, :short_notice_period, :tentative_leaving_date, :remark, :exit_interview_date, :note, :leaving_date, :settled_on, :has_left, :notice_served, :rehired , :leaving_reason_id, :is_stop_pay_request,:exit_interview_status)
   end
 end

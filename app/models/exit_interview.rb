@@ -4,6 +4,6 @@ class ExitInterview < ActiveRecord::Base
   has_many :employee_resignations
   validates :question_master_id, presence: true 
   validates_uniqueness_of :question_master_id, :scope => :employee_id
-  validates :answer, presence: true 
+  # validates :answer, presence: true 
 
 end

@@ -1190,6 +1190,8 @@ end
 
   resources :employee_resignations do
     collection do
+      get :exit_interview_employee_list
+      get :exit_interview
       get :employee_resignation_list
       get :resignation_history
       get :employee_resignation_confirmation
@@ -1631,6 +1633,7 @@ end
 
   resources :self_services do
     collection do
+      get :self_exit_interview_list
       get :employee
       get :employee_template
       get :salaryslip

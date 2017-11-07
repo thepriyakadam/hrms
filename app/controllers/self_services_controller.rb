@@ -371,6 +371,10 @@ class SelfServicesController < ApplicationController
   def modal_c_off
     @leave_c_off = LeaveCOff.find(params[:format])
   end
+
+  def self_exit_interview_list
+    @exit_interviews = ExitInterview.all
+  end
   # def apply_internally
   #   @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
   # end

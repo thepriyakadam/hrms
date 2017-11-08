@@ -373,7 +373,7 @@ class SelfServicesController < ApplicationController
   end
 
   def self_exit_interview_list
-    @exit_interviews = ExitInterview.all
+    @exit_interviews = ExitInterview.where(employee_id: current_user.employee_id)
   end
   # def apply_internally
   #   @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])

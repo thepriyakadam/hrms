@@ -571,15 +571,14 @@ class EmployeeResignationsController < ApplicationController
   end
 
   def exit_interview
-   
     @employee = params[:employee_id]
     @question_master = QuestionMaster.all
      @question_master.each do |qc|
     ExitInterview.create(question_master_id: qc.id,employee_id: @employee)
 
   end
-     @employee_resignations = EmployeeResignation.where(employee_id: @employee,resign_status: "FinalApproved")
-     @employee_resignations.update_all(exit_interview_status: true)
+    @employee_resignations = EmployeeResignation.where(employee_id: @employee,resign_status: "FinalApproved")
+    @employee_resignations.update_all(exit_interview_status: true)
     flash[:notice] = "Created Successfully"
     redirect_to exit_interview_employee_list_employee_resignations_path
   end

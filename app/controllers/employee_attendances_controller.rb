@@ -215,9 +215,14 @@ def not_found
                       total_hrs = last_out_time.to_time - first_record.time.to_time
                       working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
                     end
+
                   end#first_record.nil? || first_record.time.to_time.nil?
-                  current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "HP",comment: "Holiday Present")
-                end#first_in_time == nil && last_out_time == nil
+                 if working_hrs.to_s < "07:00"
+                 current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "H",comment: "Working hrs less than 7 hrs")
+                 else
+                 current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "HP",comment: "Holiday Present")
+               end
+              end#first_in_time == nil && last_out_time == nil
 
               end#current_employee_attendance.present == "H"
 #HDL,P,A
@@ -2015,7 +2020,7 @@ def upload
                         if working_hrs.to_s < "04:30"
                           employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "A",comment: "System Updated")
                         elsif working_hrs.to_s < "07:00"
-                          employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "HDL",comment: "System Updated")
+                          employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "HD",comment: "System Updated")
                         else
                           employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P",comment: "System Updated")
                         end
@@ -2025,7 +2030,7 @@ def upload
                         if working_hrs.to_s <  "04:30"
                           employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "A",comment: "System Updated")
                         elsif working_hrs.to_s < "07:00"
-                          employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "HDL",comment: "System Updated")
+                          employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "HD",comment: "System Updated")
                         else
                           employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P",comment: "System Updated")
                         end
@@ -2064,7 +2069,7 @@ def upload
                 EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "A")
 
               elsif working_hrs.to_s < "07:00"
-                EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "HDL")
+                EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "HD")
               else
                 EmployeeAttendance.create(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "P")
               end
@@ -2118,7 +2123,11 @@ def upload
                       working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
                     end
                   end#first_record.nil? || first_record.time.to_time.nil?
-                  current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "HP",comment: "Holiday Present")
+                 if working_hrs.to_s < "07:00"
+                 current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "H",comment: "Working hrs less than 7 hrs")
+                 else
+                 current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "HP",comment: "Holiday Present")
+               end
                 end#first_in_time == nil && last_out_time == nil
 
               end#current_employee_attendance.present == "H"
@@ -2147,7 +2156,7 @@ def upload
                 if working_hrs.to_s <  "04:30"
                   current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "A")
                 elsif working_hrs.to_s < "07:00"
-                  current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "HDL")
+                  current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "HD")
                 else
                   current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "P")
                 end

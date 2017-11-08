@@ -8,8 +8,8 @@
  
 
  <table class="table table-bordered table-hover table-condensed'">
-  <tr><td colspan="4"><font color='label-primary'><center>Resignation Request of <%= @employee_resignation.employee.try(:manual_employee_code) %> - <%= full_name(@employee_resignation.employee) %></center></font></td></tr>
 
+  <tr><td colspan="4"><font color='label-primary'><center>Resignation Request of <%= @employee_resignation.try(:employee).try(:manual_employee_code) %> - <%= full_name(@employee_resignation.try(:employee)) %></center></font></td></tr>
 
     <!-- <tr>
       <th>Resignation Code</th>
@@ -19,10 +19,11 @@
     </tr> -->
     <tr>
       <th>Reporting Manager 1</th>
-      <td><%= @employee_resignation.employee.manager.try(:first_name) %> <%= @employee_resignation.employee.manager.try(:middle_name) %> <%= @employee_resignation.employee.manager.try(:last_name) %></td>
+
+      <td><%= @employee_resignation.try(:employee).manager.try(:first_name) %> <%= @employee_resignation.try(:employee).manager.try(:middle_name) %> <%= @employee_resignation.try(:employee).manager.try(:last_name) %></td>
   
       <th>Reporting Manager 2</th>
-      <td><%= @employee_resignation.employee.try(:manager_2).try(:first_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:middle_name) %> <%= @employee_resignation.employee.try(:manager_2).try(:last_name) %></td>
+      <td><%= @employee_resignation.try(:employee).try(:manager_2).try(:first_name) %> <%= @employee_resignation.try(:employee).try(:manager_2).try(:middle_name) %> <%= @employee_resignation.try(:employee).try(:manager_2).try(:last_name) %></td>
     </tr>
 
     <tr>
@@ -50,10 +51,6 @@
      <td><%= @employee_resignation.leaving_date %></td>
     </tr>
 
-    <tr>
-      <th>Reason</th>
-      <td colspan="3"><%= @employee_resignation.reason %></td>
-    </tr>
 
    <!--  <tr>
      <th><strong>Note</strong></th>
@@ -67,6 +64,11 @@
     <th><strong>Current Status</strong></th>
     <td><%= @employee_resignation.resign_status %></td>
   </tr>
+
+     <tr>
+      <th>Reason</th>
+      <td colspan="3"><%= @employee_resignation.reason %></td>
+    </tr>
 
 
    <!--  <tr>
@@ -116,14 +118,15 @@
 
 </table>
 
-   <table id="example2" class="table table-bordered table-hover table-condensed'">
+
+ <table  class="table table-bordered table-hover table-condensed'">
       <thead>
       <tr>
-      <th colspan="4"><center><font color='label-primary'>Employee Resignation Process</font></center></th>
+      <td colspan="4"><center><font color='label-primary'>Employee Resignation Process</font></center></td>
       </tr>
         <tr>
           <th>ID</th>
-          <th>Manager Name</th>
+          <th>Name</th>
           <th>Process Date</th>
           <th>Process Status</th>
       </thead>
@@ -142,7 +145,6 @@
         <% end %>
       </tbody>
     </table>
-    
 </div>
 <div class="modal-footer"></div>
 </div>

@@ -85,15 +85,15 @@
    $(function(){
     $('#employee_resignation_leaving_reason_id').on('change', function() {
 
-      var employee_resignation_leaving_reason_id = parseInt($('#employee_resignation_leaving_reason_id').val());
+      var employee_resignation_resignation_date = parseInt($('#employee_resignation_resignation_date').val());
       var employee_resignation_notice_period = parseInt($('#employee_resignation_notice_period').val());
 
       var ans="";
-      if (isNaN(employee_resignation_leaving_reason_id) || isNaN(employee_resignation_notice_period)) {
+      if (isNaN(employee_resignation_resignation_date) || isNaN(employee_resignation_notice_period)) {
         ans = ""
       }
       else{
-        ans = (employee_resignation_leaving_reason_id + employee_resignation_notice_period);
+        ans = (employee_resignation_resignation_date + employee_resignation_notice_period);
         var date = new Date ()
         date.setDate(ans);
       }

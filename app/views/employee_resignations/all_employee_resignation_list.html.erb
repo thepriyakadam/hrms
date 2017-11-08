@@ -10,6 +10,7 @@
         <tr>
         <th>ID</th>
          <th>Employee Name</th>
+         <th>Date</th>
          <th>Status</th>
          <th>Action</th>
         </tr>
@@ -19,10 +20,9 @@
         <tr>
         <td><%= g.employee.try(:manual_employee_code)%></td>
         <td> <%= full_name(g.employee)%></td>
+        <td><%= g.resignation_date %></td>
         <td><%= g.resign_status %></td>
-<!--        <= link_to '', g,class: 'btn btn-xs btn-default fa fa-eye' %> 
- -->         
-     <td><%= link_to '', modal_show_resignation_status_detail_employee_resignations_path(g),class: 'btn btn-xs btn-default fa fa-eye',remote:true %> </td>
+      <td><%= link_to '', modal_show_resignation_status_detail_employee_resignations_path(g),class: 'btn btn-xs btn-default fa fa-eye',remote:true %> </td>
         </tr>
         <% end %>
       </tbody>

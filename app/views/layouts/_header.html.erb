@@ -36,12 +36,8 @@
           <i class="fa fa-envelope-o" ></i>
           <span class="label label-success">
             <% if current_user.class == Group %>
-           
-          <% else %>
-         
-            <% @pending_employee_leav_requests = EmployeeLeavRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false, first_reporter_id: current_user.employee_id) %>
-            <% @first_approved_employee_leav_requests = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false, second_reporter_id: current_user.employee_id) %>
-
+            <% else %>
+            <% @pending_employee_leav_requests = EmployeeLeavRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false,is_second_approved: false, first_reporter_id: current_user.employee_id) %>
             <% count1 = 0 %>
             <% @pending_employee_leav_requests.try(:each) do |employee_leav_request| %>
             <% count1 += 1 %>
@@ -50,11 +46,7 @@
             <% count1 %>
 
             <% count2 = 0 %>
-            <% @first_approved_employee_leav_requests.try(:each) do |employee_leav_request| %>
-            <% count2 += 1 %>
-            <% count2 %>
-            <% end %>
-            <% count2 %>
+            
             <% count = count1 + count2 %>
 
             <%= count %>
@@ -83,9 +75,8 @@
           <span class="label label-warning">
               <% if current_user.class == Group %>
           <% else %>
-            <%  @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: false, is_first_rejected: false, is_cancelled: false, first_reporter_id: current_user.employee_id) %> 
-            <% @first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false, second_reporter_id: current_user.employee_id) %>
-
+            <%  @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: false,is_second_approved: false, is_first_rejected: false, is_cancelled: false, first_reporter_id: current_user.employee_id) %> 
+            
             <% count1 = 0 %>
             <% @pending_on_duty_requests.try(:each) do |on_duty_request| %>
             <% count1 += 1 %>
@@ -94,11 +85,7 @@
             <% count1 %>
 
             <% count2 = 0 %>
-            <% @first_approved_on_duty_requests.try(:each) do |on_duty_request| %>
-            <% count2 += 1 %>
-            <% count2 %>
-            <% end %>
-            <% count2 %>
+           
 
             <% count = count1 + count2 %>
             <%= count %>

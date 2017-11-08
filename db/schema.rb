@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20171024130150) do
+=======
+ActiveRecord::Schema.define(version: 20171107095442) do
+>>>>>>> 1b8c29370efe221918cab04516786f268d3f3e50
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1200,6 +1204,7 @@ ActiveRecord::Schema.define(version: 20171024130150) do
     t.datetime "application_date"
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
+    t.boolean  "exit_interview_status"
   end
 
   add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id", using: :btree
@@ -2437,9 +2442,12 @@ ActiveRecord::Schema.define(version: 20171024130150) do
     t.string   "avatar_content_type",    limit: 255
     t.integer  "avatar_file_size",       limit: 4
     t.datetime "avatar_updated_at"
+<<<<<<< HEAD
     t.boolean  "current_status"
     t.integer  "login_count",            limit: 4,   default: 0,     null: false
     t.boolean  "is_active",                          default: false
+=======
+>>>>>>> 1b8c29370efe221918cab04516786f268d3f3e50
   end
 
   add_index "members", ["company_id"], name: "index_members_on_company_id", using: :btree

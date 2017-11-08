@@ -1191,6 +1191,8 @@ end
 
   resources :employee_resignations do
     collection do
+      get :exit_interview_employee_list
+      get :exit_interview
       get :employee_resignation_list
       get :resignation_history
       get :employee_resignation_confirmation
@@ -1633,6 +1635,7 @@ end
 
   resources :self_services do
     collection do
+      get :self_exit_interview_list
       get :employee
       get :employee_template
       get :salaryslip
@@ -2360,6 +2363,7 @@ end
       patch :update_leave_auto
       get :modal_balance_detail
       get :leave_balance
+      # post :leave_balance
       post :leave
     end
   end
@@ -2677,7 +2681,7 @@ end
 
   root 'home#index'
 
-  devise_for :members, controllers: { registrations: 'members/registrations', sessions: 'members/sessions', passwords: 'groups/passwords' }
+  devise_for :members, controllers: { registrations: 'members/registrations', sessions: 'members/sessions', passwords: 'members/passwords' }
   devise_for :groups, controllers: { registrations: 'groups/registrations', sessions: 'groups/sessions', passwords: 'groups/passwords' }
 
   devise_scope :group do

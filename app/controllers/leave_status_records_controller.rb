@@ -18,7 +18,7 @@ class LeaveStatusRecordsController < ApplicationController
           if @employee_leav_request.first_reporter.email.nil? || @employee_leav_request.first_reporter.email == ''
             flash[:notice] = 'Leave Cancelled Successfully without email.'
           else
-            LeaveRequestMailer.cancel(@employee_leav_request).deliver_now
+            # LeaveRequestMailer.cancel(@employee_leav_request).deliver_now
             flash[:notice] = 'Leave Cancelled Successfully.'
           end
           redirect_to hr_view_request_employee_leav_requests_path(@employee_leav_request.employee_id)
@@ -59,11 +59,11 @@ class LeaveStatusRecordsController < ApplicationController
           
           if @employee_leav_request.first_reporter_id == current_user.employee_id
             redirect_to approved_or_rejected_leave_request_manager_self_services_path
-            LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
+            # LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
             flash[:notice] = 'Leave Request Approved Successfully.'
           else
             redirect_to all_leave_request_list_employee_leav_requests_path
-            LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
+            # LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
             flash[:notice] = 'Leave Request Approved Successfully by Admin.'
           end
         else
@@ -92,7 +92,7 @@ class LeaveStatusRecordsController < ApplicationController
           if @employee_leav_request.first_reporter_id == current_user.employee_id
 
             redirect_to approved_or_rejected_leave_request_manager_self_services_path
-            LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
+            # LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
             flash[:notice] = 'Leave Request Approved Successfully.'
           else
             redirect_to all_leave_request_list_employee_leav_requests_path
@@ -127,7 +127,7 @@ class LeaveStatusRecordsController < ApplicationController
         @employee_leav_request.create_attendance
         LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FinalApproved")
         #LeaveRequestMailer.second_approve(@employee_leav_request).deliver_now
-        LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
+        # LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
         if @employee_leav_request.first_reporter_id == current_user.employee_id
           redirect_to approved_or_rejected_leave_request_manager_self_services_path
           flash[:notice] = 'Leave Request Approved Successfully.'
@@ -159,7 +159,7 @@ class LeaveStatusRecordsController < ApplicationController
         @employee_leav_request.update(is_first_rejected: true, current_status: 'Rejected')
         LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Rejected")   
         @employee_leav_request.revert_leave(@employee_leav_request)
-        LeaveRequestMailer.first_reject(@employee_leav_request).deliver_now
+        # LeaveRequestMailer.first_reject(@employee_leav_request).deliver_now
         if @employee_leav_request.first_reporter_id == current_user.employee_id
           redirect_to approved_or_rejected_leave_request_manager_self_services_path
           flash[:alert] = 'Leave Request Rejected Successfully.'
@@ -191,7 +191,7 @@ class LeaveStatusRecordsController < ApplicationController
         @employee_leav_request.update(is_second_rejected: true, current_status: 'Rejected')
         LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Rejected")
         @employee_leav_request.revert_leave(@employee_leav_request)
-        LeaveRequestMailer.second_reject(@employee_leav_request).deliver_now
+        # LeaveRequestMailer.second_reject(@employee_leav_request).deliver_now
         if @employee_leav_request.second_reporter_id == current_user.employee_id
           redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
           flash[:alert] = 'Leave Request Rejected Successfully.'
@@ -262,7 +262,7 @@ class LeaveStatusRecordsController < ApplicationController
           flash[:notice] = 'Leave Cancelled Successfully without email.'
         else
           flash[:notice] = 'Leave Cancelled Successfully.'
-          LeaveStatusRecordMailer.cancel_after_approve(@particular_leave_record,@current_emp).deliver_now
+          # LeaveStatusRecordMailer.cancel_after_approve(@particular_leave_record,@current_emp).deliver_now
         end
 
       else#is_balance = false
@@ -293,7 +293,7 @@ class LeaveStatusRecordsController < ApplicationController
           flash[:notice] = 'Leave Cancelled Successfully without email.'
         else
           flash[:notice] = 'Leave Cancelled Successfully.'
-          LeaveStatusRecordMailer.cancel_after_approve(@particular_leave_record,@current_emp).deliver_now
+          # LeaveStatusRecordMailer.cancel_after_approve(@particular_leave_record,@current_emp).deliver_now
         end
       end #particular_leav_balance.is_payble
     else

@@ -80,6 +80,15 @@ class ManagerSelfServicesController < ApplicationController
     session[:active_tab] ="ManagerSelfService"
   end
 
+  def employee_resignation_history
+    @emp = Employee.find(current_user.employee_id)
+    @sub = @emp.subordinates
+    @ind_sub = @emp.indirect_subordinates
+    @employee = @sub + @ind_sub
+
+    @employee_resignations = EmployeeResignation.where(employee_id: @employee).group(:employee_id)
+  end
+
   def final_approval_emp_resignation_list
     @employee_resignations = EmployeeResignation.where("(resign_status = ?)","SecondApproved")
     session[:active_tab] ="ManagerSelfService"

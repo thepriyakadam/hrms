@@ -62,9 +62,6 @@ def create
             @elb = EmployeeLeavBalance.create(employee_id: e, leav_category_id: params[:employee_leav_balance][:leav_category_id], no_of_leave: params[:employee_leav_balance][:no_of_leave], total_leave: params[:employee_leav_balance][:total_leave], from_date: params[:employee_leav_balance][:from_date],to_date: params[:employee_leav_balance][:to_date],is_active: true)
         end
       end
-     
-
-
        @employee_actual_workingday = 0
         @employee_leav_bal = EmployeeLeavBalance.where("to_date <= ? AND is_active = ?", Date.today,true)
         @employee_leav_bal.each do |e|
@@ -191,9 +188,13 @@ def create
                       else #@employee_actual_workingday < workingday
                           @calculated_no_of_leave = ( payable_day.to_f / @leave_master.company_workingday).to_f * @leave_master.no_of_leave.to_f
                         if @leave_master.is_carry_forward == true
-                          @leave = @calculated_no_of_leave.to_f + e.no_of_leave.to_f
+                           if @calculated_no_of_leave.to_f <= @leave_master.no_of_leave.to_f
+                             @leave = @calculated_no_of_leave.to_f + e.no_of_leave.to_f
+                           else
+                             @leave = @leave_master.no_of_leave.to_f + e.no_of_leave.to_f
+                           end
                           if @leave <= @leave_master.limit.to_f
-                            EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave.round(2),from_date: e.to_date,to_date: date_monthly,is_active: true,expiry_date: date_monthly,total_leave: @leave.round,carry_forward: e.no_of_leave.to_f,leave_count: @calculated_no_of_leave.round(2),collapse_value: 0,working_day: payable_day)
+                            EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave.round(2),from_date: e.to_date,to_date: date_monthly,is_active: true,expiry_date: date_monthly,total_leave: @leave.round(2),carry_forward: e.no_of_leave.to_f,leave_count: @calculated_no_of_leave.round(2),collapse_value: 0,working_day: payable_day)
                             e.update(is_active: false)
                             flash[:notice] = "Created Successfully"
                           else
@@ -345,8 +346,15 @@ def create
 
 
   def leave
+<<<<<<< HEAD
     # @employee_leav_balance = EmployeeLeavBalance.find(params[:id])
     
+=======
+    @leav_category_id = params[:salary][:leav_category_id]
+    @employee_leav_balance = EmployeeLeavBalance.where(params[:leav_category_id])
+    leave_category = LeavCategory.find(params[:salary][:leav_category_id])
+
+>>>>>>> 1b8c29370efe221918cab04516786f268d3f3e50
         @employee_actual_workingday = 0
         @employee_leav_bal = EmployeeLeavBalance.where("to_date <= ? AND is_active = ?", Date.today,true)
         @employee_leav_bal.each do |e|
@@ -622,7 +630,7 @@ def create
 
 
       flash[:notice] = 'Leave assigned successfully.'
-      redirect_to leave_balance_employee_leav_balances_path
+      redirect_to root_url
     end #employee_ids = nil
 
   # PATCH/PUT /employee_leav_balances/1
@@ -661,6 +669,10 @@ def create
       column(:To_Date, sortable:true){|employee_leav_balance| employee_leav_balance.try(:to_date)}
       column(:Status, sortable:true){|employee_leav_balance| employee_leav_balance.try(:is_active)}
       column(:Total_Leave, sortable:true){|employee_leav_balance| employee_leav_balance.try(:total_leave)}
+       column(:Carry_Forward, sortable:true){|employee_leav_balance| employee_leav_balance.try(:carry_forward)}
+        column(:Leave_Count, sortable:true){|employee_leav_balance| employee_leav_balance.try(:leave_count)}
+         column(:Collapes_Value, sortable:true){|employee_leav_balance| employee_leav_balance.try(:collapse_value)}
+          column(:Working_Day, sortable:true){|employee_leav_balance| employee_leav_balance.try(:working_day)}
       column(:Location, sortable:true){|employee_leav_balance| employee_leav_balance.employee.try(:company_location).try(:name)}
 
     session[:active_tab] ="LeaveManagement"

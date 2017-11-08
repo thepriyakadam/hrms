@@ -94,6 +94,13 @@ end
 def training_create_form
     @training_request = TrainingRequest.new(training_request_params)
 
+    @trainer_name = params[:training_request][:trainer_name]
+    @trainer_num = params[:training_request][:trainer_num]
+    @trainer_email = params[:training_request][:trainer_email]
+    @about_trainer = params[:training_request][:about_trainer]
+    @no_of_days = params[:training_request][:no_of_days]
+    @no_of_hrs = params[:training_request][:no_of_hrs]
+
     a=current_user.employee_id
     emp = Employee.where(id: a).take
     @employee_ids = params[:employee_ids]
@@ -106,30 +113,31 @@ def training_create_form
             flash[:alert] = "Reporting Manager not set please set Reporting Manager"
             redirect_to new_training_request_path
           else
-          if @training_request.is_there?
-            flash[:alert] = "Your Request already has been sent"
-            redirect_to new_training_request_path
-         else
-          @employee_ids.each do |eid|
+         #  if @training_request.is_there?
+         #    flash[:alert] = "Your Request already has been sent"
+         #    redirect_to new_training_request_path
+         # else
           @training_request.save
+          TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: current_user.employee_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee:  @emp_total,description: @training_request.description,justification: @training_request.justification,current_status: "FinalApproved")
+
+          @training_plan = TrainingPlan.create(no_of_hrs: @no_of_hrs,no_of_days: @no_of_days,about_trainer: @about_trainer,trainer_email: @trainer_email,trainer_num: @trainer_num,trainer_name: @trainer_name,training_date: @training_request.training_date,no_of_employee: @emp_total,place: @training_request.place,training_topic_master_id: @training_request.training_topic_master_id,training_request_id: @training_request.id)
+
+          @employee_ids.each do |eid|
+
+         
           @emp_total = @employee_ids.count
           TrainingRequest.where(id: @training_request.id).update_all(no_of_employee: @emp_total)
           TrainingRequest.where(id: @training_request.id).update_all(reporting_master_id: emp.manager_id,no_of_employee: @emp_total,status: "FinalApproved")
-          TraineeRequest.create(employee_id: eid,training_request_id: @training_request.id,training_topic_master_id: @training_request.training_topic_master_id,is_complete: true)
-          TrainingPlan.create(training_date: @training_request.training_date,no_of_employee: @training_request.no_of_employee,place: @training_request.place,training_topic_master_id: @training_request.training_topic_master_id,
-            training_request_id: @training_request.id, )
+          TraineeRequest.create(reporting_master_id: current_user.employee_id,employee_id: eid,training_request_id: @training_request.id,training_topic_master_id: @training_request.training_topic_master_id,is_complete: true)
+          TraineeRequest.where(training_request_id: @training_request.id).update_all(reporting_master_id: @training_request.reporting_master_id)
+          Trainee.create(employee_id: eid,training_plan_id: @training_plan.id)
 
           end
-          # TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: @training_request.status)
-          # ReportingMastersTrainingReq.create(reporting_master_id: current_user.employee_id, training_request_id: @training_request.id,training_status: "FinalApproved")
-          # TraineeRequest.where(training_request_id: @training_request.id).update_all(reporting_master_id: @training_request.reporting_master_id)
-          # TrainingPlan.create(training_date: ,no_of_employee: ,)
-          # Trainee.create(employee_id: @trainee_request.employee_id,training_plan_id: @training_plan.id)
-
+           ReportingMastersTrainingReq.create(reporting_master_id: current_user.employee_id, training_request_id: @training_request.id,training_status: "FinalApproved")
           # TrainingRequestMailer.training_request(@training_request).deliver_now
           flash[:notice] = 'Training Request Created Successfully'
-          redirect_to training_request_form_training_requests_path
-        end
+          redirect_to training_requests_path
+         # end
   end
 end
 end

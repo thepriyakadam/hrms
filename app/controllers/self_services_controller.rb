@@ -77,7 +77,8 @@ class SelfServicesController < ApplicationController
   end
 
 
- def display_notice_period
+
+  def display_notice_period
     @employee = Employee.find_by(id: current_user.employee_id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @notice_period = @joining_detail.notice_period_after_probation
@@ -90,6 +91,9 @@ class SelfServicesController < ApplicationController
 
   def modal_show_resignation_detail
     @employee_resignation = EmployeeResignation.find(params[:format])
+
+    @resignation_status_records = ResignationStatusRecord.where(employee_resignation_id: @employee_resignation.id)
+    @employee_resignations = EmployeeResignation.where(id: @employee_resignation.id).take
     # @employee_resignation = EmployeeResignation.find_by_id(params[:id])
    # @employee_resignation = EmployeeResignation.find_by(id: @employee_resignations.id)
     @resignation_status_records = ResignationStatusRecord.where(employee_resignation_id: @employee_resignation.id)
@@ -367,6 +371,10 @@ class SelfServicesController < ApplicationController
 
   def modal_c_off
     @leave_c_off = LeaveCOff.find(params[:format])
+  end
+
+  def self_exit_interview_list
+    @exit_interviews = ExitInterview.where(employee_id: current_user.employee_id)
   end
   # def apply_internally
   #   @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])

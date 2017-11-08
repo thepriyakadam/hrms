@@ -16,7 +16,7 @@ class HomeController < ApplicationController
     @vacancy_masters = VacancyMaster.where(vacancy_of: 'Refferal',is_confirmed: nil)
    
     #@employees = Employee.all
-    # if current_user.class == Member
+    if current_user.class == Member
     #   # @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id, status: true)
       
       if current_user.role.name == 'GroupAdmin'

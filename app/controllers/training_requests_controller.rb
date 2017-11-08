@@ -120,11 +120,11 @@ def training_create_form
             training_request_id: @training_request.id, )
 
           end
-          TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: @training_request.status)
-          ReportingMastersTrainingReq.create(reporting_master_id: current_user.employee_id, training_request_id: @training_request.id,training_status: "FinalApproved")
-          TraineeRequest.where(training_request_id: @training_request.id).update_all(reporting_master_id: @training_request.reporting_master_id)
-          TrainingPlan.create(training_date: ,no_of_employee: ,)
-          Trainee.create(employee_id: @trainee_request.employee_id,training_plan_id: @training_plan.id)
+          # TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: @training_request.status)
+          # ReportingMastersTrainingReq.create(reporting_master_id: current_user.employee_id, training_request_id: @training_request.id,training_status: "FinalApproved")
+          # TraineeRequest.where(training_request_id: @training_request.id).update_all(reporting_master_id: @training_request.reporting_master_id)
+          # TrainingPlan.create(training_date: ,no_of_employee: ,)
+          # Trainee.create(employee_id: @trainee_request.employee_id,training_plan_id: @training_plan.id)
 
           # TrainingRequestMailer.training_request(@training_request).deliver_now
           flash[:notice] = 'Training Request Created Successfully'

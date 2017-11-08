@@ -345,7 +345,7 @@ def create
 
 
   def leave
-    @employee_leav_balance = EmployeeLeavBalance.find(params[:id])
+    # @employee_leav_balance = EmployeeLeavBalance.find(params[:id])
     
         @employee_actual_workingday = 0
         @employee_leav_bal = EmployeeLeavBalance.where("to_date <= ? AND is_active = ?", Date.today,true)

@@ -22,16 +22,23 @@
           </div> 
         </div>
       </div>
-      <div class="col-sm-3">
+
+      <div class="col-sm-6">
+        <div class="group">
+          <%= f.text_area :description ,{label: "Description",readonly:true} %>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+          <div class="col-sm-3">
         <div class="form-group required">
           <%= f.select :issue_priority , ['Low','Medium','High'] ,{label: "Support Priority",include_blank: 'Select Priority'}%>
         </div>
       </div>
-    </div>
-    <div class="row">
       <div class="col-sm-6">
-        <div class="group">
-          <%= f.text_area :description ,{label: "Description"} %>
+        <div class="field">
+          <%= f.text_field :description ,{label: "Description"} %>
         </div>
       </div>
       <div class="col-sm-3">
@@ -39,13 +46,14 @@
             <%= f.file_field :document1,label: 'Upload Document(only docx,pdf)' %>
           </div>
       </div>
-      <div class="col-sm-3">
+
+    </div>
+    <div class="row">
+          <div class="col-sm-3">
         <div class="field">
             <%= f.file_field :document2,label: 'Upload Photo(only jpeg,jpg,png)' %>
         </div>
       </div>
-    </div>
-    <div class="row">
       <div class="col-sm-6">
         <label></label>
         <div class="actions">
@@ -90,4 +98,5 @@ $("#issue_request").validate({
      error.insertAfter(element.parent(element));
     }
    });
+
 </script>

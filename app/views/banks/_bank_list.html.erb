@@ -1,22 +1,21 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
-    <tr>  
+    <tr> 
+      <th>Bank Code</th> 
       <th>Bank Name</th>
+      <th>Description</th>
       <th>Action</th>
     </tr>
   </thead>
   <tbody>
     <% @banks.each do |bank| %>
       <tr>
+        <td><%= bank.code%></td>
         <td><%= bank.name%></td>
+        <td><%= bank.description%></td>
         <td>
-          <% if bank.is_confirm == true %>
-            <small class= "label label-primary">Confirmed</small>
-          <% else %>
             <%= link_to '', edit_bank_path(bank),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  bank, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
-            <%= link_to '', is_confirm_banks_path(bank: bank),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-          <% end %>
         </td>
       </tr>
     <% end %>

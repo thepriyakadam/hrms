@@ -37,12 +37,23 @@ class DepartmentTypesController < ApplicationController
     @department_types = DepartmentType.all
   end
 
-  def is_confirm
-    @department_type = DepartmentType.find(params[:department_type])
-    DepartmentType.find(@department_type.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_department_type_path
+    def department_type_master
+    @department_types = DepartmentType.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'department_types/department_type_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'department_type_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'department_types/department_type_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
   end
+  
   private
 
   def set_department_type
@@ -50,6 +61,6 @@ class DepartmentTypesController < ApplicationController
   end
 
   def department_type_params
-    params.require(:department_type).permit(:is_confirm,:name)
+    params.require(:department_type).permit(:is_confirm,:name,:code,:description)
   end
 end

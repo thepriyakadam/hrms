@@ -1,7 +1,7 @@
 class Skillset < ActiveRecord::Base
   belongs_to :employee
-  validates :name, presence: true, uniqueness: true
-  validates :skill_level, presence: true
+  # validates :name, presence: true, uniqueness: true
+  # validates :skill_level, presence: true
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
       csv << column_names

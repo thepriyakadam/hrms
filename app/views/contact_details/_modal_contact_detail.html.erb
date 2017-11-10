@@ -1,0 +1,57 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Contact Detail </center></h4>
+    </div>
+    <div class="modal-body">
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+  <tr>
+  	<th>Employee Name</th>
+  	<td><%= full_name(@contact_detail.employee) %></td>
+  	<th>Name</th>
+  	<td><%= @contact_detail.name %></td>
+  </tr>
+
+   <tr>
+   	<th>Role 1</th>
+   	<td><%= @contact_detail.role1 %></td>
+   	<th>Role 2</th>
+   	<td><%= @contact_detail.role2 %></td>
+   </tr>
+
+    <tr>
+   	<th>Role 3</th>
+   	<td><%= @contact_detail.role3 %></td>
+   	<th>Role 4</th>
+   	<td><%= @contact_detail.role4 %></td>
+   </tr>
+
+   <tr>
+   	<th>Role 5</th>
+   	<td><%= @contact_detail.role5 %></td>
+    <th>Role 6</th>
+    <td><%= @contact_detail.role6 %></td>
+   </tr>
+
+   <tr>
+    <th>Role 7</th>
+    <td><%= @contact_detail.role7 %></td>
+    <th>Role 8</th>
+    <td><%= @contact_detail.role8 %></td>
+   </tr>
+
+    <tr>   
+   	<th>Link</th>
+   	<td><%= @contact_detail.description %></td>
+   	<th>Status</th>
+   	<td><%= @contact_detail.status ? "Active" : "Inactive" %></td>
+   </tr>
+
+  </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

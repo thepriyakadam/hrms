@@ -1,0 +1,68 @@
+<div class="box">
+  <div class="box-header">
+    <% if @emp.present? %>
+      <div class="box-body">
+        <table id="example6" class="table table-bordered table-hover table-condensed">
+          <div>
+            <tr>
+              <th colspan="12"><%= @employee.try(:manual_employee_code) %> <%= full_name(@employee) %></th>
+            </tr>
+            <tr>
+              <th colspan="">Gender: <%= @employee.try(:gender) %></th>
+              <th colspan="3">PAN No.: <%= @employee.try(:pan_no) %></th>
+              <th colspan="4">Date of Birth: <%= @employee.try(:date_of_birth) %></th>
+              <th colspan="4">Date of Joining: <%= @employee.try(:joining_detail).try(:joining_date) %></th>
+            </tr>
+            <tr>
+              <th colspan="">Declaration Number</th>
+              <td> </td>
+              <td> </td>
+              <th colspan="2">Estimated</th>
+              <th colspan="2">Actual</th>
+              <th colspan="2">Accepted</th>
+              <th colspan="2">Rejected</th>
+              <th colspan="2">Comment</th>
+            </tr>
+          </div>
+          <div>
+            <% @section_code.each do |section_code, investment_declaration| %>
+              <tr><th colspan="12">Section <%= section_code %></th></tr>
+                <% investment_declaration.each do |investment_declaration|%>
+                  <tr>
+                    <td><%= investment_declaration.investment_head.try(:description) %></td>
+                      <% if investment_declaration.document_file_name.nil? %>
+                        <td>
+                          <%= form_tag document_upload_investment_declarations_path(investment_declaration), multipart: true do %>
+                            <%= file_field_tag :document %>
+                            <%= submit_tag %>
+                          <% end %>  
+                        </td>    
+                      <% else %>
+                        <td align="center">
+                          <%= link_to '', investment_download_document_path(id: investment_declaration.id), class: 'btn btn-xs fa fa-download',target: "_blank" %>
+                        </td>
+                      <% end %>
+                      <% if investment_declaration.investment_head.try(:multiple_investment) == true %>
+                        <td align="center">
+                          <%= link_to '', policy_details_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-edit', remote:true %>
+                          </td>
+                      <% else %>
+                        <td> </td>
+                      <% end %>
+                      <td colspan="2"><%= best_in_place investment_declaration, :amount %></td>
+                      <td colspan="2"><%= investment_declaration.amount %></td>
+                      <td colspan="2"><%= investment_declaration.amount %></td>
+                      <td colspan="2"><%= investment_declaration.amount %></td>
+                      <td><%= best_in_place investment_declaration, :comment %></td>
+                    </tr>
+                <% end %>
+            <% end %>
+          </div>
+        </table>
+      </div>
+      <div id="policy_details_modal" class="modal fade"></div>
+    <% else %>
+      <h1><%= Please Contact Your Manager %></h1>
+    <% end %>
+  </div>
+</div>

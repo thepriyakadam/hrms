@@ -1,5 +1,6 @@
 require 'query_report/helper'  # need to require the helper
 class EmployeeAttendancesController < ApplicationController
+  respond_to :html, :json  # to just in place edit and update
   before_action :set_employee_attendance, only: [:show, :edit, :update, :destroy]
   before_action :check_params, only: [:create_attendance]
   include QueryReport::Helper  # need to include it
@@ -11,6 +12,11 @@ class EmployeeAttendancesController < ApplicationController
     session[:active_tab] ="TimeManagement"
     session[:active_tab1] ="daily_attendance"
 
+  end
+
+  def employee_attendance
+    @employee_attendances = EmployeeAttendance.where(employee_id: current_user.try(:employee_id))
+    
   end
 
   # GET /employee_attendances/1
@@ -48,15 +54,18 @@ class EmployeeAttendancesController < ApplicationController
   # PATCH/PUT /employee_attendances/1
   # PATCH/PUT /employee_attendances/1.json
   def update
-    respond_to do |format|
-      if @employee_attendance.update(employee_attendance_params)
-        format.html { redirect_to @employee_attendance, notice: 'Employee attendance was successfully updated.' }
-        format.json { render :show, status: :ok, location: @employee_attendance }
-      else
-        format.html { render :edit }
-        format.json { render json: @employee_attendance.errors, status: :unprocessable_entity }
-      end
-    end
+    # respond_to do |format|
+    #   if @employee_attendance.update(employee_attendance_params)
+    #     format.html { redirect_to @employee_attendance, notice: 'Employee attendance was successfully updated.' }
+    #     format.json { render :show, status: :ok, location: @employee_attendance }
+    #   else
+    #     format.html { render :edit }
+    #     format.json { render json: @employee_attendance.errors, status: :unprocessable_entity }
+    #   end
+    # end
+    @employee_attendance = EmployeeAttendance.find(params[:id])
+    @employee_attendance.update_attributes(employee_attendance_params)
+    respond_with(@employee_attendances)
   end
 
   # DELETE /employee_attendances/1
@@ -109,8 +118,13 @@ class EmployeeAttendancesController < ApplicationController
     @employee_ids = params[:employee_ids]
     day = params[:employee_attendances][:day]
     present = params[:employee_attendances][:present]
+    in_time = params[:employee_attendance][:in_time]
+    out_time = params[:employee_attendance][:out_time]
     #department = params[:employee_attendances][:department_id]
     @employee = Employee.where(id: @employee_ids)
+
+     total_hrs = out_time.to_time - in_time.to_time
+     working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
     
     if @employee_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
@@ -118,7 +132,7 @@ class EmployeeAttendancesController < ApplicationController
       @employee_ids.each do |eid|
         @emp = Employee.find_by_id(eid)
 
-      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id, is_confirm: false)  
+      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id, is_confirm: false,in_time: in_time,out_time: out_time,working_hrs: working_hrs,comment: "Manually Created")  
       #Holiday.where(holiday_date: day).update_all(is_taken: true)
       flash[:notice] = "Created successfully"
       end
@@ -1512,6 +1526,7 @@ def upload
     DailyAttendance.import(params[:file])
     redirect_to root_url, notice: "File imported."
   end
+  # byebug
   last = DailyAttendance.last
   @daily_attendances = DailyAttendance.where(date: last.date.to_date)
 
@@ -1549,34 +1564,42 @@ def upload
             first_record_time = first_record.time.to_time
           end
 #operation
+
           employee_attendance = EmployeeAttendance.where(employee_id: employee.id,day: previous_date.to_date).take
+        #byebug
             if employee_attendance.nil?
             else
               if last_record.nil?
               else
-                if last_record_time <= employee_attendance.in_time.to_time
-                  last_re = last_record.time.to_time + 24*60*60
-                  total_hrs = last_re.to_time - employee_attendance.in_time.to_time
-                  working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
-
-                    if working_hrs.to_s < "04:30"
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "A",comment: "System Updated")
-                    elsif working_hrs.to_s < "07:00"
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "HDL",comment: "System Updated")
-                    else
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P",comment: "System Updated")
-                    end
+                if employee_attendance.in_time == nil
+                  employee_attendance.update(comment: "In Time Not Available")
                 else
-                  total_hrs = last_record.time.to_time - employee_attendance.in_time.to_time
-                  working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
-                    if working_hrs.to_s <  "04:30"
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "A",comment: "System Updated")
-                    elsif working_hrs.to_s < "07:00"
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "HDL",comment: "System Updated")
+                    if last_record_time <= employee_attendance.try(:in_time).to_time
+                      last_re = last_record.try(:time).to_time + 24*60*60
+                      total_hrs = last_re.to_time - employee_attendance.try(:in_time).to_time
+                      working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+
+                        if working_hrs.to_s < "04:30"
+                          employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "A",comment: "System Updated")
+                        elsif working_hrs.to_s < "07:00"
+                          employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "HDL",comment: "System Updated")
+                        else
+                          employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P",comment: "System Updated")
+                        end
                     else
-                      employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P",comment: "System Updated")
-                    end
-                end
+                      total_hrs = last_record.time.to_time - employee_attendance.try(:in_time).to_time
+                      working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+                        if working_hrs.to_s <  "04:30"
+                          employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "A",comment: "System Updated")
+                        elsif working_hrs.to_s < "07:00"
+                          employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "HDL",comment: "System Updated")
+                        else
+                          employee_attendance.update(out_time: last_record_time,working_hrs: working_hrs,present: "P",comment: "System Updated")
+                        end
+                    end#last_record_time <= 
+                    
+                    
+                end#employee_attendance.in_time == nil
               end#last_record.nil?
             end#employee_attendance.nil?
 
@@ -1720,7 +1743,7 @@ def upload
     end
 
   #remaining employees attendance creation
-    @employees = Employee.where(status: "Active")
+    @employees = Employee.where(company_location_id: current_user.company_location_id, status: "Active")
     @employees.each do |e|
       employee_atten = EmployeeAttendance.where(employee_id: e.id,day: last.date.to_date).take
       if employee_atten.nil?
@@ -1739,7 +1762,7 @@ def date_and_employeewise_attendance
   from = params[:employee][:from]
   to = params[:employee][:to]
   employee_id = params[:employee][:employee_id]
-  @employee_attendances = EmployeeAttendance.where(employee_id: employee_id,day: from.to_date..to.to_date).order("day ASC")
+  @employee_attendances = EmployeeAttendance.where(employee_id: employee_id,day: from.to_date..to.to_date).order("day DESC")
 end
 
 def modal_edit_for_show
@@ -1778,7 +1801,8 @@ end
 
 def show_datewise_daily_attendance
   @date = params[:employee][:date]
-  @employee_attendances = EmployeeAttendance.where(day: @date.to_date)
+  @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+  @employee_attendances = EmployeeAttendance.where(day: @date.to_date).where(employee_id: @employees).group(:employee_id)
 end
 
 def modal_edit_daily_attendance 
@@ -2339,18 +2363,26 @@ end
     @from_date = @from.to_date
     @to_date = @to.to_date
     @employee_attendances = EmployeeAttendance.where(day: @from_date..@to_date,employee_id: @employee).group(:employee_id)
-    respond_to do |f|
-      f.js
-      f.xls {render template: 'employee_attendances/managerwise_attendance_average.xls.erb'}
-      f.html
-      f.pdf do
-        render pdf: 'employee_attendance',
-        layout: 'pdf.html',
-        orientation: 'Landscape',
-        template: 'employee_attendances/managerwise_attendance_average.pdf.erb',
-        show_as_html: params[:debug].present?
-      end
-    end
+   
+       respond_to do |format|
+      format.js
+      format.xls {render template: 'employee_attendances/managerwise_attendance_average.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'show_datewise_report',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'employee_attendances/managerwise_attendance_average.pdf.erb',
+              # show_as_html: params[:debug].present?,
+              :page_height      => 1000,
+              :dpi              => '300',
+              :margin           => {:top    => 10, # default 10 (mm)
+                            :bottom => 10,
+                            :left   => 20,
+                            :right  => 20},
+              :show_as_html => params[:debug].present?
+          end
+         end
   end
 
   def datewise_attendance_with_options
@@ -2359,24 +2391,110 @@ end
   end
 
   def show_datewise_all
-    from = params[:employee][:from]
-    to = params[:employee][:to]
+    @from = params[:employee][:from]
+    @to = params[:employee][:to]
 
     if params[:save]
-      @employee_attendances = EmployeeAttendance.where(day: from.to_date..to.to_date)
+      @name = params[:save]
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
     elsif params[:absent]
-      @employee_attendances = EmployeeAttendance.where(day: from.to_date..to.to_date,present: "A")
+      @name = params[:absent]
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "A")
+    elsif params[:holiday]
+      @name = params[:holiday]
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where("present = ? OR present = ?","H", "HP").where.not(holiday_id: nil)
+    elsif params[:weekoff]
+      @name = params[:weekoff]
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where("present = ? OR present = ?","WO", "WOP").where.not(employee_week_off_id: nil)
     else
-      @employee_attendances = EmployeeAttendance.where(day: from.to_date..to.to_date).where.not(employee_leav_request_id: nil)
+      @name = params[:leave]
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
     end
   end
   
+  def show_datewise_all_report
+    @from = params[:from]
+    @to = params[:to]
+    @name = params[:name]
+
+    if @name == "All"
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
+    elsif @name == "Absent"
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "A")
+    elsif @name == "Holiday"
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where("present = ? OR present = ?","H", "HP")
+    elsif @name == "Week Off"
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where("present = ? OR present = ?","WOP", "WO")
+    elsif @name == "Leave"
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
+    else
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
+    end
+
+
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_attendances/datewise_attendance_with_option.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'employee_attendance',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_attendances/datewise_attendance_with_option.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
+    end
+
+  end
 
    def add_attendance
     @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
     @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id).order('day DESC')
   end
   
+  def in_out_summary
+  end
+
+  def show_in_out_summary
+    @from = params[:salary][:from]
+    @to = params[:salary][:to]
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).group(:day)
+    # in_count = 0
+    # out_count = 0
+    # @employee_attendance.each do |a|
+      
+    #   if a.in_time == nil
+    #   else
+    #     in_count = in_count + 1
+    #   end
+    #   @in_count = in_count
+
+    #   if a.out_time == nil
+    #     @nil_out = a
+    #   else
+    #     out_count = out_count + 1
+    #   end
+    #   @out_count = out_count
+    # end
+    # @in_time = @in_count
+    # @out_time = @out_count
+  end
+
+  def modal_missing_record
+    date = params[:date]
+    @employee_attendances = EmployeeAttendance.where(day: date.to_date).where("in_time = ? OR out_time = ?",nil,nil)
+  end
+
+  def attendance_summary
+  end
+
+  def show_attendance_summary
+    @from = params[:salary][:from]
+    @to = params[:salary][:to]
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).group(:day)
+   
+  end
+
   # def create_self_attendance
   #   @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
   #   employee_id = params[:salary][:employee_id]
@@ -2406,6 +2524,6 @@ end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_attendance_params
-    params.require(:employee_attendance).permit(:employee_week_off_id,:employee_code,:employee_name,:employee_id, :day, :present, :in_time, :out_time)
+    params.require(:employee_attendance).permit(:holiday_id,:employee_week_off_id,:employee_code,:employee_name,:employee_id, :day, :present, :in_time, :out_time)
   end
 end

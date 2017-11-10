@@ -56,12 +56,23 @@ class LeavingReasonsController < ApplicationController
     @leaving_reasons = LeavingReason.all
   end
 
-  def is_confirm
-    @leaving_reason = LeavingReason.find(params[:leaving_reason])
-    LeavingReason.find(@leaving_reason.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_leaving_reason_path
-  end
+ def leaving_reason_master
+      @leaving_reasons = LeavingReason.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'leaving_reasons/leaving_reason_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'leaving_reason_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'leaving_reasons/leaving_reason_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+     end
+  
   
   private
     # Use callbacks to share common setup or constraints between actions.

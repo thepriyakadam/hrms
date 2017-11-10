@@ -84,8 +84,10 @@ class FamiliesController < ApplicationController
       if @family.update(family_params)
         # format.html { redirect_to @family, notice: 'Family was successfully updated.' }
         # format.json { render :show, status: :ok, location: @family }
+        EmployeeMailer.family_detail_create(@employee,@family).deliver_now
         @families = @employee.families
         format.js { @flag = true }
+        EmployeeMailer.family_detail_create(@employee,@family).deliver_now
       else
         # format.html { render :edit }
         # format.json { render json: @family.errors, status: :unprocessable_entity }

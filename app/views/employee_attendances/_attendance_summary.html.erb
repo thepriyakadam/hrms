@@ -1,0 +1,123 @@
+<table id="example5" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Total Employee</th>
+          <th>Present</th>
+          <th>Absent</th>
+          <th>Week Off</th>
+          <th>Paid Holiday</th>
+          <th>Leave</th>
+          <th>Present %</th>
+          <th>Absent %</th>
+          <th>Week Off %</th>
+          <th>PH %</th>
+          <th>Leave %</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @employee_attendances.each do |e| %>
+          <tr>
+            <td><%= e.day %></td>
+            <td>
+              <% @employee_attendance = EmployeeAttendance.where(day: e.day) %> 
+              <% emp = 0 %>
+              <% @employee_attendance.each do |a| %>
+                <% emp = emp + 1 %>
+                <% emp %>
+              <% end %>
+              <%= emp %>
+            </td>
+            <td>
+              <% @employee_attendance = EmployeeAttendance.where(day: e.day).where("present = ? OR present = ? OR present = ? OR count = ?",'HDL','HD','P',0.5) %> 
+              <% pre = 0 %>
+              <% @employee_attendance.each do |a| %>
+                <% if a.present == "HD" %>
+                  <% pre = pre + 0.5 %>
+                  <% pre %>
+                <% elsif a.present == "HDL" %>
+                  <% pre = pre + 0.5 %>
+                  <% pre %>
+                <% elsif a.count == 0.5 %>
+                  <% pre = pre + 0.5 %>
+                  <% pre %>
+                <% else %>
+                  <% pre = pre + 1 %>
+                  <% pre %>
+                <% end %>
+              <% end %>
+              <%= pre %>
+            </td>
+            <td>
+              <% @employee_attendance = EmployeeAttendance.where(day: e.day).where("present = ? OR present = ? OR present = ?",'HDL','HD','A') %> 
+              <% abs = 0 %>
+              <% @employee_attendance.each do |a| %>
+                <% if a.present == "HD" %>
+                  <% abs = abs + 0.5 %>
+                  <% abs %>
+                <% elsif a.present == "HDL" %>
+                  <% abs = abs + 0.5 %>
+                  <% abs %>
+                <% else %>
+                  <% abs = abs + 1 %>
+                  <% abs %>
+                <% end %>
+              <% end %>
+              <%= abs %>
+            </td>
+            <td>
+              <% @employee_attendance = EmployeeAttendance.where(day: e.day).where("present = ? OR present = ?",'WOP','WO') %> 
+              <% wo = 0 %>
+              <% @employee_attendance.each do |a| %>
+                <% wo = wo + 1 %>
+                <% wo %>
+              <% end %>
+              <%= wo %>
+            </td>
+            <td>
+              <% @employee_attendance = EmployeeAttendance.where(day: e.day).where("present = ? OR present = ?",'H','HP') %>
+              <% hp = 0 %>
+              <% @employee_attendance.each do |a| %>
+                <% hp = hp + 1 %>
+                <% hp %>
+              <% end %>
+              <%= hp %>
+            </td>
+            <td>
+                <% @employee_attendance = EmployeeAttendance.where(day: e.day).where.not(employee_leav_request_id: nil) %> 
+                <% leave = 0 %>
+                <% @employee_attendance.each do |a| %>
+                  <% if a.count == 0.5 %>
+                    <% leave = leave + 0.5 %>
+                    <% leave %>
+                  <% else %>
+                    <% leave = leave + 1 %>
+                    <% leave %>
+                  <% end %>
+                <% end %>
+                <%= leave %>
+            </td>
+            <td>
+              <% p_per = (pre.to_f/emp.to_f) * 100 %>
+              <%= p_per.round(2) %>
+            </td>
+            <td>
+              <% a_per = (abs.to_f/emp.to_f) * 100 %>
+              <%= a_per.round(2) %>  
+            </td>
+            <td>
+              <% wo_per = (wo.to_f/emp.to_f) * 100 %>
+              <%= wo_per.round(2) %> 
+            </td>
+            <td>
+              <% hp_per = (hp.to_f/emp.to_f) * 100 %>
+              <%= hp_per.round(2) %> 
+            </td>
+            <td>
+              <% leave_per = (leave.to_f/emp.to_f) * 100 %>
+              <%= leave_per.round(2) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>

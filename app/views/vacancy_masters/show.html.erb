@@ -34,7 +34,7 @@
         <td><%= @vacancy_master.try(:sub_department).try(:name) %></td>
 
         <th><strong>Designation</strong></th>
-        <td><%= @vacancy_master.employee_designation.name %></td>
+        <td><%= @vacancy_master.try(:employee_designation).try(:name) %></td>
       </tr>
 
       <tr>
@@ -92,7 +92,7 @@
       </tr>
 
       <tr>
-        <th><strong>Reason for requirement </strong></th>
+        <th><strong>Reason For Requirement </strong></th>
         <td><%= @vacancy_master.reason %></td>
 
         <th><strong>Replacement</strong></th>

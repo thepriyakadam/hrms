@@ -57,11 +57,21 @@ class InterviewTypesController < ApplicationController
     @interview_types = InterviewType.all
   end
 
-  def is_confirm
-    @interview_type = InterviewType.find(params[:interview_type])
-    InterviewType.find(@interview_type.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_interview_type_path
+   def interview_type_master
+      @interview_types = InterviewType.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'interview_types/interview_type_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'interview_type_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'interview_types/interview_type_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
   end
   
   private

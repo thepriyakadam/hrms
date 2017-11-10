@@ -54,11 +54,21 @@ class CompanyTypesController < ApplicationController
             end
   end
 
-  def is_confirm
-    @company_type = CompanyType.find(params[:company_type])
-    CompanyType.find(@company_type.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_company_type_path
+  def company_type_master
+    @company_types = CompanyType.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'company_types/company_type_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'company_type_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'company_types/company_type_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
   end
 
   private
@@ -70,6 +80,6 @@ class CompanyTypesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def company_type_params
-    params.require(:company_type).permit(:is_confirm,:name)
+    params.require(:company_type).permit(:is_confirm,:name,:code,:description)
   end
 end

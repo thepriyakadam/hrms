@@ -6,6 +6,14 @@
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
     <tr>
+      <th><strong>Code</strong></th>
+      <td><%= @department.manual_department_code %></td>
+
+      <th><strong>Name</strong></th>
+      <td><%= @department.name %></td>
+    </tr>
+ 
+    <tr>
       <th><strong>Company Location</strong></th>
       <td><%= @department.company_location.company.try(:name) %> - <%= @department.company_location.try(:name) %></td>
 

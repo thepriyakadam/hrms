@@ -2,7 +2,19 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :name,hide_label:true, placeholder: 'Religion' %>
+        <%= f.text_field :code,hide_label:true, placeholder: 'Code' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Name' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
       </div>
     </div>
 
@@ -17,13 +29,19 @@
 <script>
 $("#religion").validate({
     rules: {
+      "religion[code]":{
+        required: true,
+      },
       "religion[name]":{
         required: true,
       }
        },
     messages: {
-      "religion[name]":{
-        required: "Please Specify Religion",
+      "religion[code]":{
+        required: "Please specify code",
+      },
+       "religion[name]":{
+        required: "Please specify name",
       }
        },
     errorPlacement: function(error, element) {
@@ -32,5 +50,3 @@ $("#religion").validate({
     }
    });
 </script>
-
-

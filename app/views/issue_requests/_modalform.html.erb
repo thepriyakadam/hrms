@@ -2,18 +2,20 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Lock Request </center></h4>
+    </div>
+    <div class="modal-body">
       <%= bootstrap_form_for :issue_request,url:{action:"lock_request", id: @issue_request.id},html: {id: 'issue_request'} do |f| %>
       <%= f.hidden_field :lock_date, :value => Time.zone.now.to_date %>
       <%= f.hidden_field :lock_time, :value => Time.zone.now.to_time %>
         <div class="row">
-          <div class="col-sm-9">
+          <div class="col-sm-6">
             <div class="form-group required">
              <%= f.select :issue_tracker_member_id,issue_tracker_member_role_wise(@issue_request.issue_tracker_group.id),{label: 'Issue Tracker Member',include_blank: " Select Member"},class: "form-control"%>
             </div>
          </div>
-        <div class="col-sm-3">
-        <label></label>
-          <div class="actions">
+        <div class="col-sm-6">
+          <div class="actions" style="padding: 20px">
            <%= f.submit "LOCK", class: 'btn btn-sm btn-primary fa fa-modx' %>
           </div>
         </div>

@@ -547,6 +547,7 @@ class WorkingdaysController < ApplicationController
     @from_date = @from.to_date
     @to_date = @to.to_date
     @workingdays = Workingday.where(date: @from.to_date..@to.to_date,employee_id: @employee)
+    @workingday = Workingday.where(date: @from.to_date..@to.to_date,employee_id: @employee).take
 
       respond_to do |format|
       format.js

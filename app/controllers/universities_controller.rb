@@ -43,12 +43,21 @@ class UniversitiesController < ApplicationController
     @universities = University.all
   end
 
-  def is_confirm
-    @university = University.find(params[:university])
-    University.find(@university.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_university_path
+  def university_master
+      @universities = University.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'universities/university_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'university_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'universities/university_master.pdf.erb',
+        show_as_html: params[:debug].present?
   end
+end
+end
   
   private
 
@@ -59,6 +68,6 @@ class UniversitiesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def university_params
-    params.require(:university).permit(:is_confirm,:name)
+    params.require(:university).permit(:is_confirm,:name,:code,:description)
   end
 end

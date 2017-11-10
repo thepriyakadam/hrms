@@ -12,6 +12,9 @@ class DegreeTypesController < ApplicationController
   def edit
   end
 
+  def show
+  end    
+
   # POST /degree_types
   # POST /degree_types.json
   def create
@@ -43,11 +46,21 @@ class DegreeTypesController < ApplicationController
     @degree_types = DegreeType.all
   end
 
-  def is_confirm
-    @degree_type = DegreeType.find(params[:degree_type])
-    DegreeType.find(@degree_type.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_degree_type_path
+  def qualification_level_master
+     @degree_types = DegreeType.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'degree_types/qualification_level_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'qualification_level_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'degree_types/qualification_level_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
   end
   
   private
@@ -59,6 +72,6 @@ class DegreeTypesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def degree_type_params
-    params.require(:degree_type).permit(:is_confirm,:name)
+    params.require(:degree_type).permit(:is_confirm,:name,:code,:description)
   end
 end

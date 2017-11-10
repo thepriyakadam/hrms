@@ -28,7 +28,7 @@ class OdRequestMailer < ApplicationMailer
   def second_approve(request)
     @od_request = request
     @employee = Employee.find(@od_request.employee_id)
-    @manager = Employee.find(@od_request.second_reporter_id)
+    @manager = Employee.find(@od_request.first_reporter_id)
     @emp = Employee.find_by(id: request.employee_id)
     email = @employee.try(:email)
     mail(to: email ,cc: @emp.company_location.email, subject: 'OD Approved Successfully')

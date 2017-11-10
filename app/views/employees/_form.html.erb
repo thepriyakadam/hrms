@@ -163,7 +163,12 @@
       <div class="row">
           <div class="col-sm-3">
           <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_country_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
             <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/companies/collect_states',a,function(response){});"}%>
+          </div>
           </div>
         </div> 
           <div class="col-sm-3">
@@ -297,7 +302,7 @@
   }); 
 </script>
 
-<!-- <script>
+<script>
 $("#employee").validate({
     rules: {
       "employee[manual_employee_code]":{
@@ -446,4 +451,4 @@ $("#employee").validate({
     }
 
    });
-</script> -->
+</script>

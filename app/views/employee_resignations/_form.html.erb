@@ -27,13 +27,13 @@
         </div>
 
         <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
            <%= f.select :leaving_reason_id, all_leaving_reason,{label: 'Reason of Leaving',include_blank: " Select Reason of Leaving"} %>
           </div>
         </div>
 
         <div class="col-sm-3">
-         <div class="field">
+         <div class="form-group required">
            <%= f.text_field :notice_period, label:'Notice Period (in days)',readonly: true %>
          </div>
         </div> 
@@ -73,7 +73,7 @@
       </div> -->
 
       <div class="col-sm-3">
-       <div class="field">
+       <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
@@ -95,13 +95,12 @@
       </div>
 
       <div class="col-sm-3">
-        <label>Settled On</label>
-        <div class="field">
+        <div class="form-group required">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :settled_on,hide_label: true, class: 'resignation'%>
+            <%= f.text_field :settled_on,label:'Settled On', class: 'resignation'%>
           </div>
         </div>
       </div>
@@ -112,7 +111,7 @@
       
   
       <div class="col-sm-12">
-       <div class="field">
+       <div class="form-group required">
          <%= f.text_area :note, label:'Note' %>
        </div>
       </div>
@@ -160,6 +159,25 @@ $("#employee_resignation").validate({
       "employee_resignation[resignation_date]":{
         required: true,
       },
+      "employee_resignation[employee_id]":{
+        required: true,
+      },
+      "employee_resignation[notice_period]":{
+        required: true,
+      },
+      "employee_resignation[tentative_leaving_date]":{
+        required: true,
+      },
+      "employee_resignation[exit_interview_date]":{
+        required: true,
+      },
+      "employee_resignation[leaving_date]":{
+        required: true,
+      },
+      
+      "employee_resignation[note]":{
+        required: true,
+      },
       "employee_resignation[leaving_reason_id]":{
         required: true,
       },
@@ -170,6 +188,24 @@ $("#employee_resignation").validate({
     messages: {
       "employee_resignation[resignation_date]":{
         required: "Please select date",
+      },
+      "employee_resignation[employee_id]":{
+        required: "Please select Employee ",
+      },
+      "employee_resignation[notice_period]":{
+        required: "Please select notice period ",
+      },
+      "employee_resignation[tentative_leaving_date]":{
+        required: "Please select leaving date ",
+      },
+      "employee_resignation[exit_interview_date]":{
+        required: "Please select exit interview date ",
+      },
+      "employee_resignation[leaving_date]":{
+        required: "Please select leaving date ",
+      },
+      "employee_resignation[note]":{
+        required: "Please select note ",
       },
       "employee_resignation[leaving_reason_id]":{
         required: "Please select leaving reason ",

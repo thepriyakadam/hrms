@@ -383,15 +383,15 @@ class EmployeeLeavRequest < ActiveRecord::Base
 
 
   def create_attendance_leave
-    if self.is_present?
-    else
+    
       for i in self.start_date.to_date..self.end_date.to_date
         if self.is_there(i)
+          @employee_attendance = EmployeeAttendance.where(employee_id: self.employee_id,day: i).take
+          @employee_attendance.update(present: 'A',comment: "Leave Request Pending")
         else
         EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'A',comment: "Leave Request Pending")
         end
-      end
-    end #self.is_present
+      end#for i in self
   end #def
 
 
@@ -524,6 +524,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
       if leav_category.weekoff_sandwich == true || leav_category.holiday_sandwich == true
 
         if self.weekoff_present(i,employee) || self.holiday_present(i,employee)
+          
         else
           if employee_leav_request.leave_type == 'Full Day'
           LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 1,leav_category_id: employee_leav_request.leav_category_id)
@@ -598,6 +599,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
           end
         elsif employee_leav_request.leave_type == 'Half Day'
           LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 0.5,leav_category_id: employee_leav_request.leav_category_id)
+        #byebug
         else
           LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 1,leav_category_id: employee_leav_request.leav_category_id)
         end#Half_day

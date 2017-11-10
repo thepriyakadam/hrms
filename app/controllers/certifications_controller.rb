@@ -57,8 +57,10 @@ class CertificationsController < ApplicationController
       if @certification.update(certification_params)
         # format.html { redirect_to @certification, notice: 'Certification was successfully updated.' }
         # format.json { render :show, status: :ok, location: @certification }
+        EmployeeMailer.certification_create(@employee,@certification).deliver_now
         @certifications = @employee.certifications
         format.js { @flag = true }
+        EmployeeMailer.certification_create(@employee,@certification).deliver_now
       else
         # format.html { render :edit }
         # format.json { render json: @certification.errors, status: :unprocessable_entity }

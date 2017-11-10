@@ -121,9 +121,11 @@ class OnDutyRequestsController < ApplicationController
                   @on_duty_request.save
                 end
               end
-          for i in @on_duty_request.start_date.to_date..@on_duty_request.end_date.to_date
-            OdRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',day: i)
-          end
+          # for i in @on_duty_request.start_date.to_date..@on_duty_request.end_date.to_date
+          #   OdRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',day: i)
+          # end
+
+                          @on_duty_request.create_attendance_od
             OdStatusRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',change_date: Date.today)
 
             if @employee.manager.email.nil? or @employee.manager.email == ""
@@ -141,7 +143,8 @@ class OnDutyRequestsController < ApplicationController
                 end
               else
               end
-
+              @od_record = OdRecord.where(on_duty_request_id: @on_duty_request.id).count
+              @on_duty_request.update(no_of_day: @od_record)
           flash[:notice] = "Request Created Successfully"
           if current_user.employee_id == @on_duty_request.employee_id
             redirect_to on_duty_requests_path
@@ -257,14 +260,11 @@ class OnDutyRequestsController < ApplicationController
   end
 
   def od_request_list
-    if current_user.class == Group
-      @first_level_request_lists = OnDutyRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false)
-      @second_level_request_lists = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false)
-    else
-      @first_level_request_lists = OnDutyRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false)
+    
+      @first_level_request_lists = OnDutyRequest.where(current_status: "Pending")
       @on_duty_request = OnDutyRequest.where.not(second_reporter_id: nil).pluck(:second_reporter_id)
       @second_level_request_lists = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,second_reporter_id: @on_duty_request)
-    end
+    
     session[:active_tab] ="LeaveManagement"
     session[:active_tab1] ="ODProcess"
   end

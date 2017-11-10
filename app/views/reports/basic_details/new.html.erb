@@ -1,29 +1,28 @@
 <!--SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Information Report</h3>
+    <h3 class="box-title">Employee Report</h3>
   </div><!-- /.box-header -->
 
   <div class="box-body">
-
+    <%= bootstrap_form_for(:emploee, url: { action: 'employee_basic_report',format: 'xls'}) do |f| %>
 
       <div class="col-sm-3">
-<!--           <div class="field">
-          <= select :salary, :company_location_id, all_company_location2,{include_blank: 'select Location'},{onchange:"var a={id:$(this).val()}; $.get('/reports/basic_details/collect_departments',a,function(response){});", class: "form-control"}%>
-          </div>
-      </div>
-
-       <div class="field"> -->
+          <div class="field">
            <%= select :salary, :company_location_id, all_company_location2,{include_blank: 'Select Location'},{onchange:"var a={company_location:$(this).val()};$('.ajax-progress').show(); $.get('/reports/basic_details/show_basic_detail',a,function(response){});",class: 'form-control'} %>
+          </div>
         </div>
-
-  <!--     <div class="col-sm-3">
-        <div class="actions">
-          <= f.submit "Download Excel", class: "btn btn-sm btn-primary" %>
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Download Excel", class: "btn btn-sm btn-primary" %>
+          </div>
         </div>
-      </div> -->
 
       </div><br>
-     <div id="employee_list"></div>
+    <% end %>
   </div><!-- /.box-body -->
 </div><!-- /.box -->
+ <div id="employee_list"></div>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+    

@@ -33,6 +33,16 @@
         <div class="col-sm-2" style="padding-top:20px;">
           <%= f.submit "Show Attendance",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %>
         </div>
+
+        <div class="col-sm-3">
+          <label>Present -->  Title </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <%= link_to 'Change', present_to_title_self_services_path, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary btn-primary fa fa-check' %>
+            </div>
+          </div>
+        </div>
+      
       </div>
      </div>
   <% end %>
@@ -49,14 +59,19 @@
 </script>
 
 <script type="text/javascript">
-  $(function(){
-    $('.request_date').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-200:+1',
-    dateFormat: 'dd-mm-yy' });
-  }); 
+  $('#calendar').({
+ background-color: 'red'
+}); 
 </script>
+
+<style>    
+#calendar{
+            color:#000;
+            background-color:#FFF;
+            border-color:#669999;   
+            width: 100%;                
+        }
+</style>
 
 <script>
 $("#employee").validate({

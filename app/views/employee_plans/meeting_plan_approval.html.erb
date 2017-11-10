@@ -1,0 +1,36 @@
+<div class="box box-default">
+  <div class="box-body">
+    <table id="example5" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Employee Name</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @employee_plan.each do |employee_plan| %>
+          <tr> 
+            <td><%= employee_plan.employee_id %></td>
+            <td><%= employee_plan.employee.prefix %> <%= employee_plan.employee.first_name %> <%= employee_plan.employee.middle_name %><%= employee_plan.employee.last_name%></td>
+            <td>
+              <%= link_to '', view_plan_employee_plans_path(employee_plan.id), remote: true, class: 'btn btn-sm btn-default fa fa-eye' %>
+              <%= link_to 'Approve', plan_approve_employee_plans_path(employee_plan.id), data: { confirm: 'Are you sure?' }, class: 'btn btn-primary btn-primary fa fa-check' %> 
+              <%= link_to 'Reject', plan_reject_employee_plans_path(employee_plan.id), data: { confirm: 'Are you sure?' },class: 'btn btn-primary btn-danger fa fa-trash' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div id="view_plan" class="modal fade"></div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example5').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true
+    } );
+} );
+</script>

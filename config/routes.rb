@@ -1,9 +1,19 @@
 Rails.application.routes.draw do
+  resources :policy_details do
+    collection do
+      get :policy_details_modal
+    end
+  end
+  
   resources :employee_plans do
     collection do
       get :modal_employee_plan_detail
       get :employee_plan_detail_list
       get :ajax_employee_plan_details
+      get :meeting_plan_approval
+      get :plan_approve
+      get :plan_reject
+      get :view_plan
     end
   end
   resources :events  # do
@@ -631,6 +641,14 @@ end
       post :show_datewise_report
       get :show_datewise_report
       get :modal
+      get :employee_declaration
+      get :add_employee_declaration
+      get :edit_employee_declaration
+      get :show_employee_declaration
+      post :update_employee_declaration
+      get :policy_details_modal
+      post :document_upload
+      get :download_document
     end
   end
   resources :investment_heads
@@ -1646,6 +1664,7 @@ end
       get :modal_c_off
       get :create_in_time
       get :create_out_time
+      get :present_to_title
     end
   end
 
@@ -1732,6 +1751,8 @@ end
 
   match 'employees/:id/download_employee_signature/:id' => 'employees#download_employee_signature', :via => [:get], :as => :download_employee_signature
   match 'employees/:id/download_employee_profile_picture/:id' => 'employees#download_employee_profile_picture', :via => [:get], :as => :download_employee_profile_picture
+
+  match 'investment_declarations/:id/investment_download_document/:id' => 'investment_declarations#investment_download_document', :via => [:get], :as => :investment_download_document
 
   # get '/screenshot', to: 'issue_requests#download_screenshot', as: 'download_screenshot'
   # get '/download', to: 'issue_requests#download_screenshot_image', as: 'download_screenshot_image'
@@ -2719,5 +2740,12 @@ end
     get 'user_auths/holiday_setup' => 'user_auths#holiday_setup', defaults:{format: 'json'}
     get 'user_auths/employee_contact_library' => 'user_auths#employee_contact_library', defaults:{format: 'json'}
     get 'user_auths/employee_details' => 'user_auths#employee_details', defaults:{format: 'json'}
+    get 'user_auths/manager1_employee_list' => 'user_auths#manager1_employee_list', defaults:{format: 'json'}
+    get 'user_auths/manager2_employee_list' => 'user_auths#manager2_employee_list', defaults:{format: 'json'}
+    get 'user_auths/contact_details' => 'user_auths#contact_details', defaults:{format: 'json'}
+    post 'user_auths/meeting_plan_approve' => 'user_auths#meeting_plan_approve', defaults:{format: 'json'}
+    get 'user_auths/approve_plan_list' => 'user_auths#approve_plan_list', defaults:{format: 'json'}
+    get 'user_auths/manager_approve_plan_list' => 'user_auths#manager_approve_plan_list', defaults:{format: 'json'}
+    get 'user_auths/particular_employee_plan_list' => 'user_auths#particular_employee_plan_list', defaults:{format: 'json'}
   end
 end

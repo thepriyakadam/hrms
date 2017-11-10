@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Investment declaration:</strong>
+  <%= @policy_detail.investment_declaration %>
+</p>
+
+<p>
+  <strong>Insurer:</strong>
+  <%= @policy_detail.insurer %>
+</p>
+
+<p>
+  <strong>Policy no:</strong>
+  <%= @policy_detail.policy_no %>
+</p>
+
+<p>
+  <strong>Relation:</strong>
+  <%= @policy_detail.relation %>
+</p>
+
+<p>
+  <strong>Frequency:</strong>
+  <%= @policy_detail.frequency %>
+</p>
+
+<p>
+  <strong>Premium amount:</strong>
+  <%= @policy_detail.premium_amount %>
+</p>
+
+<p>
+  <strong>Estimated annual amount:</strong>
+  <%= @policy_detail.estimated_annual_amount %>
+</p>
+
+<p>
+  <strong>Actual annual amount:</strong>
+  <%= @policy_detail.actual_annual_amount %>
+</p>
+
+<%= link_to 'Edit', edit_policy_detail_path(@policy_detail) %> |
+<%= link_to 'Back', policy_details_path %>

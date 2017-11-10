@@ -403,7 +403,7 @@ DEPENDENCIES
   spring
   table_print
   therubyracer
-  thin (~> 1.6, >= 1.6.4)
+  thin
   time_difference
   turbolinks
   twilio-ruby (~> 4.11, >= 4.11.1)

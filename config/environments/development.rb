@@ -238,7 +238,7 @@
  # password: 'Dev@2017',
   authentication: :plain,
   enable_starttls_auto: true,
-   openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+   openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE,
     openssl_verify_mode: 'none'
   }
 

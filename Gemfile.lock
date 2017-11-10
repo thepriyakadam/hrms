@@ -226,15 +226,14 @@ GEM
     rack (1.6.8)
     rack-test (0.6.3)
       rack (>= 1.0)
-
-    rails (4.2.4)
-      actionmailer (= 4.2.4)
-      actionpack (= 4.2.4)
-      actionview (= 4.2.4)
-      activejob (= 4.2.4)
-      activemodel (= 4.2.4)
-      activerecord (= 4.2.4)
-      activesupport (= 4.2.4)
+    rails (4.2.8)
+      actionmailer (= 4.2.8)
+      actionpack (= 4.2.8)
+      actionview (= 4.2.8)
+      activejob (= 4.2.8)
+      activemodel (= 4.2.8)
+      activerecord (= 4.2.8)
+      activesupport (= 4.2.8)
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.2.8)
       sprockets-rails
@@ -395,8 +394,7 @@ DEPENDENCIES
   pry
   query_report
   quiet_assets
-
-  rails (= 4.2.4)
+  rails (= 4.2.8)
   rails-erd
   rake (~> 12.0)
   rmagick (~> 2.15.4)
@@ -420,6 +418,3 @@ DEPENDENCIES
   wirble
   wkhtmltopdf-binary (~> 0.9.9.3)
   yaml_db
-
-BUNDLED WITH
-   1.16.0

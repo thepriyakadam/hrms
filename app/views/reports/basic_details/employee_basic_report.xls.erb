@@ -49,6 +49,7 @@
         <Cell ss:Index="40"><Data ss:Type="String">Service</Data></Cell>
         <Cell ss:Index="41"><Data ss:Type="String">Cost Center</Data></Cell>
         <Cell ss:Index="42"><Data ss:Type="String">Update Time</Data></Cell>
+        <Cell ss:Index="43"><Data ss:Type="String">Update Time</Data></Cell>
         </Row>
 
         <% i = 0 %>
@@ -96,6 +97,7 @@
           <Cell ss:Index="40"><Data ss:Type="String"><%= employee.try(:service_master).try(:name) %></Data></Cell>
           <Cell ss:Index="41"><Data ss:Type="String"><%= employee.try(:cost_center).try(:name) %></Data></Cell>
           <Cell ss:Index="42"><Data ss:Type="String"><%= employee.try(:updated_at).to_date %></Data></Cell>
+          <Cell ss:Index="43"><Data ss:Type="String"> <%= wicked_pdf_image_tag employee.passport_photo.url, :size => "90x50" %></Data></Cell>
      </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

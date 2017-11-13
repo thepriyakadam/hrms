@@ -212,7 +212,7 @@ class EmployeeResignationsController < ApplicationController
      @leaving_date = params[:employee_resignation] ? params[:employee_resignation][:leaving_date] : params[:leaving_date]
     #@leaving_date = params[:leaving_date]
     if @employee_resignation.employee.manager_2_id.nil?
-      EmployeeResignation.where(id: @employee_resignation.id).update_all(leaving_date: @leaving_date)
+    EmployeeResignation.where(id: @employee_resignation.id).update_all(leaving_date: @leaving_date)
    
       @employee_resignation.update(is_pending:true,is_first_approved: true,is_second_approved: true,resign_status: "SecondApproved")
       ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "SecondApproved",change_date: Date.today)

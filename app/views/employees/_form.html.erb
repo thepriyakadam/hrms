@@ -155,18 +155,6 @@
           </div>
         </div>
 
-                 <div class="col-sm-3">
-          <div class="form-group required">
-            <%= f.select :service_master_id, all_service_master, {label: 'Service Master',include_blank: " Select Service Master"} %>
-          </div>
-        </div>
-
-                 <div class="col-sm-3">
-          <div class="form-group required">
-            <%= f.select :resource_pool_master_id, all_resource_pool, {label: 'Resource Pool',include_blank: " Select Resource Pool"} %>
-          </div>
-        </div>
-      </div>
 
       <div class="row">
         <div class="col-sm-9">
@@ -263,12 +251,7 @@
             </div>
           </div>
           
-           <div class="col-sm-3">
-        <div class="form-group required">
-           <%= f.select :cost_center_id, all_cost_center, {label: 'Cost Center',include_blank: " Select Cost Center"} %>
-        </div>
-      </div>
-
+       
           <div class="col-sm-3">
             <div class="form-group required">
             <div class="input-group">
@@ -399,9 +382,7 @@ $("#employee").validate({
       "employee[department_id]":{
         required: true
       },
-       "employee[sub_department_id]":{
-        required: true
-      },
+       
        "employee[email]":{
         required: true
       },
@@ -413,16 +394,7 @@ $("#employee").validate({
         },
        "employee[gender]":{
         required: true
-        },
-       "employee[service_master_id]":{
-        required: true
-         },
-       "employee[resource_pool_master_id]":{
-        required: true
-         },
-       "employee[cost_center_id]":{
-        required: true
-      }
+        }
     },
     messages: {
       "employee[manual_employee_code]":{
@@ -484,9 +456,6 @@ $("#employee").validate({
       "employee[department_id]":{
         required: "Please select department"
       },
-      "employee[sub_department_id]":{
-        required: "Please select sub department"
-      },
       "employee[email]":{
         required: "Please specify email id"
          },
@@ -498,16 +467,7 @@ $("#employee").validate({
          },
       "employee[gender]":{
         required: "Please select gender"
-          },
-      "employee[service_master_id]":{
-        required: "Please select service master"
-          },
-      "employee[resource_pool_master_id]":{
-        required: "Please select resource pool"
-        },
-      "employee[cost_center_id]":{
-        required: "Please select cost center"
-      }
+          }
     },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})

@@ -33,8 +33,7 @@ $("#employee_resignation").validate({
     messages: {
       "employee_resignation[leaving_date]":{
         required: "Please specify leaving_date",
-      }
-      
+      } 
     },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
@@ -48,7 +47,7 @@ $("#employee_resignation").validate({
     $('.request_from_date').datepicker({
     changeYear:true,
     changeMonth: true,
-    yearRange: '-2:+5',
-    dateFormat: 'yy-mm-dd' });
+    yearRange: '-100:-0',
+    dateFormat: 'dd-mm-yy' });
   }); 
 </script>

@@ -346,15 +346,11 @@ def create
 
 
   def leave
-<<<<<<< HEAD
-    # @employee_leav_balance = EmployeeLeavBalance.find(params[:id])
-    
-=======
+
     @leav_category_id = params[:salary][:leav_category_id]
     @employee_leav_balance = EmployeeLeavBalance.where(params[:leav_category_id])
     leave_category = LeavCategory.find(params[:salary][:leav_category_id])
 
->>>>>>> 1b8c29370efe221918cab04516786f268d3f3e50
         @employee_actual_workingday = 0
         @employee_leav_bal = EmployeeLeavBalance.where("to_date <= ? AND is_active = ?", Date.today,true)
         @employee_leav_bal.each do |e|

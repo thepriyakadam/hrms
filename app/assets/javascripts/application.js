@@ -40,6 +40,51 @@ $(document).ready(function() {
 
 });
 
+$(document).ready(function() {
+    var date = new Date();
+    var d = date.getDate();
+    var m = date.getMonth();
+    var y = date.getFullYear();
+
+    $('#calendar').fullCalendar({ 
+            height: 350,
+            color: '#ff0000',
+        textColor: '#ffffff',
+        backgroundColor: 'red',
+        firstDay: 1,
+            theme: true,
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      disableDragging: true,
+      editable: true,
+      eventSources: [{
+      events: '/events.json',         
+      color: '#ff0000',
+      textColor: '#ffffff',
+      backgroundColor: '#ccc',
+      border:'1px solid #7BD148',
+      ignoreTimezone: false
+       }],
+        eventRender: function(event, element, date ) {
+            element.attr('titleeevent.tip'); // for tooltip
+        },
+        eventAfterRender: function(event, element, view) {
+           if (event.half == "1") {
+            // half a day
+            var elementWidth = parseInt(90 * event.day_count);
+
+            // set width of element
+            jQuery(element).css('width', elementWidth + "px");
+           }
+            if (event.className == "holi_day") {
+                $(element).find(".fc-event-title").css({"color": "#0000dd", "font-weight": "bold"  });
+               }
+        }
+    });
+  });
 
 
 

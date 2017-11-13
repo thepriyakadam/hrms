@@ -11,7 +11,6 @@ class EmployeeAttendancesController < ApplicationController
     @employee_attendances = EmployeeAttendance.group("strftime('%Y',day)")
     session[:active_tab] ="TimeManagement"
     session[:active_tab1] ="daily_attendance"
-
   end
 
   def employee_attendance
@@ -2098,12 +2097,17 @@ def upload
                       total_hrs = last_out_time.to_time - first_record.time.to_time
                       working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
                     end
-                  end#first_record.nil? || first_record.time.to_time.nil?
+                     if working_hrs.to_s < "07:00" || working_hrs
+                     current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "WO",comment: "Workingday Hrs Less than 7")
+                  else
+                 
                   current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: last_out_time.to_time,employee_id: employee.id,working_hrs: working_hrs,present: "WOP",comment: "Week Off Present")
+               end
+                  end#first_record.nil? || first_record.time.to_time.nil?
+                 
                 end#first_in_time == nil && last_out_time == nil
 
               elsif current_employee_attendance.present == "H"  || current_employee_attendance.present == "HP"
-
                 if first_in_time == nil && last_out_time == nil
                   current_employee_attendance.update(day: last.date,in_time: first_record_time,out_time: nil,employee_id: employee.id,comment: "In & Out Time Not Available",present: "HP")
                 elsif first_in_time == nil

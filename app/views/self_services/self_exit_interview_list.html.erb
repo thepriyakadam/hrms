@@ -1,13 +1,3 @@
-<script>
-function displayResult()
-{
-    var a=(document.getElementById('sp1').value);
-    
-    document.getElementById('sp1').value= a;
-}
-</script>
-
-
 <div class="box">
   <div class="box-header">
     <h3 class="box-title">Exit Interview List</h3>
@@ -28,7 +18,7 @@ function displayResult()
         <tr>
    
         <td><%= exit_interview.question_master.try(:name) %></td>
-        <td><%= best_in_place exit_interview, :answer  %></td>
+        <td><%= best_in_place exit_interview, :answer %></td>
         </tr>
            
         <% end %>

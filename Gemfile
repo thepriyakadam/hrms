@@ -73,7 +73,7 @@ gem 'selenium-webdriver', '~> 3.0', '>= 3.0.5'
 gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
 
 #inline edit
-gem 'best_in_place', '~> 3.0.1'
+gem 'best_in_place', github: 'bernat/best_in_place'
 
 gem 'bcrypt-ruby', '~> 3.0.0', :require => 'bcrypt'
 gem 'bcrypt'

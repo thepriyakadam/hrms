@@ -620,7 +620,6 @@ Employee.new do |e|
   e.employee_type_id = @employee_type.id unless @employee_type.nil?
 
   e.status = ex.cell(line,'AE')
- 
   # e.company_id = ex.cell(line,'AA').to_i
   @company_name = Company.find_by_name(ex.cell(line,'AF'))
   e.company_id = @company_name.id unless @company_name.nil?
@@ -630,10 +629,8 @@ Employee.new do |e|
   e.department_id =  @department_name.id unless @department_name.nil?
   @sub_department_name = SubDepartment.find_by_name(ex.cell(line,'AI'))
   e.sub_department_id =  @sub_department_name.id unless @sub_department_name.nil?
-
   @code_master = EmployeeCodeMaster.find_by_name(ex.cell(line,'AJ'))
   e.employee_code_master_id = @code_master.id unless @code_master.nil?
-
   e.save!
 end
 puts "#{i} Employee inserted.-------------#{ex.cell(line,'A')}----------------------------------"

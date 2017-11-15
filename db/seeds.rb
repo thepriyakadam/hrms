@@ -575,10 +575,10 @@ require 'roo'
 
 
 puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/employee.xls")
+ex = Roo::Excel.new("#{Rails.root}/public/new_employee.xls")
 ex.default_sheet = ex.sheets[1]
 i=1
-2.upto(9) do |line|
+2.upto(15) do |line|
 Employee.new do |e|
   e.manual_employee_code = ex.cell(line,'A').to_i
   e.prefix = ex.cell(line,'B')

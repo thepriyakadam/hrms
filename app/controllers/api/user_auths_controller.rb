@@ -796,11 +796,37 @@ class Api::UserAuthsController < ApplicationController
     status = params[:status]
     current_status = params[:current_status]
     manager_id = params[:manager_id].to_i
-    employee_plan = EmployeePlan.new(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, conform: conform, status: status, current_status: current_status, manager_id: manager_id)
-    if employee_plan.save
-      render :status=>200, :json=>{:status=>"Employee plan was successfully created"}
+    @employee_plan = EmployeePlan.where(employee_id: employee_id)
+    if @employee_plan.present?
+      employee_plan = @employee_plan.where(from_date: from_date.to_date, to_date: to_date.to_date)
+      if employee_plan.present?
+        if from_plan = employee_plan.where("? BETWEEN from_time AND to_time", from_time).present?
+          render :status=>200, :json=>{:status=>"Sorry..!! This Time was already reserved..."}  
+        elsif to_plan = employee_plan.where("? BETWEEN from_time AND to_time", to_time).present?
+          render :status=>200, :json=>{:status=>"Sorry..!! This Time was already reserved..."}
+        else
+          employee_plan = EmployeePlan.new(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, conform: conform, status: status, current_status: current_status, manager_id: manager_id)
+          if employee_plan.save
+            render :status=>200, :json=>{:status=>"Employee plan was successfully created"}
+          else
+            render :status=>200, :json=>{:status=>"Employee is not Found."}
+          end
+        end
+      else
+        employee_plan = EmployeePlan.new(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, conform: conform, status: status, current_status: current_status, manager_id: manager_id)
+        if employee_plan.save
+          render :status=>200, :json=>{:status=>"Employee plan was successfully created"}
+        else
+          render :status=>200, :json=>{:status=>"Employee is not Found."}
+        end
+      end    
     else
-      render :status=>200, :json=>{:status=>"Employee is not Found."}
+      employee_plan = EmployeePlan.new(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, conform: conform, status: status, current_status: current_status, manager_id: manager_id)
+      if employee_plan.save
+        render :status=>200, :json=>{:status=>"Employee plan was successfully created"}
+      else
+        render :status=>200, :json=>{:status=>"Employee is not Found."}
+      end
     end
   end
 
@@ -834,9 +860,28 @@ class Api::UserAuthsController < ApplicationController
     current_status = params[:current_status]
     manager_id = params[:manager].to_i
     plan_id = params[:plan_id].to_i
-    @employee_plan = EmployeePlan.find(plan_id)
-    updated_plan = @employee_plan.update(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, conform: conform, status: status, current_status: current_status, manager_id: manager_id)
-    render :status=>200, :json=>{:status=>"Employee plan was successfully updated."}
+    # @update_employee_plan = EmployeePlan.find(plan_id)
+    @employee_plan = EmployeePlan.where(employee_id: employee_id)
+    if @employee_plan.present?
+      employee_plan = @employee_plan.where(from_date: from_date.to_date, to_date: to_date.to_date)
+      if employee_plan.present?
+        if from_plan = employee_plan.where("? BETWEEN from_time AND to_time", from_time).present?
+          render :status=>200, :json=>{:status=>"Sorry..!! This From Time was already reserved..."}  
+        elsif to_plan = employee_plan.where("? BETWEEN from_time AND to_time", to_time).present?
+          render :status=>200, :json=>{:status=>"Sorry..!! This To Time was already reserved..."}
+        else
+          @update_employee_plan = EmployeePlan.find(plan_id)
+          updated_plan = @update_employee_plan.update(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, conform: conform, status: status, current_status: current_status, manager_id: manager_id)
+          render :status=>200, :json=>{:status=>"Employee plan was successfully updated."}
+        end
+      else
+        @update_employee_plan = EmployeePlan.find(plan_id)
+        updated_plan = @update_employee_plan.update(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, conform: conform, status: status, current_status: current_status, manager_id: manager_id)
+        render :status=>200, :json=>{:status=>"Employee plan was successfully updated."}
+      end    
+    else
+      render :status=>200, :json=>{:status=>"Employee Plan is not Found."}
+    end
   end
 
   def meeting_plan_approve
@@ -849,11 +894,11 @@ class Api::UserAuthsController < ApplicationController
     render :status=>200, :json=>{:status=>"Employee plan Approved successfully."}  
   end
 
-  def destroy_employee_plan
+  def cancel_employee_plan
     plan_id = params[:plan_id]
     @employee_plan = EmployeePlan.find(plan_id)
-    @employee_plan.destroy
-    render :status=>200, :json=>{:status=>"Employee plan was successfully destroyed."}
+    @employee_plan.update(current_status: "Cancelled", status: "false")
+    render :status=>200, :json=>{:status=>"Employee plan was successfully Cancelled."}
   end
 
   def holiday_setup
@@ -865,27 +910,22 @@ class Api::UserAuthsController < ApplicationController
 
   def employee_contact_library
     employees = Employee.where(status: "Active")
-    render :json => employees.present? ? employees.collect{|emp| {:id => emp.id, :prefix => emp.prefix, :first_name => emp.first_name, :middle_name => emp.middle_name, :last_name => emp.last_name, :contact_no => emp.contact_no }} : []
+    render :json => employees.present? ? employees.collect{|emp| {:id => emp.id, :prefix => emp.prefix, :employee_first_name => emp.first_name, :employee_middle_name => emp.middle_name, :employee_last_name => emp.last_name, :contact_no => emp.contact_no }} : []
   end
   
   def employee_details
     employee_id = params[:employee_id]
     employee = Employee.where(id: employee_id)
-    render :json => employee.present? ? employee.collect{|emp| {:id => emp.id, :prefix => emp.prefix, :first_name => emp.first_name, :middle_name => emp.middle_name, :last_name => emp.last_name, :contact_no => emp.contact_no, :email => emp.email, :department_id => emp.department.name, :employee_designation => emp.joining_detail.employee_designation.name  }} : []
+    render :json => employee.present? ? employee.collect{|emp| {:id => emp.id, :prefix => emp.prefix, :employee_first_name => emp.first_name, :employee_middle_name => emp.middle_name, :employee_last_name => emp.last_name, :contact_no => emp.contact_no, :email => emp.email, :department_id => emp.department.name, :employee_designation => emp.joining_detail.employee_designation.name  }} : []
   end
 
   def approve_plan_list
-    # binding.pry
-    # byebug
     employee_id = params[:employee_id].to_i
     employee_plan = EmployeePlan.where(current_status: "Pending", manager_id: employee_id)
     render :json => employee_plan.present? ? employee_plan.collect{|epl| {:id => epl.id, :employee_id => epl.employee_id, :prefix => epl.employee.prefix, :employee_first_name => epl.employee.first_name, :employee_middle_name => epl.employee.middle_name, :employee_last_name => epl.employee.last_name, :from_date => epl.from_date, :to_date => epl.to_date, :from_time => epl.from_time, :to_time => epl.to_time, :meeting_with => epl.meeting_with, :location => epl.location, :meeting_agenda => epl.meeting_agenda, :latitude => epl.latitude, :longitude => epl.longitude, :conform => epl.conform, :status => epl.status, :current_status => epl.current_status, :manager_id => epl.manager_id  }} : []
   end
-
   
   def manager_approve_plan_list
-    # binding.pry
-    # byebug
     employee_id = params[:employee_id].to_i
     employee_plan = EmployeePlan.where(current_status: "Approved", manager_id: employee_id)
     render :json => employee_plan.present? ? employee_plan.collect{|epl| {:id => epl.id, :employee_id => epl.employee_id, :prefix => epl.employee.prefix, :employee_first_name => epl.employee.first_name, :employee_middle_name => epl.employee.middle_name, :employee_last_name => epl.employee.last_name, :from_date => epl.from_date, :to_date => epl.to_date, :from_time => epl.from_time, :to_time => epl.to_time, :meeting_with => epl.meeting_with, :location => epl.location, :meeting_agenda => epl.meeting_agenda, :latitude => epl.latitude, :longitude => epl.longitude, :conform => epl.conform, :status => epl.status, :current_status => epl.current_status, :manager_id => epl.manager_id  }} : []
@@ -908,13 +948,302 @@ class Api::UserAuthsController < ApplicationController
     contact_details = ContactDetail.where(status: true)                                                       
     render :json => contact_details.present? ? contact_details.collect{|cd| {:id => cd.id, :employee_id => cd.employee_id, :passport_photo_file_name => cd.employee.passport_photo_file_name, :prefix => cd.employee.prefix, :first_name => cd.employee.first_name, :middle_name => cd.employee.middle_name, :last_name => cd.employee.last_name, :contact_no => cd.employee.contact_no, :email => cd.employee.email, :current_role => cd.employee.joining_detail.employee_designation.try(:name), :description => cd.description, :status => cd.status, :role1 => cd.role1, :role2 => cd.role2, :role3 => cd.role3, :role4 => cd.role4, :role5 => cd.role5, :role6 => cd.role6, :role6 => cd.role6, :role7 => cd.role7,:role8 => cd.role8  }} : []
   end
-
-  def
+  
+  def all_employee_list
+    emp_name = Employee.all
+    render :json => emp_name.present? ? emp_name.collect{|emp| {:id => emp.id, :prefix => emp.prefix, :first_name => emp.first_name, :middle_name => emp.middle_name, :last_name => emp.last_name, :contact_no => emp.contact_no}} : []
+  end
 
   def reject_plan
     plan_id = params[:plan_id]
     plan = EmployeePlan.find(plan_id)
-    rejct_plan = plan.update(current_status: "Rejected")
+    reject_plan = plan.update(current_status: "Rejected", status: "false")
     render :status=>200, :json=>{:status=>"Employee Plan Successfully Rejected."}
   end
+
+  def on_duty_requests
+    employee_id = params[:employee_id]
+    on_duty_requests = OnDutyRequest.where('employee_id = ?', employee_id ).order("id DESC")
+    render :json => on_duty_requests.present? ? on_duty_requests.collect{|odr| {:id => odr.id, :employee_id => odr.employee_id, :leave_type => odr.leave_type, :start_date => odr.start_date, :end_date => odr.end_date, :no_of_day => odr.no_of_day, :reason => odr.reason, :first_half => odr.first_half, :last_half => odr.last_half,:present_status => odr.present_status,:first_reporter_id => odr.first_reporter_id, :second_reporter_id => odr.second_reporter_id, :current_status => odr.current_status,:is_pending => odr.is_pending,:is_cancelled => odr.is_cancelled,:is_first_approved => odr.is_first_approved,:is_second_approved => odr.is_second_approved,:is_first_rejected => odr.is_first_rejected,:is_second_rejected => odr.is_second_rejected, :status => odr.od_status_records}} : []
+  end
+
+  def on_duty_requests_cancel
+    employee_id = params[:employee_id]
+    on_duty_request_id = params[:on_duty_request]
+    on_duty_request = OnDutyRequest.find(on_duty_request_id)
+    on_duty_request.update(is_cancelled: true,current_status: 'Cancelled')
+    OdRecord.where(on_duty_request_id: on_duty_request_id).update_all(status: 'Cancelled')
+    OdStatusRecord.create(on_duty_request_id: on_duty_request_id, employee_id: employee_id, status: 'Cancelled', change_date: Date.today)
+    if on_duty_request.first_reporter.email.nil? || on_duty_request.first_reporter.email == ''
+      render :status=>200, :json=>{:status=>"Leave Cancelled Successfully without email.."}
+    else
+      OdRequestMailer.cancel(on_duty_request).deliver_now
+      render :status=>200, :json=>{:status=>"OD Cancelled Successfully."}
+    end
+  end
+                                                                                                                                                          
+  def all_employee_plan_list
+    employeeplan = EmployeePlan.all
+    render :json => employeeplan.present? ? employeeplan.collect{|emppl| {:id => emppl.id, :employee_id => emppl.employee_id, :prefix => emppl.employee.prefix, :employee_first_name => emppl.employee.first_name, :employee_middle_name => emppl.employee.middle_name, :employee_last_name => emppl.employee.last_name, :from_date => emppl.from_date, :to_date => emppl.to_date, :from_time => emppl.from_time, :to_time => emppl.to_time,:meeting_with => emppl.meeting_with,:location => emppl.location,:meeting_agenda => emppl.meeting_agenda,:conform => emppl.conform,:status => emppl.status,:current_status => emppl.current_status,:manager_id => emppl.manager_id,:latitude => emppl.latitude,:longitude => emppl.longitude}} : []
+  end
+
+  def all_aprove_plan_list
+    employeeplan = EmployeePlan.where(current_status: "Pending")
+    render :json => employeeplan.present? ? employeeplan.collect{|emppl| {:id => emppl.id, :employee_id => emppl.employee_id, :prefix => emppl.employee.prefix, :employee_first_name => emppl.employee.first_name, :employee_middle_name => emppl.employee.middle_name, :employee_last_name => emppl.employee.last_name,:from_date => emppl.from_date, :to_date => emppl.to_date, :from_time => emppl.from_time, :to_time => emppl.to_time,:meeting_with => emppl.meeting_with,:location => emppl.location,:meeting_agenda => emppl.meeting_agenda,:conform => emppl.conform,:status => emppl.status,:current_status => emppl.current_status,:manager_id => emppl.manager_id,:latitude => emppl.latitude,:longitude => emppl.longitude}} : []
+  end
+
+  # Parameters: {{"employee_id"=>"167", "leave_type"=>"Full Day", "start_date"=>"16-11-2017", "end_date"=>"17-11-2017", "reason"=>"abc"}, "commit"=>"Create OD Request"}
+
+# INSERT INTO `on_duty_requests` (`employee_id`, `leave_type`, `start_date`, `end_date`, `reason`, `is_pending`, `current_status`, `first_reporter_id`, `no_of_day`, `is_cancelled`, `is_first_approved`, `is_first_rejected`, `is_second_approved`, `is_second_rejected`, `created_at`, `updated_at`) VALUES (167, 'Full Day', '2017-11-16 00:00:00', '2017-11-17 00:00:00', 'abc', 1, 0, 196, '2.0', 0, 0, 0, 0, 0, '2017-11-16 08:00:54', '2017-11-16 08:00:54')
+
+  def create_on_duty_requests
+    employee_id = params[:employee_id]
+    start_date = params[:start_date]
+    end_date = params[:end_date]
+    reason = params[:reason]
+    leave_type = params[:leave_type]
+    status  = ''
+
+    @on_duty_request = OnDutyRequest.new(employee_id: employee_id, leave_type: leave_type, start_date: start_date, end_date: end_date, reason: reason)
+    @employee = Employee.find(@on_duty_request.employee_id)
+      # if params[:flag] == "Full/Half"
+      #   @on_duty_request.last_half = params[:common][:last_half]
+      #   @on_duty_request.first_half = params[:common][:first_half]
+      #   @on_duty_request.present_status = params[:common][:present_status]
+      #   @checkbox = true
+      # else
+      #   @checkbox = false
+      # end
+    payroll_period = PayrollPeriod.where(status: true).take 
+    if payroll_period.nil?
+      status = "Payroll Period Not set!"
+        # flash[:alert] = "Payroll Period Not set!"
+        # redirect_to new_on_duty_request_path
+    else
+      if  start_date.to_date >= payroll_period.from.to_date && end_date.to_date <= payroll_period.to.to_date
+        if @on_duty_request.is_available?
+          # flash[:alert] = "Your Request already has been sent"
+          status = "Your Request already has been sent"
+          if employee_id == @on_duty_request.employee_id
+              # redirect_to new_on_duty_request_path
+          else
+              # redirect_to employee_list_on_duty_requests_path
+          end
+        elsif @on_duty_request.end_date == nil 
+          # flash[:alert] = "please Fill all mendatory fields"
+          status = "Payroll Period Not set!"
+          if employee_id == @on_duty_request.employee_id
+            # redirect_to new_on_duty_request_path
+          else
+            # redirect_to employee_list_on_duty_requests_path
+          end
+        elsif @on_duty_request.is_salary_processed?
+          # flash[:alert] = "Salary Processed for this month"
+          status = "Salary Processed for this month"
+          if employee_id == @on_duty_request.employee_id
+              # redirect_to new_on_duty_request_path
+          else
+              # redirect_to employee_list_on_duty_requests_path
+          end
+        else
+          if @employee.manager_id.nil?
+            # flash[:alert] = 'Reporting manager not set please set Reporting Manager'
+            status = "Reporting manager not set please set Reporting Manager"
+            if employee_id == @on_duty_request.employee_id
+                # redirect_to new_on_duty_request_path
+            else
+              # redirect_to employee_list_on_duty_requests_path
+            end
+          else
+            @on_duty_request.is_pending = true
+            @on_duty_request.current_status = 'Pending'
+            @on_duty_request.first_reporter_id = @employee.manager_id
+            if @on_duty_request.leave_type == 'Full Day'
+               @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f + 1
+            elsif @on_duty_request.leave_type == 'Full/Half'
+              if @on_duty_request.last_half == true && @on_duty_request.first_half == true
+                 @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f
+              elsif @on_duty_request.first_half == true || @on_duty_request.last_half == true
+                 @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f + 0.5
+              else
+                @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f + 0.5
+              end  
+            elsif @on_duty_request.leave_type == 'Half Day'
+              if @on_duty_request.first_half == true || @on_duty_request.last_half == true
+                 @on_duty_request.no_of_day = @on_duty_request.no_of_day.to_f + 0.5
+              elsif @on_duty_request.last_half == true && @on_duty_request.last_half == true
+                 @on_duty_request.no_of_day = @on_duty_request.no_of_day.to_f + 0.5
+              else
+                 @on_duty_request.no_of_day = @on_duty_request.no_of_day.to_f + 0.5
+              end
+            end
+            @on_duty_request.is_cancelled = false
+            @on_duty_request.is_first_approved = false
+            @on_duty_request.is_first_rejected = false
+            @on_duty_request.is_second_approved = false
+            @on_duty_request.is_second_rejected = false
+            @on_duty_request.save
+              if @on_duty_request.leave_type == 'Half Day'
+                if @on_duty_request.first_half == true && @on_duty_request.last_half == true
+                  @on_duty_request.update(first_half: false,last_half: true)
+                elsif @on_duty_request.first_half == false && @on_duty_request.last_half == false
+                  @on_duty_request.update(first_half: false,last_half: true)
+                else @on_duty_request.first_half == true || @on_duty_request.last_half == true
+                  @on_duty_request.save
+                end
+              end
+              # for i in @on_duty_request.start_date.to_date..@on_duty_request.end_date.to_date
+              #   OdRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',day: i)
+              # end
+              @on_duty_request.create_attendance_od
+              OdStatusRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',change_date: Date.today)
+              if @employee.manager.email.nil? or @employee.manager.email == ""
+                  # flash[:notice] = "Send request without email."
+                  status = "Send request without email."
+              else
+                # flash[:notice] = 'OD Request sent successfully.'
+                status = "OD Request sent successfully."
+                # OdRequestMailer.pending(@on_duty_request).deliver_now
+              end
+              if @on_duty_request.id != nil
+                if @on_duty_request.leave_type == 'Full/Half'
+                  if @on_duty_request.first_half == false && @on_duty_request.last_half == false
+                     @on_duty_request.update(first_half: false,last_half: true)
+                  end
+                end
+              else
+                end
+                  @od_record = OdRecord.where(on_duty_request_id: @on_duty_request.id).count
+                  @on_duty_request.update(no_of_day: @od_record)
+              # flash[:notice] = "Request Created Successfully"
+              status = "Request Created Successfully"
+              if employee_id == @on_duty_request.employee_id
+                # redirect_to on_duty_requests_path
+              else
+                # redirect_to employee_list_on_duty_requests_path
+              end
+            end #manager_id nil
+          end #is_available
+        else #start_date == payroll_period.from.to_date
+          if employee_id == @on_duty_request.employee_id
+            # flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+            status = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+            # redirect_to on_duty_requests_path
+          else
+            # flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+            status = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+            # redirect_to employee_list_on_duty_requests_path
+          end
+        end
+      end#payroll_period.nil?
+    # end
+    if status.empty?
+      render :status=>200, :json=>{:status=> "Success"}
+    else
+      render :status=>200, :json=>{:status=> status}
+    end
+  end
+
+  def list_of_faq
+    frequest_questions = FrequestQuestion.where(status: true)
+    render :json => frequest_questions.present? ? frequest_questions.collect{|faq| { :id => faq.id, :code => faq.code, :question => faq.question, :answer => faq.answer, :employee_id => faq.employee_id, :status => faq.status }} : []
+  end
+
+  def od_request_approval_list
+    employee_id = params[:employee_id]
+    emp = Employee.find(employee_id)
+    employees = emp.subordinates
+    employees_ind = emp.indirect_subordinates
+    pending_on_duty_requests = OnDutyRequest.where(current_status: "Pending", employee_id: employees)
+    # first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,employee_id: employees_ind)  
+    render :json => pending_on_duty_requests.present? ? pending_on_duty_requests.collect{|odral| { :id => odral.id, :employee_id => odral.employee_id, :leave_type => odral.leave_type, :start_date => odral.start_date, :end_date => odral.end_date, :no_of_day => odral.no_of_day, :first_half => odral.first_half, :last_half => odral.last_half, :present_status => odral.present_status, :first_reporter_id => odral.first_reporter_id, :second_reporter_id => odral.second_reporter_id, :current_status => odral.current_status, :is_pending => odral.is_pending, :is_cancelled => odral.is_cancelled, :is_first_approved => odral.is_first_approved, :is_second_approved => odral.is_second_approved, :is_first_rejected => odral.is_first_rejected, :is_second_rejected => odral.is_second_rejected }} : []
+  end
+ 
+  def od_employee_request_detail
+    employee_id = params[:employee_id]
+    od_request_id = params[:od_request_id]
+    # current_request = OnDutyRequest.find(od_request_id)
+    on_duty_requests = OnDutyRequest.where(employee_id: employee_id).order("id DESC")
+    render :json => on_duty_requests.present? ? on_duty_requests.collect{|odral| { :id => odral.id, :employee_id => odral.employee_id, :leave_type => odral.leave_type, :start_date => odral.start_date, :end_date => odral.end_date, :no_of_day => odral.no_of_day, :first_half => odral.first_half, :last_half => odral.last_half, :present_status => odral.present_status, :first_reporter_id => odral.first_reporter_id, :second_reporter_id => odral.second_reporter_id, :current_status => odral.current_status, :is_pending => odral.is_pending, :is_cancelled => odral.is_cancelled, :is_first_approved => odral.is_first_approved, :is_second_approved => odral.is_second_approved, :is_first_rejected => odral.is_first_rejected, :is_second_rejected => odral.is_second_rejected }} : []
+  end 
+
+  def od_request_first_approve
+    employee_id = params[:employee_id]
+    od_request_id = params[:od_request_id]
+    on_duty_request = OnDutyRequest.find(od_request_id)
+    if on_duty_request.employee.manager_2_id.nil?
+      on_duty_request.update(is_first_approved: true, current_status: 'FinalApproved')
+      OdRecord.where(on_duty_request_id: on_duty_request.id).update_all(status: 'FinalApproved')
+      OdStatusRecord.create(on_duty_request_id: on_duty_request.id, employee_id: employee_id, status: 'FinalApproved', change_date: Date.today)
+      #@on_duty_request.create_for_particular_od_record(@on_duty_request)
+      on_duty_request.create_od_in_attendance
+      OdRequestMailer.first_approve_final(on_duty_request).deliver_now
+    else #manager_2 available
+      on_duty_request.update(is_first_approved: true,current_status: 'FirstApproved',second_reporter_id: on_duty_request.employee.manager_2_id)
+      OdRecord.where(on_duty_request_id: on_duty_request.id).update_all(status: 'FirstApproved')
+      OdStatusRecord.create(on_duty_request_id: on_duty_request.id, employee_id: employee_id, status: 'FirstApproved', change_date: Date.today)
+      OdRequestMailer.first_approve(on_duty_request).deliver_now
+    end 
+    render :status=>200, :json=>{:status=> "Approved Successfully"}
+  end
+
+  def od_request_second_approve
+    employee_id = params[:employee_id]
+    od_request_id = params[:od_request_id]
+    on_duty_request = OnDutyRequest.find(od_request_id)
+    on_duty_request.update(is_second_approved: true, current_status: 'FinalApproved')
+    OdRecord.where(on_duty_request_id: on_duty_request.id).update_all(status: 'FinalApproved')
+    OdStatusRecord.create(on_duty_request_id: on_duty_request.id, employee_id: employee_id, status: 'FinalApproved', change_date: Date.today)
+    #@on_duty_request.create_for_particular_od_record(@on_duty_request)
+    on_duty_request.create_od_in_attendance
+    OdRequestMailer.second_approve(on_duty_request).deliver_now
+    render :status=>200, :json=>{:status=> "Approved Successfully"}
+  end
+
+  def od_request_first_reject
+    employee_id = params[:employee_id]
+    od_request_id = params[:od_request_id]
+    on_duty_request = OnDutyRequest.find(od_request_id)
+    on_duty_request.update(is_first_rejected: true, current_status: 'Rejected')
+    OdRecord.where(on_duty_request_id: on_duty_request.id).update_all(status: 'Rejected')
+    OdStatusRecord.create(on_duty_request_id: on_duty_request.id, employee_id: employee_id, status: 'Rejected', change_date: Date.today)
+    OdRequestMailer.first_reject(@on_duty_request).deliver_now
+    render :status=>200, :json=>{:status=> "Rejected Successfully"}
+  end
+
+  def od_request_second_reject
+    employee_id = params[:employee_id]
+    od_request_id = params[:od_request_id]
+    on_duty_request = OnDutyRequest.find(od_request_id)
+    on_duty_request.update(is_second_rejected: true, current_status: 'Rejected')
+    OdRecord.where(on_duty_request_id: on_duty_request.id).update_all(status: 'Rejected')
+    OdStatusRecord.create(on_duty_request_id: on_duty_request.id, employee_id: employee_id, status: 'Rejected', change_date: Date.today)
+    OdRequestMailer.second_reject(@on_duty_request).deliver_now
+    render :status=>200, :json=>{:status=> "Rejected Successfully"}
+  end
+
+ # LeaveCOff(id: integer, employee_id: integer, c_off_date: date, c_off_type: string, c_off_expire_day: integer, expiry_status: boolean, is_taken: boolean, expiry_date: date, leave_count: decimal, is_expire: boolean, status: boolean, current_status: string, taken_date: date, created_at: datetime, updated_at: datetime, comment: text)
+
+ #  def comp_off_approval
+ #    session[:active_tab] ="ManagerSelfService"
+ #    current_login = Employee.find_by(id: current_user.employee_id)
+ #    @sub = current_login.subordinates
+ #    @ind_sub = current_login.indirect_subordinates
+
+ #    @emp = @sub + @ind_sub
+
+
+
+ #    employee_id = params[:employee_id]
+ #    current_login = Employee.findemployee_id)
+ #    current_login_sub = current_login.subordinates
+ #    current_login_ind = current_login.indirect_subordinates
+ #    emp = current_login_sub + current_login_ind
+ #    leave_c_off_pending = LeaveCOff.where(employee_id: current_login_sub, is_taken: false, status: false, is_expire: false, current_status: "Pending")
+   
+
+ #    @leave_c_off_first_approved = LeaveCOff.where(employee_id: @ind_sub,is_taken: false,status: false,is_expire: false,current_status: "FirstApproved")
+
+ #  end
+
 end

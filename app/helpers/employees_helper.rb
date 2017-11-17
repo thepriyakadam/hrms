@@ -33,8 +33,8 @@ module EmployeesHelper
     end
   end
 
-   def role_employee_list
-     if current_user.class == Member
+  def role_employee_list
+    if current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
         @employees = Employee.all
       elsif current_user.role.name == 'Admin'

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :plan_reason_masters
   resources :policy_details do
     collection do
       get :policy_details_modal
@@ -14,6 +15,7 @@ Rails.application.routes.draw do
       get :plan_approve
       get :plan_reject
       get :view_plan
+      get :arrange_meeting
     end
   end
   resources :events  # do
@@ -2736,7 +2738,7 @@ end
     post 'user_auths/employee_plan' => 'user_auths#employee_plan', defaults:{format: 'json'}
     get 'user_auths/employee_plan_list' => 'user_auths#employee_plan_list', defaults:{format: 'json'}
     post 'user_auths/update_employee_plan' => 'user_auths#update_employee_plan', defaults:{format: 'json'}
-    get 'user_auths/destroy_employee_plan' => 'user_auths#destroy_employee_plan', defaults:{format: 'json'}
+    get 'user_auths/cancel_employee_plan' => 'user_auths#cancel_employee_plan', defaults:{format: 'json'}
     get 'user_auths/holiday_setup' => 'user_auths#holiday_setup', defaults:{format: 'json'}
     get 'user_auths/employee_contact_library' => 'user_auths#employee_contact_library', defaults:{format: 'json'}
     get 'user_auths/employee_details' => 'user_auths#employee_details', defaults:{format: 'json'}
@@ -2747,5 +2749,19 @@ end
     get 'user_auths/approve_plan_list' => 'user_auths#approve_plan_list', defaults:{format: 'json'}
     get 'user_auths/manager_approve_plan_list' => 'user_auths#manager_approve_plan_list', defaults:{format: 'json'}
     get 'user_auths/particular_employee_plan_list' => 'user_auths#particular_employee_plan_list', defaults:{format: 'json'}
+    get 'user_auths/reject_plan' => 'user_auths#reject_plan', defaults:{format: 'json'}
+    get 'user_auths/all_employee_list' => 'user_auths#all_employee_list', defaults:{format: 'json'}
+    get 'user_auths/on_duty_requests' => 'user_auths#on_duty_requests', defaults:{format: 'json'}
+    get 'user_auths/on_duty_requests_cancel' => 'user_auths#on_duty_requests_cancel', defaults:{format: 'json'}
+    get 'user_auths/all_employee_plan_list' => 'user_auths#all_employee_plan_list', defaults:{format: 'json'}
+    get 'user_auths/all_aprove_plan_list' => 'user_auths#all_aprove_plan_list', defaults:{format: 'json'}
+    post 'user_auths/create_on_duty_requests' => 'user_auths#create_on_duty_requests', defaults:{format: 'json'}
+    get 'user_auths/list_of_faq' => 'user_auths#list_of_faq', defaults:{format: 'json'}
+    get 'user_auths/od_request_approval_list' => 'user_auths#od_request_approval_list', defaults:{format: 'json'}
+    get 'user_auths/od_employee_request_detail' => 'user_auths#od_employee_request_detail', defaults:{format: 'json'}
+    get 'user_auths/od_request_first_approve' => 'user_auths#od_request_first_approve', defaults:{format: 'json'}
+    get 'user_auths/od_request_second_approve' => 'user_auths#od_request_second_approve', defaults:{format: 'json'}
+    get 'user_auths/od_request_first_reject' => 'user_auths#od_request_first_reject', defaults:{format: 'json'}
+    get 'user_auths/od_request_second_reject' => 'user_auths#od_request_second_reject', defaults:{format: 'json'}
   end
 end

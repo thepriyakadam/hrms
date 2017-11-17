@@ -195,7 +195,7 @@ class InvestmentDeclarationsController < ApplicationController
     @policy_detail = PolicyDetail.new
     # @policy_detail = PolicyDetail.find(params[:format])
   end
-
+  
   def document_upload
     investment_declaration = InvestmentDeclaration.find(params[:format])
     document = params[:document]

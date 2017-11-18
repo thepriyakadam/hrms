@@ -81,19 +81,25 @@ class CertificationsController < ApplicationController
 
 
   def import_xl
-    @certifications = Certification.all
-    respond_to do |format|
-    format.html
-    format.csv { send_data @certifications.to_csv }
-    format.xls
-     session[:active_tab] = "import"
-   end   
+   #  @certifications = Certification.all
+   #  respond_to do |format|
+   #  format.html
+   #  format.csv { send_data @certifications.to_csv }
+   #  format.xls
+   #   session[:active_tab] = "import"
+   # end   
   end
 
   def import
-    # byebug
+     # byebug
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_certifications_path
+    else
     Certification.import(params[:file])
-    redirect_to root_url, notice: "File imported."
+    redirect_to import_xl_certifications_path, notice: "File imported."
+    end
   end
 
   def certificate_modal

@@ -1017,6 +1017,7 @@ ActiveRecord::Schema.define(version: 20171107095442) do
     t.integer  "holiday_id",               limit: 4
     t.integer  "employee_week_off_id",     limit: 4
     t.string   "comment",                  limit: 255
+    t.string   "title",                    limit: 255
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id", using: :btree
@@ -2690,9 +2691,9 @@ ActiveRecord::Schema.define(version: 20171107095442) do
     t.boolean  "is_confirm"
     t.date     "day"
     t.string   "status",                   limit: 255
-    t.decimal  "count",                                precision: 10
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
+    t.decimal  "count",                                precision: 2, scale: 1
+    t.datetime "created_at",                                                   null: false
+    t.datetime "updated_at",                                                   null: false
   end
 
   add_index "leave_records", ["employee_id"], name: "index_leave_records_on_employee_id", using: :btree
@@ -2870,6 +2871,7 @@ ActiveRecord::Schema.define(version: 20171107095442) do
     t.string   "avatar_content_type",    limit: 255
     t.integer  "avatar_file_size",       limit: 4
     t.datetime "avatar_updated_at"
+    t.boolean  "current_status"
   end
 
   add_index "members", ["company_id"], name: "index_members_on_company_id", using: :btree

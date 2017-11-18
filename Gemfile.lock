@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/bernat/best_in_place.git
+  revision: 1b779e60ea912ab9c39d5c999b00c8ac44a8e535
+  specs:
+    best_in_place (3.1.1)
+      actionpack (>= 3.2)
+      railties (>= 3.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -53,9 +61,6 @@ GEM
     bcrypt (3.1.11)
     bcrypt (3.1.11-x64-mingw32)
     bcrypt-ruby (3.0.1)
-    best_in_place (3.0.3)
-      actionpack (>= 3.2)
-      railties (>= 3.2)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     bootstrap-datepicker-rails (1.6.4.1)
@@ -342,7 +347,7 @@ DEPENDENCIES
   axlsx_rails
   bcrypt
   bcrypt-ruby (~> 3.0.0)
-  best_in_place (~> 3.0.1)
+  best_in_place!
   bootstrap-datepicker-rails
   bootstrap3-datetimepicker-rails (~> 4.0.0)
   bootstrap_form

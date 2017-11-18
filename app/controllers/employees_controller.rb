@@ -35,18 +35,28 @@
   
 
   def import_xl
-    @employees = Employee.all
-    respond_to do |format|
-    format.html
-    format.csv { send_data @employee_bank_details.to_csv }
-    format.xls
-   end     
+   #  @employees = Employee.all
+   #  respond_to do |format|
+   #  format.html
+   #  format.csv { send_data @employee_bank_details.to_csv }
+   #  format.xls
+   # end     
   end
 
   def import
+    # Employee.import(params[:file])
+    # redirect_to root_url, notice: "File imported."
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_employees_path
+    else
     Employee.import(params[:file])
-    redirect_to root_url, notice: "File imported."
+    redirect_to import_xl_employees_path, notice: "File imported."
+    end
   end
+
+
 
   def report
     @employees = Employee.all

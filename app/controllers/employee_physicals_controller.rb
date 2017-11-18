@@ -70,19 +70,24 @@ class EmployeePhysicalsController < ApplicationController
   end
 
    def import_xl
-    @employee_physicals = EmployeePhysical.all
-    respond_to do |format|
-    format.html
-    format.csv { send_data @employee_physicals.to_csv }
-    format.xls
-     session[:active_tab] = "import"
-   end   
+   #  @employee_physicals = EmployeePhysical.all
+   #  respond_to do |format|
+   #  format.html
+   #  format.csv { send_data @employee_physicals.to_csv }
+   #  format.xls
+   #   session[:active_tab] = "import"
+   # end   
   end
 
   def import
-    # byebug
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_employee_physicals_path
+    else
     EmployeePhysical.import(params[:file])
-    redirect_to root_url, notice: "File imported."
+    redirect_to import_xl_employee_physicals_path, notice: "File imported."
+    end
   end
 
   private

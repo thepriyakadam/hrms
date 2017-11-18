@@ -106,19 +106,27 @@ class JoiningDetailsController < ApplicationController
  end
 
   def import_xl
-    @joining_details = JoiningDetail.all
-    respond_to do |format|
-    format.html
-    format.csv { send_data @joining_details.to_csv }
-    format.xls
-     session[:active_tab] = "import"
-   end   
+   #  @joining_details = JoiningDetail.all
+   #  respond_to do |format|
+   #  format.html
+   #  format.csv { send_data @joining_details.to_csv }
+   #  format.xls
+   #   session[:active_tab] = "import"
+   # end   
   end
 
   def import
     # byebug
+    # JoiningDetail.import(params[:file])
+    # redirect_to root_url, notice: "File imported."
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_joining_details_path
+    else
     JoiningDetail.import(params[:file])
-    redirect_to root_url, notice: "File imported."
+    redirect_to import_xl_joining_details_path, notice: "File imported."
+    end
   end
 
   def display_inactive_employee

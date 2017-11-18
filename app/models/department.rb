@@ -23,7 +23,7 @@ class Department < ActiveRecord::Base
   # validates :manual_department_code, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true
   validates :company_location_id, presence: true
-  validates :department_type_id, presence: true
+  # validates :department_type_id, presence: true
 
 
   def self.filter_records(current_user)

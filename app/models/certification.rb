@@ -14,15 +14,25 @@ class Certification < ActiveRecord::Base
   end
 
   def self.import(file)
-    spreadsheet = open_spreadsheet(file)
-    header = spreadsheet.row(1)
+  spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-      row = Hash[[header, spreadsheet.row(i)].transpose]
-      certification = find_by_id(row["id"]) || new
-      certification.attributes = row.to_hash.slice(*row.to_hash.keys)
-      certification.save!
-    end
+        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        employee_id = @employee.id
+        name = spreadsheet.cell(i,'C')
+        @year = Year.find_by_name(spreadsheet.cell(i,'D'))
+        if @year == nil
+           year_name = spreadsheet.cell(i,'D')
+           @year_entry = Year.create(name: year_name)
+           year_id = @year_entry.id
+        else
+        year_id = @year.id
+        end
+        duration = spreadsheet.cell(i,'E')
+        description = spreadsheet.cell(i,'F')
+
+        @certification = Certification.create(employee_id: employee_id,name: name,year_id: year_id,duration: duration,description: description)
   end
+end
 
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)

@@ -1491,6 +1491,10 @@ end
     post 'basic_details/list_of_employee'
     get 'basic_details/show_basic_detail'
     post 'basic_details/show_basic_detail'
+    get 'basic_details/employee_contact_list'
+    get 'basic_details/employee_contact_report'
+    # post 'basic_details/employee_contact_report_pdf'
+     get 'basic_details/employee_contact_report_pdf'
 
     get 'salaries/new'
     post 'salaries/date_range_report'
@@ -2152,6 +2156,9 @@ end
       get :datewise_workingday
       post :show_datewise_workingday
       get :show_datewise_workingday
+      get :import_working_day
+      # post :import_working_day
+      post :import_day
     end
   end
 

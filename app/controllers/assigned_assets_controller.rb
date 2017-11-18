@@ -95,19 +95,24 @@ class AssignedAssetsController < ApplicationController
   end
 
   def import_xl
-    @assigned_assets = AssignedAsset.all
-    respond_to do |format|
-    format.html
-    format.csv { send_data @assigned_assets.to_csv }
-    format.xls
-     session[:active_tab] = "import"
-   end   
+   #  @assigned_assets = AssignedAsset.all
+   #  respond_to do |format|
+   #  format.html
+   #  format.csv { send_data @assigned_assets.to_csv }
+   #  format.xls
+   #   session[:active_tab] = "import"
+   # end   
   end
 
   def import
-    # byebug
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_assigned_assets_path
+    else
     AssignedAsset.import(params[:file])
-    redirect_to root_url, notice: "File imported."
+    redirect_to import_xl_assigned_assets_path, notice: "File imported."
+    end
   end
 
   def asset_modal

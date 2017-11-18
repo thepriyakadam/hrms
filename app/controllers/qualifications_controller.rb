@@ -90,19 +90,25 @@ class QualificationsController < ApplicationController
   end
 
    def import_xl
-    @qualifications = Qualification.all
-    respond_to do |format|
-    format.html
-    format.csv { send_data @qualifications.to_csv }
-    format.xls
-     session[:active_tab] = "import"
-   end   
+   #  @qualifications = Qualification.all
+   #  respond_to do |format|
+   #  format.html
+   #  format.csv { send_data @qualifications.to_csv }
+   #  format.xls
+   #   session[:active_tab] = "import"
+   # end   
   end
 
   def import
     # byebug
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_qualifications_path
+    else
     Qualification.import(params[:file])
-    redirect_to root_url, notice: "File imported."
+    redirect_to import_xl_qualifications_path, notice: "File imported."
+    end
   end
 
   def update_qualification

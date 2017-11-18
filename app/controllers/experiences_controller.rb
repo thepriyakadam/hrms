@@ -91,19 +91,25 @@ class ExperiencesController < ApplicationController
   end
 
    def import_xl
-    @experiences = Experience.all
-    respond_to do |format|
-    format.html
-    format.csv { send_data @experiences.to_csv }
-    format.xls
-     session[:active_tab] = "import"
-   end   
+   #  @experiences = Experience.all
+   #  respond_to do |format|
+   #  format.html
+   #  format.csv { send_data @experiences.to_csv }
+   #  format.xls
+   #   session[:active_tab] = "import"
+   # end   
   end
 
   def import
     # byebug
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_experiences_path
+    else
     Experience.import(params[:file])
-    redirect_to root_url, notice: "File imported."
+    redirect_to import_xl_experiences_path, notice: "File imported."
+    end
   end
 
   def exp_modal

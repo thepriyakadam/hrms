@@ -11,7 +11,6 @@ class EmployeeAttendancesController < ApplicationController
     @employee_attendances = EmployeeAttendance.group("strftime('%Y',day)")
     session[:active_tab] ="TimeManagement"
     session[:active_tab1] ="daily_attendance"
-
   end
 
   def employee_attendance

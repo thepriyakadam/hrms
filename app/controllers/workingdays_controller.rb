@@ -664,6 +664,22 @@ class WorkingdaysController < ApplicationController
     end
   end
 
+  def import_working_day
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Attendance"
+  end
+
+  def import_day
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_working_day_workingdays_path
+    else
+    Workingday.import_day_file(params[:file])
+    redirect_to import_working_day_workingdays_path, notice: "File imported."
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

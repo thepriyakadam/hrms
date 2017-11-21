@@ -2763,5 +2763,11 @@ end
     get 'user_auths/od_request_second_approve' => 'user_auths#od_request_second_approve', defaults:{format: 'json'}
     get 'user_auths/od_request_first_reject' => 'user_auths#od_request_first_reject', defaults:{format: 'json'}
     get 'user_auths/od_request_second_reject' => 'user_auths#od_request_second_reject', defaults:{format: 'json'}
+    get 'user_auths/comp_off_approval_first' => 'user_auths#comp_off_approval_first', defaults:{format: 'json'}
+    get 'user_auths/comp_off_approval_second' => 'user_auths#comp_off_approval_second', defaults:{format: 'json'}
+    post 'user_auths/employee_feedback' => 'user_auths#employee_feedback', defaults:{format: 'json'}
+    get 'user_auths/resignation_history' => 'user_auths#resignation_history', defaults:{format: 'json'}
+    get 'user_auths/plan_reason_list' => 'user_auths#plan_reason_list', defaults:{format: 'json'}
+    post 'user_auths/employee_reason' => 'user_auths#employee_reason', defaults:{format: 'json'}
   end
 end

@@ -1121,7 +1121,7 @@ ex.default_sheet = ex.sheets[0]
 j = 1
 gross_salary = 0
 ActiveRecord::Base.transaction do
-17.upto(22) do |line|
+2.upto(22) do |line|
   puts "Starting Record
 #{ex.cell(line,'A')}---------------------------------------"
 

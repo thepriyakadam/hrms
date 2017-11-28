@@ -1152,15 +1152,15 @@ class Api::UserAuthsController < ApplicationController
     employees_ind = emp.indirect_subordinates
     pending_on_duty_requests = OnDutyRequest.where(current_status: "Pending", employee_id: employees)
     # first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,employee_id: employees_ind)  
-    render :json => pending_on_duty_requests.present? ? pending_on_duty_requests.collect{|odral| { :id => odral.id, :employee_id => odral.employee_id, :leave_type => odral.leave_type, :start_date => odral.start_date, :end_date => odral.end_date, :no_of_day => odral.no_of_day, :first_half => odral.first_half, :last_half => odral.last_half, :present_status => odral.present_status, :first_reporter_id => odral.first_reporter_id, :second_reporter_id => odral.second_reporter_id, :current_status => odral.current_status, :is_pending => odral.is_pending, :is_cancelled => odral.is_cancelled, :is_first_approved => odral.is_first_approved, :is_second_approved => odral.is_second_approved, :is_first_rejected => odral.is_first_rejected, :is_second_rejected => odral.is_second_rejected }} : []
+    render :json => pending_on_duty_requests.present? ? pending_on_duty_requests.collect{|odral| { :id => odral.id, :employee_id => odral.employee_id, :manual_employee_code => odral.employee.manual_employee_code, :prefix => odral.employee.prefix, :employee_first_name => odral.employee.first_name, :employee_middle_name => odral.employee.middle_name, :employee_last_name => odral.employee.last_name, :leave_type => odral.leave_type, :start_date => odral.start_date, :end_date => odral.end_date, :no_of_day => odral.no_of_day, :first_half => odral.first_half, :last_half => odral.last_half, :present_status => odral.present_status, :first_reporter_id => odral.first_reporter_id, :second_reporter_id => odral.second_reporter_id, :current_status => odral.current_status, :is_pending => odral.is_pending, :is_cancelled => odral.is_cancelled, :is_first_approved => odral.is_first_approved, :is_second_approved => odral.is_second_approved, :is_first_rejected => odral.is_first_rejected, :is_second_rejected => odral.is_second_rejected }} : []
   end
  
   def od_employee_request_detail
     employee_id = params[:employee_id]
     od_request_id = params[:od_request_id]
-    # current_request = OnDutyRequest.find(od_request_id)
+    current_request = OnDutyRequest.find(od_request_id)
     on_duty_requests = OnDutyRequest.where(employee_id: employee_id).order("id DESC")
-    render :json => on_duty_requests.present? ? on_duty_requests.collect{|odral| { :id => odral.id, :employee_id => odral.employee_id, :leave_type => odral.leave_type, :start_date => odral.start_date, :end_date => odral.end_date, :no_of_day => odral.no_of_day, :first_half => odral.first_half, :last_half => odral.last_half, :present_status => odral.present_status, :first_reporter_id => odral.first_reporter_id, :second_reporter_id => odral.second_reporter_id, :current_status => odral.current_status, :is_pending => odral.is_pending, :is_cancelled => odral.is_cancelled, :is_first_approved => odral.is_first_approved, :is_second_approved => odral.is_second_approved, :is_first_rejected => odral.is_first_rejected, :is_second_rejected => odral.is_second_rejected }} : []
+    render :json => on_duty_requests.present? ? on_duty_requests.collect{|odral| { :id => odral.id, :employee_id => odral.employee_id, :prefix => odral.employee.prefix, :employee_first_name => odral.employee.first_name, :employee_middle_name => odral.employee.middle_name, :employee_last_name => odral.employee.last_name, :leave_type => odral.leave_type, :start_date => odral.start_date, :end_date => odral.end_date, :no_of_day => odral.no_of_day, :first_half => odral.first_half, :last_half => odral.last_half, :present_status => odral.present_status, :first_reporter_id => odral.first_reporter_id, :second_reporter_id => odral.second_reporter_id, :current_status => odral.current_status, :is_pending => odral.is_pending, :is_cancelled => odral.is_cancelled, :is_first_approved => odral.is_first_approved, :is_second_approved => odral.is_second_approved, :is_first_rejected => odral.is_first_rejected, :is_second_rejected => odral.is_second_rejected }} : []
   end 
 
   def od_request_first_approve
@@ -1178,21 +1178,21 @@ class Api::UserAuthsController < ApplicationController
       on_duty_request.update(is_first_approved: true,current_status: 'FirstApproved',second_reporter_id: on_duty_request.employee.manager_2_id)
       OdRecord.where(on_duty_request_id: on_duty_request.id).update_all(status: 'FirstApproved')
       OdStatusRecord.create(on_duty_request_id: on_duty_request.id, employee_id: employee_id, status: 'FirstApproved', change_date: Date.today)
-      OdRequestMailer.first_approve(on_duty_request).deliver_now
+      # OdRequestMailer.first_approve(on_duty_request).deliver_now
     end 
     render :status=>200, :json=>{:status=> "Approved Successfully"}
   end
 
   def od_request_second_approve
     employee_id = params[:employee_id]
-    od_request_id = params[:od_request_id]
+    od_request_id = params[:od_req_id]
     on_duty_request = OnDutyRequest.find(od_request_id)
     on_duty_request.update(is_second_approved: true, current_status: 'FinalApproved')
     OdRecord.where(on_duty_request_id: on_duty_request.id).update_all(status: 'FinalApproved')
     OdStatusRecord.create(on_duty_request_id: on_duty_request.id, employee_id: employee_id, status: 'FinalApproved', change_date: Date.today)
     #@on_duty_request.create_for_particular_od_record(@on_duty_request)
     on_duty_request.create_od_in_attendance
-    OdRequestMailer.second_approve(on_duty_request).deliver_now
+    # OdRequestMailer.second_approve(on_duty_request).deliver_now
     render :status=>200, :json=>{:status=> "Approved Successfully"}
   end
 
@@ -1203,18 +1203,18 @@ class Api::UserAuthsController < ApplicationController
     on_duty_request.update(is_first_rejected: true, current_status: 'Rejected')
     OdRecord.where(on_duty_request_id: on_duty_request.id).update_all(status: 'Rejected')
     OdStatusRecord.create(on_duty_request_id: on_duty_request.id, employee_id: employee_id, status: 'Rejected', change_date: Date.today)
-    OdRequestMailer.first_reject(@on_duty_request).deliver_now
+    # OdRequestMailer.first_reject(@on_duty_request).deliver_now
     render :status=>200, :json=>{:status=> "Rejected Successfully"}
   end
 
   def od_request_second_reject
     employee_id = params[:employee_id]
-    od_request_id = params[:od_request_id]
+    od_request_id = params[:od_req_id]
     on_duty_request = OnDutyRequest.find(od_request_id)
     on_duty_request.update(is_second_rejected: true, current_status: 'Rejected')
     OdRecord.where(on_duty_request_id: on_duty_request.id).update_all(status: 'Rejected')
     OdStatusRecord.create(on_duty_request_id: on_duty_request.id, employee_id: employee_id, status: 'Rejected', change_date: Date.today)
-    OdRequestMailer.second_reject(@on_duty_request).deliver_now
+    # OdRequestMailer.second_reject(@on_duty_request).deliver_now
     render :status=>200, :json=>{:status=> "Rejected Successfully"}
   end
 
@@ -1272,6 +1272,25 @@ class Api::UserAuthsController < ApplicationController
     employee_id = params[:employee_id]
     employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date, employee_id: employee_id).order("day DESC")
     render :json => employee_attendances.present? ? employee_attendances.collect{|dateatt| { :id => dateatt.id, :employee_id => dateatt.employee_id, :day => dateatt.day, :present => dateatt.present, :in_time => dateatt.in_time, :out_time => dateatt.out_time, :machine_attendance_id => dateatt.machine_attendance_id, :is_confirm => dateatt.is_confirm, :department_id => dateatt.department_id, :count => dateatt.count, :employee_leav_request_id => dateatt.employee_leav_request_id }} : []
+  end
+
+  def attendance_data
+    render :status=>200, :json=>{:status=>"Employee Attendance Successfully Updated."}
+  end
+
+  def admin_all_leave_request_list
+    first_level_request_lists = EmployeeLeavRequest.where("current_status = ? OR current_status = ?", "Pending", "FirstApproved")
+    # @emp_leav_req = EmployeeLeavRequest.where.not(second_reporter_id: false).pluck(:second_reporter_id)
+    # @second_level_request_lists = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,second_reporter_id: @emp_leav_req)
+    render :json => first_level_request_lists.present? ? first_level_request_lists.collect{|adminlr| { :id => adminlr.id, :employee_id => adminlr.employee_id, :prefix => adminlr.employee.prefix, :employee_first_name => adminlr.employee.first_name, :employee_middle_name => adminlr.employee.middle_name, :employee_last_name => adminlr.employee.last_name, :leav_category_id => adminlr.leav_category_id, :leave_type => adminlr.leave_type, :start_date => adminlr.start_date, :end_date => adminlr.end_date, :reason => adminlr.reason, :first_reporter_id => adminlr.first_reporter_id, :second_reporter_id => adminlr.second_reporter_id, :manual_employee_code => adminlr.employee.manual_employee_code, :leav_category => adminlr.leav_category.name, :leave_count => adminlr.leave_count, :start_date => adminlr.start_date, :end_date => adminlr.end_date, :current_status => adminlr.current_status, :reason => adminlr.reason }} : []
+  end
+
+  def admin_employee_history
+    leave_req_id = params[:leave_req_id]
+    current_request = EmployeeLeavRequest.find(leave_req_id)
+    employee = Employee.find(current_request.employee_id)
+    employee_leav_requests = employee.employee_leav_requests.order("id DESC")
+    render :json => employee_leav_requests.present? ? employee_leav_requests.collect{|adminlr| { :id => adminlr.id, :employee_id => adminlr.employee_id, :prefix => adminlr.employee.prefix, :employee_first_name => adminlr.employee.first_name, :employee_middle_name => adminlr.employee.middle_name, :employee_last_name => adminlr.employee.last_name, :leav_category => adminlr.leav_category.name, :leave_count => adminlr.leave_count, :leave_type => adminlr.leave_type_re }} : []
   end
 
 end

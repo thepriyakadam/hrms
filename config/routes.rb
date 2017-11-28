@@ -2769,5 +2769,8 @@ end
     get 'user_auths/resignation_history' => 'user_auths#resignation_history', defaults:{format: 'json'}
     get 'user_auths/plan_reason_list' => 'user_auths#plan_reason_list', defaults:{format: 'json'}
     post 'user_auths/employee_reason' => 'user_auths#employee_reason', defaults:{format: 'json'}
+    post 'user_auths/attendance_data' => 'user_auths#attendance_data', defaults:{format: 'json'}
+    get 'user_auths/admin_all_leave_request_list' => 'user_auths#admin_all_leave_request_list', defaults:{format: 'json'}
+    get 'user_auths/admin_employee_history' => 'user_auths#admin_employee_history', defaults:{format: 'json'}
   end
 end

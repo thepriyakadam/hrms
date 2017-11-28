@@ -1,0 +1,33 @@
+<table id="example2" class="table table-bordered table-hover table-condensed'">
+  <thead>
+    <tr>
+      <th>ESIC</th>
+      <th>Percentage</th>
+      <th>Max limit</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @esic_masters.each do |esic_master| %>
+      <tr>
+        <td><%= esic_master.esic ? "Yes" : "No" %></td>
+        <td><%= esic_master.percentage %></td>
+        <td><%= esic_master.max_limit %></td>
+        <td><%= esic_master.is_active ? "Active" : "Inactive" %></td>
+        <td>
+          <% if esic_master.is_confirm == true %>
+            <small class= "label label-primary">Confirmed</small>
+            <%= link_to '', esic_master ,class: 'btn btn-xs btn-default fa fa-eye' %>
+             <%= link_to '', edit_esic_master_path(esic_master),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+          <% else %>
+            <%= link_to '', edit_esic_master_path(esic_master),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+            <%= link_to '',  esic_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+            <%= link_to '', is_confirm_esic_masters_path(esic_master: esic_master),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+             <%= link_to '', esic_master ,class: 'btn btn-xs btn-default fa fa-eye' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

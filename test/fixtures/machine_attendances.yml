@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 
+  day: 2016-11-24
+  in: 2016-11-24 10:37:04
+  out: 2016-11-24 10:37:04
+
+two:
+  employee_id: 
+  day: 2016-11-24
+  in: 2016-11-24 10:37:04
+  out: 2016-11-24 10:37:04

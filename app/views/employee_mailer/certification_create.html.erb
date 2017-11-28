@@ -1,0 +1,33 @@
+ <!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+   <h4>Employee Certification Information</h4>
+    <p>
+      <table id="example2" class="table table-bordered table-hover table-condensed">
+	   <tr>
+	   		<td><strong>Employee</strong></td>
+	   		<td><%= @certification.employee.first_name %> <%= @certification.employee.last_name %></td>
+
+          <td><strong>Name</strong></td>
+	      <td><%= @certification.name %></td>
+	    </tr>
+
+	    <tr>
+	      <td><strong>Year</strong></td>
+	      <td><%= @certification.year_id %></td>
+
+	      <td><strong>Duration</strong></td>
+	      <td><%= @certification.duration %></td>
+	    </tr>
+
+	    <tr>
+	      <td><strong>Description</strong></td>
+	      <td colspan="3"><%= @certification.description %></td>
+	   </tr>
+	  </table>
+    </p>
+  </body>
+</html>

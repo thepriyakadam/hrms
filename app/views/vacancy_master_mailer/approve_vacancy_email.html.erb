@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+     <h4>Vacancy Approved</h4>
+    <p> 
+      This is to inform you that you have a New Vacancy Request .
+      Details for New Vacancy Request is given below.<br><br>
+       1. <b>Reporting Manager Name :-</b> <%= @employee.first_name.to_s %> <%= @employee.last_name.to_s %> <%= @employee.middle_name.to_s %><br><br>
+       2. <b>Vacancy Request Raise By :-</b> <%= @emp.employee.first_name.to_s %> <%= @emp.employee.last_name.to_s %> <%= @emp.employee.middle_name.to_s %><br><br>
+       3. <b>Vacancy Code :-</b> <%= @vacancy_master.vacancy_code %><br><br>
+       3. <b>Company Location :-</b> <%= @vacancy_master.company_location.try(:name) %><br><br>
+       4. <b>Department :-</b> <%= @vacancy_master.department.try(:name) %><br><br>
+       5. <b>Vacancy Name :-</b> <%= @vacancy_master.vacancy_name %><br><br>
+       6. <b>No. Of Position :-</b> <%= @vacancy_master.no_of_position %><br><br>
+       7. <b>Vacancy Created At :-</b> <%= @vacancy_master.vacancy_post_date %><br><br>
+       8. <b>Experience :-</b> <%= @vacancy_master.experience %> to <%= @vacancy_master.experience_max %><br><br>
+       9. <b>Budget :-</b> <%= @vacancy_master.budget %> to <%= @vacancy_master.budget_max %>
+       10. <b>Reason For Requirement  :-</b> <%= @vacancy_master.reason %>
+        With Regards,<br><br>
+        HR 
+     </p>
+  </body>
+</html>

@@ -1,0 +1,89 @@
+<!-- <= form_for :pdf_salaries, url: { action: 'pdf_report',format: 'pdf',month: @month,year: @year},:html => {:target => '_blank'} do |f| %> -->
+<table id="example5" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+      <th>Year-Month</th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Actual Gross Salary</th>
+      <th>Actual Bonus</th>
+      <th>Actual Pf</th>
+      <th>Actual Esic</th>
+      <th>Actual Family Pension</th>
+      <th>Actual Insurance</th>
+      <th>Actual CTC</th>
+      <th>Calculated Gross Salary</th>
+      <th>Calculated Bonus</th>
+      <th>Calculated Pf</th>
+      <th>Calculated Esic</th>
+      <th>Calculated Family Pension</th>
+      <th>Calculated Insurance</th>
+      <th>Calculated CTC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- < if @emp_contribution.empty? %> -->
+    <% @salaryslips.try(:each) do |s| %>
+    <% @emp_contribution = EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date) %>
+    <!-- < employee_contribution = s.employee_contribution %> -->
+    <!-- < else %>
+    < @salaryslips.try(:each) do |s| %> -->
+    <!-- < @emp_contribution.try(:each) do |ee| %> -->
+    <!-- < end %> -->
+      <tr>
+        <td><%= check_box_tag "slaryslip_ids[]", s.id %></td>
+        <td><%= s.year %>-<%= s.month %></td>
+        <td><%= s.employee.try(:manual_employee_code) %></td>
+        <td><%= full_name(s.employee) %></td>
+        <td><%= s.actual_gross_salary.round %></td>
+      <!-- < @emp_contribution.try(:each) do |ec| %> -->
+        <td><%= a=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:actual_bonus).map {|i| i.to_i}.inject{|n|} %></td>
+        <td><%= b=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:actual_pf).map {|i| i.to_i}.inject{|n|} %></td>
+        <td><%= c=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:actual_esic).map {|i| i.to_i}.inject{|n|} %></td>
+        <td><%= d=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:actual_fp).map {|i| i.to_i}.inject{|n|} %></td>
+        <!-- <td><= actual_ctc=(a+b+c+d).to_f %></td> -->
+        <td><%= e=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:actual_insurance).map {|i| i.to_i}.inject{|n|} %></td>
+        <td><%= %></td>
+        <td><%= s.calculated_gross_salary.round %></td>
+        <td><%= f=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:bonus).map {|i| i.to_i}.inject{|n|} %></td>
+        <td><%= g=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:pf).map {|i| i.to_i}.inject{|n|} %></td>
+        <td><%= h=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:esic).map {|i| i.to_i}.inject{|n|} %></td>
+        <td><%= i=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:fp).map {|i| i.to_i}.inject{|n|} %></td>
+        <td><%= j=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:insurance).map {|i| i.to_i}.inject{|n|} %></td>
+        <!-- <td><= calculated_ctc=(e+f+g+h).to_f %></td> -->
+        <td><%= %></td>
+        <!-- < end %> -->
+      </tr>
+    <% end %>
+    <!-- < end %> -->
+    <!-- < end %> -->
+  </tbody>
+</table>
+<!-- < submit "Print Pdf", class: "btn btn-xl btn-info fa fa-print" %> -->
+<%= link_to " Excel Report ",salaryslip_xls_salaryslips_path(month: @month, year: @year, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+<!-- < end %>
+ -->
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example5').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true
+    } );
+} );
+</script>
+
+<script type="text/javascript">
+$('#selectAll').click(function() {
+  if (this.checked) {
+    $(':checkbox').each(function() {
+      this.checked = true;                       
+    });
+  } 
+  else {
+    $(':checkbox').each(function() {
+      this.checked = false;                        
+    });
+  } 
+});
+</script>

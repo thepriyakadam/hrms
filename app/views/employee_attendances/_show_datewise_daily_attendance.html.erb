@@ -1,0 +1,57 @@
+<script>
+function displayResult()
+{
+    var a=(document.getElementById('sp1').value);
+    var b=(document.getElementById('sp2').value);
+    
+    document.getElementById('total').value=((b - a) / 3600).round;
+}
+</script>
+<br>
+      <table id="example6" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Employee Name</th>
+            <th>Present</th>
+            <th>In Time</th>
+            <th>Out Time</th>
+            <th>Working Hours</th>
+            <th>Comment</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @employee_attendances.each do |a| %>
+            <tr>
+              <td><%= a.employee.manual_employee_code %></td>
+              <td><%= full_name(a.employee) %></td>
+              <td><%=a. present%></td>
+
+              <td><%= a.in_time %></td>
+              <td><%= a.out_time %></td>
+              <td><%= a.working_hrs %></td>
+              
+              <td><%= a.comment %></td>
+              <td>
+                <% if  a.employee_leav_request_id != nil %>
+                  <small class="label label-primary">Leave</small>
+                <% else %>
+                  <%= link_to ' ',modal_edit_daily_attendance_employee_attendances_path(a),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <!-- <= link_to "Back",datewise_daily_attendance_employee_attendances_path,class: "btn btn-sm btn-default" %> -->
+      <div id="myModal" class="modal fade"></div>
+    
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

@@ -1,0 +1,58 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+      /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+    }
+</style>
+<table style="border-collapse: collapse; font-size:20pt;" border=1 width=900 cellpadding="25">
+ <thead>
+      <tr>
+        <th>Support ID</th>
+        <th>Support</th>
+        <th>Support Raised By</th>
+        <th>Support Date</th>
+        <th>Root Cause</th>
+        <th>Description</th>
+        <th>Priority </th>
+        <th>Support Solved By</th>
+        <th>Solved</th>
+        <th>Confirm</th>
+        <th>Effort Time</th>
+        <th>Comment</th>
+        <th>Support Locker ID</th>
+        <th>Lock Date</th>
+        <th>Lock Time</th>
+      </tr>
+    </thead>
+
+    <tbody>
+     <% @issue_requests.each do |issue_request| %>
+     <% @issue_locker_histories.each do |issue_locker_history| %>
+        <tr>
+          <td><%= issue_request.id %></td>
+          <td><%= issue_request.issue_master.try(:name) %></td>
+          <td><%= full_name(issue_request.employee) %></td>
+          <td><%= issue_request.date %></td>
+          <td><%= issue_request.issue_root_cause.try(:name) %></td>
+          <td><%= issue_request.description %></td>
+          <td><%= issue_request.issue_priority %></td>
+          <td><%= full_name(issue_request.issue_tracker_member.employee) %></td>
+          <td><%= issue_request.status %></td>
+           <td><%= issue_request.is_complete %></td>
+          <td><%= issue_request.effort_time %></td>
+          <td><%= issue_request.comment %></td>
+          <td><%= issue_locker_history.issue_locker_id %></td>
+          <td><%= issue_locker_history.lock_date %></td>
+          <td><%= issue_locker_history.lock_time %></td>
+        </tr>
+      <% end %>
+      <% end %> 
+    </tbody>
+    </table>

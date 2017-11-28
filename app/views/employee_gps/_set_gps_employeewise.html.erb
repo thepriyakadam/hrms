@@ -1,0 +1,38 @@
+
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Form</h3>
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+
+    	<%= bootstrap_form_for :employee_gp,url:{action:'set_employeewise_gps'} do |f| %>
+			<%= f.hidden_field :employee_id,value: @employee_id %>
+			<%= f.hidden_field :from,value: @from %>
+			<%= f.hidden_field :to,value: @to %>
+
+			<div class="row">
+			   <div class="col-sm-3">
+			      <div class="field">
+			        <%= text_field :employee_gp,:latitude,placeholder: "Latitude",class: "form-control" %>
+			      </div>
+			    </div>
+			  <div class="col-sm-3">
+			      <div class="field">
+			        <%= text_field :employee_gp,:longitude,placeholder: "Longitude",class: "form-control" %>
+			      </div>
+			    </div>
+			   <div class="col-sm-3">
+			      <div class="field">
+			        <%= text_field :employee_gp,:location,placeholder: "Location",class: "form-control" %>
+			      </div>
+			    </div>
+			    <div class="col-sm-3">
+			    <div class="actions">
+			      <%= f.submit "Submit", class: 'btn btn-primary btn-sm' %>
+			    </div>
+			  </div>
+			 </div><br>
+			<% end %>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Pre Onboarding Details</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    
+      <tr>
+        <td><strong>Selected resume</strong></td>
+        <td><%= @pre_onboarding.selected_resume %></td>
+        
+        <td><strong>First Name</strong></td>
+        <td><%= @pre_onboarding.first_name %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Middle Name</strong></td>
+        <td><%= @pre_onboarding.middle_name %></td>
+        
+        <td><strong>Last Name</strong></td>
+        <td><%= @pre_onboarding.last_name %></td>
+      </tr>
+
+      <tr>
+        <td><strong>DOB</strong></td>
+        <td><%= @pre_onboarding.birth_date %></td>
+        
+        <td><strong>Gender</strong></td>
+        <td><%= @pre_onboarding.gender %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Marital status</strong></td>
+        <td><%= @pre_onboarding.marital_status %></td>
+        
+        <td><strong>Fathers name</strong></td>
+        <td><%= @pre_onboarding.fathers_name %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Nationality</strong></td>
+        <td><%= @pre_onboarding.nationality %></td>
+        
+        <td><strong>Permanent Address</strong></td>
+        <td><%= @pre_onboarding.permanent_address %></td>
+      </tr>
+
+      <tr>
+        <td><strong>City</strong></td>
+        <td><%= @pre_onboarding.city %></td>
+        
+        <td><strong>Country</strong></td>
+        <td><%= @pre_onboarding.country.try(:name) %></td>
+      </tr>
+
+      <tr>
+        <td><strong>State</strong></td>
+        <td><%= @pre_onboarding.state.try(:name) %></td>
+        
+        <td><strong>District</strong></td>
+        <td><%= @pre_onboarding.district.try(:name) %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Pin code</strong></td>
+        <td><%= @pre_onboarding.pin_code %></td>
+        
+        <td><strong>Current Address</strong></td>
+        <td><%= @pre_onboarding.current_address %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Contact no</strong></td>
+        <td><%= @pre_onboarding.contact_no %></td>
+        
+        <td><strong>Optional no</strong></td>
+        <td><%= @pre_onboarding.optional_no %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Email</strong></td>
+        <td><%= @pre_onboarding.email %></td>
+        
+        <td><strong>Pan No</strong></td>
+        <td><%= @pre_onboarding.pan_no %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Adhar No</strong></td>
+        <td colspan="3"><%= @pre_onboarding.adhar_no %></td>
+      </tr>
+    </table>
+    <br>
+      <%= link_to 'Back', pre_onboardings_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
+  </div>
+</div>
+<!-- <= link_to 'Edit', edit_pre_onboarding_path(@pre_onboarding) %> |
+<= link_to 'Back', pre_onboardings_path %> -->

@@ -1,0 +1,49 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+    }
+</style>
+  <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1000 cellpadding="15">
+    <thead>
+    <tr><td colspan="12"><center></center> </td></tr>
+      <tr>
+  <thead>
+    <tr>
+      <th>ID</th>
+	    <th>Employee Name</th>
+      <th>Asset type</th>
+      <th>Assets detail</th>
+      <th>Assets</th>
+      <th>Assets value</th>
+      <th>Assest status</th>
+      <th>Issue date</th>
+      <th>Valid till</th>
+      <th>Remarks</th>
+    </tr>
+  </thead>
+
+	<tbody>
+	<% @assigned_assets.each do |assigned_asset| %>
+      <tr>
+        <td><%= assigned_asset.employee.try(:manual_employee_code )%></td>
+        <td><%= full_name(assigned_asset.employee) %></td>
+        <td><%= assigned_asset.asset_type %></td>
+        <td><%= assigned_asset.assets_detail %></td>
+        <td><%= assigned_asset.assets_id %></td>
+        <td><%= assigned_asset.assets_value %></td>
+        <td><%= assigned_asset.assest_status %></td>
+        <td><%= assigned_asset.issue_date %></td>
+        <td><%= assigned_asset.valid_till %></td>
+        <td><%= assigned_asset.remarks %></td>
+       </tr>
+       <%end%>
+       </tbody>
+    </thead>
+    </table>

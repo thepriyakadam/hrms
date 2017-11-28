@@ -1,0 +1,172 @@
+<div class="modal-dialog" style="height:900px; max-height:1000px; width:800px; max-width:900px;">
+  <div class="modal-content">
+    <div class="modal-body">
+     <%= bootstrap_form_for :employee_resignation,url:{action:"edit_n_approve", resignation_id: @employee_resignation.id} do |f| %>
+     <%= f.hidden_field :employee_resignation_id, value: @employee_resignation.id %>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.text_field :employee_id,label:'Employee Name',value: @employee_resignation.employee.first_name+''+@employee_resignation.employee.middle_name+''+@employee_resignation.employee.last_name,readonly: true %>   
+          </div>
+        </div>
+     
+        <div class="col-sm-3">
+          <div class="form-group required">
+              <%= f.text_field :resignation_date,class: 'resignation',label:'Resignation Date'%>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.select :leaving_reason_id, all_leaving_reason,{label: 'Reason of Leaving',include_blank: " Select Reason of Leaving"} %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+          <%= f.text_field :reporting_master_id, label:'Request To',value: @employee_resignation.reporting_master_id,readonly: true %>   
+          </div>
+        </div>   
+
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :notice_period, label:'Notice Period (in days)' %>
+          </div>
+        </div>
+       
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :short_notice_period, label:'Short Notice Period (in days)' %>
+          </div>
+        </div>
+
+      <div class="col-sm-3">
+       <label>Requested Relieving Date</label>
+       <div class="field">
+          <%= f.text_field :tentative_leaving_date,hide_label: true, class: 'tentative_leaving_date'%>
+       </div>
+      </div>
+      <div class="col-sm-3">
+       <div class="field">
+         <%= f.text_field :remark, label:'Remark' %>
+       </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+       <label>Exit Interview Date</label>
+       <div class="field">
+          <%= f.text_field :exit_interview_date,hide_label: true, class: 'exit_interview_date'%>
+       </div>
+      </div>
+    
+  
+      <div class="col-sm-3">
+       <div class="field">
+         <%= f.text_field :note, label:'Note' %>
+       </div>
+      </div>
+
+      <div class="col-sm-3">
+       <label>Leaving Date</label>
+       <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :leaving_date,hide_label: true, class: 'leaving_date'%>
+        </div>
+       </div>
+      </div>
+
+      <div class="col-sm-3">
+        <label>Settled On</label>
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :settled_on,hide_label: true, class: 'settled_on'%>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.check_box :is_stop_pay_request, label:'Stop Payment Request' %>
+       </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="field">
+          <%= f.text_area :reason, label: "Exit Interview" %>
+        </div>
+      </div>
+
+     <div class="col-sm-3" style="padding-top:20px;">
+        <%= f.submit "Edit & Approve", class: 'btn btn-sm btn-warning fa fa-modx' %>
+      </div>
+    </div>
+      <% end %>
+</div>
+</div></div>
+
+<script>
+$("#employee_resignation").validate({
+    rules: {
+      "employee_resignation[reporting_master_id]":{
+        required: true,
+      }
+    },
+    messages: {
+      "employee_resignation[reporting_master_id]":{
+        required: "Please specify Reporting Manager Name",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+<script type="text/javascript">
+  $(function(){
+    $('.resignation').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.tentative_leaving_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+50',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.exit_interview_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:-0',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.leaving_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+150',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.settled_on').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+150',
+    dateFormat: 'dd-mm-yy' });
+
+  }); 
+</script>

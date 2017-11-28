@@ -1,0 +1,26 @@
+ <div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Assign Induction Template To Employee : <%= @employee.manual_employee_code %> - <%= full_name(@employee) %></h3>
+    <div class="box-tools pull-right">
+    </div>
+  </div><!-- /.box-header -->
+<div class="box-body">
+ <div class="row">
+	    <div class="col-sm-3">
+         <div class="field">
+	        <%= select :id,:hhh, all_induction_template2,{include_blank: "Please Select Template"},{onchange:"var a={id:$(this).val(),employee_id : '#{@employee.id}'}; $.get('/induction_activities/find_assigned_induction_template',a,function(response){});",class: 'form-control'} %>      
+	      </div>
+	    </div>
+ </div><br><br>
+
+
+<div id="induction_activity_details">
+	    
+</div>
+
+<!-- <div id="induction_document_download_details">
+	    
+</div> -->
+
+</div>
+</div>

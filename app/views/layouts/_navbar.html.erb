@@ -1,0 +1,129 @@
+<!-- Left side column. contains the logo and sidebar -->
+      <aside class="main-sidebar">
+
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+
+          <!-- Sidebar user panel (optional) -->
+          <div class="user-panel">
+            <div class="pull-left image">
+            <% if current_user.class == Group %>
+            <%= image_tag "avatar.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+            <% else %>
+            <%end%>
+            <% if current_user.class == Member %>
+            <%  @members = Member.where(employee_id: current_user.employee_id).pluck(:employee_id) %>
+             <%  @members1 = Member.where(employee_id: current_user.employee_id) %>
+             <% @employees = Employee.where(id: @members) %>
+             <% @employees.each do |e| %>
+             <% @members1.each do |m| %>
+             <% if e.gender == "Male" && m.avatar_file_name == nil  %>
+             <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+             <!-- < image_tag("avatar5.png") %> -->
+             <% elsif e.gender == "Female" && m.avatar_file_name == nil  %>
+             <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+             <!-- < image_tag("avatar2.png") %> -->
+               <%else%>
+                 <%= image_tag current_user.avatar.url(:medium),size: "25x25",class: "img-circle", alt: "avatar2"%>
+              <%end%>
+              <%end%>
+              <%end%>
+              <%end%>
+            </div>
+            
+            <div class="pull-left info">
+              <!-- <p>TATA GROUP</p>
+              <!Status -->
+              <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> --> 
+            <h3 class="profile-username text-center"></h3>
+              <p>
+                <% if current_user.class == Member %>
+                  <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:last_name) %><br>
+                  <small> <!-- <= current_user.employee.try(:joining_detail).try(:employee_designation).try(:name) %> --></small>
+                <%else%>
+                  <%= current_user.subdomain %> - <%= current_user.class %>
+                <%end%>
+              </p>
+            </div>
+          </div>
+
+          
+          <!-- Sidebar Menu -->
+          <%if current_user.class == Group %>
+            <%= render 'sidebars/group' %>
+          <%elsif current_user.class == Member %>
+            <% if current_user.role.name == 'GroupAdmin' %>
+              <%= render 'sidebars/group_admin' %>
+            <% elsif current_user.role.name == 'Admin' %>
+              <%= render 'sidebars/admin' %>
+            <% elsif current_user.role.name == 'Branch' %>
+              <%= render 'sidebars/branch' %>
+            <% elsif current_user.role.name == 'HOD' %>
+              <%= render 'sidebars/hod' %>
+            <% elsif current_user.role.name == 'Supervisor' %>
+              <%= render 'sidebars/supervisor' %>
+            <% elsif current_user.role.name == 'Account' %>
+              <%= render 'sidebars/account' %>
+            <% elsif current_user.role.name == 'AccountAdmin' %>
+              <%= render 'sidebars/account_admin' %>
+            <% elsif current_user.role.name == 'Recruitment' %>
+              <%= render 'sidebars/recruitment' %>
+            <% elsif current_user.role.name == 'GroupRecruiter' %>
+              <%= render 'sidebars/group_recruiter' %>
+            <% elsif current_user.role.name == 'AdminRecruiter' %>
+              <%= render 'sidebars/admin_recruiter' %>
+            <% elsif current_user.role.name == 'TimeAndAttendance' %>
+              <%= render 'sidebars/time_and_attendance' %>
+            <% elsif current_user.role.name == 'GroupTimeManagement' %>
+              <%= render 'sidebars/group_time_management' %>
+            <% elsif current_user.role.name == 'AdminTimeManagement' %>
+              <%= render 'sidebars/admin_time_management' %>
+            <% elsif current_user.role.name == 'NewEmployee' %>
+              <%= render 'sidebars/new_employee' %>
+            <% elsif current_user.role.name == 'CEO' %>
+              <%= render 'sidebars/ceo' %>
+            <% else %>
+              <%= render 'sidebars/employee' %>
+              
+            <% end %>
+          <%end%>
+          
+        </section>
+        <!-- /.sidebar -->
+</aside>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+
+      <%= render 'layouts/messages' %>
+        <!-- Content Header (Page header) -->
+        <!-- <section class="content-header">
+     		<p class="notice"><%= notice %></p>
+		  <p class="alert"><%= alert %></p>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+            <li class="active">Here</li>
+          </ol>
+        </section> -->
+
+        <!-- Main content -->
+        <section class="content">
+          <!-- Your Page Content Here -->
+          
+          <%= yield %>
+
+        </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+
+      <!-- Main Footer -->
+      <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+          Help Line No. +91-9028013279/+91-9970868601
+        </div>
+        <!-- Default to the left -->
+        <strong> Copyright © 2015 <a href="#">HCM-ZONE</a>.</strong> All Right Reserved.| Powered By : Indiba Business Solutions.
+      </footer>
+      <!-- Add the sidebar's background. This div must be placed
+           immediately after the control sidebar -->
+      <div class="control-sidebar-bg"></div>

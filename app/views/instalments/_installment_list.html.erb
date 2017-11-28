@@ -1,0 +1,43 @@
+  <div class="box-header">
+   <!--  <h3 class="box-title">Installment</h3>  -->   
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <div id="comments">
+    <table id="example" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Employee ID</th>
+        <th>Employee Name</th>
+        <th>Contact No.</th>
+        <th>Department Name</th>
+        <th>Advance Date</th>
+        <th>Instalment Amount</th>
+      </tr>
+    </thead>
+
+    <tbody>
+       <% @instalments.each do |i| %>
+        <tr>
+          <td><%= i.advance_salary.try(:employee).try(:manual_employee_code) %></td>
+          <td><%= full_name(i.advance_salary.try(:employee)) %></td>
+          <td><%= i.advance_salary.try(:contact_no) %></td>
+          <td><%= i.advance_salary.try(:employee).try(:department).try(:name) %></td>
+          <td><%= i.advance_salary.try(:advance_date) %></td>
+          <td><%= i.instalment_amount %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+  <%= link_to 'Back', instalments_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  <%= link_to " Excel Report ",dynamic_report_instalments_path(:instalment => {:month => params[:instalment][:month],:year => params[:instalment][:year],:company_id => params[:instalment][:company_id],:company_location_id => params[:instalment][:company_location_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <%= link_to " PDF Report ",dynamic_report_instalments_path(:instalment => {:month => params[:instalment][:month],:year => params[:instalment][:year],:company_id => params[:instalment][:company_id],:company_location_id => params[:instalment][:company_location_id]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

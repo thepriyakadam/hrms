@@ -1,0 +1,70 @@
+<%= bootstrap_form_for(@frequest_question,html: {id: 'frequest_question'},remote:true) do |f| %>
+<%= f.hidden_field :employee_id, :value => current_user.employee_id %>
+      <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group required">
+              <%= f.text_field :code,label:'Code', placeholder: 'Code' %>
+            </div>
+        </div> 
+      </div>
+      
+       <div class="row">  
+           <div class="col-sm-6">
+            <div class="form-group required">
+              <%= f.text_area :question,label:'Question', placeholder: 'Question' %>
+              </div>
+              </div>
+
+            <div class="col-sm-6">
+            <div class="form-group required">
+              <%= f.text_area :answer,label:'Answer', placeholder: 'Answer' %>
+            </div>
+          </div>
+         </div>
+
+          <div class="row">  
+            <div class="col-sm-6">
+            <label>Status</label>
+            <div class="field">
+            <%= f.check_box :status , label:'Active'%>
+          </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="actions" style="padding: 20px">
+              <%= f.submit 'Create FAQs',:class => class_name, data: { disable_with: data_info } %>
+            </div>
+          </div>
+        </div>
+<% end %>
+
+<script>
+$("#frequest_question").validate({
+    rules: {
+      "frequest_question[code]":{
+        required: true,
+      },
+      "frequest_question[question]":{
+        required: true,
+        },
+      "frequest_question[answer]":{
+        required: true,
+        }
+       },
+    messages: {
+      "frequest_question[code]":{
+        required: "Please specify code",
+      },
+       "frequest_question[question]":{
+        required: "Please specify question",
+        },
+       "frequest_question[answer]":{
+        required: "Please specify answer",
+         }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

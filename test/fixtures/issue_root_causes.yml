@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  issue_tracker_group_id: 
+  name: MyString
+  is_active: false
+  is_confirm: false
+
+two:
+  issue_tracker_group_id: 
+  name: MyString
+  is_active: false
+  is_confirm: false

@@ -1,0 +1,77 @@
+<%= bootstrap_form_for(@overtime_master,html: {id: 'overtime_master'},remote:true) do |f| %>
+  <div class="row">
+   
+    <div class="col-sm-3">
+      <div class="form-group required">       
+        <%= f.select :is_over_time,[['Active','true'],['Inactive','false']],{label: 'Overtime Option',include_blank: " Select Overtime Option"} %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :day,label: 'No. of Days' %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :company_hrs,label:'Company Hours' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :ot_rate ,label: 'Rate' %>
+      </div>
+    </div>
+    </div>
+     <div class="row">
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :is_esic,[['Yes','true'],['No','false']],{label: 'ESIC Option',include_blank: " Select ESIC Option"} %>
+      </div>
+    </div>
+     <div class="col-sm-1">
+      <label>Status </label>
+      <div class="field">
+        <%= f.check_box :status, label: 'Active'%>
+      </div>
+    </div>
+ 
+    <div class="col-sm-3">
+  <label></label>
+      <div class="actions">
+        <%= f.submit "Create Overtime Master",:class => class_name %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<br>
+
+<script type="text/javascript">
+
+$("#overtime_master").validate({
+  rules: {
+    "overtime_master[is_over_time]":{
+      required: true
+    },
+    "overtime_master[day]":{
+      required: true
+    },
+    "overtime_master[company_hrs]":{
+      required: true
+    },
+    "overtime_master[ot_rate]":{
+      required: true
+    },
+    "overtime_master[is_esic]":{
+      required: true
+    },
+    // "overtime_master[status]":{
+    //   required: true
+    // }
+  },
+  
+  errorPlacement: function(error, element) {
+   error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+   error.insertAfter(element.parent(element));
+  }
+});
+</script>

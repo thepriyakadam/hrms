@@ -1,0 +1,38 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Certification</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
+
+    <tr>
+          <th><strong>Name:</strong></th>
+      <td><%= @certification.name %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Year:</strong></th>
+      <td><%= @certification.year_id %></td>
+
+      <th><strong>Duration:</strong></th>
+      <td><%= @certification.duration %></td>
+    </tr>
+
+    <tr>
+      <th><strong>description:</strong></th>
+      <td><%= @certification.description %></td>
+
+      <th></th>
+      <td></td>
+    </tr>
+
+    </table>
+
+    <%= link_to 'Edit', edit_certification_path(@certification),class: 'btn btn-success btn-sm fa fa-edit' %> |
+    <%= link_to ' Back', certifications_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

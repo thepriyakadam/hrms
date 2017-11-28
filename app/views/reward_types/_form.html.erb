@@ -1,0 +1,58 @@
+<%= bootstrap_form_for(@reward_type,html: {id: 'reward_type'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,label: 'Code',placeholder: 'Code' %>
+      </div>
+    </div> 
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,label: 'Name',placeholder: 'Name' %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :description,label: 'Description',placeholder: 'Decription' %>
+      </div>
+    </div>
+
+     <div class="col-sm-3">
+     <label>Status</label>
+      <div class="field">
+        <%= f.check_box :status,label: 'Active' %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit'Create Reward Type', :class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %><br>
+
+<script>
+$("#reward_type").validate({
+    rules: {
+      "reward_type[code]":{
+        required: true,
+      },
+      "reward_type[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "reward_type[code]":{
+        required: "Please Specify Code",
+      },
+       "reward_type[name]":{
+        required: "Please Specify Name",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

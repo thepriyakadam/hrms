@@ -1,0 +1,79 @@
+<!--SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Advance Salary Report</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for(:advance_salary, url: { action: 'dynamic_report'},html: {id: 'advance_salary'},remote:true) do |f| %>
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="field">
+            <%= f.select :year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{hide_label:true,include_blank: " Select Year"}, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="field">
+            <%= f.select :month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{hide_label:true,include_blank: " Select Month"}, class: "form-control" %>
+           </div>
+        </div>
+
+        <div class="col-sm-2">
+            <div class="form-group required">
+              <%=f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form :'advance_salary'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
+            </div>
+          </div>
+
+          <div class="col-sm-2">
+            <div class="form-group required">
+              <div id="company_location">
+                <%= render 'employees/company_location_dropdown' %> 
+            </div> 
+            </div>
+          </div>
+        
+        <div class="col-sm-2" >
+          <div class="actions">
+            <%= f.submit "Display Report", class: "btn btn-sm btn-primary",id: "buttonCtc" %>
+          </div>
+        </div>
+        </div><br>
+        <div class="ajax-progress"></div>
+        <div id="advance_salary_li"></div>
+      <br>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#advance_salary").submit();
+  })
+</script>
+
+<script>
+$("#advance_salary").validate({
+    rules: {
+      "advance_salary[month]":{
+        required: true,
+      },
+      "advance_salary[year]":{
+        required: true,
+      }
+    },
+    messages: {
+      "advance_salary[month]":{
+        required: "Please select Month",
+      },
+      "advance_salary[year]":{
+        required: "Please select Year",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

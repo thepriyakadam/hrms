@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Sr.No.</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">ID</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Employee</Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">Company Location</Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String">Department</Data></Cell> 
+        <Cell ss:Index="6"><Data ss:Type="String">Joining Date</Data></Cell>
+        <Cell ss:Index="7"><Data ss:Type="String">Designation</Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String">Employee Grade</Data></Cell>
+        <Cell ss:Index="9"><Data ss:Type="String">Employee Qualification Level 1</Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String">Employee Qualification </Data></Cell>
+        <Cell ss:Index="11"><Data ss:Type="String">Employee Qualification Specialization </Data></Cell>
+        <Cell ss:Index="12"><Data ss:Type="String">Employee Marks 1</Data></Cell>
+        <Cell ss:Index="13"><Data ss:Type="String">Employee Passout Year </Data></Cell>
+        <Cell ss:Index="14"><Data ss:Type="String">Employee College/School </Data></Cell>
+        <Cell ss:Index="15"><Data ss:Type="String">Employee University/Institute </Data></Cell>
+        <Cell ss:Index="16"><Data ss:Type="String">Employee Qualification Level 2</Data></Cell>
+        <Cell ss:Index="17"><Data ss:Type="String">Employee Qualification </Data></Cell>
+        <Cell ss:Index="18"><Data ss:Type="String">Employee Qualification Specialization </Data></Cell>
+        <Cell ss:Index="19"><Data ss:Type="String">Employee Marks 2</Data></Cell>
+        <Cell ss:Index="20"><Data ss:Type="String">Employee Passout Year </Data></Cell>
+        <Cell ss:Index="21"><Data ss:Type="String">Employee College/School </Data></Cell>
+        <Cell ss:Index="22"><Data ss:Type="String">Employee University/Institute </Data></Cell>
+        <Cell ss:Index="23"><Data ss:Type="String">Employee Qualification Level 3</Data></Cell>
+        <Cell ss:Index="24"><Data ss:Type="String">Employee Qualification </Data></Cell>
+        <Cell ss:Index="25"><Data ss:Type="String">Employee Qualification Specialization </Data></Cell>
+        <Cell ss:Index="26"><Data ss:Type="String">Employee Marks 3</Data></Cell>
+        <Cell ss:Index="27"><Data ss:Type="String">Employee Passout Year </Data></Cell>
+        <Cell ss:Index="28"><Data ss:Type="String">Employee College/School </Data></Cell>
+        <Cell ss:Index="29"><Data ss:Type="String">Employee University/Institute </Data></Cell>
+        <Cell ss:Index="30"><Data ss:Type="String">Employee Previous Company Name 1 </Data></Cell>
+        <Cell ss:Index="31"><Data ss:Type="String">Employee Previous Designation </Data></Cell>
+        <Cell ss:Index="32"><Data ss:Type="String">Employee Previous Experience </Data></Cell>
+        <Cell ss:Index="33"><Data ss:Type="String">Employee Previous CTC </Data></Cell>
+        <Cell ss:Index="34"><Data ss:Type="String">Employee Previous Company Name 2 </Data></Cell>
+        <Cell ss:Index="35"><Data ss:Type="String">Employee Previous Designation </Data></Cell>
+        <Cell ss:Index="36"><Data ss:Type="String">Employee Previous Experience </Data></Cell>
+        <Cell ss:Index="37"><Data ss:Type="String">Employee Previous CTC </Data></Cell>
+        <Cell ss:Index="38"><Data ss:Type="String">Employee Previous Company Name 3 </Data></Cell>
+        <Cell ss:Index="39"><Data ss:Type="String">Employee Previous Designation </Data></Cell>
+        <Cell ss:Index="40"><Data ss:Type="String">Employee Previous Experience </Data></Cell>
+        <Cell ss:Index="41"><Data ss:Type="String">Employee Previous CTC </Data></Cell>
+        <Cell ss:Index="42"><Data ss:Type="String">Employee Self Comment </Data></Cell>
+        <Cell ss:Index="43"><Data ss:Type="String">Employee Self Rating </Data></Cell>
+        <Cell ss:Index="44"><Data ss:Type="String">Appraiser Comment </Data></Cell>
+        <Cell ss:Index="45"><Data ss:Type="String">Appraiser Rating </Data></Cell>
+        <Cell ss:Index="46"><Data ss:Type="String">Reviewer Comment </Data></Cell>
+        <Cell ss:Index="47"><Data ss:Type="String">Reviewer Rating </Data></Cell>
+        <Cell ss:Index="48"><Data ss:Type="String">Final Comment </Data></Cell>
+        <Cell ss:Index="49"><Data ss:Type="String">Final Rating </Data></Cell>
+        </Row>
+
+        <% i = 0 %>
+        <% @employees.each do |e|  %>
+        <% employee = Employee.find(e) %>
+        <% joining_detail = JoiningDetail.find_by_employee_id(e) %>
+
+        <% qualification1 = Qualification.where(employee_id: e).last(3).first %>
+        <% qualification2 = Qualification.where(employee_id: e).last(3).second %>
+        <% qualification3 = Qualification.where(employee_id: e).last(3).third %>
+
+        <% experience1 = Experience.where(employee_id: e).last(3).first %>
+        <% experience2 = Experience.where(employee_id: e).last(3).second %>
+        <% experience3 = Experience.where(employee_id: e).last(3).third %>
+
+        <% goal_bunch = GoalBunch.find_by_employee_id(e)%>
+
+        <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= e.manual_employee_code %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= full_name(e) %></Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="String"><%= e.company_location.try(:name) %></Data></Cell>
+          <Cell ss:Index="5"><Data ss:Type="String"><%= e.department.try(:name) %></Data></Cell>
+          <Cell ss:Index="6"><Data ss:Type="String"><%= joining_detail.try(:joining_date) %></Data></Cell>
+          <Cell ss:Index="7"><Data ss:Type="String"><%= joining_detail.try(:employee_designation).try(:name)%></Data></Cell> 
+          <Cell ss:Index="8"><Data ss:Type="String"><%= joining_detail.try(:employee_grade).try(:name)%></Data></Cell> 
+          <Cell ss:Index="9"><Data ss:Type="String"><%= qualification1.try(:degree_type).try(:name) %></Data></Cell>
+          <Cell ss:Index="10"><Data ss:Type="String"><%= qualification1.try(:degree).try(:name) %></Data></Cell>
+          <Cell ss:Index="11"><Data ss:Type="String"><%= qualification1.try(:degree_stream).try(:name) %></Data></Cell>
+          <Cell ss:Index="12"><Data ss:Type="String"><%= qualification1.try(:marks) %></Data></Cell>
+          <Cell ss:Index="13"><Data ss:Type="String"><%= qualification1.try(:year).try(:name) %></Data></Cell>
+          <Cell ss:Index="14"><Data ss:Type="String"><%= qualification1.try(:college) %></Data></Cell>
+          <Cell ss:Index="15"><Data ss:Type="String"><%= qualification1.try(:university).try(:name) %></Data></Cell>
+          <Cell ss:Index="16"><Data ss:Type="String"><%= qualification2.try(:degree_type).try(:name) %></Data></Cell>
+          <Cell ss:Index="17"><Data ss:Type="String"><%= qualification2.try(:degree).try(:name) %></Data></Cell>
+          <Cell ss:Index="18"><Data ss:Type="String"><%= qualification2.try(:degree_stream).try(:name) %></Data></Cell>
+          <Cell ss:Index="19"><Data ss:Type="String"><%= qualification2.try(:marks) %></Data></Cell>
+          <Cell ss:Index="20"><Data ss:Type="String"><%= qualification2.try(:year).try(:name) %></Data></Cell>
+          <Cell ss:Index="21"><Data ss:Type="String"><%= qualification2.try(:college) %></Data></Cell>
+          <Cell ss:Index="22"><Data ss:Type="String"><%= qualification2.try(:university).try(:name) %></Data></Cell>
+          <Cell ss:Index="23"><Data ss:Type="String"><%= qualification3.try(:degree_type).try(:name) %></Data></Cell>
+          <Cell ss:Index="24"><Data ss:Type="String"><%= qualification3.try(:degree).try(:name) %></Data></Cell>
+          <Cell ss:Index="25"><Data ss:Type="String"><%= qualification3.try(:degree_stream).try(:name) %></Data></Cell>
+          <Cell ss:Index="26"><Data ss:Type="String"><%= qualification3.try(:marks) %></Data></Cell>
+          <Cell ss:Index="27"><Data ss:Type="String"><%= qualification3.try(:year).try(:name) %></Data></Cell>
+          <Cell ss:Index="28"><Data ss:Type="String"><%= qualification3.try(:college) %></Data></Cell>
+          <Cell ss:Index="29"><Data ss:Type="String"><%= qualification3.try(:university).try(:name) %></Data></Cell>
+          <Cell ss:Index="30"><Data ss:Type="String"><%= experience1.try(:company_name) %></Data></Cell>
+          <Cell ss:Index="31"><Data ss:Type="String"><%= experience1.try(:designation) %></Data></Cell>
+          <Cell ss:Index="32"><Data ss:Type="String"><%= experience1.try(:no_of_year) %></Data></Cell>
+          <Cell ss:Index="33"><Data ss:Type="String"><%= experience1.try(:ctc) %></Data></Cell>
+          <Cell ss:Index="34"><Data ss:Type="String"><%= experience2.try(:company_name) %></Data></Cell>
+          <Cell ss:Index="35"><Data ss:Type="String"><%= experience2.try(:designation) %></Data></Cell>
+          <Cell ss:Index="36"><Data ss:Type="String"><%= experience2.try(:no_of_year) %></Data></Cell>
+          <Cell ss:Index="37"><Data ss:Type="String"><%= experience2.try(:ctc) %></Data></Cell>
+          <Cell ss:Index="38"><Data ss:Type="String"><%= experience3.try(:company_name) %></Data></Cell>
+          <Cell ss:Index="39"><Data ss:Type="String"><%= experience3.try(:designation) %></Data></Cell>
+          <Cell ss:Index="40"><Data ss:Type="String"><%= experience3.try(:no_of_year) %></Data></Cell>
+          <Cell ss:Index="41"><Data ss:Type="String"><%= experience3.try(:ctc) %></Data></Cell>
+          <Cell ss:Index="42"><Data ss:Type="String"><%= goal_bunch.try(:appraisee_comment) %></Data></Cell>
+          <Cell ss:Index="43"><Data ss:Type="String"><%= goal_bunch.try(:appraisee_rating_id) %></Data></Cell>
+          <Cell ss:Index="44"><Data ss:Type="String"><%= goal_bunch.try(:appraiser_comment) %></Data></Cell>
+          <Cell ss:Index="45"><Data ss:Type="String"><%= goal_bunch.try(:appraiser_rating) %></Data></Cell>
+          <Cell ss:Index="46"><Data ss:Type="String"><%= goal_bunch.try(:review_comment) %></Data></Cell>
+          <Cell ss:Index="47"><Data ss:Type="String"><%= goal_bunch.try(:reviewer_rating).try(:value) %></Data></Cell>
+          <Cell ss:Index="48"><Data ss:Type="String"><%= goal_bunch.try(:final_comment) %></Data></Cell>
+          <Cell ss:Index="49"><Data ss:Type="String"><%= goal_bunch.try(:final_rating).try(:value) %></Data></Cell>
+     </Row><!-- Row -->
+      <% end %><!-- slip -->
+    </Table>
+  </Worksheet>
+</Workbook>

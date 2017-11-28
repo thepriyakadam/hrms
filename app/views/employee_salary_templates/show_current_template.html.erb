@@ -1,0 +1,24 @@
+<div class="box box-default">
+  <div class="box-body">
+    <div class="pull-right">
+      <%= link_to " Excel Report ",employees_current_template_employee_salary_templates_path(employee_ids: @employee_ids, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%= link_to 'Back',employee_list_employee_salary_templates_path, class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+    </div>
+    <br>
+    <table id="example1" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Employee Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @employee_ids.each do |e| %>
+        <% emp = Employee.find_by(id: e) %>
+          <tr> 
+            <td><%= emp.manual_employee_code %></td>
+            <td><%= full_name(emp) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>

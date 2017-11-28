@@ -1,0 +1,32 @@
+<table id="example6" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr> 
+      <th>ID</th>
+      <th>Name</th>
+      <th>Active</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+   <% @reporting_masters.each do |reporting_master| %>
+      <tr>
+        <td><%= reporting_master.employee.try(:manual_employee_code) %></td>
+        <td><%= full_name(reporting_master.employee) %></td>
+        <td><%= reporting_master.is_active ? "Active" : "Inactive" %></td>
+        </td> 
+        <td>
+         <%= link_to '', edit_reporting_master_path(reporting_master),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+         <%= link_to '',  reporting_master, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-danger fa fa-close',remote:true  %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

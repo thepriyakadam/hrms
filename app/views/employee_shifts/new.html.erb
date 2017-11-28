@@ -1,0 +1,10 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee List</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= form_for @employee_shift do |f| %>
+    	<%= select :salary,:template, (@rotations.present? ? (@rotations.collect {|b| [b.company_shift.try(:name).to_s+" "+b.start_date.to_s+" - "+b.end_date.to_s,b.id]}) : {}),{include_blank: "Please Select Template"},{onchange:"var a={id:$(this).val()}; $.get('/shift_rotations/collect_employee',a,function(response){});",class: 'form-control'}%>
+    <% end %>
+  </div>
+</div>

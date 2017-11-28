@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Training Approvals</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Training request</th>
+      <th>Employee</th>
+      <th>Training topic master</th>
+      <th>Reporting master</th>
+      <th>Traininig period</th>
+      <th>Training date</th>
+      <th>Place</th>
+      <th>No. of employee</th>
+      <th>Description</th>
+      <th>Justification</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @training_approvals.each do |training_approval| %>
+      <tr>
+        <td><%= training_approval.training_request %></td>
+        <td><%= training_approval.employee %></td>
+        <td><%= training_approval.training_topic_master %></td>
+        <td><%= training_approval.reporting_master %></td>
+        <td><%= training_approval.traininig_period %></td>
+        <td><%= training_approval.training_date %></td>
+        <td><%= training_approval.place %></td>
+        <td><%= training_approval.no_of_employee %></td>
+        <td><%= training_approval.description %></td>
+        <td><%= training_approval.justification %></td>
+        <td><%= link_to 'Show', training_approval %></td>
+        <td><%= link_to 'Edit', edit_training_approval_path(training_approval) %></td>
+        <td><%= link_to 'Destroy', training_approval, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Training approval', new_training_approval_path %>

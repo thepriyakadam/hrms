@@ -1,0 +1,307 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Candidate Registrations</h3>
+  </div>
+
+<div class="box-body">
+<%= bootstrap_form_for(@capture_resume,html: { multipart: true}) do |f| %>
+<div>
+ <%= render 'show_vacancy_detail' %>
+ </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name_of_candidate,label: 'Name Of the Candidate'%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :contact_no,label: 'Contact No1'%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :contact_no2,label: 'Contact No2'%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :post_applied,label: 'Post Applied',placeholder: "e.g : Manager" %>
+      </div>
+    </div>
+  </div>
+        
+  <div class="row"> 
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :mode_of_application, ['Website','Email','Advertisement','Other'],{label: 'Mode Of Application',include_blank: " Select Mode Of Application"} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+     <!--  <label>Date Of Application </label> -->
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+         </div>
+            <%= f.text_field :date_of_application,label: 'Date Of Application', class: 'birth_date'%>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :url, label: 'URL'%>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :fax, label: 'Fax'%>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-sm-3">
+          <label>Educational Qualification</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+              <%= f.select :degree_id, all_degree_list,{hide_label: true,include_blank: " Select Qualification"} %>
+            </div>
+          </div>
+        </div>
+
+      <div class="col-sm-3">
+          <div class="field">
+          <%= f.text_field :job_title,label:'Job Title' %>
+          </div>
+      </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :employee_designation_id,label:'Employee Designation' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.file_field :avatar,label: 'Resume Upload' %>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.file_field :passport_photo,label: 'Photo Upload' %>
+      </div>
+    </div>
+    </div>
+
+    <div class="box-header with-border">
+      <h3 class="box-title">Address Information</h3>
+    </div>
+    
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :street,label:'Street' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+       <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'capture_resume'}; $.get('/companies/collect_states',a,function(response){});"}%>
+      </div>
+    </div>
+  
+    <div class="col-sm-3">
+      <div class="field">
+        <div id="states">
+           <%= render 'companies/state_dropdown' %> 
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-sm-3">
+      <div class="field">
+        <div id="district">
+        <%= render 'companies/city_dropdown' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :city,label:'City' %>
+        </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :zip_code,label:'Zipcode' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="box-header with-border">
+    <h3 class="box-title">Proffesional Details</h3>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+       <%= f.text_field :current_job_title,label:'Current Job Title' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+      <%= f.text_field :current_employeer,label:'Current Employeer' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+      <%= f.text_field :skill_set,label:'Skillset' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+      <%= f.text_field :additional_info,label:'Additional Info' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :email,label: 'Email Id1'%>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :email2,label: 'Email Id2'%>
+        </div>
+      </div>
+  
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :skype_id,label:'Skype Id' %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :twitter,label:'Twitter' %>
+        </div>
+      </div>
+  </div>
+
+  <div class="row">
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :linkedin,label: 'Linkedin'%>
+        </div>
+      </div>
+  </div>
+
+  <div class="box-header with-border">
+    <h3 class="box-title">Candidate Communication</h3>
+  </div><!-- /.box-header -->
+
+  <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :current_salary,label: 'Current CTC'%>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :expected_salary,label: 'Expected CTC'%>
+           </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :current_location,label: 'Current Location'%>
+          </div>
+        </div>
+  
+        <div class="col-sm-2">
+          <div class="field">
+            <%= f.text_field :notice_period,label: 'Notice Period'%>
+          </div>
+        </div>
+  </div>
+  
+  <div class="row">
+        <!-- <div class="col-sm-3">
+         <label>Interview Date </label>
+            <div class="field">
+              <div class="input-group">
+               <div class="input-group-addon">
+               <i class="fa fa-calendar"></i>
+               </div>
+               <= f.text_field :interview_date, hide_label: true, class: 'birth_date'%>
+              </div>
+            </div>
+        </div>
+
+         <div class="col-sm-3">
+            <div class="bootstrap-timepicker">
+               <div class="form-group required">
+               <label>Interview Time</label>
+                  <div class="input-group">
+                   <= f.text_field :interview_time,hide_label:true, class: 'form-control timepicker' %>
+                    <div class="input-group-addon">
+                     <i class="fa fa-clock-o"></i>
+                  </div>
+                 </div>
+               </div>
+             </div>
+         </div> -->
+        
+          <div class="col-sm-3">
+            <div class="field">
+             <%= f.text_field :reason,label: 'Reason For Leaving'%>
+            </div>
+          </div>
+         
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.select :work_experience, ['Fresher','0-1 Years','1-2 Years','3-5 Years','More than that'],{label: 'Work Experience',include_blank: " Select Work Experience"} %>
+             </div>
+          </div>
+
+
+           <div class="col-sm-3">
+            <div class="field">
+             <%= f.select :candidate_call_status, ['Available','Not Available'],{label: 'Candidate Calling Status',include_blank: " Select Calling Status"} %>
+            </div>
+            </div>
+  </div>
+
+  <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+             <%= f.submit "Create",class: "btn btn-primary btn-sm" %>
+          </div>
+        </div>
+  </div>
+  <% end %>
+  </div><!-- /.box-body -->  
+</div><!-- /.box -->

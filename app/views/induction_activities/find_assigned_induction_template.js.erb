@@ -1,0 +1,11 @@
+<% unless @flag %>
+	<% unless InductionMaster.exists?(id: @induction_master.id) %>
+		$("#induction_activity_details").html("<%= j render 'induction_act_list' %>")
+		$("#induction_document_download_details").html("<%= j render 'induction_document_download' %>")
+	<% else %>
+		$("#message").html("<center><p class='text-red'>Employee already assign you can update it.</p></center>")
+		$("#induction_activity_details").html("<%= j render 'induction_act_list' %>")
+	<% end %>
+<% else %>
+	
+<% end %>

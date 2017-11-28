@@ -1,0 +1,40 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Compensatory Off List </center></h4>
+    </div>
+    <div class="modal-body">
+    <table class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <td colspan="6"><%= full_name(@employee) %></td> 
+    </tr>
+
+    <tr>   
+      <th>Date</th>
+      <th>Expiry Date</th>
+      <th>Taken</th>
+      <th>Expiry Date</th>
+      <th>Leave Count</th>
+      <th>Taken Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @leave_c_offs.each do |lc| %>
+    <tr>
+      <td><%= lc.c_off_date %></td>
+      <td><%= lc.c_off_expire_day %></td>
+      <td><%= lc.is_taken ? "Yes" : "No"%></td>
+      <td><%= lc.expiry_date %></td>
+      <td><%= lc.leave_count %></td>
+      <td><%= lc.taken_date %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

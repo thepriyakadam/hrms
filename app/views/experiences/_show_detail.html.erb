@@ -1,0 +1,58 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <div class="row">
+   <div class="col-sm-1">
+  <% if @experiences.first.employee.passport_photo_file_name == nil %>
+  <% if @experiences.first.employee.gender == "Female" %>
+   <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%else%>
+   <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%end%>
+ <%else%>
+      <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+      <%end%>
+  </div>
+    <div class="col-sm-6">
+     <font color='#0077b3'>
+       ID : <%= @experiences.first.employee.try(:manual_employee_code) %><br>
+       Name : <%= full_name(@experiences.first.employee) %><br>
+       Email : <%= @experiences.first.employee.try(:email) %></font>
+    </div>
+  </div>
+
+
+    <div class="box-tools pull-right">
+      <%= link_to "Add Experience", ajax_new_experience_employees_path(id: @employee.id), class: 'btn btn-xs btn-primary',remote:true %>
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-xs fa fa-arrow-left' %>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+     <tr><th colspan="5"><center><font color='#0077b3'>Exerience Details</font></center> </th></tr>
+     <tr>
+      <th>Sr.No.</th>
+      <th>Company Name</th>
+      <th>Designation</th>
+      <th>Experience</th>
+      <th>Action</th>
+    </tr>
+    <%i = 0 %>
+     <% @experiences.each do |experience| %>
+      <tr>
+        <td><%= i = i+1 %></td>
+        <td><%= experience.company_name %></td>
+        <td><%= experience.designation %></td>
+        <td><%= experience.no_of_year %></td>
+        <td>
+         <div id="myModal" class="modal fade"></div>
+           <!-- <= link_to '',modal_experience_experiences_path(experience),class: 'btn btn-sm btn-success fa fa-edit',remote: true %> -->
+           <%= link_to '' ,edit_experience_path(experience),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+           <%= link_to '' ,exp_modal_experiences_path(experience),class: 'btn btn-xs btn-default fa fa-eye',remote:true %>
+          <!-- link_to '', experience, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-close'  -->
+        </td>
+      </tr>
+      <%end%>
+    </table>
+  </div><!-- /.box -->
+</div>
+ <div id="exp_modal" class="modal fade"></div>

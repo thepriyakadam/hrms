@@ -1,0 +1,50 @@
+<%= bootstrap_form_for(@degree_stream,html: {id: 'degree_stream'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Qualification Code' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Qualification Name' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Qualification Description' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Specialization",:class => class_name, data: { disable_with: data_info }%>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+$("#degree_stream").validate({
+    rules: {
+      "degree_stream[code]":{
+        required: true,
+      },
+      "degree_stream[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "degree_stream[code]":{
+        required: "Please specify code",
+      },
+       "degree_stream[name]":{
+        required: "Please specify name",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

@@ -1,0 +1,2 @@
+json.extract! certificate, :id, :certificate_master_id, :h1_start, :h1_end, :h2_start, :h2_end, :b1_start, :b1_end, :b2_start, :b2_end, :b3_start, :b3_end, :b4_start, :b4_end, :b5_start, :b5_end, :f1_start, :f1_end, :f2_start, :f2_end, :created_at, :updated_at
+json.url certificate_url(certificate, format: :json)

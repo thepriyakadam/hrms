@@ -1,0 +1,25 @@
+<br>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Action</th>
+ 
+  <tbody>
+    <% @leaving_reasons.each do |leaving_reason| %>
+      <tr>
+        <td><%= leaving_reason.code %></td>
+        <td><%= leaving_reason.name %></td>
+        <td><%= leaving_reason.description %></td>
+        <td><%= leaving_reason.is_confirm ? "Active" : "Inactive" %></td>
+        <td>
+            <%= link_to '', edit_leaving_reason_path(leaving_reason),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  leaving_reason, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

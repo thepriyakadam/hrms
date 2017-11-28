@@ -1,0 +1,72 @@
+<%= bootstrap_form_for(@bonus_master,html: {id: 'bonus_master'},remote: true) do |f| %>
+  <div class="row">
+   
+    <div class="col-sm-3">
+      <div class="form-group required">       
+        <%= f.select :is_bouns,[['Yes','true'],['No','false']],{label: 'Bonus Option',include_blank: " Select Bonus Option"} %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :limit_amount,label: 'Limit Amount' %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :bonus_persentage,label:'Bonus Percentage' %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+     <label>Status</label>
+      <div class="field">       
+        <%= f.check_box :status,label:'Active' %>
+      </div>
+    </div>
+  </div>
+     
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit"Create Bonus Master", :class => class_name %>
+      </div>
+    </div>
+  </div>
+  
+<% end %>
+<br>
+
+<script type="text/javascript">
+
+$("#bonus_master").validate({
+  rules: {
+    "bonus_master[is_bouns]":{
+      required: true
+    },
+    "bonus_master[limit_amount]":{
+      required: true
+    },
+    "bonus_master[bonus_persentage]":{
+      required: true
+    }
+    // "bonus_master[status]":{
+    //   required: true
+    // }
+  },
+   messages: {
+      "bonus_master[is_bouns]":{
+        required: "Please specify is bouns",
+      },
+       "bonus_master[limit_amount]":{
+        required: "Please specify limit amount",
+         },
+       "bonus_master[bonus_persentage]":{
+        required: "Please specify bonus persentage",
+      }
+       },
+  
+  errorPlacement: function(error, element) {
+   error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+   error.insertAfter(element.parent(element));
+  }
+});
+</script>

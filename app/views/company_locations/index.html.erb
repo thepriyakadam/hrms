@@ -1,0 +1,34 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Company Location List</h3>
+    <div class="pull-right">
+      <%= link_to "Create Company Location", new_company_location_path, class: 'btn btn-sm btn-primary' %> 
+    </div>
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+      <thead>
+      <tr>
+        <th>Company Name</th>
+        <th>Location Code</th>
+        <th>Location Name</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+
+      <tbody>
+        <% @company_locations.each do |company_location| %>
+          <tr>
+            <td><%= company_location.company.try(:name)  %></td>
+            <td><%= company_location.manual_company_location_code %></td>
+            <td><%= company_location.name %></td>
+            <td>
+              <%= link_to '', company_location,class: 'btn btn-default btn-sm fa fa-eye' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

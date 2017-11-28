@@ -1,0 +1,18 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Joining Checklist Master</h3>
+    <div class="pull-right">
+    <%= link_to " PDF ", joining_checklist_master_joining_checklist_masters_path(id: @joining_checklist_master.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
+    
+    <%= link_to " XLS ", joining_checklist_master_joining_checklist_masters_path(id: @joining_checklist_master.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="joining_check_list">
+			<%= render 'joining_check_list' %>
+		</div>
+	</div><!-- /.box-body -->
+</div><!-- /.box -->

@@ -1,0 +1,38 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+      <th>ID</th>
+      <th>Member</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @due_details.each do |due_detail| %>
+      <tr>
+        <td><%= check_box_tag "due_detail_ids[]", due_detail.id %></td>
+        <td><%= due_detail.reporting_master.employee.try(:manual_employee_code) %></td>
+        <td><%= full_name(due_detail.reporting_master.employee) %></td>
+        <td><%= due_detail.status ? "Active" : "Inactive" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>

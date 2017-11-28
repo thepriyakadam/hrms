@@ -1,0 +1,156 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Company Locations</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= bootstrap_form_for(@company_location,html: {id: 'company_location'}) do |f| %> 
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+             <%= f.text_field :manual_company_location_code,label: 'Company Location Code',placeholder: "Company Location Code"%>
+             </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="field">
+             <%= f.select :company_id, all_company,{label: 'Company Select',include_blank: " Select Company"} %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :name,label:"Location Name",placeholder: "e.g : Chennai" %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+             <%= f.text_field :email,placeholder: "e.g : xyz@gmail.com" %>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :contact_no,label:"Contact No." %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-9">
+            <div class="field">
+              <%= f.text_field :address %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :pin_code,label:"Pin/ZIP Code",placeholder: "e.g : 400703" %>
+            </div>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_country_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+              <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'company_location'}; $.get('/companies/collect_states',a,function(response){});"}%>
+            </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_state_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+              <div id="states">
+                <%= render 'companies/state_dropdown' %>
+              </div> 
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_district_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+             <div id="district">
+               <%= render 'companies/city_dropdown' %>
+           </div>
+           </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :city,placeholder: "e.g : Mumbai" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+         <div class="col-sm-5">
+          <div class="actions">
+            <%= f.submit :class => class_name, data: { disable_with: data_info } %> |
+            <%= link_to 'Back', company_locations_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+          </div>
+          </div>
+      <% end %>
+      </div>
+        </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script>
+$("#company_location").validate({
+    rules: {
+      "company_location[manual_company_location_code]":{
+        required: true,
+      },
+      "company_location[name]":{
+        required: true,
+      },
+      "company_location[email]":{
+        required: true,
+        },
+      "company_location[pin_code]":{
+        required: true,
+        },
+      "company_location[country_id]":{
+        required: true,
+        },
+      "company_location[city]":{
+        required: true,
+      }
+    },
+    messages: {
+      "company_location[manual_company_location_code]":{
+        required: "Please specify company location code",
+      },
+       "company_location[name]":{
+        required: "Please specify location name",
+      },
+       "company_location[email]":{
+        required: "Please specify email",
+         },
+       "company_location[pin_code]":{
+        required: "Please specify pin code",
+         },
+       "company_location[country_id]":{
+        required: "Please select country",
+        },
+       "company_location[city]":{
+        required: "Please specify city",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

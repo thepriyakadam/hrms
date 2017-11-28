@@ -1,0 +1,47 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Food Deduction List</h3>
+    <div class="pull-right">
+      <%= link_to "New Food Deduction", new_food_deduction_path, class: 'btn btn-sm btn-primary' %> 
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <div id="comments">
+    <table id="example1" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Employee Name</th>
+        <th>Date</th>
+        <th>No. of Coupon</th>
+        <th>Return Coupon</th>
+        <th>Total</th>
+        <th>Price</th>
+        <th>Amount</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @food_deductions.each do |food_deduction| %>
+        <tr>
+          <td><%= food_deduction.employee.try(:manual_employee_code) %></td>
+          <td><%= full_name(food_deduction.employee) %></td>
+          <td><%= food_deduction.food_date %></td>
+          <td><%= food_deduction.no_of_coupan %></td>
+          <td><%= food_deduction.return_coupan %></td>
+          <td><%= food_deduction.total_coupan %></td>
+          <td><%= food_deduction.food_coupan_master.price %></td>
+          <td><%= food_deduction.amount %></td>
+          <td>
+            <!-- < link_to '', food_deduction, class: "btn btn-default btn-xs fa fa-eye" %> -->
+            <%= link_to '', edit_food_deduction_path(food_deduction), class: "btn btn-success btn-xs fa fa-edit" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+  <%= link_to 'Back', food_deductions_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+</div>
+</div>

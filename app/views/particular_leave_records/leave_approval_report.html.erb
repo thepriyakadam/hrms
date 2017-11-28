@@ -1,0 +1,100 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Leave Approved Report</h3>
+  </div><!-- /.box-header -->
+ <div class="box-body">
+ <%= bootstrap_form_for(:employee, url: { action: 'show_approved_record'},html: {id: 'employee'},remote:true) do |f| %>
+ 		<div class="row">
+ 			<div class="col-sm-3">
+        <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :start_date, label: 'From Date', class: 'request_from_date'%>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :end_date,label: 'To Date', class: 'request_from_date' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-2">
+        <div class="field">
+          <div class="input-group">
+            <%= f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
+          </div>
+        </div>
+      </div>
+     
+      <div class="col-sm-2">
+        <div class="field">
+          <div id="company_location_with_label">
+            <%= render 'employees/company_location_dropdown_with_label' %> 
+        </div> 
+        </div>
+      </div>
+
+      <div class="col-sm-2">
+        <div class="field">
+          <div class="input-group">
+            <div id="department">
+              <%= render 'employees/department_dropdown' %> 
+            </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      
+     	<div class="col-sm-2" style="padding-top:20px;">
+       	<div class="actions">
+          <%= f.submit "Display Report", class: "btn btn-sm btn-primary" %>
+        </div>
+      </div>
+    </div><br>
+      <div id="approved_record_list"></div>
+    <br>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+        
+<script type="text/javascript">
+  $(function(){
+    $('.request_from_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+5',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+
+  $("#employee").validate({
+    rules: {
+      "employee[start_date]":{
+        required: true
+      },
+      "employee[end_date]":{
+        required: true
+      }
+    },
+    messages: {
+      "employee[start_date]":{
+        required: "Please specify date range."
+      },
+      "employee[end_date]":{
+        required: "Please specify date range."
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+  });
+</script>

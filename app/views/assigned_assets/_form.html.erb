@@ -1,0 +1,128 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Asset Details</h3>
+  </div><!-- /.box-header -->
+
+
+<div class="box-body">
+<%= bootstrap_form_for(@assigned_asset,html: {id: 'assigned_asset'},remote:true) do |f| %>
+<%= f.hidden_field :employee_id, value: @employee.id %>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+           <div class="input-group-addon">
+                <%= link_to "", new_asset_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+        <%= f.select :asset_type_id,all_asset_type,{label: 'Asset Type',include_blank: " Asset Type"} %>
+      </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :assets_detail,label: 'Asset Detail',placeholder:"e.g.HP Pavillion G3" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :assets_id,label: 'Asset ID',placeholder:"e.g.A12" %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :assets_value,label: 'Asset Value',placeholder:"e.g. 1" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :assest_status,label: 'Asset Status',placeholder:"e.g.Active" %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :issue_date, label: "Issue Date", class: 'issue_date'%>
+        </div>
+      </div>
+    </div>
+    
+    <!-- <div class="col-sm-3">
+    <label>Returned On: </label>
+    <div class="field">
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="fa fa-calendar"></i>
+        </div>
+        <= f.text_field :returned_on, hide_label: true, class: 'returned_on_date'%>
+      </div>
+    </div>
+  </div> -->
+
+    <div class="col-sm-6">
+      <div class="field">
+        <%= f.text_field :remarks,label: 'Remarks',placeholder:"Remarks" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create", class: "btn btn-success btn-sm" %>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+
+<% end %>
+<script type="text/javascript">
+  $(function(){
+    $('.issue_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-10:+25',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.valid_till_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-10:+25',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+
+
+ $("#assigned_asset").validate({
+    rules: {
+      "assigned_asset[asset_type_id]":{
+        required: true
+      },
+      "assigned_asset[issue_date]":{
+        required: true
+      }
+    },
+    messages: {
+      "assigned_asset[asset_type_id]":{
+        required: "Please specify asset type"
+      },
+      "assigned_asset[issue_date]":{
+        required: "Please specify issue date"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+
+
+</script>

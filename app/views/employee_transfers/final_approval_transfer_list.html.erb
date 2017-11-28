@@ -1,0 +1,33 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Final Employee Transfer Request Approval</h3>
+    <div class="pull-right"></div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div class="row">
+      <div class="col-sm-12">
+        <table id="example2" class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Employee Name</th>
+              <th>Designation</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+          <% @employee_transfers.each do |employee_transfer| %>
+          <tr>
+         
+            <td><%= employee_transfer.employee.try(:manual_employee_code) %></td>
+            <td><%= full_name(employee_transfer.employee) %></td>
+            <td><%= employee_transfer.designation %></td>
+             <td>
+           <%= link_to 'View Request',employee_transfer_confirmation_2_employee_transfers_path(employee_transfer),class: 'btn btn-xs btn-primary' %>
+                </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+ 

@@ -1,0 +1,115 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Revision Simulation</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <%= bootstrap_form_for(:salary, url: { action: 'all_employee_list'},html: {id: "salary"},remote: true) do |f| %>
+    <div class="row">
+      <div class="col-sm-2">
+      <label>Performance Period</label>
+        <div class="form-group required">
+         <%= select :salary, :period_id, all_period_type,{label: 'Period',include_blank: " Select Period"},{class: "form-control"} %>
+        </div>
+      </div>
+    </div>
+    <br>
+    <h5>Revision Level(%)</h5>
+    <div class="row">
+    <div class="col-sm-1">
+    <h6>Company</h6>
+    </div>
+      <div class="col-sm-2">
+        <div class="field">
+          <%= f.select :company_name,all_company,{hide_label: true,include_blank: " Select company"}  %>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="field">
+          <%= f.text_field :company, hide_label: true,placeholder: 'Company'%>
+        </div>
+      </div>
+    </div>
+   
+    <div class="row">
+    <div class="col-sm-1">
+    <h6>Location</h6>
+    </div>
+      <div class="col-sm-2">
+        <div class="field">
+          <%= f.select :location_name,all_company_location,{hide_label: true,include_blank: " Select Location"}  %>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="field">
+          <%= f.text_field :location, hide_label: true,placeholder: 'Location' %>
+        </div>
+      </div>
+    </div>
+    
+     <div class="row">
+    <div class="col-sm-1">
+    <h6>Department</h6>
+    </div>
+      <div class="col-sm-2">
+        <div class="field">
+          <%= f.select :department_name,all_department_list,{hide_label: true,include_blank: " Select Department"}  %>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="field">
+          <%= f.text_field :department, hide_label: true,placeholder: 'Department' %>
+        </div>
+      </div>
+    </div>
+    <br>
+    <!-- <div class="row">
+      <div class="col-sm-2">
+      <label>Max Rating</label>
+        <div class="field">
+          <%= @rating.value %>
+        </div>
+      </div>
+    </div> -->
+    <br>
+    <div class="row">
+     <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit "Simulation", class: "btn btn-sm btn-warning", id: "buttonCtc" %>
+        </div>
+      </div>
+    </div><br>
+  <% end %>
+
+  <div class="ajax-progress"></div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div id="employee_list"></div>    
+    </div>
+  </div>
+</div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script type="text/javascript">
+$("#buttonCtc").click(function(){
+  $('.ajax-progress').show();
+  $("#salary").submit();
+})
+
+ $("#salary").validate({
+    rules: {
+      "salary[period_id]":{
+        required: true
+      }
+    },
+    messages: {
+      "salary[period_id]":{
+        required: "Please specify period"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

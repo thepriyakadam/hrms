@@ -1,0 +1,72 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+		 <center><%= @employee_attendance.employee.try(:manual_employee_code) %> - <%= full_name(@employee_attendance.employee) %></center>
+    </div>
+    <div class="modal-body">
+     		
+    	<%= bootstrap_form_for :employee_attendance,url:{action:"update_attendance_for_show",employee_attendance_id: @employee_attendance.id} do |f| %>
+
+    		<div class="row">
+	    		<div class="col-sm-3">
+		          <div class="field">
+		            <%= select :employee_attendance,:present,['P','WO','WOP','A','HDL','H','HP','LWP','HD-LWP','PO','ACF'],{hide_label: true,include_blank: "Select Option"},class: 'form-control' %>
+		         	</div>
+	        </div>
+
+        	<div class="col-sm-3">
+			      <div class="bootstrap-timepicker">
+			        <div class="form-group">
+			          <div class="input-group">
+			            <div class="input-group-addon">
+			              <i class="fa fa-clock-o"></i>
+			            </div> 
+			            <%= text_field :employee_attendance,:in_time,hide_label: true, placeholder: 'In Time',class: 'form-control timepicker',value: @employee_attendance.in_time %>
+			          </div>
+			        </div>
+			      </div>
+			    </div>
+			    <div class="col-sm-3">
+			      <div class="bootstrap-timepicker">
+			        <div class="form-group">
+			          <div class="input-group">
+			            <div class="input-group-addon">
+			              <i class="fa fa-clock-o"></i>
+			            </div>
+			            <%= text_field :employee_attendance,:out_time,hide_label: true, placeholder: 'Out Time',class: 'form-control timepicker',value: @employee_attendance.out_time %>
+			          </div>
+			        </div>
+			      </div>
+			    </div>
+			    <div class="col-sm-3">
+	          <div class="field">
+	            <%= select :employee_attendance,:comment,['In Time Not Available','Out Time Not Available','In & Out Time Not Available'],{hide_label: true,include_blank: "Select Comment"},class: 'form-control' %>
+	         	</div>
+	        </div>
+	        </div>
+	        <div class="row">
+          <div class="col-sm-2">
+            <%= f.submit "Update", class: 'btn btn-sm btn-success fa fa-modx' %>
+          </div>
+
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+     $(".timepicker").timepicker({
+    showInputs: false
+  });
+    $('.machine_attendance').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:-0',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

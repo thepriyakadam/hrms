@@ -1,0 +1,37 @@
+<%if current_user.class == Group %>
+	<%= render 'group_dashboard' %>
+<%elsif current_user.class == Member %>
+	<% if current_user.role.try(:name) == 'Admin' %>
+		<%= render 'admin_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'Branch' %>
+		<%= render 'branch_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'HOD' %>
+		<%= render 'hod_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'Supervisor' %>
+		<%= render 'supervisor_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'Account' %>
+		<%= render 'account_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'AccountAdmin' %>
+	    <%= render 'account_admin' %>
+	<% elsif current_user.role.try(:name) == 'GroupAdmin' %>
+	    <%= render 'group_admin' %>
+	<% elsif current_user.role.try(:name) == 'NewEmployee' %>
+	    <%= render 'new_employee_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'Recruitment' %>
+	    <%= render 'recruitment_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'GroupRecruiter' %>
+	    <%= render 'group_recruiter_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'AdminRecruiter' %>
+	    <%= render 'admin_recuiter_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'TimeAndAttendance' %>
+	    <%= render 'time_and_attendance_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'GroupTimeManagement' %>
+	    <%= render 'group_time_management' %>
+	<% elsif current_user.role.try(:name) == 'AdminTimeManagement' %>
+	    <%= render 'admin_time_management' %>
+	<% elsif current_user.role.try(:name) == 'CEO' %>
+	    <%= render 'ceo_dashboard' %>
+	<% else %>
+		<%= render 'employee_dashboard' %>
+	<% end %>
+<%end%>

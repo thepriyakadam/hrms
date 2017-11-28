@@ -1,0 +1,73 @@
+
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Membership</h3>
+  </div><!-- /.box-header -->
+  
+  <div class="box-body">
+    <%= bootstrap_form_for(@society_member_ship,html: {id: 'workingday'}) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.select :employee_id, employee_list_by_company_location, {label: 'Employee ',include_blank: " Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
+           </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.select :is_society_member, [['Yes',true],['No', false]],{label: 'Society Membership Option',include_blank: " Select Society Membership Option"} %>
+           </div>
+        </div>
+        <div class="col-sm-3">
+        <label>Date</label>
+         <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :start_date,hide_label: true,class: 'start_date'%>
+          </div>
+         </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :amount %>
+           </div>
+        </div>
+        </div>      
+        <div class="row">
+
+         <div class="col-sm-3">
+      <label>Status </label>
+      <div class="field">
+        <%= f.check_box :is_active, label: 'Active'%>
+      </div>
+    </div>
+   
+        <div class="col-sm-3">
+         <label></label>
+          <div class="actions">
+            <%= f.submit "New Membership",:class => class_name, data: { disable_with: data_info } %>
+            <%= link_to 'Back', society_member_ships_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+          </div>
+        </div>
+    </div>
+    <% end %>
+  </div><!-- /.box-body -->
+  
+</div><!-- /.box -->
+
+<script type="text/javascript">
+  $(function(){
+ $('.start_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-4:+15',
+    dateFormat: 'dd-mm-yy' });
+     }); 
+  
+  $(document).ready(function() {
+    $(".select2").select2();
+  });
+</script>
+  

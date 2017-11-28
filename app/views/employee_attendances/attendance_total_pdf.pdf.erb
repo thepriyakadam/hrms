@@ -1,0 +1,88 @@
+
+ <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+   <thead>
+      <tr>
+        <td colspan="12"><center> 
+          <% if current_user.employee.company_location.company.company_logo == nil %>
+          <% else %>
+            <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+          <%end%> 
+            <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+        </td>
+      </tr> 
+      <tr><td colspan="12"><center>Attendance</center></td></tr>
+          <tr>
+            <th>Sr.No.</th>
+            <th>ID</th>
+            <th>Employee Name</th>
+            <th>P</th>
+            <th>A</th>
+            <th>WO</th>
+            <th>H</th>
+            <th>OD</th>
+            <th>Payable Leave</th>
+            <th>Non Payable Leave</th>
+            <th>Payable Days</th>
+            <th>NonPayable Days</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% i = 0 %>
+          <% @employee_attendances.each do |e| %>
+            <tr>
+              <td><%= i = i + 1 %></td>
+               <td><%= e.employee.manual_employee_code %></td>
+               <td><%= full_name(e.employee) %></td
+
+
+                <% present = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ?", @date.strftime('%m/%Y'), e.employee_id).where( "present = ? OR present = ? OR present = ?","P","PO","ACF") %>
+                <% absent = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ?", @date.strftime('%m/%Y'), e.employee_id).where( "present = ?","A") %>
+                <% half_day = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ?", @date.strftime('%m/%Y'), e.employee_id).where( "present = ?","HDL") %>
+                <% half_day_count = (half_day.count)/2.to_f %>
+
+                <% week_off = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ?", @date.strftime('%m/%Y'), e.employee_id).where( "present = ? or present = ?","WO","WOP") %>
+                <% holiday = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ?", @date.strftime('%m/%Y'), e.employee_id).where( "present = ? or present = ?","H","HP") %>
+                <% full_on_duty = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ?", @date.strftime('%m/%Y'), e.employee_id).where( "present = ?","OD") %>
+                <% half_present_on_duty = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ?", @date.strftime('%m/%Y'), e.employee_id).where( "present = ? OR present = ?","P/OD","OD/P") %>
+                <% half_present_on_duty_count = (half_present_on_duty.count)/2.to_f %>
+                <% half_absent_on_duty = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ?", @date.strftime('%m/%Y'), e.employee_id).where( "present = ? OR present = ?","A/OD","OD/A") %>
+                <% half_absent_on_duty_count = (half_absent_on_duty.count)/2.to_f %>
+
+                <% full_payable_leave = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ?", @date.strftime('%m/%Y'), e.employee_id).where( "present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? ","EL","CL","SL","PL","ML","AL","L","C.Off") %>
+
+                <% half_present_payable_leave = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ?", @date.strftime('%m/%Y'), e.employee_id).where( "present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ?","EL/P","CL/P","SL/P","PL/P","ML/P","AL/P","L/P","C.Off/P","P/EL","P/CL","P/SL","P/PL","P/ML","P/AL","P/L","P/C.Off")%>
+                <% half_present_payable_leave_count = (half_present_payable_leave.count)/2.to_f %>
+
+                <% half_absent_payable_leave = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ?", @date.strftime('%m/%Y'), e.employee_id).where( "present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ? OR present = ?","EL/A","CL/A","SL/A","PL/A","ML/A","AL/A","L/A","C.Off/A","A/EL","A/CL","A/SL","A/PL","A/ML","A/AL","A/L","A/C.Off")%>
+                <% half_absent_payable_leave_count = (half_absent_payable_leave.count)/2.to_f %>
+
+        <!-- #non_payable -->
+                <% full_nonpayable_leave = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ?", @date.strftime('%m/%Y'), e.employee_id).where( "present = ? OR present = ?","LWP","ESIC") %>
+                <% half_present_nonpayable_leave = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ?", @date.strftime('%m/%Y'), e.employee_id).where( "present = ? OR present = ? OR present = ? OR present = ?","P/LWP","P/ESIC","LWP/P","ESIC/P") %>
+                <% half_present_nonpayable_leave_count = (half_present_nonpayable_leave.count)/2.to_f %>
+
+                <% half_absent_nonpayable_leave = EmployeeAttendance.where( "DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ?", @date.strftime('%m/%Y'), e.employee_id).where( "present = ? OR present = ? OR present = ? OR present = ?","A/LWP","A/ESIC","LWP/A","ESIC/A") %>
+                <% half_absent_nonpayable_leave_count = (half_absent_nonpayable_leave.count)/2.to_f %>
+
+              <td><%= total_present = present.count.to_f + half_present_payable_leave_count.to_f + half_present_nonpayable_leave_count.to_f + half_present_on_duty_count.to_f + half_day_count.to_f %></td>
+
+              <td><%= total_absent = absent.count.to_f + half_absent_payable_leave_count.to_f + half_absent_nonpayable_leave_count.to_f + half_absent_on_duty_count.to_f + half_day_count.to_f %></td>
+
+              <td><%= total_week_off = week_off.count %></td>
+
+              <td><%= total_holiday = holiday.count %></td>
+
+              <td><%= total_on_duty = full_on_duty.count.to_f + half_present_on_duty_count.to_f + half_absent_on_duty_count.to_f %></td>
+
+              <td><%= total_payable_leave =  full_payable_leave.count.to_f + half_present_payable_leave_count.to_f + half_absent_payable_leave_count.to_f %></td>
+
+              <td><%= total_nonpayable_leave =  full_nonpayable_leave.count.to_f + half_present_nonpayable_leave_count.to_f + half_absent_nonpayable_leave_count.to_f %></td>
+
+              <td><%= total_payable_day = total_present.to_f + total_week_off.to_f + total_holiday.to_f + total_on_duty.to_f + total_payable_leave.to_f %></td>
+
+              <td><%= total_nonpayable_day = total_absent.to_f + total_nonpayable_leave.to_f %></td>
+            </tr> 
+          <%end%>
+        </tbody>
+  </table>
+

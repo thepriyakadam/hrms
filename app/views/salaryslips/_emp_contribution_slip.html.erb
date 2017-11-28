@@ -1,0 +1,117 @@
+<div class="row">
+  <div class="col-sm-12">
+    <table class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Salary Component</th>
+          <th>Actual Amount</th>
+          <th>Calculated Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @addable_salary_components.each do |item| %>
+          <tr>
+            <td><%= item.salary_component.name %></td>
+            <td align="right"><%= item.actual_amount.round %></td>
+            <td align="right"><%= item.calculated_amount.round %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <td><strong>Total Gross</strong></td>
+          <td align="right"><strong><%= @salaryslip.actual_gross_salary.round %></strong></td>
+          <td align="right"><strong><%= @salaryslip.calculated_gross_salary.round %></strong></td>
+        </tr>
+        <!-- <tr>
+        <td colspan="3">
+           <strong>Employer Contribution</strong>
+        </td>
+        </tr> -->
+        <tr>
+          <th>Employer Contribution</th>
+          <!-- <th>Actual Amount</th> -->
+          <!-- <th>Calculated Amount</th> -->
+          <th></th>
+          <td align="right"><strong>Amount</strong></td>
+          <!-- <th>Action</th> -->
+        </tr>
+          <tr>
+            <td>PF</td>
+            <td align="right"><%= @emp_contribution.try(:actual_pf)  %></td>
+            <td align="right"><%= @emp_contribution.try(:pf) %></td>
+            <!-- <td></td> -->
+          </tr>
+          <tr>
+            <td>ESIC</td>
+            <td align="right"><%= @emp_contribution.try(:actual_esic)  %></td>
+            <td align="right"><%= @emp_contribution.try(:esic) %></td>
+            <!-- <td></td> -->
+          </tr>
+          <tr>
+            <td>Family Pension</td>
+            <td align="right"><%= @emp_contribution.try(:actual_fp)  %></td>
+            <td align="right"><%= @emp_contribution.try(:fp) %></td>
+            <!-- <td></td> -->
+          </tr>
+          <tr>
+            <td>Insurance</td>
+            <td align="right"><%= @emp_contribution.try(:actual_insurance)  %></td>
+            <td align="right"><%= @emp_contribution.try(:insurance) %></td>
+            <!-- <td></td> -->
+          </tr>
+          <tr>
+            <td>Bonus</td>
+            <td align="right"><%= @emp_contribution.try(:actual_bonus)  %></td>
+            <td align="right"><%= @emp_contribution.try(:bonus) %></td>
+            <!-- <td></td> -->
+          </tr>
+          <tr>
+            <td><strong>Total</strong></td>
+            <td align="right"><strong><%= a=@emp_contribution.try(:actual_pf).to_f+@emp_contribution.try(:actual_esic).to_f+@emp_contribution.try(:actual_fp).to_f+@emp_contribution.try(:actual_insurance).to_f+@emp_contribution.try(:actual_bonus).to_f %></strong></td>
+            <td align="right"><strong><%= b=@emp_contribution.try(:pf).to_f+@emp_contribution.try(:esic).to_f+@emp_contribution.try(:fp).to_f+@emp_contribution.try(:insurance).to_f+@emp_contribution.try(:bonus).to_f %></strong></td>
+            <!-- <td></td> -->
+          </tr>
+          <tr>
+            <% ag=@salaryslip.actual_gross_salary.round %>
+            <% cg=@salaryslip.calculated_gross_salary.round %>
+            <td><strong>CTC</strong></td>
+            <td align="right"><strong><%= s=a+ag %></strong></td>
+            <td align="right"><strong><%= t=b+cg %></strong></td>
+            <!-- <td></td> -->
+          </tr>
+         <tr>
+          <td><strong>Deduction Component</strong></td>
+          <td align="right"><strong></strong></td>
+          <td align="right"><strong>Amount</strong></td>
+         <!--  <td></td> -->
+        </tr>
+        <% @deducted_salary_components.each do |item| %>
+          <tr>
+            <% unless item.salary_component_id.nil? %>
+              <td><%= item.salary_component.name %></td>
+              <td align="right"><%= item.actual_amount.round %></td>
+              <td align="right"><%= item.calculated_amount.round %></td>
+             <!--  <td align="center"> link_to "", edit_salaryslip_component_path(item),remote:true,class: "fa fa-edit" %></td> -->
+            <%else%>
+              <td><%= item.other_component_name %></td>
+              <td align="right"><%= item.actual_amount.round %></td>
+              <td align="right"><%= item.calculated_amount.round %></td>
+             <!--  <td align="center">link_to "", edit_salaryslip_component_path(item),remote:true,class: "fa fa-edit" %></td> -->
+            <%end%>
+          </tr>
+        <% end %>
+        <tr>
+          <td><strong>Total Deduction</strong></td>
+          <td align="right"><strong><%= @salaryslip.actual_total_deduction.round %></strong></td>
+          <td align="right"><strong><%= @salaryslip.calculated_total_deduction.round %></strong></td>
+          <!-- <td></td> -->
+        </tr>
+        <tr>
+          <td><strong>Net Salary</strong></td>
+          <td align="right"><strong><%= @salaryslip.actual_net_salary.round %></strong></td>
+          <td align="right"><strong><%= @salaryslip.calculated_net_salary.round %></strong></td>
+          <!-- <td></td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

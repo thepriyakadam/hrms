@@ -1,0 +1,45 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  vacancy_master_id: 
+  vacancy_name: MyString
+  no_of_position: 1
+  description: MyText
+  vacancy_post_date: 2016-05-19
+  budget: MyString
+  department_id: 
+  employee_designation_id: 
+  company_location_id: 
+  degree_id: 
+  degree_1_id: 
+  degree_2_id: 
+  experience: MyString
+  keyword: MyString
+  other_organization: MyString
+  industry: MyString
+  reporting_master_id: 
+  current_status: MyString
+  employee_id: 
+  justification: MyText
+
+two:
+  vacancy_master_id: 
+  vacancy_name: MyString
+  no_of_position: 1
+  description: MyText
+  vacancy_post_date: 2016-05-19
+  budget: MyString
+  department_id: 
+  employee_designation_id: 
+  company_location_id: 
+  degree_id: 
+  degree_1_id: 
+  degree_2_id: 
+  experience: MyString
+  keyword: MyString
+  other_organization: MyString
+  industry: MyString
+  reporting_master_id: 
+  current_status: MyString
+  employee_id: 
+  justification: MyText

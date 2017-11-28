@@ -1,0 +1,34 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Code</th>
+      <th>Name</th>
+      <th>Holiday Date</th>
+      <th>Type</th>
+      <th>Select Department</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @holidays.each do |holiday| %>
+      <%= bootstrap_form_for :holiday, url: {action: 'employee_list',holiday_id: holiday.id} do |f| %>
+        <tr>
+          <td><%= holiday.code %></td>
+          <td><%= holiday.name %></td>
+          <td><%= holiday.holiday_date %></td>
+          <td>
+            <!-- < if holiday.is_send == true %>
+              <small class="label label-primary">Already Set</small>
+            < else %> -->
+              <%= link_to '', edit_holiday_path(holiday),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+              <%= link_to '',  holiday, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+              <%= link_to '', modal_holidays_path(holiday),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
+          </td>
+
+              <td><%= select_tag 'department_id[]',options_for_select(all_department_list),{class: "form-control", hide_label: true,include_blank: " Select Department"} %>
+              <%= f.submit "+", class: 'btn btn-primary btn-sm fa fa-user-plus' %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<div id="modal" class="modal fade"></div>

@@ -1,0 +1,39 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Payroll Overtime Master</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+
+  <tr>
+  <th><strong>Base Component</strong></th>
+   <td colspan="3"> <% i = 0 %>
+          <% @payroll_overtime_master.base_component.split(",").each do |e| %>
+            <% if i == 0 %>
+              <%= SalaryComponent.find(e.to_i).name %>
+            <% else %>
+              + <%= SalaryComponent.find(e.to_i).name %>
+            <% end %>
+            <% i = i + 1 %>
+          <% end %>
+      </td>
+  
+</tr>
+<tr>
+  <th><strong>Rate</strong></th>
+   <td><%= @payroll_overtime_master.rate %></td>
+
+     <th><strong>Payroll</strong></th>
+  <td><%= @payroll_overtime_master.is_payroll %></td>
+
+</tr>
+
+<tr>
+<th><strong>Company Hrs</strong></th>
+   <td><%= @payroll_overtime_master.company_hrs %></td>
+
+    <th><strong>Status</strong></th>
+   <td><%= @payroll_overtime_master.is_active ? "Active" : "Inactive" %></td>
+</tr>
+</table><br>
+ <%= link_to 'Back', new_payroll_overtime_master_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>

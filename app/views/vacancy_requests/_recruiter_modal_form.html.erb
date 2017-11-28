@@ -1,0 +1,18 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-body" style="height:1000px; max-height:100px; width:630px; max-width:630px;">
+     <%= bootstrap_form_for :recruiter,url:{action:"final_approve",vacancy_request_id: @vacancy_request.id} do |f| %>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group required">
+              <%= f.select :recruiter_id, all_recruiter, {include_blank: "Select"},{:class=>"select2",:style=>"width: 100%;",:tabindex=>"-1"} %>
+            </div>
+          </div>
+          <div class="col-sm-3" style="padding-top: 20px">
+            <%= f.submit "Approve", class: 'btn btn-sm btn-primary fa fa-modx' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

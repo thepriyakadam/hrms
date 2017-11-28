@@ -1,0 +1,2 @@
+module Reports::AdvanceSalariesHelper
+end

@@ -1,0 +1,51 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Asset Detail </center></h4>
+    </div>
+    <div class="modal-body">
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+  <tr>
+  <th><strong>Employee</strong></th>
+ <td>  <%= full_name(@assigned_asset.employee) %></td>
+</tr>
+<tr>
+ <th><strong>Asset Type</strong></th>
+  <td><%= @assigned_asset.asset_type.try(:name) %></td>
+ </tr>
+ <tr>
+  <th><strong>Asset Detail</strong></th>
+  <td><%= @assigned_asset.assets_detail %></td>
+ </tr>
+  <th><strong>Asset ID </strong></th>
+  <td><%= @assigned_asset.assets_id %></td>
+</tr>
+<tr>
+  <th><strong>Asset Value</strong></th>
+  <td><%= @assigned_asset.assets_value %></td>
+ <tr>
+  <th><strong>Asset Status</strong></th>
+  <td><%= @assigned_asset.assest_status %></td>
+</tr>
+
+<tr>
+  <th><strong>Issue Date</strong></th>
+  <td><%= @assigned_asset.issue_date%></td>
+</tr>
+
+<tr>
+<th><strong>Returned On</strong></th>
+<th><%= @assigned_asset.returned_on %></th>
+</tr>
+<tr>
+<th><strong>Remarks</strong></th>
+<th><%= @assigned_asset.remarks %></th>
+</tr>
+   </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

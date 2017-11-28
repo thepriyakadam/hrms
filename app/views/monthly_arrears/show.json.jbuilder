@@ -1,0 +1,1 @@
+json.partial! "monthly_arrears/monthly_arrear", monthly_arrear: @monthly_arrear

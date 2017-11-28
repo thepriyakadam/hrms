@@ -1,0 +1,29 @@
+<!-- Optionally, you can add icons to the links -->
+<!-- sidebar menu: : style can be found in sidebar.less -->
+<ul class="sidebar-menu">
+<ul class="sidebar-menu">
+  <li class="header">Account</li>
+  <li class="active treeview">
+
+    <a href="">
+       <a href="/home"> <Center> <% if current_user.class == Member %><%= current_user.company_location.company.try(:name) %>
+    <%else%><%= current_user.subdomain %> - <%= current_user.class %> <%end%>DASHBOARD</Center></a>
+
+    <ul class="treeview-menu">
+      <li><a href="/self_services/employee"><i class="fa fa-tags"></i>Employees</a></li>
+      <li><a href="/employee_leav_requests"><i class="fa fa-tags"></i>Leave Request</a></li>
+      <li><a href="/self_services/employee_template"><i class="fa fa-tags"></i>Salary Structure</a></li>
+      <li><a href="/self_services/employee_attendance"><i class="fa fa-tags"></i>Attendance </a></li> 
+      <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i>Salary Slip</a></li>
+      <li><a href="/self_services/advance"><i class="fa fa-tags"></i>Advance & Installment</a></li>
+      <li><a href="/goal_rating_sheets/new"><i class="fa fa-tags"></i>Self Evaluation </a></li>
+      <li><a href="/frequest_questions/list_of_faq" title="To view the list of frequently asked questions"><i class="fa fa-tags"></i> FAQs </a></li>
+       <li><a href="/contact_details"><i class="fa fa-tags"></i> Key Contact Details </a></li>
+    </ul>      
+  </li>
+</ul>  
+  <li class="treeview">
+  <a href="/advance_salaries"><i class="fa fa-tags"> </i>Salary Advance</a>
+  </li>
+    
+ </ul>

@@ -1,0 +1,110 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Skill Set</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for(@skillset,html: {id: 'skillset'},remote:true) do |f| %>
+      <%= f.hidden_field :employee_id, value: @employee.id %>
+      <div id="entry1" class="clonedInput">
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :name, class: 'input_name',placeholder: 'e.g. Communication' %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.select :skill_level, ['Basic','Beginner','Intermediate','Expert'],{include_blank: " Select Skill Level"}, class: 'input_skill_level' %>
+            </div>
+          </div>
+<!-- 
+      < unless params['controller'] == 'skillsets' and params['action'] == 'edit' %>
+        <div class="row">
+          <div class="col-sm-2">
+            <input type="button" id="btnAdd" value="+ Additional Skillset" class="btn btn-success"> 
+          </div>
+
+          <div class="col-sm-3">
+            <input type="button" id="btnDel" value="Remove Above Skillset" class="btn btn-sm btn-danger">
+          </div>
+        </div><br>
+      %end%> -->
+      
+        <div class="col-sm-6">
+          <div class="actions" style="padding: 20px">
+            <%=f.submit "Create Skill Set",class: "btn btn-primary btn-sm" %>
+            <% if params['controller'] == 'skillsets' and params['action'] == 'edit' %>
+            <%= link_to 'Back',ajax_skillset_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-default',remote:true%>
+          <%end%>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div><!-- /.box-body -->  
+</div><!-- /.box -->
+
+
+<script type="text/javascript">
+  $(function () {
+  $('#btnAdd').click(function () {
+    var num     = $('.clonedInput').length, 
+        newNum  = new Number(num + 1),      
+        newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); 
+    newElem.find('.input_name').attr('name','skillset['+ newNum +'][name]').attr('id', newNum + '_skillset_name').val('');
+    newElem.find('.input_skill_level').attr('name','skillset['+ newNum +'][skill_level]').attr('id', newNum + '_skillset_skill_level').val('');
+    
+    $('#entry' + num).after(newElem);
+    $('#ID' + newNum + '_title').focus();
+
+    $('#btnDel').attr('disabled', false);
+
+    if (newNum == 5)
+    $('#btnAdd').attr('disabled', true).prop('value', "You've reached the limit"); 
+  });
+
+  $('#btnDel').click(function () {
+      if (confirm("Are you sure you wish to remove this section? This cannot be undone."))
+          {
+              var num = $('.clonedInput').length;
+              $('#entry' + num).slideUp('slow', function () {$(this).remove();
+                  if (num -1 === 1)
+              $('#btnDel').attr('disabled', true);
+              $('#btnAdd').attr('disabled', false).prop('value', "+ Additional Skillset");});
+          }
+      return false;
+  });
+  $('#btnAdd').attr('disabled', false);
+  $('#btnDel').attr('disabled', true);
+});
+</script>
+
+<script>
+$("#skillset").validate({
+    rules: {
+      "skillset[name]":{
+        required: true,
+        maxlength: 30,
+        Name:true
+      },
+      "skillset[skill_level]":{
+        required: true
+      }
+    },
+    messages: {
+      "skillset[name]":{
+        required: "Please specify skill set",
+        maxlength: "Employee Name allows upto 30 characters"
+      },
+      "skillset[skill_level]":{
+        required: "Please specify skill level"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+
+</script>

@@ -1,0 +1,42 @@
+<%= form_for :overtime_salary, url: { action: 'destroy_overtime_salary',month: @month,year: @year} do |f| %>
+  <table id="example1" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+        <th>Employee Name</th>
+        <th>OT Hours</th>
+        <th>ESIC Amount</th>
+        <th>Total Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @overtime_salaries.each do |o| %>
+        <tr>
+          <td><%= check_box_tag "overtime_salaries_id[]", o.id %></td>
+          <td><%= full_name(o.employee) %></td>
+          <td><%= o.ot_hrs %></td>
+          <td><%= o.ot_esic_amount %></td>
+          <td><%= o.total_amount %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= f.submit "Revert Overtime Salary", class: 'btn btn-primary' %>
+<% end %>
+
+<script type="text/javascript">
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;                       
+      });
+    } 
+    else {
+      $(':checkbox').each(function() {
+        this.checked = false;                        
+      });
+    }
+  });
+
+  $("#example1").DataTable();
+</script>

@@ -1,0 +1,36 @@
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Base</th>
+      <th>Period</th>
+      <th>Employee</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @goal_bunches.each do |goal_bunch| %>
+      <tr>
+        <td><%= goal_bunch.period.try(:name) %></td>
+        <td>From: <%= goal_bunch.period.try(:from) %> To: <%= goal_bunch.period.try(:to) %> </td>
+        <td><%= goal_bunch.employee.manual_employee_code %> - <%= full_name(goal_bunch.employee)%></td>
+        <td>
+           <!-- link_to '', edit_goal_bunch_path(goal_bunch),class: 'btn btn-xs btn-success fa fa-edit',remote:true %> -->
+            <!-- link_to '', modal_period_goal_bunches_path(goal_bunch),class: 'btn btn-xs btn-success fa fa-edit',remote:true %> -->
+          <% if goal_bunch.goal_approval == true %>
+            <small class="label label-info">Goal Created</small>
+          
+          <% else %>
+            <% if goal_bunch.employee_id == current_user.employee_id %>
+              <%= link_to 'Set Goals', new_goal_rating_path(id: goal_bunch,emp_id: goal_bunch.employee_id),class: 'btn btn-xs btn-primary'%>
+            <% else %>
+            <% end %>
+          <% end %>
+          <% if goal_bunch.final_confirm == true %>
+             <%= link_to 'Show Goals', final_comment_goal_bunches_path(period_id: goal_bunch.period_id,id: goal_bunch,emp_id: goal_bunch.employee_id),class: 'btn btn-xs btn-primary'%>
+          <%end%>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div id="myModal" class="modal fade"></div>

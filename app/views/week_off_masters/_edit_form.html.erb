@@ -1,0 +1,65 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Week Off Master </center></h4>
+    </div>
+    <div class="modal-body">
+      <%= bootstrap_form_for :week_off_master,url:{action:"update_week_off",week_off_master_id: @week_off_master.id},html: {id: 'week_off_master'} do |f| %>
+        <div class="row">
+          <div class="col-sm-3">
+        		<div class="form-group required">
+           	  <%= f.select :day,['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],{label: "Day",include_blank: " Select Day"} %>
+        		</div>
+      	   </div>
+
+           <div class="col-sm-2">
+              <div class="form-group required">
+                <%= f.date_field :from, label: "From", class: 'from form-control'%>
+              </div>
+           </div>
+         	<div class="col-sm-2">
+          	<div class="form-group required">
+              <%= f.date_field :to, label: "To", class: 'to form-control'%>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+    	    <div class="col-sm-3">
+    	      <label>Status</label>
+    	      <div class="form-group required">
+    	        <%= f.check_box :is_active,label:'Active' %>
+    	      </div>
+    	    </div><br>
+    	    <div class="col-sm-3">
+    	      <div class="actions">
+    	        <%= f.submit "Update Week Off" ,class: "btn btn-primary btn-sm" %>
+    	      </div>
+    	    </div>
+    	  </div>
+  	   <% end %>
+     </div>
+<div class="modal-footer"></div>
+</div>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+     $('.from').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+5',
+    dateFormat: 'dd-mm-yy' });
+    });
+</script>
+
+<script type="text/javascript">
+  $(function(){
+     $('.to').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+5',
+    dateFormat: 'dd-mm-yy' });
+    });
+</script>

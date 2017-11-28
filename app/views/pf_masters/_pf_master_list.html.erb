@@ -1,0 +1,31 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>PF</th>
+      <th>Min limit</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+   <% @pf_masters.each do |pf_master| %>
+      <tr>
+        <td><%= pf_master.is_pf ? "Yes" : "No" %></td>
+        <td><%= pf_master.min_limit %></td>
+        
+        <td><%= pf_master.is_active ? "Active" : "Inactive" %></td>
+        <td>
+          <% if pf_master.is_confirm == true %>
+            <small class= "label label-primary">Confirmed</small>
+            <%= link_to '', edit_pf_master_path(pf_master) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+          <% else %>
+            <%= link_to '', edit_pf_master_path(pf_master) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+            <%= link_to '',  pf_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+            <%= link_to '', is_confirm_pf_masters_path(pf_master: pf_master),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+            <%= link_to '', pf_master ,class: 'btn btn-xs btn-default fa fa-eye' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

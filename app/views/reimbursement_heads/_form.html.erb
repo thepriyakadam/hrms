@@ -1,0 +1,57 @@
+<%= bootstrap_form_for(@reimbursement_head,html: {id: 'reimbursement_head'},remote: true) do |f| %>
+  <div class="row">
+    <div class="col-sm-2">
+      <div class="form-group required">
+        <%= f.text_field :code,label: "Code", placeholder: 'Code' %>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="form-group required">
+        <%= f.text_field :name,label: "Head", placeholder: 'Head' %>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="field">
+        <%= f.text_field :description,label: "Description", placeholder: 'Description' %>
+      </div>
+    </div>
+    <div class="col-sm-2">
+    <label>Status</label>
+      <div class="field">
+        <%= f.check_box :status %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-2">
+      <div class="actions">
+        <%= f.submit "Create Reimbursement Head",class: "btn btn-sm btn-primary" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+$("#reimbursement_head").validate({
+    rules: {
+      "reimbursement_head[code]":{
+        required: true
+      },
+      "reimbursement_head[name]":{
+        required: true
+      }
+    },
+    messages: {
+      "reimbursement_head[code]":{
+        required: "Please Specify code"
+      },
+      "reimbursement_head[name]":{
+        required: "Please Specify name"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

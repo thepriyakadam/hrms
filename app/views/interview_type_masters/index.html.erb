@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Interview Type Masters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @interview_type_masters.each do |interview_type_master| %>
+      <tr>
+        <td><%= interview_type_master.code %></td>
+        <td><%= interview_type_master.name %></td>
+        <td><%= interview_type_master.description %></td>
+        <td><%= link_to 'Show', interview_type_master %></td>
+        <td><%= link_to 'Edit', edit_interview_type_master_path(interview_type_master) %></td>
+        <td><%= link_to 'Destroy', interview_type_master, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Interview type master', new_interview_type_master_path %>

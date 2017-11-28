@@ -1,0 +1,30 @@
+<table id="example6" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+    <th>Code</th>  
+      <th>Name</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @universities.each do |university| %>
+      <tr>
+        <td><%= university.code %></td>
+        <td><%= university.name %></td>
+        <td><%= university.description %></td>
+        <td>
+            <%= link_to '', edit_university_path(university),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

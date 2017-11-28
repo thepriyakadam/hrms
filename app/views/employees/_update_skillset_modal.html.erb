@@ -1,0 +1,33 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Update Skillset Details </center></h4>
+    </div>
+    <div class="modal-body">
+    <%= bootstrap_form_for :skillset,url:{action:"update_skillset",id: @skillset.id},html: {id: 'skillset'}  do |f| %>
+      <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :name, class: 'input_name',placeholder: 'e.g. Communication' %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.select :skill_level, ['Basic','Beginner','Intermediate','Expert'],{include_blank: " Select Skill Level"}, class: 'input_skill_level' %>
+            </div>
+          </div>
+      
+           <div class="col-sm-6">
+            <div class="field" style="padding: 20px">
+            <%= f.submit "Update Qualification", class: 'btn btn-sm btn-success fa fa-modx' %>
+          </div>
+          </div>
+          </div> 
+          <% end %>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  
+

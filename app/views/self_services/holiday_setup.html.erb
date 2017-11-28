@@ -1,0 +1,29 @@
+<div class="box box-default">
+<div class="box-header with-border">
+<h3 class="box-title">Holiday Calender</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<table id="example1" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr.No.</th>
+      <th>Date</th>
+      <th>Day</th>  
+      <th>Holiday Name</th>
+    </tr>
+  </thead>
+  <tbody>
+     <% i = 0 %>
+    <% @employee_attendances.each do |employee_attendance| %>
+        
+        <tr>
+         <td><%= i = i+1%></td>
+          <td><%= employee_attendance.day.to_date %></td>
+          <td><%= employee_attendance.day.strftime("%A") %></td>
+          <td><%= employee_attendance.try(:holiday).try(:name) %></td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>

@@ -1,0 +1,29 @@
+<table id="example1" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+     <th>Policy Type</th>
+     <th>Email</th>
+   
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @company_policies.each do |company_policy| %>
+      <tr>
+        <td><%= company_policy.policy_type.try(:name)%></td>
+        <td><%= company_policy.email%></td>
+        <td>
+       <% if company_policy.send_email == true%>
+       <small class= "label label-primary">Email Sent</small>
+      <%= link_to '', policy_type_detail_company_policies_path(company_policy_id: company_policy.id) ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+       <%else%>
+      <%= link_to '', policy_type_detail_company_policies_path(company_policy_id: company_policy.id) ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+      
+        <%= link_to 'Send Email', email_company_policies_path(company_policy),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-success' %>
+         <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

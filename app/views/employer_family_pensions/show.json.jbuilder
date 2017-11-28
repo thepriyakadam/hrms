@@ -1,0 +1,1 @@
+json.partial! "employer_family_pensions/employer_family_pension", employer_family_pension: @employer_family_pension

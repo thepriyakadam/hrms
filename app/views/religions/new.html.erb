@@ -1,0 +1,19 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Religion</h3>
+     <div class="pull-right">
+    <%= link_to " PDF ", religion_master_religions_path(id: @religion.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
+    
+    <%= link_to " XLS ", religion_master_religions_path(id: @religion.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="religion_li">
+			<%= render 'religion_list' %>
+		</div>
+		
+	</div><!-- /.box-body -->
+</div><!-- /.box -->

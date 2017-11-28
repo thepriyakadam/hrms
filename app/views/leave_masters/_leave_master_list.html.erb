@@ -1,0 +1,27 @@
+<br>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+       <th>Sr.No.</th>
+    	<th>Leave Category</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% i = 0 %>
+    <% @leave_masters.each do |leave_master| %>
+      <tr>
+      <td><%= i = i+1 %></td>
+        <td><%= leave_master.leav_category.try(:code) %> - <%= leave_master.leav_category.try(:name) %></td>
+        <td>
+        	<%= link_to '', edit_leave_master_path(leave_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <%= link_to '',  leave_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+          <%= link_to '', modal_leave_master_leave_masters_path(leave_master),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
+           <!-- <= link_to '', leave_master,class: 'btn btn-default btn-xs fa fa-eye' %> -->
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div id="modal_leave_master" class="modal fade"></div>

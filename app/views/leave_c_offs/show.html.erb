@@ -1,0 +1,37 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Compensatory Off Leave</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+     <tr>
+      <th><strong>ID</strong></th>
+      <td><%= @leave_c_off.employee.try(:manual_employee_code)%></td>
+
+      <th><strong>Employee Name</strong></th>
+      <td><%= @leave_c_off.employee.try(:first_name) %> <%= @leave_c_off.employee.try(:middle_name) %> <%= @leave_c_off.employee.try(:last_name) %></td>
+    </tr>
+ 
+    <tr>
+      <th><strong>Compensatory Off Date</strong></th>
+      <td><%= @leave_c_off.c_off_date %></td>
+
+      <th><strong>Compensatory Off</strong></th>
+      <td><%= @leave_c_off.leave_count %></td>
+    </tr>
+ 
+ 
+    <tr>
+     <th><strong>Expiry Date</strong></th>
+      <td><%= @leave_c_off.expiry_date %></td>
+
+      <th><strong>Expiry status</strong></th>
+      <td> <%= @leave_c_off.expiry_status ? "Yes" : "No" %></td>
+    </tr>
+
+     </table> <br>
+
+    <%= link_to 'Back', new_leave_c_off_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

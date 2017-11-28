@@ -1,0 +1,216 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Goal Confirmation</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <%= bootstrap_form_for GoalBunch.new,url:{action:'appraiser_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id,period_id: @period.id} do |f| %>  
+
+  <table class="table table-bordered table-hover table-condensed">     
+    <thead>
+      <tr><th colspan="4"><center>Employee Details</center></th></tr>
+      <% @employees.each do |a| %>
+      <tr>
+        <th>ID</th>
+        <td><%= a.manual_employee_code %></td> 
+        <th>Name</th>
+        <td><%= full_name(a) %></td>
+      </tr>
+      <tr>
+        <th>Age</th>
+         <td>
+          <% if a.date_of_birth == nil %>
+            <%= %>
+          <% else %>
+            <% day = Date.today - a.try(:date_of_birth).to_date %><% d = day.to_i/365 %><%= d %>
+          <% end %>
+        </td>
+        <th>Department</th>
+        <td><%= a.department.try(:name) %></td>
+       </tr>
+       <tr> 
+        <th>Date Of Joining</th>
+        <td><%= @joining_detail.joining_date %></td>
+        <th>Grade</th>
+        <td><%= @joining_detail.employee_grade.try(:name) %></td>
+        </tr>
+        <tr>
+        <th>Current Designation</th> 
+         <td><%= @joining_detail.employee_designation.try(:name) %></td>
+        <th>Current Experience</th>
+                <td>
+          <% if @joining_detail.joining_date == nil %>
+            <%= %>
+          <% else %>
+            <% day = Date.today - @joining_detail.joining_date.to_date %><% d = day.to_f/365 %><% int = d.to_i %><% remaining = d.to_f - int.to_f %><% day1 = remaining.to_f * 365 %><% day2 = day1.to_f/30 %>
+            <% if int.to_i > 0 %>
+              <%= int.to_i %>.<%= day2.to_i %> <%= "year" %>
+            <% else %>
+              <%= day2.to_i %><%= "month" %>
+            <% end %>
+          <% end %> <!-- joining_date -->
+        </td> 
+      </tr>
+    </thead>
+    <tbody>
+      <% end %>
+    </tbody>
+  </table>
+
+ 
+  <table class="table table-bordered table-hover table-condensed">
+    <thead>
+     <tr><th colspan="4"><center>Qualification Details</center></th></tr>
+      <% @qualifications.each do |q| %>
+      <tr>
+        <th>Degree</th>
+         <td><%= q.degree.try(:name) %></td>
+        <th>Year Of Passing</th>
+         <td><%= q.year.try(:name) %> </td>
+         </tr>
+         <tr>
+        <th>Marks</th>
+         <td><%= q.marks %></td>
+        <th>Qualification</th>
+         <td><%= q.degree_type.try(:name) %></td>
+      </tr>
+    </thead>
+    <tbody>
+      <% end %>
+    </tbody>
+  </table>
+
+ 
+  <table class="table table-bordered table-hover table-condensed">
+    <thead>
+     <tr><th colspan="4"><center>Previous Experience</center></th></tr>
+      <% @experiences.each do |e| %>
+      <tr>
+        <th>Previous Company</th>
+        <td><%= e.company_name %></td>
+        <th>Designation</th>
+        <td><%= e.designation %></td>
+        </tr>
+        <tr>
+        <th>Previous Exp.(Years)</th>
+         <td><%= e.no_of_year %></td>
+        <th>CTC</th>
+        <td><%= e.ctc %></td>
+      </tr>
+    </thead>
+    <tbody>
+      <% end %>
+    </tbody>
+  </table>
+
+  
+  <table class="table table-bordered table-hover table-condensed">
+    <thead>
+     <tr><th colspan="7"><center>Promotion Details</center></th></tr>
+     <% @employee_promotions.each do |employee_promotion| %>
+      <tr>
+        <th>Department</th>
+         <td colspan="3"><%= employee_promotion.employee.try(:company_location).try(:name) %> - <%= employee_promotion.employee.try(:department).try(:name) %></td>
+         </tr>
+         <tr>
+        <th>Designation</th>
+         <td><%= employee_promotion.employee_designation.try(:name) %></td>
+        <th>Grade</th>
+        <td><%= employee_promotion.employee_grade.try(:name) %></td>
+        </tr>
+        <tr>
+        <th>Category</th>
+        <td><%= employee_promotion.employee_category.try(:name) %></td>
+        <th>CTC</th>
+         <td><%= employee_promotion.try(:ctc) %></td>
+         </tr>
+         <tr>
+        <th>From</th>
+        <td><%= employee_promotion.effective_from %></td>
+        <th>To</th>
+        <td><%= employee_promotion.effective_to %></td>
+      </tr>
+    </thead>
+    <tbody>
+      <% end %>
+    </tbody>
+  </table>
+
+  <% if @goal_bunch_id.goal_confirm == true %>
+
+      <table class="table table-bordered table-hover table-condensed">
+          <thead>
+          <tr><th colspan="4"><center>Period : <%= @period.try(:name) %> : <%= @period.try(:from) %> - <%= @period.try(:to) %></center></th></tr>
+           <tr><th colspan="4"><center>Goal List</center></th></tr>
+            <tr>
+              <th>Goal perspective</th>
+              <th>Target</th>
+              <th>Weightage</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @goal_ratings.each do |goal_rating| %>
+              <tr>
+                <td><%= goal_rating.goal_perspective.try(:name) %></td>
+                <td><%= goal_rating.target %></td>
+                <td><%= goal_rating.goal_weightage %></td>
+                <td>
+                  <% if goal_rating.goal_bunch.goal_approval == true %>
+                    <small class="label label-info">Confirmed</small>
+                  <% else %>
+                    <%= link_to '', goal_modal_goal_ratings_path(goal_rating_id: goal_rating,period_id: @period.id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+                  <% end %>
+                   <%= link_to '',show_goal_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-default fa fa-eye',remote:true %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+      
+        <table class="table table-bordered table-hover table-condensed">
+          <thead>
+          <tr><th colspan="4"><center>Attribute List</center></th></tr>
+            <tr>
+              <th>Attribute</th>
+              <th>Target</th>
+              <th>Weightage</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @goal_attribute_ratings.each do |goal_rating| %>
+              <tr>
+                <td><%= goal_rating.attribute_master.try(:name) %></td>
+                <td><%= goal_rating.target %></td>
+                <td><%= goal_rating.goal_weightage %></td> 
+                <td>
+                  <% if goal_rating.goal_bunch.goal_approval == true %>
+                    <small class="label label-info">Confirmed</small>
+                  <% else %>
+                    <%= link_to '', goal_modal_goal_ratings_path(goal_rating_id: goal_rating,period_id: @period.id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+                  <% end %>
+                  <%= link_to '',show_attribute_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-default fa fa-eye',remote:true %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+  <% else %>
+  <% end %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Confirm",class: 'btn btn-primary btn-sm', data: { confirm: 'Are you sure?' } %> |
+            <%= link_to 'Reject', revert_goal_goal_bunches_path(goal_bunch_id: @goal_bunch_id.id,period_id: @period.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger' %>
+            <%= link_to 'Back',goal_period_list_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+</div>
+</div>
+<div id="myModal" class="modal fade"></div>
+<div id="show_goal_modal_form" class="modal fade"></div>
+<div id="show_attribute_modal" class="modal fade"></div>

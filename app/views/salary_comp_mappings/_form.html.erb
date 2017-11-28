@@ -1,0 +1,25 @@
+<%= bootstrap_form_for(@salary_comp_mapping,html: {id: 'salary_comp_mapping'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :salary_component_id, all_salary_component, {hide_label: true,include_blank: " Select Salary Component"} %>
+      </div>
+    </div> 
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :erp_account_code,hide_label:true,placeholder: 'ERP Account Code' %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :map_type, ['Credit','Debit'],{hide_label:true,include_blank: " Select Type"} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>

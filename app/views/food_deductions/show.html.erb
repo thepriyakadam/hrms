@@ -1,0 +1,43 @@
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Food Deduction Dtails</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+   <tr>
+      <th><strong>Employee Id</strong></th>
+      <td> <%= @food_deduction.employee.try(:manual_employee_code) %></td>
+
+      <th> <strong>Employee Name</strong></th>
+      <td><%= @food_deduction.employee.first_name %> <%= @food_deduction.employee.middle_name %> <%= @food_deduction.employee.last_name %></td> 
+    </tr>
+
+    <tr>
+      <th><strong>Food Date</strong></th>
+      <td><%= @food_deduction.food_date %></td>
+
+      <th> <strong>No. of Coupon</strong></th>
+      <td><%= @food_deduction.no_of_coupan %></td>
+    </tr>
+
+     <tr>
+      <th><strong>Coupon Return</strong></th>
+      <td><%= @food_deduction.return_coupan %></td>
+
+      <th> <strong>Total Coupon</strong></th>
+      <td><%= @food_deduction.total_coupan %></td>
+    </tr>
+
+    <tr>
+      <th> <strong>Coupon Type</strong></th>
+      <td><%= @food_deduction.food_coupan_master.name %></td>
+
+      <th> <strong>Amount</strong></th>
+      <td><%= @food_deduction.amount %></td>
+    </tr>
+ </table>
+  <%= link_to 'Edit',  edit_food_deduction_path(@food_deduction),class: 'btn btn-sm btn-success fa fa-edit' %> |
+   <%= link_to 'Back', food_deductions_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

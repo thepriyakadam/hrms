@@ -1,0 +1,7 @@
+<% if @flag %>
+  $("#myModal").html("<font color='green'> Reporting Manager Updated Successfully.</font>");
+  $("#list").html("<%= j render 'employee_list_for_update_manager' %>")
+<% else %>
+  $("#myModal").html("<font color='red'> Reporting Manager not updated. </font> ");
+<% end %>
+$("#example1").DataTable();

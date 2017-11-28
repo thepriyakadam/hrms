@@ -1,0 +1,47 @@
+<%= form_for :pdf_salaries, url: { action: 'print_salary_slip_cost_unitwise',format: 'pdf',month: @month,year: @year,cost_centre: @cost_centre},:html => {:target => '_blank'} do |f| %>
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+      <th>ID</th>
+      <th>Employee Name</th>
+      <th>Cost Center</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @salaryslips.each do |salaryslip| %>
+      <tr>
+        <td><%= check_box_tag "salaryslip_ids[]", salaryslip.employee_id %></td>
+        <td><%= salaryslip.employee.manual_employee_code %></td>
+        <td><%= full_name(salaryslip.employee) %> </td>
+        <td><%= salaryslip.employee.joining_detail.cost_center.try(:name) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+ <div class="col-sm-3">
+    <%= f.submit "Print Salary Slip",class: "btn btn-xl btn-primary fa fa-print" %>
+ </div>
+<% end %>
+
+<script type="text/javascript">
+$('#selectAll').click(function() {
+  if (this.checked) {
+    $(':checkbox').each(function() {
+      this.checked = true;                       
+    });
+  } 
+  else {
+    $(':checkbox').each(function() {
+      this.checked = false;                        
+    });
+  } 
+});
+</script>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+

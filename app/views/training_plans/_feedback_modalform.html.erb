@@ -1,0 +1,36 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-body" style="height:1000px; max-height:120px; width:630px; max-width:630px;">
+     <%= bootstrap_form_for :trainee,url:{action:"update_feedback",id: @trainee.id},html: {id: 'trainee'} do |f| %>
+        <div class="row">
+          <div class="col-sm-6">
+            <%= f.text_area :feedback,label: 'Feedback',placeholder: "Please enter your training feedback...." %>
+          </div>
+          <div class="col-sm-3" style="padding-top:40px;">
+            <%= f.submit "Create Feedback", class: 'btn btn-primary fa fa-modx' %>
+          </div>
+        </div>
+      <% end %>
+      <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+    </div>
+  </div>
+</div>
+<script>
+$("#trainee").validate({
+    rules: {
+      "trainee[feedback]":{
+        required: true,
+      }
+    },
+    messages: {
+      "trainee[feedback]":{
+        required: "Please Specify Feedback",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 
+  yearly: 9.99
+  monthly: 9.99
+  remaining_amount: 9.99
+  is_paid: false
+
+two:
+  employee_id: 
+  yearly: 9.99
+  monthly: 9.99
+  remaining_amount: 9.99
+  is_paid: false

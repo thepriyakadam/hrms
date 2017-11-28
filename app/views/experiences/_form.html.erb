@@ -1,0 +1,141 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Experience</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <%= bootstrap_form_for(@experience,html: {id: 'experience'},remote:true) do |f| %>
+    <%= f.hidden_field :employee_id, value: @employee.id %>
+    <div id="entry1" class="clonedInput">
+      <div class="row">
+        
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :company_name,label:'Company Name', class: 'input_company_name',placeholder: 'e.g. IBSl' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :designation, class: 'input_designation' ,placeholder: 'e.g. Sr. Engineer'%>
+          </div>
+        </div>
+
+         <div class="col-sm-3">
+      <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :start_date,label: "From Date", class: 'effective_from'%>
+        </div>
+      </div>
+    </div>
+   <div class="col-sm-3">
+      <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :end_date,label: "To Date", class: 'effective_to'%>
+        </div>
+      </div>
+    </div>
+      </div>
+    </div>  
+    <!--< unless params['controller'] == 'experiences' and params['action'] == 'edit' %>
+      <div class="row">
+        <div class="col-sm-2">
+          <input type="button" id="btnAdd" value="+ Additional Experiences" class="btn btn-sm btn-success"> 
+        </div>
+
+        <div class="col-sm-3">
+          <input type="button" id="btnDel" value="Remove Above Experiences" class="btn btn-sm btn-danger">
+        </div>
+      </div><br>
+    <end%>  -->
+    <div class="row">
+            <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :no_of_year,label: "No. Of Years", class: 'input_no_of_year',placeholder: 'e.g. 8 ' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :ctc,label: "CTC", class: 'input_ctc' ,placeholder: 'e.g. 8.5'%>
+          </div>
+        </div>
+
+       <div class="col-sm-6">
+          <div class="field">
+            <%= f.text_field :description,label: "Description"%>
+          </div>
+        </div>
+     </div>   
+
+ <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+          <% if params['controller'] == 'experiences' and params['action'] == 'edit' %>
+            <%= link_to 'Back',ajax_experience_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-default',remote:true%>
+          <%end%>
+        </div>
+      </div>
+    </div>
+
+  <% end %>
+  </div><!-- /.box-body -->
+  </div><!-- /.box -->
+
+  <script>     
+    $(function(){
+    $('.effective_from').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-56:+10',
+    dateFormat: 'dd-mm-yy' });
+  });
+</script>
+<script>
+   $(function(){
+    $('.effective_to').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-56:+10',
+    dateFormat: 'dd-mm-yy' });
+  });
+</script>
+
+<script>
+$("#experience").validate({
+    rules: {
+      "experience[company_name]":{
+        required: true,
+      },
+      "experience[designation]":{
+        required: true,
+      },
+      "experience[no_of_year]":{
+        required: true,
+        numbersOnly: true,
+      }
+       },
+    messages: {
+      "experience[company_name]":{
+        required: "Please specify company name",
+      },
+       "experience[designation]":{
+        required: "Please specify designation ",
+      },
+      "experience[no_of_year]":{
+        required: "Please specify experience year",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

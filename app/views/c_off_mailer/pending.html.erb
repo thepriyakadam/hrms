@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+ <center><h4> Compensatory off request pending for approval </h4></center>
+
+ <p>There is a compensatory off request pending for your approval in the People First HRMS system.</p>
+
+ <p><b> Details of the request :- </b></p><br><br>
+
+  <p> Employee ID:- <%= @c_off_request.employee.try(:manual_employee_code) %><br><br>
+
+  Employee Name : <%= @c_off_request.employee.try(:first_name).to_s+' '+@c_off_request.employee.try(:middle_name).to_s+' '+@c_off_request.employee.try(:last_name).to_s %><br><br>
+
+  Day on which employee worked:- <%=@c_off_request.c_off_date.to_date%><br><br>
+
+  Reason:- <%= @c_off_request.comment %><br><br>
+
+    </tbody>
+  </table>
+  </body>
+</html>

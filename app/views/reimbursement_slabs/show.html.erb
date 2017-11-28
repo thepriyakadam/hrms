@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Reimbursement head:</strong>
+  <%= @reimbursement_slab.reimbursement_head %>
+</p>
+
+<p>
+  <strong>Employee grade:</strong>
+  <%= @reimbursement_slab.employee_grade %>
+</p>
+
+<p>
+  <strong>Employee designation:</strong>
+  <%= @reimbursement_slab.employee_designation %>
+</p>
+
+<p>
+  <strong>From:</strong>
+  <%= @reimbursement_slab.from %>
+</p>
+
+<p>
+  <strong>To:</strong>
+  <%= @reimbursement_slab.to %>
+</p>
+
+<p>
+  <strong>Monthly amount:</strong>
+  <%= @reimbursement_slab.monthly_amount %>
+</p>
+
+<p>
+  <strong>Yearly amount:</strong>
+  <%= @reimbursement_slab.yearly_amount %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @reimbursement_slab.status %>
+</p>
+
+<%= link_to 'Edit', edit_reimbursement_slab_path(@reimbursement_slab) %> |
+<%= link_to 'Back', reimbursement_slabs_path %>

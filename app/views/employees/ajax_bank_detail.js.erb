@@ -1,0 +1,6 @@
+<% if EmployeeBankDetail.exists?(employee_id: params[:id]) %>
+<%@employee_bank_detail = EmployeeBankDetail.find_by_employee_id(params[:id])%>
+$('#info').html("<%= j render 'employee_bank_details/show_detail' %>")
+<%else%>
+$('#info').html("<%= j render 'employee_bank_details/form' %>")
+<%end%>

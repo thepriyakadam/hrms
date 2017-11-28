@@ -1,0 +1,24 @@
+ <!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+   <h4>Employee Skillset Information</h4>
+    <p>
+      <table id="example2" class="table table-bordered table-hover table-condensed">
+	   <tr>
+	    <td><strong>Employee</strong></td>
+	   	<td><%= @skillset.try(:employee).try(:prefix) %> <%= @skillset.try(:employee).try(:first_name) %> <%= @skillset.try(:employee).try(:last_name) %></td>
+
+	    <td> <strong>Name</strong></td>
+	   	<td> <%= @skillset.name %></td>
+	   	</tr>
+	   	<tr>
+	   	<td><strong>Skill level</strong></td>
+	   	<td colspan="3"> <%= @skillset.skill_level %></td>
+	   </tr>
+	  </table>
+    </p>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<br>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr.No.</th>
+      <th>Name</th>
+      <th>Document</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @induction_masters.each do |induction_master| %>
+      <tr>
+        <td><%= induction_master.code %></td>
+        <td><%= induction_master.description %></td>
+        <td>
+        <% if induction_master.avatar_file_name == nil %>
+              <small class="label label-default">Not Available</small>
+              <% else %>
+              <%= link_to '',download_induction_document_path(id: induction_master.id),class: 'btn btn-xs btn-primary fa fa-download' %>
+              <% end %>
+        </td>
+        <td>
+          <% @induction_activity = InductionActivity.where(induction_master_id: induction_master).take %>
+          <% if @induction_activity.try(:is_confirm) == true %>
+          <%= link_to ' View Induction Activity',new_induction_activity_path(induction_master_id: induction_master),class: 'btn btn-xs btn-info' %>
+          <% else %>
+          <%= link_to '',new_induction_activity_path(induction_master_id: induction_master),class: 'btn btn-xs btn-info fa fa-plus-square' %>
+           <%= link_to ' Edit Template Detail', edit_induction_master_path(induction_master),class: 'btn btn-sm btn-success btn-xs',remote:true %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+

@@ -1,0 +1,91 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Due Clearance List</h3>
+<div class="box-body">
+<%= bootstrap_form_for :due_action,url:{action:'confirm_employee_due_action'} do |f| %>  
+<table id="example2" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+          <th>Item Name</th>
+          <th>Remark</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Action</th>
+       </tr>
+      </thead>
+
+      <tbody>
+        <% @due_actions.each do |due_action| %>
+          <tr>
+            <td>
+            <% if due_action.is_confirm == true %>
+            <% else %>
+            <%= check_box_tag "due_action_ids[]", due_action.id %>
+            <% end %>
+            </td>
+            <td><%= due_action.name %></td>
+            <td><%= due_action.remark %></td>
+            <td><%= due_action.amount %></td>
+            <td>
+              <% if due_action.status == false %>
+              <small class="label label-default">Pending</small>
+              <% else %>
+              <small class="label label-success">Clear</small>
+              <% end %>
+            </td>
+            <td>
+                <% if due_action.is_confirm == true %>
+                <small class="label label-info">Confirmed</small>
+                <% else %>
+                <%= link_to '', edit_due_action_path(due_action),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+                <%= link_to '',  due_action, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+                <% end %>
+            </td>
+          </tr>
+        <% end %>
+      <tr>
+       <th></th>
+        <th>Pending Total</th>
+        <% a=DueAction.where(due_employee_detail_id: @due_employee_detail.id,status: false) %>
+        <th><%= pending_total=a.sum(:amount) %></th>
+     
+        <th>Clear Total</th>
+        <% b=DueAction.where(due_employee_detail_id: @due_employee_detail.id,status: true) %>
+        <th><%= clear_total=b.sum(:amount) %></th>
+
+        <th><%= total=pending_total + clear_total %></th>
+
+      </tr>
+      </tbody>
+</table>
+</div>
+<div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %><br><br>
+      </div>
+    </div>
+  </div>
+  <% end %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>
+
+

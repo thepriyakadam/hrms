@@ -1,0 +1,14 @@
+<label class="control-label required" for="company_state" aria-required="true">State</label>
+<% if @form == 'company' %>
+	<%= select :company,:state_id,(@states.present? ? (@states.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select State",hide_label:true},{onchange:"var a={id:$(this).val(), form : 'company'}; $.get('/companies/collect_cities',a,function(response){});",class: "form-control"}%>
+<% elsif @form == 'company_location' %>
+	<%= select :company_location,:state_id,(@states.present? ? (@states.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select State",hide_label:true},{onchange:"var a={id:$(this).val(), form : 'company_location'}; $.get('/companies/collect_cities',a,function(response){});",class: "form-control"}%>
+<% elsif @form == 'employee' %>
+	<%= select :employee,:state_id,(@states.present? ? (@states.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select State",hide_label:true},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/companies/collect_cities',a,function(response){});",class: "form-control"}%>
+<%elsif @form == 'family' %>
+	<%= select :family,:state_id,(@states.present? ? (@states.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select State",hide_label:true},{onchange:"var a={id:$(this).val(), form : 'family'}; $.get('/companies/collect_cities',a,function(response){});",class: "form-control"}%>
+<%elsif @form == 'capture_resume' %>
+	<%= select :capture_resume,:state_id,(@states.present? ? (@states.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select State",hide_label:true},{onchange:"var a={id:$(this).val(), form : 'capture_resume'}; $.get('/companies/collect_cities',a,function(response){});",class: "form-control"}%>
+<%else %>
+	<%= select :company,:state_id,(@states.present? ? (@states.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select State",hide_label:true},{onchange:"var a={id:$(this).val(), form : 'company'}; $.get('/companies/collect_cities',a,function(response){});",class: "form-control"}%>
+<%end%>

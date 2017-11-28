@@ -1,0 +1,204 @@
+
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Working Day</h3>
+  </div><!-- /.box-header -->
+  
+  <div class="box-body">
+    <%= bootstrap_form_for(@workingday,html: {id: 'workingday'}) do |f| %>
+  
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.select :employee_id, employee_list_by_company_location, {label: 'Employee ',include_blank: " Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
+           </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :month_name, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"} %>
+           </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.select :year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"} %>
+           </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :day_in_month %>
+           </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :present_day %>
+           </div>
+        </div>
+        </div>
+        <div class="row">
+      
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :lwp_leave %>
+           </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :cl_leave %>
+           </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="field">
+           <%= f.text_field :el_leave %>
+           </div>
+        </div>
+        
+        <div class="col-sm-2">
+          <div class="field">
+           <%= f.text_field :esic_leave %>
+           </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="field">
+           <%= f.text_field :coff_leave %>
+           </div>
+        </div>
+        </div> 
+        <div class="row">
+      
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :total_leave %>
+           </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :holiday_in_month %>
+           </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="field">
+           <%= f.text_field :week_off_day %>
+           </div>
+        </div>
+        
+        <div class="col-sm-2">
+          <div class="field">
+           <%= f.text_field :absent_day %>
+           </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="field">
+           <%= f.text_field :payable_day %>
+           </div>
+        </div>
+        </div> 
+        <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Create Working Day",:class => class_name, data: { disable_with: data_info } %> |
+            <%= link_to 'Back', workingdays_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+          </div>
+        </div>
+    </div>
+    <% end %>
+  </div><!-- /.box-body -->
+  
+</div><!-- /.box -->
+
+<script type="text/javascript">
+  $(function(){
+    $('#workingday_absent_day').on('input', function() {
+      var workingday_present_day = parseFloat($('#workingday_present_day').val());
+      var workingday_total_leave = parseFloat($('#workingday_total_leave').val());
+      var workingday_holiday_in_month = parseFloat($('#workingday_holiday_in_month').val());
+      var workingday_week_off_day = parseFloat($('#workingday_week_off_day').val());
+      var workingday_day_in_month = parseFloat($('#workingday_day_in_month').val());
+      var workingday_absent_day = parseFloat($('#workingday_absent_day').val());
+      var ans="";
+      if (isNaN(workingday_day_in_month) || isNaN(workingday_absent_day)) {
+        ans = ""
+      }
+      else{
+        present_total = workingday_present_day + workingday_total_leave + workingday_holiday_in_month + workingday_week_off_day
+        ans = (present_total).toFixed(2);
+      }
+      $('#workingday_payable_day').val(ans);
+    });
+
+    $('#workingday_present_day').on('input', function() {
+      var workingday_present_day = parseFloat($('#workingday_present_day').val());
+      var workingday_total_leave = parseFloat($('#workingday_total_leave').val());
+      var workingday_holiday_in_month = parseFloat($('#workingday_holiday_in_month').val());
+      var workingday_week_off_day = parseFloat($('#workingday_week_off_day').val());
+      var workingday_absent_day = parseFloat($('#workingday_absent_day').val());
+      var ans="";
+      if (isNaN(workingday_present_day) || isNaN(workingday_total_leave) || isNaN(workingday_holiday_in_month) || isNaN(workingday_week_off_day) || isNaN(workingday_absent_day)) {
+        ans = ""
+      }
+      else{
+        present_total = workingday_present_day + workingday_total_leave + workingday_holiday_in_month + workingday_week_off_day
+        ans = (present_total).toFixed(2);
+      }
+      $('#workingday_payable_day').val(ans);
+    });
+
+    $('#workingday_total_leave').on('input', function() {
+      var workingday_present_day = parseFloat($('#workingday_present_day').val());
+      var workingday_total_leave = parseFloat($('#workingday_total_leave').val());
+      var workingday_holiday_in_month = parseFloat($('#workingday_holiday_in_month').val());
+      var workingday_week_off_day = parseFloat($('#workingday_week_off_day').val());
+      var workingday_absent_day = parseFloat($('#workingday_absent_day').val());
+      var ans="";
+      if (isNaN(workingday_present_day) || isNaN(workingday_total_leave) || isNaN(workingday_holiday_in_month) || isNaN(workingday_week_off_day) || isNaN(workingday_absent_day)) {
+        ans = ""
+      }
+      else{
+        present_total = workingday_present_day + workingday_total_leave + workingday_holiday_in_month + workingday_week_off_day
+        ans = (present_total).toFixed(2);
+      }
+      $('#workingday_payable_day').val(ans);
+    });
+
+    $('#workingday_holiday_in_month').on('input', function() {
+      var workingday_present_day = parseFloat($('#workingday_present_day').val());
+      var workingday_total_leave = parseFloat($('#workingday_total_leave').val());
+      var workingday_holiday_in_month = parseFloat($('#workingday_holiday_in_month').val());
+      var workingday_week_off_day = parseFloat($('#workingday_week_off_day').val());
+      var workingday_absent_day = parseFloat($('#workingday_absent_day').val());
+      var ans="";
+      if (isNaN(workingday_present_day) || isNaN(workingday_total_leave) || isNaN(workingday_holiday_in_month) || isNaN(workingday_week_off_day) || isNaN(workingday_absent_day)) {
+        ans = ""
+      }
+      else{
+        present_total = workingday_present_day + workingday_total_leave + workingday_holiday_in_month + workingday_week_off_day
+        ans = (present_total).toFixed(2);
+      }
+      $('#workingday_payable_day').val(ans);
+    });
+
+    $('#workingday_week_off_day').on('input', function() {
+      var workingday_present_day = parseFloat($('#workingday_present_day').val());
+      var workingday_total_leave = parseFloat($('#workingday_total_leave').val());
+      var workingday_holiday_in_month = parseFloat($('#workingday_holiday_in_month').val());
+      var workingday_week_off_day = parseFloat($('#workingday_week_off_day').val());
+      var workingday_absent_day = parseFloat($('#workingday_absent_day').val());
+      var ans="";
+      if (isNaN(workingday_present_day) || isNaN(workingday_total_leave) || isNaN(workingday_holiday_in_month) || isNaN(workingday_week_off_day) || isNaN(workingday_absent_day)) {
+        ans = ""
+      }
+      else{
+        present_total = workingday_present_day + workingday_total_leave + workingday_holiday_in_month + workingday_week_off_day
+        ans = (present_total).toFixed(2);
+      }
+      $('#workingday_payable_day').val(ans);
+    });
+  });
+
+  $(document).ready(function() {
+  $(".select2").select2();
+});
+</script>

@@ -1,0 +1,27 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Code</th>
+      <th>Name</th>
+      <th>Interest</th>
+      <th>Rate</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @advance_types.each do |advance_type| %>
+      <tr>
+        <td><%= advance_type.code %></td>
+        <td><%= advance_type.name %></td>
+        <td><%= advance_type.interest %></td>
+        <td><%= advance_type.rate %></td>
+        <td><%= advance_type.description %></td>
+        <td>
+            <%= link_to '', edit_advance_type_path(advance_type),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  advance_type, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

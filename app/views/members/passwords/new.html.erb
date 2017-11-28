@@ -1,0 +1,31 @@
+<div class="login-box">
+  <div class="login-logo">
+    <a><b>Forget your password</b></a>
+  </div><!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">Sign up to start your session</p>
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+  		<%= devise_error_messages! %>
+      <div class="form-group has-feedback">
+        <%= f.email_field :email, autofocus: true, class: "form-control", placeholder: "Email" %>
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-10">
+          <%= f.submit "Send me reset password instructions",class: "btn btn-primary btn-block btn-flat" %>
+        </div><!-- /.col -->
+      </div>
+        
+
+      <!-- <div class="social-auth-links text-center">
+        <p>- OR -</p>
+        <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using Facebook</a>
+        <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using Google+</a>
+      </div> --><!-- /.social-auth-links -->
+
+      <%= render "members/shared/links" %>
+    <% end %>  
+  </div><!-- /.login-box-body -->
+
+</div><!-- /.login-box -->

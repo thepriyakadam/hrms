@@ -1,0 +1,18 @@
+
+<div class="box box-default">
+<div class="box-header with-border">
+<h3 class="box-title">Import Working Day File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_day_workingdays_path, multipart: true do %>
+<label> File (.xls,.csv,.xlsx only) </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+<!-- <p>
+Download:
+<= link_to "CSV", import_employee_attendance_employee_attendances_path(format: "csv") %> |
+<= link_to "Text", import_employee_attendance_to_txt_employee_attendances_path(format: "csv") %> |
+<= link_to "Excel", import_employee_attendance_employee_attendances_path(format: "xls") %>
+</p> -->

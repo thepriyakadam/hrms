@@ -1,0 +1,42 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Travel Expense</h3>
+    <div class="pull-right">
+      <%= link_to "Create Travel Expence", new_travel_expence_path, class: 'btn btn-sm btn-primary' %> 
+    </div>
+    </div>
+    <div class="box-body">
+    <table id="example" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Travel Request</th>
+          <th>Total Advance Amount</th>
+          <th>Total Expense Amount</th>
+          <th>Remaining Amount</th>
+          <th>Employee Amount</th>
+          <th>Company Amount</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @travel_expences.each do |travel_expence| %>
+          <tr>
+            <td><%= travel_expence.travel_request.try(:name) %></td>
+            <td><%= travel_expence.total_advance_amount %></td>
+            <td><%= travel_expence.total_expence_amount %></td>
+            <td><%= travel_expence.remaining_amount %></td>
+            <td><%= travel_expence.employee_amount %></td>
+            <td><%= travel_expence.company_amount %></td>
+            <td>
+                <%= link_to '', travel_expence,class: 'btn btn-default btn-sm fa fa-eye' %>
+                <%= link_to '', edit_travel_expence_path(travel_expence),class: 'btn btn-sm btn-success fa fa-edit' %>
+                <%= link_to '', travel_expence, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-close' %>
+            </td>
+            
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="modal-body">
+
+      <%= bootstrap_form_for :investment_declaration,url:{action: "reject_declaration",investment_declaration_id: @investment_declaration.id} do |f| %>
+        <div class="row">
+          <div class="col-sm-6">
+            <label>Comment</label>
+            <%= f.text_field :comment,hide_label:true, placeholder: "comment" %>    
+          </div>
+
+          <div class="col-sm-2" style="padding-top:20px;">
+            <%= f.submit "create", class: 'btn btn-success btn-sm' %>
+          </div>
+        </div>
+      <% end %>
+     
+      </div>
+    <div class="modal-footer"></div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

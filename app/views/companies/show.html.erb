@@ -1,0 +1,105 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Company Details</h3>
+    <div class="box-tools pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+     <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr>
+      <th>Code</th>
+      <td><%=@company.manual_company_code%></td>
+
+      <th>Name</th>
+      <td><%= @company.name %></td>
+    </tr>
+    <tr>
+        <th>Company Full Name</th>
+        <td><%= @company.description %></td>
+
+        <th>Company Type</th>
+        <td><%= @company.company_type.try(:name) %></td>
+    </tr>
+
+      <tr>
+        <th>Registration No</th>
+        <td><%= @company.registration_no %></td>
+
+        <th>PAN Card No</th>
+        <td><%= @company.pan_card_no %></td>
+      </tr>
+
+      <tr>
+        <th>Tax No</th>
+        <td><%= @company.tax_no %></td>
+
+        <th>Professional Tax No</th>
+        <td><%= @company.professional_tax_no %></td>
+      </tr>
+
+      <tr>
+        <th>Address</th>
+        <td><%= @company.address %></td>
+        <th></th>
+        <td></td>
+
+      </tr>
+      <tr>
+
+        <th>City</th>
+        <td><%= @company.city %></td>
+
+
+        <th>State</th>
+        <td><%= @company.state.try(:name) %></td>
+
+      </tr>
+
+      <tr>
+
+        <th>District</th>
+        <td><%= @company.district.try(:name) %></td>
+
+         <th>Country</th>
+        <td><%= @company.country.try(:name) %></td>
+
+      </tr>
+
+      <tr>
+
+        <th>Pin Code</th>
+        <td><%= @company.pin_code %></td>
+
+        <th>Starting Date</th>
+        <td><%= @company.starting_date %></td>
+      </tr>
+
+      <tr>
+        <th>Contact No</th>
+        <td><%= @company.contact_no %></td>
+
+        <th>Email</th>
+        <td><%= @company.email %></td>
+      </tr>
+      <tr>
+        <th>Website</th>
+        <td><%= @company.web_site %></td>
+        <th>Company Logo</th>
+        <td>
+          <% if @company.company_logo_file_name == nil %>
+              <small class="label label-default">Not Available</small>
+              <% else %>
+               <center><%= link_to '',download_company_logo_path(@company),class: 'btn btn-xs fa fa-picture-o' %></center> 
+              <%= image_tag @company.company_logo.url, :size => "10x5" %><br><br>
+              <%end %>
+        </td>
+      </tr>
+    </table> 
+    
+<br>
+
+    <%= link_to 'Edit', edit_company_path(@company),class: 'btn btn-success btn-sm fa fa-edit' %> 
+    <%= link_to 'Back', companies_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

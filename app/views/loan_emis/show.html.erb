@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Loan approval:</strong>
+  <%= @loan_emi.loan_approval %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @loan_emi.date %>
+</p>
+
+<p>
+  <strong>Emi amount:</strong>
+  <%= @loan_emi.emi_amount %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @loan_emi.status %>
+</p>
+
+<%= link_to 'Edit', edit_loan_emi_path(@loan_emi) %> |
+<%= link_to 'Back', loan_emis_path %>

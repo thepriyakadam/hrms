@@ -1,0 +1,27 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Training Plan</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+     <div class="row">
+      <div class="col-sm-3">
+        <div class="field">
+          <%= select :training_topic_master_id, :hhh, all_training_course,{include_blank: 'Select Training Topic'},{onchange:"var a={training_topic_master_id:$(this).val()}; $.get('/training_plans/show_traineerequest_list',a,function(response){});",class: 'form-control'}%>
+         </div>
+      </div>
+      </div><br>
+
+       <div id="training_plan_frm">
+
+      </div>
+
+      <div id="trainee_request_li">
+
+      </div>
+
+</div>
+</div>
+</div>
+
+
+

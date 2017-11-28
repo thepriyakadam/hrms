@@ -1,0 +1,56 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Assets</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
+
+    <tr>
+  <th><strong>Employee</strong></th>
+ <td>  <%= @assigned_asset.employee %></td>
+
+ <th><strong>Asset Type</strong></th>
+  <td><%= @assigned_asset.asset_type %></td>
+ </tr>
+ <tr>
+  <th><strong>Asset Details</strong></th>
+  <td><%= @assigned_asset.assets_detail %></td>
+
+  <th><strong>Asset </strong></th>
+  <td><%= @assigned_asset.assets_id %></td>
+</tr>
+<tr>
+  <th><strong>Asset Value</strong></th>
+  <td><%= @ assigned_asset.assets_value %></td>
+
+  <th><strong>Asset Status</strong></th>
+  <td><%= @assigned_asset.assest_status %></td>
+</tr>
+
+<tr>
+  <th><strong>Issue Date</strong></th>
+  <td><%= @assigned_asset.issue_date%></td>
+
+  <th><strong>Valid Till</strong></th>
+  <td><%= @assigned_asset.valid_till %></td>
+</tr>
+
+<tr>
+<th><strong>Returned On</strong></th>
+<th><%= @assigned_asset.returned_on %></th>
+
+<tr>
+<th><strong>Remarks</strong></th>
+<th><%= @assigned_asset.returned_on %></th>
+</tr>
+
+</table>
+
+    <%= link_to 'Edit', edit_assigned_asset_path(@assigned_asset),class: 'btn btn-success btn-sm fa fa-edit' %> |
+    <%= link_to 'Back', assigned_assets_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

@@ -1,0 +1,40 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Attendance</h3>    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+      <th>Employee</th>
+      <th>Date</th>
+      <th>Check In</th>
+      <th>Check Out</th>
+      <th>Company Hours</th>
+      <th>Over time Hours</th>
+      <th>Total Hours</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @attendances.each do |attendance| %>
+      <tr>
+        <td><%= attendance.employee.try(:first_name) %></td>
+        <td><%= attendance.attendance_date %></td>
+        <td><%= attendance.check_in %></td>
+        <td><%= attendance.check_out %></td>
+        <td><%= attendance.company_hrs %></td>
+        <td><%= attendance.over_time_hrs %></td>
+        <td><%= attendance.total_hrs %></td>
+         <td>
+            <%= link_to '', attendance,class: 'btn btn-sm btn-default fa fa-eye' %>
+            <%= link_to '', edit_attendance_path(attendance) ,class: 'btn btn-sm btn-success fa fa-edit' %>
+            <%= link_to '', attendance, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-close' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>

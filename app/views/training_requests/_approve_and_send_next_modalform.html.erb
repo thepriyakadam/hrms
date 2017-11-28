@@ -1,0 +1,39 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-body" style="height:1000px; max-height:100px; width:630px; max-width:630px;">
+     <%= bootstrap_form_for :training_request,url:{action:'approve_and_send_next',training_request_id: @training_request.id},html: {id: 'training_request'} do |f| %>
+        <div class="row">
+          <div class="col-sm-6">
+            <%= f.select :reporting_master_id, all_training_reporting_master_list, {hide_label: true,include_blank: " Select Reporting Manager"}, class: 'input_degree_stream_id' %>
+          </div>
+          <div class="col-sm-2">
+            <%= f.submit "Approve & Send next", class: 'btn btn-sm btn-primary fa fa-modx' %>
+          </div>
+        </div>
+      <% end %>
+      <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+    </div>
+  </div>
+</div>
+
+<script>
+$("#training_request").validate({
+    rules: {
+      "training_request[reporting_master_id]":{
+        required: true,
+      }
+    },
+    messages: {
+      "training_request[reporting_master_id]":{
+        required: "Please specify Reporting Manager Name",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+

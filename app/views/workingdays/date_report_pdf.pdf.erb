@@ -1,0 +1,52 @@
+<style type="text/css">
+    th { text-align: left; }
+    tr { page-break-inside: avoid; }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;}
+</style>
+
+<table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+  <tr><td colspan="8">
+        <% if @workingdays.try(:first).try(:employee).try(:company_location).try(:company).try(:company_logo) == nil %>
+        <% else %>
+            <center> <%= image_tag @workingdays.try(:first).try(:employee).try(:company_location).try(:company).try(:company_logo).url, :size => "90x50" %></center>
+        <%end%>
+
+        <center><strong><%= @workingdays.try(:first).try(:employee).try(:company_location).try(:company).try(:description) %></strong> <br>
+          <%= @workingdays.try(:first).try(:employee).try(:company_location).try(:company).try(:address) %><br>
+        <b> <%= @from_date.to_date %> To  <%= @to_date.to_date %></b>
+        </center>
+        </td>
+  </tr>
+  <tr>
+    <td colspan="2"> <b>ID</b> : <%= @workingdays.try(:first).try(:employee).try(:manual_employee_code) %></td>
+    <td colspan="4"> <b>Name</b> : <%= full_name(@workingdays.try(:first).try(:employee)) %>
+    </td>
+    <td colspan="2"> <b>Department</b> : <%= @workingdays.try(:first).try(:employee).try(:department).try(:name) %></td>
+  </tr>
+  <tr>
+  <th>Month Name</th>
+  <th>Month Year</th>
+  <th>Present Day</th>
+  <th>Absent Day</th>
+  <th>Payable Leave</th>
+  <th>Payable Day</th>
+  <th>Non Payable Day</th>
+  <th>Day In Month</th>
+  <tbody>
+  
+ <% @workingdays.each do |workingday| %>
+   <tr>
+   <td><%= workingday.month_name %></td>
+   <td><%= workingday.year %></td>
+   <td><%= workingday.present_day %></td>
+   <td><%= workingday.absent_day %></td>
+   <td><%= workingday.pay_leave %></td>
+   <td><%= workingday.payable_day %></td>
+   <td><%= workingday.nonpayable_day %></td>
+   <td><%= workingday.day_in_month %></td>
+  </tr>
+   <% end %>
+</tbody>
+</table>

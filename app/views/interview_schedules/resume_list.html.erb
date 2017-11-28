@@ -1,0 +1,85 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Candidate Resume List</h3>
+    </div>
+
+<p id="notice"><%= notice %></p>
+
+<div class="box-body">
+<%= bootstrap_form_for @selected_resume,url:{action:'is_confirm'} do |f| %>   
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr.No.</th>
+      <th>Name</th>
+      <th>Contact No.</th>
+      <th>Degree</th>
+      <th>Ctc</th>
+      <th>Experience</th>
+      <th>Notice period</th>
+      <th>Download Resume</th>
+      <th>Download Image</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% i = 0 %>
+    <% @selected_resumes.each do |selected_resume| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= selected_resume.name %></td>
+        <td><%= selected_resume.contact_no %></td>
+        <td><%= selected_resume.degree.try(:name) %></td>
+        <td><%= selected_resume.ctc %></td>
+        <td><%= selected_resume.experience %></td>
+        <td><%= selected_resume.notice_period %></td>
+        <td>
+         <% if selected_resume.avatar_file_name == nil %>
+           <small class="label label-default">Resume Not Available</small>
+             <% else %>
+             <center><%= link_to '',download_resume_path(id: selected_resume.id),class: 'btn btn-xs fa fa-download' %></center>
+          <% end %>
+          </td>
+          <td>
+          <% if selected_resume.passport_photo_file_name == nil %>
+              <small class="label label-default">Image Not Available</small>
+              <% else %>
+              <center><%= link_to '',download_image_path(id: selected_resume.id),class: 'btn btn-xs fa fa-picture-o'%></center>
+              <% end %>
+          </td>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+ <% end %>
+ <%= link_to 'Back', interview_round_list_interview_schedules_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+ </div>
+
+ </div>
+
+ 
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>

@@ -1,0 +1,8 @@
+<% if @flag %>
+$("#form").html("")
+$("#show_info").html("<%= j render 'show_detail' %>")
+<% else %>
+//$("#error").html("<font color='red'>Component Already Exist.</font>")
+$("#form").html("<font color='red'>Component Already Exist.</font>")
+$("#show_info").html("<%= j render 'show_detail' %>")
+<% end %>

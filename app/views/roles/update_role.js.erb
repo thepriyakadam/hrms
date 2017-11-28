@@ -1,0 +1,6 @@
+<% if @flag %>
+  $("#myModal").html("<font color='green'> Role Updated Successfully.</font>");
+  $("#list").html("<%= j render 'list' %>")
+<% else %>
+  $("#myModal").html("<font color='red'> Role not updated. </font> ");
+<% end %>

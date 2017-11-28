@@ -1,0 +1,84 @@
+
+<div class="box-body">
+
+<!-- < if @application_date == nil %>
+     <center><strong><p class="text-primary"> Selected Application Date Travel Request Report Not Available </strong></p></center>
+   <else %> -->
+
+    <% @travel_requests.each do |travel_request| %>
+  <table id="example" class="table table-bordered table-hover table-condensed">
+    <% @daily_bill_detail = DailyBillDetail.where(travel_request_id: travel_request) %>
+      <% @travel_expence = TravelExpence.where(travel_request_id: travel_request) %>
+     <tr><td colspan="8"><center><strong><%= travel_request.employee.company_location.company.try(:description) %></strong> <br>
+        <%= travel_request.employee.company_location.company.try(:address) %><br> <%= travel_request.employee.department.try(:name) %> -
+        <%= travel_request.employee.company_location.try(:name) %></center> </td></tr>
+     <tr><th colspan="2">Application Date: <%= travel_request.try(:application_date) %></th><th colspan="4"><center> Application Date Travel Request Report </center></th><th colspan="2">Traveling Date: <%= travel_request.try(:traveling_date) %> - <%= travel_request.try(:to) %></th></tr>
+     <tr>
+      <th>Request ID</th>
+      <th>Employee ID</th>
+      <th>Employee Name</th>
+      <th>Request To</th>
+      <th>Option</th>
+      <th>Place</th>
+      <th>Day</th>
+      <th>Advance</th>
+     </tr>
+     <tr>
+        <td><%= travel_request.id %></td>
+        <td><%= travel_request.employee.try(:manual_employee_code) %></td>
+        <td><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></td>
+        <td><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></td>
+        <td><%= travel_request.try(:travel_option).try(:name) %></td>
+        <td><%= travel_request.try(:place) %></td>
+         <td><%= travel_request.try(:day) %></td>
+        <td><%= travel_request.try(:total_advance) %></td>
+      <tr>
+       <th >Tour Purpose</th>
+       <td colspan="7"><%= @travel_request.try(:tour_purpose) %></td>
+      </tr>
+      <tr><th colspan="8"><center>Expence Claim</center></th></tr>
+      <tr>
+         <th colspan="2">Expense Date</th>
+         <th colspan="2">Place</th>
+         <th colspan="2">Expense Type</th>
+         <th colspan="2">Expense Amount</th>
+      </tr>
+    <% @daily_bill_detail.each do |daily_bill_detail| %>
+      <tr>
+        <td colspan="2"><%= daily_bill_detail.expence_date%></td>
+        <td colspan="2"><%= daily_bill_detail.e_place %></td>
+        <td colspan="2"><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
+        <td colspan="2"><%= daily_bill_detail.travel_expence %></td>
+      </tr>
+    <% end %>
+
+    <tr>
+        <th colspan="6">Expense Amount</th>
+        <th colspan="2"><%= @daily_bill_detail.sum(:travel_expence) %></th>
+    </tr>
+
+     <tr><th colspan="8"><center>Expence Detail</center></th></tr>
+        <tr>
+          <th colspan="2">Total Advance Amount</th>
+          <th colspan="2">Total Expense Amount</th>
+          <th colspan="2">Company Amount</th>
+          <th colspan="2">Employee Amount</th>
+        </tr>
+   
+        <% @travel_expence.each do |travel_expence| %>
+          <tr>
+            <td colspan="2"><%= travel_expence.total_advance_amount %></td>
+            <td colspan="2"><%= travel_expence.total_expence_amount %></td>
+            <td colspan="2"><%= travel_expence.company_amount %></td>
+            <td colspan="2"><%= travel_expence.employee_amount %></td>
+            </tr>
+  <% end %>
+    <tr><td colspan="8"></td></tr><br>
+    </tbody>
+</table>
+  <% end %>
+</div>
+<%= link_to " Excel Report ",print_application_report_travel_requests_path(from_date: params[:salary][:from_date],to_date: params[:salary][:to_date], company_id: params[:travel_request][:company_id], company_location_id: params[:travel_request][:company_location_id],department_id: params[:travel_request][:department_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+ 
+<%= link_to " Print Report ",print_application_report_travel_requests_path(from_date: params[:salary][:from_date],to_date: params[:salary][:to_date], company_id: params[:travel_request][:company_id], company_location_id: params[:travel_request][:company_location_id],department_id: params[:travel_request][:department_id],format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+</div> 

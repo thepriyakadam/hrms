@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+     <h4><center>Resignation Request</center></h4>
+    <p>
+      Dear <%= @employee.try(:prefix) %><%=
+
+@employee.try(:first_name).to_s %>  <%= @employee.try(:middle_name).to_s %> <%= @employee.try(:last_name).to_s
+%>, </p>
+      <p>Please accept this message as notification that I <b><%=
+@emp.employee.prefix %><%= @emp.employee.try(:first_name).to_s %> <%=
+@emp.employee.try(:middle_name).to_s %> <%=
+@emp.employee.try(:last_name).to_s %> (ID <%=
+@emp.employee.try(:manual_employee_code)%>)</b>, would like to resign
+from my position with <%= @employee.company.try(:name)%></p>
+
+      <p>I appreciate the opportunities I have been given at 
+
+      <%=
+@employee.company.try(:name) %> and your professional guidance and
+support. I wish you and the company success in the future. Requested
+relieving date is <b><%= @employee_resignation.tentative_leaving_date
+%></b>. The reason of leaving the organization is <b><%=
+@employee_resignation.reason %>.</p></b>
+
+      <p>For more details on the request, kindly check the People
+First HRMS portal.</p>
+
+      <p>Can we have a discussion on how we can handle this mutually
+regarding my exit plan, backup and handovers.</p>
+
+   <p>Best Regards,</p>
+<p><%=@emp.employee.try(:first_name).to_s %> <%=
+@emp.employee.try(:last_name).to_s %></p>
+  </body>
+</html>

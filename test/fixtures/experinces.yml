@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 
+  no_of_year_experince: MyString
+  company_name: MyString
+  designation: MyString
+  ctc: MyString
+
+two:
+  employee_id: 
+  no_of_year_experince: MyString
+  company_name: MyString
+  designation: MyString
+  ctc: MyString

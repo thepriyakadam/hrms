@@ -1,0 +1,58 @@
+<%= bootstrap_form_for :employee_attendances,url:{action:'destroy_employee_attendance',costcenter_id: @costcenter_id,present: @present,from: @from,to: @to} do |f| %> 
+
+  <% if @employee_attendance_id == nil %>
+    <center><p class="text-red"> Attendance Already Confirmed From <%= @from %> To <%= @to %></p></center> 
+  <% else %>
+    <table id="example5" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+          <th>ID</th>
+          <th>Employee</th>
+          <th>Department</th>
+          <th>Designation</th>
+          <th>Cost Center</th>
+          <th>Contact No</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @employee_attendances.each do |e| %>
+          <tr>
+            <td><%= check_box_tag "employee_attendance_ids[]", e.id %></td>
+            <td><%= e.employee.try(:manual_employee_code) %></td>
+            <td><%= full_name(e.employee) %></td>
+            <td><%= e.employee.department.try(:name) %></td>
+             <td><%= e.employee.try(:joining_detail).try(:employee_designation).try(:name) %></td>
+             <td><%= e.employee.try(:joining_detail).try(:cost_center).try(:name) %></td>
+             <td><%= e.employee.try(:contact_no) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= f.submit "Revert Employee Attendance" , class: 'btn btn-primary btn-sm' %>
+  <% end %>
+<% end %>
+
+<script type="text/javascript">
+$('#selectAll').click(function() {
+  if (this.checked) {
+    $(':checkbox').each(function() {
+      this.checked = true;                       
+    });
+  } 
+  else {
+    $(':checkbox').each(function() {
+      this.checked = false;                        
+    });
+  } 
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example5').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true
+    } );
+} );
+</script>

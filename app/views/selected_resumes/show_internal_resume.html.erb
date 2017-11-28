@@ -1,0 +1,47 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Profile</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example" class="table table-bordered table-hover table-condensed example3">
+      <thead>
+      	<tr>
+      		<th>Name</th>
+          <th>Email Id</th>
+          <th>Contact No.</th>
+          <th>Status</th>
+          <th>Resume</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @selected_resume1.each do |selected_resume| %>
+          <tr>
+          	<td><%= selected_resume.name %></td>
+            <td><%= selected_resume.email_id %></td>
+            <td><%= selected_resume.contact_no %></td>
+            <td>
+              <% if selected_resume.status == "Shortlisted" %>
+                <small class="label label-primary">Shortlisted</small>
+              <% elsif selected_resume.status == "Interview Scheduled" %>
+                <small class="label label-primary">Interview Scheduled</small>
+              <% elsif selected_resume.status == "Interview Rescheduled" %>
+                <small class="label label-default">Interview Rescheduled</small>
+              <% else %>
+                <small class="label label-default">Not Yet Shortlisted</small>
+              <% end %>
+            </td>
+            <td>
+             	<% if selected_resume.avatar_file_name == nil %>
+               	<small class="label label-default">Not Available</small>
+              <% else %>
+                <center><%= link_to '',download_resume_path(id: selected_resume.id),class: 'btn btn-xs fa fa-download',target: "_blank" %></center>
+              <% end %>
+            </td>
+     			</tr>
+        <% end %>
+      </tbody>
+    </table>
+    <br>
+  <%= link_to 'Back', internal_self_services_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  
+  <body>
+     <h4>Reporting Detail</h4>
+      <p>
+        <td>This is to inform you that <br>
+          <%= @emp.manual_employee_code %> - <%= @emp.first_name %> <%= @emp.last_name %> is reporting to you from today ownwards.
+        </td>
+      </p>
+
+    <h4> Employee Detail</h4>
+      <p>
+        Name : <%= @emp.manual_employee_code %> - <%= @emp.first_name %> <%= @emp.last_name %><br>
+        Company : <%= @emp.company.try(:name) %><br>
+        Location : <%= @emp.company_location.try(:name) %><br>
+        Department : <%= @emp.department.try(:name) %><br>
+        Designation : <%= @joining_detail.try(:employee_designation).try(:name) %>
+      </p>
+  </body>
+</html>

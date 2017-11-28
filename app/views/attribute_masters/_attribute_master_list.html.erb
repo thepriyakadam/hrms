@@ -1,0 +1,25 @@
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Code</th>
+      <th>Attribute</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <% @attribute_masters.each do |attribute_master| %>
+      <tr>
+        <td><%= attribute_master.code %></td>
+        <td><%= attribute_master.name %></td>
+        <td>
+            <%= link_to '', edit_attribute_master_path(attribute_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  attribute_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+             <%= link_to '', modal_attribute_masters_path(attribute_master),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div id="myModal" class="modal fade"></div>

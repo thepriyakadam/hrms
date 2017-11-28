@@ -1,0 +1,66 @@
+
+<!--SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Overtime Daily Report</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for(:salary, url: { action: 'overtime_daily_detail_report',format: 'xls'}) do |f| %>
+
+        <div class="row">
+        <div class="col-sm-3">
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= text_field :overtime, :start_date,hide_label: true, class: 'start_date'%>
+          </div>
+        </div>
+        </div>
+
+        <div class="col-sm-3">
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= text_field :overtime, :end_date,hide_label: true, class: 'end_date'%>
+          </div>
+        </div>
+        </div>
+
+
+        <div class="col-sm-3">
+          <div class="field">
+          <%= select :overtime, :company_location_id, all_company_location,{label: 'Company Location',include_blank: " Select Company Location"}, class: "form-control" %>
+          </div>
+        </div>
+        
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Download Excel", class: "btn btn-sm btn-warning" %>
+          </div>
+        </div>
+        </div>
+      <br>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script type="text/javascript">
+  $(function(){
+    $('.start_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+25',
+    dateFormat: 'dd-mm-yy' });
+
+     $('.end_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+25',
+    dateFormat: 'dd-mm-yy' });
+  });
+</script>

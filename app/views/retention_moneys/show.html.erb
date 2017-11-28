@@ -1,0 +1,53 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Retention Money</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+
+<tr>
+	<th><strong>Retention</strong></th>
+	<td><%= @retention_money.have_retention ? "Yes" : "No" %></td>
+	<th><strong>Amount</strong></th>
+	<td><%= @retention_money.amount %></td>
+</tr>
+<tr>
+	<th><strong>Base Component</strong></th>
+	 <td colspan="3"> <% i = 0 %>
+          <% @retention_money.base_component.split(",").each do |e| %>
+            <% if i == 0 %>
+              <%= SalaryComponent.find(e.to_i).name %>
+            <% else %>
+              + <%= SalaryComponent.find(e.to_i).name %>
+            <% end %>
+            <% i = i + 1 %>
+          <% end %>
+      </td>
+	
+</tr>
+
+<tr>
+	<th><strong>No. of Month</strong></th>
+	<td><%= @retention_money.no_of_month %></td>
+
+		<th><strong>Persentage</strong></th>
+	<td><%= @retention_money.persent %></td>
+
+</tr>
+
+<tr>
+
+	<th><strong>Max Amount</strong></th>
+	<td><%= @retention_money.max_limit %></td>
+	<th><strong>Description</strong></th>
+	<td><%= @retention_money.description %></td>
+</tr>
+
+
+
+<tr>
+	<th><strong>Status</strong></th>
+	<td colspan="3"><%= @retention_money.is_active %></td>
+</tr>
+</table><br>
+ <%= link_to 'Back', new_retention_money_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>

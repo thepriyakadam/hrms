@@ -1,0 +1,87 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Memberwise Support Report</h3>
+    <div class="pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <%= bootstrap_form_for(:issue_request,url: { action: 'memberwise_report_list'},html: {id: 'issue_request'},remote: true) do |f| %>
+    <div class="row">
+      <div class="col-sm-3">
+      <label>Date</label>
+         <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= text_field :issue_request,:date,placeholder: "Date",class: 'form-control request_date'%>
+          </div>
+         </div>
+      </div>
+      <div class="col-sm-3">
+      <label>Group</label>
+        <div class="field">
+          <%= select :issue_request, :issue_tracker_group_id, all_issue_tracker_group,{include_blank: 'select Group'},{onchange:"var a={group_id:$(this).val(), date:$('#issue_request_date').val()}; $.get('/issue_tracker_members/collect_memberwise_dropdown',a,function(response){});",class: 'form-control'}%>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group required">
+           <div id="issues">
+              <%= render 'issue_tracker_members/memberwise_dropdown' %> 
+           </div> 
+        </div>
+      </div>
+    
+    <div class="col-sm-3">
+    <label></label>
+          <div class="actions">
+            <%= f.submit "Display", class: "btn btn-sm btn-primary" %>
+          </div>
+    </div>
+    </div>
+      <div id="memberwise_list"></div>
+  </div>
+</div>
+<%end%>
+
+<script type="text/javascript">
+  $(function(){
+    $('.request_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+
+<script type="text/javascript">
+   $("#issue_request").validate({
+    rules: {
+      "issue_request[date]":{
+        required: true,
+      
+      },
+      "issue_request[issue_tracker_group_id]":{
+        required: true,
+      },
+      "issue_request[issue_tracker_member_id]":{
+        required: true,
+      }
+    },
+    messages: {
+      "issue_request[date]":{
+        required: "Please Specify Date Range",
+      },
+      "issue_request[issue_tracker_group_id]":{
+        required: "Please select Group",
+      },
+       "issue_request[issue_tracker_member_id]":{
+        required: "Please select Member",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

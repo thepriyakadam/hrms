@@ -1,0 +1,39 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Compensatory off</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr>
+      <th><strong>Date</strong></th>
+      <td> <%= @leave_c_off.c_off_date %></td>
+    </tr>  
+    <tr>
+     <th><strong>Compensatory Off</strong></th>
+      <td><%= @leave_c_off.leave_count %></td>
+    </tr>
+    <tr>
+      <th><strong>Expiry Date</strong></th>
+      <td> <%= @leave_c_off.expiry_date %></td>
+    </tr>
+    <tr>
+     <th><strong>Expired</strong></th>
+      <td><%= @leave_c_off.is_expire ? "Yes" : "No" %></td>
+    </tr>
+    <tr>
+      <th><strong>Taken</strong></th>
+      <td> <%= @leave_c_off.is_taken ? "Yes" : "No" %></td>
+    </tr>
+    <tr>
+     <th><strong>Taken Date</strong></th>
+      <td><%= @leave_c_off.taken_date %></td>
+    </tr> 
+    <tr>
+      <th><strong>Comment</strong></th>
+      <td><%= @leave_c_off.comment %></td>
+    </tr>  
+     </table> <br>
+
+     <%= link_to 'Back', leave_c_off_self_services_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box

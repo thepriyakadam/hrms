@@ -1,0 +1,2 @@
+module Reports::QualificationDetailsHelper
+end

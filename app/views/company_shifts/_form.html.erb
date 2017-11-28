@@ -1,0 +1,52 @@
+<%= bootstrap_form_for(@company_shift,html: {id: 'company_type'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name, placeholder: 'Company Shift', label: 'Shift Name' %>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <label> Start Time</label>
+          <div class="input-group">
+            <%= f.text_field :in_time,hide_label:true, class: 'form-control timepicker' %>
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <label>End Time</label>
+          <div class="input-group">
+            <%= f.text_field :out_time,hide_label:true, class: 'form-control timepicker' %>
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Company Shift", :class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+$(function () {
+//Timepicker
+  $(".timepicker").timepicker({
+    showInputs: false
+  });
+  
+});
+</script>

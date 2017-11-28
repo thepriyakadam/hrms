@@ -1,0 +1,112 @@
+<div class="box-body">
+  <%= bootstrap_form_for(@leave_c_off,html: {id: 'leave_c_off'}) do |f| %>
+    <div class="row">
+     <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.select :employee_id, employee_list_by_company_location, {label: 'Employee ',include_blank: " Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
+           </div>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <!-- <label>Date </label> -->
+        <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :c_off_date,label: 'Date',class: 'c_off_date'%>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.select :c_off_type,['Full Day','Half Day'],{label: 'Compensatory Off Type',include_blank: " Select Compensatory Off Type"} %>
+       </div>
+      </div> 
+       <div class="col-sm-3">
+        <div class="field" id="checker" style="padding: 10px">
+         <%= f.check_box :expiry_status,label: 'Expiry' %>
+        </div>
+      </div>
+    
+      <div class="col-sm-3">
+          <div class="field" id="dependent-box">
+              <%= f.text_field :c_off_expire_day, label:'Applicable Day',class: "form-control" %>
+          </div>
+        </div>
+     
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group required">
+              <%= f.text_field :comment, label:'Comment' %>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="actions" style="padding: 20px">
+          <%= f.submit "Create Compensatory Off",:class => class_name, data: { disable_with: data_info } %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+ 
+  $(function(){
+    $('.c_off_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+
+   }); 
+
+  $("#leave_c_off").validate({
+  rules: {
+    "leave_c_off[employee_id]":{
+      required: true
+    },
+    "leave_c_off[c_off_date]":{
+      required: true
+    },
+    "leave_c_off[c_off_type]":{
+      required: true
+    },
+    "leave_c_off[c_off_expire_day]":{
+      required: true
+      },
+    "leave_c_off[comment]":{
+      required: true
+    }
+  },
+  
+  errorPlacement: function(error, element) {
+   error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+   error.insertAfter(element.parent(element));
+  }
+}); 
+
+$(document).ready(function() {
+  $(".select2").select2();
+});
+
+</script>
+
+<script type="text/javascript">
+   $(document).ready(function () {
+        var checkbox = $('#checker'); 
+        var dependent = $('#dependent-box');
+        if (checkbox.attr('checked') !== undefined){
+           dependent.show();
+        } else {
+            dependent.hide();
+        }
+        
+        checkbox.change(function(e){
+           dependent.toggle(); 
+        });
+    }); 
+
+</script>

@@ -1,0 +1,48 @@
+<div class="box box-default">
+<div class="box-header with-border">
+<h3 class="box-title">Company Policy</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <% i = 0 %>
+    <% @company_policies.each do |company_policy| %>
+    <tr><th colspan="4"><center>Sr. No.<%= i = i+1 %></center></th></tr>
+      <tr>
+         <th>Name</th>
+        <td><%= company_policy.name %></td>
+         
+         <th>Effective From</th>
+        <td><%= company_policy.effective_from %></td>
+        </tr>
+        
+        <tr>
+         <th>Effective To</th>
+        <td><%= company_policy.effective_to %></td>
+         
+         <th>Download Document</th>
+           <td>
+           <% if company_policy.document_file_name == nil %>
+           <small class="label label-default">Document Not Available</small>
+             <% else %>
+             <%= link_to ' Document',download_docs_path(id: company_policy.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
+             <% end %>
+        </td>
+        </tr>
+        
+        <tr>
+         <th>Status</th>
+        <td><%= company_policy.status ? "Active" : "Inactive" %> </td>
+         <th>Action</th>
+           <td>
+         <%= link_to '', modal_company_policies_path(company_policy),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+         <!-- <= link_to '',  company_policy, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %> -->
+        </td>
+
+        </tr>
+    <% end %>
+  </tbody>
+</table><br>
+<%= link_to 'Back', new_company_policy_path,class: 'btn btn-default fa fa-arrow-left' %>
+  <div id="myModal" class="modal fade"></div>
+</div>
+</div>

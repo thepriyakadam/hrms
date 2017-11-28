@@ -1,0 +1,54 @@
+<%= form_for :salary_data, url: { action: 'save_all_data',id: @workingday.id,controller: 'salaryslips'} do |f| %>
+<table id="example1" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+      <th>Employee ID</th>
+      <th>Employee Name</th>
+       <th>Department</th>
+      <th>Designation</th>
+      <th>Employement</th>
+      <th>Contact No</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @employees.each do |employee| %>
+      <tr>
+        <td><%= check_box_tag "employee_ids[]", employee.id %></td>
+        <td><%= employee.manual_employee_code %></td>
+        <td><%= employee.first_name %> <%= employee.middle_name %> <%= employee.last_name %></td>
+        <td><%= employee.company_location.try(:name) %>-<%= employee.department.try(:name) %></td>
+        <td><%= employee.joining_detail.try(:employee_designation).try(:name) %></td>
+        <td><%= employee.employee_type.try(:name) %></td>
+        <td><%= employee.contact_no %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= f.submit "Create Salary", class: 'btn btn-sm btn-primary' %>
+<% end %>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example1').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+
+<script type="text/javascript">
+$('#selectAll').click(function() {
+  if (this.checked) {
+    $(':checkbox').each(function() {
+      this.checked = true;                       
+    });
+  } 
+  else {
+    $(':checkbox').each(function() {
+      this.checked = false;                        
+    });
+  } 
+});
+
+$("#example1").DataTable();
+</script>

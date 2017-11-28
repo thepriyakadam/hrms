@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Reimbursement Slabs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Reimbursement head</th>
+      <th>Employee grade</th>
+      <th>Employee designation</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Monthly amount</th>
+      <th>Yearly amount</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reimbursement_slabs.each do |reimbursement_slab| %>
+      <tr>
+        <td><%= reimbursement_slab.reimbursement_head %></td>
+        <td><%= reimbursement_slab.employee_grade %></td>
+        <td><%= reimbursement_slab.employee_designation %></td>
+        <td><%= reimbursement_slab.from %></td>
+        <td><%= reimbursement_slab.to %></td>
+        <td><%= reimbursement_slab.monthly_amount %></td>
+        <td><%= reimbursement_slab.yearly_amount %></td>
+        <td><%= reimbursement_slab.status %></td>
+        <td><%= link_to 'Show', reimbursement_slab %></td>
+        <td><%= link_to 'Edit', edit_reimbursement_slab_path(reimbursement_slab) %></td>
+        <td><%= link_to 'Destroy', reimbursement_slab, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Reimbursement slab', new_reimbursement_slab_path %>

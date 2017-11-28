@@ -1,0 +1,49 @@
+  <div class="box-header">
+    <div class="pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <div id="comments">
+    <table id="example6" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Employee Name</th>
+        <th>Amount</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @food_deductions.each do |food_deduction| %>
+        <tr>
+          <td><%= food_deduction.employee.try(:manual_employee_code) %></td>
+          <td><%= full_name(food_deduction.employee) %></td>
+          <td><%= food_deduction.amount %></td>
+          <td>
+            <% if food_deduction.is_paid == true %>
+              <small class="label label-primary">Paid</small>
+            <% else %>
+              <%= link_to '', edit_food_deduction_path(food_deduction),class: "btn btn-success btn-xs fa fa-edit" %>
+              <%= link_to '', modal_food_deductions_path(food_deduction),class: "btn btn-default btn-xs fa fa-eye" ,remote:true %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+  <%= link_to 'Back', food_deductions_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  <%= link_to " Excel ",food_deduction_xls_food_deductions_path(month: params[:month], year: params[:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <%= link_to " PDF ",food_deduction_pdf_food_deductions_path(month: params[:month], year: params[:year], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+</div>
+
+<div id="myModal" class="modal fade"></div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

@@ -1,0 +1,47 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">On Duty Detail</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+
+  	<% if @on_duty_request_id == nil %>
+     	<center><p class="text-primary"> On Duty Request Not Available </p></center> 
+    <% else %>
+
+	  <table id="example1" class="table table-bordered table-hover table-condensed">
+		  <thead>
+		    <tr>
+		      <th>ID</th>
+		      <th>Employee</th>
+		      <th>On Duty Type</th>
+		      <th>No. Of Days</th>
+		      <th>Start Date</th>
+		      <th>End Date</th>
+		      <th>Reason</th>
+		      <th>Status</th>
+		    </tr>
+		  </thead>
+
+		  <tbody>
+		    <% @on_duty_requests.each do |on_duty_request| %>
+		      <tr>
+		        <td><%= on_duty_request.employee.try(:manual_employee_code) %></td>
+		        <td><%= full_name(on_duty_request.employee) %></td>
+		        <td><%= on_duty_request.leave_type %></td>
+		        <td><%= on_duty_request.no_of_day %></td>
+		        <td><%= on_duty_request.start_date.to_date %></td>
+		        <td><%= on_duty_request.end_date.to_date %></td>
+		        <td><%= on_duty_request.reason %></td>
+		        <td><%= on_duty_request.current_status %></td>
+		      </tr>
+		    <% end %>
+		   </tbody>
+		  </table>
+		  <br>
+		 <%= link_to " Excel Report ",status_wise_report_list_on_duty_requests_path(start_date: params[:employee][:start_date],end_date: params[:employee][:end_date],company_id: params[:employee][:company_id],company_location_id: params[:employee][:company_location_id],department_id: params[:employee][:department_id],current_status: params[:employee][:current_status],format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+
+	    <%= link_to " PDF Report ",status_wise_report_list_on_duty_requests_path(start_date: params[:employee][:start_date],end_date: params[:employee][:end_date],company_id: params[:employee][:company_id],company_location_id: params[:employee][:company_location_id],department_id: params[:employee][:department_id],current_status: params[:employee][:current_status],format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+	    <% end %> <!-- if for nil -->
+		 </div>
+	</div>

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Rembursment:</strong>
+  <%= @reporting_master_rembursment.rembursment %>
+</p>
+
+<p>
+  <strong>Manager:</strong>
+  <%= @reporting_master_rembursment.manager %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @reporting_master_rembursment.status %>
+</p>
+
+<%= link_to 'Edit', edit_reporting_master_rembursment_path(@reporting_master_rembursment) %> |
+<%= link_to 'Back', reporting_master_rembursments_path %>

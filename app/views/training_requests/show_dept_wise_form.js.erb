@@ -1,0 +1,10 @@
+<% unless @flag %>
+	<% unless Department.exists?(id: @department.id) %>
+	    $("#training_request_frm").html("<%= j render 'dept_wise_training_request' %>")
+	<% else %>
+		$("#message").html("<center><p class='text-red'>Request already assign you can update it.</p></center>")
+		$("#training_request_frm").html("<%= j render 'dept_wise_training_request' %>")
+	<% end %>
+<% else %>
+	
+<% end %>

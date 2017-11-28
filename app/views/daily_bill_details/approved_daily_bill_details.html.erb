@@ -1,0 +1,53 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Approved Expense Claim Details</h3>
+<div class="box-body">
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Expense Date</th>
+      <th>Place</th>
+      <th>Expense Type</th>
+      <th>Request Status</th>
+      <th>Document</th>
+      <th>Image</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @daily_bill_details.each do |daily_bill_detail| %>
+      <tr>
+
+        <td><%= daily_bill_detail.expence_date %></td>
+        <td><%= daily_bill_detail.e_place %></td>
+        <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
+        <td>
+        <% if daily_bill_detail.request_status == "Approved" %>
+              <small class="label label-info">Approved</small>
+              <% else %>
+              <% end %>
+        </td>
+        <td>
+           <% if daily_bill_detail.avatar_file_file_name == nil %>
+           <small class="label label-warning">Not Available</small>
+             <% else %>
+             <%= link_to '',download_doc_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-download' %>
+             <% end %>
+        </td>
+        <td>
+           <% if daily_bill_detail.passport_photo_file_name == nil %>
+           <small class="label label-warning">Not Available</small>
+             <% else %>
+             <%= link_to '',download_pics_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-picture-o' %>
+             <% end %>
+        </td>  
+        <td>
+           <%= link_to '', daily_bill_detail,class: 'btn btn-sm btn-default fa fa-eye' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>
+</div>

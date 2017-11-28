@@ -1,0 +1,74 @@
+<%= bootstrap_form_for @salary_template,html: {id: 'salary_template'}, remote: true do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Template Code' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+             <%= f.text_field :validity_date,hide_label: true,class: 'salary_template_expert_date', placeholder: 'Template Validity Date' %>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+      <div class="field">
+        <%= f.check_box :is_active, label: 'Active'%>
+      </div>
+    </div>
+    </div>
+ <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Salary Template",:class => class_name %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(function(){
+    $('.salary_template_expert_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-10:+50',
+    dateFormat: 'dd-mm-yy' });
+
+
+  }); 
+</script>
+
+<script>
+$("#salary_template").validate({
+    rules: {
+      "salary_template[code]":{
+        required: true,
+      },
+      "salary_template[validity_date]":{
+        required: true,
+      }
+    },
+    messages: {
+      "salary_template[code]":{
+        required: "Please specify Code",
+      },
+      "salary_template[validity_date]":{
+        required: "Please specify Validity Date",
+      }   
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

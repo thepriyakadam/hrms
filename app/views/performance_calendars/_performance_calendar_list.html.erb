@@ -1,0 +1,32 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+    	<th>Period</th>
+      <th>Performance Activity</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  	<% @performance_calendars.each do |performance_calendar| %>
+      <tr>
+        <td><%= performance_calendar.period.name %></td>
+        <td><%= performance_calendar.performance_activity.name %></td>
+        <td><%= performance_calendar.start_date %></td>
+        <td><%= performance_calendar.end_date %></td>
+         <td>
+          <% if performance_calendar.is_confirm == true %>
+          <%= link_to '', edit_performance_calendar_path(performance_calendar) ,class: 'btn btn-sm btn-success btn-xs fa fa-edit',remote:true %>
+            <small class= "label label-primary">Confirmed</small>
+          <% else %>
+            <%= link_to '', edit_performance_calendar_path(performance_calendar) ,class: 'btn btn-sm btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  performance_calendar, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+            <%= link_to '', is_confirm_performance_calendars_path(performance_calendar: performance_calendar),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

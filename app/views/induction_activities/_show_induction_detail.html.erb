@@ -1,0 +1,25 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr.No.</th>
+      <th>Employee Name</th>
+      <th>Start Date</th>
+      <th>Induction Master</th>
+      <th>Induction Completed</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% i = 0 %>
+    <% @induction_details.each do |induction_detail| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= induction_detail.employee.first_name %> <%= induction_detail.employee.middle_name %> <%= induction_detail.employee.last_name %></td>
+        <td><%= induction_detail.start_date %></td>
+        <td><%= induction_detail.induction_master.code %></td>
+        <td><%= induction_detail.induction_completed %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

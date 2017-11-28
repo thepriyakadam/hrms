@@ -1,0 +1,27 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Period List</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table class="table table-bordered table-hover table-condensed">     
+      <thead>
+        <tr>
+          <th>Period</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @periods.each do |p| %>
+        <tr>
+          <td><%= p.name %></td> 
+          <td><%= p.from %></td>
+          <td><%= p.to %></td>
+          <td><%= link_to 'Employee For Training', training_request_goal_ratings_path(period_id: p) ,class: 'btn btn-xs btn-info' %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

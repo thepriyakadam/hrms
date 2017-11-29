@@ -18,6 +18,8 @@ class Experience < ActiveRecord::Base
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        if @employee == nil
+        else
         employee_id = @employee.id
         company_name = spreadsheet.cell(i,'C')
         designation = spreadsheet.cell(i,'D')
@@ -27,7 +29,8 @@ class Experience < ActiveRecord::Base
         ctc = spreadsheet.cell(i,'G')
         description = spreadsheet.cell(i,'H')
 
-        @employee_bank_detail = Experience.create(employee_id: employee_id,company_name: company_name,designation: designation,start_date: start_date,end_date: end_date,no_of_year: no_of_year,ctc: ctc,description: description)
+        @experience = Experience.create(employee_id: employee_id,company_name: company_name,designation: designation,start_date: start_date,end_date: end_date,no_of_year: no_of_year,ctc: ctc,description: description)
+  end
   end
 end
 

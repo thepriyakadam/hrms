@@ -19,6 +19,8 @@ class EmployeePhysical < ActiveRecord::Base
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        if @employee == nil
+        else
         employee_id = @employee.id
         height = spreadsheet.cell(i,'C')
         weight = spreadsheet.cell(i,'D')
@@ -26,6 +28,7 @@ class EmployeePhysical < ActiveRecord::Base
         trouser_size = spreadsheet.cell(i,'F')
 
         @employee_physical = EmployeePhysical.create(employee_id: employee_id,height: height,weight: weight,size: size,trouser_size: trouser_size)
+    end
   end
 end
 

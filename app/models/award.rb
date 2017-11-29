@@ -21,6 +21,8 @@ class Award < ActiveRecord::Base
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        if @employee == nil
+        else
         employee_id = @employee.id
         award_name = spreadsheet.cell(i,'C')
         @year = Year.find_by_name(spreadsheet.cell(i,'D'))
@@ -35,6 +37,7 @@ class Award < ActiveRecord::Base
         description = spreadsheet.cell(i,'F')
 
         @award = Award.create(employee_id: employee_id,award_name: award_name,year_id: year_id,award_from: award_from,description: description)
+    end
   end
 end
 

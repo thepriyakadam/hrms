@@ -88,6 +88,10 @@ class HomeController < ApplicationController
       policy_type = @company_policy.policy_type
       @company_policies = CompanyPolicy.where(policy_type: policy_type)
   end
+
+ #  def download_pdf
+ #  send_file "#{Rails.root}/app/assets/document/1.Employee Basic Detail.xls", type: "application/xls", x_sendfile: true
+ # end
   
   def event_detail
     @company_event = CompanyEvent.find(params[:id])

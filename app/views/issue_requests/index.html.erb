@@ -29,7 +29,7 @@
          < if issue_request.document1_file_name == nil %>
            <small class="label label-default">Not Available</small>
              < else %>
-             <center><%= link_to '',download_screenshot_path(id: issue_request.id),class: 'btn btn-xs fa fa-download' %>
+             <center><= link_to '',download_screenshot_path(id: issue_request.id),class: 'btn btn-xs fa fa-download' %>
              < end %>
              </center>
         </td>

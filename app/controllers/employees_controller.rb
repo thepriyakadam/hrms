@@ -35,12 +35,8 @@
   
 
   def import_xl
-   #  @employees = Employee.all
-   #  respond_to do |format|
-   #  format.html
-   #  format.csv { send_data @employee_bank_details.to_csv }
-   #  format.xls
-   # end     
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Imports"   
   end
 
   def import

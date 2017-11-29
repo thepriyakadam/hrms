@@ -1765,6 +1765,8 @@ end
 
   match 'employees/:id/download_employee_signature/:id' => 'employees#download_employee_signature', :via => [:get], :as => :download_employee_signature
   match 'employees/:id/download_employee_profile_picture/:id' => 'employees#download_employee_profile_picture', :via => [:get], :as => :download_employee_profile_picture
+  
+  match 'hrms_data_formates/:id/download_hrms_data_formate/:id' => 'hrms_data_formates#download_hrms_data_formate', :via => [:get], :as => :download_hrms_data_formate
 
   # get '/screenshot', to: 'issue_requests#download_screenshot', as: 'download_screenshot'
   # get '/download', to: 'issue_requests#download_screenshot_image', as: 'download_screenshot_image'
@@ -2026,6 +2028,8 @@ end
       get :search_by_slip_detail
       get :leave_detail
       get :leave_detail_xls
+      get :import_xl
+      post :import
     end
   end
 
@@ -2372,6 +2376,8 @@ end
       get :leave_balance
       # post :leave_balance
       post :leave
+      get :import_xl
+      post :import
     end
   end
 
@@ -2682,6 +2688,8 @@ end
     collection do
       get :created_user
       patch :update_form
+      get :hrms_data_sheet
+      # get 'download_pdf', to: "homes#download_pdf"
       # get :show
     end
   end

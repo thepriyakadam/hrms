@@ -25,6 +25,8 @@ class Qualification < ActiveRecord::Base
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        if @employee == nil
+        else
         employee_id = @employee.id
         @degree_type = DegreeType.find_by_name(spreadsheet.cell(i,'C'))
         if @degree_type == nil
@@ -71,6 +73,7 @@ class Qualification < ActiveRecord::Base
 
         @qualification = Qualification.create(employee_id: employee_id,degree_type_id: degree_type_id,degree_id: degree_id,
           degree_stream_id: degree_stream_id,marks: marks,year_id: year_id,college: college,university_id: university_id)
+   end
   end
 end
 

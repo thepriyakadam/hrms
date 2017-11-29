@@ -32,6 +32,8 @@ def self.to_csv(options = {})
    spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        if @employee.nil?
+        else
         employee_id = @employee.id
         employee_uan_no = spreadsheet.cell(i,'C')
         employee_pf_no = spreadsheet.cell(i,'D')
@@ -153,6 +155,7 @@ def self.to_csv(options = {})
         @employee_prsent.update(employee_id: employee_id,employee_uan_no: employee_uan_no,employee_pf_no: employee_pf_no,joining_date: joining_date,confirmation_date: confirmation_date,employee_grade_id: employee_grade_id,employee_designation_id: employee_designation_id,employee_category_id: employee_category_id,probation_period: probation_period,
         notice_period: notice_period,notice_period_after_probation: notice_period_after_probation,have_passport: have_passport,passport_no: passport_no,passport_issue_date: passport_issue_date,passport_expiry_date: passport_expiry_date,leaving_date: leaving_date,c_off: c_off,payment_mode_id: payment_mode_id,basis_of_time: basis_of_time,is_employeer_pf: is_employeer_pf,select_pf: select_pf,pf_max_amount: pf_max_amount,employee_pf_no: employee_pf_no,
         is_employeer_esic: is_employeer_esic,have_esic: have_esic,employee_efic_no: employee_efic_no,have_retention: have_retention,is_insurance: is_insurance,is_family_pension: is_family_pension,is_bonus: is_bonus,ot_option: ot_option,ot_rate: ot_rate)
+    end
      end
     end
   end

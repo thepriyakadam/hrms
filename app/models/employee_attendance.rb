@@ -74,21 +74,27 @@ class EmployeeAttendance < ActiveRecord::Base
     def self.import(file)
      spreadsheet = open_spreadsheet(file)
       (2..spreadsheet.last_row).each do |i|
-
-        employee_code = spreadsheet.cell(i,'A')
+        employee_code = spreadsheet.cell(i,'A').to_i
         employee_name = spreadsheet.cell(i,'B')
         day = spreadsheet.cell(i,'C')
         in_time = spreadsheet.cell(i,'D') #@employee.id
         out_time = spreadsheet.cell(i,'E')
-        present = spreadsheet.cell(i,'F')
+        working_hrs = spreadsheet.cell(i,'F')
+        present = spreadsheet.cell(i,'G')
 
         employee = Employee.find_by(manual_employee_code: employee_code)
+        if employee.nil?
+        else
         employee_atten = EmployeeAttendance.where(employee_id: employee.id,day: day.to_date).take
         if employee_atten.nil?
-          employee_attendance = EmployeeAttendance.create(employee_name: employee_name,day: day.to_date,in_time: in_time,out_time: out_time,present: present) 
+          employee_attendance = EmployeeAttendance.create(employee_name: employee_name,day: day.to_date,in_time: in_time,out_time: out_time,working_hrs: working_hrs,present: present) 
         else
-          employee_atten.update(present: present)
+          if employee_atten.employee_leav_request_id.nil? || employee_atten.on_duty_request_id.nil? 
+          employee_atten.update(employee_name: employee_name,day: day.to_date,in_time: in_time,out_time: out_time,working_hrs: working_hrs,present: present)
+          else
+          end
         end
+      end
         @employee_attendance = EmployeeAttendance.last
         employee = Employee.find_by_manual_employee_code(employee_code)
         @employee_attendance.update(employee_id: employee.id)

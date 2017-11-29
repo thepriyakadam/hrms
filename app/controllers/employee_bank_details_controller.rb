@@ -60,13 +60,8 @@ class EmployeeBankDetailsController < ApplicationController
 end
   
   def import_xl
-   #  @employee_bank_details = EmployeeBankDetail.all
-   #  respond_to do |format|
-   #  format.html
-   #  format.csv { send_data @employee_bank_details.to_csv }
-   #  format.xls
-   #  session[:active_tab] = "import"
-   # end   
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Imports" 
   end
 
   def import

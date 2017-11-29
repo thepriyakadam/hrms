@@ -15,11 +15,14 @@ class Skillset < ActiveRecord::Base
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        if @employee == nil
+        else
         employee_id = @employee.id
         name = spreadsheet.cell(i,'C')
         skill_level = spreadsheet.cell(i,'D')
 
         @skillset = Skillset.create(employee_id: employee_id,name: name,skill_level: skill_level)
+    end
   end
 end
 

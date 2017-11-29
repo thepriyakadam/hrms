@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171107095442) do
+ActiveRecord::Schema.define(version: 20171128093314) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -2076,6 +2076,18 @@ ActiveRecord::Schema.define(version: 20171107095442) do
     t.datetime "updated_at",                                 null: false
     t.boolean  "c_off"
     t.string   "holiday_type", limit: 255
+  end
+
+  create_table "hrms_data_formates", force: :cascade do |t|
+    t.string   "name",                  limit: 255
+    t.text     "description",           limit: 65535
+    t.boolean  "status"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.string   "document_file_name",    limit: 255
+    t.string   "document_content_type", limit: 255
+    t.integer  "document_file_size",    limit: 4
+    t.datetime "document_updated_at"
   end
 
   create_table "illness_types", force: :cascade do |t|
@@ -4598,6 +4610,12 @@ ActiveRecord::Schema.define(version: 20171107095442) do
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id", using: :btree
+
+  create_table "xyzs", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "years", force: :cascade do |t|
     t.integer  "name",       limit: 4

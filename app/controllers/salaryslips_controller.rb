@@ -1964,7 +1964,21 @@ end
 
   def leave_detail
     @leave_details = LeaveDetail.all
-     
+  end
+
+  def import_xl
+    
+  end
+
+  def import
+   file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_salaryslips_path
+    else
+    Salaryslip.import(params[:file])
+    redirect_to import_xl_salaryslips_path, notice: "File imported."
+    end
   end
 
   def leave_detail_xls

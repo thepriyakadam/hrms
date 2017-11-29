@@ -50,7 +50,7 @@ class ManagerSelfServicesController < ApplicationController
     @emp = Employee.find(current_user.employee_id)
     @employees = @emp.subordinates
     @employees_ind = @emp.indirect_subordinates
-      @pending_on_duty_requests = OnDutyRequest.where(current_status: "Pending",employee_id: @employees)
+      @pending_on_duty_requests = OnDutyRequest.where(current_status: "Pending", employee_id: @employees)
       @first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,employee_id: @employees_ind)
     session[:active_tab] ="ManagerSelfService"
   end

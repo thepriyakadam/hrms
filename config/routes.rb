@@ -3,11 +3,24 @@ Rails.application.routes.draw do
   resources :events
   resources :resource_pool_masters
   resources :service_masters
+
+  resources :plan_reason_masters
+  resources :policy_details do
+    collection do
+      get :policy_details_modal
+    end
+  end
+  
   resources :employee_plans do
     collection do
       get :modal_employee_plan_detail
       get :employee_plan_detail_list
       get :ajax_employee_plan_details
+      get :meeting_plan_approval
+      get :plan_approve
+      get :plan_reject
+      get :view_plan
+      get :arrange_meeting
     end
   end
   resources :events  # do
@@ -637,6 +650,14 @@ end
       post :show_datewise_report
       get :show_datewise_report
       get :modal
+      get :employee_declaration
+      get :add_employee_declaration
+      get :edit_employee_declaration
+      get :show_employee_declaration
+      post :update_employee_declaration
+      get :policy_details_modal
+      post :document_upload
+      get :download_document
     end
   end
   resources :investment_heads
@@ -1679,6 +1700,7 @@ end
       get :create_out_time
       get :display_notice_period
       get :exit_interview
+      get :present_to_title
     end
   end
 
@@ -1766,6 +1788,7 @@ end
   match 'employees/:id/download_employee_signature/:id' => 'employees#download_employee_signature', :via => [:get], :as => :download_employee_signature
   match 'employees/:id/download_employee_profile_picture/:id' => 'employees#download_employee_profile_picture', :via => [:get], :as => :download_employee_profile_picture
 
+  match 'investment_declarations/:id/investment_download_document/:id' => 'investment_declarations#investment_download_document', :via => [:get], :as => :investment_download_document
 
   # get '/screenshot', to: 'issue_requests#download_screenshot', as: 'download_screenshot'
   # get '/download', to: 'issue_requests#download_screenshot_image', as: 'download_screenshot_image'
@@ -2777,9 +2800,39 @@ end
     post 'user_auths/employee_plan' => 'user_auths#employee_plan', defaults:{format: 'json'}
     get 'user_auths/employee_plan_list' => 'user_auths#employee_plan_list', defaults:{format: 'json'}
     post 'user_auths/update_employee_plan' => 'user_auths#update_employee_plan', defaults:{format: 'json'}
-    get 'user_auths/destroy_employee_plan' => 'user_auths#destroy_employee_plan', defaults:{format: 'json'}
+    get 'user_auths/cancel_employee_plan' => 'user_auths#cancel_employee_plan', defaults:{format: 'json'}
     get 'user_auths/holiday_setup' => 'user_auths#holiday_setup', defaults:{format: 'json'}
     get 'user_auths/employee_contact_library' => 'user_auths#employee_contact_library', defaults:{format: 'json'}
     get 'user_auths/employee_details' => 'user_auths#employee_details', defaults:{format: 'json'}
+    get 'user_auths/manager1_employee_list' => 'user_auths#manager1_employee_list', defaults:{format: 'json'}
+    get 'user_auths/manager2_employee_list' => 'user_auths#manager2_employee_list', defaults:{format: 'json'}
+    get 'user_auths/contact_details' => 'user_auths#contact_details', defaults:{format: 'json'}
+    post 'user_auths/meeting_plan_approve' => 'user_auths#meeting_plan_approve', defaults:{format: 'json'}
+    get 'user_auths/approve_plan_list' => 'user_auths#approve_plan_list', defaults:{format: 'json'}
+    get 'user_auths/manager_approve_plan_list' => 'user_auths#manager_approve_plan_list', defaults:{format: 'json'}
+    get 'user_auths/particular_employee_plan_list' => 'user_auths#particular_employee_plan_list', defaults:{format: 'json'}
+    get 'user_auths/reject_plan' => 'user_auths#reject_plan', defaults:{format: 'json'}
+    get 'user_auths/all_employee_list' => 'user_auths#all_employee_list', defaults:{format: 'json'}
+    get 'user_auths/on_duty_requests' => 'user_auths#on_duty_requests', defaults:{format: 'json'}
+    get 'user_auths/on_duty_requests_cancel' => 'user_auths#on_duty_requests_cancel', defaults:{format: 'json'}
+    get 'user_auths/all_employee_plan_list' => 'user_auths#all_employee_plan_list', defaults:{format: 'json'}
+    get 'user_auths/all_aprove_plan_list' => 'user_auths#all_aprove_plan_list', defaults:{format: 'json'}
+    post 'user_auths/create_on_duty_requests' => 'user_auths#create_on_duty_requests', defaults:{format: 'json'}
+    get 'user_auths/list_of_faq' => 'user_auths#list_of_faq', defaults:{format: 'json'}
+    get 'user_auths/od_request_approval_list' => 'user_auths#od_request_approval_list', defaults:{format: 'json'}
+    get 'user_auths/od_employee_request_detail' => 'user_auths#od_employee_request_detail', defaults:{format: 'json'}
+    get 'user_auths/od_request_first_approve' => 'user_auths#od_request_first_approve', defaults:{format: 'json'}
+    get 'user_auths/od_request_second_approve' => 'user_auths#od_request_second_approve', defaults:{format: 'json'}
+    get 'user_auths/od_request_first_reject' => 'user_auths#od_request_first_reject', defaults:{format: 'json'}
+    get 'user_auths/od_request_second_reject' => 'user_auths#od_request_second_reject', defaults:{format: 'json'}
+    get 'user_auths/comp_off_approval_first' => 'user_auths#comp_off_approval_first', defaults:{format: 'json'}
+    get 'user_auths/comp_off_approval_second' => 'user_auths#comp_off_approval_second', defaults:{format: 'json'}
+    post 'user_auths/employee_feedback' => 'user_auths#employee_feedback', defaults:{format: 'json'}
+    get 'user_auths/resignation_history' => 'user_auths#resignation_history', defaults:{format: 'json'}
+    get 'user_auths/plan_reason_list' => 'user_auths#plan_reason_list', defaults:{format: 'json'}
+    post 'user_auths/employee_reason' => 'user_auths#employee_reason', defaults:{format: 'json'}
+    post 'user_auths/attendance_data' => 'user_auths#attendance_data', defaults:{format: 'json'}
+    get 'user_auths/admin_all_leave_request_list' => 'user_auths#admin_all_leave_request_list', defaults:{format: 'json'}
+    get 'user_auths/admin_employee_history' => 'user_auths#admin_employee_history', defaults:{format: 'json'}
   end
 end

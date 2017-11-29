@@ -1,7 +1,7 @@
-require 'query_report/helper'  # need to require the helper
+# require 'query_report/helper'  # need to require the helper
 class IssueRequestsController < ApplicationController
   before_action :set_issue_request, only: [:show, :edit, :update, :destroy]
-   include QueryReport::Helper  # need to include it
+   # include QueryReport::Helper  # need to include it
 
   # GET /issue_requests
   # GET /issue_requests.json

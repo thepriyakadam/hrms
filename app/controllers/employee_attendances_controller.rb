@@ -1,9 +1,9 @@
-require 'query_report/helper'  # need to require the helper
+# require 'query_report/helper'  # need to require the helper
 class EmployeeAttendancesController < ApplicationController
   respond_to :html, :json  # to just in place edit and update
   before_action :set_employee_attendance, only: [:show, :edit, :update, :destroy]
   before_action :check_params, only: [:create_attendance]
-  include QueryReport::Helper  # need to include it
+  # include QueryReport::Helper  # need to include it
 
   # GET /employee_attendances
   # GET /employee_attendances.json

@@ -1,7 +1,7 @@
-require 'query_report/helper'  # need to require the helper
+# require 'query_report/helper'  # need to require the helper
 class WorkingdaysController < ApplicationController
   before_action :set_workingday, only: [:show, :edit, :update, :destroy]
-  include QueryReport::Helper  # need to include it
+  # include QueryReport::Helper  # need to include it
   def index
     @workingdays = Workingday.group(:year)
     session[:active_tab] ="TimeManagement"

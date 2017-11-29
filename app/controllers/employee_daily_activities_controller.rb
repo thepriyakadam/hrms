@@ -1,7 +1,7 @@
-require 'query_report/helper'  # need to require the helper
+# require 'query_report/helper'  # need to require the helper
 class EmployeeDailyActivitiesController < ApplicationController
   before_action :set_employee_daily_activity, only: [:show, :edit, :update, :destroy]
-include QueryReport::Helper
+# include QueryReport::Helper
 
   # GET /employee_daily_activities
   # GET /employee_daily_activities.json

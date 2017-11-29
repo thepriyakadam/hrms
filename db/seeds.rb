@@ -386,6 +386,24 @@ end
 puts "#{i} SalaryComponent inserted.-----------------------------------------------"
 i = i+1
 end
+# # puts "Starting ..."
+# # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
+# # ex.default_sheet = ex.sheets[19]
+# # i=1
+# # 2.upto(25) do |line|
+# # SalaryComponent.new do |ec|
+# #   ec.code = ex.cell(line,'A').to_i
+# #   ec.name = ex.cell(line,'B')
+# #   ec.description = ex.cell(line,'C')
+# #   ec.account_code = ex.cell(line,'D')
+# #   ec.is_deducted = ex.cell(line,'E')
+# #   ec.is_active = ex.cell(line,'F')
+# #   ec.is_base = ex.cell(line,'G')
+# #   ec.save!
+# # end
+# # puts "#{i} SalaryComponent inserted.-----------------------------------------------"
+# # i = i+1
+# # end
 
 # puts "Starting Country..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
@@ -1039,6 +1057,7 @@ end
 
 # ===========================
 
+
 ex = Roo::Excel.new("#{Rails.root}/public/ho_ctc.xls")
 ex.default_sheet = ex.sheets[0]
 j = 1
@@ -1070,7 +1089,6 @@ ActiveRecord::Base.transaction do
       est.annual_amount = est.monthly_amount.to_i * 12
       gross_salary = gross_salary + ex.cell(line,'C').to_i
       puts "Basic..................Salary"
-
       elsif t.salary_component.name == "HRA"
       est.monthly_amount = ex.cell(line,'D') unless ex.cell(line,'D').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
@@ -1082,7 +1100,6 @@ ActiveRecord::Base.transaction do
       est.annual_amount = est.monthly_amount.to_i * 12
       gross_salary = gross_salary + ex.cell(line,'E').to_i
       puts "Convenience Allowance..................Salary"
-
       elsif t.salary_component.name == "Other Allowance"
       est.monthly_amount = ex.cell(line,'F') unless ex.cell(line,'F').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
@@ -1152,7 +1169,6 @@ ActiveRecord::Base.transaction do
   gross_salary = 0
 end
 end
-
 # ex = Roo::Excel.new("#{Rails.root}/public/project_ctc.xls")
 # ex.default_sheet = ex.sheets[1]
 # j = 1
@@ -1273,6 +1289,7 @@ end
 #   gross_salary = 0
 # end
 # end
+
 
 
 # ex = Roo::Excel.new("#{Rails.root}/public/sp_food.xls")

@@ -31,6 +31,7 @@ class Experience < ActiveRecord::Base
 
         @experience = Experience.create(employee_id: employee_id,company_name: company_name,designation: designation,start_date: start_date,end_date: end_date,no_of_year: no_of_year,ctc: ctc,description: description)
   end
+
   end
 end
 

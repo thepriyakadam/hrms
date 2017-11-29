@@ -29,6 +29,7 @@ class Family < ActiveRecord::Base
         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
         if @employee == nil
         else
+
         employee_id = @employee.id
         @relation_master = RelationMaster.find_by_name(spreadsheet.cell(i,'C'))
         if @relation_master == nil

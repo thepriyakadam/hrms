@@ -31,6 +31,7 @@ def self.import_deduction_file(file)
         @food_deduction = FoodDeduction.create(employee_id: employee_id,no_of_coupan: no_of_coupan,return_coupan: return_coupan,total_coupan: total_coupan,food_coupan_master_id: food_coupan_master_id,amount: amount,food_date: food_date)
     end
   end
+
 	# spreadsheet = open_spreadsheet(file)
 	# header = spreadsheet.row(1)
  #  	(2..spreadsheet.last_row).each do |i|

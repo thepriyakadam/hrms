@@ -23,6 +23,7 @@ class Skillset < ActiveRecord::Base
 
         @skillset = Skillset.create(employee_id: employee_id,name: name,skill_level: skill_level)
     end
+
   end
 end
 

@@ -62,6 +62,7 @@ end
   def import_xl
     session[:active_tab] ="EmployeeManagement"
     session[:active_tab1] ="Imports" 
+
   end
 
   def import

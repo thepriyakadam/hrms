@@ -21,6 +21,7 @@ class EmployeePhysical < ActiveRecord::Base
         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
         if @employee == nil
         else
+
         employee_id = @employee.id
         height = spreadsheet.cell(i,'C')
         weight = spreadsheet.cell(i,'D')

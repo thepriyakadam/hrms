@@ -1,8 +1,9 @@
-require 'query_report/helper'  # need to require the helper
+
+# require 'query_report/helper'  # need to require the helper
 class DepartmentsController < ApplicationController
   before_action :set_department, only: [:show, :edit, :update, :destroy]
   ##load_and_authorize_resource
-  include QueryReport::Helper  # need to include it
+  # include QueryReport::Helper  # need to include it
 
 
   def new

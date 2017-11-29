@@ -23,7 +23,8 @@ gem 'sass-rails', '~> 5.0'
 gem 'whenever', '~> 0.9.4',:require => false
 gem 'geocoder'
 gem 'therubyracer', platforms: :ruby
-gem 'query_report'
+
+# gem 'query_report'
 gem 'kaminari', '~> 0.16.3'
 gem 'coderay'
 gem 'bootstrap-datepicker-rails'
@@ -133,7 +134,8 @@ gem 'protokoll'
 # gem 'countries'
 gem 'city-state'
 
-gem 'rmagick', '~> 2.15.4'
+
+# gem 'rmagick', '~> 2.15.4'
 
 # infinite-cove-6619
 # DateTimePicker

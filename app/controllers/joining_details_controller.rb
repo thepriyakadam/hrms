@@ -1,10 +1,11 @@
-require 'query_report/helper' # need to require the helper
+
+# require 'query_report/helper' # need to require the helper
 class JoiningDetailsController < ApplicationController
   before_action :set_joining_detail, only: [:show, :edit, :update, :destroy]
   ##load_and_authorize_resource
   # GET /joining_details
   # GET /joining_details.json
-  include QueryReport::Helper # need to include it
+  # include QueryReport::Helper # need to include it
 
   def index
     @joining_details = JoiningDetail.all
@@ -110,8 +111,11 @@ class JoiningDetailsController < ApplicationController
     session[:active_tab1] ="Imports"   
   end
 
+ 
   def import
-
+    # byebug
+    # JoiningDetail.import(params[:file])
+    # redirect_to root_url, notice: "File imported."
     file = params[:file]
     if file.nil?
       flash[:alert] = "Please Select File!"

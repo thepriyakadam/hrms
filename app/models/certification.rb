@@ -19,6 +19,7 @@ class Certification < ActiveRecord::Base
         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
         if @employee == nil
         else
+
         employee_id = @employee.id
         name = spreadsheet.cell(i,'C')
         @year = Year.find_by_name(spreadsheet.cell(i,'D'))
@@ -34,6 +35,7 @@ class Certification < ActiveRecord::Base
 
         @certification = Certification.create(employee_id: employee_id,name: name,year_id: year_id,duration: duration,description: description)
     end
+
   end
 end
 

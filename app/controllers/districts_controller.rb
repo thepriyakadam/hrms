@@ -1,7 +1,8 @@
-require 'query_report/helper'  # need to require the helper
+
+# require 'query_report/helper'  # need to require the helper
 class DistrictsController < ApplicationController
   before_action :set_district, only: [:show, :edit, :update, :destroy]
-  include QueryReport::Helper  # need to include it
+  # include QueryReport::Helper  # need to include it
 
   
   def new

@@ -1,11 +1,13 @@
-require 'query_report/helper' # need to require the helper
+
+# require 'query_report/helper' # need to require the helper
 
 class LeaveCOffsController < ApplicationController
   before_action :set_leave_c_off, only: [:show, :edit, :update, :destroy]
   
   # GET /leave_c_offs
   # GET /leave_c_offs.json
-  include QueryReport::Helper # need to include it
+
+  # include QueryReport::Helper # need to include it
 
   def index
   end

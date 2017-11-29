@@ -1,6 +1,6 @@
-require 'query_report/helper'
+# require 'query_report/helper'
 class SalaryslipsController < ApplicationController
- include QueryReport::Helper
+ # include QueryReport::Helper
 
   def salary_slip_report_form
     session[:active_tab] ="PayrollManagement"
@@ -1967,7 +1967,6 @@ end
   end
 
   def import_xl
-    
   end
 
   def import

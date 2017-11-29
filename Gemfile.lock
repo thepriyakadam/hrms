@@ -404,4 +404,4 @@ DEPENDENCIES
   wicked_pdf (~> 1.1)
   wirble
   wkhtmltopdf-binary (~> 0.9.9.3)
-  yaml_db
+yaml_db

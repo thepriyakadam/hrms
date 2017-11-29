@@ -75,6 +75,7 @@ class EmployeeAttendance < ActiveRecord::Base
      spreadsheet = open_spreadsheet(file)
       (2..spreadsheet.last_row).each do |i|
         employee_code = spreadsheet.cell(i,'A').to_i
+
         employee_name = spreadsheet.cell(i,'B')
         day = spreadsheet.cell(i,'C')
         in_time = spreadsheet.cell(i,'D') #@employee.id
@@ -95,6 +96,7 @@ class EmployeeAttendance < ActiveRecord::Base
           end
         end
       end
+
         @employee_attendance = EmployeeAttendance.last
         employee = Employee.find_by_manual_employee_code(employee_code)
         @employee_attendance.update(employee_id: employee.id)

@@ -1,7 +1,7 @@
-require 'query_report/helper'  # need to require the helper
+# require 'query_report/helper'  # need to require the helper
 class StatesController < ApplicationController
   before_action :set_state, only: [:show, :edit, :update, :destroy]
-  include QueryReport::Helper  # need to include it
+  # include QueryReport::Helper  # need to include it
 
   # GET /states
   # GET /states.json

@@ -30,6 +30,7 @@ def self.to_csv(options = {})
         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
         if @employee.nil?
         else
+
         employee_id = @employee.id
         account_no = spreadsheet.cell(i,'C').to_i
         @bank = Bank.find_by_name(spreadsheet.cell(i,'D'))
@@ -37,6 +38,7 @@ def self.to_csv(options = {})
           bank_name = spreadsheet.cell(i,'D')
            @bank_entry = Bank.create(name: bank_name)
            bank_id = @bank_entry.id
+
         else
         bank_id = @bank.id
         end
@@ -55,6 +57,7 @@ def self.to_csv(options = {})
         @employee_prsent.update(employee_id: employee_id,account_no: account_no,bank_id: bank_id,
         branch_name: branch_name,ifsc_code: ifsc_code,micr_code:  micr_code,branch_code: branch_code,address: address,contact_no: contact_no)
    end
+
   end
 end
 end

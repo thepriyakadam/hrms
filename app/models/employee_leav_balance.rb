@@ -114,6 +114,9 @@ class EmployeeLeavBalance < ActiveRecord::Base
       else raise "Unknown file type: #{file.original_filename}"
     end
   end
+  # def is_present_for_leave_balance(e)
+  #   LeaveMaster.exists?(leav_category_id: e.leav_category_id)
+  # end
 
 
   def emp_available(e)

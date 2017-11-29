@@ -156,6 +156,7 @@ def self.to_csv(options = {})
         notice_period: notice_period,notice_period_after_probation: notice_period_after_probation,have_passport: have_passport,passport_no: passport_no,passport_issue_date: passport_issue_date,passport_expiry_date: passport_expiry_date,leaving_date: leaving_date,c_off: c_off,payment_mode_id: payment_mode_id,basis_of_time: basis_of_time,is_employeer_pf: is_employeer_pf,select_pf: select_pf,pf_max_amount: pf_max_amount,employee_pf_no: employee_pf_no,
         is_employeer_esic: is_employeer_esic,have_esic: have_esic,employee_efic_no: employee_efic_no,have_retention: have_retention,is_insurance: is_insurance,is_family_pension: is_family_pension,is_bonus: is_bonus,ot_option: ot_option,ot_rate: ot_rate)
     end
+
      end
     end
   end

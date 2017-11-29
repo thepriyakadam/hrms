@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Sr.No.</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Employee ID</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Employee Name</Data></Cell>
+				<Cell ss:Index="4"><Data ss:Type="String">Account No.</Data></Cell>
+				<Cell ss:Index="5"><Data ss:Type="String">Bank Name</Data></Cell>
+				<Cell ss:Index="6"><Data ss:Type="String">Update Time</Data></Cell>
+				</Row>
+
+        <% i = 0 %>
+        <% @employee_bank_details.each do |employee_bank_detail| %>
+        <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= employee_bank_detail.employee.try(:manual_employee_code ) %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= employee_bank_detail.employee.try(:first_name ) %> <%= employee_bank_detail.employee.try(:middle_name ) %> <%= employee_bank_detail.employee.try(:last_name ) %> </Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="String"><%= employee_bank_detail.account_no %></Data></Cell>
+          <Cell ss:Index="5"><Data ss:Type="String"><%= employee_bank_detail.bank.try(:name) %></Data></Cell>
+          <Cell ss:Index="6"><Data ss:Type="String"><%= employee_bank_detail.try(:updated_at).to_date %></Data></Cell>
+           </Row><!-- Row -->
+      <% end %><!-- slip -->
+    </Table>
+  </Worksheet>
+</Workbook>

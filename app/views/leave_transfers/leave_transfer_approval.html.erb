@@ -1,0 +1,47 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Leave Transfer Approval</h3>
+    <div class="pull-right"></div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+   <table id="example6" class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Employee</th>
+              <th>Transfer To</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @pending_leave_transfers.try(:each) do |leave_transfer| %>
+              <tr>
+                <td><%= leave_transfer.employee.try(:manual_employee_code) %></td>
+                <td><%= full_name(leave_transfer.employee) %></td>
+                <td><%= full_name(leave_transfer.transfer_to) %></td>
+                <td>
+                  <%= link_to 'View Detail', show_detail_for_approval_leave_transfers_path(leave_transfer),class: 'btn btn-xs btn-info' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+  </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example7').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

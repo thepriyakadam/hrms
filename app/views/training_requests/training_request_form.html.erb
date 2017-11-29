@@ -1,0 +1,203 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+  <h3 class="box-title">Training Request</h3>
+  </div>
+  <div class="box-body">
+
+     <%= bootstrap_form_for :training_request,url:{action:"training_create_form"},html: {id: 'training_request'} do |f| %>
+
+    <%= f.hidden_field :employee_id, value: current_user.employee_id %>
+    <%= f.hidden_field :no_of_employee, value: @emp_total %>
+    <%= f.hidden_field :training_date, value: Date.today %>
+    <%  employ_1 = Employee.where(id: current_user.employee_id).take  %>
+
+      <div class="row">
+<!--     <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <= f.text_field :training_date,label: 'Training Date',class: 'birth_date'%>
+        </div>
+      </div>
+    </div> -->
+
+      <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :training_topic_master_id, all_training_topic,{label: "Training Topic",include_blank: " Select Training Topic"}%>
+          </div>
+        </div>
+
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :trainer_name,placeholder: 'Trainer Name' %>
+      </div>
+    </div>
+       
+        <div class="col-sm-3">
+          <div class="field">
+        <%= f.text_field :trainer_num, label: 'Contact No.',placeholder: 'Contact No.' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :trainer_email,label: 'Trainer Email id',placeholder: 'Trainer Email id' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :about_trainer,label: 'Detail',placeholder: 'Detail' %>
+      </div>
+    </div>
+
+       <div class="col-sm-3">
+    <div class="field">
+        <%= f.text_field :no_of_days,label: 'No. of Days',placeholder: 'No. of Days' %>
+    </div>
+    </div>
+
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :no_of_hrs,label: 'No. of Hours',placeholder: 'No. of Hours' %>
+      </div>
+    </div>
+
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :place,placeholder: 'Place',label: "Place" %>
+
+          </div>
+        </div>
+
+      
+    
+  </div>
+
+  <div class="row">
+
+ 
+  
+
+
+          <div class="col-sm-6">
+          <div class="field">
+          <%= f.text_field :description,placeholder: 'Description',label: "Description" %>
+
+          </div>
+        </div>
+
+      
+
+
+
+        <div class="col-sm-6">
+          <div class="field">
+            <%= f.text_field :justification,placeholder: 'Justification',label: "Justification"%>
+          </div>
+        </div>
+      </div><br>
+
+      
+      <table id="example1" class="table table-bordered table-hover table-condensed">
+       <thead>
+            <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Department</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @employees.where(status: "Active").each do |e|  %>
+          <tr>
+            <td><%= check_box_tag "employee_ids[]", e.id %></td>
+            <td><%= e.manual_employee_code %></td> 
+            <td><%= full_name(e) %></td>
+            <td><%= e.department.try(:name) %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+
+    <div class="row">
+           <div class="actions" style="padding-left: 20px">
+          <%= f.submit "Create Training Request", class: 'btn btn-primary btn-sm' %>
+<!--           <= link_to 'Back', training_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+ -->       
+
+  </div>
+      </div>
+
+
+      <% end %>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+$('#selectAll').click(function() {
+  if (this.checked) {
+    $(':checkbox').each(function() {
+      this.checked = true;                       
+    });
+  } 
+  else {
+    $(':checkbox').each(function() {
+      this.checked = false;                        
+    });
+  } 
+});
+</script>
+
+<script type="text/javascript">
+  $(function () {
+    $('#example1').Datatable();
+  });
+</script>
+
+<script type="text/javascript">
+
+  $("#training_request").validate({
+    rules: {
+      "training_request[training_topic_master_id]":{
+        required: true
+      },
+      "training_request[training_date]":{
+        required: true
+      },
+      "training_request[reporting_master_id]":{
+        required: true
+      },
+      "training_request[place]":{
+        required: true
+      }
+    },
+    messages: {
+      "training_request[training_topic_master_id]":{
+        required: "Please specify Training Topic"
+      },
+      "training_request[training_date]":{
+        required: "Please specify No of Training Date"
+      },
+      "training_request[reporting_master_id]":{
+        required: "Please specify Reporting Manager"
+      },
+       "training_request[place]":{
+        required: "Please specify Place"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+
+  $('.birth_date1').datepicker({
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-100:+10',
+  dateFormat: 'dd-mm-yy' });
+</script>

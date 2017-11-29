@@ -1,0 +1,37 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Role Assigned User</h3>    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table  id="example6" class="table table-bordered table-hover table-condensed">
+	    <thead>
+	      <tr>
+		      <th>ID</th>
+		      <th>Employee Name</th>
+		      <th>System Role</th>
+		      <th>Action</th>
+	    </tr>
+		  </thead>
+		  <tbody>
+			<% @employees.each do |employee| %>  
+		      <tr>
+		        <td><%= employee.manual_employee_code %></td>
+		        <td><%= employee.first_name %> <%= employee.middle_name %> <%= employee.last_name %></td>
+		        <td><%= employee.member.try(:role).try(:name) %></td>
+				<td><%= link_to '', modal_employees_path(employee), class: 'btn btn-xs btn-default fa fa-eye',remote: true%></td>
+		      </tr>	
+		    <% end %>
+		  </tbody>
+		</table>
+	</div>
+</div>
+
+<div id="myModal" class="modal fade"></div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

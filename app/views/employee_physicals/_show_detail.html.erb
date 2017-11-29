@@ -1,0 +1,52 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+   <div class="row">
+    <div class="col-sm-1">
+  <% if @employee_physical.employee.passport_photo_file_name == nil %>
+  <% if @employee_physical.employee.gender == "Female" %>
+   <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%else%>
+   <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%end%>
+ <%else%>
+      <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+      <%end%>
+  </div>
+    <div class="col-sm-6">
+     <font color='#0077b3'>
+       ID : <%= @employee_physical.employee.try(:manual_employee_code) %><br>
+       Name : <%= @employee_physical.employee.try(:first_name) %> <%= @employee_physical.employee.try(:middle_name) %> <%= @employee_physical.employee.try(:last_name) %><br>
+       Email : <%= @employee_physical.employee.try(:email) %></font>
+    </div>
+  </div>
+     
+    <div class="box-tools pull-right">
+      <%= link_to 'Edit',  edit_employee_physical_path(@employee_physical),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-xs fa fa-arrow-left' %>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr><th colspan="4"><center><font color='#0077b3'>Physical Detail</font></center> </th></tr>
+
+    <tr>
+        <th> <strong>Height(inches)</strong></th>
+        <td> <%= @employee_physical.height %></td>
+       
+        <th><strong>Weight(kg)</strong></th>
+        <td><%= @employee_physical.weight %></td>
+    </tr>
+     <tr>
+
+        <th> <strong>T-Shirt Size</strong></th>
+        <td> <%= @employee_physical.size %></td>
+
+          <th> <strong>Trouser Size(cm)</strong></th>
+        <td> <%= @employee_physical.trouser_size %></td>
+
+    </tr>
+    </table>
+  </div><!-- /.box -->
+</div>
+
+

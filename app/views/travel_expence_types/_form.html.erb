@@ -1,0 +1,50 @@
+<%= bootstrap_form_for(@travel_expence_type,html: {id: 'travel_expence_type'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Travel Expense Code ' %>
+      </div>
+    </div> 
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Travel Expense Type' %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Travel Expense Type", class: 'btn btn-primary btn-sm' %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+$("#travel_expence_type").validate({
+    rules: {
+      "travel_expence_type[code]":{
+        required: true,
+      },
+      "travel_expence_type[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "travel_expence_type[code]":{
+        required: "Please Specify Travel Expense Code",
+      },
+       "travel_expence_type[name]":{
+        required: "Please Specify Travel Expense Type",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

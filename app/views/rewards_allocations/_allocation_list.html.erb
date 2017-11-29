@@ -1,0 +1,32 @@
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+    	<th>Reward type</th>
+      <th>Department</th>
+      <th>Approval</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Allocated Quantity</th>
+      <th>Cost</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rewards_allocations.each do |rewards_allocation| %>
+      <tr>
+        <td><%= rewards_allocation.reward_type.try(:name) %></td>
+        <td><%= rewards_allocation.department.try(:name) %></td>
+        <td><%= full_name(rewards_allocation.reporting_master.employee) %></td>
+        <td><%= rewards_allocation.from %></td>
+        <td><%= rewards_allocation.to %></td>
+        <td><%= rewards_allocation.allocated_qty %></td>
+        <td><%= rewards_allocation.cost %></td>
+        <td>
+          <%= link_to '', edit_rewards_allocation_path(rewards_allocation),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+          <%= link_to '',  rewards_allocation, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

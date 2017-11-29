@@ -1,0 +1,112 @@
+<div class="box-header">
+    <div class="pull-right">
+    <!--   < link_to "Add Employee Attendance", new_employee_attendance_path, class: 'btn btn-primary' %>  -->
+    </div>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for :temp, url: {action: "create_attendance"} do |f| %>
+      <table id="example5" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Employee</th>
+            <th>Cost Center</th>
+            <% for i in @from_date.to_date..@to_date.to_date %>
+              <th colspan="4"><%= i %> - <%= i.strftime("%A") %></th>
+            <%end%>
+          </tr>
+          <tr>
+            <th colspan="3"></th>
+              <%  for i in @from_date.to_date..@to_date.to_date %>
+                <th>Present</th>
+                <th>In Time</th>
+                <th>Out Time</th>
+                <th>Working Hrs.</th> 
+              <%end%>             
+          </tr>
+        </thead>
+        <tbody>
+          <% exist = {} %>
+          <% @employees.each do |e| %>
+            <tr>
+              <td><%= e.employee.manual_employee_code %></td>
+              <td><%= full_name(e.employee) %></td>
+              <td><%= e.employee.joining_detail.try(:cost_center).try(:name) %></td>
+              <% sorted_exists = calculate_attendance_datewise(@from_date,@to_date, exist, e)%>
+              <% sorted_exists.each do |k,v|%>
+                <td><%= v %></td>
+                <td><%= e.try(:in_time )%></td>
+                <td><%= e.try(:out_time )%></td>
+                <td><%= e.try(:working_hrs )%></td>
+              <%end%>
+            </tr>
+            <% absent_day_count = absent_day_count(exist) %>
+            <% present_day = present_day_count(exist) %>
+            <% holiday_in_month = holiday_in_month_count(exist) %>
+            <% week_off_day = week_off_day_count(exist) %>
+            <% od_day = od_day_count(exist) %>
+            <% process_off = process_off_count(exist) %>
+            <% access_card_forgotten = access_card_forgotten_count(exist) %>
+
+            <% workingday = [] %>
+            <% workingday = create_leave_datewise(@from_date,@to_date, e) %>
+            <%= hidden_field_tag "attendances[]", e.id %>
+            <%= hidden_field e.employee_id, 'employee_id', value: e.employee_id %>
+            <%= hidden_field e.employee_id, 'present_day', value: present_day.to_f + process_off.to_f + access_card_forgotten.to_f +  workingday[2] %>
+            <%= hidden_field e.employee_id, 'od_day', value: od_day %>
+            <%= hidden_field e.employee_id, 'total_leave', value: workingday[0] + workingday[1] %>
+            <%= hidden_field e.employee_id, 'nonpay_leave', value: workingday[1] %>
+            <%= hidden_field e.employee_id, 'pay_leave', value: workingday[0] %>
+            <%= hidden_field e.employee_id, 'holiday_in_month', value: holiday_in_month %>
+            <%= hidden_field e.employee_id, 'week_off_day', value: week_off_day %>
+
+              <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count.to_f + workingday[3] %>
+
+              <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+                <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + workingday[0] + workingday[2] + od_day.to_f %>
+              <% else %>
+                <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[0] + workingday[2] + od_day.to_f %>
+              <% end %>  
+            
+            <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+              <%= hidden_field e.employee_id, 'nonpayable_day', value: absent_day_count.to_f+ workingday[1] + workingday[3] + week_off_day.to_f  %>
+            <% else %>
+              <%= hidden_field e.employee_id, 'nonpayable_day', value: absent_day_count.to_f+  workingday[1] + workingday[3]  %>
+            <% end %> 
+
+            <% exist.clear %>
+          <%end%>
+        </tbody>
+      </table>
+
+
+      <%= link_to " Excel Report ",show_costcenter_wise_attendance_employee_attendances_path(:salary => {:from => params[:salary][:from], :to  => params[:salary][:to],:costcenter => params[:salary][:costcenter], :status => params[:salary][:status]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%= link_to " PDF Report",show_costcenter_wise_attendance_employee_attendances_path(:salary => {:from => params[:salary][:from],:costcenter => params[:salary][:costcenter], :to => params[:salary][:to], :status => params[:salary][:status]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+    <% end %>
+  </div>
+
+<script type="text/javascript">
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;
+      });
+    }
+    else {
+      $(':checkbox').each(function() {
+        this.checked = false;
+      });
+    }
+  });
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example5').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true
+    } );
+} );
+</script>

@@ -1,0 +1,55 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Due Detail History</h3>
+<div class="box-body">
+<%= bootstrap_form_for :due_employee_detail,url:{action:'is_confirm_employee_due'} do |f| %>  
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+     <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+     <th>No Dues Owner</th>
+     <th>No Dues Template</th>
+     <th>Employee Name</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @due_employee_details.each do |due_employee_detail| %>
+      <tr>
+       <td><%= check_box_tag "due_employee_detail_ids[]", due_employee_detail.id %></td>
+       <td><%= due_employee_detail.reporting_master_id %></td>
+       <td><%= due_employee_detail.due_template.try(:name) %></td>
+       <td><%= due_employee_detail.employee.first_name+' '+due_employee_detail.employee.middle_name+' '+due_employee_detail.employee.last_name %></td>
+ 
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %><br><br>
+      </div>
+    </div>
+  </div>
+  <% end %>
+
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>

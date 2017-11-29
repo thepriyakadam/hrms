@@ -1,0 +1,6 @@
+<% if Award.exists?(employee_id: params[:id]) %>
+<%@awards = Award.where('employee_id=?',params[:id])%>
+$('#info').html("<%= j render 'awards/show_detail' %>")
+<%else%>
+$('#info').html("<%= j render 'awards/form' %>")
+<%end%>

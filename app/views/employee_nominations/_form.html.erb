@@ -1,0 +1,181 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Nomination Details</h3>
+  </div><!-- /.box-header -->
+
+<% emp_family = Employee.find(@employee.id)%>
+<div class="box-body">
+<%= bootstrap_form_for(@employee_nomination,html: {id: "employee_nomination"}) do |f| %>
+  <%= f.hidden_field :employee_id, value: @employee.id %>
+  <div class="row">
+    <div class="col-sm-3">
+        <div class="form-group required">
+         <div class="input-group">
+          <div class="input-group-addon">
+            <%= link_to "", new_nomination_master_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+          </div>
+          <%= f.select :nomination_master_id, all_nomination_type,{label: "Nomination Type",include_blank: " Select Nomination Option"}%>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :family_id,all_family_type(emp_family),placeholder:"Family",include_blank: 'Select Family Member' %>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="form-group required">
+        <%= f.text_field :nomination,label:"Nomination(%)" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <label>Illness Type</label>
+        <div class="form-group required">
+         <div class="input-group">
+        <div class="input-group-addon">
+          <%= link_to "", new_illness_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+        </div>
+          <%= f.select :illness_type_id, all_illness_type,{hide_label: true,include_blank: " Select Illness Type"}%>
+        </div>
+        </div>
+      </div>
+     <div class="col-sm-2">
+      <div class="field">
+        <%= f.check_box :minor,inline_label: 'Remember me',class: 'showHideCheck' %>
+      </div>
+      </div>
+    </div>
+  <!-- <div class="option">
+  <div class="hiddenInput"> -->
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :guardian_name,label:"Guardian Name(If Nomminee is Minor)" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <label>Relation(Nomminee's)</label>
+        <div class="form-group required">
+         <div class="input-group">
+        <div class="input-group-addon">
+                <%= link_to "", new_relation_master_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+          <%= f.select :relation_master_id, all_relation_type,{hide_label: true,include_blank: " Select Relation"}%>
+        </div>
+        </div>
+      </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :mobile_no,placeholder:"Mobile No" %>
+      </div>
+    </div>
+    
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :address,placeholder:"Address" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/companies/collect_states',a,function(response){});"}%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <div id="states">
+          <%= render 'companies/state_dropdown' %> 
+      </div> 
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+       <div id="district">
+         <%= render 'companies/city_dropdown' %>
+     </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :city,placeholder:"City" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :pin_code,placeholder:"Pin Code" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :phone_no,placeholder:"Phone No" %>
+      </div>
+    </div>  
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :email,placeholder:"Email" %>
+      </div>
+    </div>
+  </div>
+  <!-- </div>
+  </div> -->
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "create Employee Nomination", class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+</div>
+</div>
+
+<div id="employee_nomination_list"></div>
+
+<script type="text/javascript">
+ $("#employee_nomination").validate({
+    rules: {
+      "employee_nomination[nomination_master_id]":{
+        required: true
+      },
+      "employee_nomination[family_id]":{
+        required: true
+      },
+      "employee_nomination[nomination]":{
+        required: true
+      }
+    },
+    messages: {
+      "employee_nomination[nomination_master_id]":{
+        required: "Please specify nomination master"
+      },
+      "employee_nomination[family_id]":{
+        required: "Please specify family member"
+      },
+      "employee_nomination[nomination]":{
+        required: "Please specify nomination"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+<script>
+$(".hiddenInput").hide();
+$(".showHideCheck").on("change", function() {
+    $this = $(this);
+    $input = $this.parent().find(".hiddenInput");
+    if($this.is(":checked")) {
+        $input.slideDown();
+    } else {
+        $input.slideUp();
+    }
+});
+</script>

@@ -1,0 +1,98 @@
+	 <!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+   <h4>Employee Family Detail</h4>
+    <p>
+	<table id="example2" class="table table-bordered table-hover table-condensed">
+
+<tr>
+  <td><strong>Employee</strong></td>
+  <td><%= @family.employee.try(:prefix) %> <%= @family.employee.try(:first_name) %> <%= @family.employee.try(:last_name) %></td>
+
+  <td> <strong>Relation</strong></td>
+  <td><%= @family.relation %></td>
+</tr>
+<tr>
+
+  <td><strong>First Name</strong></td>
+  <td><%= @family.f_name %></td>
+  
+  <td><strong>Middle Name</strong></td>
+  <td><%= @family.m_name %></td>
+</tr>
+<tr>
+  <td><strong>Last Name</strong></td>
+  <td><%= @family.l_name %></td>
+
+  <td> <strong>Date Of Birth</strong></td>
+  <td><%= @family.date_of_birth %></td>
+</tr>
+<tr>
+  <td> <strong>Current Address</strong></td>
+  <td><%= @family.current_address %></td>
+
+  <td><strong>Age</strong></td>
+  <td><%= @family.age %></td>
+</tr>
+<tr>
+  <td> <strong>Contact No.</strong></td>
+  <td><%= @family.contact_no %></td>
+
+  <td> <strong>Email</strong></td>
+  <td><%= @family.email %></td>
+</tr>
+<tr>
+  <td><strong>Aadhaar No</strong></td>
+  <td> <%= @family.adhar_no %></td>
+
+  <td> <strong>PAN Card No</strong></td>
+  <td><%= @family.pan_no %></td>
+</tr>
+<tr>
+  <td><strong>Passport No</strong></td>
+  <td><%= @family.passport_no %></td>
+
+  <td><strong>Passport Issue Date</strong></td>
+  <td><%= @family.passport_issue_date %></td>
+</tr>
+<tr>
+  <td><strong>Passport Expiry Date</strong></td>
+  <td><%= @family.passport_expiry_date %></td>
+
+  <td><strong>Gender</strong></td>
+  <td><%= @family.gender %></td>
+</tr>
+<tr>
+  <td><strong>Marital Status</strong></td>
+  <td><%= @family.marital %></td>
+
+  <td> <strong>Blood Group</strong></td>
+  <td><%= @family.blood_group.try(:name) %></td>
+</tr>
+<tr>
+  <td> <strong>Religion</strong></td>
+  <td><%= @family.religion.try(:name) %></td>
+
+  <td> <strong>Profession</strong></td>
+  <td><%= @family.profession %></td>
+</tr>
+<tr>
+  <td><strong>Medical Insurance</strong></td>
+  <td><%= @family.medical_claim %></td>
+
+  <td><strong>Differently Abled</strong></td>
+  <td><%= @family.is_handicap %></td>
+</tr>
+<tr>
+  <td><strong>Disability Type</strong></td>
+  <td><%= @family.handicap_type %></td>
+  <td></td>
+  <td></td>
+</tr> 
+</table>
+    </p>
+  </body>
+</html>

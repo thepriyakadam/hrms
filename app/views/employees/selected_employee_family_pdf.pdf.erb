@@ -1,0 +1,70 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+    }
+</style>
+ <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+    <thead>
+     <tr><td colspan="21"><center><strong><%= current_user.employee.company_location.company.try(:description) %></strong> <br>
+        <%= current_user.employee.company_location.company.try(:address) %><br> 
+        <%= current_user.employee.company_location.try(:name) %></center> </td></tr>
+      <tr>
+        <th>ID</th>
+        <th>Employee Name</th>
+        <th>Relation</th>
+        <th>Date Of Birth</th>
+        <th>Current Address</th>
+        <th>Age</th>
+        <th>Contact No.</th>
+        <th>Email</th>
+        <th>Aadhaar No</th>
+        <th>PAN Card No</th>
+        <th>Passport No</th>
+        <th>Passport Issue Date</th>
+        <th>Passport Expiry Date</th>
+        <th>Gender</th>
+        <th>Marital Status</th>
+        <th>Blood Group</th>
+        <th>Religion</th>
+        <th>Profession</th>
+        <th>Medical Insurance</th>
+        <th>Differently Abled</th>
+        <th>Disability Type</th>
+        </tr>
+        </thead>
+<tbody>
+
+        <% @families.each do |family| %>
+        <tr>
+         <td><%= family.employee.try(:manual_employee_code) %></td>
+         <td><%= full_name(family.employee)%></td>
+         <td><%= family.relation %></td>
+         <td><%= family.date_of_birth %></td>
+         <td><%= family.current_address %></td>
+         <td><%= family.age %></td>
+         <td><%= family.contact_no %></td>
+         <td><%= family.email %></td>
+         <td><%= family.adhar_no %></td>
+         <td><%= family.pan_no %></td>
+         <td><%= family.passport_no %></td>
+         <td><%= family.passport_issue_date %></td>
+         <td><%= family.passport_expiry_date %></td>
+         <td><%= family.gender %></td>
+         <td><%= family.marital %></td>
+         <td><%= family.blood_group.try(:name) %></td>
+         <td><%= family.religion.try(:name) %></td>
+         <td><%= family.profession %></td>
+         <td><%= family.medical_claim %></td>
+         <th><%= family.is_handicap %></th>
+         <th><%= family.handicap_type %></th>
+         </tr>
+         <%end%>
+ </tbody>
+</table>

@@ -1,0 +1,45 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Advance & Installment </h3>
+    <div class="pull-right">
+      
+    </div>
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <div id="comments">
+    <table id="example1" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Employee</th>
+        <th>Advance Amount</th>
+        <th>No. of Installment</th>
+        <th>Installment Amount</th>
+        <th>Advance Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @advance_salaries.each do |advance_salary| %>
+        <tr>
+         <td><%= advance_salary.employee.try(:manual_employee_code) %></td>
+         <td><%= full_name(advance_salary.employee) %></td>
+         <td><%= advance_salary.advance_amount %></td>
+         <td><%= advance_salary.no_of_instalment %></td>
+         <td><%= advance_salary.instalment_amount %></td>
+         <td><%= advance_salary.advance_date %></td>
+         <td>
+            
+            <!-- link_to '', advance_salary, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-sm  btn-danger fa fa-close' -->
+            <%= link_to '', advance_salary ,class: 'btn btn-xs btn-default fa fa-eye' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+ <!--  < link_to 'Back', advance_salaries_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %> -->
+</div>
+</div>

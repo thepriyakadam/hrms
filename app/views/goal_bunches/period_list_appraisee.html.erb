@@ -1,0 +1,27 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Self Evaluation - Performance Goal List</h3>
+    <div class="pull-right">  
+    </div>
+  </div>
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+     <thead>
+        <tr>
+         <th>Base</th>
+         <th>Period</th>
+         <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @goal_bunches.each do |g| %>
+        <tr>
+        <td><%= g.period.try(:name) %></td>
+        <td>From: <%= g.period.try(:from) %> To: <%= g.period.try(:to) %> </td>
+        <td><%= link_to 'Appraisee Comment', appraisee_comment_goal_bunches_path(id: g,emp_id: g.employee_id) ,class: 'btn btn-xs btn-info' %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

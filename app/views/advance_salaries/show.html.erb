@@ -1,0 +1,99 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Salary Advance</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr>
+      <th><strong>Employee ID</strong></th>
+      <td><%= @advance_salary.employee.try(:manual_employee_code) %></td>
+
+      <th><strong>Employee Name</strong></th>
+      <td> <%= full_name(@advance_salary.employee) %></td>
+    </tr>
+    <tr>
+      <th><strong>Advance Type</strong></th>
+      <td><%= @advance_salary.advance_type.try(:name) %></td>
+   
+      <th><strong>Interest</strong></th>
+      <td><%= @advance_salary.interest %></td>
+    </tr>
+    <tr>
+      <th><strong>Advance Amount</strong></th>
+      <td><%= @advance_salary.advance_amount %></td>
+   
+      <th><strong>No. of Installment</strong></th>
+      <td><%= @advance_salary.no_of_instalment %></td>
+    </tr>
+    <tr>
+      <th><strong>Installment Amount</strong></th>
+      <td><%= @advance_salary.instalment_amount %></td>
+
+      <th><strong>Advance Date</strong></th>
+      <td><%= @advance_salary.advance_date %></td>
+    </tr>
+    <tr>
+      <th><strong>Installment Paid</strong></th>
+      <td><%= @advance_salary.instalments.where(is_complete: true).sum('instalment_amount') %></td>
+
+      <th><strong>Installment Remain</strong></th>
+      <td><%= @advance_salary.instalments.where(is_complete: false).sum('instalment_amount') %></td>
+    </tr>
+    </table>
+    <br>
+
+    <% total = @advance_salary.advance_amount %>
+    <% change_total = @advance_salary.instalments.sum('instalment_amount') %>
+  
+  <div class="row">
+    <div class="col-sm-10"><h5>Installment Details</h5></div>
+    <div class="col-sm-2">
+      <div class="box-tools pull-right">
+        <% if change_total.to_i < total.to_i %>
+          <% unless @instalments.where(is_complete: true).sum('instalment_amount').to_i >= @advance_salary.advance_amount.to_i %>
+            <%= link_to "Add Instalment", new_instalment_path(@advance_salary),class: "btn btn-primary btn-sm" %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  
+  <br>
+  
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Installment Date</th>
+        <th>Installment Amount</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+       <% @instalments.each do |instalment| %>
+        <tr>
+          <% if instalment.instalment_date.nil? %>
+            <td><%=  %></td>
+          <% else %>
+            <td><%= instalment.try(:instalment_date).strftime("%B %Y") %></td>
+          <% end %>
+          
+          <td align="right"><%= instalment.instalment_amount %></td>
+          <td>
+            <% unless instalment.is_complete %>
+              <%= link_to '', edit_instalment_path(instalment), class: 'btn btn-xs btn-success fa fa-edit' %>
+              <!-- link_to '', instalment, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-sm  btn-danger fa fa-close' -->
+            <% else %>
+              <small class="label label-info">Paid.</small>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      <tr><th>Total</th><td align="right"><%= change_total %></td><td></td></tr>
+    </tbody>
+  </table>
+  
+  </div>
+  <%= link_to 'Back', advance_salaries_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+</div>

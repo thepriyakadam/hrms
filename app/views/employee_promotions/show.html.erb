@@ -1,0 +1,50 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title"> Employee Promotion</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+   
+    <tr>
+      <th><strong>Employee</strong></th>
+      <td><%= full_name(@employee_promotion.employee) %></td>
+    
+      <th><strong>Department</strong></th>
+      <td><%= @employee_promotion.department.try(:name) %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Employee Designation</strong></th>
+      <td><%= @employee_promotion.employee_designation.try(:name) %></td>
+  
+      <th><strong>Employee Grade</strong></th>
+      <td><%= @employee_promotion.employee_grade.try(:name) %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Employee Category</strong></th>
+      <td><%= @employee_promotion.employee_category.try(:name) %></td>
+
+      <th><strong>Employee CTC</strong></th>
+      <td><%= @employee_promotion.employee_ctc %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Effective From</strong></th>
+      <td><%= @employee_promotion.effective_from %></td>
+
+      <th><strong>Effective To</strong></th>
+      <td><%= "Till Next Promotion" %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Justification</strong></th>
+      <td colspan="3"><%= @employee_promotion.justification %></td>
+    </tr>
+
+    </table><br>
+
+    <%= link_to 'Edit', edit_employee_promotion_path(@employee_promotion),class: 'btn btn-success btn-sm fa fa-edit' %> |
+    <%= link_to 'Back', employee_promotions_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

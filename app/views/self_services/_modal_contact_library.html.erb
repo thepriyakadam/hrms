@@ -1,0 +1,53 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Contact Detail </center></h4>
+    </div>
+    <div class="modal-body">
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Employee Name</th>
+      <td><%= full_name(@employee) %></td>
+    </tr>
+    
+      <tr>  
+      <th>Reporting Manager</th>
+      <td><% emp=Employee.where(id: @employee.manager_id).take %><%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
+    </tr>
+
+    <tr>
+      <th>Extension Line 1</th>
+      <td><%= @employee.contact_no %></td>
+    </tr>
+<!-- 
+    <tr>
+      <th>Extension Line 2</th>
+      <td><= @employee.try(:optinal_contact_no1) %></td>
+    </tr>
+
+    <tr>
+      <th>Personal Contact No.</th>
+      <td><%= @employee.optinal_contact_no %></td>
+    </tr>
+ -->
+    <tr>   
+      <th>Email</th>
+      <td><%= @employee.email %></td>
+      </tr>
+      <tr>
+      <th>Designation</th>
+      <td><%= @employee.joining_detail.try(:employee_designation).try(:name) %></td>
+    </tr>
+    <tr>  
+      <th>Department</th>
+       <td><%= @employee.try(:joining_detail).try(:cost_center).try(:name) %> - <%= @employee.department.try(:name) %> <%= @employee.try(:sub_department).try(:name) %></td>
+       </tr>
+      
+  </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

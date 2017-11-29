@@ -1,0 +1,37 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Final Approval Training List</h3>
+    <div class="pull-right">
+    </div>
+  </div>
+
+<div class="box-body">
+
+    <table id="example1" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Employee Name</th>
+          <th>Topic</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @training_requests.each do |training_request| %>
+          <tr>
+            <td><%= training_request.employee.try(:manual_employee_code) %></td>
+            <td><%= full_name(training_request.employee) %> </td>
+            <td><%= training_request.training_topic_master.try(:name) %></td>
+          <td>
+            <% if training_request.status == "Approved" or training_request.status == "Rejected" %>
+            <% else %>
+            <%= link_to 'Approve',training_request_confirmation_training_requests_path(training_request_id: training_request.id),class: 'btn btn-sm btn-primary' %> 
+            <% end %>
+        </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>

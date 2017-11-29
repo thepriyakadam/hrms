@@ -1,0 +1,90 @@
+<div class="box">
+  <div class="box-header">
+    <h5 class="box-title"> GPS </h5>
+    <div class="box-body">
+      <%= bootstrap_form_for(:employee_gp, url: { action: 'show_set_gps_employeewise'},html: {id: "employee_gp"},remote: true) do |f| %>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <%= text_field :employee_gp,:from,placeholder: "From",class: 'request_date form-control'%>
+              </div>
+            </div>
+          </div>
+
+           <div class="col-sm-3">
+            <div class="form-group required">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <%= text_field :employee_gp,:to,placeholder: "To",class: 'request_date form-control'%>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+          <div class="form-group required">
+            <%= select :employee_gp,:employee_id, employee_list_for_food_deduction, {include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+          </div>
+        </div>  
+
+          <div class="col-sm-3">
+          <%= submit_tag 'Set GPS'%>
+          <!-- <= submit_tag 'Show GPS' %> -->
+          </div>
+        </div>
+    <% end %>
+       <div class="ajax-progress"></div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div id="set_gps_employeewise"></div>    
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#advance_salary").submit();
+  })
+</script>
+
+<script type="text/javascript">
+  $(function(){
+    $('.request_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+
+   $("#employee_gp").validate({
+    rules: {
+      "employee_gp[from]":{
+        required: true,
+      },
+      "employee_gp[to]":{
+        required: true,
+      }
+       },
+    messages: {
+      "employee_gp[from]":{
+        required: "Please Specify From Date",
+      },
+      "employee_gp[to]":{
+        required: "Please Specify To Date",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

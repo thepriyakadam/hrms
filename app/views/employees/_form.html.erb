@@ -1,0 +1,478 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Create Employee</h3>
+  
+  <div class="pull-right"></div>
+  <div class="box-body">
+    <%= bootstrap_form_for(@employee,html: {id: 'employee'}) do |f| %>
+      <div class="row">
+      <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :employee_code_master_id, all_employee_code_master,{include_blank: "Select Code Serial",label: "Code Serial"},{onchange:"var a={id:$(this).val()}; $.get('/employees/display_emp_code_master',a,function(response){});"}%>
+          </div>
+        </div>  
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :manual_employee_code,label: 'Employee ID',placeholder: "Employee ID",readonly: true %>
+           </div>
+        </div>
+          <!--  <div class="col-sm-3">
+          <div class="field">
+            <= f.select :prefix ,['Mr.','Mrs.','Miss.'] ,{label: 'Prefix',include_blank: "Select Prefix"} %>
+          </div>
+        </div> -->
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :first_name , label: 'First Name',placeholder: 'First Name' %>
+          </div>
+        </div>
+
+              <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :middle_name, label: 'Middle Name',placeholder: 'Middle Name' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+  
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :last_name, label: 'Last Name',placeholder: 'Last Name' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :gender, ['Male','Female'],{label: 'Select Gender',include_blank: " Select Gender"} %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :email,label: 'Official Email',placeholder: 'e.g.abc@sganalytics.com' %>
+          </div>
+        </div>
+
+           <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :optional_email, label: 'Personal Email',placeholder: 'e.g.abc@sganalytics.com'%>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+     
+
+         <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :adhar_no, label: 'Aadhaar No.',placeholder: "e.g : 123456789012" %>
+          </div>
+        </div>
+
+         <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :pan_no, label: 'PAN Card No.',placeholder: "e.g : ABCDE12345B" %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :licence_no, label: 'Driving Licence No.',placeholder: 'e.g.TN75 2013 0008800' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :contact_no,label: 'Extension Line 1',placeholder: 'e.g.123456789' %>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :optinal_contact_no1,label: 'Extension Line 2',placeholder: 'e.g.123456789' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :optinal_contact_no,label: 'Personal Contact No.',placeholder: 'e.g.123456789' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :emergency_contact_no,label: 'Emergency Contact No.',placeholder: 'e.g.123456789' %>
+          </div>
+        </div>
+
+                 <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :religion_id, all_religions,{include_blank: " Select Religion"} %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :status,['Active','Inactive'],{label: 'Status',include_blank: " Select Employee Status"} %>
+          </div>
+        </div>
+       <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :employee_type_id, all_employee_type,{label: "Employement Status ",include_blank: " Select Employement Status"} %>
+          </div>
+        </div>   
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :marital_status, ['Married','UnMarried','Divorcee'],{label: 'Marital Status',include_blank: " Select Marital Status"} %>
+          </div>
+        </div>
+
+           <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :nationality_id, all_nationality,{include_blank: " Select Nationality"} %>
+          </div>
+        </div>
+      </div>
+
+       <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :date_of_birth, label: 'Date of Birth', class: 'birth_date'%>
+            </div>
+          </div>
+        </div>
+         <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :blood_group_id, all_blood_group, {label: 'Blood Group',include_blank: " Select Blood Group"} %>
+          </div>
+        </div>
+
+
+      <div class="row">
+        <div class="col-sm-9">
+          <div class="form-group required">
+           <%= f.text_field :permanent_address, label: 'Permanent Address',placeholder: 'e.g. sector - c,pune' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :pin_code,label:"Pin/Zip Code",placeholder: "e.g : 400703"%>
+          </div>
+        </div>
+      </div>
+   
+      <div class="row">
+          <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_country_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+            <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/companies/collect_states',a,function(response){});"}%>
+          </div>
+          </div>
+        </div> 
+          <div class="col-sm-3">
+            <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_state_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+              <div id="states">
+                <%= render 'companies/state_dropdown' %> 
+            </div> 
+            </div>
+            </div>
+          </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_district_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+             <div id="district">
+               <%= render 'companies/city_dropdown' %>
+             </div>
+           </div>
+          </div>
+        </div>
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :city %>
+            </div>
+          </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="field">
+            <%= f.text_field :current_address, label: 'Current Address',placeholder: 'e.g. sector - c,pune' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :handicap, ['Yes','No'],{label:"Differently Able",include_blank: "Please Select Differently Abled"},{onchange:"var a={value:$(this).val()}; $.get('/employees/ajax_show_textbox',a,function(response){});"} %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <div id="handicap_type">
+              <% if action_name == 'edit' and @employee.handicap_type != "" %>
+                <%= f.text_field :handicap_type,label:"Disability Type" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+            <div class="input-group">
+              <%=f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
+            </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+            <div class="input-group">
+              <div id="company_location_with_label">
+                <%= render 'employees/company_location_dropdown_with_label' %> 
+              </div> 
+            </div>
+            </div>
+          </div>
+          
+       
+          <div class="col-sm-3">
+            <div class="form-group required">
+            <div class="input-group">
+              <div id="department">
+                <%= render 'employees/department_dropdown' %> 
+              </div> 
+           </div>
+          </div>
+        </div>
+
+             
+
+     
+
+        <!-- <div class="col-sm-3">
+          <div class="form-group required">
+            <= f.select :sub_department_id, all_sub_department, {label: 'Sub Department',include_blank: " Select Sub Department"} %>
+          </div>
+        </div> -->
+     </div>
+
+      <div class="row">
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+            <div class="input-group">
+              <div id="sub_department">
+                <%= render 'employees/sub_department_dropdown' %> 
+              </div> 
+           </div>
+          </div>
+        </div>
+
+              <div class="col-sm-3">
+          <div class="field">
+            <%= f.file_field :passport_photo,label: 'Upload Photo' %>
+          </div>
+        </div> 
+               <div class="col-sm-3">
+            <div class="field">
+              <%= f.file_field :employee_signature,label: 'Upload Signature' %>
+            </div>
+          </div> 
+        <div class="col-sm-6">
+        <label></label>
+          <div class="actions">
+            <%= f.submit "Create Employee",class: "btn btn-primary btn-sm" %>
+            <% if params['controller'] == 'employees' and params['action'] == 'edit' %>      
+            <%end%>
+            <%= link_to 'Back', employees_path,class:"btn btn-sm btn-default fa fa-arrow-left" %>
+          </div>
+        </div>
+      </div>
+      <% end %>
+   </div><!-- /.box-body -->
+</div><!-- /.box-->
+
+<script type="text/javascript">
+  $(function(){
+    $('.birth_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+
+<script>
+$("#employee").validate({
+    rules: {
+      "employee[manual_employee_code]":{
+        required: true
+      },
+      "employee[employee_code_master_id]":{
+        required: true
+      }, 
+      "employee[first_name]":{
+        required: true,
+        maxlength: 30,
+      },
+      "employee[last_name]":{
+        maxlength: 30,
+        lettersOnly:true
+      },
+      "employee[adhar_no]":{
+        maxlength: 12,
+        numbersOnly: true
+      },
+      "employee[pan_no]":{
+        maxlength: 10
+      },
+      "employee[licence_no]":{
+        maxlength: 17
+      },
+      "employee[permanent_address]":{
+        required: true
+      },
+
+      "employee[country_id]":{
+        required: true
+      },
+      "company[state_id]":{
+        required: true
+      },
+      "company[district_id]":{
+        required: true
+      },
+      "employee[pin_code]":{
+        maxlength: 6,
+        numbersOnly: true
+      },
+      "employee[contact_no]":{
+        maxlength: 13,
+        mobileNo: true
+      },
+      "employee[status]":{
+        required: true
+      },
+      "employee[email]":{
+        loginRegex: true
+      },
+      "employee[company_id]":{
+        required: true
+      },
+      "employee[company_location_id]":{
+        required: true
+      },
+      "employee[department_id]":{
+        required: true
+      },
+       
+       "employee[email]":{
+        required: true
+      },
+       "employee[date_of_birth]":{
+        required: true
+      },
+       "employee[last_name]":{
+        required: true
+        },
+       "employee[gender]":{
+        required: true
+        }
+    },
+    messages: {
+      "employee[manual_employee_code]":{
+        required: "Please specify employee code"
+      },
+      "employee[employee_code_master_id]":{
+        required: "Please select code serial"
+      },
+      "employee[first_name]":{
+        required: "Please specify first name",
+        maxlength: "Name allows upto 30 alphabets"
+      },
+      "employee[last_name]":{
+        maxlength: "Name allows upto 30 alphabets"
+      },
+      "employee[adhar_no]":{
+        maxlength: "Adhar no allows upto 12 characters"
+      },
+      "employee[pan_no]":{
+        maxlength: "Pan no allows upto 10 characters"
+      },
+      "employee[licence_no]":{
+        maxlength: "Licence No allows upto 17 characters"
+      },
+      "employee[permanent_address]":{
+        required: "Please specify address"
+      },
+
+      "employee[country_id]":{
+        required: "Please select country"
+      },
+      "employee[state_id]":{
+        required: "Please select state"
+      },
+      "employee[city]":{
+        maxlength: "Enter the City upto 30 char max"
+      },
+      "employee[district_id]":{
+        required: "Please select district"
+      },
+      "employee[pin_code]":{
+        maxlength: "Please Enter Valid Pincode Details"
+      },
+      "employee[contact_no]":{
+        maxlength: "Enter the Correct contact number"
+      },
+      "employee[status]":{
+        required: "Please select status"
+      },
+      "employee[email]":{
+        required: "Please specify email id"
+      },
+      "employee[company_id]":{
+        required: "Please select company"
+      },
+      "employee[company_location_id]":{
+        required: "Please select company location"
+      },
+      "employee[department_id]":{
+        required: "Please select department"
+      },
+      "employee[email]":{
+        required: "Please specify email id"
+         },
+      "employee[date_of_birth]":{
+        required: "Please specify date of birth"
+         },
+      "employee[last_name]":{
+        required: "Please specify last name"
+         },
+      "employee[gender]":{
+        required: "Please select gender"
+          }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+
+   });
+</script>

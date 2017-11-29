@@ -1,0 +1,59 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Travel Expense</h3>
+  </div>
+
+  <div class="box-body">
+    <%= bootstrap_form_for(@travel_expence) do |f| %>
+  
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :travel_request_id,all_travel_request, label: 'Travel Request' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :total_advance_amount, label: 'Total Advance Amount'  %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :total_expence_amount, label: 'Total Expense Amount'  %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :remaining_amount, label: 'Remaining Amount'  %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :employee_amount, label: 'Employee Amount'  %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :company_amount, label: 'Company Amount'  %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Create Travel Expense",:class => class_name, data: { disable_with: data_info } %>
+            <%= link_to 'Back', travel_expences_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+          </div>
+        </div>
+      </div>
+    <% end %>    
+  </div>
+</div>

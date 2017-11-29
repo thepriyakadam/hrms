@@ -1,0 +1,51 @@
+<!-- Optionally, you can add icons to the links -->
+<!-- sidebar menu: : style can be found in sidebar.less -->
+<ul class="sidebar-menu">
+<ul class="sidebar-menu">
+  <li class="header">Salary Account</li>
+  <li class="active treeview">
+    <a href="/home"> <Center> <% if current_user.class == Member %><%= current_user.company_location.company.try(:name) %>
+    <%else%><%= current_user.subdomain %> - <%= current_user.class %> <%end%>DASHBOARD</Center></a>
+    <ul class="treeview-menu">
+      <li><a href="/self_services/employee"><i class="fa fa-tags"></i>Employee</a></li>
+      <li><a href="/employee_leav_requests"><i class="fa fa-tags"></i>Leave Request</a></li>
+      <li><a href="/self_services/employee_template"><i class="fa fa-tags"></i>Salary Structure</a></li>
+      <li><a href="/self_services/attendance"><i class="fa fa-tags"></i>Attendance</a></li>
+      <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i>Salary Slip</a></li>
+       <li><a href="/employee_daily_activities/new"><i class="fa fa-tags"></i>Daily Activity</a></li>
+      <li><a href="/self_services/advance"><i class="fa fa-tags"></i>Advance & Installment</a></li>
+      <li><a href="/goal_bunches/new"><i class="fa fa-tags"></i> Set Goal </a></li>
+      <li><a href="/goal_bunches/period_list_appraisee"><i class="fa fa-tags"></i> Self Evaluation</a></li>
+       <li><a href="/training_plans/trainee_list"><i class="fa fa-tags"></i> Training Feedback </a></li>
+       <li><a href="/self_services/travel_request"><i class="fa fa-plane"></i> Travel Request </a></li>
+       <li><a href="/frequest_questions/list_of_faq" title="To view the list of frequently asked questions"><i class="fa fa-tags"></i> FAQs </a></li>
+        <li><a href="/contact_details"><i class="fa fa-tags"></i> key Contact Details </a></li>
+    </ul>      
+  </li>
+</ul>  
+  <li class="treeview">
+  <a href="/advance_salaries"><i class="fa fa-tags"> </i>Salary Advance</a>
+  <li><a href="/instalments"><i class="fa fa-tags"> </i>Installment</a></li>
+ <!--  <li><a href="/reports/advance_salaries/new"><i class="fa fa-tags"> </i>Salary Advance Report</a></li>
+  <li><a href="/reports/instalment_details/new"><i class="fa fa-tags"> </i>Monthly Installment Report </a></li> -->
+  </li>
+
+ 
+
+
+    
+
+    <li class="treeview" id="issuetracker">
+    <a href="#">
+      <i class="glyphicon glyphicon-th-large"></i> <span>Help Desk</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu" id="issueprocess">
+     <li><a href="http://helpdesk:8080/" target="_blank"><i class="fa fa-tags"></i>IT Help Desk</a></li>
+        <li><a href="/issue_requests/new"><i class="fa fa-tags"></i>Support Request</a></li>
+        <li><a href="/issue_requests/lock_request_list"><i class="fa fa-tags"></i>Support List</a></li>
+        <li><a href="/issue_requests/solved_issues"><i class="fa fa-tags"></i>Solved Support</a></li>
+    </ul>
+  </li>
+
+ </ul>

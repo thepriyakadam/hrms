@@ -1,0 +1,2 @@
+module Reports::MonthlyExpencesDetailsHelper
+end

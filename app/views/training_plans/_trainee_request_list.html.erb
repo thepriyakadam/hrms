@@ -1,0 +1,46 @@
+  <div class="box-header with-border">
+  </div>
+  <div class="box-body">
+    <table id="example" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <td colspan="4"><center>Employee List For Training</center></td>
+        </tr>
+        <tr>
+          <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Department</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @trainee_requests.each do |trainee_request| %>
+          <tr>
+            <td><%= check_box_tag "trainee_request_ids[]", trainee_request.id %></td>
+            <td><%= trainee_request.employee.manual_employee_code %> </td>
+            <td><%= trainee_request.employee.first_name %> <%= trainee_request.employee.middle_name %> <%= trainee_request.employee.last_name %></td>
+            <td><%= trainee_request.employee.department.try(:name) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div><br><br>
+
+  <script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>
+

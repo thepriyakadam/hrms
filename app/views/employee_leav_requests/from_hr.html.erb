@@ -1,0 +1,93 @@
+<!--SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title"> Leave Request </h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= bootstrap_form_for(:employee_leav_request,html: {id: 'employee_leav_request'}) do |f| %>
+     <%= f.hidden_field :employee_id, value: @employee.id %>
+    <div class="row">
+       <div class="col-sm-6">
+        <div class="field">
+         <table class="table table-bordered table-hover table-condensed'">
+           <thead>
+           <tr>
+           <th colspan="2"><center> Leave Process </center></th>
+           </tr>
+           <tr>
+           <th> Employee </th>
+           <td><%= @employee.manual_employee_code %> - <%= full_name(@employee) %></td>
+           </tr>
+          <tr>
+            <th>Manager 1 </th>
+            <%if @employee.id == @employee.manager_id %>
+               <td>Time & Attendance Team</td>
+             <%else%>
+              <td><%= @employee.manager.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager)) %></td>
+              <%end%>
+            </tr>
+            <tr>
+              <th>Manager 2 </th>
+              <td><%= @employee.manager_2.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager_2)) %></td>
+            </tr>
+           </thead>
+         </table>
+        </div>
+      </div>
+      <div class="col-sm-6">
+         <div class="field">
+          <table class="table table-bordered table-hover table-condensed'">
+           <thead>
+           <tr><th colspan="2"><center> Leave Balance </center></th></tr>
+            <tr>
+              <th>Leave Category</th>
+              <th>Leave Available</th>
+            </tr>
+           </thead>
+          <% @total_leaves.where(is_active: true).each do |l| %>
+            <tr>
+              <td><%= l.leav_category.try(:name) %></td>
+              <td><%= l.no_of_leave %></td>
+            </tr>
+          <% end %>
+          </table>
+         </div>
+        </div>
+    </div>
+
+       <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :leav_category_id,options_for_select(all_leav_category),{label: 'Leave Category',include_blank: "Select Leave" },{onchange:"var a={leav_category_id:$(this).val(),employee_id:$('#employee_leav_request_employee_id').val()};$('.ajax-progress').show(); $.get('/employee_leav_requests/admin_c_off_form',a,function(response){});",class: 'form-control'} %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+         <div id="normal_form"></div>
+         <!-- <div id="c_off_form"></div> -->
+         <div id="admin_c_off_form"></div>
+      </div>
+      <%end%>
+  </div><!-- /.box-body -->
+  </div>
+<br>
+<script type="text/javascript">
+$("#employee_leav_request").validate({
+    rules: {
+      "employee_leav_request[leav_category_id]":{
+        required: true
+      }
+    },
+    messages: {
+      "employee_leav_request[leav_category_id]":{
+        required: "Please specify leave category."
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+  });
+
+</script>

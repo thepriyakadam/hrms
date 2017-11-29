@@ -1,0 +1,42 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-body" style="height:1000px; max-height:100px; width:630px; max-width:630px;">
+      <%= bootstrap_form_for :selected_resume,url:{action:"update_status",id: @selected_resume.id,vacancy_master_id: @vacancy_master.id},html: {id: 'selected_resume'} do |f| %>
+        <div class="row">
+        <center>
+          <div class="col-sm-6">
+          <%= f.select :status, ['Interview Rescheduled '],{hide_label: true,include_blank: " Select Interview Status"} %>  
+          </div>
+          </center>
+          <div class="col-sm-3">
+            <%= f.submit "Update Interview Status", class: 'btn btn-sm btn-primary fa fa-modx' %>
+          </div>
+        </div>
+      <% end %>
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+  </div>
+</div>
+
+<script>
+$("#selected_resume").validate({
+    rules: {
+      "selected_resume[status]":{
+        required: true,
+      }
+    },
+    messages: {
+      "selected_resume[status]":{
+        required: "Please specify Status",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+
+

@@ -1,0 +1,249 @@
+<%= form_for :pdf_salaries, url: { action: 'print_xls',format: 'xls',month: @month,year: @year,cost_center: @cost_center,category: @category,bank_id: @bank},:html => {:target => '_blank'} do |f| %>
+<div class="ajax-progress"></div>
+<% i = 0 %>
+<table id="example3" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th colspan="7"><center> BASIC DETAILS</center></th>
+      <th colspan="13"><center> SALARY DETAILS</center></th>
+      <th colspan="11"><center> WORKING DAYS</center></th>
+      <th colspan="13"><center> EARNED SALARY</center></th>
+      <th colspan="11"><center>DEDUCTION</center></th>
+      <th><center> NET </center></th>
+      <th><center> SIGN </center></th>
+    </tr>
+
+    <tr>
+      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+      <th>Sr. No.</th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Department</th>
+      <th>PF No</th>
+      <th>ESIC No</th> 
+      <th>Basic</th>
+      <th>DA</th>
+      <th>HRA</th>
+      <th>Conv</th>
+      <th>O.Allow</th>
+      <th>S.Allow</th>
+      <th>Wsh.Allow</th>
+      <th>Driver Allow</th>
+      <th>Medi Allow</th>
+      <th>Child Edu Allow</th>
+      <th>MRA</th>
+      <th>Arrears</th>
+      <th>Total</th>
+
+      <th>CL</th>
+      <th>EL</th>
+      <th>AL</th>
+      <th>Coff</th>
+      <th>ESIC</th>
+      <th>LWP</th>
+      <th>Payable</th>
+      <th>PD</th>
+      <th>AD</th>
+      <th>HD</th>
+      <th>WOff</th>
+
+      <th>Basic</th>
+      <th>DA</th>
+      <th>HRA</th>
+      <th>conv</th>
+      <th>O.Allow</th>
+      <th>S.Allow</th>
+      <th>Wsh.Allow</th>
+      <th>Driver Allow</th>
+      <th>Medi Allow</th>
+      <th>Child Edu Allow</th>
+      <th>MRA</th>
+      <th>Arrears</th>
+      <th>Gross</th>
+
+      <th>PF</th>
+      <th>ESIC</th>
+      <th>IT</th>
+      <th>PT</th>
+      <th>Adv.Sal</th>
+      <th>Society</th>
+      <th>Food</th>
+      <th>Mobile</th>
+      <th>Retention</th>
+      <th>WF</th>
+      <th>Total Dedu</th>
+
+      <th>NET</th>
+      <th>SIGN</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reports.each do |r| %>
+      <tr>
+        <td><%= check_box_tag "report_ids[]", r.code %></td>
+        <td><%= i = i+1 %></td>
+        <td><%= r.try(:code) %></td>
+        <td><%= r.try(:employee_name) %></td>
+        <td><%= r.try(:department_name) %></td>
+        <td><%= r.try(:pf_no) %></td>
+        <td><%= r.try(:esic_no) %></td>
+
+
+        <td><%= r.try(:actual_basic).try(:round) %></td>
+        <td><%= r.try(:actual_da).try(:round) %></td>
+        <td><%= r.try(:actual_hra).try(:round) %></td>
+        <td><%= r.try(:actual_convenience).try(:round) %></td>
+        <td><%= r.try(:actual_other).try(:round) %></td>
+        <td><%= r.try(:actual_special).try(:round) %></td>
+        <td><%= r.try(:actual_washing).try(:round) %></td>
+        <td><%= r.try(:actual_driver).try(:round) %></td>
+        <td><%= r.try(:actual_medical).try(:round) %></td>
+        <td><%= r.try(:actual_child_edu).try(:round) %></td>
+        <td><%= r.try(:actual_mra).try(:round) %></td>
+        <td><%= r.try(:actual_monthly_arrear).try(:round) %></td>
+        <td><%= r.try(:actual_total).try(:round) %></td>
+
+        <td><%= r.try(:cl_leave) %></td>
+        <td><%= r.try(:el_leave) %></td>
+        <td><%= r.try(:advance_leave) %></td>
+        <td><%= r.try(:coff_leave) %></td>
+        <td><%= r.try(:esic_leave) %></td>
+        <td><%= r.try(:lwp_leave) %></td>
+        <td><%= r.try(:payable_day) %></td>
+        <td><%= r.try(:present_day) %></td>
+        <td><%= r.try(:absent_day) %></td>
+        <td><%= r.try(:holiday) %></td>
+        <td><%= r.try(:weekoff) %></td>
+
+        <td><%= r.try(:earned_basic).try(:round) %></td>
+        <td><%= r.try(:earned_da).try(:round) %></td>
+        <td><%= r.try(:earned_hra).try(:round) %></td>
+        <td><%= r.try(:earned_convenience).try(:round) %></td>
+        <td><%= r.try(:earned_other).try(:round) %></td>
+        <td><%= r.try(:earned_special).try(:round) %></td>
+        <td><%= r.try(:earned_washing).try(:round) %></td>
+        <td><%= r.try(:earned_driver).try(:round) %></td>
+        <td><%= r.try(:earned_medical).try(:round) %></td>
+        <td><%= r.try(:earned_child_edu).try(:round) %></td>
+        <td><%= r.try(:earned_mra).try(:round) %></td>
+        <td><%= r.try(:earned_monthly_arrear).try(:round) %></td>
+        <td><%= r.try(:earned_total).try(:round) %></td>
+
+        <td><%= r.try(:pf) %></td>
+        <td><%= r.try(:esic) %></td>
+        <td><%= r.try(:income_tax) %></td>
+        <td><%= r.try(:pt) %></td>
+        <td><%= r.try(:advance) %></td>
+        <td><%= r.try(:society) %></td>
+
+        <td><%= r.try(:food_deduction) %></td>
+        <td><%= r.try(:mobile) %></td>
+        <td><%= r.try(:retention) %></td>
+        <td><%= r.try(:welfair) %></td>
+        <td><%= r.try(:deduction_total).round %></td>
+        <td><%= r.try(:net_payable).round %></td>
+        <td><%=  %></td>
+      </tr>
+    <% end %>
+
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+
+
+      <td><%= @sum.actual_basic.try(:round) %></td>
+      <td><%= @sum.actual_da.try(:round) %></td>
+      <td><%= @sum.actual_hra.try(:round) %></td>
+      <td><%= @sum.actual_convenience.try(:round) %></td>
+      <td><%= @sum.actual_other.try(:round) %></td>
+      <td><%= @sum.actual_special.try(:round) %></td>
+      <td><%= @sum.actual_washing.try(:round) %></td>
+      <td><%= @sum.actual_driver.try(:round) %></td>
+      <td><%= @sum.actual_medical.try(:round) %></td>
+      <td><%= @sum.actual_child_edu.try(:round) %></td>
+      <td><%= @sum.actual_mra.try(:round) %></td>
+      <td><%= @sum.actual_monthly_arrear.try(:round) %></td>
+      <td><%= @sum.actual_total.try(:round) %></td>
+      
+      <td><%= @sum.cl_leave %></td>
+      <td><%= @sum.el_leave %></td>
+      <td><%= @sum.advance_leave %></td>
+      <td><%= @sum.coff_leave %></td>
+      <td><%= @sum.esic_leave %></td>
+      <td><%= @sum.lwp_leave %></td>
+      <td><%= @sum.payable_day %></td>
+      <td><%= @sum.present_day %></td>
+      <td><%= @sum.absent_day %></td>
+      <td><%= @sum.holiday %></td>
+      <td><%= @sum.weekoff %></td>
+
+      <td><%= @sum.earned_basic.try(:round) %></td>
+      <td><%= @sum.earned_da.try(:round) %></td>
+      <td><%= @sum.earned_hra.try(:round) %></td>
+      <td><%= @sum.earned_convenience.try(:round) %></td>
+      <td><%= @sum.earned_other.try(:round) %></td>
+      <td><%= @sum.earned_special.try(:round) %></td>
+      <td><%= @sum.earned_washing.try(:round) %></td>
+      <td><%= @sum.earned_driver.try(:round) %></td>
+      <td><%= @sum.earned_medical.try(:round) %></td>
+      <td><%= @sum.earned_child_edu.try(:round) %></td>
+      <td><%= @sum.earned_mra.try(:round) %></td>
+      <td><%= @sum.earned_monthly_arrear.try(:round) %></td>
+      <td><%= @sum.earned_total.try(:round) %></td>
+
+      <td><%= @sum.pf %></td>
+      <td><%= @sum.esic %></td>
+      <td><%= @sum.income_tax %></td>
+      <td><%= @sum.pt %></td>
+      <td><%= @sum.advance %></td>
+      <td><%= @sum.society %></td>
+      <td><%= @sum.food_deduction %></td>
+      <td><%= @sum.mobile %></td>
+      <td><%= @sum.retention %></td>
+      <td><%= @sum.welfair %></td>
+      <td><%= @sum.deduction_total %></td>
+
+      <td><%= @sum.net_payable.round.round %></td>
+      <td>SIGN</td>
+    </tr>
+  </tbody>
+</table>
+<div class="col-sm-3">
+    <%= f.submit "Print Excel",class: "btn btn-xl btn-warning fa fa-print" %>
+ </div>
+<% end %>
+
+  <!-- <div class="col-sm-6">
+    < if action_name == "cost_unit_wise_salary" %>
+      <%= link_to " Print Salary Slip ", cost_unit_wise_salary_salary_slip_ledgers_path(bank_id: @bank,year: @year,month: @month, cost_center: @cost_center,category: @category, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+      <= link_to " Excel Report ", cost_unit_wise_salary_salary_slip_ledgers_path(bank_id: @bank,year: @year,month: @month, cost_center: @cost_center,category: @category,format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+    < else %>  
+      <= link_to " Print Salary Slip ", show_employee_salary_slip_ledgers_path(bank_id: @bank.id,year: @year,month: @month, category: @category,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank"  %>
+
+      <= link_to " Excel Report ", show_employee_salary_slip_ledgers_path(bank_id: @bank.id,year: @year,month: @month, category: @category,format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+    <end%>
+  </div>   -->
+
+
+<script type="text/javascript">
+$('#selectAll').click(function() {
+  if (this.checked) {
+    $(':checkbox').each(function() {
+      this.checked = true;                       
+    });
+  } 
+  else {
+    $(':checkbox').each(function() {
+      this.checked = false;                        
+    });
+  } 
+});
+
+$("#example1").DataTable();
+</script>

@@ -1,0 +1,654 @@
+<div id = "myModal"></div>
+<!-- Main row --><!-- Info boxes -->
+<div class="row">
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-aqua"><i class="fa fa-industry"></i></span>
+      <div class="info-box-content">
+        <span class="info-box-text">Companies</span>
+        <span class="info-box-number"><%=@companies.try(:count)%></span>
+      </div><!-- /.info-box-content -->
+    </div><!-- /.info-box -->
+  </div><!-- /.col -->
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-th-list"></i></span>
+      <div class="info-box-content">
+        <span class="info-box-text">Locations</span>
+        <span class="info-box-number"><%= @company_locations.try(:count)%></span>
+      </div><!-- /.info-box-content -->
+    </div><!-- /.info-box -->
+  </div><!-- /.col -->
+
+  <!-- fix for small devices only -->
+  <div class="clearfix visible-sm-block"></div>
+
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-green"><i class="glyphicon glyphicon-th"></i></span>
+      <div class="info-box-content">
+        <span class="info-box-text">Departments</span>
+        <span class="info-box-number"><%= @departments.try(:count) %></span>
+      </div><!-- /.info-box-content -->
+    </div><!-- /.info-box -->
+  </div><!-- /.col -->
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+      <div class="info-box-content">
+        <span class="info-box-text">Employees</span>
+        <span class="info-box-number"><%= @employees.try(:count) %></span>
+      </div><!-- /.info-box-content -->
+    </div><!-- /.info-box -->
+  </div><!-- /.col -->
+</div><!-- /.row -->
+
+
+
+  <!-- Main row -->
+  <div class="row">
+    <!-- Left col -->
+    <section class="col-lg-6 connectedSortable">
+       <!-- TABLE: LATEST ORDERS -->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Circular List</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table no-margin">
+              <thead>
+                <tr>
+                 <th>Date</th>
+                 <th>Subject</th>
+                 <th>Document</th>
+                 <th>Picture</th>
+                  <!-- <th>Popularity</th> -->
+                </tr>
+              </thead>
+              <tbody>
+              <% @circulars.each do |circular| %>
+                <tr>
+                   <td><%= circular.date %></td>
+                   <td><%= circular.subject %></td>
+                   <td>
+                     <% if circular.document_file_name == nil %>
+                       <small class="label label-default">Not Available</small>
+                       <% else %>
+                    <%= link_to ' ',download_company_policy_document_path(id: circular.id),class: 'btn btn-xs btn btn-primary fa fa-download',:target => "_blank" %>
+                  <% end %>
+                </td>
+                  <td>
+                     <% if circular.avatar_file_name == nil %>
+                     <small class="label label-default">Not Available</small>
+                       <% else %>
+                       <%= link_to ' ',download_documents_path(id: circular.id),class: 'btn btn-xs btn btn-primary fa fa-download' ,:target => "_blank"%>
+                       <% end %>
+                  </td>
+                  <!-- <td><div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div></td> -->
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+      
+      <!-- TABLE: LATEST ORDERS -->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Company Events</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table no-margin">
+              <thead>
+                <tr>
+                  <th>Event Date</th>
+                  <th>Event Name</th>
+                  <th>Detail</th>
+                  <!-- <th>Popularity</th> -->
+                </tr>
+              </thead>
+              <tbody>
+              <% @company_events.where(status: true).try(:each) do |e| %>
+                <tr>
+                  <td><%= e.event_date %></td>
+                  <td><%= e.event_name %></td>
+                  <td>
+                    <%= link_to '', event_detail_company_events_path(id: e),class: 'btn btn-xs btn-primary fa fa-info-circle',remote:true %>
+
+                  </td>
+                  <!-- <td><div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div></td> -->
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+    <div id="event_detail" class="modal fade"></div>
+
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Policy Corner</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table  class="table no-margin">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Policy</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @company_policies.each do |company_policy| %>
+              <tr>
+                <td><%= company_policy.policy_type.try(:code) %></td>
+               <td><%= company_policy.policy_type.try(:name) %></td>
+              
+                  <td>
+                     <%= link_to '', policy_type_dashboard_company_policies_path(company_policy_id: company_policy.id) ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+
+    
+
+        <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Job Openings</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table id="example1" class="table no-margin">
+            <thead>
+              <tr>
+                <th>Vacancy Code</th>
+                <th>Vacancy</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @vacancy_masters.each do |vacancy_master| %>
+              <tr>
+                <td><%= vacancy_master.vacancy_code %></td>
+                <td><%= vacancy_master.vacancy_name %></td>
+                  <td>
+                     <%= link_to 'Apply', refferal_selected_resumes_path(vacancy_master_id: vacancy_master.id) ,class: 'btn btn-xs btn-primary' %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+
+    </section><!-- /.Left col -->
+    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+    <section class="col-lg-6 connectedSortable">
+    
+          <!-- USERS LIST -->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Work Anniversary</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+
+               
+                <div class="box-body">
+           
+                    <% date = Date.today %>
+                    <% @employee = Employee.where(status: "Active") %>
+                    <% @employees = JoiningDetail.where("DATE_FORMAT(joining_date,'%d/%m') = ?", date.strftime('%d/%m')).where(employee_id: @employee) %>
+
+                   <% if @employees.empty? %>
+             
+                   <%else%>
+                    <table id="example2" class="table no-margin">
+                   <thead>
+              <tr>
+                <th></th>
+                <th>Employee</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+                   
+                     <% @employees.each do |e| %>
+                      <tr>
+                       <td>
+                  <%unless e.nil? or e.nil? or  e.employee.member.nil? or e.employee.member.avatar.nil? %>
+                 <% if e.employee.gender == "Male" && e.employee.member.avatar_file_name == nil  %>
+                 <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                  <% elsif e.employee.gender == "Female" && e.employee.member.avatar_file_name == nil  %>
+                  <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                   <%else%>
+                   <%= image_tag e.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
+                  <%end%> <!-- if -->
+                   <%end%> <!-- unless -->
+                   </td>
+                       <td><%= full_name(e.employee) %>
+                        <span class="users-list-date"><%= e.employee.try(:cost_center).try(:name) %> - <%= e.employee.try(:department).try(:name) %> <%= e.employee.try(:sub_department).try(:name) %></span>
+                       </td>
+                       <td>
+                       <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today,receiver_id: e.employee_id,greeting_type: "Anniversary") %>
+                  <% if e.employee_id == current_user.employee_id %>
+                      <small class="label label-success">Happy Work Anniversary!</small>
+                  <% else %>
+                    <% if @greeting.empty? %>
+                        <%= link_to 'Wish', anniversary_mail_greetings_path(emp_id: e.employee_id),class: 'btn btn-xs btn-primary',remote:true %>
+                    <% else %>
+                        <small class="label label-success">Message Sent</small>
+                    <% end %>
+                  <% end %>
+                      </td>
+                      <% end %> <!-- do -->
+                    </tr>
+                     <%end%> <!-- if employee.empty? -->
+                   
+                  </table>
+
+                </div><!-- /.box-body -->
+                 
+              </div><!-- /.box -->
+              
+            
+
+  <script type="text/javascript">
+  $(document).ready(function() {
+
+    $('#example1').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true,
+        "scrollY": 100
+    } );
+} );
+</script>
+
+ 
+              
+
+      <div id="anniversary_email" class="modal fade"></div>
+
+      
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Today's Birthday</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+
+               
+                <div class="box-body">
+                  
+                   
+              <% date = Date.today %>
+             <% @employees = Employee.where("status = ? AND DATE_FORMAT(date_of_birth,'%d/%m') = ?", "Active" , date.strftime('%d/%m')) %>
+            <% if @employees.empty? %>
+             
+            <%else%>
+            <table id="birthday" class="table no-margin">
+                   <thead>
+              <tr>
+                <th></th>
+                <th>Employee</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+                  
+              <% @employees.each do |e| %>
+                <tr>
+                       <td>
+                     <%unless e.nil? or e.nil? or  e.member.nil? or e.member.avatar.nil? %>
+                 <% if e.gender == "Male" && e.member.avatar_file_name == nil  %>
+                 <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                  <% elsif e.gender == "Female" && e.member.avatar_file_name == nil  %>
+                  <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                   <%else%>
+                   <%= image_tag e.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
+                  <%end%>
+                   <%end%>
+                   </td>
+                       <td> <%= full_name(e) %>
+                        <span class="users-list-date"><%= e.try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
+
+                       </td>
+                       <td>
+                       <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today,receiver_id: e.id,greeting_type: "Birthday") %>
+                    <% if e.id == current_user.employee_id %>
+                      <small class="label label-success">Happy Birthday!</small>
+                    <% else %>
+                      <% if @greeting.empty? %>
+                        <%= link_to '', modal_for_mail_greetings_path(emp_id: e.id),class: 'btn btn-xs fa fa-birthday-cake',remote:true %>
+                      <% else %>
+                          <small class="label label-success">Message Sent</small>
+                      <% end %>
+                    <% end %>
+                      </td>
+                   
+                    <% end %> <!-- do -->
+                     </tr>
+                      <%end%> <!-- if employee.empty? -->
+                  </table>
+                
+                 
+                  </div><!-- /.box-body -->
+              </div><!-- /.box -->
+              
+
+      <div id="birthday_email" class="modal fade"></div>
+
+
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Upcoming Birthday</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+
+               
+                <div class="box-body">
+    
+              <% date = Date.today + 1 %>
+              <% @employees = Employee.where("status = ? AND DATE_FORMAT(date_of_birth,'%d/%m') = ?", "Active" , date.strftime('%d/%m')) %>
+            <% if @employees.empty? %>
+            <%else%>
+            <table id="birthday" class="table no-margin">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Employee</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+                  
+              <% @employees.each do |e| %>
+                <tr>
+                   <td>
+                     <%unless e.nil? or e.nil? or  e.member.nil? or e.member.avatar.nil? %>
+                 <% if e.gender == "Male" && e.member.avatar_file_name == nil  %>
+                 <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                  <% elsif e.gender == "Female" && e.member.avatar_file_name == nil  %>
+                  <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                   <%else%>
+                   <%= image_tag e.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
+                  <%end%>
+                   <%end%>
+                   </td>
+                       <td> <%= full_name(e) %>
+                        <span class="users-list-date"><%= e.try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
+
+                       </td>
+                       <td> <%= e.date_of_birth.strftime("%d %b") %></td>
+
+                    <% end %> <!-- do -->
+                     </tr>
+                      <%end%> <!-- if employee.empty? -->
+                  </table>
+                
+                 
+                  </div><!-- /.box-body -->
+              </div><!-- /.box -->
+              
+
+      <!-- PRODUCT LIST -->
+      
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Newly Joined Employees</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <ul class="products-list product-list-in-box">
+              <% JoiningDetail.all.order("joining_date desc").limit(5).each do |j| %>
+                <% if j.employee.status == "Active" %>
+                  <li class="item">
+                    <div class="product-img">
+                      <%unless j.nil? or j.employee.nil? or  j.employee.member.nil? or j.employee.member.avatar.nil? %>
+                        <% if j.employee.gender == "Male" && j.employee.member.avatar_file_name == nil  %>
+                        <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                        <% elsif j.employee.gender == "Female" && j.employee.member.avatar_file_name == nil  %>
+                        <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                        <%else%>
+                          <%= image_tag j.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
+                        <%end%>
+                      <%else%>
+                        <%= image_tag "user.jpg",class: "img-circle", alt: "User Image", size: "25x25" %>
+                      <%end%>
+                    </div>
+                    <div class="product-info">
+                      <%= full_name(j.employee)%>
+                      <span class="label label-info pull-right"><%= j.joining_date %></span>
+                      <span class="product-description"><%= j.employee.try(:cost_center).try(:name) %> - <%= j.employee.try(:department).try(:name) %> <%= j.try(:employee).try(:sub_department).try(:name) %>  </span>
+                      <span class="product-description"><%= full_name(j.employee.try(:manager)) %></span>
+                    </div>
+                  </li><!-- /.item -->
+                <% else %>
+                
+                <% end %> <!-- j.employee.status == "Active"  -->
+              <% end %>
+          </ul>
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+      
+    </section><!-- right col -->
+
+
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+          <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+          <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <!-- Home tab content -->
+          <div class="tab-pane" id="control-sidebar-home-tab">
+            <h3 class="control-sidebar-heading">Recent Activity</h3>
+            <ul class="control-sidebar-menu">
+              <li>
+                <a href="javascript::;">
+                  <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+                  <div class="menu-info">
+                    <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+                    <p>Will be 23 on April 24th</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript::;">
+                  <i class="menu-icon fa fa-user bg-yellow"></i>
+                  <div class="menu-info">
+                    <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+                    <p>New phone +1(800)555-1234</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript::;">
+                  <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+                  <div class="menu-info">
+                    <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+                    <p>nora@example.com</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript::;">
+                  <i class="menu-icon fa fa-file-code-o bg-green"></i>
+                  <div class="menu-info">
+                    <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+                    <p>Execution time 5 seconds</p>
+                  </div>
+                </a>
+              </li>
+            </ul><!-- /.control-sidebar-menu -->
+
+            <h3 class="control-sidebar-heading">Tasks Progress</h3>
+            <ul class="control-sidebar-menu">
+              <li>
+                <a href="javascript::;">
+                  <h4 class="control-sidebar-subheading">
+                    Custom Template Design
+                    <span class="label label-danger pull-right">70%</span>
+                  </h4>
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript::;">
+                  <h4 class="control-sidebar-subheading">
+                    Update Resume
+                    <span class="label label-success pull-right">95%</span>
+                  </h4>
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript::;">
+                  <h4 class="control-sidebar-subheading">
+                    Laravel Integration
+                    <span class="label label-warning pull-right">50%</span>
+                  </h4>
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript::;">
+                  <h4 class="control-sidebar-subheading">
+                    Back End Framework
+                    <span class="label label-primary pull-right">68%</span>
+                  </h4>
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                  </div>
+                </a>
+              </li>
+            </ul><!-- /.control-sidebar-menu -->
+
+          </div><!-- /.tab-pane -->
+          <!-- Stats tab content -->
+          <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div><!-- /.tab-pane -->
+          <!-- Settings tab content -->
+          <div class="tab-pane" id="control-sidebar-settings-tab">
+            <form method="post">
+              <h3 class="control-sidebar-heading">General Settings</h3>
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Report panel usage
+                  <input type="checkbox" class="pull-right" checked>
+                </label>
+                <p>
+                  Some information about this general settings option
+                </p>
+              </div><!-- /.form-group -->
+
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Allow mail redirect
+                  <input type="checkbox" class="pull-right" checked>
+                </label>
+                <p>
+                  Other sets of options are available
+                </p>
+              </div><!-- /.form-group -->
+
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Expose author name in posts
+                  <input type="checkbox" class="pull-right" checked>
+                </label>
+                <p>
+                  Allow the user to show his name in blog posts
+                </p>
+              </div><!-- /.form-group -->
+
+              <h3 class="control-sidebar-heading">Chat Settings</h3>
+
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Show me as online
+                  <input type="checkbox" class="pull-right" checked>
+                </label>
+              </div><!-- /.form-group -->
+
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Turn off notifications
+                  <input type="checkbox" class="pull-right">
+                </label>
+              </div><!-- /.form-group -->
+
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Delete chat history
+                  <a href="javascript::;" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+                </label>
+              </div><!-- /.form-group -->
+            </form>
+          </div><!-- /.tab-pane -->
+        </div>
+      </aside><!-- /.control-sidebar -->
+      <!-- Add the sidebar's background. This div must be placed
+           immediately after the control sidebar -->
+      <div class="control-sidebar-bg"></div>
+    </div><!-- ./wrapper -->

@@ -1,0 +1,20 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Expense Type</h3>
+      <div class="pull-right">
+    <%= link_to " PDF ", expence_type_master_expencess_types_path(id: @expencess_type.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
+    
+    <%= link_to " XLS ", expence_type_master_expencess_types_path(id: @expencess_type.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
+  </div><!-- /.box-header -->
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="expencess_type_li">
+			<%= render 'expencess_type_list' %>
+		</div>
+		
+	</div><!-- /.box-body -->
+</div><!-- /.box -->

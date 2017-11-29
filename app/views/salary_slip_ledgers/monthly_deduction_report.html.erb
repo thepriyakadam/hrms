@@ -1,0 +1,78 @@
+<!--SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Monthly Deduction Report</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for(:salary_slip_ledger, url: { action: 'monthly_deduction'},html: {id: 'salary_slip_ledger'},remote:true) do |f| %>
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="field">
+            <%= f.select :year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{hide_label:true,include_blank: " Select Year"}, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="field">
+            <%= f.select :month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{hide_label:true,include_blank: " Select Month"}, class: "form-control" %>
+           </div>
+        </div>
+
+        <div class="col-sm-2">
+            <div class="form-group required">
+              <%=f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form : 'food_deduction'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
+            </div>
+          </div>
+
+          <div class="col-sm-2">
+            <div class="form-group required">
+              <div id="company_location">
+                <%= render 'employees/company_location_dropdown' %> 
+            </div>
+            </div>
+          </div>
+        
+        <div class="col-sm-2" >
+          <div class="actions">
+            <%= f.submit "Display Report", class: "btn btn-sm btn-primary" %>
+          </div>
+        </div>
+        </div><br>
+        <div id="monthly_deduction_list"></div>
+
+      <br>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script>
+$("#salary_slip_ledger").validate({
+    rules: {
+      "salary_slip_ledger[month]":{
+        required: true,
+      },
+      "salary_slip_ledger[year]":{
+        required: true,
+      },
+      "salary_slip_ledger[company_id]":{
+        required: true,
+      }
+    },
+    messages: {
+      "salary_slip_ledger[month]":{
+        required: "Please select Month",
+      },
+      "salary_slip_ledger[year]":{
+        required: "Please select Year",
+      },
+      "salary_slip_ledger[company_id]":{
+        required: "Please select Company",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

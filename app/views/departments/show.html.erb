@@ -1,0 +1,36 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Department</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr>
+      <th><strong>Code</strong></th>
+      <td><%= @department.manual_department_code %></td>
+
+      <th><strong>Name</strong></th>
+      <td><%= @department.name %></td>
+    </tr>
+ 
+    <tr>
+      <th><strong>Company Location</strong></th>
+      <td><%= @department.company_location.company.try(:name) %> - <%= @department.company_location.try(:name) %></td>
+
+      <th><strong>Contact No.</strong></th>
+      <td><%= @department.contact_no %></td>
+    </tr>
+ 
+ 
+    <tr>
+     <th><strong>Department Type</strong></th>
+      <td><%= @department.department_type.try(:name) %></td>
+
+      <th><strong>Description</strong></th>
+      <td> <%= @department.description %></td>
+    </tr>
+     </table> <br>
+
+    <%= link_to 'Back', new_department_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

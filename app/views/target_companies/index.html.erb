@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Target Companies</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @target_companies.each do |target_company| %>
+      <tr>
+        <td><%= target_company.code %></td>
+        <td><%= target_company.name %></td>
+        <td><%= target_company.description %></td>
+        <td><%= target_company.status %></td>
+        <td><%= link_to 'Show', target_company %></td>
+        <td><%= link_to 'Edit', edit_target_company_path(target_company) %></td>
+        <td><%= link_to 'Destroy', target_company, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Target company', new_target_company_path %>

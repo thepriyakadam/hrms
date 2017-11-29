@@ -1,0 +1,2 @@
+module IssueLockerHistoriesHelper
+end

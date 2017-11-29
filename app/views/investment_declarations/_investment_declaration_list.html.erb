@@ -1,0 +1,25 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Investment Head</th>
+      <th>Amount</th>
+      <th>Action</th>
+    </tr>
+  <tbody>
+    <% @investment_declarations.each do |investment_declaration| %>
+      <tr>
+        <td><%= full_name(investment_declaration.employee) %></td>
+        <td><%= investment_declaration.investment_head.try(:description) %></td>
+        <td><%= investment_declaration.amount %></td>
+        <td>
+          <%= link_to '', edit_investment_declaration_path(investment_declaration),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <%= link_to '',  investment_declaration, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true%>
+          <%= link_to '', modal_investment_declarations_path(investment_declaration), class: 'btn btn-xs btn-default fa fa-eye',remote: true%>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div id="myModal" class="modal fade"></div>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Sr.No.</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Employee ID</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Employee Name</Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">Present</Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String">Designation</Data></Cell> 
+        <Cell ss:Index="6"><Data ss:Type="String">Department</Data></Cell> 
+        <Cell ss:Index="7"><Data ss:Type="String">Cost Center</Data></Cell> 
+        <Cell ss:Index="8"><Data ss:Type="String">Contact No.</Data></Cell> 
+        
+        </Row>
+
+        <% i = 0 %>
+        <% @employee_attendances.each do |a|  %>
+        <% employee = Employee.find(a.employee_id) %>
+        <% joining_detail = JoiningDetail.find_by_employee_id(a.employee_id) %>
+        <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= employee.try(:manual_employee_code) %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= full_name(employee) %></Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="String"><%= a.try(:present) %></Data></Cell>
+          <Cell ss:Index="5"><Data ss:Type="String"><%= a.employee.joining_detail.try(:employee_designation).try(:name)  %></Data></Cell>
+          <Cell ss:Index="6"><Data ss:Type="String"><%= employee.department.try(:name) %></Data></Cell>
+          <Cell ss:Index="7"><Data ss:Type="String"><%= a.employee.try(:joining_detail).try(:cost_center).try(:name) %></Data></Cell>
+          <Cell ss:Index="8"><Data ss:Type="String"><%= a.employee.contact_no %></Data></Cell>
+          
+        </Row>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

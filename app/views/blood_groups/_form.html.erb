@@ -1,0 +1,36 @@
+<%= bootstrap_form_for(@blood_group,html: {id: 'blood_group'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Blood Group' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Blood Group",:class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+$("#blood_group").validate({
+    rules: {
+      "blood_group[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "blood_group[name]":{
+        required: "Please specify blood group",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+

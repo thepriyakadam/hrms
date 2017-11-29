@@ -1,0 +1,32 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Leave Balance</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed'">
+
+    <tr>
+    	<th><strong>Employee</strong></th>
+    	<td><%= @employee_leav_balance.employee.try(:manual_employee_code) %></td>
+
+      <th><strong>Employee</strong></th>
+      <td><%= @employee_leav_balance.employee.try(:first_name) %> <%= @employee_leav_balance.employee.try(:middle_name) %> <%= @employee_leav_balance.employee.try(:last_name) %></td>
+    </tr>
+    <tr>
+    	<th><strong>Leave Category</strong></th>
+    	<td><%=  @employee_leav_balance.leav_category.try(:code) %> - <%= @employee_leav_balance.leav_category.try(:name) %></td>
+   
+    	<th><strong>No. of Leaves</strong></th>
+    	<td> <%= @employee_leav_balance.no_of_leave %></td>
+    </tr>
+
+    <tr>
+    <th><strong>Location</strong></th>
+    <td colspan="3"> <%= @employee_leav_balance.employee.try(:company_location).try(:name) %></td>
+    </tr>
+
+    </table><br>
+    <%= link_to 'Edit', edit_employee_leav_balance_path(@employee_leav_balance),class: 'btn btn-sm btn-success fa fa-edit' %> |
+    <%= link_to 'Back', employee_leav_balances_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

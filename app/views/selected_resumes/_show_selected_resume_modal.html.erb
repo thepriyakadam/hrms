@@ -1,0 +1,59 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Candidate Details </center></h4>
+    </div>
+    <div class="modal-body">
+    <table class="table table-bordered table-hover table-condensed">
+  <thead>
+  <tr> 
+  <th><strong>Name</strong></th>
+  <td colspan="3"><%= @selected_resume.name %></td>
+</tr> 
+<tr>
+   <th><strong>Skillset</strong></th>
+  <td><%= @selected_resume.skillset %></td>
+
+  <th><strong>Qualification</strong></th>
+  <td><%= @selected_resume.degree.name %></td> 
+ </tr>
+ <tr>  
+  <th><strong>Current CTC</strong></th>
+  <td><%= @selected_resume.current_ctc %></td>
+
+  <th><strong>Expected CTC</strong></th>
+  <td><%= @selected_resume.ctc %></td>  
+</tr>
+<tr>
+  <th><strong>Experience</strong></th>
+  <td><%= @selected_resume.experience %></td>
+
+  <th><strong>Notice Period</strong></th>
+  <td><%= @selected_resume.notice_period %></td>
+</tr>
+<tr>
+   <th><strong>Contact No.</strong></th>
+   <td><%= @selected_resume.contact_no %></td>
+
+<th><strong>Alternate Contact No.</strong></th>
+   <td><%= @selected_resume.contact_no2 %></td>
+</tr>
+<tr>
+   <th><strong>Email ID</strong></th>
+  <td><%= @selected_resume.email_id %></td>
+
+   <th>Status</th>
+   <td><%= @selected_resume.status %></td>
+</tr>
+<tr>
+<th><strong>Image</strong></th>
+<td colspan="3"><%= @selected_resume.passport_photo_file_name %></td>
+</tr>
+   </thead>
+</table>
+<%= image_tag @selected_resume.passport_photo.url, :size => "100x100" %><br><br>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

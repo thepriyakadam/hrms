@@ -1,0 +1,79 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Confirm Week Off</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= bootstrap_form_for :week_off_masters,url: { action: 'assign_week_off'} do |f| %>
+
+    <table id="example1" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+          <th>ID</th>
+          <th>Employee</th>
+          <th>Day</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @week_off_masters.each do |week_off_master| %>
+          <tr>              
+            <td><%= check_box_tag "week_off_master_ids[]",week_off_master.id %></td>
+
+            <td><%= week_off_master.employee.manual_employee_code %></td>
+            <td><%= full_name(week_off_master.employee) %></td>
+            <td><%= week_off_master.day %></td>
+            <td><%= week_off_master.from %></td>
+            <td><%= week_off_master.to %></td>
+            <td><%= week_off_master.is_active ? 'Active' : 'Inactive' %></td>
+            <td>
+            <div id="myModal1" class="modal fade"></div>
+              <% if week_off_master.is_send == true %>
+                <small class="label label-primary">Already Assign</small>
+              <% else %>
+              	<%= link_to '', edit_modal_week_off_masters_path(week_off_master),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
+                <%= link_to '',  week_off_master, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-danger btn-xs fa fa-close' %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Set Week Off" ,class: 'btn btn-primary btn-sm' %>
+          </div>
+        </div>
+      </div>
+
+  </div>
+</div>
+<% end %>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example1').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+
+<script type="text/javascript">
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;
+      });
+    }
+    else {
+      $(':checkbox').each(function() {
+        this.checked = false;
+      });
+    }
+  });
+</script>

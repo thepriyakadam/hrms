@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  membership_id: 
+  from: 9.99
+  to: 9.99
+  status: false
+
+two:
+  membership_id: 
+  from: 9.99
+  to: 9.99
+  status: false

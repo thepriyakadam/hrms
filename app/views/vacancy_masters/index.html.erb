@@ -1,0 +1,79 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Vacancy Status</h3>
+    <div class="pull-right">
+    </div>
+    </div>
+
+<p id="notice"><%= notice %></p>
+
+<div class="box-body">
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Vacancy Code</th>
+      <th>Designation</th>
+      <th>Department</th>
+      <th>Total Position</th>
+<!--   <th>Total No. Of Approved Position</th>
+ -->  <th>Current Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @vacancy_masters.each do |vacancy_master| %>
+      <tr>
+        <td><%= vacancy_master.vacancy_code %></td>
+        <td><%= vacancy_master.employee_designation.try(:name) %></td>
+        <td><%= vacancy_master.department.try(:name) %></td>
+        <td><%= vacancy_master.no_of_position %></td>
+         <!-- <td><= vacancy_master.particular_vacancy_requests.where(status: "Approved").count %></td> -->
+        <td>
+            <% vacancy_master.reporting_masters_vacancy_masters.try(:each) do |rm| %>
+            <% case rm.vacancy_status %>
+              <% when "Pending" %>
+              <small class="label label-default">Pending</small>
+              <% when "FirstApproved" %>
+              <small class="label label-warning">FirstApproved</small>
+              <% when "Approved" %>
+              <small class="label label-primary">Approved</small>
+              <% when "Approved & Send Next" %>
+              <small class="label label-info">Approved & Send Next</small>
+              <% when "FinalApproved" %>
+              <small class="label label-success">FinalApproved</small>
+              <% when "Rejected" %>
+              <small class="label label-danger">Rejected</small>
+              <% when "Cancelled" %>
+              <small class="label label-warning">Cancelled</small>
+              <% end %>
+            <% end %>
+        </td>
+        <td>
+        <%= link_to '', reporting_masters_vacancy_master_list_vacancy_masters_path(vacancy_master),class: 'btn btn-xs btn-default fa fa-eye' %>
+        </td>
+        <!-- <td> -->
+         <!-- link_to ' Vacancy Request', particular_vacancy_request_list_vacancy_masters_path(vacancy_master),class: 'btn btn-xs btn-default' %> -->
+<!--           < link_to '', edit_vacancy_master_path(vacancy_master),class: 'btn btn-sm btn-success fa fa-edit' %>
+ -->         <!-- link_to ' Capture Resume', new_capture_resume_path(vacancy_master.id),class: 'btn btn-xs btn-default' %>-->
+       <!--  </td> -->
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<!-- <h2>Import</h2>
+    <= form_tag import_vacancy_masters_path, multipart: true do %>
+      <= file_field_tag :file %>
+      %= submit_tag "Import" %>
+    < end %>
+    <p>
+    Download:
+    <= link_to "CSV", import_vacancy_masters_path(format: "csv") %> |
+    <= link_to "Excel", import_vacancy_masters_path(format: "xls") %>
+    </p> -->
+</div>
+</div>
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>

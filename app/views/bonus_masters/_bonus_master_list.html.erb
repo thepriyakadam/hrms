@@ -1,0 +1,30 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Bouns</th>
+      <th>Limit Amount</th>
+      <th>Bonus Percentage</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @bonus_masters.each do |bonus_master| %>
+      <tr>
+        <td><%= bonus_master.is_bouns ? "Yes" : "No" %></td>
+        <td><%= bonus_master.limit_amount %></td>
+        <td><%= bonus_master.bonus_persentage %></td>
+        <td><%= bonus_master.status ? "Active" : "Inactive" %></td>
+        <td>
+          <% if bonus_master.is_confirm == true %>
+            <small class= "label label-primary">Confirmed</small>
+          <% else %>
+            <%= link_to '', edit_bonus_master_path(bonus_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  bonus_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+            <%= link_to '', is_confirm_bonus_masters_path(bonus_master: bonus_master),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

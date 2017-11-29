@@ -1,0 +1,99 @@
+<%= bootstrap_form_for(@punch_master,html: {id: 'punch_master'},remote:true) do |f| %>
+  <div class="row">
+     <div class="col-sm-3">
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <label>Start Time</label>
+          <div class="input-group">
+            <%= f.text_field :start_time,hide_label: true, placeholder: 'Start Time',class: 'form-control timepicker' %>
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <label>End Time</label>
+          <div class="input-group">
+            <%= f.text_field :end_time,hide_label: true, placeholder: 'End Time',class: 'form-control timepicker' %>
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+    </div>
+ 
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :reader_in,class: 'form-control',label: "Reader In" %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :reader_out,class: 'form-control',label: "Reader Out" %>
+      </div>
+    </div>
+  </div>
+  
+    <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :full_day_hrs,class: 'form-control',label: "Full Day Hrs." %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :half_day_hrs,class: 'form-control',label: "Half Day Hrs." %>
+      </div>
+    </div>
+
+     <div class="col-sm-2">
+      <label>Status </label>
+      <div class="field">
+        <%= f.check_box :status, label: 'Morning'%>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+    <label></label>
+      <div class="actions">
+        <%= f.submit "Create Punch Master" ,class: 'btn btn-sm btn-primary' %>
+      </div>
+    </div>
+    </div><br>
+   <% end %>
+<script>
+$(function () {
+//Timepicker
+  $(".timepicker").timepicker({
+    showInputs: false
+  });
+  
+});
+</script>
+
+<script>
+$("#punch_master").validate({
+    rules: {
+      "punch_master[shift_master_id]":{
+        required: true,
+      }
+    },
+    messages: {
+      "punch_master[shift_master_id]":{
+        required: "Please Select Shift",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

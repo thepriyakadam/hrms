@@ -1,0 +1,80 @@
+<div class="box">
+<div class="box-header">
+    <h6 class="box-title">Attendance Average Report From <%= @from_date %> To <%= @to_date %> </h6>
+  </div>
+  <div class="box-body">
+      <table id="example6" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Employee</th>
+            <th>Working Hour</th>
+            <th>Average</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @employee_attendances.each do |e| %>
+            <tr>
+              <td><%= e.employee.try(:manual_employee_code) %></td>
+              <td><%= full_name(e.employee) %></td>
+              <th>
+                <% working_hr = 0 %>
+                <% emp = Employee.find_by(id: e.employee_id) %>
+
+                <%for i in @from_date..@to_date %>
+                  <% @attendance = EmployeeAttendance.where(employee_id: emp.id,day: i).take %>
+                  <% actual_working_hr = @attendance.try(:working_hrs) %>
+                    <% if actual_working_hr.nil? %>
+                      <% working_hr =  working_hr.to_f %>
+                    <% else %>
+                      <% working_hr = actual_working_hr.to_f + working_hr.to_f %>
+                    <% end %>
+                <% end %>
+                <%= working_hr %>
+              </th>
+              <th>
+                <% day = 0 %>
+                <% for i in @from_date..@to_date %>
+                <% day = day + 1 %>
+                <% end %>
+                <% day %>
+                <% average = working_hr.to_f/day.to_f %>
+                <%= average.round(2) %>
+              </th>
+            </tr>
+          <%end%>
+        </tbody>
+      </table>
+      <%= link_to " Excel Report ",attendance_average_details_employee_attendances_path(:employee => {:from => params[:employee][:from],:to => params[:employee][:to],:company_id => params[:employee][:company_id],:company_location_id => params[:employee][:company_location_id],:department_id => params[:employee][:department_id]},format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+
+      <%= link_to " PDF Report ",attendance_average_details_employee_attendances_path(:employee => {:from => params[:employee][:from],:to => params[:employee][:to],:company_id => params[:employee][:company_id],:company_location_id => params[:employee][:company_location_id],:department_id => params[:employee][:department_id]},format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+      
+      <%= link_to "Back",attendance_average_report_employee_attendances_path,class: "btn btn-sm btn-default" %>
+  </div>
+</div>
+  <!-- </div>
+</div> -->
+
+<script type="text/javascript">
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;
+      });
+    }
+    else {
+      $(':checkbox').each(function() {
+        this.checked = false;
+      });
+    }
+  });
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true
+    } );
+} );
+</script>

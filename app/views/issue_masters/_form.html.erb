@@ -1,0 +1,76 @@
+  <div class="box-body"> 
+    <%= bootstrap_form_for(@issue_master,html: {id: 'issue_master'},remote:true )do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :issue_tracker_group_id,all_issue_tracker_group,{label:"Group" ,include_blank: "Select Group"} %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :issue_type_id ,all_issue_types,{label:"Support Type",include_blank: "Select Type"}%>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :name,label:'Support', placeholder: 'Support' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+
+        <div class="col-sm-6">
+          <div class="form-group required">
+            <%= f.text_area :description ,label:'Description', placeholder: 'Description'%>
+          </div>
+        </div>
+       <div class="col-sm-3">
+          <label>Status</label>
+            <%= f.check_box :status,label:'Active' %>
+        </div>
+        <div class="col-sm-3">
+          <label></label>
+            <div class="actions">
+              <%= f.submit'Create Support',:class => class_name, data: { disable_with: data_info } %>
+            </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+<script>
+$("#issue_master").validate({
+    rules: {
+      "issue_master[issue_tracker_group_id]":{
+        required: true,
+      },
+      "issue_master[issue_type_id]":{
+        required: true,
+      },
+      "issue_master[name]":{
+        required: true,
+      },
+      "issue_master[description]":{
+        required: true,
+      }
+       },
+    messages: {
+      "issue_master[issue_tracker_group_id]":{
+        required: "Please Select Group",
+      },
+       "issue_master[issue_type_id]":{
+        required: "Please Select Support Type",
+      },
+      "issue_master[name]":{
+        required: "Please Specify Support",
+      },
+      "issue_master[description]":{
+        required: "Please Specify Description",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

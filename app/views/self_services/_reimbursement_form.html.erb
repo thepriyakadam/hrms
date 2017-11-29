@@ -1,0 +1,70 @@
+<%= bootstrap_form_for(@reimbursement_request, url: {action: 'create_reimbursement_request'},html: {id: 'reimbursement_request'}) do |f| %>
+    <%= hidden_field_tag :employee_id, current_user.employee_id %> 
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :reimbursement_head_id,all_reimbursement_head,{include_blank: "Select Reimbursement Head",label: "Reimbursement", placeholder: 'Reimbursement Head'} %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+            <%= f.text_field :date,label: "Date",class: 'rem_date'%>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :amount,label: "Amount", placeholder: 'Amount' %>
+      </div>
+    </div>
+    <div class="col-sm-3" style="padding-top: 20px">
+      <div class="actions">
+        <%= f.submit "Create Reimbursement Request", class: "btn btn-sm btn-primary" %>
+      </div>
+    </div>
+  </div>
+    <% end %>
+
+<script type="text/javascript">
+  $(function(){
+    $('.rem_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+
+  $("#reimbursement_request").validate({
+    rules: {
+       "reimbursement_request[reimbursement_head_id]":{
+        required: true,
+      },
+       "reimbursement_request[amount]":{
+        required: true,
+      },
+       "reimbursement_request[date]":{
+        required: true,
+      }
+    },
+    messages: {
+      "reimbursement_request[reimbursement_head_id]":{
+        required: "Please Select reimbursement_head_id",
+      },
+      "reimbursement_request[amount]":{
+        required: "Please Specify amount",
+      },
+      "reimbursement_request[date]":{
+        required: "Please Specify date",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

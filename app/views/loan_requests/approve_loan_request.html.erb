@@ -1,0 +1,37 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Loan Request</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+
+    <tr>
+    	<th>Member</th>
+    	<td><%= full_name(@loan_request.membership.employee)%></td>
+    	<th>Date</th>
+    	<td><%= @loan_request.date %></td>
+
+    </tr>
+
+    <tr>
+    	<th>Loan Type</th>
+    	<td><%= @loan_request.loan_type.try(:name) %></td>
+
+    	<th>Amount</th>
+    	<td><%= @loan_request.amount %></td>
+    </tr>
+
+    <tr>
+        <th>No. of EMI</th>
+        <td><%= @loan_request.no_of_emi %></td>
+    	<th>EMI</th>
+    	<td><%= @loan_request.emi %></td>
+    </tr>
+            
+
+</table><br>
+<%= link_to 'Back', loan_approval_loan_requests_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
+<%= link_to 'Approve', first_approve_loan_requests_path(@loan_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-info fa fa-check' %> 
+<%= link_to 'Reject', reject_loan_requests_path(@loan_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
+</div>
+</div>

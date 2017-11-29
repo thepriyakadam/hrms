@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @joining_checklist_master.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @joining_checklist_master.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @joining_checklist_master.description %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @joining_checklist_master.status %>
+</p>
+
+<%= link_to 'Edit', edit_joining_checklist_master_path(@joining_checklist_master) %> |
+<%= link_to 'Back', joining_checklist_masters_path %>

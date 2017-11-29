@@ -1,0 +1,6 @@
+<% if AssignedAsset.exists?(employee_id: params[:id]) %>
+<% @assigned_assets = AssignedAsset.where('employee_id=?',params[:id])%>
+$('#info').html("<%= j render 'assigned_assets/show_detail' %>")
+<%else%>
+$('#info').html("<%= j render 'assigned_assets/form' %>")
+<%end%>

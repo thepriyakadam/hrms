@@ -1,0 +1,2 @@
+module AboutBossesHelper
+end

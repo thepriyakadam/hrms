@@ -1,0 +1,99 @@
+<%= bootstrap_form_for(@reimbursement_slab,html: {id: 'reimbursement_slab'},remote: true) do |f| %>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :reimbursement_head_id,all_reimbursement_head,{include_blank: "Select Reimbursement Head",label: "Reimbursement Head", placeholder: 'Reimbursement Head'} %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :employee_grade_id,all_employee_grade,{include_blank: "Select Grade",label: "Employee Grade", placeholder: 'Employee Grade'} %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :employee_designation_id,all_employee_designation,{include_blank: "Select Designation",label: "Designation", placeholder: 'Designation'} %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :from,label: "From", placeholder: 'From' %>
+      </div>
+    </div>
+  </div>
+  <div class="row"> 
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :to,label: "To", placeholder: 'To' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :monthly_amount,label: "Monthly Amount", placeholder: 'Monthly Amount' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :yearly_amount,label: "Yearly Amount", placeholder: 'Yearly Amount' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+    <label>Status</label>
+      <div class="field">
+        <%= f.check_box :status %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Reimbursement Slab" , class: "btn btn-sm btn-primary" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+
+<script>
+$("#reimbursement_slab").validate({
+    rules: {
+      "reimbursement_slab[reimbursement_head_id]":{
+        required: true
+      },
+      "reimbursement_slab[employee_grade_id]":{
+        required: true
+      },
+      "reimbursement_slab[employee_designation_id]":{
+        required: true
+      },
+      "reimbursement_slab[from]":{
+        required: true
+      },
+      "reimbursement_slab[to]":{
+        required: true
+      }
+    },
+    messages: {
+      "reimbursement_slab[reimbursement_head_id]":{
+        required: "Please Specify reimbursement_head_id"
+      },
+      "reimbursement_slab[employee_grade_id]":{
+        required: "Please Specify employee_grade_id"
+      },
+      "reimbursement_slab[employee_designation_id]":{
+        required: "Please Specify employee_designation_id"
+      },
+      "reimbursement_slab[from]":{
+        required: "Please Specify from"
+      },
+      "reimbursement_slab[to]":{
+        required: "Please Specify to"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

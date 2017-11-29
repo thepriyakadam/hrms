@@ -1,0 +1,38 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Joining Deatils</h3>
+    <div class="pull-right">
+      <%= link_to "Employeen Joining Detail", new_joining_detail_path, class: 'btn btn-sm btn-primary' %> 
+    </div>
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+      <th>Employee</th>
+      <th>Joining Date</th>
+      <th>Designation</th>
+      <th>Employee Grade</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @joining_details.each do |joining_detail| %>
+      <tr>
+        <td><%= joining_detail.employee.id %></td>
+        <td><%= joining_detail.joining_date %></td>
+        <td><%= joining_detail.designation %></td>
+        <td><%= joining_detail.employee_grade.try(:name) %></td>
+         <td>
+            <%= link_to '', joining_detail,class: 'btn btn-default fa fa-eye' %>
+            <%= link_to '', edit_joining_detail_path(joining_detail),class: 'btn btn-sm btn-success fa fa-edit' %>
+            <%= link_to '', joining_detail, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-close' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>

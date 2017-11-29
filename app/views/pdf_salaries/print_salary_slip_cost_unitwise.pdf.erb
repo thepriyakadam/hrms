@@ -1,0 +1,137 @@
+<style type="text/css">
+
+ .page-break { display:block; clear:both; page-break-after:always; }
+
+</style>
+<% @salaryslips.each do |e| %>
+ <%  @addable_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",false,e.id) %>
+  <%@deducted_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",true,e.id) %>
+  <% @working_day = Workingday.find(e.workingday_id) %>
+   <% @employee = Employee.find(e.employee_id) %>
+  <% @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id) %>
+   <% @leave_details = LeaveDetail.where(salaryslip_id: e.id) %>
+   <% @slip_information = SlipInformation.find_by(salaryslip_id: e.id) %>
+     <div class="page-break">
+        <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
+      <thead>
+        <tr>
+          <td colspan="4">
+           <% if @employee.company_location.company.company_logo == nil %>
+           <% else %>
+        <center> <%= wicked_pdf_image_tag @employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+        <%end%>
+           <center><strong><%= @employee.company_location.company.try(:description) %></strong><br> <%= @employee.company_location.try(:address) %> - <%= @employee.company_location.try(:name) %></center>
+          </td>           
+        </tr>
+         <tr>
+         <th>Employee Detail</th>
+         <th>Working Day</th>
+         <th>Leave Details</th>
+         <th>Slip Information</th>
+         </tr>
+     </thead>
+     <tbody>
+        <tr>
+       <td>
+       <strong> ID : </strong> <%= @employee.manual_employee_code%><br><br> 
+       <strong> Name : </strong> <%= full_name(@employee) %><br><br> 
+       <strong> Contact No : </strong> <%= @employee.try(:contact_no)%><br><br> 
+       <strong> Designation : </strong> <%= @employee.joining_detail.try(:employee_designation).try(:name) %><br><br>
+       <strong> Department : </strong> <%= @slip_information.try(:department).try(:name) %><br><br>
+       <strong> Unit : </strong> <%= @slip_information.try(:cost_center).try(:name)%><br><br>
+       </td>
+       <td>
+       <strong> Present Day : </strong> <%= @working_day.try(:present_day) %> <br><br> 
+       <strong> Holiday : </strong> <%= @working_day.try(:holiday_in_month) %><br><br> 
+       <strong> Week Off : </strong> <%= @working_day.try(:week_off_day) %><br><br> 
+       <strong> Absent Day : </strong> <%= @working_day.try(:absent_day) %><br><br> 
+       <strong> Payable Day : </strong><%= @working_day.try(:payable_day) %><br><br>
+       </td>
+       <td>
+        <% @leave_details.each do |ld| %>
+             <strong> <%= ld.leav_category.name %>  - Leave: </strong> <%= ld.no_of_leave %> - <strong> Balance: </strong> <%= ld.balance %><br><br>
+        <% end %>
+        </td>
+       <td>
+       <strong> Salary Slip : <%= @working_day.try(:month_name) %> - <%= @working_day.try(:year) %> <br><br>
+       <strong> UAN No : </strong> <%= @slip_information.try(:uan_no) %><br><br>
+       <strong> PF No :   </strong><%= @slip_information.try(:pf_no) %><br><br>
+       <strong> ESIC No : </strong> <%= @slip_information.try(:esic_no) %><br><br>
+       </td>
+       </tr>
+
+         
+      </tbody>
+    </table>
+
+   
+       <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
+      <thead>
+      <tr><td colspan="3"><center><strong> Salary Details </strong></center></td></tr>
+        <tr>
+          <th><center>Salary Component</center></th>
+          <th style="text-align: right;"><center>Actual Amount</center></th>
+          <th style="text-align: right;"><center>Calculated Amount</center></th>
+          <!-- <th>Action</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <% @addable_salary_components.each do |item| %>
+          <tr>
+            <td><%= item.salary_component.try(:name) %></td>
+            <td align="right"><%= item.actual_amount.round %></td>
+            <td align="right"><%= item.calculated_amount.round %></td>
+            <!-- <td align="center">< link_to "", edit_salaryslip_component_path(item),remote:true,class: "fa fa-edit" %></td> -->
+          </tr>
+        <% end %>
+        <tr>
+          <td><strong>Total Gross</strong></td>
+          <td align="right"><strong><%= e.actual_gross_salary.round %></strong></td>
+          <td align="right"><strong><%= e.calculated_gross_salary.round %></strong></td>
+         <!--  <td></td> -->
+        </tr>
+         <tr>
+          <td><strong><center>Deduction Component</center></strong></td>
+          <td align="right"><strong></strong></td>
+          <td align="right"><strong><center>Amount</center></strong></td>
+         <!--  <td></td> -->
+        </tr>
+        <% @deducted_salary_components.each do |item| %>
+          <tr>
+            <% unless item.salary_component_id.nil? %>
+              <td><%= item.salary_component.name %></td>
+              <td align="right"><%= item.actual_amount.round %></td>
+              <td align="right"><%= item.calculated_amount.round %></td>
+             <!--  <td align="center"> link_to "", edit_salaryslip_component_path(item),remote:true,class: "fa fa-edit" %></td> -->
+            <%else%>
+              <td><%= item.other_component_name %></td>
+              <td align="right"><%= item.actual_amount.round %></td>
+              <td align="right"><%= item.calculated_amount.round %></td>
+             <!--  <td align="center">link_to "", edit_salaryslip_component_path(item),remote:true,class: "fa fa-edit" %></td> -->
+            <%end%>
+          </tr>
+        <% end %>
+        <tr>
+          <td><strong>Total Deduction</strong></td>
+          <td align="right"><strong><%= e.actual_total_deduction.round %></strong></td>
+          <td align="right"><strong><%= e.calculated_total_deduction.round %></strong></td>
+          <!-- <td></td> -->
+        </tr>
+        <tr>
+          <td><strong>Net Salary</strong></td>
+          <td align="right"><strong><%= e.actual_net_salary.round %></strong></td>
+          <td align="right"><strong><%= e.calculated_net_salary.round %></strong></td>
+          <!-- <td></td> -->
+        </tr>
+         <tr>
+        <td colspan="3"><center>This is a computer generated slip, hence no signature is required.</center></td>
+        </tr>
+      </tbody>
+    </table>
+   <br><br>
+   </div>
+<% end %>
+
+ 
+
+

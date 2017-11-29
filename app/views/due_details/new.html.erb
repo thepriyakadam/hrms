@@ -1,0 +1,15 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+     <h6 class="box-title">No Dues Approval :- <%= @due_template.try(:code) %> <%= @due_template.try(:name) %></h6>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="due_details_li">
+			<%= render 'due_details_list' %>
+		</div>
+	</div><!-- /.box-body -->
+</div><!-- /.box -->
+

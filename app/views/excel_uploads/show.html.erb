@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @excel_upload.code %>
+</p>
+
+<p>
+  <strong>File name:</strong>
+  <%= @excel_upload.file_name %>
+</p>
+
+<p>
+  <strong>Size:</strong>
+  <%= @excel_upload.size %>
+</p>
+
+<%= link_to 'Edit', edit_excel_upload_path(@excel_upload) %> |
+<%= link_to 'Back', excel_uploads_path %>

@@ -1,0 +1,26 @@
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Period</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @periods.each do |period| %>
+      <tr>
+        <td><%= period.name %></td>
+        <td><%= period.from %></td>
+        <td><%= period.to %></td>
+        <td><%= period.status ? "Active" : "Inactive" %></td>
+        <td>
+            <%= link_to '', edit_period_path(period),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+            <%= link_to '',  period, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

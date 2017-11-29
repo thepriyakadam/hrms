@@ -1,0 +1,47 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Leave Master Detail </center></h4>
+    </div>
+    <div class="modal-body">
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+ <tr>
+      <th><strong>Leave Category</strong></th>
+      <td colspan="3"><%= @leave_master.leav_category.try(:code) %> - <%= @leave_master.leav_category.try(:name) %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Period</strong></th>
+      <td><%= @leave_master.period %></td>
+    </tr>
+    <tr>
+      <th><strong>Workingday Limit</strong></th>
+      <td><%= @leave_master.working_day %></td>
+    </tr>
+ 
+ 
+    <tr>
+     <th><strong>Company Workingday</strong></th>
+      <td><%= @leave_master.company_workingday %></td>
+    </tr>
+      <th><strong>No. of Leaves</strong></th>
+      <td> <%= @leave_master.no_of_leave %></td>
+    </tr>
+
+    <tr>
+     <th><strong>Carry Forward</strong></th>
+      <td><%= @leave_master.is_carry_forward ? 'Yes' : 'No' %></td>
+    <tr>
+      <th><strong>Limit</strong></th>
+      <td> <%= @leave_master.limit %></td>
+    </tr>
+     </table> <br>
+
+  </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

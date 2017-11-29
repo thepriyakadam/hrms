@@ -1,0 +1,40 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Company List</h3>
+    <div class="pull-right">
+      <%= link_to "New Employee physical", new_employee_physical_path, class: 'btn btn-primary btn-sm' %> 
+    </div>
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+      <th>Employee</th>
+      <th>Hieght</th>
+      <th>Weight</th>
+      <th>T-Shirt Size</th>
+      <th>Trouser Size</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @employee_physicals.each do |employee_physical| %>
+      <tr>
+        <td><%= employee_physical.employee %></td>
+        <td><%= employee_physical.height %></td>
+        <td><%= employee_physical.weight %></td>
+        <td><%= employee_physical.size %></td>
+        <td><%= employee_physical.trouser_size %></td>
+        <td>
+            <%= link_to '', employee_physical,class: 'btn btn-default btn-sm fa fa-eye' %>
+            <%= link_to '', edit_employee_physical_path(employee_physical),class: 'btn btn-sm btn-success fa fa-edit' %>
+            <%= link_to '', employee_physical, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-close' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>

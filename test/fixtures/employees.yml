@@ -1,0 +1,53 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  department_id: 
+  first_name: MyString
+  middle_name: MyString
+  last_name: MyString
+  date_of_birth: 2015-11-16
+  contact_no: MyString
+  email: MyString
+  permanent_address: MyString
+  city: MyString
+  district: MyString
+  state: MyString
+  pin_code: 1
+  current_address: MyString
+  adhar_no: MyString
+  pan_no: MyString
+  licence_no: MyString
+  passport_no: MyString
+  marital_status: MyString
+  nationality_id: 
+  blood_group_id: 
+  handicap: MyString
+  status: MyString
+  employee_type_id: 
+  gender: MyString
+
+two:
+  department_id: 
+  first_name: MyString
+  middle_name: MyString
+  last_name: MyString
+  date_of_birth: 2015-11-16
+  contact_no: MyString
+  email: MyString
+  permanent_address: MyString
+  city: MyString
+  district: MyString
+  state: MyString
+  pin_code: 1
+  current_address: MyString
+  adhar_no: MyString
+  pan_no: MyString
+  licence_no: MyString
+  passport_no: MyString
+  marital_status: MyString
+  nationality_id: 
+  blood_group_id: 
+  handicap: MyString
+  status: MyString
+  employee_type_id: 
+  gender: MyString

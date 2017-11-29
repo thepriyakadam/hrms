@@ -1,0 +1,35 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Member</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    
+<tr>
+	<th>ID</th>
+	<td><%= @membership.employee.try(:manual_employee_code) %></td>
+
+	<th>Member Name</th>
+	<td><%= full_name(@membership.employee) %></td>
+</tr>
+
+<tr>
+	<th>Member Type</th>
+	<td><%= @membership.membership_type.try(:name) %></td>
+
+	<th>Contribution</th>
+	<td><%= @membership.contribution %></td>
+</tr>
+
+<tr>
+	<th>Date</th>
+	<td><%= @membership.date %></td>
+
+	<th>Status</th>
+	<td><%= @membership.status ? "Active" : "Inactive" %></td>
+</tr>
+</table><br>
+<%= link_to 'Edit', edit_membership_path(@membership) ,class:'btn btn-sm btn-success fa fa-edit'%> |
+<%= link_to 'Back', memberships_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
+</div>
+</div>

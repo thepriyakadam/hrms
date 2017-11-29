@@ -1,0 +1,263 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Forms</h3>
+    <div class="pull-right"></div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div class="row">
+      <div class="col-sm-2">
+        <div class="box-header">
+          <h3 class="box-title">Basic Details</h3>
+          <div class="pull-right"></div>
+        </div>
+        <table class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+				       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+				     	<th>Basic Details </th>
+     
+				     </tr>
+				    </thead>
+
+				    <tbody>
+				    	<% @employees.each do |e| %>
+				     		<tr>
+				     			<td><%= check_box_tag "employee_ids[]", e %></td>
+				        	<td><%= e.gsub("_"," ") %></td>
+				        </tr>
+				      <% end %>
+				    </tbody>
+				    </table>
+				    </div>
+
+				<div class="col-sm-2">
+        <div class="box-header">
+          <h3 class="box-title">Joining Details</h3>
+          <div class="pull-right"></div>
+        </div>
+        <table class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+				       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+				     	<th>Joining Details </th>
+     
+				     </tr>
+				    </thead>
+
+				    <tbody>
+				    	<% @joining_details.each do |j| %>
+				     		<tr>
+				     			<td><%= check_box_tag "joining_detail_ids[]", j %></td>
+				        	<td><%= j %></td>
+				        </tr>
+				      <% end %>
+				    </tbody>
+				    </table>
+				    </div>
+
+				 <div class="col-sm-2">
+        <div class="box-header">
+          <h3 class="box-title">Physical Details</h3>
+          <div class="pull-right"></div>
+        </div>
+        <table class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+				       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+				     	<th> Physical Details </th>
+     
+				     </tr>
+				    </thead>
+
+				    <tbody>
+				    	<% @employee_physicals.each do |ep| %>
+				     		<tr>
+				     			<td><%= check_box_tag "employee_physical_ids[]", ep %></td>
+				        	<td><%= ep %></td>
+				        </tr>
+				      <% end %>
+				    </tbody>
+				    </table>
+
+				<div class="col-sm-12">
+        <div class="box-header">
+          <h3 class="box-title">Bank Details</h3>
+          <div class="pull-right"></div>
+        </div>
+        <table class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+				       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+				     	<th>  Bank Details </th>
+     
+				     </tr>
+				    </thead>
+
+				    <tbody>
+				    	<% @employee_bank_details.each do |b| %>
+				     		<tr>
+				     			<td><%= check_box_tag "employee_bank_detail_ids[]", b %></td>
+				        	<td><%= b %></td>
+				        </tr>
+				      <% end %>
+				    </tbody>
+				    </table>
+
+				 <div class="col-sm-12">
+        <div class="box-header">
+          <h3 class="box-title">Award </h3>
+          <div class="pull-right"></div>
+        </div>
+        <table class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+				       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+				     	<th> Awards </th>
+     
+				     </tr>
+				    </thead>
+
+				    <tbody>
+				    	<% @awards.each do |a| %>
+				     		<tr>
+				     			<td><%= check_box_tag "award_ids[]", a %></td>
+				        	<td><%= a %></td>
+				        </tr>
+				      <% end %>
+				    </tbody>
+				    </table>
+				    </div>
+
+				    </div>
+
+				    </div>
+
+				<div class="col-sm-2">
+        <div class="box-header">
+          <h3 class="box-title">Qualification</h3>
+          <div class="pull-right"></div>
+        </div>
+        <table class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+				       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+				     	<th> Qualification Details </th>
+     
+				     </tr>
+				    </thead>
+
+				    <tbody>
+				    	<% @qualifications.each do |q| %>
+				     		<tr>
+				     			<td><%= check_box_tag "qualification_ids[]", q %></td>
+				        	<td><%= q %></td>
+				        </tr>
+				      <% end %>
+				    </tbody>
+				    </table>
+
+				<div class="col-sm-12">
+        <div class="box-header">
+          <h3 class="box-title">Skillset</h3>
+          <div class="pull-right"></div>
+        </div>
+        <table class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+				       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+				     	<th> Skillset Details </th>
+     
+				     </tr>
+				    </thead>
+
+				    <tbody>
+				    	<% @skillsets.each do |s| %>
+				     		<tr>
+				     			<td><%= check_box_tag "skillset_ids[]", s %></td>
+				        	<td><%= s %></td>
+				        </tr>
+				      <% end %>
+				    </tbody>
+				    </table>
+				    </div>
+				    </div>
+
+				<div class="col-sm-2">
+        <div class="box-header">
+          <h3 class="box-title">Experience</h3>
+          <div class="pull-right"></div>
+        </div>
+        <table class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+				       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+				     	<th> Experience Details </th>
+     
+				     </tr>
+				    </thead>
+
+				    <tbody>
+				    	<% @experiences.each do |ex| %>
+				     		<tr>
+				     			<td><%= check_box_tag "experience_ids[]", ex %></td>
+				        	<td><%= ex %></td>
+				        </tr>
+				      <% end %>
+				    </tbody>
+				    </table>
+
+				<div class="col-sm-12">
+        <div class="box-header">
+          <h3 class="box-title">Certification</h3>
+          <div class="pull-right"></div>
+        </div>
+        <table class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+				       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+				     	<th> Certification </th>
+     
+				     </tr>
+				    </thead>
+
+				    <tbody>
+				    	<% @certifications.each do |s| %>
+				     		<tr>
+				     			<td><%= check_box_tag "certification_ids[]", s %></td>
+				        	<td><%= s %></td>
+				        </tr>
+				      <% end %>
+				    </tbody>
+				    </table>
+				    </div>
+				    </div>
+
+				<div class="col-sm-2">
+        <div class="box-header">
+          <h3 class="box-title">Family Details</h3>
+          <div class="pull-right"></div>
+        </div>
+        <table class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+				       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+				     	<th>  Family Details </th>
+     
+				     </tr>
+				    </thead>
+
+				    <tbody>
+				    	<% @families.each do |f| %>
+				     		<tr>
+				     			<td><%= check_box_tag "certification_ids[]", f %></td>
+				        	<td><%= f %></td>
+				        </tr>
+				      <% end %>
+				    </tbody>
+				    </table>
+				    </div>
+
+				  		</div>
+				    </div>
+				  </div>
+				</div>

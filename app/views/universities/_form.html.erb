@@ -1,0 +1,52 @@
+<%= bootstrap_form_for(@university,html: {id: 'university'},remote:true) do |f| %>
+  <div class="row">
+      <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: "Code" %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'University / Institution' %>
+      </div>
+    </div>
+
+        <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name%>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+$("#university").validate({
+    rules: {
+      "university[code]":{
+        required: true,
+      },
+       "university[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "university[code]":{
+        required: "Please specify code",
+      },
+      "university[name]":{
+        required: "Please specify name",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

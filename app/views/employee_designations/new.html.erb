@@ -1,0 +1,18 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Designation</h3>
+     <div class="pull-right">
+    <%= link_to " PDF ", employee_designation_master_employee_designations_path(id: @employee_designation.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
+    
+    <%= link_to " XLS ", employee_designation_master_employee_designations_path(id: @employee_designation.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="employee_designation_li">
+			<%= render 'employee_designation_list' %>
+		</div>
+	</div><!-- /.box-body -->
+</div><!-- /.box -->

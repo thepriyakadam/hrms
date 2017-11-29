@@ -1,0 +1,25 @@
+<br>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Action</th>
+ 
+  <tbody>
+    <% @resource_pool_masters.each do |resource_pool_master| %>
+      <tr>
+        <td><%= resource_pool_master.code %></td>
+        <td><%= resource_pool_master.name %></td>
+        <td><%= resource_pool_master.description %></td>
+         <td><%= resource_pool_master.status ? "Active" : "Inactive" %></td>
+        <td>
+            <%= link_to '', edit_resource_pool_master_path(resource_pool_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  resource_pool_master, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

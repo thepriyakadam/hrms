@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @overtime_daily_record.employee %>
+</p>
+
+<p>
+  <strong>Ot daily date:</strong>
+  <%= @overtime_daily_record.ot_daily_date %>
+</p>
+
+<p>
+  <strong>Ot daily hrs:</strong>
+  <%= @overtime_daily_record.ot_daily_hrs %>
+</p>
+
+<p>
+  <strong>Ot rate:</strong>
+  <%= @overtime_daily_record.ot_rate %>
+</p>
+
+<p>
+  <strong>Ot daily amount:</strong>
+  <%= @overtime_daily_record.ot_daily_amount %>
+</p>
+
+<%= link_to 'Edit', edit_overtime_daily_record_path(@overtime_daily_record) %> |
+<%= link_to 'Back', overtime_daily_records_path %>

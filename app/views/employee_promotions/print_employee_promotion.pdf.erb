@@ -1,0 +1,49 @@
+<style>
+    th { text-align: left;}
+    tr {page-break-inside: avoid;}
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+    }
+</style>
+
+
+<table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
+<tr>
+  <th colspan="4"><center><strong><%= @promotion_histories.first.employee.company_location.company.try(:description) %><br> <%= @promotion_histories.first.employee.company_location.company.try(:address) %><br> <%= @promotion_histories.first.employee.company_location.try(:name) %></strong></center>
+  </th>
+</tr>
+
+<tr>
+  <th colspan="4"><center> Promotion History of <%= @promotion_histories.first.try(:employee).try(:manual_employee_code) %> <%= full_name(@promotion_histories.first.try(:employee)) %></center>
+  </th>
+</tr>
+ 
+   <% @promotion_histories.each do |promotion_history| %>
+  <tr>
+      <th>Department</th>
+      <td><%= promotion_history.employee.try(:company_location).try(:name) %> - <%= promotion_history.employee.try(:department).try(:name) %></td>
+      <th>Designation</th>
+      <td><%= promotion_history.employee_designation.try(:name) %></td>
+  </tr>
+  <tr>    
+       <th>Grade</th>
+      <td><%= promotion_history.employee_grade.try(:name) %></td>
+       <th>Category</th>
+      <td><%= promotion_history.employee_category.try(:name) %></td>
+  </tr>
+  <tr>    
+      <th>CTC</th>
+      <td><%= promotion_history.employee_ctc %></td>
+      <th>Effective From</th>
+      <td><%= promotion_history.effective_from %></td>
+  </tr>
+  <tr>    
+      <th>Effective To</th> 
+      <td colspan="3"><%= promotion_history.effective_to %></td>
+  </tr>
+  <tr>
+    <th>Justification</th>
+    <td colspan="3"><%= promotion_history.justification %></td>
+  </tr>
+<% end %>

@@ -1,0 +1,135 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Certification Details</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for(@certification,html: {id: 'certification'},remote:true) do |f| %>
+      <%= f.hidden_field :employee_id, value: @employee.id %>
+      <div id="entry1" class="clonedInput">
+        <div class="row">
+
+        <!-- <span class="glyphicon glyphicon-remove"></span>
+          <input type="button" id="btnDel" class="btn"> -->
+          
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :name,label: 'Certification Name', class: 'input_name' ,placeholder: 'e.g. Oracle'%>
+            </div>
+          </div>
+      
+          <div class="col-sm-3">
+            <div class="field">
+          <div class="input-group">
+           <div class="input-group-addon">
+                <%= link_to "", new_year_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :year_id, all_year,{label: 'Year',include_blank: " Select Year"}, class: 'input_year_id' %>
+            </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :duration, class: 'input_duration',placeholder: 'e.g. 4 Months' %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="field">
+              <%= f.text_area :description, class: 'input_description' %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    <!--   < unless params['controller'] == 'Certifications' and params['action'] == 'edit' %>
+        <div class="row">
+       <div class="col-sm-6">
+        <span class="icon-input-btn btn-sm">
+            <input type="button" class="btn btn-primary btn-success btn-sm" id="btnAdd" value="Additional Certifications"></span>
+            <input type="button" id="btnDel" value="Remove Above Certifications" class="btn-sm btn-danger"></span>
+          </div>
+</div>          
+        <br>
+      <end%> -->
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="actions">
+            <%= f.submit :class => class_name, data: { disable_with: data_info },class: 'btn btn-sm btn-success' %>
+            <% if params['controller'] == 'Certifications' and params['action'] == 'edit' %>
+            <%= link_to 'Back',ajax_certification_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-default',remote:true%>
+          <%end%>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script type="text/javascript">
+  $(function () {
+  $('#btnAdd').click(function () {
+    var num     = $('.clonedInput').length, 
+        newNum  = new Number(num + 1),      
+        newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); 
+    newElem.find('.input_name').attr('name','certification['+ newNum +'][name]').attr('id', newNum + '_certification_name').val('');
+    newElem.find('.input_year_id').attr('name','certification['+ newNum +'][year_id]').attr('id', newNum + '_certification_year_id').val('');
+    newElem.find('.input_duration').attr('name','certification['+ newNum +'][duration]').attr('id', newNum + '_certification_duration').val('');
+    newElem.find('.input_description').attr('name','certification['+ newNum +'][description]').attr('id', newNum + '_certification_description').val('');
+    
+    $('#entry' + num).after(newElem);
+    $('#ID' + newNum + '_title').focus();
+
+    $('#btnDel').attr('disabled', false);
+
+    if (newNum == 5)
+    $('#btnAdd').attr('disabled', true).prop('value', "You've reached the limit"); 
+  });
+
+  $('#btnDel').click(function () {
+      if (confirm("Are you sure you wish to remove this section? This cannot be undone."))
+          {
+              var num = $('.clonedInput').length;
+              $('#entry' + num).slideUp('slow', function () {$(this).remove();
+                  if (num -1 === 1)
+              $('#btnDel').attr('disabled', true);
+              $('#btnAdd').attr('disabled', false).prop('value', "Additional Certifications");});
+          }
+      return false;
+  });
+  $('#btnAdd').attr('disabled', false);
+  $('#btnDel').attr('disabled', true);
+});
+</script>
+
+
+<script type="text/javascript">
+ $("#certification").validate({
+    rules: {
+      "certification[name]":{
+        required: true
+      },
+      "certification[duration]":{
+        required: true
+      }
+    },
+    messages: {
+      "certification[name]":{
+        required: "Please specify certification name"
+      },
+      "certification[duration]":{
+        required: "Please specify certification duration"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

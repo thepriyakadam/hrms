@@ -1,0 +1,34 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Training Plan List</h3>
+    
+  </div>
+  <div class="box-body">
+    <table id="example" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Sr.No.</th>
+          <th>Training date</th>
+          <th>Topic</th>
+          <th>Trainer Name</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% i = 0 %>
+        <% @training_plans.each do |training_plan| %>
+          <tr>
+            <td><%= i=i+1 %></td>
+            <td><%= training_plan.training_date %></td>
+            <td><%= training_plan.training_topic_master.try(:name) %></td>
+            <td><%= training_plan.trainer_name %></td>
+            <td>
+            <%= link_to '', training_plan,class: 'btn btn-xs btn-default fa fa-eye' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

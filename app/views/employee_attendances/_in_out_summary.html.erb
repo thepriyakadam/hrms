@@ -1,0 +1,45 @@
+<table id="example5" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>In</th>
+          <th>Out</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @employee_attendances.each do |e| %>
+          <tr>
+            <td><%= e.day %></td>
+            <td>
+              <% @employee_attendance = EmployeeAttendance.where(day: e.day) %>
+              <% in_count = 0 %>
+              <% @employee_attendance.each do |a| %>
+                <% if a.in_time == nil %>
+                <% else %>
+                  <% in_count = in_count + 1 %>
+                <% end %>
+                  <% @in_count = in_count %>
+                  <% @in_time = @in_count %>
+              <% end %>
+              <%= @in_time %>
+            </td>
+            <td>
+              <% @employee_attendance = EmployeeAttendance.where(day: e.day) %>
+              <% out_count = 0 %>
+              <% @employee_attendance.each do |a| %>
+                <% if a.out_time == nil %>
+                <% else %>
+                  <% out_count = out_count + 1 %>
+                <% end %>
+                  <% @out_count = out_count %>
+                  <% @out_time = @out_count %>
+              <% end %>
+              <%= @out_time %>
+            </td>
+            <td><%= link_to 'Show ',modal_missing_record_employee_attendances_path,class: 'btn btn-primary btn-xs ',remote: true %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div id="myModal" class="modal fade"></div>

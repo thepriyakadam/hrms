@@ -1,0 +1,24 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @travel_expence_types.each do |travel_expence_type| %>
+      <tr>
+        <td><%= travel_expence_type.code %></td>
+        <td><%= travel_expence_type.name %></td>
+        <td><%= travel_expence_type.description %></td>
+        <td>
+            <%= link_to '', edit_travel_expence_type_path(travel_expence_type),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  travel_expence_type, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

@@ -1,0 +1,73 @@
+<div class="box-body">
+
+ <% @employee_transfers.each do |employee_transfer| %>
+  <table id="example" class="table table-bordered table-hover table-condensed">
+
+  <thead>
+   <tr><td colspan="5">
+   <% if @employee.try(:company_location).try(:company).try(:company_logo) == nil %>
+      <% else %>
+        <center> <%= image_tag @employee.try(:company_location).try(:company).try(:company_logo).url, :size => "90x50" %></center>
+        <%end%>
+   <center><strong><%= @employee.try(:company_location).try(:company).try(:description) %></strong> <br>
+        <%= @employee.try(:company_location).try(:company).try(:address) %><br>  <%= @employee.try(:department).try(:name) %> -
+        <%= @employee.try(:company_location).try(:name) %></center> 
+
+        </td></tr>
+
+      <tr><th colspan="5"><center> Employee Transfer Detail's </center></th><tr>
+    <tr>
+    <td> ID : <%= @employee.try(:manual_employee_code) %></td> <td colspan="3"> Employee Name :  <%= full_name(@employee) %></td><td> Department : <%= @employee.department.try(:name) %></td>
+    </tr>
+    
+  </thead>
+
+  <tbody>
+  <tr> <th colspan="5"><center>   Employee Transfer Detail's Transfer ID : <%= employee_transfer.id %> </center></th></tr>
+ 
+      <tr>
+        <td> Employee Designation : <%= employee_transfer.employee.try(:joining_detail).try(:employee_designation).try(:name) %></td>
+        <td> Employee Category : <%= employee_transfer.employee.joining_detail.employee_category.try(:name) %></td>
+        <td> Company : <%= employee_transfer.employee.company.try(:name) %></td>
+        <td> Company Location : <%= employee_transfer.employee.company_location.try(:name) %></td>  
+        <td> Department :<%= employee_transfer.employee.department.try(:name) %></td>
+        </tr>
+         <tr>
+          <td colspan="5"> Justification :<%= @employee_transfer.try(:justification) %></td>
+         </tr>
+          <tr> <th colspan="5"><center> Employee Transfer Detail's </center></th></tr>
+       <tr>
+        <td> Employee Designation : <%= employee_transfer.designation %></td>
+        <td> Employee Category : <%= employee_transfer.category %></td>
+        <td> Company : <%= employee_transfer.employee_company %></td>
+        <td> Company Location : <%= employee_transfer.employee_company_location %></td>  
+        <td> Department : <%= employee_transfer.employee_department %></td>
+         </tr>
+         </tbody>
+          <tr><th colspan="5"><center>Request Process</center> </th></tr>
+          <tr>
+          <th>ID</th>
+          <th colspan="1">Name</th>
+          <th>Designation</th>
+          <th>Contact No</th>
+          <th>Status</th>
+          </tr>
+         <% employee_transfer.reporting_employee_transfers.each do |ert| %>
+         <% emp = ReportingEmployeeTransfer.where(id: ert.id).take
+         employee = Employee.where(id: emp.reporting_master_id).take %>
+         <tr><td><%= employee.try(:manager).try(:manual_employee_code) %></td>
+         <td colspan="1"> <%= employee.try(:manager).try(:prefix) %> <%= employee.try(:manager).try(:first_name) %> <%= employee.try(:manager).try(:middle_name) %> <%= employee.try(:manager).try(:last_name) %></td>
+         <td><%= employee.try(:manager).joining_detail.employee_designation.try(:name) %></td>
+         <td><%= employee.try(:manager).try(:contact_no) %></td>
+         <td><%= ert.status %></td>
+         </tr>
+         <% end %>
+        </tbody>
+</table><br>
+    <% end %>
+
+    </div>
+ <%= link_to " Excel Report ",print_transfer_employee_name_report_employee_transfers_path(employee_id: params[:employee_transfer][:employee_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+ 
+<%= link_to " Print Report ",print_transfer_employee_name_report_employee_transfers_path(employee_id: params[:employee_transfer][:employee_id],format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+</div>

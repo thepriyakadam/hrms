@@ -1,0 +1,35 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Reimbursement Approval List</h3>
+  </div>
+	<div class="box-body">
+		<table class="table table-bordered table-hover table-condensed">
+		  <thead>
+		    <tr>
+		      <th>ID</th>
+		      <th>Employee</th>
+		      <th>Reimbursement</th>
+		      <th>Date</th>
+		      <th>Amount</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  	<% @reimbursement_requests.each do |reimbursement_request| %>
+		      <tr>
+		        <td><%= reimbursement_request.employee.manual_employee_code %></td>
+		        <td><%= full_name(reimbursement_request.employee) %></td>
+		        <td><%= reimbursement_request.reimbursement_head.try(:name) %></td>
+		        <td><%= reimbursement_request.date %></td>
+		        <td><%= reimbursement_request.amount %></td>
+		        <tr>
+		        <th colspan="5"><center>
+		        	<%= link_to 'Approve', approve_reimbursement_requests_path(reimbursement_request) ,class: 'btn btn-xs btn-primary' %>
+		        	<%= link_to 'Reject', reject_reimbursement_requests_path(reimbursement_request) ,class: 'btn btn-xs btn-danger' %>
+		        </center></th>
+		       </tr> 
+		      </tr>
+		    <% end %>
+		  </tbody>
+		</table>
+	</div>
+</div>

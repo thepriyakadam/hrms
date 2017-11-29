@@ -1,0 +1,109 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Initiate Employee Transfer</h3>
+    <div class="box-body">
+      <%= bootstrap_form_for(@employee_transfer,html: {id: 'employee_transfer'}) do |f| %>
+
+      <%= f.hidden_field :employee_id, value: current_user.employee_id %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+          <%= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :designation, label: 'Employee Designation', class: 'employee_transfer' %>
+          </div>
+        </div>
+    
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :category,label: 'Employee Category', class: 'employee_transfer'%>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :employee_company,label: 'Company', class: 'employee_transfer'%>
+          </div>
+        </div>
+        </div>
+         <div class="row">
+         <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :employee_company_location,label: 'Company Location', class: 'employee_transfer'%>
+          </div>
+        </div>
+       
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :employee_department,label: 'Department', class: 'employee_transfer'%>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="field">
+            <%= f.text_field :justification %>
+          </div>
+          </div>
+        </div>
+ 
+      <div class="row">
+        <div class="actions">
+          <%= f.submit'Initiate Transfer', :class => class_name, data: { disable_with: data_info } %> | <%= link_to 'Back', employee_transfers_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
+          <!--  <= link_to 'Back',employee_list_employee_transfers_path,class: 'btn btn-default btn-sm fa fa-arrow-left'%> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <% end %>
+
+<script>
+$("#employee_transfer").validate({
+    rules: {
+       "employee_transfer[employee_id]":{
+        required: true,
+      },
+      "employee_transfer[designation]":{
+        required: true,
+      },
+      "employee_transfer[category]":{
+        required: true,
+      },
+      "employee_transfer[employee_company]":{
+        required: true,
+      },
+      "employee_transfer[employee_company_location]":{
+        required: true,
+      },
+      "employee_transfer[employee_department]":{
+        required: true,
+      }
+    },
+    messages: {
+       "employee_transfer[employee_id]":{
+        required: "Please select employee",
+      },
+      "employee_transfer[designation]":{
+        required: "Please specify designation",
+      },
+      "employee_transfer[category]":{
+        required: "Please specify category",
+      },
+      "employee_transfer[employee_company]":{
+        required: "Please specify company",
+      },
+      "employee_transfer[employee_company_location]":{
+        required: "Please specify company location",
+      },
+      "employee_transfer[employee_department]":{
+        required: "Please specify department",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

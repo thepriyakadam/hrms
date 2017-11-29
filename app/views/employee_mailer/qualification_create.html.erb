@@ -1,0 +1,42 @@
+ <!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+     <h4>Employee Qualification Detail</h4>
+    <p>
+      <table class="table table-bordered table-hover table-condensed">
+      
+        <tr>
+          <td><strong>Employee</strong></td>
+          <td><%= @qualification.employee.try(:prefix) %> <%= @qualification.employee.try(:first_name) %> <%= @qualification.employee.try(:last_name) %></td>
+
+          <td><strong>Degree Type</strong></td>
+          <td><%= @qualification.degree_type.try(:name) %></td>
+        </tr>
+        <tr>
+          <td><strong>Degree</strong></td>
+          <td><%= @qualification.degree.try(:name) %></td>
+
+          <td><strong>Degree Stream</strong></td>
+          <td><%= @qualification.degree_stream.try(:name) %></td>
+        </tr>
+        <tr>
+          <td><strong>College</strong></td>
+          <td><%= @qualification.college %></td>
+
+          <td><strong>Marks</strong></td>
+          <td><%= @qualification.marks %></td>
+        </tr>
+        <tr>
+          <td><strong>Passing Year</strong></td>
+          <td><%= @qualification.year.try(:name)%></td>
+
+          <td><strong>University</strong></td>
+          <td><%= @qualification.university.try(:name) %></td>
+        </tr>
+        </table>
+    </p>
+  </body>
+</html>

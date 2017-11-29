@@ -1,0 +1,43 @@
+<style type="text/css">
+    th { text-align: left; }
+    tr { page-break-inside: avoid; }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;}
+</style>
+
+<table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+<thead>
+  <tr>
+        <td colspan="6">
+         <% if current_user.company_location.company.company_logo == nil %>
+      <% else %>
+        <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
+        <%end%>
+          <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>. <br> <%= @month %> <%= @year %> </center>
+        </td>           
+       </tr>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Employee Name</th>
+        <th>Contact No.</th>
+        <th>Department</th>
+        <th>Advance Date</th>
+        <th>Instalment</th>
+      </tr>
+    </thead>
+
+    <tbody>
+       <% @instalments.each do |i| %>
+        <tr>
+          <td><%= i.advance_salary.try(:employee).try(:manual_employee_code) %></td>
+          <td><%= full_name(i.advance_salary.try(:employee)) %></td>
+          <td><%= i.advance_salary.try(:contact_no) %></td>
+          <td><%= i.advance_salary.try(:employee).try(:department).try(:name) %></td>
+          <td><%= i.advance_salary.try(:advance_date) %></td>
+          <td><%= i.instalment_amount %></td>
+        </tr>
+      <% end %>
+    </tbody>
+</table>

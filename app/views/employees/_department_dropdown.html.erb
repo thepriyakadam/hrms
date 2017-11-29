@@ -1,0 +1,28 @@
+<label class="control-label required" for="company_district" aria-required="true">Department</label>
+
+<% if @form == 'company' %>
+	<%= select :employee,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_sub_department',a,function(response){});",class: "form-control"}%>
+<% elsif @form == 'company_location' %>
+	<%= select :employee,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_sub_department',a,function(response){});",class: "form-control"}%>
+<% elsif @form == 'employee' %>
+	<%= select :employee,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_sub_department',a,function(response){});",class: "form-control"}%>
+<%elsif @form == 'family' %>
+	<%= select :family,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},class: "form-control"%>
+<% elsif @form == 'capture_resume' %>
+	<%= select :capture_resume,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},class: "form-control"%>
+<% elsif @form == 'employee_transfer' %>
+	<%= select :employee_transfer,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},class: "form-control"%>
+<% elsif @form == 'travel_request' %>
+	<%= select :travel_request,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},class: "form-control"%>
+<% elsif @form == 'employee_leav_request' %>
+	<%= select :employee_leav_request,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},class: "form-control"%>
+<% elsif @form == 'particular_leave_record' %>
+	<%= select :particular_leave_record,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},class: "form-control"%>
+<% elsif @form == 'employee' %>
+	<%= select :vacancy_master,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},class: "form-control"%>
+<% elsif @form == 'due_detail' %>
+	<%= select :due_detail,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},class: "form-control"%>
+<%else %>
+	<%= select :company,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},class: "form-control"%>
+<%end%>
+<!-- <= select :employee,:company_location_id,(@company_locations.present? ? (@company_locations.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Company Location",hide_label:true},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_department',a,function(response){});",class: "form-control"}%> -->

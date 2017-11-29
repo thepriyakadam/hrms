@@ -1,0 +1,57 @@
+<table id="example1" class="table table-bordered table-hover table-condensed">
+  <thead>
+  <tr><td colspan="3"><center><strong>Salary Templates of <%= full_name(@employee_templates.try(:first).try(:employee)) %></strong></center></td></tr>
+    <tr>
+      <th>Template Name</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @employee_templates.each do |t| %>
+    <tr>
+      <td><%= t.salary_template.try(:code) %> <%= t.salary_template.try(:description) %></td>
+      <td>
+        <% if t.is_active %>
+          <small class="label label-info">Current Template</small>
+        <% elsif t.is_active == false and t.start_date.nil? %>
+
+        <%= bootstrap_form_for :activate, url: { :controller=>"employee_templates", action: 'activate'} do |f| %>
+          <%= f.text_field :activate_date,hide_label: true, class: 'ot_date' %>
+          <%= f.hidden_field :id, value: t.id %>
+          <%= f.hidden_field :employee_id, value: t.employee_id %>
+          <%= f.submit "Activate", class: 'btn btn-primary btn-xs' %>
+        <% end %>
+        <% else %>
+          <small class="label label-danger">Expired Template</small>
+        <% end %>
+      </td>
+        <td>
+            <%= link_to '', show_employee_salary_template_employee_salary_templates_path(emp_id: t.employee_id, salary_template_id: t.salary_template_id),class: 'btn btn-xs btn-default fa fa-eye' %>
+            <% if t.start_date == nil %>
+            <%= link_to 'Cancel', cancel_salary_template_employee_templates_path(employee_id: t.employee_id,employee_template_id: t.id),class: 'btn btn-info btn-xs' %>
+            <% else %>
+              <% if @salaryslip_component.is_present(t.id) %>
+                <small class="label label-primary">Salary Processed</small>
+              <% else %>
+                <%= link_to 'Revert', revert_salary_template_employee_templates_path(employee_id: t.employee_id, salary_template_id: t.salary_template_id,employee_template_id: t.id),class: 'btn btn-danger btn-xs' %>
+              <% end %>
+            <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<div>
+  <%= link_to 'Back', employee_templates_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+    $('.ot_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+50',
+    dateFormat: 'dd-mm-yy' });
+  });
+</script>

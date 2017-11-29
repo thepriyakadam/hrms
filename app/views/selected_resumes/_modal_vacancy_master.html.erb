@@ -1,0 +1,154 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Vacancy Details </center></h4>
+    </div>
+    <div class="modal-body">
+    <table class="table table-bordered table-hover table-condensed">
+  <thead>
+ <tr>
+        <th><strong>Vacancy Code</strong></th>
+        <td><%= @vacancy_master.vacancy_code %></td>
+
+        <th><strong>Request To</strong></th>
+        <td><% emp=Employee.where(id: @vacancy_master.reporting_master_id).take %>
+           <%= emp.try(:prefix) %> <%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %> </td>
+      </tr>
+
+      <tr>
+        <th><strong>Requisition Date</strong></th>
+        <td><%= @vacancy_master.vacancy_post_date %></td>
+
+        <th><strong>Company</strong></th>
+        <td><%= @vacancy_master.company.try(:name) %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Location</strong></th>
+        <td><%= @vacancy_master.company_location.try(:name) %></td>
+
+        <th><strong>Department</strong></th>
+        <td><%= @vacancy_master.try(:department).try(:name) %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Sub Department</strong></th>
+        <td><%= @vacancy_master.try(:sub_department).try(:name) %></td>
+
+        <th><strong>Designation</strong></th>
+        <td><%= @vacancy_master.employee_designation.name %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Vacancy Name</strong></th>
+        <td><%= @vacancy_master.vacancy_name %></td>
+      
+        <th><strong>Type Of Vacancy</strong></th>
+        <td><%= @vacancy_master.vacancy_type %></td>
+      </tr>
+
+      <tr>  
+        <th><strong>No. of Positions</strong></th>
+        <td><%= @vacancy_master.no_of_position %></td> 
+
+        <th><strong>Primary Skill</strong></th>
+        <td><%= @vacancy_master.keyword %></td> 
+      </tr>
+
+      <tr>  
+
+        <th><strong>Secondary Skill</strong></th>
+        <td><%= @vacancy_master.secondary_skill %></td>
+
+        <th><strong>Qualification I</strong></th>
+        <td><%= @vacancy_master.degree.try(:name) %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Qualification II</strong></th>
+        <td><%= @vacancy_master.degree_1.try(:name) %></td>
+
+        <th><strong>Qualification III</strong></th>
+        <td><%= @vacancy_master.degree_2.try(:name) %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Minimum Experience</strong></th>
+        <td><%= @vacancy_master.experience %></td>
+
+        <th><strong>Maximum Experience</strong></th>
+        <td><%= @vacancy_master.experince_max %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Minimum Budget</strong></th>
+        <td><%= @vacancy_master.budget %></td>
+
+        <th><strong>Maximum Budget</strong></th>
+        <td><%= @vacancy_master.budget_max %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Reason for requirement </strong></th>
+        <td><%= @vacancy_master.reason %></td>
+
+        <th><strong>Replacement</strong></th>
+        <td><%= @vacancy_master.replacement_id %></td>
+      </tr>
+
+      <tr>  
+        <th><strong>Notice Period</strong></th>
+        <td><%= @vacancy_master.notice_period ? "Yes": "No" %></td>
+
+        <th><strong>No. of days (Notice Period)</strong></th>
+        <td><%= @vacancy_master.notice_period_day %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Relocation Reimburment</strong></th>
+        <td><%= @vacancy_master.relocation_rerimbursement ? "Yes": "No" %></td>
+
+        <th><strong>Relocation Amount</strong></th>
+        <td><%= @vacancy_master.relocation_cost %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Fulfillment Date</strong></th>
+        <td><%= @vacancy_master.vacancy_post_date %></td>
+      
+        <th><strong>Current Status</strong></th>
+        <td><%= @vacancy_master.current_status %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Recruiter</strong></th>
+        <td><%= full_name(@vacancy_master.recruiter) %></td>
+
+        <th><strong>Resource</strong></th>
+        <td><%= @vacancy_master.billable %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Target Date</strong></th>
+        <td><%= @vacancy_master.target_date %></td>
+
+        <th><strong>Target Company</strong></th>
+        <td><%= @vacancy_master.target_company.try(:name) %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Description</strong></th>
+        <td colspan="3"><%= @vacancy_master.description %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Justification</strong></th>
+        <td colspan="3"><%= @vacancy_master.justification %></td>
+      </tr>
+  </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

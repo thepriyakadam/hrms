@@ -1,0 +1,22 @@
+<div class="box-body">
+
+ <div style="width: 700px; height: 700px;
+          padding: 10px;
+          border: 5px solid gray;
+          argin: 10;">
+  <div style="float:right;">Date - <%= Time.zone.now.to_date %> </div><br><br>
+
+  <b><center>Offer Letter</center></b><br><br>
+
+  <p> Dear Mr./Miss.<b> <%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %> </b> </p>
+  <p> We are happy to offering you job in  <b> <%= current_user.employee.company_location.company.description %> </b></p>
+  <p> I am pleased to offer you employment in the position of  <b> <%= @employee.joining_detail.employee_designation.try(:name) %> with <%= current_user.employee.company_location.company.description %> </b></p>
+
+  <p> I am eager to have you as part of our team. I foresee your potential skills as a valuable contribution to our company and clients. Your appointment as <%= @employee.joining_detail.employee_designation.try(:name) %> will commence on date --------------- . </p>
+
+  <p>I am looking forward to working with you. </p>
+  <P>HR</P>
+  <p>For <b> <%= current_user.employee.company_location.company.description %> </b></p>
+</div>
+</div>
+<!-- <= link_to "Print",offer_letter_certificates_path(employee_id: @employee.id, certificate: @certificate,format: "pdf"),class: "btn btn-xl btn-info fa fa-print",:target => "_blank"%> -->

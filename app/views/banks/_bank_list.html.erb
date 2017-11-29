@@ -1,0 +1,23 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr> 
+      <th>Bank Code</th> 
+      <th>Bank Name</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @banks.each do |bank| %>
+      <tr>
+        <td><%= bank.code%></td>
+        <td><%= bank.name%></td>
+        <td><%= bank.description%></td>
+        <td>
+            <%= link_to '', edit_bank_path(bank),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  bank, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

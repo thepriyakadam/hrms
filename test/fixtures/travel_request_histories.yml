@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  travel_request_id: 
+  application_date: 2016-05-19
+  traveling_date: 2016-05-19
+  tour_purpose: MyString
+  place: MyString
+  traveling_advance: 9.99
+  lodging_boarding_advance: 9.99
+  food_advance: 9.99
+  extra_advance: 9.99
+  total_advance: 9.99
+  reporting_master_id: 
+  current_status: MyString
+  travel_option_id: 
+
+two:
+  travel_request_id: 
+  application_date: 2016-05-19
+  traveling_date: 2016-05-19
+  tour_purpose: MyString
+  place: MyString
+  traveling_advance: 9.99
+  lodging_boarding_advance: 9.99
+  food_advance: 9.99
+  extra_advance: 9.99
+  total_advance: 9.99
+  reporting_master_id: 
+  current_status: MyString
+  travel_option_id: 

@@ -1,0 +1,46 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Assign Salary Template To Employee</h3>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+	  <div class="row">
+	    <div class="col-sm-3">
+	      <div class="field">
+	        <%= text_field :employee_code,:hhh,{oninput:"var a={employee_code:$(this).val()}; $.get('/employee_salary_templates/find_employee_for_assign_template',a,function(response){});",class: 'form-control',placeholder:'Search by Employee id'} %>
+	      </div>
+	    </div>
+	  </div>
+	  <div id="myModal" class="modal fade">
+	  	
+	  </div>
+
+	  <div id="message">
+	    
+	  </div>
+	  <div id="employee_details">
+	    
+	  </div>
+
+	  <div id="search_template_dropdown">
+	    
+	  </div>
+
+	  <div id="template">
+	    
+	  </div>
+	  <!-- <button id="btnAdd">Add</button> -->
+	</div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<%= link_to "Modal", modal_employee_salary_templates_path, remote:true %>
+
+<script type="text/javascript">
+	$(function(){
+    $('.increement_date').datepicker({
+     changeYear:true,
+     changeMonth: true,
+     yearRange: '-200:-0',
+     dateFormat: 'dd-mm-yy' });
+  });
+</script>

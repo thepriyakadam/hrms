@@ -1,0 +1,29 @@
+<div class="modal-dialog">
+  <div class="modal-content modal-xs">
+    <div class="modal-header" style="padding:5px 5px;">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h7>Update</h7>
+    </div>
+    <div class="modal-body" style="padding:5px 5px;">
+      <!-- Modaol Error Tag-->
+	    <%= bootstrap_form_for :form do |f| %>
+	    	<div class="row">
+	    		<div class="col-sm-8">
+	    			<%= f.text_field :name, hide_label: true, placeholder: "Name" %>		
+	    		</div>
+	    		<div class="col-sm-1">
+	    			<%= link_to '',companies_path, class: 'btn btn-primary btn-xs fa fa-plus' %>
+	      	</div>
+	    		<div class="col-sm-1">
+	    			<%= link_to '',companies_path, class: 'btn btn-danger btn-xs fa fa-close' %>
+	    		</div>
+	    	</div>
+	    <% end %>
+    <!-- Modaol Error Tag End-->
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+.modal-xs{width:300px; height:100px;}
+</style>

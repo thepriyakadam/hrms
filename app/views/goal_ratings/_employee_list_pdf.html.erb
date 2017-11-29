@@ -1,0 +1,42 @@
+<%= form_for :goal_ratings, url: { action: 'print_detail_departmentwise',format: 'pdf',month: @month,year: @year},:html => {:target => '_blank'} do |f| %>
+  <table id="example1" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+        <th>ID</th>
+        <th>Employee</th>
+        <th>Designation</th>
+        <th>Employement</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @employees.each do |employee| %>
+        <tr>
+          <td><%= check_box_tag "employee_ids[]", employee.id %></td>
+          <td><%= employee.manual_employee_code %></td>
+          <td><%= full_name(employee) %></td>
+          <td><%= employee.joining_detail.try(:employee_designation).try(:name) %></td>
+          <td><%= employee.employee_type.try(:name) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+   <div class="col-sm-3">
+      <%= f.submit "Print Details",class: "btn btn-xl btn-warning fa fa-print" %>
+   </div>
+<% end %>
+
+<script type="text/javascript">
+$('#selectAll').click(function() {
+  if (this.checked) {
+    $(':checkbox').each(function() {
+      this.checked = true;                       
+    });
+  } 
+  else {
+    $(':checkbox').each(function() {
+      this.checked = false;                        
+    });
+  } 
+});
+</script>

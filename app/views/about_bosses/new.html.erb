@@ -1,0 +1,18 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">About Boss</h3>
+     <div class="pull-right">
+    <%= link_to " PDF ", about_boss_master_about_bosses_path(id: @about_boss.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
+    
+    <%= link_to " XLS ", about_boss_master_about_bosses_path(id: @about_boss.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="about_boss_list">
+			<%= render 'about_boss_list' %>
+		</div>
+	</div><!-- /.box-body -->
+</div><!-- /.box -->

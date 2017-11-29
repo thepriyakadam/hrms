@@ -1,0 +1,50 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="modal-body">
+
+      <%= bootstrap_form_for :leave_c_off,url:{action: "approve_c_off",leave_c_off_id: @leave_c_off.id} do |f| %>
+
+        <div class="row">
+          <div class="col-sm-3">
+            <label>Is Expire</label>
+              <div class="field" id="checker">
+                <%= f.check_box :expiry_status ,hide_label: true %>
+              </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field" id="dependent-box">
+                <%= f.text_field :c_off_expire_day, label:'Applicable Day',class: "form-control" %>
+            </div>
+          </div>
+
+          <div class="col-sm-2" style="padding-top:20px;">
+            <%= f.submit "Approve", class: 'btn btn-success btn-sm' %>
+          </div>
+        </div>
+      <% end %>
+     
+      </div>
+    <div class="modal-footer"></div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+
+<script type="text/javascript">
+   $(document).ready(function () {
+        var checkbox = $('#checker'); 
+        var dependent = $('#dependent-box');
+        if (checkbox.attr('checked') !== undefined){
+           dependent.show();
+        } else {
+            dependent.hide();
+        }
+        
+        checkbox.change(function(e){
+           dependent.toggle(); 
+        });
+    }); 
+
+</script>

@@ -1,0 +1,56 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+     <div class="row">
+    <div class="col-sm-1">
+  <% if @families.first.employee.passport_photo_file_name == nil %>
+  <% if @families.first.employee.gender == "Female" %>
+   <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%else%>
+   <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%end%>
+ <%else%>
+      <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+      <%end%>
+  </div>
+    <div class="col-sm-6">
+     <font color='#0077b3'>
+       ID : <%= @families.first.try(:employee).try(:manual_employee_code) %><br>
+       Name : <%= full_name(@families.first.employee) %><br>
+       Email : <%= @families.first.try(:employee).try(:email) %></font>
+    </div>
+  </div>
+    <div class="box-tools pull-right">
+      <%= link_to "Add Family Member", ajax_new_family_employees_path(id: @employee.id), class: 'btn btn-primary btn-xs',remote:true %>
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-xs fa fa-arrow-left' %>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
+    <thead>
+     <tr><th colspan="4"><center><font color='#0077b3'>Employee Family Details</font></center> </th></tr>
+      <tr>
+        <th>Sr.No.</th>
+        <th>Name</th>
+        <th>Relation</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+  <tbody>
+  <%i=0%>
+    <% @families.each do |family| %>
+      <tr>
+        <td><%= i=i+1%></td>
+        <td><%= family.f_name %> <%= family.m_name %> <%= family.l_name %></td>
+        <td><%= family.relation_master.try(:name) %></td>
+        <td>
+        <%= link_to '', edit_family_path(family),class: 'btn btn-xs btn-success fa fa-edit',remote: true %>
+        <%= link_to '', family_modal_families_path(family),class: 'btn btn-default fa btn-xs fa-eye',remote: true %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div><!-- /.box -->
+</div>
+
+<div id="family_modal" class="modal fade"></div>

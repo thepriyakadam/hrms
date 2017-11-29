@@ -1,0 +1,26 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Code</th>
+      <th>Template Name</th>
+      <th>Status</th>
+      <th>Download</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @due_templates.each do |due_template| %>
+      <tr>
+        <td><%= due_template.try(:code) %></td>
+        <td><%= due_template.try(:name) %></td>
+        <td><%= due_template.status ? "Active" : "Inactive" %></td>
+        <td>
+           <% if due_template.document_file_name == nil %>
+           <small class="label label-default">Document Not Available</small>
+             <% else %>
+             <%= link_to ' Document',download_due_tempalte_documents_path(id: due_template.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
+             <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

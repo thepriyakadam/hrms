@@ -1,0 +1,5 @@
+<% if @flag %>
+$("#dynamicDropdown").html("Saved successfully.");
+$("#companyTypeDropdown").html("<%= j render 'company_types/company_type_dropdown' %>");     
+<% else %>
+<% end %>

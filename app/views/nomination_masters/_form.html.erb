@@ -1,0 +1,57 @@
+<%= bootstrap_form_for(@nomination_master,remote: true,html: {id: "nomination_master"}) do |f| %>
+  
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :code,hide_label: true,placeholder:"Code" %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :name,hide_label: true,placeholder:"Name" %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :description,hide_label: true,placeholder:"Description" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Nomination", class: "btn btn-primary btn-sm"%>
+      </div>
+    </div>
+  </div>
+
+<% end %>
+<br>
+
+
+<script type="text/javascript">
+
+
+ $("#nomination_master").validate({
+    rules: {
+      "nomination_master[name]":{
+        required: true
+      },
+      "nomination_master[code]":{
+        required: true
+      }
+    },
+    messages: {
+      "nomination_master[name]":{
+        required: "Please Specify Name"
+      },
+      "nomination_master[code]":{
+        required: "Please Specify Code"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

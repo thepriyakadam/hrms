@@ -1,0 +1,29 @@
+<br>
+	<table class="table table-bordered table-hover table-condensed">
+	  <thead>
+	    <tr>
+	      <th>Reimbursement Head</th>
+	      <th>From</th>
+	      <th>To</th>
+	      <th>Yearly Amount</th>
+	      <th>Action</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <% @reimbursement_slabs.each do |reimbursement_slab| %>
+	      <tr>
+	        <td><%= reimbursement_slab.reimbursement_head.try(:name) %></td>
+	        <td><%= reimbursement_slab.from %></td>
+	        <td><%= reimbursement_slab.to %></td>
+	        <td><%= reimbursement_slab.yearly_amount %></td>
+		       <td>
+	          <%= link_to '', edit_reimbursement_slab_path(reimbursement_slab),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+	          <%= link_to '',  reimbursement_slab, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+	           <%= link_to '', modal_reimbursement_slabs_path(reimbursement_slab), class: 'btn btn-xs btn-default fa fa-eye',remote: true%>
+	         <!--  <= link_to '',  reimbursement_slab, class: 'btn btn-default btn-xs fa fa-eye',remote:true  %> -->
+	        </td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+<div id="myModal" class="modal fade"></div>	

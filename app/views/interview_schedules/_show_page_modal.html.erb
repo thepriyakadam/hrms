@@ -1,0 +1,43 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Interview Schedule Detail </center></h4>
+    </div>
+    <div class="modal-body">
+    <table class="table table-bordered table-hover table-condensed">
+  <thead>
+<tr> 
+  <th><strong>Job Title</strong></th>
+  <td><%= @interview_schedule.job_title %></td>
+
+  <th><strong>Candidate Name</strong></th>
+  <td><%= @interview_schedule.candidate_name %></td>
+</tr>
+
+<tr> 
+  <th><strong>Email Id</strong></th>
+  <td><%= @interview_schedule.email_id %></td>
+
+  <th><strong>Interview Date</strong></th>
+  <td><%= @interview_schedule.interview_date %></td>
+</tr>
+
+<tr> 
+  <th><strong>Location</strong></th>
+  <td ><%= @interview_schedule.location %></td>
+  <th><strong></strong></th>
+  <td ><%=%></td>
+</tr>
+
+<tr>
+  <th><strong>Address</strong></th>
+  <td colspan="3"><%= @interview_schedule.address %></td>
+  
+</tr>
+  </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

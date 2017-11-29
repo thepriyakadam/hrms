@@ -1,0 +1,61 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+
+ <div class="row">
+   <div class="col-sm-1">
+  <% if @qualifications.first.employee.passport_photo_file_name == nil %>
+  <% if @qualifications.first.employee.gender == "Female" %>
+   <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%else%>
+   <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "70x70" %>
+  <%end%>
+ <%else%>
+      <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+      <%end%>
+  </div>
+    <div class="col-sm-6">
+     <font color='#0077b3'> 
+        ID : <%= @qualifications.first.employee.try(:manual_employee_code)%> <br>
+        Name : <%= full_name(@qualifications.first.employee) %> <br>
+        Email : <%= @qualifications.first.employee.try(:email) %></font>
+    </div>
+  </div>
+    <div class="box-tools pull-right">
+      <%= link_to "Add Qualification", ajax_new_qualification_employees_path(id: @employee.id), class: 'btn btn-xs btn-primary',remote:true %>
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-xs fa fa-arrow-left' %>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr>
+      <th colspan="5"><center><font color='#0077b3'>Qualification Details </font></center></th>
+    </tr>
+      <tr>
+        <th>Sr.No.</th>
+        <th>Degree</th>
+        <th>Marks</th>
+        <th>Passout Year</th>
+        <th>Action</th>
+      </tr>
+      <%i=0%>
+       <% @qualifications.each do |qualification| %>
+      <tr>
+      <td><%=i=i+1%></td>
+          <td><%= qualification.degree.try(:name) %></td>
+          <td><%= qualification.marks %></td>
+          <td><%= qualification.year.try(:name) %></td>
+          <td>
+             <!-- <= link_to ' ',modal_qualifications_path(qualification),class: 'btn btn-success btn-sm fa fa-edit',remote: true %> -->
+             <%= link_to '', edit_qualification_path(qualification),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+             <%= link_to ' ',qualification_modal_qualifications_path(qualification),class: 'btn btn-default btn-xs fa fa-eye',remote: true %>
+
+              <!-- <= link_to '',  qualification, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %> -->
+          </td>
+      </tr>
+        <%end%>
+      </table>
+  </div><!-- /.box -->
+</div>
+ 
+<div id="qualification_modal" class="modal fade"></div>
+

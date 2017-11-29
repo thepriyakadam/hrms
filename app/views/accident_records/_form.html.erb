@@ -1,0 +1,233 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">New Accident Record</h3>
+  </div><!-- /.box-header -->
+  
+  <div class="box-body">
+  <div id="dynamicDropdown"></div>
+    <%= bootstrap_form_for(@accident_record,html: {id: 'accident_record'}) do |f| %>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :code , label: 'Incidence Code',placeholder: "Accident Code"%>
+           </div>
+        </div>
+       <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :employee_id, employee_list_for_food_deduction,{include_blank: "Select Employee"},{onchange:"var a={id:$(this).val()}; $.get('/accident_records/collect_esic',a,function(response){});", :class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}%>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <div class="field">
+              <%= f.text_field :department_id, label: 'Department',placeholder: "Department", readonly: true %>
+            </div>
+          </div>
+        </div> 
+
+        <div class="col-sm-3">
+          <div class="field">
+            <div class="field">
+              <%= f.select :root_cause_master_id, all_root_cause_list,{label: 'Root Cause',include_blank: " Select Root Cause Type"} %>
+            </div>
+          </div>
+        </div> 
+        </div>
+        
+        <div class="row">
+         <div class="col-sm-3">
+         <!--  <label>Date</label> -->
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :accident_date,label: 'Date', class: 'food_coupan_date'%>
+            </div>
+          </div>
+        </div>
+
+      <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :esic_no,label: 'ESIC NO',placeholder: "e.g : ESIC No", readonly: true%> 
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :case_type,['ESIC','PRIVATE'],{label: 'Case Option',include_blank: " Select Case Option"} %>
+          </div>
+        </div> 
+      
+        <div class="col-sm-3">
+          <div class="form-group required">
+          <%= f.select :type_of_injury,['MAJOR','MINOR'],{label: 'Injury Type',include_blank: " Select Injury Type"} %>
+         </div>
+        </div>
+       </div> 
+
+       <div class="row">
+        <div class="col-sm-3">
+        <label>Date Range </label>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :leave_date_range, hide_label: true,class: "pull-right active",id: "reservationtime" %>
+            </div><!-- /.input group -->
+          </div>
+        </div>
+
+      <div class="col-sm-3">
+        <div class="field">
+            <%= f.text_field :no_of_day,label: 'No. of Days' %>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="field">
+           <%= f.text_area :description,label: 'Description' %>
+          </div>
+        </div>
+      </div>  
+     
+      <div class="row">
+       <div class="col-sm-3">
+      <div class="field">
+        <%= f.file_field :avatar,label: 'Upload Photo', multiple: true %>
+      </div>
+      </div> 
+      </div>
+      <br>
+
+<!-- <div id="entry1" class="clonedInput">
+  <div class="row">
+      <div class="col-sm-3">
+          <div class="field">
+              <= f.file_field :avatar,label: 'Upload Photo' , class: 'input_avatar' %>
+          </div>
+      </div> 
+  < unless params['controller'] == 'accident_records' and params['action'] == 'edit' %>
+  <div class="row">
+      <div class="col-sm-1">
+          <input type="button" id="btnAdd" value="+" class="btn btn-xs btn-success"> 
+          <input type="button" id="btnDel" value="-" class="btn btn-xs btn-danger">
+      </div>
+  </div><br>
+  <end%>
+  </div>
+    </div> -->
+   <div class="row">
+      <div class="col-sm-3">
+        <label></label>
+          <div class="actions">
+              <%= f.submit'Creat Accident Record', :class => class_name, data: { disable_with: data_info } %>
+                <%= link_to 'Back', accident_records_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
+              <% if params['controller'] == 'accident_records' and params['action'] == 'edit' %>
+              <%end%>
+          </div>
+      </div>
+  </div><br>
+</div>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<!-- script type="text/javascript">
+    $(function () {
+    $('#btnAdd').click(function () {
+      var num     = $('.clonedInput').length, 
+          newNum  = new Number(num + 1),      
+          newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); 
+          newElem.find('.input_avatar').attr('avatar','accident_record['+ newNum +'][avatar]').attr('id', newNum + '_accident_record_avatar').val('');
+
+      $('#entry' + num).after(newElem);
+      $('#ID' + newNum + '_title').focus();
+
+      $('#btnDel').attr('disabled', false);
+
+      if (newNum == 5)
+      $('#btnAdd').attr('disabled', true).prop('value', "You've reached the limit"); 
+    });
+
+    $('#btnDel').click(function () {
+        if (confirm("Are you sure you want to remove this section? This cannot be undone."))
+            {
+                var num = $('.clonedInput').length;
+                $('#entry' + num).slideUp('slow', function () {$(this).remove();
+                    if (num -1 === 1)
+                $('#btnDel').attr('disabled', true);
+                $('#btnAdd').attr('disabled', false).prop('value', "+")});
+            }
+        return false;
+    });
+    $('#btnAdd').attr('disabled', false);
+    $('#btnDel').attr('disabled', true);
+  });
+script>
+ -->
+<script type="text/javascript">
+  $(function(){
+    $('.food_coupan_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+  });
+
+   $("#accident_record").validate({
+  rules: {
+    "accident_record[code]":{
+      required: true
+    },
+    "accident_record[employee_id]":{
+      required: true
+    },
+    "accident_record[accident_date]":{
+      required: true
+    },
+    "accident_record[esic_no]":{
+      required: true
+    },
+    "accident_record[case_type]":{
+      required: true
+    },
+    "accident_record[type_of_injury]":{
+      required: true
+    }
+  },
+   messages: {
+      "accident_record[code]":{
+        required: "Please specify code",
+      },
+       "accident_record[employee_id]":{
+        required: "Please specify employee",
+        },
+       "accident_record[accident_date]":{
+        required: "Please specify date",
+        },
+       "accident_record[esic_no]":{
+        required: "Please specify esic_no",
+        },
+       "accident_record[case_type]":{
+        required: "Please specify case_type",
+        },
+       "accident_record[type_of_injury]":{
+        required: "Please specify type_of_injury",
+      }
+       },
+  
+  errorPlacement: function(error, element) {
+   error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+   error.insertAfter(element.parent(element));
+  }
+});
+
+   $(document).ready(function() {
+    $(".select2").select2();
+  });
+</script>

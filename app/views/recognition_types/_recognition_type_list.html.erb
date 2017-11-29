@@ -1,0 +1,25 @@
+	<table class="table table-bordered table-hover table-condensed">
+	  <thead>
+	    <tr>
+	      <th>Code</th>
+	      <th>Name</th>
+	      <th>Description</th>
+	      <th>Status</th>
+	      <th>Action</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	   <% @recognition_types.each do |recognition_type| %>
+	      <tr>
+	        <td><%= recognition_type.code %></td>
+	        <td><%= recognition_type.name %></td>
+	        <td><%= recognition_type.description %></td>
+	        <td><%= recognition_type.status ? "Active" : "Inactive" %></td>
+	        <td>
+          <%= link_to '', edit_recognition_type_path(recognition_type),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <%= link_to '',  recognition_type, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+        </td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>

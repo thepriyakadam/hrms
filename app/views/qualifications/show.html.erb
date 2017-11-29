@@ -1,0 +1,48 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Qualification</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
+
+  <tr>
+  <th><strong>Employee:</strong></th>
+ <td>  <%= @qualification.employee %></td>
+
+ <th><strong>Degree Type:</strong></th>
+  <td><%= @qualification.degree_type_id.try(:name) %></td>
+ </tr>
+ <tr>
+  <th><strong>Degree</strong></th>
+  <td><%= @qualification.degree_id.try(:name) %></td>
+
+  <th><strong>Degree Stream</strong></th>
+  <td><%= @qualification.degree_stream_id.try(:name) %></td>
+</tr>
+<tr>
+  <th><strong>College</strong></th>
+  <td><%= @qualification.college %></td>
+
+  <th><strong>Marks</strong></th>
+  <td><%= @qualification.marks %></td>
+</tr>
+
+<tr>
+  <th><strong>Passing Year</strong></th>
+  <td><%= @qualification.year_id%></td>
+
+  <th><strong>University</strong></th>
+  <td><%= @qualification.university_id.try(:name) %></td>
+</tr>
+</table>
+
+    <%= link_to 'Edit', edit_qualification_path(@qualification),class: 'btn btn-success btn-sm fa fa-edit' %> |
+    <%= link_to 'Back', qualifications_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+

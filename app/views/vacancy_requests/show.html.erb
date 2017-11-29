@@ -1,0 +1,65 @@
+<div class="box box-default">
+<div class="box-header with-border">
+    <h3 class="box-title">Vacancy Request Detail</h3>
+  </div><!-- /.box-header -->
+ <div class="box-body">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
+  
+
+  <tr>
+  <th><strong>Vacancy Name</strong></th>
+  <td><%= @vacancy_request.vacancy %></td>
+  <th><strong>No. of Positions</strong></th>
+  <td><%= @vacancy_request.no_of_position %></td>  
+   
+  </tr>
+
+  <tr>
+  <th><strong>Designation</strong></th>
+  <td><%= @vacancy_request.employee_designation.try(:name) %></td>
+   <th><strong>Department</strong></th>
+  <td><%= @vacancy_request.try(:department).try(:name) %></td>
+  
+  
+  </tr>
+
+   <tr>
+  <th><strong>Request By</strong></th>
+  <td><% emp = Employee.find_by(id: @vacancy_request.request_by_id) %><%= full_name(emp) %></td>
+   <th><strong>Skill Set</strong></th>
+  <td><%= @vacancy_request.skill_set %></td>
+  </tr>
+
+
+<tr>
+  <th><strong>Request Date</strong></th>
+  <td><%= @vacancy_request.request_date %></td>
+
+ <th><strong>Vacancy Type</strong></th>
+  <td><%= @vacancy_request.vacancy_type %></td>
+  
+</tr>
+
+<tr>
+  <th><strong>Experience</strong></th>
+  <td><%= @vacancy_request.experience %></td>
+   <th><strong>Current Status</strong></th>
+  <td><%= @vacancy_request.current_status %></td>
+</tr>
+<tr>
+
+
+
+
+<tr>
+  <th><strong>Description</strong></th>
+  <td colspan="3"><%= @vacancy_request.description %></td>
+  
+</tr>
+
+
+</table><br>
+<!--<= link_to 'Edit', edit_vacancy_master_path(@vacancy_master),class: 'btn btn-success btn-sm fa fa-edit' %> -->
+<%= link_to 'Back', vacancy_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+</div>
+</div>

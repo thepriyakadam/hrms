@@ -1,0 +1,50 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Advance Salary Installment</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for(@instalment,html: {id: 'company'}) do |f| %>
+      <div class="row">
+          <%= f.hidden_field :advance_salary_id, value: @advance_salary.id, placeholder: "Advance Salary ID" %>
+        <div class="col-sm-3">
+         <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :instalment_date,hide_label: true,placeholder: "Select Instalment Date",class: 'installment_date'%>
+          </div>
+         </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :instalment_amount,hide_label: true,placeholder: "Instalment Amount" %>
+          </div>
+        </div> 
+      
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+          </div>
+        </div>
+    </div>
+    <% end %>
+  </div><!-- /.box-body -->
+  
+</div><!-- /.box -->
+
+
+<script type="text/javascript">
+  $(function(){
+    $('.installment_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+
+
+

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Sr.No.</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Employee No</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Employee Name</Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">Day In Month</Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String">Present Day</Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String">Total Leavet</Data></Cell>
+        <Cell ss:Index="7"><Data ss:Type="String">Holiday In Month</Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String">Week off Day</Data></Cell>
+        <Cell ss:Index="9"><Data ss:Type="String">Absent Day</Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String">Payable Day</Data></Cell>
+        <!-- <Cell ss:Index="11"><Data ss:Type="String">Non Payable Day </Data></Cell> -->
+      </Row>
+
+      <% i = 0 %>
+      <% @workingdays.each do |workingday| %>
+      <Row>
+         <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
+         <Cell ss:Index="2"><Data ss:Type="String"><%= workingday.employee.try(:manual_employee_code) %></Data></Cell>
+         <Cell ss:Index="3"><Data ss:Type="String"><%= full_name(workingday.employee) %></Data></Cell>
+         <Cell ss:Index="4"><Data ss:Type="String"><%= workingday.day_in_month %></Data></Cell>
+         <Cell ss:Index="5"><Data ss:Type="String"><%= workingday.present_day %></Data></Cell>
+         <Cell ss:Index="6"><Data ss:Type="String"><%= workingday.total_leave %></Data></Cell>
+         <Cell ss:Index="7"><Data ss:Type="String"><%= workingday.holiday_in_month %></Data></Cell>
+         <Cell ss:Index="8"><Data ss:Type="String"><%= workingday.week_off_day %>></Data></Cell>
+         <Cell ss:Index="9"><Data ss:Type="String"><%= workingday.absent_day %></Data></Cell>
+         <Cell ss:Index="10"><Data ss:Type="String"><%= workingday.payable_day %></Data></Cell>
+         <!-- <Cell ss:Index="11"><Data ss:Type="String"><%= workingday.nonpayable_day %></Data></Cell> -->
+      </Row><!-- Row -->
+      <% end %><!-- slip -->
+    </Table>
+  </Worksheet>
+</Workbook>

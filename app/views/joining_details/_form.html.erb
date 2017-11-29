@@ -1,0 +1,423 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <strong> <font color='#0077b3'> EMPLOYEE ONBOARDING DETAILS</font></strong>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+<%= bootstrap_form_for(@joining_detail,html: {id: 'joining_detail'},remote:true) do |f| %>
+<%= f.hidden_field :employee_id, value: @employee.id %>
+    <div class="row">
+     <div class="col-sm-3">
+        <div class="field" id="checker">
+        <%= f.select :is_new,[['New','true'],['Replacement','false']],{label: 'Employee Option',include_blank: " Select Employee Option"} %>
+       </div>
+     </div>
+
+    <div class="col-sm-3">
+          <div class="field" id="dependent-box">
+            <div id="emp_option">
+                <%= f.select :replacement_id,all_inactive_employee_with_code,{label: "Employee",include_blank: " Select Employee"} %>
+            </div>
+          </div>
+        </div>
+     </div>
+    <div class="row">
+     <div class="col-sm-3">
+        <div class="field">
+        <%= f.text_field :employee_uan_no, label:'UAN No',placeholder: 'e.g. 01234567891011'%>
+       </div>
+     </div>
+
+       <div class="col-sm-3">
+      <div class="field">
+       <%= f.text_field :employee_pf_no, label:'PF No' %>
+      </div>
+    </div>
+  
+      <div class="col-sm-3">
+          <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :joining_date,label: 'Joining Date',class: 'joining_date'%>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <label>Confirmation Date</label>
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :confirmation_date,hide_label: true, class: 'confirm_date' %>
+          </div>
+        </div>
+        </div>
+        </div>
+        <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group required">
+           <%= f.select :employee_grade_id, all_employee_grade, {label: 'Employee Grade',include_blank: " Select Employee Grade"} %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.select :employee_designation_id,all_employee_designation,{label: 'Employee Designation',include_blank: " Select Employee Designation"} %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="form-group required">
+           <%= f.select :employee_category_id, all_employee_category, {label: 'Employee Category',include_blank: " Select Employee Category"} %>
+        </div>
+      </div>
+
+      <!-- <div class="col-sm-3">
+        <div class="field">
+           <= f.select :cost_center_id, all_cost_center, {label: 'Cost Center',include_blank: " Select Cost Center"} %>
+        </div>
+      </div> -->
+     
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.text_field :probation_period,label: 'Probation Period',placeholder: 'e.g. 6 months' %>
+        </div>
+      </div> 
+       </div>
+      <div class="row">
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :notice_period,label: 'Notice Period',placeholder: 'e.g. 1 months' %>
+        </div>
+      </div> 
+
+            <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :notice_period_after_probation,label: 'Notice Period After Probation',placeholder: 'e.g. 1 months' %>
+        </div>
+      </div> 
+
+    
+
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :notice_period_after_probation,label: 'Notice Period After Probation',placeholder: 'e.g. 1 months' %>
+        </div>
+      </div>
+
+      
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.select :have_passport,['Yes','No'],{label: 'Passport',include_blank: " Select Passport Option"} %>
+       </div>
+    </div> 
+
+     </div>
+      <div class="row">
+       <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :passport_no,label: 'Passport No.' ,placeholder: 'e.g. J8369854'%>
+       </div>
+      </div> 
+    <div class="col-sm-3">
+      <label>Passport Issue Date </label>
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+              <%= f.text_field :passport_issue_date,hide_label: true,class: 'passport_issue_date'%>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+      <label>Passport Expiry Date </label>
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+             <%= f.text_field :passport_expiry_date,hide_label:true, class: 'passport_expiry_date'%>
+          </div>
+        </div>
+      </div>
+    
+       <div class="col-sm-3">
+      <label>Leaving Date </label>
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+             <%= f.text_field :leaving_date,hide_label:true, class: 'passport_expiry_date'%>
+          </div>
+        </div>
+      </div>
+       </div>
+      <div class="row">
+       <div class="col-sm-3">
+      <label>Retirement Date </label>
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+             <%= f.text_field :retirement_date,hide_label:true, class: 'retirement_date'%>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+      <div class="field" style="padding: 10px">
+       <% if current_user.role.name == 'GroupAdmin' %>
+        <%= f.check_box :c_off, label: 'Compensatory Off'%>
+        <%end%>
+      </div>
+      </div>
+    </div>
+  <div class="box-header with-border">
+    <strong><font color='#0077b3'> EMPLOYEE PAYROLL DETAILS</font></strong>
+  </div><!-- /.box-header -->
+     <div class="row">
+     <div class="col-sm-3">
+        <div class="field">
+          <%= f.select :payment_mode_id, all_payment_mode,{label: 'Payment Mode',include_blank: " Select Payment Mode"} %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+      <div class="field" style="padding: 10px">
+        <%= f.check_box :basis_of_time, label: 'Basis Of Time'%>
+      </div>
+     </div>
+
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :is_employeer_pf,[['Yes','true'],['No','false']],{label: 'Employer PF',include_blank: " Select Employeer PF Option"} %>
+      </div>
+    </div>
+
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.select :select_pf,['Yes','No','Limit'],{label: 'Employee PF Option',include_blank: " Select PF"} %>
+       </div>
+    </div> 
+    </div>
+    <div class="row">
+     <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :pf_max_amount, label:'PF Max Amount' ,placeholder: 'e.g.2000'%>
+       </div>
+      </div> 
+    <div class="col-sm-3">
+      <div class="field">
+       <%= f.text_field :employee_pf_no, label:'PF No.',placeholder: 'e.g.1234567' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :is_employeer_esic,[['Yes','true'],['No','false']],{label: 'Employer ESIC',include_blank: " Select Employer ESIC Option"} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+        <div class="field">
+          <%= f.select :have_esic, [['Yes','true'],['No','false']],{label: 'ESIC Option',include_blank: " Select ESIC Option"} %>
+        </div>
+      </div> 
+      </div>
+      <div class="row">
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :employee_efic_no, label:'ESIC No.',placeholder: 'e.g.123456789' %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.select :have_retention,[['Yes','true'],['No','false']],{label: 'Retention',include_blank: " Select Retention"} %>
+       </div>
+    </div>
+<!--     <div class="col-sm-3">
+      <div class="field">
+       <= f.select :is_da,[['Yes','true'],['No','false']],{label: 'DA',include_blank: " Select DA"} %>    
+      </div>
+    </div> -->
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :is_insurance,[['Yes','true'],['No','false']],{label: 'Insurance',include_blank: " Select Insurance Option"} %>
+      </div>
+    </div>
+
+        <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :is_family_pension,[['Yes','true'],['No','false']],{label: 'Family Insurance',include_blank: " Select Family Pension Option"} %>
+      </div>
+    </div>
+    </div>
+    <div class="row">
+
+
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :is_bonus,[['Yes','true'],['No','false']],{label: 'Bonus',include_blank: " Select Bonus Option"} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :ot_option,[['Yes','true'],['No','false']],{label: 'OT Option',include_blank: " Select OT Option"} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+        <div class="field">
+        <%= f.text_field :ot_rate, label:'OT Rate' %>
+       </div>
+     </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="actions" style="padding: 20px">
+        <%= f.submit 'Create On Boarding Detail',:class => class_name, data: { disable_with: data_info } %>
+        <% if params['controller'] == 'joining_details' and params['action'] == 'edit' %>
+          <%= link_to 'Back',ajax_joining_detail_employees_path(id: @employee.id),class: 'btn btn-default', remote:true%>
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+  <%end%>
+
+<script type="text/javascript">
+  $(function(){
+    $('.passport_issue_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.passport_expiry_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+50',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.joining_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:-0',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.retirement_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+150',
+    dateFormat: 'dd-mm-yy' });
+
+
+    $('.confirm_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:+5',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+
+
+  $(function(){
+    $('#joining_detail_joining_date').on('input', function() {
+      var joining_detail_joining_date = parseFloat($('#joining_detail_joining_date').val());
+      var joining_detail_probation_period = parseFloat($('#joining_detail_probation_period').val());
+      var joining_detail_confirmation_date = "";
+      
+      if (isNaN(joining_detail_joining_date) || isNaN(joining_detail_probation_period)) {
+        joining_detail_confirmation_date = "";
+      }
+      else{
+
+        joining_detail_confirmation_date = (joining_detail_joining_date.getDate() + parseInt(joining_detail_probation_period)).to_s;
+      }
+      $('#joining_detail_confirmation_date').val(joining_detail_confirmation_date);
+    });
+
+    $('#joining_detail_probation_period').on('input', function() {
+      var joining_detail_joining_date = parseFloat($('#joining_detail_joining_date').val());
+      var joining_detail_probation_period = parseFloat($('#joining_detail_probation_period').val());
+      var joining_detail_confirmation_date = "";
+      
+      if (isNaN(joining_detail_joining_date) || isNaN(joining_detail_probation_period)) {
+        joining_detail_confirmation_date = "";
+      }
+      else{
+        joining_detail_confirmation_date = (joining_detail_joining_date.getDate() + parseInt(joining_detail_probation_period)).to_s;
+      }
+      $('#joining_detail_confirmation_date').val(joining_detail_confirmation_date);
+    });
+  });  
+
+</script>
+
+<script>
+$("#joining_detail").validate({
+    rules: {
+      "joining_detail[joining_date]":{
+        required: true,
+      },
+      "joining_detail[employee_designation_id]":{
+        required: true,
+      },
+      "joining_detail[employee_grade_id]":{
+        required: true,
+      },
+       "joining_detail[employee_category_id]":{
+        required: true,
+      },
+       "joining_detail[probation_period]":{
+        required: true,
+      }
+       },
+    messages: {
+      "joining_detail[joining_date]":{
+        required: "Please select joining date",
+      },
+       "joining_detail[employee_designation_id]":{
+        required: "Please select employee designation ",
+      },
+      "joining_detail[employee_grade_id]":{
+        required: "Please select employee grade",
+      },
+      "joining_detail[employee_category_id]":{
+        required: "Please select employee category",
+      },
+      "joining_detail[probation_period]":{
+        required: "Please specify probation period",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+<script type="text/javascript">
+   $(document).ready(function () {
+        var checkbox = $('#checker'); 
+        var dependent = $('#dependent-box');
+        if (checkbox.attr('checked') != undefined){
+           dependent.show();
+        } else {
+            dependent.hide();
+        }
+        
+        checkbox.change(function(e){
+           dependent.toggle(); 
+        });
+    }); 
+
+</script>
+

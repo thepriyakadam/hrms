@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Certificate Masters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Confirm</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @certificate_masters.each do |certificate_master| %>
+      <tr>
+        <td><%= certificate_master.name %></td>
+        <td><%= certificate_master.description %></td>
+        <td><%= certificate_master.status %></td>
+        <td><%= certificate_master.confirm %></td>
+        <td><%= link_to 'Show', certificate_master %></td>
+        <td><%= link_to 'Edit', edit_certificate_master_path(certificate_master) %></td>
+        <td><%= link_to 'Destroy', certificate_master, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Certificate master', new_certificate_master_path %>

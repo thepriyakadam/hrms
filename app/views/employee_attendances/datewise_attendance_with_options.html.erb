@@ -1,0 +1,87 @@
+<div class="box">
+	<div class="box-header">
+	  <h3 class="box-title"> Attendance List </h3>
+		<div class="box-body">
+      <%= bootstrap_form_for(:employee, url: { action: 'show_datewise_all'},html: {id: "employee"},remote: true) do |f| %>
+      <!-- <= bootstrap_form_for(:employee, url: { action: 'datewise_absent'},html: {id: "employee"}) do |g| %> -->
+		  	<div class="row">
+		      <div class="col-sm-3">
+		        <div class="form-group required">
+		          <div class="input-group">
+		            <div class="input-group-addon">
+		              <i class="fa fa-calendar"></i>
+		            </div>
+		            <%= text_field :employee,:from,placeholder: "From",class: 'request_date form-control'%>
+		          </div>
+		        </div>
+		      </div>
+
+           <div class="col-sm-3">
+            <div class="form-group required">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <%= text_field :employee,:to,placeholder: "To",class: 'request_date form-control'%>
+              </div>
+            </div>
+          </div>
+
+	        <div class="col-sm-6">
+          <%= submit_tag 'All', name: 'save'%>
+          <%= submit_tag 'Absent', name: 'absent' %>
+          <%= submit_tag 'Holiday', name: 'holiday' %>
+          <%= submit_tag 'Week Off', name: 'weekoff' %>
+          <%= submit_tag 'Leave' %>
+          <!-- <= f.submit " All ",class: "btn btn-sm btn-primary fa fa-print",id: "buttonCtc" %> -->
+          <!-- <= f.submit " Absent ",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %> -->
+	         <!--  <= link_to " All",datewise_all_employee_attendances_path(from: params[:employee][:from], to: params[:employee][:to]), class: "btn btn-xl btn-info" %> -->
+            <!-- <= link_to " Absent ",datewise_absent_employee_attendances_path(from: params[:from], to: params[:to]), class: "btn btn-xs btn-success" %> -->
+	        </div>
+		    </div>
+
+          <div id="datewise_all"></div>
+    <% end %>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#advance_salary").submit();
+  })
+</script>
+
+<script type="text/javascript">
+  $(function(){
+    $('.request_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+
+   $("#employee").validate({
+    rules: {
+      "employee[from]":{
+        required: true,
+      },
+      "employee[to]":{
+        required: true,
+      }
+       },
+    messages: {
+      "employee[from]":{
+        required: "Please Specify From Date",
+      },
+      "employee[to]":{
+        required: "Please Specify To Date",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

@@ -1,0 +1,15 @@
+<% unless @flag %>
+	<% unless EmployeeSalaryTemplate.exists?(employee_id: @employee.id) %>
+		$("#employee_details").html("<%= j render 'show_employee' %>")
+		$("#search_template_dropdown").html("<%= j render 'show_search_template_dropdown' %>")
+	<% else %>
+		$("#message").html("<center><p class='text-red'>Employee already assign you can update it.</p></center>")
+		$("#employee_details").html("<%= j render 'show_employee' %>")
+		$("#search_template_dropdown").html("<%= j render 'show_search_template_dropdown' %>")
+	<% end %>
+<% else %>
+	$("#message").html("<center><p class='text-red'>Record Not Found</p></center>")
+	$("#employee_details").html("")
+	$("#search_template_dropdown").html(" ")
+	$("#template").html("")
+<% end %>

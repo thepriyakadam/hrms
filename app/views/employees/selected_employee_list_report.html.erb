@@ -1,0 +1,142 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Selected Employee</h3>
+    
+  <div class="box-body">
+   <table id="example6" class="table table-bordered table-hover table-condensed">
+    <tr>
+    <th>PDF</th>
+    <th><%= link_to ' Basic Detail', selected_employee_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
+
+     <th><%= link_to 'On Boarding ', selected_on_boarding_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
+    
+     <th><%= link_to 'Bank ', selected_bank_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
+
+      <th><%= link_to 'Qualification ', selected_qualification_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
+
+     <th><%= link_to 'Experience ', selected_experience_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
+    </tr>
+    <tr>
+     <th><%= link_to 'Skillset ', selected_skillset_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
+
+     <th><%= link_to 'Certification', selected_certification_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
+
+    
+
+     <th><%= link_to 'Award ', selected_award_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
+
+    
+
+     <th><%= link_to ' Physical ', selected_employee_physical_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
+
+     
+
+     <th><%= link_to ' Family ', selected_employee_family_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
+
+
+    
+
+<!--      <= link_to 'Employee Nomination PDF', selected_employee_nomination_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+     <= link_to "Employee Nomination Excel",selected_employee_nomination_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %> -->
+
+     <th><%= link_to 'Assets ', selected_asset_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
+ 
+    <tr>
+    <th>Excel</th>
+
+    <td><%= link_to " Basic Detail",selected_employee_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %></td>
+
+
+    
+
+     <td><%= link_to "On Boarding ",selected_on_boarding_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %></td>
+
+
+    
+     <td><%= link_to "Bank ",selected_bank_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %></td>
+
+
+   
+
+     <td><%= link_to "Qualification ",selected_qualification_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %></td>
+
+
+    
+
+     <td><%= link_to "Experience ",selected_experience_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %></td>
+      </tr>
+
+      <tr>
+
+    
+
+     <td><%= link_to "Skillset ",selected_skillset_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %></td>
+
+
+    
+     <td><%= link_to "Certification ",selected_certification_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %></td>
+
+
+    
+
+     <td><%= link_to "Award ",selected_award_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %></td>
+
+
+    
+
+     <td><%= link_to "Physical ",selected_employee_physical_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %></td>
+
+
+  
+
+     <td><%= link_to "Family ",selected_employee_family_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %></td>
+
+
+<!--      <= link_to 'Employee Nomination PDF', selected_employee_nomination_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+     <= link_to "Employee Nomination Excel",selected_employee_nomination_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %> -->
+
+    
+
+     <td><%= link_to "Assets",selected_asset_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %></td>
+     </tr>
+    </div>
+  </tr>
+  </table>
+
+    <table id="example" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+      <th>ID</th>
+      <th>Employee Name</th>
+      <th>Department</th>
+      <th>Designation</th>
+      <th>No.</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @employees.each do |employee| %>
+      <tr>
+        <td><%= employee.manual_employee_code %></td>
+        <td><%= full_name(employee) %></td>
+        <td><%= employee.try(:company_location).try(:name) %> - <%= employee.try(:department).try(:name) %></td>
+        <td><%= employee.joining_detail.try(:employee_designation).try(:name) %></td>
+        <td><%= employee.try(:contact_no) %></td>
+        </tr>
+      <% end %>
+
+  </tbody>
+  </table><br>
+   <%= link_to 'Back', employee_list_report_employees_path,class:"btn btn-sm btn-default fa fa-arrow-left" %>
+</div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "scrollX": true
+    } );
+} );
+</script>

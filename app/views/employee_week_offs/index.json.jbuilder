@@ -1,0 +1,1 @@
+json.array! @employee_week_offs, partial: 'employee_week_offs/employee_week_off', as: :employee_week_off

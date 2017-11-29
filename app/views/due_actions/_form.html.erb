@@ -1,0 +1,75 @@
+<!--<= bootstrap_form_for(@due_action,html: {id: 'due_action'},due_detail_id: @due_detail.id) do |f| %>-->
+<%= bootstrap_form_for(@due_action,html: {id: 'due_action'},due_employee_detail_id: @due_employee_detail.id) do |f| %>
+<%= f.hidden_field :due_employee_detail_id, value: @due_employee_detail.id  %>
+<%= f.hidden_field :due_detail_id, value: @due_employee_detail.due_detail_id  %>
+<!--<= f.hidden_field :due_detail_id, value: @due_detail.id  %>-->
+<% if @due_employee_detail.is_confirmed == true %>
+  <% else %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,label: 'Item Name' %>
+      </div>
+    </div> 
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :remark,label: 'Remark' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :amount,label: 'Amount' %>
+      </div>
+    </div>
+
+     <div class="col-sm-1">
+      <label>Status</label>
+        <div class="field">
+          <%= f.check_box :status, label:'Cleared' %>
+       </div>
+      </div>
+    
+    <div class="col-sm-2">
+    <label></label>
+      <div class="actions">
+        <%= f.submit "Create",:class => class_name,  data: { disable_with: data_info } %>
+      </div>
+    </div>
+
+  </div>
+<% end %>
+<% end %><br>
+
+<script>
+$("#due_action").validate({
+    rules: {
+      "due_action[name]":{
+        required: true,
+      },
+      "due_action[remark]":{
+        required: true,
+      },
+      "due_action[amount]":{
+        required: true,
+      }
+    },
+    messages: {
+      "due_action[name]":{
+        required: "Please specify name",
+      },
+      "due_action[remark]":{
+        required: "Please specify remark",
+      },
+      "due_action[amount]":{
+        required: "Please specify amount",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

@@ -42,7 +42,7 @@ class Api::UserAuthsController < ApplicationController
           render :status=>401, :json=>{:status=>"Failure", :message=>"You are not in correct location"}
         end
       else
-        render :status=>200, :json=>{:id => @user.employee_id, :role => @user.role.name }
+        render :status=>200, :json=>{:id => @user.employee_id, :role => @user.role.name :avatar_file_name => @user.avatar_file_name }
       end
     end
   end

@@ -1704,6 +1704,54 @@ end
     end
   end
 
+    resources :import_files do
+    collection do
+      get :company_type_import
+      post :import_company_type
+      post :import_department_type
+      post :import_bank
+      post :import_policy_type
+      post :import_employee_code_master
+      post :import_employee_type
+      post :import_nationality
+      post :import_religion
+      post :import_relation
+      post :import_blood
+      post :import_illness
+      post :import_employee_grade
+      post :import_employee_category
+      post :import_designation
+      post :import_asset_type
+      post :import_checklist
+      post :import_qualification
+      post :import_qualification_level
+      post :import_specialization
+      post :import_univercity
+      post :import_year
+      post :import_period
+      post :import_rating
+      post :import_goal
+      post :import_attribute
+      post :import_activity
+      post :import_calender
+      post :import_skillset
+      post :import_evaluation
+      post :import_criteria
+      post :import_interview_type
+      post :import_target_company
+      post :import_question_master
+      post :import_about_company
+      post :import_about_manager
+      post :import_leaving_reason
+      post :import_training_course
+      post :import_reward_type
+      post :import_reward_owner
+      post :import_root_cause_master
+      post :import_project_master
+      post :import_rembursment_master
+    end
+  end
+
   resources :accident_records do
     collection do
       get :collect_esic
@@ -2712,6 +2760,8 @@ end
     collection do
       get :created_user
       patch :update_form
+      get :hrms_data_sheet
+      # get "downloads/xls/:id" => "downloads#xls", :as => :download_xls
 
       # get :show
     end

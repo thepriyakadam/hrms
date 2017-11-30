@@ -105,12 +105,9 @@ group :development do
 	gem 'wirble'
 	gem 'hirb'
 	# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-<<<<<<< HEAD
-	# gem 'spring'
-=======
+
 	gem 'spring'
 	gem 'thin'
->>>>>>> 94c756fb53dd5764e3e744ede073392616b00576
 end
 
 # Authentication and authorization

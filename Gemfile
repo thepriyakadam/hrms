@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.8'
+gem 'rails', '4.2.4'
 # Use mysql as the database for Active Record
 
- gem 'mysql2', '~> 0.3.18'
+gem 'mysql2', '~> 0.3.18'
  #gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
 
 # gem "rack-timeout", require:"rack/timeout/base"
@@ -23,7 +23,6 @@ gem 'sass-rails', '~> 5.0'
 gem 'whenever', '~> 0.9.4',:require => false
 gem 'geocoder'
 gem 'therubyracer', platforms: :ruby
-
 # gem 'query_report'
 gem 'kaminari', '~> 0.16.3'
 gem 'coderay'
@@ -54,6 +53,7 @@ gem 'json', '~> 1.8', '>= 1.8.3'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'thin', '~> 1.6', '>= 1.6.4'
 
 gem 'bundler'
 
@@ -105,12 +105,7 @@ group :development do
 	gem 'wirble'
 	gem 'hirb'
 	# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-<<<<<<< HEAD
 	# gem 'spring'
-=======
-	gem 'spring'
-	gem 'thin'
->>>>>>> 94c756fb53dd5764e3e744ede073392616b00576
 end
 
 # Authentication and authorization
@@ -137,7 +132,6 @@ gem 'protokoll'
 # gem 'country_state_select', '~> 2.0.0'
 # gem 'countries'
 gem 'city-state'
-
 
 # gem 'rmagick', '~> 2.15.4'
 

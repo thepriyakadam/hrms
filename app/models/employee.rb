@@ -381,12 +381,22 @@ class Employee < ActiveRecord::Base
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
         manual_employee_code = spreadsheet.cell(i,'B').to_i
+        if manual_employee_code == 0
+           manual_employee_code = spreadsheet.cell(i,'B')
+        else
+           manual_employee_code = spreadsheet.cell(i,'B').to_i
+        end
         prefix = spreadsheet.cell(i,'C')
         first_name = spreadsheet.cell(i,'D')
         middle_name = spreadsheet.cell(i,'E')
         last_name = spreadsheet.cell(i,'F')
         gender = spreadsheet.cell(i,'G')
         email = spreadsheet.cell(i,'H')
+        if email.nil?
+          email = first_name+'@gmail.com'
+        else
+          email = spreadsheet.cell(i,'H')
+        end
         optional_email = spreadsheet.cell(i,'I')
         adhar_no = spreadsheet.cell(i,'J').to_i
         pan_no = spreadsheet.cell(i,'K')
@@ -507,6 +517,42 @@ class Employee < ActiveRecord::Base
         end
   end
 end
+
+  def self.import_create_new_user(file)
+  spreadsheet = open_spreadsheet(file)
+    (2..spreadsheet.last_row).each do |i|
+       manual_member_code = spreadsheet.cell(i,'B').to_i
+       @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        if @employee.nil?
+        else
+        employee_id = @employee.id
+        email = @employee.email
+        company_id = @employee.company_id
+        company_location_id = @employee.company_location_id
+        password = @employee.first_name+'hrms'+@employee.manual_employee_code
+
+        @role = Role.find_by_name(spreadsheet.cell(i,'C'))
+        if @role == nil
+           @role_entry = Role.find_by(name: "Employee")
+           role_id = @role_entry.id
+        else
+        role_id = @role.id
+        end
+        @manager = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'D').to_i)
+        manager_id = @manager.id
+
+        @manager_2 = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'E').to_i)
+        if @manager_2.nil?
+        else
+        manager_2_id = @manager_2.id
+        end
+        @employee.update(manager_id: manager_id,manager_2_id: manager_2_id)
+
+        @member = Member.create(manual_member_code: manual_member_code,employee_id: employee_id,email: email,password: password,role_id: role_id,company_id: company_id,company_location_id: company_location_id)
+    end
+  end
+end
+
 
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)

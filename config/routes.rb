@@ -2597,6 +2597,8 @@ end
       get :selected_asset_xls
       get :import_xl
       post :import
+      get :import_assign_role
+      post :import_create_new_user
       get :graph
       get :assign_role
       post :submit_form

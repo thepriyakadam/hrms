@@ -44,7 +44,7 @@ def self.to_csv(options = {})
         end
         branch_name = spreadsheet.cell(i,'E')
         ifsc_code = spreadsheet.cell(i,'F')
-        micr_code = spreadsheet.cell(i,'G')
+        micr_code = spreadsheet.cell(i,'G').to_i
         branch_code = spreadsheet.cell(i,'H')
         address = spreadsheet.cell(i,'I')
         contact_no = spreadsheet.cell(i,'J').to_i

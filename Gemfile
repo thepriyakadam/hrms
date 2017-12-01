@@ -9,6 +9,12 @@ gem 'mysql2', '~> 0.3.18'
 
 # gem "rack-timeout", require:"rack/timeout/base"
 
+# gem 'tiny_tds'
+# gem 'activerecord-sqlserver-adapter'
+# gem 'ruby-odbc'
+# gem 'dbi'
+# gem 'activerecord-session_store'
+
 gem 'ruby-graphviz', '~> 1.2', '>= 1.2.2'
 
 gem 'twilio-ruby', '~> 4.11', '>= 4.11.1'

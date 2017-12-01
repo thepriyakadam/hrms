@@ -173,9 +173,9 @@ class Employee < ActiveRecord::Base
   validates_attachment_size :passport_photo, :less_than => 5.megabytes
 
 
-  has_attached_file :employee_signature, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'Profile11.jpg'
-  validates_attachment_content_type :employee_signature,  :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
-  validates_attachment_size :employee_signature, :less_than => 5.megabytes
+  # has_attached_file :employee_signature, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'Profile11.jpg'
+  # validates_attachment_content_type :employee_signature,  :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
+  # validates_attachment_size :employee_signature, :less_than => 5.megabytes
   
   # validates :permanent_address, presence: true
   # validates :department_id,presence: true
@@ -394,7 +394,7 @@ class Employee < ActiveRecord::Base
         contact_no = spreadsheet.cell(i,'M').to_i
         optinal_contact_no = spreadsheet.cell(i,'N').to_i
         optinal_contact_no1 = spreadsheet.cell(i,'O').to_i
-        emergency_contact_no = spreadsheet.cell(i,'P').to_i
+        # emergency_contact_no = spreadsheet.cell(i,'P').to_i
         @religion = Religion.find_by_name(spreadsheet.cell(i,'Q'))
         if @religion == nil
            religion_name = spreadsheet.cell(i,'Q')
@@ -482,15 +482,15 @@ class Employee < ActiveRecord::Base
        else
         department_id = @department.id
         end
-        @sub_department = SubDepartment.find_by_name(spreadsheet.cell(i,'AJ'))
-        if @sub_department == nil
-          sub_department_name = spreadsheet.cell(i,'AJ')
-          @sub_department_entry = SubDepartment.create(name: sub_department_name, department_id: department_id)
-          sub_department_id = @sub_department_entry.id
-        else
-        sub_department_id = @sub_department.id
-      end
-      @employee_code_master = EmployeeCodeMaster.find_by_name(spreadsheet.cell(i,'AK'))
+      #   @sub_department = SubDepartment.find_by_name(spreadsheet.cell(i,'AJ'))
+      #   if @sub_department == nil
+      #     sub_department_name = spreadsheet.cell(i,'AJ')
+      #     @sub_department_entry = SubDepartment.create(name: sub_department_name, department_id: department_id)
+      #     sub_department_id = @sub_department_entry.id
+      #   else
+      #   sub_department_id = @sub_department.id
+      # end
+      @employee_code_master = EmployeeCodeMaster.find_by_name(spreadsheet.cell(i,'AJ'))
        if @employee_code_master == nil
         else
         employee_code_master_id = @employee_code_master.id
@@ -499,11 +499,11 @@ class Employee < ActiveRecord::Base
         if @employee_prsent.nil?
           @employee = Employee.create(manual_employee_code: manual_employee_code,prefix: prefix,first_name: first_name,middle_name: middle_name,last_name: last_name,date_of_birth: date_of_birth,gender: gender,contact_no: contact_no,optinal_contact_no: optinal_contact_no,email: email,permanent_address: permanent_address,
           country_id: country_id,state_id: state_id,district_id: district_id,city: city,pin_code: pin_code,current_address: current_address,adhar_no: adhar_no,pan_no: pan_no,licence_no: licence_no,marital_status: marital_status,blood_group_id: blood_group_id,employee_type_id: employee_type_id,nationality_id: nationality_id,religion_id: religion_id,
-          handicap: handicap,handicap_type: handicap_type,status: status,company_id: company_id,company_location_id: company_location_id,department_id: department_id,employee_code_master_id: employee_code_master_id,optional_email: optional_email,sub_department_id: sub_department_id,emergency_contact_no: emergency_contact_no,optinal_contact_no1: optinal_contact_no1)
+          handicap: handicap,handicap_type: handicap_type,status: status,company_id: company_id,company_location_id: company_location_id,department_id: department_id,employee_code_master_id: employee_code_master_id,optional_email: optional_email,optinal_contact_no1: optinal_contact_no1)
         else
           @employee_prsent.update(prefix: prefix,first_name: first_name,middle_name: middle_name,last_name: last_name,date_of_birth: date_of_birth,gender: gender,contact_no: contact_no,optinal_contact_no: optinal_contact_no,email: email,permanent_address: permanent_address,
           country_id: country_id,state_id: state_id,district_id: district_id,city: city,pin_code: pin_code,current_address: current_address,adhar_no: adhar_no,pan_no: pan_no,licence_no: licence_no,marital_status: marital_status,blood_group_id: blood_group_id,employee_type_id: employee_type_id,nationality_id: nationality_id,religion_id: religion_id,
-          handicap: handicap,handicap_type: handicap_type,status: status,company_id: company_id,company_location_id: company_location_id,department_id: department_id,employee_code_master_id: employee_code_master_id,optional_email: optional_email,sub_department_id: sub_department_id,emergency_contact_no: emergency_contact_no,optinal_contact_no1: optinal_contact_no1)
+          handicap: handicap,handicap_type: handicap_type,status: status,company_id: company_id,company_location_id: company_location_id,department_id: department_id,employee_code_master_id: employee_code_master_id,optional_email: optional_email,optinal_contact_no1: optinal_contact_no1)
         end
   end
 end

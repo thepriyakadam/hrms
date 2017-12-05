@@ -3,6 +3,7 @@ class CreateCirculars < ActiveRecord::Migration
     create_table :circulars do |t|
       t.date :date
       t.string :subject
+      t.string :email
       t.boolean :is_active
       t.boolean :is_confirm
 

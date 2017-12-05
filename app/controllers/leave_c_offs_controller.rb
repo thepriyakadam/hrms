@@ -1,11 +1,13 @@
-require 'query_report/helper' # need to require the helper
+
+# require 'query_report/helper' # need to require the helper
 
 class LeaveCOffsController < ApplicationController
   before_action :set_leave_c_off, only: [:show, :edit, :update, :destroy]
   
   # GET /leave_c_offs
   # GET /leave_c_offs.json
-  include QueryReport::Helper # need to include it
+
+   # include QueryReport::Helper # need to include it
 
   def index
   end
@@ -273,7 +275,7 @@ class LeaveCOffsController < ApplicationController
 
   def approve_c_off
 
-    @leave_c_off = LeaveCOff.find(params[:leave_c_off_id])
+    @leave_c_off = LeaveCOff.find(params[:format])
     #expiry_status = params[:leave_c_off][:expiry_status]
     @leave_c_off.update(expiry_status: true)
     #c_off_expire_day = params[:leave_c_off][:c_off_expire_day]
@@ -332,7 +334,7 @@ class LeaveCOffsController < ApplicationController
   end
 
   def final_approve
-    @leave_c_off = LeaveCOff.find(params[:leave_c_off_id])
+    @leave_c_off = LeaveCOff.find(params[:format])
     leav_category = LeavCategory.find_by_code('C.Off')
     @current_emp = Employee.find_by(id: current_user.employee_id)
 

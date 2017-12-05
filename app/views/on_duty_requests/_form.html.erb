@@ -16,11 +16,14 @@
               <tr>
                 <th>Employee </th>
                 <td><%= @employee.manual_employee_code %> - <%= full_name(@employee) %></td>
-              </tr>
-              <tr>
-                <th>Manager 1 </th>
-                <td><%= @employee.manager.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager)) %></td>
-              </tr>
+              </tr>            <tr>
+            <th>Manager 1 </th>
+            <%if @employee.id == @employee.manager_id %>
+               <td>Time & Attendance Team</td>
+             <%else%>
+              <td><%= @employee.manager.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager)) %></td>
+              <%end%>
+            </tr>
               <tr>
                 <th>Manager 2 </th>
                 <td><%= @employee.manager_2.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager_2)) %></td>
@@ -76,7 +79,7 @@
         <div class="col-sm-6">
         <label></label>
           <div class="actions">
-            <%= f.submit 'Create OD Request', :class => class_name, data: { disable_with: data_info } %> | 
+            <%= f.submit 'Create On Duty Request', :class => class_name, data: { disable_with: data_info } %> | 
             <%= link_to ' Back', on_duty_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
           </div>
         </div>

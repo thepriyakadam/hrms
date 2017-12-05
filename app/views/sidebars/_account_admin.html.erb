@@ -6,8 +6,8 @@
   <li class="active treeview">
 
     <a href="">
-      <i class="fa fa-user-plus"></i> <span>Employee Self Services</span> <i class="fa fa-angle-left pull-right"></i>
-    </a>
+       <a href="/home"> <Center> <% if current_user.class == Member %><%= current_user.company_location.company.try(:name) %>
+    <%else%><%= current_user.subdomain %> - <%= current_user.class %> <%end%>DASHBOARD</Center></a>
 
     <ul class="treeview-menu">
       <li><a href="/self_services/employee"><i class="fa fa-tags"></i>Employees</a></li>
@@ -18,7 +18,7 @@
       <li><a href="/self_services/advance"><i class="fa fa-tags"></i>Advance & Installment</a></li>
       <li><a href="/goal_rating_sheets/new"><i class="fa fa-tags"></i>Self Evaluation </a></li>
       <li><a href="/frequest_questions/list_of_faq" title="To view the list of frequently asked questions"><i class="fa fa-tags"></i> FAQs </a></li>
-       <li><a href="/contact_details"><i class="fa fa-tags"></i> Contact Detail </a></li>
+       <li><a href="/contact_details"><i class="fa fa-tags"></i> Key Contact Details </a></li>
     </ul>      
   </li>
 </ul>  

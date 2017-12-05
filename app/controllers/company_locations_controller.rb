@@ -1,6 +1,6 @@
 class CompanyLocationsController < ApplicationController
   before_action :set_company_location, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
   # GET /company_locations
   # GET /company_locations.json
   def index

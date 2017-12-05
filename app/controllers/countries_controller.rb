@@ -1,7 +1,8 @@
-require 'query_report/helper'  # need to require the helper
+
+# require 'query_report/helper'  # need to require the helper
 class CountriesController < ApplicationController
   before_action :set_country, only: [:show, :edit, :update, :destroy]
-   include QueryReport::Helper  # need to include it
+   # include QueryReport::Helper  # need to include it
   def show
   end
 

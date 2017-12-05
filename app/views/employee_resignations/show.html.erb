@@ -35,23 +35,13 @@
 
 <tr>
  <th><strong>Notice Period (In Months)</strong></th>
-  <td><%= @employee_resignation.notice_period %></td>
-  
-
-  <th><strong>Short Notice Period</strong></th>
-  <td><%= @employee_resignation.short_notice_period %></td>
+  <td colspan="3"><%= @employee_resignation.notice_period %></td>
 </tr>
 
-<tr>
- 
- <th><strong>Reason</strong></th>
-  <td colspan="3"><%= @employee_resignation.reason %></td>
 
-
-</tr>
 
 <tr>
- <th><strong>Requested Releaving Date</strong></th>
+ <th><strong>Requested Relieving Date</strong></th>
  <td><%= @employee_resignation.tentative_leaving_date %></td>
  
 
@@ -63,11 +53,15 @@
 <tr>
 
   <th><strong>Leaving Date</strong></th>
-  <td><%= @employee_resignation.leaving_date %></td>
-  
- <th><strong>Settled On</strong></th>
- <td><%= @employee_resignation.settled_on %></td>
+  <td colspan="3"><%= @employee_resignation.leaving_date %></td>
 
+
+</tr>
+
+<tr>
+ 
+  <th><strong>Reason</strong></th>
+  <td colspan="3"><%= @employee_resignation.reason %></td>
 </tr>
 
 <tr>

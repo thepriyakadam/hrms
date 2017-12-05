@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+
+  resources :events
+  resources :resource_pool_masters
+  resources :service_masters
+
   resources :plan_reason_masters
   resources :policy_details do
     collection do
@@ -106,7 +111,12 @@ Rails.application.routes.draw do
       post :send_anniversary_mail
     end
   end
-  resources :thoughts
+  resources :thoughts do
+    collection do
+      get :import_xl
+      post :import
+    end
+  end
   resources :candidate_interview_schedules
   resources :interview_type_masters
   resources :interview_types 
@@ -275,6 +285,8 @@ Rails.application.routes.draw do
       get :show_subordinate_attendance
       post :vacancy_request_create
       get :vacancy_request
+      get :final_approve_modal
+      get :employee_resignation_history
     end
   end
 
@@ -759,6 +771,8 @@ end
   end
   resources :employee_attendances do
     collection do
+      get :employee_not_found
+      post :not_found
       post :department_wise_employee_list
       post :all_emp_list
       post :create_employee_attendance
@@ -786,6 +800,7 @@ end
       get :emp_attendance
       get :display_attendance_2
       post :display_attendance_2
+      get :payroll_report
       get :costcenter_wise_excel1
       get :costcenter_wise_pdf
       get :employee_attendance_excel_report
@@ -850,6 +865,7 @@ end
       get :access_record
       post :access_card_list
       get :access_card_approval
+      get :admin_access_card_approval
       get :view_access_card_detail
       get :approve_acf_request
       get :reject_acf_request
@@ -873,6 +889,8 @@ end
       get :attendance_summary
       post :show_attendance_summary
       get :show_attendance_summary
+      post :payroll_show
+      get :payroll_show
       get :employee_attendance
     end
   end
@@ -1199,6 +1217,8 @@ end
 
   resources :employee_resignations do
     collection do
+      get :exit_interview_employee_list
+      get :exit_interview
       get :employee_resignation_list
       get :resignation_history
       get :employee_resignation_confirmation
@@ -1216,23 +1236,32 @@ end
       post :edit_n_approve
       get :edit_n_approve_modal
       get :display_notice_period
-      get :first_approve
+      post :first_approve
       get :second_approve
       get :final_approval_emp_resignation_list
       get :final_approve
       get :first_reject
+      get :first_approve_modal
       get :second_reject
       get :final_reject
+      get :first_approve_modal
       get :all_employee_resignation_list
-      get :show_resignation_status_detail
+      get :modal_show_resignation_status_detail
       get :show_resignation_detail
       get :final_approved_list
       get :confirm_resignation
       get :cancel_resignation_list
       get :modal_resignation_detail
       get :final_approve_modal
+      get :list_for_settelment
+      get :settelment_date
+      post :settelment_date_create
+      post :update_dates
+      post :first_approve_update_dates
+      get :collect_date
   end
 end
+
   resources :travel_options do
     collection do
       get :is_confirm
@@ -1277,6 +1306,9 @@ end
       get :final_approval_training_list
       get :final_approve
       post :selected_employee_training_list
+      get :training_request_form
+      post :training_create_form
+      # post :training_request_form
     end
   end
   resources :selected_resumes  do
@@ -1485,6 +1517,10 @@ end
     post 'basic_details/list_of_employee'
     get 'basic_details/show_basic_detail'
     post 'basic_details/show_basic_detail'
+    get 'basic_details/employee_contact_list'
+    get 'basic_details/employee_contact_report'
+    # post 'basic_details/employee_contact_report_pdf'
+     get 'basic_details/employee_contact_report_pdf'
 
     get 'salaries/new'
     post 'salaries/date_range_report'
@@ -1612,10 +1648,10 @@ end
       get :search_by_c_off_date
       get :add_coff
       get :destroy_self
+      get :approve_c_off
       post :approve_c_off
       get :reject_c_off
       get :approve_modal
-      post :final_approve
       get :final_approve
       get :final_reject
       get :admin_c_off_approval
@@ -1629,6 +1665,7 @@ end
 
   resources :self_services do
     collection do
+      get :self_exit_interview_list
       get :employee
       get :employee_template
       get :salaryslip
@@ -1636,7 +1673,7 @@ end
       get :attendance
       get :employee_resignation
       get :resignation_history
-      get :show_resignation_detail
+      get :modal_show_resignation_detail
       get :employee_transfer
       get :travel_request
       get :employee_attendance
@@ -1666,7 +1703,57 @@ end
       get :modal_c_off
       get :create_in_time
       get :create_out_time
+      get :display_notice_period
+      get :exit_interview
       get :present_to_title
+    end
+  end
+
+    resources :import_files do
+    collection do
+      get :company_type_import
+      post :import_company_type
+      post :import_department_type
+      post :import_bank
+      post :import_policy_type
+      post :import_employee_code_master
+      post :import_employee_type
+      post :import_nationality
+      post :import_religion
+      post :import_relation
+      post :import_blood
+      post :import_illness
+      post :import_employee_grade
+      post :import_employee_category
+      post :import_designation
+      post :import_asset_type
+      post :import_checklist
+      post :import_qualification
+      post :import_qualification_level
+      post :import_specialization
+      post :import_univercity
+      post :import_year
+      post :import_period
+      post :import_rating
+      post :import_goal
+      post :import_attribute
+      post :import_activity
+      post :import_calender
+      post :import_skillset
+      post :import_evaluation
+      post :import_criteria
+      post :import_interview_type
+      post :import_target_company
+      post :import_question_master
+      post :import_about_company
+      post :import_about_manager
+      post :import_leaving_reason
+      post :import_training_course
+      post :import_reward_type
+      post :import_reward_owner
+      post :import_root_cause_master
+      post :import_project_master
+      post :import_rembursment_master
     end
   end
 
@@ -2016,6 +2103,9 @@ end
       get :search_by_slip_detail
       get :leave_detail
       get :leave_detail_xls
+      get :import_xl
+      post :import
+
     end
   end
 
@@ -2146,6 +2236,9 @@ end
       get :datewise_workingday
       post :show_datewise_workingday
       get :show_datewise_workingday
+      get :import_working_day
+      # post :import_working_day
+      post :import_day
     end
   end
 
@@ -2248,8 +2341,16 @@ end
       post :qualification_level_master
     end
   end
-  resources :districts
-  resources :states
+  resources :districts do
+    collection do
+      get :district_master
+    end
+  end
+  resources :states do
+    collection do
+      get :state_master
+    end
+  end
   resources :countries
   resources :employee_designations do
     collection do
@@ -2348,6 +2449,15 @@ end
       get :is_confirm_leave
       patch :update_leave_auto
       get :modal_balance_detail
+      get :leave_balance
+      # post :leave_balance
+      post :leave
+      get :import_xl
+      post :import
+      get :basic_report
+      post :report
+      get :report
+
     end
   end
 
@@ -2375,6 +2485,7 @@ end
       get :status_wise_request
       get :select_form
       get :select_admin_form
+      get :admin_c_off_form
       get :balancewise_report
       post :show_balancewise_report
       get :show_balancewise_report
@@ -2494,6 +2605,8 @@ end
       get :selected_asset_xls
       get :import_xl
       post :import
+      get :import_assign_role
+      post :import_create_new_user
       get :graph
       get :assign_role
       post :submit_form
@@ -2578,6 +2691,12 @@ end
       get :is_confirm
       get :modal
       get :update_manager_modal
+      get :new_employee_list
+      get :skillset_employee_list
+      get :update_skillset_modal
+      get :reporting_manager_list
+      get :employee_asset
+      get :admin_asset_employee_list
     end
     member do
       get :edit_manager
@@ -2651,13 +2770,16 @@ end
     collection do
       get :created_user
       patch :update_form
+      get :hrms_data_sheet
+      # get "downloads/xls/:id" => "downloads#xls", :as => :download_xls
+
       # get :show
     end
   end
 
   root 'home#index'
 
-  devise_for :members, controllers: { registrations: 'members/registrations', sessions: 'members/sessions', passwords: 'groups/passwords' }
+  devise_for :members, controllers: { registrations: 'members/registrations', sessions: 'members/sessions', passwords: 'members/passwords' }
   devise_for :groups, controllers: { registrations: 'groups/registrations', sessions: 'groups/sessions', passwords: 'groups/passwords' }
 
   devise_scope :group do

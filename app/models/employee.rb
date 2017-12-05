@@ -6,6 +6,7 @@ class Employee < ActiveRecord::Base
   belongs_to :sub_department
   belongs_to :company_location
   belongs_to :company
+  belongs_to :sub_department
   belongs_to :nationality
   belongs_to :blood_group
   belongs_to :employee_type
@@ -14,6 +15,9 @@ class Employee < ActiveRecord::Base
   belongs_to :district
   belongs_to :religion
   belongs_to :employee_code_master
+  belongs_to :service_master
+  belongs_to :resource_pool_master
+  belongs_to :cost_center
   # has_many :employee_resignations
   has_many :trainees
   has_many :gps_dailies
@@ -169,9 +173,9 @@ class Employee < ActiveRecord::Base
   validates_attachment_size :passport_photo, :less_than => 5.megabytes
 
 
-  has_attached_file :employee_signature, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'Profile11.jpg'
-  validates_attachment_content_type :employee_signature,  :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
-  validates_attachment_size :employee_signature, :less_than => 5.megabytes
+  # has_attached_file :employee_signature, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'Profile11.jpg'
+  # validates_attachment_content_type :employee_signature,  :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
+  # validates_attachment_size :employee_signature, :less_than => 5.megabytes
   
   # validates :permanent_address, presence: true
   # validates :department_id,presence: true
@@ -374,15 +378,181 @@ class Employee < ActiveRecord::Base
   end
 
   def self.import(file)
-    spreadsheet = open_spreadsheet(file)
-    header = spreadsheet.row(1)
+  spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-      row = Hash[[header, spreadsheet.row(i)].transpose]
-      employee = find_by_id(row["id"]) || new
-      employee.attributes = row.to_hash.slice(*row.to_hash.keys)
-      employee.save!
+        manual_employee_code = spreadsheet.cell(i,'B').to_i
+        if manual_employee_code == 0
+           manual_employee_code = spreadsheet.cell(i,'B')
+        else
+           manual_employee_code = spreadsheet.cell(i,'B').to_i
+        end
+        prefix = spreadsheet.cell(i,'C')
+        first_name = spreadsheet.cell(i,'D')
+        middle_name = spreadsheet.cell(i,'E')
+        last_name = spreadsheet.cell(i,'F')
+        gender = spreadsheet.cell(i,'G')
+        email = spreadsheet.cell(i,'H')
+        if email.nil?
+          email = first_name+'@gmail.com'
+        else
+          email = spreadsheet.cell(i,'H')
+        end
+        optional_email = spreadsheet.cell(i,'I')
+        adhar_no = spreadsheet.cell(i,'J').to_i
+        pan_no = spreadsheet.cell(i,'K')
+        licence_no = spreadsheet.cell(i,'L')
+        contact_no = spreadsheet.cell(i,'M').to_i
+        optinal_contact_no = spreadsheet.cell(i,'N').to_i
+        optinal_contact_no1 = spreadsheet.cell(i,'O').to_i
+        # emergency_contact_no = spreadsheet.cell(i,'P').to_i
+        @religion = Religion.find_by_name(spreadsheet.cell(i,'Q'))
+        if @religion == nil
+           religion_name = spreadsheet.cell(i,'Q')
+           @religion_entry = Religion.create(name: religion_name)
+           religion_id = @religion_entry.id
+        else
+        religion_id = @religion.id
+        end
+        status = spreadsheet.cell(i,'R')
+        @employee_type = EmployeeType.find_by_name(spreadsheet.cell(i,'S'))
+        if @employee_type == nil
+           employee_type_name = spreadsheet.cell(i,'S')
+           @employee_type_entry = EmployeeType.create(name: employee_type_name)
+           employee_type_id = @employee_type_entry.id
+        else
+        employee_type_id = @employee_type.id
+        end
+        marital_status = spreadsheet.cell(i,'T')
+        @nationality = Nationality.find_by_name(spreadsheet.cell(i,'U'))
+        if @nationality == nil
+           nationality_name = spreadsheet.cell(i,'U')
+           @nationality_entry = Nationality.create(name: nationality_name)
+           nationality_id = @nationality_entry.id
+        else
+        nationality_id = @nationality.id
+        end
+        date_of_birth = spreadsheet.cell(i,'V')
+        @blood_group = BloodGroup.find_by_name(spreadsheet.cell(i,'W'))
+        if @blood_group == nil
+           blood_group_name = spreadsheet.cell(i,'W')
+           @blood_group_entry = BloodGroup.create(name: blood_group_name)
+           blood_group_id = @blood_group_entry.id
+        else
+        blood_group_id = @blood_group.id
+        end
+        permanent_address = spreadsheet.cell(i,'X')
+        pin_code = spreadsheet.cell(i,'Y')
+        @country = Country.find_by_name(spreadsheet.cell(i,'Z'))
+        if @country == nil
+           country_name = spreadsheet.cell(i,'Z')
+           @country_entry = Country.create(name: country_name)
+           country_id = @country_entry.id
+        else
+        country_id = @country.id
+      end
+        @state = State.find_by_name(spreadsheet.cell(i,'AA'))
+        if @state == nil
+           state_name = spreadsheet.cell(i,'AA')
+           @state_entry = State.create(name: state_name, country_id: country_id)
+           state_id = @state_entry.id
+        else
+        state_id = @state.id
+      end
+        @district = District.find_by_name(spreadsheet.cell(i,'AB'))
+        if @district == nil
+           district_name = spreadsheet.cell(i,'AB')
+           @district_entry = District.create(name: district_name, state_id: state_id)
+           district_id = @district_entry.id
+        else
+        district_id = @district.id
+        end
+        city = spreadsheet.cell(i,'AC')
+        current_address = spreadsheet.cell(i,'AD')
+        handicap = spreadsheet.cell(i,'AE')
+        handicap_type = spreadsheet.cell(i,'AF')
+        @company = Company.find_by_name(spreadsheet.cell(i,'AG'))
+        if @company == nil
+          @company_name = Company.last
+          company_id = @company_name.id
+        else
+        company_id = @company.id
+        end
+        @company_location = CompanyLocation.find_by_name(spreadsheet.cell(i,'AH'))
+        if @company_location == nil
+          @company_location_name = CompanyLocation.last
+          company_location_id = @company_location_name.id
+        else
+        company_location_id = @company_location.id
+        end
+        @department = Department.find_by_name(spreadsheet.cell(i,'AI'))
+       if @department == nil
+          department_name = spreadsheet.cell(i,'AI')
+          @department_entry = Department.create(name: department_name, company_location_id: company_location_id)
+          department_id = @department_entry.id
+       else
+        department_id = @department.id
+        end
+      #   @sub_department = SubDepartment.find_by_name(spreadsheet.cell(i,'AJ'))
+      #   if @sub_department == nil
+      #     sub_department_name = spreadsheet.cell(i,'AJ')
+      #     @sub_department_entry = SubDepartment.create(name: sub_department_name, department_id: department_id)
+      #     sub_department_id = @sub_department_entry.id
+      #   else
+      #   sub_department_id = @sub_department.id
+      # end
+      @employee_code_master = EmployeeCodeMaster.find_by_name(spreadsheet.cell(i,'AJ'))
+       if @employee_code_master == nil
+        else
+        employee_code_master_id = @employee_code_master.id
+        end
+        @employee_prsent = Employee.find_by(manual_employee_code: manual_employee_code)
+        if @employee_prsent.nil?
+          @employee = Employee.create(manual_employee_code: manual_employee_code,prefix: prefix,first_name: first_name,middle_name: middle_name,last_name: last_name,date_of_birth: date_of_birth,gender: gender,contact_no: contact_no,optinal_contact_no: optinal_contact_no,email: email,permanent_address: permanent_address,
+          country_id: country_id,state_id: state_id,district_id: district_id,city: city,pin_code: pin_code,current_address: current_address,adhar_no: adhar_no,pan_no: pan_no,licence_no: licence_no,marital_status: marital_status,blood_group_id: blood_group_id,employee_type_id: employee_type_id,nationality_id: nationality_id,religion_id: religion_id,
+          handicap: handicap,handicap_type: handicap_type,status: status,company_id: company_id,company_location_id: company_location_id,department_id: department_id,employee_code_master_id: employee_code_master_id,optional_email: optional_email,optinal_contact_no1: optinal_contact_no1)
+        else
+          @employee_prsent.update(prefix: prefix,first_name: first_name,middle_name: middle_name,last_name: last_name,date_of_birth: date_of_birth,gender: gender,contact_no: contact_no,optinal_contact_no: optinal_contact_no,email: email,permanent_address: permanent_address,
+          country_id: country_id,state_id: state_id,district_id: district_id,city: city,pin_code: pin_code,current_address: current_address,adhar_no: adhar_no,pan_no: pan_no,licence_no: licence_no,marital_status: marital_status,blood_group_id: blood_group_id,employee_type_id: employee_type_id,nationality_id: nationality_id,religion_id: religion_id,
+          handicap: handicap,handicap_type: handicap_type,status: status,company_id: company_id,company_location_id: company_location_id,department_id: department_id,employee_code_master_id: employee_code_master_id,optional_email: optional_email,optinal_contact_no1: optinal_contact_no1)
+        end
+  end
+end
+
+  def self.import_create_new_user(file)
+  spreadsheet = open_spreadsheet(file)
+    (2..spreadsheet.last_row).each do |i|
+       manual_member_code = spreadsheet.cell(i,'B').to_i
+       @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        if @employee.nil?
+        else
+        employee_id = @employee.id
+        email = @employee.email
+        company_id = @employee.company_id
+        company_location_id = @employee.company_location_id
+        password = @employee.first_name+'hrms'+@employee.manual_employee_code
+
+        @role = Role.find_by_name(spreadsheet.cell(i,'C'))
+        if @role == nil
+           @role_entry = Role.find_by(name: "Employee")
+           role_id = @role_entry.id
+        else
+        role_id = @role.id
+        end
+        @manager = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'D').to_i)
+        manager_id = @manager.id
+
+        @manager_2 = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'E').to_i)
+        if @manager_2.nil?
+        else
+        manager_2_id = @manager_2.id
+        end
+        @employee.update(manager_id: manager_id,manager_2_id: manager_2_id)
+
+        @member = Member.create(manual_member_code: manual_member_code,employee_id: employee_id,email: email,password: password,role_id: role_id,company_id: company_id,company_location_id: company_location_id)
     end
   end
+end
+
 
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)
@@ -391,7 +561,5 @@ class Employee < ActiveRecord::Base
       when ".xlsx" then Roo::Excelx.new(file.path, file_warning: :ignore)
       else raise "Unknown file type: #{file.original_filename}"
     end
-  end
-
-  
+  end  
 end

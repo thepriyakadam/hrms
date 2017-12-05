@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @resource_pool_master.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @resource_pool_master.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @resource_pool_master.description %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @resource_pool_master.status %>
+</p>
+
+<%= link_to 'Edit', edit_resource_pool_master_path(@resource_pool_master) %> |
+<%= link_to 'Back', resource_pool_masters_path %>

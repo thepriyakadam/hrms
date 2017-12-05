@@ -1,7 +1,7 @@
 class OnDutyRequestsController < ApplicationController
   before_action :set_on_duty_request, only: [:show, :edit, :update, :destroy]
   
-  load_and_authorize_resource
+  ##load_and_authorize_resource
 
   # GET /on_duty_requests
   # GET /on_duty_requests.json
@@ -125,14 +125,14 @@ class OnDutyRequestsController < ApplicationController
           #   OdRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',day: i)
           # end
 
-                          @on_duty_request.create_attendance_od
+            @on_duty_request.create_attendance_od
             OdStatusRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',change_date: Date.today)
 
             if @employee.manager.email.nil? or @employee.manager.email == ""
               flash[:notice] = "Send request without email."
             else
               flash[:notice] = 'OD Request sent successfully.'
-              OdRequestMailer.pending(@on_duty_request).deliver_now
+              # OdRequestMailer.pending(@on_duty_request).deliver_now
             end
             
               if @on_duty_request.id != nil
@@ -203,10 +203,10 @@ class OnDutyRequestsController < ApplicationController
     @employees_ind = @emp.indirect_subordinates
     
     if current_user.class == Group
-      @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: false, is_first_rejected: false, is_cancelled: false,employee_id: @employees)
+      @pending_on_duty_requests = OnDutyRequest.where("current_status = ? OR current_status = ?", "Pending","FirstApproved").where(first_reporter_id: current_user.employee_id,employee_id: @employees)
       @first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,employee_id: @employees_ind)
     else
-      @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: false, is_first_rejected: false, is_cancelled: false,employee_id: @employees)
+      @pending_on_duty_requests = OnDutyRequest.where("current_status = ? OR current_status = ?", "Pending","FirstApproved").where(first_reporter_id: current_user.employee_id,employee_id: @employees)
       @first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,employee_id: @employees_ind)
     end
     

@@ -89,8 +89,8 @@
                 <% if @current_request.current_status == "Pending" %>
                 <th></th>
                   <th colspan="2"><center>
-                   <%= link_to 'Approve', first_approve_leave_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> 
-                   <%= link_to 'Reject', first_reject_leave_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
+                   <%= link_to 'Approve', second_approve_leave_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> 
+                   <%= link_to 'Reject', second_reject_leave_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
                    <%= link_to 'Back', all_leave_request_list_employee_leav_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %></center>
                 </th>
                 <th></th>

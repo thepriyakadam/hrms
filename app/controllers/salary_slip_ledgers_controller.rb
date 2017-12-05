@@ -1,6 +1,7 @@
-require 'query_report/helper'
+
+# require 'query_report/helper'
 class SalarySlipLedgersController < ApplicationController
-  include QueryReport::Helper
+  # include QueryReport::Helper
 
   def cost_unit_wise
    session[:active_tab] ="PayrollManagement"

@@ -1,0 +1,23 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Report</h3>
+    <div class="pull-right">
+    <!--  <= link_to "New Issue Request",  new_issue_request_path, class: 'btn btn-primary' %>  -->
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div class="row">
+
+     <div class="col-sm-3">
+         <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+            </div>
+            <%= select :salary, :company_location_id, all_company_location2,{include_blank: 'Select Location'},{onchange:"var a={company_location:$(this).val()};$('.ajax-progress').show(); $.get('/reports/basic_details/employee_contact_report',a,function(response){});",class: 'form-control'} %>
+          </div>
+         </div>
+        </div>
+    </div>
+       <div id="employee"></div>
+    </div>
+</div>

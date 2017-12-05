@@ -1,14 +1,24 @@
+
 <!DOCTYPE html>
 <html>
   <head>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-     <h4>Resignation Request Rejected</h4>
-    <p>
-      Dear, <%= @employee.prefix %><%= @employee.first_name.to_s %> <%= @employee.last_name.to_s %> <%= @employee.middle_name.to_s %><br><br>
-      This is to inform you that your Resignation Request has been Rejected.
-      <br><br>
-     </p>
+    <h4><center>Your resignation request has been rejected</center> </h4>
+
+<p>This is to inform that the resignation request created by <b><%= @employee_resignation.try(:employee).try(:prefix) %>  <%= @employee_resignation.try(:employee).try(:first_name) %> <%= @employee_resignation.try(:employee).try(:middle_name) %> <%= @employee_resignation.try(:employee).try(:last_name) %>  </b>  on <b> <%= @employee_resignation.try(:resignation_date) %></b>, has been rejected by your reporting manager <b><%= @reporting_master.try(:employee).try(:prefix)%> <%= @reporting_master.try(:employee).try(:first_name)%> <%= @reporting_master.try(:employee).try(:middle_name)%> <%= @reporting_master.try(:employee).try(:last_name)%>.</b></p>
+
+<p>For further details, kindly contact your reporting manager.</p>
+
+<h4>Details of the Resignation:-</h4>
+
+<p>Employee ID:- <%= @employee_resignation.try(:employee).try(:manual_employee_code) %></p>
+
+<p>Employee Name:- <%= @employee_resignation.try(:employee).try(:prefix) %> <%= @employee_resignation.try(:employee).try(:first_name) %> <%= @employee_resignation.try(:employee).try(:middle_name) %> <%= @employee_resignation.try(:employee).try(:last_name) %> </p>
+
+<p>Reason of Separation:- <%= @employee_resignation.try(:reason) %></p>
   </body>
 </html>
+
+

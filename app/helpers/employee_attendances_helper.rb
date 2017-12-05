@@ -1,6 +1,6 @@
 module EmployeeAttendancesHelper
-	def calculate_attendance(date, exist, e)
-		start_date = date.beginning_of_month
+  def calculate_attendance(date, exist, e)
+    start_date = date.beginning_of_month
     end_date = date.end_of_month
     start_date.step(end_date).each do |d|
       attendance_record = EmployeeAttendance.where(day: d, employee_id: e.employee_id).take
@@ -13,7 +13,7 @@ module EmployeeAttendancesHelper
       end
     end
     Hash[exist.sort]
-	end
+  end
 
   def calculate_attendance_datewise(from,to, exist, e)
     start_date = from.to_date
@@ -25,12 +25,12 @@ module EmployeeAttendancesHelper
         unless joining_detail.nil?
           unless joining_detail.joining_date.nil?
             unless joining_detail.joining_date <  d
-              exist[d] = "UJ"
+              exist[d] = "UD"
             end
           end
           unless joining_detail.retirement_date.nil?
             unless joining_detail.retirement_date > d
-              exist[d] = "RD"
+              exist[d] = "R"
             end
           end
         end
@@ -83,12 +83,28 @@ module EmployeeAttendancesHelper
   end
 
   def holiday_in_month_count(exist)
-    exist.select {|k,v| v == "H" || v == "HP" }.count
+    exist.select {|k,v| v == "H"}.count
+  end
+
+  def holiday_present_in_month_count(exist)
+
+    ((exist.select {|k,v| v == "HP" }.count)*2.to_f)
+  end
+
+   def no_of_holiday_present_in_month_count(exist)
+    exist.select {|k,v| v == "HP" }.count
   end
 
   def week_off_day_count(exist)
-    exist.select {|k,v| v == "WO" || v =="WOP" }.count
+    exist.select {|k,v| v == "WO" }.count
   end
+
+   def week_off_present_day_count(exist)
+    (exist.select {|k,v|v =="WOP" }.count)*2.to_f
+    exist.select {|k,v| v == "WO" || v =="WOP"}.count
+  end
+
+
 
   def present_count(exist)
     exist.select {|k,v| v == "P" }.count + (exist.select {|k,v| v == "HDL"}.count)/2.to_f + (exist.select {|k,v| v == "P/OD" }.count)/2.to_f + (exist.select {|k,v| v == "OD/P" }.count)/2.to_f + (exist.select {|k,v| v == "P/CL" }.count)/2.to_f + (exist.select {|k,v| v == "CL/P" }.count)/2.to_f + (exist.select {|k,v| v == "P/EL" }.count)/2.to_f + (exist.select {|k,v| v == "EL/P" }.count)/2.to_f + (exist.select {|k,v| v == "P/AL" }.count)/2.to_f + (exist.select {|k,v| v == "AL/P" }.count)/2.to_f + (exist.select {|k,v| v == "P/LWP" }.count)/2.to_f + (exist.select {|k,v| v == "LWP/P" }.count)/2.to_f + (exist.select {|k,v| v == "P/ESIC" }.count)/2.to_f + (exist.select {|k,v| v == "ESIC/P" }.count)/2.to_f + (exist.select {|k,v| v == "P/C.Off" }.count)/2.to_f + (exist.select {|k,v| v == "C.Off/P" }.count)/2.to_f

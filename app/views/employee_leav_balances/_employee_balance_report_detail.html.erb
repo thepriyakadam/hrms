@@ -1,0 +1,52 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Leave Balance Detail</h3>
+ 
+   <div class="pull-right">
+   	 <%= link_to " Excel Report ",report_employee_leav_balances_path(format: "xls"),class: "btn btn-xl btn-success fa fa-print" %>
+   	    <%= link_to " PDF Report ",report_employee_leav_balances_path(format: "pdf"),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+   </div>
+    </div><!-- /.box-header -->
+  <div class="box-body">
+	  <table id="example1" class="table table-bordered table-hover table-condensed">
+		  <thead>
+		    <tr>
+		      <th>Sr.No.</th>
+		      <th>ID</th>
+		      <th>Leave Type</th>
+		      <th>No. of Leaves</th>
+		      <th>Total Leave</th>
+		      <th>From Date</th>
+		      <th>To Date</th>
+		      <th>Status</th>
+		      <th>Leave Count</th>
+		      <th>Collapse Value</th>
+		      <th>Carry Forward</th>
+		      <th>Working Day</th>
+		    </tr>
+		  </thead>
+
+		  <tbody>
+		  <%i = 0%>
+		    <% @employee_leav_balances.each do |elb| %>
+		    
+		      <tr>
+		        <td><%= i=i+1 %></td>
+		        <td><%= elb.employee.try(:manual_employee_code) %></td>
+		        <td><%= elb.leav_category.try(:name) %></td>
+		        <td><%= elb.no_of_leave %></td>
+		        <td><%= elb.total_leave %></td>
+		        <td><%= elb.from_date %></td>
+		        <td><%= elb.to_date %></td>
+		        <td><%= elb.is_active ? "Active" : "Inactive" %></td>
+		        <td><%= elb.leave_count %></td>
+		        <td><%= elb.collapse_value %></td>
+		        <td><%= elb.carry_forward %></td>
+		        <td><%= elb.working_day %></td>
+		      </tr>
+		    <% end %>
+		   </tbody>
+		  </table>
+
+		  </div>
+		  </div>

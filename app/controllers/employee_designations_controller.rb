@@ -1,7 +1,8 @@
-require 'query_report/helper'  # need to require the helper
+
+# require 'query_report/helper'  # need to require the helper
 class EmployeeDesignationsController < ApplicationController
   before_action :set_employee_designation, only: [:show, :edit, :update, :destroy]
-  include QueryReport::Helper  # need to include it
+  # include QueryReport::Helper  # need to include it
   def new
     @employee_designation = EmployeeDesignation.new
     @employee_designations = EmployeeDesignation.all

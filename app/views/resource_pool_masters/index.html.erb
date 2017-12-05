@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Resource Pool Masters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @resource_pool_masters.each do |resource_pool_master| %>
+      <tr>
+        <td><%= resource_pool_master.code %></td>
+        <td><%= resource_pool_master.name %></td>
+        <td><%= resource_pool_master.description %></td>
+        <td><%= resource_pool_master.status %></td>
+        <td><%= link_to 'Show', resource_pool_master %></td>
+        <td><%= link_to 'Edit', edit_resource_pool_master_path(resource_pool_master) %></td>
+        <td><%= link_to 'Destroy', resource_pool_master, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Resource pool master', new_resource_pool_master_path %>

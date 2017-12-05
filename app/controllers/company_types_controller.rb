@@ -1,9 +1,9 @@
 class CompanyTypesController < ApplicationController
   before_action :set_company_type, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
 
   def new
-    @company_types = CompanyType.new
+    @company_type = CompanyType.new
     @company_types = CompanyType.all
     session[:active_tab] ="GlobalSetup"
     session[:active_tab1] ="CompanyType"

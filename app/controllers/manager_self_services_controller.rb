@@ -80,6 +80,15 @@ class ManagerSelfServicesController < ApplicationController
     session[:active_tab] ="ManagerSelfService"
   end
 
+  def employee_resignation_history
+    @emp = Employee.find(current_user.employee_id)
+    @sub = @emp.subordinates
+    @ind_sub = @emp.indirect_subordinates
+    @employee = @sub + @ind_sub
+
+    @employee_resignations = EmployeeResignation.where(employee_id: @employee).group(:employee_id)
+  end
+
   def final_approval_emp_resignation_list
     @employee_resignations = EmployeeResignation.where("(resign_status = ?)","SecondApproved")
     session[:active_tab] ="ManagerSelfService"
@@ -160,6 +169,7 @@ class ManagerSelfServicesController < ApplicationController
   end
 
   def leave_c_off
+    # byebug
     session[:active_tab] ="ManagerSelfService"
     current_login = Employee.find_by(id: current_user.employee_id)
     @sub = current_login.subordinates
@@ -171,11 +181,19 @@ class ManagerSelfServicesController < ApplicationController
 
   end
 
+  def employee_resignation_history
+    @emp = Employee.find(current_user.employee_id)
+    @sub = @emp.subordinates
+    @ind_sub = @emp.indirect_subordinates
+    @employee = @sub + @ind_sub
+
+    @employee_resignations = EmployeeResignation.where(employee_id: @employee).group(:employee_id)
+  end
+
   def vacancy_request
   end
 
   def vacancy_request_create
-    #byebug
     @employee_designation = params[:vacancy_master][:employee_designation_id]
     flash[:notice] = "Vacancy Request Created!"
     redirect_to vacancy_request_manager_self_services_path   

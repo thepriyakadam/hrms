@@ -32,7 +32,7 @@ class AssignedAssetsController < ApplicationController
     @employee = Employee.find(params[:assigned_asset][:employee_id])
     respond_to do |format|
       if @assigned_asset.save
-        EmployeeMailer.asset_detail_create(@employee,@assigned_asset).deliver_now
+        # EmployeeMailer.asset_detail_create(@employee,@assigned_asset).deliver_now
         format.html { redirect_to @assigned_asset, notice: 'Asset was successfully created.' }
         format.json { render :show, status: :created, location: @assigned_asset }
         @assigned_assets = @employee.assigned_assets
@@ -95,19 +95,19 @@ class AssignedAssetsController < ApplicationController
   end
 
   def import_xl
-    @assigned_assets = AssignedAsset.all
-    respond_to do |format|
-    format.html
-    format.csv { send_data @assigned_assets.to_csv }
-    format.xls
-     session[:active_tab] = "import"
-   end   
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Imports"    
   end
 
   def import
-    # byebug
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_assigned_assets_path
+    else
     AssignedAsset.import(params[:file])
-    redirect_to root_url, notice: "File imported."
+    redirect_to import_xl_assigned_assets_path, notice: "File imported."
+    end
   end
 
   def asset_modal

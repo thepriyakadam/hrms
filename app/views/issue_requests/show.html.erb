@@ -4,13 +4,48 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed'">
+    <tr>
+           <th colspan="4"><center> Employee Details </center></th>
+    </tr>
 <tr>
   <th><strong>Request By</strong></th>
   <td><%= @issue_request.employee.try(:first_name) %> <%= @issue_request.employee.try(:middle_name) %> <%= @issue_request.employee.try(:last_name) %></td>
 
+  <th><strong>Extension Line 1</strong></th>
+  <td><%= @issue_request.employee.try(:contact_no) %></td>
+
+</tr>
+
+<tr>
+  <th><strong>Official Email</strong></th>
+  <td><%= @issue_request.employee.try(:email) %></td>
+
+  <th><strong>Department</strong></th>
+  <td><%= @issue_request.employee.try(:department).try(:name) %></td>
+</tr>
+
+</table><br>
+
+ <table id="example2" class="table table-bordered table-hover table-condensed'">
+     <tr>
+           <th colspan="4"><center> Support Request Details </center></th>
+    </tr>
+<tr>  
+
   <th><strong>Support</strong></th>
-  <td><%= @issue_request.issue_master.try(:name) %></td>
+  <td colspan="3"><%= @issue_request.issue_master.try(:name) %></td>
+</tr>
+<tr>
+  <th><strong>Support Description</strong></th>
+  <td colspan="3"><%= @issue_request.issue_master.try(:description) %></td>
  
+</tr>
+
+  <tr>
+
+  <th><strong>Description</strong></th>
+  <td colspan="3"><%= @issue_request.description %></td>
+
 </tr>
 
  
@@ -53,12 +88,7 @@
   <% end %></td>
 </tr>
 
-  <tr>
 
-  <th><strong>Description</strong></th>
-  <td colspan="3"><%= @issue_request.description %></td>
-
-</tr>
 
 </table><br>
 <%= link_to 'Back', lock_request_list_issue_requests_path,class: 'btn btn-default fa fa-arrow-left' %>

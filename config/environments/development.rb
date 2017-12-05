@@ -10,6 +10,7 @@
    config.cache_classes = false
   
    # Do not eager load code on boot.
+
    config.eager_load = false
   
    # Show full error reports and disable caching.
@@ -49,6 +50,8 @@
    config.action_mailer.perform_deliveries = true
 
 
+ config.action_mailer.default_url_options = { host: 'https://webmail.logix.in/', port: 443 }
+ 
    #config.action_mailer.raise_delivery_errors = true 
 
 
@@ -192,7 +195,6 @@
    openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
    # openssl_verify_mode: 'none'
   }
-
 
 #   config.action_mailer.default_url_options = { host: 'https://webmail.spanpump.com/', port: 443 }
  

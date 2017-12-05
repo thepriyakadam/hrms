@@ -7,7 +7,7 @@ class Api::UserAuthsController < ApplicationController
   include ActionView::Helpers::DateHelper
   include ApplicationHelper
   # http_basic_authenticate_with :email => "vish.hake04@gmail.com", :password => "12345678"
-  # skip_before_filter :authenticate_user! 
+  # skip_before_filter :authenticate_user!
   skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
   respond_to :json
 
@@ -49,8 +49,10 @@ class Api::UserAuthsController < ApplicationController
 
   def employee_list
     @employee = params[:employee_id]
+
     employees = Employee.where(id: @employee) 
       render :json => employees.present? ? employees.collect{|e| {:id => e.id,:passport_photo_file_name => e.passport_photo_file_name,:manual_employee_code => e.manual_employee_code,:first_name => e.first_name,:middle_name => e.middle_name,:last_name => e.last_name,:date_of_birth => e.date_of_birth,
+
       :gender => e.gender,:contact_no => e.contact_no,:optinal_contact_no => e.optinal_contact_no,:optinal_contact_no1 => e.optinal_contact_no1,:email => e.email,:optional_email => e.optional_email,:permanent_address => e.permanent_address,:country_id => e.country_id,:state_id => e.state_id,:district_id => e.district_id,:city => e.city,:pin_code => e.pin_code,:current_address => e.current_address,:adhar_no => e.adhar_no,:pan_no => e.pan_no,:licence_no => e.licence_no,:marital_status => e.marital_status,:blood_group_id => e.blood_group_id,:employee_type_id => e.employee_type_id,:nationality_id => e.nationality_id,:religion_id => e.religion_id,:handicap => e.handicap,:handicap_type => e.handicap_type,:status => e.status,:manager_id => e.manager_id,:manager_2_id => e.manager_2_id,:company_id => e.company_id,:company_location_id => e.company_location_id,:department_id => e.department_id,:sub_department_id => e.sub_department_id,:extension_no => e.extension_no,:emergency_contact_no => e.emergency_contact_no}} : []
   end
 
@@ -111,7 +113,7 @@ class Api::UserAuthsController < ApplicationController
       render :status=>200, :json=>{:status=>"Employee is not Found."}
     end
   end
-  
+ 
   def cancel_leave_request
     employee_id = params[:employee_id].to_i
     leave_req_id = params[:leave_req_id].to_i
@@ -197,7 +199,7 @@ class Api::UserAuthsController < ApplicationController
           s.change_status_employee_id = employee_id unless Member.find(employee_id).class == Group
           s.status = 'FirstApproved'
           s.change_date = Time.now
-          LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FirstApproved") 
+          LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FirstApproved")
         end
         ActiveRecord::Base.transaction do
           if @leave_status.save
@@ -341,7 +343,7 @@ class Api::UserAuthsController < ApplicationController
       end
     end
   end
-  
+ 
   def employee_leave_request
     status  = ''
     @employee = params[:employee_id].to_i
@@ -449,7 +451,7 @@ class Api::UserAuthsController < ApplicationController
       else
         @checkbox = false
       end
-      payroll_period = PayrollPeriod.where(status: true).take 
+      payroll_period = PayrollPeriod.where(status: true).take
       @leav_category = LeavCategory.find_by(id: @leave_category)
       if payroll_period.nil?
         # flash[:alert] = "Payroll Period Not set!"
@@ -464,7 +466,7 @@ class Api::UserAuthsController < ApplicationController
           # redirect_to hr_view_request_employee_leav_requests_path(@employee)
         else
           if start_date.to_date >= payroll_period.from.to_date && end_date.to_date <= payroll_period.to.to_date
-            if @employee_leav_request.end_date == nil 
+            if @employee_leav_request.end_date == nil
               # flash[:alert] = "please Fill all mendatory fields"
               # render :status=>200, :json=>{:status=>"please Fill all mendatory fields"}
               status = "please Fill all mendatory fields"
@@ -532,7 +534,7 @@ class Api::UserAuthsController < ApplicationController
               #leave_limit
                 @leav_category = LeavCategory.find_by(id: @employee_leav_request.leav_category_id)
                 monthly_count = @employee_leav_request.leave_monthly_limit(@employee_leav_request)
-                # if @leav_category.monthly_leave != nil && monthly_count > @leav_category.monthly_leave.to_f 
+                # if @leav_category.monthly_leave != nil && monthly_count > @leav_category.monthly_leave.to_f
                 #   # flash[:alert] = "Leave Monthly Limit Extended !"
                 #   render :status=>200, :json=>{:status=>"Leave Monthly Limit Extended !"}
                 #   # redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
@@ -566,10 +568,10 @@ class Api::UserAuthsController < ApplicationController
                 elsif @leav_category.is_limit == true && @employee_leav_request.is_out_of_limit(@employee_leav_request)
                   # f# redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
                 elsif @leav_category.is_limit == true && @employee_leav_request.is_out_of_limit(@employee_leav_request)
-                  # flash[:alert] = "Leave Range for #{@leav_category.code} is #{@leav_category.from} - #{@leav_category.to}" 
+                  # flash[:alert] = "Leave Range for #{@leav_category.code} is #{@leav_category.from} - #{@leav_category.to}"
                   # render :status=>200, :json=>{:status=>"Leave Range for #{@leav_category.code} is #{@leav_category.from} - #{@leav_category.to}"}
                   status = "Leave Range for #{@leav_category.code} is #{@leav_category.from} - #{@leav_category.to}"
-                  # redirect_to hr_view_request_employee_leav_requests_path(@employee.id)lash[:alert] = "Leave Range for #{@leav_category.code} is #{@leav_category.from} - #{@leav_category.to}" 
+                  # redirect_to hr_view_request_employee_leav_requests_path(@employee.id)lash[:alert] = "Leave Range for #{@leav_category.code} is #{@leav_category.from} - #{@leav_category.to}"
                   # render :status=>200, :json=>{:status=>"Leave Range for #{@leav_category.code} is #{@leav_category.from} - #{@leav_category.to}"}
                   # redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
               else
@@ -737,7 +739,7 @@ class Api::UserAuthsController < ApplicationController
                 end
               end #@leave_category.is_balance == true
             end #monthly_count > @leav_category.monthly_leave.to_f
-          end #@employee_leav_request.end_date == nil 
+          end #@employee_leav_request.end_date == nil
 
           # binding.pry
           # byebug
@@ -912,7 +914,7 @@ class Api::UserAuthsController < ApplicationController
     employees = Employee.where(status: "Active")
     render :json => employees.present? ? employees.collect{|emp| {:id => emp.id, :prefix => emp.prefix, :employee_first_name => emp.first_name, :employee_middle_name => emp.middle_name, :employee_last_name => emp.last_name, :contact_no => emp.contact_no }} : []
   end
-  
+ 
   def employee_details
     employee_id = params[:employee_id]
     employee = Employee.where(id: employee_id)
@@ -924,7 +926,7 @@ class Api::UserAuthsController < ApplicationController
     employee_plan = EmployeePlan.where(current_status: "Pending", manager_id: employee_id)
     render :json => employee_plan.present? ? employee_plan.collect{|epl| {:id => epl.id, :employee_id => epl.employee_id, :prefix => epl.employee.prefix, :employee_first_name => epl.employee.first_name, :employee_middle_name => epl.employee.middle_name, :employee_last_name => epl.employee.last_name, :from_date => epl.from_date, :to_date => epl.to_date, :from_time => epl.from_time, :to_time => epl.to_time, :meeting_with => epl.meeting_with, :location => epl.location, :meeting_agenda => epl.meeting_agenda, :latitude => epl.latitude, :longitude => epl.longitude, :conform => epl.conform, :status => epl.status, :current_status => epl.current_status, :manager_id => epl.manager_id  }} : []
   end
-  
+ 
   def manager_approve_plan_list
     employee_id = params[:employee_id].to_i
     employee_plan = EmployeePlan.where(current_status: "Approved", manager_id: employee_id)
@@ -948,7 +950,7 @@ class Api::UserAuthsController < ApplicationController
     contact_details = ContactDetail.where(status: true)                                                       
     render :json => contact_details.present? ? contact_details.collect{|cd| {:id => cd.id, :employee_id => cd.employee_id, :passport_photo_file_name => cd.employee.passport_photo_file_name, :prefix => cd.employee.prefix, :employee_first_name => cd.employee.first_name, :employee_middle_name => cd.employee.middle_name, :employee_last_name => cd.employee.last_name, :contact_no => cd.employee.contact_no, :email => cd.employee.email, :current_role => cd.employee.joining_detail.employee_designation.try(:name), :description => cd.description, :status => cd.status, :role1 => cd.role1, :role2 => cd.role2, :role3 => cd.role3, :role4 => cd.role4, :role5 => cd.role5, :role6 => cd.role6, :role6 => cd.role6, :role7 => cd.role7,:role8 => cd.role8  }} : []
   end
-  
+ 
   def all_employee_list
     emp_name = Employee.all
     render :json => emp_name.present? ? emp_name.collect{|emp| {:id => emp.id, :prefix => emp.prefix, :first_name => emp.first_name, :middle_name => emp.middle_name, :last_name => emp.last_name, :contact_no => emp.contact_no}} : []
@@ -1010,7 +1012,7 @@ class Api::UserAuthsController < ApplicationController
       # else
       #   @checkbox = false
       # end
-    payroll_period = PayrollPeriod.where(status: true).take 
+    payroll_period = PayrollPeriod.where(status: true).take
     if payroll_period.nil?
       status = "Payroll Period Not set!"
         # flash[:alert] = "Payroll Period Not set!"
@@ -1025,7 +1027,7 @@ class Api::UserAuthsController < ApplicationController
           else
               # redirect_to employee_list_on_duty_requests_path
           end
-        elsif @on_duty_request.end_date == nil 
+        elsif @on_duty_request.end_date == nil
           # flash[:alert] = "please Fill all mendatory fields"
           status = "Payroll Period Not set!"
           if employee_id == @on_duty_request.employee_id
@@ -1161,7 +1163,7 @@ class Api::UserAuthsController < ApplicationController
     current_request = OnDutyRequest.find(od_request_id)
     on_duty_requests = OnDutyRequest.where(employee_id: employee_id).order("id DESC")
     render :json => on_duty_requests.present? ? on_duty_requests.collect{|odral| { :id => odral.id, :employee_id => odral.employee_id, :prefix => odral.employee.prefix, :employee_first_name => odral.employee.first_name, :employee_middle_name => odral.employee.middle_name, :employee_last_name => odral.employee.last_name, :leave_type => odral.leave_type, :start_date => odral.start_date, :end_date => odral.end_date, :no_of_day => odral.no_of_day, :first_half => odral.first_half, :last_half => odral.last_half, :present_status => odral.present_status, :first_reporter_id => odral.first_reporter_id, :second_reporter_id => odral.second_reporter_id, :current_status => odral.current_status, :is_pending => odral.is_pending, :is_cancelled => odral.is_cancelled, :is_first_approved => odral.is_first_approved, :is_second_approved => odral.is_second_approved, :is_first_rejected => odral.is_first_rejected, :is_second_rejected => odral.is_second_rejected }} : []
-  end 
+  end
 
   def od_request_first_approve
     employee_id = params[:employee_id]
@@ -1179,7 +1181,7 @@ class Api::UserAuthsController < ApplicationController
       OdRecord.where(on_duty_request_id: on_duty_request.id).update_all(status: 'FirstApproved')
       OdStatusRecord.create(on_duty_request_id: on_duty_request.id, employee_id: employee_id, status: 'FirstApproved', change_date: Date.today)
       # OdRequestMailer.first_approve(on_duty_request).deliver_now
-    end 
+    end
     render :status=>200, :json=>{:status=> "Approved Successfully"}
   end
 

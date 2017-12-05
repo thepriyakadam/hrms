@@ -1,6 +1,6 @@
 class EmployeeBankDetailsController < ApplicationController
   before_action :set_employee_bank_detail, only: [:show, :edit, :update, :destroy]
-  # load_and_authorize_resource
+  # ##load_and_authorize_resource
   # GET /employee_bank_details
   # GET /employee_bank_details.json
   def index
@@ -38,7 +38,7 @@ class EmployeeBankDetailsController < ApplicationController
         # format.html { redirect_to @employee_bank_detail, notice: 'Employee bank detail was successfully updated.' }
         # format.json { render :show, status: :ok, location: @employee_bank_detail }
         format.js { @flag = true }
-
+         # EmployeeMailer.bank_create(@employee,@employee_bank_detail).deliver_now  
       else
         # format.html { render :edit }
         # format.json { render json: @employee_bank_detail.errors, status: :unprocessable_entity }
@@ -60,19 +60,21 @@ class EmployeeBankDetailsController < ApplicationController
 end
   
   def import_xl
-    @employee_bank_details = EmployeeBankDetail.all
-    respond_to do |format|
-    format.html
-    format.csv { send_data @employee_bank_details.to_csv }
-    format.xls
-    session[:active_tab] = "import"
-   end   
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Imports" 
+
   end
 
   def import
     # byebug
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_employee_bank_details_path
+    else
     EmployeeBankDetail.import(params[:file])
-    redirect_to root_url, notice: "File imported."
+    redirect_to import_xl_employee_bank_details_path, notice: "File imported."
+    end
   end
 
 

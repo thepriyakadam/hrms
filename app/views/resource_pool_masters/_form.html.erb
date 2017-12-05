@@ -1,0 +1,60 @@
+
+    <%= bootstrap_form_for(@resource_pool_master,html: {id: 'resource_pool_master'},remote:true) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :code,label:'Code', placeholder: 'Code' %>
+            </div>
+        </div> 
+           <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :name,label:'Name', placeholder: 'Name' %>
+              </div>
+              </div>
+
+            <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :description,label:'Description', placeholder: 'Description' %>
+            </div>
+          </div>
+           
+            <div class="col-sm-3">
+            <label>Status</label>
+            <div class="field">
+            <%= f.check_box :status , label:'Active'%>
+          </div>
+          </div>
+          </div>
+           <div class="row">
+          <div class="col-sm-3">
+            <div class="actions">
+              <%= f.submit 'Create',:class => class_name, data: { disable_with: data_info } %>
+            </div>
+          </div>
+        </div>
+<% end %>
+
+<script>
+$("#resource_pool_master").validate({
+    rules: {
+      "resource_pool_master[code]":{
+        required: true,
+      },
+      "resource_pool_master[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "resource_pool_master[code]":{
+        required: "Please Specify Code",
+      },
+       "resource_pool_master[name]":{
+        required: "Please Specify Name",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

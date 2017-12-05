@@ -9,16 +9,20 @@
 
   <!-- <= image_tag "redefine_logo.jpg",size: "120x120" %> -->
 <!--   <= image_tag "span_pumps_logo.jpg",size: "120x120" %> -->
-
- <%= image_tag "SGA_New Logo.png",size: "120x120" %>
-
-  <!-- <= image_tag "RG_LOGO.jpg",size: "120x120" %> -->
-  <!-- <= image_tag "Logo_abc.jpg",size: "120x120" %> -->
+   <% t = Company.first %>
+    <%if t.nil?%>
+     <%= image_tag "demo_logo.jpg",size: "120x120" %>
+   <%else%>
+     <%= image_tag t.company_logo.url, :size => "120x120" %>
+   <%end%>
   </div><!-- /.login-logo -->
-  <p><center><strong>Welcome to People First</strong></center></p>
+  <p><center><strong>Welcome in HRMS </strong></center></p>
   <div class="login-box-body">
+  <%if t.nil?%>
     <p class="login-box-msg"><center> Login in to the portal</center></p>
-    <br>
+  <%else%>
+    <p class="login-box-msg"><center> Login in to the of <%=t.name%> portal</center></p>
+  <%end%>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="form-group has-feedback">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -63,7 +67,7 @@
 <div class="login-box-body">
   <% t=Thought.where(date: Date.today) %>
 <% t.each do |t| %>
-<div style="padding-top: 150px; font-size: 16pt;font-style: italic;color: #000000; font-family: 'Times New Roman', Times, serif;">
+<div style="padding-top: 100px; font-size: 16pt;font-style: italic;color: #000000; font-family: 'Times New Roman', Times, serif;">
   <%= t.thought %>
   </div>
   <div  style="font-size: 12pt;font-style: italic;color: #000000; font-family: 'Times New Roman', Times, serif; text-align: right;">

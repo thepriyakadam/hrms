@@ -2449,6 +2449,9 @@ end
       post :leave
       get :import_xl
       post :import
+      get :basic_report
+      post :report
+      get :report
 
     end
   end

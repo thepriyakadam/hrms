@@ -4,6 +4,7 @@ class ThoughtsController < ApplicationController
   # GET /thoughts
   # GET /thoughts.json
   def index
+    @thought = Thought.new
     @thoughts = Thought.all
   end
 
@@ -15,6 +16,7 @@ class ThoughtsController < ApplicationController
   # GET /thoughts/new
   def new
     @thought = Thought.new
+    @thoughts = Thought.all
   end
 
   # GET /thoughts/1/edit
@@ -25,14 +27,14 @@ class ThoughtsController < ApplicationController
   # POST /thoughts.json
   def create
     @thought = Thought.new(thought_params)
-
+    @thoughts = Thought.all
     respond_to do |format|
       if @thought.save
-        format.html { redirect_to @thought, notice: 'Thought was successfully created.' }
-        format.json { render :show, status: :created, location: @thought }
+         @thought = Thought.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @thought.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Thought Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +42,16 @@ class ThoughtsController < ApplicationController
   # PATCH/PUT /thoughts/1
   # PATCH/PUT /thoughts/1.json
   def update
-    respond_to do |format|
-      if @thought.update(thought_params)
-        format.html { redirect_to @thought, notice: 'Thought was successfully updated.' }
-        format.json { render :show, status: :ok, location: @thought }
-      else
-        format.html { render :edit }
-        format.json { render json: @thought.errors, status: :unprocessable_entity }
-      end
-    end
+    @thought.update(thought_params)
+    @thoughts = Thought.all
+    @thought = Thought.new
   end
 
   # DELETE /thoughts/1
   # DELETE /thoughts/1.json
   def destroy
     @thought.destroy
-    respond_to do |format|
-      format.html { redirect_to thoughts_url, notice: 'Thought was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @thoughts = Thought.all
   end
 
   private

@@ -203,10 +203,10 @@ class OnDutyRequestsController < ApplicationController
     @employees_ind = @emp.indirect_subordinates
     
     if current_user.class == Group
-      @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: false, is_first_rejected: false, is_cancelled: false,employee_id: @employees)
+      @pending_on_duty_requests = OnDutyRequest.where("current_status = ? OR current_status = ?", "Pending","FirstApproved").where(first_reporter_id: current_user.employee_id,employee_id: @employees)
       @first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,employee_id: @employees_ind)
     else
-      @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: false, is_first_rejected: false, is_cancelled: false,employee_id: @employees)
+      @pending_on_duty_requests = OnDutyRequest.where("current_status = ? OR current_status = ?", "Pending","FirstApproved").where(first_reporter_id: current_user.employee_id,employee_id: @employees)
       @first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,employee_id: @employees_ind)
     end
     

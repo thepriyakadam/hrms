@@ -111,7 +111,12 @@ Rails.application.routes.draw do
       post :send_anniversary_mail
     end
   end
-  resources :thoughts
+  resources :thoughts do
+    collection do
+      get :import_xl
+      post :import
+    end
+  end
   resources :candidate_interview_schedules
   resources :interview_type_masters
   resources :interview_types 

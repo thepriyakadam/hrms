@@ -17,6 +17,8 @@ class ThoughtsController < ApplicationController
   def new
     @thought = Thought.new
     @thoughts = Thought.all
+    session[:active_tab] = "InformationManagement"
+    session[:active_tab1] = "Events"
   end
 
   # GET /thoughts/1/edit
@@ -52,6 +54,18 @@ class ThoughtsController < ApplicationController
   def destroy
     @thought.destroy
     @thoughts = Thought.all
+  end
+
+  def import
+    # byebug
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_thoughts_path
+    else
+    Thought.import(params[:file])
+    redirect_to import_xl_thoughts_path, notice: "File imported."
+    end
   end
 
   private

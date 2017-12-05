@@ -139,7 +139,7 @@ gem 'protokoll'
 # gem 'countries'
 gem 'city-state'
 
-# gem 'rmagick', '~> 2.15.4'
+ gem 'rmagick', '~> 2.15.4'
 
 # infinite-cove-6619
 # DateTimePicker

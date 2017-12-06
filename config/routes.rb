@@ -115,6 +115,8 @@ Rails.application.routes.draw do
     collection do
       get :import_xl
       post :import
+      get :thought_master
+      post :thought_master
     end
   end
   resources :candidate_interview_schedules

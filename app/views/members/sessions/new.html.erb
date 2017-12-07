@@ -21,7 +21,7 @@
   <%if t.nil?%>
     <p class="login-box-msg"><center> Login in to the portal</center></p>
   <%else%>
-    <p class="login-box-msg"><center> Login in to the of <%=t.name%> portal</center></p>
+    <p class="login-box-msg"><center> Login in to the <%=t.name%> portal</center></p>
   <%end%>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="form-group has-feedback">

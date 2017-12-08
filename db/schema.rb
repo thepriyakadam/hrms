@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171207055011) do
+ActiveRecord::Schema.define(version: 20171208120238) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -718,6 +718,9 @@ ActiveRecord::Schema.define(version: 20171207055011) do
     t.string   "access_status", limit: 255
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.float    "latitude",      limit: 24
+    t.float    "longitude",     limit: 24
+    t.string   "place",         limit: 255
   end
 
   create_table "daily_bill_detail_histories", force: :cascade do |t|
@@ -2593,6 +2596,7 @@ ActiveRecord::Schema.define(version: 20171207055011) do
     t.string   "gate_rfid",                     limit: 255
     t.string   "notice_period_after_probation", limit: 255
     t.boolean  "c_off"
+    t.boolean  "is_da"
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id", using: :btree

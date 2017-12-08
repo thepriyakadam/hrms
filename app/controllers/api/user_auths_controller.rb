@@ -1277,7 +1277,35 @@ class Api::UserAuthsController < ApplicationController
   end
 
   def attendance_data
-    render :status=>200, :json=>{:status=>"Employee Attendance Successfully Updated."}
+
+    employee_id = params[:employee_id]
+    date = params[:date]
+    time_in = (params[:date] +' '+params[:in_time]).to_datetime.strftime("%Y-%m-%d %H:%M:%S")
+    # time_out = (params[:date] +' '+params[:out_time]).to_datetime.strftime("%Y-%m-%d %H:%M:%S")
+    in_time = params[:in_time]
+    out_time = params[:out_time]
+    latitude = params[:latitude]
+    longitude = params[:longitude]
+    place = params[:place]
+    daily_att = DailyAttendance.where(employee_code: employee_id, time: time_in)
+    if daily_att.empty?
+      DailyAttendance.create(employee_code: employee_id, date: date, time: time_in, latitude: latitude, longitude: longitude)
+      render :status=>200, :json=>{:status=>"Employee Attendance Successfully Updated on this time #{in_time}"}
+    else
+      render :status=>200, :json=>{:status=>"Employee Attendance Allready Updated."}
+    end
+
+ # DailyAttendance(id: integer, sr_no: string, date: date, time: time, employee_code: string, card_no: string, employee_name: string, controller: string, reader_name: string, access_status: string, created_at: datetime, updated_at: datetime)          #   emp_att = EmployeeAttendance.where(employee_id: emp_id, day: edate)
+ #          #   if emp_att.present?
+ #          #     time = EmployeeAttendance.where(employee_id: emp_id, in_time: etime)
+ #          #     if time.present?
+ #          #     else
+ #          #       emp_att_time = emp_att.update_all(out_time: etime)
+ #          #     end
+ #          #   else
+ #          #     emp_att_time = EmployeeAttendance.create(employee_id: emp_id, employee_code: user_id, day: edate, present: "P", in_time: etime, month_name: month_nm, employee_code: user_id, employee_name: emp_name)
+ #          #   end
+ #          # end
   end
 
   def admin_all_leave_request_list

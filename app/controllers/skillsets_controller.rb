@@ -70,8 +70,8 @@ class SkillsetsController < ApplicationController
   end
 
   def import_xl
-    session[:active_tab] = "EmployeeManagement"
-    session[:active_tab1] = "Imports"   
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Import"   
   end
 
   def import

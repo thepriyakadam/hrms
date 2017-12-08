@@ -1,6 +1,6 @@
 class AboutBoss < ActiveRecord::Base
 validates :code, presence: true,  uniqueness: { case_sensitive: false }
- validates :name, presence: true,  uniqueness: { case_sensitive: false }
+validates :name, presence: true,  uniqueness: { case_sensitive: false }
 
     def self.import_about_manager(file)
      spreadsheet = open_spreadsheet(file)

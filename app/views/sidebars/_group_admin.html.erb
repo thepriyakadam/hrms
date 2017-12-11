@@ -2,7 +2,8 @@
 <!-- sidebar menu: : style can be found in sidebar.less -->
 <ul class="sidebar-menu">
   <li class="header">
-    <a href="/home"> <Center> <% if current_user.class == Member %><%= current_user.company_location.company.try(:name) %>
+    <a href="/home"> <Center> <% if current_user.class == Member %>
+    <%= current_user.company_location.company.try(:name) %>
     <%else%><%= current_user.subdomain %> - <%= current_user.class %> <%end%>DASHBOARD</Center></a>
   </li>
   <li class="treeview" id="company">

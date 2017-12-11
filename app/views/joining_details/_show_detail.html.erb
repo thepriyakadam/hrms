@@ -117,7 +117,6 @@
       
 
   <tr><th colspan="4"><center><font color='#0077b3'>Employee Payroll Detail</font></center> </th></tr>
-
     <tr>
       <th><strong>Payment Mode</strong></th>
       <td><%= @joining_detail.payment_mode.try(:name) %></td>
@@ -149,7 +148,6 @@
       <th><strong>Employee ESIC</strong></th>
       <td><%= @joining_detail.have_esic ? "Yes" : "No" %></td>
     </tr>
-     
     <tr>
       <th><strong>ESIC No.</strong></th>
       <td><%= @joining_detail.employee_efic_no %></td>
@@ -164,6 +162,7 @@
 
       <th><strong>Family Insurance</strong></th>
       <td><%= @joining_detail.is_family_pension ? "Yes" : "No" %></td>   
+
      </tr>
 
      <tr>
@@ -173,6 +172,7 @@
 
       <th><strong>Bonus</strong></th>
       <td><%= @joining_detail.is_bonus ? "Yes" : "No" %></td>   
+
      </tr>
 
       <tr>

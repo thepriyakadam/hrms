@@ -21,9 +21,15 @@ gem 'twilio-ruby', '~> 4.11', '>= 4.11.1'
 
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
+
+# gem 'uglifier', '>= 1.3.0'
+# Use CoffeeScript for .coffee assets and views
+# gem 'coffee-rails', '~> 4.1.0'
+
  gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
  gem 'coffee-rails', '~> 4.1.0'
+
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'coffee-rails', '~> 4.0.0'
 gem 'whenever', '~> 0.9.4',:require => false
@@ -139,7 +145,10 @@ gem 'protokoll'
 # gem 'countries'
 gem 'city-state'
 
- gem 'rmagick', '~> 2.15.4'
+
+# gem 'rmagick', '~> 2.15.4'
+gem 'rmagick', '~> 2.15.4'
+
 
 # infinite-cove-6619
 # DateTimePicker

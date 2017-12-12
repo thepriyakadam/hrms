@@ -3,9 +3,20 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 # Use mysql as the database for Active Record
-
 gem 'mysql2', '~> 0.3.18'
- #gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
+# gem install tiny_tds -v 1.0.4
+#gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
+
+gem 'tiny_tds'
+ # gem 'activerecord-sqlserver-adapter'
+
+gem 'activerecord-sqlserver-adapter'
+
+gem 'ruby-odbc'
+
+gem 'dbi'
+
+gem 'activerecord-session_store'
 
 gem "rack-timeout", require:"rack/timeout/base"
 
@@ -110,7 +121,7 @@ gem 'cancancan', '~> 1.10'
 
 
 # Apartment for Multitenancy
-gem 'apartment'
+# gem 'apartment'
 gem 'local-subdomain'
 # Bootstrap form
 gem 'bootstrap_form'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170920061829) do
+ActiveRecord::Schema.define(version: 20171128073429) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -46,6 +46,11 @@ ActiveRecord::Schema.define(version: 20170920061829) do
   add_index "access_issue_requests", ["issue_request_id"], name: "index_access_issue_requests_on_issue_request_id", using: :btree
   add_index "access_issue_requests", ["issue_tracker_access_id"], name: "index_access_issue_requests_on_issue_tracker_access_id", using: :btree
   add_index "access_issue_requests", ["issue_tracker_member_id"], name: "index_access_issue_requests_on_issue_tracker_member_id", using: :btree
+
+  create_table "accesses", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "accident_images", force: :cascade do |t|
     t.integer  "accident_record_id",  limit: 4
@@ -476,6 +481,11 @@ ActiveRecord::Schema.define(version: 20170920061829) do
   add_index "change_designations", ["employee_id"], name: "index_change_designations_on_employee_id", using: :btree
 
   create_table "change_status_employees", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "checkinouts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

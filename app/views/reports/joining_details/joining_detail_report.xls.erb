@@ -48,7 +48,7 @@
       <% i = 0 %>
       <% @joining_details.each do |joining_detail| %>
       <Row>
-       <Cell ss:Index="1"><Data ss:Type="String"><%= full_name(joining_detail.employee) %></Data></Cell> 
+   <Cell ss:Index="1"><Data ss:Type="String"><%= full_name(joining_detail.employee) %></Data></Cell> 
         <Cell ss:Index="2"><Data ss:Type="String"><%= joining_detail.employee.try(:manual_employee_code) %></Data></Cell>
         <Cell ss:Index="3"><Data ss:Type="String"><%= joining_detail.try(:employee_pf_no) %></Data></Cell>
         <Cell ss:Index="4"><Data ss:Type="String"><%= joining_detail.try(:employee_uan_no) %></Data></Cell>

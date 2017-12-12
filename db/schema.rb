@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171208120238) do
+ActiveRecord::Schema.define(version: 20171211112950) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1265,6 +1265,18 @@ ActiveRecord::Schema.define(version: 20171208120238) do
   add_index "employee_leav_requests", ["first_reporter_id"], name: "index_employee_leav_requests_on_first_reporter_id", using: :btree
   add_index "employee_leav_requests", ["leav_category_id"], name: "index_employee_leav_requests_on_leav_category_id", using: :btree
   add_index "employee_leav_requests", ["second_reporter_id"], name: "index_employee_leav_requests_on_second_reporter_id", using: :btree
+
+  create_table "employee_location_histories", force: :cascade do |t|
+    t.integer  "employee_id", limit: 4
+    t.datetime "date_time"
+    t.float    "latitude",    limit: 24
+    t.float    "longitude",   limit: 24
+    t.string   "location",    limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "employee_location_histories", ["employee_id"], name: "index_employee_location_histories_on_employee_id", using: :btree
 
   create_table "employee_monthly_days", force: :cascade do |t|
     t.integer  "employee_id",       limit: 4
@@ -4765,6 +4777,7 @@ ActiveRecord::Schema.define(version: 20171208120238) do
   add_foreign_key "employee_jc_lists", "employees"
   add_foreign_key "employee_jc_lists", "joining_checklist_masters"
   add_foreign_key "employee_leav_requests", "employee_leav_balances"
+  add_foreign_key "employee_location_histories", "employees"
   add_foreign_key "employee_plans", "employees"
   add_foreign_key "employee_plans", "plan_reason_masters"
   add_foreign_key "employees", "sub_departments"

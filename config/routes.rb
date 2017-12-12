@@ -2894,5 +2894,9 @@ end
     post 'user_auths/attendance_data' => 'user_auths#attendance_data', defaults:{format: 'json'}
     get 'user_auths/admin_all_leave_request_list' => 'user_auths#admin_all_leave_request_list', defaults:{format: 'json'}
     get 'user_auths/admin_employee_history' => 'user_auths#admin_employee_history', defaults:{format: 'json'}
+    get 'user_auths/employee_daily_attendance' => 'user_auths#employee_daily_attendance', defaults:{format: 'json'}
+    post 'user_auths/employee_location_history' => 'user_auths#employee_location_history', defaults:{format: 'json'}
+    get 'user_auths/daily_att_count' => 'user_auths#daily_att_count', defaults:{format: 'json'}
+    get 'user_auths/company_logo' => 'user_auths#company_logo', defaults:{format: 'json'}
   end
 end

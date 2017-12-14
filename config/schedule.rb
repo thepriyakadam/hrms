@@ -14,6 +14,11 @@ set :output, "#{path}/log/cron.log"
 #   # rake 'task_namespace:birthday_invitation_mail' , :environment => 'development',   :output => 'log/birthday_invitation_mail.log'
 # end
 
-every 55.minutes do
+every 1.minutes do
   runner "DailyAttendance.fetch_data"
 end
+
+
+# every 2.hours do
+#   runner "DailyAttendance.fetch_data"
+# end

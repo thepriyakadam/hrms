@@ -98,6 +98,33 @@ class EmployeePlansController < ApplicationController
     redirect_to meeting_plan_approval_employee_plans_path
   end
 
+  def employee_feedback
+    @employee_plan = EmployeePlan.find(params[:format])
+  end
+
+  def feedback
+    plan_id = params[:employee_plan_id]
+    feedback = params[:employee_plan][:feedback]
+    emp_plan = EmployeePlan.find(plan_id)
+    emp_feedback = emp_plan.update(feedback: feedback)
+    flash[:notice] = 'Feedback Successfully Updated'
+    redirect_to employee_plans_path
+  end
+
+  def employee_reason
+    @employee_plan = EmployeePlan.find(params[:format])
+  end
+
+  def reason
+    plan_id = params[:employee_plan_id]
+    reason_id = params[:plan_reason_master_id]
+    reason = params[:employee_plan][:feedback]
+    emp_plan = EmployeePlan.find(plan_id)
+    emp_feedback = emp_plan.update(feedback: reason, plan_reason_master_id: reason_id)
+    flash[:notice] = 'Plan Reason Successfully Updated'
+    redirect_to employee_plans_path
+  end
+
   # DELETE /employee_plans/1
   # DELETE /employee_plans/1.json
   def destroy

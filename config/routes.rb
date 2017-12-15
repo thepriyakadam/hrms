@@ -21,6 +21,10 @@ Rails.application.routes.draw do
       get :plan_reject
       get :view_plan
       get :arrange_meeting
+      get :employee_reason
+      get :employee_feedback
+      post :feedback
+      post :reason
     end
   end
   resources :events  # do

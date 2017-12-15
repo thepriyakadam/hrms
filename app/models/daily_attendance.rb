@@ -32,6 +32,25 @@ class DailyAttendance < ActiveRecord::Base
     else raise "Unknown file type: #{file.original_filename}"
     end
   end
+  
+  def self.fetch_data
+    @data = CheckInOut.all
+    @data.each do |d|
+      user_check_in_time = d.CHECKTIME
+      if user_check_in_time.to_date > DateTime.now - 15.days
+        date = user_check_in_time
+        time = user_check_in_time
+        user_id = d.USERID
+        user_check_in_time_abc = d.CHECKTIME
+        user = DailyAttendance.where(employee_code: user_id, time: user_check_in_time_abc).present?
+        if user == true
+          puts 'all ready updated'
+        else
+          DailyAttendance.create(employee_code: user_id, date: date, time: time)
+        end
+      else
 
-
+      end
+    end
+  end
 end

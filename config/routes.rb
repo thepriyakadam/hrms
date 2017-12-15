@@ -2543,9 +2543,62 @@ end
   #     resources :products
   #   end
 
+  # namespace :api do
+  #   resources :user_auths,:only => [:create], defaults: {format: 'json'}
+  #   post 'user_auths/user_sign_up' => 'user_auths#user_sign_up', defaults: {format: 'json'}
+  #   get 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
+  # end
+
   namespace :api do
     resources :user_auths,:only => [:create], defaults: {format: 'json'}
-    post 'user_auths/user_sign_up' => 'user_auths#user_sign_up', defaults: {format: 'json'}
-    get 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
+    post 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
+    get 'user_auths/employee_list' => 'user_auths#employee_list', defaults:{format: 'json'}
+    get 'user_auths/leave_request' => 'user_auths#leave_request', defaults:{format: 'json'}
+    post 'user_auths/employee_leave_request' => 'user_auths#employee_leave_request', defaults:{format: 'json'}
+    get 'user_auths/leave_category' => 'user_auths#leave_category', defaults:{format: 'json'}
+    get 'user_auths/all_leave_request_list' => 'user_auths#all_leave_request_list', defaults:{format: 'json'}
+    get 'user_auths/cancel_leave_request' => 'user_auths#cancel_leave_request', defaults:{format: 'json'}
+    get 'user_auths/leave_approval_list' => 'user_auths#leave_approval_list', defaults:{format: 'json'}
+    get 'user_auths/first_approved_employee_leave_requests' => 'user_auths#first_approved_employee_leave_requests', defaults:{format: 'json'}
+    get 'user_auths/approve_leave_request' => 'user_auths#approve_leave_request', defaults:{format: 'json'} 
+    get 'user_auths/reject_leave_request' => 'user_auths#reject_leave_request', defaults:{format: 'json'}
+    post 'user_auths/employee_plan' => 'user_auths#employee_plan', defaults:{format: 'json'}
+    get 'user_auths/employee_plan_list' => 'user_auths#employee_plan_list', defaults:{format: 'json'}
+    post 'user_auths/update_employee_plan' => 'user_auths#update_employee_plan', defaults:{format: 'json'}
+    get 'user_auths/cancel_employee_plan' => 'user_auths#cancel_employee_plan', defaults:{format: 'json'}
+    get 'user_auths/holiday_setup' => 'user_auths#holiday_setup', defaults:{format: 'json'}
+    get 'user_auths/employee_contact_library' => 'user_auths#employee_contact_library', defaults:{format: 'json'}
+    get 'user_auths/employee_details' => 'user_auths#employee_details', defaults:{format: 'json'}
+    get 'user_auths/manager1_employee_list' => 'user_auths#manager1_employee_list', defaults:{format: 'json'}
+    get 'user_auths/manager2_employee_list' => 'user_auths#manager2_employee_list', defaults:{format: 'json'}
+    get 'user_auths/contact_details' => 'user_auths#contact_details', defaults:{format: 'json'}
+    post 'user_auths/meeting_plan_approve' => 'user_auths#meeting_plan_approve', defaults:{format: 'json'}
+    get 'user_auths/approve_plan_list' => 'user_auths#approve_plan_list', defaults:{format: 'json'}
+    get 'user_auths/manager_approve_plan_list' => 'user_auths#manager_approve_plan_list', defaults:{format: 'json'}
+    get 'user_auths/particular_employee_plan_list' => 'user_auths#particular_employee_plan_list', defaults:{format: 'json'}
+    get 'user_auths/reject_plan' => 'user_auths#reject_plan', defaults:{format: 'json'}
+    get 'user_auths/all_employee_list' => 'user_auths#all_employee_list', defaults:{format: 'json'}
+    get 'user_auths/on_duty_requests' => 'user_auths#on_duty_requests', defaults:{format: 'json'}
+    get 'user_auths/on_duty_requests_cancel' => 'user_auths#on_duty_requests_cancel', defaults:{format: 'json'}
+    get 'user_auths/all_employee_plan_list' => 'user_auths#all_employee_plan_list', defaults:{format: 'json'}
+    get 'user_auths/all_aprove_plan_list' => 'user_auths#all_aprove_plan_list', defaults:{format: 'json'}
+    post 'user_auths/create_on_duty_requests' => 'user_auths#create_on_duty_requests', defaults:{format: 'json'}
+    get 'user_auths/list_of_faq' => 'user_auths#list_of_faq', defaults:{format: 'json'}
+    get 'user_auths/od_request_approval_list' => 'user_auths#od_request_approval_list', defaults:{format: 'json'}
+    get 'user_auths/od_employee_request_detail' => 'user_auths#od_employee_request_detail', defaults:{format: 'json'}
+    get 'user_auths/od_request_first_approve' => 'user_auths#od_request_first_approve', defaults:{format: 'json'}
+    get 'user_auths/od_request_second_approve' => 'user_auths#od_request_second_approve', defaults:{format: 'json'}
+    get 'user_auths/od_request_first_reject' => 'user_auths#od_request_first_reject', defaults:{format: 'json'}
+    get 'user_auths/od_request_second_reject' => 'user_auths#od_request_second_reject', defaults:{format: 'json'}
+    get 'user_auths/comp_off_approval_first' => 'user_auths#comp_off_approval_first', defaults:{format: 'json'}
+    get 'user_auths/comp_off_approval_second' => 'user_auths#comp_off_approval_second', defaults:{format: 'json'}
+    post 'user_auths/employee_feedback' => 'user_auths#employee_feedback', defaults:{format: 'json'}
+    get 'user_auths/resignation_history' => 'user_auths#resignation_history', defaults:{format: 'json'}
+    get 'user_auths/plan_reason_list' => 'user_auths#plan_reason_list', defaults:{format: 'json'}
+    post 'user_auths/employee_reason' => 'user_auths#employee_reason', defaults:{format: 'json'}
+    post 'user_auths/attendance_data' => 'user_auths#attendance_data', defaults:{format: 'json'}
+    get 'user_auths/admin_all_leave_request_list' => 'user_auths#admin_all_leave_request_list', defaults:{format: 'json'}
+    get 'user_auths/admin_employee_history' => 'user_auths#admin_employee_history', defaults:{format: 'json'}
+    get 'user_auths/employee_daily_attendance' => 'user_auths#employee_daily_attendance', defaults:{format: 'json'}
   end
 end

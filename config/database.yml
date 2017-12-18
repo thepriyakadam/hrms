@@ -129,7 +129,7 @@ test_sec:
   adapter: sqlserver
   mode: dblib
   pool: 5
-  host: 192.168.1.55
+  host: 123.201.35.198
   username: sa
   password: pass
   reconnect: true
@@ -139,7 +139,7 @@ production_sec:
   adapter: sqlserver
   mode: dblib
   pool: 5
-  host: 192.168.1.55
+  host: 123.201.35.198
   username: sa
   password: pass
   reconnect: true

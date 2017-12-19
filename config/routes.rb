@@ -38,6 +38,10 @@ Rails.application.routes.draw do
     collection do
       get :frequest_question_modal
       get :list_of_faq
+      get :import_xl
+      post :import
+      get :frequest_question_master
+      post :frequest_question_master
     end
   end
   resources :target_companies do

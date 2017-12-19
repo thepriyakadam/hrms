@@ -1,7 +1,9 @@
 <div class="box box-default">
 <div class="box-header with-border">
 <h3 class="box-title">Import File</h3>
-</div><!-- /.box-header -->
+<div class="pull-right">
+ <%= link_to "Template", "/Templates/9.Employee Physical Detail.xls", :class=>" btn-xs btn btn-warning" %>
+</div>
 <div class="box-body">
 <%= form_tag import_employee_physicals_path, multipart: true do %>
 <label> File </label>
@@ -9,3 +11,4 @@
   <br>
   <%= submit_tag "Import" %>
 <% end %>
+</div>

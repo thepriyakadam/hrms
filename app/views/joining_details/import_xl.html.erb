@@ -1,11 +1,13 @@
 <div class="box box-default">
 <div class="box-header with-border">
 <h3 class="box-title">Import File</h3>
-</div><!-- /.box-header -->
-<div class="box-body">
+<div class="pull-right">
+ <%= link_to "Template", "/Templates/2. On Boarding Detail.xls", :class=>" btn-xs btn btn-warning" %>
+</div>
 <%= form_tag import_joining_details_path, multipart: true do %>
 <label> File </label>
   <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
   <br>
   <%= submit_tag "Import" %>
 <% end %>
+</div>

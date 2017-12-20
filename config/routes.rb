@@ -2902,5 +2902,7 @@ end
     post 'user_auths/employee_location_history' => 'user_auths#employee_location_history', defaults:{format: 'json'}
     get 'user_auths/daily_att_count' => 'user_auths#daily_att_count', defaults:{format: 'json'}
     get 'user_auths/company_logo' => 'user_auths#company_logo', defaults:{format: 'json'}
+    get 'user_auths/admin_od_request_approval_list' => 'user_auths#admin_od_request_approval_list', defaults:{format: 'json'}
+    
   end
 end

@@ -1,3 +1,4 @@
+
 class Api::UserAuthsController < ApplicationController
   skip_before_action :load_filter
   skip_before_action :authenticate!
@@ -833,7 +834,7 @@ class Api::UserAuthsController < ApplicationController
     employee_id = params[:employee_id]
     date = params[:date]
     employee_plan = EmployeePlan.where(employee_id: employee_id)
-    render :json => employee_plan.present? ? employee_plan.collect{|epl| {:id => epl.id, :employee_id => epl.employee_id,:from_date => epl.from_date, :to_date => epl.to_date, :from_time => epl.from_time, :to_time => epl.to_time, :meeting_with => epl.meeting_with, :location => epl.location, :meeting_agenda => epl.meeting_agenda, :latitude => epl.latitude, :longitude => epl.longitude, :conform => epl.conform, :status => epl.status, :current_status => epl.current_status, :manager_id => epl.manager_id  }} : []
+    render :json => employee_plan.present? ? employee_plan.collect{|epl| {:id => epl.id, :employee_id => epl.employee_id,:from_date => epl.from_date, :to_date => epl.to_date, :from_time => epl.from_time, :to_time => epl.to_time, :meeting_with => epl.meeting_with, :location => epl.location, :meeting_agenda => epl.meeting_agenda, :latitude => epl.latitude, :longitude => epl.longitude, :conform => epl.conform, :status => epl.status, :current_status => epl.current_status, :manager_id => epl.manager_id, :plan_reason_master => epl.plan_reason_master_id, :feedback => epl.feedback  }} : []
   end
 
   def employee_plan_list
@@ -848,7 +849,7 @@ class Api::UserAuthsController < ApplicationController
         employee_plan = EmployeePlan.where('employee_id = ? AND plan_reason_master_id IS ?', employee_id, nil).where("? BETWEEN from_date AND from_date", date)
       elsif status == "Not Attend"
         employee_plan = EmployeePlan.where.not('plan_reason_master_id IS ? AND feedback IS ?', nil , nil).where(employee_id: employee_id).where("? BETWEEN from_date AND from_date", date)
-      elsif status.present? || status != "all" || status == "Attend" || status == "Not Attend"
+      elsif status.present? || status != "all" || status != "Attend" || status != "Not Attend"
         employee_plan = EmployeePlan.where(employee_id: employee_id, current_status: status ).where("? BETWEEN from_date AND from_date", date)
       else
         employee_plan = EmployeePlan.where(employee_id: employee_id).where("? BETWEEN from_date AND from_date", date)
@@ -860,7 +861,7 @@ class Api::UserAuthsController < ApplicationController
         employee_plan = EmployeePlan.where('employee_id = ? AND plan_reason_master_id IS ?', employee_id, nil).where("? BETWEEN from_date AND from_date", date)
       elsif status == "Not Attend"
         employee_plan = EmployeePlan.where.not('plan_reason_master_id IS ? AND feedback IS ?', nil , nil).where(employee_id: employee_id).where("? BETWEEN from_date AND from_date", date)
-      elsif status.present? || status != "all" || status == "Attend" || status == "Not Attend"
+      elsif status.present? || status != "all" || status != "Attend" || status != "Not Attend"
         employee_plan = EmployeePlan.where(employee_id: employee_id, current_status: status ).where("? BETWEEN from_date AND from_date", date)
       else
         employee_plan = EmployeePlan.where(employee_id: employee_id).where("? BETWEEN from_date AND from_date", date)
@@ -872,7 +873,7 @@ class Api::UserAuthsController < ApplicationController
         employee_plan = EmployeePlan.where('plan_reason_master_id IS ?', nil).where("? BETWEEN from_date AND from_date", date).where(manager_id: manager_id)
       elsif status == "Not Attend"
         employee_plan = EmployeePlan.where.not('plan_reason_master_id IS ? AND feedback IS ?', nil , nil).where("? BETWEEN from_date AND from_date", date).where(manager_id: manager_id)
-      elsif status.present? || status != "all" || status == "Attend" || status == "Not Attend"
+      elsif status.present? || status != "all" || status != "Attend" || status != "Not Attend"
         employee_plan = EmployeePlan.where(current_status: status ).where("? BETWEEN from_date AND from_date", date).where(manager_id: manager_id)
       else
         employee_plan = EmployeePlan.where("? BETWEEN from_date AND from_date", date).where(manager_id: manager_id)
@@ -1038,10 +1039,13 @@ class Api::UserAuthsController < ApplicationController
     start_date = params[:start_date]
     end_date = params[:end_date]
     reason = params[:reason]
-    leave_type = params[:leave_type]
+    leave_type = params[:od_type]
     status  = ''
-
-    @on_duty_request = OnDutyRequest.new(employee_id: employee_id, leave_type: leave_type, start_date: start_date, end_date: end_date, reason: reason)
+    if leave_type.empty?
+      @on_duty_request = OnDutyRequest.new(employee_id: employee_id, leave_type: "Full Day", start_date: start_date, end_date: end_date, reason: reason)
+    else
+      @on_duty_request = OnDutyRequest.new(employee_id: employee_id, leave_type: leave_type, start_date: start_date, end_date: end_date, reason: reason)
+    end
     @employee = Employee.find(@on_duty_request.employee_id)
       # if params[:flag] == "Full/Half"
       #   @on_duty_request.last_half = params[:common][:last_half]
@@ -1359,6 +1363,8 @@ class Api::UserAuthsController < ApplicationController
     longitude = params[:longitude]
     location = params[:place]
     emp_loc_his = EmployeeLocationHistory.create(employee_id: employee_id, date_time: date_time, latitude: latitude, longitude: longitude, location: location)
+    # binding.pry
+    # byebug
     render :status=>200, :json=>{:status=>"Employee Attendance Successfully Store."}
   end
 
@@ -1382,4 +1388,26 @@ class Api::UserAuthsController < ApplicationController
     company_details = Company.first
     render :status=>200, :json=>{:company_name => company_details.name, :company_logo => company_details.company_logo.url }
   end
+
+  def admin_od_request_approval_list
+    pending_on_duty_requests = OnDutyRequest.where(current_status: "Pending")
+    # first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,employee_id: employees_ind)  
+    render :json => pending_on_duty_requests.present? ? pending_on_duty_requests.collect{|odral| { :id => odral.id, :employee_id => odral.employee_id, :manual_employee_code => odral.employee.manual_employee_code, :prefix => odral.employee.prefix, :employee_first_name => odral.employee.first_name, :employee_middle_name => odral.employee.middle_name, :employee_last_name => odral.employee.last_name, :leave_type => odral.leave_type, :start_date => odral.start_date, :end_date => odral.end_date, :no_of_day => odral.no_of_day, :first_half => odral.first_half, :last_half => odral.last_half, :present_status => odral.present_status, :first_reporter_id => odral.first_reporter_id, :second_reporter_id => odral.second_reporter_id, :current_status => odral.current_status, :is_pending => odral.is_pending, :is_cancelled => odral.is_cancelled, :is_first_approved => odral.is_first_approved, :is_second_approved => odral.is_second_approved, :is_first_rejected => odral.is_first_rejected, :is_second_rejected => odral.is_second_rejected }} : []
+  end
+ 
+
+  # def attend_not_attend
+  #   plan_id = params[:plan_id]
+  #   emp_plan = EmployeePlan.find(plan_id)
+  #   if emp_plan.feedback.present? || emp_plan.plan_reason_master_id.present?
+  #     render :status=>200, :json=>{:status=>"Employee Attendance Successfully Store."} 
+  #   elsif emp_plan.plan_reason_master_id.present?
+  #     render :status=>200, :json=>{:status=>"Employee Attendance Successfully Store."}
+  #   elsif emp_plan.feedback.present? || emp_plan.plan_reason_master_id.present?
+  #     render :status=>200, :json=>{:status=>"Employee Attendance Successfully Store."}
+  #   else
+  #     render :status=>200, :json=>{:status=>"Employee Attendance Successfully Store."}
+  #   end
+  # end
+
 end

@@ -152,6 +152,8 @@ Rails.application.routes.draw do
     collection do 
       get :policy_type_master
       post :policy_type_master
+      get :import_xl
+      post :import
     end
   end
 
@@ -198,6 +200,8 @@ Rails.application.routes.draw do
     collection do
       get :joining_checklist_master
       post :joining_checklist_master
+      get :import_xl
+      post :import
     end
   end
   resources :employee_gps do
@@ -544,6 +548,8 @@ end
       get :select_textbox
       get :employee_code_master
       post :employee_code_master
+      get :import_xl
+      post :import
     end
    end
   get 'download_pdf/index'
@@ -713,6 +719,8 @@ end
       get :is_confirm
       get :illness_type_master
       post :illness_type_master
+      get :import_xl
+      post :import
     end
   end
   resources :performance_calendars do
@@ -729,6 +737,8 @@ end
   resources :years do
     collection do
       get :is_confirm
+      get :import_xl
+      post :import
     end
   end
 
@@ -1099,6 +1109,8 @@ end
       get :is_confirm
       get :rating_master
       post :rating_master
+      get :import_xl
+      post :import
     end
   end
   resources :periods do
@@ -1106,6 +1118,8 @@ end
       get :is_confirm
       get :period_master
       post :period_master
+      get :import_xl
+      post :import
     end
   end
   resources :overall_ratings do
@@ -1358,6 +1372,8 @@ end
       get :is_confirm
       get :asset_type_master
       post :asset_type_master
+      get :import_xl
+      post :import
     end
   end
   resources :employee_nominations do
@@ -1378,6 +1394,8 @@ end
       get :is_confirm
       get :relation_master
       post :relation_master
+      get :import_xl
+      post :import
     end
   end
   resources :particular_vacancy_requests
@@ -2054,6 +2072,8 @@ end
       get :is_confirm
       get :employee_category_master
       post :employee_category_master
+      get :import_xl
+      post :import
     end
   end
   resources :other_salary_components do
@@ -2303,6 +2323,8 @@ end
       get :is_confirm
       get :religion_master
       post :religion_master
+      get :import_xl
+      post :import
     end
   end
   resources :banks do
@@ -2310,6 +2332,8 @@ end
       get :is_confirm
       get :bank_master
       post :bank_master
+      get :import_xl
+      post :import
     end
   end
   # resources :employee_annual_salaries do
@@ -2331,6 +2355,8 @@ end
       get :is_confirm
       get :university_master
       post :university_master
+      get :import_xl
+      post :import
     end
   end
   resources :degree_streams do
@@ -2338,6 +2364,8 @@ end
       get :is_confirm
       get :specialization_master
       post :specialization_master
+      get :import_xl
+      post :import
     end
   end
   resources :degree_types do
@@ -2345,6 +2373,8 @@ end
       get :is_confirm
       get :qualification_level_master
       post :qualification_level_master
+      get :import_xl
+      post :import
     end
   end
   resources :districts do
@@ -2364,6 +2394,8 @@ end
       get :employee_designation_list
       get :employee_designation_master
       post :employee_designation_master
+      get :import_xl
+      post :import
     end
   end
   resources :cost_centers do
@@ -2376,14 +2408,28 @@ end
       get :is_confirm
       get :print_qualification
       post :print_qualification
+      get :import_xl
+      post :import
     end
   end
-  resources :universities
-  resources :degree_streams
+  resources :universities do
+    collection do
+      get :import_xl
+      post :import
+    end
+  end
+  resources :degree_streams do
+    collection do
+     get :import_xl
+     post :import
+    end
+  end
   resources :degree_types do
     collection do
   get :qualification_level_master
   post :qualification_level_master
+  get :import_xl
+  post :import
   end
 end
   resources :districts do
@@ -2529,6 +2575,8 @@ end
       get :is_confirm
       get :employee_grade_master
       post :employee_grade_master
+      get :import_xl
+      post :import
     end
   end
   resources :awards do
@@ -2724,6 +2772,8 @@ end
       get :is_confirm
       get :blood_group_master
       post :blood_group_master
+      get :import_xl
+      post :import
     end
   end
   resources :nationalities do
@@ -2731,6 +2781,8 @@ end
       get :is_confirm
       get :nationality_master
       post :nationality_master
+      get :import_xl
+      post :import
     end
   end
   resources :employee_types do
@@ -2738,6 +2790,8 @@ end
       get :is_confirm
       get :employee_type_master
       post :employee_type_master
+      get :import_xl
+      post :import
     end
   end
   resources :department_types do
@@ -2745,6 +2799,8 @@ end
       get :is_confirm
       get :department_type_master
       post :department_type_master
+      get :import_xl
+      post :import
     end
   end
   resources :company_types do
@@ -2754,6 +2810,8 @@ end
       get :is_confirm
       get :company_type_master
       post :company_type_master
+      get :import_xl
+      post :import
     end
   end
   resources :departments do

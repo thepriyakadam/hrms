@@ -4,13 +4,13 @@ class Religion < ActiveRecord::Base
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
-   def self.import_religion(file)
+   def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        name = spreadsheet.cell(i,'A')
         code = spreadsheet.cell(i,'B')
-        description = spreadsheet.cell(i,'C')
+        name = spreadsheet.cell(i,'C')
+        description = spreadsheet.cell(i,'D')
 
         @religion = Religion.create(name: name,code: code,description: description)     
     end

@@ -7,7 +7,6 @@ class YearsController < ApplicationController
   end
 
   def show
-
   end
 
  
@@ -55,6 +54,17 @@ class YearsController < ApplicationController
     Year.find(@year.id).update(is_confirm: true)
     flash[:notice] = "Confirmed Successfully"
     redirect_to new_year_path
+  end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_years_path
+      else
+     Year.import(params[:file])
+     redirect_to import_xl_years_path, notice: "File imported."
+     end
   end
   
   private

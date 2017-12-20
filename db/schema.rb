@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171211112950) do
+ActiveRecord::Schema.define(version: 20171214120531) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1271,9 +1271,9 @@ ActiveRecord::Schema.define(version: 20171211112950) do
     t.datetime "date_time"
     t.float    "latitude",    limit: 24
     t.float    "longitude",   limit: 24
-    t.string   "location",    limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.text     "location",    limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   add_index "employee_location_histories", ["employee_id"], name: "index_employee_location_histories_on_employee_id", using: :btree

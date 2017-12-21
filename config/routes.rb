@@ -2903,6 +2903,14 @@ end
     get 'user_auths/daily_att_count' => 'user_auths#daily_att_count', defaults:{format: 'json'}
     get 'user_auths/company_logo' => 'user_auths#company_logo', defaults:{format: 'json'}
     get 'user_auths/admin_od_request_approval_list' => 'user_auths#admin_od_request_approval_list', defaults:{format: 'json'}
-    
+    get 'user_auths/current_location_particular_emp' => 'user_auths#current_location_particular_emp', defaults:{format: 'json'}
+    get 'user_auths/emp_salary_slip_list' => 'user_auths#emp_salary_slip_list', defaults:{format: 'json'}
+    get 'user_auths/project_master_list' => 'user_auths#project_master_list', defaults:{format: 'json'}
+    post 'user_auths/emp_daily_activity' => 'user_auths#emp_daily_activity', defaults:{format: 'json'}
+    get 'user_auths/emp_addable_salary_details' => 'user_auths#emp_addable_salary_details', defaults:{format: 'json'}
+    get 'user_auths/emp_deducted_salary_details' => 'user_auths#emp_deducted_salary_details', defaults:{format: 'json'}
+    get 'user_auths/emp_activity' => 'user_auths#emp_activity', defaults:{format: 'json'}
+    get 'user_auths/emp_details_salary_slip' => 'user_auths#emp_details_salary_slip', defaults:{format: 'json'}
+ 
   end
 end

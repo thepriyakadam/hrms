@@ -731,6 +731,10 @@ end
   resources :performance_activities do
     collection do
       get :is_confirm
+      get :performance_activity
+      post :performance_activity
+      get :import_xl
+      post :import
     end
   end
 
@@ -760,6 +764,8 @@ end
       get :modal
       get :attribute_master
       post :attribute_master
+      get :import_xl
+      post :import
     end
   end
   resources :circulars do
@@ -1102,6 +1108,8 @@ end
       get :modal
       get :goal_perspective_master
       post :goal_perspective_master
+      get :import_xl
+      post :import
     end
   end
   resources :ratings do

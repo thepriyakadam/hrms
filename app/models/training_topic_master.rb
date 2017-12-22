@@ -6,13 +6,13 @@ has_many :training_plans
 has_many :trainee_requests
 
 
-    def self.import_training_course(file)
+    def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        code = spreadsheet.cell(i,'A')
-        name = spreadsheet.cell(i,'B')
-        description = spreadsheet.cell(i,'C')
+        code = spreadsheet.cell(i,'B')
+        name = spreadsheet.cell(i,'C')
+        description = spreadsheet.cell(i,'D')
 
         @training_topic_master = TrainingTopicMaster.create(code: code,name: name,description: description)     
     end

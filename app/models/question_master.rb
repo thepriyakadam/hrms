@@ -2,13 +2,13 @@ class QuestionMaster < ActiveRecord::Base
 	validates :code, presence: true,  uniqueness: { case_sensitive: false }
   validates :name, presence: true,  uniqueness: { case_sensitive: false }
 
-   def self.import_question_master(file)
+   def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        code = spreadsheet.cell(i,'A')
-        name = spreadsheet.cell(i,'B')
-        description = spreadsheet.cell(i,'C')
+        code = spreadsheet.cell(i,'B')
+        name = spreadsheet.cell(i,'C')
+        description = spreadsheet.cell(i,'D')
 
         @question_master = QuestionMaster.create(code: code,name: name,description: description)     
     end

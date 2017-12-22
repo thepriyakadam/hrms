@@ -32,6 +32,8 @@ Rails.application.routes.draw do
   resources :contact_details do
     collection do
       get :modal_contact_detail
+      get :import_xl
+      post :import
     end
   end
   resources :frequest_questions do
@@ -48,6 +50,8 @@ Rails.application.routes.draw do
     collection do
       get :target_company_master
       post :target_company_master
+      get :import_xl
+      post :import
     end
   end
   resources :leave_transfers do
@@ -99,6 +103,8 @@ Rails.application.routes.draw do
       post :final_approve_request
       get :recruiter_master
       post :recruiter_master
+      get :import_xl
+      post :import
     end
   end
   resources :candidate_interview_schedules do
@@ -193,6 +199,8 @@ Rails.application.routes.draw do
     collection do
       get :rembursment_master
       get :rembursment_master
+      get :import_xl
+      post :import
     end
   end
   resources :employee_jc_lists
@@ -726,6 +734,10 @@ end
   resources :performance_calendars do
     collection do
       get :is_confirm
+      get :performance_calendar
+      post :performance_calendar
+      get :import_xl
+      post :import
     end
   end
   resources :performance_activities do
@@ -789,6 +801,8 @@ end
       get :is_confirm
       get  :interview_type_master
       post :interview_type_master
+      get :import_xl
+      post :import
     end
   end
   resources :employee_attendances do
@@ -936,6 +950,8 @@ end
       get :is_confirm
       get :leaving_reason_master
       post :leaving_reason_master
+      get :import_xl
+      post :import
     end
   end
   resources :training_records
@@ -1155,6 +1171,8 @@ end
       get :is_confirm
       get :about_company_master
       post :about_company_master
+      get :import_xl
+      post :import
     end
   end
   resources :about_bosses do
@@ -1162,6 +1180,8 @@ end
       get :is_confirm
       get :about_boss_master
       post :about_boss_master
+      get :import_xl
+      post :import
     end
   end
   resources :question_masters do
@@ -1169,6 +1189,8 @@ end
       get :is_confirm
       get :question_master
       post :question_master
+      get :import_xl
+      post :import
     end
   end
   resources :training_records
@@ -1219,6 +1241,8 @@ end
       get :is_confirm
       get :interview_decision_master
       post :interview_decision_master
+      get :import_xl
+      post :import
     end
   end
   resources :interview_attributes do
@@ -1226,6 +1250,8 @@ end
       get :is_confirm
       get :interview_attribute_master
       post :interview_attribute_master
+      get :import_xl
+      post :import
     end
   end
   resources :interview_evalutions do
@@ -1233,6 +1259,8 @@ end
       get :is_confirm
       get :interview_evalution_master
       post :interview_evalution_master
+      get :import_xl
+      post :import
     end
   end
   resources :training_topic_masters do
@@ -1240,6 +1268,8 @@ end
       get :is_confirm
       get :training_topic_master
       post :training_topic_master
+      get :import_xl
+      post :import
     end
   end
 

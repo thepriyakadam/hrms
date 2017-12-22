@@ -68,7 +68,7 @@ class PerformanceActivitiesController < ApplicationController
         #margin:  { top:1,bottom:1,left:1,right:1 }
             end
           end
-  end
+     end
 
   def import
     file = params[:file]

@@ -3,14 +3,14 @@ validates :code, presence: true,  uniqueness: { case_sensitive: false }
 validates :name, presence: true,  uniqueness: { case_sensitive: false }
 
 
-    def self.import_leaving_reason(file)
+    def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        code = spreadsheet.cell(i,'A')
-        name = spreadsheet.cell(i,'B')
-        description = spreadsheet.cell(i,'C')
-        is_confirm = spreadsheet.cell(i,'D')
+        code = spreadsheet.cell(i,'B')
+        name = spreadsheet.cell(i,'C')
+        description = spreadsheet.cell(i,'D')
+        is_confirm = spreadsheet.cell(i,'E')
         if is_confirm == "Yes" || is_confirm == "yes"
         	is_confirm = true
         else

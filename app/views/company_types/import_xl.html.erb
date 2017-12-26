@@ -3,7 +3,7 @@
 <h3 class="box-title">Company Type - Import File</h3>
 </div><!-- /.box-header -->
 <div class="box-body">
-<%= form_tag import_company_type_company_types_path, multipart: true do %>
+<%= form_tag import_company_types_path, multipart: true do %>
 <label> File </label>
   <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
   <br>

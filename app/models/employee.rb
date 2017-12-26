@@ -527,6 +527,12 @@ end
         else
         employee_id = @employee.id
         email = @employee.email
+        @member = Member.where(email: email)
+        if @member.nil?
+          email = @employee.email
+        else
+        email = "#{@employee.manual_employee_code}@xyz.com" 
+        end
         company_id = @employee.company_id
         company_location_id = @employee.company_location_id
         password = @employee.first_name+'hrms'+@employee.manual_employee_code

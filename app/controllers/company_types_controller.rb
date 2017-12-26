@@ -78,7 +78,7 @@ class CompanyTypesController < ApplicationController
         redirect_to import_xl_company_types_path
       else
      CompanyType.import(params[:file])
-     redirect_to import_xl_company_types_path, notice: "File imported."
+     redirect_to new_company_type_path, notice: "File imported."
      end
   end
 

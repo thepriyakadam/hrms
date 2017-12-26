@@ -64,7 +64,7 @@
     redirect_to import_assign_role_employees_path
     else
     Employee.import_create_new_user(params[:file])
-    redirect_to import_assign_role_employees_path, notice: "File imported."
+    redirect_to assign_role_employees_path, notice: "File imported."
     end
   end
 

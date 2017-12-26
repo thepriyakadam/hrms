@@ -91,10 +91,9 @@ class EmployeeLeavRequestsController < ApplicationController
     @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
     @leav_category = LeavCategory.find(@employee_leav_request.leav_category_id)
     payroll_period = PayrollPeriod.where(status: true).take 
-
+       
     @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ? AND is_active = ?', @employee.id, @employee_leav_request.leav_category_id,true).take
     #c_off
-    
     if @leav_category.id == leav_category.id
 
       end_date = params['employee_leav_request']['start_date']
@@ -103,9 +102,9 @@ class EmployeeLeavRequestsController < ApplicationController
         if end_date == "" || @leave_c_off_id == "" || @leave_c_off_id == nil
           flash[:alert] = "Please Fill mendatory Fields"
         else#end_date == nil
-          if  start_date.to_date >= payroll_period.from.to_date && start_date.to_date <= payroll_period.to.to_date        
-              @leave_c_off_id = params[:leave_c_off][:c_off_date]
-              @leave_c_off = LeaveCOff.find_by(id: @leave_c_off_id)
+          if start_date.to_date >= payroll_period.from.to_date && start_date.to_date <= payroll_period.to.to_date
+            @leave_c_off_id = params[:leave_c_off][:c_off_date]
+            @leave_c_off = LeaveCOff.find_by(id: @leave_c_off_id)
             if start_date.to_date > @leave_c_off.c_off_date.to_date
                 if @leave_c_off.expiry_date < start_date.to_date
                   flash[:alert] = "Compensatory off expired for this day"
@@ -258,7 +257,6 @@ class EmployeeLeavRequestsController < ApplicationController
                       flash[:alert] = "Leave Monthly Limit Extended !"
                       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
                     elsif type == false
-
                      
                       @employee_leav_request.save
                       @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)

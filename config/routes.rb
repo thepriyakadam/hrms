@@ -1,4 +1,39 @@
 Rails.application.routes.draw do
+  
+  resources :survey_details do
+    collection do
+      get :create_survey
+      post :submit_question
+      get :show_detail
+    end
+  end
+  resources :answer_masters
+  resources :survey_questions
+  resources :survey_groups
+  resources :leave_travel_assistances
+  resources :income_loss_house_properties
+  resources :interest_on_housing_loans
+  resources :housing_rents
+  resources :medicle_reimbursements
+  resources :sidebar_tabs
+  resources :policy_details do
+    collection do
+      get :policy_details_modal
+      get :approve_policy_details
+    end
+  end
+  
+  resources :employee_plans do
+    collection do
+      get :modal_employee_plan_detail
+      get :employee_plan_detail_list
+      get :ajax_employee_plan_details
+      get :meeting_plan_approval
+      get :plan_approve
+      get :plan_reject
+      get :view_plan
+    end
+  end
   resources :events  # do
   #   collection do
   #     get :user_events
@@ -624,6 +659,34 @@ end
       post :show_datewise_report
       get :show_datewise_report
       get :modal
+      get :approve_employee_declaration
+      get :show_declaration_details
+      get :approve_declaration_details
+      get :employee_declaration
+      get :add_employee_declaration
+      get :edit_employee_declaration
+      get :show_employee_declaration
+      post :update_employee_declaration
+      get :policy_details_modal
+      get :medicle_reimbursement_modal
+      get :housing_rent_modal
+      get :houseloan_interest_modal
+      get :income_loss_house_property_modal
+      get :add_amount_modal
+      get :leave_travel_assistance_modal
+      post :update_amount
+      post :update_policy
+      post :document_upload
+      get :download_document
+      get :ajax_investment_declaration
+      post :display_declaration_details
+      get :display_declaration_details
+      get :show_policy_details
+      get :show_medicle_reimbursement_details
+      get :show_income_loss_house_property_details
+      get :show_housingloan_details
+      get :show_housing_rent_details
+      get :upload_file_modal
     end
   end
   resources :investment_heads
@@ -1726,6 +1789,8 @@ end
   match 'employees/:id/download_employee_signature/:id' => 'employees#download_employee_signature', :via => [:get], :as => :download_employee_signature
   match 'employees/:id/download_employee_profile_picture/:id' => 'employees#download_employee_profile_picture', :via => [:get], :as => :download_employee_profile_picture
 
+  match 'investment_declarations/:id/investment_download_document/:id' => 'investment_declarations#investment_download_document', :via => [:get], :as => :investment_download_document
+
   # get '/screenshot', to: 'issue_requests#download_screenshot', as: 'download_screenshot'
   # get '/download', to: 'issue_requests#download_screenshot_image', as: 'download_screenshot_image'
 
@@ -2548,6 +2613,7 @@ end
       get :is_confirm
       get :modal
       get :update_manager_modal
+      get :show_hirarchy
     end
     member do
       get :edit_manager
@@ -2695,11 +2761,27 @@ end
   namespace :api do
     resources :user_auths,:only => [:create], defaults: {format: 'json'}
     post 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
-    # get 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
-
     get 'user_auths/employee_list' => 'user_auths#employee_list', defaults:{format: 'json'}
     get 'user_auths/leave_request' => 'user_auths#leave_request', defaults:{format: 'json'}
     post 'user_auths/employee_leave_request' => 'user_auths#employee_leave_request', defaults:{format: 'json'}
     get 'user_auths/leave_category' => 'user_auths#leave_category', defaults:{format: 'json'}
-end
+    get 'user_auths/all_leave_request_list' => 'user_auths#all_leave_request_list', defaults:{format: 'json'}
+    get 'user_auths/cancel_leave_request' => 'user_auths#cancel_leave_request', defaults:{format: 'json'}
+    get 'user_auths/leave_approval_list' => 'user_auths#leave_approval_list', defaults:{format: 'json'}
+    get 'user_auths/first_approved_employee_leave_requests' => 'user_auths#first_approved_employee_leave_requests', defaults:{format: 'json'}
+    get 'user_auths/approve_leave_request' => 'user_auths#approve_leave_request', defaults:{format: 'json'} 
+    get 'user_auths/reject_leave_request' => 'user_auths#reject_leave_request', defaults:{format: 'json'}
+    post 'user_auths/employee_plan' => 'user_auths#employee_plan', defaults:{format: 'json'}
+    get 'user_auths/employee_plan_list' => 'user_auths#employee_plan_list', defaults:{format: 'json'}
+    post 'user_auths/update_employee_plan' => 'user_auths#update_employee_plan', defaults:{format: 'json'}
+    get 'user_auths/destroy_employee_plan' => 'user_auths#destroy_employee_plan', defaults:{format: 'json'}
+    get 'user_auths/holiday_setup' => 'user_auths#holiday_setup', defaults:{format: 'json'}
+    get 'user_auths/employee_contact_library' => 'user_auths#employee_contact_library', defaults:{format: 'json'}
+    get 'user_auths/employee_details' => 'user_auths#employee_details', defaults:{format: 'json'}
+    get 'user_auths/manager1_employee_list' => 'user_auths#manager1_employee_list', defaults:{format: 'json'}
+    get 'user_auths/manager2_employee_list' => 'user_auths#manager2_employee_list', defaults:{format: 'json'}
+    get 'user_auths/contact_details' => 'user_auths#contact_details', defaults:{format: 'json'}
+    post 'user_auths/meeting_plan_approve' => 'user_auths#meeting_plan_approve', defaults:{format: 'json'}
+    get 'user_auths/approve_plan_list' => 'user_auths#approve_plan_list', defaults:{format: 'json'}
+  end
 end

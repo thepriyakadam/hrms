@@ -1,4 +1,5 @@
 class Employee < ActiveRecord::Base
+  has_ancestry
   has_many :employee_attendences
 
   protokoll :employee_code, pattern: 'EMP#######'

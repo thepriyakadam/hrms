@@ -1,0 +1,37 @@
+<%= bootstrap_form_for(@policy_detail,html: {id: 'policy_detail'} ) do |f| %>
+  <div class="field">
+    <%= f.label :investment_declaration_id %><br>
+    <%= f.text_field :investment_declaration_id %>
+  </div>
+  <div class="field">
+    <%= f.label :insurer %><br>
+    <%= f.text_field :insurer %>
+  </div>
+  <div class="field">
+    <%= f.label :policy_no %><br>
+    <%= f.text_field :policy_no %>
+  </div>
+  <div class="field">
+    <%= f.label :relation %><br>
+    <%= f.text_field :relation %>
+  </div>
+  <div class="field">
+    <%= f.label :frequency %><br>
+    <%= f.text_field :frequency %>
+  </div>
+  <div class="field">
+    <%= f.label :premium_amount %><br>
+    <%= f.text_field :premium_amount %>
+  </div>
+  <div class="field">
+    <%= f.label :estimated_annual_amount %><br>
+    <%= f.text_field :estimated_annual_amount %>
+  </div>
+  <div class="field">
+    <%= f.label :actual_annual_amount %><br>
+    <%= f.text_field :actual_annual_amount %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

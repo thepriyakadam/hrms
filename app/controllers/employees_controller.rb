@@ -89,8 +89,9 @@
 
   # GET /employees/new
   def new
+    @employee = Employee.new(:parent_id => params[:parent_id])
     # UserPasswordMailer.test.deliver_now
-    @employee = Employee.new
+    # @employee = Employee.new
     # authorize! :create, @employee
     # @employee.build_joining_detail #here
   end
@@ -314,7 +315,6 @@
   #   respond_to do |format|
   #     format.xls {render template: 'employees/index.xls.erb'}
   #   end
-
   # end
 
   def basic_detail
@@ -419,7 +419,7 @@
      @employee = Employee.find(params[:id])
     @employee = Employee.find(params[:id])
      # @employee1 = Employee.where(employee_id: current_user.employee_id)
-end
+  end
 
   def manager
     @employees = Employee.where.not(manager_id: nil)
@@ -1484,6 +1484,63 @@ def show_all_record
               disposition: 'attachment'
   end
 
+  def depth
+    path.length
+  end
+
+  def parents
+    Employee.find(path)
+  end
+
+  def children
+    Employee.where('path && ARRAY[?]', id)
+  end
+
+  def full_path
+    path + [id]
+  end
+
+  def move!(new_parent)
+    if new_parent.path.include?(id)
+      throw ArgumentError "Cannot move under a child record"
+    end
+
+    new_path = new_parent.full_path
+
+    Employee.transaction do
+      children.update_all [
+        'path = ARRAY[:new_path] || path[:depth + 1 : array_length(path,1)]',
+        new_path: new_path,
+        depth: depth
+      ]
+
+      self.path = new_path
+      self.save!
+    end
+  end  
+
+  def show_hirarchy
+    # binding.pry
+    # byebug
+     @employees = Employee.all
+    # @par = Employee.parents
+    # @emp = Employee.find(7).depth
+    # @children = Employee.where('path && ARRAY[?]', id)
+    @root_manager = ReportingMaster.where(is_active: true)
+    # @root_manager.each do |m2|
+      @second_manager = Employee.where(manager_id: @root_manager)
+      # m2.each do |m1|
+      #   manager = Employee.where(manager_id: m1.id)
+      # end
+    # end
+         
+    # @second_manager = Employee.where(manager_id: @root_manager.employee_id)
+    @sub = Employee.where(manager_id: @second_manager) 
+
+    # @abc = Employee.where("id IN (SELECT parent_id FROM categories)")
+
+  end
+
 
   private
 
@@ -1499,7 +1556,7 @@ def show_all_record
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_params
     # params.require(:employee).permit(:department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :district, :state, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender)
-    params.require(:employee).permit(:optional_email,:optinal_contact_no,:optinal_contact_no1,:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id,:sub_department_id,:first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id,:employee_signature,:emergency_contact_no)
+    params.require(:employee).permit(:optional_email,:optinal_contact_no,:optinal_contact_no1,:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id,:sub_department_id,:first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id,:employee_signature,:emergency_contact_no, :parent_id)
     # joining_detail_attributes: [:joining_date, :reference_from, :admin_hr, :tech_hr, :designation, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem])
   end
 end

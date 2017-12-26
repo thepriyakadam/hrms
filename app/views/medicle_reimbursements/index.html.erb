@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Medicle Reimbursements</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Investment declaration</th>
+      <th>Bill no</th>
+      <th>Bill date</th>
+      <th>Name on invoice</th>
+      <th>Estimated amt</th>
+      <th>Actual amt</th>
+      <th>Toatal amt</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @medicle_reimbursements.each do |medicle_reimbursement| %>
+      <tr>
+        <td><%= medicle_reimbursement.investment_declaration %></td>
+        <td><%= medicle_reimbursement.bill_no %></td>
+        <td><%= medicle_reimbursement.bill_date %></td>
+        <td><%= medicle_reimbursement.name_on_invoice %></td>
+        <td><%= medicle_reimbursement.estimated_amt %></td>
+        <td><%= medicle_reimbursement.actual_amt %></td>
+        <td><%= medicle_reimbursement.toatal_amt %></td>
+        <td><%= link_to 'Show', medicle_reimbursement %></td>
+        <td><%= link_to 'Edit', edit_medicle_reimbursement_path(medicle_reimbursement) %></td>
+        <td><%= link_to 'Destroy', medicle_reimbursement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Medicle reimbursement', new_medicle_reimbursement_path %>

@@ -66,6 +66,6 @@ class InvestmentHeadsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def investment_head_params
-      params.require(:investment_head).permit(:document_name,:section_id, :description, :limit)
+      params.require(:investment_head).permit(:multiple_investment, :document_name,:section_id, :description, :limit)
     end
 end

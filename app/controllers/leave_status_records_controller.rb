@@ -1,7 +1,6 @@
 class LeaveStatusRecordsController < ApplicationController
   before_action :set_employee_leav_request, only: [:cancel, :first_approve, :second_approve, :first_reject, :second_reject]
   def cancel
-
     if @employee_leav_request.current_status == 'Pending'
       @leave_status = LeaveStatusRecord.new do |s|
         s.employee_leav_request_id = params[:id]

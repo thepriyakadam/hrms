@@ -5,6 +5,8 @@ class HomeController < ApplicationController
   require 'date'
 
   def index
+    @sidebar_tabs = SidebarTab.all
+    
     @circulars = Circular.where(is_active: true)
     @company_policies = CompanyPolicy.group("policy_type_id")
     @company_events = CompanyEvent.all

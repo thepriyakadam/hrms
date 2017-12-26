@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Interest On Housing Loans</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Investment declaration</th>
+      <th>Property name</th>
+      <th>Property address</th>
+      <th>Date of possession</th>
+      <th>Lender name</th>
+      <th>Lender address</th>
+      <th>Lender pan no</th>
+      <th>Estimated interest</th>
+      <th>Actual interest</th>
+      <th>Total interest</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @interest_on_housing_loans.each do |interest_on_housing_loan| %>
+      <tr>
+        <td><%= interest_on_housing_loan.investment_declaration %></td>
+        <td><%= interest_on_housing_loan.property_name %></td>
+        <td><%= interest_on_housing_loan.property_address %></td>
+        <td><%= interest_on_housing_loan.date_of_possession %></td>
+        <td><%= interest_on_housing_loan.lender_name %></td>
+        <td><%= interest_on_housing_loan.lender_address %></td>
+        <td><%= interest_on_housing_loan.lender_pan_no %></td>
+        <td><%= interest_on_housing_loan.estimated_interest %></td>
+        <td><%= interest_on_housing_loan.actual_interest %></td>
+        <td><%= interest_on_housing_loan.total_interest %></td>
+        <td><%= link_to 'Show', interest_on_housing_loan %></td>
+        <td><%= link_to 'Edit', edit_interest_on_housing_loan_path(interest_on_housing_loan) %></td>
+        <td><%= link_to 'Destroy', interest_on_housing_loan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Interest on housing loan', new_interest_on_housing_loan_path %>

@@ -8,7 +8,7 @@ gem 'mysql2', '~> 0.3.18'
  #gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
 
 
-gem "rack-timeout", require:"rack/timeout/base"
+# gem "rack-timeout", require:"rack/timeout/base"
 
 gem 'ruby-graphviz', '~> 1.2', '>= 1.2.2'
 
@@ -39,6 +39,7 @@ gem 'paperclip', '~> 4.3', '>= 4.3.6'
 
 gem 'mime-types-data', '~> 3.2016', '>= 3.2016.0521'
 gem 'globalid', '~> 0.3.7'
+gem 'ancestry'
  # gem 'rails-assets-fullcalendar'
  # gem 'rails-assets-momentjs'
 # Use jquery as the JavaScript library

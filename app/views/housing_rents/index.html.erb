@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Housing Rents</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Investment declaration</th>
+      <th>Metro city</th>
+      <th>Estimated rent</th>
+      <th>Actual rent</th>
+      <th>Accepted rent</th>
+      <th>Rejected rent</th>
+      <th>Landlord name</th>
+      <th>Landlord pan no</th>
+      <th>Address</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @housing_rents.each do |housing_rent| %>
+      <tr>
+        <td><%= housing_rent.investment_declaration %></td>
+        <td><%= housing_rent.metro_city %></td>
+        <td><%= housing_rent.estimated_rent %></td>
+        <td><%= housing_rent.actual_rent %></td>
+        <td><%= housing_rent.accepted_rent %></td>
+        <td><%= housing_rent.rejected_rent %></td>
+        <td><%= housing_rent.landlord_name %></td>
+        <td><%= housing_rent.landlord_pan_no %></td>
+        <td><%= housing_rent.address %></td>
+        <td><%= link_to 'Show', housing_rent %></td>
+        <td><%= link_to 'Edit', edit_housing_rent_path(housing_rent) %></td>
+        <td><%= link_to 'Destroy', housing_rent, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Housing rent', new_housing_rent_path %>

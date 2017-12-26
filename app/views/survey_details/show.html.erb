@@ -1,0 +1,29 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <div class="row">
+    <div class="col-sm-12">
+      <div class="box-tools pull-right">  
+
+		<p>
+		  <strong>Employee:</strong>
+		  <%= @survey_detail.employee %>
+		</p>
+		<% @survey_questions = SurveyQuestion.all %>
+        <% @survey_questions.each do |sq| %>
+		
+		  <strong>Survey question:</strong>
+		  <%= @survey_detail.sq.survey_question %>
+		
+
+		
+		  <strong>Answer master:</strong>
+		  <%= @survey_detail.sq.answer_master %>
+		<% end %>
+
+		<%= link_to 'Edit', edit_survey_detail_path(@survey_detail) %> |
+		<%= link_to 'Back', survey_details_path %>
+		</div>
+	  </div>
+	</div>
+  </div>
+</div>	  	

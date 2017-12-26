@@ -1,7 +1,7 @@
-#
+
 # Install the MYSQL driver
 #   gem install mysql2
-#
+
 # Ensure the MySQL gem is defined in your Gemfile
 #   gem 'mysql2'
 
@@ -53,3 +53,62 @@ production:
   database: hrms_production
   username: hrms
   password: <%= ENV['HRMS_DATABASE_PASSWORD'] %>
+
+  
+
+# development:
+#   adapter: mysql2
+#   encoding: utf8
+#   pool: 5
+#   username: root
+#   password: root
+#   reconnect: true
+#   database: hrms_development
+
+# production:
+#   adapter: mysql2
+#   encoding: utf8
+#   pool: 5
+#   username: root
+#   password: root
+#   database: hrms_production
+
+# test:
+#   adapter: mysql2
+#   encoding: utf8
+#   pool: 5
+#   username: root
+#   password: root
+#   database: hrms_test
+
+# development_sec:
+#   adapter: sqlserver
+#   encoding: utf8
+#   host: 182.76.15.42
+#   database: access
+#   username: essl
+#   password: essl
+
+# production_sec:
+#   mode: odbc
+#   adapter: sqlserver
+#   dsn: mydsn
+#   encoding: utf8
+#   pool: 5
+#   host: 182.76.15.42
+#   database: access
+#   username: essl
+#   password: essl
+#   port: 1433
+
+# test_sec:
+#   mode: odbc
+#   adapter: sqlserver
+#   dsn: mydsn
+#   encoding: utf8
+#   pool: 5
+#   host: 182.76.15.42
+#   database: access
+#   username: essl
+#   password: essl
+#   port: 1433

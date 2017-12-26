@@ -359,9 +359,6 @@ class Api::UserAuthsController < ApplicationController
     payroll_period = PayrollPeriod.where(status: true).take
     @employee_leav_request = EmployeeLeavRequest.new(employee_id: @employee, leav_category_id: @leave_category, leave_type: @leave_type, first_half: @first_half, last_half: @last_half, start_date: start_date, end_date: end_date, reason: @reason, first_reporter_id: first_reporter_id, second_reporter_id: second_reporter_id )
     @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ? AND is_active = ?', @employee, @leave_category ,true).take
-  # binding.pry
-  # byebug
-
 
     if @leave_category == leave_category.id
       end_date = params[:to_date]
@@ -738,8 +735,6 @@ class Api::UserAuthsController < ApplicationController
             end #monthly_count > @leav_category.monthly_leave.to_f
           end #@employee_leav_request.end_date == nil
 
-          # binding.pry
-          # byebug
           if @employee_leav_request.id != nil
             if @employee_leav_request.leave_type == 'Full/Half'
               if @employee_leav_request.first_half == false && @employee_leav_request.last_half == false
@@ -1328,7 +1323,7 @@ class Api::UserAuthsController < ApplicationController
     emp = Employee.find(employee_id)
     emp_code = emp.manual_employee_code
     DailyAttendance.create(employee_code: emp_code, date: date, time: in_time, latitude: latitude, longitude: longitude, place: place) 
-    render :status=>200, :json=>{:status=>"Employee Attendance Successfully Store."}
+    render :status=>200, :json=>{:status=>"Attendance Successfully Store."}
   end
 
   def employee_daily_attendance
@@ -1337,7 +1332,7 @@ class Api::UserAuthsController < ApplicationController
     emp_code = emp.manual_employee_code
     date = params[:date]
     emp_daily_att = DailyAttendance.where(employee_code: emp_code, date: date)
-    render :json => emp_daily_att.present? ? emp_daily_att.collect{|eda| { :date => eda.date, :time => eda.time, :employee_code => eda.employee_code, :latitude => eda.latitude, :longitude => eda.longitude, :place => eda.place }} : []
+    render :json => emp_daily_att.present? ? emp_daily_att.collect{|eda| { :date => eda.date, :time => eda.time.strftime("%I:%M:%S %p"), :employee_code => eda.employee_code, :latitude => eda.latitude, :longitude => eda.longitude, :place => eda.place }} : []
   end
 
   def admin_all_leave_request_list
@@ -1362,8 +1357,6 @@ class Api::UserAuthsController < ApplicationController
     longitude = params[:longitude]
     location = params[:place]
     emp_loc_his = EmployeeLocationHistory.create(employee_id: employee_id, date_time: date_time, latitude: latitude, longitude: longitude, location: location)
-    # binding.pry
-    # byebug
     render :status=>200, :json=>{:status=>"Employee Attendance Successfully Store."}
   end
 
@@ -1441,11 +1434,10 @@ class Api::UserAuthsController < ApplicationController
     slip_id = params[:salaryslip_id]
     id = Salaryslip.find(slip_id)
     employee = Employee.find(id.employee_id)
-    # render :json => employee.present? ? employee.collect{|e| {:id => e.id, :passport_photo_file_name => e.passport_photo_file_name, :manual_employee_code => e.manual_employee_code, :prefix => e.prefix, :first_name => e.first_name, :middle_name => e.middle_name, :last_name => e.last_name, :date_of_birth => e.date_of_birth, :gender => e.gender,:contact_no => e.contact_no,:email => e.email,:permanent_address => e.permanent_address,:country_id => e.country_id,:pin_code => e.pin_code,:current_address => e.current_address,:adhar_no => e.adhar_no,:pan_no => e.pan_no,:blood_group_id => e.blood_group.try(:name), :employee_type_id => e.employee_type.try(:name),:nationality_id => e.nationality.try(:name),:company_id => e.company.try(:name),:department_id => e.department.try(:name),:sub_department_id => e.sub_department.try(:name), :employee_designation => e.joining_detail.employee_designation.try(:name), :employee_uan_no => e.joining_detail.employee_uan_no, :account_no => e.try(:employee_bank_detail).try(:account_no), :employee_pf_no => e.try(:joining_detail).try(:employee_pf_no), :company_location => e.try(:company_location).try(:name) }} : []
     if employee.present?
       render :status=>200, :json=>{ :id => employee.id, :passport_photo_file_name => employee.passport_photo_file_name, :manual_employee_code => employee.manual_employee_code, :prefix => employee.prefix, :first_name => employee.first_name, :middle_name => employee.middle_name, :last_name => employee.last_name, :date_of_birth => employee.date_of_birth, :gender => employee.gender,:contact_no => employee.contact_no,:email => employee.email,:permanent_address => employee.permanent_address,:country_id => employee.country_id,:pin_code => employee.pin_code,:current_address => employee.current_address,:adhar_no => employee.adhar_no,:pan_no => employee.pan_no,:blood_group_id => employee.blood_group.try(:name), :employee_type_id => employee.employee_type.try(:name),:nationality_id => employee.nationality.try(:name),:company_id => employee.company.try(:name),:department_id => employee.department.try(:name),:sub_department_id => employee.sub_department.try(:name), :employee_designation => employee.joining_detail.employee_designation.try(:name), :employee_uan_no => employee.joining_detail.employee_uan_no, :account_no => employee.try(:employee_bank_detail).try(:account_no), :employee_pf_no => employee.try(:joining_detail).try(:employee_pf_no), :company_location => employee.try(:company_location).try(:name) }
     else
-      render :status=>200, :json=>{:status=>"Employee location history not ound..."}
+      render :status=>200, :json=>{:status=>"Employee location history not found..."}
     end
   end
 
@@ -1466,6 +1458,15 @@ class Api::UserAuthsController < ApplicationController
     emp_daily_list = EmployeeDailyActivity.where(employee_id: employee)
     render :json => emp_daily_list.present? ? emp_daily_list.collect{|sal| { :employee_id => sal.employee_id, :prefix => sal.employee.try(:prefix), :first_name => sal.employee.try(:first_name), :middle_name => sal.employee.try(:middle_name), :last_name => sal.employee.try(:last_name), :project_master_id => sal.try(:project_master).try(:name), :today_activity => sal.today_activity, :tomorrow_plan => sal.tomorrow_plan, :day => sal.day }} : []
   end
- 
+
+  def employee_wise_attendance
+    emp_id = params[:employee_id]
+    emp_att = EmployeeAttendance.where(employee_id: emp_id)
+    if emp_att.present?
+      render :json => emp_att.present? ? emp_att.collect{|emp_att| { :id => emp_att.id, :day => emp_att.day, :in_time => emp_att.try(:in_time), :out_time => emp_att.try(:out_time), :working_hrs => emp_att.working_hrs, :present => emp_att.present }} : []
+    else
+      render :status=>200, :json=>{:status=>"Employee Attendance Not Found."}
+    end
+  end
 
 end

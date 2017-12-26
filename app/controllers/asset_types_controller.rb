@@ -71,7 +71,7 @@ def asset_type_master
         redirect_to import_xl_asset_types_path
       else
      AssetType.import(params[:file])
-     redirect_to import_xl_asset_types_path, notice: "File imported."
+     redirect_to new_asset_type_path, notice: "File imported."
      end
   end
   

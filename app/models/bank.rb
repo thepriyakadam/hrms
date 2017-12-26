@@ -6,11 +6,22 @@ class Bank < ActiveRecord::Base
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        name = spreadsheet.cell(i,'B')
-        code = spreadsheet.cell(i,'C')
-        description = spreadsheet.cell(i,'D')
+       code = spreadsheet.cell(i,'B').to_i
+        if code == 0
+           code = spreadsheet.cell(i,'B')
+         else
+          code = spreadsheet.cell(i,'B').to_i
+        end
+        name = spreadsheet.cell(i,'C')
 
+        description = spreadsheet.cell(i,'D')
+        
+        @ba = Bank.find_by(name: name)
+        if @ba.nil?
         @bank = Bank.create(name: name,code: code,description: description)     
+        else
+        @ba.update(name: name,code: code,description: description)   
+        end
     end
   end
 

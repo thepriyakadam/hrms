@@ -68,7 +68,7 @@ class EmployeeGradesController < ApplicationController
         redirect_to import_xl_employee_grades_path
       else
      EmployeeGrade.import(params[:file])
-     redirect_to import_xl_employee_grades_path, notice: "File imported."
+     redirect_to new_employee_grade_path, notice: "File imported."
      end
   end
   

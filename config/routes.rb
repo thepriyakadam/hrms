@@ -160,6 +160,7 @@ Rails.application.routes.draw do
       post :policy_type_master
       get :import_xl
       post :import
+      get :modal
     end
   end
 

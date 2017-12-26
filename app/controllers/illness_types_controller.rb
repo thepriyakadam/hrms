@@ -73,7 +73,7 @@ class IllnessTypesController < ApplicationController
         redirect_to import_xl_illness_types_path
       else
      IllnessType.import(params[:file])
-     redirect_to import_xl_illness_types_path, notice: "File imported."
+     redirect_to new_illness_type_path, notice: "File imported."
      end
   end
   

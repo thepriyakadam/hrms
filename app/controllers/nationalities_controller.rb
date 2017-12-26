@@ -61,7 +61,7 @@ class NationalitiesController < ApplicationController
         redirect_to import_xl_nationalities_path
       else
      Nationality.import(params[:file])
-     redirect_to import_xl_nationalities_path, notice: "File imported."
+     redirect_to new_nationality_path, notice: "File imported."
      end
   end 
   

@@ -82,7 +82,7 @@ class RelationMastersController < ApplicationController
         redirect_to import_xl_relation_masters_path
       else
      RelationMaster.import(params[:file])
-     redirect_to import_xl_relation_masters_path, notice: "File imported."
+     redirect_to new_relation_master_path, notice: "File imported."
      end
   end 
 

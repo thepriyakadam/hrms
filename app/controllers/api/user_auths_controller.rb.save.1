@@ -1,4 +1,3 @@
-
 class Api::UserAuthsController < ApplicationController
   skip_before_action :load_filter
   skip_before_action :authenticate!
@@ -51,7 +50,7 @@ class Api::UserAuthsController < ApplicationController
   def employee_list
     @employee = params[:employee_id]
     employees = Employee.where(id: @employee)
-    render :json => employees.present? ? employees.collect{|e| {:id => e.id,:passport_photo_file_name => e.passport_photo_file_name,:manual_employee_code => e.manual_employee_code,:first_name => e.first_name,:middle_name => e.middle_name,:last_name => e.last_name,:date_of_birth => e.date_of_birth,:gender => e.gender,:contact_no => e.contact_no,:optinal_contact_no => e.optinal_contact_no,:optinal_contact_no1 => e.optinal_contact_no1,:email => e.email,:optional_email => e.optional_email,:permanent_address => e.permanent_address,:country_id => e.country_id,:state_id => e.state.try(:name),:district_id => e.district.try(:name),:city => e.city,:pin_code => e.pin_code,:current_address => e.current_address,:adhar_no => e.adhar_no,:pan_no => e.pan_no,:licence_no => e.licence_no,:marital_status => e.marital_status,:blood_group_id => e.blood_group.try(:name),:employee_type_id => e.employee_type.try(:name),:nationality_id => e.nationality.try(:name),:religion_id => e.religion.try(:name),:handicap => e.handicap,:handicap_type => e.handicap_type,:status => e.status,:manager_id => e.manager_id,:manager_2_id => e.manager_2_id,:company_id => e.company.try(:name),:company_location_id => e.company_location.try(:name),:department_id => e.department.try(:name),:sub_department_id => e.sub_department.try(:name), :emergency_contact_no => e.emergency_contact_no, :employee_designation => e.joining_detail.employee_designation.try(:name), :employee_uan_no => e.joining_detail.try(:employee_uan_no) }} : []
+    render :json => employees.present? ? employees.collect{|e| {:id => e.id,:passport_photo_file_name => e.passport_photo_file_name,:manual_employee_code => e.manual_employee_code,:first_name => e.first_name,:middle_name => e.middle_name,:last_name => e.last_name,:date_of_birth => e.date_of_birth,:gender => e.gender,:contact_no => e.contact_no,:optinal_contact_no => e.optinal_contact_no,:optinal_contact_no1 => e.optinal_contact_no1,:email => e.email,:optional_email => e.optional_email,:permanent_address => e.permanent_address,:country_id => e.country_id,:state_id => e.state.name,:district_id => e.district.name,:city => e.city,:pin_code => e.pin_code,:current_address => e.current_address,:adhar_no => e.adhar_no,:pan_no => e.pan_no,:licence_no => e.licence_no,:marital_status => e.marital_status,:blood_group_id => e.blood_group.name,:employee_type_id => e.employee_type.name,:nationality_id => e.nationality.name,:religion_id => e.religion.name,:handicap => e.handicap,:handicap_type => e.handicap_type,:status => e.status,:manager_id => e.manager_id,:manager_2_id => e.manager_2_id,:company_id => e.company.name,:company_location_id => e.company_location.name,:department_id => e.department.name,:sub_department_id => e.sub_department.try(:name), :emergency_contact_no => e.emergency_contact_no, :employee_designation => e.joining_detail.employee_designation.name, :employee_uan_no => e.joining_detail.employee_uan_no }} : []
   end
 
   def leave_coff
@@ -1394,80 +1393,20 @@ class Api::UserAuthsController < ApplicationController
     # first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,employee_id: employees_ind)  
     render :json => pending_on_duty_requests.present? ? pending_on_duty_requests.collect{|odral| { :id => odral.id, :employee_id => odral.employee_id, :manual_employee_code => odral.employee.manual_employee_code, :prefix => odral.employee.prefix, :employee_first_name => odral.employee.first_name, :employee_middle_name => odral.employee.middle_name, :employee_last_name => odral.employee.last_name, :leave_type => odral.leave_type, :start_date => odral.start_date, :end_date => odral.end_date, :no_of_day => odral.no_of_day, :first_half => odral.first_half, :last_half => odral.last_half, :present_status => odral.present_status, :first_reporter_id => odral.first_reporter_id, :second_reporter_id => odral.second_reporter_id, :current_status => odral.current_status, :is_pending => odral.is_pending, :is_cancelled => odral.is_cancelled, :is_first_approved => odral.is_first_approved, :is_second_approved => odral.is_second_approved, :is_first_rejected => odral.is_first_rejected, :is_second_rejected => odral.is_second_rejected }} : []
   end
-
-  def current_location_particular_emp
-    emp_id = params[:employee_id]
-    elh = EmployeeLocationHistory.where(employee_id: emp_id).last
-    if elh.present?
-      render :status=>200, :json=>{ :id => elh.id, :employee_id => elh.employee_id, :date_time => elh.date_time, :latitude => elh.latitude, :longitude => elh.longitude, :location => elh.location }
-    else
-      render :status=>200, :json=>{:status=>"Employee location history not ound..."}
-    end
-  end
-
-  def project_master_list
-    project = ProjectMaster.all
-    render :json => project.present? ? project.collect{|pro| { :id => pro.id, :code => pro.code, :name => pro.name, :description => pro.description, :is_confirm => pro.is_confirm }} : []
-  end
-
-  def emp_daily_activity
-    project_master_id = params[:project_list]
-    employee_id = params[:employee_id]
-    today_activity = params[:today_activity]
-    tomorrow_plan = params[:tomorrow_plan]
-    day = params[:date]
-    EmployeeDailyActivity.create(employee_id: employee_id, project_master_id: project_master_id, today_activity: today_activity, tomorrow_plan: tomorrow_plan, day: day)
-    render :status=>200, :json=>{:status=>"Employee Daily Activity Successfully Updated.."}
-  end
-
-  def emp_activity
-    employee_id = params[:employee_id]
-    emp_activity = EmployeeDailyActivity.where(employee_id: employee_id)
-    render :json => emp_activity.present? ? emp_activity.collect{|emp| { :employee_id => emp.employee_id, :project_master_id => emp.project_master_id, :today_activity => emp.today_activity, :tomorrow_plan => tomorrow_plan, :day => day }} : []
-  end
-
-  def emp_details_salary_slip
-    employee_id = params[:employee_id]
-    emp_details = Employee.where(id: employee_id)
-    render :json => emp_details.present? ? emp_details.collect{|e| {:id => e.id, :passport_photo_file_name => e.passport_photo_file_name, :manual_employee_code => e.manual_employee_code, :prefix => e.prefix, :first_name => e.first_name, :middle_name => e.middle_name, :last_name => e.last_name, :date_of_birth => e.date_of_birth, :gender => e.gender,:contact_no => e.contact_no,:email => e.email,:permanent_address => e.permanent_address,:country_id => e.country_id,:pin_code => e.pin_code,:current_address => e.current_address,:adhar_no => e.adhar_no,:pan_no => e.pan_no,:blood_group_id => e.blood_group.try(:name), :employee_type_id => e.employee_type.try(:name),:nationality_id => e.nationality.try(:name),:company_id => e.company.try(:name),:department_id => e.department.try(:name),:sub_department_id => e.sub_department.try(:name), :employee_designation => e.joining_detail.employee_designation.try(:name), :employee_uan_no => e.joining_detail.employee_uan_no, :account_no => e.try(:employee_bank_detail).try(:account_no), :employee_pf_no => e.try(:joining_detail).try(:employee_pf_no), :company_location => e.try(:company_location).try(:name) }} : []
-  end
-
-  def emp_salary_slip_list
-    emp_id = params[:employee_id]
-    salray_slips = Salaryslip.where('employee_id= ?', emp_id).order('salary_slip_code desc').only(:order, :where)
-    render :json => salray_slips.present? ? salray_slips.collect{|sal| { :id => sal.id, :employee_id => sal.employee_id, :salary_slip_code => sal.salary_slip_code, :workingday_id => sal.workingday_id, :actual_gross_salary => sal.actual_gross_salary, :actual_total_deduction => sal.actual_total_deduction, :actual_net_salary => sal.actual_net_salary, :salary_template_id => sal.salary_template_id, :month => sal.month, :year => sal.year, :calculated_gross_salary => sal.calculated_gross_salary, :calculated_total_deduction => sal.calculated_total_deduction, :calculated_net_salary => sal.calculated_net_salary, :month_year => sal.month_year, :employee_template_id => sal.employee_template_id, :arrear_actual_amount => sal.arrear_actual_amount, :arrear_calculated_amount => sal.arrear_calculated_amount, :is_confirm => sal.is_confirm, :working_day => sal.try(:workingday).try(:day_in_month), :payable_day => sal.try(:workingday).try(:payable_day) }} : []
-  end
-
-  def emp_salary_slip_data
-    slip_id = params[:salaryslip_id]
-    id = Salaryslip.find(slip_id)
-    employee = Employee.find(id.employee_id)
-    # render :json => employee.present? ? employee.collect{|e| {:id => e.id, :passport_photo_file_name => e.passport_photo_file_name, :manual_employee_code => e.manual_employee_code, :prefix => e.prefix, :first_name => e.first_name, :middle_name => e.middle_name, :last_name => e.last_name, :date_of_birth => e.date_of_birth, :gender => e.gender,:contact_no => e.contact_no,:email => e.email,:permanent_address => e.permanent_address,:country_id => e.country_id,:pin_code => e.pin_code,:current_address => e.current_address,:adhar_no => e.adhar_no,:pan_no => e.pan_no,:blood_group_id => e.blood_group.try(:name), :employee_type_id => e.employee_type.try(:name),:nationality_id => e.nationality.try(:name),:company_id => e.company.try(:name),:department_id => e.department.try(:name),:sub_department_id => e.sub_department.try(:name), :employee_designation => e.joining_detail.employee_designation.try(:name), :employee_uan_no => e.joining_detail.employee_uan_no, :account_no => e.try(:employee_bank_detail).try(:account_no), :employee_pf_no => e.try(:joining_detail).try(:employee_pf_no), :company_location => e.try(:company_location).try(:name) }} : []
-    if employee.present?
-      render :status=>200, :json=>{ :id => employee.id, :passport_photo_file_name => employee.passport_photo_file_name, :manual_employee_code => employee.manual_employee_code, :prefix => employee.prefix, :first_name => employee.first_name, :middle_name => employee.middle_name, :last_name => employee.last_name, :date_of_birth => employee.date_of_birth, :gender => employee.gender,:contact_no => employee.contact_no,:email => employee.email,:permanent_address => employee.permanent_address,:country_id => employee.country_id,:pin_code => employee.pin_code,:current_address => employee.current_address,:adhar_no => employee.adhar_no,:pan_no => employee.pan_no,:blood_group_id => employee.blood_group.try(:name), :employee_type_id => employee.employee_type.try(:name),:nationality_id => employee.nationality.try(:name),:company_id => employee.company.try(:name),:department_id => employee.department.try(:name),:sub_department_id => employee.sub_department.try(:name), :employee_designation => employee.joining_detail.employee_designation.try(:name), :employee_uan_no => employee.joining_detail.employee_uan_no, :account_no => employee.try(:employee_bank_detail).try(:account_no), :employee_pf_no => employee.try(:joining_detail).try(:employee_pf_no), :company_location => employee.try(:company_location).try(:name) }
-    else
-      render :status=>200, :json=>{:status=>"Employee location history not ound..."}
-    end
-  end
-
-  def emp_addable_salary_details
-    salaryslip_id = params[:salaryslip_id]
-    addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, salaryslip_id)
-    render :json => addable_salary_components.present? ? addable_salary_components.collect{|sal| { :id => sal.id, :salaryslip_id => sal.salaryslip_id, :salary_component_id => sal.salary_component_id, :actual_amount => sal.actual_amount, :is_deducted => sal.is_deducted, :other_component_name => sal.other_component_name, :calculated_amount => sal.calculated_amount, :employee_template_id => sal.employee_template_id, :is_arrear => sal.is_arrear }} : []
-  end
-
-  def emp_deducted_salary_details
-    salaryslip_id = params[:salaryslip_id]
-    deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, salaryslip_id)
-    render :json => deducted_salary_components.present? ? deducted_salary_components.collect{|sal| { :id => sal.id, :salaryslip_id => sal.salaryslip_id, :salary_component_id => sal.salary_component_id, :actual_amount => sal.actual_amount, :is_deducted => sal.is_deducted, :other_component_name => sal.other_component_name, :calculated_amount => sal.calculated_amount, :employee_template_id => sal.employee_template_id, :is_arrear => sal.is_arrear }} : []
-  end
-
-  def emp_daily_activity_list
-    employee = params[:employee_id]
-    emp_daily_list = EmployeeDailyActivity.where(employee_id: employee)
-    render :json => emp_daily_list.present? ? emp_daily_list.collect{|sal| { :employee_id => sal.employee_id, :prefix => sal.employee.try(:prefix), :first_name => sal.employee.try(:first_name), :middle_name => sal.employee.try(:middle_name), :last_name => sal.employee.try(:last_name), :project_master_id => sal.try(:project_master).try(:name), :today_activity => sal.today_activity, :tomorrow_plan => sal.tomorrow_plan, :day => sal.day }} : []
-  end
  
 
-end
+  # def attend_not_attend
+  #   plan_id = params[:plan_id]
+  #   emp_plan = EmployeePlan.find(plan_id)
+  #   if emp_plan.feedback.present? || emp_plan.plan_reason_master_id.present?
+  #     render :status=>200, :json=>{:status=>"Employee Attendance Successfully Store."} 
+  #   elsif emp_plan.plan_reason_master_id.present?
+  #     render :status=>200, :json=>{:status=>"Employee Attendance Successfully Store."}
+  #   elsif emp_plan.feedback.present? || emp_plan.plan_reason_master_id.present?
+  #     render :status=>200, :json=>{:status=>"Employee Attendance Successfully Store."}
+  #   else
+  #     render :status=>200, :json=>{:status=>"Employee Attendance Successfully Store."}
+  #   end
+  # end
 
+end

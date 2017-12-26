@@ -75,6 +75,17 @@ class RelationMastersController < ApplicationController
           end
     end
 
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_relation_masters_path
+      else
+     RelationMaster.import(params[:file])
+     redirect_to import_xl_relation_masters_path, notice: "File imported."
+     end
+  end 
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_relation_master

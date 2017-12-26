@@ -5,7 +5,7 @@
       <h4 class="modal-title"><center> Update Resignation Details </center></h4>
     </div>
     <div class="modal-body">
-     <%= bootstrap_form_for :employee_resignation,url:{action:"final_approve", resignation_id: @employee_resignation.id} do |f| %>
+     <%= bootstrap_form_for :employee_resignation,url:{action:"update_dates", resignation_id: @employee_resignation.id} do |f| %>
     <div class="row">
       <div class="col-sm-6">
        <div class="form-group required">
@@ -14,21 +14,16 @@
       </div>
 
 
-      <div class="col-sm-6">
+      <!-- <div class="col-sm-6">
        <div class="form-group required">
-          <%= f.text_field :leaving_date,label: "Leaving Date", class: 'leaving_date'%>
+          <%#= f.text_field :leaving_date,label: "Leaving Date", class: 'leaving_date'%>
         </div>
       </div>
-     </div>
+     </div> -->
 
      <div class="row">
-      <div class="col-sm-6">
-        <div class="field">
-            <%= f.text_field :settled_on,label: "Settled On", class: 'settled_on'%>
-          </div>
-      </div>
      <div class="col-sm-6" style="padding-top:20px;">
-        <%= link_to 'Final Approve',final_approve_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-success fa fa-check' %> 
+        <%= f.submit 'Final Approve',class: 'btn btn-sm btn-success' %> 
       </div>
     </div>
       <% end %>
@@ -60,4 +55,24 @@
     dateFormat: 'dd-mm-yy' });
 
   }); 
+</script>
+
+<script>
+$("#exit_interview_date").validate({
+    rules: {
+      "exit_interview_date[exit_interview_date]":{
+        required: true,
+      }
+    },
+    messages: {
+      "exit_interview_date[exit_interview_date]":{
+        required: "Please Select Exit Interview Date",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
 </script>

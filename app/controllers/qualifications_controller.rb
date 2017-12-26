@@ -1,6 +1,6 @@
 class QualificationsController < ApplicationController
   before_action :set_qualification, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
   # GET /qualifications
   # GET /qualifications.json
   def index
@@ -35,7 +35,7 @@ class QualificationsController < ApplicationController
           for i in 2..len
             Qualification.create(employee_id: params['qualification']['employee_id'], degree_type_id: params['qualification'][i.to_s]['degree_type_id'], degree_id: params['qualification'][i.to_s]['degree_id'], degree_stream_id: params['qualification'][i.to_s]['degree_stream_id'], marks: params['qualification'][i.to_s]['marks'], year_id: params['qualification'][i.to_s]['year_id'], college: params['qualification'][i.to_s]['college'], university_id: params['qualification'][i.to_s]['university_id'])
           end
-        EmployeeMailer.qualification_create(@employee,@qualification).deliver_now  
+        # EmployeeMailer.qualification_create(@employee,@qualification).deliver_now  
           @qualifications = Qualification.where(employee_id: @employee.id)
           format.html { redirect_to @qualification, notice: 'Qualification was successfully created.' }
           format.json { render :show, status: :created, location: @qualification }
@@ -66,7 +66,7 @@ class QualificationsController < ApplicationController
         EmployeeMailer.qualification_create(@employee,@qualification).deliver_now  
         @qualifications = @employee.qualifications
         format.js { @flag = true }
-        EmployeeMailer.qualification_create(@employee,@qualification).deliver_now
+        # EmployeeMailer.qualification_create(@employee,@qualification).deliver_now  
       else
         # format.html { render :edit }
         # format.json { render json: @skillset.errors, status: :unprocessable_entity }
@@ -80,7 +80,7 @@ class QualificationsController < ApplicationController
   def destroy
     @qualification.destroy
     respond_to do |format|
-      format.html { redirect_to qualifications_url, notice: 'Qualification was successfully destroyed.' }
+      #format.html { redirect_to qualifications_url, notice: 'Qualification was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -90,19 +90,20 @@ class QualificationsController < ApplicationController
   end
 
    def import_xl
-    @qualifications = Qualification.all
-    respond_to do |format|
-    format.html
-    format.csv { send_data @qualifications.to_csv }
-    format.xls
-     session[:active_tab] = "import"
-   end   
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Import"  
   end
 
   def import
     # byebug
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_qualifications_path
+    else
     Qualification.import(params[:file])
-    redirect_to root_url, notice: "File imported."
+    redirect_to import_xl_qualifications_path, notice: "File imported."
+    end
   end
 
   def update_qualification

@@ -53,6 +53,34 @@ class PerformanceActivitiesController < ApplicationController
     redirect_to new_performance_activity_path
   end
 
+    def performance_activity
+      @performance_activities = PerformanceActivity.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'performance_activities/performance_activity.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'performance_activity',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'performance_activities/performance_activity.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+     end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_performance_activities_path
+      else
+     PerformanceActivity.import(params[:file])
+     redirect_to import_xl_performance_activities_path, notice: "File imported."
+     end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_performance_activity

@@ -1,7 +1,7 @@
-require 'query_report/helper'  # need to require the helper
+# require 'query_report/helper'  # need to require the helper
 class WorkingdaysController < ApplicationController
   before_action :set_workingday, only: [:show, :edit, :update, :destroy]
-  include QueryReport::Helper  # need to include it
+  # include QueryReport::Helper  # need to include it
   def index
     @workingdays = Workingday.group(:year)
     session[:active_tab] ="TimeManagement"
@@ -272,7 +272,9 @@ class WorkingdaysController < ApplicationController
     format.html
     format.csv { send_data @workingdays.to_csv }
     format.xls
-   end   
+   end
+    session[:active_tab] = "EmployeeManagement"
+    session[:active_tab1] ="Imports"  
   end
 
   def import
@@ -661,6 +663,22 @@ class WorkingdaysController < ApplicationController
     else
       flash[:alert] = "Please Select Date Within payroll Period!"
       redirect_to datewise_workingday_workingdays_path
+    end
+  end
+
+  def import_working_day
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Import"
+  end
+
+  def import_day
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_working_day_workingdays_path
+    else
+    Workingday.import_day_file(params[:file])
+    redirect_to import_working_day_workingdays_path, notice: "File imported."
     end
   end
 

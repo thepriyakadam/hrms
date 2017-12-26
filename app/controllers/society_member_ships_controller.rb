@@ -1,6 +1,6 @@
 class SocietyMemberShipsController < ApplicationController
   before_action :set_society_member_ship, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
   # GET /society_member_ships
   # GET /society_member_ships.json
   def index

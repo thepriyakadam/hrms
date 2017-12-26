@@ -26,13 +26,13 @@ function displayResult()
             <tr>
               <td><%= a.employee.manual_employee_code %></td>
               <td><%= full_name(a.employee) %></td>
-              <td><%= best_in_place a, :present, type: :select, collection:[['P','P'],['ACF','ACF'],['WOP','WOP'],['A','A'],['HDL','HDL'],['H','H'],['HP','HP'],['LWP','LWP'],['HD-LWP','HD-LWP'],['PO','PO'],['ACF','ACF']] %></td>
+              <td><%=a. present%></td>
 
-              <td><%= best_in_place a, :in_time, id:'sp1', onchange:'displayResult()'  %></td>
-              <td><%= best_in_place a, :out_time, id:'sp2', onchange:'displayResult()' %></td>
-              <td><%= best_in_place a, :working_hrs, id:'total'  %></td>
+              <td><%= a.in_time %></td>
+              <td><%= a.out_time %></td>
+              <td><%= a.working_hrs %></td>
               
-              <td><%= best_in_place a, :comment %></td>
+              <td><%= a.comment %></td>
               <td>
                 <% if  a.employee_leav_request_id != nil %>
                   <small class="label label-primary">Leave</small>

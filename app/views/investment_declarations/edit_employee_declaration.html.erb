@@ -29,7 +29,10 @@
         <% @sections.each do |section| %>
           <tr><th>Section <%= section.try(:code) %></th></tr>
             <% if section.try(:code) == "80C" %>
-            <% @investment_declarations_bc.each do |investment_declaration| %>
+
+            <%#  binding.pry  %>
+              <%# byebug %>
+              <% @investment_declarations_bc.each do |investment_declaration| %>
               <%= bootstrap_form_for(investment_declaration, html: {id: 'investment_declaration.id' } ) do |f| %>
                 <tr>
                   <td><%#= investment_declaration.investment_head.try(:description) %></td>

@@ -5,7 +5,13 @@
     <%= link_to " PDF ", company_type_master_company_types_path(id: @company_type.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
     
     <%= link_to " XLS ", company_type_master_company_types_path(id: @company_type.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
+
+    <%= link_to " Upload ", import_xl_company_types_path, class: 'fa fa-upload btn btn-xl btn-primary' %>
+    
+     <%= link_to " Template ", "/Templates/21.Company Type.xls", :class=>" fa fa-download btn-xl btn btn-warning" %>
+     </div> <!-- pull right -->
   </div><!-- /.box-header -->
+
 	<div class="box-body">
 		<div id="form">
 			<%= render 'form' %>	
@@ -17,4 +23,5 @@
 		
 	</div><!-- /.box-body -->
 </div><!-- /.box -->
+
 

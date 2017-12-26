@@ -7,6 +7,7 @@ class PolicyDetailsController < ApplicationController
     @policy_details = PolicyDetail.all
     @investment_declarations = InvestmentDeclaration.all
     @investment_declaration = InvestmentDeclaration.find(params[:investment_declaration_id])
+
   end
 
   # GET /policy_details/1
@@ -38,6 +39,13 @@ class PolicyDetailsController < ApplicationController
     
   #   # @policy_detail = PolicyDetail.find(params[:format])
   # end
+  # end
+
+  def policy_details_modal
+    @policy_detail = PolicyDetail.new
+    # @policy_detail = PolicyDetail.find(params[:format])
+    # redirect_to show_employee_declaration_investment_declarations_path
+  end
 
   # POST /policy_details
   # POST /policy_details.json
@@ -79,6 +87,7 @@ class PolicyDetailsController < ApplicationController
     @investment_declarations.update(accepted_amt: actual_annual_amount_sum)
 
   end
+
   # PATCH/PUT /policy_details/1
   # PATCH/PUT /policy_details/1.json
   def update
@@ -97,8 +106,6 @@ class PolicyDetailsController < ApplicationController
   # DELETE /policy_details/1.json
   def destroy
     @policy_detail.destroy
-    # flash[:notice] = 'Successfully checked in'
-    # redirect_to show_policy_details_policy_details_path
     respond_to do |format|
       format.html { redirect_to policy_details_url, notice: 'Policy detail was successfully destroyed.' }
       format.json { head :no_content }

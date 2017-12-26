@@ -1,6 +1,6 @@
 class NationalitiesController < ApplicationController
   before_action :set_nationality, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
 
   def new
     @nationality = Nationality.new
@@ -53,6 +53,17 @@ class NationalitiesController < ApplicationController
             end
           end
     end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_nationalities_path
+      else
+     Nationality.import(params[:file])
+     redirect_to import_xl_nationalities_path, notice: "File imported."
+     end
+  end 
   
   private
 

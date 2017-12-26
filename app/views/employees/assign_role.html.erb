@@ -6,7 +6,12 @@
 
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Create New User</h3>    
+    <h3 class="box-title">Create New User</h3> 
+     <div class="pull-right"> 
+      <%= link_to "Upload Create New User", import_assign_role_employees_path, class: 'btn btn-xs btn-primary' %>
+      
+    <%= link_to "Template", "/Templates/18.create_new_user.xls", :class=>" btn-xs btn btn-warning" %>  
+    </div>
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example" class="table table-bordered table-hover table-condensed">
@@ -40,8 +45,10 @@
               <!-- 
               <td><= select_tag 'role_id[]'options_for_select(all_role_list),{class: "form-control", hide_label: true,include_blank: " Select Role"} %></td> -->
 
-              <td><%= select_tag 'manager_id[]',options_for_select(all_reporting_master_list), {class: "form-control",include_blank: 'Select Manager 1'}%></td>
-              <td><%= select_tag 'manager_2_id[]',options_for_select(all_reporting_master_list),{class: "form-control",include_blank: 'select Manager 2'} %></td>
+
+              <td><%= select_tag 'manager_id[]',options_for_select(all_reporting_master_list), {class: "form-control",include_blank: 'Select Manager 1',:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1",hide_label: true}%></td>
+              <td><%= select_tag 'manager_2_id[]',options_for_select(all_reporting_master_list),{class: "form-control",include_blank: 'select Manager 2',:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1",hide_label: true} %></td>
+
               <%= hidden_field_tag 'employee_ids[]',"",value: employee.id %>
 
               <td><%= f.submit "+", class: 'btn btn-primary btn-sm fa fa-user-plus' %></td>

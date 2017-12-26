@@ -54,6 +54,8 @@ class InterviewTypeMastersController < ApplicationController
     @interview_type_masters = InterviewTypeMaster.all
   end
 
+  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_interview_type_master

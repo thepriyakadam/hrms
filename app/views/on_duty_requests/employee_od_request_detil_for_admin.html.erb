@@ -5,7 +5,7 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>OD Type</th>
+          <th>On Duty Type</th>
           <th>No. Of Days</th>
           <th>Status</th>
         </tr>
@@ -48,7 +48,7 @@
     <br>
   <table id="example1" class="table table-bordered table-hover table-condensed">
     <tbody>
-      <tr><td colspan="4"><font color='red'><center>Employee Current OD Detail</center></font></td></tr>
+      <tr><td colspan="4"><font color='red'><center>Employee Current On Duty Detail</center></font></td></tr>
       <tr>
         <th>ID</th>
         <td><%= @current_request.employee.try(:manual_employee_code) %></td>
@@ -79,8 +79,8 @@
   <br>
      <%= link_to 'Back', od_request_list_on_duty_requests_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %> |
     <% if @current_request.current_status == "Pending" %>
-        <%= link_to 'Approve', first_approve_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> |
-        <%= link_to 'Reject', first_reject_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
+        <%= link_to 'Approve', second_approve_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> |
+        <%= link_to 'Reject', second_reject_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
       <% else %>
         <%= link_to 'Approve', second_approve_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> |
         <%= link_to 'Reject', second_reject_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>

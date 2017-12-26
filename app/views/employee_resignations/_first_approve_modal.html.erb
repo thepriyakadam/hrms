@@ -1,0 +1,53 @@
+
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Leaving Date </center></h4>
+    </div>
+    <div class="modal-body">
+     <%= bootstrap_form_for :employee_resignation,url:{action:"first_approve", emp_resignation_id: @employee_resignation.id},html: {id: 'employee_resignation'} do |f| %>
+         <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group required">
+                <%= f.text_field :leaving_date, class: 'request_from_date',label:'Leaving Date'%>
+              </div>
+            </div>
+
+          <div class="col-sm-6" style="padding-top: 20px">
+            <%= f.submit "Approve",class: 'btn btn-sm btn-success' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+$("#employee_resignation").validate({
+    rules: {
+      "employee_resignation[leaving_date]":{
+        required: true,
+      }
+    },
+    messages: {
+      "employee_resignation[leaving_date]":{
+        required: "Please specify leaving_date",
+      } 
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+<script type="text/javascript">
+  $(function(){
+    $('.request_from_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:-0',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

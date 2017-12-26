@@ -1,7 +1,9 @@
-<%= bootstrap_form_for(@employee_plan, html: {id: 'employee_plan' },remote:true) do |f| %>
+
+<%= bootstrap_form_for(@employee_plan, html: {id: 'employee_plan' } ) do |f| %>
   <div class="row">
     <%= f.hidden_field :employee_id , value: current_user.employee_id %>
     <%= f.hidden_field :manager_id,  value: current_user.employee.manager_id %>
+    <%= f.hidden_field :current_status, value: "Pending"%>
     <div class="col-sm-3">
       <div class="form-group required">
         <%= f.text_field :from_date, label:'From Date', placeholder: 'From Date', class: 'from_date' %>

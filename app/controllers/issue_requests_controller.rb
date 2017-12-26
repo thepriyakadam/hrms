@@ -1,7 +1,8 @@
-require 'query_report/helper'  # need to require the helper
+
+# require 'query_report/helper'  # need to require the helper
 class IssueRequestsController < ApplicationController
   before_action :set_issue_request, only: [:show, :edit, :update, :destroy]
-   include QueryReport::Helper  # need to include it
+   # include QueryReport::Helper  # need to include it
 
   # GET /issue_requests
   # GET /issue_requests.json
@@ -256,7 +257,7 @@ def group_report_list
 end
 
   def issue_tracker_pdf
-     @start = params[:date].to_date unless params[:date].nil?
+    @start = params[:date].to_date unless params[:date].nil?
     @en = params[:to_date].to_date unless params[:to_date].nil?
     @issue_tracker_group = IssueTrackerGroup.where(params[:id]).take 
     unless @start.nil? or @en.nil?

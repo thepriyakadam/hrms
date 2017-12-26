@@ -1,6 +1,6 @@
 class BloodGroupsController < ApplicationController
   before_action :set_blood_group, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
 
   def new
     @blood_group = BloodGroup.new
@@ -53,6 +53,17 @@ class BloodGroupsController < ApplicationController
             end
           end
     end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_blood_groups_path
+      else
+     BloodGroup.import(params[:file])
+     redirect_to import_xl_blood_groups_path, notice: "File imported."
+     end
+  end  
   
   private
 

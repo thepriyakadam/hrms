@@ -20,10 +20,10 @@ class Department < ActiveRecord::Base
   has_many :slip_informations
   has_many :vacancy_requests
   
-  validates :manual_department_code, presence: true, uniqueness: { case_sensitive: false }
+  # validates :manual_department_code, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true
   validates :company_location_id, presence: true
-  validates :department_type_id, presence: true
+  # validates :department_type_id, presence: true
 
 
   def self.filter_records(current_user)

@@ -1,23 +1,29 @@
+
 <!-- <header class="w3-container w3-indigo">
   <h1><center>HRMS-ONE</center></h1>
 </header> -->
  <div class="row">
     <div class="col-sm-6">
 <div class="login-box">
- 
   <div class="login-logo">
+
   <!-- <= image_tag "redefine_logo.jpg",size: "120x120" %> -->
 <!--   <= image_tag "span_pumps_logo.jpg",size: "120x120" %> -->
 
- <%= image_tag "SGA_New Logo.png",size: "120x120" %> 
-
-  <!-- <= image_tag "RG_LOGO.jpg",size: "120x120" %> -->
-  <!-- <= image_tag "Logo_abc.jpg",size: "120x120" %> -->
+   <% t = Company.first %>
+    <%if t.nil?%>
+     <%= image_tag "demo_logo.jpg",size: "120x120" %>
+   <%else%>
+     <%= image_tag t.company_logo.url, :size => "120x120" %>
+   <%end%>
   </div><!-- /.login-logo -->
-  <p><center><strong>Welcome to HCM-Portal</strong></center></p>
+  <p><center><strong>Welcome in HCM-ZONE </strong></center></p>
   <div class="login-box-body">
-    <p class="login-box-msg"><center> Login in to HCM-ZONE</center></p>
-    <br>
+  <%if t.nil?%>
+    <p class="login-box-msg"><center> Login in to the portal</center></p>
+  <%else%>
+    <p class="login-box-msg"><center> Login in to the <%=t.name%> portal</center></p>
+  <%end%>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="form-group has-feedback">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -36,20 +42,24 @@
                 </div>
               <% end -%>
             </label>
+<<<<<<< HEAD
           </div> 
+=======
+
+          </div>
+>>>>>>> b32a287f4213ce5ebf08cbe7825c6ff47813883e
       <%= f.submit 'SIGN IN' ,data: { disable_with: "Logging in..."}, class: "btn btn-block btn-social btn-github" %>
 
       <div class="social-auth-links text-center">
         <!-- <p>- OR -</p> -->
-        <a href="#" class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i> </a>
-        <a href="#" class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"></i> </a>
-        <a href="#" class="btn btn-social-icon btn-linkedin"><i class="fa fa-linkedin"></i> </a>
-        <a href="#" class="btn btn-social-icon btn-google"><i class="fa fa-google"></i> </a>
-        <a href="#" class="btn btn-social-icon btn-instagram"><i class="fa fa-instagram"></i> </a>
+        <a target="_blank" href="#" class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i> </a>
+        <a target="_blank" href="#" class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"></i> </a>
+        <a target="_blank" href="#" class="btn btn-social-icon btn-linkedin"><i class="fa fa-linkedin"></i> </a>
+        <a target="_blank" href="#" class="btn btn-social-icon btn-google"><i class="fa fa-google"></i> </a>
+        <a target="_blank" href="#" class="btn btn-social-icon btn-instagram"><i class="fa fa-instagram"></i> </a>
       </div> <!-- /.social-auth-links-->
-
      <!--  <= render "members/shared/links" %> -->
-    <% end %>  
+    <% end %> 
   </div><!-- /.login-box-body -->
 
 
@@ -62,9 +72,10 @@
 <div class="login-box-body">
   <% t=Thought.where(date: Date.today) %>
 <% t.each do |t| %>
-<div style="padding-top: 200px; font-size: 16pt;font-style: italic;color: #000000; font-family: 'Times New Roman', Times, serif;">
+
+<div style="padding-top: 100px; font-size: 16pt;font-style: italic;color: #000000; font-family: 'Times New Roman', Times, serif;">
   <%= t.thought %>
-  </div><br/ >
+  </div>
   <div  style="font-size: 12pt;font-style: italic;color: #000000; font-family: 'Times New Roman', Times, serif; text-align: right;">
   -<%= t.thought_of %>
   </div>

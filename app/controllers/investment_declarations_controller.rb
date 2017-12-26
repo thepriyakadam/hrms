@@ -393,8 +393,14 @@ class InvestmentDeclarationsController < ApplicationController
   def ajax_investment_declaration
     # @investment_declaration = InvestmentDeclaration.find_by(id: @investment_declaration)
     @investment_declaration = InvestmentDeclaration.new
-
   end
+
+  def employee_declaration
+    @employees = Employee.where.not(id: InvestmentDeclaration.select(:employee_id))
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] = "IncomeTax"
+  end
+
 
   
   private

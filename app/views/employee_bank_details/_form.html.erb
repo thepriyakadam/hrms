@@ -29,8 +29,7 @@
             <%= f.text_field :ifsc_code,label: 'IFSC Code',placeholder: 'e.g. CITI0000026' %>
           </div>
         </div>
-        </div>
-
+     </div>
         <div class="row">
 
 
@@ -59,9 +58,8 @@
           </div>
 
       </div>
-      <div class="row">
         <div class="col-sm-6">
-          <div class="actions">
+          <div class="actions" style="padding-top: 20px">
             <%= f.submit 'Create Bank Detail',:class => class_name, data: { disable_with: data_info } %>
             <% if params['controller'] == 'employee_bank_details' and params['action'] == 'edit' %>
               <%= link_to 'Back',ajax_bank_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-default', remote:true%>

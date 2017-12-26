@@ -7,7 +7,7 @@ class Country < ActiveRecord::Base
   has_many :capture_resumes
   has_many :employee_nominations
   has_many :pre_onboardings
-  validates :code, presence: true, uniqueness: { case_sensitive: false }
+  # validates :code, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   def self.filter_records(current_user)

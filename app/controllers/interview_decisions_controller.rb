@@ -71,6 +71,17 @@ class InterviewDecisionsController < ApplicationController
             end
           end
   end
+
+    def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_interview_decisions_path
+      else
+     InterviewDecision.import(params[:file])
+     redirect_to import_xl_interview_decisions_path, notice: "File imported."
+     end
+  end
   
   private
     # Use callbacks to share common setup or constraints between actions.

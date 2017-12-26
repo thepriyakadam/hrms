@@ -73,6 +73,17 @@ class InterviewEvalutionsController < ApplicationController
             end
           end
      end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_interview_evalutions_path
+      else
+     InterviewEvalution.import(params[:file])
+     redirect_to import_xl_interview_evalutions_path, notice: "File imported."
+     end
+  end
   
   private
 

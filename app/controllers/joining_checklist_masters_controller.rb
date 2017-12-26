@@ -75,6 +75,17 @@ class JoiningChecklistMastersController < ApplicationController
           end
   end
 
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_joining_checklist_masters_path
+      else
+     JoiningChecklistMaster.import(params[:file])
+     redirect_to import_xl_joining_checklist_masters_path, notice: "File imported."
+     end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_joining_checklist_master

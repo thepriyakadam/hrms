@@ -2,25 +2,36 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :code,hide_label:true, placeholder: 'Code' %>
+        <%= f.text_field :code,label: "Code", placeholder: 'Code' %>
       </div>
     </div> 
      <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :name,hide_label:true, placeholder: 'Leaving Reason' %>
+        <%= f.text_field :name,label: "Leaving Reason", placeholder: 'Leaving Reason' %>
       </div>
     </div>
      <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
+        <%= f.text_field :description,label: "Description", placeholder: 'Description' %>
       </div>
     </div>
 
+         <div class="col-sm-3">
+      <label>Status</label>
+        <div class="field">
+          <%= f.check_box :is_confirm , label:'Active'%>
+        </div>
+      </div>
+</div>
+  
+   <div class="row">
     <div class="col-sm-3">
       <div class="actions">
         <%= f.submit :class => class_name, data: { disable_with: data_info } %>
       </div>
     </div>
+
+
   </div>
 <% end %>
 

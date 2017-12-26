@@ -1,6 +1,6 @@
 class CompanyShiftsController < ApplicationController
   before_action :set_company_shift, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
 
   def new
     @company_shift = CompanyShift.new

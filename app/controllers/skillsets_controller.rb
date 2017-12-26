@@ -1,6 +1,6 @@
 class SkillsetsController < ApplicationController
   before_action :set_skillset, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
   # GET /skillsets
   # GET /skillsets.json
   def index
@@ -70,19 +70,19 @@ class SkillsetsController < ApplicationController
   end
 
   def import_xl
-    @skillsets = Skillset.all
-    respond_to do |format|
-    format.html
-    format.csv { send_data @skillsets.to_csv }
-    format.xls
-     session[:active_tab] = "import"
-   end   
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Import"   
   end
 
   def import
-    # byebug
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_skillsets_path
+    else
     Skillset.import(params[:file])
-    redirect_to root_url, notice: "File imported."
+    redirect_to import_xl_skillsets_path, notice: "File imported."
+    end
   end
   # DELETE /skillsets/1
   # DELETE /skillsets/1.json

@@ -1,7 +1,8 @@
-require 'query_report/helper'  # need to require the helper
+
+# require 'query_report/helper'  # need to require the helper
 class EmployeeDesignationsController < ApplicationController
   before_action :set_employee_designation, only: [:show, :edit, :update, :destroy]
-  include QueryReport::Helper  # need to include it
+  # include QueryReport::Helper  # need to include it
   def new
     @employee_designation = EmployeeDesignation.new
     @employee_designations = EmployeeDesignation.all
@@ -66,7 +67,17 @@ class EmployeeDesignationsController < ApplicationController
       column(:ID, sortable: true) { |employee_designation| employee_designation.try(:id) }
       column(:Name, sortable: true) { |employee_designation| employee_designation.name }
     end
-   
+  end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_employee_designations_path
+      else
+     EmployeeDesignation.import(params[:file])
+     redirect_to import_xl_employee_designations_path, notice: "File imported."
+     end
   end
 
   

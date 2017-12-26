@@ -35,6 +35,20 @@ class SelfServicesController < ApplicationController
     session[:active_tab] ="EmployeeSelfService"
   end
 
+  def present_to_title 
+    emp = EmployeeAttendance.all
+    emp.each do |empatt|
+      present = empatt[:present]
+      title = empatt[:title]
+      if present == title
+        
+      else
+        @empatt = empatt.update(present: present, title: present)
+      end
+    end
+    redirect_to employee_attendance_self_services_path
+  end
+
   def employee_resignation
     @employee_resignation = EmployeeResignation.new
     @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
@@ -45,18 +59,21 @@ class SelfServicesController < ApplicationController
 
   def create_self_resignation
     @employee_resignation = EmployeeResignation.new
-
     employee_id = params[:employee_id]
     application_date = params[:application_date]
     resignation_date = params[:employee_resignation][:resignation_date]
     leaving_reason_id = params[:employee_resignation][:leaving_reason_id]
-    notice_period = params[:notice_period]
+    # notice_period = params[:notice_period]
     tentative_leaving_date = params[:employee_resignation][:tentative_leaving_date]
     reason = params[:employee_resignation][:reason]
     note = params[:employee_resignation][:note]
 
+    @employee = Employee.find_by(id: current_user.employee_id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @notice_period = @joining_detail.notice_period_after_probation
+
     if resignation_date == "" || leaving_reason_id == "" || tentative_leaving_date == "" || reason == ""
-      flash[:alert] = "Please fill all mendetory fields!"
+      flash[:alert] = "Please fill all mandatory fields!"
     else
       if @employee_resignation.is_there_self(employee_id)
       flash[:alert] = "Your Request already has been sent"
@@ -64,13 +81,21 @@ class SelfServicesController < ApplicationController
         @employees=Employee.find_by(id: employee_id)
         @date_diff = (tentative_leaving_date.to_date - resignation_date.to_date).to_i
 
-        @employee_resignation = EmployeeResignation.create(short_notice_period: @date_diff,reporting_master_id: @employees.manager_id,is_pending: true,resign_status: "Pending",is_first_approved: false,is_first_rejected: false, is_cancelled: false,employee_id: employee_id,resignation_date: resignation_date,application_date: application_date,reason: reason,note: note,leaving_reason_id: leaving_reason_id,notice_period: notice_period,tentative_leaving_date: tentative_leaving_date)  
+        @employee_resignation = EmployeeResignation.create(short_notice_period: @date_diff,reporting_master_id: @employees.manager_id,is_pending: true,resign_status: "Pending",is_first_approved: false,is_first_rejected: false, is_cancelled: false,employee_id: employee_id,resignation_date: resignation_date,application_date: application_date,reason: reason,note: note,leaving_reason_id: leaving_reason_id,notice_period: @notice_period,tentative_leaving_date: tentative_leaving_date)  
         @resignation_status_record = ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "Pending",change_date: Date.today)
         EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
-        flash[:notice] = "created Successfully!"
+        flash[:notice] = "Created Successfully!"
       end#is_there?
     end#nil
       redirect_to employee_resignation_self_services_path
+  end
+
+
+
+  def display_notice_period
+    @employee = Employee.find_by(id: current_user.employee_id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @notice_period = @joining_detail.notice_period_after_probation
   end
 
   def resignation_history
@@ -78,9 +103,16 @@ class SelfServicesController < ApplicationController
     session[:active_tab] ="EmployeeSelfService"
   end
 
-  def show_resignation_detail
-    @employee_resignation = EmployeeResignation.find_by_id(params[:id])
+  def modal_show_resignation_detail
+    @employee_resignation = EmployeeResignation.find(params[:format])
+
+    @resignation_status_records = ResignationStatusRecord.where(employee_resignation_id: @employee_resignation.id)
+    @employee_resignations = EmployeeResignation.where(id: @employee_resignation.id).take
+    # @employee_resignation = EmployeeResignation.find_by_id(params[:id])
    # @employee_resignation = EmployeeResignation.find_by(id: @employee_resignations.id)
+    @resignation_status_records = ResignationStatusRecord.where(employee_resignation_id: @employee_resignation.id)
+    @employee_resignations = EmployeeResignation.where(id: @employee_resignation.id).take
+
   end
 
   def employee_transfer
@@ -147,7 +179,7 @@ class SelfServicesController < ApplicationController
   def holiday_setup
     # byebug
     @day = params[:day]
-    @employee_attendances = EmployeeAttendance.where(present: 'H',employee_id: current_user.employee_id)
+    @employee_attendances = EmployeeAttendance.where(present: 'H',employee_id: current_user.employee_id).order("day ASC")
     session[:active_tab] = "EmployeeSelfService"
   end
 
@@ -155,7 +187,7 @@ class SelfServicesController < ApplicationController
   def leave_c_off
     session[:active_tab] ="EmployeeSelfService"
     @leave_c_off = LeaveCOff.new
-    @leave_c_offs = LeaveCOff.where(employee_id: current_user.employee_id).order("id DESC")
+    @leave_c_offs = LeaveCOff.where(employee_id: current_user.employee_id).order("id ASC")
   end
 
   def show_leave_c_off_list
@@ -175,22 +207,19 @@ class SelfServicesController < ApplicationController
 
     if @joining_detail.c_off == true
       if @leave_c_off.is_self_present(@employee_id,@c_off_date)
-        flash[:alert] = "Your COff already set for that day"
+        flash[:alert] = "
+        Your COff already set for that day"
       else
         @leave_c_off = LeaveCOff.new(leave_c_off_params)
         @leave_c_offs = LeaveCOff.all
         leav_category = LeavCategory.find_by(code: 'C.Off')
 
         if @leave_c_off.is_week_off_present_for_coff(@employee_id,@c_off_date) || @leave_c_off.is_holiday_present_for_coff(@employee_id,@c_off_date)
-          # @employee_attendance = EmployeeAttendance.where(employee_id: @employee_id,present: "WOP",day: @c_off_date.to_date).take
-          # @employee_attendance_1 = EmployeeAttendance.where(employee_id: @employee_id,present: "HP",day: @c_off_date.to_date).take
-          
+ 
           @emp_attendance = EmployeeAttendance.where("present = ? OR present = ?", "WOP","HP").where(employee_id: @employee_id,day: @c_off_date.to_date).take
 
           if @emp_attendance.working_hrs.to_s < "07:00"
             flash[:alert] = "Working hrs. less than 7,Please contact to Admin"
-          # elsif @employee_attendance_1.working_hrs.to_s < "07:00"
-          #   flash[:alert] = "Working hrs. less than 9,Please contact to Admin"
           else
             if leav_category.nil?
             else
@@ -233,6 +262,7 @@ class SelfServicesController < ApplicationController
     end
     redirect_to leave_c_off_self_services_path
   end#def
+
 
   def reimbursement_request
     @reimbursement_request = ReimbursementRequest.new
@@ -331,6 +361,11 @@ class SelfServicesController < ApplicationController
     redirect_to add_attendance_self_services_path
   end
 
+  def exit_interview
+    @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
+    session[:active_tab] ="EmployeeSelfService"
+  end
+
   def internal
     @vacancy_masters = VacancyMaster.where(vacancy_of: 'Internal',is_confirmed: nil)
   end
@@ -344,8 +379,18 @@ class SelfServicesController < ApplicationController
     @employee = Employee.find(params[:format])
   end
 
+   def exit_interview
+    @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
+    session[:active_tab] ="EmployeeSelfService"
+  end
+
   def modal_c_off
     @leave_c_off = LeaveCOff.find(params[:format])
+  end
+
+  def self_exit_interview_list
+    @exit_interviews = ExitInterview.where(employee_id: current_user.employee_id)
+    # redirect_to self_exit_interview_list_self_services_path
   end
   # def apply_internally
   #   @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])

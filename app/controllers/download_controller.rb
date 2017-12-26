@@ -11,4 +11,7 @@ class DownloadController < ApplicationController
     send_file Rails.root.join('private', 'tasks.docx'), :type=>"application/doc", :x_sendfile=>true
   end
 
+ def xls
+    send_file Rails.root.join('private', 'tasks.xls'), :type=>"application/xls", :x_sendfile=>true
+  end
 end

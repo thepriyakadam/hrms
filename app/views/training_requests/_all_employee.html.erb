@@ -1,0 +1,45 @@
+<div class="box-header with-border">
+  </div>
+ <table id="example1" class="table table-bordered table-hover table-condensed">
+<!-- <= bootstrap_form_for :training_request,url:{action:"training_create_form"},html: {id: 'training_request'} do |f| %>  -->
+ <thead>
+      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Department</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @employees.where(status: "Active").each do |e|  %>
+    <tr>
+      <td><%= check_box_tag "employee_ids[]", e.id %></td>
+      <td><%= e.manual_employee_code %></td> 
+      <td><%= full_name(e) %></td>
+      <td><%= e.department.try(:name) %></td>
+    </tr>
+  <% end %>
+  </tbody>
+
+</table>
+</div>
+
+<script type="text/javascript">
+$('#selectAll').click(function() {
+  if (this.checked) {
+    $(':checkbox').each(function() {
+      this.checked = true;                       
+    });
+  } 
+  else {
+    $(':checkbox').each(function() {
+      this.checked = false;                        
+    });
+  } 
+});
+</script>
+
+<script type="text/javascript">
+  $(function () {
+    $('#example1').Datatable();
+  });
+</script>

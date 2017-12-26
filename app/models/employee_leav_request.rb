@@ -382,17 +382,27 @@ class EmployeeLeavRequest < ActiveRecord::Base
   end #def
 
 
-  def create_attendance_leave 
-    for i in self.start_date.to_date..self.end_date.to_date
-      if self.is_there(i)
-        @employee_attendance = EmployeeAttendance.where(employee_id: self.employee_id,day: i).take
-        @employee_attendance.update(present: 'A',comment: "Leave Request Pending")
-      else
-      EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'A',comment: "Leave Request Pending")
-      end
-    end#for i in self
-  end #def
 
+ def create_attendance_leave
+    
+      for i in self.start_date.to_date..self.end_date.to_date
+        if self.is_there(i)
+          leav_category = LeavCategory.find_by(id: self.leav_category_id)
+          if leav_category.weekoff_sandwich == true || leav_category.holiday_sandwich == true
+            if self.weekoff_present(i,employee) || self.holiday_present(i,employee)
+            else
+              @employee_attendance = EmployeeAttendance.where(employee_id: self.employee_id,day: i).take
+              @employee_attendance.update(present: 'A',comment: "Leave Request Pending")
+            end#self
+          else
+              @employee_attendance = EmployeeAttendance.where(employee_id: self.employee_id,day: i).take
+              @employee_attendance.update(present: 'A',comment: "Leave Request Pending")
+          end#leav_category
+        else
+          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'A',comment: "Leave Request Pending")
+        end
+      end#for i in self
+  end #def
 
   def is_holiday?
     flag = 0
@@ -514,6 +524,28 @@ class EmployeeLeavRequest < ActiveRecord::Base
     flag
   end
 
+  def create_attendance_leave
+    
+      for i in self.start_date.to_date..self.end_date.to_date
+        if self.is_there(i)
+          leav_category = LeavCategory.find_by(id: self.leav_category_id)
+          if leav_category.weekoff_sandwich == true || leav_category.holiday_sandwich == true
+            if self.weekoff_present(i,employee) || self.holiday_present(i,employee)
+
+            else
+              @employee_attendance = EmployeeAttendance.where(employee_id: self.employee_id,day: i).take
+              @employee_attendance.update(present: 'A',comment: "Leave Request Pending")
+            end#self
+          else
+              @employee_attendance = EmployeeAttendance.where(employee_id: self.employee_id,day: i).take
+              @employee_attendance.update(present: 'A',comment: "Leave Request Pending")
+          end#leav_category
+        else
+          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'A',comment: "Leave Request Pending")
+        end
+      end#for i in self
+  end #def
+
   def leave_record_create(employee_leav_request)
     for i in employee_leav_request.start_date.to_date..employee_leav_request.end_date.to_date 
       start_date = employee_leav_request.start_date.to_date
@@ -523,6 +555,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
       if leav_category.weekoff_sandwich == true || leav_category.holiday_sandwich == true
 
         if self.weekoff_present(i,employee) || self.holiday_present(i,employee)
+          
         else
           if employee_leav_request.leave_type == 'Full Day'
           LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: i,count: 1,leav_category_id: employee_leav_request.leav_category_id)

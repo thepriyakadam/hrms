@@ -38,8 +38,8 @@
             <h3 class="profile-username text-center"></h3>
               <p>
                 <% if current_user.class == Member %>
-                  <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:last_name) %><br>
-                  <small> <%= current_user.employee.try(:joining_detail).try(:employee_designation).try(:name) %></small>
+                  <%= current_user.employee.try(:prefix) %> <%= current_user.employee.try(:first_name) %><br>
+                  <small> <!-- <= current_user.employee.try(:joining_detail).try(:employee_designation).try(:name) %> --></small>
                 <%else%>
                   <%= current_user.subdomain %> - <%= current_user.class %>
                 <%end%>
@@ -74,12 +74,14 @@
               <%= render 'sidebars/admin_recruiter' %>
             <% elsif current_user.role.name == 'TimeAndAttendance' %>
               <%= render 'sidebars/time_and_attendance' %>
-              <% elsif current_user.role.name == 'GroupTimeManagement' %>
+            <% elsif current_user.role.name == 'GroupTimeManagement' %>
               <%= render 'sidebars/group_time_management' %>
-              <% elsif current_user.role.name == 'AdminTimeManagement' %>
+            <% elsif current_user.role.name == 'AdminTimeManagement' %>
               <%= render 'sidebars/admin_time_management' %>
-               <% elsif current_user.role.name == 'NewEmployee' %>
+            <% elsif current_user.role.name == 'NewEmployee' %>
               <%= render 'sidebars/new_employee' %>
+            <% elsif current_user.role.name == 'CEO' %>
+              <%= render 'sidebars/ceo' %>
             <% else %>
               <%= render 'sidebars/employee' %>
               
@@ -120,7 +122,7 @@
           Help Line No. +91-9028013279/+91-9970868601
         </div>
         <!-- Default to the left -->
-        <strong> Copyright © 2015 <a href="#">HCM-ZONE</a>.</strong> All Right Reserved.| Powered By : Indiba Business Solutions.
+        <strong> Copyright © <%= Time.new.year %> <a href="#">HCM-ZONE</a>.</strong> All Right Reserved.| Powered By : Indiba Business Solutions.
       </footer>
       <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->

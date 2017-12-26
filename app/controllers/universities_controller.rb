@@ -12,6 +12,10 @@ class UniversitiesController < ApplicationController
   def edit
   end
 
+  def show
+    
+  end
+
   # POST /universities
   # POST /universities.json
   def create
@@ -58,6 +62,18 @@ class UniversitiesController < ApplicationController
   end
 end
 end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_universities_path
+      else
+     University.import(params[:file])
+     redirect_to import_xl_universities_path, notice: "File imported."
+     end
+  end
+
   
   private
 

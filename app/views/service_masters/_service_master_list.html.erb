@@ -1,0 +1,25 @@
+<br>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Action</th>
+ 
+  <tbody>
+    <% @service_masters.each do |service_master| %>
+      <tr>
+        <td><%= service_master.code %></td>
+        <td><%= service_master.name %></td>
+        <td><%= service_master.description %></td>
+         <td><%= service_master.status ? "Active" : "Inactive" %></td>
+        <td>
+            <%= link_to '', edit_service_master_path(service_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  service_master, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

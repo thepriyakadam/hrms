@@ -1,6 +1,17 @@
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Performance Calendar</h3>
+
+       <div class="pull-right">
+    <%= link_to " PDF ", performance_calendar_performance_calendars_path(id: @performance_calendar.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
+    
+<%= link_to " XLS ", performance_calendar_performance_calendars_path(id: @performance_calendar.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
+
+    <%= link_to "Upload Performance Calendar", import_xl_performance_calendars_path, class: 'btn btn-xs btn-primary' %>
+    
+    <%= link_to "Template", "/Templates/47.Performance Calendar.xls", :class=>" btn-xs btn btn-warning" %>
+    </div>
+
   </div><!-- /.box-header -->
 	<div class="box-body">
 		<div id="form">

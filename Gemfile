@@ -7,8 +7,13 @@ gem 'rails', '4.2.4'
 gem 'mysql2', '~> 0.3.18'
  #gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
 
-
 # gem "rack-timeout", require:"rack/timeout/base"
+
+gem 'tiny_tds'
+gem 'activerecord-sqlserver-adapter'
+gem 'ruby-odbc'
+gem 'dbi'
+gem 'activerecord-session_store'
 
 gem 'ruby-graphviz', '~> 1.2', '>= 1.2.2'
 
@@ -16,32 +21,33 @@ gem 'twilio-ruby', '~> 4.11', '>= 4.11.1'
 
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
+ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
-
+# gem 'coffee-rails', '~> 4.0.0'
 gem 'whenever', '~> 0.9.4',:require => false
 gem 'geocoder'
 gem 'therubyracer', platforms: :ruby
-gem 'query_report'
+# gem 'query_report'
 gem 'kaminari', '~> 0.16.3'
 gem 'coderay'
 gem 'bootstrap-datepicker-rails'
 gem 'awesome_print'
 gem 'datagrid', '~> 1.4', '>= 1.4.1'
 gem 'quiet_assets'
-gem 'fullcalendar-rails'
+
+
+gem 'fullcalendar-rails', '~> 3.4.0.0'
 gem 'momentjs-rails'
+
 gem 'tzinfo-data', '~> 1.2016', '>= 1.2016.10'
 
 gem 'paperclip', '~> 4.3', '>= 4.3.6'
 
 gem 'mime-types-data', '~> 3.2016', '>= 3.2016.0521'
 gem 'globalid', '~> 0.3.7'
-gem 'ancestry'
- # gem 'rails-assets-fullcalendar'
- # gem 'rails-assets-momentjs'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -73,8 +79,7 @@ gem 'selenium-webdriver', '~> 3.0', '>= 3.0.5'
 gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
 
 #inline edit
-
-gem 'best_in_place'
+gem 'best_in_place', github: 'bernat/best_in_place'
 
 gem 'bcrypt-ruby', '~> 3.0.0', :require => 'bcrypt'
 gem 'bcrypt'
@@ -106,7 +111,7 @@ group :development do
 	gem 'wirble'
 	gem 'hirb'
 	# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-	gem 'spring'
+	# gem 'spring'
 end
 
 # Authentication and authorization
@@ -134,7 +139,7 @@ gem 'protokoll'
 # gem 'countries'
 gem 'city-state'
 
-gem 'rmagick', '~> 2.15.4'
+ gem 'rmagick', '~> 2.15.4'
 
 # infinite-cove-6619
 # DateTimePicker

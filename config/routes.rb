@@ -3017,6 +3017,6 @@ end
     get 'user_auths/emp_details_salary_slip' => 'user_auths#emp_details_salary_slip', defaults:{format: 'json'}
     get 'user_auths/emp_daily_activity_list' => 'user_auths#emp_daily_activity_list', defaults:{format: 'json'}
     get 'user_auths/emp_salary_slip_data' => 'user_auths#emp_salary_slip_data', defaults:{format: 'json'}
-    
+    get 'user_auths/employee_wise_attendance' => 'user_auths#employee_wise_attendance', defaults:{format: 'json'}
   end
 end

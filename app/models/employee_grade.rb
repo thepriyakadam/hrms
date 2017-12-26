@@ -5,13 +5,13 @@ class EmployeeGrade < ActiveRecord::Base
   has_many :promotion_histories
   has_many :reimbursement_slabs
 
-    def self.import_employee_grade(file)
+    def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        code = spreadsheet.cell(i,'A')
-        name = spreadsheet.cell(i,'B')
-        description = spreadsheet.cell(i,'C')
+        code = spreadsheet.cell(i,'B')
+        name = spreadsheet.cell(i,'C')
+        description = spreadsheet.cell(i,'D')
 
         @employee_grade = EmployeeGrade.create(code: code,name: name,description: description)     
     end

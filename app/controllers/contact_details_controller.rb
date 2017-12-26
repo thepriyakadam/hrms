@@ -60,6 +60,17 @@ class ContactDetailsController < ApplicationController
     @contact_detail = ContactDetail.find(params[:format])
   end
 
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_contact_details_path
+      else
+     ContactDetail.import(params[:file])
+     redirect_to import_xl_contact_details_path, notice: "File imported."
+     end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_contact_detail

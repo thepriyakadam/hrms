@@ -2,20 +2,20 @@ class GoalPerspective < ActiveRecord::Base
 	has_many :goal_ratings
 	belongs_to :department
 
-	def self.import_goal(file)
+	def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        name = spreadsheet.cell(i,'A')
-        goal_weightage = spreadsheet.cell(i,'B')
+        name = spreadsheet.cell(i,'B')
+        goal_weightage = spreadsheet.cell(i,'C')
         if goal_weightage == "Yes" || goal_weightage == "yes"
         	goal_weightage = true
         else
         	goal_weightage = false
         end
-        from = spreadsheet.cell(i,'C')
-        to = spreadsheet.cell(i,'D')
-        status = spreadsheet.cell(i,'E')
+        from = spreadsheet.cell(i,'D')
+        to = spreadsheet.cell(i,'E')
+        status = spreadsheet.cell(i,'F')
         if status == "Yes" || status == "yes"
         	status = true
         else

@@ -5,6 +5,11 @@
     <%= link_to " PDF ", relation_master_relation_masters_path(id: @relation_master.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
     
     <%= link_to " XLS ", relation_master_relation_masters_path(id: @relation_master.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
+
+    <%= link_to "Upload Religion", import_xl_relation_masters_path, class: 'btn btn-xs btn-primary' %>
+    
+    <%= link_to "Template", "/Templates/29.Relation.xls", :class=>" btn-xs btn btn-warning" %>
+    </div>
   </div><!-- /.box-header -->
     <div class="box-body">
 	    <div id="form">

@@ -5,6 +5,11 @@
     <%= link_to " PDF ", employee_grade_master_employee_grades_path(id: @employee_grade.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
     
     <%= link_to " XLS ", employee_grade_master_employee_grades_path(id: @employee_grade.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
+    
+    <%= link_to "Upload Employee Grade", import_xl_employee_grades_path, class: 'btn btn-xs btn-primary' %>
+    
+    <%= link_to "Template", "/Templates/32.Employee Grade.xls", :class=>" btn-xs btn btn-warning" %>
+    </div>
   </div><!-- /.box-header -->
 	<div class="box-body">
 		<div id="form">

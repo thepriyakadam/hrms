@@ -14,13 +14,13 @@ class Rating < ActiveRecord::Base
                           foreign_key: "final_rating_id"
 
 
-    def self.import_rating(file)
+    def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        value = spreadsheet.cell(i,'A')
-        discription = spreadsheet.cell(i,'B')
-        status = spreadsheet.cell(i,'C')
+        value = spreadsheet.cell(i,'B')
+        discription = spreadsheet.cell(i,'C')
+        status = spreadsheet.cell(i,'D')
         if status == "Yes" || status == "yes"
         	status = true
         else

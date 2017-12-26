@@ -2,14 +2,14 @@ class AboutBoss < ActiveRecord::Base
 validates :code, presence: true,  uniqueness: { case_sensitive: false }
 validates :name, presence: true,  uniqueness: { case_sensitive: false }
 
-    def self.import_about_manager(file)
+    def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        code = spreadsheet.cell(i,'A')
-        name = spreadsheet.cell(i,'B')
-        description = spreadsheet.cell(i,'C')
-        status = spreadsheet.cell(i,'D')
+        code = spreadsheet.cell(i,'B')
+        name = spreadsheet.cell(i,'C')
+        description = spreadsheet.cell(i,'D')
+        status = spreadsheet.cell(i,'E')
         if status == "Yes" || status == "yes"
         	status = true
         else

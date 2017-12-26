@@ -1,7 +1,9 @@
 <div class="box box-default">
 <div class="box-header with-border">
 <h3 class="box-title">Import File</h3>
-</div><!-- /.box-header -->
+<div class="pull-right">
+ <%= link_to "Template", "/Templates/12.Employee Leave Balance.xls", :class=>" btn-xs btn btn-warning" %>
+</div>
 <div class="box-body">
 <%= form_tag import_employee_leav_balances_path, multipart: true do %>
 <label> File </label>

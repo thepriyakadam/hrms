@@ -4,11 +4,11 @@ class Year < ActiveRecord::Base
   has_many :awards
   validates :name,presence:true
 
-    def self.import_year(file)
+    def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        name = spreadsheet.cell(i,'A')
+        name = spreadsheet.cell(i,'B')
 
         @degree = Year.create(name: name)     
     end

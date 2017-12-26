@@ -1,14 +1,14 @@
 class PolicyType < ActiveRecord::Base
 	has_many :company_policies
 
-  def self.import_policy_type(file)
+  def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        code = spreadsheet.cell(i,'A')
-        name = spreadsheet.cell(i,'B')
-        description = spreadsheet.cell(i,'C')
-        is_active = spreadsheet.cell(i,'D')
+        code = spreadsheet.cell(i,'B')
+        name = spreadsheet.cell(i,'C')
+        description = spreadsheet.cell(i,'D')
+        is_active = spreadsheet.cell(i,'E')
         if is_active == "Yes" || is_active == "yes"
           is_active = true
         else

@@ -3,13 +3,13 @@ class InterviewDecision < ActiveRecord::Base
   validates :name, presence: true
 
 
-    def self.import_evaluation(file)
+    def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        code = spreadsheet.cell(i,'A')
-        name = spreadsheet.cell(i,'B').to_i
-        description = spreadsheet.cell(i,'C')
+        code = spreadsheet.cell(i,'B')
+        name = spreadsheet.cell(i,'C').to_i
+        description = spreadsheet.cell(i,'D')
 
         @interview_decision = InterviewDecision.create(code: code,name: name,description: description)     
     end

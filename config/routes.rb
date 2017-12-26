@@ -2873,6 +2873,8 @@ end
       get :created_user
       patch :update_form
       get :hrms_data_sheet
+      get :assigned_user
+      post :assigned_user
       # get "downloads/xls/:id" => "downloads#xls", :as => :download_xls
 
       # get :show

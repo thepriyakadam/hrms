@@ -88,6 +88,23 @@ class HomeController < ApplicationController
       policy_type = @company_policy.policy_type
       @company_policies = CompanyPolicy.where(policy_type: policy_type)
   end
+
+  def assigned_user
+      @employees = Employee.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'home/assigned_user.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'assigned_user',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'home/assigned_user.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+  end
   
   def event_detail
     @company_event = CompanyEvent.find(params[:id])

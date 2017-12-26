@@ -1,0 +1,49 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+      /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+    }
+</style>
+<table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
+  <thead>
+        <tr>
+          <td colspan="6"><center> 
+            <% if current_user.employee.company_location.company.company_logo == nil %>
+            <%else %>
+              <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+            <%end%> 
+              <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+          </td>
+        </tr>
+         <tr><th colspan="6"><center>Role Assigned User</center></th></tr>
+
+    <tr> 
+      <th>Sr.No.</th> 
+      <th>ID</th>
+      <th>Employee Name</th>
+      <th>System Role</th>
+      <th>Reporting Manager 1</th>
+      <th>Reporting Manager 2</th>
+    </tr>
+  </thead>
+  <tbody>
+  <%i = 0%>
+    <% @employees.each do |employee| %>  
+      <tr>
+      <td><%= i = i+1 %></td>
+        <td><%= employee.try(:manual_employee_code) %></td>
+        <td><%= full_name(employee) %></td>
+        <td><%= employee.member.try(:role).try(:name) %></td>
+        <td><%= employee.manager.try(:first_name) %> <%= employee.manager.try(:middle_name) %> <%= employee.manager.try(:last_name) %></td>
+       	<td><%= employee.manager_2.try(:first_name) %> <%= employee.manager_2.try(:middle_name) %><%= employee.manager_2.try(:last_name) %></td>
+   </tr>
+   <%end%>
+   </tbody>
+   </table>

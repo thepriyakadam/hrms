@@ -70,7 +70,7 @@ end
         redirect_to import_xl_universities_path
       else
      University.import(params[:file])
-     redirect_to import_xl_universities_path, notice: "File imported."
+     redirect_to new_university_path, notice: "File imported."
      end
   end
 

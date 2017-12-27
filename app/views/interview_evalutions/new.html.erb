@@ -5,10 +5,10 @@
     <%= link_to " PDF ", interview_evalution_master_interview_evalutions_path(id: @interview_evalution.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
     
     <%= link_to " XLS ", interview_evalution_master_interview_evalutions_path(id: @interview_evalution.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
-
-    <%= link_to "Upload Evaluation Criteria", import_xl_interview_evalutions_path, class: 'btn btn-xs btn-primary' %>
+ 
+    <%= link_to " Upload  ", import_xl_interview_evalutions_path, class: 'fa fa-upload btn btn-xl btn-primary' %>
     
-    <%= link_to "Template", "/Templates/50.Evaluation Criteria.xls", :class=>" btn-xs btn btn-warning" %>
+    <%= link_to " Template", "/Templates/50.Evaluation Criteria.xls", :class=>"fa fa-download btn-xl btn btn-warning" %>
     </div>
   </div><!-- /.box-header -->
 	<div class="box-body">

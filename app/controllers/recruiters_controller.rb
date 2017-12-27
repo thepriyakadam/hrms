@@ -103,7 +103,7 @@ class RecruitersController < ApplicationController
         redirect_to import_xl_recruiters_path
       else
      Recruiter.import(params[:file])
-     redirect_to import_xl_recruiters_path, notice: "File imported."
+     redirect_to new_recruiter_path, notice: "File imported."
      end
   end
 

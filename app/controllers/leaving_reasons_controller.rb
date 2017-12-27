@@ -80,7 +80,7 @@ class LeavingReasonsController < ApplicationController
         redirect_to import_xl_leaving_reasons_path
       else
      LeavingReason.import(params[:file])
-     redirect_to import_xl_leaving_reasons_path, notice: "File imported."
+     redirect_to new_leaving_reason_path, notice: "File imported."
      end
   end
   

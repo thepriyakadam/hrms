@@ -82,7 +82,7 @@ class TargetCompaniesController < ApplicationController
         redirect_to import_xl_target_companies_path
       else
      TargetCompany.import(params[:file])
-     redirect_to import_xl_target_companies_path, notice: "File imported."
+     redirect_to new_target_company_path, notice: "File imported."
      end
   end
 

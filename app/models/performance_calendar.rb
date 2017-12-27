@@ -30,8 +30,13 @@ class PerformanceCalendar < ActiveRecord::Base
         end
         start_date = spreadsheet.cell(i,'D')
         end_date = spreadsheet.cell(i,'E')
-
+        
+        @employee = PerformanceCalendar.find_by_name(period_id: period_id)
+        if @employee.nil?
         @performance = PerformanceCalendar.create(period_id: period_id,performance_activity_id: performance_activity_id,start_date: start_date,end_date: end_date)
+       else
+        @employee.update(period_id: period_id,performance_activity_id: performance_activity_id,start_date: start_date,end_date: end_date)
+      end
        end
     end
 

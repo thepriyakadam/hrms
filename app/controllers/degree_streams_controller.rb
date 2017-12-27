@@ -67,7 +67,7 @@ end
         redirect_to import_xl_degree_streams_path
       else
      DegreeStream.import(params[:file])
-     redirect_to import_xl_degree_streams_path, notice: "File imported."
+     redirect_to new_degree_stream_path, notice: "File imported."
      end
   end
   

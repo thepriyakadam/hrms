@@ -15,7 +15,13 @@ class Period < ActiveRecord::Base
         else
         	status = false
         end
+
+        @period = Period.find_by(name: name)
+        if @period.nil?
         @degree = Period.create(name: name,from: from,to: to,status: status)     
+        else
+          @period.update(name: name,from: from,to: to,status: status)
+        end
     end
   end
 

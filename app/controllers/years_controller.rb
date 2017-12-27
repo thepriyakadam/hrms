@@ -63,7 +63,7 @@ class YearsController < ApplicationController
         redirect_to import_xl_years_path
       else
      Year.import(params[:file])
-     redirect_to import_xl_years_path, notice: "File imported."
+     redirect_to new_year_path, notice: "File imported."
      end
   end
   

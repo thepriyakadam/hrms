@@ -26,7 +26,13 @@ class AttributeMaster < ActiveRecord::Base
         else
         	status = false
         end
+
+        @attribute = AttributeMaster.find_by(name: name)
+        if @attribute.nil?
         @degree = AttributeMaster.create(code: code,name: name,definition: definition,attribute_weightage: attribute_weightage,from: from,to: to,status: status)     
+        else
+          @attribute.update(code: code,name: name,definition: definition,attribute_weightage: attribute_weightage,from: from,to: to,status: status)
+        end
     end
   end
 

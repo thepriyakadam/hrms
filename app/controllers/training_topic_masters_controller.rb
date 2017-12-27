@@ -79,7 +79,7 @@ class TrainingTopicMastersController < ApplicationController
         redirect_to import_xl_training_topic_masters_path
       else
      TrainingTopicMaster.import(params[:file])
-     redirect_to import_xl_training_topic_masters_path, notice: "File imported."
+     redirect_to new_training_topic_master_path, notice: "File imported."
      end
   end
   

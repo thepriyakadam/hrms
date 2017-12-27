@@ -7,7 +7,12 @@ validates :name, presence: true,  uniqueness: { case_sensitive: false }
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        code = spreadsheet.cell(i,'B')
+        code = spreadsheet.cell(i,'B').to_i
+        if code == 0
+           code = spreadsheet.cell(i,'B')
+         else
+          code = spreadsheet.cell(i,'B').to_i
+        end
         name = spreadsheet.cell(i,'C')
         description = spreadsheet.cell(i,'D')
         is_confirm = spreadsheet.cell(i,'E')
@@ -16,7 +21,13 @@ validates :name, presence: true,  uniqueness: { case_sensitive: false }
         else
         	is_confirm = false
         end
+
+        @leaving = LeavingReason.find_by(name: name)
+        if @leaving.nil?
         @leaving_reason = LeavingReason.create(code: code,name: name,description: description,is_confirm: is_confirm)     
+        else
+          @leaving.update(code: code,name: name,description: description,is_confirm: is_confirm)
+        end
     end
   end
 

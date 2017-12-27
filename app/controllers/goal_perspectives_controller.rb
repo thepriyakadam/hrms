@@ -83,7 +83,7 @@ class GoalPerspectivesController < ApplicationController
         redirect_to import_xl_goal_perspectives_path
       else
      GoalPerspective.import(params[:file])
-     redirect_to import_xl_goal_perspectives_path, notice: "File imported."
+     redirect_to new_goal_perspective_path, notice: "File imported."
      end
   end
 

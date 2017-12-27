@@ -1332,7 +1332,7 @@ class Api::UserAuthsController < ApplicationController
     emp_code = emp.manual_employee_code
     date = params[:date]
     emp_daily_att = DailyAttendance.where(employee_code: emp_code, date: date)
-    render :json => emp_daily_att.present? ? emp_daily_att.collect{|eda| { :date => eda.date, :time => eda.time.strftime("%I:%M:%S %p"), :employee_code => eda.employee_code, :latitude => eda.latitude, :longitude => eda.longitude, :place => eda.place }} : []
+    render :json => emp_daily_att.present? ? emp_daily_att.collect{|eda| { :id => eda.id, :date => eda.date, :time => eda.time.strftime("%I:%M:%S %p"), :employee_code => eda.employee_code, :latitude => eda.latitude, :longitude => eda.longitude, :place => eda.place }} : []
   end
 
   def admin_all_leave_request_list
@@ -1350,15 +1350,20 @@ class Api::UserAuthsController < ApplicationController
     render :json => employee_leav_requests.present? ? employee_leav_requests.collect{|adminlr| { :id => adminlr.id, :employee_id => adminlr.employee_id, :prefix => adminlr.employee.prefix, :employee_first_name => adminlr.employee.first_name, :employee_middle_name => adminlr.employee.middle_name, :employee_last_name => adminlr.employee.last_name, :leav_category => adminlr.leav_category.name, :leave_count => adminlr.leave_count, :leave_type => adminlr.leave_type_re }} : []
   end
 
-  def employee_location_history
-    employee_id = params[:employee_id]
-    date_time = params[:date_time]
-    latitude = params[:latitude]
-    longitude = params[:longitude]
-    location = params[:place]
-    emp_loc_his = EmployeeLocationHistory.create(employee_id: employee_id, date_time: date_time, latitude: latitude, longitude: longitude, location: location)
-    render :status=>200, :json=>{:status=>"Employee Attendance Successfully Store."}
-  end
+  # def employee_location_history
+  #   emp_id = params[:employee_id]
+  #   date_time = params[:date_time]
+  #   latitude = params[:latitude]
+  #   longitude = params[:longitude]
+  #   location = params[:place]
+  #   emp_history = EmployeeLocationHistory.where(employee_id: emp_id, date_time: date_time)
+  #   emp_count = emp_history.count
+  #   if emp_count == 2
+  #     emp_history.last.latitude
+     
+  #   emp_loc_his = EmployeeLocationHistory.create(employee_id: emp_id, date_time: date_time, latitude: latitude, longitude: longitude, location: location)
+  #   render :status=>200, :json=>{:status=>"Employee Attendance Successfully Store."}
+  # end
 
   def daily_att_count
     employee_id = params[:employee_id]

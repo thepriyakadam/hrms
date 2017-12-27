@@ -21,6 +21,10 @@ class PlanReasonMastersController < ApplicationController
   def edit
   end
 
+  def view_resaon
+    reason_id = params[:format]
+    @plan_reason = PlanReasonMaster.find(reason_id)
+  end
   # POST /plan_reason_masters
   # POST /plan_reason_masters.json
   def create

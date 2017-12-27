@@ -1,6 +1,11 @@
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Specialization</h3>
+      <div class="pull-right">
+    <%= link_to " PDF ", specialization_master_degree_streams_path(id: @degree_stream.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
+    
+    <%= link_to " XLS ", specialization_master_degree_streams_path(id: @degree_stream.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
+    </div>
   </div><!-- /.box-header -->
 	<div class="box-body">
 		<div id="form">

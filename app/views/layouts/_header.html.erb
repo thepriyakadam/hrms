@@ -1,24 +1,23 @@
 <!-- Main Header -->
 <header class="main-header">
-
 <!-- Logo -->
 <a href="/home" class="logo">
-<!--  <span class="logo-mini"><b>H</b>CM</span>
-  <span class="logo-lg"><b> -->
+ <span class="logo-mini"><b>HCM</b></span>
+  <span class="logo-lg"><b>
    <% if current_user.class == Member %>
-             <% if current_user.employee.company.company_logo_file_name == nil %>
-              <small class="label label-default">Not Available</small>
-              <% else %>
-              <!-- <center><= link_to '',download_company_logo_path(@company),class: 'btn btn-xs fa fa-picture-o' %></center> -->
-              <%= image_tag current_user.employee.company.company_logo.url, :size => "120x40" %>
-              <%end %>
-              <%else%>
-                  <input type="text" name="q" class="form-control" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
-              </span>
-                <%end%>
-               <!--  </b></span> -->
+       <% if current_user.employee.company.company_logo_file_name == nil %>
+        <small class="label label-default">Not Available</small>
+        <% else %>
+        <!-- <center><= link_to '',download_company_logo_path(@company),class: 'btn btn-xs fa fa-picture-o' %></center> -->
+        <%= image_tag current_user.employee.company.company_logo.url, :size => "200x60" %>
+        <%end %>
+        <%else%>
+          <!--   <input type="text" name="q" class="form-control" placeholder="Search...">
+        <span class="input-group-btn">
+          <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+        </span> -->
+          <%end%>
+                </b></span>
 </a>
 
 <!-- Header Navbar -->
@@ -36,9 +35,9 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Employee Leave Request">
           <i class="fa fa-envelope-o" ></i>
           <span class="label label-success">
-            <% @pending_employee_leav_requests = EmployeeLeavRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false, first_reporter_id: current_user.employee_id) %>
-            <% @first_approved_employee_leav_requests = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false, second_reporter_id: current_user.employee_id) %>
-
+            <% if current_user.class == Group %>
+            <% else %>
+            <% @pending_employee_leav_requests = EmployeeLeavRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false,is_second_approved: false, first_reporter_id: current_user.employee_id) %>
             <% count1 = 0 %>
             <% @pending_employee_leav_requests.try(:each) do |employee_leav_request| %>
             <% count1 += 1 %>
@@ -47,15 +46,11 @@
             <% count1 %>
 
             <% count2 = 0 %>
-            <% @first_approved_employee_leav_requests.try(:each) do |employee_leav_request| %>
-            <% count2 += 1 %>
-            <% count2 %>
-            <% end %>
-            <% count2 %>
+            
             <% count = count1 + count2 %>
 
             <%= count %>
-
+           <%end%>
            </span>
         </a>
         <ul class="dropdown-menu">
@@ -78,10 +73,10 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="On Duty Request">
           <i class="fa fa-bell-o" ></i>
           <span class="label label-warning">
+              <% if current_user.class == Group %>
+          <% else %>
+            <%  @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: false,is_second_approved: false, is_first_rejected: false, is_cancelled: false, first_reporter_id: current_user.employee_id) %> 
             
-            <%  @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: false, is_first_rejected: false, is_cancelled: false, first_reporter_id: current_user.employee_id) %> 
-            <% @first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false, second_reporter_id: current_user.employee_id) %>
-
             <% count1 = 0 %>
             <% @pending_on_duty_requests.try(:each) do |on_duty_request| %>
             <% count1 += 1 %>
@@ -90,15 +85,12 @@
             <% count1 %>
 
             <% count2 = 0 %>
-            <% @first_approved_on_duty_requests.try(:each) do |on_duty_request| %>
-            <% count2 += 1 %>
-            <% count2 %>
-            <% end %>
-            <% count2 %>
+           
 
             <% count = count1 + count2 %>
             <%= count %>
 
+          <%end%>
           </span>
         </a>
         <ul class="dropdown-menu">
@@ -236,7 +228,7 @@
             <p>
               <% if current_user.class == Member %>
                 <small> ID : <%= current_user.manual_member_code %><br></small>
-                <small> Role Level : <%= current_user.role.name %> <br></small>
+                <small> System Role  : <%= current_user.role.name %> <br></small>
                 <small> Name : <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:last_name) %></small>
               <%else%>
                 <%= current_user.subdomain %>-
@@ -280,12 +272,15 @@
                 <%= link_to "Profile", edit_member_registration_path,class: "btn btn-default btn-flat" %>
               </div>
               <div class="pull-right">
-                <%= link_to 'Logout', destroy_member_session_path, :method => :delete ,class: "btn btn-default btn-flat" %>
+                <%= link_to 'Logout', destroy_member_session_path, :method => :delete ,class: "btn btn-default btn-flat", :id => 'example' %>
               </div>
             </li>
           <% end %>
         </ul>
       </li>
+
+
+
       <!-- Control Sidebar Toggle Button -->
       <!-- <li>
         <a href="#" data-toggle="control-sidebar" title = "Recent Activity">

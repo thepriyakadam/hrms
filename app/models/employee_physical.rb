@@ -16,15 +16,22 @@ class EmployeePhysical < ActiveRecord::Base
   end
 
   def self.import(file)
-    spreadsheet = open_spreadsheet(file)
-    header = spreadsheet.row(1)
+  spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-      row = Hash[[header, spreadsheet.row(i)].transpose]
-      employee_physical = find_by_id(row["id"]) || new
-      employee_physical.attributes = row.to_hash.slice(*row.to_hash.keys)
-      employee_physical.save!
+        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        if @employee == nil
+        else
+
+        employee_id = @employee.id
+        height = spreadsheet.cell(i,'C')
+        weight = spreadsheet.cell(i,'D')
+        size = spreadsheet.cell(i,'E')
+        trouser_size = spreadsheet.cell(i,'F')
+
+        @employee_physical = EmployeePhysical.create(employee_id: employee_id,height: height,weight: weight,size: size,trouser_size: trouser_size)
     end
   end
+end
 
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)

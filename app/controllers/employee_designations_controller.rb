@@ -1,7 +1,8 @@
-require 'query_report/helper'  # need to require the helper
+
+# require 'query_report/helper'  # need to require the helper
 class EmployeeDesignationsController < ApplicationController
   before_action :set_employee_designation, only: [:show, :edit, :update, :destroy]
-  include QueryReport::Helper  # need to include it
+  # include QueryReport::Helper  # need to include it
   def new
     @employee_designation = EmployeeDesignation.new
     @employee_designations = EmployeeDesignation.all
@@ -44,11 +45,21 @@ class EmployeeDesignationsController < ApplicationController
     @employee_designations = EmployeeDesignation.all
   end
 
-  def is_confirm
-    @employee_designation = EmployeeDesignation.find(params[:employee_designation])
-    EmployeeDesignation.find(@employee_designation.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_employee_designation_path
+ def employee_designation_master
+      @employee_designations = EmployeeDesignation.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_designations/employee_designation_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'employee_designation_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_designations/employee_designation_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
   end
 
   def employee_designation_list
@@ -69,6 +80,6 @@ class EmployeeDesignationsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_designation_params
-    params.require(:employee_designation).permit(:is_confirm,:name,:description)
+    params.require(:employee_designation).permit(:is_confirm,:name,:description,:code)
   end
 end

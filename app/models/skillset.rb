@@ -1,7 +1,7 @@
 class Skillset < ActiveRecord::Base
   belongs_to :employee
-  validates :name, presence: true, uniqueness: true
-  validates :skill_level, presence: true
+  # validates :name, presence: true, uniqueness: true
+  # validates :skill_level, presence: true
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
       csv << column_names
@@ -12,15 +12,20 @@ class Skillset < ActiveRecord::Base
   end
 
   def self.import(file)
-    spreadsheet = open_spreadsheet(file)
-    header = spreadsheet.row(1)
+  spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-      row = Hash[[header, spreadsheet.row(i)].transpose]
-      skillset = find_by_id(row["id"]) || new
-      skillset.attributes = row.to_hash.slice(*row.to_hash.keys)
-      skillset.save!
+        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        if @employee == nil
+        else
+        employee_id = @employee.id
+        name = spreadsheet.cell(i,'C')
+        skill_level = spreadsheet.cell(i,'D')
+
+        @skillset = Skillset.create(employee_id: employee_id,name: name,skill_level: skill_level)
     end
+
   end
+end
 
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)

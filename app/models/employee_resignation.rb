@@ -48,4 +48,20 @@ class EmployeeResignation < ActiveRecord::Base
     flag2
     flag3
   end
+
+   def is_there_self(emp)
+    employee = emp
+    flag = 0
+    flag1 = 0
+    flag2 = 0
+    flag3 = 0
+      flag = EmployeeResignation.exists?(employee_id: employee,resign_status: 'Pending') ||
+      flag1 = EmployeeResignation.exists?(employee_id: employee,resign_status: 'FirstApproved') ||
+      flag2 = EmployeeResignation.exists?(employee_id: employee,resign_status: 'SecondApproved') ||
+      flag3 = EmployeeResignation.exists?(employee_id: employee,resign_status: 'FinalApproved')
+    flag
+    flag1
+    flag2
+    flag3
+  end
 end

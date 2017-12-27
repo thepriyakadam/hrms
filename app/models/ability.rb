@@ -35,7 +35,17 @@ class Ability
         can :manage, [OnDutyRequest, ParticularOdRecord]
       elsif user.role.name == 'Supervisor'
         can :read, Employee
-        can :read, [JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family]
+        can :manage, [Employee, JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family,Award,Certification]
+
+        can :read, [EmployeeTemplate, EmployeeSalaryTemplate]
+        can :manage, EmployeeLeavRequest
+        can :manage, [GoalBunch, GoalRating]
+        can :manage, [TravelRequest, DailyBillDetail]
+        can :manage, [OnDutyRequest, ParticularOdRecord]
+      elsif user.role.name == 'CEO'
+        can :read, Employee
+        can :manage, [Employee, JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family,Award,Certification]
+
         can :read, [EmployeeTemplate, EmployeeSalaryTemplate]
         can :manage, EmployeeLeavRequest
         can :manage, [GoalBunch, GoalRating]
@@ -43,8 +53,22 @@ class Ability
         can :manage, [OnDutyRequest, ParticularOdRecord]
       elsif user.role.name == 'Employee'
         can :read, Employee, id: user.employee_id
-        can :manage, [JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family], employee_id: user.employee_id
+        can :manage, [JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family,Award,Certification], employee_id: user.employee_id
         cannot [:destroy,:update,:create], [JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family]
+        can :read, [EmployeeTemplate, EmployeeSalaryTemplate]
+        can :manage, EmployeeLeavRequest, employee_id: user.employee_id
+        can :read, AdvanceSalary, employee_id: user.employee_id
+        can :read, Attendance, employee_id: user.employee_id
+        can :manage, GoalBunch, employee_id: user.employee_id
+        can :manage, OnDutyRequest, employee_id: user.employee_id
+        can :manage, GoalRating, appraisee_id: user.employee_id
+        can :manage, TravelRequest, employee_id: user.employee_id
+        can [:read, :create, :update], DailyBillDetail, travel_request_id: user.employee_id
+      elsif user.role.name == 'NewEmployee'
+        can :manage, Employee, id: user.employee_id
+        can :manage, [JoiningDetail, Qualification, Experience, Skillset, EmployeePhysical, Certification,Family,Award,AssignedAsset,EmployeeDocument], employee_id: user.employee_id
+        can :manage,EmployeeBankDetail, employee_id: user.employee_id
+        cannot [:destroy,:update,:create],EmployeeBankDetail
         can :read, [EmployeeTemplate, EmployeeSalaryTemplate]
         can :manage, EmployeeLeavRequest, employee_id: user.employee_id
         can :read, AdvanceSalary, employee_id: user.employee_id

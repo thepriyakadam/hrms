@@ -10,6 +10,8 @@
         <tr>
           <th>ID</th>
           <th>Employee</th>
+          <th>Date</th>
+          <th>Status</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -19,10 +21,14 @@
           <tr>
           <td><%= employee_resignation.employee.try(:manual_employee_code) %></td>
             <td><%= full_name(employee_resignation.employee)%></td>
-            <td><%= link_to '', show_resignation_detail_self_services_path(emp_id: employee_resignation.employee_id), class: 'btn btn-default fa fa-eye btn-sm' %></td>
+             <td><%= employee_resignation.resignation_date%></td>
+              <td><%= employee_resignation.resign_status%></td>
+            <td><%= link_to '', modal_show_resignation_detail_self_services_path(employee_resignation), class: 'btn btn-default fa fa-eye btn-sm',remote:true %></td>
           </tr>
           <% end %>
       </tbody>
     </table>
   </div>
 </div>
+
+<div id="modal_show_resignation_detail" class="modal fade"></div>

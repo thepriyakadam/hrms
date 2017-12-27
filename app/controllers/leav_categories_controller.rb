@@ -1,6 +1,6 @@
 class LeavCategoriesController < ApplicationController
   before_action :set_leav_category, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
 
   def new
     @leav_category = LeavCategory.new
@@ -46,7 +46,6 @@ class LeavCategoriesController < ApplicationController
   
   def show_leave_category
     @leav_category = LeavCategory.find(params[:leav_category])
-    
   end
 
   def leave_category_modal
@@ -62,6 +61,7 @@ class LeavCategoriesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def leav_category_params
-    params.require(:leav_category).permit(:transfer,:monthly_leave,:is_continuous,:assign_balance,:is_cashable,:is_limit,:limit,:is_balance,:is_confirm,:from,:to,:is_active,:is_payble,:code, :name, :description)
+    params.require(:leav_category).permit(:transfer,:monthly_leave,:is_continuous,:assign_balance,:is_cashable,:is_limit,:limit,:is_balance,:is_confirm,:from,:to,:is_active,:is_payble,:code, :name, :description,:weekoff_sandwich)
+
   end
 end

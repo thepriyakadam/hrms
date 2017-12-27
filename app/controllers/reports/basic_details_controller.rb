@@ -26,7 +26,7 @@ class Reports::BasicDetailsController < ApplicationController
   end 
 
   def show_basic_detail
-    @company_location = params[:company_location]
+    @company_location = params[:salary][:company_location]
     @employees = Employee.where(company_location_id: @company_location)
 
   end
@@ -57,6 +57,33 @@ class Reports::BasicDetailsController < ApplicationController
       elsif current_user.role.name == 'Employee'
       end
     end
+  end
+
+  def employee_contact_report
+    @company_location = params[:company_location]
+    @employees = Employee.where(company_location_id: @company_location)
+  end
+
+  def employee_contact_report_pdf
+    @company_location = params[:company_location_id]
+    @employees = Employee.where(company_location_id: @company_location)
+     respond_to do |format|
+          format.json
+          format.pdf do
+            render pdf: 'employee_contact_report_pdf',
+                  layout: 'pdf.html',
+                  orientation: 'Landscape',
+                  template: 'reports/basic_details/employee_contact_report_pdf.pdf.erb',
+                  # show_as_html: params[:debug].present?,
+                  :page_height      => 1000,
+                  :dpi              => '300',
+                  :margin           => {:top    => 10, # default 10 (mm)
+                                :bottom => 10,
+                                :left   => 20,
+                                :right  => 20},
+                  :show_as_html => params[:debug].present?
+          end
+      end
   end
 
   def employee_basic_info

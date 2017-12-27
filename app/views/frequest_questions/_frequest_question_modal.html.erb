@@ -1,0 +1,29 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> FAQ's Detail </center></h4>
+    </div>
+    <div class="modal-body">
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+ <th><strong>Code</strong></th>
+  <td><%= @frequest_question.code %></td>
+  </tr>
+  
+  <tr> 
+  <th><strong>Question</strong></th>
+  <td><%= @frequest_question.question %></td>  
+   
+  </tr>
+
+  <tr>
+  <th><strong>Aswer</strong></th>
+  <td><%= @frequest_question.answer %></td>
+  </tr>
+   </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

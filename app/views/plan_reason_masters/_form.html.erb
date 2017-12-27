@@ -1,0 +1,30 @@
+<%= bootstrap_form_for(@plan_reason_master, html: {id: 'plan_reason_master' } ) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code, label:'Code', placeholder: 'Code' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name, label: 'Name', placeholder: 'Name' %>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group required">
+        <%= f.text_area :description, label:'Description'%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.check_box :status, label:'Status' %>
+      </div>
+    </div>
+    <br />
+    <div class="col-sm-3">
+      <div class="actions" style="padding-top: 20px;">
+        <%= f.submit 'Create',class: "btn btn-primary btn-sm"%>
+      </div>
+    </div>
+  </div>
+<% end %>

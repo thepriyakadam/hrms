@@ -1,0 +1,617 @@
+<div class="row">
+   <div class="col-sm-4">
+     <div class="box-header with-border">
+        <h3 class="box-title">Company Type Import File</h3>
+     </div><!-- /.box-header -->
+    <div class="box-body">
+      <%= form_tag import_company_type_import_files_path, multipart: true do %>
+      <label> File </label>
+      <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %><br>
+      <%= submit_tag "Import" %>
+      <% end %>
+    </div>
+   </div>
+
+
+   <div class="col-sm-4">
+    <div class="box-header with-border">
+<h3 class="box-title">Department Type Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_department_type_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+ <div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Bank Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_bank_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+</div>
+
+
+<div class="row">
+ <div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Policy Type Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_policy_type_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Employee Code Master Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_employee_code_master_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Employment Type Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_employee_type_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Nationality Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_nationality_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Religion Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_religion_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Relation Master Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_relation_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Blood Group Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_blood_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Illness Type Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_illness_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Employee Grade Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_employee_grade_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Employee Category Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_employee_category_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Employee Designation Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_designation_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Asset Type Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_asset_type_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Joining Checklist Master Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_checklist_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Qualification Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_qualification_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Qualification Level Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_qualification_level_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Specialization Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_specialization_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">University / Institution Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_univercity_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Passout Year Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_year_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Performance Period Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_period_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Rating Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_rating_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Goal Perspective Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_goal_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Attribute Definition Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_attribute_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Performance Activity Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_activity_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Performance Calendar Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_calender_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Skill Set Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_skillset_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Evaluation Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_evaluation_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Evaluation Criteria Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_criteria_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+</div>
+
+
+<div class="row">
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Interview Type Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_interview_type_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Target Company Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_target_company_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Question Master Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_question_master_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">About Company Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_about_company_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">About Manager Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_about_manager_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Leaving Reason Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_leaving_reason_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Training Course Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_training_course_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Reward Type Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_reward_type_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Reward Owner Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_reward_owner_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Root Cause Master Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_root_cause_master_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Project Master Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_project_master_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="box-header with-border">
+<h3 class="box-title">Reimbursment Master Import File</h3>
+</div><!-- /.box-header -->
+<div class="box-body">
+<%= form_tag import_rembursment_master_import_files_path, multipart: true do %>
+<label> File </label>
+  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  <br>
+  <%= submit_tag "Import" %>
+<% end %>
+</div>
+</div>
+</div>

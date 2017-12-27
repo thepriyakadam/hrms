@@ -1,6 +1,6 @@
 class LeavRejectedsController < ApplicationController
   before_action :set_leav_rejected, only: [:show, :edit, :update, :destroy]
-  # load_and_authorize_resource
+  # ##load_and_authorize_resource
   # GET /leav_rejecteds
   # GET /leav_rejecteds.json
   def index

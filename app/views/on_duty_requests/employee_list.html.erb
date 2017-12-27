@@ -1,6 +1,6 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Employee OD Request List</h3>
+    <h3 class="box-title">Employee On Duty Request List</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example6" class="table table-bordered table-hover table-condensed">
@@ -18,8 +18,8 @@
             <td><%= employee.manual_employee_code %></td>
             <td><%= full_name(employee) %></td>
             <td>
-              <%= link_to 'OD Request', from_hr_on_duty_requests_path(employee), class: 'btn btn-xs btn-primary' %>
-              <%= link_to 'View Request', hr_view_request_on_duty_requests_path(employee), class: 'btn btn-xs btn-info' %>
+              <%= link_to 'On Duty Request', from_hr_on_duty_requests_path(employee), class: 'btn btn-sm btn-primary' %>
+              <%= link_to 'View Request', hr_view_request_on_duty_requests_path(employee), class: 'btn btn-sm btn-info' %>
             </td>
           </tr>
         <% end %>

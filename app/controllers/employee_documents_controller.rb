@@ -1,6 +1,6 @@
 class EmployeeDocumentsController < ApplicationController
   before_action :set_employee_document, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
 
   # GET /employee_documents
   # GET /employee_documents.json
@@ -63,6 +63,7 @@ class EmployeeDocumentsController < ApplicationController
         # format.html { redirect_to @employee_document, notice: 'Employee Document Updated Successfully.' }
         # format.json { render :show, status: :ok, location: @employee_document }
         @employee_documents = @employee.employee_documents
+        EmployeeMailer.employee_document_create(@employee,@employee_document).deliver_now
         format.js { @flag = true }
       else
         # format.html { render :edit }

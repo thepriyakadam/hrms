@@ -25,15 +25,43 @@ def self.to_csv(options = {})
   end
 
   def self.import(file)
-    spreadsheet = open_spreadsheet(file)
-    header = spreadsheet.row(1)
+  spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-      row = Hash[[header, spreadsheet.row(i)].transpose]
-      employee_bank_detail = find_by_id(row["id"]) || new
-      employee_bank_detail.attributes = row.to_hash.slice(*row.to_hash.keys)
-      employee_bank_detail.save!
-    end
+        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        if @employee.nil?
+        else
+
+        employee_id = @employee.id
+        account_no = spreadsheet.cell(i,'C').to_i
+        @bank = Bank.find_by_name(spreadsheet.cell(i,'D'))
+        if @bank == nil
+          bank_name = spreadsheet.cell(i,'D')
+           @bank_entry = Bank.create(name: bank_name)
+           bank_id = @bank_entry.id
+
+        else
+        bank_id = @bank.id
+        end
+        branch_name = spreadsheet.cell(i,'E')
+        ifsc_code = spreadsheet.cell(i,'F')
+        micr_code = spreadsheet.cell(i,'G').to_i
+        branch_code = spreadsheet.cell(i,'H')
+        address = spreadsheet.cell(i,'I')
+        contact_no = spreadsheet.cell(i,'J').to_i
+
+        @employee_prsent = EmployeeBankDetail.find_by(employee_id: employee_id)
+        if @employee_prsent.nil?
+        @employee_bank_detail = EmployeeBankDetail.create(employee_id: employee_id,account_no: account_no,bank_id: bank_id,
+        branch_name: branch_name,ifsc_code: ifsc_code,micr_code:  micr_code,branch_code: branch_code,address: address,contact_no: contact_no)
+        else
+        @employee_prsent.update(employee_id: employee_id,account_no: account_no,bank_id: bank_id,
+        branch_name: branch_name,ifsc_code: ifsc_code,micr_code:  micr_code,branch_code: branch_code,address: address,contact_no: contact_no)
+   end
+
   end
+end
+end
+
 
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)

@@ -1,6 +1,10 @@
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Employee Category</h3>
+    <div class="pull-right">
+    <%= link_to " PDF ", employee_category_master_employee_categories_path(id: @employee_category.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
+    
+    <%= link_to " XLS ", employee_category_master_employee_categories_path(id: @employee_category.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
   </div><!-- /.box-header -->
 	<div class="box-body">
 		<div id="form">

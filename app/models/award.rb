@@ -4,9 +4,9 @@ class Award < ActiveRecord::Base
   validates :award_name, presence: true
   validates :year_id, presence: true
   validates :award_from, presence: true
-  validate :award_name_regex
-  validate :award_from_regex
-  validates :employee_id, uniqueness: { scope: [:award_name] }
+  # validate :award_name_regex
+  # validate :award_from_regex
+  # validates :employee_id, uniqueness: { scope: [:award_name] }
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
@@ -18,15 +18,30 @@ class Award < ActiveRecord::Base
   end
 
   def self.import(file)
-    spreadsheet = open_spreadsheet(file)
-    header = spreadsheet.row(1)
+  spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-      row = Hash[[header, spreadsheet.row(i)].transpose]
-      award = find_by_id(row["id"]) || new
-      award.attributes = row.to_hash.slice(*row.to_hash.keys)
-      award.save!
+        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        if @employee == nil
+        else
+
+        employee_id = @employee.id
+        award_name = spreadsheet.cell(i,'C')
+        @year = Year.find_by_name(spreadsheet.cell(i,'D'))
+        if @year == nil
+           year_name = spreadsheet.cell(i,'D')
+           @year_entry = Year.create(name: year_name)
+           year_id = @year_entry.id
+        else
+        year_id = @year.id
+        end
+        award_from = spreadsheet.cell(i,'E')
+        description = spreadsheet.cell(i,'F')
+
+        @award = Award.create(employee_id: employee_id,award_name: award_name,year_id: year_id,award_from: award_from,description: description)
     end
+
   end
+end
 
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)

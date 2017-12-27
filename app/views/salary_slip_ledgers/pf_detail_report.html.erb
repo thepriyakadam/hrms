@@ -7,35 +7,37 @@
   <div class="box-body">
     <%= bootstrap_form_for(:pf_detail, url: { action: 'dynamic_report'},html: {id: 'pf_detail'},remote:true) do |f| %>
       <div class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-3">
         <label>Year</label>
           <div class="field">
             <%= select :pf_detail,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
           </div>
         </div>
 
-        <div class="col-sm-2">
+        <div class="col-sm-3">
         <label>Month</label>
           <div class="field">
             <%= select :pf_detail,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
            </div>
         </div>
 
-        <div class="col-sm-2">
+        <div class="col-sm-3">
         <label>Company</label>
             <div class="form-group required">
               <%=f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form : 'food_deduction'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
             </div>
           </div>
 
-          <div class="col-sm-2">
+          <div class="col-sm-3">
             <div class="form-group required">
               <div id="company_location_with_label">
                 <%= render 'employees/company_location_dropdown_with_label' %> 
             </div>
             </div>
           </div>
-        
+        </div>
+
+      <div class="row">
         <div class="col-sm-2">
         <label></label>
           <div class="actions">

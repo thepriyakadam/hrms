@@ -1,0 +1,139 @@
+<div class="box">
+  <div class="box-body">
+      <table id="example6" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+          <th>Sr.No.</th>
+            <th>Employee</th>
+            <th>ID</th>
+            <th>Department</th>
+            <th>Joining Date</th>
+            <th>Payable Day</th>
+
+            <th>Non Payable Leave</th>
+            <th>Opening Balance</th>
+            <th>Payable Leave</th>
+            <th>Closing Balance</th>
+          
+            <th>C.Off</th>
+            <th>ACF</th>
+            <th>HP</th>
+              <% @from_date.step(@to_date).each do |l| %>
+                <th><%= l.strftime("%d") %></th>
+              <%end%>
+            </tr>
+        </thead>
+        <tbody>
+          <% exist = {} %>
+           <%i = 0%>
+          <% @employee_attendances.each do |e| %>
+            <tr>
+             <td><%= i=i+1 %></td>
+              <td><%= full_name(e.employee) %></td>
+              <td><%= e.employee.try(:manual_employee_code) %></td>
+              <td><%= e.employee.department.try(:description) %> <% if e.employee.sub_department.try(:name) == "NA"%>  <% else %> <%= e.employee.sub_department.try(:name) %><%end%></td>
+              <td><%= e.employee.joining_detail.try(:joining_date) %></td>
+
+              <% sorted_exists = calculate_attendance_datewise(@from_date,@to_date, exist, e)%>
+
+              <% sorted_exists.each do |k,v|%>
+                <td><%= v %></td>
+              <%end%>
+              <td><%= e.employee.department.try(:description) %></td>
+              <td><%= e.employee.joining_detail.try(:joining_date) %></td>
+
+              <% sorted_exists = calculate_attendance_datewise(@from_date,@to_date, exist, e)%>
+              
+            <% holiday_in_month = holiday_in_month_count(exist) %>
+            <% holiday_present_in_month = holiday_present_in_month_count(exist) %>
+            <% no_of_holiday_present_in_month = no_of_holiday_present_in_month_count(exist) %>
+            <% week_off_day = week_off_day_count(exist) %>
+           
+            <% od_day = od_day_count(exist) %>
+            <% present_count = present_count(exist) %>
+            <% absent_count = absent_count(exist) %>
+            <% el_leave_count = el_leave_count(exist) %>
+            <% cl_leave_count = cl_leave_count(exist) %>
+            <% coff_leave_count = coff_leave_count(exist) %>
+            <% advance_leave_count = advance_leave_count(exist) %>
+            <% lwp_leave_count = lwp_leave_count(exist) %>
+            <% esic_leave_count = esic_leave_count(exist) %>
+            <% pl_leave_count = pl_leave_count(exist) %>
+            <% sl_leave_count = sl_leave_count(exist) %>
+            <% leave_count = leave_count(exist) %>
+            <% ml_leave_count = ml_leave_count(exist) %>
+            <% wfh_leave_count = wfh_leave_count(exist) %>
+            <% process_off = process_off_count(exist) %>
+            <% access_card_forgotten = access_card_forgotten_count(exist) %>
+
+              <% payable_leave = el_leave_count.to_f + cl_leave_count.to_f + coff_leave_count.to_f + advance_leave_count.to_f + pl_leave_count.to_f + sl_leave_count.to_f + leave_count.to_f + wfh_leave_count.to_f + ml_leave_count.to_f %>
+             
+              <% nonpayable_leave = lwp_leave_count.to_f + esic_leave_count.to_f %>
+       
+                <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+                  <% payable_day = present_count.to_f + process_off.to_f + access_card_forgotten.to_f + od_day.to_f + holiday_in_month.to_f + cl_leave_count.to_f + el_leave_count.to_f + coff_leave_count.to_f %>
+                <% else %>
+                  <% payable_day = present_count.to_f + process_off.to_f + access_card_forgotten.to_f + od_day.to_f + holiday_in_month.to_f + week_off_day.to_f + cl_leave_count.to_f + el_leave_count.to_f + coff_leave_count.to_f  + holiday_present_in_month.to_f %>
+                <% end %>
+
+                <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+                  <% nonpayable_day = absent_count.to_f+ lwp_leave_count.to_f + esic_leave_count.to_f + week_off_day.to_f %>
+                <% else %>
+                  <% nonpayable_day = absent_count.to_f+ lwp_leave_count.to_f + esic_leave_count.to_f  %>
+                <% end %>
+
+              <td><%= payable_day %></td>
+             
+              <td><%= nonpayable_leave %></td>
+              <td></td>
+               <td><%= payable_leave %></td>
+              <td></td>
+              <td><%= coff_leave_count %></td>
+              <td><%= access_card_forgotten %></td>
+              <td><%= no_of_holiday_present_in_month %></td>
+              <!-- <td><= nonpayable_day %></td> -->
+              <% sorted_exists.each do |k,v|%>
+                <td><%= v %></td>
+              <%end%>
+            </tr>          
+            <% exist.clear %>
+
+          <%end%>
+        </tbody>
+      </table> 
+
+      <%= link_to " Excel Report ",payroll_show_employee_attendances_path(:employee => {:from => params[:employee][:from], :to => params[:employee][:to],:company_id => params[:employee][:company_id],:company_location_id => params[:employee][:company_location_id],:department_id => params[:employee][:department_id],:status => params[:employee][:status]},format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+
+      <%= link_to " PDF Report ",payroll_show_employee_attendances_path(:employee => {:from => params[:employee][:from], :to => params[:employee][:to],:company_id => params[:employee][:company_id],:company_location_id => params[:employee][:company_location_id],:department_id => params[:employee][:department_id],:status => params[:employee][:status]},format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+
+      <%= link_to "Back",payroll_report_employee_attendances_path,class: "btn btn-sm btn-default" %>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;
+      });
+    }
+    else {
+      $(':checkbox').each(function() {
+        this.checked = false;
+      });
+    }
+  });
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true,
+        "scrollY": 500
+    } );
+} );
+</script>
+

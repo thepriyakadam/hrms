@@ -10,6 +10,32 @@
             <%= f.hidden_field :day, value: @date %>
           </div>
         </div>
+        <div class="col-sm-3">
+         <label>In Time</label>
+            <div class="bootstrap-timepicker">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-clock-o"></i>
+                  </div> 
+                  <%= text_field :employee_attendance,:in_time,hide_label: true, placeholder: 'In Time',class: 'form-control timepicker',value: @employee_attendance.in_time %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+           <label>Out Time</label>
+            <div class="bootstrap-timepicker">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-clock-o"></i>
+                  </div>
+                  <%= text_field :employee_attendance,:out_time,hide_label: true, placeholder: 'Out Time',class: 'form-control timepicker',value: @employee_attendance.out_time %>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
 
       <table id="example1" class="table table-bordered table-hover table-condensed">
@@ -88,4 +114,17 @@ $(document).ready(function() {
      error.insertAfter(element.parent(element));
     }
    });
+</script>
+
+<script type="text/javascript">
+  $(function(){
+     $(".timepicker").timepicker({
+    showInputs: false
+  });
+    $('.machine_attendance').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:-0',
+    dateFormat: 'dd-mm-yy' });
+  }); 
 </script>

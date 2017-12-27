@@ -1,6 +1,6 @@
 class NationalitiesController < ApplicationController
   before_action :set_nationality, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
 
   def new
     @nationality = Nationality.new
@@ -37,12 +37,22 @@ class NationalitiesController < ApplicationController
     @nationalities = Nationality.all
   end
 
-  def is_confirm
-    @nationality = Nationality.find(params[:nationality])
-    Nationality.find(@nationality.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_nationality_path
-  end
+  def nationality_master
+     @nationalities = Nationality.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'nationalities/nationality_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' nationality_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'nationalities/nationality_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+    end
   
   private
 
@@ -53,6 +63,6 @@ class NationalitiesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def nationality_params
-    params.require(:nationality).permit(:is_confirm,:name)
+    params.require(:nationality).permit(:is_confirm,:name,:code,:description)
   end
 end

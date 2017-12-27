@@ -8,10 +8,19 @@ class EmployeeMailer < ApplicationMailer
    # end
   end
  
-  def user_confirmation(emp,pwd)
+  def user_confirmation(emp,pwd,code)
     @password = pwd
     @employee = emp
+    @manual_employee_code = code
     @emp = Employee.find_by(id: @employee.id)
+    attachments.inline['mail_signature.png'] = File.read('app/assets/images/mail_signature.png')
+    mail(to: @emp.email, subject: 'HRMS Password Detail')
+  end
+
+  def employee_reset_password(member)
+    @member = member
+    @emp = Member.find_by(manual_member_code: @member.manual_member_code)
+    attachments.inline['mail_signature.png'] = File.read('app/assets/images/mail_signature.png')
     mail(to: @emp.email, subject: 'HRMS Password Detail')
   end
 
@@ -26,7 +35,7 @@ class EmployeeMailer < ApplicationMailer
 
   def employee_create(employee)
     @employee = Employee.find_by(id: employee.id)
-    mail(to: @employee.company_location.email, subject: 'Employee Detail')
+    mail(to: "design@indibasolutions.com",cc: @employee.company_location.email, subject: 'Employee Detail')
   end
 
   def joining_create(employee,joining_detail)

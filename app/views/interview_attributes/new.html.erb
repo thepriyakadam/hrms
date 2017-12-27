@@ -1,6 +1,10 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Skillset</h3>
+    <h3 class="box-title">Skill Set</h3>
+      <div class="pull-right">
+    <%= link_to " PDF ", interview_attribute_master_interview_attributes_path(id: @interview_attribute.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
+    
+    <%= link_to " XLS ", interview_attribute_master_interview_attributes_path(id: @interview_attribute.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
   </div><!-- /.box-header -->
 	<div class="box-body">
 		<div id="form">

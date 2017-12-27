@@ -1,0 +1,43 @@
+ <div class="box-header">
+    <div class="pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <div id="comments">
+    <table id="example1" class="table table-bordered table-hover table-condensed">    
+    <thead>
+    <tr><td colspan="4"><center><strong><%= current_user.employee.company_location.company.try(:description) %></strong> <br>
+        <%= current_user.employee.company_location.company.try(:address) %><br> 
+        <%= current_user.employee.company_location.try(:name) %></center> </td></tr>
+      <tr>
+      <th>Employee Code</th>
+      <th>Employee Name</th>
+      <th>Department</th>
+      <th>Image</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @employees.each do |e| %>
+      <tr>
+        <td><%= e.manual_employee_code%></td>
+        <td><%= full_name(e) %></td>
+        <td><%= e.department.try(:name) %></td>
+        <td> 
+      <% if e.passport_photo_file_name == nil %>
+      <% if e.gender == "Female" %>
+      <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "50x50" %>
+      <%else%>
+      <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "50x50" %>
+      <%end%>
+      <%else%>
+      <%= image_tag e.passport_photo.url, :size => "50x50" %>
+      <%end%>
+      </td>
+       </tr>
+      <% end %>
+    </tbody>
+    </table>
+    </div>
+    <%= link_to " Print PDF ",reports_basic_details_employee_contact_report_pdf_path(company_location_id: @company_location , format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+    </div>

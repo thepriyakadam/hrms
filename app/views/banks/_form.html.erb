@@ -2,7 +2,19 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Bank Code' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
         <%= f.text_field :name,hide_label:true, placeholder: 'Bank Name' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Bank Description' %>
       </div>
     </div>
 
@@ -14,18 +26,24 @@
   </div>
 <% end %>
 
-<script type="text/javascript">
- $("#bank").validate({
+<script>
+$("#bank").validate({
     rules: {
+      "bank[code]":{
+        required: true,
+      },
       "bank[name]":{
-        required: true
+        required: true,
       }
-    },
+       },
     messages: {
-      "bank[name]":{
-        required: "Please specify bank name"
+      "bank[code]":{
+        required: "Please specify code",
+      },
+       "bank[name]":{
+        required: "Please specify name",
       }
-    },
+       },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));

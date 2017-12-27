@@ -1,0 +1,47 @@
+  <style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+      /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+    }
+</style>
+<table style="border-collapse: collapse; font-size:8pt;" border=1 width=1000 cellpadding="19">
+   <thead>
+    <tr><td colspan="4"><center><strong><%= current_user.employee.company_location.company.try(:description) %></strong> <br>
+        <%= current_user.employee.company_location.company.try(:address) %><br> 
+        <%= current_user.employee.company_location.try(:name) %></center> </td></tr>
+      <tr>
+      <th>Employee Code</th>
+      <th>Employee Name</th>
+      <th>Department</th>
+      <th>Image</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @employees.each do |e| %>
+      <tr>
+        <td><%= e.manual_employee_code%></td>
+        <td><%= full_name(e) %></td>
+        <td><%= e.department.try(:name) %></td>
+         <td> 
+      <% if e.passport_photo_file_name == nil %>
+      <% if e.gender == "Female" %>
+      <%= wicked_pdf_image_tag "avatar2.png",class: "img", alt: "User Image", size: "50x50" %>
+      <%else%>
+      <%= wicked_pdf_image_tag "avatar5.png",class: "img", alt: "User Image", size: "50x50" %>
+      <%end%>
+      <%else%>
+      <%= wicked_pdf_image_tag e.passport_photo.url, :size => "50x50" %>
+      <%end%>
+      </td>
+       </tr>
+      <% end %>
+    </tbody>
+    </table>

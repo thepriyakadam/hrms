@@ -12,7 +12,12 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
+        <div class="input-group">
+           <div class="input-group-addon">
+                <%= link_to "", new_asset_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
         <%= f.select :asset_type_id,all_asset_type,{label: 'Asset Type',include_blank: " Asset Type"} %>
+      </div>
       </div>
     </div>
     <div class="col-sm-3">
@@ -85,13 +90,13 @@
     $('.issue_date').datepicker({
     changeYear:true,
     changeMonth: true,
-    yearRange: '-2:+25',
+    yearRange: '-10:+25',
     dateFormat: 'dd-mm-yy' });
 
     $('.valid_till_date').datepicker({
     changeYear:true,
     changeMonth: true,
-    yearRange: '-2:+25',
+    yearRange: '-10:+25',
     dateFormat: 'dd-mm-yy' });
   }); 
 

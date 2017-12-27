@@ -6,6 +6,7 @@
   <div class="box-body">
     <%= bootstrap_form_for(@on_duty_request,html: {id: 'on_duty_request'}) do |f| %>
     <%= f.hidden_field :employee_id, value: @employee.id %>
+    <%= f.hidden_field :leave_type, value: "Full Day" %>
 
       <div class="row">
       <div class="col-sm-6">
@@ -15,11 +16,14 @@
               <tr>
                 <th>Employee </th>
                 <td><%= @employee.manual_employee_code %> - <%= full_name(@employee) %></td>
-              </tr>
-              <tr>
-                <th>Manager 1 </th>
-                <td><%= @employee.manager.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager)) %></td>
-              </tr>
+              </tr>            <tr>
+            <th>Manager 1 </th>
+            <%if @employee.id == @employee.manager_id %>
+               <td>Time & Attendance Team</td>
+             <%else%>
+              <td><%= @employee.manager.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager)) %></td>
+              <%end%>
+            </tr>
               <tr>
                 <th>Manager 2 </th>
                 <td><%= @employee.manager_2.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager_2)) %></td>
@@ -31,13 +35,13 @@
     </div>
 
       <div class="row">
-        <div class="col-sm-3">
+       <!--  <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :leave_type,['Full Day','Half Day','Full/Half'],{label:"OD Type",include_blank: "Select OD Type"},{onchange:"var a={leave_type:$(this).val()}; $.get('/on_duty_requests/select_checkbox',a,function(response){});",class: 'form-control'} %>
+            <= f.select :leave_type,['Full Day','Half Day'],{label:"OD Type",include_blank: "Select OD Type"},{onchange:"var a={leave_type:$(this).val()}; $.get('/on_duty_requests/select_checkbox',a,function(response){});",class: 'form-control'} %>
           </div>
         </div>
 
-        <div id="checkbox"></div>
+        <div id="checkbox"></div> -->
 
         <div class="col-sm-3">
           <div class="form-group required">
@@ -61,10 +65,8 @@
         </div>
 
 
-      </div>
-      <div class="row">
 
-        <div id="checkbox1"></div>
+        <!-- <div id="checkbox1"></div> -->
 
         <div class="col-sm-4">
           <div class="field">
@@ -77,7 +79,7 @@
         <div class="col-sm-6">
         <label></label>
           <div class="actions">
-            <%= f.submit 'Create OD Request', :class => class_name, data: { disable_with: data_info } %> | 
+            <%= f.submit 'Create On Duty Request', :class => class_name, data: { disable_with: data_info } %> | 
             <%= link_to ' Back', on_duty_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
           </div>
         </div>
@@ -90,9 +92,6 @@
   <script type="text/javascript">
   $("#on_duty_request").validate({
       rules: {
-        "on_duty_request[leave_type]":{
-          required: true
-        },
         "on_duty_request[start_date]":{
           required: true
         },
@@ -101,9 +100,6 @@
         }
       },
       messages: {
-        "on_duty_request[leave_type]":{
-          required: "Please specify OD type."
-        },
         "on_duty_request[start_date]":{
           required: "Please specify date range."
         },

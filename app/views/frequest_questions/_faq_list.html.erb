@@ -1,0 +1,34 @@
+<br>
+<table id="example6" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Code</th>
+      <th>Question</th>
+      <th>Status</th>
+      <th>Action</th>
+ 
+  <tbody>
+    <% @frequest_questions.each do |frequest_question| %>
+      <tr>
+        <td><%= frequest_question.code %></td>
+        <td><%= frequest_question.question %></td>
+        <td><%= frequest_question.status ? "Active" : "Inactive" %></td>
+        <td>
+            <%= link_to '', edit_frequest_question_path(frequest_question),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  frequest_question, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
+            <%= link_to '', frequest_question_modal_frequest_questions_path(frequest_question),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div id="frequest_question_modal" class="modal fade"></div>
+
+ <script type="text/javascript">
+  $(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

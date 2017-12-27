@@ -16,6 +16,7 @@
 				<Cell ss:Index="7"><Data ss:Type="String">Weight</Data></Cell>
 				<Cell ss:Index="8"><Data ss:Type="String">T-Shirt Size</Data></Cell>
         <Cell ss:Index="9"><Data ss:Type="String">Trouser Size</Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String">Update Time</Data></Cell>
         </Row>
          <% i = 0 %>
          <% @employee_physicals.each do |employee_physical| %>
@@ -29,6 +30,7 @@
           <Cell ss:Index="7"><Data ss:Type="String"><%= employee_physical.weight %></Data></Cell>
           <Cell ss:Index="8"><Data ss:Type="String"><%= employee_physical.size %></Data></Cell>
           <Cell ss:Index="9"><Data ss:Type="String"><%= employee_physical.trouser_size %></Data></Cell>
+          <Cell ss:Index="10"><Data ss:Type="String"><%= employee_physical.try(:updated_at).to_date %></Data></Cell>
           </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

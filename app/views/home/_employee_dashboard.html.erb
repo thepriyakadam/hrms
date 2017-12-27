@@ -36,8 +36,8 @@
     <div class="info-box">
       <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
       <div class="info-box-content">
-        <span class="info-box-text">Employees</span>
-        <span class="info-box-number"><%= @employees.try(:count) %></span>
+        <span class="info-box-text"></span>
+        <span class="info-box-number"></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
   </div><!-- /.col -->
@@ -155,7 +155,7 @@
         </div><!-- /.box-header -->
         <div class="box-body">
           <div class="table-responsive">
-            <table id="example1" class="table no-margin">
+            <table class="table no-margin">
             <thead>
               <tr>
                 <th>Code</th>
@@ -187,44 +187,6 @@
 
     
 
-        <div class="box box-info">
-        <div class="box-header with-border">
-          <h3 class="box-title">Openings</h3>
-          <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-          </div>
-        </div><!-- /.box-header -->
-        <div class="box-body">
-          <div class="table-responsive">
-            <table id="example1" class="table no-margin">
-            <thead>
-              <tr>
-                <th>Vacancy Code</th>
-                <th>Vacancy</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <% @vacancy_masters.each do |vacancy_master| %>
-              <tr>
-                <td><%= vacancy_master.vacancy_code %></td>
-                <td><%= vacancy_master.vacancy_name %></td>
-                  <td>
-                     <%= link_to 'Apply', refferal_selected_resumes_path(vacancy_master_id: vacancy_master.id) ,class: 'btn btn-xs btn-primary' %>
-                  </td>
-                </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div><!-- /.table-responsive -->
-        </div><!-- /.box-body -->
-        <div class="box-footer clearfix">
-          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
-          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
-        </div><!-- /.box-footer -->
-      </div><!-- /.box -->
 
     </section><!-- /.Left col -->
     <!-- right col (We are only adding the ID to make the widgets sortable)-->
@@ -244,7 +206,9 @@
                 <div class="box-body">
            
                     <% date = Date.today %>
-                    <% @employees = JoiningDetail.where("DATE_FORMAT(joining_date,'%d/%m') = ?", date.strftime('%d/%m'))%>
+                    <% @employee = Employee.where(status: "Active") %>
+                    <% @employees = JoiningDetail.where("DATE_FORMAT(joining_date,'%d/%m') = ?", date.strftime('%d/%m')).where(employee_id: @employee) %>
+
                    <% if @employees.empty? %>
              
                    <%else%>
@@ -271,7 +235,7 @@
                    <%end%> <!-- unless -->
                    </td>
                        <td><%= full_name(e.employee) %>
-                        <span class="users-list-date"><%= e.try(:joining_detail).try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
+                        <span class="users-list-date"><%= e.employee.try(:cost_center).try(:name) %> - <%= e.employee.try(:department).try(:name) %> <%= e.employee.try(:sub_department).try(:name) %></span>
                        </td>
                        <td>
                        <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today,receiver_id: e.employee_id,greeting_type: "Anniversary") %>
@@ -355,7 +319,7 @@
                    <%end%>
                    </td>
                        <td> <%= full_name(e) %>
-                        <span class="users-list-date"><%= e.try(:joining_detail).try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
+                        <span class="users-list-date"><%= e.try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
 
                        </td>
                        <td>
@@ -382,8 +346,9 @@
               
 
       <div id="birthday_email" class="modal fade"></div>
-      
-      <div class="box box-primary">
+
+
+      <div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title">Upcoming Birthday</h3>
           <div class="box-tools pull-right">
@@ -391,35 +356,51 @@
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
           </div>
         </div><!-- /.box-header -->
-        <div class="box-body">
-            
-             <% date = Date.today + 1 %>
-            <% @employees = Employee.where("status = ? AND DATE_FORMAT(date_of_birth,'%d/%m') = ?", "Active" , date.strftime('%d/%m')) %>
+
+               
+                <div class="box-body">
+    
+              <% date = Date.today + 1 %>
+              <% @employees = Employee.where("status = ? AND DATE_FORMAT(date_of_birth,'%d/%m') = ?", "Active" , date.strftime('%d/%m')) %>
             <% if @employees.empty? %>
             <%else%>
-            <table  class="table table-bordered table-hover table-condensed">
-              <thead>
+            <table id="birthday" class="table no-margin">
+            <thead>
               <tr>
-                <th>Name</th>
-                <th>Contact No</th>
-                </tr>
-              </thead>
-              <tbody>
-                <%@employees.each do |e|%>
+                <th></th>
+                <th>Employee</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+                  
+              <% @employees.each do |e| %>
                 <tr>
-                  <td><%= full_name(e) %></td>
-                  <td><%= e.contact_no %></td>
-                </tr>
-                <%end%>
-              </tbody>
-           
-            <%end%>
-             </table>
-        </div><!-- /.box-body -->
-      </div><!-- /.box -->
-      
-         
+                   <td>
+                     <%unless e.nil? or e.nil? or  e.member.nil? or e.member.avatar.nil? %>
+                 <% if e.gender == "Male" && e.member.avatar_file_name == nil  %>
+                 <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                  <% elsif e.gender == "Female" && e.member.avatar_file_name == nil  %>
+                  <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                   <%else%>
+                   <%= image_tag e.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
+                  <%end%>
+                   <%end%>
+                   </td>
+                       <td> <%= full_name(e) %>
+                        <span class="users-list-date"><%= e.try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
 
+                       </td>
+                       <td> <%= e.date_of_birth.strftime("%d %b") %></td>
+
+                    <% end %> <!-- do -->
+                     </tr>
+                      <%end%> <!-- if employee.empty? -->
+                  </table>
+                
+                 
+                  </div><!-- /.box-body -->
+              </div><!-- /.box -->
+              
 
       <!-- PRODUCT LIST -->
       
@@ -433,17 +414,17 @@
         </div><!-- /.box-header -->
         <div class="box-body">
           <ul class="products-list product-list-in-box">
-              <% JoiningDetail.all.order("id desc").limit(5).each do |j| %>
+              <% JoiningDetail.all.order("joining_date desc").limit(5).each do |j| %>
                 <% if j.employee.status == "Active" %>
                   <li class="item">
                     <div class="product-img">
                       <%unless j.nil? or j.employee.nil? or  j.employee.member.nil? or j.employee.member.avatar.nil? %>
                         <% if j.employee.gender == "Male" && j.employee.member.avatar_file_name == nil  %>
-                          <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                        <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
                         <% elsif j.employee.gender == "Female" && j.employee.member.avatar_file_name == nil  %>
-                          <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                        <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
                         <%else%>
-                          <%= image_tag j.employee.member.avatar.url(:medium),class: "img-circle"%>
+                          <%= image_tag j.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
                         <%end%>
                       <%else%>
                         <%= image_tag "user.jpg",class: "img-circle", alt: "User Image", size: "25x25" %>
@@ -452,7 +433,8 @@
                     <div class="product-info">
                       <%= full_name(j.employee)%>
                       <span class="label label-info pull-right"><%= j.joining_date %></span>
-                      <span class="product-description"><%= j.employee.try(:joining_detail).try(:cost_center).try(:name) %> - <%= j.employee.try(:department).try(:name) %> <%= j.try(:employee).try(:sub_department).try(:name) %></span>
+                      <span class="product-description"><%= j.employee.try(:cost_center).try(:name) %> - <%= j.employee.try(:department).try(:name) %> <%= j.try(:employee).try(:sub_department).try(:name) %>  </span>
+                      <span class="product-description"><%= full_name(j.employee.try(:manager)) %></span>
                     </div>
                   </li><!-- /.item -->
                 <% else %>

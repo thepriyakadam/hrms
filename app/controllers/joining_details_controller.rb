@@ -1,10 +1,11 @@
-require 'query_report/helper' # need to require the helper
+
+# require 'query_report/helper' # need to require the helper
 class JoiningDetailsController < ApplicationController
   before_action :set_joining_detail, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
   # GET /joining_details
   # GET /joining_details.json
-  include QueryReport::Helper # need to include it
+  # include QueryReport::Helper # need to include it
 
   def index
     @joining_details = JoiningDetail.all
@@ -28,6 +29,8 @@ class JoiningDetailsController < ApplicationController
 
   # POST /joining_details
   # POST /joining_details.json
+  
+
   def create
     @joining_detail = JoiningDetail.new(joining_detail_params)
     @employee = Employee.find(params[:joining_detail][:employee_id])
@@ -61,11 +64,13 @@ class JoiningDetailsController < ApplicationController
         # format.html { redirect_to @joining_detail, notice: 'Joining detail was successfully updated.' }
         # format.json { render :show, status: :ok, location: @joining_detail }
         format.js { @flag = true }
+        # EmployeeMailer.joining_create(@employee,@joining_detail).deliver_now  
       else
         # format.html { render :edit }
         # format.json { render json: @joining_detail.errors, status: :unprocessable_entity }
         format.js { @flag = true }
       end
+        EmployeeMailer.joining_create(@employee,@joining_detail).deliver_now  
     end
   end
 
@@ -102,19 +107,23 @@ class JoiningDetailsController < ApplicationController
  end
 
   def import_xl
-    @joining_details = JoiningDetail.all
-    respond_to do |format|
-    format.html
-    format.csv { send_data @joining_details.to_csv }
-    format.xls
-     session[:active_tab] = "import"
-   end   
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Imports"   
   end
 
+ 
   def import
     # byebug
+    # JoiningDetail.import(params[:file])
+    # redirect_to root_url, notice: "File imported."
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_joining_details_path
+    else
     JoiningDetail.import(params[:file])
-    redirect_to root_url, notice: "File imported."
+    redirect_to import_xl_joining_details_path, notice: "File imported."
+    end
   end
 
   def display_inactive_employee

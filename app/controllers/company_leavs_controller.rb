@@ -1,7 +1,7 @@
 class CompanyLeavsController < ApplicationController
   before_filter :collect_leaves, only: [:new, :create, :update, :destroy]
   before_action :set_company_leav, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
 
   def new
     @company_leav = CompanyLeav.new

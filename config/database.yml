@@ -105,42 +105,66 @@ test:
   host: localhost
 
 production:
-  adapter: mysql2
-  encoding: utf8
-  pool: 5
-  socket: /var/run/mysqld/mysqld.sock
-  database: hrms_development
-  username: root
-  password: root
-  host: localhost
-  reconnect: true
+  <<: *default
+  database: hrms_production
+  username: hrms
+  password: <%= ENV['HRMS_DATABASE_PASSWORD'] %>
 
-development_sec:
-  adapter: sqlserver
-  mode: dblib
-  encoding: utf8
-  host: 123.201.35.198
-  database: ZKA
-  username: sa
-  password: pass
-  reconnect: true
-
-test_sec:
-  adapter: sqlserver
-  mode: dblib
-  pool: 5
-  host: 192.168.1.55
-  username: sa
-  password: pass
-  reconnect: true
-  database: ZKA
   
-production_sec:
-  adapter: sqlserver
-  mode: dblib
-  pool: 5
-  host: 192.168.1.55
-  username: sa
-  password: pass
-  reconnect: true
-  database: ZKA
+
+# development:
+#   adapter: mysql2
+#   encoding: utf8
+#   pool: 5
+#   username: root
+#   password: root
+#   reconnect: true
+#   database: hrms_development
+
+# production:
+#   adapter: mysql2
+#   encoding: utf8
+#   pool: 5
+#   username: root
+#   password: root
+#   database: hrms_production
+
+# test:
+#   adapter: mysql2
+#   encoding: utf8
+#   pool: 5
+#   username: root
+#   password: root
+#   database: hrms_test
+
+# development_sec:
+#   adapter: sqlserver
+#   encoding: utf8
+#   host: 182.76.15.42
+#   database: access
+#   username: essl
+#   password: essl
+
+# production_sec:
+#   mode: odbc
+#   adapter: sqlserver
+#   dsn: mydsn
+#   encoding: utf8
+#   pool: 5
+#   host: 182.76.15.42
+#   database: access
+#   username: essl
+#   password: essl
+#   port: 1433
+
+# test_sec:
+#   mode: odbc
+#   adapter: sqlserver
+#   dsn: mydsn
+#   encoding: utf8
+#   pool: 5
+#   host: 182.76.15.42
+#   database: access
+#   username: essl
+#   password: essl
+#   port: 1433

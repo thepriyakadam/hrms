@@ -20,7 +20,7 @@
                 <td><%= e.manual_employee_code %></td>
                 <td><%= full_name(e) %></td>
                 <td><%= e.joining_detail.try(:employee_designation).try(:name) %></td>
-                <td><%= e.company_location.try(:name) %> - <%= e.department.try(:name) %></td>
+<td><%= e.company_location.try(:name) %> - <%= e.department.try(:name) %> - <%= e.try(:sub_department).try(:name) %></td>
               </tr>
             <% end %>
           </tbody>

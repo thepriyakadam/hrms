@@ -15,15 +15,25 @@ class Experience < ActiveRecord::Base
   end
 
   def self.import(file)
-    spreadsheet = open_spreadsheet(file)
-    header = spreadsheet.row(1)
+  spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-      row = Hash[[header, spreadsheet.row(i)].transpose]
-      experience = find_by_id(row["id"]) || new
-      experience.attributes = row.to_hash.slice(*row.to_hash.keys)
-      experience.save!
-    end
+        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        if @employee == nil
+        else
+        employee_id = @employee.id
+        company_name = spreadsheet.cell(i,'C')
+        designation = spreadsheet.cell(i,'D')
+        start_date = spreadsheet.cell(i,'E')
+        end_date = spreadsheet.cell(i,'E')
+        no_of_year = spreadsheet.cell(i,'F')
+        ctc = spreadsheet.cell(i,'G')
+        description = spreadsheet.cell(i,'H')
+
+        @experience = Experience.create(employee_id: employee_id,company_name: company_name,designation: designation,start_date: start_date,end_date: end_date,no_of_year: no_of_year,ctc: ctc,description: description)
   end
+
+  end
+end
 
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)

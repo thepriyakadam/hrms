@@ -4,12 +4,21 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h4>Leave Request Cancelled</h4>
-    <p>
-      Leave request is Cancel after approved by
-      ID : <%= @current_emp.manual_employee_code %><br>
-      Employee : <%= @current_emp.first_name.to_s+' '+@current_emp.last_name.to_s %><br>
-      Date <%= @particular_leave_record.leave_date.to_date %><br>
-    </p>
+  <center><h4>Your leave request has been reverted by the Time & Attendance Team</h4></center>
+
+<p>As per your request, a leave request that had been earlier approved, has now been reverted by the Time & Attendance Team.</p>
+ 
+<h4>Requester Details :-</h>
+ 
+<p>Employee ID :- <%= @particular_leave_record.try(:employee).try(:manual_employee_code) %></p>
+ 
+<p>Employee Name :-  <%= @particular_leave_record.try(:employee).try(:first_name) %>  <%= @particular_leave_record.try(:employee).try(:middle_name) %>  <%= @particular_leave_record.try(:employee).try(:last_name) %></p>
+ 
+<h4>Details of the Leave :-</h>
+ 
+<p>Date :-  <%= @particular_leave_record.leave_date.to_date %></p>
+
+<p>Reason :-  <%= @particular_leave_record.try(:employee_leav_request).try(:reason) %></p>
+ 
   </body>
 </html>

@@ -1,0 +1,14 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Editing Employee Plan</h3>
+     <div class="pull-right">
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+    		<br />
+			<%= link_to 'Show', @employee_plan, class: 'btn btn-sm btn-default fa fa-eye' %> |
+			<%= link_to 'Back', employee_plans_path, class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+		</div>
+	</div><!-- /.box-body -->
+</div><!-- /.box -->

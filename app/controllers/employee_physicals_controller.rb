@@ -1,6 +1,6 @@
 class EmployeePhysicalsController < ApplicationController
   before_action :set_employee_physical, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
   # GET /employee_physicals
   # GET /employee_physicals.json
   def index
@@ -29,7 +29,7 @@ class EmployeePhysicalsController < ApplicationController
     @employee = Employee.find(params[:employee_physical][:employee_id])
     respond_to do |format|
       if @employee_physical.save
-        EmployeeMailer.physical_detail_create(@employee,@employee_physical).deliver_now
+        # EmployeeMailer.physical_detail_create(@employee,@employee_physical).deliver_now
         format.html { redirect_to @employee_physical, notice: 'Employee physical was successfully created.' }
         format.json { render :show, status: :created, location: @employee_physical }
         format.js { @flag = true }
@@ -48,7 +48,9 @@ class EmployeePhysicalsController < ApplicationController
       if @employee_physical.update(employee_physical_params)
         # format.html { redirect_to @employee_physical, notice: 'Employee physical was successfully updated.' }
         # format.json { render :show, status: :ok, location: @employee_physical }
+        EmployeeMailer.physical_detail_create(@employee,@employee_physical).deliver_now
         format.js { @flag = true }
+         EmployeeMailer.physical_detail_create(@employee,@employee_physical).deliver_now
       else
         # format.html { render :edit }
         # format.json { render json: @employee_physical.errors, status: :unprocessable_entity }
@@ -68,19 +70,19 @@ class EmployeePhysicalsController < ApplicationController
   end
 
    def import_xl
-    @employee_physicals = EmployeePhysical.all
-    respond_to do |format|
-    format.html
-    format.csv { send_data @employee_physicals.to_csv }
-    format.xls
-     session[:active_tab] = "import"
-   end   
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Imports" 
   end
 
   def import
-    # byebug
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_employee_physicals_path
+    else
     EmployeePhysical.import(params[:file])
-    redirect_to root_url, notice: "File imported."
+    redirect_to import_xl_employee_physicals_path, notice: "File imported."
+    end
   end
 
   private

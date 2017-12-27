@@ -1,8 +1,9 @@
-require 'query_report/helper'  # need to require the helper
+
+# require 'query_report/helper'  # need to require the helper
 class DepartmentsController < ApplicationController
   before_action :set_department, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
-  include QueryReport::Helper  # need to include it
+  ##load_and_authorize_resource
+  # include QueryReport::Helper  # need to include it
 
 
   def new
@@ -52,6 +53,10 @@ class DepartmentsController < ApplicationController
       column(:Location_ID, sortable: true) { |department| department.company_location_id }
       column(:Department_Name, sortable: true) { |department| department.name }
     end
+  end
+
+  def modal
+    @department = Department.find(params[:format])
   end
 
   def is_confirm

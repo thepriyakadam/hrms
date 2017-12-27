@@ -51,13 +51,24 @@ class EmployeeCodeMastersController < ApplicationController
     @employee_code_master.destroy
     @employee_code_masters = EmployeeCodeMaster.all
   end
+  
+  def employee_code_master
+     @employee_code_masters = EmployeeCodeMaster.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_code_masters/employee_code_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' employee_code_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_code_masters/employee_code_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+    end
 
-  def is_confirm
-    @employee_code_master = EmployeeCodeMaster.find(params[:employee_code_master])
-    EmployeeCodeMaster.find(@employee_code_master.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_employee_code_master_path
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

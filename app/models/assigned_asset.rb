@@ -12,15 +12,32 @@ class AssignedAsset < ActiveRecord::Base
   end
 
   def self.import(file)
-    spreadsheet = open_spreadsheet(file)
-    header = spreadsheet.row(1)
+  spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-      row = Hash[[header, spreadsheet.row(i)].transpose]
-      assigned_asset = find_by_id(row["id"]) || new
-      assigned_asset.attributes = row.to_hash.slice(*row.to_hash.keys)
-      assigned_asset.save!
-    end
+        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        if @employee == nil
+        else
+        employee_id = @employee.id
+        @asset_type = AssetType.find_by_name(spreadsheet.cell(i,'C'))
+        if @asset_type == nil
+           asset_type_name = spreadsheet.cell(i,'C')
+           @asset_type_entry = AssetType.create(name: asset_type_name)
+           asset_type_id = @asset_type_entry.id
+        else
+        asset_type_id = @asset_type.id
+        end
+        assets_detail = spreadsheet.cell(i,'D')
+        assets_id = spreadsheet.cell(i,'E')
+        assets_value = spreadsheet.cell(i,'F')
+        assest_status = spreadsheet.cell(i,'G')
+        issue_date = spreadsheet.cell(i,'H')
+        remarks = spreadsheet.cell(i,'I')
+
+        @assigned_asset = AssignedAsset.create(employee_id: employee_id,asset_type_id: asset_type_id,assets_detail: assets_detail,assets_id: assets_id,assets_value: assets_value,
+          assest_status: assest_status,issue_date: issue_date,remarks: remarks)
+     end
   end
+end
 
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)

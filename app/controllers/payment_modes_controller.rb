@@ -43,12 +43,24 @@ class PaymentModesController < ApplicationController
     @payment_modes = PaymentMode.all
   end
 
-  def is_confirm
-    @payment_mode = PaymentMode.find(params[:payment_mode])
-    PaymentMode.find(@payment_mode.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_payment_mode_path
-  end
+    def payment_mode_master
+     @payment_modes = PaymentMode.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'payment_modes/payment_mode_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' payment_mode_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'payment_modes/payment_mode_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+    end
+
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

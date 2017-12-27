@@ -18,7 +18,7 @@
         
         <tr>
          <td><%= i = i+1%></td>
-          <td><%= employee_attendance.day %></td>
+          <td><%= employee_attendance.day.to_date %></td>
           <td><%= employee_attendance.day.strftime("%A") %></td>
           <td><%= employee_attendance.try(:holiday).try(:name) %></td>
         </tr>

@@ -1,7 +1,7 @@
-require 'query_report/helper'  # need to require the helper
+# require 'query_report/helper'  # need to require the helper
 class StatesController < ApplicationController
   before_action :set_state, only: [:show, :edit, :update, :destroy]
-  include QueryReport::Helper  # need to include it
+  # include QueryReport::Helper  # need to include it
 
   # GET /states
   # GET /states.json
@@ -64,6 +64,24 @@ class StatesController < ApplicationController
       column(:Name, sortable: true) { |state| state.name }
       column(:ci, sortable: true) { |state| state.try(:country_id) }
     end
+  end
+
+
+  def state_master
+    @states = State.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'states/state_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' state_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'states/state_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
   end
 
   private

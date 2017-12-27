@@ -1,6 +1,6 @@
-require 'query_report/helper'
+# require 'query_report/helper'
 class SalaryslipsController < ApplicationController
- include QueryReport::Helper
+ # include QueryReport::Helper
 
   def salary_slip_report_form
     session[:active_tab] ="PayrollManagement"
@@ -1964,7 +1964,20 @@ end
 
   def leave_detail
     @leave_details = LeaveDetail.all
-     
+  end
+
+  def import_xl
+  end
+
+  def import
+   file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_salaryslips_path
+    else
+    Salaryslip.import(params[:file])
+    redirect_to import_xl_salaryslips_path, notice: "File imported."
+    end
   end
 
   def leave_detail_xls

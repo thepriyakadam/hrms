@@ -96,19 +96,17 @@ class MachineAttendancesController < ApplicationController
 		@present = params[:machine_attendance][:present]
 		# MachineAttendance.where(id: @machine_attendance.id).update_all(employee_id: @machine_attendance.employee_id,day: @day,in: @in.to_datetime.utc,out: @out.to_datetime.utc,shift_master_id: @shift_type,present: @present,user_id: current_user.employee_id,is_updated: true)
 		if @in == "" && @out == "" && @present == ""
-				# byebug
-				MachineAttendance.where(id: @machine_attendance.id).update_all(employee_id: @machine_attendance.employee_id,day: @day,in: nil,out: nil,shift_master_id: @shift_type,present: nil,user_id: current_user.employee_id,is_updated: true)
+				MachineAttendance.where(id: @machine_attendance.id).update_all(employee_id: @machine_attendance.employee_id,day: @day.to_date,in: nil,out: nil,shift_master_id: @shift_type,present: nil,user_id: current_user.employee_id,is_updated: true)
 		elsif @in == "" && @out == ""
-				# byebug
-				MachineAttendance.where(id: @machine_attendance.id).update_all(employee_id: @machine_attendance.employee_id,day: @day,in: nil,out: nil,shift_master_id: @shift_type,present: @present,user_id: current_user.employee_id,is_updated: true)
+				MachineAttendance.where(id: @machine_attendance.id).update_all(employee_id: @machine_attendance.employee_id,day: @day.to_date,in: nil,out: nil,shift_master_id: @shift_type,present: @present,user_id: current_user.employee_id,is_updated: true)
 		elsif @in == "" || @present == ""
 			# byebug
-			MachineAttendance.where(id: @machine_attendance.id).update_all(employee_id: @machine_attendance.employee_id,day: @day,in: nil,out: @out.to_datetime.utc,shift_master_id: @shift_type,present: nil,user_id: current_user.employee_id,is_updated: true)
+			MachineAttendance.where(id: @machine_attendance.id).update_all(employee_id: @machine_attendance.employee_id,day: @day.to_date,in: nil,out: @out.to_datetime.utc,shift_master_id: @shift_type,present: nil,user_id: current_user.employee_id,is_updated: true)
 		elsif @out == "" || @present == ""
-			MachineAttendance.where(id: @machine_attendance.id).update_all(employee_id: @machine_attendance.employee_id,day: @day,in: @in.to_datetime.utc,out: nil,shift_master_id: @shift_type,present: nil,user_id: current_user.employee_id,is_updated: true)
+			MachineAttendance.where(id: @machine_attendance.id).update_all(employee_id: @machine_attendance.employee_id,day: @day.to_date,in: @in.to_datetime.utc,out: nil,shift_master_id: @shift_type,present: nil,user_id: current_user.employee_id,is_updated: true)
 		else
 			# byebug
-			MachineAttendance.where(id: @machine_attendance.id).update_all(employee_id: @machine_attendance.employee_id,day: @day,in: @in.to_datetime.utc,out: @out.to_datetime.utc,shift_master_id: @shift_type,present: @present,user_id: current_user.employee_id,is_updated: true)
+			MachineAttendance.where(id: @machine_attendance.id).update_all(employee_id: @machine_attendance.employee_id,day: @day.to_date,in: @in.to_datetime.utc,out: @out.to_datetime.utc,shift_master_id: @shift_type,present: @present,user_id: current_user.employee_id,is_updated: true)
 		end
 		flash[:notice] = "Machine Attendance Updated Successfully"
 		redirect_to new_machine_attendance_path
@@ -523,11 +521,7 @@ class MachineAttendancesController < ApplicationController
 		# @employees = Employee.all
 		respond_to do |format|
 		format.html
-		# format.html { send_data @machine_attendances,
-  # :type => 'text',
-  # :disposition => "attachment; filename=your_file_name.txt" }
 		format.csv { send_data @machine_attendances.to_csv }
-		# format.csv { send_data @employees.to_txt }
 		format.xls
 	    end
 	   session[:active_tab] ="TimeManagement"

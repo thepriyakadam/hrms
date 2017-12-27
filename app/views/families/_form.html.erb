@@ -12,7 +12,12 @@
       <div class="col-sm-3">
 <!--       <label>Relation</label>
  -->        <div class="form-group required">
+           <div class="input-group">
+           <div class="input-group-addon">
+            <!--     < link_to "", new_relation_master_path,class: "fa fa-plus fa-success",:target => "_blank" %> -->
+              </div>
           <%= f.select :relation_master_id,all_relation_type,{label:'Relation',include_blank: " Select Relation"} %>
+        </div>
         </div>
     </div>
     <div class="col-sm-3">
@@ -78,7 +83,12 @@
 
     <div class="col-sm-3">
         <div class="field">
+          <div class="input-group">
+           <div class="input-group-addon">
+                <%= link_to "", new_blood_group_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
         <%= f.select :blood_group_id, all_blood_group,{label: 'Blood Group',include_blank: " Select Blood Group"} %>
+        </div>
         </div>
       </div>
 </div>
@@ -146,7 +156,13 @@
     <div class="row">  
       <div class="col-sm-3">
         <div class="field">
+                 <div class="input-group">
+           <div class="input-group-addon">
+                <%= link_to "", new_religion_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+
           <%= f.select :religion_id, all_religions,{include_blank: " Select Religion"} %>
+        </div>
         </div>
       </div>
  

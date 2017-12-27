@@ -26,7 +26,16 @@
       session[:active_tab] ="EmployeeManagement"
       session[:active_tab1] ="Employee1"
   end
-  
+
+  def fetch_data
+    empp = Employee.all 
+    abc = empp.fetch_data
+  end
+
+  def cal_data
+    empp = Employee.all 
+    abc = empp.cal_data
+  end
 
   def import_xl
     @employees = Employee.all

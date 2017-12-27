@@ -18,6 +18,11 @@ every 1.minutes do
   runner "DailyAttendance.fetch_data"
 end
 
+every 3.minutes do
+	runner "DailyAttendance.fetch_data"
+end
+
+
 
 # every 2.hours do
 #   runner "DailyAttendance.fetch_data"

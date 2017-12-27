@@ -2297,6 +2297,9 @@ end
   end
   resources :employees do
     collection do
+      
+      get :fetch_data
+      get :cal_data
       get :print_employee_data_formate
       get :employee_list_report
       post :selected_employee_list_report

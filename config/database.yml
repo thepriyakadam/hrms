@@ -118,7 +118,6 @@ production:
 #   username: hrms
 #   password: <%= ENV['HRMS_DATABASE_PASSWORD'] %>
 
-  
 
 # development:
 #   adapter: mysql2

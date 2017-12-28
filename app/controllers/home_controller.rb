@@ -18,7 +18,6 @@ class HomeController < ApplicationController
    
     @employees = Employee.all
     if current_user.class == Member
-
       # @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id, status: true)
       
       if current_user.role.name == 'GroupAdmin'

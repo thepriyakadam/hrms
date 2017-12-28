@@ -4,7 +4,12 @@ Rails.application.routes.draw do
   resources :resource_pool_masters
   resources :service_masters
 
-  resources :plan_reason_masters
+  resources :plan_reason_masters do
+    collection do
+      get :view_resaon
+    end
+  end
+  
   resources :policy_details do
     collection do
       get :policy_details_modal
@@ -21,6 +26,10 @@ Rails.application.routes.draw do
       get :plan_reject
       get :view_plan
       get :arrange_meeting
+      get :employee_reason
+      get :employee_feedback
+      post :feedback
+      post :reason
     end
   end
   resources :events  # do
@@ -2999,5 +3008,21 @@ end
     post 'user_auths/attendance_data' => 'user_auths#attendance_data', defaults:{format: 'json'}
     get 'user_auths/admin_all_leave_request_list' => 'user_auths#admin_all_leave_request_list', defaults:{format: 'json'}
     get 'user_auths/admin_employee_history' => 'user_auths#admin_employee_history', defaults:{format: 'json'}
+    get 'user_auths/employee_daily_attendance' => 'user_auths#employee_daily_attendance', defaults:{format: 'json'}
+    post 'user_auths/employee_location_history' => 'user_auths#employee_location_history', defaults:{format: 'json'}
+    get 'user_auths/daily_att_count' => 'user_auths#daily_att_count', defaults:{format: 'json'}
+    get 'user_auths/company_logo' => 'user_auths#company_logo', defaults:{format: 'json'}
+    get 'user_auths/admin_od_request_approval_list' => 'user_auths#admin_od_request_approval_list', defaults:{format: 'json'}
+    get 'user_auths/current_location_particular_emp' => 'user_auths#current_location_particular_emp', defaults:{format: 'json'}
+    get 'user_auths/emp_salary_slip_list' => 'user_auths#emp_salary_slip_list', defaults:{format: 'json'}
+    get 'user_auths/project_master_list' => 'user_auths#project_master_list', defaults:{format: 'json'}
+    post 'user_auths/emp_daily_activity' => 'user_auths#emp_daily_activity', defaults:{format: 'json'}
+    get 'user_auths/emp_addable_salary_details' => 'user_auths#emp_addable_salary_details', defaults:{format: 'json'}
+    get 'user_auths/emp_deducted_salary_details' => 'user_auths#emp_deducted_salary_details', defaults:{format: 'json'}
+    get 'user_auths/emp_activity' => 'user_auths#emp_activity', defaults:{format: 'json'}
+    get 'user_auths/emp_details_salary_slip' => 'user_auths#emp_details_salary_slip', defaults:{format: 'json'}
+    get 'user_auths/emp_daily_activity_list' => 'user_auths#emp_daily_activity_list', defaults:{format: 'json'}
+    get 'user_auths/emp_salary_slip_data' => 'user_auths#emp_salary_slip_data', defaults:{format: 'json'}
+    get 'user_auths/employee_wise_attendance' => 'user_auths#employee_wise_attendance', defaults:{format: 'json'}
   end
 end

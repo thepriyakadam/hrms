@@ -7,45 +7,70 @@
     <div class="modal-body">
 <table class="table table-bordered table-hover table-condensed">
   <thead>
+
     <tr>
     	<th>Employee</th>
     	<td><%= @employee_plan.employee.try(:first_name) %> <%= @employee_plan.employee.try(:last_name) %></td>
-      <th>Manager</th>
-      <td><%= @employee_plan.manager_id %></td>
     </tr>
 
     <tr>
-    	<th>From date</th>
+      <th>Manager</th>
+      <% emp = @employee_plan.manager_id %>
+      <% @emp_name = Employee.find(emp) %>
+      <td><%= @emp_name.prefix %> <%= @emp_name.first_name %> <%= @emp_name.middle_name %><%= @emp_name.last_name%></td>
+    </tr>
+
+    <tr>
+    	<th>From Date</th>
     	<td><%= @employee_plan.from_date%></td>
-     	<th>To date</th>
+    </tr>
+
+    <tr>
+     	<th>To Date</th>
      	<td><%= @employee_plan.to_date %></td>
     </tr>
 
     <tr>
      	<th>From Time</th>
       <td><%= @employee_plan.from_time %></td>
+    </tr>
+
+    <tr>
       <th>To Time</th>
       <td><%= @employee_plan.to_time %></td>
     </tr>
 
     <tr>
-      <th>Meeting with</th>
+      <th>Meeting With</th>
       <td><%= @employee_plan.meeting_with %></td>
-      <th>Meeting agenda</th>
+    </tr>
+
+    <tr>
+      <th>Meeting Agenda</th>
       <td><%= @employee_plan.meeting_agenda %></td>
     </tr>
 
     <tr>
-      <th>Status</th>
-      <td><%= @employee_plan.status %></td>
+      <th>Place</th>
+      <td><%= @employee_plan.location %></td>
+    </tr>
+
+    <tr>
       <th>Current Status</th>
       <td><%= @employee_plan.current_status %></td>
     </tr>
 
+    <tr>
+      <th>Feedback</th>
+      <td><%= @employee_plan.feedback %></td>
+    </tr>
+
+    <tr>
+      <th>Plan Reject Reson</th>
+      <td><%= @employee_plan.try(:plan_reason_master).try(:name) %></td>
+    </tr>
+    
+
   </thead>
 </table>
 </div>
-<!-- <div class="modal-footer"></div>
-</div>
-</div> 
-<div id="myModal" class="modal fade"> -->

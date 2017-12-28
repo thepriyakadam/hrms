@@ -34,7 +34,7 @@ class DailyAttendance < ActiveRecord::Base
   end
   
   def self.fetch_data
-    matrix = CheckInOut.where("CHECKTIME > ? ", Time.now - 2.days)
+    matrix = CheckInOut.where("CHECKTIME > ? ", Time.now - 3.days)
     matrix.each do |mat|
       edate_time = mat.CHECKTIME
       edate = edate_time.to_date
@@ -94,7 +94,7 @@ class DailyAttendance < ActiveRecord::Base
           total_hrms = out_time - in_time 
           working_hrs = Time.at(total_hrms).utc.strftime("%H:%M")
           if working_hrs > "07:00" 
-            emp_att.update_all(working_hrs: working_hrs)
+            emp_att.update_all(working_hrs: working_hrs, present: "P")
           else
             emp_att.update_all(present: "HD")
           end

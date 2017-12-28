@@ -5,6 +5,11 @@
     <%= link_to " PDF ", interview_attribute_master_interview_attributes_path(id: @interview_attribute.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
     
     <%= link_to " XLS ", interview_attribute_master_interview_attributes_path(id: @interview_attribute.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
+
+        <%= link_to " Upload ", import_xl_interview_attributes_path, class: 'fa fa-upload btn btn-xl btn-primary' %>
+    
+    <%= link_to " Template", "/Templates/48.Skill Set.xls", :class=>"fa fa-download btn-xl btn btn-warning" %>
+    </div>
   </div><!-- /.box-header -->
 	<div class="box-body">
 		<div id="form">

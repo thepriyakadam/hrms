@@ -173,9 +173,9 @@ class Employee < ActiveRecord::Base
   validates_attachment_size :passport_photo, :less_than => 5.megabytes
 
 
-  # has_attached_file :employee_signature, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'Profile11.jpg'
-  # validates_attachment_content_type :employee_signature,  :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
-  # validates_attachment_size :employee_signature, :less_than => 5.megabytes
+  has_attached_file :employee_signature, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'Profile11.jpg'
+  validates_attachment_content_type :employee_signature,  :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
+  validates_attachment_size :employee_signature, :less_than => 5.megabytes
   
   # validates :permanent_address, presence: true
   # validates :department_id,presence: true
@@ -602,6 +602,12 @@ end
         else
         employee_id = @employee.id
         email = @employee.email
+        @member = Member.where(email: email)
+        if @member.nil?
+          email = @employee.email
+        else
+        email = "#{@employee.manual_employee_code}@xyz.com" 
+        end
         company_id = @employee.company_id
         company_location_id = @employee.company_location_id
         password = @employee.first_name+'hrms'+@employee.manual_employee_code

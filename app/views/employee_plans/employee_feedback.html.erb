@@ -5,13 +5,9 @@
     <div class="box-body">
       <%= bootstrap_form_for :employee_plan, url:{ action: "feedback", employee_plan_id: @employee_plan.id, id: 'employee_plan' }  do |f| %>
         <div class="row">
-          <div class="col-sm-3">
-            <div class="form-group">
-            </div>
-          </div>
-          <div class="col-sm-3">
+          <div class="col-sm-5">
             <div class="form-group required">
-              <%= f.text_field :feedback, label:'feedback' %>
+              <%= f.text_field :feedback, label:'Feedback' %>
             </div>
           </div>
           <div class="col-sm-3">

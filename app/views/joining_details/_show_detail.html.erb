@@ -116,9 +116,7 @@
       </tr>
       
 
- <tr><th colspan="4"><center><font color='#0077b3'>Employee Payroll
-Detail</font></center> </th></tr>
-
+  <tr><th colspan="4"><center><font color='#0077b3'>Employee Payroll Detail</font></center> </th></tr>
     <tr>
       <th><strong>Payment Mode</strong></th>
       <td><%= @joining_detail.payment_mode.try(:name) %></td>
@@ -150,7 +148,6 @@ Detail</font></center> </th></tr>
       <th><strong>Employee ESIC</strong></th>
       <td><%= @joining_detail.have_esic ? "Yes" : "No" %></td>
     </tr>
-
     <tr>
       <th><strong>ESIC No.</strong></th>
       <td><%= @joining_detail.employee_efic_no %></td>
@@ -164,7 +161,8 @@ Detail</font></center> </th></tr>
       <td><%= @joining_detail.is_insurance ? "Yes" : "No" %></td>
 
       <th><strong>Family Insurance</strong></th>
-      <td><%= @joining_detail.is_family_pension ? "Yes" : "No" %></td>
+      <td><%= @joining_detail.is_family_pension ? "Yes" : "No" %></td>   
+
      </tr>
 
      <tr>
@@ -173,7 +171,8 @@ Detail</font></center> </th></tr>
 
 
       <th><strong>Bonus</strong></th>
-      <td><%= @joining_detail.is_bonus ? "Yes" : "No" %></td>
+      <td><%= @joining_detail.is_bonus ? "Yes" : "No" %></td>   
+
      </tr>
 
       <tr>
@@ -185,7 +184,7 @@ Detail</font></center> </th></tr>
       <td><%= @joining_detail.ot_rate %></td>
      </tr>
 
-
+     
  </table>
   </div><!-- /.box -->
 </div>

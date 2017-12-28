@@ -3,20 +3,31 @@ validates :code, presence: true,  uniqueness: { case_sensitive: false }
 validates :name, presence: true,  uniqueness: { case_sensitive: false }
 
 
-    def self.import_leaving_reason(file)
+    def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        code = spreadsheet.cell(i,'A')
-        name = spreadsheet.cell(i,'B')
-        description = spreadsheet.cell(i,'C')
-        is_confirm = spreadsheet.cell(i,'D')
+        code = spreadsheet.cell(i,'B').to_i
+        if code == 0
+           code = spreadsheet.cell(i,'B')
+         else
+          code = spreadsheet.cell(i,'B').to_i
+        end
+        name = spreadsheet.cell(i,'C')
+        description = spreadsheet.cell(i,'D')
+        is_confirm = spreadsheet.cell(i,'E')
         if is_confirm == "Yes" || is_confirm == "yes"
         	is_confirm = true
         else
         	is_confirm = false
         end
+
+        @leaving = LeavingReason.find_by(name: name)
+        if @leaving.nil?
         @leaving_reason = LeavingReason.create(code: code,name: name,description: description,is_confirm: is_confirm)     
+        else
+          @leaving.update(code: code,name: name,description: description,is_confirm: is_confirm)
+        end
     end
   end
 

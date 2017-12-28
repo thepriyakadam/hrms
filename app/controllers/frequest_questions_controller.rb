@@ -65,6 +65,35 @@ class FrequestQuestionsController < ApplicationController
     session[:active_tab] = "EmployeeSelfService"
   end
 
+    def import
+    # byebug
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_frequest_questions_path
+    else
+    FrequestQuestion.import(params[:file])
+    redirect_to import_xl_frequest_questions_path, notice: "File imported."
+    end
+  end
+
+  def frequest_question_master
+    @frequest_questions = FrequestQuestion.all
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'frequest_questions/frequest_question_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' frequest_question_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'frequest_questions/frequest_question_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_frequest_question

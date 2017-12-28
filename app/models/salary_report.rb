@@ -6,9 +6,6 @@ class SalaryReport
                 :earned_special, :earned_washing, :earned_total,:earned_monthly_arrear,
                 :actual_medical,:actual_driver, :actual_child_edu, :actual_mra, :actual_medical_rem, 
                 :earned_medical,:earned_driver,  :earned_child_edu,:earned_mra ,:earned_medical_rem, 
-<<<<<<< HEAD
-                :actual_lta,:actual_progressive_alw,:actual_transport_alw,:earned_lta,:earned_progressive_alw,:earned_transport_alw,:pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, :pantry_deduction,:welfair, :deduction_total, :net_payable, :other_deduction,  :pf_ctc, :esic_ctc,:bonus_ctc, :total_leave, :pay_leave, :nonpay_leave, :gatepass, :day_in_month, :payable_day,:present_day, :absent_day, :holiday, :weekoff, :month, :year            
-=======
                 :actual_lta,:actual_progressive_alw,:actual_transport_alw,
                 :earned_lta,:earned_progressive_alw,:earned_transport_alw,
                 
@@ -19,8 +16,6 @@ class SalaryReport
 
                 :total_leave, :pay_leave, :nonpay_leave, :gatepass, :day_in_month, :payable_day, 
                 :present_day, :absent_day, :holiday, :weekoff, :month, :year, 
-               
->>>>>>> a4b1c1cb77ff2255bfa47e42b081d3046b97f3f7
         
 
   def self.collect_data(e, j, sl)

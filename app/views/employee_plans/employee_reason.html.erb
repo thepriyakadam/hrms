@@ -1,16 +1,16 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Plan Reason:</h3>
+    <h3 class="box-title">Plan Reason</h3>
     <div class="pull-right"></div>
     <div class="box-body">
       <%= bootstrap_form_for :employee_plan, url:{ action: "reason", employee_plan_id: @employee_plan.id, html: {id: 'employee_plan' } }  do |f| %>
         <div class="row">
           <div class="col-sm-3">
             <div class="form-group">
-              <%= f.select :plan_reason_master_id, all_plan_reason, {include_blank: 'Select plan reason'} %>
+              <%= f.select :plan_reason_master_id, all_plan_reason,{include_blank: 'Select plan reason'} %>
             </div>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-5">
             <div class="form-group required">
               <%= f.text_field :feedback, label:'Reason' %>
             </div>

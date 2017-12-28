@@ -11,12 +11,12 @@
            <!-- <tr><td colspan="3"><center>First Level Request</center></td></tr> -->
             <tr>
               <th>Sr.No.</th>
-              <th>From date</th>
-              <th>To date</th>
-              <th>From time</th>
-              <th>To time</th>
-              <th>Meeting with</th>
-              <th>Current status</th>
+              <th>From Date</th>
+              <th>To Date</th>
+              <th>From Time</th>
+              <th>To Time</th>
+              <th>Meeting With</th>
+              <th>Current Status</th>
               <th>Location</th>
               <!-- <th>Meeting agenda</th> -->
               <!-- <th>Lat</th>
@@ -63,15 +63,15 @@
                 <td><%#= employee_plan.manager_id %></td> -->
                 <%# binding.pry %>
                 <td>
-                  <%= link_to '', modal_employee_plan_detail_employee_plans_path(employee_plan), class: 'btn btn-xs btn-default fa fa-eye', remote: true %>
+                  <%= link_to '', modal_employee_plan_detail_employee_plans_path(employee_plan), remote: true, class: 'btn btn-xs btn-default fa fa-eye' %>
                 </td>
                 <% if employee_plan.current_status == "Approved" && employee_plan.to_date == DateTime.now.to_date %>
                   <% if employee_plan.to_time.strftime("%H:%M") < DateTime.now.strftime("%H:%M") %>
                     <td>
-                      <%= link_to 'Attend', employee_feedback_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit', remote: true %>
+                      <%= link_to 'Attend', employee_feedback_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit'%>
                     </td>
                     <td>
-                      <%= link_to 'Not Attend', employee_reason_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit', remote: true %>
+                      <%= link_to 'Not Attend', employee_reason_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit' %>
                     </td>
                   <% else %>
                     <td> </td>

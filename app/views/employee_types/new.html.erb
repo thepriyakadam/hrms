@@ -5,6 +5,11 @@
     <%= link_to " PDF ", employee_type_master_employee_types_path(id: @employee_type.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
     
     <%= link_to " XLS ", employee_type_master_employee_types_path(id: @employee_type.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
+
+    <%= link_to " Upload ", import_xl_employee_types_path, class: 'fa fa-upload btn btn-xl btn-primary' %>
+    
+    <%= link_to " Template", "/Templates/26.Employee Type.xls", :class=>"fa fa-download  btn-xl btn btn-warning" %>
+    </div>
   </div><!-- /.box-header -->
 	<div class="box-body">
 		<div id="form">

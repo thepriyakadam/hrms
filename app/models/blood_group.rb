@@ -3,11 +3,11 @@ class BloodGroup < ActiveRecord::Base
   has_many :families
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
-  def self.import_blood(file)
+  def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        name = spreadsheet.cell(i,'A')
+        name = spreadsheet.cell(i,'B')
 
         @blood = BloodGroup.create(name: name)     
     end

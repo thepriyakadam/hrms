@@ -2,20 +2,26 @@ class Period < ActiveRecord::Base
 	has_many :goal_bunches
 	validates :name, presence: true,uniqueness: { case_sensitive: false }
 
-	def self.import_period(file)
+	def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        name = spreadsheet.cell(i,'A')
-        from = spreadsheet.cell(i,'B')
-        to = spreadsheet.cell(i,'C')
-        status = spreadsheet.cell(i,'D')
+        name = spreadsheet.cell(i,'B')
+        from = spreadsheet.cell(i,'C')
+        to = spreadsheet.cell(i,'D')
+        status = spreadsheet.cell(i,'E')
         if status == "Yes" || status == "yes"
            status = true
         else
         	status = false
         end
+
+        @period = Period.find_by(name: name)
+        if @period.nil?
         @degree = Period.create(name: name,from: from,to: to,status: status)     
+        else
+          @period.update(name: name,from: from,to: to,status: status)
+        end
     end
   end
 

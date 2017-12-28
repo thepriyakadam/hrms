@@ -13,6 +13,7 @@
       <tr>
       <th>ID</th>
       <th>Employee</th>
+      <th>Leave Category</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -22,6 +23,7 @@
       <tr>
         <td><%= employee_leav_balance.employee.try(:manual_employee_code) %></td>
         <td><%= full_name(employee_leav_balance.employee)%></td>
+         <td><%= employee_leav_balance.leav_category.try(:name) %></td>
          <td>
             <div id="myModal1" class="modal fade"></div>
               <% if employee_leav_balance.is_confirm == true %>

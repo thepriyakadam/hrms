@@ -1,0 +1,30 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Policy Type Detail </center></h4>
+    </div>
+    <div class="modal-body">
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+  <tr>
+  	<th>Code</th>
+  	<td><%= @policy_type.code %></td>
+
+  	<th>Name</th>
+  	<td><%= @policy_type.name %></td>
+  </tr>
+
+  <tr>
+  	<th>Description</th>
+  	<td><%= @policy_type.description %></td>
+
+  	<th>Status</th>
+  	<td><%= @policy_type.is_active ? "Active" : "Inactive" %></td>
+  </tr>
+  </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

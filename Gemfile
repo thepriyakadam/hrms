@@ -1,22 +1,11 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.8'
+gem 'rails', '4.2.4'
 # Use mysql as the database for Active Record
+
 gem 'mysql2', '~> 0.3.18'
-# gem install tiny_tds -v 1.0.4
-#gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
-
-gem 'tiny_tds'
- # gem 'activerecord-sqlserver-adapter'
-
-gem 'activerecord-sqlserver-adapter'
-
-gem 'ruby-odbc'
-
-gem 'dbi'
-
-gem 'activerecord-session_store'
+ #gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
 
 # gem "rack-timeout", require:"rack/timeout/base"
 
@@ -25,6 +14,8 @@ gem 'activerecord-sqlserver-adapter'
 gem 'ruby-odbc'
 gem 'dbi'
 gem 'activerecord-session_store'
+
+gem 'mdb'
 
 gem 'ruby-graphviz', '~> 1.2', '>= 1.2.2'
 
@@ -131,7 +122,7 @@ gem 'cancancan', '~> 1.10'
 
 
 # Apartment for Multitenancy
-# gem 'apartment'
+gem 'apartment'
 gem 'local-subdomain'
 # Bootstrap form
 gem 'bootstrap_form'
@@ -150,7 +141,7 @@ gem 'protokoll'
 # gem 'countries'
 gem 'city-state'
 
- # gem 'rmagick', '~> 2.15.4'
+ gem 'rmagick', '~> 2.15.4'
 
 # infinite-cove-6619
 # DateTimePicker

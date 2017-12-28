@@ -836,6 +836,8 @@ class Api::UserAuthsController < ApplicationController
     employee_id = params[:employee_id]
     date = params[:date]
     status = params[:status]
+    # binding.pry
+    # byebug
     if manager_id.empty?
       if status == "all"
         employee_plan = EmployeePlan.where(employee_id: employee_id).where("? BETWEEN from_date AND from_date", date)
@@ -1292,9 +1294,9 @@ class Api::UserAuthsController < ApplicationController
   end
 
   def employee_reason
-    reason_id = params[:reason_id]
+    reason_id = params[:reason_catagory]
     employee_plan_id = params[:plan_id]
-    feedback = params[:justification]
+    feedback = params[:feedback]
     emp_plan = EmployeePlan.find(employee_plan_id)
     emp_reason = emp_plan.update(plan_reason_master_id: reason_id, feedback: feedback)
     render :status=>200, :json=>{:status=>"Employee Reason Successfully Updated."}
@@ -1352,27 +1354,32 @@ class Api::UserAuthsController < ApplicationController
 
   def employee_location_history
     emp_id = params[:employee_id]
-    emp_date_time = params[:date_time]
-    binding.pry
-    date_time = emp_date_time.to_date
-    latitude = params[:latitude].to_f
-    longitude = params[:longitude].to_f
+    date_time = params[:date_time]
+    time = Time.now.to_time.strftime("%H:%M")
+    date = Time.now.to_date.strftime("%Y-%m-%d")
+    # time = params[:time]
+    lon = params[:latitude].to_f
+    lat = params[:longitude].to_f
+    longitude = lon.round(4)
+    latitude = lat.round(4)
     location = params[:place]
-    emp_history = EmployeeLocationHistory.where(employee_id: emp_id, date_time: date_time)
-    emp_last_history = EmployeeLocationHistory.where(employee_id: emp_id, date_time: date_time).last
+    emp_history = EmployeeLocationHistory.where(employee_id: emp_id, date: date)
+    emp_last_history = EmployeeLocationHistory.where(employee_id: emp_id, date: date).last
     emp_count = emp_history.count
+    # binding.pry
+    # byebug
     if emp_count >= 2
       last_lat = emp_last_history.latitude
       last_lon = emp_last_history.longitude
       if latitude == last_lat && longitude == last_lon
-        emp_last_history.update(employee_id: emp_id, date_time: date_time, latitude: latitude, longitude: longitude, location: location)
+        emp_last_history.update(employee_id: emp_id, date: date, time: time, latitude: latitude, longitude: longitude, location: location)
         render :status=>200, :json=>{:status=>"Employee Attendance Successfully updated."}
       else
-        EmployeeLocationHistory.create(employee_id: emp_id, date_time: date_time, latitude: latitude, longitude: longitude, location: location) 
+        EmployeeLocationHistory.create(employee_id: emp_id, date: date, time: time, latitude: latitude, longitude: longitude, location: location) 
         render :status=>200, :json=>{:status=>"Employee Attendance Successfully created 1."}
       end
     else
-      emp_loc_his = EmployeeLocationHistory.create(employee_id: emp_id, date_time: date_time, latitude: latitude, longitude: longitude, location: location)
+      emp_loc_his = EmployeeLocationHistory.create(employee_id: emp_id, date: date, time: time, latitude: latitude, longitude: longitude, location: location)
       render :status=>200, :json=>{:status=>"Employee Attendance Successfully created 2."}
     end
   end
@@ -1387,10 +1394,10 @@ class Api::UserAuthsController < ApplicationController
   end
 
   def date_wise_location_history
-    employee_id = params[:employee_id]
+    emp_id = params[:employee_id]
     date = params[:date]
-    date_wise_history = EmployeeLocationHistory.where(employee_id: employee_id, date_time: date)                                                                 
-    render :json => date_wise_history.present? ? date_wise_history.collect{|dwh| { :employee_id => dwh.employee_id, :date_time => dwh.date_time, :latitude => dwh.latitude, :longitude => dwh.longitude, :location => dwh.location }} : []
+    date_wise_history = EmployeeLocationHistory.where(employee_id: emp_id, date: date)                                                                 
+    render :json => date_wise_history.present? ? date_wise_history.collect{|dwh| { :employee_id => dwh.employee_id, :date => dwh.date, :time => dwh.time,:latitude => dwh.latitude, :longitude => dwh.longitude, :location => dwh.location }} : []
   end
 
   def company_logo
@@ -1410,7 +1417,7 @@ class Api::UserAuthsController < ApplicationController
     if elh.present?
       render :status=>200, :json=>{ :id => elh.id, :employee_id => elh.employee_id, :date_time => elh.date_time, :latitude => elh.latitude, :longitude => elh.longitude, :location => elh.location }
     else
-      render :status=>200, :json=>{:status=>"Employee location history not ound..."}
+      render :status=>200, :json=>{:status=>"Employee location history not Found..."}
     end
   end
 
@@ -1473,7 +1480,7 @@ class Api::UserAuthsController < ApplicationController
   def emp_daily_activity_list
     employee = params[:employee_id]
     emp_daily_list = EmployeeDailyActivity.where(employee_id: employee)
-    render :json => emp_daily_list.present? ? emp_daily_list.collect{|sal| { :employee_id => sal.employee_id, :prefix => sal.employee.try(:prefix), :first_name => sal.employee.try(:first_name), :middle_name => sal.employee.try(:middle_name), :last_name => sal.employee.try(:last_name), :project_master_id => sal.try(:project_master).try(:name), :today_activity => sal.today_activity, :tomorrow_plan => sal.tomorrow_plan, :day => sal.day }} : []
+    render :json => emp_daily_list.present? ? emp_daily_list.collect{|sal| { :id => sal.id, :employee_id => sal.employee_id, :prefix => sal.employee.try(:prefix), :first_name => sal.employee.try(:first_name), :middle_name => sal.employee.try(:middle_name), :last_name => sal.employee.try(:last_name), :project_master_id => sal.try(:project_master).try(:name), :today_activity => sal.today_activity, :tomorrow_plan => sal.tomorrow_plan, :day => sal.day }} : []
   end
 
   def employee_wise_attendance

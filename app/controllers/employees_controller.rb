@@ -45,7 +45,7 @@
 
   def import_xl
     session[:active_tab] ="EmployeeManagement"
-    session[:active_tab1] ="Imports"   
+    session[:active_tab1] ="Import"   
   end
 
   def import
@@ -60,17 +60,20 @@
     redirect_to import_xl_employees_path, notice: "File imported."
     end
   end
+  
+  def import_assign_role
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Import" 
+  end
 
   def import_create_new_user
-    # Employee.import(params[:file])
-    # redirect_to root_url, notice: "File imported."
     file = params[:file]
     if file.nil?
       flash[:alert] = "Please Select File!"
     redirect_to import_assign_role_employees_path
     else
     Employee.import_create_new_user(params[:file])
-    redirect_to import_assign_role_employees_path, notice: "File imported."
+    redirect_to assign_role_employees_path, notice: "File imported."
     end
   end
 

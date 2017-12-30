@@ -4,7 +4,12 @@ Rails.application.routes.draw do
   resources :resource_pool_masters
   resources :service_masters
 
-  resources :plan_reason_masters
+  resources :plan_reason_masters do
+    collection do
+      get :view_resaon
+    end
+  end
+  
   resources :policy_details do
     collection do
       get :policy_details_modal

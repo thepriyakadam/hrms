@@ -1351,20 +1351,37 @@ class Api::UserAuthsController < ApplicationController
     render :json => employee_leav_requests.present? ? employee_leav_requests.collect{|adminlr| { :id => adminlr.id, :employee_id => adminlr.employee_id, :prefix => adminlr.employee.prefix, :employee_first_name => adminlr.employee.first_name, :employee_middle_name => adminlr.employee.middle_name, :employee_last_name => adminlr.employee.last_name, :leav_category => adminlr.leav_category.name, :leave_count => adminlr.leave_count, :leave_type => adminlr.leave_type_re }} : []
   end
 
-  # def employee_location_history
-  #   emp_id = params[:employee_id]
-  #   date_time = params[:date_time]
-  #   latitude = params[:latitude]
-  #   longitude = params[:longitude]
-  #   location = params[:place]
-  #   emp_history = EmployeeLocationHistory.where(employee_id: emp_id, date_time: date_time)
-  #   emp_count = emp_history.count
-  #   if emp_count == 2
-  #     emp_history.last.latitude
-     
-  #   emp_loc_his = EmployeeLocationHistory.create(employee_id: emp_id, date_time: date_time, latitude: latitude, longitude: longitude, location: location)
-  #   render :status=>200, :json=>{:status=>"Employee Attendance Successfully Store."}
-  # end
+  def employee_location_history
+    emp_id = params[:employee_id]
+    date_time = params[:date_time]
+    time = Time.now.to_time.strftime("%H:%M")
+    date = Time.now.to_date.strftime("%Y-%m-%d")
+    # time = params[:time]
+    lon = params[:latitude].to_f
+    lat = params[:longitude].to_f
+    longitude = lon.round(4)
+    latitude = lat.round(4)
+    location = params[:place]
+    emp_history = EmployeeLocationHistory.where(employee_id: emp_id, date: date)
+    emp_last_history = EmployeeLocationHistory.where(employee_id: emp_id, date: date).last
+    emp_count = emp_history.count
+    # binding.pry
+    # byebug
+    if emp_count >= 2
+      last_lat = emp_last_history.latitude
+      last_lon = emp_last_history.longitude
+      if latitude == last_lat && longitude == last_lon
+        emp_last_history.update(employee_id: emp_id, date: date, time: time, latitude: latitude, longitude: longitude, location: location)
+        render :status=>200, :json=>{:status=>"Employee Attendance Successfully updated."}
+      else
+        EmployeeLocationHistory.create(employee_id: emp_id, date: date, time: time, latitude: latitude, longitude: longitude, location: location) 
+        render :status=>200, :json=>{:status=>"Employee Attendance Successfully created 1."}
+      end
+    else
+      emp_loc_his = EmployeeLocationHistory.create(employee_id: emp_id, date: date, time: time, latitude: latitude, longitude: longitude, location: location)
+      render :status=>200, :json=>{:status=>"Employee Attendance Successfully created 2."}
+    end
+  end
 
   def daily_att_count
     employee_id = params[:employee_id]
@@ -1399,7 +1416,7 @@ class Api::UserAuthsController < ApplicationController
     if elh.present?
       render :status=>200, :json=>{ :id => elh.id, :employee_id => elh.employee_id, :date_time => elh.date_time, :latitude => elh.latitude, :longitude => elh.longitude, :location => elh.location }
     else
-      render :status=>200, :json=>{:status=>"Employee location history not ound..."}
+      render :status=>200, :json=>{:status=>"Employee location history not Found..."}
     end
   end
 
@@ -1462,7 +1479,7 @@ class Api::UserAuthsController < ApplicationController
   def emp_daily_activity_list
     employee = params[:employee_id]
     emp_daily_list = EmployeeDailyActivity.where(employee_id: employee)
-    render :json => emp_daily_list.present? ? emp_daily_list.collect{|sal| { :employee_id => sal.employee_id, :prefix => sal.employee.try(:prefix), :first_name => sal.employee.try(:first_name), :middle_name => sal.employee.try(:middle_name), :last_name => sal.employee.try(:last_name), :project_master_id => sal.try(:project_master).try(:name), :today_activity => sal.today_activity, :tomorrow_plan => sal.tomorrow_plan, :day => sal.day }} : []
+    render :json => emp_daily_list.present? ? emp_daily_list.collect{|sal| { :id => sal.id, :employee_id => sal.employee_id, :prefix => sal.employee.try(:prefix), :first_name => sal.employee.try(:first_name), :middle_name => sal.employee.try(:middle_name), :last_name => sal.employee.try(:last_name), :project_master_id => sal.try(:project_master).try(:name), :today_activity => sal.today_activity, :tomorrow_plan => sal.tomorrow_plan, :day => sal.day }} : []
   end
 
   def employee_wise_attendance

@@ -15,6 +15,8 @@ gem 'ruby-odbc'
 gem 'dbi'
 gem 'activerecord-session_store'
 
+gem 'mdb'
+
 gem 'ruby-graphviz', '~> 1.2', '>= 1.2.2'
 
 gem 'twilio-ruby', '~> 4.11', '>= 4.11.1'

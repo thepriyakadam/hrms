@@ -2210,6 +2210,9 @@ end
 
   resources :salary_slip_ledgers do
     collection do
+      get :yearly_reports
+      get :month_wise_yearly_report
+      post :month_wise_yearly_report
       get :select_month_year_form
       get :show_employee
       get :employee_ctc

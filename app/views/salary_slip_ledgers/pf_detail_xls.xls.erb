@@ -15,10 +15,12 @@
         <Cell ss:Index="6"><Data ss:Type="String">Payble Days</Data></Cell>
        
         <Cell ss:Index="7"><Data ss:Type="String">Amount</Data></Cell>
-         <Cell ss:Index="8"><Data ss:Type="String">Amount PF</Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String">Amount PF</Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String">Employer Contribution</Data></Cell>
       </Row>
       <% i = 0 %>
       <% @salaryslips.each do |slip| %>
+      <%if slip.employee.joining_detail.select_pf == "Yes" %>
         <% employee = slip.employee %>
         <% joining = employee.joining_detail %>
         <% bank = employee.employee_bank_detail %>
@@ -53,8 +55,16 @@
                 <Cell ss:Index="8"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% end %>
           <% end %><!-- deducted items -->
+          <% @date = slip.month_year %>
+      <% @emp_id = slip.employee_id %>
+      <% emp_contribution = EmployerContribution.where(date: @date.to_date, employee_id: @emp_id) %>
+      <% emp_contribution.each do |emp_con| %>
+        <Cell ss:Index="7"><Data ss:Type="Number"><%= emp_con.pf %></Data></Cell>
+      <% end %>
         </Row><!-- Row -->
+      <% end %>
       <% end %><!-- slip -->
+
     </Table>
   </Worksheet>
 </Workbook>

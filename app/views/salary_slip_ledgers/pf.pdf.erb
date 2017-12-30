@@ -9,35 +9,69 @@
 <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
 <thead>
   <tr>
-        <td colspan="6">
-         <% if current_user.company_location.company.company_logo == nil %>
-      <% else %>
-        <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
-        <%end%>
-          <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>. <br> <%= @month %> <%= @year %> </center>
+       <td colspan="9"> <center><strong> <h4>
+        Employees Provident Fund Scheme<br>
+         Form 6-A
+        </h4> 
+        <br>[Paragraph 43 of the Employees’ Provident Funds Scheme,<br> 1952 and Paragraph 20(4) of the Employees’ Pension Scheme, 1995)<br>
+         Consolidated Annual Contribution Statement</strong></center> </td></tr>
+          <tr>
+         <td colspan="3"> Statutory rate of contribution </td><td colspan="6"><strong><%= '12 %' %> 
+        </td>           
+       </tr>
+         <tr>
+         <td colspan="3"> No. of Members voluntarily subscribing at a higher rate </td><td colspan="6"><strong><%= 'No' %> 
+        </td>           
+       </tr>
+         <tr>
+         <td colspan="3"> Name and address of the Factory/Establishment </td><td colspan="6"><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>. <br> <%= @month %> <%= @year %> 
+        </td>           
+       </tr>
+        <tr>
+         <td colspan="3"> Code No. of the Establishment </td><td colspan="6"><strong><%= current_user.company_location.company.try(:registration_no) %></strong><br>
         </td>           
        </tr>
       <tr>
-        <th>ID</th>
-        <th>Employee Name</th>
-        <th>PF No.</th>
-        <th>Payble Days</th>
-        <th>Amount</th>
-        <th>PF Amount</th>
+        <th>Sr.No</th>
+        <th>Account No.</th>
+        <th>Name of the Member</th>
+        <th>Wages, Retaining allowance (if any) and D.A. including cash value of food concession paid during the currency period</th>
+        <th>Amount of worker’s Contribution deducted from the wages</th>
+        <th>Employer Contribution</th>
+         <th>Refund of Advances</th>
+          <th>Rate of higher voluntary contribution (if any)</th>
+           <th>remarks</th>
+         
+         
+
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+          <td>3</td>
+        <td>4</td>
+          <td>5</td>
+        <td>6</td>
+          <td>7</td>
+        <td>8</td>
+          <td>9</td>
+       
       </tr>
     </thead>
 
     <tbody>
+    <% i=0%>
       <% @salaryslips.each do |slip| %>
+      <%if slip.employee.joining_detail.select_pf == "Yes" %>
         <% employee = slip.employee %>
         <% joining = employee.joining_detail %>
         <% bank = employee.employee_bank_detail %>
         <% workingday = slip.workingday %>
         <tr>
-          <td><%= slip.employee.manual_employee_code %></td>
-          <td><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></td>
+          <td><%= i = i+1 %></td>
+         
           <td><%= joining.try(:employee_pf_no) %></td>
-          <td><%= workingday.payable_day %></td>
+           <td><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></td>
           <% @addable_salaryslip_items = slip.salaryslip_components.where(is_deducted: false) %>
           <%basic_amt = 0%>
           <%da_amt = 0%>
@@ -56,17 +90,34 @@
           <% end %><!-- addable items -->
 
           
-          <td><%= basic_amt+da_amt %></td>
+          <td><%= basic_amt+da_amt * 12 %></td>
            
           <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
           <% @deducted_salaryslip_items.each do |item| %>
               <% if item.other_component_name == "Provident Fund" %>
-               <td><%= item.calculated_amount.round %></td>
+               <td><%= item.calculated_amount.round * 12  %></td>
             <% end %>
              
       <% end %><!-- slip -->
-     
+      <% @date = slip.month_year %>
+      <% @emp_id = slip.employee_id %>
+      <% emp_contribution = EmployerContribution.where(date: @date.to_date, employee_id: @emp_id) %>
+      <% emp_contribution.each do |emp_con| %>
+        <td><%= emp_con.pf * 12  %></td>
+        <th></th>
+        <th></th>
+        <th></th>
+      <% end %>
+      <% end %>
         </tr>
+       
         <% end %>
+         <tr><td colspan="9"><p>
+1. Total number of contribution cards enclosed (Form 3-A Revised)<br>
+2. Certified that Form 3-A duly completed of all the members listed in this statement are enclosed, except those already sent during the course of the currency period for the final settlement of the concerned member’s account vide ‘Remarks’ furnished against the names of the respective members above.<br>
+
+
+Signature of Employer (with Office Seal)</p>
+</td></tr>
     </tbody>
   </table>

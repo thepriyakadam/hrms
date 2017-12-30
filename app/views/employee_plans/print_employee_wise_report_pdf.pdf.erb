@@ -1,0 +1,63 @@
+<style>
+  th {
+      text-align: left;
+  }
+  tr {
+      page-break-inside: avoid;
+  }
+  div.alwaysbreak { page-break-before: always; }
+  div.nobreak:before { clear:both; }
+  div.nobreak{ page-break-inside: avoid;
+    /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+  }
+</style>
+<table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
+  <thead>
+    <tr>
+      <td colspan="8"><center> 
+        <% if current_user.employee.company_location.company.company_logo == nil %>
+        <%else %>
+          <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+        <%end%> 
+        <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+      </td>
+    </tr>
+    <tr><th colspan="8"><center>Employee Wise Plan Report</center></th></tr>
+    <tr>
+      <th>Sr.No.</th>
+      <th>From Date</th>
+      <th>To Date</th>
+      <th>From Time</th>
+      <th>To Time</th>
+      <th>Meeting With</th>              
+      <th>Location</th>
+      <th>Current Status</th>
+    </tr>
+    <%i = 0%>
+    <% @emp_report.try(:each) do |employee_plan| %>
+      <tr>
+        <td><%= i = i+1 %></td>
+        <td><%= employee_plan.from_date%></td>
+        <td><%= employee_plan.to_date %></td>
+        <td><%= employee_plan.from_time %></td>
+        <td><%= employee_plan.to_time %></td>
+        <td><%= employee_plan.meeting_with %></td>
+        <td><%= employee_plan.location %></td>
+        <td>
+          <% case employee_plan.current_status %>
+            <% when "Pending" %>
+              <small class="label label-default">Pending</small>
+            <% when "Approved"   %>
+              <small class="label label-success">Approved</small>
+            <% when "Rejected" %>
+              <small class="label label-danger">Rejected</small>
+            <% when "Cancelled" %>
+              <small class="label label-warning">Cancelled</small>
+            <% else %>
+              <small class="label label-info">Else</small>
+          <%end%>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -90,12 +90,12 @@
           <% end %><!-- addable items -->
 
           
-          <td><%= basic_amt+da_amt * 12 %></td>
+          <td><%= basic_amt+da_amt%></td>
            
           <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
           <% @deducted_salaryslip_items.each do |item| %>
               <% if item.other_component_name == "Provident Fund" %>
-               <td><%= item.calculated_amount.round * 12  %></td>
+               <td><%= item.calculated_amount.round   %></td>
             <% end %>
              
       <% end %><!-- slip -->
@@ -103,7 +103,7 @@
       <% @emp_id = slip.employee_id %>
       <% emp_contribution = EmployerContribution.where(date: @date.to_date, employee_id: @emp_id) %>
       <% emp_contribution.each do |emp_con| %>
-        <td><%= emp_con.pf * 12  %></td>
+        <td><%= emp_con.pf  %></td>
         <th></th>
         <th></th>
         <th></th>

@@ -1091,6 +1091,32 @@ class SalarySlipLedgersController < ApplicationController
     end
   end
 
+  def yearly_reports
+  end
+
+  def month_wise_yearly_report
+    @from_date = params[:yearly_reports] ? params[:yearly_reports][:from_date] : params[:from_date]
+    @to_date = params[:yearly_reports] ? params[:yearly_reports][:to_date] : params[:to_date]
+    @company = params[:salary_slip_ledger] ? params[:salary_slip_ledger][:company_id] : params[:company_id]
+    @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+    @salaryslips1 = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date).pluck(:id)
+    @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1, other_component_name: "Provident Fund").pluck(:salaryslip_id)
+    @salaryslips = Salaryslip.where(id: @salaryslip_components)
+
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'salary_slip_ledgers/month_wise_yearly_report.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'salary_ledger',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'salary_slip_ledgers/month_wise_yearly_report.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
+    end
+  end
+
   def salary_ledger
     @reports = []
     @start_date = params[:start_date].to_date

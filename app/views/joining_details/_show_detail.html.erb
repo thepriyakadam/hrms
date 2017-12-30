@@ -112,7 +112,10 @@
 
       <tr>
         <th><strong>Compensatory Off</strong></th>
-        <td colspan="3"><%= @joining_detail.c_off ? "Yes" : "No" %></td>
+        <td><%= @joining_detail.c_off ? "Yes" : "No" %></td>
+
+        <th><strong>Cost Center</strong></th>
+        <td><%= @joining_detail.cost_center.try(:name) %></td>
       </tr>
       
 

@@ -1331,7 +1331,7 @@ class Api::UserAuthsController < ApplicationController
     emp = Employee.find(employee_id)
     emp_code = emp.manual_employee_code
     date = params[:date]
-    emp_daily_att = DailyAttendance.where(employee_code: emp_code, date: date)
+    emp_daily_att = DailyAttendance.where(employee_code: emp_code, date: date).order("id DESC")
     render :json => emp_daily_att.present? ? emp_daily_att.collect{|eda| { :id => eda.id, :date => eda.date, :time => eda.time.strftime("%I:%M:%S %p"), :employee_code => eda.employee_code, :latitude => eda.latitude, :longitude => eda.longitude, :place => eda.place }} : []
   end
 
@@ -1477,13 +1477,13 @@ class Api::UserAuthsController < ApplicationController
 
   def emp_daily_activity_list
     employee = params[:employee_id]
-    emp_daily_list = EmployeeDailyActivity.where(employee_id: employee)
+    emp_daily_list = EmployeeDailyActivity.where(employee_id: employee).order("id DESC")
     render :json => emp_daily_list.present? ? emp_daily_list.collect{|sal| { :id => sal.id, :employee_id => sal.employee_id, :prefix => sal.employee.try(:prefix), :first_name => sal.employee.try(:first_name), :middle_name => sal.employee.try(:middle_name), :last_name => sal.employee.try(:last_name), :project_master_id => sal.try(:project_master).try(:name), :today_activity => sal.today_activity, :tomorrow_plan => sal.tomorrow_plan, :day => sal.day }} : []
   end
 
   def employee_wise_attendance
     emp_id = params[:employee_id]
-    emp_att = EmployeeAttendance.where(employee_id: emp_id)
+    emp_att = EmployeeAttendance.where(employee_id: emp_id).order("id DESC")
     if emp_att.present?
       render :json => emp_att.present? ? emp_att.collect{|emp_att| { :id => emp_att.id, :day => emp_att.day, :in_time => emp_att.try(:in_time), :out_time => emp_att.try(:out_time), :working_hrs => emp_att.working_hrs, :present => emp_att.present }} : []
     else

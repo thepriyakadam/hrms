@@ -1483,7 +1483,7 @@ class Api::UserAuthsController < ApplicationController
 
   def employee_wise_attendance
     emp_id = params[:employee_id]
-    emp_att = EmployeeAttendance.where(employee_id: emp_id).order("id DESC")
+    emp_att = EmployeeAttendance.where(employee_id: emp_id).order("day DESC")
     if emp_att.present?
       render :json => emp_att.present? ? emp_att.collect{|emp_att| { :id => emp_att.id, :day => emp_att.day, :in_time => emp_att.try(:in_time), :out_time => emp_att.try(:out_time), :working_hrs => emp_att.working_hrs, :present => emp_att.present }} : []
     else

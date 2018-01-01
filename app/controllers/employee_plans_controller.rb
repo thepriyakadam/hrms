@@ -142,13 +142,13 @@ class EmployeePlansController < ApplicationController
   # PATCH/PUT /employee_plans/1
   # PATCH/PUT /employee_plans/1.json
   def update
-    @employee_plan = EmployeePlan.all
-    @employee_plan = @employee_plan.check_availability(current_user, params[:employee_plan][:from_date], params[:employee_plan][:to_date], params[:employee_plan][:from_time], params[:employee_plan][:to_time])
-    if @employee_plan == true
-      flash[:alert] = 'Sorry..!! This Time was already reserved...'
-      redirect_to employee_plans_url
-    else
-      @employee_plan = EmployeePlan.new(employee_plan_params)
+    # @employee_plan = EmployeePlan.all
+    # @employee_plan = @employee_plan.check_availability(current_user, params[:employee_plan][:from_date], params[:employee_plan][:to_date], params[:employee_plan][:from_time], params[:employee_plan][:to_time])
+    # if @employee_plan == true
+    #   flash[:alert] = 'Sorry..!! This Time was already reserved...'
+    #   redirect_to employee_plans_url
+    # else
+      # @employee_plan = EmployeePlan.new(employee_plan_params)
       respond_to do |format|
         if @employee_plan.update(employee_plan_params)
           format.html { redirect_to employee_plans_url, notice: 'Employee plan was successfully created.' }
@@ -158,7 +158,7 @@ class EmployeePlansController < ApplicationController
           format.json { render json: @employee_plan.errors, status: :unprocessable_entity }
         end
       end
-    end
+    # end
   end
 
   def meeting_plan_approval

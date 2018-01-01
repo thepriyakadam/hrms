@@ -141,14 +141,14 @@ class EmployeePlansController < ApplicationController
 
   # PATCH/PUT /employee_plans/1
   # PATCH/PUT /employee_plans/1.json
-  def update
-    @employee_plan = EmployeePlan.all
-    @employee_plan = @employee_plan.check_availability(current_user, params[:employee_plan][:from_date], params[:employee_plan][:to_date], params[:employee_plan][:from_time], params[:employee_plan][:to_time])
-    if @employee_plan == true
-      flash[:alert] = 'Sorry..!! This Time was already reserved...'
-      redirect_to employee_plans_url
-    else
-      @employee_plan = EmployeePlan.new(employee_plan_params)
+   def update
+  #   @employee_plan = EmployeePlan.all
+  #   @employee_plan = @employee_plan.check_availability(current_user, params[:employee_plan][:from_date], params[:employee_plan][:to_date], params[:employee_plan][:from_time], params[:employee_plan][:to_time])
+  #   if @employee_plan == true
+  #     flash[:alert] = 'Sorry..!! This Time was already reserved...'
+  #     redirect_to employee_plans_url
+  #   else
+  #     @employee_plan = EmployeePlan.new(employee_plan_params)
       respond_to do |format|
         if @employee_plan.update(employee_plan_params)
           format.html { redirect_to employee_plans_url, notice: 'Employee plan was successfully created.' }
@@ -157,7 +157,7 @@ class EmployeePlansController < ApplicationController
           format.html { render :new }
           format.json { render json: @employee_plan.errors, status: :unprocessable_entity }
         end
-      end
+      # end
     end
   end
 
@@ -175,14 +175,14 @@ class EmployeePlansController < ApplicationController
   def plan_approve
     plan_id = params[:format]
     @employee_plan = EmployeePlan.find(plan_id)
-    plan_approval = @employee_plan.update(current_status: "Approved", status: "true", conform: "true")
+    plan_approval = @employee_plan.update(current_status: "Approved", status: "true", confirm: "true")
     redirect_to meeting_plan_approval_employee_plans_path
   end
 
   def plan_reject
     plan_id = params[:format]
     @employee_plan = EmployeePlan.find(plan_id)
-    plan_approval = @employee_plan.update(current_status: "Rejected", status: "false", conform: "false")
+    plan_approval = @employee_plan.update(current_status: "Rejected", status: "false", confirm: "false")
     redirect_to meeting_plan_approval_employee_plans_path
   end
 
@@ -216,7 +216,7 @@ class EmployeePlansController < ApplicationController
   # DELETE /employee_plans/1
   # DELETE /employee_plans/1.json
   def destroy
-    @employee_plan.update(current_status: "Cancelled", status: "false", conform: "false")
+    @employee_plan.update(current_status: "Cancelled", status: "false", confirm: "false")
     respond_to do |format|
       format.html { redirect_to employee_plans_url, notice: 'Employee plan was successfully destroyed.' }
       format.json { head :no_content }
@@ -239,6 +239,6 @@ class EmployeePlansController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_plan_params
-      params.require(:employee_plan).permit(:employee_id, :from_date, :to_date, :from_time, :to_time, :meeting_with, :location, :meeting_agenda, :lat, :lng, :conform, :status, :current_status, :manager_id)
+      params.require(:employee_plan).permit(:employee_id, :from_date, :to_date, :from_time, :to_time, :meeting_with, :location, :meeting_agenda, :lat, :lng, :confirm, :status, :current_status, :manager_id)
     end
 end

@@ -953,7 +953,7 @@ class Api::UserAuthsController < ApplicationController
   def employee_details
     employee_id = params[:employee_id]
     employee = Employee.where(id: employee_id)
-    render :json => employee.present? ? employee.collect{|emp| {:id => emp.id, :prefix => emp.prefix, :employee_first_name => emp.first_name, :employee_middle_name => emp.middle_name, :employee_last_name => emp.last_name, :contact_no => emp.contact_no, :email => emp.email, :department_id => emp.department.name, :employee_designation => emp.joining_detail.employee_designation.name  }} : []
+    render :json => employee.present? ? employee.collect{|emp| {:id => emp.id, :prefix => emp.prefix, :employee_first_name => emp.first_name, :employee_middle_name => emp.middle_name, :employee_last_name => emp.last_name, :contact_no => emp.contact_no, :email => emp.email, :department_id => emp.department.try(:name), :employee_designation => emp.joining_detail.employee_designation.try(:name)  }} : []
   end
 
   def approve_plan_list
@@ -972,13 +972,13 @@ class Api::UserAuthsController < ApplicationController
     manager_id = params[:employee_id]
     employee = Employee.where('manager_id = ?', manager_id)
     # @employee_plan = EmployeePlan.where(current_status: "Pending", manager_id: manager_id)
-    render :json => employee.present? ? employee.collect{|emp| {:id => emp.id, :prefix => emp.prefix, :first_name => emp.first_name, :middle_name => emp.middle_name, :last_name => emp.last_name, :contact_no => emp.contact_no, :email => emp.email, :department_id => emp.department.name, :employee_designation => emp.joining_detail.employee_designation.name  }} : []
+    render :json => employee.present? ? employee.collect{|emp| {:id => emp.id, :prefix => emp.prefix, :first_name => emp.first_name, :middle_name => emp.middle_name, :last_name => emp.last_name, :contact_no => emp.contact_no, :email => emp.email, :department_id => emp.department.try(:name), :employee_designation => emp.joining_detail.employee_designation.try(:name)  }} : []
   end
 
   def manager2_employee_list
     manager_id = params[:employee_id]
     employee = Employee.where('manager_2_id = ?', manager_id)
-    render :json => employee.present? ? employee.collect{|emp| {:id => emp.id, :prefix => emp.prefix, :first_name => emp.first_name, :middle_name => emp.middle_name, :last_name => emp.last_name, :contact_no => emp.contact_no, :email => emp.email, :department_id => emp.department.name, :employee_designation => emp.joining_detail.employee_designation.name  }} : []
+    render :json => employee.present? ? employee.collect{|emp| {:id => emp.id, :prefix => emp.prefix, :first_name => emp.first_name, :middle_name => emp.middle_name, :last_name => emp.last_name, :contact_no => emp.contact_no, :email => emp.email, :department_id => emp.department.try(:name), :employee_designation => emp.joining_detail.employee_designation.try(:name)  }} : []
   end
 
   def contact_details

@@ -40,8 +40,8 @@ gem 'datagrid', '~> 1.4', '>= 1.4.1'
 gem 'quiet_assets'
 
 
-gem 'fullcalendar-rails', '~> 3.4.0.0'
-gem 'momentjs-rails'
+# gem 'fullcalendar-rails', '~> 3.4.0.0'
+# gem 'momentjs-rails'
 
 gem 'tzinfo-data', '~> 1.2016', '>= 1.2016.10'
 

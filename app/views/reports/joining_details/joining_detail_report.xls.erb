@@ -7,16 +7,23 @@
   <Worksheet ss:Name="Sheet1">
     <Table>
       <Row>
-        <Cell ss:Index="1"><Data ss:Type="String">Sr. No.</Data></Cell>
+        <Cell ss:Index="1"><Data ss:Type="String">Employee</Data></Cell>
         <Cell ss:Index="2"><Data ss:Type="String">ID</Data></Cell>
-        <Cell ss:Index="3"><Data ss:Type="String">Employee Name</Data></Cell>
+        <Cell ss:Index="23"><Data ss:Type="String">UAN No.</Data></Cell>
+        <Cell ss:Index="23"><Data ss:Type="String">PF No.</Data></Cell>
+        <Cell ss:Index="9"><Data ss:Type="String">Joining Date</Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String">Confirmation Date</Data></Cell>
+        <Cell ss:Index="7"><Data ss:Type="String">Employee Grade</Data></Cell>
+
+
+
         <Cell ss:Index="4"><Data ss:Type="String">New</Data></Cell>
         <Cell ss:Index="5"><Data ss:Type="String">Replacement</Data></Cell>
         <Cell ss:Index="6"><Data ss:Type="String">Employee Category</Data></Cell>
-        <Cell ss:Index="7"><Data ss:Type="String">Employee Grade</Data></Cell>
+        
         <Cell ss:Index="8"><Data ss:Type="String">Designation</Data></Cell>
-        <Cell ss:Index="9"><Data ss:Type="String">Joining Date</Data></Cell>
-        <Cell ss:Index="10"><Data ss:Type="String">Confirmation Date</Data></Cell>
+        
+       
         <Cell ss:Index="11"><Data ss:Type="String">Probation Period</Data></Cell>
         <Cell ss:Index="12"><Data ss:Type="String">Notice Period</Data></Cell>
         <Cell ss:Index="13"><Data ss:Type="String">Notice Period After Probation</Data></Cell>
@@ -30,7 +37,11 @@
         <Cell ss:Index="21"><Data ss:Type="String">Passport Expiry Date</Data></Cell>
         <Cell ss:Index="22"><Data ss:Type="String">Reserved Category</Data></Cell> 
 
+<<<<<<< HEAD
+        
+=======
         <Cell ss:Index="23"><Data ss:Type="String">PF No.</Data></Cell>
+>>>>>>> fb76949485cf2a37c5dc2cbe106bfec0718e7403
         <Cell ss:Index="24"><Data ss:Type="String">Company RFID</Data></Cell>
         <Cell ss:Index="25"><Data ss:Type="String">Gate RFID</Data></Cell>
         <Cell ss:Index="26"><Data ss:Type="String">Date</Data></Cell>
@@ -42,16 +53,23 @@
       <% i = 0 %>
       <% @joining_details.each do |joining_detail| %>
       <Row>
-        <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
+       <Cell ss:Index="3"><Data ss:Type="String"><%= full_name(joining_detail.employee) %></Data></Cell> 
         <Cell ss:Index="2"><Data ss:Type="String"><%= joining_detail.employee.try(:manual_employee_code) %></Data></Cell>
-        <Cell ss:Index="3"><Data ss:Type="String"><%= full_name(joining_detail.employee) %></Data></Cell> 
+        <Cell ss:Index="23"><Data ss:Type="String"><%= joining_detail.try(:employee_pf_no) %></Data></Cell>
+        <Cell ss:Index="23"><Data ss:Type="String"><%= joining_detail.try(:employee_uan_no) %></Data></Cell>
+        <Cell ss:Index="9"><Data ss:Type="String"><%= joining_detail.try(:joining_date) %></Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String"><%= joining_detail.try(:confirmation_date) %></Data></Cell>
+        
+
+
+
         <Cell ss:Index="4"><Data ss:Type="String"><%= joining_detail.try(:is_new) ? 'Yes' : 'No'%></Data></Cell>
         <Cell ss:Index="5"><Data ss:Type="String"><%= joining_detail.try(:replacement_id) %></Data></Cell>
         <Cell ss:Index="6"><Data ss:Type="String"><%= joining_detail.try(:employee_category).try(:name) %></Data></Cell>
         <Cell ss:Index="7"><Data ss:Type="String"><%= joining_detail.try(:employee_grade).try(:name) %></Data></Cell>
         <Cell ss:Index="8"><Data ss:Type="String"><%= joining_detail.try(:employee_designation).try(:name)%></Data></Cell>
-        <Cell ss:Index="9"><Data ss:Type="String"><%= joining_detail.try(:joining_date) %></Data></Cell>
-        <Cell ss:Index="10"><Data ss:Type="String"><%= joining_detail.try(:confirmation_date) %></Data></Cell>
+        
+        
         <Cell ss:Index="11"><Data ss:Type="String"><%= joining_detail.try(:probation_period) %></Data></Cell>
         <Cell ss:Index="12"><Data ss:Type="String"><%= joining_detail.try(:notice_period) %></Data></Cell>
         <Cell ss:Index="13"><Data ss:Type="String"><%= joining_detail.try(:notice_period_after_probation) %></Data></Cell>
@@ -66,7 +84,11 @@
         <Cell ss:Index="22"><Data ss:Type="String"><%= joining_detail.try(:reserved_category).try(:name) %></Data></Cell>
        
 
+<<<<<<< HEAD
+        
+=======
         <Cell ss:Index="23"><Data ss:Type="String"><%= joining_detail.try(:employee_pf_no) %></Data></Cell>
+>>>>>>> fb76949485cf2a37c5dc2cbe106bfec0718e7403
         <Cell ss:Index="24"><Data ss:Type="String"><%= joining_detail.try(:company_rfid) %></Data></Cell>
         <Cell ss:Index="25"><Data ss:Type="String"><%= joining_detail.try(:gate_rfid) %></Data></Cell>
         <Cell ss:Index="26"><Data ss:Type="String"><%= joining_detail.try(:date) %></Data></Cell>

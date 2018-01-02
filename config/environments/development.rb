@@ -10,6 +10,7 @@
    config.cache_classes = false
   
    # Do not eager load code on boot.
+
    config.eager_load = false
   
    # Show full error reports and disable caching.
@@ -51,22 +52,351 @@
 
  config.action_mailer.default_url_options = { host: 'https://webmail.logix.in/', port: 443 }
  
+   #config.action_mailer.raise_delivery_errors = true 
+
+
+   #config.action_mailer.perform_deliveries = true
+  
+  # Root url
+   # config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
+  
+  
+   # # config.domain = 'lvh.me'
+   # # config.action_mailer.perform_deliveries = true,
+   # ActionMailer::Base.delivery_method = :smtp
+   # ActionMailer::Base.smtp_settings = {
+   # address: 'mail.bhandarigroup.in',
+   # port: 587,
+   # domain: '192.168.0.62',
+   # user_name: 'hrmsdws-bhandarigroup',
+   # password: 'hrms1234',
+   # authentication: :plain,
+   # enable_starttls_auto: true,
+   # openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+   # #openssl_verify_mode: 'none'
+   # }
+
+   # config.action_mailer.default_url_options = { host: 'https://mg.mail.yahoo.com', port: 3000}
+
+   # # config.domain = 'lvh.me'
+   # # config.action_mailer.perform_deliveries = true,
+   # ActionMailer::Base.delivery_method = :smtp
+   # ActionMailer::Base.smtp_settings = {
+   # address: 'mail.redefine.in',
+   # port: 465,
+   # domain: 'mail.redefine.in',
+   # user_name: 'hrms@redefine.in',
+   # password: 'Pass!159',
+   # authentication: :plain,
+   # enable_starttls_auto: true,
+   # openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+   # # openssl_verify_mode: 'none'
+   # }
+
+
+ # config.action_mailer.default_url_options = { host: 'https://webmail.logix.in/', port: 443}
+  
+  
+ #   # config.domain = 'lvh.me'
+ #   # config.action_mailer.perform_deliveries = true,
+ #   ActionMailer::Base.delivery_method = :smtp
+ #   ActionMailer::Base.smtp_settings = {
+ #   address: 'smtp.logix.in',
+ #   port: 587,
+ #   domain: 'smtp.logix.in',
+ #   user_name: 'hrms@sganalytics.com',
+ #   password: 'Hrms@2o!7',
+ #   authentication: :plain,
+ #   enable_starttls_auto: true,
+ #   openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+ #   # openssl_verify_mode: 'none'
+ #   }
+  
+  
+   # # config.domain = 'lvh.me'
+   # # config.action_mailer.perform_deliveries = true,
+   # ActionMailer::Base.delivery_method = :smtp
+   # ActionMailer::Base.smtp_settings = {
+   # address: 'mail.redefine.in',
+   # port: 465,
+   # domain: 'mail.redefine.in',
+   # user_name: 'hrms@redefine.in',
+   # password: 'Pass!159',
+   # authentication: :plain,
+   # enable_starttls_auto: true,
+   # openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+   # # openssl_verify_mode: 'none'
+   # }
+
+   # config.action_mailer.default_url_options = { host: 'https://gmail.com', port: 3000}
+  
+  
+   # # config.domain = 'lvh.me'
+   # # config.action_mailer.perform_deliveries = true,
+   # ActionMailer::Base.delivery_method = :smtp
+   # ActionMailer::Base.smtp_settings = {
+   # address: 'mail.indibasolutions.com',
+   # port: 465,
+   # domain: 'mail.indibasolutions.com',
+   # user_name: 'hcmzone@indibasolutions.com',
+   # password: 'Indiba04',
+   # authentication: :plain,
+   # enable_starttls_auto: true,
+   # openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+   # # openssl_verify_mode: 'none'
+   # }
+
+
+
+  # config.action_mailer.default_url_options = { host: 'http://gmail.com', port: 3000 }
+   # config.domain = 'lvh.me'
+  # # config.action_mailer.perform_deliveries = true,
+  # ActionMailer::Base.delivery_method = :smtp
+  # ActionMailer::Base.smtp_settings = {
+  # address: 'smtp.gmail.com',
+  # port:  465,
+  # domain: 'smtp.gmail.com',
+  # user_name: 'hrms@spanpump.com',
+  # password: 'Admin@321',
+  # authentication: :plain,
+  # enable_starttls_auto: true,
+  #  openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+  #  # openssl_verify_mode: 'none'
+  # }
+
+  # config.action_mailer.default_url_options = { host: 'http://amaazia.co.in', port: 2095 }
+
+  # # config.domain = 'lvh.me'
+  # # config.action_mailer.perform_deliveries = true,
+  # ActionMailer::Base.delivery_method = :smtp
+  # ActionMailer::Base.smtp_settings = {
+  # address: 'amaazia.co.in',
+  # port:  587,
+  # domain: 'amaazia.co.in',
+  # user_name: 'hrms@rajgreen.co.in',
+  # password: 'amaazia@123',
+  # authentication: :plain,
+  # enable_starttls_auto: true,
+  #  openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+  #  # openssl_verify_mode: 'none'
  
+  config.action_mailer.default_url_options = { host: 'https://webmail.logix.in/', port: 443 } 
   # config.domain = 'lvh.me'
-   config.action_mailer.perform_deliveries = true,
+  # config.action_mailer.perform_deliveries = true,
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
-  address: 'smtp.logix.in',
+  address: 'amaazia.co.in',
   port:  587,
-  domain: 'smtp.logix.in',
-  user_name: 'hrms@sganalytics.com',
-  password: 'Dev@2017',
+  domain: 'amaazia.co.in',
+  user_name: 'hrms@rajgreen.co.in',
+  password: 'amaazia@123',
   authentication: :plain,
   enable_starttls_auto: true,
    openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
    # openssl_verify_mode: 'none'
   }
 
+#   config.action_mailer.default_url_options = { host: 'https://webmail.spanpump.com/', port: 443 }
+ 
+ 
+#   # config.domain = 'lvh.me'
+#   # config.action_mailer.perform_deliveries = true,
+#   ActionMailer::Base.delivery_method = :smtp
+#   ActionMailer::Base.smtp_settings = {
+#   address: 'smtp.spanpump.com',
+#   port:  587,
+#   domain: 'smtp.spanpump.com',
+#   user_name: 'hrms@spanpump.com',
+#   password: 'HRm$!@12',
+
+
+ 
+#   # # config.domain = 'lvh.me'
+#   # # config.action_mailer.perform_deliveries = true,
+#   # ActionMailer::Base.delivery_method = :smtp
+#   # ActionMailer::Base.smtp_settings = {
+#   # address: 'amaazia.co.in',
+#   # port:  587,
+#   # domain: 'amaazia.co.in',
+#   # user_name: 'hrms@rajgreen.co.in',
+#   # password: 'amaazia@123',
+#   # authentication: :plain,
+#   # enable_starttls_auto: true,
+#   #  openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+#   #  # openssl_verify_mode: 'none'
+#   # }
+
+ # config.action_mailer.default_url_options = { host: 'https://webmail.logix.in/', port: 443 }
+ 
+ 
+ #  config.domain = 'lvh.me'
+ #  config.action_mailer.perform_deliveries = true,
+ # ActionMailer::Base.delivery_method = :smtp
+ #  ActionMailer::Base.smtp_settings = {
+ # address: 'smtp.logix.in',
+ # port:  587,
+ # domain: 'smtp.logix.in',
+ # user_name: 'hrms@sganalytics.com',
+ # password: 'Dev@2017',
+ #  authentication: :plain,
+ #  enable_starttls_auto: true,
+ #   openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE,
+ #    openssl_verify_mode: 'none'
+ #  }
+
+# config.action_mailer.delivery_method = :smtp
+
+#   config.action_mailer.smtp_settings = {
+#        :address => "smtp.gmail.com",
+#        :port => 25,
+#        :domain => "gmail.com",
+#        :user_name => "vish.hake04@gmail.com",
+#        :password => "vish9604331394"
+#        :authentication => "plain",
+#        :enable_starttls_auto => true
+#   }
+# # Root url
+  # config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
+  # ActionMailer::Base.smtp_settings = {
+  # :address => "mail.rajgreen.co.in",
+  # :port => 25,
+  # :user_name => "hrms@rajgreen.co.in",
+  # :password => "amaazia@123",
+  # :authentication => 'plain',
+  # }
+   # # Root url
+   # config.action_mailer.default_url_options = { host: 'mail.bhandarigroup.in', port: 3000 }
+   
+   # # config.domain = 'lvh.me'
+   # # config.action_mailer.perform_deliveries = true,
+   # ActionMailer::Base.delivery_method = :smtp
+  
+   # ActionMailer::Base.smtp_settings = {
+   # address: 'mail.bhandarigroup.in',
+   # port: 25,
+   # domain: '192.168.0.62',
+   # user_name: 'hrmsdws-bhandarigroup',
+   # password: 'hrms1234',
+   # authentication: :plain,
+   # openssl_verify_mode: 'none'
+   # }
+  
+   # Root url
+  # config.action_mailer.default_url_options = { host: 'mail.amaazia.co.in', port: 3000 }
+  # # config.domain = 'lvh.me'
+  # # config.action_mailer.perform_deliveries = true,
+  # ActionMailer::Base.delivery_method = :smtp
+  
+  # ActionMailer::Base.smtp_settings = {
+  # :address => "mail.amaazia.co.in",
+  # :port => 25,
+  # :user_name => "hrms@amaazia.co.in",
+  # :password => "ranna@123",
+  # :authentication => 'plain',
+  # }
+  
+   # # Root url
+   # config.action_mailer.default_url_options = { host: 'imap.gmail.com', port: 3000 }
+   # # config.domain = 'lvh.me'
+   # # config.action_mailer.perform_deliveries = true,
+   # ActionMailer::Base.delivery_method = :smtp
+  
+   # ActionMailer::Base.smtp_settings = {
+   # address: 'smtp.gmail.com',
+   # port: 25,
+   # domain: 'imap.gmail.com',
+   # authentication: :plain,
+   # enable_starttls_auto: true,
+   # user_name: 'ranna.p@amaazia.com',
+   # password: 'rannahr@123'
+   # }
+  
+  # config.action_mailer.default_url_options = { :host => 'amaazia.com', port: 3000 } 
+  # config.action_mailer.delivery_method = :smtp 
+  # config.action_mailer.perform_deliveries = true 
+  # config.action_mailer.raise_delivery_errors = false 
+  # config.action_mailer.default :charset => "utf-8" 
+  # config.action_mailer.smtp_settings = { 
+  # address: "smtp.gmail.com",
+  # port: 587,
+  # domain: "amaazia.com",
+  # authentication: "plain",
+  # enable_starttls_auto: true,
+  # user_name: ENV["ranna.p@amaazia.com"],
+  # password: ENV["rannahr@1234"]
+
+
+
+
+ # Root url
+#   config.action_mailer.default_url_options = { host: 'mail.rajgreen.co.in', port: 3000 }
+#   # config.domain = 'lvh.me'
+#    config.action_mailer.perform_deliveries = true,
+#   ActionMailer::Base.delivery_method = :smtp
+#   ActionMailer::Base.smtp_settings = {
+#     :address => "mail.rajgreen.co.in",
+#     :port => 465,
+#     :user_name => "hrms@rajgreen.co.in",
+#     :password => "amaazia@123",
+#     :authentication => 'plain',
+# }
+
+#   ActionMailer::Base.smtp_settings = {
+#     :address => "mail.rajgreen.co.in",
+#     :port => 25,
+#     :user_name => "hrms@rajgreen.co.in",
+#     :password => "amaazia@123",
+#     :authentication => 'plain',
+# }
+
+
+ # # Root url
+ #  config.action_mailer.default_url_options = { host: 'mail.bhandarigroup.in', port: 3000 }
+ 
+ #  # config.domain = 'lvh.me'
+ #  # config.action_mailer.perform_deliveries = true,
+ #  ActionMailer::Base.delivery_method = :smtp
+
+ #  ActionMailer::Base.smtp_settings = {
+ #    address: 'mail.bhandarigroup.in',
+ #    port: 25,
+ #    domain: '192.168.0.62',
+ #    user_name: 'hrmsdws-bhandarigroup',
+ #    password: 'hrms1234',
+ #    authentication: :plain,
+ #    openssl_verify_mode: 'none'
+ #  }
+
+ # Root url
+#   config.action_mailer.default_url_options = { host: 'mail.amaazia.com', port: 3000 }
+#   # config.domain = 'lvh.me'
+#   # config.action_mailer.perform_deliveries = true,
+#   ActionMailer::Base.delivery_method = :smtp
+
+#   ActionMailer::Base.smtp_settings = {
+#     :address => "mail.amaazia.com",
+#     :port => 465,
+#     :user_name => "ranna.p@amaazia.com",
+#     :password => "ranna@123",
+#     :authentication => 'plain',
+# }
+
+ # # Root url
+  # config.action_mailer.default_url_options = { host: 'imap.gmail.com', port: 3000 }
+  # # config.domain = 'lvh.me'
+  # # config.action_mailer.perform_deliveries = true,
+  # ActionMailer::Base.delivery_method = :smtp
+
+  # ActionMailer::Base.smtp_settings = {
+  #   address: 'smtp.gmail.com',
+  #   port: 25,
+  #   domain: 'imap.gmail.com',
+  #   authentication: :plain,
+  #   enable_starttls_auto: true,
+  #   user_name: 'ranna.p@amaazia.com',
+  #   password: 'rannahr@123'
+  # }
+  
   
    # Paperclip setup
    # Paperclip.options[:command_path] = "/usr/local/bin/convert"

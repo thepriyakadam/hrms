@@ -15,6 +15,8 @@ class AssignedAsset < ActiveRecord::Base
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        if @employee == nil
+        else
         employee_id = @employee.id
         @asset_type = AssetType.find_by_name(spreadsheet.cell(i,'C'))
         if @asset_type == nil
@@ -33,6 +35,7 @@ class AssignedAsset < ActiveRecord::Base
 
         @assigned_asset = AssignedAsset.create(employee_id: employee_id,asset_type_id: asset_type_id,assets_detail: assets_detail,assets_id: assets_id,assets_value: assets_value,
           assest_status: assest_status,issue_date: issue_date,remarks: remarks)
+     end
   end
 end
 

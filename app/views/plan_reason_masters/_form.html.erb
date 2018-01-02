@@ -1,0 +1,33 @@
+<%= form_for(@plan_reason_master) do |f| %>
+  <% if @plan_reason_master.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@plan_reason_master.errors.count, "error") %> prohibited this plan_reason_master from being saved:</h2>
+
+      <ul>
+      <% @plan_reason_master.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :code %><br>
+    <%= f.text_field :code %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.check_box :status %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

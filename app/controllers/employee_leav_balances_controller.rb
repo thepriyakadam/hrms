@@ -1,3 +1,4 @@
+
 # require 'query_report/helper'  # need to require the helper
 
 class EmployeeLeavBalancesController < ApplicationController
@@ -726,6 +727,23 @@ def create
 
   def modal_balance_detail
     @employee_leav_balance = EmployeeLeavBalance.find(params[:format])
+  end
+
+  def import_xl
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Imports" 
+  end
+
+  def import
+    # byebug
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_employee_leav_balances_path
+    else
+    EmployeeLeavBalance.import(params[:file])
+    redirect_to import_xl_employee_leav_balances_path, notice: "File imported."
+    end
   end
 
   private

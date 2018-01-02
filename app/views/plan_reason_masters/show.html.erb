@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @plan_reason_master.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @plan_reason_master.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @plan_reason_master.description %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @plan_reason_master.status %>
+</p>
+
+<%= link_to 'Edit', edit_plan_reason_master_path(@plan_reason_master) %> |
+<%= link_to 'Back', plan_reason_masters_path %>

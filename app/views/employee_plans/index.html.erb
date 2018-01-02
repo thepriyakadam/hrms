@@ -16,15 +16,16 @@
               <th>From time</th>
               <th>To time</th>
               <th>Meeting with</th>
-              <th>Location</th>
-              <th>Meeting agenda</th>
+              <th>Current status</th>
+              <!-- <th>Location</th>
+              <th>Meeting agenda</th> -->
               <!-- <th>Lat</th>
               <th>Lng</th>
               <th>Conform</th>
               <th>Status</th>
               <th>Current status</th>
               <th>Manager</th> -->
-              <th colspan="3"> Action</th>
+              <th colspan="3"> Action </th>
             </tr>
           </thead>
 
@@ -37,8 +38,22 @@
                 <td><%= employee_plan.from_time %></td>
                 <td><%= employee_plan.to_time %></td>
                 <td><%= employee_plan.meeting_with %></td>
-                <td><%= employee_plan.location %></td>
-                <td><%= employee_plan.meeting_agenda %></td>
+                <td>
+                  <% case employee_plan.current_status %>
+                    <% when "Pending" %>
+                      <small class="label label-default">Pending</small>
+                    <% when "Approved"   %>
+                      <small class="label label-success">Approved</small>
+                    <% when "Rejected" %>
+                      <small class="label label-danger">Rejected</small>
+                    <% when "Cancelled" %>
+                      <small class="label label-warning">Cancelled</small>
+                    <% else %>
+                      <small class="label label-info">Else</small>
+                  <%end%>
+                </td>
+               <!--  <td><%= employee_plan.location %></td>
+                <td><%= employee_plan.meeting_agenda %></td> -->
                 <!-- <td><%= employee_plan.lat %></td>
                 <td><%= employee_plan.lng %></td>
                 <td><%= employee_plan.conform %></td>
@@ -46,8 +61,16 @@
                 <td><%= employee_plan.current_status %></td>
                 <td><%= employee_plan.manager_id %></td> -->
                 <td><%= link_to '', modal_employee_plan_detail_employee_plans_path(employee_plan), class: 'btn btn-xs btn-default fa fa-eye', remote: true %></td>
-                <td><%= link_to '', edit_employee_plan_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit' %></td>
-                <td><%= link_to '', employee_plan, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-xs btn-danger fa fa-close' %></td>
+                <% if employee_plan.current_status == "Approved" || employee_plan.current_status == "Rejected" %>
+                  <td></td>
+                <% else %>
+                  <td><%= link_to '', edit_employee_plan_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit' %></td>
+                <% end %>
+                <% if employee_plan.current_status == "Approved" || employee_plan.current_status == "Rejected" %>
+                  <td></td>
+                <% else %>
+                  <td><%= link_to '', employee_plan, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-xs btn-danger fa fa-close' %></td>
+                <% end %>
               </tr>
             <% end %>
           </tbody>

@@ -1,3 +1,4 @@
+
 # require 'query_report/helper' # need to require the helper
 class JoiningDetailsController < ApplicationController
   before_action :set_joining_detail, only: [:show, :edit, :update, :destroy]
@@ -106,15 +107,11 @@ class JoiningDetailsController < ApplicationController
  end
 
   def import_xl
-   #  @joining_details = JoiningDetail.all
-   #  respond_to do |format|
-   #  format.html
-   #  format.csv { send_data @joining_details.to_csv }
-   #  format.xls
-   #   session[:active_tab] = "import"
-   # end   
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Imports"   
   end
 
+ 
   def import
     # byebug
     # JoiningDetail.import(params[:file])

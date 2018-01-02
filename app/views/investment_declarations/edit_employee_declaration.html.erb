@@ -1,0 +1,64 @@
+<%#= bootstrap_form_for :investment_declaration, url:{action: "update_employee_declaration",investment_declaration_id: @investment_declaration.id} do |f| %>
+<%#= bootstrap_form_for(@investment_declaration, html: {id: 'investment_declaration'}) do |f| %>
+<div class="box-body">
+  <table class="table table-bordered table-hover table-condensed">
+    <div class="row">
+      <div>
+        <tr>
+          <th><%= @employee.try(:manual_employee_code) %> <%= full_name(@employee) %></th>
+        </tr>
+        <tr>
+          <th>Gender :<%= @employee.try(:gender) %></th>
+          <th>PAN No :<%= @employee.try(:pan_no) %></th>
+          <th>Date of Birth :<%= @employee.try(:date_of_birth) %></th>
+          <th>Date of Joining :<%#= @employee.try(:manual_employee_code) %></th>
+        </tr>
+        <tr>
+          <td>Declaration Number</td>
+          <th>Estimated</th>
+          <th>Actual</th>
+          <th>Accepted</th>
+          <th>Rejected</th>
+          <th>Comment</th>
+        </tr>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <% @sections.each do |section| %>
+          <tr><th>Section <%= section.try(:code) %></th></tr>
+            <% if section.try(:code) == "80C" %>
+            <%#  binding.pry  %>
+              <%# byebug %>
+              <% @investment_declarations_bc.each do |investment_declaration| %>
+              <%= bootstrap_form_for(investment_declaration, html: {id: 'investment_declaration.id' } ) do |f| %>
+                <tr>
+                  <td><%#= investment_declaration.investment_head.try(:description) %></td>
+                  <td><%= f.text_field :amount, hide_label:true %></td>
+                  <td><%= f.text_field :amount, hide_label:true %></td>
+                  <td><%= f.text_field :amount, hide_label:true %></td>
+                  <td><%= f.text_field :amount, hide_label:true %></td>
+                  <td>Comment</td>
+                </tr>
+                <% end %>
+              <% end %>
+            <% elsif  section.try(:code) == "80CC" %>
+              <% @investment_declarations_bcc.each do |investment_declaration| %>
+              <%= bootstrap_form_for(investment_declaration, html: {id: 'investment_declaration.id' } ) do |f| %>
+                <tr>
+                  <td><%#= investment_declaration.investment_head.try(:description) %></td>
+                  <td><%= f.text_field :amount, hide_label:true %></td>
+                  <td><%= f.text_field :amount, hide_label:true %></td>
+                  <td><%= f.text_field :amount, hide_label:true %></td>
+                  <td><%= f.text_field :amount, hide_label:true %></td>
+                  <td>Comment</td>
+                </tr>
+                <% end %>
+              <% end %>
+            <% end %>               
+        <% end %> 
+      </div>
+    </div>
+  </table>
+</div>

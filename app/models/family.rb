@@ -27,6 +27,9 @@ class Family < ActiveRecord::Base
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        if @employee == nil
+        else
+
         employee_id = @employee.id
         @relation_master = RelationMaster.find_by_name(spreadsheet.cell(i,'C'))
         if @relation_master == nil
@@ -77,6 +80,7 @@ class Family < ActiveRecord::Base
           date_of_birth: date_of_birth,age: age,contact_no: contact_no,email: email,current_address: current_address,gender: gender,blood_group_id: blood_group_id,
           adhar_no: adhar_no,pan_no: pan_no,marital: marital,medical_claim: medical_claim,profession: profession,passport_no: passport_no,passport_issue_date: passport_issue_date,
           passport_expiry_date: passport_expiry_date,religion_id: religion_id,is_handicap: is_handicap,handicap_type: handicap_type)
+    end
   end
 end
 

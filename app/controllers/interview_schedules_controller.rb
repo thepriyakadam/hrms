@@ -1,3 +1,4 @@
+
 # require 'query_report/helper' # need to require the helper
 
 class InterviewSchedulesController < ApplicationController

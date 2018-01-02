@@ -107,13 +107,9 @@ class FamiliesController < ApplicationController
   end
 
    def import_xl
-   #  @families = Family.all
-   #  respond_to do |format|
-   #  format.html
-   #  format.csv { send_data @families.to_csv }
-   #  format.xls
-   #   session[:active_tab] = "import"
-   # end   
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Imports"   
+
   end
 
   def import

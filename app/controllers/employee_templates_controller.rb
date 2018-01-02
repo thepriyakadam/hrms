@@ -1,3 +1,4 @@
+
 # require 'query_report/helper'  # need to require the helper
 class EmployeeTemplatesController < ApplicationController
   ##load_and_authorize_resource except: [:template_list]

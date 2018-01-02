@@ -1,3 +1,4 @@
+
 # require 'query_report/helper'
 class SalarySlipLedgersController < ApplicationController
   # include QueryReport::Helper

@@ -1,3 +1,4 @@
+
 # require 'query_report/helper'  # need to require the helper
 class EmployeeLeavRequestsController < ApplicationController
   before_action :set_employee_leav_request, only: [:show, :edit,:update, :destroy]

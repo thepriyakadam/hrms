@@ -35,12 +35,8 @@
   
 
   def import_xl
-   #  @employees = Employee.all
-   #  respond_to do |format|
-   #  format.html
-   #  format.csv { send_data @employee_bank_details.to_csv }
-   #  format.xls
-   # end     
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Imports"   
   end
 
   def import
@@ -53,6 +49,19 @@
     else
     Employee.import(params[:file])
     redirect_to import_xl_employees_path, notice: "File imported."
+    end
+  end
+
+  def import_create_new_user
+    # Employee.import(params[:file])
+    # redirect_to root_url, notice: "File imported."
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_assign_role_employees_path
+    else
+    Employee.import_create_new_user(params[:file])
+    redirect_to import_assign_role_employees_path, notice: "File imported."
     end
   end
 

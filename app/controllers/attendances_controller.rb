@@ -1,3 +1,4 @@
+
 # require 'query_report/helper' # need to require the helper
 class AttendancesController < ApplicationController
   before_action :set_attendance, only: [:show, :edit, :update, :destroy]

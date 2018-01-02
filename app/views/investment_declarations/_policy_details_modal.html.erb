@@ -1,0 +1,63 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <center>Add Policy Detail</center>
+    </div>
+    
+    <div class="modal-body">
+      <%= bootstrap_form_for(@policy_detail,html: {id: 'policy_detail'} ) do |f| %>
+        <%#= f.hidden_field :investment_declaration_id , value: current_user.employee_id %>
+
+        <%= f.hidden_field :investment_declaration_id , value: params[:format] %>
+        
+        <div class="col-sm-4">
+          <div class="field">
+            <%= f.text_field :insurer %>
+          </div>
+        </div>
+        
+        <div class="col-sm-4">
+          <div class="field">
+            <%= f.text_field :policy_no %>
+          </div>
+        </div>
+        
+        <div class="col-sm-4">
+          <div class="field">
+            <%= f.text_field :relation %>
+          </div>
+        </div>
+        
+        <div class="col-sm-4">
+          <div class="field">
+            <%= f.text_field :frequency %>
+          </div>
+        </div>
+        
+        <div class="col-sm-4">
+          <div class="field">
+            <%= f.text_field :premium_amount %>
+          </div>
+        </div>
+        
+        <div class="col-sm-4">
+          <div class="field">
+            <%= f.text_field :estimated_annual_amount %>
+          </div>
+        </div>
+        
+        <div class="col-sm-4">
+          <div class="field">
+            <%= f.text_field :actual_annual_amount %>
+          </div>
+        </div>
+
+        <div class="row" align="center">
+          <div class="col-sm-10">
+            <%= f.submit "Submit", class: 'btn btn-sm btn-success fa fa-modx' %>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>

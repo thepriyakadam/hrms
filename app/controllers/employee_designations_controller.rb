@@ -1,3 +1,4 @@
+
 # require 'query_report/helper'  # need to require the helper
 class EmployeeDesignationsController < ApplicationController
   before_action :set_employee_designation, only: [:show, :edit, :update, :destroy]

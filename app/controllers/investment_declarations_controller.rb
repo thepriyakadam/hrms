@@ -17,8 +17,8 @@ class InvestmentDeclarationsController < ApplicationController
   def new
     @investment_declaration = InvestmentDeclaration.new
     @investment_declarations = InvestmentDeclaration.all
-      session[:active_tab] ="PayrollManagement"
-      session[:active_tab1] = "IncomeTax"
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] = "IncomeTax"
   end
 
   # GET /investment_declarations/1/edit
@@ -29,13 +29,13 @@ class InvestmentDeclarationsController < ApplicationController
   # POST /investment_declarations.json
 
   def create
-     @investment_declaration = InvestmentDeclaration.new(investment_declaration_params)
-     @investment_declarations = InvestmentDeclaration.all
-      if @investment_declaration.save
-        @investment_declaration = InvestmentDeclaration.new
-        flash[:notice] = 'Investment Declaration is saved Successfully'
-      end
-      redirect_to new_investment_declaration_path   
+    @investment_declaration = InvestmentDeclaration.new(investment_declaration_params)
+    @investment_declarations = InvestmentDeclaration.all
+    if @investment_declaration.save
+      @investment_declaration = InvestmentDeclaration.new
+      flash[:notice] = 'Investment Declaration is saved Successfully'
+    end
+    redirect_to new_investment_declaration_path   
   end
 
   # PATCH/PUT /investment_declarations/1
@@ -63,7 +63,7 @@ class InvestmentDeclarationsController < ApplicationController
   end
    
  
-   def investment_document
+  def investment_document
     @investment_declaration = InvestmentDeclaration.find(params[:id])
     send_file @investment_declaration.document.path,
               filename: @investment_declaration.document_file_name,
@@ -73,15 +73,6 @@ class InvestmentDeclarationsController < ApplicationController
     # render path
     # render 'show'
   end
-
-  # def investment_document2
-  #     @investment_declaration = InvestmentDeclaration.find(params[:id])
-  #     send_file @investment_declaration.document.path,
-  #              filename: @investment_declaration.document_file_name,
-  #              type: @investment_declaration.document_content_type,
-  #              disposition: 'attachment'
-    
-  # end
 
   def send_for_approval
     @investment_declaration = InvestmentDeclaration.find(params[:format])
@@ -176,9 +167,69 @@ class InvestmentDeclarationsController < ApplicationController
               margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
-
   end
 
+  def employee_declaration
+    @employees = Employee.where.not(id: InvestmentDeclaration.select(:employee_id))
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] = "IncomeTax"
+  end
+
+  def add_employee_declaration
+    @investment_heads = InvestmentHead.all
+    @investment_heads.each do |ih|
+      InvestmentDeclaration.create(investment_head_id: ih.id, employee_id: params[:employee_id], amount: 0.0, date: Date.today )
+    end
+    redirect_to employee_declaration_investment_declarations_path
+  end
+
+  def edit_employee_declaration
+    @employee = Employee.find_by(id: current_user.employee_id)
+    @sections = Section.all
+  end
+
+  def update_employee_declaration
+  end
+
+  def policy_details_modal
+    @policy_detail = PolicyDetail.new
+    # @policy_detail = PolicyDetail.find(params[:format])
+  end
+  
+  def document_upload
+    investment_declaration = InvestmentDeclaration.find(params[:format])
+    document = params[:document]
+    investment_declaration.update(document: document)
+    redirect_to show_employee_declaration_investment_declarations_path
+  end
+
+  # def download_emp
+  #   @employee_document = EmployeeDocument.find(params[:id])
+  #   send_file @employee_document.document.path,
+  #             filename: @employee_document.document,
+  #             type: @employee_document.document_content_type,
+  #             disposition: 'attachment'
+  # end
+
+  def investment_download_document
+    @investment_declarations = InvestmentDeclaration.find(params[:id])
+    send_file @investment_declarations.document.path,
+              filename: @investment_declarations.document,
+              type: @investment_declarations.document_content_type,
+              disposition: 'attachment'
+  end
+
+  def show_employee_declaration
+    @employee = Employee.find_by(id: current_user.employee_id)
+    @emp = InvestmentDeclaration.where(employee_id: @employee)
+    @sections = Section.all
+ 
+    @section_code = {}
+    @sections.each do |section|
+      @section_code[section.code] = @investment_declarations_c = InvestmentDeclaration.select(InvestmentDeclaration.arel_table[Arel.star]).where(Section.arel_table[:code].eq(section.code).and(InvestmentDeclaration.arel_table[:employee_id].eq(@employee))).joins(InvestmentDeclaration.arel_table.join(InvestmentHead.arel_table).on(InvestmentDeclaration.arel_table[:investment_head_id].eq(InvestmentHead.arel_table[:id])).join_sources).joins(InvestmentDeclaration.arel_table.join(Section.arel_table).on(Section.arel_table[:id].eq(InvestmentHead.arel_table[:section_id])).join_sources)
+    end
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_investment_declaration

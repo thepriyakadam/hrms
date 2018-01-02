@@ -23,17 +23,28 @@ class EmployeePlansController < ApplicationController
   end
 
   def create
-    @employee_plan = EmployeePlan.new(employee_plan_params)
-    # @employee_plans = EmployeePlan.all
-    respond_to do |format|
-      if @employee_plan.save
-        format.html { redirect_to employee_plans_url, notice: 'Employee plan was successfully created.' }
-        format.json { render :show, status: :created, location: @employee_plan }
-      else
-        format.html { render :new }
-        format.json { render json: @employee_plan.errors, status: :unprocessable_entity }
+    @employee_plan = EmployeePlan.all
+    @employee_plan = @employee_plan.check_availability(current_user, params[:employee_plan][:from_date], params[:employee_plan][:to_date], params[:employee_plan][:from_time], params[:employee_plan][:to_time])
+    if @employee_plan == true
+      flash[:alert] = 'Sorry..!! This Time was already reserved...'
+      redirect_to employee_plans_url
+    else
+      @employee_plan = EmployeePlan.new(employee_plan_params)
+      respond_to do |format|
+        if @employee_plan.save
+          format.html { redirect_to employee_plans_url, notice: 'Employee plan was successfully created.' }
+          format.json { render :show, status: :created, location: @employee_plan }
+        else
+          format.html { render :new }
+          format.json { render json: @employee_plan.errors, status: :unprocessable_entity }
+        end
       end
     end
+  end
+
+  def arrange_meeting
+    @employee_plan = EmployeePlan.new
+    session[:active_tab] ="ManagerSelfService"
   end
 
   def ajax_employee_plan_details
@@ -43,21 +54,54 @@ class EmployeePlansController < ApplicationController
   # PATCH/PUT /employee_plans/1
   # PATCH/PUT /employee_plans/1.json
   def update
-    respond_to do |format|
-      if @employee_plan.update(employee_plan_params)
-        format.html { redirect_to employee_plans_url, notice: 'Employee plan was successfully updated.' }
-        format.json { render :show, status: :ok, location: @employee_plan }
-      else
-        format.html { render :edit }
-        format.json { render json: @employee_plan.errors, status: :unprocessable_entity }
+    @employee_plan = EmployeePlan.all
+    @employee_plan = @employee_plan.check_availability(current_user, params[:employee_plan][:from_date], params[:employee_plan][:to_date], params[:employee_plan][:from_time], params[:employee_plan][:to_time])
+    if @employee_plan == true
+      flash[:alert] = 'Sorry..!! This Time was already reserved...'
+      redirect_to employee_plans_url
+    else
+      @employee_plan = EmployeePlan.new(employee_plan_params)
+      respond_to do |format|
+        if @employee_plan.update(employee_plan_params)
+          format.html { redirect_to employee_plans_url, notice: 'Employee plan was successfully created.' }
+          format.json { render :show, status: :created, location: @employee_plan }
+        else
+          format.html { render :new }
+          format.json { render json: @employee_plan.errors, status: :unprocessable_entity }
+        end
       end
     end
+  end
+
+  def meeting_plan_approval
+    @employee_plan = EmployeePlan.where(current_status: "Pending", manager_id: current_user.employee_id)
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] = "IncomeTax"
+  end
+
+  def view_plan
+    plan_id = params[:format]
+    @employee_plan = EmployeePlan.find(plan_id)
+  end  
+  
+  def plan_approve
+    plan_id = params[:format]
+    @employee_plan = EmployeePlan.find(plan_id)
+    plan_approval = @employee_plan.update(current_status: "Approved", status: "true", conform: "true")
+    redirect_to meeting_plan_approval_employee_plans_path
+  end
+
+  def plan_reject
+    plan_id = params[:format]
+    @employee_plan = EmployeePlan.find(plan_id)
+    plan_approval = @employee_plan.update(current_status: "Rejected", status: "false", conform: "false")
+    redirect_to meeting_plan_approval_employee_plans_path
   end
 
   # DELETE /employee_plans/1
   # DELETE /employee_plans/1.json
   def destroy
-    @employee_plan.destroy
+    @employee_plan.update(current_status: "Cancelled", status: "false", conform: "false")
     respond_to do |format|
       format.html { redirect_to employee_plans_url, notice: 'Employee plan was successfully destroyed.' }
       format.json { head :no_content }

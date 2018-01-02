@@ -1,3 +1,4 @@
+
 # require 'query_report/helper' # need to require the helper
 class AdvanceSalariesController < ApplicationController
   before_action :set_advance_salary, only: [:show, :edit, :update, :destroy]

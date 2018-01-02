@@ -28,7 +28,7 @@ class CreateFamilies < ActiveRecord::Migration
       t.string :handicap_type
       
       t.references :religion, index: true, foreign_key: true
-
+      t.integer :relation_master_id
 
       t.timestamps null: false
     end

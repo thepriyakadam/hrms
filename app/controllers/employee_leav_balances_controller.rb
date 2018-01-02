@@ -731,7 +731,7 @@ def create
 
   def import_xl
     session[:active_tab] ="EmployeeManagement"
-    session[:active_tab1] ="Imports" 
+    session[:active_tab1] ="Import" 
   end
 
   def import
@@ -743,6 +743,23 @@ def create
     else
     EmployeeLeavBalance.import(params[:file])
     redirect_to import_xl_employee_leav_balances_path, notice: "File imported."
+    end
+  end
+
+  def report
+     @employee_leav_balances = EmployeeLeavBalance.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_leav_balances/excel_report.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'report',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_leav_balances/pdf_report.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
     end
   end
 

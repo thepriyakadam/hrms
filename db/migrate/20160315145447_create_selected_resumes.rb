@@ -14,6 +14,9 @@ class CreateSelectedResumes < ActiveRecord::Migration
       t.string :status
       t.string :job_title
       t.boolean :shortlist_for_interview
+      t.string :contact_no2
+      t.decimal :current_ctc
+      t.integer :add_by_id
 
       t.timestamps null: false
     end

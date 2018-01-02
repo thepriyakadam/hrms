@@ -3,15 +3,25 @@ class InterviewAttribute < ActiveRecord::Base
   validates :name, presence: true
 
 
-    def self.import_skillset(file)
+    def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        code = spreadsheet.cell(i,'A')
-        name = spreadsheet.cell(i,'B')
-        description = spreadsheet.cell(i,'C')
-
+        code = spreadsheet.cell(i,'B').to_i
+        if code == 0
+           code = spreadsheet.cell(i,'B')
+         else
+          code = spreadsheet.cell(i,'B').to_i
+        end
+        name = spreadsheet.cell(i,'C')
+        description = spreadsheet.cell(i,'D')
+        
+        @interview = InterviewAttribute.find_by(name: name)
+        if @interview.nil?
         @interview_attribute = InterviewAttribute.create(code: code,name: name,description: description)     
+        else
+          @interview.update(code: code,name: name,description: description)
+        end
     end
   end
 

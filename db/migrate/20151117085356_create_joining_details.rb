@@ -43,7 +43,9 @@ class CreateJoiningDetails < ActiveRecord::Migration
       t.boolean :time_master
       t.boolean :time_adjusted
       t.date :leaving_date, :date
-     
+      t.string :notice_period_after_probation
+      t.boolean :c_off
+      t.boolean :is_da
 
       t.timestamps null: false
     end

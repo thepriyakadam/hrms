@@ -5,28 +5,34 @@ class AttributeMaster < ActiveRecord::Base
 	validates :name,presence:true, uniqueness:{case_sensitive:false}
 
 
-    def self.import_attribute(file)
+    def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        code = spreadsheet.cell(i,'A')
-        name = spreadsheet.cell(i,'B')
-        definition = spreadsheet.cell(i,'C')
-        attribute_weightage = spreadsheet.cell(i,'D')
+        code = spreadsheet.cell(i,'B')
+        name = spreadsheet.cell(i,'C')
+        definition = spreadsheet.cell(i,'D')
+        attribute_weightage = spreadsheet.cell(i,'E')
         if attribute_weightage == "Yes" || attribute_weightage == "yes"
         	attribute_weightage = true
         else
         	attribute_weightage = false
         end
-        from = spreadsheet.cell(i,'E')
-        to = spreadsheet.cell(i,'F')
-        status = spreadsheet.cell(i,'G')
+        from = spreadsheet.cell(i,'F')
+        to = spreadsheet.cell(i,'G')
+        status = spreadsheet.cell(i,'H')
         if status == "Yes" || status == "yes"
         	status = true
         else
         	status = false
         end
+
+        @attribute = AttributeMaster.find_by(name: name)
+        if @attribute.nil?
         @degree = AttributeMaster.create(code: code,name: name,definition: definition,attribute_weightage: attribute_weightage,from: from,to: to,status: status)     
+        else
+          @attribute.update(code: code,name: name,definition: definition,attribute_weightage: attribute_weightage,from: from,to: to,status: status)
+        end
     end
   end
 

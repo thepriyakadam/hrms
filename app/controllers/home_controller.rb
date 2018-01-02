@@ -18,7 +18,6 @@ class HomeController < ApplicationController
    
     @employees = Employee.all
     if current_user.class == Member
-
       # @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id, status: true)
       
       if current_user.role.name == 'GroupAdmin'
@@ -87,6 +86,23 @@ class HomeController < ApplicationController
       @company_policy = CompanyPolicy.find(params[:company_policy_id])
       policy_type = @company_policy.policy_type
       @company_policies = CompanyPolicy.where(policy_type: policy_type)
+  end
+
+  def assigned_user
+      @employees = Employee.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'home/assigned_user.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'assigned_user',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'home/assigned_user.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
   end
   
   def event_detail

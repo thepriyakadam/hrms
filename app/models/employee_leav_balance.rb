@@ -93,10 +93,10 @@ class EmployeeLeavBalance < ActiveRecord::Base
          carry_forward = spreadsheet.cell(i,'K')
         working_day = spreadsheet.cell(i,'L')
 
-        @employee_prsent = EmployeeLeavBalance.find_by(employee_id: employee_id)
+        @employee_prsent = EmployeeLeavBalance.find_by(employee_id: employee_id,leav_category_id: leav_category_id)
       if @employee_prsent.nil?
         @employee_leav_balance = EmployeeLeavBalance.create(employee_id: employee_id,leav_category_id: leav_category_id,no_of_leave: no_of_leave,total_leave: total_leave,
-          from_date: from_date,to_date: to_date,,is_active: is_active,leave_count: leave_count,carry_forward: carry_forward,collapse_value: collapse_value,working_day: working_day)
+          from_date: from_date,to_date: to_date,is_active: is_active,leave_count: leave_count,carry_forward: carry_forward,collapse_value: collapse_value,working_day: working_day)
       else
         @employee_prsent.update(employee_id: employee_id,leav_category_id: leav_category_id,no_of_leave: no_of_leave,total_leave: total_leave,
         from_date: from_date,to_date: to_date,is_active: is_active,leave_count: leave_count,carry_forward: carry_forward,collapse_value: collapse_value,working_day: working_day)

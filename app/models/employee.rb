@@ -173,9 +173,9 @@ class Employee < ActiveRecord::Base
   validates_attachment_size :passport_photo, :less_than => 5.megabytes
 
 
-  # has_attached_file :employee_signature, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'Profile11.jpg'
-  # validates_attachment_content_type :employee_signature,  :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
-  # validates_attachment_size :employee_signature, :less_than => 5.megabytes
+  has_attached_file :employee_signature, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'Profile11.jpg'
+  validates_attachment_content_type :employee_signature,  :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
+  validates_attachment_size :employee_signature, :less_than => 5.megabytes
   
   # validates :permanent_address, presence: true
   # validates :department_id,presence: true
@@ -366,7 +366,82 @@ class Employee < ActiveRecord::Base
       end
     end
   end
-  
+
+  def self.fetch_data
+    matrix = CheckInOut.where("CHECKTIME > ? ", Time.now - 2.days)
+    matrix.each do |mat|
+      edate_time = mat.CHECKTIME
+      edate = edate_time.to_date
+      etime = mat.CHECKTIME
+      user_id = mat.USERID
+      month_nm = etime.strftime("%B")
+      emp =  Employee.find_by_manual_employee_code(user_id)
+      empa =  Employee.find_by_manual_employee_code(user_id)
+      if empa.nil?
+        puts "Employee Id not found"
+      else
+        emp_id = empa.id
+        emp_first = emp.first_name
+        emp_last = emp.last_name
+        space = " "
+        emp_name = emp_first + space + emp_last
+        daily_att = DailyAttendance.where(employee_code: user_id, time: etime)
+        if daily_att.empty?
+          daily_att_updated = DailyAttendance.create(employee_code: user_id, date: edate_time.to_date, time: etime)
+        else 
+        end
+        emp_att = EmployeeAttendance.where(employee_id: emp_id, day: edate)
+        if emp_att.present?
+          time = EmployeeAttendance.where(employee_id: emp_id, in_time: etime)
+          if time.present?
+          else
+            emp_att_time = emp_att.update_all(out_time: etime)
+          end
+        else
+          emp_att_time = EmployeeAttendance.create(employee_id: emp_id, employee_code: user_id, day: edate, present: "P", in_time: etime, month_name: month_nm, employee_code: user_id, employee_name: emp_name)
+        end
+      end
+    end
+  end
+
+ def self.cal_data
+    emp = EmployeeAttendance.where("in_time > ? ", Time.now - 7.days)
+    emp.each do |emp|
+      id = emp.employee_id
+      in_t = emp.in_time
+      out_t = emp.out_time
+      emp_att = EmployeeAttendance.where(employee_id: id, in_time: in_t)
+      if emp_att.last.working_hrs.present?
+          in_time = in_t.to_time
+          out_time = out_t.to_time
+          total_hrms = out_time - in_time 
+          working_hrs = Time.at(total_hrms).utc.strftime("%H:%M")
+          if working_hrs > "07:00" 
+            emp_att.update_all(working_hrs: working_hrs)
+          else
+            emp_att.update_all(present: "HD")
+          end
+      else
+        if emp_att.last.out_time.present?
+          in_time = in_t.to_time
+          out_time = out_t.to_time
+          total_hrms = out_time - in_time 
+          working_hrs = Time.at(total_hrms).utc.strftime("%H:%M")
+          if working_hrs > "07:00" 
+            emp_att.update_all(working_hrs: working_hrs)
+          else
+            emp_att.update_all(present: "HD")
+          end
+        else
+          emp_att.update_all(present: "HD")
+        end
+      end
+    end
+  end
+
+
+
+
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
@@ -404,7 +479,7 @@ class Employee < ActiveRecord::Base
         contact_no = spreadsheet.cell(i,'M').to_i
         optinal_contact_no = spreadsheet.cell(i,'N').to_i
         optinal_contact_no1 = spreadsheet.cell(i,'O').to_i
-        # emergency_contact_no = spreadsheet.cell(i,'P').to_i
+        emergency_contact_no = spreadsheet.cell(i,'P').to_i
         @religion = Religion.find_by_name(spreadsheet.cell(i,'Q'))
         if @religion == nil
            religion_name = spreadsheet.cell(i,'Q')
@@ -492,15 +567,15 @@ class Employee < ActiveRecord::Base
        else
         department_id = @department.id
         end
-      #   @sub_department = SubDepartment.find_by_name(spreadsheet.cell(i,'AJ'))
-      #   if @sub_department == nil
-      #     sub_department_name = spreadsheet.cell(i,'AJ')
-      #     @sub_department_entry = SubDepartment.create(name: sub_department_name, department_id: department_id)
-      #     sub_department_id = @sub_department_entry.id
-      #   else
-      #   sub_department_id = @sub_department.id
-      # end
-      @employee_code_master = EmployeeCodeMaster.find_by_name(spreadsheet.cell(i,'AJ'))
+        @sub_department = SubDepartment.find_by_name(spreadsheet.cell(i,'AJ'))
+        if @sub_department == nil
+          sub_department_name = spreadsheet.cell(i,'AJ')
+          @sub_department_entry = SubDepartment.create(name: sub_department_name, department_id: department_id)
+          sub_department_id = @sub_department_entry.id
+        else
+        sub_department_id = @sub_department.id
+      end
+      @employee_code_master = EmployeeCodeMaster.find_by_name(spreadsheet.cell(i,'AK'))
        if @employee_code_master == nil
         else
         employee_code_master_id = @employee_code_master.id
@@ -527,6 +602,12 @@ end
         else
         employee_id = @employee.id
         email = @employee.email
+        @member = Member.where(email: email)
+        if @member.nil?
+          email = @employee.email
+        else
+        email = "#{@employee.manual_employee_code}@xyz.com" 
+        end
         company_id = @employee.company_id
         company_location_id = @employee.company_location_id
         password = @employee.first_name+'hrms'+@employee.manual_employee_code

@@ -8,6 +8,7 @@ class CreateSalaryslipComponents < ActiveRecord::Migration
       t.boolean :is_deducted
       t.references :employee_template, index: true, foreign_key: true
       t.boolean :is_arrear
+      t.string :other_component_name
       t.timestamps null: false
     end
   end

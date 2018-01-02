@@ -1,4 +1,3 @@
-<h1>Hey i am here..</h1>
 <!-- Main content -->
 <div class="modal-dialog">
   <div class="modal-content">
@@ -10,54 +9,56 @@
       <table class="table table-bordered table-hover table-condensed">
         <tbody>
        	  <tr>
-  			<th><strong>Employee:</strong></th>
+  			<th><strong>Employee</strong></th>
     		<td>
     		<%= @employee_plan.employee.prefix %> <%= @employee_plan.employee.first_name %> <%= @employee_plan.employee.middle_name %><%= @employee_plan.employee.last_name%>
     		</td>
 		  </tr>
 		  <tr>
-  			<th><strong>From date:</strong></th>
+  			<th><strong>From Date</strong></th>
     		<td><%= @employee_plan.from_date %></td>
     	  </tr>
     	  <tr>
-  			<th><strong>To date:</strong></th>
+  			<th><strong>To Date</strong></th>
     		<td><%= @employee_plan.to_date %>
 		  </tr>
 		  <tr>
-  			<th><strong>From time:</strong></th>
+  			<th><strong>From Time</strong></th>
     		<td><%= @employee_plan.from_time %></td>
 		  </tr>
 		  <tr>
-  			<th><strong>To time:</strong></th>
+  			<th><strong>To Time</strong></th>
     		<td><%= @employee_plan.to_time %></td>
 		  </tr>
 		  <tr>
-  			<th><strong>Meeting with:</strong></th>
+  			<th><strong>Meeting With</strong></th>
     		<td><%= @employee_plan.meeting_with %></td>
 		  </tr>
 		  <tr>
-  			<th><strong>Location:</strong></th>
+  			<th><strong>Location</strong></th>
     		<td><%= @employee_plan.location %></td>
 		  </tr>
 		  <tr>
-  			<th><strong>Meeting agenda:</strong></th>
+  			<th><strong>Meeting Agenda</strong></th>
     		<td><%= @employee_plan.meeting_agenda %></td>
 		  </tr>
 		  <tr>
-  			<th><strong>Conform:</strong></th>
-    		<td><%= @employee_plan.conform %></td>
+  			<th><strong>Confirm</strong></th>
+    		<td><%= @employee_plan.confirm %></td>
 		  </tr>
 		  <tr>
-  			<th><strong>Status:</strong></th>
+  			<th><strong>Status</strong></th>
     		<td><%= @employee_plan.status %></td>
 		  </tr>
 		  <tr>
-  			<th><strong>Current status:</strong></th>
+  			<th><strong>Current Status</strong></th>
 			<td><%= @employee_plan.current_status %></td>
 		  </tr>
 		  <tr>
-		    <th><strong>Manager:</strong></th>
-		    <td><%= @employee_plan.manager_id %></td>
+		    <th><strong>Manager</strong></th>
+		    <% emp = @employee_plan.manager_id %>
+        <% @emp_name = Employee.find(emp) %>
+        <td><%= @emp_name.prefix %> <%= @emp_name.first_name %> <%= @emp_name.middle_name %><%= @emp_name.last_name%></td>
 		  </tr>
 	    </table> <br>
 	    <div align="center">

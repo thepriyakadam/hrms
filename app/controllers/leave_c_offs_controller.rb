@@ -7,7 +7,7 @@ class LeaveCOffsController < ApplicationController
   # GET /leave_c_offs
   # GET /leave_c_offs.json
 
-  # include QueryReport::Helper # need to include it
+   # include QueryReport::Helper # need to include it
 
   def index
   end

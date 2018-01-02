@@ -3,15 +3,25 @@ class DepartmentType < ActiveRecord::Base
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
-    def self.import_department_type(file)
+    def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        code = spreadsheet.cell(i,'A')
-        name = spreadsheet.cell(i,'B')
-        description = spreadsheet.cell(i,'C')
-
+        code = spreadsheet.cell(i,'B').to_i
+        if code == 0
+          code = spreadsheet.cell(i,'B')
+        else
+          code = spreadsheet.cell(i,'B').to_i
+        end
+        name = spreadsheet.cell(i,'C')
+        description = spreadsheet.cell(i,'D')
+       
+       @department = DepartmentType.find_by(name: name)
+        if @department == nil
         @department_type = DepartmentType.create(code: code,name: name,description: description)     
+        else 
+        @department.update(code: code,name: name,description: description)    
+      end
     end
   end
 

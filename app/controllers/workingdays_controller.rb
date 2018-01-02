@@ -667,8 +667,8 @@ class WorkingdaysController < ApplicationController
   end
 
   def import_working_day
-    session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Attendance"
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Import"
   end
 
   def import_day

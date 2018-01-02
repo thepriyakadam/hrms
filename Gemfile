@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.8'
 # Use mysql as the database for Active Record
 
 gem 'mysql2', '~> 0.3.18'
@@ -9,11 +9,13 @@ gem 'mysql2', '~> 0.3.18'
 
 # gem "rack-timeout", require:"rack/timeout/base"
 
-# gem 'tiny_tds'
-# gem 'activerecord-sqlserver-adapter'
-# gem 'ruby-odbc'
-# gem 'dbi'
-# gem 'activerecord-session_store'
+gem 'tiny_tds'
+gem 'activerecord-sqlserver-adapter'
+gem 'ruby-odbc'
+gem 'dbi'
+gem 'activerecord-session_store'
+
+gem 'mdb'
 
 gem 'ruby-graphviz', '~> 1.2', '>= 1.2.2'
 
@@ -21,9 +23,9 @@ gem 'twilio-ruby', '~> 4.11', '>= 4.11.1'
 
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
-# gem 'uglifier', '>= 1.3.0'
+ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
-# gem 'coffee-rails', '~> 4.1.0'
+ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'coffee-rails', '~> 4.0.0'
 gem 'whenever', '~> 0.9.4',:require => false
@@ -38,8 +40,8 @@ gem 'datagrid', '~> 1.4', '>= 1.4.1'
 gem 'quiet_assets'
 
 
-gem 'fullcalendar-rails', '~> 3.4.0.0'
-gem 'momentjs-rails'
+# gem 'fullcalendar-rails', '~> 3.4.0.0'
+# gem 'momentjs-rails'
 
 gem 'tzinfo-data', '~> 1.2016', '>= 1.2016.10'
 
@@ -79,7 +81,7 @@ gem 'selenium-webdriver', '~> 3.0', '>= 3.0.5'
 gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
 
 #inline edit
-gem 'best_in_place', github: 'bernat/best_in_place'
+# gem 'best_in_place', github: 'bernat/best_in_place'
 
 gem 'bcrypt-ruby', '~> 3.0.0', :require => 'bcrypt'
 gem 'bcrypt'
@@ -139,7 +141,7 @@ gem 'protokoll'
 # gem 'countries'
 gem 'city-state'
 
-# gem 'rmagick', '~> 2.15.4'
+ # gem 'rmagick', '~> 2.15.4'
 
 # infinite-cove-6619
 # DateTimePicker

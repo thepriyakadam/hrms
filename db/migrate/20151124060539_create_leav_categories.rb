@@ -17,7 +17,9 @@ class CreateLeavCategories < ActiveRecord::Migration
       t.boolean :assign_balance
       t.boolean :is_continuous
       t.decimal :monthly_leave
-
+      t.boolean :weekoff_sandwich
+      t.boolean :holiday_sandwich
+      t.boolean :transfer
 
       t.timestamps null: false
     end

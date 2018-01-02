@@ -263,6 +263,7 @@ class SelfServicesController < ApplicationController
     redirect_to leave_c_off_self_services_path
   end#def
 
+
   def reimbursement_request
     @reimbursement_request = ReimbursementRequest.new
     @reimbursement_requests = ReimbursementRequest.where(employee_id: current_user.employee_id)

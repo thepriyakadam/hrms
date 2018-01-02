@@ -16,7 +16,6 @@ class SalaryReport
 
                 :total_leave, :pay_leave, :nonpay_leave, :gatepass, :day_in_month, :payable_day, 
                 :present_day, :absent_day, :holiday, :weekoff, :month, :year, 
-               
         
 
   def self.collect_data(e, j, sl)

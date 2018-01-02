@@ -10,6 +10,10 @@ class CreateEmployeeLeavBalances < ActiveRecord::Migration
       t.date :from_date
       t.date :to_date
       t.boolean :is_active
+      t.string :carry_forward
+      t.string :leave_count 
+      t.string :collapse_value
+      t.string :working_day 
       t.timestamps null: false
     end
   end

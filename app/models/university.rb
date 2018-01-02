@@ -2,15 +2,25 @@ class University < ActiveRecord::Base
   has_many :qualifications
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
-    def self.import_univercity(file)
+    def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        code = spreadsheet.cell(i,'A')
-        name = spreadsheet.cell(i,'B')
-        description = spreadsheet.cell(i,'C')
-
+        code = spreadsheet.cell(i,'B').to_i
+        if code == 0
+           code = spreadsheet.cell(i,'B')
+         else
+          code = spreadsheet.cell(i,'B').to_i
+        end
+        name = spreadsheet.cell(i,'C')
+        description = spreadsheet.cell(i,'D')
+        
+        @employee = University.find_by(name: name)
+        if @employee.nil?
         @degree = University.create(code: code,name: name,description: description)     
+        else
+          @employee.update(code: code,name: name,description: description)
+        end
     end
   end
 

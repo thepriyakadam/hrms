@@ -1,0 +1,57 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+      /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+    }
+</style>
+<table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+<thead>
+<tr><td colspan="12"><center><strong><%= current_user.employee.company_location.company.try(:description) %></strong> <br>
+        <%= current_user.employee.company_location.company.try(:address) %><br>  <%= current_user.employee.department.try(:name) %> -
+        <%= current_user.employee.company_location.try(:name) %></center> </td></tr>
+
+   <thead>
+        <tr>
+          <th>Sr.No.</th>
+          <th>ID</th>
+          <th>Leave Type</th>
+          <th>No. of Leaves</th>
+          <th>Total Leave</th>
+          <th>From Date</th>
+          <th>To Date</th>
+          <th>Status</th>
+          <th>Leave Count</th>
+          <th>Collapse Value</th>
+          <th>Carry Forward</th>
+          <th>Working Day</th>
+        </tr>
+      </thead>
+
+      <tbody>
+      <%i = 0%>
+        <% @employee_leav_balances.each do |elb| %>
+        
+          <tr>
+            <td><%= i=i+1 %></td>
+            <td><%= elb.employee.try(:manual_employee_code) %></td>
+            <td><%= elb.leav_category.try(:name) %></td>
+            <td><%= elb.no_of_leave %></td>
+            <td><%= elb.total_leave %></td>
+            <td><%= elb.from_date %></td>
+            <td><%= elb.to_date %></td>
+            <td><%= elb.is_active ? "Active" : "Inactive" %></td>
+            <td><%= elb.leave_count %></td>
+            <td><%= elb.collapse_value %></td>
+            <td><%= elb.carry_forward %></td>
+            <td><%= elb.working_day %></td>
+          </tr>
+        <% end %>
+       </tbody>
+      </table>

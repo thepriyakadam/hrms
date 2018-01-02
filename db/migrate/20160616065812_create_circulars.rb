@@ -5,6 +5,8 @@ class CreateCirculars < ActiveRecord::Migration
       t.string :subject
       t.boolean :is_active
       t.boolean :is_confirm
+      t.string  :email
+      t.boolean :send_email
 
       t.timestamps null: false
     end

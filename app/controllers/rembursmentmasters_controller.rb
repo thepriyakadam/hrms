@@ -72,6 +72,17 @@ class RembursmentmastersController < ApplicationController
           end
   end
 
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_rembursmentmasters_path
+      else
+     Rembursmentmaster.import(params[:file])
+     redirect_to new_rembursmentmaster_path, notice: "File imported."
+     end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_rembursmentmaster

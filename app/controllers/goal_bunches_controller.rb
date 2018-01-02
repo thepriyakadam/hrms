@@ -1,10 +1,10 @@
-require 'query_report/helper'
+# require 'query_report/helper'
 class GoalBunchesController < ApplicationController
   before_action :set_goal_bunch, only: [:show, :edit, :update, :destroy]
   ##load_and_authorize_resource
 
   #before_filter :authenticate_user!
- include QueryReport::Helper  # need to include it
+ # include QueryReport::Helper  # need to include it
   # GET /goal_bunches
   # GET /goal_bunches.json
   def index

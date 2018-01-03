@@ -1251,6 +1251,19 @@ ActiveRecord::Schema.define(version: 20171215123749) do
   add_index "employee_leav_requests", ["employee_leav_balance_id"], name: "index_employee_leav_requests_on_employee_leav_balance_id", using: :btree
   add_index "employee_leav_requests", ["leav_category_id"], name: "index_employee_leav_requests_on_leav_category_id", using: :btree
 
+  create_table "employee_location_histories", force: :cascade do |t|
+    t.integer  "employee_id", limit: 4
+    t.date     "date"
+    t.time     "time"
+    t.float    "latitude",    limit: 24
+    t.float    "longitude",   limit: 24
+    t.text     "location",    limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "employee_location_histories", ["employee_id"], name: "index_employee_location_histories_on_employee_id", using: :btree
+
   create_table "employee_monthly_days", force: :cascade do |t|
     t.integer  "employee_id",       limit: 4
     t.string   "month",             limit: 255
@@ -4661,6 +4674,7 @@ ActiveRecord::Schema.define(version: 20171215123749) do
   add_foreign_key "employee_leav_requests", "employee_leav_balances"
   add_foreign_key "employee_leav_requests", "employees"
   add_foreign_key "employee_leav_requests", "leav_categories"
+  add_foreign_key "employee_location_histories", "employees"
   add_foreign_key "employee_monthly_days", "employees"
   add_foreign_key "employee_monthly_days", "years"
   add_foreign_key "employee_nominations", "countries"

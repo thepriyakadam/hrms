@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171215123749) do
+ActiveRecord::Schema.define(version: 20180102042535) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -723,8 +723,11 @@ ActiveRecord::Schema.define(version: 20171215123749) do
     t.string   "controller",    limit: 255
     t.string   "reader_name",   limit: 255
     t.string   "access_status", limit: 255
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.decimal  "latitude",                    precision: 10
+    t.decimal  "longitude",                   precision: 10
+    t.text     "place",         limit: 65535
   end
 
   create_table "daily_bill_detail_histories", force: :cascade do |t|
@@ -1250,6 +1253,19 @@ ActiveRecord::Schema.define(version: 20171215123749) do
   add_index "employee_leav_requests", ["employee_id"], name: "index_employee_leav_requests_on_employee_id", using: :btree
   add_index "employee_leav_requests", ["employee_leav_balance_id"], name: "index_employee_leav_requests_on_employee_leav_balance_id", using: :btree
   add_index "employee_leav_requests", ["leav_category_id"], name: "index_employee_leav_requests_on_leav_category_id", using: :btree
+
+  create_table "employee_location_histories", force: :cascade do |t|
+    t.integer  "employee_id", limit: 4
+    t.date     "date"
+    t.time     "time"
+    t.float    "latitude",    limit: 24
+    t.float    "longitude",   limit: 24
+    t.text     "location",    limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "employee_location_histories", ["employee_id"], name: "index_employee_location_histories_on_employee_id", using: :btree
 
   create_table "employee_monthly_days", force: :cascade do |t|
     t.integer  "employee_id",       limit: 4
@@ -1831,6 +1847,18 @@ ActiveRecord::Schema.define(version: 20171215123749) do
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
   end
+
+  create_table "frequest_questions", force: :cascade do |t|
+    t.string   "code",        limit: 255
+    t.text     "question",    limit: 65535
+    t.text     "answer",      limit: 65535
+    t.integer  "employee_id", limit: 4
+    t.boolean  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "frequest_questions", ["employee_id"], name: "index_frequest_questions_on_employee_id", using: :btree
 
   create_table "goal_bunches", force: :cascade do |t|
     t.integer  "employee_id",             limit: 4
@@ -4661,6 +4689,7 @@ ActiveRecord::Schema.define(version: 20171215123749) do
   add_foreign_key "employee_leav_requests", "employee_leav_balances"
   add_foreign_key "employee_leav_requests", "employees"
   add_foreign_key "employee_leav_requests", "leav_categories"
+  add_foreign_key "employee_location_histories", "employees"
   add_foreign_key "employee_monthly_days", "employees"
   add_foreign_key "employee_monthly_days", "years"
   add_foreign_key "employee_nominations", "countries"
@@ -4720,6 +4749,7 @@ ActiveRecord::Schema.define(version: 20171215123749) do
   add_foreign_key "families", "religions"
   add_foreign_key "food_deductions", "employees"
   add_foreign_key "food_deductions", "food_coupan_masters"
+  add_foreign_key "frequest_questions", "employees"
   add_foreign_key "goal_bunches", "employees"
   add_foreign_key "goal_bunches", "performance_calendars"
   add_foreign_key "goal_bunches", "periods"

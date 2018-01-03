@@ -76,7 +76,7 @@ class EmployeeCodeMastersController < ApplicationController
         redirect_to import_xl_employee_code_masters_path
       else
      EmployeeCodeMaster.import(params[:file])
-     redirect_to import_xl_employee_code_masters_path, notice: "File imported."
+     redirect_to new_employee_code_master_path, notice: "File imported."
      end
   end
 

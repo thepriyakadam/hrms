@@ -68,7 +68,7 @@ class BanksController < ApplicationController
         redirect_to import_xl_banks_path
       else
      Bank.import(params[:file])
-     redirect_to import_xl_banks_path, notice: "File imported."
+     redirect_to new_bank_path, notice: "File imported."
      end
   end
 

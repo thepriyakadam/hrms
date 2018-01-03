@@ -5,6 +5,8 @@ class CreateAdvanceTypes < ActiveRecord::Migration
       t.string :name
       t.string :description
       t.boolean :is_confirm
+      t.boolean :intrest
+      t.decimal :rate
 
       t.timestamps null: false
     end

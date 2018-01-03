@@ -62,7 +62,7 @@ class EmployeeTypesController < ApplicationController
         redirect_to import_xl_employee_types_path
       else
      EmployeeType.import(params[:file])
-     redirect_to import_xl_employee_types_path, notice: "File imported."
+     redirect_to new_employee_type_path, notice: "File imported."
      end
   end
   

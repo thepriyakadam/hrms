@@ -6,9 +6,9 @@
     
     <%= link_to " XLS ", specialization_master_degree_streams_path(id: @degree_stream.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
 
-    <%= link_to "Upload Specialization", import_xl_degree_streams_path, class: 'btn btn-xs btn-primary' %>
+    <%= link_to " Upload ", import_xl_degree_streams_path, class: 'fa fa-upload btn btn-xl btn-primary' %>
     
-     <%= link_to "Template", "/Templates/39.Specialization.xls", :class=>" btn-xs btn btn-warning" %>
+     <%= link_to " Template", "/Templates/39.Specialization.xls", :class=>"fa fa-download btn-xl btn btn-warning" %>
     </div>
   </div><!-- /.box-header -->
 	<div class="box-body">

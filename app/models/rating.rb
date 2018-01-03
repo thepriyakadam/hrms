@@ -26,7 +26,13 @@ class Rating < ActiveRecord::Base
         else
         	status = false
         end
+
+        @rating = Rating.find_by(value: value)
+        if @rating.nil?
         @degree = Rating.create(value: value,discription: discription,status: status)     
+        else
+          @rating.update(value: value,discription: discription,status: status)
+        end
     end
   end
 

@@ -81,7 +81,7 @@ class InterviewTypesController < ApplicationController
         redirect_to import_xl_interview_types_path
       else
      InterviewType.import(params[:file])
-     redirect_to import_xl_interview_types_path, notice: "File imported."
+     redirect_to new_interview_type_path, notice: "File imported."
      end
   end
   

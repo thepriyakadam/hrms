@@ -15,7 +15,7 @@
       <tbody>
         <% @employee_plan.each do |employee_plan| %>
           <tr> 
-            <td><%= employee_plan.employee_id %></td>
+            <td><%= employee_plan.employee.manual_employee_code %></td>
             <td><%= employee_plan.employee.prefix %> <%= employee_plan.employee.first_name %> <%= employee_plan.employee.middle_name %><%= employee_plan.employee.last_name%></td>
             <!-- <td><%= employee_plan.from_date %></td>
             <td><%= employee_plan.to_date %></td>

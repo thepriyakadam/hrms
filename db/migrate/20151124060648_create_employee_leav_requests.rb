@@ -23,7 +23,7 @@ class CreateEmployeeLeavRequests < ActiveRecord::Migration
       t.references :first_reporter
       t.references :second_reporter
       t.boolean :present_status
-
+      t.integer :employee_leav_balance_id
       t.timestamps null: false
     end
   end

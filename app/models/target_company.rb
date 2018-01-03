@@ -5,7 +5,12 @@ class TargetCompany < ActiveRecord::Base
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        code = spreadsheet.cell(i,'B')
+        code = spreadsheet.cell(i,'B').to_i
+        if code == 0
+           code = spreadsheet.cell(i,'B')
+         else
+          code = spreadsheet.cell(i,'B').to_i
+        end
         name = spreadsheet.cell(i,'C')
         description = spreadsheet.cell(i,'D')
         status = spreadsheet.cell(i,'E')
@@ -14,7 +19,13 @@ class TargetCompany < ActiveRecord::Base
         else
         	status = false
         end
+
+        @target = TargetCompany.find_by(name: name)
+        if @target.nil?
         @taget_company = TargetCompany.create(code: code,name: name,description: description,status: status)     
+        else
+          @target.update(code: code,name: name,description: description,status: status)
+        end
     end
   end
 

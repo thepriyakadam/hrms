@@ -68,7 +68,7 @@ class ReligionsController < ApplicationController
         redirect_to import_xl_religions_path
       else
      Religion.import(params[:file])
-     redirect_to import_xl_religions_path, notice: "File imported."
+     redirect_to new_religion_path, notice: "File imported."
      end
   end 
   

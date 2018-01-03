@@ -70,7 +70,7 @@ class DegreeTypesController < ApplicationController
         redirect_to import_xl_degree_types_path
       else
      DegreeType.import(params[:file])
-     redirect_to import_xl_degree_types_path, notice: "File imported."
+     redirect_to new_degree_type_path, notice: "File imported."
      end
   end
   

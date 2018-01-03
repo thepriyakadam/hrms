@@ -85,7 +85,7 @@ class AttributeMastersController < ApplicationController
         redirect_to import_xl_attribute_masters_path
       else
      AttributeMaster.import(params[:file])
-     redirect_to import_xl_attribute_masters_path, notice: "File imported."
+     redirect_to new_attribute_master_path, notice: "File imported."
      end
   end
   

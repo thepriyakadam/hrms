@@ -14,9 +14,11 @@
         <td>
             <%= link_to '', edit_policy_type_path(pt),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  pt, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
-            <%= link_to '', pt,class: 'btn btn-default btn-xs fa fa-eye' %>
+             <%= link_to '', modal_policy_types_path(pt), class: 'btn btn-xs btn-default fa fa-eye',remote: true%>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<div id="Mymodal" class="modal fade"></div>

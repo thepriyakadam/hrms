@@ -21,7 +21,13 @@ class GoalPerspective < ActiveRecord::Base
         else
         	status = false
         end
+
+        @goal = GoalPerspective.find_by(name: name)
+        if @goal.nil?
         @degree = GoalPerspective.create(name: name,goal_weightage: goal_weightage,from: from,to: to,status: status)     
+        else
+          @goal.update(name: name,goal_weightage: goal_weightage,from: from,to: to,status: status)
+        end
     end
   end
 

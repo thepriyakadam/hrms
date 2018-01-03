@@ -18,8 +18,13 @@ class Recruiter < ActiveRecord::Base
         else
           status = false
         end
-
+        
+        @emp = Recruiter.find_by(employee_id: employee_id)
+        if @emp.nil?
         @recruiter = Recruiter.create(employee_id: employee_id,status: status)
+        else
+        @emp.update(employee_id: employee_id,status: status)
+      end
     end
 
   end

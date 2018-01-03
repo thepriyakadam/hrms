@@ -61,7 +61,7 @@ class DepartmentTypesController < ApplicationController
         redirect_to import_xl_department_types_path
       else
      DepartmentType.import(params[:file])
-     redirect_to import_xl_department_types_path, notice: "File imported."
+     redirect_to new_department_type_path, notice: "File imported."
      end
   end
   

@@ -40,6 +40,8 @@
         </div>
       </div>
     </div>
+    </div>
+    <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
         <%= f.text_field :meeting_with, label:'Meeting With', placeholder: 'Meeting With'%>
@@ -50,26 +52,12 @@
         <%= f.text_field :location, label:'Location', placeholder: 'Location' %>
       </div>
     </div>
-    <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.text_field :conform, label: 'Conform', placeholder: 'Conform' %>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.text_field :current_status, label: 'Current Status', placeholder: 'Current Status' %>
-      </div>
-    </div>
-    <div class="col-sm-3">
+    <div class="col-sm-6">
       <div class="form-group required">
         <%= f.text_area :meeting_agenda, label: 'Meeting Agenda', placeholder: 'Meeting Agenda' %>
       </div>
     </div>
-    <div class="col-sm-2">
-      <div class="form-group required">
-        <%= f.check_box :status, label: 'Status', placeholder: 'Status' %>
-      </div>
-    </div>
+   
     <div class="col-sm-3">
       <div class="actions" style="padding-top: 20px;">
         <%= f.submit 'Create',class: "btn btn-primary btn-sm"%>

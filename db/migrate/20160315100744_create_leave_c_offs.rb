@@ -14,6 +14,7 @@ class CreateLeaveCOffs < ActiveRecord::Migration
       t.integer :c_off_expire_day, default: false
       t.string :current_status
       t.date :taken_date
+      t.text :comment
 
       t.timestamps null: false
     end

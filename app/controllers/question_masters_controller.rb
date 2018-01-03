@@ -79,7 +79,7 @@ class QuestionMastersController < ApplicationController
         redirect_to import_xl_question_masters_path
       else
      QuestionMaster.import(params[:file])
-     redirect_to import_xl_question_masters_path, notice: "File imported."
+     redirect_to new_question_master_path, notice: "File imported."
      end
   end
   

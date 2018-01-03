@@ -79,7 +79,7 @@ class InterviewDecisionsController < ApplicationController
         redirect_to import_xl_interview_decisions_path
       else
      InterviewDecision.import(params[:file])
-     redirect_to import_xl_interview_decisions_path, notice: "File imported."
+     redirect_to new_interview_decision_path, notice: "File imported."
      end
   end
   

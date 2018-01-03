@@ -80,7 +80,7 @@ class AboutCompaniesController < ApplicationController
         redirect_to import_xl_about_companies_path
       else
      AboutCompany.import(params[:file])
-     redirect_to import_xl_about_companies_path, notice: "File imported."
+     redirect_to new_about_company_path, notice: "File imported."
      end
   end
   

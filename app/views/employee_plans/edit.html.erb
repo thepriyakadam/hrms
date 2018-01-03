@@ -5,13 +5,10 @@
   </div><!-- /.box-header -->
 	<div class="box-body">
 		<div id="form">
-			<%= render 'form' %>
-			<%= link_to 'Show', @employee_plan %> |
-			<%= link_to 'Back', employee_plans_path %>
+			<%= render 'form' %>	
+    		<br />
+			<%#= link_to 'Show', @employee_plan, class: 'btn btn-sm btn-default fa fa-eye' %>
+			<%#= link_to 'Back', employee_plans_path, class: 'btn btn-sm btn-default fa fa-arrow-left' %>
 		</div>
-		
-		<!-- <div id="employee_plan_detail_list">
-			<%#= render 'employee_plan_detail_list' %>
-		</div> -->
 	</div><!-- /.box-body -->
 </div><!-- /.box -->

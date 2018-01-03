@@ -4,7 +4,12 @@ Rails.application.routes.draw do
   resources :resource_pool_masters
   resources :service_masters
 
-  resources :plan_reason_masters
+  resources :plan_reason_masters do
+    collection do
+      get :view_resaon
+    end
+  end
+  
   resources :policy_details do
     collection do
       get :policy_details_modal
@@ -13,6 +18,14 @@ Rails.application.routes.draw do
   
   resources :employee_plans do
     collection do
+      get :print_employee_wise_report
+      get :print_manager_wise_report
+      get :employee_wise_report
+      get :manager_wise_report
+      post :employee_report_data
+      get :employee_report_data
+      post :manager_report
+      get :manager_report
       get :modal_employee_plan_detail
       get :employee_plan_detail_list
       get :ajax_employee_plan_details
@@ -162,6 +175,7 @@ Rails.application.routes.draw do
       post :policy_type_master
       get :import_xl
       post :import
+      get :modal
     end
   end
 
@@ -2192,6 +2206,9 @@ end
 
   resources :salary_slip_ledgers do
     collection do
+      get :yearly_reports
+      get :month_wise_yearly_report
+      post :month_wise_yearly_report
       get :select_month_year_form
       get :show_employee
       get :employee_ctc
@@ -2999,5 +3016,6 @@ end
     get 'user_auths/emp_daily_activity_list' => 'user_auths#emp_daily_activity_list', defaults:{format: 'json'}
     get 'user_auths/emp_salary_slip_data' => 'user_auths#emp_salary_slip_data', defaults:{format: 'json'}
     get 'user_auths/employee_wise_attendance' => 'user_auths#employee_wise_attendance', defaults:{format: 'json'}
+    get 'user_auths/date_wise_location_history' => 'user_auths#date_wise_location_history', defaults:{format: 'json'}
   end
 end

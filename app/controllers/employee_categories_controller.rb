@@ -79,7 +79,7 @@ end
         redirect_to import_xl_employee_categories_path
       else
      EmployeeCategory.import(params[:file])
-     redirect_to import_xl_employee_categories_path, notice: "File imported."
+     redirect_to new_employee_category_path, notice: "File imported."
      end
   end
   

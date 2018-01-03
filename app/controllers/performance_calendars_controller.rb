@@ -86,7 +86,7 @@ class PerformanceCalendarsController < ApplicationController
         redirect_to import_xl_performance_calendars_path
       else
      PerformanceCalendar.import(params[:file])
-     redirect_to import_xl_performance_calendars_path, notice: "File imported."
+     redirect_to new_performance_calendar_path, notice: "File imported."
      end
   end
 

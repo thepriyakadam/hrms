@@ -82,7 +82,7 @@ class JoiningChecklistMastersController < ApplicationController
         redirect_to import_xl_joining_checklist_masters_path
       else
      JoiningChecklistMaster.import(params[:file])
-     redirect_to import_xl_joining_checklist_masters_path, notice: "File imported."
+     redirect_to new_joining_checklist_master_path, notice: "File imported."
      end
   end
 

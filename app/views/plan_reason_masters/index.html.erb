@@ -1,33 +1,36 @@
 <p id="notice"><%= notice %></p>
-
-<h1>Listing Plan Reason Masters</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Code</th>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Status</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @plan_reason_masters.each do |plan_reason_master| %>
-      <tr>
-        <td><%= plan_reason_master.code %></td>
-        <td><%= plan_reason_master.name %></td>
-        <td><%= plan_reason_master.description %></td>
-        <td><%= plan_reason_master.status %></td>
-        <td><%= link_to 'Show', plan_reason_master %></td>
-        <td><%= link_to 'Edit', edit_plan_reason_master_path(plan_reason_master) %></td>
-        <td><%= link_to 'Destroy', plan_reason_master, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Plan reason master', new_plan_reason_master_path %>
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Plan Reason Masters</h3>
+    <div class="pull-right">
+      <%= link_to "Create Plan Reason", new_plan_reason_master_path, class: 'btn btn-sm btn-primary' %> 
+    </div>
+  </div>
+<!-- <h1>Listing Plan Reason Masters</h1> -->
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th colspan="3">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @plan_reason_masters.each do |plan_reason_master| %>
+          <tr>
+            <td><%= plan_reason_master.code %></td>
+            <td><%= plan_reason_master.name %></td>
+            <td><%= plan_reason_master.description %></td>
+            <td><%= plan_reason_master.status %></td>
+            <td><%= link_to ' ', view_resaon_plan_reason_masters_path(plan_reason_master), remote: true, class: 'btn btn-xs btn-default fa fa-eye' %></td>
+            <td><%= link_to ' ', edit_plan_reason_master_path(plan_reason_master), class: 'btn btn-xs btn-success fa fa-edit' %></td>
+            <td><%= link_to ' ', plan_reason_master, method: :delete, data: { confirm: 'Are you sure?' },  class: 'btn btn-xs btn-danger fa fa-trash' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+</div>
+<div id="view_resaon" class="modal fade"></div>

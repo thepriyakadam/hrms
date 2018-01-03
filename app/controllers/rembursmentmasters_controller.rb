@@ -79,7 +79,7 @@ class RembursmentmastersController < ApplicationController
         redirect_to import_xl_rembursmentmasters_path
       else
      Rembursmentmaster.import(params[:file])
-     redirect_to import_xl_rembursmentmasters_path, notice: "File imported."
+     redirect_to new_rembursmentmaster_path, notice: "File imported."
      end
   end
 

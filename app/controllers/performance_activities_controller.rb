@@ -77,7 +77,7 @@ class PerformanceActivitiesController < ApplicationController
         redirect_to import_xl_performance_activities_path
       else
      PerformanceActivity.import(params[:file])
-     redirect_to import_xl_performance_activities_path, notice: "File imported."
+     redirect_to new_performance_activity_path, notice: "File imported."
      end
   end
 

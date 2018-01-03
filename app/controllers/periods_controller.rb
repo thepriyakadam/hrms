@@ -61,7 +61,7 @@ class PeriodsController < ApplicationController
         redirect_to import_xl_periods_path
       else
      Period.import(params[:file])
-     redirect_to import_xl_periods_path, notice: "File imported."
+     redirect_to periods_path, notice: "File imported."
      end
   end
 

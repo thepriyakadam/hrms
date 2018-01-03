@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.8'
 # Use mysql as the database for Active Record
 
 gem 'mysql2', '~> 0.3.18'
@@ -14,6 +14,8 @@ gem 'activerecord-sqlserver-adapter'
 gem 'ruby-odbc'
 gem 'dbi'
 gem 'activerecord-session_store'
+
+gem 'mdb'
 
 gem 'ruby-graphviz', '~> 1.2', '>= 1.2.2'
 
@@ -38,8 +40,8 @@ gem 'datagrid', '~> 1.4', '>= 1.4.1'
 gem 'quiet_assets'
 
 
-gem 'fullcalendar-rails', '~> 3.4.0.0'
-gem 'momentjs-rails'
+# gem 'fullcalendar-rails', '~> 3.4.0.0'
+# gem 'momentjs-rails'
 
 gem 'tzinfo-data', '~> 1.2016', '>= 1.2016.10'
 
@@ -139,7 +141,8 @@ gem 'protokoll'
 # gem 'countries'
 gem 'city-state'
 
- gem 'rmagick', '~> 2.15.4'
+
+ # gem 'rmagick', '~> 2.15.4'
 
 # infinite-cove-6619
 # DateTimePicker

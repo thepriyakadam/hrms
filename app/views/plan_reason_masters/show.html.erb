@@ -1,24 +1,27 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Code:</strong>
-  <%= @plan_reason_master.code %>
-</p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @plan_reason_master.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @plan_reason_master.description %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @plan_reason_master.status %>
-</p>
-
-<%= link_to 'Edit', edit_plan_reason_master_path(@plan_reason_master) %> |
-<%= link_to 'Back', plan_reason_masters_path %>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Plan Reason </h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    	<tr>
+      		<th><strong>Code</strong></th>
+      		<td><%= @plan_reason_master.code %></td>
+    	</tr>
+    	<tr>
+      		<th><strong>Name</strong></th>
+      		<td><%= @plan_reason_master.name %></td>
+    	</tr>
+    	<tr>
+      		<th><strong>Description</strong></th>
+      		<td><%= @plan_reason_master.description %></td>
+    	</tr>
+    	<tr>
+      		<th><strong>Status</strong></th>
+      		<td><%= @plan_reason_master.status %></td>
+    	</tr>
+    </table> <br>
+    <%= link_to 'Back', plan_reason_masters_path, class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+    <%= link_to 'Edit', edit_plan_reason_master_path(@plan_reason_master), class: 'btn btn-sm btn-default fa' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

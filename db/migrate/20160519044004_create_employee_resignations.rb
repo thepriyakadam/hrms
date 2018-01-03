@@ -21,7 +21,6 @@ class CreateEmployeeResignations < ActiveRecord::Migration
       t.references :reporting_master
       t.references :change_status_employee
       t.boolean :is_stop_pay_request
-
       t.references :second_reporter
       t.references :final_reporter
       t.boolean :is_pending
@@ -33,6 +32,7 @@ class CreateEmployeeResignations < ActiveRecord::Migration
       t.boolean :is_second_rejected
       t.boolean :is_final_rejected
       t.datetime :application_date
+      t.boolean :exit_interview_status
 
       t.timestamps null: false
     end

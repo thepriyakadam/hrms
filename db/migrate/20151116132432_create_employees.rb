@@ -40,6 +40,16 @@ class CreateEmployees < ActiveRecord::Migration
       t.references :department, index: true, foreign_key: true
       t.references :punch_card
       t.references :employee_code_master, index: true, foreign_key: true
+      t.string   :prefix                   
+      t.string   :optional_email               
+      t.integer  :sub_department_id
+      t.string   :employee_signature_file_name
+      t.string   :employee_signature_content_type
+      t.integer  :employee_signature_file_size
+      t.datetime :employee_signature_updated_at
+      t.string   :emergency_contact_no
+      t.string   :optinal_contact_no1             
+      t.string   :extension_no             
     
       t.timestamps null: false
     end

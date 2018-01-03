@@ -15,7 +15,13 @@ class EmployeeCodeMaster < ActiveRecord::Base
         else
           is_active = false
         end
+
+        @employee = EmployeeCodeMaster.find_by(name: name)
+        if @employee.nil?
         @employee_code_master = EmployeeCodeMaster.create(name: name,range: range,last_range: last_range,is_active: is_active)     
+        else
+          @employee.update(name: name,range: range,last_range: last_range,is_active: is_active)
+      end
     end
   end
 

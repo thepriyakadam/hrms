@@ -157,10 +157,6 @@ GEM
     ffi (1.9.18)
     ffi (1.9.18-x64-mingw32)
     ffi (1.9.18-x86-mingw32)
-    fullcalendar-rails (3.4.0.0)
-      jquery-rails (>= 4.0.5, < 5.0.0)
-      jquery-ui-rails (>= 5.0.2)
-      momentjs-rails (>= 2.9.0)
     geocoder (1.4.5)
     gherkin (5.0.0)
     globalid (0.3.7)
@@ -388,7 +384,6 @@ DEPENDENCIES
   dbi
   devise
   email_verifier
-  fullcalendar-rails (~> 3.4.0.0)
   geocoder
   globalid (~> 0.3.7)
   hirb
@@ -401,7 +396,6 @@ DEPENDENCIES
   local-subdomain
   mdb
   mime-types-data (~> 3.2016, >= 3.2016.0521)
-  momentjs-rails
   mysql2 (~> 0.3.18)
   paperclip (~> 4.3, >= 4.3.6)
   pdfkit (~> 0.8.2)

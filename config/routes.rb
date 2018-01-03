@@ -3036,5 +3036,6 @@ end
     get 'user_auths/emp_salary_slip_data' => 'user_auths#emp_salary_slip_data', defaults:{format: 'json'}
     get 'user_auths/employee_wise_attendance' => 'user_auths#employee_wise_attendance', defaults:{format: 'json'}
     get 'user_auths/date_wise_location_history' => 'user_auths#date_wise_location_history', defaults:{format: 'json'}
+    get 'user_auths/leave_coff' => 'user_auths#leave_coff', defaults:{format: 'json'}
   end
 end

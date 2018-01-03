@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171215123749) do
+ActiveRecord::Schema.define(version: 20180102042535) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -723,8 +723,11 @@ ActiveRecord::Schema.define(version: 20171215123749) do
     t.string   "controller",    limit: 255
     t.string   "reader_name",   limit: 255
     t.string   "access_status", limit: 255
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.decimal  "latitude",                    precision: 10
+    t.decimal  "longitude",                   precision: 10
+    t.text     "place",         limit: 65535
   end
 
   create_table "daily_bill_detail_histories", force: :cascade do |t|
@@ -1844,6 +1847,18 @@ ActiveRecord::Schema.define(version: 20171215123749) do
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
   end
+
+  create_table "frequest_questions", force: :cascade do |t|
+    t.string   "code",        limit: 255
+    t.text     "question",    limit: 65535
+    t.text     "answer",      limit: 65535
+    t.integer  "employee_id", limit: 4
+    t.boolean  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "frequest_questions", ["employee_id"], name: "index_frequest_questions_on_employee_id", using: :btree
 
   create_table "goal_bunches", force: :cascade do |t|
     t.integer  "employee_id",             limit: 4
@@ -4734,6 +4749,7 @@ ActiveRecord::Schema.define(version: 20171215123749) do
   add_foreign_key "families", "religions"
   add_foreign_key "food_deductions", "employees"
   add_foreign_key "food_deductions", "food_coupan_masters"
+  add_foreign_key "frequest_questions", "employees"
   add_foreign_key "goal_bunches", "employees"
   add_foreign_key "goal_bunches", "performance_calendars"
   add_foreign_key "goal_bunches", "periods"

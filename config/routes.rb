@@ -1,27 +1,5 @@
 Rails.application.routes.draw do
 
-  
-  resources :survey_details do
-    collection do
-      get :create_survey
-      post :submit_question
-      get :show_detail
-    end
-  end
-  resources :answer_masters
-  resources :survey_questions
-  resources :survey_groups
-  resources :leave_travel_assistances
-  resources :income_loss_house_properties
-  resources :interest_on_housing_loans
-  resources :housing_rents
-  resources :medicle_reimbursements
-  resources :sidebar_tabs
-  resources :policy_details do
-    collection do
-      get :policy_details_modal
-      get :approve_policy_details
-
   resources :events
   resources :resource_pool_masters
   resources :service_masters
@@ -43,6 +21,10 @@ Rails.application.routes.draw do
       get :plan_reject
       get :view_plan
       get :arrange_meeting
+      get :employee_reason
+      get :employee_feedback
+      post :feedback
+      post :reason
     end
   end
   resources :events  # do
@@ -60,12 +42,11 @@ Rails.application.routes.draw do
   end
   resources :frequest_questions do
     collection do
+      get :frequest_question_master
       get :frequest_question_modal
       get :list_of_faq
       get :import_xl
       post :import
-      get :frequest_question_master
-      post :frequest_question_master
     end
   end
   resources :target_companies do
@@ -145,10 +126,9 @@ Rails.application.routes.draw do
   end
   resources :thoughts do
     collection do
+      get :thought_master
       get :import_xl
       post :import
-      get :thought_master
-      post :thought_master
     end
   end
   resources :candidate_interview_schedules
@@ -221,8 +201,6 @@ Rails.application.routes.draw do
     collection do
       get :rembursment_master
       get :rembursment_master
-      get :import_xl
-      post :import
     end
   end
   resources :employee_jc_lists
@@ -697,34 +675,12 @@ end
       post :show_datewise_report
       get :show_datewise_report
       get :modal
-      get :approve_employee_declaration
-      get :show_declaration_details
-      get :approve_declaration_details
       get :employee_declaration
       get :add_employee_declaration
       get :edit_employee_declaration
       get :show_employee_declaration
       post :update_employee_declaration
       get :policy_details_modal
-      get :medicle_reimbursement_modal
-      get :housing_rent_modal
-      get :houseloan_interest_modal
-      get :income_loss_house_property_modal
-      get :add_amount_modal
-      get :leave_travel_assistance_modal
-      post :update_amount
-      post :update_policy
-      post :document_upload
-      get :download_document
-      get :ajax_investment_declaration
-      post :display_declaration_details
-      get :display_declaration_details
-      get :show_policy_details
-      get :show_medicle_reimbursement_details
-      get :show_income_loss_house_property_details
-      get :show_housingloan_details
-      get :show_housing_rent_details
-      get :upload_file_modal
       post :document_upload
       get :download_document
     end
@@ -777,18 +733,16 @@ end
   end
   resources :performance_calendars do
     collection do
-      get :is_confirm
       get :performance_calendar
-      post :performance_calendar
+      get :is_confirm
       get :import_xl
       post :import
     end
   end
   resources :performance_activities do
     collection do
-      get :is_confirm
       get :performance_activity
-      post :performance_activity
+      get :is_confirm
       get :import_xl
       post :import
     end
@@ -994,8 +948,6 @@ end
       get :is_confirm
       get :leaving_reason_master
       post :leaving_reason_master
-      get :import_xl
-      post :import
     end
   end
   resources :training_records
@@ -1243,6 +1195,8 @@ end
       get :is_confirm
       get :leaving_reason_master
       post :leaving_reason_master
+      get :import_xl
+      post :import
     end
   end
   resources :training_approvals
@@ -1456,6 +1410,7 @@ end
       post :asset_type_master
       get :import_xl
       post :import
+
     end
   end
   resources :employee_nominations do
@@ -2455,8 +2410,6 @@ end
       get :is_confirm
       get :qualification_level_master
       post :qualification_level_master
-      get :import_xl
-      post :import
     end
   end
   resources :districts do
@@ -2494,24 +2447,14 @@ end
       post :import
     end
   end
-  resources :universities do
-    collection do
-      get :import_xl
-      post :import
-    end
-  end
-  resources :degree_streams do
-    collection do
-     get :import_xl
-     post :import
-    end
-  end
+  resources :universities
+  resources :degree_streams
   resources :degree_types do
     collection do
-  get :qualification_level_master
-  post :qualification_level_master
-  get :import_xl
-  post :import
+      get :qualification_level_master
+      post :qualification_level_master
+      get :import_xl
+      post :import
   end
 end
   resources :districts do
@@ -2697,7 +2640,7 @@ end
       post :import
       get :modal
       post :update_qualification
-      get :qualification_modal
+      get :qualification_modal 
      end
    end
   resources :families do
@@ -2827,7 +2770,6 @@ end
       get :is_confirm
       get :modal
       get :update_manager_modal
-      get :show_hirarchy
       get :new_employee_list
       get :skillset_employee_list
       get :update_skillset_modal
@@ -2918,8 +2860,6 @@ end
       get :created_user
       patch :update_form
       get :hrms_data_sheet
-      get :assigned_user
-      post :assigned_user
       # get "downloads/xls/:id" => "downloads#xls", :as => :download_xls
 
       # get :show
@@ -3009,9 +2949,6 @@ end
     post 'user_auths/employee_plan' => 'user_auths#employee_plan', defaults:{format: 'json'}
     get 'user_auths/employee_plan_list' => 'user_auths#employee_plan_list', defaults:{format: 'json'}
     post 'user_auths/update_employee_plan' => 'user_auths#update_employee_plan', defaults:{format: 'json'}
-
-    get 'user_auths/destroy_employee_plan' => 'user_auths#destroy_employee_plan', defaults:{format: 'json'}
-
     get 'user_auths/cancel_employee_plan' => 'user_auths#cancel_employee_plan', defaults:{format: 'json'}
     get 'user_auths/holiday_setup' => 'user_auths#holiday_setup', defaults:{format: 'json'}
     get 'user_auths/employee_contact_library' => 'user_auths#employee_contact_library', defaults:{format: 'json'}
@@ -3046,5 +2983,21 @@ end
     post 'user_auths/attendance_data' => 'user_auths#attendance_data', defaults:{format: 'json'}
     get 'user_auths/admin_all_leave_request_list' => 'user_auths#admin_all_leave_request_list', defaults:{format: 'json'}
     get 'user_auths/admin_employee_history' => 'user_auths#admin_employee_history', defaults:{format: 'json'}
+    get 'user_auths/employee_daily_attendance' => 'user_auths#employee_daily_attendance', defaults:{format: 'json'}
+    post 'user_auths/employee_location_history' => 'user_auths#employee_location_history', defaults:{format: 'json'}
+    get 'user_auths/daily_att_count' => 'user_auths#daily_att_count', defaults:{format: 'json'}
+    get 'user_auths/company_logo' => 'user_auths#company_logo', defaults:{format: 'json'}
+    get 'user_auths/admin_od_request_approval_list' => 'user_auths#admin_od_request_approval_list', defaults:{format: 'json'}
+    get 'user_auths/current_location_particular_emp' => 'user_auths#current_location_particular_emp', defaults:{format: 'json'}
+    get 'user_auths/emp_salary_slip_list' => 'user_auths#emp_salary_slip_list', defaults:{format: 'json'}
+    get 'user_auths/project_master_list' => 'user_auths#project_master_list', defaults:{format: 'json'}
+    post 'user_auths/emp_daily_activity' => 'user_auths#emp_daily_activity', defaults:{format: 'json'}
+    get 'user_auths/emp_addable_salary_details' => 'user_auths#emp_addable_salary_details', defaults:{format: 'json'}
+    get 'user_auths/emp_deducted_salary_details' => 'user_auths#emp_deducted_salary_details', defaults:{format: 'json'}
+    get 'user_auths/emp_activity' => 'user_auths#emp_activity', defaults:{format: 'json'}
+    get 'user_auths/emp_details_salary_slip' => 'user_auths#emp_details_salary_slip', defaults:{format: 'json'}
+    get 'user_auths/emp_daily_activity_list' => 'user_auths#emp_daily_activity_list', defaults:{format: 'json'}
+    get 'user_auths/emp_salary_slip_data' => 'user_auths#emp_salary_slip_data', defaults:{format: 'json'}
+    get 'user_auths/employee_wise_attendance' => 'user_auths#employee_wise_attendance', defaults:{format: 'json'}
   end
 end

@@ -128,7 +128,7 @@ class Api::UserAuthsController < ApplicationController
           @employee_leav_request.update(is_cancelled: true, current_status: 'Cancelled')
           LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Cancelled")
           @employee_leav_request.revert_leave(@employee_leav_request)
-          LeaveRequestMailer.cancel(@employee_leav_request).deliver_now
+          # LeaveRequestMailer.cancel(@employee_leav_request).deliver_now
           render :status=>200, :json=>{:status=>"Leave Cancelled Successfully"}
         else
           render :status=>200, :json=>{:status=>"Leave Already cancelled. Please refresh page."}
@@ -155,7 +155,7 @@ class Api::UserAuthsController < ApplicationController
       if @employee_leav_request.employee.manager_2_id.nil?
         @leave_status = LeaveStatusRecord.new do |s|
           s.employee_leav_request_id = employee_leav_request
-          s.change_status_employee_id = employee_id unless Member.find(employee_id).class == Group
+          s.change_status_employee_id = employee_id unless current_user.class == Group
           s.status = 'FinalApproved'
           s.change_date = Time.now
         end
@@ -168,12 +168,12 @@ class Api::UserAuthsController < ApplicationController
             LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FinalApproved")
             if @employee_leav_request.first_reporter_id == employee_id
               # redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
-              LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
+              # LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
               # flash[:notice] = 'Leave Request Approved Successfully.'
               render :status=>200, :json=>{:status=>"Leave Request Approved Successfully."}
             else
               # redirect_to all_leave_request_list_employee_leav_requests_path
-              LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
+              #LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
               # flash[:notice] = 'Leave Request Approved Successfully by Admin.'
               render :status=>200, :json=>{:status=>"Leave Request Approved Successfully by Admin."}
             end
@@ -193,7 +193,7 @@ class Api::UserAuthsController < ApplicationController
       else
         @leave_status = LeaveStatusRecord.new do |s|
           s.employee_leav_request_id = employee_leav_request
-          s.change_status_employee_id = employee_id unless Member.find(employee_id).class == Group
+          s.change_status_employee_id = employee_id unless current_user.class == Group
           s.status = 'FirstApproved'
           s.change_date = Time.now
           LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FirstApproved")
@@ -203,12 +203,12 @@ class Api::UserAuthsController < ApplicationController
             @employee_leav_request.update(is_first_approved: true, current_status: 'FirstApproved', second_reporter_id: @employee_leav_request.employee.manager_2_id)
             if @employee_leav_request.first_reporter_id == employee_id
               # redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
-              LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
+              # LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
               # flash[:notice] = 'Leave Request Approved Successfully.'
               render :status=>200, :json=>{:status=>"Leave Request Approved Successfully."}
             else
               # redirect_to all_leave_request_list_employee_leav_requests_path
-              LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
+              #LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
               # flash[:notice] = 'Leave Request Approved Successfully by Admin.'
               render :status=>200, :json=>{:status=>"Leave Request Approved Successfully by Admin."}
             end
@@ -228,7 +228,7 @@ class Api::UserAuthsController < ApplicationController
     else
       @leave_status = LeaveStatusRecord.new do |s|
         s.employee_leav_request_id = employee_leav_request
-        s.change_status_employee_id = employee_id unless Member.find(employee_id).class == Group
+        s.change_status_employee_id = employee_id unless current_user.class == Group
         s.status = 'FinalApproved'
         s.change_date = Time.now
       end
@@ -240,7 +240,7 @@ class Api::UserAuthsController < ApplicationController
         @employee_leav_request.create_attendance
         LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FinalApproved")
         #LeaveRequestMailer.second_approve(@employee_leav_request).deliver_now
-        LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
+        #LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
         if @employee_leav_request.second_reporter_id == employee_id
           # redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
           # flash[:notice] = 'Leave Request Approved Successfully.'
@@ -282,7 +282,9 @@ class Api::UserAuthsController < ApplicationController
           @employee_leav_request.update(is_first_rejected: true, current_status: 'Rejected')
           LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Rejected")   
           @employee_leav_request.revert_leave(@employee_leav_request)
-          # LeaveRequestMailer.first_reject(@employee_leav_request).deliver_now
+
+          #LeaveRequestMailer.first_reject(@employee_leav_request).deliver_now
+
           if @employee_leav_request.first_reporter_id == employee_id
             # redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
             render :status=>200, :json=>{:status=>"Leave Request Rejected Successfully."}
@@ -316,7 +318,7 @@ class Api::UserAuthsController < ApplicationController
           @employee_leav_request.update(is_second_rejected: true, current_status: 'Rejected')
           LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Rejected")
           @employee_leav_request.revert_leave(@employee_leav_request)
-          LeaveRequestMailer.second_reject(@employee_leav_request).deliver_now
+         # LeaveRequestMailer.second_reject(@employee_leav_request).deliver_now
           if @employee_leav_request.second_reporter_id == employee_id
             # redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
             # flash[:alert] = 'Leave Request Rejected Successfully.'

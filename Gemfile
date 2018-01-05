@@ -9,6 +9,7 @@ gem 'mysql2', '~> 0.3.18'
 
 # gem "rack-timeout", require:"rack/timeout/base"
 
+
 gem 'tiny_tds'
 gem 'activerecord-sqlserver-adapter'
 gem 'ruby-odbc'
@@ -64,6 +65,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'thin', '~> 1.6', '>= 1.6.4'
 
 gem 'bundler'
+
+gem 'delayed_job_active_record'
+gem "daemons"
 
 # for pdf generation
 gem 'prawn', '~> 1.3.0'

@@ -31,8 +31,14 @@
             <%= f.text_field :award_from, label: 'Award From',placeholder: 'e.g. Company' ,class: 'input_award_from' %>
           </div>
         </div>
+
+       <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_area :description, label: 'Achievement', class: 'input_award_from' %>
+          </div>
         </div>
 
+    </div>
    <!-- < unless params['controller'] == 'awards' and params['action'] == 'edit' %>
       <div class="row">
         <div class="col-sm-2">
@@ -45,11 +51,7 @@
       </div><br>
     <end%>-->
     <div class="row">
-        <div class="col-sm-6">
-          <div class="field">
-            <%= f.text_field :description, label: 'Description' %>
-          </div>
-        </div>
+      
 
       <div class="col-sm-3">
         <div class="actions" style="padding: 20px">

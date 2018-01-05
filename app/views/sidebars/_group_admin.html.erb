@@ -621,9 +621,8 @@
                   <li><a href="/investment_declarations/new"><i class="fa fa-tags"> </i> Investment Declaration </a></li>
                   <li><a href="/slabs/new"><i class="fa fa-tags"> </i> Slab </a></li>
                   <li><a href="/slabs/employee_list"><i class="fa fa-tags"> </i> Employee List </a></li>
-                  <!-- <li><a href="/manager_self_services/investment_declaration"><i class="fa fa-thumbs-up"> </i> Declaration Approval</a></li> -->
-                  <li><a href="/investment_declarations/approve_employee_declaration"><i class="fa fa-thumbs-up"> </i> Declaration Approval</a></li>
-                  <li><a href="/investment_declarations/employee_declaration"><i class="fa fa-thumbs-up"> </i> Add Employee </a></li>
+                  <li><a href="/manager_self_services/investment_declaration"><i class="fa fa-thumbs-up"> </i> Declaration Approval</a></li>
+                  <li><a href="/investment_declarations/employee_declaration"><i class="fa fa-thumbs-up"> </i> Employee Declaration </a></li>
                 </ul>
             </li>
             <li id="EmployeeRembursment">
@@ -954,6 +953,5 @@
   <% unless session[:active_tab2].nil? %>
   document.getElementById("<%= session[:active_tab2] %>").classList.add("active");
   <%end%>
-
 </script>
-     
+      <li><a href="/company_locations" title="Company location details"><i class="fa fa-tags"></i> Locations </a></li>

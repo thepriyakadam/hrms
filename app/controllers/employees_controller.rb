@@ -147,7 +147,6 @@
     @department = @employee.department
     @sub_departments = @department.try(:sub_departments)
 
-
     # if current_user.class == Group
     # @company_locations = CompanyLocation.all
     # else
@@ -1521,63 +1520,7 @@ def show_all_record
               disposition: 'attachment'
   end
 
-# <<<<<<< HEAD
-#   def depth
-#     path.length
-#   end
 
-#   def parents
-#     Employee.find(path)
-#   end
-
-#   def children
-#     Employee.where('path && ARRAY[?]', id)
-#   end
-
-#   def full_path
-#     path + [id]
-#   end
-
-#   def move!(new_parent)
-#     if new_parent.path.include?(id)
-#       throw ArgumentError "Cannot move under a child record"
-#     end
-
-#     new_path = new_parent.full_path
-
-#     Employee.transaction do
-#       children.update_all [
-#         'path = ARRAY[:new_path] || path[:depth + 1 : array_length(path,1)]',
-#         new_path: new_path,
-#         depth: depth
-#       ]
-
-#       self.path = new_path
-#       self.save!
-#     end
-#   end  
-
-#   def show_hirarchy
-#     # binding.pry
-#     # byebug
-#      @employees = Employee.all
-#     # @par = Employee.parents
-#     # @emp = Employee.find(7).depth
-#     # @children = Employee.where('path && ARRAY[?]', id)
-#     @root_manager = ReportingMaster.where(is_active: true)
-#     # @root_manager.each do |m2|
-#       @second_manager = Employee.where(manager_id: @root_manager)
-#       # m2.each do |m1|
-#       #   manager = Employee.where(manager_id: m1.id)
-#       # end
-#     # end
-         
-#     # @second_manager = Employee.where(manager_id: @root_manager.employee_id)
-#     @sub = Employee.where(manager_id: @second_manager) 
-
-#     # @abc = Employee.where("id IN (SELECT parent_id FROM categories)")
-
-# =======
   def new_employee_list
      if current_user.class == Member
       if current_user.role.name == 'GroupAdmin'

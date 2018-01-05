@@ -5,7 +5,7 @@ class Award < ActiveRecord::Base
   validates :year_id, presence: true
   validates :award_from, presence: true
   # validate :award_name_regex
-  # validate :award_from_regex
+   # validate :award_from_regex
   # validates :employee_id, uniqueness: { scope: [:award_name] }
 
   def self.to_csv(options = {})

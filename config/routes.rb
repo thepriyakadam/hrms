@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
   resources :events
   resources :resource_pool_masters
   resources :service_masters
@@ -98,6 +99,13 @@ Rails.application.routes.draw do
       post :target_company_master
       get :import_xl
       post :import
+    end
+   end
+    
+  resources :daily_attendances do 
+    collection do
+      get :attendance
+      get :calculate
     end
   end
   resources :leave_transfers do
@@ -274,6 +282,7 @@ Rails.application.routes.draw do
       post :print_visitor_report
       get :print_visitor_report
       get :visitor_list
+
     end
   end
 
@@ -2367,7 +2376,9 @@ end
       post :show_datewise_workingday
       get :show_datewise_workingday
       get :import_working_day
+
       # post :import_working_day
+
       post :import_day
     end
   end

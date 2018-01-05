@@ -205,6 +205,7 @@ class SelfServicesController < ApplicationController
     end
     @joining_detail = JoiningDetail.find_by(employee_id: @employee_id)
 
+
     if @joining_detail.c_off == true
       if @leave_c_off.is_self_present(@employee_id,@c_off_date)
         flash[:alert] = "

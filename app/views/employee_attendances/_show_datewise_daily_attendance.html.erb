@@ -24,7 +24,7 @@ function displayResult()
         <tbody>
           <% @employee_attendances.each do |a| %>
             <tr>
-              <td><%= a.employee.manual_employee_code %></td>
+              <td><%= a.employee.try(:manual_employee_code) %></td>
               <td><%= full_name(a.employee) %></td>
               <td><%=a. present%></td>
 

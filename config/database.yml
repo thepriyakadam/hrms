@@ -6,7 +6,7 @@
 #   gem 'mysql2'
 
 # And be sure to use new-style password hashing:
-#   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
+# #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
 
 # default: &default
 #   adapter: mysql2
@@ -20,7 +20,6 @@
 # development:
 #   <<: *default
 #   database: hrms_development
-
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -166,3 +165,46 @@ production:
 #   password: <%= ENV['HRMS_DATABASE_PASSWORD'] %>
 
   
+# test:
+#   adapter: mysql2
+#   encoding: utf8
+#   pool: 5
+#   username: root
+#   password: root
+#   database: hrms_test
+
+# development_sec:
+#   # mode: odbc
+#   adapter: sqlserver
+#   # dsn: mydsn
+#   encoding: utf8
+#   # pool: 5
+#   host: 10.10.10.62
+#   database: cosecnew
+#   username: amaazia
+#   password: matrix_1
+#   # port: 1433
+
+# production_sec:
+#   mode: odbc
+#   adapter: sqlserver
+#   dsn: mydsn
+#   encoding: utf8
+#   pool: 5
+#   host: 10.10.10.62
+#   database: cosecnew
+#   username: amaazia
+#   password: matrix_1
+#   port: 1433
+
+# test_sec:
+#   mode: odbc
+#   adapter: sqlserver
+#   dsn: mydsn
+#   encoding: utf8
+#   pool: 5
+#   host: 10.10.10.62
+#   database: cosecnew
+#   username: amaazia
+#   password: matrix_1
+#   port: 1433

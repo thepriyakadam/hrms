@@ -4,7 +4,8 @@ class MonthlyExpencesController < ApplicationController
   # GET /monthly_expences
   # GET /monthly_expences.json
   def index
-    @monthly_expences = MonthlyExpence.group("DATE_FORMAT('%Y',expence_date)")
+    @monthly_expences = MonthlyExpence.group("DATE_FORMAT(expence_date,'%Y')")
+
     session[:active_tab] ="PayrollManagement"
     session[:active_tab1] ="PayrollSetup"
     session[:active_tab2] ="PeriodicComponents"

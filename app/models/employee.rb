@@ -93,6 +93,9 @@ class Employee < ActiveRecord::Base
   has_many :machine_attendances
   has_many :on_duty_requests
   has_many :gratuity
+  has_many :visitor_details
+
+
   has_many :texable_monthly_deductions
   has_many :advance_salaries
   has_many :employee_jc_lists

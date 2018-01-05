@@ -23,7 +23,7 @@ class Workingday < ActiveRecord::Base
   # validates :payable_day, :presence => true
 
 
-  def self.import_day_file(file)
+   def self.import_day_file(file)
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
       @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'A').to_i)
@@ -60,7 +60,6 @@ class Workingday < ActiveRecord::Base
     else raise "Unknown file type: #{file.original_filename}"
     end
   end
-
 
   def self.find_by_role(workingdays, current_user)
     if current_user.class == Group

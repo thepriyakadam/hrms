@@ -19,7 +19,7 @@ every 1.hours do
 end
 
 every 1.minutes do
-  rake 'DailyAttendance:fetch_data'
+  runner 'DailyAttendance.fetch_data'
 end
 
 every 5.minutes do 

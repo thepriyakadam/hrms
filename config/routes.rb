@@ -3,6 +3,12 @@ Rails.application.routes.draw do
   resources :events
   resources :resource_pool_masters
   resources :service_masters
+  resources :daily_attendances do 
+    collection do
+      get :attendance
+      get :calculate
+    end
+  end
 
   resources :plan_reason_masters do
     collection do

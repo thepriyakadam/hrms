@@ -54,6 +54,7 @@ class DailyAttendance < ActiveRecord::Base
         daily_att = DailyAttendance.where(employee_code: user_id, time: etime)
         if daily_att.empty?
           daily_att_updated = DailyAttendance.create(employee_code: user_id, date: edate_time.to_date, time: etime)
+          puts "---------attendace created 0 #{Time.now}---------"
         else 
         end
         emp_att = EmployeeAttendance.where(employee_id: emp_id, day: edate)
@@ -62,15 +63,17 @@ class DailyAttendance < ActiveRecord::Base
           if time.present?
           else
             emp_att_time = emp_att.update_all(out_time: etime)
+            puts "-----------attendance updated #{Time.now}-----------"
           end
         else
           emp_att_time = EmployeeAttendance.create(employee_id: emp_id, employee_code: user_id, day: edate, present: "P", in_time: etime, month_name: month_nm, employee_code: user_id, employee_name: emp_name)
+          puts "---------attendace created 1 #{Time.now}---------"
         end
       end
     end
   end
 
- def self.calculate_atte
+ def self.calculate_attendance
     emp = EmployeeAttendance.where("in_time > ? ", Time.now - 7.days)
     emp.each do |emp|
       id = emp.employee_id
@@ -84,6 +87,7 @@ class DailyAttendance < ActiveRecord::Base
           working_hrs = Time.at(total_hrms).utc.strftime("%H:%M")
           if working_hrs > "07:00" 
             emp_att.update_all(working_hrs: working_hrs)
+            puts "---------attendace calculate 1 #{Time.now}---------"
           else
             emp_att.update_all(present: "HD")
           end
@@ -95,11 +99,14 @@ class DailyAttendance < ActiveRecord::Base
           working_hrs = Time.at(total_hrms).utc.strftime("%H:%M")
           if working_hrs > "07:00" 
             emp_att.update_all(working_hrs: working_hrs, present: "P")
+            puts "---------attendace calculate updated 1 #{Time.now}---------"
           else
             emp_att.update_all(present: "HD")
+            puts "---------attendace calculate updated 2 #{Time.now}---------"
           end
         else
           emp_att.update_all(present: "HD")
+          puts "---------attendace calculate updated 3 #{Time.now}---------"
         end
       end
     end

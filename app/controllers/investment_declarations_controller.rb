@@ -224,6 +224,10 @@ class InvestmentDeclarationsController < ApplicationController
     # @investment_declaration = InvestmentDeclaration.find(params[:format])
   end
 
+  def leave_travel_assistance_modal
+    @leave_travel_assistance = LeaveTravelAssistance.new
+  end
+
   def add_amount_modal
     @investment_declarations = InvestmentDeclaration.new
   end

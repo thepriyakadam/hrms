@@ -26,16 +26,16 @@
         <table id="example6" class="table table-bordered table-hover table-condensed">
           <div>
             <tr>
-              <th colspan="10"><%= @employee.try(:manual_employee_code) %> <%= full_name(@employee) %></th>
-              <td colspan="2"><%#= link_to " Print Form ", display_declaration_details_investment_declarations_path(id: current_user.id,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+              <th colspan="10"><%= employee.try(:manual_employee_code) %> <%= full_name(@employee) %></th>
+              <td colspan="2"><%#= link_to " Print Form ", display_declaration_details_investment_declarations_path(id: @employee.id,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
               <%= link_to 'Update Declaration', show_declaration_details_investment_declarations_path(employee_id: params[:employee_id]),class: "btn btn-primary btn-sm" %> 
               </td>
             </tr>
             <tr>
-              <th colspan="1">Gender: <%= @employee.try(:gender) %></th>
-              <th colspan="3">PAN No.: <%= @employee.try(:pan_no) %></th>
-              <th colspan="4">Date of Birth: <%= @employee.try(:date_of_birth) %></th>
-              <th colspan="4">Date of Joining: <%= @employee.try(:joining_detail).try(:joining_date) %></th>
+              <th colspan="1">Gender: <%= employee.try(:gender) %></th>
+              <th colspan="3">PAN No.: <%= employee.try(:pan_no) %></th>
+              <th colspan="4">Date of Birth: <%= employee.try(:date_of_birth) %></th>
+              <th colspan="4">Date of Joining: <%= employee.try(:joining_detail).try(:joining_date) %></th>
             </tr>
         </table> 
         <br /> 

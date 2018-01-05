@@ -37,6 +37,7 @@ class HousingRentsController < ApplicationController
       accepted_rent_sum = accepted_rent_sum.to_f + amount_p
    end
     @investment_declarations.update(actual_amt: accepted_rent_sum)
+    @investment_declarations.update(actual_amt: accepted_rent_sum)
 
     redirect_to show_employee_declaration_investment_declarations_path
     # @housing_rent = HousingRent.new(housing_rent_params)

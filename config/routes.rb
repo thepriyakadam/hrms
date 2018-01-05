@@ -15,6 +15,36 @@ Rails.application.routes.draw do
       get :policy_details_modal
     end
   end
+
+  resources :medicle_reimbursements do
+    collection do
+      get :medicle_reimbursements_modal
+    end
+  end  
+
+  resources :income_loss_house_properties do
+    collection do
+      get :income_loss_house_property_modal
+    end
+  end
+  
+  resources :interest_on_housing_loans do
+    collection do
+      get :houseloan_interest_modal
+    end
+  end     
+
+  resources :housing_rents do
+    collection do
+      get :housing_rent_modal
+    end  
+  end  
+
+  resources :leave_travel_assistances do
+    collection do
+      get :leave_travel_assistance_modal
+    end
+  end    
   
   resources :employee_plans do
     collection do
@@ -695,8 +725,28 @@ end
       get :show_employee_declaration
       post :update_employee_declaration
       get :policy_details_modal
+      post :policy_details_modal
       post :document_upload
       get :download_document
+      get :show_declaration_details
+      get :show_employee_declaration
+      get :display_declaration_details
+      get :upload_file_modal
+      get :add_amount_modal
+      post :show_policy_details
+      get :medicle_reimbursement_modal
+      post :show_medicle_reimbursement_details
+      get :leave_travel_assistance_modal
+      get :housing_rent_modal
+      post :show_housing_rent_details
+      get :houseloan_interest_modal
+      post :show_housingloan_details
+      get :income_loss_house_property_modal
+      post :show_income_loss_house_property_details
+      get :update_amount
+      post :update_amount
+      get :houseloan_interest_modal
+      get :approve_employee_declaration
     end
   end
   resources :investment_heads

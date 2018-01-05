@@ -108,10 +108,6 @@ class AwardsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def award_params
-<<<<<<< HEAD
     params.require(:award).permit(:employee_id, :award_name, :year_id, :award_from, :description)
-=======
-    params.require(:award).permit(:employee_id, :award_name, :year_id, :award_from,:description)
->>>>>>> 20390ecd6302fc1071fc5913d1b4fdad7f020133
   end
 end

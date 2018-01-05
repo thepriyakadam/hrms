@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170913222025) do
+ActiveRecord::Schema.define(version: 20171206150959) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -44,6 +44,11 @@ ActiveRecord::Schema.define(version: 20170913222025) do
 
   add_index "access_issue_requests", ["issue_request_id"], name: "index_access_issue_requests_on_issue_request_id", using: :btree
   add_index "access_issue_requests", ["issue_tracker_access_id"], name: "index_access_issue_requests_on_issue_tracker_access_id", using: :btree
+
+  create_table "accesses", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "accident_images", force: :cascade do |t|
     t.integer  "accident_record_id",  limit: 4
@@ -618,7 +623,7 @@ ActiveRecord::Schema.define(version: 20170913222025) do
   create_table "daily_attendances", force: :cascade do |t|
     t.string   "sr_no",         limit: 255
     t.date     "date"
-    t.time     "time"
+    t.datetime "time"
     t.string   "employee_code", limit: 255
     t.string   "card_no",       limit: 255
     t.string   "employee_name", limit: 255
@@ -729,6 +734,22 @@ ActiveRecord::Schema.define(version: 20170913222025) do
     t.datetime "updated_at",              null: false
     t.boolean  "is_confirm"
   end
+
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer  "priority",   limit: 4,     default: 0, null: false
+    t.integer  "attempts",   limit: 4,     default: 0, null: false
+    t.text     "handler",    limit: 65535,             null: false
+    t.text     "last_error", limit: 65535
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by",  limit: 255
+    t.string   "queue",      limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "department_types", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -2612,6 +2633,11 @@ ActiveRecord::Schema.define(version: 20170913222025) do
 
   add_index "monthly_expences", ["employee_id"], name: "index_monthly_expences_on_employee_id", using: :btree
   add_index "monthly_expences", ["expencess_type_id"], name: "index_monthly_expences_on_expencess_type_id", using: :btree
+
+  create_table "mx_atdevent_trns", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "nationalities", force: :cascade do |t|
     t.string   "code",        limit: 255

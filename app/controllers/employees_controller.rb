@@ -107,6 +107,8 @@
     @company_locations = @company.try(:company_locations)
     @company_location = @employee.company_location
     @departments = @company_location.try(:departments)
+    @department = @employee.department
+    @sub_departments = @department.try(:sub_departments)
 
     # if current_user.class == Group
     # @company_locations = CompanyLocation.all

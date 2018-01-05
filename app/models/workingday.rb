@@ -22,6 +22,39 @@ class Workingday < ActiveRecord::Base
   # validates :absent_day, :presence => true
   # validates :payable_day, :presence => true
 
+   def self.import_day_file(file)
+  spreadsheet = open_spreadsheet(file)
+    (2..spreadsheet.last_row).each do |i|
+      @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'A').to_i)
+      if @employee.nil?
+      else
+      employee_id = @employee.id
+      month_name = spreadsheet.cell(i,'B')
+      year = spreadsheet.cell(i,'C').to_i
+      day_in_month = spreadsheet.cell(i,'D')
+      payable_day = spreadsheet.cell(i,'E')
+      @workingday_data = Workingday.where(employee_id: employee_id,month_name: month_name).take 
+      if @workingday_data == nil
+      @workingday = Workingday.create(employee_id: employee_id,month_name: month_name,year: year,day_in_month: day_in_month,payable_day: payable_day)
+      else
+       if @workingday_data.paid == nil
+          @workingday_data.update(employee_id: employee_id,month_name: month_name,year: year,day_in_month: day_in_month,payable_day: payable_day)
+       else
+       end
+      end
+    end
+    end
+  end
+
+  def self.open_spreadsheet(file)
+    case File.extname(file.original_filename)
+    when '.csv' then Roo::CSV.new(file.path, file_warning: :ignore)
+    when '.xls' then Roo::Excel.new(file.path, file_warning: :ignore)
+    when '.xlsx' then Roo::Excelx.new(file.path, file_warning: :ignore)
+    else raise "Unknown file type: #{file.original_filename}"
+    end
+  end
+
   def self.find_by_role(workingdays, current_user)
     if current_user.class == Group
       Employee.where(id: workingdays)

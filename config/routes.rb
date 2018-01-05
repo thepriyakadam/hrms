@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   resources :target_companies
+  resources :daily_attendances do 
+    collection do
+      get :attendance
+      get :calculate
+    end
+  end
   resources :leave_transfers do
     collection do
       get :leave_transfer_approval
@@ -2003,6 +2009,8 @@ end
       get :datewise_workingday
       post :show_datewise_workingday
       get :show_datewise_workingday
+      get :import_working_day
+      post :import_day
     end
   end
 

@@ -957,10 +957,10 @@ class Api::UserAuthsController < ApplicationController
 
   def approve_plan_list
     employee_id = params[:employee_id].to_i
-    employee_plan = EmployeePlan.where(current_status: "Pending", manager_id: employee_id)
+    employee_plan = EmployeePlan.where(current_status: "Pending", manager_id: employee_id).order("id DESC")
     render :json => employee_plan.present? ? employee_plan.collect{|epl| {:id => epl.id, :employee_id => epl.employee_id, :prefix => epl.employee.prefix, :employee_first_name => epl.employee.first_name, :employee_middle_name => epl.employee.middle_name, :employee_last_name => epl.employee.last_name, :from_date => epl.from_date, :to_date => epl.to_date, :from_time => epl.from_time, :to_time => epl.to_time, :meeting_with => epl.meeting_with, :location => epl.location, :meeting_agenda => epl.meeting_agenda, :latitude => epl.latitude, :longitude => epl.longitude, :conform => epl.conform, :status => epl.status, :current_status => epl.current_status, :manager_id => epl.manager_id  }} : []
   end
- 
+
   def manager_approve_plan_list
     employee_id = params[:employee_id].to_i
     employee_plan = EmployeePlan.where(current_status: "Approved", manager_id: employee_id)
@@ -984,9 +984,9 @@ class Api::UserAuthsController < ApplicationController
     contact_details = ContactDetail.where(status: true)
     render :json => contact_details.present? ? contact_details.collect{|cd| {:id => cd.id, :employee_id => cd.employee_id, :passport_photo_file_name => cd.employee.try(:passport_photo_file_name), :prefix => cd.employee.try(:prefix), :employee_first_name => cd.employee.try(:first_name), :employee_middle_name => cd.employee.try(:middle_name), :employee_last_name => cd.employee.try(:last_name), :contact_no => cd.employee.try(:contact_no), :email => cd.employee.try(:email), :current_role => cd.employee.try(:joining_detail).try(:employee_designation).try(:name), :description => cd.description, :status => cd.status, :role1 => cd.role1, :role2 => cd.role2, :role3 => cd.role3, :role4 => cd.role4, :role5 => cd.role5, :role6 => cd.role6, :role6 => cd.role6, :role7 => cd.role7,:role8 => cd.role8  }} : []
   end
- 
+
   def all_employee_list
-    emp_name = Employee.all
+    emp_name = Employee.all.order("id DESC")
     render :json => emp_name.present? ? emp_name.collect{|emp| {:id => emp.id, :prefix => emp.prefix, :first_name => emp.first_name, :middle_name => emp.middle_name, :last_name => emp.last_name, :contact_no => emp.contact_no}} : []
   end
 
@@ -1378,7 +1378,7 @@ class Api::UserAuthsController < ApplicationController
   end
 
   def admin_all_leave_request_list
-    first_level_request_lists = EmployeeLeavRequest.where("current_status = ? OR current_status = ?", "Pending", "FirstApproved")
+    first_level_request_lists = EmployeeLeavRequest.where("current_status = ? OR current_status = ?", "Pending", "FirstApproved").order("id DESC")
     # @emp_leav_req = EmployeeLeavRequest.where.not(second_reporter_id: false).pluck(:second_reporter_id)
     # @second_level_request_lists = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,second_reporter_id: @emp_leav_req)
     render :json => first_level_request_lists.present? ? first_level_request_lists.collect{|adminlr| { :id => adminlr.id, :employee_id => adminlr.employee_id, :prefix => adminlr.employee.prefix, :employee_first_name => adminlr.employee.first_name, :employee_middle_name => adminlr.employee.middle_name, :employee_last_name => adminlr.employee.last_name, :leav_category_id => adminlr.leav_category_id, :leave_type => adminlr.leave_type, :start_date => adminlr.start_date, :end_date => adminlr.end_date, :reason => adminlr.reason, :first_reporter_id => adminlr.first_reporter_id, :second_reporter_id => adminlr.second_reporter_id, :manual_employee_code => adminlr.employee.manual_employee_code, :leav_category => adminlr.leav_category.name, :leave_count => adminlr.leave_count, :start_date => adminlr.start_date, :end_date => adminlr.end_date, :current_status => adminlr.current_status, :reason => adminlr.reason }} : []
@@ -1421,39 +1421,6 @@ class Api::UserAuthsController < ApplicationController
     end
   end
 
-  # def employee_location_history
-  #   emp_id = params[:employee_id]
-  #   date_time = params[:date_time]
-  #   time = Time.now.to_time.strftime("%H:%M")
-  #   date = Time.now.to_date.strftime("%Y-%m-%d")
-  #   # time = params[:time]
-  #   lon = params[:latitude].to_f
-  #   lat = params[:longitude].to_f
-  #   longitude = lon.round(4)
-  #   latitude = lat.round(4)
-  #   location = params[:place]
-  #   emp_history = EmployeeLocationHistory.where(employee_id: emp_id, date: date)
-  #   emp_last_history = EmployeeLocationHistory.where(employee_id: emp_id, date: date).last
-  #   emp_count = emp_history.count
-  #   # binding.pry
-  #   # byebug
-  #   if emp_count >= 2
-  #     last_lat = emp_last_history.latitude
-  #     last_lon = emp_last_history.longitude
-  #     if latitude == last_lat && longitude == last_lon
-  #       emp_last_history.update(employee_id: emp_id, date: date, time: time, latitude: latitude, longitude: longitude, location: location)
-  #       render :status=>200, :json=>{:status=>"Employee Attendance Successfully updated."}
-  #     else
-  #       EmployeeLocationHistory.create(employee_id: emp_id, date: date, time: time, latitude: latitude, longitude: longitude, location: location)
-  #       render :status=>200, :json=>{:status=>"Employee Attendance Successfully created 1."}
-  #     end
-  #   else
-  #     emp_loc_his = EmployeeLocationHistory.create(employee_id: emp_id, date: date, time: time, latitude: latitude, longitude: longitude, location)
-  #     render :status=>200, :json=>{:status=>"Employee Attendance Successfully created 2."}
-  #   end
-  #   render :status=>200, :json=>{:status=>"Employee Attendance Successfully updated."}
-  # end
-
   def daily_att_count
     employee_id = params[:employee_id]
     emp = Employee.find(employee_id)
@@ -1476,7 +1443,7 @@ class Api::UserAuthsController < ApplicationController
   end
 
   def admin_od_request_approval_list
-    pending_on_duty_requests = OnDutyRequest.where(current_status: "Pending")
+    pending_on_duty_requests = OnDutyRequest.where(current_status: "Pending").order("id DESC")
     # first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,employee_id: employees_ind)  
     render :json => pending_on_duty_requests.present? ? pending_on_duty_requests.collect{|odral| { :id => odral.id, :employee_id => odral.employee_id, :manual_employee_code => odral.employee.manual_employee_code, :prefix => odral.employee.prefix, :employee_first_name => odral.employee.first_name, :employee_middle_name => odral.employee.middle_name, :employee_last_name => odral.employee.last_name, :leave_type => odral.leave_type, :start_date => odral.start_date, :end_date => odral.end_date, :no_of_day => odral.no_of_day, :first_half => odral.first_half, :last_half => odral.last_half, :present_status => odral.present_status, :first_reporter_id => odral.first_reporter_id, :second_reporter_id => odral.second_reporter_id, :current_status => odral.current_status, :is_pending => odral.is_pending, :is_cancelled => odral.is_cancelled, :is_first_approved => odral.is_first_approved, :is_second_approved => odral.is_second_approved, :is_first_rejected => odral.is_first_rejected, :is_second_rejected => odral.is_second_rejected }} : []
   end

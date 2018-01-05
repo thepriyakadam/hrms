@@ -18,10 +18,18 @@ every 1.hours do
   runner "DailyAttendance.fetch_data"
 end
 
-every 1.minutes do
-  runner 'DailyAttendance.fetch_data'
+every 5.minutes do
+  runner "DailyAttendance.fetch_data"
 end
 
-every 5.minutes do 
-   runner "DailyAttendance.calculate_atte"
+every 7.minutes do 
+  runner "DailyAttendance.calculate_atte"
+end
+
+every 9.minutes do 
+   rake 'atte_task:fetch_att'
+end
+
+every 11.minutes do 
+   rake 'atte_task:calculate'
 end

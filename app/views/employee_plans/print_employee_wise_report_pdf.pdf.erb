@@ -22,7 +22,11 @@
         <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
       </td>
     </tr>
-    <tr><th colspan="8"><center>Employee Wise Plan Report</center></th></tr>
+    <tr>
+      <td colspan="2"> <b>ID</b> : <%= @employee.try(:manual_employee_code) %></td>
+      <td colspan="6"> <b>Employee Name</b> : <%= @employee.try(:first_name) %> <%= current_user.employee.try(:middle_name) %> <%= current_user.employee.try(:last_name) %>
+      </td>
+    </tr>
     <tr>
       <th>Sr.No.</th>
       <th>From Date</th>

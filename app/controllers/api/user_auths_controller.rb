@@ -71,7 +71,7 @@ class Api::UserAuthsController < ApplicationController
   def leave_category
     # @employee_leav_requests = EmployeeLeavRequest.where('employee_id = ?', @leave_user.try(:employee_id)).order("id DESC")
     leav_categories = LeavCategory.where(is_active: true)
-    render :json => leav_categories.present? ? leav_categories.collect{|lc| {:id => lc.id, :name => lc.name}} : []
+    render :json => leav_categories.present? ? leav_categories.collect{|lc| {:id => lc.id, :name => lc.name, :code => lc.code }} : []
   end
 
   def check_leave_request

@@ -5,7 +5,7 @@ class EmployeePlansController < ApplicationController
   # GET /employee_plans.json
   def index
     # @employee_plan = EmployeePlan.new
-    @employee_plans = EmployeePlan.where(employee_id: current_user.employee_id)
+    @employee_plans = EmployeePlan.where(employee_id: current_user.employee_id).order("from_date DESC")
   end
 
   # GET /employee_plans/1

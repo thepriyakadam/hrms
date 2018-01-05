@@ -1,11 +1,19 @@
-<div class="box-header">
-  <div class="pull-right">
-  </div>
-</div><!-- /.box-header -->
-<div class="box-body">
-  <div id="comments">
-    <table id="example" class="table table-bordered table-hover table-condensed">
-      <thead>
+<div class="ajax-progress"></div>
+<% i = 0 %>
+<table style="border-collapse: collapse; font-size:15pt;" border=1 width=1000 cellpadding="15">
+  <thead>
+    <tr>
+      <td colspan="27">
+        <% if current_user.company_location.company.company_logo == nil %>
+        <% else %>
+          <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
+        <%end%>
+        <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
+        <center><small></small></center>
+        <center><small>Employee Salary Reports <%#= @start_date.strftime("%B") %>  <%#= @start_date.strftime("%Y") %>  <%#= @end_date.strftime("%B") %> <%#= @end_date.strftime("%Y") %> </small></center>   
+      </th>
+    </tr>
+
         <tr>
           <th>ID</th>
           <th>Employee Name</th>
@@ -14,18 +22,16 @@
           <th>PF Amount/Company Contribution</th>
           <th>Employer Contribution</th>
         </tr>
-      </thead>
-      <tbody>
         <% @salaryslips.each do |slip| %>
           <%if slip.employee.joining_detail.select_pf == "Yes" %>
             <% employee = slip.employee %>
             <% joining = employee.joining_detail %>
             <% bank = employee.employee_bank_detail %>
             <% workingday = slip.workingday %>
-            <% month_from = params[:yearly_reports][:from_date].to_date.strftime("%B") %>
-            <% month_to = params[:yearly_reports][:to_date].to_date.strftime("%B") %>
-            <% year_from = params[:yearly_reports][:from_date].to_date.strftime("%Y") %>
-            <% year_to = params[:yearly_reports][:to_date].to_date.strftime("%Y") %>
+            <% month_from = params[:from_date].to_date.strftime("%B") %>
+            <% month_to = params[:to_date].to_date.strftime("%B") %>
+            <% year_from = params[:from_date].to_date.strftime("%Y") %>
+            <% year_to = params[:to_date].to_date.strftime("%Y") %>
             <% @salaryslips2 = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: employee.id) %>
             <% total_amt = 0 %>
             <% @salaryslips2.each do |salary| %>
@@ -77,44 +83,28 @@
           <% end %>
         
         <% end %>
-    </tbody>
-  </table>
-  </div>
-
-  <table id="example" class="table table-bordered table-hover table-condensed">
-    <thead>
+      </div>
+    <div>
+    <tr>
+      <th>Month</th>
+      <th>Company Contribution</th>
+    </tr>
+    <% @month_year.each do |month_year, salaryslip_components| %>
       <tr>
-        <th>Month</th>
-        <th>Company Contribution</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @month_year.each do |month_year, salaryslip_components| %>
-        <tr>
-          <td><%= month_year %></td>
+        <td><%= month_year %></td>
             <% total_amt = 0 %>
             <% salaryslip_components.each do |components|%>
               <% total_amt += components.calculated_amount.round %>
             <% end %>
-          <td><%= total_amt %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <%= link_to " Excel Report ", month_wise_yearly_report_salary_slip_ledgers_path(from_date: params[:yearly_reports][:from_date], to_date: params[:yearly_reports][:to_date], company_id: params[:salary_slip_ledger][:company_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %> 
-  <%#= link_to " Text Report", export_pf_report_to_text_salary_slip_ledgers_path(month: params[:pf_detail][:month], year: params[:pf_detail][:year],company_id: params[:pf_detail][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "csv"), class: "btn btn-xl btn-primary fa fa-file-text-o" %> 
-  
-  <%= link_to "PDF Report ", month_wise_yearly_report_salary_slip_ledgers_path(from_date: params[:yearly_reports][:from_date], to_date: params[:yearly_reports][:to_date], company_id: params[:salary_slip_ledger][:company_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+        <td><%= total_amt %></td>
+      </tr>
+    <% end %>
+  </div>
+ </tbody>
+</table>
 
-  <%#= link_to " Excel Report ",show_subordinate_attendance_manager_self_services_path(:employee => {:from => params[:employee][:from],:to => params[:employee][:to]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
- 
-     <%#= link_to " Print Report ",show_subordinate_attendance_manager_self_services_path(:employee => {:from => params[:employee][:from],:to =>  params[:employee][:to]},format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %> 
-</div>
-
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('#example').DataTable( {
-        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
-    } );
-} );
-</script>
+<style type="text/css">
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak { page-break-inside: avoid; }
+</style>

@@ -1102,7 +1102,22 @@ class SalarySlipLedgersController < ApplicationController
     @salaryslips1 = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date).pluck(:id)
     @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1, other_component_name: "Provident Fund").pluck(:salaryslip_id)
     @salaryslips = Salaryslip.where(id: @salaryslip_components)
-
+    
+    month_from = params[:yearly_reports] ? params[:yearly_reports][:from_date] : params[:from_date]
+    month_to = params[:yearly_reports] ? params[:yearly_reports][:to_date] : params[:to_date]
+    year_from = params[:yearly_reports] ? params[:yearly_reports][:from_date] : params[:from_date]
+    year_to = params[:yearly_reports] ? params[:yearly_reports][:to_date] : params[:to_date]
+    # month_from = params[:yearly_reports][:from_date].to_date.strftime("%B")
+    # month_to = params[:yearly_reports][:to_date].to_date.strftime("%B")
+    # year_from = params[:yearly_reports][:from_date].to_date.strftime("%Y")
+    # year_to = params[:yearly_reports][:to_date].to_date.strftime("%Y")
+    @salaryslips3 = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date)
+    @year_wise = Salaryslip.where(year: year_from..year_to)
+    @month_year = {}
+    @salaryslips3.each do |month_year|
+      @month_year[month_year.month_year.strftime("%B %Y")] = month_year.salaryslip_components.each { |cat| cat.calculated_amount.round }
+    end
+    
     respond_to do |f|
       f.js
       f.xls {render template: 'salary_slip_ledgers/month_wise_yearly_report.xls.erb'}

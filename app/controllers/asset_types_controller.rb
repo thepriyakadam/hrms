@@ -63,6 +63,17 @@ def asset_type_master
             end
           end
   end
+
+    def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_asset_types_path
+      else
+     AssetType.import(params[:file])
+     redirect_to new_asset_type_path, notice: "File imported."
+     end
+  end
   
   private
     # Use callbacks to share common setup or constraints between actions.

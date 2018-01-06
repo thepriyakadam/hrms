@@ -23,6 +23,9 @@
       </td>
     </tr>
     <tr>
+      <center> Employee </center>
+    </tr>
+    <tr>
       <td colspan="2"> <b>ID</b> : <%= @employee.try(:manual_employee_code) %></td>
       <td colspan="6"> <b>Employee Name</b> : <%= @employee.try(:first_name) %> <%= current_user.employee.try(:middle_name) %> <%= current_user.employee.try(:last_name) %>
       </td>

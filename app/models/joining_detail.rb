@@ -145,16 +145,25 @@ def self.to_csv(options = {})
           ot_option = false
         end
         ot_rate = spreadsheet.cell(i,'AH')
+
+        @cost_center = CostCenter.find_by_name(spreadsheet.cell(i,'AI'))
+        if @cost_center == nil
+           cost_center_name = spreadsheet.cell(i,'AI')
+           @cost_center_entry = CostCenter.create(name: cost_center_name)
+           cost_center_id = @cost_center_entry.id
+        else
+        cost_center_id = @cost_center.id
+        end
         
         @employee_prsent = JoiningDetail.find_by(employee_id: employee_id)
         if @employee_prsent.nil?
         @joining_detail = JoiningDetail.create(employee_id: employee_id,employee_uan_no: employee_uan_no,employee_pf_no: employee_pf_no,joining_date: joining_date,confirmation_date: confirmation_date,employee_grade_id: employee_grade_id,employee_designation_id: employee_designation_id,employee_category_id: employee_category_id,probation_period: probation_period,
         notice_period: notice_period,have_passport: have_passport,passport_no: passport_no,passport_issue_date: passport_issue_date,passport_expiry_date: passport_expiry_date,leaving_date: leaving_date,payment_mode_id: payment_mode_id,basis_of_time: basis_of_time,is_employeer_pf: is_employeer_pf,select_pf: select_pf,pf_max_amount: pf_max_amount,employee_pf_no: employee_pf_no,
-        is_employeer_esic: is_employeer_esic,have_esic: have_esic,employee_efic_no: employee_efic_no,have_retention: have_retention,is_insurance: is_insurance,is_family_pension: is_family_pension,is_bonus: is_bonus,ot_option: ot_option,ot_rate: ot_rate)
+        is_employeer_esic: is_employeer_esic,have_esic: have_esic,employee_efic_no: employee_efic_no,have_retention: have_retention,is_insurance: is_insurance,is_family_pension: is_family_pension,is_bonus: is_bonus,ot_option: ot_option,ot_rate: ot_rate,cost_center_id: cost_center_id)
         else
         @employee_prsent.update(employee_id: employee_id,employee_uan_no: employee_uan_no,employee_pf_no: employee_pf_no,joining_date: joining_date,confirmation_date: confirmation_date,employee_grade_id: employee_grade_id,employee_designation_id: employee_designation_id,employee_category_id: employee_category_id,probation_period: probation_period,
         notice_period: notice_period,have_passport: have_passport,passport_no: passport_no,passport_issue_date: passport_issue_date,passport_expiry_date: passport_expiry_date,leaving_date: leaving_date,payment_mode_id: payment_mode_id,basis_of_time: basis_of_time,is_employeer_pf: is_employeer_pf,select_pf: select_pf,pf_max_amount: pf_max_amount,employee_pf_no: employee_pf_no,
-        is_employeer_esic: is_employeer_esic,have_esic: have_esic,employee_efic_no: employee_efic_no,have_retention: have_retention,is_insurance: is_insurance,is_family_pension: is_family_pension,is_bonus: is_bonus,ot_option: ot_option,ot_rate: ot_rate)
+        is_employeer_esic: is_employeer_esic,have_esic: have_esic,employee_efic_no: employee_efic_no,have_retention: have_retention,is_insurance: is_insurance,is_family_pension: is_family_pension,is_bonus: is_bonus,ot_option: ot_option,ot_rate: ot_rate,cost_center_id: cost_center_id)
     end
 
      end

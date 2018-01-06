@@ -67,7 +67,17 @@ class EmployeeDesignationsController < ApplicationController
       column(:ID, sortable: true) { |employee_designation| employee_designation.try(:id) }
       column(:Name, sortable: true) { |employee_designation| employee_designation.name }
     end
-   
+  end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_employee_designations_path
+      else
+     EmployeeDesignation.import(params[:file])
+     redirect_to new_employee_designation_path, notice: "File imported."
+     end
   end
 
   

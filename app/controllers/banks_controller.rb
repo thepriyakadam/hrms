@@ -61,6 +61,17 @@ class BanksController < ApplicationController
           end
     end
 
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_banks_path
+      else
+     Bank.import(params[:file])
+     redirect_to new_bank_path, notice: "File imported."
+     end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

@@ -2,7 +2,9 @@
 <div class="box box-default">
 <div class="box-header with-border">
 <h3 class="box-title">Import Monthly Expence File</h3>
-</div><!-- /.box-header -->
+<div class="pull-right">
+ <%= link_to "Template", "/Templates/15.Monthly Expence Detail.xls", :class=>" btn-xs btn btn-warning" %>
+</div>
 <div class="box-body">
 <%= form_tag import_monthly_expences_path, multipart: true do %>
 <label> File (.xls,.csv,.xlsx only) </label>
@@ -10,3 +12,4 @@
   <br>
   <%= submit_tag "Import" %>
 <% end %>
+</div>

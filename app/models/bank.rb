@@ -2,15 +2,26 @@ class Bank < ActiveRecord::Base
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   has_many :employee_bank_details
 
-  def self.import_bank(file)
+  def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        name = spreadsheet.cell(i,'A')
-        code = spreadsheet.cell(i,'B')
-        description = spreadsheet.cell(i,'C')
+       code = spreadsheet.cell(i,'B').to_i
+        if code == 0
+           code = spreadsheet.cell(i,'B')
+         else
+          code = spreadsheet.cell(i,'B').to_i
+        end
+        name = spreadsheet.cell(i,'C')
 
+        description = spreadsheet.cell(i,'D')
+        
+        @ba = Bank.find_by(name: name)
+        if @ba.nil?
         @bank = Bank.create(name: name,code: code,description: description)     
+        else
+        @ba.update(name: name,code: code,description: description)   
+        end
     end
   end
 

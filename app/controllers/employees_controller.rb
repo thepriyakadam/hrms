@@ -32,11 +32,20 @@
       session[:active_tab] ="EmployeeManagement"
       session[:active_tab1] ="Employee1"
   end
-  
+
+  def fetch_data
+    empp = Employee.all 
+    abc = empp.fetch_data
+  end
+
+  def cal_data
+    empp = Employee.all 
+    abc = empp.cal_data
+  end
 
   def import_xl
     session[:active_tab] ="EmployeeManagement"
-    session[:active_tab1] ="Imports"   
+    session[:active_tab1] ="Import"   
   end
 
   def import
@@ -51,17 +60,20 @@
     redirect_to import_xl_employees_path, notice: "File imported."
     end
   end
+  
+  def import_assign_role
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Import" 
+  end
 
   def import_create_new_user
-    # Employee.import(params[:file])
-    # redirect_to root_url, notice: "File imported."
     file = params[:file]
     if file.nil?
       flash[:alert] = "Please Select File!"
     redirect_to import_assign_role_employees_path
     else
     Employee.import_create_new_user(params[:file])
-    redirect_to import_assign_role_employees_path, notice: "File imported."
+    redirect_to assign_role_employees_path, notice: "File imported."
     end
   end
 
@@ -319,6 +331,7 @@
             employee.update_attributes(manager_id: @reporting_master1.employee_id, manager_2_id: @reporting_master2.try(:employee_id))
 
             ManagerHistory.create(employee_id: employee.id,manager_id: manager_1,manager_2_id: manager_2,effective_from: params["login"]["effec_date"])
+
             EmployeeMailer.user_confirmation(employee,password,manual_employee_code).deliver_now
             EmployeeMailer.manager_detail(manager_1,employee).deliver_now
             flash[:notice] = "Employee assigned successfully."

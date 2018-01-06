@@ -6,22 +6,31 @@ class EmployeeCategory < ActiveRecord::Base
   validates :code, presence: true
 
 
-    def self.import_employee_category(file)
+    def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
         
-        code = spreadsheet.cell(i,'A')
-        name = spreadsheet.cell(i,'B')
-        description = spreadsheet.cell(i,'C')
-        is_active = spreadsheet.cell(i,'D')
+        code = spreadsheet.cell(i,'B').to_i
+        if code == 0
+           code = spreadsheet.cell(i,'B')
+         else
+          code = spreadsheet.cell(i,'B').to_i
+        end
+        name = spreadsheet.cell(i,'C')
+        description = spreadsheet.cell(i,'D')
+        is_active = spreadsheet.cell(i,'E')
         if is_active == "Yes" || is_active == "yes"
         	is_active = true
         else
         	is_active = false
         end
 
-
+        @employee = EmployeeCategory.find_by(name: name)
+        if @employee.nil?
         @employee_category = EmployeeCategory.create(code: code,name: name,description: description,is_active: is_active)     
+        else
+          @employee.update(code: code,name: name,description: description,is_active: is_active)
+        end
     end
   end
 

@@ -402,7 +402,7 @@ class SalarySlipLedgersController < ApplicationController
             @salaryslips = Salaryslip.where(id:  @salaryslip_components)
             respond_to do |format|
             format.html
-            # format.csv { send_data @salaryslips.to_text,filename: "employee_pf_report-#{Date.today}.txt" }
+            format.csv { send_data @salaryslips.try(:to_text),filename: "employee_pf_report-#{Date.today}.txt" }
           end
           else
             @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)

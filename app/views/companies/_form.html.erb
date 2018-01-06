@@ -97,7 +97,7 @@
               <div class="input-group-addon">
                 <%= link_to "", new_country_path,class: "fa fa-plus fa-success",:target => "_blank" %>
               </div>
-            <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'company'}; $.get('/companies/collect_states',a,function(response){});",:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}%>
+           <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'company_location'}; $.get('/companies/collect_states',a,function(response){});"}%>
           </div>
           </div>
         </div>

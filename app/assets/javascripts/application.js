@@ -20,7 +20,6 @@
 //= require chartkick
 
 
-
 //= require bootstrap-datetimepicker
 
 //= require_tree .

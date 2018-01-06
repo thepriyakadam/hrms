@@ -30,6 +30,14 @@ GEM
       activemodel (= 4.2.8)
       activesupport (= 4.2.8)
       arel (~> 6.0)
+    activerecord-session_store (1.1.0)
+      actionpack (>= 4.0, < 5.2)
+      activerecord (>= 4.0, < 5.2)
+      multi_json (~> 1.11, >= 1.11.2)
+      rack (>= 1.5.2, < 3)
+      railties (>= 4.0, < 5.2)
+    activerecord-sqlserver-adapter (4.2.18)
+      activerecord (~> 4.2.1)
     activesupport (4.2.8)
       i18n (~> 0.7)
       minitest (~> 5.1)
@@ -119,7 +127,10 @@ GEM
     database_cleaner (1.6.2)
     datagrid (1.5.8)
       rails (>= 4.0)
+    dbi (0.4.5)
+      deprecated (= 2.0.1)
     debug_inspector (0.0.3)
+    deprecated (2.0.1)
     devise (4.4.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -138,6 +149,10 @@ GEM
     ffi (1.9.18)
     ffi (1.9.18-x64-mingw32)
     ffi (1.9.18-x86-mingw32)
+    fullcalendar-rails (3.4.0.0)
+      jquery-rails (>= 4.0.5, < 5.0.0)
+      jquery-ui-rails (>= 5.0.2)
+      momentjs-rails (>= 2.9.0)
     geocoder (1.4.5)
     gherkin (5.0.0)
     globalid (0.3.7)
@@ -256,6 +271,7 @@ GEM
       rubyzip
       spreadsheet (> 0.6.4)
     ruby-graphviz (1.2.3)
+    ruby-odbc (0.99998)
     ruby-ole (1.2.12.1)
     rubyzip (1.0.0)
     sass (3.5.4)
@@ -297,6 +313,9 @@ GEM
     tilt (2.0.8)
     time_difference (0.5.0)
       activesupport
+    tiny_tds (2.1.0)
+    tiny_tds (2.1.0-x64-mingw32)
+    tiny_tds (2.1.0-x86-mingw32)
     ttfunk (1.4.0)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
@@ -335,6 +354,8 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  activerecord-session_store
+  activerecord-sqlserver-adapter
   apartment
   awesome_print
   axlsx (~> 2.0)
@@ -354,8 +375,10 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   datagrid (~> 1.4, >= 1.4.1)
+  dbi
   devise
   email_verifier
+  fullcalendar-rails (~> 3.4.0.0)
   geocoder
   globalid (~> 0.3.7)
   hirb
@@ -367,6 +390,7 @@ DEPENDENCIES
   kaminari (~> 0.16.3)
   local-subdomain
   mime-types-data (~> 3.2016, >= 3.2016.0521)
+  momentjs-rails
   mysql2 (~> 0.3.18)
   paperclip (~> 4.3, >= 4.3.6)
   pdfkit (~> 0.8.2)
@@ -379,6 +403,7 @@ DEPENDENCIES
   rake (~> 12.0)
   roo
   ruby-graphviz (~> 1.2, >= 1.2.2)
+  ruby-odbc
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   selenium-webdriver (~> 3.0, >= 3.0.5)
@@ -386,6 +411,7 @@ DEPENDENCIES
   therubyracer
   thin (~> 1.6, >= 1.6.4)
   time_difference
+  tiny_tds
   turbolinks
   twilio-ruby (~> 4.11, >= 4.11.1)
   tzinfo-data (~> 1.2016, >= 1.2016.10)

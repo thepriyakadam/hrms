@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171215123749) do
+ActiveRecord::Schema.define(version: 20180106103351) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -479,6 +479,8 @@ ActiveRecord::Schema.define(version: 20171215123749) do
     t.string   "document_content_type", limit: 255
     t.integer  "document_file_size",    limit: 4
     t.datetime "document_updated_at"
+    t.string   "email",                 limit: 255
+    t.boolean  "send_email"
   end
 
   add_index "company_policies", ["policy_type_id"], name: "index_company_policies_on_policy_type_id", using: :btree

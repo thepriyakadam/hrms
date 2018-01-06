@@ -9,11 +9,11 @@ gem 'mysql2', '~> 0.3.18'
 
 # gem "rack-timeout", require:"rack/timeout/base"
 
-# gem 'tiny_tds'
-# gem 'activerecord-sqlserver-adapter'
-# gem 'ruby-odbc'
-# gem 'dbi'
-# gem 'activerecord-session_store'
+gem 'tiny_tds'
+gem 'activerecord-sqlserver-adapter'
+gem 'ruby-odbc'
+gem 'dbi'
+gem 'activerecord-session_store'
 
 # gem 'mdb'
 
@@ -40,8 +40,8 @@ gem 'datagrid', '~> 1.4', '>= 1.4.1'
 gem 'quiet_assets'
 
 
-# gem 'fullcalendar-rails', '~> 3.4.0.0'
-# gem 'momentjs-rails'
+gem 'fullcalendar-rails', '~> 3.4.0.0'
+gem 'momentjs-rails'
 
 gem 'tzinfo-data', '~> 1.2016', '>= 1.2016.10'
 

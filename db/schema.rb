@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171227061417) do
+ActiveRecord::Schema.define(version: 20180106055307) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -716,11 +716,12 @@ ActiveRecord::Schema.define(version: 20171227061417) do
     t.string   "controller",    limit: 255
     t.string   "reader_name",   limit: 255
     t.string   "access_status", limit: 255
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.float    "latitude",      limit: 24
     t.float    "longitude",     limit: 24
     t.string   "place",         limit: 255
+    t.text     "comment",       limit: 65535
   end
 
   create_table "daily_bill_detail_histories", force: :cascade do |t|

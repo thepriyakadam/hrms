@@ -1375,7 +1375,7 @@ class Api::UserAuthsController < ApplicationController
     emp_code = emp.manual_employee_code
     date = params[:date]
     emp_daily_att = DailyAttendance.where(employee_code: emp_code, date: date).order("id DESC")
-    render :json => emp_daily_att.present? ? emp_daily_att.collect{|eda| { :id => eda.id, :date => eda.date, :time => eda.time.strftime("%I:%M:%S %p"), :employee_code => eda.employee_code, :latitude => eda.latitude, :longitude => eda.longitude, :place => eda.place }} : []
+    render :json => emp_daily_att.present? ? emp_daily_att.collect{|eda| { :id => eda.id, :date => eda.date, :time => eda.time.strftime("%I:%M:%S %p"), :employee_code => eda.employee_code, :latitude => eda.latitude, :longitude => eda.longitude, :place => eda.place, :note => eda.comment }} : []
   end
 
   def admin_all_leave_request_list
@@ -1410,6 +1410,9 @@ class Api::UserAuthsController < ApplicationController
       last_lat = emp_last_history.latitude
       last_lon = emp_last_history.longitude
       if latitude == last_lat && longitude == last_lon
+        emp_last_history.update(employee_id: emp_id, date: date, time: time, latitude: latitude, longitude: longitude, location: location)
+        render :status=>200, :json=>{:status=>"Employee Attendance Successfully updated."}
+      elsif location == emp_last_history.location
         emp_last_history.update(employee_id: emp_id, date: date, time: time, latitude: latitude, longitude: longitude, location: location)
         render :status=>200, :json=>{:status=>"Employee Attendance Successfully updated."}
       else
@@ -1531,5 +1534,16 @@ class Api::UserAuthsController < ApplicationController
     end
   end
 
-end
+  def notes_details
+    daily_att_id = params[:id]
+    note = params[:notes]
+    daily_att = DailyAttendance.find(daily_att_id)
+    if daily_att.present?
+      daily_att.update(comment: note)
+      render :status=>200, :json=>{:status=>"Note Successfully Update"}
+    else  
+      render :status=>200, :json=>{:status=>"DailyAttendance Not Found "}
+    end
+  end
 
+end

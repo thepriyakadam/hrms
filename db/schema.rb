@@ -1535,6 +1535,18 @@ ActiveRecord::Schema.define(version: 20180106103351) do
   add_index "food_deductions", ["employee_id"], name: "index_food_deductions_on_employee_id", using: :btree
   add_index "food_deductions", ["food_coupan_master_id"], name: "index_food_deductions_on_food_coupan_master_id", using: :btree
 
+  create_table "frequest_questions", force: :cascade do |t|
+    t.string   "code",         limit: 255
+    t.text     "question",     limit: 65535
+    t.text     "answer",       limit: 65535
+    t.integer  "employees_id", limit: 4
+    t.boolean  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "frequest_questions", ["employees_id"], name: "index_frequest_questions_on_employees_id", using: :btree
+
   create_table "goal_bunches", force: :cascade do |t|
     t.integer  "employee_id",             limit: 4
     t.boolean  "goal_confirm"

@@ -1,84 +1,64 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title"> Attendance</h3>
+    <h3 class="box-title"> Attendance </h3>
+  </div>
  <div class="box-body">
   <%= bootstrap_form_for(:employee, url: { action: 'show_self_datewise_attendance'},html: {id: "employee"}) do |f| %>
 
   <%= hidden_field :employee,:employee_id, value: current_user.employee_id %>
     <div class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <label>From </label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-                <%= text_field :employee,:from,hide_label: true,placeholder: "From Date",class: 'request_date form-control'%>
+                <%= text_field :employee,:from,hide_label: true,placeholder: "From Date",class: 'from_date form-control'%>
             </div>
           </div>
         </div>
 
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <label>To </label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= text_field :employee,:to,hide_label: true,placeholder: "To Date",class: 'request_date form-control'%>
+              <%= text_field :employee,:to,hide_label: true,placeholder: "To Date",class: 'from_date form-control'%>
             </div>
           </div>
         </div>
 
-        <div class="col-sm-2" style="padding-top:20px;">
+        <div class="col-sm-3" style="padding-top:20px;">
           <%= f.submit "Show Attendance",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %>
         </div>
-        <div class="col-sm-3">
-          <label>Present -->  Title </label>
+
+    <!--     <div class="col-sm-3">
           <div class="form-group required">
             <div class="input-group">
-              <%= link_to 'Change', present_to_title_self_services_path, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary btn-primary fa fa-check' %>
+              < link_to 'Change', present_to_title_self_services_path, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary btn-primary fa fa-check' %>
             </div>
           </div>
-        </div>
+        </div> -->
       
       </div>
-     </div>
+    
   <% end %>
-
+ </div>
 </div>
-    <div class="row">
-        <div class="col-sm-12">
-        <div id="calendar"></div>
-        </div>
-        </div>
-
-</div>
-
-</div>
-</div>
+    
 <script type="text/javascript">
-  $("#buttonCtc").click(function(){
-    $('.ajax-progress').show();
-    $("#advance_salary").submit();
-  })
+  
+   $(function(){
+    $('.from_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+5',
+    dateFormat: 'dd-mm-yy' });
+  }); 
 </script>
-
-<script type="text/javascript">
-  $('#calendar').({
- background-color: 'red'
-}); 
-</script>
-
-<style>    
-#calendar{
-            color:#000;
-            background-color:#FFF;
-            border-color:#669999;   
-            width: 100%;                
-        }
-</style>
-
 <script>
 $("#employee").validate({
     rules: {

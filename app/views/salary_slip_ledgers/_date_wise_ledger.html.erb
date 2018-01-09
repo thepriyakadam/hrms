@@ -1,0 +1,125 @@
+<div class="ajax-progress"></div>
+<div class="box">
+<div class="box-body">
+<% i = 0 %>
+<table id="example3" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Month</th>
+      <th>Year</th>
+      <th>Payble Day</th>
+      <th>Basic</th>
+      <th>DA</th>
+      <th>HRA</th>
+      <th>conv</th>
+      <th>O.Allow</th>
+      <th>S.Allow</th>
+      <th>Wsh.Allow</th>
+      <th>Driver Allow</th>
+      <th>Medi Allow</th>
+      <th>Child Edu Allow</th>
+      <th>MRA</th>
+      <th>MA</th>
+      <th>Gross</th>
+
+      <th>PF</th>
+      <th>ESIC</th>
+      <th>IT</th>
+      <th>PT</th>
+      <th>Adv.Sal</th>
+      <th>Society</th>
+      <th>Food</th>
+      <th>Mobile</th>
+      <th>Retention</th>
+      <th>Total Dedu</th>
+
+      <th>NET</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reports.each do |r| %>
+      <tr>
+        <td><%= i = i+1 %></td>
+        <td><%= r.try(:code) %></td>
+        <td><%= r.try(:employee_name) %></td>
+        <td><%= r.try(:month) %></td>
+        <td><%= r.try(:year) %></td>
+
+        <td><%= r.try(:payable_day) %></td>
+        
+        <td><%= r.try(:earned_basic).try(:round) %></td>
+        <td><%= r.try(:earned_da).try(:round) %></td>
+        <td><%= r.try(:earned_hra).try(:round) %></td>
+
+        <td><%= r.try(:earned_convenience).try(:round) %></td>
+        <td><%= r.try(:earned_other).try(:round) %></td>
+        <td><%= r.try(:earned_special).try(:round) %></td>
+        <td><%= r.try(:earned_washing).try(:round) %></td>
+        <td><%= r.try(:earned_driver).try(:round) %></td>
+        <td><%= r.try(:earned_medical).try(:round) %></td>
+        <td><%= r.try(:earned_child_edu).try(:round) %></td>
+        <td><%= r.try(:earned_mra).try(:round) %></td>
+          <td><%= r.try(:earned_monthly_arrear).try(:round) %></td>
+        <td><%= r.try(:earned_total).try(:round) %></td>
+
+        <td><%= r.try(:pf) %></td>
+        <td><%= r.try(:esic) %></td>
+        <td><%= r.try(:income_tax) %></td>
+        <td><%= r.try(:pt) %></td>
+        <td><%= r.try(:advance) %></td>
+        <td><%= r.try(:society) %></td>
+
+        <td><%= r.try(:food_deduction) %></td>
+        <td><%= r.try(:mobile) %></td>
+        <td><%= r.try(:retention) %></td>
+        <td><%= r.try(:deduction_total).try(:round) %></td>
+        <td><%= r.try(:net_payable).try(:round) %></td>
+      </tr>
+      <% end %>
+      <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><%= @sum.payable_day.try(:round) %></td>
+      <td><%= @sum.earned_basic.try(:round) %></td>
+      <td><%= @sum.earned_da.try(:round) %></td>
+      <td><%= @sum.earned_hra.try(:round) %></td>
+      <td><%= @sum.earned_convenience.try(:round) %></td>
+      <td><%= @sum.earned_other.try(:round) %></td>
+      <td><%= @sum.earned_special.try(:round) %></td>
+      <td><%= @sum.earned_washing.try(:round) %></td>
+      <td><%= @sum.earned_driver.try(:round) %></td>
+      <td><%= @sum.earned_medical.try(:round) %></td>
+      <td><%= @sum.earned_child_edu.try(:round) %></td>
+      <td><%= @sum.earned_mra.try(:round) %></td>
+      <td><%= @sum.earned_monthly_arrear.try(:round) %></td>
+      <td><%= @sum.earned_total.try(:round) %></td>
+
+      <td><%= @sum.pf %></td>
+      <td><%= @sum.esic %></td>
+      <td><%= @sum.income_tax %></td>
+      <td><%= @sum.pt %></td>
+      <td><%= @sum.advance %></td>
+      <td><%= @sum.society %></td>
+      <td><%= @sum.food_deduction %></td>
+      <td><%= @sum.mobile %></td>
+      <td><%= @sum.retention %></td>
+      <td><%= @sum.deduction_total %></td>
+
+      <td><%= @sum.net_payable.try(:round) %></td>
+      </tr>
+      
+  </tbody>
+</table>
+<div class="col-sm-6">
+  <%= link_to "Print Salary Slip ", date_wise_ledger_salary_slip_ledgers_path(start_date: @start_date, end_date: @end_date, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+  <%= link_to " Excel Report ", date_wise_ledger_salary_slip_ledgers_path(start_date: @start_date,end_date: @end_date, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+</div>
+</div>
+</div>

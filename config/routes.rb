@@ -2231,6 +2231,9 @@ end
       get :bank_wise_net_amount
       get :collect_salary
       get :salary_ledger
+      get :all_employee_salary_ledger
+      get :date_wise_ledger
+      post :date_wise_ledger
       post :show_monthly_ctc
       get :pf_detail_report
       get :dynamic_report

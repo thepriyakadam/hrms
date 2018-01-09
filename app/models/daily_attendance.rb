@@ -101,7 +101,7 @@ class DailyAttendance < ActiveRecord::Base
             emp_att.update_all(working_hrs: working_hrs, present: "P")
             puts "---------attendace calculate updated 1 #{Time.now}---------"
           else
-            emp_att.update_all(present: "HD")
+            emp_att.update_all(working_hrs: working_hrs, present: "HD")
             puts "---------attendace calculate updated 2 #{Time.now}---------"
           end
         else

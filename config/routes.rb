@@ -3045,5 +3045,6 @@ end
     get 'user_auths/date_wise_location_history' => 'user_auths#date_wise_location_history', defaults:{format: 'json'}
     get 'user_auths/leave_coff' => 'user_auths#leave_coff', defaults:{format: 'json'}
     post 'user_auths/notes_details' => 'user_auths#notes_details', defaults:{format: 'json'}
+    get 'user_auths/all_plan_list' => 'user_auths#all_plan_list', defaults:{format: 'json'}
   end
 end

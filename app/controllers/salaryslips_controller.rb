@@ -604,7 +604,7 @@ class SalaryslipsController < ApplicationController
           unless @well_faires.empty?
             deducted_calculated_amount = 0
             @well_faires.try(:each) do |w|
-              if @month == w.month
+              if @month == w.month and @employee.joining_detail.c_off == true
                 deducted_actual_amount = 0
                 deducted_calculated_amount = deducted_calculated_amount + w.amount
                 @salary_component = SalaryComponent.find_by(name: "WelFare")
@@ -1187,7 +1187,7 @@ class SalaryslipsController < ApplicationController
           unless @well_faires.empty?
             deducted_calculated_amount = 0
             @well_faires.try(:each) do |w|
-              if @month == w.month
+             if @month == w.month and @employee.joining_detail.c_off == true
                 deducted_actual_amount = 0
                 deducted_calculated_amount = deducted_calculated_amount + w.amount
                 @salary_component = SalaryComponent.find_by(name: "WelFare")

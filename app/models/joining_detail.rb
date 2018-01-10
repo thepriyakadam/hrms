@@ -72,12 +72,12 @@ def self.to_csv(options = {})
         passport_expiry_date = spreadsheet.cell(i,'P')
         leaving_date = spreadsheet.cell(i,'Q')
         retirement_date = spreadsheet.cell(i,'R')
-        c_off = spreadsheet.cell(i,'S')
-        if c_off == "Yes"
-          c_off = true
-        else
-          c_off = false
-        end
+         c_off = spreadsheet.cell(i,'S')
+         if c_off == "Yes"
+           c_off = true
+         else
+           c_off = false
+         end
         @payment_mode = PaymentMode.find_by_name(spreadsheet.cell(i,'T'))
         if @payment_mode == nil
            payment_mode_name = spreadsheet.cell(i,'T')

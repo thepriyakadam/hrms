@@ -57,7 +57,7 @@ class Api::UserAuthsController < ApplicationController
   def leave_coff
     @employee = params[:employee_id]
     leave_coff = LeaveCOff.where(taken_date: nil,current_status: "FinalApproved", employee_id: @employee).collect { |x| [x.c_off_date.to_s + ' - ' + x.c_off_date.strftime("%A").to_s, x.id] }
-    render :json => leave_coff.present? ? leave_coff.collect{|coff| {:id => coff.id, :employee_id => coff.employee_id, :c_off_date => coff.c_off_date, :c_off_type => coff.c_off_type,:c_off_expire_day => coff.c_off_expire_day,:expiry_status => coff.expiry_status,:is_taken => coff.is_taken,:expiry_date => coff.expiry_date,:leave_count => coff.leave_count,:is_expire => coff.is_expire,:created_at => coff.created_at,:status => coff.status,:current_status => coff.current_status,:taken_date => coff.taken_date, :comment => coff.comment }} : []
+    render :json => leave_coff.present? ? leave_coff.collect{|coff| {:id => coff.try(:id), :employee_id => coff.try(:employee_id), :c_off_date => coff.try(:c_off_date), :c_off_type => coff.try(:c_off_type),:c_off_expire_day => coff.try(:c_off_expire_day),:expiry_status => coff.try(:expiry_status),:is_taken => coff.try(:is_taken),:expiry_date => coff.try(:expiry_date),:leave_count => coff.try(:leave_count),:is_expire => coff.try(:is_expire),:created_at => coff.try(:created_at),:status => coff.try(:status),:current_status => coff.try(:current_status),:taken_date => coff.try(:taken_date), :comment => coff.try(:comment) }} : []
   end
     
   def leave_request
@@ -823,7 +823,10 @@ class Api::UserAuthsController < ApplicationController
       end
     end
   end
-
+  def all_plan_list
+    employee_plan = EmployeePlan.all
+    render :json => employee_plan.present? ? employee_plan.collect{|epl| {:id => epl.id, :employee_id => epl.employee_id, :prefix => epl.employee.try(:prefix), :employee_first_name => epl.employee.try(:first_name), :employee_middle_name => epl.employee.try(:middle_name), :employee_last_name => epl.employee.try(:last_name), :from_date => epl.from_date, :to_date => epl.to_date, :from_time => epl.from_time, :to_time => epl.to_time, :meeting_with => epl.meeting_with, :location => epl.location, :meeting_agenda => epl.meeting_agenda, :latitude => epl.latitude, :longitude => epl.longitude, :confirm => epl.confirm, :status => epl.status, :current_status => epl.current_status, :manager_id => epl.manager_id  }} : []
+  end
   def particular_employee_plan_list
     employee_id = params[:employee_id]
     date = params[:date]

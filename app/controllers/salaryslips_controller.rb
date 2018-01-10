@@ -119,8 +119,14 @@ class SalaryslipsController < ApplicationController
       format.pdf do
         render pdf: 'print_salary_slip_formate_3',
               layout: 'pdf.html',
-              :orientation      => 'Landscape', # default , Landscape
+              # :orientation      => 'Landscape', # default , Landscape
               template: 'salaryslips/print_salary_slip_formate_3.pdf.erb',
+                :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 30,
+                      :left   => 10,
+                      :right  => 10},
               :show_as_html => params[:debug].present?
       end
     end
@@ -192,8 +198,14 @@ class SalaryslipsController < ApplicationController
       format.pdf do
         render pdf: 'print_emp_contribution_slip',
               layout: 'pdf.html',
-              :orientation      => 'Landscape', # default , Landscape
+              # :orientation      => 'Landscape', # default , Landscape
               template: 'salaryslips/emp_contribution_slip_pdf.pdf.erb',
+                :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 30,
+                      :left   => 10,
+                      :right  => 10},
               :show_as_html => params[:debug].present?
       end
     end
@@ -218,7 +230,14 @@ class SalaryslipsController < ApplicationController
               layout: 'pdf.html',
               # :orientation      => 'Landscape', # default , Landscape
               template: 'salaryslips/print_salary_slip.pdf.erb',
+                :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 30,
+                      :left   => 10,
+                      :right  => 10},
               :show_as_html => params[:debug].present?
+
       end
     end
   end
@@ -236,10 +255,16 @@ class SalaryslipsController < ApplicationController
       format.pdf do
         render pdf: 'print_salary_slip_rg',
               layout: 'pdf.html',
-              :orientation      => 'Landscape', # default , Landscape
-              :page_height      => 1000,
-              :dpi              => '300',
+              # :orientation      => 'Landscape', # default , Landscape
+              # :page_height      => 1000,
+              # :dpi              => '300',
               template: 'salaryslips/print_salary_slip_rg.pdf.erb',
+               :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 30,
+                      :left   => 10,
+                      :right  => 10},
               :show_as_html => params[:debug].present?
       end
     end

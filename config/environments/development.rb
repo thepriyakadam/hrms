@@ -195,7 +195,7 @@
   #  # openssl_verify_mode: 'none'
   # }
 
-  config.action_mailer.default_url_options = { host: 'https://webmail.sparkline.co.in/', port: 443 }
+  config.action_mailer.default_url_options = { host: '182.71.216.30', port: 443 }
   # config.domain = 'lvh.me'
   # config.action_mailer.perform_deliveries = true,
   ActionMailer::Base.delivery_method = :smtp

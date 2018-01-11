@@ -1343,31 +1343,31 @@ class Api::UserAuthsController < ApplicationController
     else
       emp_att_time = EmployeeAttendance.create(employee_id: emp_id, employee_code: emp_code, day: date, present: "P", in_time: in_time.to_time, month_name: month_nm, employee_name: emp_name)
     end
-    emp_att = EmployeeAttendance.where(employee_id: emp_id, day: date)
-    emp_att_last = emp_att.last
-    if emp_att.last.working_hrs.present?
+    emp_att_l = EmployeeAttendance.where(employee_id: emp_id, day: date)
+    emp_att_last = emp_att_l.last
+    if emp_att_l.last.working_hrs.present?
       in_time = emp_att_last.in_time.to_time
       out_time = emp_att_last.out_time.to_time
       total_hrms = out_time - in_time
       working_hrs = Time.at(total_hrms).utc.strftime("%H:%M")
       if working_hrs > "07:00"
-        emp_att.update_all(working_hrs: working_hrs, present: "P")
+        emp_att_l.update_all(working_hrs: working_hrs, present: "P")
       else
-        emp_att.update_all(working_hrs: working_hrs, present: "HD")
+        emp_att_l.update_all(working_hrs: working_hrs, present: "HD")
       end
     else
-      if emp_att.last.out_time.present?
+      if emp_att_l.last.out_time.present?
         in_time = emp_att_last.in_time.to_time
         out_time = emp_att_last.out_time.to_time
         total_hrms = out_time - in_time
         working_hrs = Time.at(total_hrms).utc.strftime("%H:%M")
         if working_hrs > "07:00"
-          emp_att.update_all(working_hrs: working_hrs, present: "P")
+          emp_att_l.update_all(working_hrs: working_hrs, present: "P")
         else
-          emp_att.update_all(working_hrs: working_hrs, present: "HD")
+          emp_att_l.update_all(working_hrs: working_hrs, present: "HD")
         end
       else
-        emp_att.update_all(present: "HD")
+        emp_att_l.update_all(present: "HD")
       end
     end
     render :status=>200, :json=>{:status=>"Attendance Successfully Store."}

@@ -71,6 +71,8 @@ class SalaryslipsController < ApplicationController
     @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id)
     @working_day = Workingday.find(@salaryslip.workingday_id)
     @employee = Employee.find(@salaryslip.employee_id)
+    
+    @leave_details = LeaveDetail.where(salaryslip_id: @salaryslip.id)
     # @employee_leav_balance = EmployeeLeavBalance.find_by()
     @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
     unless @advance_salary.nil?
@@ -250,6 +252,7 @@ class SalaryslipsController < ApplicationController
     @working_day = Workingday.find(@salaryslip.workingday_id)
     @employee = Employee.find(@salaryslip.employee_id)
     @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
+    @leave_details = LeaveDetail.where(salaryslip_id: @salaryslip.id)
     respond_to do |format|
       format.html
       format.pdf do

@@ -17,11 +17,11 @@
               </center>
           </td>
         </tr>
-        <tr><th colspan="7"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
+        <tr><th colspan="8"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
       <tr>
         <td>ID : <%= current_user.employee.manual_employee_code %></td>
         <td colspan="2">Employee : <%= full_name(current_user.employee) %></td>
-        <td colspan="3">Department : <%= current_user.employee.company_location.try(:name) %> - <%= current_user.employee.try(:joining_detail).try(:cost_center).try(:name) %> - <%= current_user.employee.try(:department).try(:name) %> <%= current_user.employee.try(:sub_department).try(:name) %></td>
+        <td colspan="5">Department : <%= current_user.employee.company_location.try(:name) %> - <%= current_user.employee.try(:joining_detail).try(:cost_center).try(:name) %> - <%= current_user.employee.try(:department).try(:name) %> <%= current_user.employee.try(:sub_department).try(:name) %></td>
       </tr>
         <tr>
           <th>Sr.No.</th>
@@ -30,6 +30,7 @@
           <th>In Time</th>
           <th>Out Time</th>
           <th>Working Hrs.</th>
+          <th>Late Mark</th>
           <th>Present</th>
         </tr>
       </thead>
@@ -43,8 +44,17 @@
             <td><%= employee_attendance.try(:in_time) %></td>
             <td><%= employee_attendance.try(:out_time) %></td>
             <td><%= employee_attendance.try(:working_hrs) %></td>
+            <% if employee_attendance.try(:in_time).present? %>
+              <% time = Time.at(employee_attendance.try(:in_time)).utc.strftime("%H:%M") %>
+              <% if time > "08:33" %>
+                <td class="danger"><%= employee_attendance.try(:in_time) %></td>
+              <% else %>
+                <td></td>
+              <% end %>
+            <% else %>
+            <td></td>
+            <% end %>
             <td><%= employee_attendance.try(:present) %></td>
-           
           </tr>
         <% end %>
       </tbody>

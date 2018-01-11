@@ -32,7 +32,16 @@
       session[:active_tab] ="EmployeeManagement"
       session[:active_tab1] ="Employee1"
   end
-  
+
+  def fetch_data
+    empp = Employee.all 
+    abc = empp.fetch_data
+  end
+
+  def cal_data
+    empp = Employee.all 
+    abc = empp.cal_data
+  end
 
   def import_xl
     session[:active_tab] ="EmployeeManagement"
@@ -322,6 +331,7 @@
             employee.update_attributes(manager_id: @reporting_master1.employee_id, manager_2_id: @reporting_master2.try(:employee_id))
 
             ManagerHistory.create(employee_id: employee.id,manager_id: manager_1,manager_2_id: manager_2,effective_from: params["login"]["effec_date"])
+
             EmployeeMailer.user_confirmation(employee,password,manual_employee_code).deliver_now
             EmployeeMailer.manager_detail(manager_1,employee).deliver_now
             flash[:notice] = "Employee assigned successfully."

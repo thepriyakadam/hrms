@@ -8,13 +8,9 @@
   <div class="login-logo">
 
   <!-- <= image_tag "redefine_logo.jpg",size: "120x120" %> -->
-<!--   <= image_tag "span_pumps_logo.jpg",size: "120x120" %> -->
+  <%= image_tag "spark.jpg",size: "270x100" %>
    <% t = Company.first %>
-    <%if t.nil?%>
-     <%= image_tag "demo_logo.jpg",size: "120x120" %>
-   <%else%>
-     <%= image_tag t.company_logo.url, :size => "120x120" %>
-   <%end%>
+   
   </div><!-- /.login-logo -->
   <p><center><strong>Welcome To HCMZONE </strong></center></p>
   <div class="login-box-body">

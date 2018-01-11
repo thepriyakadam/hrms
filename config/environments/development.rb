@@ -6,11 +6,10 @@
    # every request. This slows down response time but is perfect for development
    # since you don't have to restart the web server when you make code changes.
    
-   
+
    config.cache_classes = false
   
    # Do not eager load code on boot.
-
    config.eager_load = false
   
    # Show full error reports and disable caching.
@@ -50,8 +49,7 @@
    config.action_mailer.perform_deliveries = true
 
 
- # config.action_mailer.default_url_options = { host: 'https://webmail.logix.in/', port: 443 }
- 
+
    #config.action_mailer.raise_delivery_errors = true 
 
 
@@ -147,9 +145,9 @@
    # }
 
 
+  # config.action_mailer.default_url_options = { host: 'http://gmail.com', port: 443 }
 
-  # config.action_mailer.default_url_options = { host: 'http://gmail.com', port: 3000 }
-   # config.domain = 'lvh.me'
+  # # config.domain = 'lvh.me'
   # # config.action_mailer.perform_deliveries = true,
   # ActionMailer::Base.delivery_method = :smtp
   # ActionMailer::Base.smtp_settings = {
@@ -179,70 +177,40 @@
   # enable_starttls_auto: true,
   #  openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
   #  # openssl_verify_mode: 'none'
+  # }
+
+
  
-  config.action_mailer.default_url_options = { host: 'https://webmail.logix.in/', port: 443 } 
+  # # config.domain = 'lvh.me'
+  # # config.action_mailer.perform_deliveries = true,
+  # ActionMailer::Base.delivery_method = :smtp
+  # ActionMailer::Base.smtp_settings = {
+  # address: 'amaazia.co.in',
+  # port:  587,
+  # domain: 'amaazia.co.in',
+  # user_name: 'hrms@rajgreen.co.in',
+  # password: 'amaazia@123',
+  # authentication: :plain,
+  # enable_starttls_auto: true,
+  #  openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+  #  # openssl_verify_mode: 'none'
+  # }
+
+  config.action_mailer.default_url_options = { host: 'https://webmail.sparkline.co.in/', port: 443 }
   # config.domain = 'lvh.me'
   # config.action_mailer.perform_deliveries = true,
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
-  address: 'amaazia.co.in',
+  address: 'smtp.sparkline.co.in',
   port:  587,
-  domain: 'amaazia.co.in',
-  user_name: 'hrms@rajgreen.co.in',
-  password: 'amaazia@123',
+  domain: 'smtp.sparkline.co.in',
+  user_name: 'hrms@sparkline.co.in',
+  password: 'HRMS@2018',
   authentication: :plain,
   enable_starttls_auto: true,
-   openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+  openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
    # openssl_verify_mode: 'none'
   }
-
-#   config.action_mailer.default_url_options = { host: 'https://webmail.spanpump.com/', port: 443 }
- 
- 
-#   # config.domain = 'lvh.me'
-#   # config.action_mailer.perform_deliveries = true,
-#   ActionMailer::Base.delivery_method = :smtp
-#   ActionMailer::Base.smtp_settings = {
-#   address: 'smtp.spanpump.com',
-#   port:  587,
-#   domain: 'smtp.spanpump.com',
-#   user_name: 'hrms@spanpump.com',
-#   password: 'HRm$!@12',
-
-
- 
-#   # # config.domain = 'lvh.me'
-#   # # config.action_mailer.perform_deliveries = true,
-#   # ActionMailer::Base.delivery_method = :smtp
-#   # ActionMailer::Base.smtp_settings = {
-#   # address: 'amaazia.co.in',
-#   # port:  587,
-#   # domain: 'amaazia.co.in',
-#   # user_name: 'hrms@rajgreen.co.in',
-#   # password: 'amaazia@123',
-#   # authentication: :plain,
-#   # enable_starttls_auto: true,
-#   #  openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
-#   #  # openssl_verify_mode: 'none'
-#   # }
-
- # config.action_mailer.default_url_options = { host: 'https://webmail.logix.in/', port: 443 }
- 
- 
- #  config.domain = 'lvh.me'
- #  config.action_mailer.perform_deliveries = true,
- # ActionMailer::Base.delivery_method = :smtp
- #  ActionMailer::Base.smtp_settings = {
- # address: 'smtp.logix.in',
- # port:  587,
- # domain: 'smtp.logix.in',
- # user_name: 'hrms@sganalytics.com',
- # password: 'Dev@2017',
- #  authentication: :plain,
- #  enable_starttls_auto: true,
- #   openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE,
- #    openssl_verify_mode: 'none'
- #  }
 
 # config.action_mailer.delivery_method = :smtp
 
@@ -398,7 +366,7 @@
   # }
   
   
-   # Paperclip setup
-   # Paperclip.options[:command_path] = "/usr/local/bin/convert"
-   # Paperclip.options[:command_path] = "/home/rk/.rvm/gems/ruby-2.2.2/bin/convert"
-  end
+  # # Paperclip setup
+  # Paperclip.options[:command_path] = "/usr/local/bin/convert"
+  # Paperclip.options[:command_path] = "/home/rk/.rvm/gems/ruby-2.2.2/bin/convert"
+end

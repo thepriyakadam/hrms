@@ -16,8 +16,8 @@
               <th>From Time</th>
               <th>To Time</th>
               <th>Meeting With</th>
-              <th>Current Status</th>
               <th>Location</th>
+              <th>Current Status</th>
               <!-- <th>Meeting agenda</th> -->
               <!-- <th>Lat</th>
               <th>Lng</th>
@@ -39,6 +39,7 @@
                 <td><%= employee_plan.from_time %></td>
                 <td><%= employee_plan.to_time %></td>
                 <td><%= employee_plan.meeting_with %></td>
+                <td><%= employee_plan.location %></td>
                 <td>
                   <% case employee_plan.current_status %>
                     <% when "Pending" %>
@@ -53,7 +54,6 @@
                       <small class="label label-info">Else</small>
                   <%end%>
                 </td>
-                <td><%= employee_plan.location %></td>
                 <!-- <td><%#= employee_plan.meeting_agenda %></td> -->
                 <!-- <td><%#= employee_plan.lat %></td>
                 <td><%#= employee_plan.lng %></td>

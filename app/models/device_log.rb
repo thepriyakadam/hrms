@@ -1,4 +1,4 @@
 class DeviceLog < Access
-	self.table_name = "DeviceLogs_1_2018"
+	self.table_name = "PunchTimeDetails"
 	establish_connection(:developent_sec)
 end

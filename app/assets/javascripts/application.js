@@ -16,18 +16,10 @@
 //= require jquery-ui
 //= require jquery.validate
 //= require jquery.validate.additional-methods
+
 //= require bootstrap-datetimepicker
 //= require_tree .
 
-
-
-
-
-
- $(document).ready(function() {
-   
-   jQuery(".best_in_place").best_in_place();
- });
 
 
   $("#example1").DataTable();

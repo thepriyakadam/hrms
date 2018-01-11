@@ -1513,13 +1513,13 @@ class Api::UserAuthsController < ApplicationController
   def emp_addable_salary_details
     salaryslip_id = params[:salaryslip_id]
     addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, salaryslip_id)
-    render :json => addable_salary_components.present? ? addable_salary_components.collect{|sal| { :id => sal.id, :salaryslip_id => sal.salaryslip_id, :salary_component_id => sal.salary_component.name, :actual_amount => sal.actual_amount, :is_deducted => sal.is_deducted, :other_component_name => sal.other_component_name, :calculated_amount => sal.calculated_amount, :employee_template_id => sal.employee_template_id, :is_arrear => sal.is_arrear }} : []
+    render :json => addable_salary_components.present? ? addable_salary_components.collect{|sal| { :id => sal.id, :salaryslip_id => sal.salaryslip_id, :salary_component_id => sal.salary_component.try(:name), :actual_amount => sal.actual_amount, :is_deducted => sal.is_deducted, :other_component_name => sal.other_component_name, :calculated_amount => sal.calculated_amount, :employee_template_id => sal.employee_template_id, :is_arrear => sal.is_arrear }} : []
   end
 
   def emp_deducted_salary_details
     salaryslip_id = params[:salaryslip_id]
     deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, salaryslip_id)
-    render :json => deducted_salary_components.present? ? deducted_salary_components.collect{|sal| { :id => sal.id, :salaryslip_id => sal.salaryslip_id, :salary_component_id => sal.salary_component.name, :actual_amount => sal.actual_amount, :is_deducted => sal.is_deducted, :other_component_name => sal.other_component_name, :calculated_amount => sal.calculated_amount, :employee_template_id => sal.employee_template_id, :is_arrear => sal.is_arrear }} : []
+    render :json => deducted_salary_components.present? ? deducted_salary_components.collect{|sal| { :id => sal.id, :salaryslip_id => sal.salaryslip_id, :salary_component_id => sal.salary_component.try(:name), :actual_amount => sal.actual_amount, :is_deducted => sal.is_deducted, :other_component_name => sal.other_component_name, :calculated_amount => sal.calculated_amount, :employee_template_id => sal.employee_template_id, :is_arrear => sal.is_arrear }} : []
   end
 
   def emp_daily_activity_list

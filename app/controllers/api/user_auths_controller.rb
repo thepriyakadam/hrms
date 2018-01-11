@@ -825,13 +825,13 @@ class Api::UserAuthsController < ApplicationController
   end
   def all_plan_list
     employee_plan = EmployeePlan.all
-    render :json => employee_plan.present? ? employee_plan.collect{|epl| {:id => epl.id, :employee_id => epl.employee_id, :prefix => epl.employee.try(:prefix), :employee_first_name => epl.employee.try(:first_name), :employee_middle_name => epl.employee.try(:middle_name), :employee_last_name => epl.employee.try(:last_name), :from_date => epl.from_date, :to_date => epl.to_date, :from_time => epl.from_time, :to_time => epl.to_time, :meeting_with => epl.meeting_with, :location => epl.location, :meeting_agenda => epl.meeting_agenda, :latitude => epl.latitude, :longitude => epl.longitude, :confirm => epl.confirm, :status => epl.status, :current_status => epl.current_status, :manager_id => epl.manager_id  }} : []
+    render :json => employee_plan.present? ? employee_plan.collect{|epl| {:id => epl.id, :employee_id => epl.employee_id, :prefix => epl.employee.try(:prefix), :employee_first_name => epl.employee.try(:first_name), :employee_middle_name => epl.employee.try(:middle_name), :employee_last_name => epl.employee.try(:last_name), :from_date => epl.from_date, :to_date => epl.to_date, :from_time => epl.from_time, :to_time => epl.to_time, :meeting_with => epl.meeting_with, :location => epl.location, :meeting_agenda => epl.meeting_agenda, :latitude => epl.latitude, :longitude => epl.longitude, :confirm => epl.confirm, :status => epl.status, :current_status => epl.current_status, :manager_id => epl.manager_id, :plan_reason_master => epl.try(:plan_reason_master).try(:name), :reason => epl.feedback   }} : []
   end
   def particular_employee_plan_list
     employee_id = params[:employee_id]
     date = params[:date]
     employee_plan = EmployeePlan.where(employee_id: employee_id)
-    render :json => employee_plan.present? ? employee_plan.collect{|epl| {:id => epl.id, :employee_id => epl.employee_id,:from_date => epl.from_date, :to_date => epl.to_date, :from_time => epl.from_time, :to_time => epl.to_time, :meeting_with => epl.meeting_with, :location => epl.location, :meeting_agenda => epl.meeting_agenda, :latitude => epl.latitude, :longitude => epl.longitude, :confirm => epl.confirm, :status => epl.status, :current_status => epl.current_status, :manager_id => epl.manager_id, :plan_reason_master => epl.plan_reason_master_id, :reason => epl.feedback  }} : []
+    render :json => employee_plan.present? ? employee_plan.collect{|epl| {:id => epl.id, :employee_id => epl.employee_id,:from_date => epl.from_date, :to_date => epl.to_date, :from_time => epl.from_time, :to_time => epl.to_time, :meeting_with => epl.meeting_with, :location => epl.location, :meeting_agenda => epl.meeting_agenda, :latitude => epl.latitude, :longitude => epl.longitude, :confirm => epl.confirm, :status => epl.status, :current_status => epl.current_status, :manager_id => epl.manager_id, :plan_reason_master => epl.try(:plan_reason_master).try(:name), :reason => epl.feedback  }} : []
   end
 
   def employee_plan_list
@@ -1513,13 +1513,13 @@ class Api::UserAuthsController < ApplicationController
   def emp_addable_salary_details
     salaryslip_id = params[:salaryslip_id]
     addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, salaryslip_id)
-    render :json => addable_salary_components.present? ? addable_salary_components.collect{|sal| { :id => sal.id, :salaryslip_id => sal.salaryslip_id, :salary_component_id => sal.salary_component_id, :actual_amount => sal.actual_amount, :is_deducted => sal.is_deducted, :other_component_name => sal.other_component_name, :calculated_amount => sal.calculated_amount, :employee_template_id => sal.employee_template_id, :is_arrear => sal.is_arrear }} : []
+    render :json => addable_salary_components.present? ? addable_salary_components.collect{|sal| { :id => sal.id, :salaryslip_id => sal.salaryslip_id, :salary_component_id => sal.salary_component.name, :actual_amount => sal.actual_amount, :is_deducted => sal.is_deducted, :other_component_name => sal.other_component_name, :calculated_amount => sal.calculated_amount, :employee_template_id => sal.employee_template_id, :is_arrear => sal.is_arrear }} : []
   end
 
   def emp_deducted_salary_details
     salaryslip_id = params[:salaryslip_id]
     deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, salaryslip_id)
-    render :json => deducted_salary_components.present? ? deducted_salary_components.collect{|sal| { :id => sal.id, :salaryslip_id => sal.salaryslip_id, :salary_component_id => sal.salary_component_id, :actual_amount => sal.actual_amount, :is_deducted => sal.is_deducted, :other_component_name => sal.other_component_name, :calculated_amount => sal.calculated_amount, :employee_template_id => sal.employee_template_id, :is_arrear => sal.is_arrear }} : []
+    render :json => deducted_salary_components.present? ? deducted_salary_components.collect{|sal| { :id => sal.id, :salaryslip_id => sal.salaryslip_id, :salary_component_id => sal.salary_component.name, :actual_amount => sal.actual_amount, :is_deducted => sal.is_deducted, :other_component_name => sal.other_component_name, :calculated_amount => sal.calculated_amount, :employee_template_id => sal.employee_template_id, :is_arrear => sal.is_arrear }} : []
   end
 
   def emp_daily_activity_list

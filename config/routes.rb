@@ -2331,6 +2331,8 @@ end
       get :import_working_day
       # post :import_working_day
       post :import_day
+      get :datewise_total_workingday
+      post :show_total_workingday
     end
   end
 

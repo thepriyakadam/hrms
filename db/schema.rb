@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180106103351) do
+ActiveRecord::Schema.define(version: 20180111084545) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1474,6 +1474,21 @@ ActiveRecord::Schema.define(version: 20180106103351) do
     t.datetime "updated_at",              null: false
   end
 
+  create_table "experiences", force: :cascade do |t|
+    t.integer  "employee_id",  limit: 4
+    t.string   "company_name", limit: 255
+    t.string   "designation",  limit: 255
+    t.string   "no_of_year",   limit: 255
+    t.string   "ctc",          limit: 255
+    t.date     "start_date"
+    t.date     "end_date"
+    t.text     "description",  limit: 65535
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "experiences", ["employee_id"], name: "index_experiences_on_employee_id", using: :btree
+
   create_table "families", force: :cascade do |t|
     t.integer  "employee_id",          limit: 4
     t.string   "no_of_member",         limit: 255
@@ -2196,6 +2211,7 @@ ActiveRecord::Schema.define(version: 20180106103351) do
     t.boolean  "transfer"
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
+    t.boolean  "pre_request"
   end
 
   create_table "leave_c_offs", force: :cascade do |t|
@@ -2294,6 +2310,23 @@ ActiveRecord::Schema.define(version: 20180106103351) do
   end
 
   add_index "leave_status_records", ["employee_leav_request_id"], name: "index_leave_status_records_on_employee_leav_request_id", using: :btree
+
+  create_table "leave_transfers", force: :cascade do |t|
+    t.integer  "employee_id",              limit: 4
+    t.integer  "transfer_to_id",           limit: 4
+    t.date     "date"
+    t.string   "no_of_leave",              limit: 255
+    t.string   "status",                   limit: 255
+    t.text     "reason",                   limit: 65535
+    t.integer  "employee_leav_balance_id", limit: 4
+    t.integer  "leav_category_id",         limit: 4
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
+  add_index "leave_transfers", ["employee_id"], name: "index_leave_transfers_on_employee_id", using: :btree
+  add_index "leave_transfers", ["employee_leav_balance_id"], name: "index_leave_transfers_on_employee_leav_balance_id", using: :btree
+  add_index "leave_transfers", ["leav_category_id"], name: "index_leave_transfers_on_leav_category_id", using: :btree
 
   create_table "leaving_reasons", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -2431,6 +2464,18 @@ ActiveRecord::Schema.define(version: 20180106103351) do
 
   add_index "od_records", ["employee_id"], name: "index_od_records_on_employee_id", using: :btree
   add_index "od_records", ["on_duty_request_id"], name: "index_od_records_on_on_duty_request_id", using: :btree
+
+  create_table "od_status_records", force: :cascade do |t|
+    t.integer  "on_duty_request_id", limit: 4
+    t.integer  "employee_id",        limit: 4
+    t.string   "status",             limit: 255
+    t.datetime "change_date"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "od_status_records", ["employee_id"], name: "index_od_status_records_on_employee_id", using: :btree
+  add_index "od_status_records", ["on_duty_request_id"], name: "index_od_status_records_on_on_duty_request_id", using: :btree
 
   create_table "on_duty_requests", force: :cascade do |t|
     t.integer  "employee_id",        limit: 4
@@ -2655,6 +2700,30 @@ ActiveRecord::Schema.define(version: 20180106103351) do
     t.datetime "created_at",                                          null: false
     t.datetime "updated_at",                                          null: false
   end
+
+  create_table "plan_reason_masters", force: :cascade do |t|
+    t.string   "code",        limit: 255
+    t.string   "name",        limit: 255
+    t.text     "description", limit: 65535
+    t.boolean  "status"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  create_table "policy_details", force: :cascade do |t|
+    t.integer  "investment_declaration_id", limit: 4
+    t.string   "insurer",                   limit: 255
+    t.string   "policy_no",                 limit: 255
+    t.string   "relation",                  limit: 255
+    t.string   "frequency",                 limit: 255
+    t.decimal  "premium_amount",                        precision: 10
+    t.decimal  "estimated_annual_amount",               precision: 10
+    t.decimal  "actual_annual_amount",                  precision: 10
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+  end
+
+  add_index "policy_details", ["investment_declaration_id"], name: "index_policy_details_on_investment_declaration_id", using: :btree
 
   create_table "policy_types", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -3056,6 +3125,16 @@ ActiveRecord::Schema.define(version: 20180106103351) do
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
   end
+
+  create_table "salary_comp_mappings", force: :cascade do |t|
+    t.integer  "salary_component_id", limit: 4
+    t.integer  "erp_account_code",    limit: 4
+    t.string   "map_type",            limit: 255
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  add_index "salary_comp_mappings", ["salary_component_id"], name: "index_salary_comp_mappings_on_salary_component_id", using: :btree
 
   create_table "salary_component_templates", force: :cascade do |t|
     t.string   "manual_template_code",       limit: 255
@@ -3756,6 +3835,15 @@ ActiveRecord::Schema.define(version: 20180106103351) do
 
   add_index "week_off_masters", ["employee_id"], name: "index_week_off_masters_on_employee_id", using: :btree
 
+  create_table "well_faires", force: :cascade do |t|
+    t.string   "month",      limit: 255
+    t.decimal  "amount",                 precision: 15, scale: 2, default: 0.0
+    t.boolean  "status"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",                                                    null: false
+    t.datetime "updated_at",                                                    null: false
+  end
+
   create_table "workingdays", force: :cascade do |t|
     t.integer  "employee_id",             limit: 4
     t.date     "date"
@@ -3927,6 +4015,7 @@ ActiveRecord::Schema.define(version: 20180106103351) do
   add_foreign_key "exit_interviews", "employee_resignations"
   add_foreign_key "exit_interviews", "employees"
   add_foreign_key "exit_interviews", "question_masters"
+  add_foreign_key "experiences", "employees"
   add_foreign_key "families", "blood_groups"
   add_foreign_key "families", "employees"
   add_foreign_key "families", "religions"
@@ -4006,6 +4095,9 @@ ActiveRecord::Schema.define(version: 20180106103351) do
   add_foreign_key "leave_records", "employees"
   add_foreign_key "leave_records", "leav_categories"
   add_foreign_key "leave_status_records", "employee_leav_requests"
+  add_foreign_key "leave_transfers", "employee_leav_balances"
+  add_foreign_key "leave_transfers", "employees"
+  add_foreign_key "leave_transfers", "leav_categories"
   add_foreign_key "machine_attendances", "employees"
   add_foreign_key "machine_attendances", "shift_masters"
   add_foreign_key "manager_histories", "employees"
@@ -4019,6 +4111,8 @@ ActiveRecord::Schema.define(version: 20180106103351) do
   add_foreign_key "monthly_expences", "expencess_types"
   add_foreign_key "od_records", "employees"
   add_foreign_key "od_records", "on_duty_requests"
+  add_foreign_key "od_status_records", "employees"
+  add_foreign_key "od_status_records", "on_duty_requests"
   add_foreign_key "on_duty_requests", "employees"
   add_foreign_key "overtime_daily_records", "employees"
   add_foreign_key "overtime_month_records", "employees"
@@ -4035,6 +4129,7 @@ ActiveRecord::Schema.define(version: 20180106103351) do
   add_foreign_key "particular_vacancy_requests", "vacancy_masters"
   add_foreign_key "performance_calendars", "performance_activities"
   add_foreign_key "performance_calendars", "periods"
+  add_foreign_key "policy_details", "investment_declarations"
   add_foreign_key "professional_tax_masters", "company_locations"
   add_foreign_key "promotion_histories", "departments"
   add_foreign_key "promotion_histories", "employee_categories"
@@ -4068,6 +4163,7 @@ ActiveRecord::Schema.define(version: 20180106103351) do
   add_foreign_key "rewards_allocations", "reward_types"
   add_foreign_key "rewards_pals", "employees"
   add_foreign_key "rewards_pals", "reward_types"
+  add_foreign_key "salary_comp_mappings", "salary_components"
   add_foreign_key "salary_component_templates", "salary_components"
   add_foreign_key "salary_component_templates", "salary_templates"
   add_foreign_key "salary_map_saps", "companies"

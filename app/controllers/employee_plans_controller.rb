@@ -5,7 +5,7 @@ class EmployeePlansController < ApplicationController
   # GET /employee_plans.json
   def index
     # @employee_plan = EmployeePlan.new
-    @employee_plans = EmployeePlan.where(employee_id: current_user.employee_id)
+    @employee_plans = EmployeePlan.where(employee_id: current_user.employee_id).order("from_date DESC")
   end
 
   # GET /employee_plans/1
@@ -56,11 +56,56 @@ class EmployeePlansController < ApplicationController
     session[:active_tab1] = "travelrequestreports"
   end
 
-  def employee_report_data
+  def gps_tracking
+    session[:active_tab] = "TravelManagemnt"
+    session[:active_tab1] = "travelrequestreports"
+  end
 
+  def employee_gps_tracking
     from_date = params[:employee_plan] ? params[:employee_plan][:from_date] : params[:from_date]
     to_date = params[:employee_plan] ? params[:employee_plan][:to_date] : params[:to_date]
     emp_id = params[:employee_plan] ? params[:employee_plan][:employee_id] : params[:employee_id]
+    @employee = Employee.find(emp_id)
+    @employee_plan = EmployeeLocationHistory.where(employee_id: emp_id)
+    if from_date.present? && !to_date.present?
+      @emp_report = EmployeeLocationHistory.where("date >= ? and employee_id =?", from_date.to_date, emp_id)
+    end
+    if !from_date.present? && to_date.present?
+      @emp_report = EmployeeLocationHistory.where("date <= ? and employee_id =?", to_date.to_date, emp_id)
+    end
+    if from_date.present? && to_date.present?
+      @emp_report = EmployeeLocationHistory.where(date:  from_date.to_date..to_date.to_date, employee_id: emp_id) 
+    end
+    if !from_date.present? && !to_date.present? && emp_id.present?
+      @emp_report = EmployeeLocationHistory.where("employee_id =?", emp_id)
+    end
+
+    respond_to do |format|
+      format.js
+      format.xls {render template: 'employee_plans/employee_gps_tracking_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'employee_gps_tracking_pdf',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'employee_plans/employee_gps_tracking_pdf.pdf.erb',
+            show_as_html: params[:debug].present?,
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+      end
+    end
+  end
+
+  def employee_report_data
+    from_date = params[:employee_plan] ? params[:employee_plan][:from_date] : params[:from_date]
+    to_date = params[:employee_plan] ? params[:employee_plan][:to_date] : params[:to_date]
+    emp_id = params[:employee_plan] ? params[:employee_plan][:employee_id] : params[:employee_id]
+    @employee = Employee.find(emp_id)
     @employee_plan = EmployeePlan.where(employee_id: emp_id)
     if from_date.present? && !to_date.present?
       @emp_report = EmployeePlan.where("from_date >= ? and employee_id =?", from_date.to_date, emp_id)
@@ -141,6 +186,7 @@ class EmployeePlansController < ApplicationController
 
   # PATCH/PUT /employee_plans/1
   # PATCH/PUT /employee_plans/1.json
+
    def update
   #   @employee_plan = EmployeePlan.all
   #   @employee_plan = @employee_plan.check_availability(current_user, params[:employee_plan][:from_date], params[:employee_plan][:to_date], params[:employee_plan][:from_time], params[:employee_plan][:to_time])
@@ -157,8 +203,8 @@ class EmployeePlansController < ApplicationController
           format.html { render :new }
           format.json { render json: @employee_plan.errors, status: :unprocessable_entity }
         end
-      # end
-    end
+      end
+    # end
   end
 
   def meeting_plan_approval

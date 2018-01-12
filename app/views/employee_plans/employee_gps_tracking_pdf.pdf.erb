@@ -23,44 +23,26 @@
       </td>
     </tr>
     <tr>
+      <center> Employee </center>
+    </tr>
+    <tr>
       <td colspan="2"> <b>ID</b> : <%= @employee.try(:manual_employee_code) %></td>
       <td colspan="6"> <b>Employee Name</b> : <%= @employee.try(:first_name) %> <%= current_user.employee.try(:middle_name) %> <%= current_user.employee.try(:last_name) %>
       </td>
     </tr>
     <tr>
       <th>Sr.No.</th>
-      <th>From Date</th>
-      <th>To Date</th>
-      <th>From Time</th>
-      <th>To Time</th>
-      <th>Meeting With</th>              
+      <th>Date</th>
+      <th>Time</th>
       <th>Location</th>
-      <th>Current Status</th>
     </tr>
     <%i = 0%>
     <% @emp_report.try(:each) do |employee_plan| %>
       <tr>
         <td><%= i = i+1 %></td>
-        <td><%= employee_plan.from_date%></td>
-        <td><%= employee_plan.to_date %></td>
-        <td><%= employee_plan.from_time %></td>
-        <td><%= employee_plan.to_time %></td>
-        <td><%= employee_plan.meeting_with %></td>
+        <td><%= employee_plan.date %></td>
+        <td><%= employee_plan.time %></td>
         <td><%= employee_plan.location %></td>
-        <td>
-          <% case employee_plan.current_status %>
-            <% when "Pending" %>
-              <small class="label label-default">Pending</small>
-            <% when "Approved"   %>
-              <small class="label label-success">Approved</small>
-            <% when "Rejected" %>
-              <small class="label label-danger">Rejected</small>
-            <% when "Cancelled" %>
-              <small class="label label-warning">Cancelled</small>
-            <% else %>
-              <small class="label label-info">Else</small>
-          <%end%>
-        </td>
       </tr>
     <% end %>
   </tbody>

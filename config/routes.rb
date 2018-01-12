@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   
   resources :employee_plans do
     collection do
+      get :gps_tracking
+      get :employee_gps_tracking
+      post :employee_gps_tracking
       get :print_employee_wise_report
       get :print_manager_wise_report
       get :employee_wise_report
@@ -2186,6 +2189,7 @@ end
       get :show_unconfirmed_employee
       post :Confirm_salaryslip
       get :show_salaryslip_rg
+      get :show_month_salaryslip_rg
       get :print_salary_slip_rg
       get :show_salaryslip_formate_3
       get :print_salary_slip_formate_3
@@ -2234,6 +2238,9 @@ end
       get :bank_wise_net_amount
       get :collect_salary
       get :salary_ledger
+      get :all_employee_salary_ledger
+      get :date_wise_ledger
+      post :date_wise_ledger
       post :show_monthly_ctc
       get :pf_detail_report
       get :dynamic_report
@@ -3046,5 +3053,7 @@ end
     get 'user_auths/employee_wise_attendance' => 'user_auths#employee_wise_attendance', defaults:{format: 'json'}
     get 'user_auths/date_wise_location_history' => 'user_auths#date_wise_location_history', defaults:{format: 'json'}
     get 'user_auths/leave_coff' => 'user_auths#leave_coff', defaults:{format: 'json'}
+    post 'user_auths/notes_details' => 'user_auths#notes_details', defaults:{format: 'json'}
+    get 'user_auths/all_plan_list' => 'user_auths#all_plan_list', defaults:{format: 'json'}
   end
 end

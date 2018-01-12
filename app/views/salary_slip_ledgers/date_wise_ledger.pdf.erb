@@ -1,0 +1,127 @@
+<div class="ajax-progress"></div>
+<% i = 0 %>
+<table style="border-collapse: collapse; font-size:15pt;" border=1 width=1000 cellpadding="15">
+  <thead>
+    <tr>
+      <td colspan="29">
+      <% if current_user.company_location.company.company_logo == nil %>
+      <% else %>
+        <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
+        <%end%>
+       <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
+        <center><small></small></center>
+        <center><small>Employee Monthly Salary For The Year <%= @start_date.to_date.strftime("%B") %>  <%= @start_date.to_date.strftime("%Y") %> - <%= @end_date.to_date.strftime("%B") %> <%= @end_date.to_date.strftime("%Y") %> </small></center>   
+      </th>
+    </tr>
+    <tr>
+      <th>Sr.No</th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Month</th>
+      <th>Payble Day</th>
+      
+      <th>Basic</th>
+      <th>DA</th>
+      <th>HRA</th>
+      <th>conv</th>
+      <th>O.Allow</th>
+      <th>S.Allow</th>
+      <th>Wsh.Allow</th>
+      <th>Driver Allow</th>
+      <th>Medi Allow</th>
+      <th>Child Edu Allow</th>
+      <th>MRA</th>
+      <th>MA</th>
+      <th>Gross</th>
+
+      <th>PF</th>
+      <th>ESIC</th>
+      <th>IT</th>
+      <th>PT</th>
+      <th>Adv.Sal</th>
+      <th>Society</th>
+      <th>Food</th>
+      <th>Mobile</th>
+      <th>Retention</th>
+      <th>Total Dedu</th>
+
+      <th>NET</th>
+    </tr>
+    </thead>
+    <tbody>
+     <% @reports.each do |r| %>
+      <tr>
+        <td><%= i = i+1 %></td>
+        <td><%= r.try(:code) %></td>
+        <td><%= r.try(:employee_name) %></td>
+        <td><%= r.try(:month) %> <%= r.try(:year) %></td>
+
+        <td><%= r.try(:payable_day) %></td>
+        <td><%= r.try(:earned_basic).try(:round) %></td>
+        <td><%= r.try(:earned_da).try(:round) %></td>
+        <td><%= r.try(:earned_hra).try(:round) %></td>
+
+        <td><%= r.try(:earned_convenience).try(:round) %></td>
+        <td><%= r.try(:earned_other).try(:round) %></td>
+        <td><%= r.try(:earned_special).try(:round) %></td>
+        <td><%= r.try(:earned_washing).try(:round) %></td>
+        <td><%= r.try(:earned_driver).try(:round) %></td>
+        <td><%= r.try(:earned_medical).try(:round) %></td>
+        <td><%= r.try(:earned_child_edu).try(:round) %></td>
+        <td><%= r.try(:earned_mra).try(:round) %></td>
+        <td><%= r.try(:earned_monthly_arrear).try(:round) %></td>
+        <td><%= r.try(:earned_total).try(:round) %></td>
+
+        <td><%= r.try(:pf) %></td>
+        <td><%= r.try(:esic) %></td>
+        <td><%= r.try(:income_tax) %></td>
+        <td><%= r.try(:pt) %></td>
+        <td><%= r.try(:advance) %></td>
+        <td><%= r.try(:society) %></td>
+
+        <td><%= r.try(:food_deduction) %></td>
+        <td><%= r.try(:mobile) %></td>
+        <td><%= r.try(:retention) %></td>
+        <td><%= r.try(:deduction_total).try(:round) %></td>
+        <td><%= r.try(:net_payable).try(:round) %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <th></th>
+      <th></th>
+      <th><%= @sum.payable_day.try(:round) %></th>
+      <th><%= @sum.earned_basic.try(:round) %></th>
+      <th><%= @sum.earned_da.try(:round) %></th>
+      <th><%= @sum.earned_hra.try(:round) %></th>
+      <th><%= @sum.earned_convenience.try(:round) %></th>
+      <th><%= @sum.earned_other.try(:round) %></th>
+      <th><%= @sum.earned_special.try(:round) %></th>
+      <th><%= @sum.earned_washing.try(:round) %></th>
+      <td><%= @sum.earned_driver.try(:round) %></td>
+      <td><%= @sum.earned_medical.try(:round) %></td>
+      <td><%= @sum.earned_child_edu.try(:round) %></td>
+      <td><%= @sum.earned_mra.try(:round) %></td>
+      <td><%= @sum.earned_monthly_arrear.try(:round) %></td>
+      <th><%= @sum.earned_total.try(:round) %></th>
+
+      <th><%= @sum.pf %></th>
+      <th><%= @sum.esic %></th>
+      <th><%= @sum.income_tax %></th>
+      <th><%= @sum.pt %></th>
+      <th><%= @sum.advance %></th>
+      <th><%= @sum.society %></th>
+      <th><%= @sum.food_deduction %></th>
+      <th><%= @sum.mobile %></th>
+      <th><%= @sum.retention %></th>
+      <th><%= @sum.deduction_total %></th>
+
+      <th><%= @sum.net_payable.try(:round) %></th>
+      </tr>
+  </tbody>
+</table>
+
+<style type="text/css">
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak { page-break-inside: avoid; }
+</style>

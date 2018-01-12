@@ -1,0 +1,11 @@
+$(".ajax-progress").hide();
+$("#date_wise_ledger").html("<%= j render 'date_wise_ledger' %>")
+
+$(document).ready(function() {
+    $('#example3').DataTable( {
+      //"scrollY":        "200px",
+      "scrollX":        "1000px",
+      "scrollCollapse": true,
+      "paging":         true
+    } );
+  } );

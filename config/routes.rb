@@ -4,6 +4,13 @@ Rails.application.routes.draw do
   resources :resource_pool_masters
   resources :service_masters
 
+  resources :daily_attendances do 
+    collection do
+      get :attendance
+      get :calculate
+    end
+  end
+
   resources :plan_reason_masters do
     collection do
       get :view_resaon
@@ -2331,6 +2338,8 @@ end
       get :import_working_day
       # post :import_working_day
       post :import_day
+      get :datewise_total_workingday
+      post :show_total_workingday
     end
   end
 

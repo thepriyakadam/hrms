@@ -152,13 +152,9 @@
         <th>Department</th>
         <td><%= @employee.try(:department).try(:name) %></td>
 
-        <th>Cost Center</th>
-        <td><%= @employee.try(:cost_center).try(:name) %></td>
-      </tr>
-
-      <tr>
+   
         <th>Sub Department</th>
-        <td colspan="3"><%= @employee.try(:sub_department).try(:name) %></td>
+        <td><%= @employee.try(:sub_department).try(:name) %></td>
       </tr>
 
       <tr>

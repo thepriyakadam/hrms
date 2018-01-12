@@ -6,7 +6,7 @@
    # every request. This slows down response time but is perfect for development
    # since you don't have to restart the web server when you make code changes.
    
-   
+
    config.cache_classes = false
   
    # Do not eager load code on boot.
@@ -47,6 +47,7 @@
   
    config.action_mailer.raise_delivery_errors = true
    config.action_mailer.perform_deliveries = true
+
 
 
    #config.action_mailer.raise_delivery_errors = true 
@@ -195,16 +196,16 @@
   #  # openssl_verify_mode: 'none'
   # }
 
-  config.action_mailer.default_url_options = { host: 'https://webmail.spanpump.com/', port: 443 }
+  config.action_mailer.default_url_options = { host: '182.71.216.30', port: 443 }
   # config.domain = 'lvh.me'
   # config.action_mailer.perform_deliveries = true,
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
-  address: 'smtp.spanpump.com',
+  address: 'smtp.sparkline.co.in',
   port:  587,
-  domain: 'smtp.spanpump.com',
-  user_name: 'hrms@spanpump.com',
-  password: 'HRm$@123',
+  domain: 'smtp.sparkline.co.in',
+  user_name: 'hrms@sparkline.co.in',
+  password: 'HRMS@2018',
   authentication: :plain,
   enable_starttls_auto: true,
   openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
@@ -365,7 +366,7 @@
   # }
   
   
-   # Paperclip setup
-# Paperclip.options[:command_path] = "/usr/local/bin/convert
-   # Paperclip.options[:command_path] = "/home/rk/.rvm/gems/ruby-2.2.2/bin/convert"
+  # # Paperclip setup
+  # Paperclip.options[:command_path] = "/usr/local/bin/convert"
+  # Paperclip.options[:command_path] = "/home/rk/.rvm/gems/ruby-2.2.2/bin/convert"
 end

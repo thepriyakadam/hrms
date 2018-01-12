@@ -36,9 +36,11 @@
             <td><%= employee_attendance.try(:day).strftime('%A') %></td>
             <td><%= employee_attendance.try(:in_time) %></td>
             <td><%= employee_attendance.try(:out_time) %></td>
+            <%# binding.pry %>
             <% if employee_attendance.try(:in_time).present? %>
               <% time = Time.at(employee_attendance.try(:in_time)).utc.strftime("%H:%M") %>
-              <% if time > "09:33" %>
+              <% if time > "08:33" %>
+
                 <td class="danger"><%= employee_attendance.try(:in_time) %></td>
               <% else %>
                 <td></td>

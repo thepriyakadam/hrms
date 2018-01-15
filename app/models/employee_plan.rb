@@ -2,6 +2,7 @@ class EmployeePlan < ActiveRecord::Base
   belongs_to :employee
   belongs_to :manager
   belongs_to :plan_reason_master
+  has_many :listed_companies
   validates :from_date, presence: true
   validates :to_date, presence: true
   validates :location, presence: true

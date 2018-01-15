@@ -1,5 +1,19 @@
 Rails.application.routes.draw do
 
+  resources :meeting_follow_ups
+  resources :meeting_minutes do
+    collection do
+      get :view_minutes
+      get :minutes_form
+    end
+  end
+  
+  resources :listed_companies do
+    collection do
+      get :view_company
+    end
+  end
+
   resources :events
   resources :resource_pool_masters
   resources :service_masters
@@ -36,6 +50,9 @@ Rails.application.routes.draw do
       get :employee_report_data
       post :manager_report
       get :manager_report
+      get :company_wise_report
+      get :company_report
+      post :company_report
       get :modal_employee_plan_detail
       get :employee_plan_detail_list
       get :ajax_employee_plan_details
@@ -48,6 +65,9 @@ Rails.application.routes.draw do
       get :employee_feedback
       post :feedback
       post :reason
+      get :minutes_form
+      get :start_meeting
+      get :end_meeting
     end
   end
   resources :events  # do
@@ -3055,5 +3075,11 @@ end
     get 'user_auths/leave_coff' => 'user_auths#leave_coff', defaults:{format: 'json'}
     post 'user_auths/notes_details' => 'user_auths#notes_details', defaults:{format: 'json'}
     get 'user_auths/all_plan_list' => 'user_auths#all_plan_list', defaults:{format: 'json'}
+    get 'user_auths/listed_company' => 'user_auths#listed_company', defaults:{format: 'json'}
+    post 'user_auths/start_meeting' => 'user_auths#start_meeting', defaults:{format: 'json'}
+    post 'user_auths/end_meeting' => 'user_auths#end_meeting', defaults:{format: 'json'}
+    post 'user_auths/meeting_minutes' => 'user_auths#meeting_minutes', defaults:{format: 'json'}
+    get 'user_auths/meeting_plan_minutes' => 'user_auths#meeting_plan_minutes', defaults:{format: 'json'}
+            
   end
 end

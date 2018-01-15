@@ -65,13 +65,14 @@ def self.to_csv(options = {})
         end
         probation_period = spreadsheet.cell(i,'J')
         notice_period = spreadsheet.cell(i,'K')
-        # notice_period_after_probation = spreadsheet.cell(i,'L')
+         notice_period_after_probation = spreadsheet.cell(i,'L')
         have_passport = spreadsheet.cell(i,'M')
         passport_no = spreadsheet.cell(i,'N')
         passport_issue_date = spreadsheet.cell(i,'O')
         passport_expiry_date = spreadsheet.cell(i,'P')
         leaving_date = spreadsheet.cell(i,'Q')
         retirement_date = spreadsheet.cell(i,'R')
+
          c_off = spreadsheet.cell(i,'S')
          if c_off == "Yes"
            c_off = true

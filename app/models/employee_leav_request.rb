@@ -382,6 +382,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
   end #def
 
 
+
  def create_attendance_leave
     
       for i in self.start_date.to_date..self.end_date.to_date

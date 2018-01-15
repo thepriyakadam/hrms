@@ -1,0 +1,7 @@
+<%if @flag == true %>
+  $("#form").html("<%= j render 'investment_declarations/investment_declaration' %>");
+  $("#investment_declaration_list").html("<%= j render 'investment_declarations/investment_declaration' %>");
+<%else%>
+   $("#form").html("<%= j render 'investment_declarations/investment_declaration' %>");
+  
+<%end%>

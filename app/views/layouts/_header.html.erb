@@ -269,7 +269,7 @@
           <%elsif member_signed_in? %>
             <li class="user-footer">
               <div class="pull-left">
-                <%= link_to "Profile", edit_member_registration_path,class: "btn btn-default btn-flat" %>
+                <%#= link_to "Profile", edit_member_registration_path,class: "btn btn-default btn-flat" %>
               </div>
               <div class="pull-right">
                 <%= link_to 'Logout', destroy_member_session_path, :method => :delete ,class: "btn btn-default btn-flat", :id => 'example' %>

@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Answer Masters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @answer_masters.each do |answer_master| %>
+      <tr>
+        <td><%= answer_master.code %></td>
+        <td><%= answer_master.name %></td>
+        <td><%= answer_master.status %></td>
+        <td><%= link_to 'Show', answer_master %></td>
+        <td><%= link_to 'Edit', edit_answer_master_path(answer_master) %></td>
+        <td><%= link_to 'Destroy', answer_master, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Answer master', new_answer_master_path %>

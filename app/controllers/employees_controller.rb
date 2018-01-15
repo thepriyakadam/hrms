@@ -1,5 +1,9 @@
  class EmployeesController < ApplicationController
+<<<<<<< HEAD
+  before_action :set_employee, only: [:show, :edit, :update, :destroy, :ajax_joining_detail, :ajax_bank_detail, :ajax_qualification_detail, :ajax_new_qualification, :ajax_experience_detail, :ajax_new_experience, :ajax_skillset_detail, :ajax_new_skillset, :ajax_certification_detail, :ajax_new_certification, :ajax_award_detail, :ajax_new_award, :ajax_physical_detail, :ajax_family_detail, :ajax_new_family,:ajax_employee_document_detail,:ajax_new_employee_document]
+=======
    before_action :set_employee, only: [:show, :edit, :update, :destroy, :ajax_joining_detail, :ajax_bank_detail, :ajax_qualification_detail, :ajax_new_qualification, :ajax_experience_detail, :ajax_new_experience, :ajax_skillset_detail, :ajax_new_skillset, :ajax_certification_detail, :ajax_new_certification, :ajax_award_detail, :ajax_new_award, :ajax_physical_detail, :ajax_family_detail, :ajax_new_family,:ajax_employee_document_detail,:ajax_new_employee_document]
+>>>>>>> 26ec75cc64ebd9a13aa3b956803cc45286b24ab2
   load_and_authorize_resource
   # GET /employees
   # GET /employees.json
@@ -125,8 +129,9 @@
 
   # GET /employees/new
   def new
+    @employee = Employee.new(:parent_id => params[:parent_id])
     # UserPasswordMailer.test.deliver_now
-    @employee = Employee.new
+    # @employee = Employee.new
     # authorize! :create, @employee
     # @employee.build_joining_detail #here
   end
@@ -145,7 +150,6 @@
     @departments = @company_location.try(:departments)
     @department = @employee.department
     @sub_departments = @department.try(:sub_departments)
-
 
     # if current_user.class == Group
     # @company_locations = CompanyLocation.all
@@ -353,7 +357,6 @@
   #   respond_to do |format|
   #     format.xls {render template: 'employees/index.xls.erb'}
   #   end
-
   # end
 
   def basic_detail
@@ -458,7 +461,7 @@
      @employee = Employee.find(params[:id])
     # @employee = Employee.find(params[:id])
      # @employee1 = Employee.where(employee_id: current_user.employee_id)
-end
+  end
 
   def manager
     @employees = Employee.where.not(manager_id: nil)
@@ -1521,6 +1524,7 @@ def show_all_record
               disposition: 'attachment'
   end
 
+
   def new_employee_list
      if current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
@@ -1568,7 +1572,7 @@ def show_all_record
   def admin_asset_employee_list
      @employee = Employee.find(params[:format])
      @assigned_assets = AssignedAsset.where(employee_id: @employee.id)
-  end
+ end
 
 
   private
@@ -1585,8 +1589,8 @@ def show_all_record
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_params
     # params.require(:employee).permit(:department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :district, :state, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender)
-
     params.require(:employee).permit(:optional_email,:optinal_contact_no,:optinal_contact_no1,:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id,:sub_department_id,:first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id,:employee_signature,:emergency_contact_no,:cost_center_id,:service_master_id,:resource_pool_master_id)
+
     # joining_detail_attributes: [:joining_date, :reference_from, :admin_hr, :tech_hr, :designation, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem])
   end
 end

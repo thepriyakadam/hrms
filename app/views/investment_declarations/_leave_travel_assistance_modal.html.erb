@@ -1,0 +1,96 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <center>Add Leave Travel Assistance Details</center>
+    </div>
+
+    <div class="modal-body">
+    <%= bootstrap_form_for(@leave_travel_assistance,html: {id: 'leave_travel_assistance'} ) do |f| %>
+      <%#= bootstrap_form_for(@leave_travel_assistance,html: {id: 'leave_travel_assistance'} ) do |f| %>
+       <%#= f.hidden_field :investment_declaration_id , value: current_user.employee_id %>
+       
+        <%= f.hidden_field :investment_declaration_id , value: params[:format] %>
+        
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.date_select :journey_from_date, label:'Journey From' %>
+            </div>
+          </div>
+          <div class="col-sm-3">  
+            <div class="field">
+              <%= f.date_select :journey_to_date, label:'Journey To' %>
+            </div>
+          </div>
+          <div class="col-sm-3">  
+            <div class="field">
+             <%= f.text_field :from_location, label:'From Location' %>
+            </div>
+          </div>
+          <div class="col-sm-3">  
+            <div class="field">
+              <%= f.text_field :to_location, label:'To Location' %>
+            </div>
+          </div>
+        </div>  
+        <div class="row">    
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :person_traveled, label:'Name of Person Traveled ' %>
+            </div>
+          </div>
+         <div class="col-sm-3">    
+            <div class="field">
+              <%= f.text_field :relationship, label:'Relationship with Employee' %>
+            </div>
+          </div>
+          <div class="col-sm-3">  
+            <div class="field">
+              <%= f.text_field :travel_mode, label:'Travel Mode' %>
+            </div>
+          </div>
+          <div class="col-sm-3">  
+            <div class="field">
+              <%= f.text_field :estimated_amt, label:'Estimated Amount' %>
+            </div>
+          </div>
+        </div>
+        <div class="row">    
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :actual_amt,label:'Actual Amount' %>
+            </div>
+          </div>
+        </div>
+        <div class="row">  
+          <div class="col-sm-3">  
+            <div class="field">
+              <%= f.text_field :total, label:'Total' %>
+            </div>
+          </div>  
+            <div class="actions">
+              <%= f.submit %>
+            </div>
+          </div>  
+      <% end %>
+
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $('#datepicker').datepicker({
+   format: "yyyy-mm-dd"
+  })
+  .on('changeDate', function(ev){
+  $('#datepicker').datepicker('hide');
+
+  $('#datepicker1').datepicker({
+   format: "yyyy-mm-dd"
+  })
+  .on('changeDate', function(ev){
+  $('#datepicker').datepicker('hide');
+});       
+</script>    

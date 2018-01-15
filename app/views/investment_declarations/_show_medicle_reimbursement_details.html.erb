@@ -1,0 +1,48 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <center>Medicle Reimbursement Details</center>
+    </div>
+
+    <div class="modal-body">
+    <% i = 0 %>
+    <% @medicle_reimbursements.each do |mr| %>
+    <% i = i + 1 %>
+    <div align="right">
+     <%#= link_to 'Edit', edit_policy_detail_path(policy_detail),class: "btn btn-success btn-sm fa fa-edit" %>
+     <%= link_to '',mr, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-trash-o' %>
+     </div>
+    <table id="example6" class="table table-bordered table-hover table-condensed">
+      <tr>
+        <th>Sr. No.</th>
+        <td><%= i %></td>
+        <th>Bill No:</th>
+        <td><%= mr.bill_no %></td>
+      </tr>
+
+      <tr>
+        <th>Bill Date:</th>
+        <td><%= mr.bill_date %></td>
+        <th>Name on Invoice:</th>
+        <td><%= mr.name_on_invoice %></td>
+      </tr>
+
+      <tr>
+        <th>Estimated Amount:</th>
+        <td><%= mr.estimated_amt %></td>
+        <th>Actual Amount:</th>
+        <td><%= mr.actual_amt %></td>
+      </tr>
+
+      <tr>
+        <th>Total Amount:</th>
+        <td colspan="3"><%= mr.toatal_amt %></td>
+      </tr>
+    </table>
+    <% end %>
+<%#= link_to 'Edit', editmr_path(mr) %> |
+<%#= link_to 'Back',mrs_path %>
+    </div>
+   </div>
+</div>

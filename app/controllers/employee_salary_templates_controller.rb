@@ -203,7 +203,6 @@ class EmployeeSalaryTemplatesController < ApplicationController
       end 
   end
 
-
  def employees_current_template
     @employee_ids = params[:employee_ids]
     respond_to do |format|

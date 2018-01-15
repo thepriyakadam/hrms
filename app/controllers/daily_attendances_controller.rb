@@ -20,6 +20,7 @@ class DailyAttendancesController < ApplicationController
   def calculate
     DailyAttendance.calculate_attendance
     redirect_to subordinate_attendance_manager_self_services_path
+
   end
 
   # GET /daily_attendances/new

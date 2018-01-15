@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Investment declaration:</strong>
+  <%= @medicle_reimbursement.investment_declaration %>
+</p>
+
+<p>
+  <strong>Bill no:</strong>
+  <%= @medicle_reimbursement.bill_no %>
+</p>
+
+<p>
+  <strong>Bill date:</strong>
+  <%= @medicle_reimbursement.bill_date %>
+</p>
+
+<p>
+  <strong>Name on invoice:</strong>
+  <%= @medicle_reimbursement.name_on_invoice %>
+</p>
+
+<p>
+  <strong>Estimated amt:</strong>
+  <%= @medicle_reimbursement.estimated_amt %>
+</p>
+
+<p>
+  <strong>Actual amt:</strong>
+  <%= @medicle_reimbursement.actual_amt %>
+</p>
+
+<p>
+  <strong>Toatal amt:</strong>
+  <%= @medicle_reimbursement.toatal_amt %>
+</p>
+
+<%= link_to 'Edit', edit_medicle_reimbursement_path(@medicle_reimbursement) %> |
+<%= link_to 'Back', medicle_reimbursements_path %>

@@ -11,10 +11,11 @@
            <!-- <tr><td colspan="3"><center>First Level Request</center></td></tr> -->
             <tr>
               <th>Sr.No.</th>
-              <th>From Date</th>
-              <th>To Date</th>
-              <th>From Time</th>
-              <th>To Time</th>
+              <th>Employee Name</th>
+              <th>From Date / From Time</th>
+              <th>To Date / To Time</th>
+              <!-- <th>From Time</th> -->
+              <!-- <th>To Time</th> -->
               <th>Meeting With</th>
               <th>Location</th>
               <th>Current Status</th>
@@ -25,6 +26,7 @@
               <th>Status</th>
               <th>Current status</th>
               <th>Manager</th> -->
+
               <th colspan="3"> Action </th>
             </tr>
           </thead>
@@ -34,10 +36,11 @@
             <% @employee_plans.try(:each) do |employee_plan| %>
               <tr>
                 <td><%= i = i+1 %></td>
-                <td><%= employee_plan.from_date%></td>
-                <td><%= employee_plan.to_date %></td>
-                <td><%= employee_plan.from_time %></td>
-                <td><%= employee_plan.to_time %></td>
+                <td><%= full_name(employee_plan.employee) %></td>
+                <td><%= employee_plan.from_date%> - <%= employee_plan.from_time %></td>
+                <td><%= employee_plan.to_date %> - <%= employee_plan.to_time %></td>
+                <!-- <td><%= employee_plan.from_time %></td>
+                <td><%= employee_plan.to_time %></td> -->
                 <td><%= employee_plan.meeting_with %></td>
                 <td><%= employee_plan.location %></td>
                 <td>
@@ -54,6 +57,7 @@
                       <small class="label label-info">Else</small>
                   <%end%>
                 </td>
+
                 <!-- <td><%#= employee_plan.meeting_agenda %></td> -->
                 <!-- <td><%#= employee_plan.lat %></td>
                 <td><%#= employee_plan.lng %></td>
@@ -108,10 +112,10 @@
   </div>
 </div>
 <div id="modal_employee_plan_detail" class="modal fade"></div>
+
 <div id="employee_feedback" class="modal fade"></div>
 <div id="employee_reason" class="modal fade"></div>
 <div id="employee_plan_detail_list" ></div>
-
 <script type="text/javascript">
 $(document).ready(function() {
     $('#example6').DataTable( {

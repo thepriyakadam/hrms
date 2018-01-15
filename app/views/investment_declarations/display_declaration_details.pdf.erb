@@ -1,0 +1,176 @@
+<style type="text/css">
+    th { text-align: left; }
+    tr { page-break-inside: avoid; }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;}
+</style>
+
+
+<div class="box-body">
+<table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">  
+      <tr>  
+        <th>
+            <center>
+              <h1>Investment Declaration Form for FY 2017-18</h1>
+            </center>
+        </th>
+      </tr>
+      </table>
+  
+<div class="box box-default">
+  <div class="box-header with-border">
+    <div class="row">
+      <div class="box-tools pull-right">  
+        <!-- <= link_to 'Edit', edit_entry_path(@entry),class: 'btn btn-sm btn-success fa fa-edit', remote:true %> -->
+       
+      </div>
+    </div>
+  </div>
+  <div class="box-body">
+    <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">  
+      <tr>
+        <th>Employee Name</th>
+        <td><%= full_name(@employee) %></td>
+        <th>Employee Code</th>
+        <td><%= @employee.try(:manual_employee_code) %></td>
+      </tr>
+
+      <tr>
+        <th>Gender</th>
+        <td><%= @employee.try(:gender) %></td>
+        <th>PAN No</th>
+        <td><%= @employee.try(:pan_no) %></td>
+      </tr>
+
+      <tr>
+        <th>Date of Birth</th>
+        <td><%= @employee.try(:date_of_birth) %></td>
+        <th>Date of Joining</th>
+        <td><%= @employee.try(:joining_detail).try(:joining_date) %></td>
+      </tr>
+    </table>
+    <br />
+    <br />
+    <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">  
+          <div>
+          
+          <tr>
+            <th>S.No.</th>
+            <th>Particulars</th>
+            <th>Remarks</th>
+            <th>Amount Declared by you in the Declaration form</th>
+            <th>Metro/Non Metro</th>
+          </tr>
+          <% i=0 %>
+          <%# if @housing_rents.investment_declaration_id != nil %>
+          <% @housing_rents.each do |rent| %>
+                <% i=i+1 %>
+            <tr>
+              <td><%= i %></td>
+              <td><%= rent.month %> <%= rent.year %></td>
+              <td></td>
+              <td><%= rent.accepted_rent %></td>
+              <% if rent.metro_city == true %>
+               <td><%= 'Metro City' %></td>
+              <% else %> 
+               <td><%= 'Non Metro City' %></td>
+              <% end %>
+              
+            </tr>
+            
+          <% end %>
+          <%# end %>
+          <tr>
+            <th></th>
+            <th>Total</th>
+            <td></td>
+            <td><%= @total_amt %></td>
+            <td></td>
+          </tr>
+       </div>    
+    </table>
+    <br />
+    <br />
+    <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+      <div>
+
+        <tr>
+          <th>S.No.</th>
+          <th>Particulars</th>
+          <th>Amount</th>
+          <th>Maximum Limit</th>
+        </tr>
+
+        <% i=0 %>
+        <% @total_amt1 = 0 %>
+        <% @section_code.each do |section_code, investment_declaration| %>
+        <% investment_declaration.each do |investment_declaration|%>
+        <% @total_amt1 = @total_amt1 + investment_declaration.amount %>
+        <% i=i+1 %>
+        <tr>
+            <td><%= i %></td>
+            <td><%= investment_declaration.investment_head.try(:description) %></td>
+            <td><%= investment_declaration.try(:amount) %></td>
+            <td></td>
+          </tr>
+           <% end %>
+         <% end %>
+
+         <tr>
+            <th></th>
+            <th>Total</th>
+            <td><%= @total_amt1 %></td>
+            <td></td>
+         </tr>
+
+      </div>
+    </table>  
+    <br />
+    <br />
+    <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+      <div>
+        <tr>
+          <th>S.No.</th>
+          <th>Particulars</th>
+          <th>Remarks</th>
+          <th>Amount</th>
+        </tr>
+
+         <% i=0 %>
+         <% @section_code.each do |section_code, investment_declaration| %>
+         <% if section_code == '24' %>
+             <% investment_declaration.each do |investment_declaration|%>
+              <% i=i+1 %>
+            <tr>
+              <td><%= i %></td>
+              <td><%= investment_declaration.investment_head.try(:description) %></td>
+              <td></td>
+              <td><%= investment_declaration.try(:amount) %></td>
+            </tr>  
+             <% end %>
+            <% end %>
+         <% end %>
+         <br />
+            <tr>
+              <th colspan="12">Declaration</th>
+            </tr>
+            
+            <tr>    
+              <td colspan="12">
+              I hereby declare that the information  given above is correct and true in all respects. I am also aware that the company will be considering the above details in utmost good faith based on the details provided by me and that am personally liable for any consequences arising out of errors, if any, in the above information.
+              I hereby confirm that my PAN  quoted above is correct.
+              </td>
+            </tr>
+      </div>
+    </table>
+
+
+
+
+
+
+
+  </div>
+  </div>
+  </div>

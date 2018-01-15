@@ -1,0 +1,19 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <center>Upload File</center>
+    </div>
+<%#binding.pry%>
+    <div class="modal-body">
+    <%#= form_for @investment_declaration, html: { multipart: true } do |f| %> 
+    <%# investment_declaration_id: params[:format] %>
+      <%#= f.file_field :document %>
+      <%#= f.submit "Upload file" %>
+    <%= form_tag document_upload_investment_declarations_path(params[:format]), multipart: true do %>
+	    <%= file_field_tag :document %>
+		<%= submit_tag %> 
+    <% end %>
+    </div>
+   </div>
+ </div>

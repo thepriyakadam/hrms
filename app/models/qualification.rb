@@ -63,9 +63,9 @@ class Qualification < ActiveRecord::Base
         year_id = @year.id
         end
         college = spreadsheet.cell(i,'H')
-        @university = University.find_by_name(spreadsheet.cell(i,'G'))
+        @university = University.find_by_name(spreadsheet.cell(i,'I'))
         if @university == nil
-          university_name = spreadsheet.cell(i,'G')
+          university_name = spreadsheet.cell(i,'J')
            @university_entry = University.create(name: university_name)
            university_id = @university_entry.id
         else

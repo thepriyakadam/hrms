@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  investment_declaration_id: 
+  property_name: MyString
+  property_address: MyText
+  date_of_possession: 2017-11-16
+  lender_name: MyString
+  lender_address: MyText
+  lender_pan_no: MyString
+  estimated_interest: 9.99
+  actual_interest: 9.99
+  total_interest: 9.99
+
+two:
+  investment_declaration_id: 
+  property_name: MyString
+  property_address: MyText
+  date_of_possession: 2017-11-16
+  lender_name: MyString
+  lender_address: MyText
+  lender_pan_no: MyString
+  estimated_interest: 9.99
+  actual_interest: 9.99
+  total_interest: 9.99

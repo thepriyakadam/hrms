@@ -1,0 +1,26 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Contact number</th>
+      <th>Role</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <% @survey_groups.each do |survey_group| %>
+      <tr>
+        <td><%= survey_group.name %></td>
+        <td><%= survey_group.contact %></td>
+        <td><%= survey_group.role %></td>
+        <td><%= survey_group.status ? "Active" : "Inactive"%></td>
+          <td>
+            <%= link_to '',  survey_group, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+            <%= link_to '', edit_survey_group_path(survey_group),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

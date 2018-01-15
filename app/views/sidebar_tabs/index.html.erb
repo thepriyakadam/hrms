@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Sidebar Tabs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sidebar_tabs.each do |sidebar_tab| %>
+      <tr>
+        <td><%= sidebar_tab.name %></td>
+        <td><%= sidebar_tab.status %></td>
+        <td><%= link_to 'Show', sidebar_tab %></td>
+        <td><%= link_to 'Edit', edit_sidebar_tab_path(sidebar_tab) %></td>
+        <td><%= link_to 'Destroy', sidebar_tab, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Sidebar tab', new_sidebar_tab_path %>

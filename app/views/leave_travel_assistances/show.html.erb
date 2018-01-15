@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Investment declaration:</strong>
+  <%= @leave_travel_assistance.investment_declaration %>
+</p>
+
+<p>
+  <strong>Journey from date:</strong>
+  <%= @leave_travel_assistance.journey_from_date %>
+</p>
+
+<p>
+  <strong>Journey to date:</strong>
+  <%= @leave_travel_assistance.journey_to_date %>
+</p>
+
+<p>
+  <strong>From location:</strong>
+  <%= @leave_travel_assistance.from_location %>
+</p>
+
+<p>
+  <strong>To location:</strong>
+  <%= @leave_travel_assistance.to_location %>
+</p>
+
+<p>
+  <strong>Person traveled:</strong>
+  <%= @leave_travel_assistance.person_traveled %>
+</p>
+
+<p>
+  <strong>Relationship:</strong>
+  <%= @leave_travel_assistance.relationship %>
+</p>
+
+<p>
+  <strong>Travel mode:</strong>
+  <%= @leave_travel_assistance.travel_mode %>
+</p>
+
+<p>
+  <strong>Estimated amt:</strong>
+  <%= @leave_travel_assistance.estimated_amt %>
+</p>
+
+<p>
+  <strong>Actual amt:</strong>
+  <%= @leave_travel_assistance.actual_amt %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @leave_travel_assistance.total %>
+</p>
+
+<%= link_to 'Edit', edit_leave_travel_assistance_path(@leave_travel_assistance) %> |
+<%= link_to 'Back', leave_travel_assistances_path %>

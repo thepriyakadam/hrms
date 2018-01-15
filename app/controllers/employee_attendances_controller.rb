@@ -1,4 +1,5 @@
 
+
 # require 'query_report/helper'  # need to require the helper
 class EmployeeAttendancesController < ApplicationController
   respond_to :html, :json  # to just in place edit and update
@@ -555,6 +556,7 @@ end
           end
           @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
         elsif location == ""
+
           if status == 'Active'
             @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
           elsif status == 'Inactive'
@@ -1337,6 +1339,7 @@ end
           @employees = Employee.where(company_id: company.to_i,company_location_id: location.to_i,department_id: department.to_i).pluck(:id)
         end 
         @employee_attendances = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ?", @date.strftime('%m/%Y')).where(employee_id: @employees).group(:employee_id)
+
       end
     elsif current_user.class == Member
       if current_user.role.name == 'GroupAdmin'|| current_user.role.name == 'GroupRecruiter' || current_user.role.name == 'GroupTimeManagement'
@@ -1350,6 +1353,7 @@ end
           end 
           @employee_attendances = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ?", @date.strftime('%m/%Y')).where(employee_id: @employees).group(:employee_id)
         elsif location == ""
+
           if status == 'Active'
             @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
           elsif status == 'Inactive'

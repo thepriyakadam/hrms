@@ -407,7 +407,6 @@ class LeaveCOffsController < ApplicationController
             b.from_date = @leave_c_off.c_off_date
             b.is_active = true
             b.to_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
-
             @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
 
             if @leave_c_off.c_off_type == "Full Day"
@@ -457,6 +456,7 @@ class LeaveCOffsController < ApplicationController
   end
 
   def admin_c_off_approval
+
     @first_level_request_lists = LeaveCOff.where(is_taken: false,status: false,is_expire: false).where("current_status = ? OR current_status = ?","FirstApproved" , "Pending")
     # @second_level_request_lists = LeaveCOff.where(is_taken: false,status: false,is_expire: false,current_status: "FirstApproved")
   end

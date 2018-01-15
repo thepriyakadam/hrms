@@ -1,0 +1,109 @@
+<%# title "Employees" %>
+<%# binding.pry %>
+<%# byebug %>
+<!--  < @employees = Employee.all %> -->
+<%# i =0 %>
+<%# @root_manager.each do |rm| %>
+    <%# if rm.id == rm.manager_id %>
+     <%#= i=i+1%>
+       <%# @second_manager = Employee.where(manager_id: rm.id) %>
+        <%# @second_manager.each do |sm| %>
+          <%# if rm.id == sm.manager_id %>
+           <!--  <div style="padding-left: 30px; color: green;">
+              <%#= sm.manual_employee_code %>
+              <%#= sm.first_name %>
+          
+            </div> -->
+
+          
+            <%# @sub = Employee.where(manager_id: sm.id) %>
+            <%# @sub.each do |s| %>
+              <%# if sm.id == s.manager_id %>
+               <!-- <th style="padding-left: 60px;">
+                <%#= s.manual_employee_code %>
+                <%#= s.first_name %>
+              </th> -->
+              <%# end %><!--end of sub if condition -->
+            <%# end %> <!--end of sub  -->
+         
+              <%# end %><!--end of second manager if condition -->
+        <%# end %> <!--end of second manager -->
+<%# end %><!--end of root manager -->
+
+<%# @root_manager = ReportingMaster.where(is_active: true) %>
+
+<%# @root_manager.each do |m2| %>
+  <%#= m2.employee_id %><!-- <br />
+    <%# @second_manager = Employee.where(manager_id: m2.id) %>
+    <%# @second_manager.each do |m1| %>
+      <div style="padding-left: 60px;">
+        <%#= m1.first_name %><br />
+      </div>
+      <%# manager = Employee.where(manager_id: m1.id) %>
+        <%# if manager.present? %>
+          <%# manager.each do |m3| %>
+            <%# emp = Employee.where(manager_id: m3.id) %>
+            <div style="padding-left: 90px;">
+              <%# if m1.id == m3.id%>
+              <%#else%>
+                <%#= m3.first_name %><br />
+                <%# hod = Employee.where(manager_id: m3.id) %>
+                <%# hod.each do |m5|%>
+                  <div style="padding-left: 100px;">
+                    <%#= m5.first_name %><br />
+                  </div>
+                <%# end %> <!- end of hod m5 -->
+              <%#end%> <!-- end of if -->
+            <!-- </div>
+            <%# if emp.present? %>
+              <%# emp.each do |m4|%>
+              <div style="padding-left: 120px;">
+                <%#= m4.first_name %><br />
+                
+              </div> --> 
+            <%# end %> <!-- end of emp m4 -->
+          <%# end %>   <!-- end of if emp -->
+          <%# end %>     <!-- end of manager m3 -->
+        <%# end %> <!-- end of if manager m3 -->
+    <%# end %> <!-- end of second manager m1 -->
+<%# end %> <!-- end of root manager m2 -->
+  
+<%# title "Employees" %>
+<%# binding.pry %>
+<%# byebug %>
+<% @employees = Employee.all %>
+  <% @root_manager.each do |rm| %>
+    <%# if rm.id == rm.manager_id %>
+      <div style="color: blue;">
+      <% if rm.employee.id == rm.employee.id %>
+
+      <% else %>
+        <%= rm.employee.manual_employee_code %>
+        <%= rm.employee.first_name %>
+      <% end %>  
+      </div>
+        <% @second_manager.each do |sm| %>
+          <% if rm.employee.id == sm.manager_id %>
+            <div style="padding-left: 30px; color: green;">
+              <%= sm.manual_employee_code %>
+              <%= sm.first_name %>
+            </div>
+            
+            <% @sub.each do |s| %>
+              <% if sm.id == s.manager_id %>
+                <div style="padding-left: 60px;">
+                  <%= s.manual_employee_code %>
+                  <%= s.first_name %>
+                </div>
+              <% end %>
+            <% end %> 
+
+          <% end %>
+        <% end %> 
+
+    <%# end %>
+  <% end %>
+      
+
+      
+

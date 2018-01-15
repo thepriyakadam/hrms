@@ -9,6 +9,7 @@ gem 'mysql2', '~> 0.3.18'
 
 # gem "rack-timeout", require:"rack/timeout/base"
 
+
 gem 'tiny_tds'
 gem 'activerecord-sqlserver-adapter'
 gem 'ruby-odbc'
@@ -65,6 +66,9 @@ gem 'thin', '~> 1.6', '>= 1.6.4'
 
 gem 'bundler'
 
+gem 'delayed_job_active_record'
+gem "daemons"
+
 # for pdf generation
 gem 'prawn', '~> 1.3.0'
 # for pdf generation
@@ -81,7 +85,7 @@ gem 'selenium-webdriver', '~> 3.0', '>= 3.0.5'
 gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
 
 #inline edit
-gem 'best_in_place', github: 'bernat/best_in_place'
+gem 'best_in_place', '~> 3.0.1'
 
 gem 'bcrypt-ruby', '~> 3.0.0', :require => 'bcrypt'
 gem 'bcrypt'
@@ -140,6 +144,7 @@ gem 'protokoll'
 # gem 'country_state_select', '~> 2.0.0'
 # gem 'countries'
 gem 'city-state'
+
 
  # gem 'rmagick', '~> 2.15.4'
 

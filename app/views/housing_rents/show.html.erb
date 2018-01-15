@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Investment declaration:</strong>
+  <%= @housing_rent.investment_declaration %>
+</p>
+
+<p>
+  <strong>Metro city:</strong>
+  <%= @housing_rent.metro_city %>
+</p>
+
+<p>
+  <strong>Estimated rent:</strong>
+  <%= @housing_rent.estimated_rent %>
+</p>
+
+<p>
+  <strong>Actual rent:</strong>
+  <%= @housing_rent.actual_rent %>
+</p>
+
+<p>
+  <strong>Accepted rent:</strong>
+  <%= @housing_rent.accepted_rent %>
+</p>
+
+<p>
+  <strong>Rejected rent:</strong>
+  <%= @housing_rent.rejected_rent %>
+</p>
+
+<p>
+  <strong>Landlord name:</strong>
+  <%= @housing_rent.landlord_name %>
+</p>
+
+<p>
+  <strong>Landlord pan no:</strong>
+  <%= @housing_rent.landlord_pan_no %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @housing_rent.address %>
+</p>
+
+<%= link_to 'Edit', edit_housing_rent_path(@housing_rent) %> |
+<%= link_to 'Back', housing_rents_path %>

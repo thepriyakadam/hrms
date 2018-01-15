@@ -5,6 +5,7 @@ class EmployeePlansController < ApplicationController
   # GET /employee_plans.json
   def index
     # @employee_plan = EmployeePlan.new
+
     @employee_plans = EmployeePlan.where(employee_id: current_user.employee_id)
   end
 
@@ -47,7 +48,7 @@ class EmployeePlansController < ApplicationController
     session[:active_tab] ="ManagerSelfService"
   end
 
-  def ajax_employee_plan_details
+def ajax_employee_plan_details
     @employee_plans = EmployeePlan.find(params[:id])
   end
 
@@ -160,6 +161,7 @@ class EmployeePlansController < ApplicationController
       # end
     end
   end
+
 
   def meeting_plan_approval
     @employee_plan = EmployeePlan.where(current_status: "Pending", manager_id: current_user.employee_id)

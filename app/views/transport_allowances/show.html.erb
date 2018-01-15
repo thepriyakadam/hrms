@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @transport_allowance.employee %>
+</p>
+
+<p>
+  <strong>Option:</strong>
+  <%= @transport_allowance.option %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @transport_allowance.amount %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @transport_allowance.status %>
+</p>
+
+<%= link_to 'Edit', edit_transport_allowance_path(@transport_allowance) %> |
+<%= link_to 'Back', transport_allowances_path %>

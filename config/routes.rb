@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+
+  resources :transport_allowances
   resources :events
   resources :resource_pool_masters
   resources :service_masters
@@ -21,6 +23,36 @@ Rails.application.routes.draw do
       get :policy_details_modal
     end
   end
+
+  resources :medicle_reimbursements do
+    collection do
+      get :medicle_reimbursements_modal
+    end
+  end  
+
+  resources :income_loss_house_properties do
+    collection do
+      get :income_loss_house_property_modal
+    end
+  end
+  
+  resources :interest_on_housing_loans do
+    collection do
+      get :houseloan_interest_modal
+    end
+  end     
+
+  resources :housing_rents do
+    collection do
+      get :housing_rent_modal
+    end  
+  end  
+
+  resources :leave_travel_assistances do
+    collection do
+      get :leave_travel_assistance_modal
+    end
+  end    
   
   resources :employee_plans do
     collection do
@@ -61,12 +93,11 @@ Rails.application.routes.draw do
   end
   resources :frequest_questions do
     collection do
+      get :frequest_question_master
       get :frequest_question_modal
       get :list_of_faq
       get :import_xl
       post :import
-      get :frequest_question_master
-      post :frequest_question_master
     end
   end
   resources :target_companies do
@@ -75,6 +106,13 @@ Rails.application.routes.draw do
       post :target_company_master
       get :import_xl
       post :import
+    end
+   end
+    
+  resources :daily_attendances do 
+    collection do
+      get :attendance
+      get :calculate
     end
   end
   resources :leave_transfers do
@@ -146,18 +184,17 @@ Rails.application.routes.draw do
   end
   resources :thoughts do
     collection do
+      get :thought_master
       get :import_xl
       post :import
-      get :thought_master
-      post :thought_master
     end
   end
   resources :candidate_interview_schedules
   resources :interview_type_masters
-  resources :interview_types 
+  # resources :interview_types 
   resources :candidate_forms
   resources :vacancy_request_statuses
-  resources :interview_types
+  # resources :interview_types
   resources :vacancy_requests do
     collection do
       get :cancel
@@ -254,6 +291,7 @@ Rails.application.routes.draw do
       post :print_visitor_report
       get :print_visitor_report
       get :visitor_list
+
     end
   end
 
@@ -705,8 +743,28 @@ end
       get :show_employee_declaration
       post :update_employee_declaration
       get :policy_details_modal
+      post :policy_details_modal
       post :document_upload
       get :download_document
+      get :show_declaration_details
+      get :show_employee_declaration
+      get :display_declaration_details
+      get :upload_file_modal
+      get :add_amount_modal
+      post :show_policy_details
+      get :medicle_reimbursement_modal
+      post :show_medicle_reimbursement_details
+      get :leave_travel_assistance_modal
+      get :housing_rent_modal
+      post :show_housing_rent_details
+      get :houseloan_interest_modal
+      post :show_housingloan_details
+      get :income_loss_house_property_modal
+      post :show_income_loss_house_property_details
+      get :update_amount
+      post :update_amount
+      get :houseloan_interest_modal
+      get :approve_employee_declaration
     end
   end
   resources :investment_heads
@@ -757,18 +815,16 @@ end
   end
   resources :performance_calendars do
     collection do
-      get :is_confirm
       get :performance_calendar
-      post :performance_calendar
+      get :is_confirm
       get :import_xl
       post :import
     end
   end
   resources :performance_activities do
     collection do
-      get :is_confirm
       get :performance_activity
-      post :performance_activity
+      get :is_confirm
       get :import_xl
       post :import
     end
@@ -1223,6 +1279,8 @@ end
       get :is_confirm
       get :leaving_reason_master
       post :leaving_reason_master
+      get :import_xl
+      post :import
     end
   end
   resources :training_approvals
@@ -1436,6 +1494,7 @@ end
       post :asset_type_master
       get :import_xl
       post :import
+
     end
   end
   resources :employee_nominations do
@@ -2042,6 +2101,7 @@ end
       post :dynamic_report
       get :modal
       get :import_food_deduction
+      get :import_deduction
       post :import_deduction
     end
   end
@@ -2328,7 +2388,9 @@ end
       post :show_datewise_workingday
       get :show_datewise_workingday
       get :import_working_day
+
       # post :import_working_day
+
       post :import_day
     end
   end
@@ -2477,24 +2539,14 @@ end
       post :import
     end
   end
-  resources :universities do
-    collection do
-      get :import_xl
-      post :import
-    end
-  end
-  resources :degree_streams do
-    collection do
-     get :import_xl
-     post :import
-    end
-  end
+  resources :universities
+  resources :degree_streams
   resources :degree_types do
     collection do
-  get :qualification_level_master
-  post :qualification_level_master
-  get :import_xl
-  post :import
+      get :qualification_level_master
+      post :qualification_level_master
+      get :import_xl
+      post :import
   end
 end
   resources :districts do
@@ -2680,7 +2732,7 @@ end
       post :import
       get :modal
       post :update_qualification
-      get :qualification_modal
+      get :qualification_modal 
      end
    end
   resources :families do
@@ -2900,8 +2952,6 @@ end
       get :created_user
       patch :update_form
       get :hrms_data_sheet
-      get :assigned_user
-      post :assigned_user
       # get "downloads/xls/:id" => "downloads#xls", :as => :download_xls
 
       # get :show

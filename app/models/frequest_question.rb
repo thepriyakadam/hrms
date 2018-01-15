@@ -15,7 +15,12 @@ class FrequestQuestion < ActiveRecord::Base
           status = false
         end
 
-        @frequest_question = FrequestQuestion.create(code: code,question: question,answer: answer,status: status)
+        @frequest_question = FrequestQuestion.find_by(question: question)
+        if @company == nil
+          @frequest_question = FrequestQuestion.create(code: code,question: question,answer: answer,status: status)
+        else
+          @frequest_question.update(code: code,question: question,answer: answer,status: status)  
+        end  
       end
     end
 

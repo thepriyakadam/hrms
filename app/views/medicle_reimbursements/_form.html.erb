@@ -1,0 +1,45 @@
+<%= form_for(@medicle_reimbursement) do |f| %>
+  <% if @medicle_reimbursement.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@medicle_reimbursement.errors.count, "error") %> prohibited this medicle_reimbursement from being saved:</h2>
+
+      <ul>
+      <% @medicle_reimbursement.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :investment_declaration_id %><br>
+    <%= f.text_field :investment_declaration_id %>
+  </div>
+  <div class="field">
+    <%= f.label :bill_no %><br>
+    <%= f.text_field :bill_no %>
+  </div>
+  <div class="field">
+    <%= f.label :bill_date %><br>
+    <%= f.date_select :bill_date %>
+  </div>
+  <div class="field">
+    <%= f.label :name_on_invoice %><br>
+    <%= f.text_field :name_on_invoice %>
+  </div>
+  <div class="field">
+    <%= f.label :estimated_amt %><br>
+    <%= f.text_field :estimated_amt %>
+  </div>
+  <div class="field">
+    <%= f.label :actual_amt %><br>
+    <%= f.text_field :actual_amt %>
+  </div>
+  <div class="field">
+    <%= f.label :toatal_amt %><br>
+    <%= f.text_field :toatal_amt %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -10,7 +10,7 @@
         <%= f.text_field :name, label: 'Name', placeholder: 'Name' %>
       </div>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
       <div class="form-group required">
         <%= f.text_area :description, label:'Description'%>
       </div>
@@ -20,11 +20,12 @@
         <%= f.check_box :status, label:'Status' %>
       </div>
     </div>
-    <br />
+  </div>
+  <div class="row">
     <div class="col-sm-3">
       <div class="actions" style="padding-top: 20px;">
         <%= f.submit 'Create',class: "btn btn-primary btn-sm"%>
       </div>
     </div>
-  </div>
+ </div>
 <% end %>

@@ -3,6 +3,12 @@ Rails.application.routes.draw do
   resources :events
   resources :resource_pool_masters
   resources :service_masters
+  resources :daily_attendances do 
+    collection do
+      get :attendance
+      get :calculate
+    end
+  end
 
   resources :daily_attendances do 
     collection do
@@ -3044,5 +3050,6 @@ end
     get 'user_auths/employee_wise_attendance' => 'user_auths#employee_wise_attendance', defaults:{format: 'json'}
     get 'user_auths/date_wise_location_history' => 'user_auths#date_wise_location_history', defaults:{format: 'json'}
     get 'user_auths/leave_coff' => 'user_auths#leave_coff', defaults:{format: 'json'}
+     get 'user_auths/all_plan_list' => 'user_auths#all_plan_list', defaults:{format: 'json'}
   end
 end

@@ -1,6 +1,6 @@
 class AssignedAssetsController < ApplicationController
   before_action :set_assigned_asset, only: [:show, :edit, :update, :destroy]
-
+ load_and_authorize_resource
   # GET /assigned_assets
   # GET /assigned_assets.json
   def index

@@ -52,9 +52,12 @@ class Ability
         can :manage, [TravelRequest, DailyBillDetail]
         can :manage, [OnDutyRequest, ParticularOdRecord]
       elsif user.role.name == 'Employee'
-        can :read, Employee, id: user.employee_id
-        can :manage, [JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family,Award,Certification], employee_id: user.employee_id
-        cannot [:destroy,:update,:create], [Certification,JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family]
+
+        can :manage, Employee, id: user.employee_id
+        # can :read, JoiningDetail, employee_id: user.employee_id
+        cannot [:destroy,:update,:create],Employee
+         can :manage, [JoiningDetail, Qualification, Experience, Skillset, EmployeePhysical, Certification,Family,Award,AssignedAsset,EmployeeDocument], employee_id: user.employee_id
+        cannot [:destroy,:update,:create], [JoiningDetail, Qualification, Experience, Skillset, EmployeePhysical, Certification,Family,Award,AssignedAsset,EmployeeDocument]
         can :read, [EmployeeTemplate, EmployeeSalaryTemplate]
         can :manage, EmployeeLeavRequest, employee_id: user.employee_id
         can :read, AdvanceSalary, employee_id: user.employee_id

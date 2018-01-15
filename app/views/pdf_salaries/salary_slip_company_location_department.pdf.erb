@@ -23,41 +23,33 @@
            <center><strong><%= @employee.company_location.company.try(:description) %></strong><br> <%= @employee.company_location.try(:address) %> - <%= @employee.company_location.try(:name) %></center>
           </td>           
         </tr>
-         <tr>
-         <th>Employee Detail</th>
-         <th>Working Day</th>
-         <th>Leave Details</th>
-         <th>Slip Information</th>
-         </tr>
      </thead>
      <tbody>
         <tr>
        <td>
-       <strong> ID : </strong> <%= @employee.manual_employee_code%><br><br> 
-       <strong> Name : </strong> <%= full_name(@employee) %><br><br> 
-       <strong> Contact No : </strong> <%= @employee.try(:contact_no)%><br><br> 
-       <strong> Designation : </strong> <%= @employee.joining_detail.try(:employee_designation).try(:name) %><br><br>
-       <strong> Department : </strong> <%= @slip_information.try(:department).try(:name) %><br><br>
-       <strong> Unit : </strong> <%= @slip_information.try(:cost_center).try(:name)%><br><br>
+      <strong> Employee Code :</strong> <%= @employee.manual_employee_code%> <br><br>
+      <strong> Name :</strong> <%= full_name(@employee) %> <br><br>
+      <strong> Designation :</strong> <%= @employee.joining_detail.try(:employee_designation).name %> <br><br>
+      <strong> Department : </strong><%= @employee.department.try(:name) %> <br><br>
+      <strong> Date Of Joining : </strong><%= @employee.joining_detail.try(:joining_date) %> <br><br>
+      
        </td>
+      
        <td>
-       <strong> Present Day : </strong> <%= @working_day.try(:present_day) %> <br><br> 
-       <strong> Holiday : </strong> <%= @working_day.try(:holiday_in_month) %><br><br> 
-       <strong> Week Off : </strong> <%= @working_day.try(:week_off_day) %><br><br> 
-       <strong> Absent Day : </strong> <%= @working_day.try(:absent_day) %><br><br> 
-       <strong> Payable Day : </strong><%= @working_day.try(:payable_day) %><br><br>
-       </td>
-       <td>
-        <% @leave_details.each do |ld| %>
-             <strong> <%= ld.leav_category.name %>  - Leave: </strong> <%= ld.no_of_leave %> - <strong> Balance: </strong> <%= ld.balance %><br><br>
-        <% end %>
-        </td>
-       <td>
-       <strong> Salary Slip : <%= @working_day.try(:month_name) %> - <%= @working_day.try(:year) %> <br><br>
+      
        <strong> UAN No : </strong> <%= @slip_information.try(:uan_no) %><br><br>
        <strong> PF No :   </strong><%= @slip_information.try(:pf_no) %><br><br>
-       <strong> ESIC No : </strong> <%= @slip_information.try(:esic_no) %><br><br>
+      <strong> PAN No  : </strong> <%= @salaryslip.try(:pan_no) %><br><br> 
+      <strong> Account No. :</strong><%= @employee.try(:employee_bank_detail).try(:account_no) %>
        </td>
+        <td>
+        <% @leave_details.each do |ld| %>
+         <strong> Salary Slip :</strong> <%= @working_day.try(:month_name) %> - <%= @working_day.try(:year) %> <br><br>
+             <strong> <%= ld.leav_category.name %>  - Leave: </strong> <%= ld.no_of_leave %> - <strong> Balance: </strong> <%= ld.balance %><br><br>
+        <% end %>
+         <strong> Days in Month : </strong><%= @working_day.try(:day_in_month) %> <br><br> 
+      <strong> Payble Days : </strong><%= @working_day.try(:payable_day) %><br><br>
+        </td>
        </tr>
 
          

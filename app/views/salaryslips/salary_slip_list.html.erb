@@ -6,6 +6,8 @@
     <table id="example6" class="table table-bordered table-hover">
     <thead>
       <tr>
+      <th>ID</th>
+      <th>Employee</th>
       <th>Month</th>
       <th>Year</th>
       <th>Action</th>
@@ -15,12 +17,14 @@
   <tbody>
     <% @salray_slips.each do |salary| %>
       <tr>
+        <td><%= salary.employee.manual_employee_code %></td>
+        <td><%= full_name(salary.employee)%></td>
         <td><%= salary.month %></td>
         <td><%= salary.year %></td>
         <td>
-        <%=  link_to 'Formate 1', show_salaryslip_formate_3_salaryslips_path(salary), class: 'btn btn-primary fa fa-show' %> 
-        <%= link_to 'Formate 2', show_salaryslip_salaryslips_path(salary), class: 'btn btn-primary fa fa-show' %>
-        <%= link_to 'Formate 3', show_salaryslip_rg_salaryslips_path(salary), class: 'btn btn-primary fa fa-show' %>
+       <!--  <=  link_to 'Formate 1', show_salaryslip_formate_3_salaryslips_path(salary), class: 'btn btn-primary fa fa-show' %> 
+        <= link_to 'Formate 2', show_salaryslip_salaryslips_path(salary), class: 'btn btn-primary fa fa-show' %> -->
+        <%= link_to 'Salary Slip', show_salaryslip_rg_salaryslips_path(salary), class: 'btn btn-primary fa fa-show' %>
 
         </td>
         </tr>

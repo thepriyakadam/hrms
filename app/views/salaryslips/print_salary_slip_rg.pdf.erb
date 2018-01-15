@@ -26,28 +26,35 @@ div.nobreak{ page-break-inside: avoid;
         <center><strong>SALARY SLIP</strong></center>
       </td>           
     </tr>
-    <tr>
+   
+      <tr>
       <td>
-      <strong> Employee ID :</strong> <%= @employee.manual_employee_code%> <br><br>
-      <strong> Employee Name : </strong><%= full_name(@employee) %> <br><br>
-      <strong> Designation : </strong><%= @employee.joining_detail.try(:employee_designation).name %> <br><br>
-      <strong> Department :</strong> <%= @employee.department.try(:name) %> <br><br>
+      <strong> Employee Code :</strong> <%= @employee.manual_employee_code%> <br><br>
+      <strong> Name :</strong> <%= full_name(@employee) %> <br><br>
+      <strong> Designation :</strong> <%= @employee.joining_detail.try(:employee_designation).name %> <br><br>
+      <strong> Department : </strong><%= @employee.department.try(:name) %> <br><br>
+      <strong> Date Of Joining : </strong><%= @employee.joining_detail.try(:joining_date) %> <br><br>
       </td>
+
       <td>
-      <strong> UAN No. : </strong><%= @employee.joining_detail.try(:employee_uan_no) %><br><br> 
+      <strong> UAN No. :</strong> <%= @employee.joining_detail.try(:employee_uan_no) %><br><br> 
       <strong> PF No. :</strong> <%= @employee.joining_detail.try(:employee_pf_no) %><br><br>
-      <strong> PAN No  :</strong> <%= @salaryslip.employee.pan_no %><br><br> 
+      <strong> PAN No  : </strong> <%= @salaryslip.employee.pan_no %><br><br> 
       <strong> Account No. :</strong><%= @employee.try(:employee_bank_detail).try(:account_no) %><br><br> 
       </td>
       <td>
-      <strong> Location :</strong> <%= @employee.company_location.try(:name) %>  <br><br>
-      <strong> Pay Month :</strong>  <%= @salaryslip.month%> - <%= @salaryslip.year%><br><br>
-      <strong> Working Days : </strong><%= @working_day.try(:day_in_month) %> <br><br> 
-      <strong> Paid Days :</strong> <%= @working_day.try(:payable_day) %><br><br> 
+     
+      <strong> Pay Month : </strong> <%= @salaryslip.month%> - <%= @salaryslip.year%><br><br>
+       <% @leave_details.each do |ld| %>
+             <strong> <%= ld.leav_category.name %>  - Leave: </strong> <%= ld.no_of_leave %> - <strong> Balance: </strong> <%= ld.balance %><br><br>
+        <% end %>
+      <strong> Days in Month : </strong><%= @working_day.try(:day_in_month) %> <br><br> 
+      <strong> Payble Days : </strong><%= @working_day.try(:payable_day) %><br><br> 
+      
       </td>   
     </tr>
    
-     <tr>
+    <!--  <tr>
       <th>Gross Salary : <%= @salaryslip.calculated_gross_salary.round %>
     </th>   
  
@@ -57,7 +64,7 @@ div.nobreak{ page-break-inside: avoid;
       <th>Net Salary :  <%= @salaryslip.calculated_net_salary.round %>
       </th>   
     </tr>
-
+ -->
   </thead>
 </table>
 

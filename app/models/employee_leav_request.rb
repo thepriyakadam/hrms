@@ -223,8 +223,8 @@ class EmployeeLeavRequest < ActiveRecord::Base
             end
           end
         end
-      end
-    end #do
+      end #do
+    end #if
   end
 
   def self.filter_records(current_user)

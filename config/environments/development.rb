@@ -194,7 +194,6 @@
   #  openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
   #  # openssl_verify_mode: 'none'
   # }
-
   config.action_mailer.default_url_options = { host: 'https://webmail.spanpump.com/', port: 443 }
   # config.domain = 'lvh.me'
   # config.action_mailer.perform_deliveries = true,
@@ -210,6 +209,7 @@
   openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
    # openssl_verify_mode: 'none'
   }
+
 
 # config.action_mailer.delivery_method = :smtp
 

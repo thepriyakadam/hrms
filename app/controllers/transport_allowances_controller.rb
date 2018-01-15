@@ -5,6 +5,9 @@ class TransportAllowancesController < ApplicationController
   # GET /transport_allowances.json
   def index
     @transport_allowances = TransportAllowance.all
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="PayrollSetup"
+    session[:active_tab2] ="PeriodicComponents"
   end
 
   # GET /transport_allowances/1

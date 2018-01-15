@@ -1076,6 +1076,8 @@ end
       get :show_attribute
       get :show_goal_modal
       get :show_attribute_modal
+      get :import_xl
+      post :import
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -2340,6 +2342,7 @@ end
       post :import_day
       get :datewise_total_workingday
       post :show_total_workingday
+      get :show_total_workingday
     end
   end
 

@@ -675,7 +675,20 @@ class WorkingdaysController < ApplicationController
     to = params[:employee][:to]
     @from = from.to_date
     @to = to.to_date
-    @workingdays = Workingday.where(from: @from,to: @to)
+    @workingdays = Workingday.where(date: @from..@to).group(:employee_id)
+
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'workingdays/total_workingday.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'workingday',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'workingdays/total_workingday.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
+    end
   end
 
   def import_working_day

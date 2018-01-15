@@ -2,7 +2,7 @@
   <div class="box-header">
     <h3 class="box-title">Total Working Day</h3>
  <div class="box-body">
-  <%= bootstrap_form_for(:employee, url: { action: 'show_total_workingday'},html: {id: "employee"}) do |f| %>
+  <%= bootstrap_form_for(:employee, url: { action: 'show_total_workingday'},html: {id: "employee"},remote: true) do |f| %>
      <div class="row">
         <div class="col-sm-2">
           <label>From </label>
@@ -32,6 +32,15 @@
         <div class="col-sm-2" style="padding-top:20px;">
           <%= f.submit "Show Workingday",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %>
         </div>
+
+        <div class="ajax-progress"></div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div id="total_workingday"></div>    
+        </div>
+      </div>
+
+
       </div>
     <% end %>
     </div>

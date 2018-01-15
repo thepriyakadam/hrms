@@ -1,0 +1,96 @@
+
+  <div class="box-body">
+    <table id="example5" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr><td colspan="13"><center>Working Days : <%= @from %> - <%= @to %></center></td></tr>
+        <tr>
+          <th>ID</th>
+          <th>Employee</th>
+          <th>Payable Day</th>
+          <th>Present Day</th>
+          <th>Absent Day</th>
+          <th>Holiday</th>
+          <th>Week Off</th>
+          <th>OD Day</th>
+        </tr>
+      </thead>
+
+      <tbody>
+         <% @workingdays.each do |workingday| %>
+          <tr>
+            <td><%= workingday.employee.try(:manual_employee_code) %></td>
+            <td><%= full_name(workingday.employee) %></td>
+            <td>
+                <% payable = 0 %>
+                <% @workingday = Workingday.where(date: @from..@to,employee_id: workingday.employee_id) %>
+                <% @workingday.each do |w| %>
+                  <% payable =  payable + w.payable_day %>
+                  <% payable %>
+                <% end %>
+              <%= payable %>
+            </td>
+            <td>
+              <% present = 0 %>
+              <% @workingday = Workingday.where(date: @from..@to,employee_id: workingday.employee_id) %>
+                <% @workingday.each do |w| %>
+                  <% present =  present + w.present_day %>
+                  <% present %>
+                <% end %>
+              <%= present %>
+            </td>
+            <td>
+              <% absent = 0 %>
+              <% @workingday = Workingday.where(date: @from..@to,employee_id: workingday.employee_id) %>
+                <% @workingday.each do |w| %>
+                  <% absent =  absent + w.absent_day %>
+                  <% absent %>
+                <% end %>
+              <%= absent %>
+            </td>
+            <td>
+              <% holiday = 0 %>
+              <% @workingday = Workingday.where(date: @from..@to,employee_id: workingday.employee_id) %>
+                <% @workingday.each do |w| %>
+                  <% holiday =  holiday + w.holiday_in_month %>
+                  <% holiday %>
+                <% end %>
+              <%= holiday %>
+            </td>
+            <td>
+              <% week_off = 0 %>
+              <% @workingday = Workingday.where(date: @from..@to,employee_id: workingday.employee_id) %>
+                <% @workingday.each do |w| %>
+                  <% week_off =  week_off + w.week_off_day %>
+                  <% week_off %>
+                <% end %>
+              <%= week_off %>
+            </td>
+            <td>
+              <% od = 0 %>
+              <% @workingday = Workingday.where(date: @from..@to,employee_id: workingday.employee_id) %>
+                <% @workingday.each do |w| %>
+                  <% od =  od + w.od_day %>
+                  <% od %>
+                <% end %>
+              <%= od %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+      <%= link_to " Excel Report ",show_total_workingday_workingdays_path(:employee => {:from => params[:employee][:from], :to  => params[:employee][:to]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%= link_to " PDF Report",show_total_workingday_workingdays_path(:employee => {:from => params[:employee][:from],:to => params[:employee][:to]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+   <!--  <= link_to 'Back', datewise_total_workingday_workingdays_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %> -->
+  </div>
+</div>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example5').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true
+    } );
+} );
+</script>
+

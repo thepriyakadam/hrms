@@ -39,6 +39,24 @@ class GoalRatingsController < ApplicationController
     end
   end
 
+  def import_xl
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:emp_id])
+  end
+
+  def import
+    goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    employee = Employee.find(params[:emp_id])
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_goal_ratings_path
+      else
+        GoalRating.import(params[:file])
+        redirect_to new_goal_rating_path(emp_id: employee.id,id: goal_bunch.id), notice: "File imported."
+      end
+  end
+
   # POST /goal_ratings
   # POST /goal_ratings.json
   def create

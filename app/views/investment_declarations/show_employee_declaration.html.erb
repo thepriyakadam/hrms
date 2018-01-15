@@ -1,8 +1,6 @@
-
 <!-- <div class="box">
     <%#= link_to 'Investment Declaration',ajax_investment_declaration_investment_declarations_path(id: @investment_declaration),class: 'btn btn-sm btn-primary ', remote:true%>
     <%#= link_to 'Previous Income Details',ajax_investment_declaration_investment_declarations_path(id: @investment_declaration.try(:id)),class: 'btn btn-sm btn-primary ', remote:true%>
-
     <div id='info'>
     <%#= render 'investment_declaration'%>
     </div>
@@ -49,22 +47,22 @@
             </tr>
           </div>
           <div>
-          	<% @total = 0 %>
+            <% @total = 0 %>
             <% @section_code.each do |section_code, investment_declaration| %>
-           	
+            
               <tr>
-              	<th colspan="2">Section <%= section_code %></th>
-              	<% if section_code == '80C' %>
-              		<th colspan="10"><%= 'Maximum Limit Rs.1,50,000/-' %></th>
-              	<% elsif section_code == '80D' %>	
-              		<th colspan="10"><%= 'Maximum Limit Rs.25,000/-' %></th>
-              	<% elsif section_code == '24' %>	
-              		<th colspan="10"><%= 'Maximum Limit Rs.2,00,000/-' %></th>
-              	<% else %>	
-              		<th colspan="10"></th>
-              	<% end %>	
-              	
-              	</tr>
+                <th colspan="2">Section <%= section_code %></th>
+                <% if section_code == '80C' %>
+                  <th colspan="10"><%= 'Maximum Limit Rs.1,50,000/-' %></th>
+                <% elsif section_code == '80D' %> 
+                  <th colspan="10"><%= 'Maximum Limit Rs.25,000/-' %></th>
+                <% elsif section_code == '24' %>  
+                  <th colspan="10"><%= 'Maximum Limit Rs.2,00,000/-' %></th>
+                <% else %>  
+                  <th colspan="10"></th>
+                <% end %> 
+                
+                </tr>
               
                 <% investment_declaration.each do |investment_declaration|%>
                   <tr>
@@ -73,11 +71,11 @@
                         <td align="center">
                         <%= link_to '', upload_file_modal_investment_declarations_path(investment_declaration), class: 'fa-lg fa fa-paperclip', remote:true %>
                         <%#= form_tag document_upload_investment_declarations_path(investment_declaration), multipart: true do %>
-                        	<%#= file_field_tag :document %>
-                        	<!-- <span class="btn btn-large btn-warning btn-file">
-							+
-						    <%#= file_field_tag :document %>
-							</span>
+                          <%#= file_field_tag :document %>
+                          <!-- <span class="btn btn-large btn-warning btn-file">
+              +
+                <%#= file_field_tag :document %>
+              </span>
                             <%#= submit_tag 'Upload' %>
                       <%# end %>  -->
                         </td>    
@@ -86,12 +84,12 @@
                           <%= link_to '', investment_download_document_path(id: investment_declaration.id), class: 'btn btn-xs fa fa-download',target: "_blank" %>
                         </td>
                       <% end %>
-                      <% if investment_declaration.investment_head.description == "g. Conribution in unit-linked insurance plan" %>
+                      <% if investment_declaration.investment_head.description == "Life Insurance Premium" %>
                         <td>
                           <%= link_to '', policy_details_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-plus', remote:true %>
                           <%= link_to '', show_policy_details_investment_declarations_path(investment_declaration),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
                         </td>
-                        <% elsif investment_declaration.investment_head.description == "c. Life Insurance Premium" %>
+                        <% elsif investment_declaration.investment_head.description == "Unit Linked Insurance Policy (ULIP)" %>
                         <td>
                           <%= link_to '', policy_details_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-plus', remote:true %>
                           <%= link_to '', show_policy_details_investment_declarations_path(investment_declaration),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
@@ -132,10 +130,10 @@
                       <td colspan="2"><%= investment_declaration.rejected_amt %></td>
                       <td><%= investment_declaration.comment %></td>
                     </tr>
-		             <% @total = @total + investment_declaration.amount %>
-		                    </tr>
-		            <% end %>
-		            <% end %>
+                 <% @total = @total + investment_declaration.amount %>
+                        </tr>
+                <% end %>
+                <% end %>
                     <tr>
                       <th>Total Investment Amount Declared</th>
                       <td colspan="11"><%= @total %></td>
@@ -143,16 +141,16 @@
                   
                     
           </div>
-          			<tr>
-          			  <th colspan="12">Declaration</th>
-          			</tr>
-          			
-          			<tr>	  
-          			  <td colspan="12">
-          				I hereby declare that the information  given above is correct and true in all respects. I am also aware that the company will be considering the above details in utmost good faith based on the details provided by me and that am personally liable for any consequences arising out of errors, if any, in the above information.
-          				I hereby confirm that my PAN  quoted above is correct.
-          			  </td>
-          			</tr>
+                <tr>
+                  <th colspan="12">Declaration</th>
+                </tr>
+                
+                <tr>    
+                  <td colspan="12">
+                  I hereby declare that the information  given above is correct and true in all respects. I am also aware that the company will be considering the above details in utmost good faith based on the details provided by me and that am personally liable for any consequences arising out of errors, if any, in the above information.
+                  I hereby confirm that my PAN  quoted above is correct.
+                  </td>
+                </tr>
         </table>
         </div>
       <div id="policy_details_modal" class="modal fade"></div>
@@ -183,7 +181,6 @@
     position: relative;
     overflow: hidden;
 }
-
 .btn-file input[type=file] {
     position: absolute;
     top: 0;

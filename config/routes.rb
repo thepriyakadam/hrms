@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
 
+  resources :transport_allowances
   resources :events
   resources :resource_pool_masters
   resources :service_masters
@@ -184,10 +185,10 @@ Rails.application.routes.draw do
   end
   resources :candidate_interview_schedules
   resources :interview_type_masters
-  resources :interview_types 
+  # resources :interview_types 
   resources :candidate_forms
   resources :vacancy_request_statuses
-  resources :interview_types
+  # resources :interview_types
   resources :vacancy_requests do
     collection do
       get :cancel
@@ -253,6 +254,8 @@ Rails.application.routes.draw do
     collection do
       get :rembursment_master
       get :rembursment_master
+      get :import_xl
+      post :import
     end
   end
   resources :employee_jc_lists
@@ -1021,6 +1024,8 @@ end
       get :is_confirm
       get :leaving_reason_master
       post :leaving_reason_master
+      get :import_xl
+      post :import
     end
   end
   resources :training_records
@@ -2090,6 +2095,7 @@ end
       post :dynamic_report
       get :modal
       get :import_food_deduction
+      get :import_deduction
       post :import_deduction
     end
   end
@@ -2488,6 +2494,8 @@ end
       get :is_confirm
       get :qualification_level_master
       post :qualification_level_master
+      get :import_xl
+      post :import
     end
   end
   resources :districts do

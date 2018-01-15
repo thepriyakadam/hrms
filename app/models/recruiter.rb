@@ -11,7 +11,7 @@ class Recruiter < ActiveRecord::Base
         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
         if @employee == nil
         else
-        employee_id = @employee.id
+        employee_id = @employee
         status = spreadsheet.cell(i,'C')
         if status == "Yes" || status == "yes"
           status = true

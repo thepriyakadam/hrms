@@ -13,7 +13,7 @@
       <li><a href="/companies" title="Company details"><i class="fa fa-tags"></i> Companies </a></li>
       <li><a href="/company_locations" title="Company location details"><i class="fa fa-tags"></i> Locations </a></li>
       <li><a href="/departments/new" title="Company department details"><i class="fa fa-tags"></i> Departments </a></li>
-      <li><a href="/sub_departments/new" title="Company sub department details"><i class="fa fa-tags"></i> Sub Departments </a></li>
+      <!-- <li><a href="/sub_departments/new" title="Company sub department details"><i class="fa fa-tags"></i> Sub Departments </a></li> -->
       <li><a href="/cost_centers/new" title="Company Cost Center Details"><i class="fa fa-tags"></i> Cost Center </a></li>
     </ul>
   </li>
@@ -273,9 +273,10 @@
             <li><a href="/self_services/internal" title="For applying to internal vacancy"><i class="fa fa-tags"></i> IJP Opening </a></li>
             <li><a href="/goal_bunches/new" title="For setting , self goals"><i class="fa fa-tags"></i> Goal Setting </a></li>
             <li><a href="/goal_bunches/period_list_appraisee" title="For making the judgement about self goals"><i class="fa fa-tags"></i> Self Evaluation </a></li>
-            <li><a href="/self_services/investment_declaration" title="For creating investment declaration"><i class="fa fa-tags"> </i> Investment Declaration</a></li>
-            <li><a href="/investment_declarations/show_employee_declaration"><i class="fa fa-tags"> </i> Show Employee Declaration </a></li>
-            <li><a href="/investment_declarations/show_income_tax"><i class="fa fa-tags"> </i> Show Employee Declaration </a></li>
+            <!-- <li><a href="/self_services/investment_declaration" title="For creating investment declaration"><i class="fa fa-tags"> </i> Investment Declaration</a></li> -->
+            <li><a href="/investment_declarations/show_employee_declaration" title="For creating investment declaration"><i class="fa fa-tags"> </i> Investment Declaration</a></li>
+            <!-- <li><a href="/investment_declarations/show_employee_declaration"><i class="fa fa-tags"> </i> Show Employee Declaration </a></li>
+            <li><a href="/investment_declarations/show_income_tax"><i class="fa fa-tags"> </i> Show Employee Declaration </a></li> -->
             <li><a href="/self_services/employee_resignation" title="For initiating self resignation request"><i class="fa fa-tags"></i> Resignation Request </a></li>
             <li><a href="/self_services/resignation_history" title="For view the self resignation history"><i class="fa fa-tags"></i> Resignation History </a></li>
             <li><a href="/frequest_questions/list_of_faq" title="To view the list of frequently asked questions"><i class="fa fa-tags"></i> FAQs </a></li>
@@ -290,7 +291,7 @@
             <li><a href="/manager_self_services/request_approval_list" title="On duty approval and rejection"><i class="fa fa-thumbs-up"></i> On Duty Approval </a></li>
             <li><a href="/manager_self_services/leave_c_off" title="For approving the compensatory off which raise by employee"><i class="fa fa-thumbs-up"> </i> Comp. Off Approval </a></li>
             <li><a href="/employee_attendances/access_card_approval" title="For approving the access card"><i class="fa fa-tags"></i> ACF Approval </a></li>
-            <li><a href="/manager_self_services/subordinate_attendance" title="To view all attendance report by selecting date"><i class="fa fa-tags"></i> Attendance </a></li>
+           <!--  <li><a href="/manager_self_services/subordinate_attendance" title="To view all attendance report by selecting date"><i class="fa fa-tags"></i> Attendance </a></li> -->
             <li><a href="/manager_self_services/employee_attendance" title="To view the attendance report by selecting date and employee"><i class="fa fa-tags"></i> Attendance Employee Wise </a></li>
             <li><a href="/employee_attendances/manager_attendance_form"><i class="fa fa-tags"></i>Attendance </a></li>
             <li><a href="/employee_plans/arrange_meeting"><i class="fa fa-tags"></i> Arrange Meeting </a></li>
@@ -603,7 +604,7 @@
                       <li><a href="/monthly_expences/monthly_expence_report"><i class="fa fa-tags"> </i> Monthly Expences </a></li>
                       <li><a href="/salary_slip_ledgers/proff_tax_report"><i class="fa fa-tags"> </i> Proffesional Tax </a></li>
                       <!-- <li><a href="/reports/welfare_details/new"><i class="fa fa-tags"> </i>Well Faires</a></li> -->
-                      <li><a href="/salary_slip_ledgers/welfare_detail_report"><i class="fa fa-tags"> </i> Well Faire </a></li>
+                      <li><a href="/salary_slip_ledgers/welfare_detail_report"><i class="fa fa-tags"> </i> Welfare </a></li>
                       <!-- <li><a href="/reports/society_membership_details/new"><i class="fa fa-tags"> </i>Society Memberships</a></li> -->
                       <li><a href="/salary_slip_ledgers/soc_membership_report"><i class="fa fa-tags"> </i> Society Membership </a></li>
                       <!-- <li><a href="/reports/retention_money_details/new"><i class="fa fa-tags"> </i>Retention Moneys</a></li> -->
@@ -621,8 +622,10 @@
                   <li><a href="/investment_declarations/new"><i class="fa fa-tags"> </i> Investment Declaration </a></li>
                   <li><a href="/slabs/new"><i class="fa fa-tags"> </i> Slab </a></li>
                   <li><a href="/slabs/employee_list"><i class="fa fa-tags"> </i> Employee List </a></li>
-                  <li><a href="/manager_self_services/investment_declaration"><i class="fa fa-thumbs-up"> </i> Declaration Approval</a></li>
-                  <li><a href="/investment_declarations/employee_declaration"><i class="fa fa-thumbs-up"> </i> Employee Declaration </a></li>
+                 <!--  <li><a href="/manager_self_services/investment_declaration"><i class="fa fa-thumbs-up"> </i> Declaration Approval</a></li>
+                  <li><a href="/investment_declarations/employee_declaration"><i class="fa fa-thumbs-up"> </i> Employee Declaration </a></li> -->
+                  <li><a href="/investment_declarations/employee_declaration"><i class="fa fa-thumbs-up"> </i> Add Employee </a></li>
+                  <li><a href="/investment_declarations/approve_employee_declaration"><i class="fa fa-thumbs-up"> </i> Declaration Approval</a></li>
                 </ul>
             </li>
             <li id="EmployeeRembursment">
@@ -954,4 +957,4 @@
   document.getElementById("<%= session[:active_tab2] %>").classList.add("active");
   <%end%>
 </script>
-      <li><a href="/company_locations" title="Company location details"><i class="fa fa-tags"></i> Locations </a></li>
+      

@@ -21,6 +21,7 @@ class DegreeType < ActiveRecord::Base
         @degree = DegreeType.create(code: code,name: name,description: description)     
         else
           @employee.update(code: code,name: name,description: description)
+      end
     end
   end
 

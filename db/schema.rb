@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180110055516) do
+ActiveRecord::Schema.define(version: 20180112091459) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1352,16 +1352,28 @@ ActiveRecord::Schema.define(version: 20180110055516) do
     t.boolean  "status"
     t.string   "current_status",        limit: 255
     t.integer  "manager_id",            limit: 4
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
     t.float    "latitude",              limit: 24
     t.float    "longitude",             limit: 24
     t.integer  "plan_reason_master_id", limit: 4
     t.text     "feedback",              limit: 65535
     t.boolean  "confirm"
+    t.boolean  "plan_or_unplan"
+    t.decimal  "start_latitude",                      precision: 10
+    t.decimal  "end_latitude",                        precision: 10
+    t.decimal  "present_latitude",                    precision: 10
+    t.decimal  "start_longitude",                     precision: 10
+    t.decimal  "end_longitude",                       precision: 10
+    t.decimal  "present_longitude",                   precision: 10
+    t.string   "start_place",           limit: 255
+    t.string   "end_place",             limit: 255
+    t.string   "present_place",         limit: 255
+    t.integer  "listed_company_id",     limit: 4
   end
 
   add_index "employee_plans", ["employee_id"], name: "index_employee_plans_on_employee_id", using: :btree
+  add_index "employee_plans", ["listed_company_id"], name: "index_employee_plans_on_listed_company_id", using: :btree
   add_index "employee_plans", ["plan_reason_master_id"], name: "index_employee_plans_on_plan_reason_master_id", using: :btree
 
   create_table "employee_promotions", force: :cascade do |t|
@@ -2830,6 +2842,15 @@ ActiveRecord::Schema.define(version: 20180110055516) do
     t.boolean  "is_confirm"
   end
 
+  create_table "listed_companies", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "contact_no", limit: 255
+    t.string   "email",      limit: 255
+    t.text     "location",   limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
   create_table "loan_approvals", force: :cascade do |t|
     t.integer  "loan_request_id",    limit: 4
     t.integer  "membership_id",      limit: 4
@@ -2949,6 +2970,30 @@ ActiveRecord::Schema.define(version: 20180110055516) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "meeting_follow_ups", force: :cascade do |t|
+    t.integer  "employee_plan_id",   limit: 4
+    t.string   "contact_person",     limit: 255
+    t.string   "contact_no",         limit: 255
+    t.text     "follow_up_response", limit: 65535
+    t.date     "date"
+    t.time     "time"
+    t.date     "next_date"
+    t.time     "next_time"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
+
+  add_index "meeting_follow_ups", ["employee_plan_id"], name: "index_meeting_follow_ups_on_employee_plan_id", using: :btree
+
+  create_table "meeting_minutes", force: :cascade do |t|
+    t.integer  "employee_plan_id", limit: 4
+    t.text     "minutes",          limit: 65535
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "meeting_minutes", ["employee_plan_id"], name: "index_meeting_minutes_on_employee_plan_id", using: :btree
 
   create_table "members", force: :cascade do |t|
     t.string   "manual_member_code",     limit: 255
@@ -4781,6 +4826,7 @@ ActiveRecord::Schema.define(version: 20180110055516) do
   add_foreign_key "employee_leav_requests", "employee_leav_balances"
   add_foreign_key "employee_location_histories", "employees"
   add_foreign_key "employee_plans", "employees"
+  add_foreign_key "employee_plans", "listed_companies"
   add_foreign_key "employee_plans", "plan_reason_masters"
   add_foreign_key "employees", "sub_departments"
   add_foreign_key "exit_interviews", "employee_resignations"
@@ -4799,6 +4845,8 @@ ActiveRecord::Schema.define(version: 20180110055516) do
   add_foreign_key "loan_requests", "loan_types"
   add_foreign_key "loan_requests", "memberships"
   add_foreign_key "medicle_reimbursements", "investment_declarations"
+  add_foreign_key "meeting_follow_ups", "employee_plans"
+  add_foreign_key "meeting_minutes", "employee_plans"
   add_foreign_key "membership_balances", "memberships"
   add_foreign_key "membership_contributions", "memberships"
   add_foreign_key "memberships", "employees"

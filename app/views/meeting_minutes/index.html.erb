@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">New Meeting Minute</h3>
+    <div class="pull-right">
+      <%= link_to "New Company", new_meeting_minute_path, class: 'btn btn-sm btn-primary' %> 
+    </div>
+  </div>
+<!-- <h1>Listing Plan Reason Masters</h1> -->
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Sr.No.</th>
+          <th>Employee plan</th>
+          <th>Minutes</th>
+          <th colspan="3">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% i = 0 %>
+        <% @meeting_minutes.each do |meeting_minute| %>
+          <tr>
+            <td><%= i=i+1 %></td>
+            <td><%= meeting_minute.employee_plan %></td>
+            <td><%= meeting_minute.minutes %></td>
+            <td><%= link_to ' ', view_minutes_meeting_minutes_path(meeting_minute), remote: true, class: 'btn btn-xs btn-default fa fa-eye' %></td>
+            <td><%= link_to ' ', edit_meeting_minute_path(meeting_minute), class: 'btn btn-xs btn-success fa fa-edit' %></td>
+            <td><%= link_to ' ', meeting_minute, method: :delete, data: { confirm: 'Are you sure?' },  class: 'btn btn-xs btn-danger fa fa-trash' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+</div>
+<div id="view_minutes" class="modal fade"></div>

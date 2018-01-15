@@ -1,23 +1,23 @@
-<%= bootstrap_form_for(@plan_reason_master, html: {id: 'plan_reason_master' } ) do |f| %>
+<%= bootstrap_form_for(@listed_company, html: {id: 'listed_company' } ) do |f| %>
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :code, label:'Code', placeholder: 'Code' %>
+        <%= f.text_field :name, label:'Name', placeholder: 'Name' %>
       </div>
     </div>
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :name, label: 'Name', placeholder: 'Name' %>
+        <%= f.text_field :contact_no, label: 'Contact Number', placeholder: '0000000000' %>
       </div>
     </div>
-    <div class="col-sm-1">
+    <div class="col-sm-4">
       <div class="form-group required">
-        <%= f.check_box :status, label:'Status' %>
+        <%= f.text_field :email, label:'Email', placeholder: 'abc@example.com' %>
       </div>
     </div>
     <div class="col-sm-5">
       <div class="form-group required">
-        <%= f.text_area :description, label:'Description'%>
+        <%= f.text_area :location, label:'Location', placeholder: 'XYZ' %>
       </div>
     </div>
     <br />
@@ -31,33 +31,33 @@
 <% end %>
 
 <script>
-  $("#plan_reason_master").validate({
+  $("#listed_company").validate({
     rules: {
-      "plan_reason_master[code]":{
+      "listed_company[name]":{
         required: true,
       },
-      "plan_reason_master[name]":{
+      "listed_company[contact_no]":{
         required: true,
       },
-      "plan_reason_master[status]":{
+      "listed_company[email]":{
         required: true,
       },
-      "plan_reason_master[description]":{
+      "listed_company[location]":{
         required: true,
       }
     },
     messages: {
-      "plan_reason_master[code]":{
-        required: "Please Specify Code",
-      },
-       "plan_reason_master[name]":{
+      "listed_company[name]":{
         required: "Please Specify Name",
       },
-      "plan_reason_master[status]":{
-        required: "Please Specify Status",
+      "listed_company[contact_no]":{
+        required: "Please Specify Contact Number",
       },
-      "plan_reason_master[description]":{
-        required: "Please Specify Description",
+      "listed_company[email]":{
+        required: "Please Specify Email Address",
+      },
+      "listed_company[location]":{
+        required: "Please Specify Location",
       }
        },
     errorPlacement: function(error, element) {

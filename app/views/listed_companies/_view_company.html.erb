@@ -1,0 +1,36 @@
+<!-- Main content -->
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Listed Company </center></h4>
+    </div>
+    <div class="modal-body">
+      <table class="table table-bordered table-hover table-condensed">
+        <tbody>
+       	  <tr>
+            <th><strong>Name</strong></th>
+            <td><%= @listed_company.name %></td>
+          </tr>
+          <tr>
+              <th><strong>Contact no</strong></th>
+              <td><%= @listed_company.contact_no %></td>
+          </tr>
+          <tr>
+              <th><strong>Email</strong></th>
+              <td><%= @listed_company.email %></td>
+          </tr>
+          <tr>
+              <th><strong>Location</strong></th>
+              <td><%= @listed_company.location %></td>
+          </tr>
+      </tbody>
+	    </table> <br>
+	    <div align="center">
+	    <%#= link_to 'Approve', plan_approve_employee_plans_path(@employee_plan.id), data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-sm" %>
+   </div>
+    
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+
+<!-- <div id="myModal" class="modal fade"></div> -->

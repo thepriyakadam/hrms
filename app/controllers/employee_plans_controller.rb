@@ -22,6 +22,10 @@ class EmployeePlansController < ApplicationController
   def edit
   end
 
+  def minutes_form
+    @meeting_minute = MeetingMinute.new
+  end
+
   def create
     @employee_plan = EmployeePlan.all
     @employee_plan = @employee_plan.check_availability(current_user, params[:employee_plan][:from_date], params[:employee_plan][:to_date], params[:employee_plan][:from_time], params[:employee_plan][:to_time])
@@ -52,12 +56,12 @@ class EmployeePlansController < ApplicationController
   end
 
   def employee_wise_report
-    session[:active_tab] = "TravelManagemnt"
+    session[:active_tab] = "EmployeePlan"
     session[:active_tab1] = "travelrequestreports"
   end
 
   def gps_tracking
-    session[:active_tab] = "TravelManagemnt"
+    session[:active_tab] = "EmployeePlan"
     session[:active_tab1] = "travelrequestreports"
   end
 
@@ -142,8 +146,8 @@ class EmployeePlansController < ApplicationController
   end
 
   def manager_wise_report
-    session[:active_tab] = "TravelManagemnt"
-    session[:active_tab1] = "travelrequestreports"
+    session[:active_tab] = "EmployeePlan"
+    # session[:active_tab1] = "travelrequestreports"
   end
 
   def manager_report
@@ -172,6 +176,48 @@ class EmployeePlansController < ApplicationController
             layout: 'pdf.html',
             orientation: 'Landscape',
             template: 'employee_plans/print_manager_wise_report_pdf.pdf.erb',
+            show_as_html: params[:debug].present?,
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+      end
+    end
+  end
+
+  def company_wise_report
+    session[:active_tab] = "EmployeePlan"
+  end
+
+  def company_report
+    @emp_plan = EmployeePlan.all
+    from_date = params[:employee_plan] ? params[:employee_plan][:from_date] : params[:from_date]
+    to_date = params[:employee_plan] ? params[:employee_plan][:to_date] : params[:to_date]
+    listed_company = params[:employee_plan] ? params[:employee_plan][:listed_company_id] : params[:listed_company_id]
+    if from_date.present? && !to_date.present?
+      @emp_report = EmployeePlan.where("from_date >= ? and listed_company_id =?", from_date.to_date, listed_company)
+    end
+    if !from_date.present? && to_date.present?
+      @emp_report = EmployeePlan.where("to_time <= ? and listed_company_id =?", to_date.to_date, listed_company)
+    end
+    if from_date.present? && to_date.present?
+      @emp_report = EmployeePlan.where(from_date: from_date.to_date..to_date.to_date, listed_company_id: listed_company) 
+    end
+    if !from_date.present? && !to_date.present? && listed_company.present? 
+      @emp_report = EmployeePlan.where("listed_company_id =?", listed_company)
+    end
+    respond_to do |format|
+      format.js
+      format.xls {render template: 'employee_plans/print_company_wise_report_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'print_employee_wise_report_pdf',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'employee_plans/print_company_wise_report_pdf.pdf.erb',
             show_as_html: params[:debug].present?,
             :page_height      => 1000,
             :dpi              => '300',
@@ -233,7 +279,15 @@ class EmployeePlansController < ApplicationController
   end
 
   def employee_feedback
-    @employee_plan = EmployeePlan.find(params[:format])
+    emp_paln_id = params[:format]
+    @employee_plan = EmployeePlan.find(emp_paln_id)
+    @emp_minutes = MeetingMinute.where(employee_plan_id: emp_paln_id)
+  end
+
+  def start_meeting
+  end
+
+  def end_meeting
   end
 
   def feedback
@@ -285,6 +339,6 @@ class EmployeePlansController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_plan_params
-      params.require(:employee_plan).permit(:employee_id, :from_date, :to_date, :from_time, :to_time, :meeting_with, :location, :meeting_agenda, :lat, :lng, :confirm, :status, :current_status, :manager_id)
+      params.require(:employee_plan).permit(:employee_id, :plan_or_unplan, :listed_company_id, :from_date, :to_date, :from_time, :to_time, :meeting_with, :location, :meeting_agenda, :lat, :lng, :confirm, :status, :current_status, :manager_id)
     end
 end

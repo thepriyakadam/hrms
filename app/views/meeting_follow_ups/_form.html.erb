@@ -1,0 +1,49 @@
+<%= form_for(@meeting_follow_up) do |f| %>
+  <% if @meeting_follow_up.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@meeting_follow_up.errors.count, "error") %> prohibited this meeting_follow_up from being saved:</h2>
+
+      <ul>
+      <% @meeting_follow_up.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :employee_plan_id %><br>
+    <%= f.text_field :employee_plan_id %>
+  </div>
+  <div class="field">
+    <%= f.label :contact_person %><br>
+    <%= f.text_field :contact_person %>
+  </div>
+  <div class="field">
+    <%= f.label :contact_no %><br>
+    <%= f.text_field :contact_no %>
+  </div>
+  <div class="field">
+    <%= f.label :follow_up_response %><br>
+    <%= f.text_area :follow_up_response %>
+  </div>
+  <div class="field">
+    <%= f.label :date %><br>
+    <%= f.date_select :date %>
+  </div>
+  <div class="field">
+    <%= f.label :time %><br>
+    <%= f.time_select :time %>
+  </div>
+  <div class="field">
+    <%= f.label :next_date %><br>
+    <%= f.date_select :next_date %>
+  </div>
+  <div class="field">
+    <%= f.label :next_time %><br>
+    <%= f.time_select :next_time %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

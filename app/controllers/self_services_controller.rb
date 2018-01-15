@@ -3,7 +3,7 @@ class SelfServicesController < ApplicationController
 
   def employee
     @employees = Employee.where(id: current_user.employee_id)
-    session[:active_tab] ="EmployeeSelfService"
+    session[:active_tab] ="EmployeeelfService"
   end
 
   def employee_template

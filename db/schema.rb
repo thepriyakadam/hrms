@@ -1681,7 +1681,21 @@ ActiveRecord::Schema.define(version: 20180115074040) do
     t.datetime "updated_at"
   end
 
+<<<<<<< HEAD
   add_index "frequest_questions", ["employees_id"], name: "index_frequest_questions_on_employees_id", using: :btree
+=======
+  create_table "frequest_questions", force: :cascade do |t|
+    t.string   "code",        limit: 255
+    t.text     "question",    limit: 65535
+    t.text     "answer",      limit: 65535
+    t.integer  "employee_id", limit: 4
+    t.boolean  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "frequest_questions", ["employee_id"], name: "index_frequest_questions_on_employee_id", using: :btree
+>>>>>>> 26ec75cc64ebd9a13aa3b956803cc45286b24ab2
 
   create_table "goal_bunches", force: :cascade do |t|
     t.integer  "period_id",               limit: 4
@@ -4460,9 +4474,91 @@ ActiveRecord::Schema.define(version: 20180115074040) do
   add_foreign_key "employees", "sub_departments"
   add_foreign_key "exit_interviews", "employee_resignations"
   add_foreign_key "families", "relation_masters"
+<<<<<<< HEAD
   add_foreign_key "housing_rents", "investment_declarations"
   add_foreign_key "income_loss_house_properties", "investment_declarations"
   add_foreign_key "interest_on_housing_loans", "investment_declarations"
+=======
+  add_foreign_key "families", "religions"
+  add_foreign_key "food_deductions", "employees"
+  add_foreign_key "food_deductions", "food_coupan_masters"
+  add_foreign_key "frequest_questions", "employees"
+  add_foreign_key "goal_bunches", "employees"
+  add_foreign_key "goal_bunches", "performance_calendars"
+  add_foreign_key "goal_bunches", "periods"
+  add_foreign_key "goal_ratings", "attribute_masters"
+  add_foreign_key "goal_ratings", "goal_bunches"
+  add_foreign_key "goal_ratings", "goal_perspectives"
+  add_foreign_key "goal_ratings", "performance_calendars"
+  add_foreign_key "goal_ratings", "periods"
+  add_foreign_key "goal_ratings", "training_topic_masters"
+  add_foreign_key "gps_dailies", "employee_gps"
+  add_foreign_key "gps_dailies", "employees"
+  add_foreign_key "gratuities", "employees"
+  add_foreign_key "gratuities", "gratuity_masters"
+  add_foreign_key "induction_activities", "employees"
+  add_foreign_key "induction_activities", "induction_masters"
+  add_foreign_key "induction_details", "employees"
+  add_foreign_key "induction_details", "induction_masters"
+  add_foreign_key "induction_templates", "employees"
+  add_foreign_key "interview_analyses", "interview_attributes"
+  add_foreign_key "interview_analyses", "interview_decisions"
+  add_foreign_key "interview_analyses", "interview_evalutions"
+  add_foreign_key "interview_analyses", "interview_rounds"
+  add_foreign_key "interview_analyses", "interview_schedules"
+  add_foreign_key "interview_analyses", "vacancy_request_histories"
+  add_foreign_key "interview_reschedules", "employees"
+  add_foreign_key "interview_reschedules", "interview_schedules"
+  add_foreign_key "interview_round_reschedules", "employees"
+  add_foreign_key "interview_round_reschedules", "interview_rounds"
+  add_foreign_key "interview_round_reschedules", "interview_types"
+  add_foreign_key "interview_rounds", "employees"
+  add_foreign_key "interview_rounds", "interview_schedules"
+  add_foreign_key "interview_rounds", "interview_types"
+  add_foreign_key "interview_schedules", "employees"
+  add_foreign_key "interview_schedules", "selected_resumes"
+  add_foreign_key "investment_declarations", "employees"
+  add_foreign_key "investment_declarations", "investment_heads"
+  add_foreign_key "investment_heads", "sections"
+  add_foreign_key "issue_histories", "employees"
+  add_foreign_key "issue_histories", "issue_masters"
+  add_foreign_key "issue_histories", "issue_requests"
+  add_foreign_key "issue_histories", "issue_tracker_groups"
+  add_foreign_key "issue_histories", "issue_tracker_members"
+  add_foreign_key "issue_locker_histories", "issue_lockers"
+  add_foreign_key "issue_locker_histories", "issue_requests"
+  add_foreign_key "issue_locker_histories", "issue_tracker_members"
+  add_foreign_key "issue_lockers", "issue_requests"
+  add_foreign_key "issue_lockers", "issue_tracker_members"
+  add_foreign_key "issue_masters", "issue_tracker_groups"
+  add_foreign_key "issue_masters", "issue_types"
+  add_foreign_key "issue_requests", "employees"
+  add_foreign_key "issue_requests", "issue_masters"
+  add_foreign_key "issue_requests", "issue_root_causes"
+  add_foreign_key "issue_requests", "issue_tracker_groups"
+  add_foreign_key "issue_requests", "issue_tracker_members"
+  add_foreign_key "issue_root_causes", "issue_tracker_groups"
+  add_foreign_key "issue_tracker_accesses", "issue_tracker_groups"
+  add_foreign_key "issue_tracker_members", "employees"
+  add_foreign_key "issue_tracker_members", "issue_tracker_groups"
+  add_foreign_key "joining_details", "cost_centers"
+  add_foreign_key "joining_details", "employee_categories"
+  add_foreign_key "joining_details", "employee_designations"
+  add_foreign_key "joining_details", "employee_grades"
+  add_foreign_key "joining_details", "employees"
+  add_foreign_key "joining_details", "payment_modes"
+  add_foreign_key "joining_details", "reserved_categories"
+  add_foreign_key "leave_c_offs", "employees"
+  add_foreign_key "leave_cashables", "employees"
+  add_foreign_key "leave_cashables", "leav_categories"
+  add_foreign_key "leave_details", "leav_categories"
+  add_foreign_key "leave_details", "salaryslips"
+  add_foreign_key "leave_masters", "leav_categories"
+  add_foreign_key "leave_records", "employee_leav_requests"
+  add_foreign_key "leave_records", "employees"
+  add_foreign_key "leave_records", "leav_categories"
+  add_foreign_key "leave_status_records", "employee_leav_requests"
+>>>>>>> 26ec75cc64ebd9a13aa3b956803cc45286b24ab2
   add_foreign_key "leave_transfers", "employee_leav_balances"
   add_foreign_key "leave_transfers", "employees"
   add_foreign_key "leave_transfers", "leav_categories"

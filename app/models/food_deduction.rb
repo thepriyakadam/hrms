@@ -10,7 +10,7 @@ class FoodDeduction < ActiveRecord::Base
 def self.import_deduction_file(file)
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B'))
         if @employee.nil?
         else
         employee_id = @employee.id

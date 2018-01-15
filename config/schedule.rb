@@ -20,6 +20,6 @@ every 1.hours do
 end
 
 
-every 5.minutes do 
-   runner "DailyAttendance.calculate_atte"
+every 11.minutes do 
+   rake 'atte_task:calculate'
 end

@@ -1,6 +1,6 @@
 class EmployeeJcListsController < ApplicationController
   before_action :set_employee_jc_list, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /employee_jc_lists
   # GET /employee_jc_lists.json
   def index

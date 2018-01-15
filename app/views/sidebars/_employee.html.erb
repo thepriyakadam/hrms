@@ -2,11 +2,12 @@
   <li class="header">   <a href="/home"> <Center> <% if current_user.class == Member %><%= current_user.company_location.company.try(:name) %>
     <%else%><%= current_user.subdomain %> - <%= current_user.class %> <%end%>DASHBOARD</Center></a></li>
  <li class="treeview" id="EmployeeSelfService">
-          <a href="">
-            <i class="fa fa-user-plus"></i> <span> Employee Self Service </span><i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-      <li><a href="/self_services/employee_contact_library" title="Contains contact list of all employee"><i class="fa fa-tags"></i> Contact Library </a></li>
+
+    <a href="">
+      <i class="fa fa-user-plus"></i> <span> Employee Self Service </span><i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+     <li><a href="/self_services/employee_contact_library" title="Contains contact list of all employee"><i class="fa fa-tags"></i> Contact Library </a></li>
      <li><a href="/contact_details" title="Contains contact person details"><i class="fa fa-tags"></i> Key Persons </a></li>
     <li><a href="/self_services/employee" title="Contains full personal details of employee"><i class="fa fa-tags"></i> Personal Details </a></li>
     <li><a href="/employee_leav_requests" title="For initiating self leave request"><i class="fa fa-tags"></i> Leave Request </a></li>
@@ -62,10 +63,6 @@
   <% unless session[:active_tab].nil? %>
   document.getElementById("<%= session[:active_tab] %>").classList.add("active");
   <%end%>
-  <% unless session[:active_tab1].nil? %>
-  document.getElementById("<%= session[:active_tab1] %>").classList.add("active");
-  <%end%>
-  <% unless session[:active_tab2].nil? %>
-  document.getElementById("<%= session[:active_tab2] %>").classList.add("active");
-  <%end%>
+ 
+ 
 </script>

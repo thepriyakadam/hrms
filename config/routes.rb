@@ -1146,6 +1146,9 @@ end
       get :period_for_multiple
       post :create_multiple_bunch
       get :revert_goal
+      get :self_evaluation
+      get :import_xl
+      post :import
     end
   end
   resources :goal_perspectives do

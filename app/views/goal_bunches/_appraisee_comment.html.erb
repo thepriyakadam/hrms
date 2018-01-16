@@ -1,7 +1,15 @@
 <div class="box box-default">
 
   <div class="box-body">
-
+    <div class="pull-right">
+     
+      <% if  @goal_bunch.nil? %>
+      <% else %>
+        <%= link_to " Upload ", import_xl_goal_bunches_path(goal_bunch_id: @goal_bunch_id.id,employee_id: @employee.id), class: 'fa fa-upload btn btn-xl btn-success' %>
+        <%= link_to " Template ",self_evaluation_goal_bunches_path(format: "xls",employee_id: @employee.id,goal_bunch_id: @goal_bunch_id.id), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+      <% end %>
+     </div> <!-- pull right -->
+<br>
  <table id="example2" class="table table-bordered table-hover table-condensed">
      <thead>
         <tr>
@@ -14,13 +22,13 @@
       </thead>
       <tbody>
         <% @goal_bunche.each do |g| %>
-        <tr>
-        <td><%= g.period.try(:name) %></td>
-        <td>From: <%= g.period.try(:from) %> To: <%= g.period.try(:to) %> </td>
-        <td><%= g.employee.try(:manual_employee_code) %> - <%= full_name(g.employee) %></td>
-        <td><%= g.employee.try(:manager).try(:manual_employee_code) %> - <%= full_name(g.employee.try(:manager)) %></td>
-        <td><%= g.employee.try(:manager_2).try(:manual_employee_code) %> - <%= full_name(g.employee.try(:manager_2)) %></td>
-        </tr>
+          <tr>
+          <td><%= g.period.try(:name) %></td>
+          <td>From: <%= g.period.try(:from) %> To: <%= g.period.try(:to) %> </td>
+          <td><%= g.employee.try(:manual_employee_code) %> - <%= full_name(g.employee) %></td>
+          <td><%= g.employee.try(:manager).try(:manual_employee_code) %> - <%= full_name(g.employee.try(:manager)) %></td>
+          <td><%= g.employee.try(:manager_2).try(:manual_employee_code) %> - <%= full_name(g.employee.try(:manager_2)) %></td>
+          </tr>
         <% end %>
       </tbody>
     </table>

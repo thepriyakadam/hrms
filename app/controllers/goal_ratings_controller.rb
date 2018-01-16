@@ -119,12 +119,12 @@ class GoalRatingsController < ApplicationController
             @goal_rating.save
             @flag = true
           end
-        end
+        end #params[:flag]
+
         @goal_rating = GoalRating.new
-        #@goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
         @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
         @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
-      else
+      else #goal_weightage_sum
         @flag = false
       end
   end

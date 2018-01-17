@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180112091459) do
+ActiveRecord::Schema.define(version: 20180117115112) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1352,20 +1352,20 @@ ActiveRecord::Schema.define(version: 20180112091459) do
     t.boolean  "status"
     t.string   "current_status",        limit: 255
     t.integer  "manager_id",            limit: 4
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.float    "latitude",              limit: 24
     t.float    "longitude",             limit: 24
     t.integer  "plan_reason_master_id", limit: 4
     t.text     "feedback",              limit: 65535
     t.boolean  "confirm"
     t.boolean  "plan_or_unplan"
-    t.decimal  "start_latitude",                      precision: 10
-    t.decimal  "end_latitude",                        precision: 10
-    t.decimal  "present_latitude",                    precision: 10
-    t.decimal  "start_longitude",                     precision: 10
-    t.decimal  "end_longitude",                       precision: 10
-    t.decimal  "present_longitude",                   precision: 10
+    t.float    "start_latitude",        limit: 24
+    t.float    "end_latitude",          limit: 24
+    t.float    "present_latitude",      limit: 24
+    t.float    "start_longitude",       limit: 24
+    t.float    "end_longitude",         limit: 24
+    t.float    "present_longitude",     limit: 24
     t.string   "start_place",           limit: 255
     t.string   "end_place",             limit: 255
     t.string   "present_place",         limit: 255

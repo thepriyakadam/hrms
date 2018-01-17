@@ -11,8 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+ActiveRecord::Schema.define(version: 20180112051349) do
 
-ActiveRecord::Schema.define(version: 20180111084545) do
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "name",        limit: 255
@@ -1359,6 +1359,7 @@ ActiveRecord::Schema.define(version: 20180111084545) do
     t.integer  "plan_reason_master_id", limit: 4
     t.text     "feedback",              limit: 65535
     t.boolean  "confirm"
+    t.integer  "listed_company_id",     limit: 4
     t.boolean  "plan_or_unplan"
     t.decimal  "start_latitude",                      precision: 10
     t.decimal  "end_latitude",                        precision: 10
@@ -1369,7 +1370,6 @@ ActiveRecord::Schema.define(version: 20180111084545) do
     t.string   "start_place",           limit: 255
     t.string   "end_place",             limit: 255
     t.string   "present_place",         limit: 255
-    t.integer  "listed_company_id",     limit: 4
   end
 
   add_index "employee_plans", ["employee_id"], name: "index_employee_plans_on_employee_id", using: :btree

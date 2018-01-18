@@ -1,9 +1,9 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Meeting Minutes History Report</h3>
+    <h3 class="box-title">Meeting Follow-up Report</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <%= bootstrap_form_for(:employee_plan, url: { action: 'meeting_minutes_history_report'},html: {id: 'employee_plan'},remote: true ) do |f| %>
+    <%= bootstrap_form_for(:employee_plan, url: { action: 'meeting_follow_up_report'},html: {id: 'employee_plan'},remote: true ) do |f| %>
   	  <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
@@ -37,7 +37,7 @@
         </div>
       </div>
     <%end%>
-    <div id="meeting_minutes_history_report"></div>
+    <div id="meeting_follow_up_report"></div>
   </div>
 </div>
 <script type="text/javascript">
@@ -63,13 +63,13 @@
 <script>
 $("#employee_plan").validate({
     rules: {
-      "employee_plan[current_status]":{
+      "employee_plan[employee_id]":{
         required: true,
       }
     },
     messages: {
-      "employee_plan[current_status]":{
-        required: "Please Select Status",
+      "employee_plan[employee_id]":{
+        required: "Please Select Employee",
       }
     },
     errorPlacement: function(error, element) {

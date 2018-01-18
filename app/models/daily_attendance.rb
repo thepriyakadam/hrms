@@ -109,7 +109,7 @@ class DailyAttendance < ActiveRecord::Base
   # end
 
   def self.calculate_attendance
-    emp = EmployeeAttendance.where("in_time > ? ", Time.now - 7.days)
+    emp = EmployeeAttendance.where("in_time > ? ", Time.now - 3.days)
     emp.each do |emp|
       id = emp.employee_id
       in_t = emp.in_time
@@ -120,11 +120,10 @@ class DailyAttendance < ActiveRecord::Base
           out_time = out_t.to_time
           total_hrms = out_time - in_time 
           working_hrs = Time.at(total_hrms).utc.strftime("%H:%M")
-          if working_hrs > "07:00" 
-            emp_att.update_all(working_hrs: working_hrs)
-            puts "---------attendace calculate 1 #{Time.now}---------"
+          if working_hrs > "07:00"
+            emp_att.update_all(working_hrs: working_hrs,present: "P")
           else
-            emp_att.update_all(present: "HD")
+            emp_att.update_all(working_hrs: working_hrs,present: "HD")
           end
       else
         if emp_att.last.out_time.present?

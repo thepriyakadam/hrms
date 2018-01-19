@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180118052827) do
+ActiveRecord::Schema.define(version: 20180119062851) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1370,6 +1370,10 @@ ActiveRecord::Schema.define(version: 20180118052827) do
     t.string   "end_place",             limit: 255
     t.string   "created_place",         limit: 255
     t.integer  "listed_company_id",     limit: 4
+    t.date     "created_date"
+    t.time     "created_time"
+    t.time     "start_time"
+    t.time     "end_time"
   end
 
   add_index "employee_plans", ["employee_id"], name: "index_employee_plans_on_employee_id", using: :btree

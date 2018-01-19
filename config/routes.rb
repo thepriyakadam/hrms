@@ -39,9 +39,17 @@ Rails.application.routes.draw do
   
   resources :employee_plans do
     collection do
+      get :meeting_minutes_history
+      get :meeting_minutes_history_report
+      post :meeting_minutes_history_report
+      post :plan_meeting_minutes
+      get :plan_meeting_minutes 
       get :gps_tracking
       get :employee_gps_tracking
       post :employee_gps_tracking
+      get :status_wise_report
+      get :status_report
+      post :status_report
       get :print_employee_wise_report
       get :print_manager_wise_report
       get :employee_wise_report

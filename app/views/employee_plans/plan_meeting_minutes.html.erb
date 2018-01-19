@@ -2,6 +2,11 @@
   <div class="box-header with-border">
     <h3 class="box-title">Attend Meeting</h3>
     <div class="pull-right"></div>
+      <div class="pull-right">
+        <%= link_to 'Back', meeting_minutes_history_employee_plans_path, class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+        <%= link_to "Excel Report", plan_meeting_minutes_employee_plans_path(plan_id: params[:plan_id],format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+        <%= link_to "Print Report", plan_meeting_minutes_employee_plans_path(plan_id: params[:plan_id],format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+      </div><br /> <br />
       <div class="box-body">
         <table class="table table-bordered table-hover table-condensed">
           <thead>
@@ -67,10 +72,7 @@
             </tr>
           </tbody>
       </table>
-        <br />
-        <%= link_to ' Add Minutes', minutes_form_employee_plans_path(@employee_plan.id), class: 'btn btn-sm btn-success btn-xs glyphicon glyphicon-plus',remote:true %>
-        <%= link_to 'End Meeting', employee_plans_path, class: 'pull-right btn btn-sm btn-danger btn-xs ',remote:true %>
-      </div>
+     </div>
     </div>
   </div>
   <div id="minutes_form"></div>

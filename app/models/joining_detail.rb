@@ -155,6 +155,18 @@ def self.to_csv(options = {})
         else
         cost_center_id = @cost_center.id
         end
+         welfare = spreadsheet.cell(i,'AJ')
+         if welfare == "Yes"
+           welfare = true
+         else
+           welfare = false
+         end
+         welfare = spreadsheet.cell(i,'AK')
+         if welfare == "Yes"
+           welfare = true
+         else
+           welfare = false
+         end
         
         @employee_prsent = JoiningDetail.find_by(employee_id: employee_id)
         if @employee_prsent.nil?

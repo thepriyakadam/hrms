@@ -161,7 +161,7 @@ def self.to_csv(options = {})
          else
            welfare = false
          end
-         contact_library: contact_library = spreadsheet.cell(i,'AK')
+         contact_library = spreadsheet.cell(i,'AK')
          if contact_library == "Yes"
            contact_library = true
          else

@@ -351,7 +351,7 @@ class SalaryslipsController < ApplicationController
               addable_calculated_amount = addable_actual_amount / working_day.day_in_month * working_day.calculated_payable_days
             end
             addable_total_actual_amount += addable_actual_amount
-            addable_total_calculated_amount += addable_calculated_amount
+            addable_total_calculated_amount += addable_calculated_amount.round
 
             if item.salary_component.name == 'Basic'
               basic_actual_amount = addable_actual_amount
@@ -903,7 +903,7 @@ class SalaryslipsController < ApplicationController
               addable_calculated_amount = addable_actual_amount / working_day.day_in_month * working_day.payable_day
             end
             addable_total_actual_amount += addable_actual_amount
-            addable_total_calculated_amount += addable_calculated_amount
+            addable_total_calculated_amount += addable_calculated_amount.round
 
             if item.salary_component.name == 'Basic'
               basic_actual_amount = addable_actual_amount
@@ -915,7 +915,7 @@ class SalaryslipsController < ApplicationController
             @addable_salaryslip_item = SalaryslipComponent.new do |sc|
               sc.salary_component_id = item.salary_component_id
               sc.actual_amount = addable_actual_amount
-              sc.calculated_amount = addable_calculated_amount
+              sc.calculated_amount = addable_calculated_amount.round
               sc.is_deducted = false
             end
             @salaryslip_component_array << @addable_salaryslip_item
@@ -1434,8 +1434,9 @@ class SalaryslipsController < ApplicationController
     @salaryslip_component1 = SalaryslipComponent.where(salaryslip_id: @salaryslip.id)
     @salaryslip_component2 = SalaryslipComponent.where(salaryslip_id: @salaryslip.id,is_deducted: true)
     @salaryslip_component3 = SalaryslipComponent.where(salaryslip_id: @salaryslip.id,is_deducted: false)
+    
     actual_gross_salary = @salaryslip_component3.sum(:actual_amount).to_f
-    calculated_gross_salary = @salaryslip_component3.sum(:calculated_amount).to_f
+    calculated_gross_salary = @salaryslip_component3.sum(:calculated_amount)
     actual_amount = @salaryslip_component1.sum(:actual_amount).to_f
     calculated_amount = @salaryslip_component1.sum(:calculated_amount).to_f
     actual_total_deduction = @salaryslip_component2.sum(:actual_amount).to_f

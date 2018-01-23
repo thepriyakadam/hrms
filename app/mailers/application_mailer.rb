@@ -4,7 +4,7 @@ class ApplicationMailer < ActionMailer::Base
     	# default from: "hrms@rajgreen.co.in"
 
      # default from: "hrmsdws@bhandarigroup.in"
-    default from: "hrms@rajgreen.co.in"
+    default from: "hrms@spanpump.com"
     # default from: "vishal.h@indibasolustions.com"
     # default from: "vish.hake04@gmail.com"
 

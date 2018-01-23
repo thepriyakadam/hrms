@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180115071109) do
+ActiveRecord::Schema.define(version: 20180123062737) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -2529,6 +2529,7 @@ ActiveRecord::Schema.define(version: 20180115071109) do
     t.datetime "updated_at",                                                null: false
     t.string   "notice_period_after_probation", limit: 255
     t.boolean  "c_off"
+    t.boolean  "welfare"
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id", using: :btree

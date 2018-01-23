@@ -279,6 +279,7 @@ class SalaryslipsController < ApplicationController
     session[:active_tab] ="PayrollManagement"
     session[:active_tab1] ="SalaryProcess"
     # session[:active_tab2] ="Advance"
+    @employees = JoiningDetail.all
   end
 
   def show_unsaved_employee
@@ -312,7 +313,7 @@ class SalaryslipsController < ApplicationController
     employee_ids = params[:employee_ids]
     @month = params[:month]
     @year = params[:year]
-    if employee_ids.nil? || employee_ids.empty?
+    if employee_ids.nil? || employee_ids.empty? 
       flash[:alert] = 'Please select employees.'
       redirect_to select_month_year_form_salaryslips_path
     else
@@ -1404,7 +1405,7 @@ class SalaryslipsController < ApplicationController
       unless transport_allowance.nil?
         if transport_allowance.option
           addable_actual_amount = 0
-          addable_calculated_amount = transport_allowance.amount
+          addable_calculated_amount = (transport_allowance.amount/working_day.try(:day_in_month))* working_day.try(:payable_day)
           @salary_component = SalaryComponent.find_by(name: "Transport Allowance")
           SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: addable_calculated_amount, calculated_amount: addable_calculated_amount, is_deducted: false, other_component_name: 'Transport Allowance',salary_component_id: @salary_component.id)
         end

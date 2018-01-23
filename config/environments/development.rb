@@ -209,6 +209,21 @@
   # openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
   #  # openssl_verify_mode: 'none'
   # }
+  # config.action_mailer.default_url_options = { host: 'https://webmail.spanpump.com/', port: 443 }
+  # # config.domain = 'lvh.me'
+  # # config.action_mailer.perform_deliveries = true,
+  # ActionMailer::Base.delivery_method = :smtp
+  # ActionMailer::Base.smtp_settings = {
+  # address: 'smtp.spanpump.com',
+  # port:  587,
+  # domain: 'smtp.spanpump.com',
+  # user_name: 'hrms@spanpump.com',
+  # password: 'Hrm$@123',
+  # authentication: :plain,
+  # enable_starttls_auto: true,
+  # openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+  #  # openssl_verify_mode: 'none'
+  # }
   config.action_mailer.default_url_options = { host: 'https://webmail.spanpump.com/appsuite', port: 443 }
   # config.domain = 'lvh.me'
   # config.action_mailer.perform_deliveries = true,
@@ -224,7 +239,6 @@
   openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
    # openssl_verify_mode: 'none'
   }
-
 
 # config.action_mailer.delivery_method = :smtp
 

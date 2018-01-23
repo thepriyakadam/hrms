@@ -209,14 +209,14 @@
   # openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
   #  # openssl_verify_mode: 'none'
   # }
-  config.action_mailer.default_url_options = { host: 'https://webmail.spanpump.com/', port: 443 }
+  config.action_mailer.default_url_options = { host: 'https://webmail.spanpump.com/appsuite', port: 443 }
   # config.domain = 'lvh.me'
   # config.action_mailer.perform_deliveries = true,
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
-  address: 'smtp.spanpump.com',
+  address: 'webmail.spanpump.com/appsuite',
   port:  587,
-  domain: 'smtp.spanpump.com',
+  domain: 'webmail.spanpump.com/appsuite',
   user_name: 'hrms@spanpump.com',
   password: 'HRm$@123',
   authentication: :plain,

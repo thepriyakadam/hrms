@@ -35,7 +35,7 @@ def self.to_csv(options = {})
         if @employee.nil?
         else
         employee_id = @employee.id
-        employee_uan_no = spreadsheet.cell(i,'C')
+        employee_uan_no = spreadsheet.cell(i,'C').to_i
         employee_pf_no = spreadsheet.cell(i,'D')
         joining_date = spreadsheet.cell(i,'E')
         confirmation_date = spreadsheet.cell(i,'F')

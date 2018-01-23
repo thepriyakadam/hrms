@@ -633,7 +633,7 @@ class SalaryslipsController < ApplicationController
           unless @well_faires.empty?
             deducted_calculated_amount = 0
             @well_faires.try(:each) do |w|
-              if @month == w.month and @employee.joining_detail.c_off == true
+              if @month == w.month and @employee.joining_detail.welfare == true
                 deducted_actual_amount = 0
                 deducted_calculated_amount = deducted_calculated_amount + w.amount
                 @salary_component = SalaryComponent.find_by(name: "WelFare")
@@ -1217,7 +1217,7 @@ class SalaryslipsController < ApplicationController
           unless @well_faires.empty?
             deducted_calculated_amount = 0
             @well_faires.try(:each) do |w|
-             if @month == w.month and @employee.joining_detail.c_off == true
+             if @month == w.month and @employee.joining_detail.welfare == true
                 deducted_actual_amount = 0
                 deducted_calculated_amount = deducted_calculated_amount + w.amount
                 @salary_component = SalaryComponent.find_by(name: "WelFare")
@@ -1405,7 +1405,7 @@ class SalaryslipsController < ApplicationController
       unless transport_allowance.nil?
         if transport_allowance.option
           addable_actual_amount = 0
-          addable_calculated_amount = (transport_allowance.amount/working_day.try(:day_in_month))* working_day.try(:payable_day)
+          addable_calculated_amount = transport_allowance.amount * working_day.try(:payable_day)/working_day.try(:day_in_month)
           @salary_component = SalaryComponent.find_by(name: "Transport Allowance")
           SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: addable_calculated_amount, calculated_amount: addable_calculated_amount, is_deducted: false, other_component_name: 'Transport Allowance',salary_component_id: @salary_component.id)
         end

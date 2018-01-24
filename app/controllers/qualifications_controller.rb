@@ -1,6 +1,6 @@
 class QualificationsController < ApplicationController
   before_action :set_qualification, only: [:show, :edit, :update, :destroy]
-  ##load_and_authorize_resource
+  load_and_authorize_resource
   # GET /qualifications
   # GET /qualifications.json
   def index

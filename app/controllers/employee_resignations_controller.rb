@@ -207,7 +207,6 @@ class EmployeeResignationsController < ApplicationController
   end
 
   def first_approve
-
     @employee_resignation = EmployeeResignation.find(params[:emp_resignation_id])
      @leaving_date = params[:employee_resignation] ? params[:employee_resignation][:leaving_date] : params[:leaving_date]
     #@leaving_date = params[:leaving_date]

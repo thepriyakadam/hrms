@@ -1,0 +1,26 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Transport Allowance</h3>
+    <div class="box-tools pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+      <tr>
+        <th> <strong>Employee ID</strong></th>
+        <td><%= @transport_allowance.employee.try(:manual_employee_code) %></td>
+        
+        <th><strong>Emplyee Name</strong></th>
+        <td><%= @transport_allowance.employee.first_name %><%= @transport_allowance.employee.middle_name %><%= @transport_allowance.employee.last_name %></td>
+      
+        <th> <strong>Amount</strong></th>
+        <td><%= @transport_allowance.amount %></td>
+
+        
+      </tr>
+    </table>
+    <br>
+    <%= link_to 'Edit', edit_transport_allowance_path(@transport_allowance),class: 'btn btn-success btn-sm fa fa-edit' %> 
+    <%= link_to 'Back', transport_allowance_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

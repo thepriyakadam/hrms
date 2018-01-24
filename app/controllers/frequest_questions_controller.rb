@@ -73,7 +73,7 @@ class FrequestQuestionsController < ApplicationController
     redirect_to import_xl_frequest_questions_path
     else
     FrequestQuestion.import(params[:file])
-    redirect_to import_xl_frequest_questions_path, notice: "File imported."
+    redirect_to new_frequest_question_path, notice: "File imported."
     end
   end
 

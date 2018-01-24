@@ -67,7 +67,7 @@ class ContactDetailsController < ApplicationController
         redirect_to import_xl_contact_details_path
       else
      ContactDetail.import(params[:file])
-     redirect_to import_xl_contact_details_path, notice: "File imported."
+     redirect_to new_contact_detail_path, notice: "File imported."
      end
   end
 

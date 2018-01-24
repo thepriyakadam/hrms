@@ -98,6 +98,7 @@ class RembursmentsController < ApplicationController
   def approval_list
     current_login = Employee.find(current_user.employee_id)
     @rembursments = Rembursment.where(manager_id: current_user.employee_id).where("status = ? || status = ? || status = ?","Pending","Approved & Send Next","FirstApproved")
+
     session[:active_tab] = "PayrollManagement"
     session[:active_tab1] ="EmployeeRembursment"
   end

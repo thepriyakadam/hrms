@@ -15,6 +15,7 @@ class OdRequestMailer < ApplicationMailer
   def first_approve_final(request)
     @od_request = request
     @employee = Employee.find(@od_request.employee_id)
+    
     @manager = Employee.find(@od_request.first_reporter_id)
     @emp = Employee.find_by(id: request.employee_id)
     email = @employee.try(:email)

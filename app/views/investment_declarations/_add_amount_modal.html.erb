@@ -1,0 +1,28 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <center>Add Amount</center>
+    </div>
+
+    <div class="modal-body">
+      <%= bootstrap_form_for :investment_declaration, url:{action:"update_amount"},html: {id: 'investment_declaration'}, remote:true  do |f| %>
+      
+        <%= f.hidden_field :investment_declaration_id , value: params[:format] %>
+        
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="field">
+              <%= f.text_field :amount, label:'Estimated Amount' %>
+            </div>
+          </div>
+       
+            <div class="col-sm-2" style="padding-top: 25px;">
+              <%= f.submit "Submit", class: 'btn btn-sm btn-success fa fa-modx' %>
+            </div>
+        </div>    
+      <% end %>
+    </div>
+  </div>
+</div>
+

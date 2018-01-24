@@ -80,6 +80,8 @@
               <%= render 'sidebars/admin_time_management' %>
             <% elsif current_user.role.name == 'NewEmployee' %>
               <%= render 'sidebars/new_employee' %>
+             <% elsif current_user.role.name == 'Employee' %>
+              <%= render 'sidebars/employee' %>
             <% elsif current_user.role.name == 'CEO' %>
               <%= render 'sidebars/ceo' %>
             <% else %>

@@ -64,7 +64,7 @@ class ThoughtsController < ApplicationController
     redirect_to import_xl_thoughts_path
     else
     Thought.import(params[:file])
-    redirect_to import_xl_thoughts_path, notice: "File imported."
+    redirect_to new_thought_path, notice: "File imported."
     end
   end
 

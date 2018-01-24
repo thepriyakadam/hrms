@@ -1,5 +1,5 @@
 class Employee < ActiveRecord::Base
-  has_many :employee_attendences
+ has_many :employee_attendences
 
   protokoll :employee_code, pattern: 'EMP#######'
   belongs_to :department
@@ -93,6 +93,9 @@ class Employee < ActiveRecord::Base
   has_many :machine_attendances
   has_many :on_duty_requests
   has_many :gratuity
+  has_many :visitor_details
+
+
   has_many :texable_monthly_deductions
   has_many :advance_salaries
   has_many :employee_jc_lists

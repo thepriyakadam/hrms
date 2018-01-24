@@ -1,0 +1,24 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Answer</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @answer_masters.each do |answer_master| %>
+      <tr>
+        <td><%= answer_master.code %></td>
+        <td><%= answer_master.name %> </td>
+        <td><%= answer_master.status ? "Active" : "Inactive" %></td>
+        <td>
+         <%= link_to '',  answer_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+          <%= link_to '', edit_answer_master_path(answer_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+        </td>
+      </tr>
+    <% end %>
+   
+  </tbody>
+</table>

@@ -1,0 +1,2 @@
+module HousingRentsHelper
+end

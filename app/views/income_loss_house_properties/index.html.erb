@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Income Loss House Properties</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Investment declaration</th>
+      <th>Property type</th>
+      <th>Rental income</th>
+      <th>Less taxes</th>
+      <th>Less repairs</th>
+      <th>Income</th>
+      <th>Less interest</th>
+      <th>Less pre emi interest</th>
+      <th>Estimated total amt</th>
+      <th>Actual total amt</th>
+      <th>Total</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @income_loss_house_properties.each do |income_loss_house_property| %>
+      <tr>
+        <td><%= income_loss_house_property.investment_declaration %></td>
+        <td><%= income_loss_house_property.property_type %></td>
+        <td><%= income_loss_house_property.rental_income %></td>
+        <td><%= income_loss_house_property.less_taxes %></td>
+        <td><%= income_loss_house_property.less_repairs %></td>
+        <td><%= income_loss_house_property.income %></td>
+        <td><%= income_loss_house_property.less_interest %></td>
+        <td><%= income_loss_house_property.less_pre_emi_interest %></td>
+        <td><%= income_loss_house_property.estimated_total_amt %></td>
+        <td><%= income_loss_house_property.actual_total_amt %></td>
+        <td><%= income_loss_house_property.total %></td>
+        <td><%= link_to 'Show', income_loss_house_property %></td>
+        <td><%= link_to 'Edit', edit_income_loss_house_property_path(income_loss_house_property) %></td>
+        <td><%= link_to 'Destroy', income_loss_house_property, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Income loss house property', new_income_loss_house_property_path %>

@@ -3,7 +3,7 @@ class SelfServicesController < ApplicationController
 
   def employee
     @employees = Employee.where(id: current_user.employee_id)
-    session[:active_tab] ="EmployeeSelfService"
+    session[:active_tab] ="EmployeeelfService"
   end
 
   def employee_template
@@ -204,6 +204,7 @@ class SelfServicesController < ApplicationController
       @c_off_type = "Full Day"
     end
     @joining_detail = JoiningDetail.find_by(employee_id: @employee_id)
+
 
     if @joining_detail.c_off == true
       if @leave_c_off.is_self_present(@employee_id,@c_off_date)

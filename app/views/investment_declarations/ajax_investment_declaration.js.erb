@@ -1,0 +1,9 @@
+<% if PolicyDetail.exists?(investment_declarations_id: params[:id]) %>
+<%@clean = PolicyDetail.find_by_investment_declarations_id(params[:id])%>
+$('#info').html("<%= j render 'investment_declarations/investment_declaration' %>")
+<%else%>
+$('#info').html("<%= j render 'investment_declarations/investment_declaration' %>")
+<%end%>
+
+
+$('#info').html("<%= j render 'investment_declarations/investment_declaration' %>")

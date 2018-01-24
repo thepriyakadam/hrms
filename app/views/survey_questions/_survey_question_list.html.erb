@@ -1,0 +1,35 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Group</th>
+      <th>Question Code</th>
+      <th>Question</th>
+      <th>Question category</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @survey_questions.each do |survey_question| %>
+      <tr>
+        <td><%= survey_question.survey_group.try(:name) %></td>
+        <!-- <td><%#= survey_question.employee.try(:first_name) %> <%##= survey_question.employee.try(:last_name) %> </td> -->
+         <td><%= survey_question.question_code %></td>
+         <td><%= survey_question.question %></td>
+         <td><%= survey_question.question_category %></td>
+        <td><%= survey_question.status ? "Active" : "Inactive" %></td>
+        <td>
+         <!-- < if survey_question.is_confirm == true %> -->
+            <!-- <small class= "label label-primary">Confirmed</small> -->
+             <!-- <= link_to '', edit_survey_question_path(survey_question),class: 'btn btn-success btn-xs fa fa-edit',remote:true %> -->
+          <!-- < else %> -->
+         
+          <%= link_to '',  survey_question, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+          <!-- <= link_to '', is_confirm_survey_questions_path(survey_question: survey_question),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %> -->
+           <%= link_to '', edit_survey_question_path(survey_question),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          </td>
+      </tr>
+    <% end %>
+   
+  </tbody>
+</table>

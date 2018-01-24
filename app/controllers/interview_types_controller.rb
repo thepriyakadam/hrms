@@ -74,6 +74,7 @@ class InterviewTypesController < ApplicationController
           end
   end
 
+
     def import
     file = params[:file]
       if file.nil?

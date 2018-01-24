@@ -24,10 +24,10 @@ class Experience < ActiveRecord::Base
         company_name = spreadsheet.cell(i,'C')
         designation = spreadsheet.cell(i,'D')
         start_date = spreadsheet.cell(i,'E')
-        end_date = spreadsheet.cell(i,'E')
-        no_of_year = spreadsheet.cell(i,'F')
-        ctc = spreadsheet.cell(i,'G')
-        description = spreadsheet.cell(i,'H')
+        end_date = spreadsheet.cell(i,'F')
+        no_of_year = spreadsheet.cell(i,'G')
+        ctc = spreadsheet.cell(i,'H')
+        description = spreadsheet.cell(i,'I')
 
         @experience = Experience.create(employee_id: employee_id,company_name: company_name,designation: designation,start_date: start_date,end_date: end_date,no_of_year: no_of_year,ctc: ctc,description: description)
   end

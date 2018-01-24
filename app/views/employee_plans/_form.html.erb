@@ -1,3 +1,4 @@
+
 <%= bootstrap_form_for(@employee_plan, html: {id: 'employee_plan' } ) do |f| %>
   <div class="row">
     <%= f.hidden_field :employee_id , value: current_user.employee_id %>
@@ -77,24 +78,7 @@
         <%= f.text_area :meeting_agenda, label: 'Meeting Agenda', placeholder: 'Meeting Agenda' %>
       </div>
     </div>
-    <!-- <div class="col-sm-3">
-      <div class="form-group required">
-        <%#= f.text_field :conform, label: 'Conform', placeholder: 'Conform' %>
-      </div>
-    </div> -->
-    <!-- <div class="col-sm-3">
-      <div class="form-group required">
-        <%#= f.text_field :current_status, label: 'Current Status', placeholder: 'Current Status' %>
-      </div>
-    </div> -->
-    
-    <!-- <div class="col-sm-2">
-      <div class="form-group required">
-        <%#= f.check_box :status, label: 'Status', placeholder: 'Status' %>
-      </div>
-    </div> -->
-    </div>
-    <div class="row">
+   
     <div class="col-sm-3">
       <div class="actions" style="padding-top: 20px;">
         <%= f.submit 'Create',class: "btn btn-primary btn-sm"%>
@@ -152,9 +136,10 @@
       "employee_plan[plan_or_unplan]":{
         required: true,
       },
-      // "employee_plan[current_status]":{
-      //   required: true,
-      // }
+    
+      "employee_plan[current_status]":{
+        required: true,
+      }
     },
     messages: {
       "employee_plan[listed_company_id]":{
@@ -184,9 +169,9 @@
       "employee_plan[plan_or_unplan]":{
         required: "Please Select Plan Type",
       }
-      // "employee_plan[current_status]":{
-      //   required: "Please Specify Current Status",
-      // }
+      "employee_plan[current_status]":{
+        required: "Please Specify Current Status",
+      }
        },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})

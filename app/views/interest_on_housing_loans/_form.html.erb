@@ -1,0 +1,57 @@
+<%= form_for(@interest_on_housing_loan) do |f| %>
+  <% if @interest_on_housing_loan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@interest_on_housing_loan.errors.count, "error") %> prohibited this interest_on_housing_loan from being saved:</h2>
+
+      <ul>
+      <% @interest_on_housing_loan.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :investment_declaration_id %><br>
+    <%= f.text_field :investment_declaration_id %>
+  </div>
+  <div class="field">
+    <%= f.label :property_name %><br>
+    <%= f.text_field :property_name %>
+  </div>
+  <div class="field">
+    <%= f.label :property_address %><br>
+    <%= f.text_area :property_address %>
+  </div>
+  <div class="field">
+    <%= f.label :date_of_possession %><br>
+    <%= f.date_select :date_of_possession %>
+  </div>
+  <div class="field">
+    <%= f.label :lender_name %><br>
+    <%= f.text_field :lender_name %>
+  </div>
+  <div class="field">
+    <%= f.label :lender_address %><br>
+    <%= f.text_area :lender_address %>
+  </div>
+  <div class="field">
+    <%= f.label :lender_pan_no %><br>
+    <%= f.text_field :lender_pan_no %>
+  </div>
+  <div class="field">
+    <%= f.label :estimated_interest %><br>
+    <%= f.text_field :estimated_interest %>
+  </div>
+  <div class="field">
+    <%= f.label :actual_interest %><br>
+    <%= f.text_field :actual_interest %>
+  </div>
+  <div class="field">
+    <%= f.label :total_interest %><br>
+    <%= f.text_field :total_interest %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -5,6 +5,7 @@ class ProjectMastersController < ApplicationController
   # GET /project_masters.json
   def index
     @project_masters = ProjectMaster.all
+     session[:active_tab] ="ProjectMaster"
   end
 
   # GET /project_masters/1

@@ -335,7 +335,7 @@ class FoodDeductionsController < ApplicationController
     redirect_to import_food_deduction_food_deductions_path
     else
     FoodDeduction.import_deduction_file(params[:file])
-    redirect_to food_deduction_path, notice: "File imported."
+    redirect_to root_path, notice: "File imported."
     end
   end
 

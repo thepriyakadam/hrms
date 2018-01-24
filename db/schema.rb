@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180117115112) do
+ActiveRecord::Schema.define(version: 20180119043105) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1363,13 +1363,17 @@ ActiveRecord::Schema.define(version: 20180117115112) do
     t.boolean  "plan_or_unplan"
     t.float    "start_latitude",        limit: 24
     t.float    "end_latitude",          limit: 24
-    t.float    "present_latitude",      limit: 24
+    t.float    "created_latitude",      limit: 24
     t.float    "start_longitude",       limit: 24
     t.float    "end_longitude",         limit: 24
-    t.decimal  "present_longitude",                   precision: 10
+    t.decimal  "created_longitude",                   precision: 10
     t.string   "start_place",           limit: 255
     t.string   "end_place",             limit: 255
-    t.string   "present_place",         limit: 255
+    t.string   "created_place",         limit: 255
+    t.date     "created_date"
+    t.time     "created_time"
+    t.time     "start_time"
+    t.time     "end_time"
   end
 
   add_index "employee_plans", ["employee_id"], name: "index_employee_plans_on_employee_id", using: :btree

@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
 
-  resources :meeting_follow_ups
+  resources :meeting_follow_ups do
+    collection do
+      get :view_meeting_follow_up
+    end
+  end
+  
   resources :meeting_minutes do
     collection do
       get :view_minutes
@@ -39,6 +44,9 @@ Rails.application.routes.draw do
   
   resources :employee_plans do
     collection do
+      get :meeting_follow_up
+      get :meeting_follow_up_report
+      post :meeting_follow_up_report
       get :meeting_minutes_history
       get :meeting_minutes_history_report
       post :meeting_minutes_history_report

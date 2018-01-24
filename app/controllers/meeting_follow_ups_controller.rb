@@ -21,6 +21,9 @@ class MeetingFollowUpsController < ApplicationController
   def edit
   end
 
+  def view_meeting_follow_up
+  end
+
   # POST /meeting_follow_ups
   # POST /meeting_follow_ups.json
   def create

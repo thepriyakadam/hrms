@@ -14,6 +14,9 @@ class MeetingFollowUpsController < ApplicationController
 
   # GET /meeting_follow_ups/new
   def new
+    @emp_plan = EmployeePlan.where(id: params[:plan_id])
+    # binding.pry
+    
     @meeting_follow_up = MeetingFollowUp.new
   end
 

@@ -10,11 +10,11 @@
       <div class="box-body">
         <table class="table table-bordered table-hover table-condensed">
           <thead>
+            <tr><th colspan="4"><center><font color='#0077b3'>Meeting Detail</font></center> </th></tr>
             <tr>
               <th>Employee</th>
               <td><%= @employee_plan.employee.try(:first_name) %> <%= @employee_plan.employee.try(:last_name) %></td>
-            </tr>
-            <tr>
+            
               <th>Manager</th>
               <% emp = @employee_plan.manager_id %>
               <% @emp_name = Employee.find(emp) %>
@@ -24,30 +24,29 @@
             <tr>
               <th>From Date</th>
               <td><%= @employee_plan.from_date%></td>
-            </tr>
-            <tr>
+            
               <th>To Date</th>
               <td><%= @employee_plan.to_date %></td>
             </tr>
             <tr>
               <th>From Time</th>
               <td><%= @employee_plan.from_time %></td>
-            </tr>
-            <tr>
+            
               <th>To Time</th>
               <td><%= @employee_plan.to_time %></td>
             </tr>
             <tr>
               <th>Meeting With</th>
               <td><%= @employee_plan.meeting_with %></td>
-            </tr>
-            <tr>
+            
               <th>Meeting Agenda</th>
               <td><%= @employee_plan.meeting_agenda %></td>
             </tr>
             <tr>
               <th>Place</th>
               <td><%= @employee_plan.location %></td>
+              <th></th>
+              <td></td>
             </tr>
            
           </thead>

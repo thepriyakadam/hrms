@@ -956,14 +956,16 @@
                 <li><a href="/loan_requests/final_approve"><i class="fa fa-fa fa-tags"></i> Final Approval </a></li>
               </ul>
             </li>
-          </ul>  
-        </li>  
-           <li class="treeview" id="safety">
-            <a href=""><i class="ionicons ion-ios-time"></i><span><span> Health Safety Management </span></span> <i class="fa fa-angle-left pull-right"></i></a>
-            <ul class="treeview-menu">
-              <li><a href="/accident_records"><i class="fa fa-hospital-o"></i> Accident Record </a></li>
-            </ul>
-           </li> 
+          </ul>
+        </li>
+        <li class="treeview" id="safety">
+          <a href=""><i class="ionicons ion-ios-time"></i><span><span> Health Safety Management </span></span> <i class="fa fa-angle-left pull-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a href="/accident_records"><i class="fa fa-hospital-o"></i> Accident Record </a></li>
+          </ul>
+        </li> 
+        <li><a href="/company_locations" title="Company location details"><i class="fa fa-tags"></i> Locations </a></li>
+
 
            <!-- <li class="treeview" id="import">
             <a href=""><i class="glyphicon glyphicon-save"></i><span><span> Import Excel File </span></span> <i class="fa fa-angle-left pull-right"></i></a>
@@ -982,4 +984,4 @@
   document.getElementById("<%= session[:active_tab2] %>").classList.add("active");
   <%end%>
 </script>
-      <li><a href="/company_locations" title="Company location details"><i class="fa fa-tags"></i> Locations </a></li>
+      

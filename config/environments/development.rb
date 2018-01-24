@@ -144,6 +144,23 @@
    # }
 
 
+  # config.action_mailer.default_url_options = { host: 'http://182.71.216.30/webmail', port: 443 }
+  # # config.domain = 'lvh.me'
+  # # config.action_mailer.perform_deliveries = true,
+  # ActionMailer::Base.delivery_method = :smtp
+  # ActionMailer::Base.smtp_settings = {
+  # address: '182.71.216.30',
+  # port:  587,
+  # domain: '182.71.216.30',
+  # user_name: 'hrms@sparkline.co.in',
+  # password: 'HRMS@2018',
+  # authentication: :plain,
+  # enable_starttls_auto: true,
+  # openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+  #  # openssl_verify_mode: 'none'
+  # }
+
+
   # config.action_mailer.default_url_options = { host: 'http://gmail.com', port: 443 }
 
   # # config.domain = 'lvh.me'
@@ -161,48 +178,31 @@
   #  # openssl_verify_mode: 'none'
   # }
 
-  # config.action_mailer.default_url_options = { host: 'http://amaazia.co.in', port: 2095 }
 
+  # config.action_mailer.default_url_options = { host: 'http://webmail.spanpump.com/appsuite', port: 443 }
   # # config.domain = 'lvh.me'
   # # config.action_mailer.perform_deliveries = true,
   # ActionMailer::Base.delivery_method = :smtp
   # ActionMailer::Base.smtp_settings = {
-  # address: 'amaazia.co.in',
+  # address: 'webmail.spanpump.com/appsuite',
   # port:  587,
-  # domain: 'amaazia.co.in',
-  # user_name: 'hrms@rajgreen.co.in',
-  # password: 'amaazia@123',
+  # domain: 'webmail.spanpump.com',
+  # user_name: 'hrms@spanpump.com',
+  # password: 'HRm$@123',
   # authentication: :plain,
   # enable_starttls_auto: true,
-  #  openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+  # openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
   #  # openssl_verify_mode: 'none'
   # }
 
-
- 
-  # # config.domain = 'lvh.me'
-  # # config.action_mailer.perform_deliveries = true,
-  # ActionMailer::Base.delivery_method = :smtp
-  # ActionMailer::Base.smtp_settings = {
-  # address: 'amaazia.co.in',
-  # port:  587,
-  # domain: 'amaazia.co.in',
-  # user_name: 'hrms@rajgreen.co.in',
-  # password: 'amaazia@123',
-  # authentication: :plain,
-  # enable_starttls_auto: true,
-  #  openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
-  #  # openssl_verify_mode: 'none'
-  # }
-
-  config.action_mailer.default_url_options = { host: 'https://webmail.spanpump.com/', port: 443 }
+  config.action_mailer.default_url_options = { host: 'http://webmail.spanpump.com/appsuite', port: 443 }
   # config.domain = 'lvh.me'
   # config.action_mailer.perform_deliveries = true,
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
-  address: 'smtp.spanpump.com',
+  address: 'webmail.spanpump.com',
   port:  587,
-  domain: 'smtp.spanpump.com',
+  domain: 'webmail.spanpump.com',
   user_name: 'hrms@spanpump.com',
   password: 'HRm$@123',
   authentication: :plain,
@@ -210,6 +210,53 @@
   openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
    # openssl_verify_mode: 'none'
   }
+
+  # config.action_mailer.default_url_options = { host: 'http://amaazia.co.in', port: 2095 }
+  # # config.domain = 'lvh.me'
+  # # config.action_mailer.perform_deliveries = true,
+  # ActionMailer::Base.delivery_method = :smtp
+  # ActionMailer::Base.smtp_settings = {
+  # address: 'amaazia.co.in',
+  # port:  587,
+  # domain: 'amaazia.co.in',
+  # user_name: 'hrms@rajgreen.co.in',
+  # password: 'amaazia@123',
+  # authentication: :plain,
+  # enable_starttls_auto: true,
+  #  openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+  #  # openssl_verify_mode: 'none'
+  # }
+
+  # config.domain = 'lvh.me'
+  # config.action_mailer.perform_deliveries = true,
+  # ActionMailer::Base.delivery_method = :smtp
+  # ActionMailer::Base.smtp_settings = {
+  # address: 'amaazia.co.in',
+  # port:  587,
+  # domain: 'amaazia.co.in',
+  # user_name: 'hrms@rajgreen.co.in',
+  # password: 'amaazia@123',
+  # authentication: :plain,
+  # enable_starttls_auto: true,
+  #  openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+  #  # openssl_verify_mode: 'none'
+  # }
+
+  # config.action_mailer.default_url_options = { host: 'https://webmail.spanpump.com/', port: 443 }
+  # # config.domain = 'lvh.me'
+  # # config.action_mailer.perform_deliveries = true,
+  # ActionMailer::Base.delivery_method = :smtp
+  # ActionMailer::Base.smtp_settings = {
+  # address: 'smtp.spanpump.com',
+  # port:  587,
+  # domain: 'smtp.spanpump.com',
+  # user_name: 'hrms@spanpump.com',
+  # password: 'HRm$@123',
+  # authentication: :plain,
+  # enable_starttls_auto: true,
+  # openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+  #  # openssl_verify_mode: 'none'
+  # }
 
 # config.action_mailer.delivery_method = :smtp
 

@@ -368,6 +368,7 @@ class EmployeePlansController < ApplicationController
     to_date = params[:employee_plan] ? params[:employee_plan][:to_date] : params[:to_date]
     emp_id = params[:employee_plan] ? params[:employee_plan][:employee_id] : params[:employee_id]
     @employee = Employee.find(emp_id)
+    #@emp_plan = EmployeePlan.find(emp_id)
     @employee_plan = EmployeePlan.where(employee_id: emp_id)
     if from_date.present? && !to_date.present?
       @emp_report = EmployeePlan.where("from_date >= ? and employee_id =?", from_date.to_date, emp_id).where.not(start_latitude: nil?).order("from_date DESC")

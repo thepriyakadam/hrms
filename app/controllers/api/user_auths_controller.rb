@@ -794,6 +794,8 @@ class Api::UserAuthsController < ApplicationController
     created_place = params[:current_place]
     current_date = params[:current_date]
     created_time = params[:current_time]
+    current_latitude = params[:current_latitude]
+    current_longitude = params[:current_longitude]
 
     manager_id = params[:manager_id].to_i
     @employee_plan = EmployeePlan.where(employee_id: employee_id)
@@ -805,10 +807,11 @@ class Api::UserAuthsController < ApplicationController
         elsif to_plan = employee_plan.where("? BETWEEN from_time AND to_time", to_time).present?
           render :status=>200, :json=>{:status=>"Sorry..!! This Time was already reserved..."}
         else
-          if plan_type == "false"
-            employee_plan = EmployeePlan.new(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, confirm: confirm, status: status, current_status: "Unplan", manager_id: manager_id, listed_company_id: company_name, plan_or_unplan: plan_type, created_place: created_place, created_place: created_place, created_time: created_time)
+
+          if plan_type == false
+            employee_plan = EmployeePlan.new(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, confirm: confirm, status: status, current_status: "unplan", manager_id: manager_id, listed_company_id: company_name, plan_or_unplan: plan_type)
           else
-            employee_plan = EmployeePlan.new(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, confirm: confirm, status: status, current_status: current_status, manager_id: manager_id, listed_company_id: company_name, plan_or_unplan: plan_type, created_place: created_place, created_place: created_place, created_time: created_time) 
+            employee_plan = EmployeePlan.new(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, confirm: confirm, status: status, current_status: current_status, manager_id: manager_id, listed_company_id: company_name, plan_or_unplan: plan_type)
           end
           if employee_plan.save
             render :status=>200, :json=>{:status=>"Employee plan was successfully created"}
@@ -817,10 +820,10 @@ class Api::UserAuthsController < ApplicationController
           end
         end
       else
-        if plan_type == "false"
-          employee_plan = EmployeePlan.new(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, confirm: confirm, status: status, current_status: "Unplan", manager_id: manager_id, listed_company_id: company_name, plan_or_unplan: plan_type, created_place: created_place, created_place: created_place, created_time: created_time)
+        if plan_type == false
+          employee_plan = EmployeePlan.new(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, confirm: confirm, status: status, current_status: "unplan", manager_id: manager_id, listed_company_id: company_name, plan_or_unplan: plan_type)
         else
-          employee_plan = EmployeePlan.new(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, confirm: confirm, status: status, current_status: current_status, manager_id: manager_id, listed_company_id: company_name, plan_or_unplan: plan_type, created_place: created_place, created_place: created_place, created_time: created_time) 
+          employee_plan = EmployeePlan.new(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, confirm: confirm, status: status, current_status: current_status, manager_id: manager_id, listed_company_id: company_name, plan_or_unplan: plan_type)
         end
         if employee_plan.save
           render :status=>200, :json=>{:status=>"Employee plan was successfully created"}
@@ -829,10 +832,10 @@ class Api::UserAuthsController < ApplicationController
         end
       end    
     else
-      if plan_type == "false"
-        employee_plan = EmployeePlan.new(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, confirm: confirm, status: status, current_status: "Unplan", manager_id: manager_id, listed_company_id: company_name, plan_or_unplan: plan_type, created_place: created_place, created_place: created_place, created_time: created_time)
+      if plan_type == false
+        employee_plan = EmployeePlan.new(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, confirm: confirm, status: status, current_status: "unplan", manager_id: manager_id, listed_company_id: company_name, plan_or_unplan: plan_type)
       else
-        employee_plan = EmployeePlan.new(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, confirm: confirm, status: status, current_status: current_status, manager_id: manager_id, listed_company_id: company_name, plan_or_unplan: plan_type, created_place: created_place, created_place: created_place, created_time: created_time) 
+        employee_plan = EmployeePlan.new(employee_id: employee_id, from_date: from_date, to_date: to_date, from_time: from_time, to_time: to_time, meeting_with: meeting_with, location: location, meeting_agenda: meeting_agenda, latitude: latitude, longitude: longitude, confirm: confirm, status: status, current_status: current_status, manager_id: manager_id, listed_company_id: company_name, plan_or_unplan: plan_type)
       end
       if employee_plan.save
         render :status=>200, :json=>{:status=>"Employee plan was successfully created"}
@@ -863,9 +866,10 @@ class Api::UserAuthsController < ApplicationController
       if status == "All"
         employee_plan = EmployeePlan.where(employee_id: employee_id).where("? BETWEEN from_date AND from_date", date).order("id DESC")
       elsif status == "Attend"
-        employee_plan = EmployeePlan.where('employee_id = ? AND plan_reason_master_id IS ? AND start_longitude IS NOT NULL', employee_id, nil).where("? BETWEEN from_date AND from_date", date).order("id DESC")
+
+        employee_plan = EmployeePlan.where('employee_id = ? AND plan_reason_master_id IS ? AND start_latitude IS NOT NULL', employee_id, nil).where("? BETWEEN from_date AND from_date", date).order("id DESC")
       elsif status == "Not Attend"
-        employee_plan = EmployeePlan.where.not('plan_reason_master_id IS', nil).where(employee_id: employee_id).where("? BETWEEN from_date AND from_date", date).order("id DESC")
+        employee_plan = EmployeePlan.where.not('plan_reason_master_id IS ?', nil).where(employee_id: employee_id).where("? BETWEEN from_date AND from_date", date).order("id DESC")
       elsif status.present? && status != "All" && status != "Attend" && status != "Not Attend"
         employee_plan = EmployeePlan.where(employee_id: employee_id, current_status: status ).where("? BETWEEN from_date AND from_date", date).order("id DESC")
       else

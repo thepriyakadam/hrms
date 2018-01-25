@@ -2590,6 +2590,9 @@ end
       get :basic_report
       post :report
       get :report
+      get :date_categorywise_balance
+      post :show_date_categorywise
+      get :show_date_categorywise
 
     end
   end

@@ -675,7 +675,8 @@ class WorkingdaysController < ApplicationController
     to = params[:employee][:to]
     @from = from.to_date
     @to = to.to_date
-    @workingdays = Workingday.where(date: @from..@to).group(:employee_id)
+    @emp = Employee.where(status: "Active")
+    @workingdays = Workingday.where(date: @from..@to,employee_id: @emp).group(:employee_id)
 
     respond_to do |f|
       f.js

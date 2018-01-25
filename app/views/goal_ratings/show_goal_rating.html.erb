@@ -1,5 +1,7 @@
- <div class= "box-body ">
-    <table class="table table-bordered table-hover table-condensed">
+<div class="box">
+  <div class="box box-default">
+    <div class= "box-body ">
+      <table class="table table-bordered table-hover table-condensed">
         <thead>
            <tr><td colspan="2"><center>Employee Goals </center></td></tr>
              <tr>
@@ -9,6 +11,10 @@
               <tr>
                 <th>Measure</th>
                 <td><%= @goal_rating.goal_measure %></td>
+              </tr>
+              <tr>
+                <th>Activity</th>
+                <td><%= @goal_rating.activity %></td>
               </tr>
               <tr>
            	    <th>Target</th>
@@ -22,7 +28,9 @@
            	    <th>Aligned</th>
            	    <td><%= @goal_rating.aligned %></td>
               </tr>
-       </thead>
-    </table><br>
-     <%= link_to 'Back', new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+        </thead>
+      </table><br>
+      <%= link_to 'Back', new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+    </div>
+  </div>
 </div>

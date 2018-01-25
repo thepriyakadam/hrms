@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180111084545) do
+ActiveRecord::Schema.define(version: 20180125061315) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -1990,7 +1990,7 @@ ActiveRecord::Schema.define(version: 20180111084545) do
   create_table "goal_ratings", force: :cascade do |t|
     t.integer  "goal_bunch_id",            limit: 4
     t.integer  "goal_perspective_id",      limit: 4
-    t.integer  "goal_weightage",           limit: 4
+    t.float    "goal_weightage",           limit: 24
     t.text     "goal_measure",             limit: 65535
     t.text     "target",                   limit: 65535
     t.string   "aligned",                  limit: 255
@@ -2013,6 +2013,7 @@ ActiveRecord::Schema.define(version: 20180111084545) do
     t.boolean  "is_hide"
     t.integer  "period_id",                limit: 4
     t.integer  "appraisee_rating_id",      limit: 4
+    t.text     "activity",                 limit: 65535
   end
 
   add_index "goal_ratings", ["appraisee_id"], name: "index_goal_ratings_on_appraisee_id", using: :btree

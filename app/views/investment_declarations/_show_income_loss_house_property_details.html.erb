@@ -1,0 +1,95 @@
+<script>
+  function displayResult()
+  {
+      var a=(document.getElementById('sp1').value);
+      var b=(document.getElementById('sp2').value);
+      var c=(document.getElementById('sp3').value);
+      // var d=(document.getElementById('sp4').value);
+      document.getElementById('income').value=Number(a)-(Number(b)+Number(c));
+  }
+
+  function CalcInterest()
+  {
+      var p=(document.getElementById('income').value);
+      var r=(document.getElementById('s2').value);
+      var q=(Number(p)*Number(r))/100;
+      var s=Number(p)-Number(q);
+      
+      // var t=(document.getElementById('s3').value);
+      
+      // var d=(document.getElementById('sp4').value);
+      document.getElementById('estimatedAmount').value=Number(s);
+  }
+</script>
+
+
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <center>Income/ Loss on Housing Property Details</center>
+    </div>
+
+    <div class="modal-body">
+    <div>
+      <%#= link_to 'Edit', edit_income_loss_house_property_path(@income_loss_house_property),class: "btn btn-success btn-sm fa fa-edit", remote:true %>
+    </div>
+    <% i = 0 %>
+    <% @income_loss_house_properties.each do |ilhp| %>
+    <% i = i + 1 %>
+    <div align="right">
+     <%#= link_to 'Edit', edit_policy_detail_path(policy_detail),class: "btn btn-success btn-sm fa fa-edit" %>
+     <%= link_to '', ilhp, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-trash-o' %>
+     </div>
+    <table id="example6" class="table table-bordered table-hover table-condensed">
+      <tr>
+        <th>Sr.No.</th>
+        <td><%= i %></td>
+        <th>Property Type:</th>
+        <td><%= ilhp.property_type %></td>
+      </tr>
+
+      <tr>
+        <th>Rental Income:</th>
+        <td><%= ilhp.rental_income %></td>
+        <th>Less Taxes:</th>
+        <td><%= ilhp.less_taxes %></td>
+      </tr>
+
+      <tr>
+        <th>Less Repairs:</th>
+        <td><%= ilhp.less_repairs %></td>
+        <th>Income:</th>
+        <td><%= ilhp.income %></td>
+      </tr>
+
+      <tr>
+        <th>Less Interest:</th>
+        <td><%= ilhp.less_interest %></td>
+        <th>Less Pre EMI Interest:</th>
+        <td><%= ilhp.less_pre_emi_interest %></td>
+      </tr>
+
+      <tr>
+        <th>Estimated Total Amount:</th>
+        <td><%= ilhp.estimated_total_amt %></td>
+        <th>Actual Total Amount:</th>
+        <td><%= ilhp.actual_total_amt %></td>
+      </tr>
+
+      <tr>
+        <th>Total:</th>
+        <td colspan="3"><%= ilhp.total %></td>
+      </tr>
+
+<%#= link_to 'Edit', editilhp_path(ilhp) %> |
+<%#= link_to 'Back', income_loss_house_properties_path %>
+
+      
+
+    </table>
+    <% end %>  
+    </div>
+   </div>
+ </div>
+

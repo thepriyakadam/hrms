@@ -1,0 +1,79 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <center>Add Medicle Reimbursement Detail</center>
+    </div>
+
+    <div class="modal-body">
+      <%#= bootstrap_form_for :policy_detail,url:{action:"policy_details"},html: {id: 'policy_detail'}, remote:true  do |f| %>
+      <%= bootstrap_form_for(@medicle_reimbursement,html: {id: 'medicle_reimbursement'} ) do |f| %>
+       <%#= f.hidden_field :investment_declaration_id , value: current_user.employee_id %>
+       
+        <%= f.hidden_field :investment_declaration_id , value: params[:format] %>
+        <!-- <div class="col-sm-4">
+          <div class="field">
+            <%#= f.text_field :investment_declaration_id %>
+          </div>
+        </div> -->
+        
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :bill_no, label:'Bill No.' %>
+            </div>
+          </div>
+          
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :bill_date, label:'Bill Date',id:'datepicker' %>
+            </div>
+          </div>
+        </div>
+          
+        <div class="row">  
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :name_on_invoice, label:'Name On Invoice' %>
+            </div>
+          </div>
+          
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :estimated_amt, label:'Estimated Amount' %>
+            </div>
+          </div>
+        </div>  
+          
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :actual_amt, label:'Actual Amount' %>
+            </div>
+          </div>
+          
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :toatal_amt, label:'Total Amount' %>
+            </div>
+          </div>
+        </div>  
+          
+
+        <div class="row" align="center">
+          <div class="col-sm-12">
+            <%= f.submit "Submit", class: 'btn btn-sm btn-success fa fa-modx' %>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+         $('#datepicker').datepicker({
+   format: "yyyy-mm-dd"
+  })
+  .on('changeDate', function(ev){
+  $('#datepicker').datepicker('hide');
+});       
+</script>

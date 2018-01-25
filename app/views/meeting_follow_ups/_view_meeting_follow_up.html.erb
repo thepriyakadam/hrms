@@ -1,0 +1,55 @@
+<%#= link_to 'Edit', edit_meeting_follow_up_path(@meeting_follow_up) %> |
+<%#= link_to 'Back', meeting_follow_ups_path %>
+<!-- Main content -->
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Meeting Follow_up  </center></h4>
+    </div>
+    <div class="modal-body">
+      <table class="table table-bordered table-hover table-condensed">
+        <tbody>
+          <tr>
+            <th><strong> Employee Plan </strong></th>
+            <td><%= @meeting_follow_up.employee_plan %></td>
+          </tr>
+          <tr>
+              <th><strong> Contact Person </strong></th>
+              <td><%= @meeting_follow_up.contact_person %></td>
+          </tr>
+          <tr>
+            <th><strong> Follow_up Response </strong></th>
+            <td><%= @meeting_follow_up.follow_up_response %></td>
+          </tr>
+          <tr>
+              <th><strong>Date</strong></th>
+              <td><%= @meeting_follow_up.date %></td>
+          </tr>
+          <tr>
+            <th><strong>Time</strong></th>
+            <td><%= @meeting_follow_up.time %></td>
+          </tr>
+          <tr>
+              <th><strong>Next date</strong></th>
+              <td><%= @meeting_follow_up.next_time %></td>
+          </tr>
+          <tr>
+            <th><strong>Employee Plan</strong></th>
+            <td><%= @meeting_minute.employee_plan_id %></td>
+          </tr>
+          <tr>
+              <th><strong>Minutes</strong></th>
+              <td><%= @meeting_minute.minutes %></td>
+          </tr>
+      </tbody>
+      </table> <br>
+      <div align="center">
+      <%#= link_to 'Approve', plan_approve_employee_plans_path(@employee_plan.id), data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-sm" %>
+   </div>
+    
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+
+<!-- <div id="myModal" class="modal fade"></div> -->
+

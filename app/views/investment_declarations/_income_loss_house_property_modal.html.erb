@@ -1,0 +1,137 @@
+<script>
+  function displayResult()
+  {
+      var a=(document.getElementById('sp1').value);
+      var b=(document.getElementById('sp2').value);
+      var c=(document.getElementById('sp3').value);
+      // var d=(document.getElementById('sp4').value);
+      document.getElementById('income').value=Number(a)-(Number(b)+Number(c));
+  }
+
+  function CalcInterest()
+  {
+      var p=(document.getElementById('income').value);
+      var r=(document.getElementById('s2').value);
+      var q=(Number(p)*Number(r))/100;
+      var s=Number(p)-Number(q);
+      
+      var t=(document.getElementById('s3').value);
+      var u=Number(r)+Number(t);
+      var v=Number(p)-Number(u);
+      // var d=(document.getElementById('sp4').value);
+      // document.getElementById('estimatedAmount').value=Number(s);
+      document.getElementById('estimatedAmount').value=Number(v);
+      document.getElementById('estimatedAmount1').value=Number(v);
+  }
+</script>
+
+
+
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <center>Add Income / Loss Details on Housing Property</center>
+    </div>
+
+    <div class="modal-body">
+      <%#= bootstrap_form_for :policy_detail,url:{action:"policy_details"},html: {id: 'policy_detail'}, remote:true  do |f| %>
+      <%= bootstrap_form_for(@income_loss_house_property,html: {id: 'income_loss_house_property'} ) do |f| %>
+       <%#= f.hidden_field :investment_declaration_id , value: current_user.employee_id %>
+       
+        <%= f.hidden_field :investment_declaration_id , value: params[:format] %>
+        <!-- <div class="col-sm-4">
+          <div class="field">
+            <%#= f.text_field :investment_declaration_id %>
+          </div>
+        </div> -->
+        
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :property_type, label:'PROPERTY TYPE' %>
+            </div>
+          </div>
+          
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :rental_income, label:'RENTAL INCOME', id:'sp1', onchange:'displayResult()' %>
+            </div>
+          </div>
+        </div>  
+          
+        <div class="row">  
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :less_taxes, label:'LESS TAXES', id:'sp2', onchange:'displayResult()' %>
+            </div>
+          </div>
+          
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :less_repairs, label:'LESS REPAIRS AMOUNT', id:'sp3', onchange:'displayResult()' %>
+            </div>
+          </div>
+        </div>  
+          
+        <div class="row">  
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :income, id:'income',:readonly => true %>
+            </div>
+          </div>
+        
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :less_interest, label:'LESS INTEREST AMOUNT', id:'s2', onchange:'CalcInterest()' %>
+            </div>
+          </div>
+        </div>  
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :less_pre_emi_interest, label:'LESS PRE-EMI INTEREST AMOUNT', id:'s3', onchange:'CalcInterest()' %>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :estimated_total_amt, label:'ESTIMATED TOTAL AMOUNT', id:'estimatedAmount' %>
+            </div>
+          </div>
+        </div>    
+        
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :actual_total_amt, label:'ACTUAL TOTAL AMOUNT', id:'estimatedAmount1',:readonly => true %>
+            </div>
+          </div>  
+
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :total, label:'TOTAL' %>
+            </div>
+          </div>
+        </div>
+        
+
+        <div class="row" align="center">
+          <div class="col-sm-10">
+            <%= f.submit "Submit", class: 'btn btn-sm btn-success fa fa-modx' %>
+          </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="box">
+  <ol>
+  <lh>Notes :</lh>
+  <li> Rental Income should be either notional rent as specified by Municipal Corporations    or fair rental value as per the locations.</li>
+  <li> Repairs and maintainance is allowed for let out property only.</li>
+  <li> Please enclose certificate for interest on house property from financial institutes.</li>
+  <li> Interest on self Occupied Property is allowable to the extent of Rs.30,000 & Rs.2,00,000 as the case may be. </li>
+  <li> Any interest relating to the period prior to year of acquisition / construction, the same should be deducted in five equal installments beginning withthe  year in which the property  was acquired / constructed.</li>
+  </ol>
+  </div>
+</div>

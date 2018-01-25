@@ -1,0 +1,54 @@
+<div id="notice"><%= notice %></div>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <center>Policy Details</center>
+    </div>
+
+    <div class="modal-body">
+    <% i = 0 %>
+    <% @policy_details.each do |policy_detail| %>
+    <div align="right">
+     <%#= link_to 'Edit', edit_policy_detail_path(policy_detail),class: "btn btn-success btn-sm fa fa-edit" %>
+     <%= link_to '', policy_detail, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-trash-o' %>
+     </div>
+    <% i = i + 1 %>
+    <table id="example6" class="table table-bordered table-hover table-condensed">
+      <tr>
+        <th>Sr. No.</th>
+        <td> <%= i %></td>
+        <th>Insurer:</th>
+        <td> <%= policy_detail.insurer %></td>
+      </tr>
+
+        <tr>
+          <th>Policy no:</th>
+          <td><%= policy_detail.policy_no %></td>
+          <th>Relation:</th>
+          <td><%= policy_detail.relation %></td>
+        </tr>
+
+        <tr>
+          <th>Frequency:</th>
+          <td><%= policy_detail.frequency %></td>
+          <th>Premium amount:</th>
+          <td><%= policy_detail.premium_amount %></td>
+        </tr>
+
+        <tr>
+          <th>Estimated annual amount:</th>
+          <td><%= policy_detail.estimated_annual_amount %></td>
+          <th>Actual annual amount:</th>
+          <td><%= policy_detail.actual_annual_amount %></td>
+        </tr>
+    </table>
+    <% end %>
+
+    <%#= link_to 'Edit', edit_policy_detail_path(@policy_detail) %> |
+    <%#= link_to 'Back', policy_details_path %>
+  </div>
+ </div>
+</div>
+
+<div id="policy_details_modal" class="modal fade">

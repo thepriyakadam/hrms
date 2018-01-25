@@ -1,0 +1,5 @@
+<% if @flag == true %>
+	$("#info").html("<%= j render 'investment_declarations/show__policy_detail' %>");      
+<% else %>
+	$("#info").html("<%= j render 'investment_declarations/policy_details_modal' %>");      
+<% end %>

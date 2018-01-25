@@ -1,5 +1,7 @@
 class Access < ActiveRecord::Base
 	self.abstract_class = true
-	#establish_connection("development_sec")
+
+	# self.table_name = "Mx_ATDEventTrn"
+	# self.table_name = "Mx_ATDEventTrn"
 	establish_connection "#{Rails.env}_sec"
 end

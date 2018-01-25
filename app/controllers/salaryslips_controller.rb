@@ -71,6 +71,8 @@ class SalaryslipsController < ApplicationController
     @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id)
     @working_day = Workingday.find(@salaryslip.workingday_id)
     @employee = Employee.find(@salaryslip.employee_id)
+    
+    @leave_details = LeaveDetail.where(salaryslip_id: @salaryslip.id)
     # @employee_leav_balance = EmployeeLeavBalance.find_by()
     @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
     unless @advance_salary.nil?
@@ -141,8 +143,14 @@ class SalaryslipsController < ApplicationController
       format.pdf do
         render pdf: 'print_salary_slip_formate_3',
               layout: 'pdf.html',
-              :orientation      => 'Landscape', # default , Landscape
+              # :orientation      => 'Landscape', # default , Landscape
               template: 'salaryslips/print_salary_slip_formate_3.pdf.erb',
+                :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 30,
+                      :left   => 10,
+                      :right  => 10},
               :show_as_html => params[:debug].present?
       end
     end
@@ -214,8 +222,14 @@ class SalaryslipsController < ApplicationController
       format.pdf do
         render pdf: 'print_emp_contribution_slip',
               layout: 'pdf.html',
-              :orientation      => 'Landscape', # default , Landscape
+              # :orientation      => 'Landscape', # default , Landscape
               template: 'salaryslips/emp_contribution_slip_pdf.pdf.erb',
+                :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 30,
+                      :left   => 10,
+                      :right  => 10},
               :show_as_html => params[:debug].present?
       end
     end
@@ -240,7 +254,14 @@ class SalaryslipsController < ApplicationController
               layout: 'pdf.html',
               # :orientation      => 'Landscape', # default , Landscape
               template: 'salaryslips/print_salary_slip.pdf.erb',
+                :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 30,
+                      :left   => 10,
+                      :right  => 10},
               :show_as_html => params[:debug].present?
+
       end
     end
   end
@@ -253,15 +274,22 @@ class SalaryslipsController < ApplicationController
     @working_day = Workingday.find(@salaryslip.workingday_id)
     @employee = Employee.find(@salaryslip.employee_id)
     @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
+    @leave_details = LeaveDetail.where(salaryslip_id: @salaryslip.id)
     respond_to do |format|
       format.html
       format.pdf do
         render pdf: 'print_salary_slip_rg',
               layout: 'pdf.html',
-              :orientation      => 'Landscape', # default , Landscape
-              :page_height      => 1000,
-              :dpi              => '300',
+              # :orientation      => 'Landscape', # default , Landscape
+              # :page_height      => 1000,
+              # :dpi              => '300',
               template: 'salaryslips/print_salary_slip_rg.pdf.erb',
+               :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 30,
+                      :left   => 10,
+                      :right  => 10},
               :show_as_html => params[:debug].present?
       end
     end
@@ -273,6 +301,7 @@ class SalaryslipsController < ApplicationController
     session[:active_tab] ="PayrollManagement"
     session[:active_tab1] ="SalaryProcess"
     # session[:active_tab2] ="Advance"
+    @employees = JoiningDetail.all
   end
 
   def show_unsaved_employee
@@ -306,7 +335,7 @@ class SalaryslipsController < ApplicationController
     employee_ids = params[:employee_ids]
     @month = params[:month]
     @year = params[:year]
-    if employee_ids.nil? || employee_ids.empty?
+    if employee_ids.nil? || employee_ids.empty? 
       flash[:alert] = 'Please select employees.'
       redirect_to select_month_year_form_salaryslips_path
     else
@@ -317,7 +346,7 @@ class SalaryslipsController < ApplicationController
           @salaryslip_component_array = []
           @employee = Employee.find_by(id: eid)
           working_day = Workingday.where(employee_id: eid, month_name: @month, year: @year).take
-       if @employee.joining_detail.basis_of_time == true
+       if @employee.joining_detail.try(:basis_of_time) == true
           current_template = EmployeeTemplate.where('employee_id = ? and is_active = ?', @employee.id, true).take
           next if current_template.nil?
           addable_salary_items = current_template.employee_salary_templates.where('is_deducted = ?', false)
@@ -344,7 +373,7 @@ class SalaryslipsController < ApplicationController
               addable_calculated_amount = addable_actual_amount / working_day.day_in_month * working_day.calculated_payable_days
             end
             addable_total_actual_amount += addable_actual_amount
-            addable_total_calculated_amount += addable_calculated_amount
+            addable_total_calculated_amount += addable_calculated_amount.round
 
             if item.salary_component.name == 'Basic'
               basic_actual_amount = addable_actual_amount
@@ -626,7 +655,7 @@ class SalaryslipsController < ApplicationController
           unless @well_faires.empty?
             deducted_calculated_amount = 0
             @well_faires.try(:each) do |w|
-              if @month == w.month
+              if @month == w.month and @employee.joining_detail.welfare == true
                 deducted_actual_amount = 0
                 deducted_calculated_amount = deducted_calculated_amount + w.amount
                 @salary_component = SalaryComponent.find_by(name: "WelFare")
@@ -644,6 +673,7 @@ class SalaryslipsController < ApplicationController
               SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_calculated_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Society',salary_component_id: @salary_component.id)
             end
           end
+
 
           date = Date.new(@year.to_i, Workingday.months[@month])
           @food_deductions = FoodDeduction.where(food_date: date..date.at_end_of_month, employee_id: @employee.id)
@@ -895,7 +925,7 @@ class SalaryslipsController < ApplicationController
               addable_calculated_amount = addable_actual_amount / working_day.day_in_month * working_day.payable_day
             end
             addable_total_actual_amount += addable_actual_amount
-            addable_total_calculated_amount += addable_calculated_amount
+            addable_total_calculated_amount += addable_calculated_amount.round
 
             if item.salary_component.name == 'Basic'
               basic_actual_amount = addable_actual_amount
@@ -907,7 +937,7 @@ class SalaryslipsController < ApplicationController
             @addable_salaryslip_item = SalaryslipComponent.new do |sc|
               sc.salary_component_id = item.salary_component_id
               sc.actual_amount = addable_actual_amount
-              sc.calculated_amount = addable_calculated_amount
+              sc.calculated_amount = addable_calculated_amount.round
               sc.is_deducted = false
             end
             @salaryslip_component_array << @addable_salaryslip_item
@@ -1209,7 +1239,7 @@ class SalaryslipsController < ApplicationController
           unless @well_faires.empty?
             deducted_calculated_amount = 0
             @well_faires.try(:each) do |w|
-              if @month == w.month
+             if @month == w.month and @employee.joining_detail.welfare == true
                 deducted_actual_amount = 0
                 deducted_calculated_amount = deducted_calculated_amount + w.amount
                 @salary_component = SalaryComponent.find_by(name: "WelFare")
@@ -1376,9 +1406,9 @@ class SalaryslipsController < ApplicationController
       end
     end
 
-    #   @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)
-      
-      if @employee.joining_detail.ot_option == true && working_day.ot_hours != 0
+     if @employee.joining_detail.ot_option == true && working_day.ot_hours != 0
+        @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)
+        
         @payroll_overtime_masters.try(:each) do |pom|
         formula_string = pom.base_component.split(',').map {|i| i.to_i}
         formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  
@@ -1388,21 +1418,20 @@ class SalaryslipsController < ApplicationController
         overtime_payment = working_day.try(:ot_hours).to_f * pom.rate.to_f * base_amount.to_f
         @salary_component = SalaryComponent.find_by(name: "Overtime")
         SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
-        puts "gggggggggggggggg"
+        puts "ffffffffffffffffffff"
         end
       end
-      
-    #   @payroll_overtime_masters.try(:each) do |pom|
-    #   formula_string = pom.base_component.split(',').map {|i| i.to_i}
-    #   formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  
-    #   @total = formula_item.sum(:calculated_amount)
-    #   @total_actual = formula_item.sum(:actual_amount)
-    #   base_amount = (@total.to_f / working_day.try(:day_in_month).to_f) / pom.company_hrs.to_f
-    #   overtime_payment = working_day.try(:ot_days).to_f * pom.rate.to_f * base_amount.to_f
-    #   @salary_component = SalaryComponent.find_by(name: "Overtime")
-    #   SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
-    #   puts "Overtime................................."
-    # end
+
+
+      transport_allowance = TransportAllowance.find_by_employee_id(@employee.id)
+      unless transport_allowance.nil?
+        if transport_allowance.option
+          addable_actual_amount = 0
+          addable_calculated_amount = transport_allowance.amount * working_day.try(:payable_day)/working_day.try(:day_in_month)
+          @salary_component = SalaryComponent.find_by(name: "Transport Allowance")
+          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: addable_calculated_amount, calculated_amount: addable_calculated_amount, is_deducted: false, other_component_name: 'Transport Allowance',salary_component_id: @salary_component.id)
+        end
+      end
 
    
 
@@ -1421,12 +1450,15 @@ class SalaryslipsController < ApplicationController
       end
 
 
+
+
     @salaryslip = Salaryslip.last
     @salaryslip_component1 = SalaryslipComponent.where(salaryslip_id: @salaryslip.id)
     @salaryslip_component2 = SalaryslipComponent.where(salaryslip_id: @salaryslip.id,is_deducted: true)
     @salaryslip_component3 = SalaryslipComponent.where(salaryslip_id: @salaryslip.id,is_deducted: false)
+    
     actual_gross_salary = @salaryslip_component3.sum(:actual_amount).to_f
-    calculated_gross_salary = @salaryslip_component3.sum(:calculated_amount).to_f
+    calculated_gross_salary = @salaryslip_component3.sum(:calculated_amount)
     actual_amount = @salaryslip_component1.sum(:actual_amount).to_f
     calculated_amount = @salaryslip_component1.sum(:calculated_amount).to_f
     actual_total_deduction = @salaryslip_component2.sum(:actual_amount).to_f

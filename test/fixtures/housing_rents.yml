@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  investment_declaration_id: 
+  metro_city: false
+  estimated_rent: 9.99
+  actual_rent: 9.99
+  accepted_rent: 9.99
+  rejected_rent: 9.99
+  landlord_name: MyString
+  landlord_pan_no: MyString
+  address: MyText
+
+two:
+  investment_declaration_id: 
+  metro_city: false
+  estimated_rent: 9.99
+  actual_rent: 9.99
+  accepted_rent: 9.99
+  rejected_rent: 9.99
+  landlord_name: MyString
+  landlord_pan_no: MyString
+  address: MyText

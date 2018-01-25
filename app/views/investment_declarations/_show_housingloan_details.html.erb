@@ -1,0 +1,58 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <center>Interest on Housing Loan Details</center>
+    </div>
+
+    <div class="modal-body">
+    <% i = 0 %>
+    <% @interest_on_housing_loans.each do |ihp| %>
+    <% i = i + 1 %>
+    <div align="right">
+     <%#= link_to 'Edit', edit_policy_detail_path(policy_detail),class: "btn btn-success btn-sm fa fa-edit" %>
+     <%= link_to '', ihp, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-trash-o' %>
+     </div>
+    <table id="example6" class="table table-bordered table-hover table-condensed">
+      <tr>
+        <th>Sr. No</th>
+        <td><%= i %></td>
+        <th>Property Name:</th>
+        <td><%= best_in_place ihp, :property_name %></td>
+      </tr>
+
+      <tr>
+        <th>Property Address:</th>
+        <td><%= best_in_place ihp, :property_address %></td>
+        <th>Date of Possession:</th>
+        <td><%= best_in_place ihp, :date_of_possession %></td>
+      </tr>
+
+      <tr>
+        <th>Lender Name:</th>
+        <td><%= best_in_place ihp, :lender_name %></td>
+        <th>Lender Address:</th>
+        <td><%= best_in_place ihp, :lender_address %></td>
+      </tr>
+
+      <tr>
+        <th>Lender PAN No:</th>
+        <td><%= best_in_place ihp, :lender_pan_no %></td>
+        <th>Estimated Interest:</th>
+        <td><%= best_in_place ihp, :estimated_interest %></td>
+      </tr>
+
+      <tr>
+        <th>Actual Interest:</th>
+        <td><%= best_in_place ihp, :actual_interest %></td>
+        <th>Total Interest:</th>
+        <td><%= best_in_place ihp, :total_interest %></td>
+      </tr>
+
+        
+      </tr>
+    </table>
+   <% end %>   
+  </div>
+ </div>
+</div>   

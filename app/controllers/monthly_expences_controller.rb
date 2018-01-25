@@ -4,7 +4,8 @@ class MonthlyExpencesController < ApplicationController
   # GET /monthly_expences
   # GET /monthly_expences.json
   def index
-    @monthly_expences = MonthlyExpence.group("DATE_FORMAT('%Y',expence_date)")
+    @monthly_expences = MonthlyExpence.group("DATE_FORMAT(expence_date,'%Y')")
+
     session[:active_tab] ="PayrollManagement"
     session[:active_tab1] ="PayrollSetup"
     session[:active_tab2] ="PeriodicComponents"
@@ -245,7 +246,7 @@ class MonthlyExpencesController < ApplicationController
     redirect_to import_monthly_expence_monthly_expences_path
     else
     MonthlyExpence.import(params[:file])
-    redirect_to monthly_expence_path, notice: "File imported."
+    redirect_to monthly_expences_path, notice: "File imported."
     end
   end
 

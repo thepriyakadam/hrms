@@ -1,4 +1,10 @@
 module EmployeesHelper
+  # def nested_employees(employees)
+  #   employees.map do |employee, sub_employee|
+  #     render(employee) + content_tag(:div, nested_employees(sub_employee), :class => "nested_employees")
+  #   end.join.html_safe
+  # end
+
   def all_active_employee_with_code
   Employee.where(status: "Active").collect {|e| [e.try(:manual_employee_code).to_s + ' ' + e.try(:prefix).to_s + ' ' +e.try(:first_name).to_s+ ' ' + e.try(:middle_name).to_s + ' ' + e.try(:last_name).to_s, e.id]}
   end

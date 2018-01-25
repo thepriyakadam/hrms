@@ -11,7 +11,7 @@ before_action :set_greeting, only: [:show, :edit, :update, :destroy]
     employee_id = params[:employee_id]
     # birthday_image = params[:greeting][:birthday_image]
     #type = params[:type]
-    @greeting = Greeting.create(date: Date.today,message: message,sender_id: current_user.employee_id,receiver_id: employee_id,status: true,greeting_type: 'Birthday',birthday_image: birthday_image)
+    @greeting = Greeting.create(date: Date.today,message: message,sender_id: current_user.employee_id,receiver_id: employee_id,status: true,greeting_type: 'Birthday')
     GreetingMailler.send_email_to_employee(@greeting).deliver_now
 
     flash[:notice] = "Birthday Greeting Send Successfully!"

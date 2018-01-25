@@ -1,0 +1,21 @@
+<div class="box-body"> 
+<%= bootstrap_form_for(@answer_master,html: {id: 'answer_master'} ,remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+       <%= f.text_field :code %>
+      </div>
+    </div>  
+      <div class="col-sm-3">
+        <%= f.text_field :name, label:'Answer' %>
+      </div>
+      <div class="col-sm-3">
+        <label>Status</label>
+        <%= f.check_box :status, label:'Active' %>
+      </div>
+    </div>  
+      <div class="actions">
+        <%= f.submit 'Create Answer',:class => class_name, data: { disable_with: data_info } %>
+      </div>
+  </div>    
+    <% end %>

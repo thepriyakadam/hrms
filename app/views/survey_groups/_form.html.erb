@@ -1,0 +1,49 @@
+<%= bootstrap_form_for(@survey_group,html: {id: 'survey_group'}, remote:true) do |f| %>
+    <div class="row">
+      <div class="col-sm-4">
+        <%= f.text_field :name,label:'Name', placeholder: 'Name' %>
+      </div>
+      <div class="col-sm-4">
+          <div class="form-group required">
+            <%= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Employee"},{:class=>"select2",:style=>"width: 100%;",:tabindex=>"-1"} %>
+          </div>
+      </div> 
+      <div class="col-sm-4">
+        <%= f.text_field :contact,label:'Contact Number', placeholder: 'Contact Number' %>
+      </div>
+    </div>
+    <div class="row">    
+      <div class="col-sm-4">
+        <%= f.select :role,['Admin','Co-ordinator'],{include_blank: "Select Role"} %>
+      </div>
+      <div class="col-sm-4">
+      <label>Status</label>
+         <%= f.check_box :status,label:'Active' %>
+       </div>
+      <div class="actions" style="padding-top: 30px;">
+        <%= f.submit'Create Group',:class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>    
+  <% end %>
+
+<script>
+$("#survey_group").validate({
+    rules: {
+      "survey_group[name]":{
+        required: true,
+      },
+      
+    },
+    messages: {
+      "survey_group[name]":{
+        required: "Please Specify Group Name "
+      },
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

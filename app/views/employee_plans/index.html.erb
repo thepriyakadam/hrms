@@ -2,7 +2,7 @@
   <div class="box-header">
     <h3 class="box-title">Plans List</h3>
     <div class="pull-right">
-      <%= link_to 'New Employee plan', new_employee_plan_path, class: "btn btn-xl btn-info" %> </div>
+      <%= link_to 'New Meeting Plan', new_employee_plan_path, class: "btn btn-primary btn-sm" %> </div>
   </div><!-- /.box-header -->
   <div class="box-body">
       <!-- <div class="col-sm-6"> -->
@@ -11,10 +11,11 @@
            <!-- <tr><td colspan="3"><center>First Level Request</center></td></tr> -->
             <tr>
               <th>Sr.No.</th>
-              <th>From Date</th>
-              <th>To Date</th>
-              <th>From Time</th>
-              <th>To Time</th>
+              <th>Employee Name</th>
+              <th>From Date / From Time</th>
+              <th>To Date / To Time</th>
+              <!-- <th>From Time</th> -->
+              <!-- <th>To Time</th> -->
               <th>Meeting With</th>
               <th>Location</th>
               <th>Current Status</th>
@@ -25,6 +26,7 @@
               <th>Status</th>
               <th>Current status</th>
               <th>Manager</th> -->
+
               <th colspan="3"> Action </th>
             </tr>
           </thead>
@@ -34,10 +36,11 @@
             <% @employee_plans.try(:each) do |employee_plan| %>
               <tr>
                 <td><%= i = i+1 %></td>
-                <td><%= employee_plan.from_date%></td>
-                <td><%= employee_plan.to_date %></td>
-                <td><%= employee_plan.from_time %></td>
-                <td><%= employee_plan.to_time %></td>
+                <td><%= full_name(employee_plan.employee) %></td>
+                <td><%= employee_plan.from_date%> - <%= employee_plan.from_time %></td>
+                <td><%= employee_plan.to_date %> - <%= employee_plan.to_time %></td>
+                <!-- <td><%= employee_plan.from_time %></td>
+                <td><%= employee_plan.to_time %></td> -->
                 <td><%= employee_plan.meeting_with %></td>
                 <td><%= employee_plan.location %></td>
                 <td>
@@ -54,6 +57,7 @@
                       <small class="label label-info">Else</small>
                   <%end%>
                 </td>
+
                 <!-- <td><%#= employee_plan.meeting_agenda %></td> -->
                 <!-- <td><%#= employee_plan.lat %></td>
                 <td><%#= employee_plan.lng %></td>
@@ -62,28 +66,35 @@
                 <td><%#= employee_plan.current_status %></td>
                 <td><%#= employee_plan.manager_id %></td> -->
                 <%# binding.pry %>
-                <td>
-                  <%= link_to '', modal_employee_plan_detail_employee_plans_path(employee_plan), remote: true, class: 'btn btn-xs btn-default fa fa-eye' %>
-                </td>
                 <% if employee_plan.current_status == "Approved" && employee_plan.to_date == DateTime.now.to_date %>
-                  <% if employee_plan.to_time.strftime("%H:%M") < DateTime.now.strftime("%H:%M") %>
-                    <td>
-                      <%= link_to 'Attend', employee_feedback_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit'%>
-                    </td>
-                    <td>
-                      <%= link_to 'Not Attend', employee_reason_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit' %>
-                    </td>
+                  <% if employee_plan.plan_reason_master_id.nil? || employee_plan.feedback.nil? %>
+                    <% if employee_plan.to_time.strftime("%H:%M") < DateTime.now.strftime("%H:%M") %>
+                      <td>
+                        <%= link_to 'Attend', employee_feedback_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit'%>
+                      </td>
+                      <td>
+                        <%= link_to 'Not Attend', employee_reason_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit' %>
+                      </td>
+                    <% else %>
+                      <td> </td>
+                      <td> </td>
+                    <% end %>
                   <% else %>
                     <td> </td>
                     <td> </td>
                   <% end %>
                 <% elsif employee_plan.current_status == "Approved" && employee_plan.to_date < DateTime.now.to_date %>
-                  <td>
-                    <%= link_to 'Attend', employee_feedback_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit' %>
-                  </td>
-                  <td>
-                    <%= link_to 'Not Attend', employee_reason_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit' %>
-                  </td>
+                  <% if !employee_plan.plan_reason_master_id.nil? || !employee_plan.feedback.nil? %>
+                    <td> </td>
+                    <td> </td>
+                  <% else %>
+                    <td>
+                      <%= link_to 'Attend', employee_feedback_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit' %>
+                    </td>
+                    <td>
+                      <%= link_to 'Not Attend', employee_reason_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit' %>
+                    </td>
+                  <% end %>
                 <% elsif employee_plan.current_status == "Approved" && employee_plan.to_date > DateTime.now.to_date %>
                   <td> </td>
                   <td> </td>
@@ -108,10 +119,10 @@
   </div>
 </div>
 <div id="modal_employee_plan_detail" class="modal fade"></div>
+
 <div id="employee_feedback" class="modal fade"></div>
 <div id="employee_reason" class="modal fade"></div>
 <div id="employee_plan_detail_list" ></div>
-
 <script type="text/javascript">
 $(document).ready(function() {
     $('#example6').DataTable( {

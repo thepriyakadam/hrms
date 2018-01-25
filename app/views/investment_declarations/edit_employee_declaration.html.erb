@@ -29,6 +29,7 @@
         <% @sections.each do |section| %>
           <tr><th>Section <%= section.try(:code) %></th></tr>
             <% if section.try(:code) == "80C" %>
+
             <%#  binding.pry  %>
               <%# byebug %>
               <% @investment_declarations_bc.each do |investment_declaration| %>

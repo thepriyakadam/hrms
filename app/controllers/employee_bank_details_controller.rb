@@ -1,6 +1,6 @@
 class EmployeeBankDetailsController < ApplicationController
   before_action :set_employee_bank_detail, only: [:show, :edit, :update, :destroy]
-  # ##load_and_authorize_resource
+  load_and_authorize_resource
   # GET /employee_bank_details
   # GET /employee_bank_details.json
   def index

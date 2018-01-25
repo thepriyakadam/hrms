@@ -2,6 +2,8 @@ class EmployeePlan < ActiveRecord::Base
   belongs_to :employee
   belongs_to :manager
   belongs_to :plan_reason_master
+  has_many :listed_companies
+  has_many :meeting_follow_ups
   validates :from_date, presence: true
   validates :to_date, presence: true
   validates :location, presence: true

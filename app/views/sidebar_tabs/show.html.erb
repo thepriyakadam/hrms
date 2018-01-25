@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @sidebar_tab.name %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @sidebar_tab.status %>
+</p>
+
+<%= link_to 'Edit', edit_sidebar_tab_path(@sidebar_tab) %> |
+<%= link_to 'Back', sidebar_tabs_path %>

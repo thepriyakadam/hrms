@@ -1,25 +1,80 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Feedback :</h3>
+    <h3 class="box-title">Attend Meeting</h3>
     <div class="pull-right"></div>
-    <div class="box-body">
-      <%= bootstrap_form_for :employee_plan, url:{ action: "feedback", employee_plan_id: @employee_plan.id, id: 'employee_plan' }  do |f| %>
-        <div class="row">
-          <div class="col-sm-5">
-            <div class="form-group required">
-              <%= f.text_field :feedback, label:'Feedback' %>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="actions" style="padding-top: 20px;">
-              <%= f.submit 'Submit', class: "btn btn-primary btn-sm"%>
-            </div>
-          </div>
-        </div>
-      <% end %>
+      <div class="box-body">
+        <table class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <td><%= @employee_plan.employee.try(:first_name) %> <%= @employee_plan.employee.try(:last_name) %></td>
+            </tr>
+            <tr>
+              <th>Manager</th>
+              <% emp = @employee_plan.manager_id %>
+              <% @emp_name = Employee.find(emp) %>
+              <td><%= @emp_name.prefix %> <%= @emp_name.first_name %> <%= @emp_name.middle_name %><%= @emp_name.last_name%>
+              </td>
+            </tr>
+            <tr>
+              <th>From Date</th>
+              <td><%= @employee_plan.from_date%></td>
+            </tr>
+            <tr>
+              <th>To Date</th>
+              <td><%= @employee_plan.to_date %></td>
+            </tr>
+            <tr>
+              <th>From Time</th>
+              <td><%= @employee_plan.from_time %></td>
+            </tr>
+            <tr>
+              <th>To Time</th>
+              <td><%= @employee_plan.to_time %></td>
+            </tr>
+            <tr>
+              <th>Meeting With</th>
+              <td><%= @employee_plan.meeting_with %></td>
+            </tr>
+            <tr>
+              <th>Meeting Agenda</th>
+              <td><%= @employee_plan.meeting_agenda %></td>
+            </tr>
+            <tr>
+              <th>Place</th>
+              <td><%= @employee_plan.location %></td>
+            </tr>
+           
+          </thead>
+        </table>
+        <br />
+        <table class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>  
+              <th text-align="center">Minutes </th>
+            </tr>
+          </thead>
+          <tbody>
+          <% i = 0%>
+            <% @emp_minutes.each do |m| %>
+            <tr>
+              <td>
+                <%= i=i+1 %>
+                  <%= m.minutes %>
+                  <hr style="margin-top:00px;margin-bottom:00px;">
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+      </table>
+        <br />
+        <%= link_to ' Add Minutes', minutes_form_employee_plans_path(@employee_plan.id), class: 'btn btn-sm btn-success btn-xs glyphicon glyphicon-plus',remote:true %>
+        <%= link_to 'End Meeting', employee_plans_path, class: 'pull-right btn btn-sm btn-danger btn-xs ',remote:true %>
+      </div>
     </div>
   </div>
-</div>
+  <div id="minutes_form"></div>
+  <div id="plan_meeting_minutes" class="modal fade"></div>
 <script>
   $("#employee_plan").validate({
     rules: {

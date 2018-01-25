@@ -3,7 +3,7 @@
   <div class="box-header">
     <h3 class="box-title">Plan Reason Masters</h3>
     <div class="pull-right">
-      <%= link_to "Create Plan Reason", new_plan_reason_master_path, class: 'btn btn-sm btn-primary' %> 
+      <%= link_to "New Plan Reason", new_plan_reason_master_path, class: 'btn btn-sm btn-primary' %> 
     </div>
   </div>
 <!-- <h1>Listing Plan Reason Masters</h1> -->
@@ -25,9 +25,9 @@
             <td><%= plan_reason_master.name %></td>
             <td><%= plan_reason_master.description %></td>
             <td><%= plan_reason_master.status %></td>
-            <td><%= link_to ' ', view_resaon_plan_reason_masters_path(plan_reason_master), remote: true, class: 'btn btn-xs btn-default fa fa-eye' %></td>
-            <td><%= link_to ' ', edit_plan_reason_master_path(plan_reason_master), class: 'btn btn-xs btn-success fa fa-edit' %></td>
-            <td><%= link_to ' ', plan_reason_master, method: :delete, data: { confirm: 'Are you sure?' },  class: 'btn btn-xs btn-danger fa fa-trash' %></td>
+            <td><%= link_to ' ', view_resaon_plan_reason_masters_path(plan_reason_master), remote: true, class: 'btn btn-xs btn-default fa fa-eye' %>
+                <%= link_to ' ', edit_plan_reason_master_path(plan_reason_master), class: 'btn btn-xs btn-success fa fa-edit' %>
+                <%= link_to ' ', plan_reason_master, method: :delete, data: { confirm: 'Are you sure?' },  class: 'btn btn-xs btn-danger fa fa-trash' %></td>
           </tr>
         <% end %>
       </tbody>

@@ -5,7 +5,8 @@ class EmployeePlansController < ApplicationController
   # GET /employee_plans.json
   def index
     # @employee_plan = EmployeePlan.new
-    @employee_plans = EmployeePlan.where(employee_id: current_user.employee_id).order("from_date DESC")
+
+    @employee_plans = EmployeePlan.where(employee_id: current_user.employee_id)
   end
 
   # GET /employee_plans/1
@@ -20,6 +21,10 @@ class EmployeePlansController < ApplicationController
 
   # GET /employee_plans/1/edit
   def edit
+  end
+
+  def minutes_form
+    @meeting_minute = MeetingMinute.new
   end
 
   def create
@@ -47,18 +52,16 @@ class EmployeePlansController < ApplicationController
     session[:active_tab] ="ManagerSelfService"
   end
 
-  def ajax_employee_plan_details
+def ajax_employee_plan_details
     @employee_plans = EmployeePlan.find(params[:id])
   end
 
   def employee_wise_report
-    session[:active_tab] = "TravelManagemnt"
-    session[:active_tab1] = "travelrequestreports"
+    session[:active_tab] = "MeetingPlan"
   end
 
   def gps_tracking
-    session[:active_tab] = "TravelManagemnt"
-    session[:active_tab1] = "travelrequestreports"
+    session[:active_tab] = "MeetingPlan"
   end
 
   def employee_gps_tracking
@@ -68,16 +71,16 @@ class EmployeePlansController < ApplicationController
     @employee = Employee.find(emp_id)
     @employee_plan = EmployeeLocationHistory.where(employee_id: emp_id)
     if from_date.present? && !to_date.present?
-      @emp_report = EmployeeLocationHistory.where("date >= ? and employee_id =?", from_date.to_date, emp_id)
+      @emp_report = EmployeeLocationHistory.where("date >= ? and employee_id =?", from_date.to_date, emp_id).order("from_date DESC")
     end
     if !from_date.present? && to_date.present?
-      @emp_report = EmployeeLocationHistory.where("date <= ? and employee_id =?", to_date.to_date, emp_id)
+      @emp_report = EmployeeLocationHistory.where("date <= ? and employee_id =?", to_date.to_date, emp_id).order("from_date DESC")
     end
     if from_date.present? && to_date.present?
-      @emp_report = EmployeeLocationHistory.where(date:  from_date.to_date..to_date.to_date, employee_id: emp_id) 
+      @emp_report = EmployeeLocationHistory.where(date:  from_date.to_date..to_date.to_date, employee_id: emp_id).order("from_date DESC")
     end
     if !from_date.present? && !to_date.present? && emp_id.present?
-      @emp_report = EmployeeLocationHistory.where("employee_id =?", emp_id)
+      @emp_report = EmployeeLocationHistory.where("employee_id =?", emp_id).order("from_date DESC")
     end
 
     respond_to do |format|
@@ -108,16 +111,16 @@ class EmployeePlansController < ApplicationController
     @employee = Employee.find(emp_id)
     @employee_plan = EmployeePlan.where(employee_id: emp_id)
     if from_date.present? && !to_date.present?
-      @emp_report = EmployeePlan.where("from_date >= ? and employee_id =?", from_date.to_date, emp_id)
+      @emp_report = EmployeePlan.where("from_date >= ? and employee_id =?", from_date.to_date, emp_id).order("from_date DESC")
     end
     if !from_date.present? && to_date.present?
-      @emp_report = EmployeePlan.where("to_time <= ? and employee_id =?", to_date.to_date, emp_id)
+      @emp_report = EmployeePlan.where("to_time <= ? and employee_id =?", to_date.to_date, emp_id).order("from_date DESC")
     end
     if from_date.present? && to_date.present?
-      @emp_report = EmployeePlan.where(from_date:  from_date.to_date..to_date.to_date, employee_id: emp_id) 
+      @emp_report = EmployeePlan.where(from_date:  from_date.to_date..to_date.to_date, employee_id: emp_id).order("from_date DESC")
     end
     if !from_date.present? && !to_date.present? && emp_id.present?
-      @emp_report = EmployeePlan.where("employee_id =?", emp_id)
+      @emp_report = EmployeePlan.where("employee_id =?", emp_id).order("from_date DESC")
     end
 
     respond_to do |format|
@@ -142,8 +145,8 @@ class EmployeePlansController < ApplicationController
   end
 
   def manager_wise_report
-    session[:active_tab] = "TravelManagemnt"
-    session[:active_tab1] = "travelrequestreports"
+    session[:active_tab] = "MeetingPlan"
+    # session[:active_tab1] = "travelrequestreports"
   end
 
   def manager_report
@@ -152,16 +155,16 @@ class EmployeePlansController < ApplicationController
     to_date = params[:employee_plan] ? params[:employee_plan][:to_date] : params[:to_date]
     emp_id = params[:employee_plan] ? params[:employee_plan][:employee_id] : params[:employee_id]
     if from_date.present? && !to_date.present?
-      @emp_report = EmployeePlan.where("from_date >= ? and manager_id =?", from_date.to_date, emp_id)
+      @emp_report = EmployeePlan.where("from_date >= ? and manager_id =?", from_date.to_date, emp_id).order("from_date DESC")
     end
     if !from_date.present? && to_date.present?
-      @emp_report = EmployeePlan.where("to_time <= ? and manager_id =?", to_date.to_date, emp_id)
+      @emp_report = EmployeePlan.where("to_time <= ? and manager_id =?", to_date.to_date, emp_id).order("from_date DESC")
     end
     if from_date.present? && to_date.present?
-      @emp_report = EmployeePlan.where(from_date:  from_date.to_date..to_date.to_date, manager_id: emp_id) 
+      @emp_report = EmployeePlan.where(from_date:  from_date.to_date..to_date.to_date, manager_id: emp_id).order("from_date DESC")
     end
     if !from_date.present? && !to_date.present? && emp_id.present? 
-      @emp_report = EmployeePlan.where("manager_id =?", emp_id)
+      @emp_report = EmployeePlan.where("manager_id =?", emp_id).order("from_date DESC")
     end
     respond_to do |format|
       format.js
@@ -184,6 +187,222 @@ class EmployeePlansController < ApplicationController
     end
   end
 
+  def company_wise_report
+    session[:active_tab] = "MeetingPlan"
+  end
+
+  def company_report
+    @emp_plan = EmployeePlan.all
+    from_date = params[:employee_plan] ? params[:employee_plan][:from_date] : params[:from_date]
+    to_date = params[:employee_plan] ? params[:employee_plan][:to_date] : params[:to_date]
+    listed_company = params[:employee_plan] ? params[:employee_plan][:listed_company_id] : params[:listed_company_id]
+    if from_date.present? && !to_date.present?
+      @emp_report = EmployeePlan.where("from_date >= ? and listed_company_id =?", from_date.to_date, listed_company).order("from_date DESC")
+    end
+    if !from_date.present? && to_date.present?
+      @emp_report = EmployeePlan.where("to_time <= ? and listed_company_id =?", to_date.to_date, listed_company).order("from_date DESC")
+    end
+    if from_date.present? && to_date.present?
+      @emp_report = EmployeePlan.where(from_date: from_date.to_date..to_date.to_date, listed_company_id: listed_company).order("from_date DESC")
+    end
+    if !from_date.present? && !to_date.present? && listed_company.present? 
+      @emp_report = EmployeePlan.where("listed_company_id =?", listed_company).order("from_date DESC")
+    end
+    respond_to do |format|
+      format.js
+      format.xls {render template: 'employee_plans/print_company_wise_report_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'print_employee_wise_report_pdf',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'employee_plans/print_company_wise_report_pdf.pdf.erb',
+            show_as_html: params[:debug].present?,
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+      end
+    end
+  end
+
+  def status_wise_report
+    session[:active_tab] = "MeetingPlan"
+  end
+
+  def status_report
+    @emp_plan = EmployeePlan.all
+    from_date = params[:employee_plan] ? params[:employee_plan][:from_date] : params[:from_date]
+    to_date = params[:employee_plan] ? params[:employee_plan][:to_date] : params[:to_date]
+    current_status = params[:employee_plan] ? params[:employee_plan][:current_status] : params[:current_status]
+    emp_id = params[:employee_plan] ? params[:employee_plan][:employee_id] : params[:employee_id]
+    if from_date.present? && !to_date.present? && !emp_id.present?
+      @emp_report = EmployeePlan.where("from_date >= ? and current_status =? ", from_date.to_date, current_status).order("from_date DESC")
+    end
+    if from_date.present? && !to_date.present? && emp_id.present?
+      @emp_report = EmployeePlan.where("from_date >= ? and current_status =? and employee_id =?", from_date.to_date, current_status, emp_id).order("from_date DESC")
+    end
+    if !from_date.present? && to_date.present? && !emp_id.present?
+      @emp_report = EmployeePlan.where("to_time <= ? and current_status =?", to_date.to_date, current_status).order("from_date DESC")
+    end
+    if !from_date.present? && to_date.present? && emp_id.present?
+      @emp_report = EmployeePlan.where("to_time <= ? and current_status =? and employee_id =?", to_date.to_date, current_status, emp_id).order("from_date DESC")
+    end
+    if from_date.present? && to_date.present? && !emp_id.present?
+      @emp_report = EmployeePlan.where(from_date: from_date.to_date..to_date.to_date, current_status: current_status).order("from_date DESC")
+    end
+    if from_date.present? && to_date.present? && emp_id.present?
+      @emp_report = EmployeePlan.where(from_date: from_date.to_date..to_date.to_date, current_status: current_status, employee_id: emp_id).order("from_date DESC")
+    end
+    if !from_date.present? && !to_date.present? && current_status.present? && !emp_id.present?
+      @emp_report = EmployeePlan.where("current_status =?", current_status).order("from_date DESC")
+    end
+    if !from_date.present? && !to_date.present? && current_status.present? && emp_id.present?
+      @emp_report = EmployeePlan.where("current_status =? and employee_id =?", current_status, emp_id).order("from_date DESC")
+    end
+    respond_to do |format|
+      format.js
+      format.xls {render template: 'employee_plans/print_status_wise_report_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'print_employee_wise_report_pdf',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'employee_plans/print_status_wise_report_pdf.pdf.erb',
+            show_as_html: params[:debug].present?,
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+      end
+    end
+  end
+
+  def meeting_minutes_history
+    session[:active_tab] = "MeetingPlan"
+  end
+
+  def meeting_minutes_history_report
+    from_date = params[:employee_plan] ? params[:employee_plan][:from_date] : params[:from_date]
+    to_date = params[:employee_plan] ? params[:employee_plan][:to_date] : params[:to_date]
+    emp_id = params[:employee_plan] ? params[:employee_plan][:employee_id] : params[:employee_id]
+    @employee = Employee.find(emp_id)
+    @employee_plan = EmployeePlan.where(employee_id: emp_id)
+    if from_date.present? && !to_date.present?
+      @emp_report = EmployeePlan.where("from_date >= ? and employee_id =?", from_date.to_date, emp_id).order("from_date DESC")
+    end
+    if !from_date.present? && to_date.present?
+      @emp_report = EmployeePlan.where("to_time <= ? and employee_id =?", to_date.to_date, emp_id).order("from_date DESC")
+    end
+    if from_date.present? && to_date.present?
+      @emp_report = EmployeePlan.where(from_date:  from_date.to_date..to_date.to_date, employee_id: emp_id).order("from_date DESC")
+    end
+    if !from_date.present? && !to_date.present? && emp_id.present?
+      @emp_report = EmployeePlan.where("employee_id =?", emp_id).order("from_date DESC")
+    end
+
+    respond_to do |format|
+      format.js
+      format.xls {render template: 'employee_plans/print_employee_wise_report_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'print_employee_wise_report_pdf',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'employee_plans/print_employee_wise_report_pdf.pdf.erb',
+            show_as_html: params[:debug].present?,
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+      end
+    end
+  end
+  
+  def plan_meeting_minutes
+    plan_id = params[:plan_id]
+    @employee_plan = EmployeePlan.find(plan_id)
+    @emp_minutes = MeetingMinute.where(employee_plan_id: plan_id)
+    @all_minutes = []
+    if @emp_minutes.present?
+      @emp_minutes.each do |m|
+        @minut = m.minutes
+        @all_minutes << @minut
+      end
+    end
+    respond_to do |format|
+      format.js
+      format.xls {render template: 'employee_plans/plan_meeting_minutes_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'print_employee_wise_report_pdf',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'employee_plans/plan_meeting_minutes_pdf.pdf.erb',
+            show_as_html: params[:debug].present?,
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+      end
+    end
+  end
+
+  def meeting_follow_up
+    session[:active_tab] = "MeetingPlan"
+  end
+
+  def meeting_follow_up_report
+    from_date = params[:employee_plan] ? params[:employee_plan][:from_date] : params[:from_date]
+    to_date = params[:employee_plan] ? params[:employee_plan][:to_date] : params[:to_date]
+    emp_id = params[:employee_plan] ? params[:employee_plan][:employee_id] : params[:employee_id]
+    @employee = Employee.find(emp_id)
+    #@emp_plan = EmployeePlan.find(emp_id)
+    @employee_plan = EmployeePlan.where(employee_id: emp_id)
+    if from_date.present? && !to_date.present?
+      @emp_report = EmployeePlan.where("from_date >= ? and employee_id =?", from_date.to_date, emp_id).where.not(start_latitude: nil?).order("from_date DESC")
+    end
+    if !from_date.present? && to_date.present?
+      @emp_report = EmployeePlan.where("to_time <= ? and employee_id =?", to_date.to_date, emp_id).where.not(start_latitude: nil?).order("from_date DESC")
+    end
+    if from_date.present? && to_date.present?
+      @emp_report = EmployeePlan.where(from_date:  from_date.to_date..to_date.to_date, employee_id: emp_id).where.not(start_latitude: nil?).order("from_date DESC")
+    end
+    if !from_date.present? && !to_date.present? && emp_id.present?
+      @emp_report = EmployeePlan.where("employee_id =?", emp_id).where.not(start_latitude: nil?).order("from_date DESC")
+    end
+    respond_to do |format|
+      format.js
+      format.xls {render template: 'employee_plans/print_employee_wise_report_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'print_employee_wise_report_pdf',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'employee_plans/print_employee_wise_report_pdf.pdf.erb',
+            show_as_html: params[:debug].present?,
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+      end
+    end
+  end
   # PATCH/PUT /employee_plans/1
   # PATCH/PUT /employee_plans/1.json
 
@@ -206,6 +425,7 @@ class EmployeePlansController < ApplicationController
       end
     # end
   end
+
 
   def meeting_plan_approval
     @employee_plan = EmployeePlan.where(current_status: "Pending", manager_id: current_user.employee_id)
@@ -233,7 +453,15 @@ class EmployeePlansController < ApplicationController
   end
 
   def employee_feedback
-    @employee_plan = EmployeePlan.find(params[:format])
+    emp_paln_id = params[:format]
+    @employee_plan = EmployeePlan.find(emp_paln_id)
+    @emp_minutes = MeetingMinute.where(employee_plan_id: emp_paln_id)
+  end
+
+  def start_meeting
+  end
+
+  def end_meeting
   end
 
   def feedback
@@ -285,6 +513,6 @@ class EmployeePlansController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_plan_params
-      params.require(:employee_plan).permit(:employee_id, :from_date, :to_date, :from_time, :to_time, :meeting_with, :location, :meeting_agenda, :lat, :lng, :confirm, :status, :current_status, :manager_id)
+      params.require(:employee_plan).permit(:employee_id, :plan_or_unplan, :listed_company_id, :from_date, :to_date, :from_time, :to_time, :meeting_with, :location, :meeting_agenda, :lat, :lng, :confirm, :status, :current_status, :manager_id, :latitude, :longitude, :plan_reason_master_id, :feedback, :start_latitude, :end_latitude, :created_latitude, :start_longitude, :end_longitude, :created_longitude, :start_place, :end_place, :created_place)
     end
 end

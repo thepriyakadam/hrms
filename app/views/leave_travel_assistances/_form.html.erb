@@ -1,0 +1,61 @@
+<%= form_for(@leave_travel_assistance) do |f| %>
+  <% if @leave_travel_assistance.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@leave_travel_assistance.errors.count, "error") %> prohibited this leave_travel_assistance from being saved:</h2>
+
+      <ul>
+      <% @leave_travel_assistance.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :investment_declaration_id %><br>
+    <%= f.text_field :investment_declaration_id %>
+  </div>
+  <div class="field">
+    <%= f.label :journey_from_date %><br>
+    <%= f.date_select :journey_from_date %>
+  </div>
+  <div class="field">
+    <%= f.label :journey_to_date %><br>
+    <%= f.date_select :journey_to_date %>
+  </div>
+  <div class="field">
+    <%= f.label :from_location %><br>
+    <%= f.text_field :from_location %>
+  </div>
+  <div class="field">
+    <%= f.label :to_location %><br>
+    <%= f.text_field :to_location %>
+  </div>
+  <div class="field">
+    <%= f.label :person_traveled %><br>
+    <%= f.text_field :person_traveled %>
+  </div>
+  <div class="field">
+    <%= f.label :relationship %><br>
+    <%= f.text_field :relationship %>
+  </div>
+  <div class="field">
+    <%= f.label :travel_mode %><br>
+    <%= f.text_field :travel_mode %>
+  </div>
+  <div class="field">
+    <%= f.label :estimated_amt %><br>
+    <%= f.text_field :estimated_amt %>
+  </div>
+  <div class="field">
+    <%= f.label :actual_amt %><br>
+    <%= f.text_field :actual_amt %>
+  </div>
+  <div class="field">
+    <%= f.label :total %><br>
+    <%= f.text_field :total %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

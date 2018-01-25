@@ -728,6 +728,7 @@ ActiveRecord::Schema.define(version: 20180123071508) do
     t.decimal  "latitude",                    precision: 10
     t.decimal  "longitude",                   precision: 10
     t.text     "place",         limit: 65535
+    t.text     "comment",       limit: 65535
   end
 
   create_table "daily_bill_detail_histories", force: :cascade do |t|
@@ -1342,11 +1343,29 @@ ActiveRecord::Schema.define(version: 20180123071508) do
     t.float    "longitude",             limit: 24
     t.integer  "plan_reason_master_id", limit: 4
     t.text     "feedback",              limit: 65535
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
+    t.integer  "listed_company_id",     limit: 4
+    t.boolean  "plan_or_unplan"
+    t.float    "start_latitude",        limit: 24
+    t.float    "start_longitude",       limit: 24
+    t.string   "start_place",           limit: 255
+    t.float    "end_latitude",          limit: 24
+    t.float    "end_longitude",         limit: 24
+    t.string   "end_place",             limit: 255
+    t.float    "created_latitude",      limit: 24
+    t.decimal  "created_longitude",                   precision: 10
+    t.string   "created_place",         limit: 255
+    t.date     "created_date"
+    t.time     "created_time"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.date     "start_date"
+    t.date     "end_date"
   end
 
   add_index "employee_plans", ["employee_id"], name: "index_employee_plans_on_employee_id", using: :btree
+  add_index "employee_plans", ["listed_company_id"], name: "index_employee_plans_on_listed_company_id", using: :btree
 
   create_table "employee_promotions", force: :cascade do |t|
     t.string   "designation",             limit: 255
@@ -2606,6 +2625,7 @@ ActiveRecord::Schema.define(version: 20180123071508) do
     t.boolean  "weekoff_sandwich"
     t.boolean  "holiday_sandwich"
     t.boolean  "transfer"
+    t.boolean  "pre_request"
   end
 
   create_table "leav_rejecteds", force: :cascade do |t|
@@ -2741,6 +2761,15 @@ ActiveRecord::Schema.define(version: 20180123071508) do
     t.datetime "updated_at",                null: false
   end
 
+  create_table "listed_companies", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "contact_no", limit: 255
+    t.string   "email",      limit: 255
+    t.text     "location",   limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
   create_table "loan_approvals", force: :cascade do |t|
     t.integer  "loan_request_id",    limit: 4
     t.integer  "membership_id",      limit: 4
@@ -2843,6 +2872,30 @@ ActiveRecord::Schema.define(version: 20180123071508) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "meeting_follow_ups", force: :cascade do |t|
+    t.integer  "employee_plan_id",   limit: 4
+    t.string   "contact_person",     limit: 255
+    t.string   "contact_no",         limit: 255
+    t.text     "follow_up_response", limit: 65535
+    t.date     "date"
+    t.time     "time"
+    t.date     "next_date"
+    t.time     "next_time"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
+
+  add_index "meeting_follow_ups", ["employee_plan_id"], name: "index_meeting_follow_ups_on_employee_plan_id", using: :btree
+
+  create_table "meeting_minutes", force: :cascade do |t|
+    t.integer  "employee_plan_id", limit: 4
+    t.text     "minutes",          limit: 65535
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "meeting_minutes", ["employee_plan_id"], name: "index_meeting_minutes_on_employee_plan_id", using: :btree
 
   create_table "members", force: :cascade do |t|
     t.string   "manual_member_code",     limit: 255
@@ -4715,6 +4768,7 @@ ActiveRecord::Schema.define(version: 20180123071508) do
   add_foreign_key "employee_nominations", "states"
   add_foreign_key "employee_physicals", "employees"
   add_foreign_key "employee_plans", "employees"
+  add_foreign_key "employee_plans", "listed_companies"
   add_foreign_key "employee_promotions", "departments"
   add_foreign_key "employee_promotions", "employee_designations"
   add_foreign_key "employee_promotions", "employee_grades"
@@ -4850,6 +4904,8 @@ ActiveRecord::Schema.define(version: 20180123071508) do
   add_foreign_key "machine_attendances", "employees"
   add_foreign_key "machine_attendances", "shift_masters"
   add_foreign_key "manager_histories", "employees"
+  add_foreign_key "meeting_follow_ups", "employee_plans"
+  add_foreign_key "meeting_minutes", "employee_plans"
   add_foreign_key "members", "companies"
   add_foreign_key "members", "company_locations"
   add_foreign_key "members", "departments"

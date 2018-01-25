@@ -43,9 +43,9 @@ class AdvanceTypesController < ApplicationController
     @advance_types = AdvanceType.all
   end
 
-      def advance_type_master
-     @advance_types = AdvanceType.all
-     respond_to do |f|
+  def advance_type_master
+    @advance_types = AdvanceType.all
+    respond_to do |f|
       f.js
       f.xls {render template: 'advance_types/advance_type_master.xls.erb'}
       f.html
@@ -56,9 +56,9 @@ class AdvanceTypesController < ApplicationController
         template: 'advance_types/advance_type_master.pdf.erb',
         show_as_html: params[:debug].present?
         #margin:  { top:1,bottom:1,left:1,right:1 }
-            end
-          end
+      end
     end
+  end
 
   private
 
@@ -69,6 +69,6 @@ class AdvanceTypesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def advance_type_params
-    params.require(:advance_type).permit(:interest,:rate,:is_confirm,:code, :name, :description)
+    params.require(:advance_type).permit(:intrest,:rate,:is_confirm,:code, :name, :description)
   end
 end

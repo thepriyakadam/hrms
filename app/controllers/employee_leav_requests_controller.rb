@@ -418,32 +418,44 @@ class EmployeeLeavRequestsController < ApplicationController
 
                               # @leave_record = LeaveRecord.last
                               @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
-                                  total = 0
-                                  @leave_record.each do |l|
-                                    total = total + l.count
-                                  end
-                                  total
-                                  @employee_leav_request.update(leave_count: total)
+
+                              total = 0
+                              @leave_record.each do |l|
+                                total = total + l.count
+                              end
+                              total
+                              @employee_leav_request.update(leave_count: total)
 
 
-                                  @employee_leav_request.minus_leave(@employee_leav_request)
-                                  if @employee.manager.email.nil? || @employee.manager.email == ''
-                                    flash[:notice] = 'Send request without email.'
-                                  else
-                                    flash[:notice] = 'Leave Request sent successfully !'
-                                    # LeaveRequestMailer.pending(@employee_leav_request).deliver_now
-                                  end
-                                  redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-                                else
-                                  render :new
-                                end
-                            end#balance.nil?
+                              #@employee_leav_request.manage_coff(@employee_leav_request)
+                              @employee_leav_request.minus_leave(@employee_leav_request)
+                              if @employee.manager.email.nil? || @employee.manager.email == ''
+                                flash[:notice] = 'Send request without email.'
+                              else
+                                flash[:notice] = 'Leave Request sent successfully !!'
+                                 LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                              end
+                              redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+                            else
+                              render :new
+                            end
+                        else
+                            @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
+                            if @employee_leav_request.save
+                          #emp_leav_bal_id
+                              @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
+                  #leave_record
+                          @employee_leav_request.leave_record_create(@employee_leav_request)
+                          @employee_leav_request.create_attendance_leave
 
-                        else #is_balance == true
-                              @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
-                              if @employee_leav_request.save
-                             #emp_leav_bal_id
-                                  #@employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
+                          # @leave_record = LeaveRecord.last
+                          @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
+                              total = 0
+                              @leave_record.each do |l|
+                                total = total + l.count
+                              end
+                              total
+                              @employee_leav_request.update(leave_count: total)
 
                     #leave_record
                             @employee_leav_request.leave_record_create(@employee_leav_request)
@@ -467,7 +479,8 @@ class EmployeeLeavRequestsController < ApplicationController
                                 end
                                 redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
                               else
-                                render :new
+                                flash[:notice] = 'Leave Request sent successfully !'
+                                 LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                               end
                         end #@leave_category.is_balance == true
                     end #monthly_count > @leav_category.monthly_leave.to_f

@@ -9,7 +9,7 @@ class Qualification < ActiveRecord::Base
   has_many :candidate_forms
    validates :employee_id, presence: true
    validates :marks, presence: true
-   validates :degree_id, presence: true, uniqueness: { case_sensitive: false }
+   # validates :degree_id, presence: true, uniqueness: { case_sensitive: false }
    validates :degree_type_id, presence: true
 
   def self.to_csv(options = {})

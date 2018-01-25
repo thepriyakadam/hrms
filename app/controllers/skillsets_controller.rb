@@ -35,7 +35,7 @@ class SkillsetsController < ApplicationController
             Skillset.create(employee_id: params['skillset']['employee_id'], name: params['skillset'][i.to_s]['name'], skill_level: params['skillset'][i.to_s]['skill_level'])
           end
           @skillsets = @employee.skillsets
-        # EmployeeMailer.skillset_create(@employee,@skillset).deliver_now
+          EmployeeMailer.skillset_create(@employee,@skillset).deliver_now
           flash[:notice] = 'skillset was successfully created'
           format.html { redirect_to @skillset, notice: 'Skillset was successfully created.' }
           format.json { render :show, status: :created, location: @skillset }
@@ -60,7 +60,7 @@ class SkillsetsController < ApplicationController
         # EmployeeMailer.skillset_create(@employee,@skillset).deliver_now
         @skillsets = @employee.skillsets
         format.js { @flag = true }
-        # EmployeeMailer.skillset_create(@employee,@skillset).deliver_now
+        EmployeeMailer.skillset_create(@employee,@skillset).deliver_now
       else
         # format.html { render :edit }
         # format.json { render json: @skillset.errors, status: :unprocessable_entity }

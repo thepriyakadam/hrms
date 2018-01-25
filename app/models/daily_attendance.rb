@@ -60,11 +60,7 @@ class DailyAttendance < ActiveRecord::Base
         end
         daily_att = DailyAttendance.where(employee_code: user_id, time: etime)
         if daily_att.empty?
-<<<<<<< HEAD
-          daily_att_updated = DailyAttendance.create(employee_code: user_id, date: edate, time: etime)
-=======
           daily_att_updated = DailyAttendance.create(employee_code: user_id, date: edate_time.to_date, time: etime)
->>>>>>> 26ec75cc64ebd9a13aa3b956803cc45286b24ab2
           puts "---------attendace created 0 #{Time.now}---------"
         else 
         end
@@ -94,7 +90,7 @@ class DailyAttendance < ActiveRecord::Base
 
 
  def self.calculate_attendance
-    emp = EmployeeAttendance.where("in_time > ? ", Time.now - 7.days)
+    emp = EmployeeAttendance.where("in_time > ? ", Time.now - 24.days)
     emp.each do |emp|
       id = emp.employee_id
       in_t = emp.in_time

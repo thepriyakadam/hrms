@@ -132,7 +132,7 @@ class OnDutyRequestsController < ApplicationController
               flash[:notice] = "Send request without email."
             else
               flash[:notice] = 'OD Request sent successfully.'
-              # OdRequestMailer.pending(@on_duty_request).deliver_now
+               OdRequestMailer.pending(@on_duty_request).deliver_now
             end
             
               if @on_duty_request.id != nil

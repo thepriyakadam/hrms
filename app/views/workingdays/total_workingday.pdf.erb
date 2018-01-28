@@ -1,0 +1,92 @@
+<div class="box">
+  <div class="box-body">
+    <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+        <thead>
+         <tr>
+          <td colspan="13"><center> 
+            <% if current_user.employee.company_location.company.company_logo == nil %>
+            <%else %>
+              <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+            <%end%> 
+              <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+          </td>
+        </tr>
+
+        <tr><td colspan="13"><center>Working Days : <%= @from %> - <%= @to %></center></td></tr>
+        <tr>
+          <th>ID</th>
+          <th>Employee</th>
+          <th>Payable Day</th>
+          <th>Present Day</th>
+          <th>Absent Day</th>
+          <th>Holiday</th>
+          <th>Week Off</th>
+          <th>OD Day</th>
+        </tr>
+      </thead>
+
+      <tbody>
+         <% @workingdays.each do |workingday| %>
+          <tr>
+            <td><%= workingday.employee.try(:manual_employee_code) %></td>
+            <td><%= full_name(workingday.employee) %></td>
+            <td>
+                <% payable = 0 %>
+                <% @workingday = Workingday.where(date: @from..@to,employee_id: workingday.employee_id) %>
+                <% @workingday.each do |w| %>
+                  <% payable =  payable + w.payable_day %>
+                  <% payable %>
+                <% end %>
+              <%= payable %>
+            </td>
+            <td>
+              <% present = 0 %>
+              <% @workingday = Workingday.where(date: @from..@to,employee_id: workingday.employee_id) %>
+                <% @workingday.each do |w| %>
+                  <% present =  present + w.present_day %>
+                  <% present %>
+                <% end %>
+              <%= present %>
+            </td>
+            <td>
+              <% absent = 0 %>
+              <% @workingday = Workingday.where(date: @from..@to,employee_id: workingday.employee_id) %>
+                <% @workingday.each do |w| %>
+                  <% absent =  absent + w.absent_day %>
+                  <% absent %>
+                <% end %>
+              <%= absent %>
+            </td>
+            <td>
+              <% holiday = 0 %>
+              <% @workingday = Workingday.where(date: @from..@to,employee_id: workingday.employee_id) %>
+                <% @workingday.each do |w| %>
+                  <% holiday =  holiday + w.holiday_in_month %>
+                  <% holiday %>
+                <% end %>
+              <%= holiday %>
+            </td>
+            <td>
+              <% week_off = 0 %>
+              <% @workingday = Workingday.where(date: @from..@to,employee_id: workingday.employee_id) %>
+                <% @workingday.each do |w| %>
+                  <% week_off =  week_off + w.week_off_day %>
+                  <% week_off %>
+                <% end %>
+              <%= week_off %>
+            </td>
+            <td>
+              <% od = 0 %>
+              <% @workingday = Workingday.where(date: @from..@to,employee_id: workingday.employee_id) %>
+                <% @workingday.each do |w| %>
+                  <% od =  od + w.od_day %>
+                  <% od %>
+                <% end %>
+              <%= od %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+    </div>
+</div>

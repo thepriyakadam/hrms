@@ -59,25 +59,19 @@
 <script>
 $("#salaryslip").validate({
     rules: {
-      "salaryslip[month]":{
+      "salaryslip[start_date]":{
         required: true,
       },
-      "salaryslip[year]":{
-        required: true,
-      },
-      "salaryslip[company_id]":{
+      "salaryslip[end_date]":{
         required: true,
       }
     },
     messages: {
-      "salaryslip[month]":{
-        required: "Please select Month",
+      "salaryslip[start_date]":{
+        required: "Please select Date",
       },
-      "salaryslip[year]":{
-        required: "Please select Year",
-      },
-      "salaryslip[company_id]":{
-        required: "Please select Company",
+      "salaryslip[end_date]":{
+        required: "Please select Date",
       }
     },
     errorPlacement: function(error, element) {

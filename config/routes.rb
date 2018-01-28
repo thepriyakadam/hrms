@@ -1172,6 +1172,8 @@ end
       get :show_attribute
       get :show_goal_modal
       get :show_attribute_modal
+      get :import_xl
+      post :import
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -1240,6 +1242,9 @@ end
       get :period_for_multiple
       post :create_multiple_bunch
       get :revert_goal
+      get :self_evaluation
+      get :import_xl
+      post :import
     end
   end
   resources :goal_perspectives do
@@ -2442,6 +2447,7 @@ end
       post :import_day
       get :datewise_total_workingday
       post :show_total_workingday
+      get :show_total_workingday
     end
   end
 
@@ -2676,6 +2682,9 @@ end
       get :basic_report
       post :report
       get :report
+      get :date_categorywise_balance
+      post :show_date_categorywise
+      get :show_date_categorywise
 
     end
   end

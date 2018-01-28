@@ -25,12 +25,17 @@
             <%= f.text_field :goal_measure,hide_label:true, placeholder: "Goal Measure" %>   
           </div>
           <div class="col-sm-3">
+          <label>Activity</label>
+            <%= f.text_field :activity,hide_label:true, placeholder: "Activity" %>   
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-3">
           <label>Target/Unit</label>
             <%= f.text_field :target,hide_label:true, placeholder: "Target/Unit" %>    
           </div>
-        </div>
-        <div class="row">
-        <div class="col-sm-4">
+          <div class="col-sm-3">
           <label>Weightage</label>
             <%= f.text_field :goal_weightage,hide_label:true, placeholder: "Goal Weightage" %>    
           </div>

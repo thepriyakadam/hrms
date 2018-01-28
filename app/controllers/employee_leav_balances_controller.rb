@@ -47,6 +47,38 @@ class EmployeeLeavBalancesController < ApplicationController
     @leav_category = LeavCategory.find(@employee_leav_balance.leav_category_id)
   end
 
+  def date_categorywise_balance
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="LeaveReports"
+  end
+
+  def show_date_categorywise
+    @from_date = params[:employee] ? params[:employee][:from_date] : params[:from_date]
+    @to_date = params[:employee] ? params[:employee][:to_date] : params[:to_date]
+    @leav_category_id = params[:employee] ? params[:employee][:leav_category_id] : params[:leav_category_id]
+    @emp = Employee.where(status: "Active")
+
+    if @leav_category_id == nil || @leav_category_id == ""
+      @employee_leav_balances = EmployeeLeavBalance.where(from_date: @from_date.to_date..@to_date.to_date,employee_id: @emp)
+    else
+      @employee_leav_balances = EmployeeLeavBalance.where(from_date: @from_date.to_date..@to_date.to_date,leav_category_id: @leav_category_id,employee_id: @emp)
+    end
+
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_leav_balances/date_categorywise.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'status_wise_request',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_leav_balances/date_categorywise.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
+
   # POST /employee_leav_balances
   # POST /employee_leav_balances.json
 def create

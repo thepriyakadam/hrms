@@ -27,20 +27,30 @@
   <th>Payable Day</th>
   <th>Non Payable Day</th>
   <th>Day In Month</th>
+  </tr>
   <tbody>
   
- <% @workingdays.each do |workingday| %>
+  <% @workingdays.each do |workingday| %>
    <tr>
-   <td><%= workingday.month_name %></td>
-   <td><%= workingday.year %></td>
-   <td><%= workingday.present_day %></td>
-   <td><%= workingday.absent_day %></td>
-   <td><%= workingday.pay_leave %></td>
-   <td><%= workingday.payable_day %></td>
-   <td><%= workingday.nonpayable_day %></td>
-   <td><%= workingday.day_in_month %></td>
-  </tr>
-   <% end %>
+       <td><%= workingday.month_name %></td>
+       <td><%= workingday.year %></td>
+       <td><% wd  = workingday.present_day %><%= wd %></td>
+       <td><% ab  = workingday.absent_day %><%= ab %></td>
+       <td><% pay = workingday.pay_leave %><%= pay %></td>
+       <td><% pay_day = workingday.payable_day %><%= pay_day %></td>
+       <td><% non_pay = workingday.nonpayable_day %><%= non_pay %></td>
+       <td><% day = workingday.day_in_month %><%= day %></td>
+    </tr>
+    <tr>
+        <th colspan="2">Total</th>
+        <td><%= wd.try(:sum) %></td>
+        <td><%= ab.try(:sum) %></td>
+        <td><%= pay.try(:sum) %></td>
+        <td><%= pay_day.try(:sum) %></td>
+        <td><%= non_pay.try(:sum) %></td>
+        <td><%= day.try(:sum) %></td>
+   </tr>
+  <% end %>
 </tbody>
 </table><br>
 <div>

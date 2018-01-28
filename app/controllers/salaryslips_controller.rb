@@ -1803,7 +1803,6 @@ end
   end
 
   def dynamic_daterange_report
-    #byebug
     start_date = params[:salaryslip][:start_date].to_date
     end_date = params[:salaryslip][:end_date].to_date
     @company = params[:salaryslip][:company_id]

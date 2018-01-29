@@ -126,9 +126,9 @@
 
   # GET /employees/new
   def new
-    @employee = Employee.new(:parent_id => params[:parent_id])
+    # @employee = Employee.new(:parent_id => params[:parent_id])
     # UserPasswordMailer.test.deliver_now
-    # @employee = Employee.new
+    @employee = Employee.new
     # authorize! :create, @employee
     # @employee.build_joining_detail #here
   end

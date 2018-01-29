@@ -12,12 +12,14 @@
     </div>
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_area :description, label:'Description'%>
+        <%= f.check_box :status, label:'Status' %>
       </div>
     </div>
-    <div class="col-sm-3">
+  </div>
+  <div class="row">
+    <div class="col-sm-5">
       <div class="form-group required">
-        <%= f.check_box :status, label:'Status' %>
+        <%= f.text_area :description, label:'Description'%>
       </div>
     </div>
   </div>
@@ -29,3 +31,40 @@
     </div>
  </div>
 <% end %>
+
+<script>
+  $("#plan_reason_master").validate({
+    rules: {
+      "plan_reason_master[code]":{
+        required: true,
+      },
+      "plan_reason_master[name]":{
+        required: true,
+      },
+      "plan_reason_master[status]":{
+        required: true,
+      },
+      "plan_reason_master[description]":{
+        required: true,
+      }
+    },
+    messages: {
+      "plan_reason_master[code]":{
+        required: "Please Specify Code",
+      },
+       "plan_reason_master[name]":{
+        required: "Please Specify Name",
+      },
+      "plan_reason_master[status]":{
+        required: "Please Specify Status",
+      },
+      "plan_reason_master[description]":{
+        required: "Please Specify Description",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+  });
+</script>

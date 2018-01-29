@@ -401,7 +401,7 @@ class Employee < ActiveRecord::Base
             emp_att_time = emp_att.update_all(out_time: etime)
           end
         else
-          emp_att_time = EmployeeAttendance.create(employee_id: emp_id, employee_code: user_id, day: edate, present: "P", in_time: etime, month_name: month_nm, employee_code: user_id, employee_name: emp_name)
+          emp_att_time = EmployeeAttendance.create(employee_id: emp_id, day: edate, present: "P", in_time: etime, month_name: month_nm, employee_code: user_id, employee_name: emp_name)
         end
       end
     end

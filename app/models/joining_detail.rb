@@ -35,7 +35,7 @@ def self.to_csv(options = {})
         if @employee.nil?
         else
         employee_id = @employee.id
-        employee_uan_no = spreadsheet.cell(i,'C')
+        employee_uan_no = spreadsheet.cell(i,'C').to_i
         employee_pf_no = spreadsheet.cell(i,'D')
         joining_date = spreadsheet.cell(i,'E')
         confirmation_date = spreadsheet.cell(i,'F')
@@ -72,6 +72,7 @@ def self.to_csv(options = {})
         passport_expiry_date = spreadsheet.cell(i,'P')
         leaving_date = spreadsheet.cell(i,'Q')
         retirement_date = spreadsheet.cell(i,'R')
+
 
          c_off = spreadsheet.cell(i,'S')
          if c_off == "Yes"
@@ -155,16 +156,28 @@ def self.to_csv(options = {})
         else
         cost_center_id = @cost_center.id
         end
+         welfare = spreadsheet.cell(i,'AJ')
+         if welfare == "Yes"
+           welfare = true
+         else
+           welfare = false
+         end
+         contact_library = spreadsheet.cell(i,'AK')
+         if contact_library == "Yes"
+           contact_library = true
+         else
+           contact_library = false
+         end
         
         @employee_prsent = JoiningDetail.find_by(employee_id: employee_id)
         if @employee_prsent.nil?
         @joining_detail = JoiningDetail.create(employee_id: employee_id,employee_uan_no: employee_uan_no,employee_pf_no: employee_pf_no,joining_date: joining_date,confirmation_date: confirmation_date,employee_grade_id: employee_grade_id,employee_designation_id: employee_designation_id,employee_category_id: employee_category_id,probation_period: probation_period,
         notice_period: notice_period,have_passport: have_passport,passport_no: passport_no,passport_issue_date: passport_issue_date,passport_expiry_date: passport_expiry_date,leaving_date: leaving_date,payment_mode_id: payment_mode_id,basis_of_time: basis_of_time,is_employeer_pf: is_employeer_pf,select_pf: select_pf,pf_max_amount: pf_max_amount,employee_pf_no: employee_pf_no,
-        is_employeer_esic: is_employeer_esic,have_esic: have_esic,employee_efic_no: employee_efic_no,have_retention: have_retention,is_insurance: is_insurance,is_family_pension: is_family_pension,is_bonus: is_bonus,ot_option: ot_option,ot_rate: ot_rate,cost_center_id: cost_center_id)
+        is_employeer_esic: is_employeer_esic,have_esic: have_esic,employee_efic_no: employee_efic_no,have_retention: have_retention,is_insurance: is_insurance,is_family_pension: is_family_pension,is_bonus: is_bonus,ot_option: ot_option,ot_rate: ot_rate,cost_center_id: cost_center_id,welfare: welfare,contact_library: contact_library)
         else
         @employee_prsent.update(employee_id: employee_id,employee_uan_no: employee_uan_no,c_off: c_off,employee_pf_no: employee_pf_no,joining_date: joining_date,confirmation_date: confirmation_date,employee_grade_id: employee_grade_id,employee_designation_id: employee_designation_id,employee_category_id: employee_category_id,probation_period: probation_period,
         notice_period: notice_period,have_passport: have_passport,passport_no: passport_no,passport_issue_date: passport_issue_date,passport_expiry_date: passport_expiry_date,leaving_date: leaving_date,payment_mode_id: payment_mode_id,basis_of_time: basis_of_time,is_employeer_pf: is_employeer_pf,select_pf: select_pf,pf_max_amount: pf_max_amount,employee_pf_no: employee_pf_no,
-        is_employeer_esic: is_employeer_esic,have_esic: have_esic,employee_efic_no: employee_efic_no,have_retention: have_retention,is_insurance: is_insurance,is_family_pension: is_family_pension,is_bonus: is_bonus,ot_option: ot_option,ot_rate: ot_rate,cost_center_id: cost_center_id)
+        is_employeer_esic: is_employeer_esic,have_esic: have_esic,employee_efic_no: employee_efic_no,have_retention: have_retention,is_insurance: is_insurance,is_family_pension: is_family_pension,is_bonus: is_bonus,ot_option: ot_option,ot_rate: ot_rate,cost_center_id: cost_center_id,welfare: welfare,contact_library: contact_library)
     end
      end
     end

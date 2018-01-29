@@ -1,10 +1,34 @@
 Rails.application.routes.draw do
 
-
+  resources :meeting_follow_ups do
+    collection do
+      get :view_meeting_follow_up
+    end
+  end
+  
+  resources :meeting_minutes do
+    collection do
+      get :view_minutes
+      get :minutes_form
+    end
+  end
+  
+  resources :listed_companies do
+    collection do
+      get :view_company
+    end
+  end
   resources :transport_allowances
   resources :events
   resources :resource_pool_masters
   resources :service_masters
+  resources :daily_attendances do 
+    collection do
+      get :attendance
+      get :calculate
+    end
+  end
+
   resources :daily_attendances do 
     collection do
       get :attendance
@@ -56,6 +80,24 @@ Rails.application.routes.draw do
   
   resources :employee_plans do
     collection do
+      post :meeting_follow_up_record
+      get :meeting_follow_up_record
+      post :follow_up_record_form
+      get :follow_up_record_form
+      get :meeting_follow_up
+      get :meeting_follow_up_report
+      post :meeting_follow_up_report
+      get :meeting_minutes_history
+      get :meeting_minutes_history_report
+      post :meeting_minutes_history_report
+      post :plan_meeting_minutes
+      get :plan_meeting_minutes 
+      get :gps_tracking
+      get :employee_gps_tracking
+      post :employee_gps_tracking
+      get :status_wise_report
+      get :status_report
+      post :status_report
       get :print_employee_wise_report
       get :print_manager_wise_report
       get :employee_wise_report
@@ -64,6 +106,9 @@ Rails.application.routes.draw do
       get :employee_report_data
       post :manager_report
       get :manager_report
+      get :company_wise_report
+      get :company_report
+      post :company_report
       get :modal_employee_plan_detail
       get :employee_plan_detail_list
       get :ajax_employee_plan_details
@@ -76,6 +121,9 @@ Rails.application.routes.draw do
       get :employee_feedback
       post :feedback
       post :reason
+      get :minutes_form
+      get :start_meeting
+      get :end_meeting
     end
   end
   resources :events  # do
@@ -2255,6 +2303,7 @@ end
       get :show_unconfirmed_employee
       post :Confirm_salaryslip
       get :show_salaryslip_rg
+      get :show_month_salaryslip_rg
       get :print_salary_slip_rg
       get :show_salaryslip_formate_3
       get :print_salary_slip_formate_3
@@ -2303,6 +2352,9 @@ end
       get :bank_wise_net_amount
       get :collect_salary
       get :salary_ledger
+      get :all_employee_salary_ledger
+      get :date_wise_ledger
+      post :date_wise_ledger
       post :show_monthly_ctc
       get :pf_detail_report
       get :dynamic_report
@@ -2402,6 +2454,8 @@ end
       # post :import_working_day
 
       post :import_day
+      get :datewise_total_workingday
+      post :show_total_workingday
     end
   end
 
@@ -3103,6 +3157,14 @@ end
     get 'user_auths/employee_wise_attendance' => 'user_auths#employee_wise_attendance', defaults:{format: 'json'}
     get 'user_auths/date_wise_location_history' => 'user_auths#date_wise_location_history', defaults:{format: 'json'}
     get 'user_auths/leave_coff' => 'user_auths#leave_coff', defaults:{format: 'json'}
-     get 'user_auths/all_plan_list' => 'user_auths#all_plan_list', defaults:{format: 'json'}
+
+    post 'user_auths/notes_details' => 'user_auths#notes_details', defaults:{format: 'json'}
+    get 'user_auths/all_plan_list' => 'user_auths#all_plan_list', defaults:{format: 'json'}
+    get 'user_auths/listed_company' => 'user_auths#listed_company', defaults:{format: 'json'}
+    post 'user_auths/start_meeting' => 'user_auths#start_meeting', defaults:{format: 'json'}
+    post 'user_auths/end_meeting' => 'user_auths#end_meeting', defaults:{format: 'json'}
+    post 'user_auths/meeting_minutes' => 'user_auths#meeting_minutes', defaults:{format: 'json'}
+    get 'user_auths/meeting_plan_minutes' => 'user_auths#meeting_plan_minutes', defaults:{format: 'json'}
+    
   end
 end

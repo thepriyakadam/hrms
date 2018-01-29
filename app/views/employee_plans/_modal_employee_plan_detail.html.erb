@@ -57,18 +57,24 @@
 
     <tr>
       <th>Current Status</th>
-      <td><%= @employee_plan.current_status %></td>
+      <td><%= @employee_plan.current_status  %></td>
     </tr>
-
-    <tr>
-      <th>Feedback</th>
-      <td><%= @employee_plan.feedback %></td>
-    </tr>
-
-    <tr>
-      <th>Plan Reject Reson</th>
-      <td><%= @employee_plan.try(:plan_reason_master).try(:name) %></td>
-    </tr>
+    <% if @employee_plan.feedback.present? && @employee_plan.try(:plan_reason_master).nil? %>
+      <tr >
+        <th>Plan Attend Feedback</th>
+        <td><%= @employee_plan.feedback %></td>
+      </tr>
+    <% elsif @employee_plan.feedback.present? && @employee_plan.try(:plan_reason_master).present? %>
+      <tr >
+        <th>Plan Reject Reason</th>
+        <td><%= @employee_plan.feedback %></td>
+      </tr>
+      <tr>
+        <th>Plan Reject Reson Refer </th>
+        <td><%= @employee_plan.try(:plan_reason_master).try(:name) %></td>
+      </tr>
+    <% else @employee_plan.nil? && @employee_plan.try(:plan_reason_master).nil? %>
+    <% end %>
     
 
   </thead>

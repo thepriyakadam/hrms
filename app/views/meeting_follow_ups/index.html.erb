@@ -1,0 +1,46 @@
+<p id="notice"><%= notice %></p>
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Listing Meeting Follow Ups</h3>
+    <div class="pull-right">
+      <%= link_to "New Company", new_meeting_follow_up_path, class: 'btn btn-sm btn-primary' %> 
+    </div>
+  </div>
+<!-- <h1>Listing Plan Reason Masters</h1> -->
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Employee Plan</th>
+          <th>Contact Person</th>
+          <th>Contact No.</th>
+          <th>Follow-up Response</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Next Date</th>
+          <th>Next Time</th>
+          <th colspan="3">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% i = 0 %>
+        <% @meeting_follow_ups.each do |meeting_follow_up| %>
+          <tr>
+            <td><%= i=i+1 %></td>
+            <td><%= meeting_follow_up.employee_plan %></td>
+            <td><%= meeting_follow_up.contact_person %></td>
+            <td><%= meeting_follow_up.contact_no %></td>
+            <td><%= meeting_follow_up.follow_up_response %></td>
+            <td><%= meeting_follow_up.date %></td>
+            <td><%= meeting_follow_up.time %></td>
+            <td><%= meeting_follow_up.next_date %></td>
+            <td><%= meeting_follow_up.next_time %></td>
+            <td><%= link_to 'Show', view_meeting_follow_up_meeting_follow_ups(meeting_follow_up), remote: true, class: 'btn btn-xs btn-default fa fa-eye' %></td>
+            <td><%= link_to 'Edit', edit_meeting_follow_up_path(meeting_follow_up),class: 'btn btn-xs btn-success fa fa-edit' %></td>
+            <td><%= link_to 'Destroy', meeting_follow_up, method: :delete, data: { confirm: 'Are you sure?' },lass: 'btn btn-xs btn-danger fa fa-trash' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+</div>
+<div id="view_meeting_follow_up" class="modal fade"></div>

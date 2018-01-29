@@ -1,4 +1,5 @@
 class DailyAttendancesController < ApplicationController
+
 	before_action :set_daily_attendance, only: [:show, :edit, :update, :destroy]
 
   # GET /daily_attendances
@@ -20,7 +21,6 @@ class DailyAttendancesController < ApplicationController
   def calculate
     DailyAttendance.calculate_attendance
     redirect_to subordinate_attendance_manager_self_services_path
-
   end
 
   # GET /daily_attendances/new

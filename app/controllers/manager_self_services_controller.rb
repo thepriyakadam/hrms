@@ -123,7 +123,7 @@ class ManagerSelfServicesController < ApplicationController
     @employees_ind = @emp.indirect_subordinates
     @employee_id = @employees + @employees_ind
 
-    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id)
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day DESC")
 
      respond_to do |format|
         format.js

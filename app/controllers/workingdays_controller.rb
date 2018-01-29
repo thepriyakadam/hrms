@@ -666,6 +666,18 @@ class WorkingdaysController < ApplicationController
     end
   end
 
+  def datewise_total_workingday
+
+  end
+
+  def show_total_workingday
+    from = params[:employee][:from]
+    to = params[:employee][:to]
+    @from = from.to_date
+    @to = to.to_date
+    @workingdays = Workingday.where(from: @from,to: @to)
+  end
+
   def import_working_day
 
         session[:active_tab] ="TimeManagement"

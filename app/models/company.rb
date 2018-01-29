@@ -17,14 +17,14 @@ class Company < ActiveRecord::Base
   validates :registration_no, presence: true
   validates :address, presence: true
   validates :web_site, presence: true
-  validates :country_id, presence: true
-  validates :state_id, presence: true
-  validates :district_id, presence: true
-  validates :city, presence: true
-  validates :pin_code, presence: true
-  validates :name, uniqueness: { scope: [:company_type_id] }
-  validate :pan_no_regex
-  validate :contact_no_regex
+  # validates :country_id, presence: true
+  # validates :state_id, presence: true
+  # validates :district_id, presence: true
+  # validates :city, presence: true
+  # validates :pin_code, presence: true
+  # validates :name, uniqueness: { scope: [:company_type_id] }
+  # validate :pan_no_regex
+  # validate :contact_no_regex
 
 
   has_attached_file :company_logo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'missing.png'

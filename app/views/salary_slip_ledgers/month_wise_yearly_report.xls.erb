@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Sr No.</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">ID</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Employee Name</Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">PF No.</Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String">Amount</Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String">PF Amount/Company Contribution</Data></Cell>
+        <Cell ss:Index="7"><Data ss:Type="String">Employer Contribution</Data></Cell>
+      </Row>
+      <% i = 0 %>
+      <% @salaryslips.each do |slip| %>
+        <%if slip.employee.joining_detail.select_pf == "Yes" %>
+          <% employee = slip.employee %>
+          <% joining = employee.joining_detail %>
+          <% bank = employee.employee_bank_detail %>
+          <% workingday = slip.workingday %>
+          <% month_from = params[:from_date].to_date.strftime("%B") %>
+          <% month_to = params[:to_date].to_date.strftime("%B") %>
+          <% year_from = params[:from_date].to_date.strftime("%Y") %>
+          <% year_to = params[:to_date].to_date.strftime("%Y") %>
+          <% @salaryslips2 = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: employee.id) %>
+          <% total_amt = 0 %>
+          <% @salaryslips2.each do |salary| %>
+            <% @salary_slip_cmop = salary.salaryslip_components.where(is_deducted: true) %>
+            <% @salary_slip_cmop.each do |item| %>
+              <% if item.other_component_name == "Provident Fund" %>
+                <% total_amt += item.calculated_amount.round %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= slip.employee.manual_employee_code %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="String"><%= joining.try(:employee_pf_no) %></Data></Cell>
+          <% @addable_salaryslip_items = slip.salaryslip_components.where(is_deducted: false) %>
+            <%basic_amt = 0%>
+            <%da_amt = 0 %>
+            <%basic_a_amt = 0 %>
+            <% @addable_salaryslip_items.each do |item| %>
+              <% case item.salary_component.try(:name) %>
+              <% when "Basic" %>
+                <% basic_amt = item.calculated_amount.round %>
+              <% when "DA" %>
+                <% da_amt = item.calculated_amount.round %>
+              <% else %>
+              <% end %> <!-- switch case --> 
+            <% end %><!-- addable items -->
+            <Cell ss:Index="5"><Data ss:Type="String"><%= basic_amt+da_amt %></Data></Cell>
+            <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
+            <% @salaryslips2 = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: employee.id) %>
+            <% total_amt = 0 %>
+            <% @salaryslips2.each do |salary| %>
+              <% @salary_slip_cmop = salary.salaryslip_components.where(is_deducted: true) %>
+              <% @salary_slip_cmop.each do |item| %>
+                <% if item.other_component_name == "Provident Fund" %>
+                  <% total_amt += item.calculated_amount.round %>
+                <% end %>
+              <% end %>
+            <% end %>
+            <Cell ss:Index="6"><Data ss:Type="String"><%= total_amt %></Data></Cell>
+            <% emp_contribution = EmployerContribution.where(date: @from_date.to_date..@to_date.to_date, employee_id: employee.id) %>
+            <% total_emp_cont = 0 %>
+            <% emp_contribution.each do |emp_con| %>
+              <% total_emp_cont += emp_con.pf %>
+            <% end%>
+            <Cell ss:Index="7"><Data ss:Type="String"><%= total_emp_cont %></Data></Cell>
+           <% end %>
+        
+        
+        </Row><!-- Row -->
+      <% end %><!-- slip -->
+    </Table>
+  </Worksheet>
+</Workbook>

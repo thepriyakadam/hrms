@@ -9,12 +9,12 @@
     <h4>Wish You A Very Happy Birthday On Your <%= @day.to_i %> Birthday!</h4>
     <p>
       <%= @greeting.message %><br><br><br>
-      <% if @greeting.birthday_image_file_name == nil %>
-      <% attachments.inline['bday.jpg'] = File.read("#{Rails.root}/app/assets/images/bday.jpg") %>
-      <%else%>
+      <%# if @greeting.birthday_image_file_name == nil %>
+      <%# attachments.inline['bday.jpg'] = File.read("#{Rails.root}/app/assets/images/bday.jpg") %>
+      <%#else%>
 
       <!-- <= image_tag attachments.inline[:birthday_image].url, :size => "120x40" %> -->
-  <%end%><br><br><br>
+  <%#end%><br><br><br>
       <b>Warm Regards,</b><br>
       <%= @greeting.sender.try(:first_name) %> <%= @greeting.sender.try(:last_name) %>
     </p>

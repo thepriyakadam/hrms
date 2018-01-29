@@ -2,7 +2,7 @@
   <div class="box-header">
     <h3 class="box-title">Plans List</h3>
     <div class="pull-right">
-      <%= link_to 'New Employee plan', new_employee_plan_path, class: "btn btn-xl btn-info" %> </div>
+      <%= link_to 'New Meeting Plan', new_employee_plan_path, class: "btn btn-primary btn-sm" %> </div>
   </div><!-- /.box-header -->
   <div class="box-body">
       <!-- <div class="col-sm-6"> -->
@@ -66,28 +66,36 @@
                 <td><%#= employee_plan.current_status %></td>
                 <td><%#= employee_plan.manager_id %></td> -->
                 <%# binding.pry %>
-                <td>
-                  <%= link_to '', modal_employee_plan_detail_employee_plans_path(employee_plan), remote: true, class: 'btn btn-xs btn-default fa fa-eye' %>
-                </td>
-                <% if employee_plan.current_status == "Approved" && employee_plan.to_date == DateTime.now.to_date %>
-                  <% if employee_plan.to_time.strftime("%H:%M") < DateTime.now.strftime("%H:%M") %>
-                    <td>
-                      <%= link_to 'Attend', employee_feedback_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit'%>
-                    </td>
-                    <td>
-                      <%= link_to 'Not Attend', employee_reason_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit' %>
-                    </td>
+                <%= link_to 'Attend', employee_feedback_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit'%>
+                <% if employee_plan.current_status == "Pending" && employee_plan.to_date == DateTime.now.to_date %>
+                  <% if employee_plan.plan_reason_master_id.nil? || employee_plan.feedback.nil? %>
+                    <% if employee_plan.to_time.strftime("%H:%M") < DateTime.now.strftime("%H:%M") %>
+                      <td>
+                        <%= link_to 'Attend', employee_feedback_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit'%>
+                      </td>
+                      <td>
+                        <%= link_to 'Not Attend', employee_reason_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit' %>
+                      </td>
+                    <% else %>
+                      <td> </td>
+                      <td> </td>
+                    <% end %>
                   <% else %>
                     <td> </td>
                     <td> </td>
                   <% end %>
                 <% elsif employee_plan.current_status == "Approved" && employee_plan.to_date < DateTime.now.to_date %>
-                  <td>
-                    <%= link_to 'Attend', employee_feedback_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit' %>
-                  </td>
-                  <td>
-                    <%= link_to 'Not Attend', employee_reason_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit' %>
-                  </td>
+                  <% if !employee_plan.plan_reason_master_id.nil? || !employee_plan.feedback.nil? %>
+                    <td> </td>
+                    <td> </td>
+                  <% else %>
+                    <td>
+                      <%= link_to 'Attend', employee_feedback_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit' %>
+                    </td>
+                    <td>
+                      <%= link_to 'Not Attend', employee_reason_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit' %>
+                    </td>
+                  <% end %>
                 <% elsif employee_plan.current_status == "Approved" && employee_plan.to_date > DateTime.now.to_date %>
                   <td> </td>
                   <td> </td>

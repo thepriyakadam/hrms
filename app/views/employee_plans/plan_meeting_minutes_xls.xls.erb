@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Sr.No.</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">ID</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Employee Name</Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">Manager Name</Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String">From Date</Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String">To Date</Data></Cell>
+        <Cell ss:Index="7"><Data ss:Type="String">From Time</Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String">To Time</Data></Cell>
+        <Cell ss:Index="9"><Data ss:Type="String">Meeting With</Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String">Location</Data></Cell>
+        <Cell ss:Index="11"><Data ss:Type="String">Meeting Agenda</Data></Cell>
+        <Cell ss:Index="12"><Data ss:Type="String">Minutes</Data></Cell> 
+      </Row>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String"> 1 </Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String"><%= @employee_plan.try(:employee).try(:manual_employee_code) %></td>
+        <Cell ss:Index="3"><Data ss:Type="String"><%= @employee.try(:first_name) %> <%= current_user.employee.try(:middle_name) %> <%= current_user.employee.try(:last_name) %></Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String"><%= @emp_name.try(:prefix) %> <%= @emp_name.try(:first_name) %> <%= @emp_name.try(:middle_name) %><%= @emp_name.try(:last_name)%></Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String"><%= @employee_plan.try(:from_date) %></Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String"><%= @employee_plan.try(:to_date) %></Data></Cell>
+        <Cell ss:Index="7"><Data ss:Type="String"><%= @employee_plan.try(:from_time) %></Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String"><%= @employee_plan.try(:to_time) %></Data></Cell>
+        <Cell ss:Index="9"><Data ss:Type="String"><%= @employee_plan.try(:meeting_with) %></Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String"><%= @employee_plan.try(:location) %></Data></Cell>
+        <Cell ss:Index="11"><Data ss:Type="String"><%= @employee_plan.try(:meeting_agenda) %></Data></Cell>
+        <Cell ss:Index="12"><Data ss:Type="String"><%= @all_minutes %></Data></Cell>
+      </Row><!-- Row -->
+    </Table>
+  </Worksheet>
+</Workbook>

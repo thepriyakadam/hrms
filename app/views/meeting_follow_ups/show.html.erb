@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee plan:</strong>
+  <%= @meeting_follow_up.employee_plan %>
+</p>
+
+<p>
+  <strong>Contact person:</strong>
+  <%= @meeting_follow_up.contact_person %>
+</p>
+
+<p>
+  <strong>Contact no:</strong>
+  <%= @meeting_follow_up.contact_no %>
+</p>
+
+<p>
+  <strong>Follow up response:</strong>
+  <%= @meeting_follow_up.follow_up_response %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @meeting_follow_up.date %>
+</p>
+
+<p>
+  <strong>Time:</strong>
+  <%= @meeting_follow_up.time %>
+</p>
+
+<p>
+  <strong>Next date:</strong>
+  <%= @meeting_follow_up.next_date %>
+</p>
+
+<p>
+  <strong>Next time:</strong>
+  <%= @meeting_follow_up.next_time %>
+</p>
+
+<%= link_to 'Edit', edit_meeting_follow_up_path(@meeting_follow_up) %> |
+<%= link_to 'Back', meeting_follow_ups_path %>

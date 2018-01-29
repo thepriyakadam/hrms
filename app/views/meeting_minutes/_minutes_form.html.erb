@@ -1,0 +1,40 @@
+<%= bootstrap_form_for(@meeting_minute, html: {id: 'meeting_minute' } ) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :employee_plan_id, label:'Employee Plan Id', placeholder: 'Name' %>
+      </div>
+    </div>
+    <div class="col-sm-5">
+      <div class="form-group required">
+        <%= f.text_area :minutes, label:'Minutes', placeholder: 'Notes' %>
+      </div>
+    </div>
+    <br />
+    <div class="col-sm-3">
+      <div class="actions" style="padding-top: 20px;">
+        <%= f.submit 'Create',class: "btn btn-primary btn-sm"%>
+      </div>
+    </div>
+  </div>
+  <br />
+<% end %>
+
+<script>
+  $("#meeting_minute").validate({
+    rules: {
+      "meeting_minute[minutes]":{
+        required: true,
+      }
+    },
+    messages: {
+      "meeting_minute[minutes]":{
+        required: "Please Specify Notes",
+      },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+  });
+</script>
+

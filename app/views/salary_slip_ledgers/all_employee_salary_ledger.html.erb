@@ -1,0 +1,57 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Date Wise Employee Salary Ledger</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= bootstrap_form_for(:salary, url: { action: 'date_wise_ledger'}, html: {id: 'salary'},remote: true ) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :salary, :start_date, label: 'Start Date', placeholder: "Start Date", class: 'form-control request_date'%>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+             <%= text_field :salary, :end_date, label: 'End Date', placeholder: "End Date", class: 'form-control request_date'%>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Display Report", class: "btn btn-sm btn-primary",id: "buttonCtc" %>
+          </div>
+        </div>
+      </div>
+    <%end%>
+    <div id="date_wise_ledger"> </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+    $('.request_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:-0',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+
+<script type="text/javascript">
+  $(function(){
+    $('.request_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:-0',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

@@ -1,81 +1,114 @@
 <div class="box-header">
-    <div class="pull-right">
-    </div>
-  </div><!-- /.box-header -->
-  <div class="box-body">
+  <div class="pull-right">
+  </div>
+</div><!-- /.box-header -->
+<div class="box-body">
   <div id="comments">
     <table id="example" class="table table-bordered table-hover table-condensed">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Employee Name</th>
-        <th>PF No.</th>
-        <th>Payble Days</th>
-        <th>Amount</th>
-        <th>PF Amount</th>
-        <th>Employer Contribution</th>
-      </tr>
-    </thead>
-
-    <tbody>
-    <%# binding.pry %>
-    <%# buyebug %>
-      <% @salaryslips.each do |slip| %>
-      <%if slip.employee.joining_detail.select_pf == "Yes" %>
-        <% employee = slip.employee %>
-        <% joining = employee.joining_detail %>
-        <% bank = employee.employee_bank_detail %>
-        <% workingday = slip.workingday %>
+      <thead>
         <tr>
-          <td><%= slip.employee.manual_employee_code %></td>
-          <td><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></td>
-          <td><%= joining.try(:employee_pf_no) %></td>
-          <td><%= workingday.payable_day %></td>
-          <% @addable_salaryslip_items = slip.salaryslip_components.where(is_deducted: false) %>
-          <%basic_amt = 0%>
-          <%da_amt = 0 %>
-          <%basic_a_amt = 0 %>
-          <% @addable_salaryslip_items.each do |item| %>
-          
-            <% case item.salary_component.try(:name) %>
-            <% when "Basic" %>
-            <% basic_amt = item.calculated_amount.round %>
-            <% when "DA" %>
-           <% da_amt = item.calculated_amount.round %>
-            <% else %>
-           
-            <% end %> <!-- switch case --> 
-  
-          <% end %><!-- addable items -->
-
-          
-          <td><%= basic_amt+da_amt %></td>
-           
-          <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
-          <% @deducted_salaryslip_items.each do |item| %>
-              <% if item.other_component_name == "Provident Fund" %>
-               <td><%= item.calculated_amount.round * 12  %></td>
-            <% end %>
-          <% %>
-          <% %>
-         
-      <% end %><!-- slip -->
-      <% @date = slip.month_year %>
-      <% @emp_id = slip.employee_id %>
-      <% emp_contribution = EmployerContribution.where(date: @date.to_date, employee_id: @emp_id) %>
-      <% emp_contribution.each do |emp_con| %>
-        <td><%= emp_con.pf  %></td>
-      <% end%>
-
-      <% end %>
+          <th>ID</th>
+          <th>Employee Name</th>
+          <th>PF No.</th>
+          <th>Amount</th>
+          <th>PF Amount/Company Contribution</th>
+          <th>Employer Contribution</th>
         </tr>
+      </thead>
+      <tbody>
+        <% @salaryslips.each do |slip| %>
+          <%if slip.employee.joining_detail.select_pf == "Yes" %>
+            <% employee = slip.employee %>
+            <% joining = employee.joining_detail %>
+            <% bank = employee.employee_bank_detail %>
+            <% workingday = slip.workingday %>
+            <% month_from = params[:yearly_reports][:from_date].to_date.strftime("%B") %>
+            <% month_to = params[:yearly_reports][:to_date].to_date.strftime("%B") %>
+            <% year_from = params[:yearly_reports][:from_date].to_date.strftime("%Y") %>
+            <% year_to = params[:yearly_reports][:to_date].to_date.strftime("%Y") %>
+            <% @salaryslips2 = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: employee.id) %>
+            <% total_amt = 0 %>
+            <% @salaryslips2.each do |salary| %>
+              <% @salary_slip_cmop = salary.salaryslip_components.where(is_deducted: true) %>
+              <% @salary_slip_cmop.each do |item| %>
+                <% if item.other_component_name == "Provident Fund" %>
+                  <% total_amt += item.calculated_amount.round %>
+                <% end %>
+              <% end %>
+            <% end %>
+        
+          <tr>
+            <td><%= slip.employee.manual_employee_code %></td>
+            <td><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></td>
+            <td><%= joining.try(:employee_pf_no) %></td>
+            <% @addable_salaryslip_items = slip.salaryslip_components.where(is_deducted: false) %>
+            <%basic_amt = 0%>
+            <%da_amt = 0 %>
+            <%basic_a_amt = 0 %>
+            <% @addable_salaryslip_items.each do |item| %>
+              <% case item.salary_component.try(:name) %>
+              <% when "Basic" %>
+                <% basic_amt = item.calculated_amount.round %>
+              <% when "DA" %>
+                <% da_amt = item.calculated_amount.round %>
+              <% else %>
+              <% end %> <!-- switch case --> 
+            <% end %><!-- addable items -->
+            <td><%= basic_amt+da_amt %></td>
+            <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
+            <% @salaryslips2 = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: employee.id) %>
+            <% total_amt = 0 %>
+            <% @salaryslips2.each do |salary| %>
+              <% @salary_slip_cmop = salary.salaryslip_components.where(is_deducted: true) %>
+              <% @salary_slip_cmop.each do |item| %>
+                <% if item.other_component_name == "Provident Fund" %>
+                  <% total_amt += item.calculated_amount.round %>
+                <% end %>
+              <% end %>
+            <% end %>
+            <td><%= total_amt %></td>
+            <% emp_contribution = EmployerContribution.where(date: @from_date.to_date..@to_date.to_date, employee_id: employee.id) %>
+            <% total_emp_cont = 0 %>
+            <% emp_contribution.each do |emp_con| %>
+              <% total_emp_cont += emp_con.pf %>
+            <% end%>
+            <td><%= total_emp_cont %></td>
+          </tr>
+          <% end %>
+        
         <% end %>
     </tbody>
   </table>
   </div>
-  <%#= link_to " Excel Report ",dynamic_report_salary_slip_ledgers_path(month: params[:pf_detail][:month], year: params[:pf_detail][:year],company_id: params[:pf_detail][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %> |
-  <%#= link_to " Text Report", export_pf_report_to_text_salary_slip_ledgers_path(month: params[:pf_detail][:month], year: params[:pf_detail][:year],company_id: params[:pf_detail][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "csv"), class: "btn btn-xl btn-primary fa fa-file-text-o" %> |
-  <%#= link_to " PDF Report ",dynamic_report_salary_slip_ledgers_path(month: params[:pf_detail][:month], year: params[:pf_detail][:year],company_id: params[:pf_detail][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+  <table id="example" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Month</th>
+        <th>Company Contribution</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @month_year.each do |month_year, salaryslip_components| %>
+        <tr>
+          <td><%= month_year %></td>
+            <% total_amt = 0 %>
+            <% salaryslip_components.each do |components|%>
+              <% total_amt += components.calculated_amount.round %>
+            <% end %>
+          <td><%= total_amt %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= link_to " Excel Report ", month_wise_yearly_report_salary_slip_ledgers_path(from_date: params[:yearly_reports][:from_date], to_date: params[:yearly_reports][:to_date], company_id: params[:salary_slip_ledger][:company_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %> 
+  <%#= link_to " Text Report", export_pf_report_to_text_salary_slip_ledgers_path(month: params[:pf_detail][:month], year: params[:pf_detail][:year],company_id: params[:pf_detail][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "csv"), class: "btn btn-xl btn-primary fa fa-file-text-o" %> 
+  
+  <%= link_to "PDF Report ", month_wise_yearly_report_salary_slip_ledgers_path(from_date: params[:yearly_reports][:from_date], to_date: params[:yearly_reports][:to_date], company_id: params[:salary_slip_ledger][:company_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+  <%#= link_to " Excel Report ",show_subordinate_attendance_manager_self_services_path(:employee => {:from => params[:employee][:from],:to => params[:employee][:to]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+ 
+     <%#= link_to " Print Report ",show_subordinate_attendance_manager_self_services_path(:employee => {:from => params[:employee][:from],:to =>  params[:employee][:to]},format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %> 
 </div>
 
 <script type="text/javascript">

@@ -15,6 +15,12 @@ class SalarySlipLedgersController < ApplicationController
     session[:active_tab2] = "SalaryReport"
   end
 
+  def all_employee_salary_ledger
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] = "SalaryReport"
+  end
+
   def employee_ctc
   end
 
@@ -1102,7 +1108,22 @@ class SalarySlipLedgersController < ApplicationController
     @salaryslips1 = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date).pluck(:id)
     @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1, other_component_name: "Provident Fund").pluck(:salaryslip_id)
     @salaryslips = Salaryslip.where(id: @salaryslip_components)
-
+    
+    month_from = params[:yearly_reports] ? params[:yearly_reports][:from_date] : params[:from_date]
+    month_to = params[:yearly_reports] ? params[:yearly_reports][:to_date] : params[:to_date]
+    year_from = params[:yearly_reports] ? params[:yearly_reports][:from_date] : params[:from_date]
+    year_to = params[:yearly_reports] ? params[:yearly_reports][:to_date] : params[:to_date]
+    # month_from = params[:yearly_reports][:from_date].to_date.strftime("%B")
+    # month_to = params[:yearly_reports][:to_date].to_date.strftime("%B")
+    # year_from = params[:yearly_reports][:from_date].to_date.strftime("%Y")
+    # year_to = params[:yearly_reports][:to_date].to_date.strftime("%Y")
+    @salaryslips3 = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date)
+    @year_wise = Salaryslip.where(year: year_from..year_to)
+    @month_year = {}
+    @salaryslips3.each do |month_year|
+      @month_year[month_year.month_year.strftime("%B %Y")] = month_year.salaryslip_components.each { |cat| cat.calculated_amount.round }
+    end
+    
     respond_to do |f|
       f.js
       f.xls {render template: 'salary_slip_ledgers/month_wise_yearly_report.xls.erb'}
@@ -1139,6 +1160,32 @@ class SalarySlipLedgersController < ApplicationController
         layout: 'pdf.html',
         orientation: 'Landscape',
         template: 'salary_slip_ledgers/collect_employee_salary_ledger.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
+    end
+  end
+
+  def date_wise_ledger
+    @reports = []
+    @start_date = params[:salary] ? params[:salary][:start_date].to_date : params[:start_date]
+    @end_date = params[:salary] ? params[:salary][:end_date].to_date : params[:end_date]
+    @salaryslips = Salaryslip.where(month_year: @start_date.to_date..@end_date.to_date)
+    @salaryslips.try(:each) do |s|
+      employee = Employee.find(s.employee_id)
+      joining = JoiningDetail.find_by_employee_id(employee.id)
+      sr = SalaryReport.collect_data(employee,joining,s)
+      @reports << sr
+    end
+    @sum = SalaryReport.create_sum(@reports)
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'salary_slip_ledgers/date_wise_ledger.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'salary_ledger',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'salary_slip_ledgers/date_wise_ledger.pdf.erb',
         show_as_html: params[:debug].present?
       end
     end

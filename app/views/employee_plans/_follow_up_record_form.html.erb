@@ -1,0 +1,84 @@
+<%= bootstrap_form_for(@meeting_follow_up, html: {id: 'meeting_follow_up' } ) do |f| %>
+  <%= f.hidden_field :employee_plan_id , value: params[:format] %>
+  <%= f.hidden_field :date , value: Time.now.to_date %>
+  <%= f.hidden_field :time , value: Time.now.to_time %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :contact_person, label:'Contact Person', placeholder: 'Name' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :contact_no, label:'Contact No.', placeholder: 'Name' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :next_date, label:'Next Date', placeholder: '01-01-2018', class: 'to_date' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="bootstrap-timepicker">
+        <div class="form-group required">
+          <label> Next Time </label>
+          <div class="input-group">
+            <%= f.text_field :next_time, hide_label:true, placeholder: '09:00', class: 'form-control timepicker' %>
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :follow_up_response, label:'Follow-up Response', placeholder: 'Name' %>
+      </div>
+    </div>
+    <br />
+    <div class="col-sm-3">
+      <div class="actions" style="padding-top: 20px;">
+        <%= f.submit 'Create',class: "btn btn-primary btn-sm"%>
+      </div>
+    </div>
+  </div>
+  <br />
+<% end %>
+
+<script>
+  $("#meeting_minute").validate({
+    rules: {
+      "meeting_minute[minutes]":{
+        required: true,
+      }
+    },
+    messages: {
+      "meeting_minute[minutes]":{
+        required: "Please Specify Notes",
+      },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+  });
+</script>
+
+<script type="text/javascript">
+  $(function(){
+    $('.from_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+25',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.to_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+25',
+    dateFormat: 'dd-mm-yy' });
+
+    $(".timepicker").timepicker({
+    showInputs: false });
+  });
+</script>

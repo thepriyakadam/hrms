@@ -1,0 +1,115 @@
+<div class="box">
+  <div class="box-header">
+ </div>
+<div class="box-body">
+ <div style="float:right;">
+  <%= link_to 'Print PDF', print_salary_slip_rg_salaryslips_path(format: 'pdf',id: @salaryslip.id),class: 'btn btn-xl btn-primary fa fa-print', :target => '_blank' %><br><br>
+  </div>
+
+ <table class="table table-bordered table-hover table-condensed"> <br>
+      <thead>
+       <tr>
+      <td colspan="3">
+      <% if @employee.company_location.company.company_logo == nil %>
+      <% else %>
+        <center> <%= image_tag @employee.company_location.company.company_logo.url, :size => "180x90" %></center>
+        <%end%>
+        <center><strong><%= @employee.company_location.company.try(:description) %></strong><br><%= @employee.company_location.try(:address) %>, <%= @employee.company_location.try(:name) %>  </center>
+        <center><strong>SALARY SLIP</strong></center> 
+      </td>           
+    </tr>
+    <tr>
+      <td>
+      <strong> Employee ID :</strong> <%= @employee.manual_employee_code%> <br><br>
+      <strong> Employee Name :</strong> <%= full_name(@employee) %> <br><br>
+      <strong> Designation :</strong> <%= @employee.joining_detail.try(:employee_designation).name %> <br><br>
+      <strong> Department : </strong><%= @employee.department.try(:name) %> <br><br>
+      </td>
+      <td>
+      <strong> UAN No. :</strong> <%= @employee.joining_detail.try(:employee_uan_no) %><br><br> 
+      <strong> PF No. :</strong> <%= @employee.joining_detail.try(:employee_pf_no) %><br><br>
+      <strong> PAN No  : </strong> <%= @salaryslip.employee.pan_no %><br><br> 
+      <strong> Account No. :</strong><%= @employee.try(:employee_bank_detail).try(:account_no) %><br><br> 
+      </td>
+      <td>
+      <strong> Location : </strong><%= @employee.company_location.try(:name) %>  <br><br>
+      <strong> Pay Month : </strong> <%= @salaryslip.month%> - <%= @salaryslip.year%><br><br>
+      <strong> Working Days : </strong><%= @working_day.try(:day_in_month) %> <br><br> 
+      <strong> Paid Days : </strong><%= @working_day.try(:payable_day) %><br><br> 
+      </td>   
+    </tr>
+   
+     <tr>
+      <th>Gross Salary : <%= @salaryslip.calculated_gross_salary.round %>
+    </th>   
+ 
+      <th>Deduction : <%= @salaryslip.calculated_total_deduction.round %> 
+         </th>   
+  
+      <th>Net Salary :  <%= @salaryslip.calculated_net_salary.round %>
+      </th>   
+    </tr>
+
+  </thead>
+ 
+</table>
+
+ <div class="row">
+  <div class="col-sm-12">
+    <table class="table table-bordered table-hover table-condensed">
+      <thead>
+      <tr><th colspan="3"><center> Earning Details </center></th></tr>
+        <tr>
+          <th><center>Component</center></th>
+          <th><center>Actual Amount</center></th>
+          <th><center>Calculated Amount</center></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @addable_salary_components.each do |item| %>
+          <tr>
+            <td><%= item.salary_component.name %></td>
+            <td align="right"><%= item.actual_amount.round %></td>
+            <td align="right"><%= item.calculated_amount.round %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <td><strong>Gross Salary</strong></td>
+          <td align="right"><strong><%= @salaryslip.actual_gross_salary.round %></strong></td>
+          <td align="right"><strong><%= @salaryslip.calculated_gross_salary.round %></strong></td>
+        </tr>
+       <tr><th colspan="3"><center> Deduction Details </center></th></tr>
+    
+        <% @deducted_salary_components.each do |item| %>
+          <tr>
+            <% unless item.salary_component_id.nil? %>
+              <td><%= item.salary_component.name %></td>
+              <td align="right"><%= item.actual_amount.round %></td>
+              <td align="right"><%= item.calculated_amount.round %></td>
+            <%else%>
+              <td><%= item.other_component_name %></td>
+              <td align="right"><%= item.actual_amount.round %></td>
+              <td align="right"><%= item.calculated_amount.round %></td>
+            <%end%>
+          </tr>
+        <% end %>
+        <tr>
+          <td><strong>Total Deduction</strong></td>
+          <td align="right"><strong><%= @salaryslip.actual_total_deduction.round %></strong></td>
+          <td align="right"><strong><%= @salaryslip.calculated_total_deduction.round %></strong></td>
+        </tr>
+
+         <tr>
+          <td><strong>Net Salary</strong></td>
+          <td align="right"><strong><%= @salaryslip.actual_net_salary.round %></strong></td>
+          <td align="right"><strong><%= @salaryslip.calculated_net_salary.round %></strong></td>
+        </tr>
+        <tr>
+        <td colspan="3"><center>**This is a computer generated slip, hence no signature is required.**</center></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div><%= link_to 'Back', employee_salary_list_salaryslips_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %></div>
+</div>

@@ -1061,6 +1061,49 @@ class SalaryslipsController < ApplicationController
           formula_total_actual_amount = 0
           formula_total_calculated_amount = 0
 
+           if @employee.joining_detail.ot_option == true && working_day.ot_hours != 0
+        @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)
+        @payroll_overtime_masters.try(:each) do |pom|
+        formula_string = pom.base_component.split(',').map {|i| i.to_i}
+        formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  
+        @total = formula_item.sum(:calculated_amount)
+        @total_actual = formula_item.sum(:actual_amount)
+        base_amount = (@total_actual.to_f / working_day.try(:day_in_month).to_f) / pom.company_hrs.to_f
+        overtime_payment = working_day.try(:ot_hours).to_f * pom.rate.to_f * base_amount.to_f
+        @salary_component = SalaryComponent.find_by(name: "Overtime")
+        SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
+        puts "ffffffffffffffffffff"
+        end
+      end
+
+
+      transport_allowance = TransportAllowance.find_by_employee_id(@employee.id)
+      unless transport_allowance.nil?
+        if transport_allowance.option
+          addable_actual_amount = 0
+          addable_calculated_amount = transport_allowance.amount * working_day.try(:payable_day)/working_day.try(:day_in_month)
+          @salary_component = SalaryComponent.find_by(name: "Transport Allowance")
+          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: addable_calculated_amount, calculated_amount: addable_calculated_amount, is_deducted: false, other_component_name: 'Transport Allowance',salary_component_id: @salary_component.id)
+        end
+      end
+
+   
+
+    date = Date.new(@year.to_i, Workingday.months[@month])
+     @monthly_arrears = MonthlyArrear.where(day: date..date.at_end_of_month, employee_id: @employee.id)
+      unless @monthly_arrears.empty?
+        addable_calculated_amount = 0
+        @monthly_arrears.try(:each) do |m|
+        m.update(is_paid: true)
+        addable_actual_amount = 0
+        addable_calculated_amount = addable_calculated_amount + m.amount
+      end
+        @salary_component=SalaryComponent.find_by(name: "Monthly Arrear")
+        SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: addable_calculated_amount, is_deducted: false,other_component_name: 'Monthly Arrear', salary_component_id:  @salary_component.id)
+         puts "Monthly Arrear......................................"
+      end
+
+
           @pf_master = PfMaster.where(is_active: true).take
           if @pf_master.nil?
           else
@@ -1406,48 +1449,7 @@ class SalaryslipsController < ApplicationController
       end
     end
 
-     if @employee.joining_detail.ot_option == true && working_day.ot_hours != 0
-        @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)
-        @payroll_overtime_masters.try(:each) do |pom|
-        formula_string = pom.base_component.split(',').map {|i| i.to_i}
-        formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  
-        @total = formula_item.sum(:calculated_amount)
-        @total_actual = formula_item.sum(:actual_amount)
-        base_amount = (@total_actual.to_f / working_day.try(:day_in_month).to_f) / pom.company_hrs.to_f
-        overtime_payment = working_day.try(:ot_hours).to_f * pom.rate.to_f * base_amount.to_f
-        @salary_component = SalaryComponent.find_by(name: "Overtime")
-        SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
-        puts "ffffffffffffffffffff"
-        end
-      end
-
-
-      transport_allowance = TransportAllowance.find_by_employee_id(@employee.id)
-      unless transport_allowance.nil?
-        if transport_allowance.option
-          addable_actual_amount = 0
-          addable_calculated_amount = transport_allowance.amount * working_day.try(:payable_day)/working_day.try(:day_in_month)
-          @salary_component = SalaryComponent.find_by(name: "Transport Allowance")
-          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: addable_calculated_amount, calculated_amount: addable_calculated_amount, is_deducted: false, other_component_name: 'Transport Allowance',salary_component_id: @salary_component.id)
-        end
-      end
-
-   
-
-    date = Date.new(@year.to_i, Workingday.months[@month])
-     @monthly_arrears = MonthlyArrear.where(day: date..date.at_end_of_month, employee_id: @employee.id)
-      unless @monthly_arrears.empty?
-        addable_calculated_amount = 0
-        @monthly_arrears.try(:each) do |m|
-        m.update(is_paid: true)
-        addable_actual_amount = 0
-        addable_calculated_amount = addable_calculated_amount + m.amount
-      end
-        @salary_component=SalaryComponent.find_by(name: "Monthly Arrear")
-        SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: addable_calculated_amount, is_deducted: false,other_component_name: 'Monthly Arrear', salary_component_id:  @salary_component.id)
-         puts "Monthly Arrear......................................"
-      end
-
+    
 
 
 

@@ -3,7 +3,9 @@
     <%= f.hidden_field :employee_id , value: current_user.employee_id %>
     <%= f.hidden_field :manager_id,  value: current_user.employee.manager_id %>
     <%= f.hidden_field :current_status, value: "Pending"%>
-    
+    <%= f.hidden_field :created_date, value: Time.now.to_date %>
+    <%= f.hidden_field :created_time, value: Time.now.to_time %>
+      
     <div class="col-sm-1">
       <div class="radio_button required">
         <%= f.radio_button :plan_or_unplan, 'true', :checked => true, label:'Plan' %>

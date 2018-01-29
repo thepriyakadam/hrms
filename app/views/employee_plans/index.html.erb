@@ -66,7 +66,8 @@
                 <td><%#= employee_plan.current_status %></td>
                 <td><%#= employee_plan.manager_id %></td> -->
                 <%# binding.pry %>
-                <% if employee_plan.current_status == "Approved" && employee_plan.to_date == DateTime.now.to_date %>
+                <%= link_to 'Attend', employee_feedback_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit'%>
+                <% if employee_plan.current_status == "Pending" && employee_plan.to_date == DateTime.now.to_date %>
                   <% if employee_plan.plan_reason_master_id.nil? || employee_plan.feedback.nil? %>
                     <% if employee_plan.to_time.strftime("%H:%M") < DateTime.now.strftime("%H:%M") %>
                       <td>

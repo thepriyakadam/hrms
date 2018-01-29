@@ -1,0 +1,137 @@
+<style>
+  th {
+      text-align: left;
+  }
+  tr {
+      page-break-inside: avoid;
+  }
+  div.alwaysbreak { page-break-before: always; }
+  div.nobreak:before { clear:both; }
+  div.nobreak{ page-break-inside: avoid;
+    /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+  }
+</style>
+  <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
+     <thead>
+     <tr>
+      <td colspan="8"><center> 
+        <% if current_user.employee.company_location.company.company_logo == nil %>
+        <%else %>
+          <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+        <%end%> 
+        <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+      </td>
+    </tr>
+      <tr><th colspan="4"><center><font color='#0077b3'>Meeting Plan Detail</font></center> </th></tr>
+      <tr>
+        <th>Employee</th>
+        <td><%= @emp_plan.employee.try(:first_name) %> <%= @emp_plan.employee.try(:last_name) %></td>
+      
+        <th>Manager </th>
+        <% emp = @emp_plan.manager_id %>
+        <% @emp_name = Employee.find(emp) %>
+        
+        <td><%= @emp_name.prefix %> <%= @emp_name.first_name %> <%= @emp_name.middle_name %> <%= @emp_name.last_name%>
+        </td>
+      </tr>
+
+      <tr>
+        <th>Meeting Created Date - Time</th>
+        <td><%= @emp_plan.try(:created_date) %> - <%= @emp_plan.try(:created_time) %></td>
+        <th></th>
+        <td></td>
+      </tr>
+
+      <tr>
+        <th>Meeting From Date - Time </th>
+        <td><%= @emp_plan.try(:from_date) %> - <%= @emp_plan.try(:from_time) %></td>
+      
+        <th>Meeting To Date - Time</th>
+        <td><%= @emp_plan.try(:to_date) %> - <%= @emp_plan.try(:to_time) %></td>
+      </tr>
+
+      <tr>
+        <th>Meeting Start Date - Time </th>
+        <td><%= @emp_plan.try(:from_date) %> - <%= @emp_plan.try(:from_time) %></td>
+      
+        <th>Meeting End Date - Time</th>
+        <td><%= @emp_plan.try(:to_date) %> - <%= @emp_plan.try(:to_time) %></td>
+      </tr>
+
+      <tr>
+        <th>Meeting Start Time - End Time</th>
+        <td><%= @emp_plan.try(:start_time) %> - <%= @emp_plan.try(:end_time) %></td>
+        <th></th>
+        <td></td>
+      </tr>
+
+      <tr>
+        <th> Meeting Start Place </th>
+        <td><%= @emp_plan.try(:start_place) %> </td>
+      
+        <th>Meeting End Place </th>
+        <td><%= @emp_plan.try(:end_place) %> </td>
+      </tr>
+
+      <tr>
+        <th>Meeting With</th>
+        <td><%= @emp_plan.try(:meeting_with) %></td>
+      
+        <th>Meeting Agenda</th>
+        <td><%= @emp_plan.try(:meeting_agenda) %></td>
+      </tr>
+
+      <tr>
+        <th>Place</th>
+        <td><%= @emp_plan.try(:location) %></td>
+        <th></th>
+        <td></td>
+      </tr>
+    </thead>
+    </table>
+    <br />
+      <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
+        <thead>
+          <tr><th colspan="4"><center><font color='#0077b3'> Minutes </font></center> </th></tr>
+        </thead>
+        <tbody>
+          <% i = 0 %>
+            <% @emp_minutes.try(:each) do |m| %>
+              <tr>
+                <td>
+                  <%= i=i+1 %>
+                  <%= m.minutes %>
+                <hr style="margin-top:00px;margin-bottom:00px;">
+                <% end %>
+                </td>
+              </tr>
+        </tbody>
+      </table>
+
+      <br />
+      <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
+        <thead>
+          <tr><th colspan="8"><center><font color='#0077b3'> Follow-up History </font></center> </th></tr>
+          <tr>
+            <th>Sr.No.</th>
+            <th>Contact Person</th>
+            <th>Contact No.</th>
+            <th>Follow-up Response</th>
+            <th>Follow-up Date- Time</th>            
+            <th>Next Follow-up Date - Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%i = 0%>
+            <% @meeting_follow_up.try(:each) do |follow_up| %>
+              <tr>
+                <td><%= i = i+1 %></td>
+                <td><%= follow_up.contact_person %></td>
+                <td><%= follow_up.contact_no %></td>
+                <td><%= follow_up.follow_up_response %></td>
+                <td><%= follow_up.date %> - <%= follow_up.time %></td>
+                <td><%= follow_up.next_date %> - <%= follow_up.next_time %></td>
+              </tr>
+            <% end %>
+        </tbody>
+      </table>

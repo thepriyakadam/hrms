@@ -52,7 +52,7 @@ class EmployeePlansController < ApplicationController
     session[:active_tab] ="ManagerSelfService"
   end
 
-def ajax_employee_plan_details
+  def ajax_employee_plan_details
     @employee_plans = EmployeePlan.find(params[:id])
   end
 
@@ -485,6 +485,35 @@ def ajax_employee_plan_details
     emp_feedback = emp_plan.update(feedback: reason, plan_reason_master_id: reason_id)
     flash[:notice] = 'Plan Reason Successfully Updated'
     redirect_to employee_plans_path
+  end
+
+  def meeting_follow_up_record
+    @emp_plan = EmployeePlan.find_by_id(params[:plan_id])
+    @emp_minutes = MeetingMinute.find_by_employee_plan_id(params[:plan_id])
+    @meeting_follow_up = MeetingFollowUp.where(employee_plan_id: params[:plan_id])
+    respond_to do |format|
+      format.js
+      format.xls {render template: 'employee_plans/meeting_follow_up_record_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'meeting_follow_up_record_pdf',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'employee_plans/meeting_follow_up_record_pdf.pdf.erb',
+            show_as_html: params[:debug].present?,
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+      end
+    end
+  end
+
+  def follow_up_record_form
+    @meeting_follow_up = MeetingFollowUp.new
   end
 
   # DELETE /employee_plans/1

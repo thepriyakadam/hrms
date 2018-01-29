@@ -32,10 +32,9 @@ class MeetingFollowUpsController < ApplicationController
   # POST /meeting_follow_ups.json
   def create
     @meeting_follow_up = MeetingFollowUp.new(meeting_follow_up_params)
-
     respond_to do |format|
       if @meeting_follow_up.save
-        format.html { redirect_to @meeting_follow_up, notice: 'Meeting follow up was successfully created.' }
+        format.html { redirect_to meeting_follow_up_record_employee_plans_path(plan_id: params[:meeting_follow_up][:employee_plan_id]), notice: 'Meeting follow up was successfully created.' }
         format.json { render :show, status: :created, location: @meeting_follow_up }
       else
         format.html { render :new }

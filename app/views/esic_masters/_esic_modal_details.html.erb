@@ -1,0 +1,56 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+
+      <center>ESIC</center>
+    </div>
+
+    <div class="modal-body">
+
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    	<tr>
+			<th><strong>ESIC</strong></th>
+			 <td><%= @esic_master.esic ? "Yes" : "No" %></td>
+			<th><strong>Percentage</strong></th>
+			 <td><%= @esic_master.percentage %></td>
+		</tr>
+		<tr>
+			<th><strong>Base Component</strong></th>
+			 <td colspan="3"> <% i = 0 %>
+			 	<% @esic_master.base_component.split(",").each do |e| %>
+		            <% if i == 0 %>
+		              <%= SalaryComponent.find(e.to_i).name %>
+		            <% else %>
+		              + <%= SalaryComponent.find(e.to_i).name %>
+		            <% end %>
+		            <% i = i + 1 %>
+		          <% end %>
+		      </td>
+		</tr>
+
+		<tr>
+			<th><strong>From Date</strong></th>
+			<td><%= @esic_master.date_effective %></td>
+
+			<th><strong>To Date</strong></th>
+			<td><%= @esic_master.to_date %></td>
+
+		</tr>
+
+		<tr>
+
+				<th><strong>Max limit</strong></th>
+			<td><%= @esic_master.max_limit %></td>
+
+			<th><strong>Status</strong></th>
+			 <td><%= @esic_master.is_active ? "Active" : "Inactive" %></td>
+		</tr>
+		</table><br>
+	</div>
+  </div>
+</div>
+
+		 <%= link_to 'Back', new_esic_master_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>

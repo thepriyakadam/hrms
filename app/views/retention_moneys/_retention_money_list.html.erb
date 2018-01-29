@@ -22,10 +22,12 @@
             <%= link_to '', edit_retention_money_path(retention_money),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '',  retention_money, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
             <%= link_to '', is_confirm_retention_moneys_path(retention_money: retention_money),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-             <%= link_to '', retention_money ,class: 'btn btn-xs btn-default fa fa-eye' %>
+            <%= link_to '', modal_retention_moneys_path(retention_money), class: 'btn btn-xs btn-default fa fa-eye',remote: true%>
           <% end %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<div id="Mymodal" class="modal fade"></div>

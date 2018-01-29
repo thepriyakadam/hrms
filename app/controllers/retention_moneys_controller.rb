@@ -80,6 +80,10 @@ class RetentionMoneysController < ApplicationController
     end
   end
   
+  def modal
+    @retention_money = RetentionMoney.find(params[:format])
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.

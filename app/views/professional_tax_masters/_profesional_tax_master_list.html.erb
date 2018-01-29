@@ -29,15 +29,17 @@
           <% if professional_tax_master.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>
             <%= link_to '', edit_professional_tax_master_path(professional_tax_master) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
-         <%= link_to '', professional_tax_master ,class: 'btn btn-xs btn-default fa fa-eye' %>
-          <% else %>
+            <%= link_to '', pf_tax_master_modal_professional_tax_masters_path(professional_tax_master), class: 'btn btn-xs btn-default fa fa-eye',remote: true%>
+            <% else %>
             <%= link_to '', edit_professional_tax_master_path(professional_tax_master) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '',  professional_tax_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
             <%= link_to '', is_confirm_professional_tax_masters_path(professional_tax_master: professional_tax_master),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-              <%= link_to '', professional_tax_master ,class: 'btn btn-xs btn-default fa fa-eye' %>
+              <%= link_to '', pf_tax_master_modal_professional_tax_masters_path(professional_tax_master), class: 'btn btn-xs btn-default fa fa-eye',remote: true%>
           <% end %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<div id="Mymodal" class="modal fade"></div>

@@ -1105,7 +1105,7 @@ class SalaryslipsController < ApplicationController
             @total_actual = formula_item.sum(:actual_amount)
             @total = formula_item.sum(:calculated_amount)
             formula_item_actual_amount = @total_actual
-            formula_item_calculated_amount = (@total_actual / working_day.try(:day_in_month) * working_day.try(:payable_day))
+            formula_item_calculated_amount = (@total / working_day.try(:day_in_month) * working_day.try(:payable_day))
             deducted_actual_amount = (formula_item_actual_amount / 100 * @master_esic.percentage).ceil
             deducted_calculated_amount = (formula_item_calculated_amount / 100 * @master_esic.percentage).ceil
             @salary_component = SalaryComponent.find_by(name: "ESIC")
@@ -1408,7 +1408,6 @@ class SalaryslipsController < ApplicationController
 
      if @employee.joining_detail.ot_option == true && working_day.ot_hours != 0
         @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)
-        
         @payroll_overtime_masters.try(:each) do |pom|
         formula_string = pom.base_component.split(',').map {|i| i.to_i}
         formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  

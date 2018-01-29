@@ -30,23 +30,26 @@
             <%= select :employee_plan,:employee_id,employee_list_by_company_location,{hide_label:true,include_blank: " Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
           </div>
         </div>
-        </div>
-        <div class="row">
+      </div>
+      <div class="row">
         <div class="col-sm-4">
           <div class="field">
             <%= f.select :current_status ,['Pending','Approved','Rejected','Cancelled'] ,{label: 'Select Status',include_blank: "Select Status"} %>
           </div>
         </div>
-        
+      </div>
+      <br />
+      <div class="row">
         <div class="col-sm-3">
           <div class="actions">
             <%= f.submit "Display Report", class: "btn btn-sm btn-primary",id: "buttonCtc" %>
           </div>
         </div>
       </div>
-    <%end%>
-    <div id="status_report"></div>
-  </div>
+    </div>
+  <%end%>
+  <div id="status_report"></div>
+ </div>
 </div>
 <script type="text/javascript">
   $(function(){

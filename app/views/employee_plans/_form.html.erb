@@ -1,9 +1,19 @@
-
 <%= bootstrap_form_for(@employee_plan, html: {id: 'employee_plan' } ) do |f| %>
   <div class="row">
     <%= f.hidden_field :employee_id , value: current_user.employee_id %>
     <%= f.hidden_field :manager_id,  value: current_user.employee.manager_id %>
     <%= f.hidden_field :current_status, value: "Pending"%>
+    
+    <div class="col-sm-1">
+      <div class="radio_button required">
+        <%= f.radio_button :plan_or_unplan, 'true', :checked => true, label:'Plan' %>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="radio_button required">
+        <%= f.radio_button :plan_or_unplan, 'false', label:'Unplan' %>
+      </div>
+    </div>
     <div class="col-sm-3">
       <div class="field">
         <div class="form-group required">
@@ -22,21 +32,22 @@
         <%= f.text_field :to_date, label: 'To Date', placeholder: '01-01-2018', class: 'to_date' %>
       </div>
     </div>
+  </div>
+  <div class="row">
     <div class="col-sm-3">
-      <div class="bootstrap-timepicker">
-        <div class="form-group required">
-          <label> From Time </label>
-          <div class="input-group">
-            <%= f.text_field :from_time, hide_label:true, placeholder: '09:00', class: 'form-control timepicker' %>
-            <div class="input-group-addon">
-              <i class="fa fa-clock-o"></i>
+        <div class="bootstrap-timepicker">
+          <div class="form-group required">
+            <label> From Time </label>
+            <div class="input-group">
+              <%= f.text_field :from_time, hide_label:true, placeholder: '09:00', class: 'form-control timepicker' %>
+              <div class="input-group-addon">
+                <i class="fa fa-clock-o"></i>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row">
+    
     <div class="col-sm-3">
       <div class="bootstrap-timepicker">
         <div class="form-group required">
@@ -60,19 +71,10 @@
         <%= f.text_field :location, label:'Location', placeholder: 'Pune' %>
       </div>
     </div>
-    <div class="col-sm-1">
-      <div class="radio_button required">
-        <%= f.radio_button :plan_or_unplan, 'true', :checked => true, label:'Plan' %>
-      </div>
-    </div>
-    <div class="col-sm-1">
-      <div class="radio_button required">
-        <%= f.radio_button :plan_or_unplan, 'false', label:'Unplan' %>
-      </div>
-    </div>
-    </div>
-    <div class="row">
     
+
+  </div>
+  <div class="row">
     <div class="col-sm-6">
       <div class="form-group required">
         <%= f.text_area :meeting_agenda, label: 'Meeting Agenda', placeholder: 'Meeting Agenda' %>

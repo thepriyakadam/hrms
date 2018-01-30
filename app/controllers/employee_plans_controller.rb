@@ -372,16 +372,16 @@ class EmployeePlansController < ApplicationController
     #@emp_plan = EmployeePlan.find(emp_id)
     @employee_plan = EmployeePlan.where(employee_id: emp_id)
     if from_date.present? && !to_date.present?
-      @emp_report = EmployeePlan.where("from_date >= ? and employee_id =?", from_date.to_date, emp_id).where.not(start_latitude: nil?).order("from_date DESC")
+      @emp_report = EmployeePlan.where("from_date >= ? and employee_id =?", from_date.to_date, emp_id).where.not(start_time: nil?).order("from_date DESC")
     end
     if !from_date.present? && to_date.present?
-      @emp_report = EmployeePlan.where("to_time <= ? and employee_id =?", to_date.to_date, emp_id).where.not(start_latitude: nil?).order("from_date DESC")
+      @emp_report = EmployeePlan.where("to_time <= ? and employee_id =?", to_date.to_date, emp_id).where.not(start_time: nil?).order("from_date DESC")
     end
     if from_date.present? && to_date.present?
-      @emp_report = EmployeePlan.where(from_date:  from_date.to_date..to_date.to_date, employee_id: emp_id).where.not(start_latitude: nil?).order("from_date DESC")
+      @emp_report = EmployeePlan.where(from_date:  from_date.to_date..to_date.to_date, employee_id: emp_id).where.not(start_time: nil?).order("from_date DESC")
     end
     if !from_date.present? && !to_date.present? && emp_id.present?
-      @emp_report = EmployeePlan.where("employee_id =?", emp_id).where.not(start_latitude: nil?).order("from_date DESC")
+      @emp_report = EmployeePlan.where("employee_id =?", emp_id).where.not(start_time: nil?).order("from_date DESC")
     end
     respond_to do |format|
       format.js
@@ -489,7 +489,7 @@ class EmployeePlansController < ApplicationController
 
   def meeting_follow_up_record
     @emp_plan = EmployeePlan.find_by_id(params[:plan_id])
-    @emp_minutes = MeetingMinute.find_by_employee_plan_id(params[:plan_id])
+    @emp_minutes = MeetingMinute.where(employee_plan_id: params[:plan_id])
     @meeting_follow_up = MeetingFollowUp.where(employee_plan_id: params[:plan_id])
     respond_to do |format|
       format.js
@@ -542,6 +542,6 @@ class EmployeePlansController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_plan_params
-      params.require(:employee_plan).permit(:employee_id, :plan_or_unplan, :listed_company_id, :from_date, :to_date, :from_time, :to_time, :meeting_with, :location, :meeting_agenda, :lat, :lng, :confirm, :status, :current_status, :manager_id, :latitude, :longitude, :plan_reason_master_id, :feedback, :start_latitude, :end_latitude, :created_latitude, :start_longitude, :end_longitude, :created_longitude, :start_place, :end_place, :created_place)
+      params.require(:employee_plan).permit(:employee_id, :plan_or_unplan, :listed_company_id, :from_date, :to_date, :from_time, :to_time, :meeting_with, :location, :meeting_agenda, :lat, :lng, :confirm, :status, :current_status, :manager_id, :latitude, :longitude, :plan_reason_master_id, :feedback, :start_latitude, :end_latitude, :created_latitude, :start_longitude, :end_longitude, :created_longitude, :start_place, :end_place, :created_place, :created_date, :created_time)
     end
 end

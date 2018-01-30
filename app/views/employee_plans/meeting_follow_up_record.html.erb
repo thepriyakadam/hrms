@@ -99,6 +99,7 @@
       <table class="table table-bordered table-hover table-condensed">
         <thead>
           <tr><th colspan="8"><center><font color='#0077b3'> Follow-up History </font></center> </th></tr>
+          <% if @meeting_follow_up.present? %>
           <tr>
             <th>Sr.No.</th>
             <th>Contact Person</th>
@@ -121,9 +122,11 @@
               </tr>
             <% end %>
         </tbody>
+        <% end %>
       </table>
       <br />
       <%= link_to ' Follow-up ', follow_up_record_form_employee_plans_path(params[:plan_id]), class: 'btn btn-sm btn-success btn-xs glyphicon glyphicon-plus', remote:true %>
+      <br />
  </div>
  <div id="follow_up_record_form"></div>
   </div>

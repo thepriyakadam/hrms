@@ -1,3 +1,4 @@
+<br />
 <%= bootstrap_form_for(@meeting_follow_up, html: {id: 'meeting_follow_up' } ) do |f| %>
   <%= f.hidden_field :employee_plan_id , value: params[:format] %>
   <%= f.hidden_field :date , value: Time.now.to_date %>
@@ -14,8 +15,8 @@
       </div>
     </div>
     <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.text_field :next_date, label:'Next Date', placeholder: '01-01-2018', class: 'to_date' %>
+      <div class="form-group">
+        <%= f.text_field :next_date, label:'Next Date', placeholder: '01-01-2018', class: 'next_date' %>
       </div>
     </div>
     <div class="col-sm-3">
@@ -23,7 +24,7 @@
         <div class="form-group required">
           <label> Next Time </label>
           <div class="input-group">
-            <%= f.text_field :next_time, hide_label:true, placeholder: '09:00', class: 'form-control timepicker' %>
+            <%= f.text_field :next_time, hide_label:true, placeholder: '09:00', class: 'form-control next_time' %>
             <div class="input-group-addon">
               <i class="fa fa-clock-o"></i>
             </div>
@@ -78,7 +79,16 @@
     yearRange: '-2:+25',
     dateFormat: 'dd-mm-yy' });
 
+    $('.next_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+25',
+    dateFormat: 'dd-mm-yy' });
+
     $(".timepicker").timepicker({
+    showInputs: false });
+
+    $(".next_time").timepicker({
     showInputs: false });
   });
 </script>

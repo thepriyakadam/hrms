@@ -353,9 +353,11 @@ Rails.application.routes.draw do
   end
   resources :employee_gps_histories
   resources :gratuities
+
   resources :gratuity_masters do
     collection do
       get :is_confirm
+      get :gratuity_master_modal
     end
   end
   resources :monthly_arrears  do
@@ -544,16 +546,19 @@ Rails.application.routes.draw do
   resources :dearness_allowances do
     collection do
       get :is_confirm
+      get :dearness_allowances_modal
     end
   end
   resources :employer_insurances do
     collection do
       get :is_confirm
+      get :employer_insurances_modal
     end
   end
   resources :employer_family_pensions do
     collection do
       get :is_confirm
+      get :employer_family_pensions_modal
     end
   end
 

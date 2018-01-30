@@ -74,6 +74,10 @@ class DearnessAllowancesController < ApplicationController
     @dearness_allowance = DearnessAllowance.new
     @dearness_allowances = DearnessAllowance.all
   end
+
+  def dearness_allowances_modal
+    @dearness_allowance = DearnessAllowance.find(params[:format])
+  end
   
   def is_confirm
     @dearness_allowance = DearnessAllowance.find(params[:dearness_allowance])

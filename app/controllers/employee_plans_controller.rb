@@ -92,7 +92,6 @@ class EmployeePlansController < ApplicationController
             layout: 'pdf.html',
             orientation: 'Landscape',
             template: 'employee_plans/employee_gps_tracking_pdf.pdf.erb',
-            show_as_html: params[:debug].present?,
             :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)
@@ -132,7 +131,6 @@ class EmployeePlansController < ApplicationController
             layout: 'pdf.html',
             orientation: 'Landscape',
             template: 'employee_plans/print_employee_wise_report_pdf.pdf.erb',
-            show_as_html: params[:debug].present?,
             :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)
@@ -175,7 +173,6 @@ class EmployeePlansController < ApplicationController
             layout: 'pdf.html',
             orientation: 'Landscape',
             template: 'employee_plans/print_manager_wise_report_pdf.pdf.erb',
-            show_as_html: params[:debug].present?,
             :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)
@@ -217,7 +214,6 @@ class EmployeePlansController < ApplicationController
             layout: 'pdf.html',
             orientation: 'Landscape',
             template: 'employee_plans/print_company_wise_report_pdf.pdf.erb',
-            show_as_html: params[:debug].present?,
             :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)
@@ -272,7 +268,6 @@ class EmployeePlansController < ApplicationController
             layout: 'pdf.html',
             orientation: 'Landscape',
             template: 'employee_plans/print_status_wise_report_pdf.pdf.erb',
-            show_as_html: params[:debug].present?,
             :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)
@@ -306,7 +301,6 @@ class EmployeePlansController < ApplicationController
     if !from_date.present? && !to_date.present? && emp_id.present?
       @emp_report = EmployeePlan.where("employee_id =?", emp_id).order("from_date DESC")
     end
-
     respond_to do |format|
       format.js
       format.xls {render template: 'employee_plans/print_employee_wise_report_xls.xls.erb'}
@@ -316,7 +310,6 @@ class EmployeePlansController < ApplicationController
             layout: 'pdf.html',
             orientation: 'Landscape',
             template: 'employee_plans/print_employee_wise_report_pdf.pdf.erb',
-            show_as_html: params[:debug].present?,
             :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)
@@ -348,7 +341,6 @@ class EmployeePlansController < ApplicationController
             layout: 'pdf.html',
             orientation: 'Landscape',
             template: 'employee_plans/plan_meeting_minutes_pdf.pdf.erb',
-            show_as_html: params[:debug].present?,
             :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)
@@ -369,7 +361,6 @@ class EmployeePlansController < ApplicationController
     to_date = params[:employee_plan] ? params[:employee_plan][:to_date] : params[:to_date]
     emp_id = params[:employee_plan] ? params[:employee_plan][:employee_id] : params[:employee_id]
     @employee = Employee.find(emp_id)
-    #@emp_plan = EmployeePlan.find(emp_id)
     @employee_plan = EmployeePlan.where(employee_id: emp_id)
     if from_date.present? && !to_date.present?
       @emp_report = EmployeePlan.where("from_date >= ? and employee_id =?", from_date.to_date, emp_id).where.not(start_time: nil?).order("from_date DESC")
@@ -392,7 +383,6 @@ class EmployeePlansController < ApplicationController
             layout: 'pdf.html',
             orientation: 'Landscape',
             template: 'employee_plans/print_employee_wise_report_pdf.pdf.erb',
-            show_as_html: params[:debug].present?,
             :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)
@@ -500,7 +490,6 @@ class EmployeePlansController < ApplicationController
             layout: 'pdf.html',
             orientation: 'Landscape',
             template: 'employee_plans/meeting_follow_up_record_pdf.pdf.erb',
-            show_as_html: params[:debug].present?,
             :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)

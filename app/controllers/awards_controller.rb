@@ -38,7 +38,7 @@ class AwardsController < ApplicationController
           # end
 
           @awards = Award.where(employee_id: @employee.id)
-        # EmployeeMailer.award_create(@employee,@award).deliver_now
+          EmployeeMailer.award_create(@employee,@award).deliver_now
           format.html { redirect_to @award, notice: 'Award was successfully created.' }
           format.json { render :show, status: :created, location: @award }
           format.js { @flag = true }

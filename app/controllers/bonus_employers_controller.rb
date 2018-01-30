@@ -84,6 +84,10 @@ class BonusEmployersController < ApplicationController
     redirect_to new_bonus_employer_path
   end
 
+  def bonus_employers_modal
+    @bonus_employer = BonusEmployer.find(params[:format])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_bonus_employer

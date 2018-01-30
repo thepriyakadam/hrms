@@ -22,16 +22,18 @@
         <td>
           <% if esic_employer.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>
-            <%= link_to '', esic_employer ,class: 'btn btn-xs btn-default fa fa-eye' %>
+            <%= link_to '', esic_employers_modal_esic_employers_path(esic_employer) ,class: 'btn btn-xs btn-default fa fa-eye',remote:true %>
             <%= link_to '', edit_esic_employer_path(esic_employer) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
           <% else %>
             <%= link_to '', edit_esic_employer_path(esic_employer) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '',  esic_employer, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
             <%= link_to '', is_confirm_esic_employers_path(esic_employer: esic_employer),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-            <%= link_to '', esic_employer ,class: 'btn btn-xs btn-default fa fa-eye' %>
+            <%= link_to '', esic_employers_modal_esic_employers_path(esic_employer) ,class: 'btn btn-xs btn-default fa fa-eye',remote:true %>
           <% end %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<div id="Mymodal" class="modal fade"></div>

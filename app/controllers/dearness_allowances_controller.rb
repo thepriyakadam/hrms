@@ -85,6 +85,10 @@ class DearnessAllowancesController < ApplicationController
     flash[:notice] = "Confirmed Successfully"
     redirect_to new_dearness_allowance_path
   end
+
+  def dearness_allowances_modal
+    @dearness_allowance = DearnessAllowance.find(params[:format])
+  end
   
   private
     # Use callbacks to share common setup or constraints between actions.

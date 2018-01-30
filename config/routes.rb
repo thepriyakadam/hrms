@@ -475,6 +475,7 @@ Rails.application.routes.draw do
   resources :payroll_overtime_masters do
     collection do
       get :is_confirm
+      get :payroll_overtime_masters_modal
       end
   end
   resources :leave_cash_masters do
@@ -526,21 +527,25 @@ Rails.application.routes.draw do
   resources :pf_employers do
     collection do
       get :is_confirm
+      get :pf_employers_modal
     end
   end
   resources :esic_employers do
     collection do
       get :is_confirm
+      get :esic_employers_modal
     end
   end
   resources :bonus_employers do
     collection do
       get :is_confirm
+      get :bonus_employers_modal
     end
   end
   resources :professional_tax_masters do
     collection do
       get :is_confirm
+      get :pf_tax_master_modal
     end
   end
   resources :dearness_allowances do
@@ -2103,6 +2108,7 @@ end
   resources :pf_masters do
     collection do
       get :is_confirm
+      get :modal
     end
   end
 
@@ -2114,6 +2120,7 @@ end
   resources :well_faires do
     collection do
       get :is_confirm
+      get :modal
     end
   end
   resources :monthly_expences do
@@ -2217,6 +2224,7 @@ end
     collection do
       get :select_form
       get :is_confirm
+      get :modal
     end
   end
 
@@ -2235,6 +2243,7 @@ end
   resources :esic_masters do
     collection do
       get :is_confirm
+      get :modal
     end
   end
   resources :excel_uploads do

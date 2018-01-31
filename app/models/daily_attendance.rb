@@ -34,7 +34,6 @@ class DailyAttendance < ActiveRecord::Base
   end
   
   def self.fetch_data
-
     matrix = CheckInOut.where("CHECKTIME > ? ", Time.now - 4.days)
     matrix.each do |mat|
       edate_time = mat.CHECKTIME
@@ -131,21 +130,19 @@ class DailyAttendance < ActiveRecord::Base
       id = emp.employee_id
       in_t = emp.in_time
       out_t = emp.out_time
+      day = emp.day
       emp_att = EmployeeAttendance.where(employee_id: id, in_time: in_t)
       if emp_att.last.working_hrs.present?
-          in_time = in_t.to_time
-          out_time = out_t.to_time
-          total_hrms = out_time - in_time 
-          working_hrs = Time.at(total_hrms).utc.strftime("%H:%M")
-
-          if working_hrs > "07:00" 
-
-            emp_att.update_all(working_hrs: working_hrs)
-            puts "---------attendace calculate 1 #{DateTime.now}---------"
-
-          else
-            emp_att.update_all(working_hrs: working_hrs,present: "HD")
-          end
+        in_time = in_t.to_time
+        out_time = out_t.to_time
+        total_hrms = out_time - in_time 
+        working_hrs = Time.at(total_hrms).utc.strftime("%H:%M")
+        if working_hrs > "07:00" 
+          emp_att.update_all(working_hrs: working_hrs)
+          puts "---------attendace calculate 1 #{DateTime.now}---------"
+        else
+          emp_att.update_all(working_hrs: working_hrs,present: "HD")
+        end
       else
         if emp_att.last.out_time.present?
           in_time = in_t.to_time
@@ -153,7 +150,6 @@ class DailyAttendance < ActiveRecord::Base
           total_hrms = out_time - in_time 
           working_hrs = Time.at(total_hrms).utc.strftime("%H:%M")
           if working_hrs > "07:00" 
-
             emp_att.update_all(working_hrs: working_hrs, present: "P")
             puts "---------attendace calculate updated 1 #{DateTime.now}---------"
           else
@@ -163,6 +159,14 @@ class DailyAttendance < ActiveRecord::Base
         else
           emp_att.update_all(present: "HD")
           puts "---------attendace calculate updated 3 #{DateTime.now}---------"
+        end
+      end
+      #remaining employees attendance creation
+      @employees = Employee.where(status: "Active")
+      @employees.each do |e|
+        employee_atten = EmployeeAttendance.where(employee_id: e.id, day: day).take
+        if employee_atten.nil?
+          EmployeeAttendance.create(employee_id: e.id, day: day, present: "A")
         end
       end
     end

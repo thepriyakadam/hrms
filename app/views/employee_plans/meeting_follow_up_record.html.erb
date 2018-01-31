@@ -52,7 +52,7 @@
         <% end_time = @emp_plan.try(:end_time) %>
         <% if end_time.present? %>
           <% total_hrs = end_time - start_time %> 
-          <% meeting_hrs = Time.at(total_hrms).utc.strftime("%H:%M") %>
+          <% meeting_hrms = Time.at(total_hrms).utc.strftime("%H:%M") %>
           <td><%= meeting_hrs %></td>
         <% end %>
       <td></td>

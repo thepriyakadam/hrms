@@ -32,6 +32,8 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
         <%= f.text_field :follow_up_response, label:'Follow-up Response', placeholder: 'Name' %>
@@ -47,22 +49,37 @@
   <br />
 <% end %>
 
-<script>
-  $("#meeting_minute").validate({
+
+  <script>
+$("#meeting_follow_up").validate({
     rules: {
-      "meeting_minute[minutes]":{
+      "meeting_follow_up[contact_person]":{
+        required: true,
+      },
+      "meeting_follow_up[contact_no]":{
+        required: true,
+      },
+      "meeting_follow_up[follow_up_response]":{
         required: true,
       }
-    },
+       },
+
     messages: {
-      "meeting_minute[minutes]":{
-        required: "Please Specify Notes",
+      "meeting_follow_up[contact_person]":{
+        required: "Please specify Contact Person",
       },
+       "meeting_follow_up[contact_no]":{
+        required: "Please upload Contact Number",
+      },
+      "meeting_follow_up[follow_up_response]":{
+        required: "Please upload Follow Up Response",
+      }
+       },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
-  });
+   });
 </script>
 
 <script type="text/javascript">

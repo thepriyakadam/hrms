@@ -61,6 +61,31 @@ class GoalBunchesController < ApplicationController
 
   # POST /goal_bunches
   # POST /goal_bunches.json
+  def self_evaluation
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:employee_id])
+    @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
+
+  end
+
+  def import_xl
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:employee_id])
+  end
+
+  def import
+    goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    employee = Employee.find(params[:employee_id])
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_goal_bunches_path
+      else
+        GoalBunch.import(params[:file])
+        redirect_to new_goal_bunch_path(emp_id: employee.id,id: goal_bunch.id), notice: "File imported."
+      end
+  end
+
   def appraiser_confirm
     @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
     @employee = Employee.find(params[:emp_id])

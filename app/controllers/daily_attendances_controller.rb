@@ -1,7 +1,6 @@
 class DailyAttendancesController < ApplicationController
 
-	before_action :set_daily_attendance, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_daily_attendance, only: [:show, :edit, :update, :destroy]
   # GET /daily_attendances
   # GET /daily_attendances.json
   def index

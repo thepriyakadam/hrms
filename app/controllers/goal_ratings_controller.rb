@@ -39,6 +39,28 @@ class GoalRatingsController < ApplicationController
     end
   end
 
+  def import_xl
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:emp_id])
+  end
+
+  def import
+    goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    employee = Employee.find(params[:emp_id])
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_goal_ratings_path
+      else
+        @method = GoalRating.import(params[:file],employee,goal_bunch)
+        if @method == false
+          redirect_to new_goal_rating_path(emp_id: employee.id,id: goal_bunch.id), alert: "Weightage should be 100 or less then 100"
+        else 
+          redirect_to new_goal_rating_path(emp_id: employee.id,id: goal_bunch.id), notice: "File imported."
+        end
+      end
+  end
+
   # POST /goal_ratings
   # POST /goal_ratings.json
   def create
@@ -101,12 +123,12 @@ class GoalRatingsController < ApplicationController
             @goal_rating.save
             @flag = true
           end
-        end
+        end #params[:flag]
+
         @goal_rating = GoalRating.new
-        #@goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
         @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
         @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
-      else
+      else #goal_weightage_sum
         @flag = false
       end
   end
@@ -125,7 +147,6 @@ class GoalRatingsController < ApplicationController
     goal_weightage_sum = @goal_rating.goal_weightage_sumdate(@goal_bunch, @goal_rating.goal_weightage, params)
 
      weightage = goal_rating_params["goal_weightage"].to_i
-
       if goal_weightage_sum <= 100
         if @goal_rating.goal_type == "Goal"
            @goal = GoalPerspective.find_by(id: @goal_rating.goal_perspective_id)
@@ -206,7 +227,7 @@ class GoalRatingsController < ApplicationController
     sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
     if sum == 100
       @emp = Employee.find(current_user.employee_id)
-      GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
+      #GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
       @gol_bunch = GoalBunch.find_by(id: @goal_bunch.id).update(goal_confirm: true,appraiser_confirm: false,goal_approval: false)
       flash[:notice] = "Mail Sent Successfully"
       redirect_to new_goal_bunch_path
@@ -674,6 +695,6 @@ class GoalRatingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_rating_params
-      params.require(:goal_rating).permit(:appraisee_rating_id,:period_id,:is_hide,:attribute_master_id,:goal_bunch_id, :goal_perspective_id, :goal_weightage, :goal_measure, :target, :aligned, :goal_setter_id, :appraisee_id, :appraisee_comment, :appraiser_id, :appraiser_comment, :appraiser_rating_id, :reviewer_id, :reviewer_comment,:goal_type)
+      params.require(:goal_rating).permit(:activity,:appraisee_rating_id,:period_id,:is_hide,:attribute_master_id,:goal_bunch_id, :goal_perspective_id, :goal_weightage, :goal_measure, :target, :aligned, :goal_setter_id, :appraisee_id, :appraisee_comment, :appraiser_id, :appraiser_comment, :appraiser_rating_id, :reviewer_id, :reviewer_comment,:goal_type)
     end
 end

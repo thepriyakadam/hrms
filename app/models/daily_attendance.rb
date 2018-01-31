@@ -33,15 +33,70 @@ class DailyAttendance < ActiveRecord::Base
     end
   end
   
+  # def self.fetch_data
+
+  #   matrix = CheckInOut.where("CHECKTIME > ? ", Time.now - 4.days)
+  #   matrix.each do |mat|
+  #     edate_time = mat.CHECKTIME
+  #     edate = edate_time.to_date
+  #     punchtime = mat.LogDateTime
+  #     etime = punchtime.to_time
+  #     user_id = mat.EmpCode
+  #     month_nm = edate.strftime("%B")
+  #     emp =  Employee.find_by_manual_employee_code(user_id)
+  #     empa =  Employee.find_by_manual_employee_code(user_id)
+  #     if empa.nil?
+  #       puts "Employee Id not found"
+  #     else
+  #       emp_id = empa.id
+  #       emp_first = emp.first_name
+  #       emp_last = emp.last_name
+  #       space = " "
+  #       if emp_last.present?
+  #         emp_name = emp_first + space + emp_last
+  #       else
+  #         emp_name = emp_first
+  #       end
+  #       daily_att = DailyAttendance.where(employee_code: user_id, time: etime)
+  #       if daily_att.empty?
+
+  #         daily_att_updated = DailyAttendance.create(employee_code: user_id, date: edate_time.to_date, time: etime)
+  #         puts "---------attendace created 0 #{DateTime.now}---------"
+  #       else 
+  #       end
+  #       emp_att = EmployeeAttendance.where(employee_id: emp_id, day: edate)
+  #       if emp_att.present?
+  #         time = EmployeeAttendance.where(employee_id: emp_id, in_time: etime)
+  #         if time.present?
+  #         else
+  #           emp_att_time = emp_att.update_all(out_time: etime)
+
+  #           puts "-----------attendance updated #{DateTime.now}-----------"
+  #         end
+  #       else
+  #         emp_att_time = EmployeeAttendance.create(employee_id: emp_id, employee_code: user_id, day: edate, present: "P", in_time: etime, month_name: month_nm, employee_code: user_id, employee_name: emp_name)
+  #         puts "---------attendace created 1 #{DateTime.now}---------"
+  #       end
+  #     end
+  #   end
+    #remaining employees attendance creation
+    # @employees = Employee.where(status: "Active")
+    # @employees.each do |e|
+    #   employee_atten = EmployeeAttendance.where(employee_id: e.id, day: edate).take
+    #   if employee_atten.nil?
+    #     EmployeeAttendance.create(employee_id: e.id, day: edate, present: "A")
+    #   end
+    # end
+  # end
+
   def self.fetch_data
-    matrix = CheckInOut.where("CHECKTIME > ? ", Time.now - 4.days)
+    matrix = CheckInOut.where("CHECKTIME > ? ", Time.now - 7.days)
     matrix.each do |mat|
       edate_time = mat.CHECKTIME
       edate = edate_time.to_date
-      punchtime = mat.LogDateTime
-      etime = punchtime.to_time
-      user_id = mat.EmpCode
-      month_nm = edate.strftime("%B")
+      etime = mat.CHECKTIME
+      user_id = mat.USERID
+      month_nm = etime.strftime("%B")
       emp =  Employee.find_by_manual_employee_code(user_id)
       empa =  Employee.find_by_manual_employee_code(user_id)
       if empa.nil?
@@ -51,17 +106,12 @@ class DailyAttendance < ActiveRecord::Base
         emp_first = emp.first_name
         emp_last = emp.last_name
         space = " "
-        if emp_last.present?
-          emp_name = emp_first + space + emp_last
-        else
-          emp_name = emp_first
-        end
+        emp_name = emp_first + space + emp_last
         daily_att = DailyAttendance.where(employee_code: user_id, time: etime)
         if daily_att.empty?
-
           daily_att_updated = DailyAttendance.create(employee_code: user_id, date: edate_time.to_date, time: etime)
-          puts "---------attendace created 0 #{DateTime.now}---------"
-        else 
+          puts "---------attendace created 0 #{Time.now}---------"
+        else
         end
         emp_att = EmployeeAttendance.where(employee_id: emp_id, day: edate)
         if emp_att.present?
@@ -69,26 +119,15 @@ class DailyAttendance < ActiveRecord::Base
           if time.present?
           else
             emp_att_time = emp_att.update_all(out_time: etime)
-
-            puts "-----------attendance updated #{DateTime.now}-----------"
+            puts "-----------attendance updated #{Time.now}-----------"
           end
         else
           emp_att_time = EmployeeAttendance.create(employee_id: emp_id, employee_code: user_id, day: edate, present: "P", in_time: etime, month_name: month_nm, employee_code: user_id, employee_name: emp_name)
-          puts "---------attendace created 1 #{DateTime.now}---------"
+          puts "---------attendace created 1 #{Time.now}---------"
         end
       end
     end
-    #remaining employees attendance creation
-    # @employees = Employee.where(status: "Active")
-    # @employees.each do |e|
-    #   employee_atten = EmployeeAttendance.where(employee_id: e.id, day: edate).take
-    #   if employee_atten.nil?
-    #     EmployeeAttendance.create(employee_id: e.id, day: edate, present: "A")
-    #   end
-    # end
   end
-
-
 
   # def self.fetch_data
   #   matrix = MxAtdeventTrn.all
@@ -133,16 +172,17 @@ class DailyAttendance < ActiveRecord::Base
       day = emp.day
       emp_att = EmployeeAttendance.where(employee_id: id, in_time: in_t)
       if emp_att.last.working_hrs.present?
-        in_time = in_t.to_time
-        out_time = out_t.to_time
-        total_hrms = out_time - in_time 
-        working_hrs = Time.at(total_hrms).utc.strftime("%H:%M")
-        if working_hrs > "07:00" 
-          emp_att.update_all(working_hrs: working_hrs)
-          puts "---------attendace calculate 1 #{DateTime.now}---------"
-        else
-          emp_att.update_all(working_hrs: working_hrs,present: "HD")
-        end
+          in_time = in_t.to_time
+          out_time = out_t.to_time
+          total_hrms = out_time - in_time 
+          working_hrs = Time.at(total_hrms).utc.strftime("%H:%M")
+
+          if working_hrs > "07:00"
+            emp_att.update_all(working_hrs: working_hrs,present: "P")
+            puts "---------attendace calculate 1 #{Time.now}---------"
+          else
+            emp_att.update_all(working_hrs: working_hrs,present: "HD")
+          end
       else
         if emp_att.last.out_time.present?
           in_time = in_t.to_time
@@ -154,7 +194,8 @@ class DailyAttendance < ActiveRecord::Base
             puts "---------attendace calculate updated 1 #{DateTime.now}---------"
           else
             emp_att.update_all(working_hrs: working_hrs, present: "HD")
-            puts "---------attendace calculate updated 2 #{DateTime.now}---------"
+
+            puts "---------attendace calculate updated 2 #{Time.now}---------"
           end
         else
           emp_att.update_all(present: "HD")
@@ -172,3 +213,4 @@ class DailyAttendance < ActiveRecord::Base
     end
   end
 end
+

@@ -113,74 +113,21 @@ production:
 development_sec:
   adapter: sqlserver
   encoding: utf8
-  host: 123.201.35.198
-  database: ZKA
-  username: sa
-  password: pass
 
-  
-# test:
-#   adapter: mysql2
-#   encoding: utf8
-#   pool: 5
-#   username: root
-#   password: root
-#   database: hrms_test
-
-# development_sec:
-#   # mode: odbc
-#   adapter: sqlserver
-#   # dsn: mydsn
-#   encoding: utf8
-#   # pool: 5
-#   host: 10.10.10.62
-#   database: cosecnew
-#   username: amaazia
-#   password: matrix_1
-#   # port: 1433
-
-# production_sec:
-#   mode: odbc
-#   adapter: sqlserver
-#   dsn: mydsn
-#   encoding: utf8
-#   pool: 5
-#   host: 10.10.10.62
-#   database: cosecnew
-#   username: amaazia
-#   password: matrix_1
-#   port: 1433
-
-# test_sec:
-#   mode: odbc
-#   adapter: sqlserver
-#   dsn: mydsn
-#   encoding: utf8
-#   pool: 5
-#   host: 10.10.10.62
-#   database: cosecnew
-#   username: amaazia
-#   password: matrix_1
-#   port: 1433
+  host: 192.168.0.15
+  database: etimetracklite1
+  username: SA
 
 production_sec:
   adapter: sqlserver
   encoding: utf8
-  dsn: mydsn
-  pool: 5
-  host: 123.201.35.198
-  database: ZKA
-  username: sa
-  password: pass
-  port: 1433
+  host: 192.168.0.15
+  database: etimetracklite1
+  username: SA
 
-test_sec:
+test:
   adapter: sqlserver
   encoding: utf8
-  dsn: mydsn
-  pool: 5
-  host: 123.201.35.198
-  database: ZKA
-  username: sa
-  password: pass
-  port: 1433
+  host: 192.168.0.15
+  database: etimetracklite1
+  username: SA

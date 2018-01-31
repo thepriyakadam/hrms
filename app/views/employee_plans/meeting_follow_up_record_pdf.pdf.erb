@@ -112,6 +112,7 @@
       <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
         <thead>
           <tr><th colspan="8"><center><font color='#0077b3'> Follow-up History </font></center> </th></tr>
+          <% if @meeting_follow_up.present? %>
           <tr>
             <th>Sr.No.</th>
             <th>Contact Person</th>
@@ -134,4 +135,5 @@
               </tr>
             <% end %>
         </tbody>
+        <% end %>
       </table>

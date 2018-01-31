@@ -87,11 +87,9 @@ gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
 
 #inline edit
 
-<<<<<<< HEAD
-=======
+
 # gem 'best_in_place', '~> 3.0.1'
 
->>>>>>> f9585529e1ee77da32ee67e7709afe45b7bcb8ec
 gem 'bcrypt-ruby', '~> 3.0.0', :require => 'bcrypt'
 gem 'bcrypt'
 

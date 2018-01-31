@@ -80,6 +80,10 @@ Rails.application.routes.draw do
   
   resources :employee_plans do
     collection do
+      post :meeting_follow_up_record
+      get :meeting_follow_up_record
+      post :follow_up_record_form
+      get :follow_up_record_form
       get :meeting_follow_up
       get :meeting_follow_up_report
       post :meeting_follow_up_report

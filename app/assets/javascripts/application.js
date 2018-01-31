@@ -20,7 +20,10 @@
 //= require bootstrap-datetimepicker
 //= require_tree .
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f9585529e1ee77da32ee67e7709afe45b7bcb8ec
 
 
   $("#example1").DataTable();

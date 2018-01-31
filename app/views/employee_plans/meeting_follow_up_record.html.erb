@@ -1,0 +1,130 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+<div class="box-body">
+  <div class="pull-right">
+    <%= link_to " Excel Report ", meeting_follow_up_record_employee_plans_path(plan_id: params[:plan_id],format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+    <%= link_to " Print Report ", meeting_follow_up_record_employee_plans_path(plan_id: params[:plan_id],format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+  </div><br /> <br />
+  <table class="table table-bordered table-hover table-condensed">
+    <thead>
+    <tr><th colspan="4"><center><font color='#0077b3'>Meeting Plan Detail</font></center> </th></tr>
+
+    <tr>
+      <th>Employee</th>
+      <td><%= @emp_plan.employee.try(:first_name) %> <%= @emp_plan.employee.try(:last_name) %></td>
+    
+      <th>Manager </th>
+      <% emp = @emp_plan.manager_id %>
+      <% @emp_name = Employee.find(emp) %>
+      
+      <td><%= @emp_name.prefix %> <%= @emp_name.first_name %> <%= @emp_name.middle_name %> <%= @emp_name.last_name%>
+      </td>
+    </tr>
+
+    <tr>
+      <th>Meeting Created Date - Time</th>
+      <td><%= @emp_plan.try(:created_date) %> - <%= @emp_plan.try(:created_time) %></td>
+      <th></th>
+      <td></td>
+    </tr>
+
+    <tr>
+      <th>Meeting From Date - Time </th>
+      <td><%= @emp_plan.try(:from_date) %> - <%= @emp_plan.try(:from_time) %></td>
+    
+      <th>Meeting To Date - Time</th>
+      <td><%= @emp_plan.try(:to_date) %> - <%= @emp_plan.try(:to_time) %></td>
+    </tr>
+
+    <tr>
+      <th>Meeting Start Date - Time </th>
+      <td><%= @emp_plan.try(:from_date) %> - <%= @emp_plan.try(:from_time) %></td>
+    
+      <th>Meeting End Date - Time</th>
+      <td><%= @emp_plan.try(:to_date) %> - <%= @emp_plan.try(:to_time) %></td>
+    </tr>
+
+    <tr>
+      <th>Meeting Start Time - End Time</th>
+      <td><%= @emp_plan.try(:start_time) %> - <%= @emp_plan.try(:end_time) %></td>
+      <th></th>
+      <td></td>
+    </tr>
+
+    <tr>
+      <th> Meeting Start Place </th>
+      <td><%= @emp_plan.try(:start_place) %> </td>
+    
+      <th>Meeting End Place </th>
+      <td><%= @emp_plan.try(:end_place) %> </td>
+    </tr>
+
+    <tr>
+      <th>Meeting With</th>
+      <td><%= @emp_plan.try(:meeting_with) %></td>
+    
+      <th>Meeting Agenda</th>
+      <td><%= @emp_plan.try(:meeting_agenda) %></td>
+    </tr>
+
+    <tr>
+      <th>Place</th>
+      <td><%= @emp_plan.try(:location) %></td>
+      <th></th>
+      <td></td>
+    </tr>
+
+  </thead>
+  </table>
+    <br />
+      <table class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr><th colspan="4"><center><font color='#0077b3'> Minutes </font></center> </th></tr>
+        </thead>
+        <tbody>
+          <% i = 0 %>
+            <% @emp_minutes.try(:each) do |m| %>
+              <tr>
+                <td>
+                  <%= i=i+1 %>
+                  <%= m.minutes %>
+                <hr style="margin-top:00px;margin-bottom:00px;">
+                <% end %>
+                </td>
+              </tr>
+        </tbody>
+      </table>
+
+      <br />
+      <table class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr><th colspan="8"><center><font color='#0077b3'> Follow-up History </font></center> </th></tr>
+          <tr>
+            <th>Sr.No.</th>
+            <th>Contact Person</th>
+            <th>Contact No.</th>
+            <th>Follow-up Response</th>
+            <th>Follow-up Date- Time</th>            
+            <th>Next Follow-up Date - Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%i = 0%>
+            <% @meeting_follow_up.try(:each) do |follow_up| %>
+              <tr>
+                <td><%= i = i+1 %></td>
+                <td><%= follow_up.contact_person %></td>
+                <td><%= follow_up.contact_no %></td>
+                <td><%= follow_up.follow_up_response %></td>
+                <td><%= follow_up.date %> - <%= follow_up.time %></td>
+                <td><%= follow_up.next_date %> - <%= follow_up.next_time %></td>
+              </tr>
+            <% end %>
+        </tbody>
+      </table>
+      <br />
+      <%= link_to ' Follow-up ', follow_up_record_form_employee_plans_path(params[:plan_id]), class: 'btn btn-sm btn-success btn-xs glyphicon glyphicon-plus', remote:true %>
+ </div>
+ <div id="follow_up_record_form"></div>
+  </div>
+</div>

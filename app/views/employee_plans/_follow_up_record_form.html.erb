@@ -1,5 +1,5 @@
 <%= bootstrap_form_for(@meeting_follow_up, html: {id: 'meeting_follow_up' } ) do |f| %>
-  <%= f.hidden_field :employee_plan_id , value: params[:plan_id] %>
+  <%= f.hidden_field :employee_plan_id , value: params[:format] %>
   <%= f.hidden_field :date , value: Time.now.to_date %>
   <%= f.hidden_field :time , value: Time.now.to_time %>
   <div class="row">
@@ -66,7 +66,7 @@
 
 <script type="text/javascript">
   $(function(){
-    $('.next_date').datepicker({
+    $('.from_date').datepicker({
     changeYear:true,
     changeMonth: true,
     yearRange: '-2:+25',
@@ -78,7 +78,7 @@
     yearRange: '-2:+25',
     dateFormat: 'dd-mm-yy' });
 
-    $(".next_time").timepicker({
+    $(".timepicker").timepicker({
     showInputs: false });
   });
 </script>

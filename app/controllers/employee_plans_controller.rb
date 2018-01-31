@@ -363,16 +363,16 @@ class EmployeePlansController < ApplicationController
     @employee = Employee.find(emp_id)
     @employee_plan = EmployeePlan.where(employee_id: emp_id)
     if from_date.present? && !to_date.present?
-      @emp_report = EmployeePlan.where("from_date >= ? and employee_id =?", from_date.to_date, emp_id).where.not(start_longitude: nil?).order("from_date DESC")
+      @emp_report = EmployeePlan.where("from_date >= ? and employee_id =?", from_date.to_date, emp_id).where.not(start_time: nil?).order("from_date DESC")
     end
     if !from_date.present? && to_date.present?
-      @emp_report = EmployeePlan.where("to_time <= ? and employee_id =?", to_date.to_date, emp_id).where.not(start_longitude: nil?).order("from_date DESC")
+      @emp_report = EmployeePlan.where("to_time <= ? and employee_id =?", to_date.to_date, emp_id).where.not(start_time: nil?).order("from_date DESC")
     end
     if from_date.present? && to_date.present?
-      @emp_report = EmployeePlan.where(from_date:  from_date.to_date..to_date.to_date, employee_id: emp_id).where.not(start_longitude: nil?).order("from_date DESC")
+      @emp_report = EmployeePlan.where(from_date:  from_date.to_date..to_date.to_date, employee_id: emp_id).where.not(start_time: nil?).order("from_date DESC")
     end
     if !from_date.present? && !to_date.present? && emp_id.present?
-      @emp_report = EmployeePlan.where("employee_id =?", emp_id).where.not(start_longitude: nil?).order("from_date DESC")
+      @emp_report = EmployeePlan.where("employee_id =?", emp_id).where.not(start_time: nil?).order("from_date DESC")
     end
     respond_to do |format|
       format.js

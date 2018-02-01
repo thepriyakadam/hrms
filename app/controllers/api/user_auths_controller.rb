@@ -1616,4 +1616,5 @@ class Api::UserAuthsController < ApplicationController
     meeting_mintes = MeetingMinute.where(employee_plan_id: plan_id)
     render :json => meeting_mintes.present? ? meeting_mintes.collect{|minutes| { :id => minutes.try(:id), :minutes => minutes.try(:minutes) }} : []
   end
+
 end

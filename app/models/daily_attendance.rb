@@ -33,7 +33,8 @@ class DailyAttendance < ActiveRecord::Base
     end
   end
   
-   def self.fetch_data
+
+  def self.fetch_data
     punch = PunchTimeDetail.where("LogDateTime > ? ", Time.now - 33.days)
     punch.each do |mat|
       punch_date_time = mat.LogDateTime

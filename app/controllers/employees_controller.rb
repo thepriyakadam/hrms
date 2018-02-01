@@ -13,7 +13,7 @@
         @employees = Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'HOD'
           @emp = Employee.find(current_user.employee_id)
-         @employees = Employee.where(manager_id: @emp)
+         @employees = Employee.where(manager_id: @emp,status: "Active")
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
          @employees = Employee.where(manager_id: @emp)

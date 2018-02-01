@@ -22,17 +22,15 @@ Rails.application.routes.draw do
   resources :events
   resources :resource_pool_masters
   resources :service_masters
-  resources :daily_attendances do 
-    collection do
-      get :attendance
-      get :calculate
-    end
-  end
 
   resources :daily_attendances do 
     collection do
       get :attendance
       get :calculate
+      get :daily_attendance
+      post :daily_attendance
+      get :daily_attendances_report
+      post :daily_attendances_report
     end
   end
 

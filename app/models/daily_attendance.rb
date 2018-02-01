@@ -34,9 +34,10 @@ class DailyAttendance < ActiveRecord::Base
   end
   
   def self.fetch_data
-    punch = PunchTimeDetail.all
+    # punch = PunchTimeDetail.all
     # byebug
     # binding.pry
+    punch = PunchTimeDetail.where("LogDateTime > ? ", Time.now - 7.days)
     punch.each do |mat|
       edate_time = mat.LogDateTime
       edate = edate_time.to_date
@@ -61,40 +62,38 @@ class DailyAttendance < ActiveRecord::Base
         daily_att = DailyAttendance.where(employee_code: user_id, time: etime)
         if daily_att.empty?
           daily_att_updated = DailyAttendance.create(employee_code: user_id, date: edate_time.to_date, time: etime)
-          puts "---------attendace created 0 #{Time.now}---------"
+          puts "-----DailyAttendance---- created 0 #{Time.now}---------"
         else 
         end
+        daily_att = DailyAttendance.where(employee_code: user_id, time: etime).order("time ASC")
+        @in_time = daily_att.first.time.to_time
         emp_att = EmployeeAttendance.where(employee_id: emp_id, day: edate)
         if emp_att.present?
           time = EmployeeAttendance.where(employee_id: emp_id, in_time: etime)
-          if time.present?
+          if time.present?            
+            emp_att_time = emp_att.update_all(in_time: @in_time)
+            # emp_att_time = emp_att.update_all(in_time: etime)
           else
             emp_att_time = emp_att.update_all(out_time: etime)
-            puts "-----------attendance updated #{Time.now}-----------"
+            puts "-----------EmployeeAttendance updated #{Time.now}-----------"
           end
         else
           emp_att_time = EmployeeAttendance.create(employee_id: emp_id, employee_code: user_id, day: edate, present: "P", in_time: etime, month_name: month_nm, employee_code: user_id, employee_name: emp_name)
-          puts "---------attendace created 1 #{Time.now}---------"
+          puts "-------EmployeeAttendance created 1 #{Time.now}---------"
         end
       end
     end
-    #remaining employees attendance creation
-    # @employees = Employee.where(status: "Active")
-    # @employees.each do |e|
-    #   employee_atten = EmployeeAttendance.where(employee_id: e.id, day: edate).take
-    #   if employee_atten.nil?
-    #     EmployeeAttendance.create(employee_id: e.id, day: edate, present: "A")
-    #   end
-    # end
   end
 
 
- def self.calculate_attendance
-    emp = EmployeeAttendance.where("in_time > ? ", Time.now - 24.days)
+  def self.calculate_attendance
+    emp = EmployeeAttendance.where("in_time > ? ", Time.now - 2.days)
     emp.each do |emp|
       id = emp.employee_id
       in_t = emp.in_time
       out_t = emp.out_time
+      day = emp.day
+      @days = emp.day
       emp_att = EmployeeAttendance.where(employee_id: id, in_time: in_t)
       if emp_att.last.working_hrs.present?
           in_time = in_t.to_time
@@ -124,6 +123,13 @@ class DailyAttendance < ActiveRecord::Base
           emp_att.update_all(present: "HD")
           puts "---------attendace calculate updated 3 #{Time.now}---------"
         end
+      end
+    end
+    @employees = Employee.where(status: "Active")
+    @employees.each do |e|
+    employee_atten = EmployeeAttendance.where(employee_id: e.id, day: @days).take
+      if employee_atten.nil?
+        EmployeeAttendance.create(employee_id: e.id, day: day, present: "A")
       end
     end
   end

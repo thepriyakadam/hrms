@@ -23,35 +23,35 @@ class Workingday < ActiveRecord::Base
   # validates :payable_day, :presence => true
 
 
-  def self.import_day_file(file)
+ def self.import_day_file(file)
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-      @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'A').to_i)
+      @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
       if @employee.nil?
       else
       employee_id = @employee.id
-      month_name = spreadsheet.cell(i,'B')
-      year = spreadsheet.cell(i,'C').to_i
-      day_in_month = spreadsheet.cell(i,'D')
-      present_day = spreadsheet.cell(i,'E')
-      week_off_day = spreadsheet.cell(i,'F')
-      od_day = spreadsheet.cell(i,'G')
-      pay_leave = spreadsheet.cell(i,'H')
-      holiday_in_month = spreadsheet.cell(i,'I')
-      payable_day = spreadsheet.cell(i,'J')
+      month_name = spreadsheet.cell(i,'C')
+      year = spreadsheet.cell(i,'D').to_i
+      day_in_month = spreadsheet.cell(i,'E')
+      present_day = spreadsheet.cell(i,'F')
+      week_off_day = spreadsheet.cell(i,'G')
+      od_day = spreadsheet.cell(i,'H')
+      pay_leave = spreadsheet.cell(i,'I')
+      holiday_in_month = spreadsheet.cell(i,'J')
+      payable_day = spreadsheet.cell(i,'K')
+      ot_hours = spreadsheet.cell(i,'L')
       @workingday_data = Workingday.where(employee_id: employee_id,month_name: month_name).take 
       if @workingday_data == nil
-      @workingday = Workingday.create(employee_id: employee_id,month_name: month_name,year: year,day_in_month: day_in_month,present_day: present_day,week_off_day: week_off_day,od_day: od_day,pay_leave: pay_leave,holiday_in_month: holiday_in_month,payable_day: payable_day)
+      @workingday = Workingday.create(employee_id: employee_id,ot_hours: ot_hours, month_name: month_name,year: year,day_in_month: day_in_month,present_day: present_day,week_off_day: week_off_day,od_day: od_day,pay_leave: pay_leave,holiday_in_month: holiday_in_month,payable_day: payable_day)
       else
        if @workingday_data.paid == nil
-          @workingday_data.update(employee_id: employee_id,month_name: month_name,year: year,day_in_month: day_in_month,present_day: present_day,week_off_day: week_off_day,od_day: od_day,pay_leave: pay_leave,holiday_in_month: holiday_in_month,payable_day: payable_day)
+          @workingday_data.update(employee_id: employee_id,ot_hours: ot_hours,month_name: month_name,year: year,day_in_month: day_in_month,present_day: present_day,week_off_day: week_off_day,od_day: od_day,pay_leave: pay_leave,holiday_in_month: holiday_in_month,payable_day: payable_day)
        else
        end
       end
     end
     end
   end
-
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)
     when '.csv' then Roo::CSV.new(file.path, file_warning: :ignore)

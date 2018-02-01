@@ -74,6 +74,7 @@ class EmployeeAttendance < ActiveRecord::Base
     def self.import(file)
      spreadsheet = open_spreadsheet(file)
       (2..spreadsheet.last_row).each do |i|
+     
         employee_code = spreadsheet.cell(i,'A').to_i
 
         employee_name = spreadsheet.cell(i,'B')

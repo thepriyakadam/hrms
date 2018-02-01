@@ -8,7 +8,7 @@
      <%= f.hidden_field :end_date, value: @start_date %>
 
       <div class="row">
-      <div class="col-sm-3">
+        <div class="col-sm-3">
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
@@ -20,13 +20,22 @@
         </div>
 
         <div class="col-sm-3">
-        <label>C.Off Date</label>
           <div class="form-group required">
-            <%= select :leave_c_off, :c_off_date ,all_leav_c_off,{include_blank: " Select Date"},class: 'form-control' %>
+          <%= f.select :leave_type, ['Full Day','Half Day'],{label:"Leave Type",include_blank: "Select Leave Type"},{onchange:"var a={leave_type:$(this).val()}; $.get('/employee_leav_requests/c_off_date',a,function(response){});",class: 'form-control'} %>
           </div>
         </div>
 
-        <div class="col-sm-5">
+        <div id="checkbox"></div>
+        <!-- <div class="col-sm-3">
+        <label>C.Off Date</label>
+          <div class="form-group required">
+            <= select :leave_c_off, :c_off_date ,all_leav_c_off,{include_blank: " Select Date"},class: 'form-control' %>
+          </div>
+        </div> -->
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
           <div class="form-group required">
             <%= f.text_field :reason %>
           </div>

@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
 
+  resources :latemark_deductions
+  resources :latemark_masters do
+    collection do
+      get :latemark_calculation
+      post :show_employee_list
+      get :show_employee_list
+      post :calculate_latemark
+      get :latemark_total
+    end
+  end
   resources :meeting_follow_ups do
     collection do
       get :view_meeting_follow_up
@@ -2734,6 +2744,7 @@ end
       post :show_balancewise_report
       get :show_balancewise_report
       get :leave_request_modal
+      get :c_off_date
     end
   end
   resources :company_leavs
@@ -2943,6 +2954,8 @@ end
       get :reporting_manager_list
       get :employee_asset
       get :admin_asset_employee_list
+      get :show_employee_dropdown
+      get :collect_self_data
     end
     member do
       get :edit_manager

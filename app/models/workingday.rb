@@ -23,7 +23,7 @@ class Workingday < ActiveRecord::Base
   # validates :payable_day, :presence => true
 
 
-   def self.import_day_file(file)
+ def self.import_day_file(file)
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
       @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
@@ -52,7 +52,6 @@ class Workingday < ActiveRecord::Base
     end
     end
   end
-
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)
     when '.csv' then Roo::CSV.new(file.path, file_warning: :ignore)

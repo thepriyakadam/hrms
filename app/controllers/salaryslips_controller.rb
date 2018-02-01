@@ -900,8 +900,6 @@ class SalaryslipsController < ApplicationController
 
 
         else
-
-
           current_template = EmployeeTemplate.where('employee_id = ? and is_active = ?', @employee.id, true).take
           next if current_template.nil?
           addable_salary_items = current_template.employee_salary_templates.where('is_deducted = ?', false)
@@ -1102,7 +1100,6 @@ class SalaryslipsController < ApplicationController
         SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: addable_calculated_amount, is_deducted: false,other_component_name: 'Monthly Arrear', salary_component_id:  @salary_component.id)
          puts "Monthly Arrear......................................"
       end
-
 
           @pf_master = PfMaster.where(is_active: true).take
           if @pf_master.nil?

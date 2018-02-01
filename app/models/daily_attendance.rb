@@ -117,6 +117,7 @@ class DailyAttendance < ActiveRecord::Base
         if emp_att.present?
           time = EmployeeAttendance.where(employee_id: emp_id, in_time: etime)
           if time.present?
+            
           else
             emp_att_time = emp_att.update_all(out_time: etime)
             puts "-----------attendance updated #{Time.now}-----------"

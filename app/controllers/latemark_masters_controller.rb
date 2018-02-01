@@ -16,6 +16,8 @@ class LatemarkMastersController < ApplicationController
   def new
     @latemark_master = LatemarkMaster.new
     @latemark_masters = LatemarkMaster.all
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="latemark"
   end
 
   # GET /latemark_masters/1/edit
@@ -51,6 +53,8 @@ class LatemarkMastersController < ApplicationController
   end
 
   def latemark_calculation
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="latemark"
   end
 
   def show_employee_list

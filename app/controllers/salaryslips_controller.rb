@@ -900,8 +900,6 @@ class SalaryslipsController < ApplicationController
 
 
         else
-
-
           current_template = EmployeeTemplate.where('employee_id = ? and is_active = ?', @employee.id, true).take
           next if current_template.nil?
           addable_salary_items = current_template.employee_salary_templates.where('is_deducted = ?', false)

@@ -1,0 +1,5 @@
+<% if @flag %>
+	$("#checkbox").html("<%= j render 'full_day_coff' %>");
+<% else %>
+	$("#checkbox").html("<%= j render 'half_day_coff' %>");
+<% end %>

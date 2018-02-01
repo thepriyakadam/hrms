@@ -33,13 +33,6 @@ class EmployeeLeavRequestsController < ApplicationController
   def edit
   end
 
-  def select_checkbox
-    if params[:leave_type] == "Full/Half" || params[:leave_type] == "Half Day"
-      @flag = true
-    else
-      @flag = false
-    end
-  end
 
   def from_hr
     @employee = Employee.find(params[:format])
@@ -84,6 +77,22 @@ class EmployeeLeavRequestsController < ApplicationController
     end
   end
 
+  def select_checkbox
+    if params[:leave_type] == "Full/Half" || params[:leave_type] == "Half Day"
+      @flag = true
+    else
+      @flag = false
+    end
+  end
+
+  def c_off_date
+    if params[:leave_type] == "Full Day" || params[:leave_type] == " "
+      @flag = true
+    else
+      @flag = false
+    end
+  end
+
   def select_form
     @employee_leav_request = EmployeeLeavRequest.new
     @employee = Employee.find_by(id: current_user.employee_id)
@@ -117,13 +126,15 @@ class EmployeeLeavRequestsController < ApplicationController
     if @leav_category.id == leav_category.id
 
       end_date = params['employee_leav_request']['start_date']
-      @leave_c_off_id = params[:leave_c_off][:c_off_date]
+      
+        @leave_c_off_id = params[:common][:c_off_date]
+
   #nil fields
         if end_date == "" || @leave_c_off_id == "" || @leave_c_off_id == nil
           flash[:alert] = "Please Fill mendatory Fields"
         else#end_date == nil
           if  start_date.to_date >= payroll_period.from.to_date && start_date.to_date <= payroll_period.to.to_date        
-              @leave_c_off_id = params[:leave_c_off][:c_off_date]
+              @leave_c_off_id = params[:common][:c_off_date]
               @leave_c_off = LeaveCOff.find_by(id: @leave_c_off_id)
             if start_date.to_date > @leave_c_off.c_off_date.to_date
                 if @leave_c_off.expiry_date < start_date.to_date
@@ -142,8 +153,14 @@ class EmployeeLeavRequestsController < ApplicationController
                   @employee_leav_request.is_pending = true
                   @employee_leav_request.current_status = 'Pending'
                   # if @leave_c_off.leave_count == 1.0 || @leave_c_off.leave_count == 0.0
-                    @employee_leav_request.leave_count = 1
+                  
+                  if params[:flag] == "Full"
+                    @employee_leav_request.leave_count = 1.0
                     @employee_leav_request.leave_type = "Full Day"
+                  else
+                    @employee_leav_request.leave_count = 0.5
+                    @employee_leav_request.leave_type = "Half Day"
+                  end
                   # else
                   #   @employee_leav_request.leave_count = 0.5
                   #   @employee_leav_request.leave_type = "Half Day"

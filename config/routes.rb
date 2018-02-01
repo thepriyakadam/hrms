@@ -2728,6 +2728,7 @@ end
       post :show_balancewise_report
       get :show_balancewise_report
       get :leave_request_modal
+      get :c_off_date
     end
   end
   resources :company_leavs

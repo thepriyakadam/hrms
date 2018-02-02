@@ -23,10 +23,12 @@
             <%= link_to '', edit_employer_family_pension_path(employer_family_pension) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '',  employer_family_pension, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
             <%= link_to '', is_confirm_employer_family_pensions_path(employer_family_pension: employer_family_pension),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-             <%= link_to '',employer_family_pension,class: 'btn btn-xs btn-default fa fa-eye' %>
+             <%= link_to '',employer_family_pensions_modal_employer_family_pensions_path(employer_family_pension),class: 'btn btn-xs btn-default fa fa-eye',remote:true %>
           <% end %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<div id="Mymodal" class="modal fade">

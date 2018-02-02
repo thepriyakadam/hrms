@@ -25,6 +25,9 @@ class WellFairesController < ApplicationController
       redirect_to new_well_faire_path    
   end
 
+  def modal
+    @well_faire = WellFaire.find(params[:format])
+  end
   # PATCH/PUT /well_faires/1
   # PATCH/PUT /well_faires/1.json
   def update

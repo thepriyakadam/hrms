@@ -1,95 +1,3 @@
-<div class="box-body">
-  <table class="table table-bordered table-hover table-condensed">
-    <thead>
-    <tr><th colspan="4"><center><font color='#0077b3'>Meeting Plan Detail</font></center> </th></tr>
-    <tr>
-      <th>Employee</th>
-      <td><%#= @emp_plan.employee.try(:first_name) %> <%#= @employee_plan.employee.try(:last_name) %></td>
-    
-      <th>Plan Created Time</th>
-      <%# emp = @employee_plan.manager_id %>
-      <%# @emp_name = Employee.find(emp) %>
-      <td><%#= @emp_name.prefix %> <%#= @emp_name.first_name %> <%#= @emp_name.middle_name %><%#= @emp_name.last_name%>
-      </td>
-    </tr>
-    <tr>
-      <th>Meeting Created Date - Time</th>
-      <td><%= @emp_plan.try(:created_date) %> - <%= @emp_plan.try(:created_time) %></td>
-    </tr>
-    <tr>
-      <th>Meeting From Date - time </th>
-      <td><%= @emp_plan.try(:from_date) %> - <%= @emp_plan.try(:from_time) %></td>
-    
-      <th>Meeting To Date - time</th>
-      <td><%= @emp_plan.try(:to_date) %> - <%= @emp_plan.try(:to_time) %></td>
-    </tr>
-    <tr>
-      <th>Meeting Start Date - time </th>
-      <td><%= @emp_plan.try(:from_date) %> - <%= @emp_plan.try(:from_time) %></td>
-    
-      <th>Meeting End Date - time</th>
-      <td><%= @emp_plan.try(:to_date) %> - <%= @emp_plan.try(:to_time) %></td>
-
-      <th>Meeting Start Time - End Time</th>
-      <td><%= @emp_plan.try(:start_time) %> - <%= @emp_plan.try(:end_time) %></td>
-    </tr>
-    <tr>
-      <th> Meeting Start Place </th>
-      <td><%= @emp_plan.try(:start_place) %> </td>
-    
-      <th>Meeting End Place </th>
-      <td><%= @emp_plan.try(:end_place) %> </td>
-    </tr>
-    <tr>
-      <th>Meeting With</th>
-      <td><%= @emp_plan.try(:meeting_with) %></td>
-    
-      <th>Meeting Agenda</th>
-      <td><%= @emp_plan.try(:meeting_agenda) %></td>
-    </tr>
-    <tr>
-      <th>Place</th>
-      <td><%= @emp_plan.try(:location) %></td>
-      <th></th>
-      <td></td>
-    </tr>
-  </thead>
-</table>
-    <br />
-    <table class="table table-bordered table-hover table-condensed">
-      <thead>
-        <tr>  
-          <th text-align="center">Minutes </th>
-        </tr>
-      </thead>
-      <tbody>
-      <% i = 0%>
-        <%# @emp_minutes.each do |m| %>
-        <tr>
-          <td>
-            <%= i=i+1 %>
-              <%#= m.minutes %>
-              <hr style="margin-top:00px;margin-bottom:00px;">
-            <%# end %>
-          </td>
-        </tr>
-      </tbody>
-  </table>
- </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <%= bootstrap_form_for(@meeting_follow_up, html: {id: 'meeting_follow_up' } ) do |f| %>
   <%= f.hidden_field :employee_plan_id , value: params[:plan_id] %>
   <%= f.hidden_field :date , value: Time.now.to_date %>
@@ -158,7 +66,7 @@
 
 <script type="text/javascript">
   $(function(){
-    $('.from_date').datepicker({
+    $('.next_date').datepicker({
     changeYear:true,
     changeMonth: true,
     yearRange: '-2:+25',
@@ -170,7 +78,7 @@
     yearRange: '-2:+25',
     dateFormat: 'dd-mm-yy' });
 
-    $(".timepicker").timepicker({
+    $(".next_time").timepicker({
     showInputs: false });
   });
 </script>

@@ -1,0 +1,75 @@
+<div class="box-body">
+  <%= bootstrap_form_for(@latemark_deduction,html: {id: 'latemark_deduction'}) do |f| %>
+  
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.select :employee_id, employee_list_for_food_deduction,{label: 'Employee',include_blank: " Select Employee"} %>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <label>Latemark Day</label>
+        <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :latemark_day, hide_label: true, class: 'latemark_day'%>
+          </div>
+        </div>
+      </div> 
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :latemark_count,label:'Late Mark Count' %>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :latemark_amount,label:'Late Mark Amount' %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3" style="padding-top: 20px">
+        <div class="actions">
+          <%= f.submit "Create Deduction",class: "btn btn-primary btn-sm" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<script>
+$("#latemark_deduction").validate({
+    rules: {
+      "latemark_deduction[employee_id]":{
+        required: true
+              },
+      "latemark_deduction[latemark_day]":{
+        required: true
+              }
+    },
+    messages: {
+      "latemark_deduction[employee_id]":{
+        required: "Please Specify Employee"
+      },
+      "latemark_deduction[latemark_day]":{
+        required: "Please Specify Latemark Day"
+      }
+
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+<script type="text/javascript">
+  $(function(){
+    $('.latemark_day').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

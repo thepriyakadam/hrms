@@ -505,7 +505,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
   end
 
   def leave_record_create_coff(employee_leav_request)
-    if employee_leav_request.leave_count == 0.5
+    if employee_leav_request.leave_type == "Half Day"
       LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: employee_leav_request.start_date,count: 0.5,leav_category_id: employee_leav_request.leav_category_id)
     else
       LeaveRecord.create(employee_id: employee_leav_request.employee_id,employee_leav_request_id: employee_leav_request.id,status: "Pending", day: employee_leav_request.start_date,count: 1,leav_category_id: employee_leav_request.leav_category_id)

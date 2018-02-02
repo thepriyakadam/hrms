@@ -22,7 +22,6 @@
 
 
 
-
   $("#example1").DataTable();
   $('#example2').DataTable({
     "paging": true,

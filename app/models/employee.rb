@@ -22,6 +22,8 @@ class Employee < ActiveRecord::Base
   has_many :trainees
   has_many :gps_dailies
   has_many :exit_interviews
+  has_many :latemark_deductions
+  has_many :latemark_totals
 
   has_many :reporting_masters
   has_many :employee_attendances

@@ -75,6 +75,9 @@ class EmployerFamilyPensionsController < ApplicationController
     redirect_to new_employer_family_pension_path
   end
 
+  def employer_family_pensions_modal
+    @employer_family_pension = EmployerFamilyPension.find(params[:format])
+  end
 
   # DELETE /employer_family_pensions/1
   # DELETE /employer_family_pensions/1.json

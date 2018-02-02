@@ -74,12 +74,20 @@ class DearnessAllowancesController < ApplicationController
     @dearness_allowance = DearnessAllowance.new
     @dearness_allowances = DearnessAllowance.all
   end
+
+  def dearness_allowances_modal
+    @dearness_allowance = DearnessAllowance.find(params[:format])
+  end
   
   def is_confirm
     @dearness_allowance = DearnessAllowance.find(params[:dearness_allowance])
     DearnessAllowance.find(@dearness_allowance.id).update(is_confirm: true)
     flash[:notice] = "Confirmed Successfully"
     redirect_to new_dearness_allowance_path
+  end
+
+  def dearness_allowances_modal
+    @dearness_allowance = DearnessAllowance.find(params[:format])
   end
   
   private

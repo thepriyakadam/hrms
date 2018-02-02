@@ -54,6 +54,10 @@ class EsicMastersController < ApplicationController
     @esic_master = EsicMaster.new
   end
 
+  def modal
+    @esic_master = EsicMaster.find(params[:format])
+  end
+
   # DELETE /esic_masters/1
   # DELETE /esic_masters/1.json
   def destroy

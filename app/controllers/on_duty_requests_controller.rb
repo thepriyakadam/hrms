@@ -190,7 +190,7 @@ class OnDutyRequestsController < ApplicationController
   end
 
   def select_checkbox
-    if params[:leave_type] == "Full/Half" || params[:leave_type] == "Half Day"
+    if params[:leave_type] == "Half Day"
       @flag = true
     else
       @flag = false

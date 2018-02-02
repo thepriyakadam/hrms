@@ -30,6 +30,7 @@
           <th>In Time</th>
           <th>Out Time</th>
           <th>Working Hrs.</th>
+          <th>Late Mark</th>
           <th>Present</th>
         </tr>
       </thead>
@@ -43,6 +44,16 @@
             <td><%= employee_attendance.try(:in_time) %></td>
             <td><%= employee_attendance.try(:out_time) %></td>
             <td><%= employee_attendance.try(:working_hrs) %></td>
+            <% if employee_attendance.try(:in_time).present? %>
+              <% time = Time.at(employee_attendance.try(:in_time)).utc.strftime("%H:%M") %>
+              <% if time > "08:33" %>
+                <td class="danger"><%= employee_attendance.try(:in_time) %></td>
+              <% else %>
+                <td></td>
+              <% end %>
+            <% else %>
+              <td></td>
+            <% end %>
             <td><%= employee_attendance.try(:present) %></td>
           </tr>
         <% end %>

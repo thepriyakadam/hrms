@@ -95,6 +95,8 @@ class OnDutyRequestsController < ApplicationController
               @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f + 0.5
             end  
           elsif @on_duty_request.leave_type == 'Half Day'
+
+            byebug
             if @on_duty_request.first_half == true || @on_duty_request.last_half == true
               @on_duty_request.no_of_day = @on_duty_request.no_of_day.to_f + 0.5
             elsif @on_duty_request.last_half == true && @on_duty_request.last_half == true
@@ -125,6 +127,7 @@ class OnDutyRequestsController < ApplicationController
           #   OdRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',day: i)
           # end
 
+          #ATTENDANCE
             @on_duty_request.create_attendance_od
             OdStatusRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',change_date: Date.today)
 
@@ -144,7 +147,7 @@ class OnDutyRequestsController < ApplicationController
               else
               end
               @od_record = OdRecord.where(on_duty_request_id: @on_duty_request.id).count
-              @on_duty_request.update(no_of_day: @od_record)
+              #@on_duty_request.update(no_of_day: @od_record)
           flash[:notice] = "Request Created Successfully"
           if current_user.employee_id == @on_duty_request.employee_id
             redirect_to on_duty_requests_path

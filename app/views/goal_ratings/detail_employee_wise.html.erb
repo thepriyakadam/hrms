@@ -151,10 +151,11 @@
         <% i=i+1%>
         <th><%= i %></th>
         <th colspan="9"><center>Performance Report for Period: <%= goal_bunch.period.name %> From: <%= goal_bunch.period.from %> To: <%= goal_bunch.period.to %></center></th></tr>
-        <tr><th colspan="10"><center>Goals</center></th></tr>
+        <tr><th colspan="11"><center>Goals</center></th></tr>
           <tr>
             <th>Goal Perspective</th>
-            <th>Goal Measure</th>
+            <th>Measure</th>
+            <th>Activity</th>
             <th>Target/Unit</th>
             <th>Goal Weightage</th>
             <th>Aligned</th>
@@ -170,6 +171,7 @@
             <tr>
               <td><%= goal_rating.try(:goal_perspective).try(:name) %></td>
               <td><%= goal_rating.try(:goal_measure) %></td>
+              <td><%= goal_rating.try(:activity) %></td>
               <td><%= goal_rating.try(:target) %></td>
               <td><%= goal_rating.try(:goal_weightage) %></td>
               <td><%= goal_rating.try(:aligned) %></td>
@@ -184,10 +186,11 @@
         </table>
         <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
         <thead>
-        <tr><th colspan="10"><center>Attributes</center></th></tr>
+        <tr><th colspan="11"><center>Attributes</center></th></tr>
           <tr>
             <th>Attribute</th>
-            <th>Goal Measure</th>
+            <th>Measure</th>
+            <th>Activity</th>
             <th>Target/Unit</th>
             <th>Goal Weightage</th>
             <th>Aligned</th>
@@ -203,6 +206,7 @@
             <tr>
               <td><%= goal_rating.attribute_master.try(:name) %></td>
               <td><%= goal_rating.goal_measure %></td>
+              <td><%= goal_rating.activity %></td>
               <td><%= goal_rating.target %></td>
               <td><%= goal_rating.goal_weightage %></td>
               <td><%= goal_rating.aligned %></td>

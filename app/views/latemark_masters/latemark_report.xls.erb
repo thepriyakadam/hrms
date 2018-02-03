@@ -1,0 +1,23 @@
+
+<table id="example5" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr><th colspan="4"><center>From <%= @from_date.to_date %> To <%= @to_date.to_date %></center></th></tr>
+    <tr>
+      <th>ID</th>
+      <th>Employee</th>
+      <th>In Time</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @emp_att.each do |employee_attendance| %>
+
+      <tr>
+          <td><%= employee_attendance.employee.manual_employee_code %></td>
+          <td><%= full_name(employee_attendance.employee) %></td>
+          <td><%= employee_attendance.in_time.strftime("%I:%M") %></td>
+          <td><%= employee_attendance.day %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

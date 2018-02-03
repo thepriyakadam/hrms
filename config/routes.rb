@@ -8,6 +8,9 @@ Rails.application.routes.draw do
       get :show_employee_list
       post :calculate_latemark
       get :latemark_total
+      get :latemark_report
+      post :show_datewise_report
+      get :datewise_report
     end
   end
   resources :meeting_follow_ups do

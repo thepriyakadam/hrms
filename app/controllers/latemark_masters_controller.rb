@@ -72,9 +72,8 @@ class LatemarkMastersController < ApplicationController
         @emp_att << att
       end
     end
-    # @all = @emp_att
   end
-
+  
   # def calculate_latemark
   #   @employee_attendance_ids = params[:employee_attendance_ids]
   #   if @employee_attendance_ids.nil?

@@ -215,6 +215,7 @@ class SelfServicesController < ApplicationController
       else
         @leave_c_off = LeaveCOff.new(leave_c_off_params)
         @leave_c_offs = LeaveCOff.all
+        
         @emp_attendance = EmployeeAttendance.where(employee_id: @employee_id,day: @c_off_date.to_date).take
         
           if leav_category.nil?
@@ -236,8 +237,8 @@ class SelfServicesController < ApplicationController
             end#c_off.nil?
             #byebug
 
-            if @emp_attendance.holiday_id != nil || @emp_attendance.employee_week_off_id != nil
-              if @emp_attendance.on_duty_request_id != nil
+            if @emp_attendance.holiday_id.present? || @emp_attendance.employee_week_off_id.present?
+              if @emp_attendance.on_duty_request_id.present?
                 @on_duty_request = OnDutyRequest.find_by(id: @emp_attendance.on_duty_request_id)
                 if @on_duty_request.leave_type == "Half Day"
                   @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Half Day",c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending",comment: @comment)

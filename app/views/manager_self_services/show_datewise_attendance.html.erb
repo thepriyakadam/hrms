@@ -28,7 +28,9 @@
             <td><%= employee_attendance.try(:in_time) %></td>
             <td><%= employee_attendance.try(:out_time) %></td>
             <td><%= employee_attendance.try(:working_hrs) %></td>
-            <% if !employee_attendance.try(:holiday_id).present? || !employee_attendance.try(:employee_week_off_id).present? %>
+            <% if employee_attendance.try(:holiday_id).present? || employee_attendance.try(:employee_week_off_id).present?  || employee_attendance.try(:on_duty_request_id).present? || employee_attendance.try(:employee_leav_request_id).present? %>
+              <td></td>
+            <% else %>
               <% if employee_attendance.try(:in_time).present? %>
                 <% time = Time.at(employee_attendance.try(:in_time)).utc.strftime("%H:%M") %>
                 <% if time > "08:33" %>
@@ -39,8 +41,7 @@
               <% else %>
                 <td></td>
               <% end %>
-            <% else %>
-              <td></td>
+              
             <% end %>
           </tr>
         <% end %>

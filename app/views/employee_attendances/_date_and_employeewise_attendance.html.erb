@@ -27,7 +27,9 @@
             <td><%= a.try(:out_time) %></td>
             <td><%= a.try(:working_hrs) %></td>
             <% if @company_time.present? %>
-              <% if a.try(:holiday_id).present? || a.try(:employee_week_off_id).present?  || a.try(:on_duty_request_id).present? || a.try(:employee_leav_request_id).present? %>
+              <% if a.try(:holiday_id).present? || a.try(:employee_week_off_id).present? || a.try(:on_duty_request_id).present? || a.try(:employee_leav_request_id).present? %>
+                <td></td>
+              <% else %>
                 <% if a.try(:in_time).present? %>
                   <% time = Time.at(a.try(:in_time)).utc.strftime("%H:%M") %>
                   <% if time > @company_time %>
@@ -38,8 +40,6 @@
                 <% else %>
                   <td></td>
                 <% end %>
-              <% else %>
-                <td></td>
               <% end %>
             <% end %>
             <td><%= a.try(:comment) %></td>

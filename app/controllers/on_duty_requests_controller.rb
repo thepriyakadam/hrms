@@ -22,7 +22,7 @@ class OnDutyRequestsController < ApplicationController
     @employee = Employee.find_by(id: current_user.employee_id)
   end
 
-  # GET /on_duty_requests/1/edit
+  # GET /n_duty_requests/1/edit
   def edit
   end
 
@@ -96,7 +96,7 @@ class OnDutyRequestsController < ApplicationController
             end  
           elsif @on_duty_request.leave_type == 'Half Day'
 
-            byebug
+            #byebug
             if @on_duty_request.first_half == true || @on_duty_request.last_half == true
               @on_duty_request.no_of_day = @on_duty_request.no_of_day.to_f + 0.5
             elsif @on_duty_request.last_half == true && @on_duty_request.last_half == true

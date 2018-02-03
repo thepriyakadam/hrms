@@ -501,6 +501,8 @@ end
     status = params[:employee][:status]
     @from_date = @from.to_date
     @to_date = @to.to_date
+    #byebug
+    @code = params[:employee][:code]
     #@date = Date.new(@year.to_i, Workingday.months[@month])
     #@day = @date.end_of_month.day
     #@start_date = @date

@@ -9,7 +9,9 @@
           <th>In Time</th>
           <th>Out Time</th>
           <th>Working Hours</th>
-          <th>Late Mark</th>
+          <% if @company_time.present? %>
+            <th>Late Mark</th>
+          <% end %>
           <th>Comment</th>
           <th>Action</th>
         </tr>
@@ -24,19 +26,21 @@
             <td><%= a.try(:in_time) %></td>
             <td><%= a.try(:out_time) %></td>
             <td><%= a.try(:working_hrs) %></td>
-            <% if !a.try(:holiday_id).present? || !a.try(:employee_week_off_id).present? %>
-              <% if a.try(:in_time).present? %>
-                <% time = Time.at(a.try(:in_time)).utc.strftime("%H:%M") %>
-                <% if time > "08:33" %>
-                  <td class="danger"><%= a.try(:in_time) %></td>
+            <% if @company_time.present? %>
+              <% if a.try(:holiday_id).present? || a.try(:employee_week_off_id).present?  || a.try(:on_duty_request_id).present? || a.try(:employee_leav_request_id).present? %>
+                <% if a.try(:in_time).present? %>
+                  <% time = Time.at(a.try(:in_time)).utc.strftime("%H:%M") %>
+                  <% if time > @company_time %>
+                    <td class="danger"><%= a.try(:in_time) %></td>
+                  <% else %>
+                    <td></td>
+                  <% end %>
                 <% else %>
                   <td></td>
                 <% end %>
               <% else %>
                 <td></td>
               <% end %>
-            <% else %>
-              <td></td>
             <% end %>
             <td><%= a.try(:comment) %></td>
             <td>

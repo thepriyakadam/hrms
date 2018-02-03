@@ -1169,7 +1169,6 @@ end
   end
 
   def show_costcenter_wise_attendance
-   
     @to, @from = params[:salary][:to], params[:salary][:from]
     @costcenter_id =params[:salary][:costcenter]
     @status =params[:salary][:status]
@@ -1183,7 +1182,8 @@ end
     else
       @employees = Employee.all.pluck(:id)
     end
-    @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id,employee_id: @employees).pluck(:employee_id)
+
+    @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id, employee_id: @employees).pluck(:employee_id)
   
     @employees = EmployeeAttendance.where(day: @from.to_date..@to.to_date,is_confirm: false,employee_id: @costcenter)
     
@@ -2214,6 +2214,9 @@ def date_and_employeewise_attendance
   from = params[:employee][:from]
   to = params[:employee][:to]
   employee_id = params[:employee][:employee_id]
+  @latemark_master = LatemarkMaster.last
+  @latemark_master_time = @latemark_master.company_time
+  @company_time = @latemark_master_time.strftime("%I:%M")
   @employee_attendances = EmployeeAttendance.where(employee_id: employee_id,day: from.to_date..to.to_date).order("day DESC")
 end
 

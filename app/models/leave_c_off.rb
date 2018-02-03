@@ -64,4 +64,10 @@ LeaveCOff.all
     flag = EmployeeAttendance.exists?(employee_id: emp,present: "OD",day: date.to_date)
     flag 
   end
+
+   def is_od_present_for_coff_half(emp,date)
+    flag = 0
+    flag = EmployeeAttendance.exists?(employee_id: emp,present: "HD",day: date.to_date)
+    flag 
+   end
 end

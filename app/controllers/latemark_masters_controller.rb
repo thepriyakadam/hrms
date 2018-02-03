@@ -63,23 +63,31 @@ class LatemarkMastersController < ApplicationController
     @latemark_master = LatemarkMaster.last
     @latemark_master_time = @latemark_master.company_time
     @company_time = @latemark_master_time.strftime("%I:%M")
+    @emp_att = []
     @employee_attendances = EmployeeAttendance.where(day: @from_date.to_date..@to_date.to_date,late_mark: nil).where.not(in_time: nil)
-  end
-
-  def calculate_latemark
-    @employee_attendance_ids = params[:employee_attendance_ids]
-    if @employee_attendance_ids.nil?
-      flash[:alert] = "Please Select the Checkbox"
-    else
-      @employee_attendance_ids.each do |eid|
-        @employee_attendance = EmployeeAttendance.find_by_id(eid)
-        LatemarkTotal.create(employee_id: @employee_attendance.employee_id,latemark_date: @employee_attendance.day,in_time: @employee_attendance.in_time)
-        @employee_attendance.update(late_mark: 0)
-        flash[:notice] = "Created successfully"
+    @employee_attendances.each do |att|
+      if att.in_time.strftime("%I:%M") > @company_time
+        LatemarkTotal.create(employee_id: att.employee_id,latemark_date: att.day,in_time: att.in_time)
+        att.update(late_mark: 0)
+        @emp_att << att
       end
     end
-      redirect_to latemark_calculation_latemark_masters_path
   end
+  
+  # def calculate_latemark
+  #   @employee_attendance_ids = params[:employee_attendance_ids]
+  #   if @employee_attendance_ids.nil?
+  #     flash[:alert] = "Please Select the Checkbox"
+  #   else
+  #     @employee_attendance_ids.each do |eid|
+  #       @employee_attendance = EmployeeAttendance.find_by_id(eid)
+  #       LatemarkTotal.create(employee_id: @employee_attendance.employee_id,latemark_date: @employee_attendance.day,in_time: @employee_attendance.in_time)
+  #       @employee_attendance.update(late_mark: 0)
+  #       flash[:notice] = "Created successfully"
+  #     end
+  #   end
+  #     redirect_to latemark_calculation_latemark_masters_path
+  # end
 
   def latemark_total
     @latemark_totals = LatemarkTotal.where(confirm: nil).group(:employee_id)
@@ -104,6 +112,57 @@ class LatemarkMastersController < ApplicationController
     flash[:notice] = "Created successfully"
     redirect_to latemark_calculation_latemark_masters_path
   end
+
+  def latemark_report
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="latemark"
+  end
+
+  def show_datewise_report
+    @from_date = params[:latemark_master][:from_date]
+    @to_date = params[:latemark_master][:to_date]
+    @latemark_master = LatemarkMaster.last
+    @latemark_master_time = @latemark_master.company_time
+    @company_time = @latemark_master_time.strftime("%I:%M")
+    @emp_att = []
+    @employee_attendances = EmployeeAttendance.where(day: @from_date.to_date..@to_date.to_date).where.not(in_time: nil)
+    @employee_attendances.each do |att|
+      if att.in_time.strftime("%I:%M") > @company_time
+        # LatemarkTotal.create(employee_id: att.employee_id,latemark_date: att.day,in_time: att.in_time)
+        # att.update(late_mark: 0)
+        @emp_att << att
+      end
+    end
+  end
+
+  def datewise_report
+    @from_date = params[:latemark_master][:from_date]
+    @to_date = params[:latemark_master][:to_date]
+    @latemark_master = LatemarkMaster.last
+    @latemark_master_time = @latemark_master.company_time
+    @company_time = @latemark_master_time.strftime("%I:%M")
+    @emp_att = []
+    @employee_attendances = EmployeeAttendance.where(day: @from_date.to_date..@to_date.to_date,late_mark: nil).where.not(in_time: nil)
+    @employee_attendances.each do |att|
+      if att.in_time.strftime("%I:%M") > @company_time
+        @emp_att << att
+      end
+    end
+
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'latemark_masters/latemark_report.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'employee_attendance',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'latemark_masters/latemark_report.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

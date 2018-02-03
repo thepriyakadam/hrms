@@ -138,11 +138,12 @@
 
         <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
           <thead>
-          <tr><th colspan="10"><center>Performance Record</center></th></tr>
-          <tr><th colspan="10"><center>Goals</center></th></tr>
+          <tr><th colspan="11"><center>Performance Record</center></th></tr>
+          <tr><th colspan="11"><center>Goals</center></th></tr>
             <tr>
               <th>Goal Perspective</th>
               <th>Goal Measure</th>
+              <th>Activity</th>
               <th>Target/Unit</th>
               <th>Goal Weightage</th>
               <th>Aligned</th>
@@ -158,6 +159,7 @@
               <tr>
                 <td><%= goal_rating.try(:goal_perspective).try(:name) %></td>
                 <td><%= goal_rating.try(:goal_measure) %></td>
+                <td><%= goal_rating.try(:activity) %></td>
                 <td><%= goal_rating.try(:target) %></td>
                 <td><%= goal_rating.try(:goal_weightage) %></td>
                 <td><%= goal_rating.try(:aligned) %></td>
@@ -173,10 +175,11 @@
 
         <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
           <thead>
-          <tr><th colspan="10"><center>Attributes</center></th></tr>
+          <tr><th colspan="11"><center>Attributes</center></th></tr>
             <tr>
               <th>Attribute</th>
               <th>Goal Measure</th>
+              <th>Activity</th>
               <th>Target/Unit</th>
               <th>Goal Weightage</th>
               <th>Aligned</th>
@@ -192,6 +195,7 @@
               <tr>
                 <td><%= attribute_rating.try(:attribute_master).try(:name) %></td>
                 <td><%= attribute_rating.try(:goal_measure) %></td>
+                <td><%= attribute_rating.try(:activity) %></td>
                 <td><%= attribute_rating.try(:target) %></td>
                 <td><%= attribute_rating.try(:goal_weightage) %></td>
                 <td><%= attribute_rating.try(:aligned) %></td>

@@ -138,6 +138,9 @@ class SelfServicesController < ApplicationController
     @from = params[:employee][:from]
     @to = params[:employee][:to]
     @employee_id = params[:employee][:employee_id]
+    @latemark_master = LatemarkMaster.last
+    @latemark_master_time = @latemark_master.company_time
+    @company_time = @latemark_master_time.strftime("%I:%M")
     @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day DESC")
   end
 
@@ -215,6 +218,7 @@ class SelfServicesController < ApplicationController
       else
         @leave_c_off = LeaveCOff.new(leave_c_off_params)
         @leave_c_offs = LeaveCOff.all
+        
         @emp_attendance = EmployeeAttendance.where(employee_id: @employee_id,day: @c_off_date.to_date).take
         
           if leav_category.nil?

@@ -35,7 +35,7 @@ class DailyAttendance < ActiveRecord::Base
   
 
   def self.fetch_data
-    punch = PunchTimeDetail.where("LogDateTime > ? ", Time.now - 33.days)
+    punch = PunchTimeDetail.where("LogDateTime > ? ", Time.now - 3.days)
     punch.each do |mat|
       punch_date_time = mat.LogDateTime
       punch_date = punch_date_time.to_date
@@ -82,7 +82,7 @@ class DailyAttendance < ActiveRecord::Base
   end
 
   def self.calculate_attendance
-    emp = EmployeeAttendance.where("in_time > ? ", Time.now - 33.days)
+    emp = EmployeeAttendance.where("in_time > ? ", Time.now - 3.days)
     emp.each do |emp|
       id = emp.employee_id
       in_t = emp.in_time

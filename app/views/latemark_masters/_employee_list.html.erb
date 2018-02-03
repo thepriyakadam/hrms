@@ -6,22 +6,28 @@
           <tr>
             <th>ID</th>
             <th>Employee</th>
-            <th>In Time</th>
             <th>Date</th>
+            <th>In Time</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
           <% @emp_att.each do |employee_attendance| %>
 
             <tr>
-                <td><%= employee_attendance.employee.manual_employee_code %></td>
-                <td><%= full_name(employee_attendance.employee) %></td>
-                <td><%= employee_attendance.in_time.strftime("%I:%M") %></td>
-                <td><%= employee_attendance.day %></td>
+              <td><%= employee_attendance.employee.manual_employee_code %></td>
+              <td><%= full_name(employee_attendance.employee) %></td>
+              <td><%= employee_attendance.day %></td>
+              <td><%= employee_attendance.in_time.strftime("%I:%M") %></td>
+              <td><%= employee_attendance.present %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
+        <div class="col-sm-2" style="padding-top: 20px">
+          <%= link_to 'Final Deduction',latemark_total_latemark_masters_path,class: 'btn btn-primary btn-sm ' %>
+        </div>
+
   </div>
 </div>
 

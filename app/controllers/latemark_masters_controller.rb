@@ -65,12 +65,11 @@ class LatemarkMastersController < ApplicationController
     @company_time = @latemark_master_time.strftime("%I:%M")
     @emp_att = []
     @employee_attendances = EmployeeAttendance.where(day: @from_date.to_date..@to_date.to_date,late_mark: nil).where.not(in_time: nil)
+    
+    @time = 0 
     @employee_attendances.each do |att|
       if att.in_time.strftime("%I:%M") > @company_time
-        #byebug
-        #@in_time = att.in_time.strftime("%I:%M") - @company_time
-        LatemarkTotal.create(employee_id: att.employee_id,latemark_date: att.day,in_time: att.in_time)
-        att.update(late_mark: 0)
+        
         @emp_att << att
       end
     end
@@ -92,6 +91,20 @@ class LatemarkMastersController < ApplicationController
   # end
 
   def latemark_total
+    @from_date = params[:from_date]
+    @to_date = params[:to_date]
+    @latemark_master = LatemarkMaster.last
+    @latemark_master_time = @latemark_master.company_time
+    @company_time = @latemark_master_time.strftime("%I:%M")
+    @employee_attendances = EmployeeAttendance.where(day: @from_date.to_date..@to_date.to_date,late_mark: nil).where.not(in_time: nil)
+    
+    @employee_attendances.each do |att|
+      if att.in_time.strftime("%I:%M") > @company_time
+        LatemarkTotal.create(employee_id: att.employee_id,latemark_date: att.day,in_time: att.in_time)
+        att.update(late_mark: 0)
+      end
+    end
+
     @latemark_totals = LatemarkTotal.where(confirm: nil).group(:employee_id)
     @latemark_master = LatemarkMaster.last
     company_count = @latemark_master.allow_latemark
@@ -130,7 +143,7 @@ class LatemarkMastersController < ApplicationController
     @employee_attendances = EmployeeAttendance.where(day: @from_date.to_date..@to_date.to_date,late_mark: 0).where.not(in_time: nil)
   
     @employee_attendances.each do |att|
-      if att.in_time.strftime("%I:%M") > @company_time
+      if att.in_time.strftime("%I:%M") > @company_time && att.in_time.strftime("%I:%M") < @late_limit
         # LatemarkTotal.create(employee_id: att.employee_id,latemark_date: att.day,in_time: att.in_time)
         # att.update(late_mark: 0)
         @emp_att << att
@@ -144,10 +157,12 @@ class LatemarkMastersController < ApplicationController
     @latemark_master = LatemarkMaster.last
     @latemark_master_time = @latemark_master.company_time
     @company_time = @latemark_master_time.strftime("%I:%M")
+    @latemark_master_late_time = @latemark_master.late_limit
+    @late_limit = @latemark_master_late_time.strftime("%I:%M")
     @emp_att = []
     @employee_attendances = EmployeeAttendance.where(day: @from_date.to_date..@to_date.to_date,late_mark: nil).where.not(in_time: nil)
     @employee_attendances.each do |att|
-      if att.in_time.strftime("%I:%M") > @company_time
+      if att.in_time.strftime("%I:%M") > @company_time && att.in_time.strftime("%I:%M") < @late_limit
         @emp_att << att
       end
     end
@@ -175,6 +190,6 @@ class LatemarkMastersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def latemark_master_params
-      params.require(:latemark_master).permit(:company_time, :allow_latemark, :amount)
+      params.require(:latemark_master).permit(:halfday_allow,:late_limit,:company_time, :allow_latemark, :amount)
     end
 end

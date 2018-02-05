@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180202063251) do
+ActiveRecord::Schema.define(version: 20180205062146) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code",        limit: 255
@@ -2628,6 +2628,8 @@ ActiveRecord::Schema.define(version: 20180202063251) do
     t.decimal  "amount",                     precision: 10
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
+    t.time     "late_limit"
+    t.boolean  "halfday_allow"
   end
 
   create_table "latemark_totals", force: :cascade do |t|

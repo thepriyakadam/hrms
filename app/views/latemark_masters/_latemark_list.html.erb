@@ -5,6 +5,7 @@
       <th>Time To</th>
       <th>Allow latemark</th>
       <th>Amount</th>
+      <th>Allow Halfday</th>
       <th>Action</th>
     </tr>
     </tr>
@@ -17,6 +18,7 @@
         <td><%= latemark_master.late_limit %></td>
         <td><%= latemark_master.allow_latemark %></td>
         <td><%= latemark_master.amount %></td>
+        <td><%= latemark_master.halfday_allow ? "Yes" : "No" %></td>
           <td>
             <%= link_to '',  latemark_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
              <%= link_to '', edit_latemark_master_path(latemark_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>

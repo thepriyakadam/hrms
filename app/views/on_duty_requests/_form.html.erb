@@ -35,13 +35,13 @@
     </div>
 
       <div class="row">
-       <!--  <div class="col-sm-3">
+        <div class="col-sm-3">
           <div class="form-group required">
-            <= f.select :leave_type,['Full Day','Half Day'],{label:"OD Type",include_blank: "Select OD Type"},{onchange:"var a={leave_type:$(this).val()}; $.get('/on_duty_requests/select_checkbox',a,function(response){});",class: 'form-control'} %>
+            <%= f.select :leave_type,['Full Day','Half Day'],{label:"OD Type",include_blank: "Select OD Type"},{onchange:"var a={leave_type:$(this).val()}; $.get('/on_duty_requests/select_checkbox',a,function(response){});",class: 'form-control'} %>
           </div>
         </div>
 
-        <div id="checkbox"></div> -->
+        <div id="checkbox"></div>
 
         <div class="col-sm-3">
           <div class="form-group required">
@@ -64,7 +64,8 @@
           </div>
         </div>
 
-        <!-- <div id="checkbox1"></div> -->
+
+        <div id="checkbox1"></div>
 
         <div class="col-sm-4">
           <div class="field">
@@ -151,11 +152,19 @@
     }
   });
 
+</script>
+
+<script type="text/javascript">
   $('#on_duty_request_leave_type').on('change', function() {
     if ($('#on_duty_request_leave_type').val() == "Full Day"){
    
       $("#checkbox1").hide();
       $("#checkbox").hide();
+    }
+    elsif ($('#on_duty_request_leave_type').val() == "Half Day"){
+
+      $("#checkbox1").show();
+      $("#checkbox").show();
     }
     else{
       $("#checkbox1").show();

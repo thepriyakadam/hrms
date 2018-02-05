@@ -28,10 +28,12 @@
             <%= link_to '', edit_pf_employer_path(pf_employer) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '',  pf_employer, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
             <%= link_to '', is_confirm_pf_employers_path(pf_employer: pf_employer),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-            <%= link_to '', pf_employer ,class: 'btn btn-xs btn-default fa fa-eye' %>
+            <%= link_to '', pf_employers_modal_pf_employers_path(pf_employer), class: 'btn btn-xs btn-default fa fa-eye',remote: true%>
           <% end %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<div id="Mymodal" class="modal fade"></div>

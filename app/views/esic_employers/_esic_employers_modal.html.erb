@@ -1,0 +1,45 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Employer ESIC Detail </center></h4>
+    </div>
+    <div class="modal-body">
+		<table class="table table-bordered table-hover table-condensed">
+		  <thead>
+		  <tr>
+		  <th><strong>Base Component</strong></th>
+		   <td colspan="3"> <% i = 0 %>
+		          <% @esic_employer.base_component.split(",").each do |e| %>
+		            <% if i == 0 %>
+		              <%= SalaryComponent.find(e.to_i).name %>
+		            <% else %>
+		              + <%= SalaryComponent.find(e.to_i).name %>
+		            <% end %>
+		            <% i = i + 1 %>
+		          <% end %>
+		      </td>
+		  
+		</tr>
+		<tr>
+		  <th><strong>Percentage</strong></th>
+		   <td><%= @esic_employer.percentage %></td>
+
+		    <th><strong>Status</strong></th>
+		   <td><%= @esic_employer.is_active ? "Active" : "Inactive" %></td>
+		</tr>
+
+		<tr>
+		  <th><strong>From Date</strong></th>
+		  <td><%= @esic_employer.effective_from %></td>
+
+		  <th><strong>To Date</strong></th>
+		  <td><%= @esic_employer.effective_to %></td>
+
+		</tr>
+		  </thead>
+		</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

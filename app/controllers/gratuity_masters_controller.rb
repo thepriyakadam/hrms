@@ -76,6 +76,10 @@ class GratuityMastersController < ApplicationController
     @gratuity_masters = GratuityMaster.all
   end
 
+  def gratuity_master_modal
+    @gratuity_master = GratuityMaster.find(params[:format])
+  end
+
   # DELETE /gratuity_masters/1
   # DELETE /gratuity_masters/1.json
   def destroy

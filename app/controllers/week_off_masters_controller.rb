@@ -118,7 +118,7 @@ class WeekOffMastersController < ApplicationController
   def create_week_off
     @employee_ids = params[:employee_ids]
     @employee = Employee.where(id: @employee_ids)
-    # day = params[:week_off_masters][:day]
+    day = params[:week_off_masters][:day]
     from = params[:week_off_masters][:from]
     to = params[:week_off_masters][:to]
     is_active = params[:week_off_masters][:is_active]

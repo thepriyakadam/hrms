@@ -900,8 +900,6 @@ class SalaryslipsController < ApplicationController
 
 
         else
-
-
           current_template = EmployeeTemplate.where('employee_id = ? and is_active = ?', @employee.id, true).take
           next if current_template.nil?
           addable_salary_items = current_template.employee_salary_templates.where('is_deducted = ?', false)
@@ -1077,15 +1075,15 @@ class SalaryslipsController < ApplicationController
       end
 
 
-     # @transport_allowance = TransportAllowance.find_by_employee_id(@employee.id)
-     #  unless transport_allowance.nil?
-     #    if transport_allowance.option
-     #      addable_actual_amount = 0
-     #      addable_calculated_amount = @transport_allowance.amount * working_day.try(:payable_day)/working_day.try(:day_in_month)
-     #      @salary_component = SalaryComponent.find_by(name: "Transport Allowance")
-     #      SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: addable_calculated_amount, calculated_amount: addable_calculated_amount, is_deducted: false, other_component_name: 'Transport Allowance',salary_component_id: @salary_component.id)
-     #    end
-     #  end
+      transport_allowance = TransportAllowance.find_by_employee_id(@employee.id)
+      unless transport_allowance.nil?
+        if transport_allowance.option
+          addable_actual_amount = 0
+          addable_calculated_amount = transport_allowance.amount * working_day.try(:payable_day)/working_day.try(:day_in_month)
+          @salary_component = SalaryComponent.find_by(name: "Transport Allowance")
+          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: addable_calculated_amount, calculated_amount: addable_calculated_amount, is_deducted: false, other_component_name: 'Transport Allowance',salary_component_id: @salary_component.id)
+        end
+      end
 
    
 
@@ -1447,6 +1445,7 @@ class SalaryslipsController < ApplicationController
         end
       end
     end
+
 
      if @employee.joining_detail.ot_option == true && working_day.ot_hours != 0
         @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)

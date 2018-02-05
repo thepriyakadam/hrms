@@ -52,7 +52,7 @@ class EmployeePlansController < ApplicationController
     session[:active_tab] ="ManagerSelfService"
   end
 
-def ajax_employee_plan_details
+  def ajax_employee_plan_details
     @employee_plans = EmployeePlan.find(params[:id])
   end
 
@@ -92,7 +92,6 @@ def ajax_employee_plan_details
             layout: 'pdf.html',
             orientation: 'Landscape',
             template: 'employee_plans/employee_gps_tracking_pdf.pdf.erb',
-            show_as_html: params[:debug].present?,
             :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)
@@ -132,7 +131,6 @@ def ajax_employee_plan_details
             layout: 'pdf.html',
             orientation: 'Landscape',
             template: 'employee_plans/print_employee_wise_report_pdf.pdf.erb',
-            show_as_html: params[:debug].present?,
             :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)
@@ -175,7 +173,6 @@ def ajax_employee_plan_details
             layout: 'pdf.html',
             orientation: 'Landscape',
             template: 'employee_plans/print_manager_wise_report_pdf.pdf.erb',
-            show_as_html: params[:debug].present?,
             :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)
@@ -217,7 +214,6 @@ def ajax_employee_plan_details
             layout: 'pdf.html',
             orientation: 'Landscape',
             template: 'employee_plans/print_company_wise_report_pdf.pdf.erb',
-            show_as_html: params[:debug].present?,
             :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)
@@ -272,7 +268,6 @@ def ajax_employee_plan_details
             layout: 'pdf.html',
             orientation: 'Landscape',
             template: 'employee_plans/print_status_wise_report_pdf.pdf.erb',
-            show_as_html: params[:debug].present?,
             :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)
@@ -306,7 +301,6 @@ def ajax_employee_plan_details
     if !from_date.present? && !to_date.present? && emp_id.present?
       @emp_report = EmployeePlan.where("employee_id =?", emp_id).order("from_date DESC")
     end
-
     respond_to do |format|
       format.js
       format.xls {render template: 'employee_plans/print_employee_wise_report_xls.xls.erb'}
@@ -316,7 +310,6 @@ def ajax_employee_plan_details
             layout: 'pdf.html',
             orientation: 'Landscape',
             template: 'employee_plans/print_employee_wise_report_pdf.pdf.erb',
-            show_as_html: params[:debug].present?,
             :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)
@@ -348,7 +341,6 @@ def ajax_employee_plan_details
             layout: 'pdf.html',
             orientation: 'Landscape',
             template: 'employee_plans/plan_meeting_minutes_pdf.pdf.erb',
-            show_as_html: params[:debug].present?,
             :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)
@@ -369,19 +361,18 @@ def ajax_employee_plan_details
     to_date = params[:employee_plan] ? params[:employee_plan][:to_date] : params[:to_date]
     emp_id = params[:employee_plan] ? params[:employee_plan][:employee_id] : params[:employee_id]
     @employee = Employee.find(emp_id)
-    #@emp_plan = EmployeePlan.find(emp_id)
     @employee_plan = EmployeePlan.where(employee_id: emp_id)
     if from_date.present? && !to_date.present?
-      @emp_report = EmployeePlan.where("from_date >= ? and employee_id =?", from_date.to_date, emp_id).where.not(start_latitude: nil?).order("from_date DESC")
+      @emp_report = EmployeePlan.where("from_date >= ? and employee_id =?", from_date.to_date, emp_id).where.not(start_time: nil?).order("from_date DESC")
     end
     if !from_date.present? && to_date.present?
-      @emp_report = EmployeePlan.where("to_time <= ? and employee_id =?", to_date.to_date, emp_id).where.not(start_latitude: nil?).order("from_date DESC")
+      @emp_report = EmployeePlan.where("to_time <= ? and employee_id =?", to_date.to_date, emp_id).where.not(start_time: nil?).order("from_date DESC")
     end
     if from_date.present? && to_date.present?
-      @emp_report = EmployeePlan.where(from_date:  from_date.to_date..to_date.to_date, employee_id: emp_id).where.not(start_latitude: nil?).order("from_date DESC")
+      @emp_report = EmployeePlan.where(from_date:  from_date.to_date..to_date.to_date, employee_id: emp_id).where.not(start_time: nil?).order("from_date DESC")
     end
     if !from_date.present? && !to_date.present? && emp_id.present?
-      @emp_report = EmployeePlan.where("employee_id =?", emp_id).where.not(start_latitude: nil?).order("from_date DESC")
+      @emp_report = EmployeePlan.where("employee_id =?", emp_id).where.not(start_time: nil?).order("from_date DESC")
     end
     respond_to do |format|
       format.js
@@ -392,7 +383,6 @@ def ajax_employee_plan_details
             layout: 'pdf.html',
             orientation: 'Landscape',
             template: 'employee_plans/print_employee_wise_report_pdf.pdf.erb',
-            show_as_html: params[:debug].present?,
             :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)
@@ -462,6 +452,11 @@ def ajax_employee_plan_details
   end
 
   def end_meeting
+    emp_paln_id = params[:format]
+    emp_plan = EmployeePlan.find_by_id(emp_paln_id)
+    emp_plan.update(end_date: Time.now.to_date, end_time: Time.now.to_time)
+    redirect_to employee_feedback_employee_plans_path(emp_paln_id)
+    flash[:notice] = 'Meeting Successfully End..!!'
   end
 
   def feedback
@@ -485,6 +480,34 @@ def ajax_employee_plan_details
     emp_feedback = emp_plan.update(feedback: reason, plan_reason_master_id: reason_id)
     flash[:notice] = 'Plan Reason Successfully Updated'
     redirect_to employee_plans_path
+  end
+
+  def meeting_follow_up_record
+    @emp_plan = EmployeePlan.find_by_id(params[:plan_id])
+    @emp_minutes = MeetingMinute.where(employee_plan_id: params[:plan_id])
+    @meeting_follow_up = MeetingFollowUp.where(employee_plan_id: params[:plan_id])
+    respond_to do |format|
+      format.js
+      format.xls {render template: 'employee_plans/meeting_follow_up_record_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'meeting_follow_up_record_pdf',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'employee_plans/meeting_follow_up_record_pdf.pdf.erb',
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+      end
+    end
+  end
+
+  def follow_up_record_form
+    @meeting_follow_up = MeetingFollowUp.new
   end
 
   # DELETE /employee_plans/1
@@ -513,6 +536,6 @@ def ajax_employee_plan_details
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_plan_params
-      params.require(:employee_plan).permit(:employee_id, :plan_or_unplan, :listed_company_id, :from_date, :to_date, :from_time, :to_time, :meeting_with, :location, :meeting_agenda, :lat, :lng, :confirm, :status, :current_status, :manager_id, :latitude, :longitude, :plan_reason_master_id, :feedback, :start_latitude, :end_latitude, :created_latitude, :start_longitude, :end_longitude, :created_longitude, :start_place, :end_place, :created_place)
+      params.require(:employee_plan).permit(:employee_id, :plan_or_unplan, :listed_company_id, :from_date, :to_date, :from_time, :to_time, :meeting_with, :location, :meeting_agenda, :lat, :lng, :confirm, :status, :current_status, :manager_id, :latitude, :longitude, :plan_reason_master_id, :feedback, :start_latitude, :end_latitude, :created_latitude, :start_longitude, :end_longitude, :created_longitude, :start_place, :end_place, :created_place, :created_date, :created_time)
     end
 end

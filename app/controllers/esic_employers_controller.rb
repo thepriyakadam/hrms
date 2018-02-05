@@ -83,6 +83,9 @@ class EsicEmployersController < ApplicationController
     redirect_to new_esic_employer_path
   end
 
+  def esic_employers_modal
+    @esic_employer = EsicEmployer.find(params[:format])
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

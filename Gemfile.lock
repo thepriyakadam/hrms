@@ -30,6 +30,14 @@ GEM
       activemodel (= 4.2.8)
       activesupport (= 4.2.8)
       arel (~> 6.0)
+    activerecord-session_store (1.1.0)
+      actionpack (>= 4.0, < 5.2)
+      activerecord (>= 4.0, < 5.2)
+      multi_json (~> 1.11, >= 1.11.2)
+      rack (>= 1.5.2, < 3)
+      railties (>= 4.0, < 5.2)
+    activerecord-sqlserver-adapter (4.2.18)
+      activerecord (~> 4.2.1)
     activesupport (4.2.8)
       i18n (~> 0.7)
       minitest (~> 5.1)
@@ -119,12 +127,15 @@ GEM
     database_cleaner (1.6.2)
     datagrid (1.5.8)
       rails (>= 4.0)
+    dbi (0.4.5)
+      deprecated (= 2.0.1)
     debug_inspector (0.0.3)
     delayed_job (4.1.4)
       activesupport (>= 3.0, < 5.2)
     delayed_job_active_record (4.1.2)
       activerecord (>= 3.0, < 5.2)
       delayed_job (>= 3.0, < 5)
+    deprecated (2.0.1)
     devise (4.4.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -265,6 +276,7 @@ GEM
       rubyzip
       spreadsheet (> 0.6.4)
     ruby-graphviz (1.2.3)
+    ruby-odbc (0.99998)
     ruby-ole (1.2.12.1)
     rubyzip (1.0.0)
     sass (3.5.5)
@@ -306,6 +318,9 @@ GEM
     tilt (2.0.8)
     time_difference (0.5.0)
       activesupport
+    tiny_tds (2.1.1)
+    tiny_tds (2.1.1-x64-mingw32)
+    tiny_tds (2.1.1-x86-mingw32)
     ttfunk (1.4.0)
     turbolinks (5.1.0)
       turbolinks-source (~> 5.1)
@@ -344,6 +359,8 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  activerecord-session_store
+  activerecord-sqlserver-adapter
   apartment
   awesome_print
   axlsx (~> 2.0)
@@ -364,6 +381,7 @@ DEPENDENCIES
   daemons
   database_cleaner
   datagrid (~> 1.4, >= 1.4.1)
+  dbi
   delayed_job_active_record
   devise
   email_verifier
@@ -392,6 +410,7 @@ DEPENDENCIES
   rake (~> 12.0)
   roo
   ruby-graphviz (~> 1.2, >= 1.2.2)
+  ruby-odbc
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   selenium-webdriver (~> 3.0, >= 3.0.5)
@@ -399,6 +418,7 @@ DEPENDENCIES
   therubyracer
   thin (~> 1.6, >= 1.6.4)
   time_difference
+  tiny_tds
   turbolinks
   twilio-ruby (~> 4.11, >= 4.11.1)
   tzinfo-data (~> 1.2016, >= 1.2016.10)

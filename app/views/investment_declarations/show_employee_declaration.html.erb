@@ -94,17 +94,17 @@
                           <%= link_to '', policy_details_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-plus', remote:true %>
                           <%= link_to '', show_policy_details_investment_declarations_path(investment_declaration),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
                         </td>
-                      <% elsif investment_declaration.investment_head.description == "Medicle Insurance Premium for self/ spouse/ child" %>
+                      <% elsif investment_declaration.investment_head.description == "Medical Bill Reimbursement" %>
                         <td>
                           <%= link_to '', medicle_reimbursement_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-plus', remote:true %>
                           <%= link_to '', show_medicle_reimbursement_details_investment_declarations_path(investment_declaration),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
                         </td>
-                      <% elsif investment_declaration.investment_head.description == "Housing Rent/ Lease Rent paid/ payable during the year" %>
+                      <% elsif investment_declaration.investment_head.description == "House Rent paid to the Landlord" %>
                         <td>
                           <%= link_to '', housing_rent_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-plus', remote:true %>
                           <%= link_to '', show_housing_rent_details_investment_declarations_path(investment_declaration),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
                         </td> 
-                      <% elsif investment_declaration.investment_head.description == "a. Interest on Housing Loan" %>
+                      <% elsif investment_declaration.investment_head.description == "Housing Loan-Stamp duty/Registration Charges/Principal Amount repayment-Self" %>
                         <td>
                           <%= link_to '', houseloan_interest_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-plus', remote:true %>
                           <%= link_to '', show_housingloan_details_investment_declarations_path(investment_declaration),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>

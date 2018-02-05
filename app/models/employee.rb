@@ -582,9 +582,10 @@ class Employee < ActiveRecord::Base
       end
       @employee_code_master = EmployeeCodeMaster.find_by_name(spreadsheet.cell(i,'AK'))
        if @employee_code_master == nil
-        else
+       else
         employee_code_master_id = @employee_code_master.id
-        end
+        @employee_code_master.update(last_range:  manual_employee_code)
+       end
         @employee_prsent = Employee.find_by(manual_employee_code: manual_employee_code)
         if @employee_prsent.nil?
           @employee = Employee.create(manual_employee_code: manual_employee_code,prefix: prefix,first_name: first_name,middle_name: middle_name,last_name: last_name,date_of_birth: date_of_birth,gender: gender,contact_no: contact_no,optinal_contact_no: optinal_contact_no,email: email,permanent_address: permanent_address,

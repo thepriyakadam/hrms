@@ -14,7 +14,7 @@
         @employees = Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'HOD'
           @emp = Employee.find(current_user.employee_id)
-         @employees = Employee.where(manager_id: @emp)
+         @employees = Employee.where(manager_id: @emp,status: "Active")
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
          @employees = Employee.where(manager_id: @emp)
@@ -131,9 +131,9 @@
 
   # GET /employees/new
   def new
-    #@employee = Employee.new(:parent_id => params[:parent_id])
+    # @employee = Employee.new(:parent_id => params[:parent_id])
     # UserPasswordMailer.test.deliver_now
-     @employee = Employee.new
+    @employee = Employee.new
     # authorize! :create, @employee
     # @employee.build_joining_detail #here
   end

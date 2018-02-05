@@ -35,17 +35,15 @@ Rails.application.routes.draw do
   resources :events
   resources :resource_pool_masters
   resources :service_masters
-  resources :daily_attendances do 
-    collection do
-      get :attendance
-      get :calculate
-    end
-  end
 
   resources :daily_attendances do 
     collection do
       get :attendance
       get :calculate
+      get :daily_attendance
+      post :daily_attendance
+      get :daily_attendances_report
+      post :daily_attendances_report
     end
   end
 
@@ -93,6 +91,10 @@ Rails.application.routes.draw do
   
   resources :employee_plans do
     collection do
+      post :meeting_follow_up_record
+      get :meeting_follow_up_record
+      post :follow_up_record_form
+      get :follow_up_record_form
       get :meeting_follow_up
       get :meeting_follow_up_report
       post :meeting_follow_up_report
@@ -362,9 +364,11 @@ Rails.application.routes.draw do
   end
   resources :employee_gps_histories
   resources :gratuities
+
   resources :gratuity_masters do
     collection do
       get :is_confirm
+      get :gratuity_master_modal
     end
   end
   resources :monthly_arrears  do
@@ -485,6 +489,7 @@ Rails.application.routes.draw do
   resources :payroll_overtime_masters do
     collection do
       get :is_confirm
+      get :payroll_overtime_masters_modal
       end
   end
   resources :leave_cash_masters do
@@ -536,36 +541,43 @@ Rails.application.routes.draw do
   resources :pf_employers do
     collection do
       get :is_confirm
+      get :pf_employers_modal
     end
   end
   resources :esic_employers do
     collection do
       get :is_confirm
+      get :esic_employers_modal
     end
   end
   resources :bonus_employers do
     collection do
       get :is_confirm
+      get :bonus_employers_modal
     end
   end
   resources :professional_tax_masters do
     collection do
       get :is_confirm
+      get :pf_tax_master_modal
     end
   end
   resources :dearness_allowances do
     collection do
       get :is_confirm
+      get :dearness_allowances_modal
     end
   end
   resources :employer_insurances do
     collection do
       get :is_confirm
+      get :employer_insurances_modal
     end
   end
   resources :employer_family_pensions do
     collection do
       get :is_confirm
+      get :employer_family_pensions_modal
     end
   end
 
@@ -2115,6 +2127,7 @@ end
   resources :pf_masters do
     collection do
       get :is_confirm
+      get :modal
     end
   end
 
@@ -2126,6 +2139,7 @@ end
   resources :well_faires do
     collection do
       get :is_confirm
+      get :modal
     end
   end
   resources :monthly_expences do
@@ -2229,6 +2243,7 @@ end
     collection do
       get :select_form
       get :is_confirm
+      get :modal
     end
   end
 
@@ -2247,6 +2262,7 @@ end
   resources :esic_masters do
     collection do
       get :is_confirm
+      get :modal
     end
   end
   resources :excel_uploads do

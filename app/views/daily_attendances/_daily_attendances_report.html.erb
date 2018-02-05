@@ -1,0 +1,48 @@
+<div class="box">
+  <div class="box-header">
+    <div class="box-body">
+      <div class="pull-right">
+        <%= link_to " Excel Report ", daily_attendances_report_daily_attendances_path(employee_id: params[:daily_attendance][:employee_id], from_date: params[:daily_attendance][:from_date], to_date: params[:daily_attendance][:to_date], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+        <%= link_to " Print Report ", daily_attendances_report_daily_attendances_path(employee_id: params[:daily_attendance][:employee_id], from_date: params[:daily_attendance][:from_date], to_date: params[:daily_attendance][:to_date],format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+      </div><br /> <br />
+      <!-- <div class="col-sm-6"> -->
+        <table id="example6" class="table table-bordered table-hover table-condensed">
+          <thead>
+           <!-- <tr><td colspan="3"><center>First Level Request</center></td></tr> -->
+            <tr>
+              <th>Sr.No.</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Place</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <%i = 0%>
+            <% @daily_atten_report.try(:each) do |daily_atte| %>
+              <tr>
+                <td><%= i = i+1 %></td>
+                <td><%= daily_atte.date %></td>
+                <td><%= daily_atte.time %></td>
+                <td><%= daily_atte.place %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example7').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

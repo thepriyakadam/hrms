@@ -69,7 +69,7 @@
       </table>
         <br />
         <%= link_to ' Add Minutes', minutes_form_employee_plans_path(@employee_plan.id), class: 'btn btn-sm btn-success btn-xs glyphicon glyphicon-plus',remote:true %>
-        <%= link_to 'End Meeting', employee_plans_path, class: 'pull-right btn btn-sm btn-danger btn-xs ',remote:true %>
+        <%= link_to 'End Meeting', end_meeting_employee_plans_path(@employee_plan.id), class: 'pull-right btn btn-sm btn-danger btn-xs ',remote:true %>
       </div>
     </div>
   </div>

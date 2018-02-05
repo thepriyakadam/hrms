@@ -31,9 +31,12 @@
           <% end %>
         </tbody>
       </table>
-        <div class="col-sm-2" style="padding-top: 20px">
-          <%= link_to 'Final Deduction',latemark_total_latemark_masters_path(from_date: @from_date,to_date: @to_date),class: 'btn btn-primary btn-sm ' %>
-        </div>
+        <% if @emp_att == [] %>
+        <% else %>
+          <div class="col-sm-2" style="padding-top: 20px">
+            <%= link_to 'Final Deduction',latemark_total_latemark_masters_path(from_date: @from_date,to_date: @to_date),class: 'btn btn-primary btn-sm ' %>
+          </div>
+        <% end %>
 
   </div>
 </div>

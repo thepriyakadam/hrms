@@ -452,6 +452,9 @@ Rails.application.routes.draw do
       post :show_employee_list
       post :revert_selective_week_off
       post :revert_selective_data
+      get :datewise_report
+      post :show_datewise_employee
+      get :show_datewise_employee
     end
   end
   resources :late_mark_masters do

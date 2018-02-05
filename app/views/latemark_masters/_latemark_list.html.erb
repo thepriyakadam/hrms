@@ -1,7 +1,8 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th>Company time</th>
+      <th>Time From</th>
+      <th>Time To</th>
       <th>Allow latemark</th>
       <th>Amount</th>
       <th>Action</th>
@@ -13,6 +14,7 @@
     <% @latemark_masters.each do |latemark_master| %>
       <tr>
         <td><%= latemark_master.company_time %></td>
+        <td><%= latemark_master.late_limit %></td>
         <td><%= latemark_master.allow_latemark %></td>
         <td><%= latemark_master.amount %></td>
           <td>

@@ -4,9 +4,23 @@
       <div class="col-sm-3">
         <div class="bootstrap-timepicker">
           <div class="form-group required">
-            <label>Company Time</label>
+            <label>Time From</label>
             <div class="input-group">
               <%= f.text_field :company_time,hide_label:true, class: 'form-control timepicker' %>
+              <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+              </div>
+            </div><!-- /.input group -->
+          </div><!-- /.form group -->
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="bootstrap-timepicker">
+          <div class="form-group required">
+            <label>Time To</label>
+            <div class="input-group">
+              <%= f.text_field :late_limit,hide_label:true, class: 'form-control timepicker' %>
               <div class="input-group-addon">
               <i class="fa fa-clock-o"></i>
               </div>
@@ -26,7 +40,9 @@
           <%= f.text_field :amount,label:'Amount' %>
         </div>
       </div>
+    </div>
 
+    <div class="row">
       <div class="col-sm-3" style="padding-top: 20px">
         <div class="actions">
           <%= f.submit "Create Late Mark",class: "btn btn-primary btn-sm" %>

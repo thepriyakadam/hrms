@@ -57,3 +57,6 @@ config/database.yml
 
 # Ignore .byebug_history
 .byebug_history
+
+# Ignore schema file
+db/schema.rb

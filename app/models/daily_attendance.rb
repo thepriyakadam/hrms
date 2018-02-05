@@ -84,6 +84,9 @@ class DailyAttendance < ActiveRecord::Base
   def self.calculate_attendance
     @halfday_allow = LatemarkMaster.last.halfday_allow
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 4589b8bde9f542433dd84c54c680d8e4b61948a7
     emp = EmployeeAttendance.where("in_time > ? ", Time.now - 3.days)
 =======
     emp = EmployeeAttendance.where("in_time > ? ", Time.now - 10.days)

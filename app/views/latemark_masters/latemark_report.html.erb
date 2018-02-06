@@ -1,9 +1,9 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Datewise Latemark</h3>
+    <h3 class="box-title">Datewise Latemark Report</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <%= bootstrap_form_for(:latemark_master, url: { action: 'show_employee_list'},html: {id: 'latemark_master'},remote: true ) do |f| %>
+    <%= bootstrap_form_for(:latemark_master, url: { action: 'show_datewise_report'},html: {id: 'latemark_master'},remote: true ) do |f| %>
       <div class="row">
         <div class="col-sm-3">
           <label>From Date</label>
@@ -30,15 +30,31 @@
         <div class="col-sm-2">
         <label></label>
           <div class="actions">
-            <%= f.submit "Create Latemark", class: "btn btn-sm btn-primary",id: "buttonCtc" %>
+            <%= f.submit "Display Report", class: "btn btn-sm btn-primary",id: "buttonCtc" %>
           </div>
         </div>
-        
       </div>
-      <div id="employee_list"></div>
+
+          <div id="datewise_report"></div>
     <% end %>
 </div>
 </div>
+
+<script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#advance_salary").submit();
+  })
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+
 <script type="text/javascript">
   $(function(){
     $('.latemark_day').datepicker({
@@ -47,13 +63,6 @@
     yearRange: '-100:+5',
     dateFormat: 'dd-mm-yy' });
   }); 
-</script>
-
-<script type="text/javascript">
-  $("#buttonCtc").click(function(){
-    $('.ajax-progress').show();
-    $("#advance_salary").submit();
-  })
 </script>
 
 <script>

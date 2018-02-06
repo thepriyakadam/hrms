@@ -63,27 +63,54 @@ class LatemarkMastersController < ApplicationController
     @latemark_master = LatemarkMaster.last
     @latemark_master_time = @latemark_master.company_time
     @company_time = @latemark_master_time.strftime("%I:%M")
+    @latemark_master_late_time = @latemark_master.late_limit
+    @late_limit = @latemark_master_late_time.strftime("%I:%M")
+    @emp_att = []
     @employee_attendances = EmployeeAttendance.where(day: @from_date.to_date..@to_date.to_date,late_mark: nil).where.not(in_time: nil)
-  end
-
-  def calculate_latemark
-    @employee_attendance_ids = params[:employee_attendance_ids]
-    if @employee_attendance_ids.nil?
-      flash[:alert] = "Please Select the Checkbox"
-    else
-      @employee_attendance_ids.each do |eid|
-        @employee_attendance = EmployeeAttendance.find_by_id(eid)
-        LatemarkTotal.create(employee_id: @employee_attendance.employee_id,latemark_date: @employee_attendance.day,in_time: @employee_attendance.in_time)
-        @employee_attendance.update(late_mark: 0)
-        flash[:notice] = "Created successfully"
+    
+    @time = 0 
+    @employee_attendances.each do |att|
+      if att.in_time.strftime("%I:%M") > @company_time && att.in_time.strftime("%I:%M") < @late_limit
+        
+        @emp_att << att
       end
     end
-      redirect_to latemark_calculation_latemark_masters_path
   end
+  
+  # def calculate_latemark
+  #   @employee_attendance_ids = params[:employee_attendance_ids]
+  #   if @employee_attendance_ids.nil?
+  #     flash[:alert] = "Please Select the Checkbox"
+  #   else
+  #     @employee_attendance_ids.each do |eid|
+  #       @employee_attendance = EmployeeAttendance.find_by_id(eid)
+  #       LatemarkTotal.create(employee_id: @employee_attendance.employee_id,latemark_date: @employee_attendance.day,in_time: @employee_attendance.in_time)
+  #       @employee_attendance.update(late_mark: 0)
+  #       flash[:notice] = "Created successfully"
+  #     end
+  #   end
+  #     redirect_to latemark_calculation_latemark_masters_path
+  # end
 
   def latemark_total
-    @latemark_totals = LatemarkTotal.where(confirm: nil).group(:employee_id)
+    @from_date = params[:from_date]
+    @to_date = params[:to_date]
     @latemark_master = LatemarkMaster.last
+    @latemark_master_time = @latemark_master.company_time
+    @company_time = @latemark_master_time.strftime("%I:%M")
+    @latemark_master_late_time = @latemark_master.late_limit
+    @late_limit = @latemark_master_late_time.strftime("%I:%M")
+    
+    @employee_attendances = EmployeeAttendance.where(day: @from_date.to_date..@to_date.to_date,late_mark: nil).where.not(in_time: nil)
+    
+    @employee_attendances.each do |att|
+      if att.in_time.strftime("%I:%M") > @company_time && att.in_time.strftime("%I:%M") < @late_limit
+        LatemarkTotal.create(employee_id: att.employee_id,latemark_date: att.day,in_time: att.in_time)
+        att.update(late_mark: 0)
+      end
+    end
+
+    @latemark_totals = LatemarkTotal.where(confirm: nil).group(:employee_id)
     company_count = @latemark_master.allow_latemark
     company_amount = @latemark_master.amount
     @latemark_totals.each do |lt|
@@ -105,6 +132,61 @@ class LatemarkMastersController < ApplicationController
     redirect_to latemark_calculation_latemark_masters_path
   end
 
+  def latemark_report
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="latemark"
+  end
+
+  def show_datewise_report
+    @from_date = params[:latemark_master][:from_date]
+    @to_date = params[:latemark_master][:to_date]
+    @latemark_master = LatemarkMaster.last
+    @latemark_master_time = @latemark_master.company_time
+    @company_time = @latemark_master_time.strftime("%I:%M")
+    @latemark_master_late_time = @latemark_master.late_limit
+    @late_limit = @latemark_master_late_time.strftime("%I:%M")
+    @emp_att = []
+    @employee_attendances = EmployeeAttendance.where(day: @from_date.to_date..@to_date.to_date).where.not(in_time: nil)
+    @employee_attendances.each do |att|
+      if att.in_time.strftime("%I:%M") > @company_time && att.in_time.strftime("%I:%M") < @late_limit
+        # LatemarkTotal.create(employee_id: att.employee_id,latemark_date: att.day,in_time: att.in_time)
+        # att.update(late_mark: 0)
+        @emp_att << att
+      end
+    end
+  end
+
+  def datewise_report
+    @from_date = params[:latemark_master][:from_date]
+    @to_date = params[:latemark_master][:to_date]
+    @latemark_master = LatemarkMaster.last
+    @latemark_master_time = @latemark_master.company_time
+    @company_time = @latemark_master_time.strftime("%I:%M")
+    @latemark_master_late_time = @latemark_master.late_limit
+    @late_limit = @latemark_master_late_time.strftime("%I:%M")
+    @emp_att = []
+    @employee_attendances = EmployeeAttendance.where(day: @from_date.to_date..@to_date.to_date,late_mark: nil).where.not(in_time: nil)
+    @employee_attendances.each do |att|
+      if att.in_time.strftime("%I:%M") > @company_time && att.in_time.strftime("%I:%M") < @late_limit
+        @emp_att << att
+      end
+    end
+
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'latemark_masters/latemark_report.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'employee_attendance',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'latemark_masters/latemark_report.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
+    end
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_latemark_master
@@ -113,6 +195,6 @@ class LatemarkMastersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def latemark_master_params
-      params.require(:latemark_master).permit(:company_time, :allow_latemark, :amount)
+      params.require(:latemark_master).permit(:halfday_working_hrs,:fullday_working_hrs,:halfday_allow,:late_limit,:company_time, :allow_latemark, :amount)
     end
 end

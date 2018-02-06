@@ -1,0 +1,45 @@
+<style>
+th {
+    text-align: left;
+}
+tr {
+    page-break-inside: avoid;
+}
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak{ page-break-inside: avoid;
+  /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+}
+</style>
+<table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+    <thead>
+      <tr>
+        <td colspan="6"><center> 
+          <% if current_user.employee.company_location.company.company_logo == nil %>
+          <%else %>
+            <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+          <%end%> 
+            <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+        </td>
+      </tr>
+
+      <tr><th colspan="4"><center>From <%= @from_date.to_date %> To <%= @to_date.to_date %></center></th></tr>
+      <tr>
+        <th>ID</th>
+        <th>Employee</th>
+        <th>In Time</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @emp_att.each do |employee_attendance| %>
+
+        <tr>
+            <td><%= employee_attendance.employee.manual_employee_code %></td>
+            <td><%= full_name(employee_attendance.employee) %></td>
+            <td><%= employee_attendance.in_time.strftime("%I:%M") %></td>
+            <td><%= employee_attendance.day %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

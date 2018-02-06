@@ -82,66 +82,95 @@ class DailyAttendance < ActiveRecord::Base
   end
 
   def self.calculate_attendance
+    fullday_working_hrs = LatemarkMaster.last.fullday_working_hrs.to_i
+    @company_fullday_working_hrs = Time.at(fullday_working_hrs).utc.strftime("%H:%M")
+    halfday_working_hrs = LatemarkMaster.last.halfday_working_hrs.to_i
+    @company_halfday_working_hrs = Time.at(halfday_working_hrs).utc.strftime("%H:%M")
+    @late_limit = LatemarkMaster.last.late_limit.utc.strftime("%H:%M")
     @halfday_allow = LatemarkMaster.last.halfday_allow
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 4589b8bde9f542433dd84c54c680d8e4b61948a7
-    emp = EmployeeAttendance.where("in_time > ? ", Time.now - 3.days)
-=======
-    emp = EmployeeAttendance.where("in_time > ? ", Time.now - 10.days)
->>>>>>> 1c55a72e6d9e02b1f6782b2f509f9734868d9676
-    emp.each do |emp|
-      id = emp.employee_id
-      in_t = emp.in_time
-      out_t = emp.out_time
-      day = emp.day
-      @days = emp.day
-      emp_att = EmployeeAttendance.where(employee_id: id, in_time: in_t)
-      if emp_att.last.working_hrs.present?
-          in_time = in_t.to_time
-          out_time = out_t.to_time
-          total_hrms = out_time - in_time 
-          working_hrs = Time.at(total_hrms).utc.strftime("%H:%M")
-          if working_hrs > "07:00"
-            emp_att.update_all(working_hrs: working_hrs,present: "P")
+    @on_duty_request_id = EmployeeAttendance.last.on_duty_request_id
+    @employee_leav_request_id = EmployeeAttendance.last.employee_leav_request_id
+    calculate_att = EmployeeAttendance.where("in_time > ? ", Time.now - 33.days)
+    calculate_att.each do |cal_att|
+      @employee_id = cal_att.employee_id
+      @employee_in_time = cal_att.in_time
+      @employee_out_time = cal_att.out_time
+      @att_day = cal_att.day
+      employee_in_time_att = EmployeeAttendance.where(employee_id: @employee_id, in_time: @employee_in_time)
+      if employee_in_time_att.last.working_hrs.present?
+        emp_in_time = @employee_in_time.to_time
+        emp_out_time = @employee_out_time.to_time
+        total_hrs = emp_out_time - emp_in_time
+        working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+        if working_hrs > @company_fullday_working_hrs
+          if @on_duty_request_id.present? || @employee_leav_request_id.present?
+            employee_in_time_att.update_all(working_hrs: working_hrs)
             puts "---------attendace calculate 1 #{Time.now}---------"
           else
-            emp_att.update_all(working_hrs: working_hrs,present: "HD")
-          end
-      else
-        if emp_att.last.out_time.present?
-          in_time = in_t.to_time
-          out_time = out_t.to_time
-          total_hrms = out_time - in_time 
-          working_hrs = Time.at(total_hrms).utc.strftime("%H:%M")
-          if working_hrs > "07:00" 
-            emp_att.update_all(working_hrs: working_hrs, present: "P")
-            puts "---------attendace calculate updated 1 #{Time.now}---------"
-          else
-            emp_att.update_all(working_hrs: working_hrs, present: "HD")
-            puts "---------attendace calculate updated 2 #{Time.now}---------"
+            employee_in_time_att.update_all(working_hrs: working_hrs, present: "P")
+            puts "---------attendace calculate 1 #{Time.now}---------"
           end
         else
-          emp_att.update_all(present: "HD")
-          puts "---------attendace calculate updated 3 #{Time.now}---------"
+          if @on_duty_request_id.present? || @employee_leav_request_id.present?
+            employee_in_time_att.update_all(working_hrs: working_hrs)
+            puts "---------attendace calculate 1 #{Time.now}---------"
+          else
+            employee_in_time_att.update_all(working_hrs: working_hrs, present: "HD")
+            puts "---------attendace calculate 5 #{Time.now}---------"
+          end
+        end
+      else
+        if employee_in_time_att.last.out_time.present?
+          emp_in_time = @employee_in_time.to_time
+          emp_out_time = @employee_out_time.to_time
+          total_hrs = emp_out_time - emp_in_time
+          working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+          if working_hrs > @company_fullday_working_hrs
+            if @on_duty_request_id.present? || @employee_leav_request_id.present?
+              employee_in_time_att.update_all(working_hrs: working_hrs)
+              puts "---------attendace calculate 11 #{Time.now}---------"
+            else
+              employee_in_time_att.update_all(working_hrs: working_hrs, present: "P")
+              puts "---------attendace calculate 1 #{Time.now}---------"
+            end
+          else
+            if @on_duty_request_id.present? || @employee_leav_request_id.present?
+              employee_in_time_att.update_all(working_hrs: working_hrs)
+              puts "---------attendace calculate 12 #{Time.now}---------"
+            else
+              employee_in_time_att.update_all(working_hrs: working_hrs, present: "HD")
+              puts "---------attendace calculate 5 #{Time.now}---------"
+            end
+          end
+        else
+          if @on_duty_request_id.present? || @employee_leav_request_id.present?
+            employee_in_time_att.update_all(working_hrs: working_hrs)
+            puts "---------attendace calculate 13 #{Time.now}---------"
+          else
+            employee_in_time_att.update_all(present: "HD")
+            puts "---------attendace calculate updated 3 #{Time.now}---------"
+          end
         end
       end
       if @halfday_allow == true
-        emp_in_time = Time.at(in_t).utc.strftime("%H:%M")
-        if emp_in_time > "09:30"
-          emp_att.update_all(working_hrs: working_hrs, present: "HD", comment: "Late-Coming")
-          puts "---------Late-Coming updated  #{Time.now}---------"
+        emp_in_time = Time.at(@employee_in_time).utc.strftime("%H:%M")
+        if emp_in_time > @late_limit
+          if @on_duty_request_id.present? || @employee_leav_request_id.present?
+            employee_in_time_att.update_all(working_hrs: working_hrs, comment: "Late-Coming")
+            puts "---------attendace calculate 14 #{Time.now}---------"
+          else
+            employee_in_time_att.update_all(working_hrs: working_hrs, present: "HD", comment: "Late-Coming")
+            puts "---------Late-Coming updated  #{Time.now}---------"
+          end
         end
       end
     end
     @employees = Employee.where(status: "Active")
     @employees.each do |e|
-    employee_atten = EmployeeAttendance.where(employee_id: e.id, day: @days).take
+    employee_atten = EmployeeAttendance.where(employee_id: e.id, day: @att_day).take
       if employee_atten.nil?
-        EmployeeAttendance.create(employee_id: e.id, day: @days, present: "A")
+        EmployeeAttendance.create(employee_id: e.id, day: @att_day, present: "A")
       end
     end
   end
 end
-

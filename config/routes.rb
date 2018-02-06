@@ -3187,7 +3187,6 @@ end
     get 'user_auths/employee_wise_attendance' => 'user_auths#employee_wise_attendance', defaults:{format: 'json'}
     get 'user_auths/date_wise_location_history' => 'user_auths#date_wise_location_history', defaults:{format: 'json'}
     get 'user_auths/leave_coff' => 'user_auths#leave_coff', defaults:{format: 'json'}
-
     post 'user_auths/notes_details' => 'user_auths#notes_details', defaults:{format: 'json'}
     get 'user_auths/all_plan_list' => 'user_auths#all_plan_list', defaults:{format: 'json'}
     get 'user_auths/listed_company' => 'user_auths#listed_company', defaults:{format: 'json'}
@@ -3195,6 +3194,6 @@ end
     post 'user_auths/end_meeting' => 'user_auths#end_meeting', defaults:{format: 'json'}
     post 'user_auths/meeting_minutes' => 'user_auths#meeting_minutes', defaults:{format: 'json'}
     get 'user_auths/meeting_plan_minutes' => 'user_auths#meeting_plan_minutes', defaults:{format: 'json'}
-    
+    get 'user_auths/particular_emp_status_wise_plan_list' => 'user_auths#particular_emp_status_wise_plan_list', defaults:{format: 'json'}
   end
 end

@@ -35,7 +35,7 @@ class DailyAttendance < ActiveRecord::Base
   
 
   def self.fetch_data
-    punch = PunchTimeDetail.where("LogDateTime > ? ", Time.now - 3.days)
+    punch = PunchTimeDetail.where("LogDateTime > ? ", Time.now - 5.days)
     punch.each do |mat|
       punch_date_time = mat.LogDateTime
       punch_date = punch_date_time.to_date
@@ -83,14 +83,7 @@ class DailyAttendance < ActiveRecord::Base
 
   def self.calculate_attendance
     @halfday_allow = LatemarkMaster.last.halfday_allow
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 4589b8bde9f542433dd84c54c680d8e4b61948a7
-    emp = EmployeeAttendance.where("in_time > ? ", Time.now - 3.days)
-=======
-    emp = EmployeeAttendance.where("in_time > ? ", Time.now - 10.days)
->>>>>>> 1c55a72e6d9e02b1f6782b2f509f9734868d9676
+    emp = EmployeeAttendance.where("in_time > ? ", Time.now - 5.days)
     emp.each do |emp|
       id = emp.employee_id
       in_t = emp.in_time

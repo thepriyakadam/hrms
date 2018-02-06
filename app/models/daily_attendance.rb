@@ -90,7 +90,7 @@ class DailyAttendance < ActiveRecord::Base
   # end
 
   def self.fetch_data
-    matrix = CheckInOut.where("CHECKTIME > ? ", Time.now - 7.days)
+    matrix = CheckInOut.where("CHECKTIME > ? ", Time.now - 3.days)
     matrix.each do |mat|
       edate_time = mat.CHECKTIME
       edate = edate_time.to_date
@@ -131,7 +131,7 @@ class DailyAttendance < ActiveRecord::Base
 
 
  def self.calculate_attendance
-    emp = EmployeeAttendance.where("in_time > ? ", Time.now - 24.days)
+    emp = EmployeeAttendance.where("in_time > ? ", Time.now - 10.days)
     emp.each do |emp|
       id = emp.employee_id
       in_t = emp.in_time

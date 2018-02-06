@@ -6,6 +6,8 @@
       <th>Allow latemark</th>
       <th>Amount</th>
       <th>Allow Halfday</th>
+      <th>Fullday Working Time</th>
+      <th>Halfday Working Time</th>
       <th>Action</th>
     </tr>
     </tr>
@@ -19,11 +21,12 @@
         <td><%= latemark_master.allow_latemark %></td>
         <td><%= latemark_master.amount %></td>
         <td><%= latemark_master.halfday_allow ? "Yes" : "No" %></td>
-          <td>
-            <%= link_to '',  latemark_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
-             <%= link_to '', edit_latemark_master_path(latemark_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
-             
-          </td>
+        <td><%= latemark_master.fullday_working_hrs %></td>
+        <td><%= latemark_master.halfday_working_hrs %></td>
+        <td>
+          <%= link_to '',  latemark_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+           <%= link_to '', edit_latemark_master_path(latemark_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+        </td>
       </tr>
     <% end %>
   </tbody>

@@ -46,7 +46,7 @@
                 <% elsif goal_rating.goal_bunch.goal_confirm == false || goal_rating.goal_bunch.goal_confirm == nil %>
                   <%= link_to '', goal_set_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
                   <%= link_to '', goal_rating, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close' %>
-                  <%= link_to '', show_goal_rating_goal_ratings_path(goal_rating_id: goal_rating.id,employee_id: @employee.id,goal_bunch_id: @goal_bunch.id),class: 'btn btn-default btn-xs fa fa-eye' %>
+                  <%= link_to '', show_goal_rating_goal_ratings_path(goal_rating_id: goal_rating.id),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
                 <% end %>
               </td>
             </tr>
@@ -54,13 +54,14 @@
         </tbody>
       </table>
     </div>
+<div id="myModal1" class="modal fade"></div>
 
     <!-- < elsif @goal_rating.goal_type == 'Attribute' %> -->
 
   <div class="col-sm-6">
     <table class="table table-bordered table-hover table-condensed">
       <thead>
-       <tr><td colspan="6"><center> Employee Attribute & Definition</center></td></tr>
+       <tr><td colspan="3"><center> Employee Attribute & Definition</center></td></tr>
         <tr>
           <th>Attribute</th>
           <th>Weightage</th>
@@ -80,7 +81,7 @@
               <% elsif goal_rating.goal_bunch.goal_confirm == false || goal_rating.goal_bunch.goal_confirm == nil %>
                   <%= link_to '', goal_set_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
                   <%= link_to '', goal_rating, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close' %>
-                  <%= link_to '', show_attribute_goal_ratings_path(goal_rating_id: goal_rating.id,employee_id: @employee.id,goal_bunch_id: @goal_bunch.id),class: 'btn btn-default btn-xs fa fa-eye' %>
+                  <%= link_to '', show_attribute_goal_ratings_path(goal_rating_id: goal_rating.id),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
               <% end %>
             </td>
           </tr>
@@ -89,6 +90,7 @@
     </table>
   </div>
 </div>
+<div id="myModal" class="modal fade"></div>
 
   <% if @goal_bunch.goal_confirm == true %>
     <small class="label label-info">Request has been send for Confirmation</small>

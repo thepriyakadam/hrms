@@ -137,7 +137,7 @@ class GoalRating < ActiveRecord::Base
              return @weightage_sum = weightage_sum1
           end#weightage_sum <= 100 
         else
-          flash[:alert] = "Type not available!"
+          # flash[:alert] = "Type not available!"
         end #type == "Goal" || type == "Attribute" 
 
       end#do

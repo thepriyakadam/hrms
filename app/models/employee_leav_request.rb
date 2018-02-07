@@ -521,7 +521,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
           EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'A',comment: "Leave Request Pending")
         end
       end#for i in self
-  end #def
+  end #def  
 
 
  def create_attendance_leave

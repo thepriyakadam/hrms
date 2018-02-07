@@ -319,6 +319,37 @@ end
     redirect_to revert_selective_employee_week_offs_path
   end
 
+  def datewise_report
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="WeekoffSetup"
+  end
+
+  def show_datewise_employee
+    from_date = params[:employee][:from_date]
+    to_date = params[:employee][:to_date]
+    type = params[:employee][:type]
+    if type == "Holiday"
+      @employee_attendances = EmployeeAttendance.where(day: from_date.to_date..to_date.to_date).where.not(holiday_id: nil)
+    elsif type == "Weekoff"
+      @employee_attendances = EmployeeAttendance.where(day: from_date.to_date..to_date.to_date).where.not(employee_week_off_id: nil)
+    else
+      @employee_attendances = EmployeeAttendance.where(day: from_date.to_date..to_date.to_date).where.not(holiday_id: nil).where.not(employee_week_off_id: nil)
+    end
+
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_week_offs/date_typewise_employee.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'employee_week_off',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_week_offs/date_typewise_employee.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_week_off

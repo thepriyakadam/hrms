@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Sr.No.</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Employee</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Manager</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Meeting Created Date - Time</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Meeting From Date - Time</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Meeting To Date - Time</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Meeting Start Date - Time</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Meeting End Date - Time</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Meeting Start Time - End Time</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Meeting Start Place</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Meeting End Place</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Place</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Meeting With</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Contact Person</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Contact No.</Data></Cell>
+		    <Cell ss:Index="4"><Data ss:Type="String">Follow-up Response</Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String">Follow-up Date- Time</Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String">Next Follow-up Date - Time</Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String">Minutes </Data></Cell>
+	    </Row>
+      <% i = 0 %>
+      <% @meeting_follow_up.try(:each) do |follow_up| %>
+        <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= @emp_plan.employee.try(:first_name) %> <%= @emp_plan.employee.try(:last_name) %></Data></Cell>
+          <% emp = @emp_plan.manager_id %>
+          <% @emp_name = Employee.find(emp) %>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= @emp_name.prefix %> <%= @emp_name.first_name %> <%= @emp_name.middle_name %> <%= @emp_name.last_name  %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= @emp_plan.try(:created_date) %> - <%= @emp_plan.try(:created_time) %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= @emp_plan.try(:from_date) %> - <%= @emp_plan.try(:from_time) %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= @emp_plan.try(:to_date) %> - <%= @emp_plan.try(:to_time) %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= @emp_plan.try(:from_date) %> - <%= @emp_plan.try(:from_time) %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= @emp_plan.try(:to_date) %> - <%= @emp_plan.try(:to_time) %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= @emp_plan.try(:start_time) %> - <%= @emp_plan.try(:end_time) %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= @emp_plan.try(:start_place) %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= @emp_plan.try(:end_place) %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= @emp_plan.try(:meeting_with) %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= @emp_plan.try(:meeting_agenda) %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= @emp_plan.try(:location) %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= follow_up.contact_person %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= follow_up.contact_no %></Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="String"><%= follow_up.follow_up_response %></Data></Cell>
+          <Cell ss:Index="5"><Data ss:Type="String"><%= follow_up.date %> - <%= follow_up.time %></Data></Cell>
+          <Cell ss:Index="6"><Data ss:Type="String"><%= follow_up.next_date %> - <%= follow_up.next_time %></Data></Cell>
+          <% @emp_minutes.try(:each) do |m| %>
+          <Cell ss:Index="7"><Data ss:Type="String"><%= m.minutes %></Data></Cell>
+          <% end %>
+        </Row><!-- Row -->
+      <% end %><!-- slip -->
+    </Table>
+  </Worksheet>
+</Workbook>

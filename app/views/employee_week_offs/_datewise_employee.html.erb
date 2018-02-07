@@ -1,0 +1,35 @@
+<div class="box">
+  <div class="box-header">
+      <table id="example" class="table table-bordered table-hover table-condensed">
+        <thead>
+        <tr><td colspan="4"><center>Employee List</center></td></tr>
+          <tr>
+            <th>ID</th>
+            <th>Employee Name</th>
+            <th>Day</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @employee_attendances.each do |a| %>
+            <tr>
+              <td><%= a.employee.manual_employee_code %></td>
+              <td><%= full_name(a.employee) %></td>
+              <td><%= a.day %></td>
+              <td><%= a.present %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+        <%= link_to " Excel ",show_datewise_employee_employee_week_offs_path(:employee =>{:from_date => params[:employee][:from_date],:to_date => params[:employee][:to_date],:type => params[:employee][:type]}, format: "xls"), class: "btn btn-sm btn-success" %>
+        <%= link_to "PDF", show_datewise_employee_employee_week_offs_path(:employee => {:from_date => params[:employee][:from_date],:to_date => params[:employee][:to_date],:type => params[:employee][:type]}, format: "pdf"), class: "btn btn-sm btn-info", :target => "_blank" %>
+        
+    </div>
+</div>
+
+  <script>
+  $(document).ready(function() {
+      $('#example').DataTable();
+  } );
+  </script>

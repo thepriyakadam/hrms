@@ -1,5 +1,9 @@
 <% if @flag %>
-$("#checkbox").html("<%= j render 'last_half_checkbox' %>");
-$("#checkbox1").html("<%= j render 'first_half_checkbox' %>");
+	$("#checkbox").html("<%= j render 'last_half_checkbox' %>");
+	$("#checkbox1").html("<%= j render 'first_half_checkbox' %>");
+	$("#checkbox").show();
+	$("#checkbox1").show();
 <% else %>
+	$("#checkbox").hide();
+	$("#checkbox1").hide();
 <% end %>

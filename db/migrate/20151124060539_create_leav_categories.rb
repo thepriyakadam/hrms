@@ -6,7 +6,6 @@ class CreateLeavCategories < ActiveRecord::Migration
       t.string :description
       t.boolean :is_confirm
       t.boolean :is_payble
-
       t.decimal :from
       t.decimal :to
       t.boolean :is_active

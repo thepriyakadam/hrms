@@ -1,0 +1,107 @@
+<div class="box-body"> 
+  <%= bootstrap_form_for(@latemark_master,html: {id: 'latemark_master'}) do |f| %>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="bootstrap-timepicker">
+          <div class="form-group required">
+            <label>Time From</label>
+            <div class="input-group">
+              <%= f.text_field :company_time,hide_label:true, class: 'form-control timepicker' %>
+              <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+              </div>
+            </div><!-- /.input group -->
+          </div><!-- /.form group -->
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="bootstrap-timepicker">
+          <div class="form-group required">
+            <label>Time To</label>
+            <div class="input-group">
+              <%= f.text_field :late_limit,hide_label:true, class: 'form-control timepicker' %>
+              <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+              </div>
+            </div><!-- /.input group -->
+          </div><!-- /.form group -->
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.text_field :allow_latemark,label:'Late Mark' %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :amount,label:'Amount' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="field">
+        <%= f.check_box :halfday_allow, label: 'Allow Halfday'%>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :fullday_working_hrs,label:'Fullday Working Hrs.' %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :halfday_working_hrs,label:'Halflday Working Hrs.' %>
+        </div>
+      </div>
+
+      <div class="col-sm-3" style="padding-top: 20px">
+        <div class="actions">
+          <%= f.submit "Create Late Mark",class: "btn btn-primary btn-sm" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<script>
+$(function () {
+//Timepicker
+  $(".timepicker").timepicker({
+    showInputs: false
+  });
+  
+});
+</script>
+
+<script>
+$("#latemark_master").validate({
+    rules: {
+      "latemark_master[company_time]":{
+        required: true
+              },
+      "latemark_master[allow_latemark]":{
+        required: true
+              }
+    },
+    messages: {
+      "latemark_master[company_time]":{
+        required: "Please Specify Company Time"
+      },
+      "latemark_master[allow_latemark]":{
+        required: "Please Specify Latemark"
+      }
+
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

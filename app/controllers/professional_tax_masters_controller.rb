@@ -84,6 +84,9 @@ class ProfessionalTaxMastersController < ApplicationController
     redirect_to new_professional_tax_master_path
   end
 
+  def pf_tax_master_modal
+    @professional_tax_master = ProfessionalTaxMaster.find(params[:format])
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

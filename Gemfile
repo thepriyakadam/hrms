@@ -11,11 +11,11 @@ gem 'mysql2', '~> 0.3.18'
 
 
 
-gem 'tiny_tds'
-gem 'activerecord-sqlserver-adapter'
-gem 'ruby-odbc'
-gem 'dbi'
-gem 'activerecord-session_store'
+# gem 'tiny_tds'
+# gem 'activerecord-sqlserver-adapter'
+# gem 'ruby-odbc'
+# gem 'dbi'
+# gem 'activerecord-session_store'
 
 # gem 'mdb'
 
@@ -86,6 +86,9 @@ gem 'selenium-webdriver', '~> 3.0', '>= 3.0.5'
 gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
 
 #inline edit
+
+
+# gem 'best_in_place', '~> 3.0.1'
 
 gem 'bcrypt-ruby', '~> 3.0.0', :require => 'bcrypt'
 gem 'bcrypt'

@@ -33,7 +33,7 @@ class ListedCompaniesController < ApplicationController
 
     respond_to do |format|
       if @listed_company.save
-        format.html { redirect_to @listed_company, notice: 'Listed company was successfully created.' }
+        format.html { redirect_to listed_companies_path, notice: 'Listed company was successfully created.' }
         format.json { render :show, status: :created, location: @listed_company }
       else
         format.html { render :new }

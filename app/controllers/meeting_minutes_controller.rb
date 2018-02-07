@@ -36,7 +36,13 @@ class MeetingMinutesController < ApplicationController
   def create
     plan_id = params[:meeting_minute][:employee_plan_id]
     @meeting_minute = MeetingMinute.new(meeting_minute_params)
-
+    @emp_plan = EmployeePlan.where(id: plan_id, start_date: Time.now.to_date).first
+    @emp_plan_first = EmployeePlan.where(id: plan_id)
+    if @emp_plan.present?
+      @emp_plan.update(start_time: Time.now.to_time, start_date: Time.now.to_date)
+    else
+      @emp_plan_first.update_all(start_time: Time.now.to_time, start_date: Time.now.to_date)
+    end
     respond_to do |format|
       if @meeting_minute.save
         format.html { redirect_to employee_feedback_employee_plans_path(plan_id), notice: 'Meeting minute was successfully Added.' }

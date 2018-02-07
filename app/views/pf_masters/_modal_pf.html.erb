@@ -1,0 +1,50 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> PF Detail </center></h4>
+    </div>
+    <div class="modal-body">
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+  <tr>
+  <th><strong>PF</strong></th>
+   <td><%= @pf_master.is_pf ? "Yes" : "No" %></td>
+  <th><strong>Percentage</strong></th>
+   <td><%= @pf_master.percentage %></td>
+</tr>
+<tr>
+  <th><strong>Base Component</strong></th>
+   <td colspan="3">  <% i = 0 %>
+          <% @pf_master.base_component.split(",").each do |e| %>
+            <% if i == 0 %>
+              <%= SalaryComponent.find(e.to_i).name %>
+            <% else %>
+              + <%= SalaryComponent.find(e.to_i).name %>
+            <% end %>
+            <% i = i + 1 %>
+          <% end %>
+      </td>
+  
+</tr>
+
+<tr>
+  <th><strong>Effective Date</strong></th>
+  <td><%= @pf_master.date_effective %></td>
+
+  <th><strong>Min limit</strong></th>
+  <td><%= @pf_master.min_limit %></td>
+
+</tr>
+
+<tr>
+
+    <th><strong>Status</strong></th>
+  <td colspan="3"><%= @pf_master.is_active ? "Active" : "Inactive" %></td>
+</tr>
+  </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

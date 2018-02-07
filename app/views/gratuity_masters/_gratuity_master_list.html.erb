@@ -22,9 +22,11 @@
             <%= link_to '',  gratuity_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
             <%= link_to '', is_confirm_gratuity_masters_path(gratuity_master: gratuity_master),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
           <% end %>
-           <%= link_to '',gratuity_master,class: 'btn btn-xs btn-default fa fa-eye' %>
+           <%= link_to '',gratuity_master_modal_gratuity_masters_path(gratuity_master),class: 'btn btn-xs btn-default fa fa-eye', remote:true %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<div id="Mymodal" class="modal fade">

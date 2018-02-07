@@ -83,7 +83,10 @@ class PfMastersController < ApplicationController
     @pf_master = PfMaster.new
 
   end
-
+  
+  def modal
+    @pf_master = PfMaster.find(params[:format])
+  end
   # DELETE /pf_masters/1
   # DELETE /pf_masters/1.json
 

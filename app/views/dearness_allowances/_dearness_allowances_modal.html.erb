@@ -1,0 +1,48 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+      <h4 class="modal-title"><center> Dearness Allowance Detail </center></h4>
+
+    </div>
+    <div class="modal-body">
+		<table class="table table-bordered table-hover table-condensed">
+		  <thead>
+
+		 
+		 <tr>
+	  <th><strong>Base Component</strong></th>
+	   <td colspan="3"> <% i = 0 %>
+          <% @dearness_allowance.base_component.split(",").each do |e| %>
+            <% if i == 0 %>
+              <%= SalaryComponent.find(e.to_i).name %>
+            <% else %>
+              + <%= SalaryComponent.find(e.to_i).name %>
+            <% end %>
+            <% i = i + 1 %>
+          <% end %>
+      </td>
+	</tr>
+	<tr>
+	  <th><strong>Minimum wages</strong></th>
+	   <td><%= @dearness_allowance.minimum_wages %></td>
+
+	     <th><strong>Effective from</strong></th>
+	  <td><%= @dearness_allowance.effective_from %></td>
+
+	</tr>
+
+	<tr>
+	   <th><strong>Effective to</strong></th>
+	   <td><%= @dearness_allowance.effective_to %></td>
+
+	  <th>Status</th>
+	  <td><%= @dearness_allowance.is_active ? "Active" : "Inactive"  %></td>
+	</tr>  
+  </thead>
+</table>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>  

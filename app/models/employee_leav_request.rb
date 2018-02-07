@@ -381,7 +381,11 @@ class EmployeeLeavRequest < ActiveRecord::Base
     end #self.is_present
   end #def
 
-
+def is_there(i)
+    flag = 0
+    flag = EmployeeAttendance.exists?(day: i,employee_id: self.employee_id)
+    flag
+  end
 
  def create_attendance_leave
     

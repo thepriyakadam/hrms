@@ -18,9 +18,6 @@
         <Cell ss:Index="8"><Data ss:Type="String">Target</Data></Cell>
         <Cell ss:Index="9"><Data ss:Type="String">Weightage</Data></Cell>
         <Cell ss:Index="10"><Data ss:Type="String">Align to supervisor</Data></Cell>
-        <Cell ss:Index="11"><Data ss:Type="String">Self Comment</Data></Cell>
-        <Cell ss:Index="12"><Data ss:Type="String">Self Rating</Data></Cell>
-        <Cell ss:Index="13"><Data ss:Type="String">Goal Rating ID</Data></Cell>
       </Row>
 
         <% i = 0 %>
@@ -39,9 +36,6 @@
             <Cell ss:Index="8"><Data ss:Type="String"><%= g.target %></Data></Cell>
             <Cell ss:Index="9"><Data ss:Type="String"><%= g.goal_weightage %></Data></Cell>
             <Cell ss:Index="10"><Data ss:Type="String"><%= g.aligned %></Data></Cell>
-            <Cell ss:Index="11"><Data ss:Type="String"><%= g.try(:appraisee_comment) %></Data></Cell>
-            <Cell ss:Index="12"><Data ss:Type="String"><%= g.try(:appraisee_rating).try(:value) %></Data></Cell>
-            <Cell ss:Index="13"><Data ss:Type="String"><%= g.try(:id) %></Data></Cell>
           </Row><!-- Row -->
         <% end %><!-- slip -->
       </Table>

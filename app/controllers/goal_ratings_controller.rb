@@ -30,6 +30,12 @@ class GoalRatingsController < ApplicationController
     flash[:notice] = "Deleted Successfully"
     redirect_to new_goal_rating_path(id: @goal_bunch, emp_id:@employee)
   end
+  
+  def goal_set
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:employee_id])
+    @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id) 
+  end
 
   def select_dropdown
     if params[:goal_type] == "Goal"
@@ -235,7 +241,7 @@ class GoalRatingsController < ApplicationController
       flash[:notice] = "Mail Sent Successfully"
       redirect_to new_goal_bunch_path
     else
-      flash[:alert] = "Goal weightage sum should be 100"
+      flash[:alert] = "Goal weightage sum should be 100 !!"
       redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id: @employee.id)
     end 
   end

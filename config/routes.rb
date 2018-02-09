@@ -1167,7 +1167,7 @@ end
       post :training_plan_create
       get :modal_training_plan
       get :goal_set_modal
-      patch :update_goal_set_modal
+      post :update_goal_set_modal
       get :trainee_list
       post :print_employee_detail
       get :all_emp_list
@@ -1202,6 +1202,7 @@ end
       get :show_attribute_modal
       get :import_xl
       post :import
+      get :goal_set
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -1210,7 +1211,6 @@ end
       get :goal_approval
       post :appraiser_confirm
       get :appraisee_comment
-      post :self_comment
       post :self_comment_confirm
       get :appraiser_subordinate
       get :appraiser_comment
@@ -1273,6 +1273,8 @@ end
       get :self_evaluation
       get :import_xl
       post :import
+      get :self_comment_modal
+      post :self_comment
     end
   end
   resources :goal_perspectives do

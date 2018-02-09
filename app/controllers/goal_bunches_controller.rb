@@ -82,7 +82,7 @@ class GoalBunchesController < ApplicationController
         redirect_to import_xl_goal_bunches_path
       else
         GoalBunch.import(params[:file])
-        redirect_to new_goal_bunch_path(emp_id: employee.id,id: goal_bunch.id), notice: "File imported."
+        redirect_to appraisee_comment_goal_bunches_path(emp_id: employee.id,id: goal_bunch.id), notice: "File imported."
       end
   end
 

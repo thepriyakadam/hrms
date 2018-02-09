@@ -1,9 +1,13 @@
-<div class="box">
-  <div class="box box-default">
-    <div class= "box-body ">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h5 class="modal-title"><center> Employee Goals </center></h5>
+    </div>
+    <div class="modal-body">
+
       <table class="table table-bordered table-hover table-condensed">
         <thead>
-           <tr><td colspan="2"><center>Employee Goals </center></td></tr>
              <tr>
                <th>Goal Perspective</th>
                <td><%= @goal_rating.goal_perspective.try(:name) %></td>
@@ -29,8 +33,9 @@
            	    <td><%= @goal_rating.aligned %></td>
               </tr>
         </thead>
-      </table><br>
-      <%= link_to 'Back', new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
-    </div>
-  </div>
-</div>
+      </table>
+   
+      </div>
+    <div class="modal-footer"></div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

@@ -13,14 +13,14 @@ class GoalRatingsController < ApplicationController
 
   def show_goal_rating
     @goal_rating = GoalRating.find(params[:goal_rating_id])
-    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
-    @employee = Employee.find(params[:employee_id])
+    # @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    # @employee = Employee.find(params[:employee_id])
   end
 
   def show_attribute
     @goal_rating = GoalRating.find(params[:goal_rating_id])
-    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
-    @employee = Employee.find(params[:employee_id])
+    # @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    # @employee = Employee.find(params[:employee_id])
   end
  
   def destroy

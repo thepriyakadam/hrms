@@ -1634,4 +1634,21 @@ class Api::UserAuthsController < ApplicationController
     render :json => meeting_mintes.present? ? meeting_mintes.collect{|minutes| { :id => minutes.try(:id), :minutes => minutes.try(:minutes) }} : []
   end
 
+  def notifications_count
+    employee_id = params[:employee_id]
+    keyword = params[:keyword]
+    if keyword == "employee"
+      self_pending_od = OnDutyRequest.where(current_status: "Pending", employee_id: employee_id).count
+      self_pending_leave  = EmployeeLeavRequest.where(current_status: "Pending", employee_id: employee_id).count
+      render :status=>200, :json=>{:self_pending_od => self_pending_od, :self_pending_leave => self_pending_leave }
+    elsif keyword == "manager"
+      pending_od = OnDutyRequest.where(current_status: "Pending", first_reporter_id: employee_id).count
+      pending_leave  = EmployeeLeavRequest.where(current_status: "Pending", first_reporter_id: employee_id).count
+      render :status=>200, :json=>{:pending_leave => pending_leave, :pending_od => pending_od }
+    else keyword == "admin"
+      all_pending_od = OnDutyRequest.where(current_status: "Pending").count
+      all_pending_leave  = EmployeeLeavRequest.where(current_status: "Pending").count
+      render :status=>200, :json=>{:all_pending_leave => all_pending_leave, :all_pending_od => all_pending_od }
+    end
+  end
 end

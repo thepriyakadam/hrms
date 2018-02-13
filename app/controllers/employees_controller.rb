@@ -621,7 +621,6 @@
   end
 
   def collect_company_location
-    # byebug
     @company = Company.find(params[:id])
     # @company_locations = @company.company_locations
     if current_user.class == Group

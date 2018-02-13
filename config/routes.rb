@@ -2335,7 +2335,12 @@ end
       get :leave_detail_xls
       get :import_xl
       post :import
-
+      get :statutory_computation
+      get :statutory_computation_report
+      post :statutory_computation_report
+      get :pf_computation
+      get :pf_computation_report
+      post :pf_computation_report
     end
   end
 

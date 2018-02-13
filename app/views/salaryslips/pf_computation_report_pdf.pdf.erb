@@ -1,0 +1,55 @@
+<style>
+  th {
+      text-align: left;
+  }
+  tr {
+      page-break-inside: avoid;
+  }
+  div.alwaysbreak { page-break-before: always; }
+  div.nobreak:before { clear:both; }
+  div.nobreak{ page-break-inside: avoid;
+    /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+  }
+</style>
+  <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
+      <thead>
+        <tr>
+          <td colspan="10"><center> 
+            <% if current_user.employee.company_location.company.company_logo == nil %>
+            <%else %>
+              <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+            <%end%> 
+            <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+            <center><strong>PF Computation Report</strong></center>
+            <center><strong><%= @from_date %> <b>-</b> <%= @to_date  %></strong></center>
+
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3"><b> Particular </b></td>
+          <td colspan="3"><b> Payable Amount </b></td>
+          <td colspan="3"><b> Paid Amount </b></td>
+        </tr>
+        <tr><td colspan="10"><b> Provident Fund </b></td></tr>
+        <tr>
+          <td colspan="3">Employee Statutory Deduction</td>
+          <td colspan="3"><%= @employee_statutory_deduction %></td>
+          <td colspan="3"><%= @employee_statutory_deduction %></td>
+        </tr>
+        <tr>
+          <td colspan="3">Employer Statutory Contribution</td>
+          <td colspan="3"><%= @employer_statutory_contribution %></td>
+          <td colspan="3"><%= @employer_statutory_contribution %></td>
+        </tr>
+        <tr>
+          <td colspan="3">Employer Other Charges</td>
+          <td colspan="3"><%= @employer_other_charges.round %></td>
+          <td colspan="3"><%= @employer_other_charges.round %></td>
+        </tr>
+        <tr>
+          <td colspan="3"><b> Total </b></td>
+          <td colspan="3"><%= @total_amt.round %></td>
+          <td colspan="3"><%= @total_amt.round %></td>
+        </tr>
+      </tbody>
+    </table>

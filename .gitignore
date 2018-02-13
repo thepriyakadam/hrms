@@ -62,4 +62,3 @@ config/database.yml
 
 # Ignore schema file
 db/schema.rb
-

@@ -188,6 +188,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.7.0)
       mini_mime (>= 0.1.1)
+    mdb (0.4.1)
     method_source (0.9.0)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
@@ -318,9 +319,9 @@ GEM
     tilt (2.0.8)
     time_difference (0.5.0)
       activesupport
-    tiny_tds (2.1.1)
-    tiny_tds (2.1.1-x64-mingw32)
-    tiny_tds (2.1.1-x86-mingw32)
+    tiny_tds (2.1.0)
+    tiny_tds (2.1.0-x64-mingw32)
+    tiny_tds (2.1.0-x86-mingw32)
     ttfunk (1.4.0)
     turbolinks (5.1.0)
       turbolinks-source (~> 5.1)
@@ -396,6 +397,7 @@ DEPENDENCIES
   json (~> 1.8, >= 1.8.3)
   kaminari (~> 0.16.3)
   local-subdomain
+  mdb
   mime-types-data (~> 3.2016, >= 3.2016.0521)
   momentjs-rails
   mysql2 (~> 0.3.18)

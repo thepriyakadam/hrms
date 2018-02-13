@@ -11,13 +11,14 @@ gem 'mysql2', '~> 0.3.18'
 
 
 
- gem 'tiny_tds'
- gem 'activerecord-sqlserver-adapter'
- gem 'ruby-odbc'
- gem 'dbi'
- gem 'activerecord-session_store'
 
-# gem 'mdb'
+gem 'tiny_tds'
+gem 'activerecord-sqlserver-adapter'
+gem 'ruby-odbc'
+gem 'dbi'
+gem 'activerecord-session_store'
+
+gem 'mdb'
 
 gem 'ruby-graphviz', '~> 1.2', '>= 1.2.2'
 

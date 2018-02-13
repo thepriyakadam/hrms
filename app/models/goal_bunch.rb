@@ -45,7 +45,7 @@ class GoalBunch < ActiveRecord::Base
         #   align_to_supervisor = spreadsheet.cell(i,'I')
         #   employee_id = emp.id
         #   #period_id = period_id
-          self_comment = spreadsheet.cell(i,'k')
+          self_comment = spreadsheet.cell(i,'K')
           self_rating = spreadsheet.cell(i,'L')
           goal_rating_id = spreadsheet.cell(i,'M')
 

@@ -228,6 +228,12 @@ class GoalBunchesController < ApplicationController
   #   session[:active_tab] ="selfservice"
   # end
 
+  def self_comment_modal
+    @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:emp_id])
+    @goal_rating = GoalRating.find(params[:goal_rating_id])
+  end 
+
   def self_comment
     @goal_rating_ids = params[:goal_rating_ids]
     comments = params[:appraisee_comment]

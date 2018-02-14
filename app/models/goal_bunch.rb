@@ -55,10 +55,19 @@ class GoalBunch < ActiveRecord::Base
           #   else
           #     goal_bunch = GoalBunch.where(period_id: period_id,employee_id: employee_id).take
           #   end
-      
+     
+          int_rating = self_rating.to_i
+          rating = int_rating.to_s
+        @self_rating = Rating.find_by(value: rating)
+        if @self_rating.nil?
+          @self_rating_id = nil
+        else
+          @self_rating_id = @self_rating.id
+        end
+
         goal_rating = GoalRating.find_by(id: goal_rating_id)
         if goal_rating_id.to_i == goal_rating.id
-          goal_rating.update(appraisee_comment: self_comment,appraisee_rating_id: self_rating)
+          goal_rating.update(appraisee_comment: self_comment,appraisee_rating_id: @self_rating_id)
         end
     end#do
   end

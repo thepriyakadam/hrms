@@ -172,7 +172,7 @@
           <%= bootstrap_form_for (@goal_rating),url:{action:'self_comment',emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id} do |f| %>  
             <table class="table table-bordered table-hover table-condensed">
               <thead>
-               <tr><th colspan="8"><center>Goal Rating</center></th></tr>
+               <tr><th colspan="7"><center>Goal Rating</center></th></tr>
                 <tr>
                   <th>Goal Perspective</th>
                   <th>Measure</th>
@@ -180,8 +180,9 @@
                   <th>Target/Unit</th>
                   <th>Weightage</th>
                   <th>Aligned</th>
-                  <th>Self Comment</th>
-                  <th>Self Rating</th>
+                  <!-- <th>Self Comment</th>
+                  <th>Self Rating</th> -->
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -193,17 +194,22 @@
                     <td><%= goal_rating.target %></td>
                     <td><%= goal_rating.goal_weightage %></td>
                     <td><%= goal_rating.aligned %></td>
-                    <td><%= text_field_tag 'appraisee_comment[]',"",class: "form-control",autofocus: true %></td>
-                    <td><%= select_tag 'appraisee_rating[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %></td>
+
+                    <td><%= link_to 'Comment/Rating', self_comment_modal_goal_bunches_path(goal_rating_id: goal_rating.id,emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id),class: 'btn btn-xs btn-warning',remote: true %>
+                    </td>
+
+                     <!-- <td><%#= text_field_tag 'appraisee_comment[]',"",class: "form-control",autofocus: true %></td>
+                    <td><%#= select_tag 'appraisee_rating[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %></td> -->
                     <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
-                  </tr>
+                  </tr>​
+
                 <% end %>
               </tbody>
             </table>
 
             <table class="table table-bordered table-hover table-condensed">
               <thead>
-               <tr><th colspan="8"><center>Attribute Rating</center></th></tr>
+               <tr><th colspan="7"><center>Attribute Rating</center></th></tr>
                 <tr>
                   <th>Attribute</th>
                   <th>Measure</th>
@@ -211,8 +217,9 @@
                   <th>Target/Unit</th>
                   <th>Weightage</th>
                   <th>Aligned</th>
-                  <th>Self Comment</th>
-                  <th>Self Rating</th>
+                  <!-- <th>Self Comment</th>
+                  <th>Self Rating</th> -->
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -224,8 +231,12 @@
                     <td><%= goal_rating.target %></td>
                     <td><%= goal_rating.goal_weightage %></td>
                     <td><%= goal_rating.aligned %></td>
-                    <td><%= text_field_tag 'appraisee_comment[]',"",class: "form-control" %></td>
-                    <td><%= select_tag 'appraisee_rating[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %></td>
+
+                    <td><%= link_to 'Comment/Rating', self_comment_modal_goal_bunches_path(goal_rating_id: goal_rating.id,emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id),class: 'btn btn-xs btn-warning',remote: true %>
+                    </td>
+
+                    <!-- <td><%#= text_field_tag 'appraisee_comment[]',"",class: "form-control" %></td>
+                    <td><%#= select_tag 'appraisee_rating[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %></td> -->
                     <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
                   </tr>
                 <% end %>

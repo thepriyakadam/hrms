@@ -18,7 +18,6 @@ class CreateVacancyMasters < ActiveRecord::Migration
       t.string :other_organization
       t.string :industry
       t.string :current_status
-      t.date :vacancy_fullfillment_date
       t.boolean :is_confirmed
       t.string :vacancy_code
       t.string :experience

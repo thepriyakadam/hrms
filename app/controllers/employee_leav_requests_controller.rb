@@ -33,7 +33,6 @@ class EmployeeLeavRequestsController < ApplicationController
   def edit
   end
 
-
   def from_hr
     @employee = Employee.find(params[:format])
     @employee_leav_request = EmployeeLeavRequest.new

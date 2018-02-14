@@ -32,7 +32,6 @@ class GoalRating < ActiveRecord::Base
 
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
-
          weightage = spreadsheet.cell(i,'I')
           weightage_sum = weightage.to_f + previous_weightage.to_f
           previous_weightage = weightage_sum

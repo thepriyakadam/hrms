@@ -111,7 +111,6 @@
 
   <% if @goal_bunch.goal_confirm == true %>
     <small class="label label-info">Request has been sent for Confirmation</small>
-
     <%= link_to " Created Goals ",goal_set_goal_ratings_path(format: "xls",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
     <%= link_to 'Back',new_goal_bunch_path, class: 'btn btn-sm btn-default fa fa-arrow-left' %>
   <% elsif @goal_bunch.goal_approval == true %>

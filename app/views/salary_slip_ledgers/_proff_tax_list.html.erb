@@ -1,12 +1,22 @@
 <div class="box-header">
-    <div class="pull-right">
-    </div>
+   
   </div><!-- /.box-header -->
   <div class="box-body">
   <div id="comments">
     <table id="example" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
+        <td colspan="5">
+          <% if current_user.company_location.company.company_logo == nil %>
+          <% else %>
+            <center> <%= image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
+          <%end%>
+            <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>.<br><strong>Professional Tax Report</strong></center>
+            <center><strong><%= @from.strftime("%B-%Y") %> to <%= @to.strftime("%B-%Y") %></strong></center>
+        </td>           
+       </tr>
+      <tr>
+        <th>Sr. No.</th>
         <th>ID</Data></th>
         <th>Employee Name</th>
         <th>Department</th>
@@ -14,11 +24,14 @@
     </tr>
     </thead>
     <tbody>
+      <% i = 0 %>
+      <% @proff_tax = 0 %>
       <% @salaryslips.each do |slip| %>
         <% employee = slip.employee %>
         <% bank = employee.employee_bank_detail %>
         <% workingday = slip.workingday %>
         <tr>
+          <td><%= i = i + 1 %></td>
           <td><%= slip.employee.manual_employee_code %></td>
           <td><%= employee.try(:first_name) %> <%= employee.try(:middle_name) %> <%= employee.try(:last_name) %></td>
            <td><%= employee.company_location.try(:name) %> - <%= employee.department.try(:name) %></td>
@@ -26,17 +39,22 @@
           <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
           <% @deducted_salaryslip_items.each do |item| %>
               <% if item.other_component_name == "Professional Tax" %>
-                <td><%= item.calculated_amount.round %></td>
+                <td><%= proff_tax = item.calculated_amount.round %></td>
+                <% @proff_tax = @proff_tax.to_f + proff_tax.to_f %>
               <% end %>
           <% end %><!-- deducted items -->
         </Row><!-- Row -->
       <% end %><!-- slip -->
+      <tr>
+        <td colspan="4">Total</td>
+        <td><%= @proff_tax %></td>
+      </tr>
    </tbody>
   </table>
   </div>
 
-  <%= link_to " Excel Report ",professional_tax_master_dynamic_report_salary_slip_ledgers_path(:food_deduction => {:month => params[:food_deduction][:month],:year => params[:food_deduction][:year],:company_id => params[:food_deduction][:company_id],:company_location_id => params[:food_deduction][:company_location_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <%= link_to " PDF Report ",professional_tax_master_dynamic_report_salary_slip_ledgers_path(:food_deduction => {:month => params[:food_deduction][:month],:year => params[:food_deduction][:year],:company_id => params[:food_deduction][:company_id],:company_location_id => params[:food_deduction][:company_location_id]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+  <%= link_to " Excel Report ",professional_tax_master_dynamic_report_salary_slip_ledgers_path(:employee => {:from => params[:employee][:from],:to => params[:employee][:to],:company_id => params[:employee][:company_id],:company_location_id => params[:employee][:company_location_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <%= link_to " PDF Report ",professional_tax_master_dynamic_report_salary_slip_ledgers_path(:employee => {:from => params[:employee][:from],:to => params[:employee][:to],:company_id => params[:employee][:company_id],:company_location_id => params[:employee][:company_location_id]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>
 
 <script type="text/javascript">

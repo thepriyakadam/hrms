@@ -9,39 +9,49 @@
 <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
 <thead>
   <tr>
-        <td colspan="3">
-         <% if current_user.company_location.company.company_logo == nil %>
-      <% else %>
-        <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
+      <td colspan="4">
+        <% if current_user.company_location.company.company_logo == nil %>
+        <% else %>
+          <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
         <%end%>
-          <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>. <br> <%= @month %> <%= @year %> </center>
+          <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>. <br><strong>Society Membership Report</strong></center>
+          <center><strong><%= @from.strftime("%B-%Y") %> to <%= @to.strftime("%B-%Y") %></strong></center>
         </td>           
        </tr>
     <thead>
       <tr>
+      <th>Sr. No.</th>
         <th>Employee Code</th>
         <th>Employee Code</th>
         <th>Society</th>
     </tr>
     </thead>
     <tbody>
+      <% i = 0 %>
+      <% @amount  = 0 %>
       <% @salaryslips.each do |slip| %>
         <% employee = slip.employee %>
         <% joining = employee.joining_detail %>
         <% bank = employee.employee_bank_detail %>
         <% workingday = slip.workingday %>
         <tr>
+          <td><%= i = i + 1 %></td>
           <td><%= slip.employee.manual_employee_code %></td>
           <td><%= employee.try(:first_name) %> <%= employee.try(:middle_name) %> <%= employee.try(:last_name) %></td>
           <td>
           <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
           <% @deducted_salaryslip_items.each do |item| %>
               <% if item.other_component_name == "Society" %>
-                <%= item.calculated_amount.round %>
+                <%= amount = item.calculated_amount.round %>
+                <% @amount = @amount.to_f + amount.to_f %>
               <% end %>
             <% end %>
             </td>
         </tr><!-- Row -->
       <% end %><!-- slip -->
+      <tr>
+        <td colspan="3">Total</td>
+        <td><%= @amount%></td>
+      </tr>
    </tbody>
   </table>

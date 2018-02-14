@@ -3,15 +3,14 @@
 <table style="border-collapse: collapse; font-size:15pt;" border=1 width=1000 cellpadding="15">
   <thead>
     <tr>
-      <td colspan="27">
+      <td colspan="7">
         <% if current_user.company_location.company.company_logo == nil %>
         <% else %>
           <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
         <%end%>
-        <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
-        <center><small></small></center>
-        <center><small>Employee Salary Reports <%#= @start_date.strftime("%B") %>  <%#= @start_date.strftime("%Y") %>  <%#= @end_date.strftime("%B") %> <%#= @end_date.strftime("%Y") %> </small></center>   
-      </th>
+        <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>.<br><strong>Monthwise Report</strong></center>
+          <center><strong><%= @from.strftime("%B-%Y") %> to <%= @to.strftime("%B-%Y") %></strong></center>
+        </td>          
     </tr>
 
         <tr>

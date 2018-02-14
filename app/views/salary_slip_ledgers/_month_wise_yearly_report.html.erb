@@ -6,6 +6,16 @@
   <div id="comments">
     <table id="example" class="table table-bordered table-hover table-condensed">
       <thead>
+       <tr>
+      <td colspan="7">
+        <% if current_user.company_location.company.company_logo == nil %>
+        <% else %>
+          <center> <%= image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
+        <%end%>
+        <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>.<br><strong>Monthwise Report</strong></center>
+          <center><strong><%= @from.strftime("%B-%Y") %> to <%= @to.strftime("%B-%Y") %></strong></center>
+        </td>          
+    </tr>
         <tr>
           <th>ID</th>
           <th>Employee Name</th>
@@ -17,6 +27,10 @@
       </thead>
       <tbody>
         <% @salaryslips.each do |slip| %>
+        <% @employee_contribution = 0 %>
+        <% @amount = 0 %>
+        <% @pf_amount = 0 %>
+
           <%if slip.employee.joining_detail.select_pf == "Yes" %>
             <% employee = slip.employee %>
             <% joining = employee.joining_detail %>
@@ -54,7 +68,9 @@
               <% else %>
               <% end %> <!-- switch case --> 
             <% end %><!-- addable items -->
-            <td><%= basic_amt+da_amt %></td>
+            <td><%= amount = basic_amt+da_amt %></td>
+            <% @amount = @amount.to_f + amount.to_f %>
+
             <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
             <% @salaryslips2 = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: employee.id) %>
             <% total_amt = 0 %>
@@ -66,17 +82,28 @@
                 <% end %>
               <% end %>
             <% end %>
-            <td><%= total_amt %></td>
+            <td><%= pf_amount = total_amt %></td>
+            <% @pf_amount = @pf_amount.to_f + pf_amount.to_f %>
+
             <% emp_contribution = EmployerContribution.where(date: @from_date.to_date..@to_date.to_date, employee_id: employee.id) %>
             <% total_emp_cont = 0 %>
             <% emp_contribution.each do |emp_con| %>
               <% total_emp_cont += emp_con.pf %>
             <% end%>
-            <td><%= total_emp_cont %></td>
+
+            <td><%= employee_contribution = total_emp_cont %></td>
+            <% @employee_contribution = @employee_contribution.to_f + employee_contribution.to_f %>
+
           </tr>
           <% end %>
         
         <% end %>
+        <tr>
+          <td colspan="3">Total</td>
+          <td><%= @amount %></td>
+          <td><%= @pf_amount %></td>
+          <td><%= @employee_contribution %></td>
+        </tr>
     </tbody>
   </table>
   </div>
@@ -101,6 +128,7 @@
       <% end %>
     </tbody>
   </table>
+  <br>
   <%= link_to " Excel Report ", month_wise_yearly_report_salary_slip_ledgers_path(from_date: params[:yearly_reports][:from_date], to_date: params[:yearly_reports][:to_date], company_id: params[:salary_slip_ledger][:company_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %> 
   <%#= link_to " Text Report", export_pf_report_to_text_salary_slip_ledgers_path(month: params[:pf_detail][:month], year: params[:pf_detail][:year],company_id: params[:pf_detail][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "csv"), class: "btn btn-xl btn-primary fa fa-file-text-o" %> 
   

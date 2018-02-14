@@ -30,7 +30,7 @@
       <% @salaryslips.each do |slip| %>
         <% employee = slip.employee %>
         <tr>
-          <td><% i = i + 1 %></td>
+          <td><%= i = i + 1 %></td>
           <td><%= slip.employee.manual_employee_code %></td>
           <td><%= employee.try(:first_name) %> <%= employee.try(:middle_name) %> <%= employee.try(:last_name) %></td>
           <td><%= employee.company_location.try(:name) %> - <%= employee.department.try(:name) %></td>

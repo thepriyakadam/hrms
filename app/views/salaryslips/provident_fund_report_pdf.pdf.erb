@@ -1,0 +1,112 @@
+<style>
+  th {
+      text-align: left;
+  }
+  tr {
+      page-break-inside: avoid;
+  }
+  div.alwaysbreak { page-break-before: always; }
+  div.nobreak:before { clear:both; }
+  div.nobreak{ page-break-inside: avoid;
+    /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+  }
+</style>
+  <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
+      <thead>
+        <tr>
+          <td colspan="15"><center> 
+            <% if current_user.employee.company_location.company.company_logo == nil %>
+            <%else %>
+              <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+            <%end%> 
+            <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+            <center><strong>Provident Fund Report</strong></center>
+            <center><strong><%= @from_date %> <b>-</b> <%= @to_date  %></strong></center>
+
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3"><b> Particular </b></td>
+          <td colspan="2"><b> Gross Amount </b></td>
+          <td colspan="2"><b> Percentage </b></td>
+          <td colspan="2"><b> Account No </b></td>
+          <td colspan="2"><b> Amount </b></td>
+          <td colspan="2"><b> Payable Amount </b></td>
+          <td colspan="2"><b> Paid Amount </b></td>
+        </tr>
+        <br />
+        <tr>
+          <td colspan="3"><b> Employee Statutory Deduction </b></td>
+          <td colspan="12"><b><%= @employee_statutory_deduction %> </b></td>
+        </tr>
+        <tr>
+          <td colspan="3">Employee PF Contributions @ 12% </td>
+          <td colspan="2"><%=  %></td>
+          <td colspan="2"> 12% </td>
+          <td colspan="2"><%=  %></td>
+          <td colspan="2"><%= @employee_statutory_deduction %></td>
+          <td colspan="2"><%= @employee_statutory_deduction %></td>
+          <td colspan="2"><%= @employee_statutory_deduction %></td>
+        </tr>
+        <tr>
+          <td colspan="3"><b> Employer Statutory Contribution </b></td>
+          <td colspan="12"><b><%= @employer_statutory_contribution %> </b></td>
+        </tr>
+        <tr>
+          <td colspan="3">Employer EPS @ 8.33%</td>
+          <td colspan="2"><%= @employer_statutory_contribution_all %></td>
+          <td colspan="2">8.33%</td>
+          <td colspan="2"><%=  %></td>
+          <td colspan="2"><%= @employer_statutory_contribution_eight_point %></td>
+          <td colspan="2"><%= @employer_statutory_contribution_eight_point %></td>
+          <td colspan="2"><%= @employer_statutory_contribution_eight_point %></td>
+        </tr>
+        <tr>
+          <td colspan="3">Employer EPF @ 3.67%</td>
+          <td colspan="2"><%=  %></td>
+          <td colspan="2"> 3.67% </td>
+          <td colspan="2"><%=  %></td>
+          <td colspan="2"><%= @employer_statutory_contribution_three_point %></td>
+          <td colspan="2"><%= @employer_statutory_contribution_three_point %></td>
+          <td colspan="2"><%= @employer_statutory_contribution_three_point %></td>
+        </tr>
+        <br />
+        <tr><td colspan="15"><b> Employer Other Charges </b></td></tr>
+        <tr>
+          <td colspan="3">EDLI Admin Charges @0.01%</td>
+          <td colspan="2"><%=  %></td>
+          <td colspan="2">0.01%</td>
+          <td colspan="2"><%=  %></td>
+          <td colspan="2"><%= @employer_other_charges_one_percent %></td>
+          <td colspan="2"><%= @employer_other_charges_one_percent %></td>
+          <td colspan="2"><%= @employer_other_charges_one_percent %></td>
+        </tr>
+        <tr>
+          <td colspan="3">EDLI Contribution @0.5%</td>
+          <td colspan="2"><%=  %></td>
+          <td colspan="2">0.50%</td>
+          <td colspan="2"><%=  %></td>
+          <td colspan="2"><%= @employer_other_charges_five_percent %></td>
+          <td colspan="2"><%= @employer_other_charges_five_percent %></td>
+          <td colspan="2"><%= @employer_other_charges_five_percent %></td>
+        </tr>
+        <tr>
+          <td colspan="3">PF Admin Charges @1.10%</td>
+          <td colspan="2"><%=  %></td>
+          <td colspan="2">1.10%</td>
+          <td colspan="2"><%=  %> </td>
+          <td colspan="2"><%= @employer_other_charges_ten_percent.round(2) %></td>
+          <td colspan="2"><%= @employer_other_charges_ten_percent.round(2) %></td>
+          <td colspan="2"><%= @employer_other_charges_ten_percent.round(2) %></td>
+        </tr>
+        <tr>
+          <td colspan="3"><b> Total </b></td>
+          <td colspan="2"><%= @total_gross_amt %></td>
+          <td colspan="2"><%=  %></td>
+          <td colspan="2"><%=  %></td>
+          <td colspan="2"><%= @total_all_percent %></td>
+          <td colspan="2"><%= @total_all_percent %></td>
+          <td colspan="2"><%= @total_all_percent %></td>
+        </tr>
+      </tbody>
+    </table>

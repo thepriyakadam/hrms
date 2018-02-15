@@ -9,14 +9,16 @@
 <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
 <thead>
   <tr>
-        <td colspan="8">
+        <td colspan="9">
          <% if current_user.company_location.company.company_logo == nil %>
       <% else %>
         <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
         <%end%>
-          <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>. <br><%= @month %> <%= @year %> </center>
+        <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>.<br><strong>Food Deduction</strong></center>
+            <center><strong><%= @from.strftime("%B-%Y") %> to <%= @to.strftime("%B-%Y") %></strong></center>
         </td>  
       <tr>
+        <th>Sr. No.</th>
         <th>ID</th>
         <th>Employee Name</th>
         <th>Date</th>
@@ -29,8 +31,11 @@
     </thead>
 
     <tbody>
+      <% i = 0 %>
+      <% @amount = 0 %>
       <% @food_deductions.each do |food_deduction| %>
         <tr>
+          <td><%= i = i + 1 %></td>
           <td><%= food_deduction.employee.try(:manual_employee_code) %></td>
           <td><%= full_name(food_deduction.employee) %></td>
           <td><%= food_deduction.food_date %></td>
@@ -38,8 +43,12 @@
           <td><%= food_deduction.return_coupan %></td>
           <td><%= food_deduction.total_coupan %></td>
           <td><%= food_deduction.food_coupan_master.price %></td>
-          <td><%= food_deduction.amount %></td>
+          <td><%= amount = food_deduction.amount %></td>
+              <% @amount = @amount.to_f + amount.to_f %>
         </tr>
       <% end %>
+          <tr><td colspan="7">Total</td>
+          <th><%= @amount %></th></tr>
+
     </tbody>
   </table>

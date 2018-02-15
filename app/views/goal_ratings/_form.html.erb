@@ -15,35 +15,34 @@
 
       <div id="dropdown"></div>
       
-      
       <div class="col-sm-6">
-        <div class="form-group required">
-          <%= f.text_field :goal_measure,{label: 'Measure',placeholder: 'Measure'} %>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="form-group required">
-          <%= f.text_field :activity,{label: 'Activity',placeholder: 'Activity'} %>
-        </div>
-      </div>
-
-      <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :target,{label: 'Target/Unit',placeholder: 'Target/Unit'} %>
         </div>
       </div>
+    </div>
 
-        <div class="col-sm-3">
-          <div class="form-group required">
-            <%= f.text_field :goal_weightage,{label: 'Weightage',placeholder: 'Weightage'} %>
-          </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group required">
+          <%= f.text_area :goal_measure,{label: 'Measure',placeholder: 'Measure'} %>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="form-group required">
+          <%= f.text_area :activity,{label: 'Activity',placeholder: 'Activity'} %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.text_field :goal_weightage,{label: 'Weightage',placeholder: 'Weightage'} %>
+        </div>
       </div>
     
-    </div>
-    <div class="row">
       <div class="col-sm-3">
         <div class="field">
           <%= f.select :aligned,["Yes","No"],{label: 'Aligned To Supervisor',include_blank: "Select Option"} %>

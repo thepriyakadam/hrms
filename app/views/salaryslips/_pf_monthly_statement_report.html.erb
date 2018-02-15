@@ -1,0 +1,74 @@
+<div class="box">
+  <div class="box-header">
+    <div class="box-body">
+      <tr>
+        <td colspan="10"><center> 
+          <% if current_user.employee.company_location.company.company_logo == nil %>
+          <%else %>
+            <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+          <%end%> 
+          <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+          <center><strong>PF Monthly Statement Report</strong></center>
+          <center><strong><%= @from_date %> <b>-</b> <%= @to_date  %></strong></center>
+        </td>
+      </tr>
+      <div class="pull-right">
+        <%#= link_to " Excel Report ", pf_monthly_statement_report_salaryslips_path(from_date: params[:pf_monthly_statement][:from_date], to_date: params[:pf_monthly_statement][:to_date], company_id: params[:salaryslip][:company_id], company_location_id: params[:salaryslip][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  
+        <%= link_to "PDF Report ", pf_monthly_statement_report_salaryslips_path(from_date: params[:pf_monthly_statement][:from_date], to_date: params[:pf_monthly_statement][:to_date], company_id: params[:salaryslip][:company_id], company_location_id: params[:salaryslip][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+      </div><br /> <br />
+      <!-- <div class="col-sm-6"> -->
+        <table id="example6" class="table table-bordered table-hover table-condensed">
+          <thead>
+           <!-- <tr><td colspan="3"><center>First Level Request</center></td></tr> -->
+            <tr>
+              <td colspan="10"><center> 
+              <th>Sr. No.</th>
+              <th>Employee ID</th>
+              <th>PF Number</th>
+              <th>Employee Name</th>
+              <th>Worked</th>
+              <th>Earned Wages(gross)</th>
+              <th>Employee's Contribution </th>
+              <th>PF @12%</th>
+              <th>VPF</th>
+              <th>Total</th>
+              <th>Employer's Contribution</th>
+              <th>EPS@8.33%</th>
+              <th>EPF@3.67%</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <%i = 0%>
+            <% @salaryslip_components.try(:each) do |salaryslip_comp| %>
+              <tr>
+                <td><%= i = i+1 %></td>
+                <td><%= salaryslip_comp.salaryslip_id %></td>
+                <td><%= salaryslip_comp.salary_component_id %></td>
+                <td><%=  %></td>
+                <td><%=  %></td>
+                <td><%=  %></td>
+                <td><%=  %></td>
+                <td><%=  %></td>
+                <td><%=  %></td>
+                <td><%=  %></td>
+                <td><%=  %></td>
+                <td><%=  %></td>
+                <td><%=  %></td>
+                <td><%=  %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

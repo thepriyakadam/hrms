@@ -34,33 +34,43 @@
           </tr>
         </thead>
         <tbody>
+        <% weightage_sum = 0 %>
           <% @goal_ratings.each do |goal_rating| %>
             <tr>
               <td><%= goal_rating.goal_perspective.try(:name) %></td>
-              <td><%= goal_rating.goal_weightage %></td>
+              <td><%= weightage = goal_rating.goal_weightage %></td>
               <td>
                 <% if goal_rating.goal_bunch.goal_approval == true %>
                 <small class="label label-success">Confirmed</small>
+                <%= link_to '', show_goal_rating_goal_ratings_path(goal_rating_id: goal_rating.id),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
+  
                 <% elsif goal_rating.goal_bunch.goal_confirm == true %>
-                <small class="label label-info">Send For Approval</small>
+                <small class="label label-info">Sent For Approval</small>
+                <%= link_to '', show_goal_rating_goal_ratings_path(goal_rating_id: goal_rating.id),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
                 <% elsif goal_rating.goal_bunch.goal_confirm == false || goal_rating.goal_bunch.goal_confirm == nil %>
                   <%= link_to '', goal_set_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
                   <%= link_to '', goal_rating, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close' %>
-                  <%= link_to '', show_goal_rating_goal_ratings_path(goal_rating_id: goal_rating.id,employee_id: @employee.id,goal_bunch_id: @goal_bunch.id),class: 'btn btn-default btn-xs fa fa-eye' %>
+                  <%= link_to '', show_goal_rating_goal_ratings_path(goal_rating_id: goal_rating.id),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
                 <% end %>
               </td>
+              <% weightage_sum = weightage_sum.to_f + weightage.to_f %>
             </tr>
           <% end %>
+          <tr>
+            <th><h6><font color='red' size='2'>Weightage </font></h6></th>
+            <th colspan="2"><h6><font color='red' size='2'> <%= weightage_sum %></font></h6></th>
+          </tr>
         </tbody>
       </table>
     </div>
+<div id="myModal1" class="modal fade"></div>
 
     <!-- < elsif @goal_rating.goal_type == 'Attribute' %> -->
 
   <div class="col-sm-6">
     <table class="table table-bordered table-hover table-condensed">
       <thead>
-       <tr><td colspan="6"><center> Employee Attribute & Definition</center></td></tr>
+       <tr><td colspan="3"><center> Employee Attribute & Definition</center></td></tr>
         <tr>
           <th>Attribute</th>
           <th>Weightage</th>
@@ -68,30 +78,40 @@
         </tr>
       </thead>
       <tbody>
+        <% weightage_sum = 0 %>
         <% @goal_attribute_ratings.each do |goal_rating| %>
           <tr>
             <td><%= goal_rating.attribute_master.try(:name) %></td>
-            <td><%= goal_rating.goal_weightage %></td>
+            <td><%= weightage = goal_rating.goal_weightage %></td>
             <td>
               <% if goal_rating.goal_bunch.goal_approval == true %>
               <small class="label label-success">Confirmed</small>
+                  <%= link_to '', show_attribute_goal_ratings_path(goal_rating_id: goal_rating.id),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
               <% elsif goal_rating.goal_bunch.goal_confirm == true %>
-                <small class="label label-info">Send For Approval</small>
+                <small class="label label-info">Sent For Approval</small>
+                  <%= link_to '', show_attribute_goal_ratings_path(goal_rating_id: goal_rating.id),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
               <% elsif goal_rating.goal_bunch.goal_confirm == false || goal_rating.goal_bunch.goal_confirm == nil %>
                   <%= link_to '', goal_set_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
                   <%= link_to '', goal_rating, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close' %>
-                  <%= link_to '', show_attribute_goal_ratings_path(goal_rating_id: goal_rating.id,employee_id: @employee.id,goal_bunch_id: @goal_bunch.id),class: 'btn btn-default btn-xs fa fa-eye' %>
+                  <%= link_to '', show_attribute_goal_ratings_path(goal_rating_id: goal_rating.id),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
               <% end %>
             </td>
+              <% weightage_sum = weightage_sum.to_f + weightage.to_f %>
+            </tr>
+          <% end %>
+          <tr>
+            <th><h6><font color='red' size='2'>Weightage </font></h6></th>
+            <th colspan="2"><h6><font color='red' size='2'> <%= weightage_sum %></font></h6></th>
           </tr>
-        <% end %>
       </tbody>
     </table>
   </div>
 </div>
+<div id="myModal" class="modal fade"></div>
 
   <% if @goal_bunch.goal_confirm == true %>
-    <small class="label label-info">Request has been send for Confirmation</small>
+    <small class="label label-info">Request has been sent for Confirmation</small>
+    <%= link_to " Created Goals ",goal_set_goal_ratings_path(format: "xls",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
     <%= link_to 'Back',new_goal_bunch_path, class: 'btn btn-sm btn-default fa fa-arrow-left' %>
   <% elsif @goal_bunch.goal_approval == true %>
     <small class="label label-success">Goal Confirmed</small>
@@ -102,6 +122,11 @@
         <div class="actions">
          <%= f.submit "Send For Confirmation", class: 'btn btn-primary btn-xs' %> <%= link_to 'Back',new_goal_bunch_path, class: 'btn btn-sm btn-default fa fa-arrow-left' %>
           
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= link_to " Created Goals ",goal_set_goal_ratings_path(format: "xls",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
         </div>
       </div>
     </div>

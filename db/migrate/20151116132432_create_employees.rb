@@ -49,7 +49,7 @@ class CreateEmployees < ActiveRecord::Migration
       t.datetime :employee_signature_updated_at
       t.string   :emergency_contact_no
       t.string   :optinal_contact_no1             
-      t.string   :extension_no             
+      t.string   :extension_no              
     
       t.timestamps null: false
     end

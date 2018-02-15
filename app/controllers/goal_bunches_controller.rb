@@ -82,7 +82,7 @@ class GoalBunchesController < ApplicationController
         redirect_to import_xl_goal_bunches_path
       else
         GoalBunch.import(params[:file])
-        redirect_to new_goal_bunch_path(emp_id: employee.id,id: goal_bunch.id), notice: "File imported."
+        redirect_to appraisee_comment_goal_bunches_path(emp_id: employee.id,id: goal_bunch.id), notice: "File imported."
       end
   end
 
@@ -227,6 +227,12 @@ class GoalBunchesController < ApplicationController
   #   @goal_rating = GoalRating.new
   #   session[:active_tab] ="selfservice"
   # end
+
+  def self_comment_modal
+    @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:emp_id])
+    @goal_rating = GoalRating.find(params[:goal_rating_id])
+  end 
 
   def self_comment
     @goal_rating_ids = params[:goal_rating_ids]

@@ -2343,6 +2343,13 @@ end
       get :pf_computation
       get :pf_computation_report
       post :pf_computation_report
+      get :provident_fund
+      get :provident_fund_report
+      post :provident_fund_report
+      get :pf_monthly_statement
+      get :pf_monthly_statement_report
+      post :pf_monthly_statement_report
+      
     end
   end
 

@@ -8,10 +8,10 @@
     <Table>
       <Row>
         <Cell ss:Index="1"><Data ss:Type="String">Sr No.</Data></Cell>
-        <Cell ss:Index="2"><Data ss:Type="String">Month - Year</Data></Cell>
-        <Cell ss:Index="3"><Data ss:Type="String">Employee Code</Data></Cell>
-        <Cell ss:Index="4"><Data ss:Type="String">Employee Name</Data></Cell>
-        <Cell ss:Index="5"><Data ss:Type="String">WelFare</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">ID</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Employee Name</Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">WelFare</Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String">Month-Year</Data></Cell>
       </Row>
       <% i = 0 %>
       <% @amount = 0 %>
@@ -22,23 +22,23 @@
         <% workingday = slip.workingday %>
         <Row>
           <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
-          <Cell ss:Index="2"><Data ss:Type="String"><%= slip.month %> <%= slip.year %></Data></Cell>
-          <Cell ss:Index="3"><Data ss:Type="String"><%= slip.employee.manual_employee_code %></Data></Cell>
-          <Cell ss:Index="4"><Data ss:Type="String"><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= slip.employee.manual_employee_code %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></Data></Cell>
 
-          <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true,other_component_name: "WelFare") %>
-          <% @deducted_salaryslip_items.each do |item| %>
+            <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true,other_component_name: "WelFare") %>
+            <% @deducted_salaryslip_items.each do |item| %>
               <% if item.other_component_name == "WelFare" %>
-                <Cell ss:Index="5"><Data ss:Type="Number"><%= amount = item.calculated_amount.round %></Data></Cell>
+                <Cell ss:Index="4"><Data ss:Type="Number"><%= amount = item.calculated_amount.round %></Data></Cell>
 
                 <% @amount = @amount.to_f + amount.to_f %>
               <% end %>
-          <% end %><!-- deducted items -->
+            <% end %><!-- deducted items -->
+          <Cell ss:Index="5"><Data ss:Type="String"><%= slip.month %> <%= slip.year %></Data></Cell>
         </Row><!-- Row -->
       <% end %><!-- slip -->
        <Row>
-          <Cell ss:Index="4"><Data ss:Type="String">Total</Data></Cell>
-          <Cell ss:Index="5"><Data ss:Type="Number"><%= @amount %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String">Total</Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="Number"><%= @amount %></Data></Cell>
         </Row>
     </Table>
   </Worksheet>

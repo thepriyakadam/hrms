@@ -7,9 +7,9 @@
 </style>
 
 <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
-<thead>
+  <thead>
     <tr>
-      <td colspan="4">
+      <td colspan="5 ">
            <% if current_user.company_location.company.company_logo == nil %>
         <% else %>
           <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
@@ -18,38 +18,40 @@
             <center><strong><%= @from.strftime("%B-%Y") %> to <%= @to.strftime("%B-%Y") %></strong></center>
       </td>           
     </tr>
-      <tr>
-        <th>Sr. No.</th>
-        <th>Employee Code</th>
-        <th>Employee Name</th>
-        <th>WelFare</th>
+    <tr>
+      <th>Sr. No.</th>
+      <th>ID</th>
+      <th>Employee Name</th>
+      <th>WelFare</th>
+      <th>Month-Year</th>
     </tr>
-    </thead>
-    <tbody>
-      <% @amount = 0 %>
-      <% i = 0 %>
-      <% @salaryslips.each do |slip| %>
-        <% employee = slip.employee %>
-        <% joining = employee.joining_detail %>
-        <% bank = employee.employee_bank_detail %>
-        <% workingday = slip.workingday %>
-        <tr>
-          <td><%= i = i + 1 %></td>
-          <td><%= slip.employee.manual_employee_code %></td>
-          <td><%= employee.try(:first_name) %> <%= employee.try(:middle_name) %> <%= employee.try(:last_name) %></td>
+  </thead>
+  <tbody>
+    <% @amount = 0 %>
+    <% i = 0 %>
+    <% @salaryslips.each do |slip| %>
+      <% employee = slip.employee %>
+      <% joining = employee.joining_detail %>
+      <% bank = employee.employee_bank_detail %>
+      <% workingday = slip.workingday %>
+      <tr>
+        <td><%= i = i + 1 %></td>
+        <td><%= slip.employee.manual_employee_code %></td>
+        <td><%= employee.try(:first_name) %> <%= employee.try(:middle_name) %> <%= employee.try(:last_name) %></td>
 
           <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true,other_component_name: "WelFare") %>
           <% @deducted_salaryslip_items.each do |item| %>
-              <% if item.other_component_name == "WelFare" %>
-                <td><%= amount = item.calculated_amount.round %></td>
-                <% @amount = @amount.to_f + amount.to_f %>
-              <% end %>
+            <% if item.other_component_name == "WelFare" %>
+              <td><%= amount = item.calculated_amount.round %></td>
+              <% @amount = @amount.to_f + amount.to_f %>
+            <% end %>
           <% end %><!-- deducted items -->
-        </tr><!-- Row -->
-      <% end %><!-- slip -->
-      <tr>
-        <td colspan="3">Total</td>
-        <td><%= @amount %></td>
-      </tr>
-   </tbody>
-  </table>
+        <td><%= slip.month %><%= slip.year %></td>
+      </tr><!-- Row -->
+    <% end %><!-- slip -->
+    <tr>
+      <td colspan="3">Total</td>
+      <td colspan="2"><%= @amount %></td>
+    </tr>
+  </tbody>
+</table>

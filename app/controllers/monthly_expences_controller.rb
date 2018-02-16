@@ -151,11 +151,8 @@ class MonthlyExpencesController < ApplicationController
     if current_user.class == Group
       if @company_id == ""
         @monthly_expences = MonthlyExpence.where(expence_date: @from..@to)
-      elsif @location == ""
+      elsif @location == "" || @location == nil
         @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
-        @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
-      elsif @department == ""
-        @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
         @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
       else
         @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i).pluck(:id)
@@ -165,11 +162,8 @@ class MonthlyExpencesController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         if @company_id == ""
           @monthly_expences = MonthlyExpence.where(expence_date: @from..@to)
-        elsif @location == ""
+        elsif @location == "" || @location == nil
           @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
-          @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
-        elsif @department == ""
-          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
           @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
         else
           @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i).pluck(:id)
@@ -179,29 +173,23 @@ class MonthlyExpencesController < ApplicationController
         if @company_id == ""
           @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
           @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
-        elsif @location == ""
+        elsif @location == "" || @location == nil
           @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
-          @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
-        elsif @department == ""
-          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
           @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
         else
           @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i).pluck(:id)
           @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Branch'
-        if @company_id == "" || @location == ""
+        if @company_id == "" || @location == "" || @location == nil
           @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-          @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
-        elsif @department == ""
-          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
           @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
         else
           @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i).pluck(:id)
           @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'HOD'
-        if @company_id == "" || @location == ""
+        if @company_id == "" || @location == "" || @location == nil
           @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
           @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
         else
@@ -209,7 +197,7 @@ class MonthlyExpencesController < ApplicationController
           @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Superviser'
-        if @company_id == "" || @location == ""
+        if @company_id == "" || @location == "" || @location == nil
           @emp = Employee.find(current_user.employee_id)
           @employees = @emp.subordinates
           @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)

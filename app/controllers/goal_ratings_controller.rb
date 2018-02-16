@@ -67,6 +67,10 @@ class GoalRatingsController < ApplicationController
       end
   end
 
+  def admin_level_goal_set
+    @goal_bunches = GoalBunch.where(goal_confirm: nil)
+  end
+
   # POST /goal_ratings
   # POST /goal_ratings.json
   def create

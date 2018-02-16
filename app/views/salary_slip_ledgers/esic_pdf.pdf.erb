@@ -9,7 +9,7 @@
 <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
 <thead>
   <tr>
-        <td colspan="7">
+        <td colspan="8">
          <% if current_user.company_location.company.company_logo == nil %>
       <% else %>
         <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
@@ -21,12 +21,13 @@
        </tr>
       <tr>
         <th>Sr. No.</th>
-        <th>Employee Code</th>
+        <th>ID</th>
         <th>Employee Name</th>
         <th>ESIC No.</th>
         <th>Payble Days</Data></th>
         <th>Gross Salary</th>
         <th>ESIC Amount</th>
+        <th>Month-Year</th>
       </tr>
       </thead>
 
@@ -54,11 +55,12 @@
               <% @esic_amount = @esic_amount.to_f + esic_amount.to_f %>
               <% end %>
             <% end %><!-- deducted items -->
+          <td><%= slip.month %>-<%= slip.year %></td>
         </tr><!-- Row -->
       <% end %><!-- slip -->
       <tr>
         <td colspan="6">Total</td>
-        <td><%= @esic_amount%></td>
+        <td colspan="2"><%= @esic_amount%></td>
       </tr>
     </tbody>
     </table>

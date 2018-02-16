@@ -78,19 +78,19 @@ $(function(){
 <script>
 $("#employee").validate({
     rules: {
-      "employee[month]":{
+      "employee[from]":{
         required: true,
       },
-      "employee[year]":{
+      "employee[to]":{
         required: true,
       }
     },
     messages: {
-      "employee[month]":{
-        required: "Please select Month",
+      "employee[from]":{
+        required: "Please select From Date",
       },
-      "employee[year]":{
-        required: "Please select Year",
+      "employee[to]":{
+        required: "Please select To Date",
       }
     },
     errorPlacement: function(error, element) {

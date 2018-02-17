@@ -49,6 +49,12 @@ class GoalBunch < ActiveRecord::Base
           self_rating = spreadsheet.cell(i,'L')
           goal_rating_id = spreadsheet.cell(i,'M')
 
+          @self_rating = Rating.find_by(id: self_rating)
+          if @self_rating.nil?
+          @self_rating_id = nil
+        else
+          @self_rating_id = @self_rating.value
+        end
           # @goal_bunch = GoalBunch.where("employee_id = ? AND period_id = ?" , employee_id ,period_id)
           #   if @goal_bunch == nil
           #     goal_bunch = GoalBunch.create(period_id: period_id,employee_id: employee_id)
@@ -58,7 +64,7 @@ class GoalBunch < ActiveRecord::Base
       
         goal_rating = GoalRating.find_by(id: goal_rating_id)
         if goal_rating_id.to_i == goal_rating.id
-          goal_rating.update(appraisee_comment: self_comment,appraisee_rating_id: self_rating)
+          goal_rating.update(appraisee_comment: self_comment,appraisee_rating_id: @self_rating_id)
         end
     end#do
   end

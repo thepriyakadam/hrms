@@ -7,24 +7,24 @@
   def index
     if current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
-        @employees = Employee.all
+        @employees = Employee.where(status: "Active")
       elsif current_user.role.name == 'Admin'
         @employees = Employee.where(company_id: current_user.company_location.company_id)
       elsif current_user.role.name == 'Branch'
-        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @employees = Employee.where(company_location_id: current_user.company_location_id,status: "Active")
       elsif current_user.role.name == 'HOD'
           @emp = Employee.find(current_user.employee_id)
          @employees = Employee.where(manager_id: @emp,status: "Active")
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
-         @employees = Employee.where(manager_id: @emp)
+         @employees = Employee.where(manager_id: @emp,status: "Active")
       elsif current_user.role.name == 'CEO'
         @emp = Employee.find(current_user.employee_id)
-         @employees = Employee.where(manager_id: @emp).where.not(id: 1)
+         @employees = Employee.where(manager_id: @emp,status: "Active").where.not(id: 1)
       elsif current_user.role.name == 'NewEmployee'
-        @employees = Employee.where(id: current_user.employee_id)
+        @employees = Employee.where(id: current_user.employee_id,status: "Active")
       else current_user.role.name == 'Employee'
-        @employees = Employee.where(id: current_user.employee_id)
+        @employees = Employee.where(id: current_user.employee_id,status: "Active")
         redirect_to home_index_path
       end
     else

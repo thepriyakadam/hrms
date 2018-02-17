@@ -36,7 +36,6 @@
           <th>Present</th>
         </tr>
       </thead>
-
       <tbody>
         <% @employee_attendances.each do |employee_attendance| %>
           <tr>
@@ -50,7 +49,10 @@
               <% if employee_attendance.try(:holiday_id).present? || employee_attendance.try(:employee_week_off_id).present?  || employee_attendance.try(:on_duty_request_id).present? || employee_attendance.try(:employee_leav_request_id).present? %>
                 <% if employee_attendance.try(:in_time).present? %>
                   <% time = Time.at(employee_attendance.try(:in_time)).utc.strftime("%H:%M") %>
-                  <% if time > @company_time %>
+                  <% exact_in_time = "08:30".to_time.strftime("%H:%M") %>
+                  <% c_time = @company_time.to_time.strftime("%H:%M") %>
+
+                  <% if (exact_in_time..@company_time).include?(time) %>
                     <td class="danger"><%= employee_attendance.try(:in_time) %></td>
                   <% else %>
                     <td></td>

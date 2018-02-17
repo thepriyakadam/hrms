@@ -141,6 +141,8 @@ class SelfServicesController < ApplicationController
     @latemark_master = LatemarkMaster.last
     @latemark_master_time = @latemark_master.company_time
     @company_time = @latemark_master_time.strftime("%I:%M")
+    @company_late_limit_time = @latemark_master.late_limit
+    @company_late_time = @latemark_master_time.strftime("%I:%M")
     @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day DESC")
   end
 

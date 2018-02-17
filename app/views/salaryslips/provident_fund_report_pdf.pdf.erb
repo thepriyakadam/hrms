@@ -11,102 +11,71 @@
     /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
   }
 </style>
-  <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
-      <thead>
+<table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
+  <thead>
+    <tr>
+      <td colspan="15"><center> 
+        <% if current_user.employee.company_location.company.company_logo == nil %>
+        <%else %>
+          <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+        <%end%> 
+        <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+        <center><strong>Provident Fund Report</strong></center>
+        <center><strong><%= @from_date %> <b>-</b> <%= @to_date  %></strong></center>
+      </td>
+    </tr> 
+    <tr>
+      <th>Sr. No.</th>
+      <th>Employee ID</th>
+      <th>PF Number</th>
+      <th>Employee Name</th>
+      <th>Worked</th>
+      <th>Earned Wages(gross)</th>
+      <th>PF @12%</th>
+      <th>VPF</th>
+      <th>Total</th>
+      <th>EPS@8.33%</th>
+      <th>EPF@3.67%</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%i = 0%>
+    <% @salaryslip_components.try(:each) do |salaryslip_comp| %>
+      
+      <% @emp_id = salaryslip_comp.try(:salaryslip).try(:employee_id) %>
+      <% @employee = Employee.find(@emp_id) %>
+      <% if @employee.joining_detail.select_pf == "Yes" || @employee.joining_detail.select_pf == "Limit" %>
+        <% @emp_id = salaryslip_comp.try(:salaryslip).try(:employee_id) %>
+        <% date = salaryslip_comp.try(:salaryslip).try(:month_year) %>
+        <% salary_slip_code = salaryslip_comp.try(:salaryslip).try(:salary_slip_code) %>
+        <% employee = Employee.find(@emp_id) %>
+        <% @employee_pf_no = employee.try(:joining_detail).try(:employee_pf_no) %>
+        <% manual_employee_code = employee.manual_employee_code %>
+        <% employee_name = full_name(employee) %>
+        <% @calculated_gross_salary = salaryslip_comp.try(:salaryslip).try(:calculated_gross_salary) %>
+        <% @workingday = salaryslip_comp.try(:salaryslip).try(:workingday).try(:payable_day) %>
+        <% employee_contribution = salaryslip_comp.try(:actual_amount) %>
+        <% employer_contribution = EmployerContribution.where(employee_id: @emp_id, date: date.to_date) %>
+        <% @current_employer_contribution = employer_contribution.last.try(:actual_pf) %>
+        <% total = employee_contribution.to_i + @current_employer_contribution.to_i   %>
+        <% @current_employer_statutory_contribution_eight_point = (@current_employer_contribution.to_i / 12)* 8.33 %>
+        <% @currentemployer_statutory_contribution_three_point = (@current_employer_contribution.to_i / 12)* 3.67 %>
         <tr>
-          <td colspan="15"><center> 
-            <% if current_user.employee.company_location.company.company_logo == nil %>
-            <%else %>
-              <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
-            <%end%> 
-            <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
-            <center><strong>Provident Fund Report</strong></center>
-            <center><strong><%= @from_date %> <b>-</b> <%= @to_date  %></strong></center>
-
-          </td>
+          <td><%= i = i+1 %></td>
+          <td><%= manual_employee_code %></td>
+          <td><%= @employee_pf_no %></td>
+          <td><%= employee_name %></td>
+          <td><%= @workingday.round %></td>
+          <td><%= @calculated_gross_salary %></td>
+          <td><%= employee_contribution %></td>
+          <td><%=  %></td>
+          <td><%= employee_contribution %></td>
+          <td><%= @current_employer_statutory_contribution_eight_point.round %></td>
+          <td><%= @currentemployer_statutory_contribution_three_point.round %></td>
+          <td><%= @current_employer_contribution %></td>
         </tr>
-        <tr>
-          <td colspan="3"><b> Particular </b></td>
-          <td colspan="2"><b> Gross Amount </b></td>
-          <td colspan="2"><b> Percentage </b></td>
-          <td colspan="2"><b> Account No </b></td>
-          <td colspan="2"><b> Amount </b></td>
-          <td colspan="2"><b> Payable Amount </b></td>
-          <td colspan="2"><b> Paid Amount </b></td>
-        </tr>
-        <br />
-        <tr>
-          <td colspan="3"><b> Employee Statutory Deduction </b></td>
-          <td colspan="12"><b><%= @employee_statutory_deduction %> </b></td>
-        </tr>
-        <tr>
-          <td colspan="3">Employee PF Contributions @ 12% </td>
-          <td colspan="2"><%=  %></td>
-          <td colspan="2"> 12% </td>
-          <td colspan="2"><%=  %></td>
-          <td colspan="2"><%= @employee_statutory_deduction %></td>
-          <td colspan="2"><%= @employee_statutory_deduction %></td>
-          <td colspan="2"><%= @employee_statutory_deduction %></td>
-        </tr>
-        <tr>
-          <td colspan="3"><b> Employer Statutory Contribution </b></td>
-          <td colspan="12"><b><%= @employer_statutory_contribution %> </b></td>
-        </tr>
-        <tr>
-          <td colspan="3">Employer EPS @ 8.33%</td>
-          <td colspan="2"><%= @employer_statutory_contribution_all %></td>
-          <td colspan="2">8.33%</td>
-          <td colspan="2"><%=  %></td>
-          <td colspan="2"><%= @employer_statutory_contribution_eight_point %></td>
-          <td colspan="2"><%= @employer_statutory_contribution_eight_point %></td>
-          <td colspan="2"><%= @employer_statutory_contribution_eight_point %></td>
-        </tr>
-        <tr>
-          <td colspan="3">Employer EPF @ 3.67%</td>
-          <td colspan="2"><%=  %></td>
-          <td colspan="2"> 3.67% </td>
-          <td colspan="2"><%=  %></td>
-          <td colspan="2"><%= @employer_statutory_contribution_three_point %></td>
-          <td colspan="2"><%= @employer_statutory_contribution_three_point %></td>
-          <td colspan="2"><%= @employer_statutory_contribution_three_point %></td>
-        </tr>
-        <br />
-        <tr><td colspan="15"><b> Employer Other Charges </b></td></tr>
-        <tr>
-          <td colspan="3">EDLI Admin Charges @0.01%</td>
-          <td colspan="2"><%=  %></td>
-          <td colspan="2">0.01%</td>
-          <td colspan="2"><%=  %></td>
-          <td colspan="2"><%= @employer_other_charges_one_percent %></td>
-          <td colspan="2"><%= @employer_other_charges_one_percent %></td>
-          <td colspan="2"><%= @employer_other_charges_one_percent %></td>
-        </tr>
-        <tr>
-          <td colspan="3">EDLI Contribution @0.5%</td>
-          <td colspan="2"><%=  %></td>
-          <td colspan="2">0.50%</td>
-          <td colspan="2"><%=  %></td>
-          <td colspan="2"><%= @employer_other_charges_five_percent %></td>
-          <td colspan="2"><%= @employer_other_charges_five_percent %></td>
-          <td colspan="2"><%= @employer_other_charges_five_percent %></td>
-        </tr>
-        <tr>
-          <td colspan="3">PF Admin Charges @1.10%</td>
-          <td colspan="2"><%=  %></td>
-          <td colspan="2">1.10%</td>
-          <td colspan="2"><%=  %> </td>
-          <td colspan="2"><%= @employer_other_charges_ten_percent.round(2) %></td>
-          <td colspan="2"><%= @employer_other_charges_ten_percent.round(2) %></td>
-          <td colspan="2"><%= @employer_other_charges_ten_percent.round(2) %></td>
-        </tr>
-        <tr>
-          <td colspan="3"><b> Total </b></td>
-          <td colspan="2"><%= @total_gross_amt %></td>
-          <td colspan="2"><%=  %></td>
-          <td colspan="2"><%=  %></td>
-          <td colspan="2"><%= @total_all_percent %></td>
-          <td colspan="2"><%= @total_all_percent %></td>
-          <td colspan="2"><%= @total_all_percent %></td>
-        </tr>
-      </tbody>
-    </table>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

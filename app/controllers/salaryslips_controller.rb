@@ -2278,46 +2278,25 @@ end
     if @company.present? and @company_location.present?
       @employees = Employee.where(company_id: @company.to_i, company_location_id: @company_location.to_i).pluck(:id)
       @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: @employees).pluck(:id)
-      @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
-      @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
     elsif @company.present? and !@company_location.present?
       @employees = Employee.where(company_id: @company.to_i).pluck(:id)
       @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: @employees).pluck(:id)
-      @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
-      @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
     elsif !@company.present? and @company_location.present?
       @employees = Employee.where(company_location_id: @company_location.to_i).pluck(:id)
       @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: @employees).pluck(:id)
-      @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
-      @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
     else
       @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date).pluck(:id)
       @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
-      @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
-      @emp_statutory_deduction_twelve_percent_all = (@employee_statutory_deduction.to_i / 12)* 100
-      @emp_statutory_deduction_twelve_percent = (@employee_statutory_deduction.to_i / 100)* 12
     end
-    @employer_contribution = EmployerContribution.where(date: @from_date.to_date..@to_date.to_date)
-    @employer_statutory_contribution = @employer_contribution.sum(:actual_pf)
-
-    @employer_statutory_contribution_eight_point = (@employer_statutory_contribution.to_i / 12)* 8.33
-    @employer_statutory_contribution_three_point = (@employer_statutory_contribution.to_i / 12)* 3.67
-        
-    @employer_other_charges_one_percent = (@employer_statutory_contribution.to_i / 100)* 0.01
-    @employer_other_charges_five_percent  = (@employer_statutory_contribution.to_i / 100)* 0.50
-    @employer_other_charges_ten_percent = (@employer_statutory_contribution.to_i / 100)* 1.10
-
-    @total_gross_amt = @employee_statutory_deduction + @employer_statutory_contribution_eight_point
-    @total_all_percent = @employee_statutory_deduction + @employer_statutory_contribution_eight_point + @employer_statutory_contribution_three_point + @employer_other_charges_one_percent + @employer_other_charges_five_percent + @employer_other_charges_ten_percent
     respond_to do |format|
       format.js
-      format.xls {render template: 'salaryslips/provident_fund_report_xls.xls.erb'}
+      format.xls {render template: 'salaryslips/pf_monthly_statement_report_xls.xls.erb'}
       format.html
       format.pdf do
-        render pdf: 'provident_fund_report_pdf',
+        render pdf: 'pf_monthly_statement_report_pdf',
             layout: 'pdf.html',
             orientation: 'Landscape',
-            template: 'salaryslips/provident_fund_report_pdf.pdf.erb',
+            template: 'salaryslips/pf_monthly_statement_report_pdf.pdf.erb',
             :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)

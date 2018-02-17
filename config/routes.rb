@@ -1203,6 +1203,7 @@ end
       get :import_xl
       post :import
       get :goal_set
+      get :admin_level_goal_set
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -1275,6 +1276,8 @@ end
       post :import
       get :self_comment_modal
       post :self_comment
+      get :admin_level_period
+      post :create_admin_level_period
     end
   end
   resources :goal_perspectives do

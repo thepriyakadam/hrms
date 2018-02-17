@@ -1,66 +1,75 @@
-  <div class="box-header">
-    <div class="pull-right">
-    </div>
-  </div><!-- /.box-header -->
-  <div class="box-body">
-  <div id="comments">
-    <table id="example" class="table table-bordered table-hover table-condensed">
-    <thead>
-      <tr>
-        <td colspan="10">
-          <% if current_user.company_location.company.company_logo == nil %>
-          <% else %>
-            <center> <%= image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
-          <%end%>
-            <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>.<br><strong>Food Deduction</strong></center>
-            <center><strong><%= @from.strftime("%B-%Y") %> to <%= @to.strftime("%B-%Y") %></strong></center>
-        </td> 
-      </tr> 
-      <tr>
-        <th>Sr. No.</th>
-        <th>ID</th>
-        <th>Employee Name</th>
-        <th>Date</th>
-        <th>No. of Coupon</th>
-        <th>Return Coupon</th>
-        <th>Total</th>
-        <th>Price</th>
-        <th>Location</th>
-        <th>Amount</th>
-      </tr>
-    </thead>
-
-    <tbody>
+<div class="ajax-progress"></div>
+  <div class="box">
+    <div class="box-body">
       <% i = 0 %>
       <% @amount = 0 %>
-      <% @food_deductions.each do |food_deduction| %>
-        <tr>
-          <td><%= i = i + 1 %></td>
-          <td><%= food_deduction.employee.try(:manual_employee_code) %></td>
-          <td><%= full_name(food_deduction.try(:employee)) %></td>
-          <td><%= food_deduction.food_date %></td>
-          <td><%= food_deduction.no_of_coupan %></td>
-          <td><%= food_deduction.return_coupan %></td>
-          <td><%= food_deduction.total_coupan %></td>
-          <td><%= food_deduction.try(:food_coupan_master).try(:price) %></td>
-          <td><%= food_deduction.employee.company_location.name %></td>
-          <td><%= amount = food_deduction.amount %></td>
-              <% @amount = @amount.to_f + amount.to_f %>
-        </tr>
-      <% end %>
-          <tr><td colspan="8">Total</td>
-          <th><%= @amount %></th></tr>
-    </tbody>
-  </table>
+      <table id="example6" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <td colspan="11">
+              <center><strong>Food Deduction</strong></center>
+              <center><strong><%= @from.strftime("%B-%Y") %> to <%= @to.strftime("%B-%Y") %></strong></center>
+            </td> 
+          </tr> 
+          <tr>
+            <th>Sr. No.</th>
+            <th>ID</th>
+            <th>Employee Name</th>
+            <th>Date</th>
+            <th>Paid</th>
+            <th>No. of Coupon</th>
+            <th>Return Coupon</th>
+            <th>Total</th>
+            <th>Price</th>
+            <th>Location</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @food_deductions.each do |food_deduction| %>
+            <tr>
+              <td><%= i = i + 1 %></td>
+              <td><%= food_deduction.employee.try(:manual_employee_code) %></td>
+              <td><%= full_name(food_deduction.try(:employee)) %></td>
+              <td><%= food_deduction.food_date %></td>
+              <td><%= food_deduction.is_paid ? "Paid" : "Unpaid" %></td>
+              <td><%= food_deduction.no_of_coupan %></td>
+              <td><%= food_deduction.return_coupan %></td>
+              <td><%= food_deduction.total_coupan %></td>
+              <td><%= food_deduction.try(:food_coupan_master).try(:price) %></td>
+              <td><%= food_deduction.employee.company_location.name %></td>
+              <td><%= amount = food_deduction.amount %></td>
+                  <% @amount = @amount.to_f + amount.to_f %>
+            </tr>
+          <% end %>
+            <tr>
+              <th>Total</th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <th><%= @amount %></th>
+            </tr>
+        </tbody>
+      </table>
+    <div class="col-sm-6">
+      <%= link_to " Excel Report ",dynamic_report_food_deductions_path(:food_deduction => {:from => params[:food_deduction][:from], :to => params[:food_deduction][:to],:company_id => params[:food_deduction][:company_id],:company_location_id => params[:food_deduction][:company_location_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%= link_to " PDF Report ",dynamic_report_food_deductions_path(:food_deduction => {:from => params[:food_deduction][:from], :to => params[:food_deduction][:to],:company_id => params[:food_deduction][:company_id],:company_location_id => params[:food_deduction][:company_location_id]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+    </div>
   </div>
-  <%= link_to " Excel Report ",dynamic_report_food_deductions_path(:food_deduction => {:from => params[:food_deduction][:from], :to => params[:food_deduction][:to],:company_id => params[:food_deduction][:company_id],:company_location_id => params[:food_deduction][:company_location_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <%= link_to " PDF Report ",dynamic_report_food_deductions_path(:food_deduction => {:from => params[:food_deduction][:from], :to => params[:food_deduction][:to],:company_id => params[:food_deduction][:company_id],:company_location_id => params[:food_deduction][:company_location_id]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>
 
 <script type="text/javascript">
-  $(document).ready(function() {
-    $('#example').DataTable( {
-        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true,
+        "scrollY": 500
     } );
 } );
 </script>

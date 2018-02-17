@@ -1,9 +1,9 @@
 <!--SELECT2 EXAMPLE -->
-<div class="box box-default">
-  <div class="box-header with-border">
+
+<div class="box">
+  <div class="box-header">
     <h3 class="box-title">PF Report</h3>
   </div><!-- /.box-header -->
-
   <div class="box-body">
     <%= bootstrap_form_for(:pf_detail, url: { action: 'dynamic_report'},html: {id: 'pf_detail'},remote:true) do |f| %>
       <div class="row">
@@ -87,10 +87,10 @@ $("#pf_detail").validate({
     },
     messages: {
       "pf_detail[from]":{
-        required: "Please select From",
+        required: "Please select From Date",
       },
       "pf_detail[to]":{
-        required: "Please select To",
+        required: "Please select To Date",
       }
     },
     errorPlacement: function(error, element) {

@@ -44,11 +44,11 @@ class OnDutyRequestsController < ApplicationController
       end
 
     payroll_period = PayrollPeriod.where(status: true).take 
-  if payroll_period.nil?
-    flash[:alert] = "Payroll Period Not set!"
-    redirect_to new_on_duty_request_path
-  else
-    if  start_date.to_date >= payroll_period.from.to_date && end_date.to_date <= payroll_period.to.to_date
+  # if payroll_period.nil?
+  #   flash[:alert] = "Payroll Period Not set!"
+  #   redirect_to new_on_duty_request_path
+  # else
+    # if  start_date.to_date >= payroll_period.from.to_date && end_date.to_date <= payroll_period.to.to_date
       
       if @on_duty_request.is_available?
         flash[:alert] = "Your Request already has been sent"
@@ -156,16 +156,16 @@ class OnDutyRequestsController < ApplicationController
           end
         end #manager_id nil
       end #is_available
-    else #start_date == payroll_period.from.to_date
-      if current_user.employee_id == @on_duty_request.employee_id
-        flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
-        redirect_to on_duty_requests_path
-      else
-        flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
-        redirect_to employee_list_on_duty_requests_path
-      end
+    # else #start_date == payroll_period.from.to_date
+    #   if current_user.employee_id == @on_duty_request.employee_id
+    #     flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+    #     redirect_to on_duty_requests_path
+    #   else
+    #     flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+    #     redirect_to employee_list_on_duty_requests_path
+    #   end
     end
-  end#payroll_period.nil?
+  # end#payroll_period.nil?
   end
 
   # PATCH/PUT /on_duty_requests/1

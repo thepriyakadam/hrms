@@ -86,6 +86,24 @@ class GoalBunchesController < ApplicationController
       end
   end
 
+  def admin_level_period
+    @employees = Employee.where(status: "Active")
+  end
+
+  def create_admin_level_period
+    @employee_ids = params[:employee_ids]
+    period_id = params[:goal_bunches][:period_id]
+    if @employee_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+    else
+      @employee_ids.each do |eid|
+        GoalBunch.create(employee_id: eid,period_id: period_id)
+        flash[:notice] = "Created successfully"
+      end
+    end
+    redirect_to admin_level_period_goal_bunches_path
+  end
+
   def appraiser_confirm
     @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
     @employee = Employee.find(params[:emp_id])

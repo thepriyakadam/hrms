@@ -2884,6 +2884,9 @@ end
     elsif params[:weekoff]
       @name = params[:weekoff]
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_week_off_id: nil)
+    elsif params[:onduty]
+      @name = params[:onduty]
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(on_duty_request_id: nil)
     else
       @name = params[:leave]
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
@@ -2903,6 +2906,8 @@ end
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(holiday_id: nil)
     elsif @name == "Week Off"
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).not(employee_week_off_id: nil)
+    elsif @name == "onduty"
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).not(on_duty_request_id: nil)
     elsif @name == "Leave"
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
     else

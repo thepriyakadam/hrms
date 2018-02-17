@@ -47,12 +47,13 @@
             <td><%= employee_attendance.try(:working_hrs) %></td>
             <% if @company_time.present? %>
               <% if employee_attendance.try(:holiday_id).present? || employee_attendance.try(:employee_week_off_id).present?  || employee_attendance.try(:on_duty_request_id).present? || employee_attendance.try(:employee_leav_request_id).present? %>
+                <td></td>
+              <% else %>
                 <% if employee_attendance.try(:in_time).present? %>
                   <% time = Time.at(employee_attendance.try(:in_time)).utc.strftime("%H:%M") %>
                   <% exact_in_time = "08:30".to_time.strftime("%H:%M") %>
                   <% c_time = @company_time.to_time.strftime("%H:%M") %>
-
-                  <% if (exact_in_time..@company_time).include?(time) %>
+                  <% if (@company_time..@company_late_time).include?(time) %>
                     <td class="danger"><%= employee_attendance.try(:in_time) %></td>
                   <% else %>
                     <td></td>
@@ -60,8 +61,6 @@
                 <% else %>
                   <td></td>
                 <% end %>
-              <% else %>
-                <td></td>
               <% end %>
             <% end %> 
             <td><%= employee_attendance.try(:present) %></td>
@@ -71,11 +70,7 @@
     </table>
     <br>
     <%= link_to 'Back',employee_attendance_self_services_path,class: 'btn btn-default btn-sm fa fa-arrow-left'%>
-
-     <%= link_to " Excel Report ",self_service_datewise_attendance_employee_attendances_path(:employee => {:from => params[:employee][:from],:to => params[:employee][:to],:employee_id => params[:employee][:employee_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
- 
-     <%= link_to " Print Report ",self_service_datewise_attendance_employee_attendances_path(:employee => {:from => params[:employee][:from],:to =>  params[:employee][:to],:employee_id => params[:employee][:employee_id]},format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %> 
-
-
+      <%= link_to " Excel Report ",self_service_datewise_attendance_employee_attendances_path(:employee => {:from => params[:employee][:from],:to => params[:employee][:to],:employee_id => params[:employee][:employee_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%= link_to " Print Report ",self_service_datewise_attendance_employee_attendances_path(:employee => {:from => params[:employee][:from],:to =>  params[:employee][:to],:employee_id => params[:employee][:employee_id]},format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
   </div>
 </div>

@@ -68,6 +68,8 @@ class GoalRatingsController < ApplicationController
   end
 
   def admin_level_goal_set
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
     @goal_bunches = GoalBunch.where(goal_confirm: nil)
   end
 

@@ -87,6 +87,8 @@ class GoalBunchesController < ApplicationController
   end
 
   def admin_level_period
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
     @employees = Employee.where(status: "Active")
   end
 

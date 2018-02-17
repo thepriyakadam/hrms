@@ -573,6 +573,8 @@ class WorkingdaysController < ApplicationController
   end
 
   def datewise_workingday
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Report"
   end
 
   def show_datewise_workingday

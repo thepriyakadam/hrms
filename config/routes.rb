@@ -2340,7 +2340,8 @@ end
       get :leave_detail_xls
       get :import_xl
       post :import
-
+      get :dynamic_daterange_report
+      post :dynamic_daterange_report
     end
   end
 

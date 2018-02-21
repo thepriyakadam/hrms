@@ -70,7 +70,11 @@ class GoalRatingsController < ApplicationController
   def admin_level_goal_set
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_cycle"
-    @goal_bunches = GoalBunch.where(goal_confirm: nil)
+    @goal_bunches = GoalBunch.where(goal_confirm: nil).group(:employee_id,:period_id)
+    # @goal_bunches = []
+    # goal_bunches.each do |g|
+    #   @goal_bunches << g
+    # end
   end
 
   # POST /goal_ratings

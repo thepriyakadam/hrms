@@ -1832,6 +1832,7 @@ end
     end_date = params[:salaryslip][:end_date].to_date
     @company = params[:salaryslip][:company_id]
     @location = params[:salaryslip][:company_location_id]
+    
     if current_user.class == Group
         if @company == ""
           @employees = Employee.where(status: "Active").pluck(:id)

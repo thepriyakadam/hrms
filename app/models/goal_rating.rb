@@ -18,7 +18,7 @@ class GoalRating < ActiveRecord::Base
   belongs_to :appraiser_rating, class_name: 'Rating'
   #validates :goal_perspective_id, presence: true
   #validates :attribute_master_id, presence: true
-  validates_length_of :goal_measure, :maximum => 255
+  #validates_length_of :goal_measure, :maximum => 255
   
  
   def self.import(file,emp,goal_bunch)

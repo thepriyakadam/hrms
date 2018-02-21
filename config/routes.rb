@@ -3216,5 +3216,6 @@ end
     get 'user_auths/meeting_plan_minutes' => 'user_auths#meeting_plan_minutes', defaults:{format: 'json'}
     get 'user_auths/particular_emp_status_wise_plan_list' => 'user_auths#particular_emp_status_wise_plan_list', defaults:{format: 'json'}
     get 'user_auths/notifications_count' => 'user_auths#notifications_count', defaults:{format: 'json'}
+    post 'user_auths/employee_wise_date' => 'user_auths#employee_wise_date', defaults:{format: 'json'}
   end
 end

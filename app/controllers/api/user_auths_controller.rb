@@ -1571,7 +1571,19 @@ class Api::UserAuthsController < ApplicationController
 
   def employee_wise_attendance
     emp_id = params[:employee_id]
-    emp_att = EmployeeAttendance.where(employee_id: emp_id).order("day DESC")
+    emp_att = EmployeeAttendance.where(employee_id: emp_id).order("day DESC").last(30)
+    if emp_att.present?
+      render :json => emp_att.present? ? emp_att.collect{|emp_att| { :id => emp_att.id, :day => emp_att.day, :in_time => emp_att.try(:in_time), :out_time => emp_att.try(:out_time), :working_hrs => emp_att.working_hrs, :present => emp_att.present }} : []
+    else
+      render :status=>200, :json=>{:status=>"Employee Attendance Not Found."}
+    end
+  end
+
+  def employee_wise_date
+    emp_id = params[:employee_id]
+    start_date = params[:start_date]
+    end_date = params[:end_date]
+    emp_att = EmployeeAttendance.where(employee_id: emp_id, day: start_date..end_date).order("day DESC")
     if emp_att.present?
       render :json => emp_att.present? ? emp_att.collect{|emp_att| { :id => emp_att.id, :day => emp_att.day, :in_time => emp_att.try(:in_time), :out_time => emp_att.try(:out_time), :working_hrs => emp_att.working_hrs, :present => emp_att.present }} : []
     else

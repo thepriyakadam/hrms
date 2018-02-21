@@ -163,6 +163,18 @@ class GoalBunchesController < ApplicationController
     session[:active_tab1] ="perform_cycle"
   end
 
+  def admin_goal_approval_period
+    @periods = Period.where(status: true).group(:id)
+    @goal_bunches = GoalBunch.where(goal_confirm: true).group(:period_id)
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
+  end
+
+  def admin_level_goal_approval
+    @period = Period.find(params[:period_id])
+    @goal_bunches = GoalBunch.where(period_id: @period.id,goal_confirm: true,goal_approval: false)
+  end
+
   def goal_period_list
     @period = Period.find(params[:period_id])
     current_login = Employee.find(current_user.employee_id)
@@ -375,7 +387,6 @@ class GoalBunchesController < ApplicationController
     @period = Period.find(params[:period_id])
     current_login = Employee.find(current_user.employee_id)
     @emps = current_login.indirect_subordinates.pluck(:id)
-    #@emp1 = Employee.where(id: @emps).pluck(:id)
     @employees = GoalBunch.where(employee_id: @emps,appraiser_confirm: true,period_id: @period.id)
   end
 

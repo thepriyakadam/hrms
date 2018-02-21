@@ -49,6 +49,9 @@ class SelfServicesController < ApplicationController
     redirect_to employee_attendance_self_services_path
   end
 
+  def modal_info_about_attendance
+  end 
+  
   def employee_resignation
     @employee_resignation = EmployeeResignation.new
     @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)

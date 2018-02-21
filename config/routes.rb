@@ -1281,6 +1281,8 @@ end
       post :self_comment
       get :admin_level_period
       post :create_admin_level_period
+      get :admin_goal_approval_period
+      get :admin_level_goal_approval
     end
   end
   resources :goal_perspectives do
@@ -1936,6 +1938,7 @@ end
       get :display_notice_period
       get :exit_interview
       get :present_to_title
+      get :modal_info_about_attendance
     end
   end
 
@@ -2355,7 +2358,8 @@ end
       get :pf_monthly_statement
       get :pf_monthly_statement_report
       post :pf_monthly_statement_report
-      
+      get :dynamic_daterange_report
+      post :dynamic_daterange_report
     end
   end
 

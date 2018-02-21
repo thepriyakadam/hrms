@@ -15,7 +15,7 @@
         <center> <%= image_tag @employee.company_location.company.company_logo.url, :size => "120x70" %></center><br>
         <%end%>
         <center><strong><%= @employee.company_location.company.try(:description) %></strong><br><%= @employee.company_location.try(:address) %>, <%= @employee.company_location.try(:name) %>  </center>
-        <center><strong>SALARY SLIP</strong></center> 
+        <center><strong> Payslip for the Month of <%= @salaryslip.month%> - <%= @salaryslip.year%></strong></center> 
       </td>           
     </tr>
     <tr>
@@ -30,12 +30,13 @@
       <td>
       <strong> UAN No. :</strong> <%= @employee.joining_detail.try(:employee_uan_no) %><br><br> 
       <strong> PF No. :</strong> <%= @employee.joining_detail.try(:employee_pf_no) %><br><br>
-      <strong> PAN No  : </strong> <%= @salaryslip.employee.pan_no %><br><br> 
+      <strong> PAN No.  : </strong> <%= @salaryslip.employee.pan_no %><br><br> 
       <strong> Account No. :</strong><%= @employee.try(:employee_bank_detail).try(:account_no) %><br><br> 
+      <strong> Bank Name :</strong><%= @employee.try(:employee_bank_detail).try(:bank_name) %><br><br>     
       </td>
       <td>
      
-      <strong> Pay Month : </strong> <%= @salaryslip.month%> - <%= @salaryslip.year%><br><br>
+     
        <% @leave_details.each do |ld| %>
              <strong> <%= ld.leav_category.name %>  - Leave: </strong> <%= ld.no_of_leave %> - <strong> Balance: </strong> <%= ld.balance %><br><br>
         <% end %>
@@ -67,8 +68,8 @@
       <tr><th colspan="3"><center> Earning Details </center></th></tr>
         <tr>
           <th><center>Component</center></th>
-          <th><center>Actual Amount</center></th>
-          <th><center>Calculated Amount</center></th>
+          <th><center>Gross</center></th>
+          <th><center>Earning</center></th>
         </tr>
       </thead>
       <tbody>

@@ -1,10 +1,10 @@
 <div class="box box-default">
-	<div class="box-header">
+  <div class="box-header">
     <h3 class="box-title">Goal Setting</h3> 
   </div>
   <div class="box-body">
 
-	  	<table id="example1" class="table table-bordered table-hover table-condensed">
+      <table id="example6" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
             <th>ID</th>
@@ -20,7 +20,11 @@
               <td><%= full_name(g.employee) %></td>
               <td><%= g.period.name %></td>
               <td>
-              	<%= link_to 'Set Goal', new_goal_rating_path(emp_id: g.employee_id,id: g.id),class: 'btn btn-primary btn-xs' %>
+                <% if g.goal_confirm == true %>
+                  <%= link_to 'View Goal', new_goal_rating_path(emp_id: g.employee_id,id: g.id),class: 'btn btn-info btn-xs' %>
+                <% else %>
+                  <%= link_to 'Set Goal', new_goal_rating_path(emp_id: g.employee_id,id: g.id),class: 'btn btn-primary btn-xs' %>
+                <% end %>
               </td>
             </tr>
           <% end %>
@@ -29,3 +33,13 @@
 
     </div>
   </div>
+  
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true,
+        "scrollY": 400
+    } );
+} );
+</script>

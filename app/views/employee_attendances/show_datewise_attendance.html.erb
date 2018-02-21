@@ -48,9 +48,9 @@
           <%= hidden_field e.employee_id, 'absent_day', value: absent_count.to_f + workingday[3] %>
 
           <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
-            <%= hidden_field e.employee_id, 'payable_day', value: present_count.to_f + holiday_count.to_f + workingday[0] + workingday[2] + on_duty_count.to_f + holiday_count.to_f %>
+            <%= hidden_field e.employee_id, 'payable_day', value: present_count.to_f + holiday_count.to_f + workingday[0] + workingday[2] + on_duty_count.to_f %>
           <% else %>
-            <%= hidden_field e.employee_id, 'payable_day', value: present_count.to_f + holiday_count.to_f + weekoff_count.to_f + workingday[0] + workingday[2] + on_duty_count.to_f + holiday_count.to_f %>
+            <%= hidden_field e.employee_id, 'payable_day', value: present_count.to_f + holiday_count.to_f + weekoff_count.to_f + workingday[0] + workingday[2] + on_duty_count.to_f %>
           <% end %>  
 
           <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>

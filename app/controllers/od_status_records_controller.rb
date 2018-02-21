@@ -73,6 +73,7 @@ class OdStatusRecordsController < ApplicationController
     @on_duty_request = OnDutyRequest.find(params[:id])
     @on_duty_request.update(is_cancelled: true,current_status: 'Cancelled')
     OdRecord.where(on_duty_request_id: @on_duty_request.id).update_all(status: 'Cancelled')
+    EmployeeAttendance.where(on_duty_request_id: @on_duty_request.id).update_all(on_duty_request_id: nil,present: "A")
     OdStatusRecord.create(on_duty_request_id: @on_duty_request.id,employee_id: current_user.employee_id,status: 'Cancelled',change_date: Date.today)
     if @on_duty_request.first_reporter.email.nil? || @on_duty_request.first_reporter.email == ''
       flash[:notice] = 'Leave Cancelled Successfully without email.'
@@ -96,7 +97,7 @@ class OdStatusRecordsController < ApplicationController
     OdRecord.where("on_duty_request_id =? AND day =?", @particular_od_record.on_duty_request_id, @date).update_all(status: "Cancelled")
     @particular_od_record.update(is_cancel_after_approve: true)
     #EmployeeAttendance.where("employee_id = ? AND day = ?", @particular_od_record.employee_id,@particular_od_record.leave_date.to_date).destroy_all    
-    EmployeeAttendance.where(on_duty_request_id: @particular_od_record.on_duty_request_id).destroy_all
+    EmployeeAttendance.where(on_duty_request_id: @particular_od_record.on_duty_request_id).update_all(on_duty_request_id: nil,present: "A")
       if @on_duty_request.employee.email.nil? || @on_duty_request.employee.email == ''
         flash[:notice] = 'OD Cancelled Successfully without email.'
       else

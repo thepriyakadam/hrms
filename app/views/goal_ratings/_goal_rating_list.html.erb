@@ -1,7 +1,12 @@
  <table class="table table-bordered table-hover table-condensed">
       <thead>
        <tr>
-         <td colspan="4"><center><%= @goal_bunch.employee.manual_employee_code %> - <%= full_name(@goal_bunch.employee) %></center></td>
+         <td colspan="3"><center><%= @goal_bunch.employee.manual_employee_code %> - <%= full_name(@goal_bunch.employee) %></center></td>
+         <td>
+         <div class="pull-right">
+             <%= link_to " ",goal_set_goal_ratings_path(format: "xls",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id), class: "btn btn-xl btn-success fa fa-print", :target => "_blank" %>
+         </div>
+         </td>
          </tr>
         <tr>
          <th>Base</th>
@@ -111,7 +116,12 @@
 
   <% if @goal_bunch.goal_confirm == true %>
     <small class="label label-info">Request has been sent for Confirmation</small>
+<<<<<<< HEAD
     <%= link_to " Created Goals ",goal_set_goal_ratings_path(format: "xls",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+=======
+
+    <%#= link_to " Created Goals ",goal_set_goal_ratings_path(format: "xls",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+>>>>>>> 822161daeafa63c123145a6dad499e79eb511787
     <%= link_to 'Back',new_goal_bunch_path, class: 'btn btn-sm btn-default fa fa-arrow-left' %>
   <% elsif @goal_bunch.goal_approval == true %>
     <small class="label label-success">Goal Confirmed</small>
@@ -126,7 +136,7 @@
       </div>
       <div class="col-sm-3">
         <div class="actions">
-          <%= link_to " Created Goals ",goal_set_goal_ratings_path(format: "xls",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+          <%#= link_to " Created Goals ",goal_set_goal_ratings_path(format: "xls",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
         </div>
       </div>
     </div>

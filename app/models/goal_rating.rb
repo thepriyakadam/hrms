@@ -16,7 +16,7 @@ class GoalRating < ActiveRecord::Base
 
   belongs_to :appraisee_rating, class_name: 'Rating'
   belongs_to :appraiser_rating, class_name: 'Rating'
-  #validates :goal_perspective_id, presence: true
+  validates :goal_perspective_id, presence: true
   #validates :attribute_master_id, presence: true
   #validates_length_of :goal_measure, :maximum => 255
   
@@ -80,8 +80,18 @@ class GoalRating < ActiveRecord::Base
 
                 if goal_perspective == nil
                   perspective = spreadsheet.cell(i,'E')
+                  # if perspective == nil
+                  # else
+                  #   perspective = spreadsheet.cell(i,'E')
+                  # end
+
                   last_goal_perspective = GoalPerspective.last
-                  new_id = last_goal_perspective.id.to_i + 1
+                    if last_goal_perspective == nil
+                      last_goal_perspective_id = 0
+                    else
+                      last_goal_perspective_id = last_goal_perspective.id
+                    end
+                  new_id = last_goal_perspective_id.to_i + 1
 
                   goal = GoalPerspective.find_by(name: perspective)
                   if goal.nil?
@@ -91,9 +101,8 @@ class GoalRating < ActiveRecord::Base
                   goal_perspective = goal.update(status: true)
                   goal_perspective_id = goal.id
                   end
-                  GoalRating.create(goal_bunch_id: goal_bunch.id,goal_perspective_id: goal_perspective_id,goal_weightage: weightage,goal_measure: measure,
-                  activity: activity,target: target,aligned: align_to_supervisor,period_id: period.id,goal_type: type,goal_setter_id: emp.id,
-                  appraisee_id: emp.id,appraiser_id: emp.manager_id)
+
+                  GoalRating.create(goal_bunch_id: goal_bunch.id,goal_perspective_id: goal_perspective_id,goal_weightage: weightage,goal_measure: measure,activity: activity,target: target,aligned: align_to_supervisor,period_id: period.id,goal_type: type,goal_setter_id: emp.id,appraisee_id: emp.id,appraiser_id: emp.manager_id)
 
                 else
                   goal_perspective_id = goal_perspective.id

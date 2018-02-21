@@ -1,10 +1,10 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title"> Working Day</h3>
+    <h3 class="box-title">Working Day</h3>
  <div class="box-body">
-  <%= bootstrap_form_for(:employee, url: { action: 'show_datewise_workingday'},html: {id: "employee"}) do |f| %>
+  <%= bootstrap_form_for(:employee, url: { action: 'show_datewise_workingday'},html: {id: "employee"},remote: true) do |f| %>
      <div class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <label>From </label>
           <div class="form-group required">
             <div class="input-group">
@@ -16,7 +16,7 @@
           </div>
         </div>
 
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <label>To </label>
           <div class="form-group required">
             <div class="input-group">
@@ -28,22 +28,24 @@
           </div>
         </div>
 
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <label>Company</label>
           <div class="form-group required">
             <%= f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
           </div>
         </div>
 
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <div class="field">
             <div id="company_location_with_label">
               <%= render 'employees/company_location_dropdown_with_label' %> 
           </div>
           </div>
         </div>
+      </div>
 
-        <div class="col-sm-2">
+     <div class="row">
+        <div class="col-sm-3">
           <div class="field">
             <div class="input-group">
               <div id="department">
@@ -53,11 +55,13 @@
           </div>
         </div>
 
-        <div class="col-sm-2" style="padding-top:20px;">
+        <div class="col-sm-3" style="padding-top:20px;">
           <%= f.submit "Show Workingday",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %>
         </div>
       </div>
-     </div>
+
+      <div class="ajax-progress"></div>
+      <div id="datewise_workingday"></div>
   <% end %>
 </div>
 </div>

@@ -16,7 +16,7 @@ class GoalRating < ActiveRecord::Base
 
   belongs_to :appraisee_rating, class_name: 'Rating'
   belongs_to :appraiser_rating, class_name: 'Rating'
-  validates :goal_perspective_id, presence: true
+  #validates :goal_perspective_id, presence: true
   #validates :attribute_master_id, presence: true
   #validates_length_of :goal_measure, :maximum => 255
   
@@ -32,7 +32,7 @@ class GoalRating < ActiveRecord::Base
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
       
-         weightage = spreadsheet.cell(i,'I')
+        weightage = spreadsheet.cell(i,'I')
           weightage_sum = weightage.to_f + previous_weightage.to_f
           previous_weightage = weightage_sum
 
@@ -43,10 +43,17 @@ class GoalRating < ActiveRecord::Base
           employee_code = spreadsheet.cell(i,'B').to_i
         end
         emp = Employee.find_by(manual_employee_code: employee_code)
+
+
         period_name = spreadsheet.cell(i,'C')
         period = Period.find_by(name: period_name)
         if period == nil
           period_name = spreadsheet.cell(i,'C')
+          if period_name == nil
+            period_name = "NA"
+          else
+            period_name = spreadsheet.cell(i,'C')
+          end
           @period = Period.create(name: period_name,status: true)
           period_id = @period.id
         else
@@ -61,29 +68,61 @@ class GoalRating < ActiveRecord::Base
             weightage_sum1 = true
             perspective = spreadsheet.cell(i,'E')
             activity = spreadsheet.cell(i,'F')
+              if activity == nil
+                activity = "NA"
+              else
+                activity = spreadsheet.cell(i,'F')
+              end
             measure = spreadsheet.cell(i,'G')
+              if measure == nil
+                measure = "NA"
+              else
+                measure = spreadsheet.cell(i,'G')
+              end
             target = spreadsheet.cell(i,'H')
+              if target == nil
+                target = "NA"
+              else
+                target = spreadsheet.cell(i,'H')
+              end
             weightage = spreadsheet.cell(i,'I')
+              if weightage == nil
+                weightage = "NA"
+              else
+                weightage = spreadsheet.cell(i,'I')
+              end
+
             align_to_supervisor = spreadsheet.cell(i,'J')
+              if align_to_supervisor == nil
+                align_to_supervisor = "NA"
+              else
+                align_to_supervisor = spreadsheet.cell(i,'J')
+              end
             employee_id = emp.id
             
-            @goal_bunch = GoalBunch.where("employee_id = ? AND period_id = ?" , employee_id ,period_id)
-            #GoalBunch.where(employee_id: employee_id) && GoalBunch.where(period_id: period_id)
-              if @goal_bunch == nil
-                goal_bunch = GoalBunch.create(period_id: period_id,employee_id: employee_id)
-              else
-                goal_bunch = GoalBunch.where(period_id: period_id,employee_id: employee_id).take
-              end
+            @goal_bunch = goal_bunch
+            goal_bunch_id = @goal_bunch.id
+
+            # @goal_bunch = GoalBunch.where("employee_id = ? AND period_id = ?" , employee_id ,period_id)
+            # #GoalBunch.where(employee_id: employee_id) && GoalBunch.where(period_id: period_id)
+            #   if @goal_bunch == nil
+            #     goal_bunch = GoalBunch.create(period_id: period_id,employee_id: employee_id)
+            #     goal_bunch_id = goal_bunch.id
+            #   else
+            #     goal_bunch = GoalBunch.where(period_id: period_id,employee_id: employee_id).take
+            #     goal_bunch_id = goal_bunch.id
+            #   end
 
               if type == "Goal"
                 goal_perspective = GoalPerspective.where(name: perspective,status: true).take
 
                 if goal_perspective == nil
                   perspective = spreadsheet.cell(i,'E')
-                  # if perspective == nil
-                  # else
-                  #   perspective = spreadsheet.cell(i,'E')
-                  # end
+                  if perspective == nil
+                    perspective = "NA"
+                  else
+                    perspective = spreadsheet.cell(i,'E')
+                  end
 
                   last_goal_perspective = GoalPerspective.last
                     if last_goal_perspective == nil
@@ -102,12 +141,12 @@ class GoalRating < ActiveRecord::Base
                   goal_perspective_id = goal.id
                   end
 
-                  GoalRating.create(goal_bunch_id: goal_bunch.id,goal_perspective_id: goal_perspective_id,goal_weightage: weightage,goal_measure: measure,activity: activity,target: target,aligned: align_to_supervisor,period_id: period.id,goal_type: type,goal_setter_id: emp.id,appraisee_id: emp.id,appraiser_id: emp.manager_id)
+                  GoalRating.create(goal_bunch_id: goal_bunch_id,goal_perspective_id: goal_perspective_id,goal_weightage: weightage,goal_measure: measure,activity: activity,target: target,aligned: align_to_supervisor,period_id: period_id,goal_type: type,goal_setter_id: emp.id,appraisee_id: emp.id,appraiser_id: emp.manager_id)
 
                 else
                   goal_perspective_id = goal_perspective.id
-                  GoalRating.create(goal_bunch_id: goal_bunch.id,goal_perspective_id: goal_perspective_id,goal_weightage: weightage,goal_measure: measure,
-                  activity: activity,target: target,aligned: align_to_supervisor,period_id: period.id,goal_type: type,goal_setter_id: emp.id,
+                  GoalRating.create(goal_bunch_id: goal_bunch_id,goal_perspective_id: goal_perspective_id,goal_weightage: weightage,goal_measure: measure,
+                  activity: activity,target: target,aligned: align_to_supervisor,period_id: period_id,goal_type: type,goal_setter_id: emp.id,
                   appraisee_id: emp.id,appraiser_id: emp.manager_id)
                 end
                  
@@ -117,10 +156,21 @@ class GoalRating < ActiveRecord::Base
                   
                   if attribute_master == nil 
                     perspective = spreadsheet.cell(i,'E')
+                    if perspective == nil
+                      perspective = "NA"
+                    else
+                      perspective = spreadsheet.cell(i,'E')
+                    end
                     last_attribute = AttributeMaster.last
-                    last_code = last_attribute.code
-                    new_code = last_code.to_i + 1
-                    new_id = last_attribute.id.to_i + 1
+                    if last_attribute == nil
+                      last_attribute_id = 0
+                      last_attribute_code = 0
+                    else
+                      last_attribute_id = last_attribute.id
+                      last_attribute_code = last_attribute.code
+                    end
+                    new_code = last_attribute_code.to_i + 1
+                    new_id = last_attribute_id.to_i + 1
 
                     attribute = AttributeMaster.find_by(name: perspective)
                     if attribute.nil?
@@ -131,14 +181,12 @@ class GoalRating < ActiveRecord::Base
                     attribute_id = attribute.id
                     end
                     
-                    GoalRating.create(goal_bunch_id: goal_bunch.id,attribute_master_id: attribute_id,goal_weightage: weightage,goal_measure: measure,
-                    activity: activity,target: target,aligned: align_to_supervisor,period_id: period.id,goal_type: type,goal_setter_id: emp.id,
-                    appraisee_id: emp.id,appraiser_id: emp.manager_id)
+                    GoalRating.create(goal_bunch_id: goal_bunch_id,attribute_master_id: attribute_id,goal_weightage: weightage,goal_measure: measure,activity: activity,target: target,aligned: align_to_supervisor,period_id: period_id,goal_type: type,goal_setter_id: emp.id,appraisee_id: emp.id,appraiser_id: emp.manager_id)
                 
                   else
                     attribute_master_id = attribute_master.id
-                    GoalRating.create(goal_bunch_id: goal_bunch.id,attribute_master_id: attribute_master_id,goal_weightage: weightage,goal_measure: measure,
-                    activity: activity,target: target,aligned: align_to_supervisor,period_id: period.id,goal_type: type,goal_setter_id: emp.id,
+                    GoalRating.create(goal_bunch_id: goal_bunch_id,attribute_master_id: attribute_master_id,goal_weightage: weightage,goal_measure: measure,
+                    activity: activity,target: target,aligned: align_to_supervisor,period_id: period_id,goal_type: type,goal_setter_id: emp.id,
                     appraisee_id: emp.id,appraiser_id: emp.manager_id)
                   end
               end#if type

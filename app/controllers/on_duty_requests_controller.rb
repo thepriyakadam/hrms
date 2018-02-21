@@ -164,7 +164,7 @@ class OnDutyRequestsController < ApplicationController
     #     flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
     #     redirect_to employee_list_on_duty_requests_path
     #   end
-    end
+    #end
   # end#payroll_period.nil?
   end
 

@@ -2223,6 +2223,9 @@ def date_and_employeewise_attendance
 end
 
 def modal_edit_for_show
+  @employee_id = params[:employee_id]
+  @from = params[:from]
+  @to = params[:to]
   @employee_attendance = EmployeeAttendance.find(params[:format])
 end
 
@@ -2238,7 +2241,17 @@ def update_attendance_for_show
 
   @employee_attendance.update(in_time: in_time,out_time: out_time,present: present,comment: comment,working_hrs: working_hrs,comment: "Manually Update")
   flash[:notice] = "Updated Successfully!"
-  redirect_to select_date_and_employee_employee_attendances_path
+  # redirect_to select_date_and_employee_employee_attendances_path
+
+  
+  from = params[:employee_attendance][:from]
+  to = params[:employee_attendance][:to]
+  employee_id = params[:employee_attendance][:employee_id]
+  @latemark_master = LatemarkMaster.last
+  @latemark_master_time = @latemark_master.company_time
+  @company_time = @latemark_master_time.strftime("%I:%M")
+  @employee_attendances = EmployeeAttendance.where(employee_id: employee_id,day: from.to_date..to.to_date).order("day DESC")
+  render 'employee_attendances/_date_and_employeewise_attendance.html.erb'
 end
 
 def daily_attendance_datewise
@@ -2284,7 +2297,19 @@ def update_daily_attendance
 
   @employee_attendance.update(in_time: in_time,out_time: out_time,present: present,comment: comment,working_hrs: working_hrs,comment: "User Updated")
   flash[:notice] = "Updated Successfully!"
-  redirect_to datewise_daily_attendance_employee_attendances_path
+  # redirect_to datewise_daily_attendance_employee_attendances_path
+  # binding.pry
+  @date = params[:employee_attendance][:date]
+  if current_user.role.name == "GroupAdmin"
+    @employees = Employee.where(status: "Active").pluck(:id)
+    @employee_attendances = EmployeeAttendance.where(day: @date.to_date).where(employee_id: @employees).group(:employee_id)
+    render 'employee_attendances/_show_datewise_daily_attendance.html.erb'
+  else
+    @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+    @employee_attendances = EmployeeAttendance.where(day: @date.to_date).where(employee_id: @employees).group(:employee_id)
+    render 'employee_attendances/_show_datewise_daily_attendance.html.erb'
+  end
+
 end
 
 def import

@@ -1040,6 +1040,7 @@ end
       post :show_datewise_daily_attendance
       get :modal_edit_daily_attendance
       post :update_daily_attendance
+      post :update_daily_attendance
       post :create_self_attendance
       get :daily_attendance_datewise
       post :show_daily_attendance_datewise
@@ -1049,7 +1050,9 @@ end
       post :show_daily_attendance_for_destroy
       post :destroy_daily_attendance_datewise
       get :modal_edit_for_show
+      post :modal_edit_for_show
       post :update_attendance_for_show
+      get :update_attendance_for_show
       get :access_record
       post :access_card_list
       get :access_card_approval

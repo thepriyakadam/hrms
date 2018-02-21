@@ -8,7 +8,7 @@
     <div class="modal-body">
      		
     	<%= bootstrap_form_for :employee_attendance,url:{action:"update_daily_attendance",employee_attendance_id: @employee_attendance.id} do |f| %>
-
+    	<%= f.hidden_field :date , value: @employee_attendance.day %>
     		<div class="row">
 	    		<div class="col-sm-3">
 		          <div class="field">

@@ -19,9 +19,8 @@
         <div class="col-sm-3">
           <div class="form-group required">
             <div class="input-group">
-              <div id="company_location_with_label">
-                <%= render 'employees/company_location_dropdown_with_label' %> 
-              </div>
+             <%=f.select :company_location_id, all_company_location,{include_blank: "Select Company Location"}%>
+            
             </div> 
           </div>
         </div>
@@ -29,9 +28,7 @@
         <div class="col-sm-3">
          <div class="form-group required">
           <div class="input-group">
-            <div id="department">
-              <%= render 'employees/department_dropdown' %> 
-            </div> 
+            <%=f.select :department_id, all_department_list,{include_blank: "Select Department"}%>
           </div>
          </div>
         </div>

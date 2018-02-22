@@ -41,6 +41,10 @@
         </tbody>
       </table>
 
+        <%= link_to "PDF",show_datewise_workingday_workingdays_path(:employee => {:from => params[:employee][:from],:to => params[:employee][:to],:company_id => params[:employee][:company_id],:company_location_id => params[:employee][:company_location_id],:department_id => params[:employee][:department_id],:status => params[:employee][:status]},format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+        <%= link_to " Excel ",show_datewise_workingday_workingdays_path(:employee => {:from => params[:employee][:from],:to => params[:employee][:to],:company_id => params[:employee][:company_id],:company_location_id => params[:employee][:company_location_id],:department_id => params[:employee][:department_id],:status => params[:employee][:status]},format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+        
     <% else %>
       <center><div style="color: Red"><h6>Please Select Date Within Payroll Period</h6></div></center>
     <% end %>

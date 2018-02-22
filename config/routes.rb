@@ -1207,6 +1207,9 @@ end
       post :import
       get :goal_set
       get :admin_level_goal_set
+      get :admin_level_period
+      get :admin_appraiser_evaluation_period
+      get :admin_level_appraiser_evaluation
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -1283,6 +1286,8 @@ end
       post :create_admin_level_period
       get :admin_goal_approval_period
       get :admin_level_goal_approval
+      get :admin_self_evaluation_period
+      get :admin_level_self_evaluation
     end
   end
   resources :goal_perspectives do

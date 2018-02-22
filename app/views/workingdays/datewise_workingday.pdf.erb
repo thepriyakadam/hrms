@@ -1,0 +1,52 @@
+<div class="box">
+  <div class="box-body">
+    <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+        <thead>
+         <tr>
+          <td colspan="13"><center> 
+            <% if current_user.employee.company_location.company.company_logo == nil %>
+            <%else %>
+              <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+            <%end%> 
+              <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+          </td>
+        </tr>
+
+        <tr><td colspan="13"><center>Working Days : <%= @from %> - <%= @to %></center></td></tr>
+         <tr>
+            <th>ID</th>
+            <th>Employee</th>
+            <th>Present Day</th>
+            <th>Holiday</th>
+            <th>Week Off</th>
+            <th>OD</th>
+            <th>Gate Pass</th>
+            <th>Pay Leave</th>
+            <th>Non Pay Leave</th>
+            <th>Absent</th>
+            <th>Payable Day</th>
+            <th>Days In Month</th>
+          </tr>
+        </thead>
+
+        <tbody>
+           <% @workingdays.each do |workingday| %>
+            <tr>
+              <td><%= workingday.employee.try(:manual_employee_code) %></td>
+              <td><%= full_name(workingday.employee) %></td>
+              <td><%= workingday.present_day %></td>
+              <td><%= workingday.holiday_in_month %></td>
+              <td><%= workingday.week_off_day %></td>
+              <td><%= workingday.od_day %></td>
+              <td><%= workingday.gatepass %></td>
+              <td><%= workingday.pay_leave %></td>
+              <td><%= workingday.nonpay_leave %></td>
+              <td><%= workingday.absent_day %></td>
+              <th><%= workingday.payable_day %></th>
+              <td><%= workingday.day_in_month %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>

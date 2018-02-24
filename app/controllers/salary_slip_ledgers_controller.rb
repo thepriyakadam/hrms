@@ -1153,6 +1153,12 @@ class SalarySlipLedgersController < ApplicationController
       f.pdf do
         render pdf: 'salary_ledger',
         layout: 'pdf.html',
+        :page_height      => 1000,
+               :dpi              => '300',
+               :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 14,
+                          :right  => 14},
         orientation: 'Landscape',
         template: 'salary_slip_ledgers/month_wise_yearly_report.pdf.erb',
         show_as_html: params[:debug].present?

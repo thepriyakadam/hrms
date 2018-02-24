@@ -67,6 +67,34 @@ class GoalRatingsController < ApplicationController
       end
   end
 
+  def admin_appraiser_evaluation_period
+    @periods = Period.where(status: true).group(:id)
+    @goal_bunches = GoalBunch.where(goal_confirm: true).group(:period_id)
+  end
+
+  def admin_level_appraiser_evaluation
+    @period = Period.find(params[:period_id])
+    @goal_bunches = GoalBunch.where(period_id: @period.id,appraisee_confirm: true)
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
+  end
+
+  def admin_level_period
+    @periods = Period.where(status: true).group(:id)
+    @goal_bunches = GoalBunch.where(goal_confirm: true).group(:period_id)
+  end
+
+  def admin_level_goal_set
+    @period = Period.find(params[:period_id])
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
+    @goal_bunches = GoalBunch.where(period_id: @period.id,goal_confirm: nil).group(:employee_id,:period_id)
+    # @goal_bunches = []
+    # goal_bunches.each do |g|
+    #   @goal_bunches << g
+    # end
+  end
+
   # POST /goal_ratings
   # POST /goal_ratings.json
   def create

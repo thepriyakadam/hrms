@@ -74,105 +74,82 @@ module EmployeeAttendancesHelper
     day_in_month
   end
 
-  def present_day_count(exist)
-    exist.select {|k,v| v == "P" }.count + (exist.select {|k,v| v == "HDL"}.count)/2.to_f + (exist.select {|k,v| v == "P/OD" }.count)/2.to_f + (exist.select {|k,v| v == "OD/P" }.count)/2.to_f
-  end
-
-  def absent_day_count(exist)
-    exist.select {|k,v| v == "A" || v == "" }.count + (exist.select {|k,v| v == "HDL"}.count)/2.to_f + (exist.select {|k,v| v == "A/OD" }.count)/2.to_f + (exist.select {|k,v| v == "OD/A" }.count)/2.to_f
-  end
-
-  def holiday_in_month_count(exist)
-    exist.select {|k,v| v == "H"}.count
-  end
-
-  def holiday_present_in_month_count(exist)
-
-    ((exist.select {|k,v| v == "HP" }.count)*2.to_f)
-  end
-
-   def no_of_holiday_present_in_month_count(exist)
-    exist.select {|k,v| v == "HP" }.count
-  end
-
-  def week_off_day_count(exist)
-    exist.select {|k,v| v == "WO" }.count
-  end
-
-   def week_off_present_day_count(exist)
-    (exist.select {|k,v|v =="WOP" }.count)*2.to_f
-    exist.select {|k,v| v == "WO" || v =="WOP"}.count
-  end
-
-
-
   def present_count(exist)
-    exist.select {|k,v| v == "P" }.count + (exist.select {|k,v| v == "HDL"}.count)/2.to_f + (exist.select {|k,v| v == "P/OD" }.count)/2.to_f + (exist.select {|k,v| v == "OD/P" }.count)/2.to_f + (exist.select {|k,v| v == "P/CL" }.count)/2.to_f + (exist.select {|k,v| v == "CL/P" }.count)/2.to_f + (exist.select {|k,v| v == "P/EL" }.count)/2.to_f + (exist.select {|k,v| v == "EL/P" }.count)/2.to_f + (exist.select {|k,v| v == "P/AL" }.count)/2.to_f + (exist.select {|k,v| v == "AL/P" }.count)/2.to_f + (exist.select {|k,v| v == "P/LWP" }.count)/2.to_f + (exist.select {|k,v| v == "LWP/P" }.count)/2.to_f + (exist.select {|k,v| v == "P/ESIC" }.count)/2.to_f + (exist.select {|k,v| v == "ESIC/P" }.count)/2.to_f + (exist.select {|k,v| v == "P/C.Off" }.count)/2.to_f + (exist.select {|k,v| v == "C.Off/P" }.count)/2.to_f
+     exist.select {|k,v| v == "P" }.count + (exist.select {|k,v| v == "HDL" }.count)/2.to_f  +
+     (exist.select {|k,v| v == "P/OD" }.count)/2.to_f +  (exist.select {|k,v| v == "OD/P" }.count)/2.to_f
   end
 
   def absent_count(exist)
-    exist.select {|k,v| v == "A" || v == "" }.count + (exist.select {|k,v| v == "HDL"}.count)/2.to_f + (exist.select {|k,v| v == "A/OD" }.count)/2.to_f + (exist.select {|k,v| v == "OD/A" }.count)/2.to_f + (exist.select {|k,v| v == "A/CL" }.count)/2.to_f + (exist.select {|k,v| v == "CL/A" }.count)/2.to_f + (exist.select {|k,v| v == "A/EL" }.count)/2.to_f + (exist.select {|k,v| v == "EL/A" }.count)/2.to_f + (exist.select {|k,v| v == "A/AL" }.count)/2.to_f + (exist.select {|k,v| v == "AL/A" }.count)/2.to_f + (exist.select {|k,v| v == "A/LWP" }.count)/2.to_f + (exist.select {|k,v| v == "LWP/A" }.count)/2.to_f + (exist.select {|k,v| v == "A/ESIC" }.count)/2.to_f + (exist.select {|k,v| v == "ESIC/A" }.count)/2.to_f + (exist.select {|k,v| v == "A/C.Off" }.count)/2.to_f + (exist.select {|k,v| v == "C.Off/A" }.count)/2.to_f
+     exist.select {|k,v| v == "A" }.count + (exist.select {|k,v| v == "HDL" }.count)/2.to_f + (exist.select {|k,v| v == "A/OD" }.count)/2.to_f +  
+     (exist.select {|k,v| v == "OD/A" }.count)/2.to_f
   end
 
-  def cl_leave_count(exist)
-    exist.select {|k,v| v == "CL" }.count + (exist.select {|k,v| v == "P/CL" }.count)/2.to_f + (exist.select {|k,v| v == "CL/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/CL" }.count)/2.to_f + (exist.select {|k,v| v == "CL/A" }.count)/2.to_f
+  def on_duty_count(exist)
+     exist.select {|k,v| v == "OD" }.count + (exist.select {|k,v| v == "A/OD" }.count)/2.to_f +  (exist.select {|k,v| v == "OD/A" }.count)/2.to_f +
+     (exist.select {|k,v| v == "P/OD" }.count)/2.to_f +  (exist.select {|k,v| v == "OD/P" }.count)/2.to_f
   end
 
-  def el_leave_count(exist)
-    exist.select {|k,v| v == "EL" }.count + (exist.select {|k,v| v == "P/EL" }.count)/2.to_f + (exist.select {|k,v| v == "EL/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/EL" }.count)/2.to_f + (exist.select {|k,v| v == "EL/A" }.count)/2.to_f
+  def holiday_count(exist)
+     exist.select {|k,v| v == "H" }.count +  exist.select {|k,v| v == "H/P" }.count  +  exist.select {|k,v| v == "H/OD" }.count +  
+     exist.select {|k,v| v == "OD/H" }.count +  exist.select {|k,v| v == "H/HD" }.count  +  exist.select {|k,v| v == "H/HDOD" }.count  
   end
 
-  def esic_leave_count(exist)
-    exist.select {|k,v| v == "ESIC" }.count + (exist.select {|k,v| v == "P/ESIC" }.count)/2.to_f + (exist.select {|k,v| v == "ESIC/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/ESIC" }.count)/2.to_f + (exist.select {|k,v| v == "ESIC/A" }.count)/2.to_f
+  def weekoff_count(exist)
+     exist.select {|k,v| v == "WO" }.count + exist.select {|k,v| v == "WO/P" }.count + exist.select {|k,v| v == "P/WO" }.count + 
+     exist.select {|k,v| v == "WO/HD" }.count +  exist.select {|k,v| v == "WO/HOOD" }.count 
   end
 
-  def lwp_leave_count(exist)
-    exist.select {|k,v| v == "LWP" }.count + (exist.select {|k,v| v == "HD-LWP" }.count)/2.to_f + (exist.select {|k,v| v == "LWP/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/LWP" }.count)/2.to_f + (exist.select {|k,v| v == "LWP/A" }.count)/2.to_f
+  def paybale_leave_count(exist)
+     exist.select {|k,v| v == "L" }.count  + exist.select {|k,v| v == "P/L" }.count  +  exist.select {|k,v| v == "L/P" }.count +
+     exist.select {|k,v| v == "CL" }.count  + exist.select {|k,v| v == "P/CL" }.count  +  exist.select {|k,v| v == "CL/P" }.count +  
+     exist.select {|k,v| v == "EL" }.count  + exist.select {|k,v| v == "P/EL" }.count  +  exist.select {|k,v| v == "EL/P" }.count +
+     exist.select {|k,v| v == "PL" }.count  + exist.select {|k,v| v == "P/PL" }.count  +  exist.select {|k,v| v == "PL/P" }.count +
+     exist.select {|k,v| v == "ML" }.count  + exist.select {|k,v| v == "P/ML" }.count  +  exist.select {|k,v| v == "ML/P" }.count +
+     exist.select {|k,v| v == "SL" }.count  + exist.select {|k,v| v == "P/SL" }.count  +  exist.select {|k,v| v == "SL/P" }.count +
+     exist.select {|k,v| v == "AL" }.count  + exist.select {|k,v| v == "P/AL" }.count  +  exist.select {|k,v| v == "AL/P" }.count +
+     exist.select {|k,v| v == "MTL" }.count  + exist.select {|k,v| v == "P/MTL" }.count  +  exist.select {|k,v| v == "MTL/P" }.count +
+     exist.select {|k,v| v == "PTL" }.count  + exist.select {|k,v| v == "P/PTL" }.count  +  exist.select {|k,v| v == "PTL/P" }.count +
+     exist.select {|k,v| v == "MRL" }.count  + exist.select {|k,v| v == "P/MRL" }.count  +  exist.select {|k,v| v == "MRL/P" }.count +
+     exist.select {|k,v| v == "WFH" }.count  + exist.select {|k,v| v == "P/WFH" }.count  +  exist.select {|k,v| v == "WFH/P" }.count +
+     exist.select {|k,v| v == "C.Off" }.count  + exist.select {|k,v| v == "P/C.Off" }.count  +  exist.select {|k,v| v == "C.Off/P" }.count
   end
 
-  def advance_leave_count(exist)
-    exist.select {|k,v| v == "AL" }.count + (exist.select {|k,v| v == "P/AL" }.count)/2.to_f + (exist.select {|k,v| v == "AL/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/AL" }.count)/2.to_f + (exist.select {|k,v| v == "AL/A" }.count)/2.to_f
+  def half_pay_leave_count(exist)
+    (exist.select {|k,v| v == "A/L" }.count)/2.to_f + (exist.select {|k,v| v == "L/A" }.count)/2.to_f +
+    (exist.select {|k,v| v == "A/CL" }.count)/2.to_f + (exist.select {|k,v| v == "CL/A" }.count)/2.to_f +
+    (exist.select {|k,v| v == "A/EL" }.count)/2.to_f + (exist.select {|k,v| v == "EL/A" }.count)/2.to_f +
+    (exist.select {|k,v| v == "A/PL" }.count)/2.to_f + (exist.select {|k,v| v == "PL/A" }.count)/2.to_f +
+    (exist.select {|k,v| v == "A/ML" }.count)/2.to_f + (exist.select {|k,v| v == "ML/A" }.count)/2.to_f +
+    (exist.select {|k,v| v == "A/SL" }.count)/2.to_f + (exist.select {|k,v| v == "SL/A" }.count)/2.to_f +
+    (exist.select {|k,v| v == "A/AL" }.count)/2.to_f + (exist.select {|k,v| v == "AL/A" }.count)/2.to_f +
+    (exist.select {|k,v| v == "A/MTL" }.count)/2.to_f + (exist.select {|k,v| v == "MTL/A" }.count)/2.to_f +
+    (exist.select {|k,v| v == "A/PTL" }.count)/2.to_f + (exist.select {|k,v| v == "PTL/A" }.count)/2.to_f +
+    (exist.select {|k,v| v == "A/MRL" }.count)/2.to_f + (exist.select {|k,v| v == "MRL/A" }.count)/2.to_f +
+    (exist.select {|k,v| v == "A/WFH" }.count)/2.to_f + (exist.select {|k,v| v == "WFH/A" }.count)/2.to_f +
+    (exist.select {|k,v| v == "P/LWP" }.count)/2.to_f + (exist.select {|k,v| v == "LWP/P" }.count)/2.to_f +
+    (exist.select {|k,v| v == "A/C.Off" }.count)/2.to_f + (exist.select {|k,v| v == "C.Off/A" }.count)/2.to_f
   end
 
-  def coff_leave_count(exist)
-    exist.select {|k,v| v == "C.Off" }.count + (exist.select {|k,v| v == "P/C.Off" }.count)/2.to_f + (exist.select {|k,v| v == "C.Off/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/C.Off" }.count)/2.to_f + (exist.select {|k,v| v == "C.Off/A" }.count)/2.to_f
+  def non_paybale_leave_count(exist)
+     exist.select {|k,v| v == "LWP" }.count  + exist.select {|k,v| v == "A/LWP" }.count  +  exist.select {|k,v| v == "LWP/A" }.count 
   end
 
-  def od_day_count(exist)
-    exist.select {|k,v| v == "OD" }.count + (exist.select {|k,v| v == "P/OD" }.count)/2.to_f + (exist.select {|k,v| v == "OD/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/OD" }.count)/2.to_f + (exist.select {|k,v| v == "OD/A" }.count)/2.to_f
+  def half_non_paybale_leave_count(exist)
+     (exist.select {|k,v| v == "P/LWP" }.count)/2.to_f + (exist.select {|k,v| v == "LWP/P" }.count)/2.to_f 
   end
 
-  def pl_leave_count(exist)
-    exist.select {|k,v| v == "PL" }.count + (exist.select {|k,v| v == "P/PL" }.count)/2.to_f + (exist.select {|k,v| v == "PL/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/PL" }.count)/2.to_f + (exist.select {|k,v| v == "PL/A" }.count)/2.to_f
-  end
 
-  def sl_leave_count(exist)
-    exist.select {|k,v| v == "SL" }.count + (exist.select {|k,v| v == "P/SL" }.count)/2.to_f + (exist.select {|k,v| v == "SL/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/SL" }.count)/2.to_f + (exist.select {|k,v| v == "SL/A" }.count)/2.to_f
-  end
+  # def gatepass_count(exist)
+  #   exist.select {|k,v| v == "PG" }.count
+  # end
 
-  def gatepass_count(exist)
-    exist.select {|k,v| v == "PG" }.count
-  end
-#SGA
-  def leave_count(exist)
-    exist.select {|k,v| v == "L" }.count + (exist.select {|k,v| v == "P/L" }.count)/2.to_f + (exist.select {|k,v| v == "L/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/L" }.count)/2.to_f + (exist.select {|k,v| v == "L/A" }.count)/2.to_f
-  end
+  # def process_off_count(exist)
+  #   exist.select {|k,v| v == "PO" }.count
+  # end
 
-  def ml_leave_count(exist)
-    exist.select {|k,v| v == "ML" }.count + (exist.select {|k,v| v == "P/ML" }.count)/2.to_f + (exist.select {|k,v| v == "ML/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/ML" }.count)/2.to_f + (exist.select {|k,v| v == "ML/A" }.count)/2.to_f
-  end
-
-  def wfh_leave_count(exist)
-    exist.select {|k,v| v == "WFH" }.count + (exist.select {|k,v| v == "P/WFH" }.count)/2.to_f + (exist.select {|k,v| v == "WFH/P" }.count)/2.to_f + (exist.select {|k,v| v == "A/WFH" }.count)/2.to_f + (exist.select {|k,v| v == "WFH/A" }.count)/2.to_f
-  end
-
-  def process_off_count(exist)
-    exist.select {|k,v| v == "PO" }.count
-  end
-
-  def access_card_forgotten_count(exist)
-    exist.select {|k,v| v == "ACF" }.count
-  end
+  # def access_card_forgotten_count(exist)
+  #   exist.select {|k,v| v == "ACF" }.count
+  # end
 
   def create_leave(date,employee)
     arr = []

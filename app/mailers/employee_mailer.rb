@@ -18,7 +18,7 @@ class EmployeeMailer < ApplicationMailer
   def employee_reset_password(member)
     @member = member
     @emp = Member.find_by(manual_member_code: @member.manual_member_code)
-    attachments.inline['mail_signature.png'] = File.read('app/assets/images/mail_signature.png')
+    # attachments.inline['mail_signature.png'] = File.read('app/assets/images/mail_signature.png')
     mail(to: @emp.email, subject: 'HRMS Password Detail')
   end
 

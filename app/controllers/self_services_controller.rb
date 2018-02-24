@@ -49,6 +49,9 @@ class SelfServicesController < ApplicationController
     redirect_to employee_attendance_self_services_path
   end
 
+  def modal_info_about_attendance
+  end 
+  
   def employee_resignation
     @employee_resignation = EmployeeResignation.new
     @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
@@ -142,7 +145,7 @@ class SelfServicesController < ApplicationController
     @latemark_master_time = @latemark_master.company_time
     @company_time = @latemark_master_time.strftime("%I:%M")
     @company_late_limit_time = @latemark_master.late_limit
-    @company_late_time = @latemark_master_time.strftime("%I:%M")
+    @company_late_time = @company_late_limit_time.strftime("%I:%M")
     @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day DESC")
   end
 
@@ -184,7 +187,8 @@ class SelfServicesController < ApplicationController
   def holiday_setup
     # byebug
     @day = params[:day]
-    @employee_attendances = EmployeeAttendance.where(present: 'H',employee_id: current_user.employee_id).order("day ASC")
+    # @employee_attendances = EmployeeAttendance.where(present: 'H',employee_id: current_user.employee_id).order("day ASC")
+    @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id).where.not(holiday_id: nil).order("day ASC")
     session[:active_tab] = "EmployeeSelfService"
   end
 

@@ -9,33 +9,45 @@
 <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
 <thead>
   <tr>
-        <td colspan="8">
+        <td colspan="7">
          <% if current_user.company_location.company.company_logo == nil %>
       <% else %>
         <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
         <%end%>
-          <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>. <br> <%= @month %> <%= @year %> </center>
+          <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>.<br><strong>Monthly Expence</strong></center>
+          <center><strong><%= @from.strftime("%B-%Y")%> to <%= @to.strftime("%B-%Y") %></strong></center>
         </td>           
        </tr>
     <thead>
       <tr>
-        <th>Employee ID</th>
+        <th>Sr. No.</th>
+        <th>ID</th>
         <th>Employee Name</th>
         <th>Expence Type</th>
         <th>Amount</th>
         <th>Date</th>
+        <th>Description</th>
       </tr>
     </thead>
 
     <tbody>
+      <% i = 0 %>
+      <% @amount = 0 %>
       <% @monthly_expences.each do |m| %>
         <tr>
+          <td><%= i = i + 1 %></td>
           <td><%= m.employee.try(:manual_employee_code) %></td>
           <td><%= full_name(m.employee) %></td>
           <td><%= m.expencess_type.name %></td>
-          <td><%= m.amount %></td>
+          <td><%= amount = m.amount %></td>
           <td><%= m.expence_date %></td>
+          <td><%= m.description %></td>
         </tr>
+        <% @amount = @amount.to_f + amount.to_f %>
       <% end %>
+      <tr>
+        <td colspan="4">Total</td>
+        <td colspan="3"><%= @amount %></td>
+      </tr>
     </tbody>
   </table>

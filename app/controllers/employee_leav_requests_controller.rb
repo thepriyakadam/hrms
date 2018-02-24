@@ -216,18 +216,17 @@ class EmployeeLeavRequestsController < ApplicationController
       payroll_period = PayrollPeriod.where(status: true).take 
        @leav_category = LeavCategory.find_by(id: @employee_leav_request.leav_category_id)
 
-      if payroll_period.nil?
-        flash[:alert] = "Payroll Period Not set!"
-        redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-      else
+      # if payroll_period.nil?
+      #   flash[:alert] = "Payroll Period Not set!"
+      #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+      # else
   #nil fields
         if start_date == "" || end_date == ""
           flash[:alert] = "Please fill all mandatory fields "
         redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
         else
-            if  start_date.to_date >= payroll_period.from.to_date && end_date.to_date <= payroll_period.to.to_date
-            # if start_date == payroll_period.from.to_date..payroll_period.to.to_date && end_date == payroll_period.from.to_date..payroll_period.to.to_date
-
+            # if  start_date.to_date >= payroll_period.from.to_date && end_date.to_date <= payroll_period.to.to_date
+            
               if @employee_leav_request.end_date == nil 
                 flash[:alert] = "please Fill all mendatory fields"
                 redirect_to new_employee_leav_request_path
@@ -521,18 +520,18 @@ class EmployeeLeavRequestsController < ApplicationController
                   end
                 else
                 end
-            else #start_date == payroll_period.from.to_date
-               if current_user.employee_id == @employee_leav_request.employee_id
-                flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
-                redirect_to employee_leav_requests_path
-              else
-                flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
-                redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-                #redirect_to employee_list_on_duty_requests_path
-              end  
-            end
+            # else #start_date == payroll_period.from.to_date
+            #    if current_user.employee_id == @employee_leav_request.employee_id
+            #     flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+            #     redirect_to employee_leav_requests_path
+            #   else
+            #     flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+            #     redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+            #     #redirect_to employee_list_on_duty_requests_path
+            #   end  
+            # end#start_date == payroll_period.from.to_date
           end#start_date == nil
-      end#if payroll_period.nil?
+      #end#if payroll_period.nil?
     end#c_off
   end
 
@@ -568,11 +567,10 @@ class EmployeeLeavRequestsController < ApplicationController
   end
 
   def all_leave_request_list
-    
-      @first_level_request_lists = EmployeeLeavRequest.where(is_pending: true, is_second_approved: false,is_first_rejected: false, is_cancelled: false, is_second_rejected: false)
-      @emp_leav_req = EmployeeLeavRequest.where.not(second_reporter_id: false).pluck(:second_reporter_id)
-      @second_level_request_lists = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,second_reporter_id: @emp_leav_req)
-    # @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
+    @first_level_request_lists = EmployeeLeavRequest.where(is_pending: true, is_second_approved: false,is_first_rejected: false, is_cancelled: false, is_second_rejected: false)
+    @emp_leav_req = EmployeeLeavRequest.where.not(second_reporter_id: false).pluck(:second_reporter_id)
+    @second_level_request_lists = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,second_reporter_id: @emp_leav_req)
+  # @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
     session[:active_tab] ="LeaveManagement"
     session[:active_tab1] ="LeaveProcess"
   end

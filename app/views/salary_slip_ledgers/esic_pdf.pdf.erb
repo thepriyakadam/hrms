@@ -14,54 +14,53 @@
       <% else %>
         <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
         <%end%>
-          <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>. <br> <%= @month %> <%= @year %> </center>
+          <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>. <br>
+          <strong>ESIC Report</strong></center>
+          <center><strong><%= @from.strftime("%B-%Y") %> to <%= @to.strftime("%B-%Y") %></strong></center>
         </td>           
        </tr>
-    <thead>
       <tr>
-        <th>Employee Code</th>
+        <th>Sr. No.</th>
+        <th>ID</th>
         <th>Employee Name</th>
         <th>ESIC No.</th>
         <th>Payble Days</Data></th>
-        <th>Washing Allowance</th>
         <th>Gross Salary</th>
-        <th>Amount</th>
         <th>ESIC Amount</th>
+        <th>Month-Year</th>
       </tr>
       </thead>
 
       <tbody>
+      <% i = 0 %>
       <% @salaryslips.each do |slip| %>
         <% employee = slip.employee %>
         <% joining = employee.joining_detail %>
         <% bank = employee.employee_bank_detail %>
         <% workingday = slip.workingday %>
+        <% @amount = 0 %>
+        <% @esic_amount = 0 %>
         <tr>
+          <td><%= i = i + 1 %></td>
           <td><%= slip.employee.manual_employee_code %></td>
           <td><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></td>
           <td><%= joining.try(:employee_efic_no) %></td>
           <td><%= workingday.payable_day %></td>
-
-          <% @addable_salaryslip_items = slip.salaryslip_components.where(is_deducted: false) %>
-          <%gross_amt = 0%>
-          <%wa_amt = 0%>
-          <% @addable_salaryslip_items.each do |item| %>
-            <% case item.salary_component.try(:name) %>
-            <% when "Washing Allowance" %>
-              <td><%= wa_amt = item.calculated_amount.round %></td>
-            <% else %>
-            <% end %> <!-- switch case -->
-          <% end %><!-- addable items -->
           <td><%= gross_amt = slip.calculated_gross_salary.round %></td>
-          <td><%= gross_amt - wa_amt %></td>
-          
-          <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
-          <% @deducted_salaryslip_items.each do |item| %>
+
+            <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
+            <% @deducted_salaryslip_items.each do |item| %>
               <% if item.other_component_name == "ESIC" %>
-                <td><%= item.calculated_amount.round %></td>
+                <td><%= esic_amount = item.calculated_amount.round %></td>
+              <% @esic_amount = @esic_amount.to_f + esic_amount.to_f %>
               <% end %>
-          <% end %><!-- deducted items -->
+            <% end %><!-- deducted items -->
+          <td><%= slip.month %>-<%= slip.year %></td>
         </tr><!-- Row -->
       <% end %><!-- slip -->
+      <tr>
+        <td colspan="6">Total</td>
+        <td colspan="2"><%= @esic_amount%></td>
+      </tr>
     </tbody>
     </table>

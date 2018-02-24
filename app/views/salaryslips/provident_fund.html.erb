@@ -75,15 +75,35 @@
     changeMonth: true,
     yearRange: '-100:-0',
     dateFormat: 'dd-mm-yy' });
-  }); 
+  });
+
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#advance_salary").submit();
+  })
 </script>
 
-<script type="text/javascript">
-  $(function(){
-    $('.request_date').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-100:-0',
-    dateFormat: 'dd-mm-yy' });
-  }); 
+<script>
+$("#provident_fund").validate({
+    rules: {
+      "provident_fund[from_date]":{
+        required: true,
+      },
+      "provident_fund[to_date]":{
+        required: true,
+      }
+    },
+    messages: {
+      "provident_fund[from_date]":{
+        required: "Please select From Date",
+      },
+      "provident_fund[to_date]":{
+        required: "Please select To Date",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
 </script>

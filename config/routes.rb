@@ -1040,6 +1040,7 @@ end
       post :show_datewise_daily_attendance
       get :modal_edit_daily_attendance
       post :update_daily_attendance
+      post :update_daily_attendance
       post :create_self_attendance
       get :daily_attendance_datewise
       post :show_daily_attendance_datewise
@@ -1049,7 +1050,9 @@ end
       post :show_daily_attendance_for_destroy
       post :destroy_daily_attendance_datewise
       get :modal_edit_for_show
+      post :modal_edit_for_show
       post :update_attendance_for_show
+      get :update_attendance_for_show
       get :access_record
       post :access_card_list
       get :access_card_approval
@@ -1203,6 +1206,10 @@ end
       get :import_xl
       post :import
       get :goal_set
+      get :admin_level_goal_set
+      get :admin_level_period
+      get :admin_appraiser_evaluation_period
+      get :admin_level_appraiser_evaluation
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -1275,6 +1282,12 @@ end
       post :import
       get :self_comment_modal
       post :self_comment
+      get :admin_level_period
+      post :create_admin_level_period
+      get :admin_goal_approval_period
+      get :admin_level_goal_approval
+      get :admin_self_evaluation_period
+      get :admin_level_self_evaluation
     end
   end
   resources :goal_perspectives do
@@ -1930,6 +1943,7 @@ end
       get :display_notice_period
       get :exit_interview
       get :present_to_title
+      get :modal_info_about_attendance
     end
   end
 
@@ -2349,7 +2363,8 @@ end
       get :pf_monthly_statement
       get :pf_monthly_statement_report
       post :pf_monthly_statement_report
-      
+      get :dynamic_daterange_report
+      post :dynamic_daterange_report
     end
   end
 
@@ -3210,5 +3225,7 @@ end
     get 'user_auths/meeting_plan_minutes' => 'user_auths#meeting_plan_minutes', defaults:{format: 'json'}
     get 'user_auths/particular_emp_status_wise_plan_list' => 'user_auths#particular_emp_status_wise_plan_list', defaults:{format: 'json'}
     get 'user_auths/notifications_count' => 'user_auths#notifications_count', defaults:{format: 'json'}
+    post 'user_auths/employee_wise_date' => 'user_auths#employee_wise_date', defaults:{format: 'json'}
+    post 'user_auths/holiday_setup_manager' => 'user_auths#holiday_setup_manager', defaults:{format: 'json'}
   end
 end

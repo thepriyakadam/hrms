@@ -34,8 +34,18 @@
         </div>
       </div>
 
+      <div class="col-sm-3">
+        <div class="field">
+          <div id="company_location_with_label">
+            <%= render 'employees/company_location_dropdown_with_label' %> 
+        </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
      <div class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-3">
         <label></label>
           <div class="actions">
             <%= f.submit "Display Report", class: "btn btn-sm btn-primary",id: "buttonCtc" %>
@@ -59,16 +69,36 @@
     yearRange: '-100:-0',
     dateFormat: 'dd-mm-yy' });
   }); 
+
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#yearly_reports").submit();
+  })
 </script>
 
-<script type="text/javascript">
-  $(function(){
-    $('.request_date').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-100:-0',
-    dateFormat: 'dd-mm-yy' });
-  }); 
+<script>
+$("#yearly_reports").validate({
+    rules: {
+      "yearly_reports[from_date]":{
+        required: true,
+      },
+      "yearly_reports[to_date]":{
+        required: true,
+      }
+    },
+    messages: {
+      "yearly_reports[from_date]":{
+        required: "Please select From Date",
+      },
+      "yearly_reports[to_date]":{
+        required: "Please select To Date",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
 </script>
 
 

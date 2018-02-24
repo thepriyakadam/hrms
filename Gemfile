@@ -12,7 +12,7 @@ gem 'mysql2', '~> 0.3.18'
 
 
 
-# gem 'tiny_tds'
+gem 'tiny_tds'
 gem 'activerecord-sqlserver-adapter'
 gem 'ruby-odbc'
 gem 'dbi'

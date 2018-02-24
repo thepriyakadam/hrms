@@ -319,6 +319,7 @@ GEM
     tilt (2.0.8)
     time_difference (0.5.0)
       activesupport
+    tiny_tds (2.1.1)
     ttfunk (1.4.0)
     turbolinks (5.1.0)
       turbolinks-source (~> 5.1)
@@ -417,6 +418,7 @@ DEPENDENCIES
   therubyracer
   thin (~> 1.6, >= 1.6.4)
   time_difference
+  tiny_tds
   turbolinks
   twilio-ruby (~> 4.11, >= 4.11.1)
   tzinfo-data (~> 1.2016, >= 1.2016.10)

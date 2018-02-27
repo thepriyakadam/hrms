@@ -261,8 +261,8 @@ class SelfServicesController < ApplicationController
                   COffMailer.pending(@leave_c_off).deliver_now
                 end#@on_duty_request.leave_type == "Half Day"
               else#emp_attendance.on_duty_request_id != nil
-                if @emp_attendance.working_hrs.to_s < "7:00"
-                  if @emp_attendance.working_hrs.to_s < "4:00"
+                if @emp_attendance.working_hrs.to_s < "07:00"
+                  if @emp_attendance.working_hrs.to_s < "04:00"
                     flash[:alert] = "Working hours less then 4"
                   else#working_hrs.to_s < "4:00"
                     @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Half Day",

@@ -92,6 +92,16 @@ class EmployeeLeavRequestsController < ApplicationController
     end
   end
 
+
+  def c_off_date_admin
+    @employee_id = params[:employee_id]
+    if params[:leave_type] == "Full Day" || params[:leave_type] == " "
+      @flag = true
+    else
+      @flag = false
+    end
+  end
+
   def select_form
     @employee_leav_request = EmployeeLeavRequest.new
     @employee = Employee.find_by(id: current_user.employee_id)

@@ -2363,6 +2363,15 @@ end
       get :pf_monthly_statement
       get :pf_monthly_statement_report
       post :pf_monthly_statement_report
+      get :form_3A
+      get :form_3A_report
+      post :form_3A_report
+      get :form_6A
+      get :form_6A_report
+      post :form_6A_report
+      get :form_12A
+      get :form_12A_report
+      post :form_12A_report
       get :dynamic_daterange_report
       post :dynamic_daterange_report
     end
@@ -2780,6 +2789,7 @@ end
       get :show_balancewise_report
       get :leave_request_modal
       get :c_off_date
+      get :c_off_date_admin
     end
   end
   resources :company_leavs

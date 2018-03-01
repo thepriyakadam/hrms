@@ -1,7 +1,8 @@
 # require 'query_report/helper'
 class SalaryslipsController < ApplicationController
  # include QueryReport::Helper
-
+require 'numbers_in_words'
+require 'numbers_in_words/duck_punch'
   def salary_slip_report_form
     session[:active_tab] ="PayrollManagement"
     session[:active_tab1] ="SalaryProcess"
@@ -228,8 +229,8 @@ class SalaryslipsController < ApplicationController
         :dpi              => '300',
         :margin           => {:top    => 20, # default 10 (mm)
                       :bottom => 30,
-                      :left   => 10,
-                      :right  => 10},
+                      :left   => 20,
+                      :right  => 20},
               :show_as_html => params[:debug].present?
       end
     end
@@ -1145,7 +1146,7 @@ class SalaryslipsController < ApplicationController
             @total_actual = formula_item.sum(:actual_amount)
             @total = formula_item.sum(:calculated_amount)
             formula_item_actual_amount = @total_actual
-            formula_item_calculated_amount = (@total / working_day.try(:day_in_month) * working_day.try(:payable_day))
+            formula_item_calculated_amount = (@total_actual / working_day.try(:day_in_month) * working_day.try(:payable_day))
             deducted_actual_amount = (formula_item_actual_amount / 100 * @master_esic.percentage).ceil
             deducted_calculated_amount = (formula_item_calculated_amount / 100 * @master_esic.percentage).ceil
             @salary_component = SalaryComponent.find_by(name: "ESIC")

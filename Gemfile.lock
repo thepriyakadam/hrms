@@ -210,6 +210,8 @@ GEM
       mini_portile2 (~> 2.3.0)
     nokogiri (1.8.2-x86-mingw32)
       mini_portile2 (~> 2.3.0)
+    numbers_in_words (0.4.0)
+      activesupport
     orm_adapter (0.5.0)
     paperclip (4.3.7)
       activemodel (>= 3.2.0)
@@ -319,8 +321,6 @@ GEM
     tilt (2.0.8)
     time_difference (0.5.0)
       activesupport
-    tiny_tds (2.1.1)
-    tiny_tds (2.1.1-x64-mingw32)
     ttfunk (1.4.0)
     turbolinks (5.1.0)
       turbolinks-source (~> 5.1)
@@ -400,6 +400,7 @@ DEPENDENCIES
   mime-types-data (~> 3.2016, >= 3.2016.0521)
   momentjs-rails
   mysql2 (~> 0.3.18)
+  numbers_in_words
   paperclip (~> 4.3, >= 4.3.6)
   pdfkit (~> 0.8.2)
   prawn (~> 1.3.0)
@@ -419,7 +420,6 @@ DEPENDENCIES
   therubyracer
   thin (~> 1.6, >= 1.6.4)
   time_difference
-  tiny_tds
   turbolinks
   twilio-ruby (~> 4.11, >= 4.11.1)
   tzinfo-data (~> 1.2016, >= 1.2016.10)

@@ -1207,6 +1207,9 @@ end
       post :import
       get :goal_set
       get :admin_level_goal_set
+      get :admin_level_period
+      get :admin_appraiser_evaluation_period
+      get :admin_level_appraiser_evaluation
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -1283,6 +1286,8 @@ end
       post :create_admin_level_period
       get :admin_goal_approval_period
       get :admin_level_goal_approval
+      get :admin_self_evaluation_period
+      get :admin_level_self_evaluation
     end
   end
   resources :goal_perspectives do
@@ -2358,6 +2363,15 @@ end
       get :pf_monthly_statement
       get :pf_monthly_statement_report
       post :pf_monthly_statement_report
+      get :form_3A
+      get :form_3A_report
+      post :form_3A_report
+      get :form_6A
+      get :form_6A_report
+      post :form_6A_report
+      get :form_12A
+      get :form_12A_report
+      post :form_12A_report
       get :dynamic_daterange_report
       post :dynamic_daterange_report
     end
@@ -2775,6 +2789,7 @@ end
       get :show_balancewise_report
       get :leave_request_modal
       get :c_off_date
+      get :c_off_date_admin
     end
   end
   resources :company_leavs
@@ -3220,5 +3235,7 @@ end
     get 'user_auths/meeting_plan_minutes' => 'user_auths#meeting_plan_minutes', defaults:{format: 'json'}
     get 'user_auths/particular_emp_status_wise_plan_list' => 'user_auths#particular_emp_status_wise_plan_list', defaults:{format: 'json'}
     get 'user_auths/notifications_count' => 'user_auths#notifications_count', defaults:{format: 'json'}
+    post 'user_auths/employee_wise_date' => 'user_auths#employee_wise_date', defaults:{format: 'json'}
+    post 'user_auths/holiday_setup_manager' => 'user_auths#holiday_setup_manager', defaults:{format: 'json'}
   end
 end

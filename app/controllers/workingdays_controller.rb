@@ -661,7 +661,25 @@ class WorkingdaysController < ApplicationController
         elsif current_user.role.name == 'Employee'
         end #current_user.role
       end #current_user.class
-    
+      respond_to do |format|
+        format.js
+        format.xls {render template: 'workingdays/datewise_workingday.xls.erb'}
+        format.html
+        format.pdf do
+          render pdf: 'date_report_pdf',
+                layout: 'pdf.html',
+                orientation: 'Landscape',
+                template: 'workingdays/datewise_workingday.pdf.erb',
+                # show_as_html: params[:debug].present?,
+                :page_height      => 1000,
+                :dpi              => '300',
+                :margin           => {:top    => 10, # default 10 (mm)
+                              :bottom => 10,
+                              :left   => 20,
+                              :right  => 20},
+                :show_as_html => params[:debug].present?
+          end
+        end
   end
 
   def datewise_total_workingday

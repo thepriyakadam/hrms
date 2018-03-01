@@ -163,6 +163,18 @@ class GoalBunchesController < ApplicationController
     session[:active_tab1] ="perform_cycle"
   end
 
+  def admin_self_evaluation_period
+    @periods = Period.where(status: true).group(:id)
+    @goal_bunches = GoalBunch.where(goal_confirm: true).group(:period_id)
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
+  end
+  
+  def admin_level_self_evaluation
+    @period = Period.find(params[:period_id])
+    @goal_bunches = GoalBunch.where(period_id: @period.id,goal_approval: true)
+  end
+
   def admin_goal_approval_period
     @periods = Period.where(status: true).group(:id)
     @goal_bunches = GoalBunch.where(goal_confirm: true).group(:period_id)
@@ -303,8 +315,8 @@ class GoalBunchesController < ApplicationController
   end
   
   def appraisee_comment
-    @employee = Employee.find(current_user.employee_id)
     @goal_bunch_id = GoalBunch.find(params[:id]) 
+    @employee = Employee.find(params[:emp_id])
     @goal_bunches = GoalBunch.find_by(id: @goal_bunch_id.id)
 
     @employees = Employee.where(id: @employee.id)

@@ -321,6 +321,9 @@ GEM
     tilt (2.0.8)
     time_difference (0.5.0)
       activesupport
+
+    tiny_tds (2.1.1)
+
     ttfunk (1.4.0)
     turbolinks (5.1.0)
       turbolinks-source (~> 5.1)
@@ -430,6 +433,3 @@ DEPENDENCIES
   wirble
   wkhtmltopdf-binary (~> 0.9.9.3)
   yaml_db
-
-BUNDLED WITH
-   1.16.1

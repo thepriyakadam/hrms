@@ -187,7 +187,8 @@ class SelfServicesController < ApplicationController
   def holiday_setup
     # byebug
     @day = params[:day]
-    @employee_attendances = EmployeeAttendance.where(present: 'H',employee_id: current_user.employee_id).order("day ASC")
+    # @employee_attendances = EmployeeAttendance.where(present: 'H',employee_id: current_user.employee_id).order("day ASC")
+    @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id).where.not(holiday_id: nil).order("day ASC")
     session[:active_tab] = "EmployeeSelfService"
   end
 
@@ -260,8 +261,8 @@ class SelfServicesController < ApplicationController
                   COffMailer.pending(@leave_c_off).deliver_now
                 end#@on_duty_request.leave_type == "Half Day"
               else#emp_attendance.on_duty_request_id != nil
-                if @emp_attendance.working_hrs.to_s < "7:00"
-                  if @emp_attendance.working_hrs.to_s < "4:00"
+                if @emp_attendance.working_hrs.to_s < "07:00"
+                  if @emp_attendance.working_hrs.to_s < "04:00"
                     flash[:alert] = "Working hours less then 4"
                   else#working_hrs.to_s < "4:00"
                     @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Half Day",

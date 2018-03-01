@@ -431,7 +431,7 @@ def is_there(i)
 
   def is_available_coff?
     flag = false
-    leave_records = LeaveRecord.where(employee_id: self.employee_id).where.not(status: "Cancelled")
+    leave_records = LeaveRecord.where(employee_id: self.employee_id).where.not(status: "Cancelled").where.not(status: "Rejected")
     leave_records.each do |l|
       for i in self.start_date.to_date..self.start_date.to_date
         if i ==  l.day

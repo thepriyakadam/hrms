@@ -20,7 +20,10 @@
         <Cell ss:Index="10"><Data ss:Type="String">Align to supervisor</Data></Cell>
         <Cell ss:Index="11"><Data ss:Type="String">Self Comment</Data></Cell>
         <Cell ss:Index="12"><Data ss:Type="String">Self Rating</Data></Cell>
-        <Cell ss:Index="13"><Data ss:Type="String">Goal Rating ID</Data></Cell>
+        <Cell ss:Index="13"><Data ss:Type="String">Appraiser Comment</Data></Cell>
+        <Cell ss:Index="14"><Data ss:Type="String">Appraiser Rating</Data></Cell>
+        <Cell ss:Index="15"><Data ss:Type="String">Reviewer Comment</Data></Cell>
+        <Cell ss:Index="16"><Data ss:Type="String">Goal Rating ID</Data></Cell>
       </Row>
 
         <% i = 0 %>
@@ -33,9 +36,9 @@
             <Cell ss:Index="3"><Data ss:Type="String"><%= g.period_id %></Data></Cell>
             <Cell ss:Index="4"><Data ss:Type="String"><%= type = g.goal_type %></Data></Cell>
             <% if type == "Goal" %>
-            <Cell ss:Index="5"><Data ss:Type="String"><%= g.goal_perspective.try(:name) %></Data></Cell>
+            <Cell ss:Index="5"><Data ss:Type="String"><%= g.goal_perspective_id %></Data></Cell>
             <% else %>
-            <Cell ss:Index="5"><Data ss:Type="String"><%= g.attribute_master.try(:name) %></Data></Cell>
+            <Cell ss:Index="5"><Data ss:Type="String"><%= g.attribute_master_id %></Data></Cell>
             <% end %>
 
             <Cell ss:Index="6"><Data ss:Type="String"><%= g.goal_measure %></Data></Cell> 
@@ -45,7 +48,10 @@
             <Cell ss:Index="10"><Data ss:Type="String"><%= g.aligned %></Data></Cell>
             <Cell ss:Index="11"><Data ss:Type="String"><%= g.try(:appraisee_comment) %></Data></Cell>
             <Cell ss:Index="12"><Data ss:Type="String"><%= g.try(:appraisee_rating).try(:value) %></Data></Cell>
-            <Cell ss:Index="13"><Data ss:Type="String"><%= g.try(:id) %></Data></Cell>
+            <Cell ss:Index="13"><Data ss:Type="String"><%= g.try(:appraiser_comment) %></Data></Cell>
+            <Cell ss:Index="14"><Data ss:Type="String"><%= g.try(:appraiser_rating).try(:value) %></Data></Cell>
+            <Cell ss:Index="15"><Data ss:Type="String"><%= g.try(:reviewer_comment) %></Data></Cell>
+            <Cell ss:Index="16"><Data ss:Type="String"><%= g.try(:id) %></Data></Cell>
           </Row><!-- Row -->
         <% end %><!-- slip -->
       </Table>

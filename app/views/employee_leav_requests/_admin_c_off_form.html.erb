@@ -21,7 +21,7 @@
 
         <div class="col-sm-3">
           <div class="form-group required">
-          <%= f.select :leave_type, ['Full Day','Half Day'],{label:"Leave Type",include_blank: "Select Leave Type"},{onchange:"var a={leave_type:$(this).val()}; $.get('/employee_leav_requests/c_off_date',a,function(response){});",class: 'form-control'} %>
+          <%= f.select :leave_type, ['Full Day','Half Day'],{label:"Leave Type",include_blank: "Select Leave Type"},{onchange:"var a={leave_type:$(this).val(),employee_id:$('#employee_leav_request_employee_id').val()}; $.get('/employee_leav_requests/c_off_date',a,function(response){});",class: 'form-control'} %>
           </div>
         </div>
 

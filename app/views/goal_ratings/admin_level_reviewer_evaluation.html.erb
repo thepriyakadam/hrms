@@ -17,14 +17,14 @@
           <tr>
             <td><%= e.employee.manual_employee_code %></td>
             <td><%= full_name(e.employee) %></td>
-            <td><%= e.employee.company_location.try(:name) %> - <%= e.employee.department.try(:name) %></td> 
-            <td><%= link_to 'Goals For Approval', goal_approval_goal_bunches_path(id: e.id,emp_id: e.employee_id,period_id: @period.id) ,class: 'btn btn-xs btn-info' %></td>
+            <td><%= e.employee.company_location.try(:name) %> - <%= e.employee.department.try(:name) %></td>
+            <td><%= link_to 'Reviewer Comment', reviewer_comment_goal_bunches_path(id: e,emp_id: e.employee_id,period_id: e.period_id) ,class: 'btn btn-xs btn-info' %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
     <br>
-    <%= link_to 'Back',admin_goal_approval_period_goal_bunches_path,class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+    <%= link_to 'Back',admin_reviewer_evaluation_period_goal_ratings_path,class: 'btn btn-sm btn-default fa fa-arrow-left'%>
   </div>
 </div>
 

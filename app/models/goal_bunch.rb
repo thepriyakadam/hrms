@@ -19,56 +19,90 @@ class GoalBunch < ActiveRecord::Base
   def self.import(file)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
-        
-        # employee_code = spreadsheet.cell(i,'B').to_i
-        # if employee_code == 0
-        #   employee_code = spreadsheet.cell(i,'B')
-        # else
-        #   employee_code = spreadsheet.cell(i,'B').to_i
-        # end
-        # emp = Employee.find_by(manual_employee_code: employee_code)
-        # period_name = spreadsheet.cell(i,'C')
-        # period = Period.find_by(name: period_name)
-        # if period == nil
-        #   period_name = spreadsheet.cell(i,'C')
-        #   @period = Period.create(name: period_name,status: true)
-        #   period_id = @period.id
-        # else
-        #   period_id = period.id
-        # end
-
-        # type = spreadsheet.cell(i,'D')
-        #   perspective = spreadsheet.cell(i,'E')
-        #   measure = spreadsheet.cell(i,'F')
-        #   target = spreadsheet.cell(i,'G')
-        #   weightage = spreadsheet.cell(i,'H')
-        #   align_to_supervisor = spreadsheet.cell(i,'I')
-        #   employee_id = emp.id
-        #   #period_id = period_id
+        self_comment = spreadsheet.cell(i,'k')
+        if self_comment == nil
+          self_comment = "NA"
+        else
           self_comment = spreadsheet.cell(i,'k')
-          self_rating = spreadsheet.cell(i,'L')
-          goal_rating_id = spreadsheet.cell(i,'M')
+        end
+        self_rating = spreadsheet.cell(i,'L')
+        goal_rating_id = spreadsheet.cell(i,'M')
 
-          # @goal_bunch = GoalBunch.where("employee_id = ? AND period_id = ?" , employee_id ,period_id)
-          #   if @goal_bunch == nil
-          #     goal_bunch = GoalBunch.create(period_id: period_id,employee_id: employee_id)
-          #   else
-          #     goal_bunch = GoalBunch.where(period_id: period_id,employee_id: employee_id).take
-          #   end
-     
+        if goal_rating_id == nil
+        else    
           int_rating = self_rating.to_i
           rating = int_rating.to_s
-        @self_rating = Rating.find_by(value: rating)
-        if @self_rating.nil?
-          @self_rating_id = nil
-        else
-          @self_rating_id = @self_rating.id
-        end
+          if rating == nil
+            @self_rating_id = 0
+          else
+            @self_rating = Rating.find_by(value: rating)
+            if @self_rating == nil
+              rating = Rating.create(value: self_rating,status: true)
+              @self_rating_id = rating.id
+            else
+              @self_rating_id = @self_rating.id
+            end
+          end#rating == nil
 
-        goal_rating = GoalRating.find_by(id: goal_rating_id)
-        if goal_rating_id.to_i == goal_rating.id
-          goal_rating.update(appraisee_comment: self_comment,appraisee_rating_id: @self_rating_id)
+          goal_rating = GoalRating.find_by(id: goal_rating_id)
+          if goal_rating_id.to_i == goal_rating.id
+            goal_rating.update(appraisee_comment: self_comment,appraisee_rating_id: @self_rating_id)
+          end
+        end# goal_rating_id == nil
+    end#do
+  end
+
+   def self.import_appraiser_evaluation(file)
+     spreadsheet = open_spreadsheet(file)
+     (2..spreadsheet.last_row).each do |i|
+          appraiser_comment = spreadsheet.cell(i,'M')
+          if appraiser_comment == nil
+            appraiser_comment = "NA"
+          else
+            appraiser_comment = spreadsheet.cell(i,'M')
+          end
+
+          appraiser_rating = spreadsheet.cell(i,'N')
+          goal_rating_id = spreadsheet.cell(i,'O')
+
+          if goal_rating_id == nil
+          else 
+            int_rating = appraiser_rating.to_i
+            rating = int_rating.to_s
+            if rating == nil
+              @appraiser_rating_id = 0
+            else
+              @appraiser_rating = Rating.find_by(value: rating)
+              if @appraiser_rating == nil
+                rating = Rating.create(value: appraiser_rating,status: true)
+                @appraiser_rating_id = rating.id
+              else
+                @appraiser_rating_id = @appraiser_rating.id
+              end
+            end#rating == nil
+            goal_rating = GoalRating.find_by(id: goal_rating_id)
+            if goal_rating_id.to_i == goal_rating.id
+              goal_rating.update(appraiser_comment: appraiser_comment,appraiser_rating_id: @appraiser_rating_id)
+            end
+          end#goal_rating_id == nil
+      end#do
+    end
+
+  def self.import_reviewer_evaluation(file)
+    spreadsheet = open_spreadsheet(file)
+     (2..spreadsheet.last_row).each do |i|
+      reviewer_comment = spreadsheet.cell(i,'O')
+        if reviewer_comment == nil
+          reviewer_comment = "NA"
+        else
+          reviewer_comment = spreadsheet.cell(i,'O')
         end
+        goal_rating_id = spreadsheet.cell(i,'P')
+        if goal_rating_id == nil
+        else 
+          goal_rating = GoalRating.find_by(id: goal_rating_id)
+          goal_rating.update(reviewer_comment: reviewer_comment)
+        end#goal_rating_id == nil
     end#do
   end
 

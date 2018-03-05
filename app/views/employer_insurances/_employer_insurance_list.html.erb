@@ -23,10 +23,12 @@
             <%= link_to '', edit_employer_insurance_path(employer_insurance) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '',  employer_insurance, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
             <%= link_to '', is_confirm_employer_insurances_path(employer_insurance: employer_insurance),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-             <%= link_to '',employer_insurance,class: 'btn btn-xs btn-default fa fa-eye' %>
+             <%= link_to '',employer_insurances_modal_employer_insurances_path(employer_insurance),class: 'btn btn-xs btn-default fa fa-eye',remote:true %>
           <% end %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<div id="Mymodal" class="modal fade">

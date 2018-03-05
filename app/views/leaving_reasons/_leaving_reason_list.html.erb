@@ -1,9 +1,11 @@
+<br>
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>  
       <th>Code</th>
       <th>Name</th>
       <th>Description</th>
+      <th>Status</th>
       <th>Action</th>
  
   <tbody>
@@ -12,14 +14,10 @@
         <td><%= leaving_reason.code %></td>
         <td><%= leaving_reason.name %></td>
         <td><%= leaving_reason.description %></td>
+        <td><%= leaving_reason.is_confirm ? "Active" : "Inactive" %></td>
         <td>
-          <% if leaving_reason.is_confirm == true %>
-            <small class= "label label-primary">Confirmed</small>
-          <% else %>
             <%= link_to '', edit_leaving_reason_path(leaving_reason),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  leaving_reason, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
-            <%= link_to '', is_confirm_leaving_reasons_path(leaving_reason: leaving_reason),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-          <% end %>
         </td>
       </tr>
     <% end %>

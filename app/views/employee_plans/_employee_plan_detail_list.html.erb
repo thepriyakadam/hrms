@@ -1,0 +1,38 @@
+<br>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Employee</th>
+      <th>From Date</th>
+      <th>To Date</th>
+      <th>From Time</th>
+      <th>To Time</th>
+      <th>Meeting With</th>
+      <th>Location</th>
+      <th>Meeting Agenda</th>
+      <th>Conform</th>
+      <th>Status</th>
+      <th>Current Status</th>
+      <th>Manager</th>
+  <tbody>
+    <% @employee_plans.each do |employee_plan| %>
+      <tr>
+        <td><%= employee_plan.employee_id %></td>
+        <td><%= employee_plan.from_date%></td>
+        <td><%= employee_plan.to_date %></td>
+        <td><%= employee_plan.from_time %></td>
+        <td><%= employee_plan.to_time %></td>
+        <td><%= employee_plan.meeting_with %></td>
+        <td><%= employee_plan.location %></td>
+        <td><%= employee_plan.meeting_agenda %></td>
+        <td><%= employee_plan.confirm %></td>
+        <td><%= employee_plan.status %></td>
+        <td><%= employee_plan.current_status %></td>
+        <td><%= employee_plan.manager_id %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<div id="modal_employee_plan_detail" class="modal fade"></div>

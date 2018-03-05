@@ -3,9 +3,14 @@ class OdRequestMailer < ApplicationMailer
     @od_request = request
     @manager = Employee.find(@od_request.employee.try(:manager_id))
     @emp = Employee.find_by(id: request.employee_id)
+    if @emp == @manager
+    mail(to: 'time@sganalytics.com',cc: @emp.company_location.email, subject: 'On duty request pending for approval')
+    else
     email = @manager.email
-    mail(to: email ,cc: @emp.company_location.email, subject: 'OD Request')
-	end
+
+    mail(to: email ,cc: @emp.company_location.email, subject: 'On Duty request pending for approval')
+    end
+  end
 
   def first_approve_final(request)
     @od_request = request
@@ -14,7 +19,7 @@ class OdRequestMailer < ApplicationMailer
     @manager = Employee.find(@od_request.first_reporter_id)
     @emp = Employee.find_by(id: request.employee_id)
     email = @employee.try(:email)
-    mail(to: email ,cc: @emp.company_location.email, subject: 'OD Final Approved')
+    mail(to: email ,cc: @emp.company_location.email, subject: 'Your on duty request has been approved')
   end
 
 	def first_approve(request)
@@ -29,10 +34,10 @@ class OdRequestMailer < ApplicationMailer
   def second_approve(request)
     @od_request = request
     @employee = Employee.find(@od_request.employee_id)
-    @manager = Employee.find(@od_request.second_reporter_id)
+    @manager = Employee.find(@od_request.first_reporter_id)
     @emp = Employee.find_by(id: request.employee_id)
     email = @employee.try(:email)
-    mail(to: email ,cc: @emp.company_location.email, subject: 'OD Approved Successfully')
+    mail(to: email ,cc: @emp.company_location.email, subject: 'Your on duty request has been approved')
   end
 
   def first_reject(request)
@@ -57,8 +62,12 @@ class OdRequestMailer < ApplicationMailer
     @employee = Employee.find(@od_request.employee_id)
     @manager = Employee.find(@od_request.first_reporter_id)
     @emp = Employee.find_by(id: request.employee_id)
+    if @emp == @manager
+    mail(to: 'time@sganalytics.com',cc: @emp.company_location.email, subject: 'On Duty request cancellation by your direct reportee')
+    else
     email = @manager.try(:email)
-    mail(to: email ,cc: @emp.company_location.email, subject: 'OD Cancelled By Employee')
+    mail(to: email ,cc: @emp.company_location.email, subject: 'On Duty request cancellation by your direct reportee')
+  end
   end
 
   def cancel_after_approve(particular_od_record,current_emp)

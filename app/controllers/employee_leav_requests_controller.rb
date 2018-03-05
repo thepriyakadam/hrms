@@ -1,8 +1,8 @@
-require 'query_report/helper'  # need to require the helper
+# require 'query_report/helper'  # need to require the helper
 class EmployeeLeavRequestsController < ApplicationController
   before_action :set_employee_leav_request, only: [:show, :edit,:update, :destroy]
-  load_and_authorize_resource
-  include QueryReport::Helper  # need to include it
+  # ##load_and_authorize_resource
+  # include QueryReport::Helper  # need to include it
 
   def index
     @employee = Employee.find(current_user.employee_id)
@@ -32,14 +32,6 @@ class EmployeeLeavRequestsController < ApplicationController
   def edit
   end
 
-  def select_checkbox
-    if params[:leave_type] == "Full/Half" || params[:leave_type] == "Half Day"
-      @flag = true
-    else
-      @flag = false
-    end
-  end
-
   def from_hr
     @employee = Employee.find(params[:format])
     @employee_leav_request = EmployeeLeavRequest.new
@@ -59,6 +51,40 @@ class EmployeeLeavRequestsController < ApplicationController
     @leav_id = @leav_category_id.to_s.split('')
 
     if params[:leav_category_id] == @leav_id.inject{|n| n}
+      @flag = true
+    else
+      @flag = false
+    end
+  end
+
+  def admin_c_off_form
+
+    @employee_leav_request = EmployeeLeavRequest.new
+    employee = params[:employee_id]
+    @employee = Employee.find_by(id: employee)
+    @leave_id = params[:leav_category_id]
+
+    leav_category = LeavCategory.find_by(code: "C.Off")
+    @leav_category_id = leav_category.id
+    @leav_id = @leav_category_id.to_s.split('')
+
+    if params[:leav_category_id] == @leav_id.inject{|n| n}
+      @flag = true
+    else
+      @flag = false
+    end
+  end
+
+  def select_checkbox
+    if params[:leave_type] == "Full/Half" || params[:leave_type] == "Half Day"
+      @flag = true
+    else
+      @flag = false
+    end
+  end
+
+  def c_off_date
+    if params[:leave_type] == "Full Day" || params[:leave_type] == " "
       @flag = true
     else
       @flag = false
@@ -94,20 +120,26 @@ class EmployeeLeavRequestsController < ApplicationController
 
     @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ? AND is_active = ?', @employee.id, @employee_leav_request.leav_category_id,true).take
     #c_off
+    
     if @leav_category.id == leav_category.id
 
       end_date = params['employee_leav_request']['start_date']
-      @leave_c_off_id = params[:leave_c_off][:c_off_date]
+      
+        @leave_c_off_id = params[:common][:c_off_date]
+
   #nil fields
         if end_date == "" || @leave_c_off_id == "" || @leave_c_off_id == nil
           flash[:alert] = "Please Fill mendatory Fields"
         else#end_date == nil
-          if  start_date.to_date >= payroll_period.from.to_date && start_date.to_date <= payroll_period.to.to_date        
-              @leave_c_off_id = params[:leave_c_off][:c_off_date]
+          #if  start_date.to_date >= payroll_period.from.to_date && start_date.to_date <= payroll_period.to.to_date 
+              @leave_c_off_id = params[:common][:c_off_date]
               @leave_c_off = LeaveCOff.find_by(id: @leave_c_off_id)
             if start_date.to_date > @leave_c_off.c_off_date.to_date
-                if @leave_c_off.expiry_date < Date.today || @leave_c_off.expiry_date < start_date.to_date
+                if @leave_c_off.expiry_date < start_date.to_date
                   flash[:alert] = "Compensatory off expired for this day"
+                elsif @leave_c_off.c_off_date > start_date.to_date
+                  flash[:alert] = "Please check Compensatory off day"
+
                 elsif @employee_leav_request.is_available_coff?
                   flash[:alert] = "Your Leave Request already has been sent"
                 elsif @employee_leav_request.is_salary_processed_coff?
@@ -118,13 +150,19 @@ class EmployeeLeavRequestsController < ApplicationController
                   @employee_leav_request.first_reporter_id = @employee.manager_id
                   @employee_leav_request.is_pending = true
                   @employee_leav_request.current_status = 'Pending'
-                  if @leave_c_off.leave_count == 1.0 || @leave_c_off.leave_count == 0.0
-                    @employee_leav_request.leave_count = 1
+                  # if @leave_c_off.leave_count == 1.0 || @leave_c_off.leave_count == 0.0
+                  
+                  if params[:flag] == "Full"
+                    @employee_leav_request.leave_count = 1.0
                     @employee_leav_request.leave_type = "Full Day"
                   else
                     @employee_leav_request.leave_count = 0.5
                     @employee_leav_request.leave_type = "Half Day"
                   end
+                  # else
+                  #   @employee_leav_request.leave_count = 0.5
+                  #   @employee_leav_request.leave_type = "Half Day"
+                  # end
                     @employee_leav_request.is_cancelled = false
                     @employee_leav_request.is_first_approved = false
                     @employee_leav_request.is_first_rejected = false
@@ -137,26 +175,28 @@ class EmployeeLeavRequestsController < ApplicationController
                     @employee_leav_request.save
                     @employee_leav_request.leave_record_create_coff(@employee_leav_request)
                     unless @emp_leave_bal.nil?
-                      if @employee_leav_request.leave_count == 0.5
+                      # if @employee_leav_request.leave_count == 0.5
+                      #   no_of_leave = @emp_leave_bal.no_of_leave.to_f - @employee_leav_request.leave_count.to_f
+                      #   @emp_leave_bal.update(no_of_leave: no_of_leave)
+                      # else
                         no_of_leave = @emp_leave_bal.no_of_leave.to_f - @employee_leav_request.leave_count.to_f
                         @emp_leave_bal.update(no_of_leave: no_of_leave)
-                      else
-                        no_of_leave = @emp_leave_bal.no_of_leave.to_f - @employee_leav_request.leave_count.to_f
-                        @emp_leave_bal.update(no_of_leave: no_of_leave)
-                      end
+                      # end
     #emp_leav_bal_id
                         @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                     end
                     flash[:notice] = "Created successfully!"
-                      LeaveRequestMailer.pending(@employee_leav_request).deliver_now        
-                end
+                       LeaveRequestMailer.pending(@employee_leav_request).deliver_now    
+                end#@leave_c_off.expiry_date < start_date.to_date
 
-              else
+              else#start_date.to_date > @leave_c_off.c_off_date.to_date
                 flash[:alert] = "C.Off Not Available For #{start_date}"
               end#c_off_date
-            else
-              flash[:alert] = "Please Select Date Within Payroll Period"
-            end
+
+            # else#start_date.to_date >= payroll_period.from.to_date && start_date.to_date <= payroll_period.to.to_date 
+            #   flash[:alert] = "Please Select Date Within Payroll Period"
+            # end
+
           end#end_date == nil
             if current_user.employee_id == @employee_leav_request.employee_id
               redirect_to employee_leav_requests_path
@@ -177,17 +217,18 @@ class EmployeeLeavRequestsController < ApplicationController
       payroll_period = PayrollPeriod.where(status: true).take 
        @leav_category = LeavCategory.find_by(id: @employee_leav_request.leav_category_id)
 
-      if payroll_period.nil?
-        flash[:alert] = "Payroll Period Not set!"
-        redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-      else
+      # if payroll_period.nil?
+      #   flash[:alert] = "Payroll Period Not set!"
+      #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+      # else
   #nil fields
         if start_date == "" || end_date == ""
           flash[:alert] = "Please fill all mandatory fields "
         redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
         else
-            if  start_date.to_date >= payroll_period.from.to_date && end_date.to_date <= payroll_period.to.to_date
-            # if start_date == payroll_period.from.to_date..payroll_period.to.to_date && end_date == payroll_period.from.to_date..payroll_period.to.to_date
+
+            # if  start_date.to_date >= payroll_period.from.to_date && end_date.to_date <= payroll_period.to.to_date
+            
 
               if @employee_leav_request.end_date == nil 
                 flash[:alert] = "please Fill all mendatory fields"
@@ -220,6 +261,7 @@ class EmployeeLeavRequestsController < ApplicationController
                 if @employee_leav_request.leave_type == 'Full Day'
                   @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 1
                 elsif @employee_leav_request.leave_type == 'Full/Half'
+
                   if @employee_leav_request.first_half == true && @employee_leav_request.last_half == true
                     @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f
                   elsif @employee_leav_request.first_half == true
@@ -271,14 +313,13 @@ class EmployeeLeavRequestsController < ApplicationController
                               total
                               @employee_leav_request.update(leave_count: total)
 
-
                               @employee_leav_request.minus_leave(@employee_leav_request)
                         
                         if @employee.manager.email.nil? or @employee.manager.email == ""
                           flash[:notice] = "Send request without email."
                         else
                           flash[:notice] = 'Leave Request sent successfully.'
-                          LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                           LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                         end
                         redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
 
@@ -306,7 +347,7 @@ class EmployeeLeavRequestsController < ApplicationController
                           #emp_leav_bal_id
                               @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                               @employee_leav_request.leave_record_create(@employee_leav_request)
-                          @employee_leav_request.create_attendance_leave
+                              @employee_leav_request.create_attendance_leave
 
                               # @leave_record = LeaveRecord.last
                               @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
@@ -331,6 +372,7 @@ class EmployeeLeavRequestsController < ApplicationController
                           elsif @leav_category.from.nil? or @leav_category.to.nil?
                             @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
                             if @employee_leav_request.save
+                              #byebug
                         #emp_leav_bal_id
                               @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                             #leave_record
@@ -341,9 +383,9 @@ class EmployeeLeavRequestsController < ApplicationController
                               @leave_record = LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id)
                               total = 0
                               @leave_record.each do |l|
-                                total = total + l.count
+                                total = total.to_f + l.count.to_f
                               end
-                              total
+                              total.to_f
                               @employee_leav_request.update(leave_count: total)
 
 
@@ -352,7 +394,7 @@ class EmployeeLeavRequestsController < ApplicationController
                                 flash[:notice] = 'Send request without email.'
                               else
                                 flash[:notice] = 'Leave Request sent successfully..'
-                                LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                                 LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                               end
                               redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
                             else
@@ -391,7 +433,7 @@ class EmployeeLeavRequestsController < ApplicationController
                                 flash[:notice] = 'Send request without email.'
                               else
                                 flash[:notice] = 'Leave Request sent successfully !!'
-                                LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                                 LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                               end
                               redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
                             else
@@ -421,7 +463,7 @@ class EmployeeLeavRequestsController < ApplicationController
                                 flash[:notice] = 'Send request without email.'
                               else
                                 flash[:notice] = 'Leave Request sent successfully !'
-                                LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                                 LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                               end
                               redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
                             else
@@ -453,7 +495,7 @@ class EmployeeLeavRequestsController < ApplicationController
                               flash[:notice] = 'Send request without email.'
                             else
                               flash[:notice] = 'Leave Request sent successfully !'
-                              LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+                              # LeaveRequestMailer.pending(@employee_leav_request).deliver_now
                             end
                             redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
                           else
@@ -481,18 +523,18 @@ class EmployeeLeavRequestsController < ApplicationController
                   end
                 else
                 end
-            else #start_date == payroll_period.from.to_date
-               if current_user.employee_id == @employee_leav_request.employee_id
-                flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+              if current_user.employee_id == @employee_leav_request.employee_id
                 redirect_to employee_leav_requests_path
               else
-                flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
                 redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
                 #redirect_to employee_list_on_duty_requests_path
               end  
-            end
+              
+            # else #start_date == payroll_period.from.to_date
+            #   flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+            # end
           end#start_date == nil
-      end#if payroll_period.nil?
+      # end#if payroll_period.nil?
     end#c_off
   end
 
@@ -518,28 +560,20 @@ class EmployeeLeavRequestsController < ApplicationController
   end
 
   def approved_or_rejected_leave_request
-    if current_user.class == Group
-      @pending_employee_leav_requests = EmployeeLeavRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false)
-      @first_approved_employee_leav_requests = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false)
-    else
-      @pending_employee_leav_requests = EmployeeLeavRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false, first_reporter_id: current_user.employee_id)
+   
+      @pending_employee_leav_requests = EmployeeLeavRequest.where("current_status = ? OR current_status = ?", "Pending","FirstApproved").where(first_reporter_id: current_user.employee_id)
       @first_approved_employee_leav_requests = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false, second_reporter_id: current_user.employee_id)
-    end
+   
     # @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
     session[:active_tab] ="LeaveManagement"
     session[:active_tab1] ="LeaveProcess"
   end
 
   def all_leave_request_list
-    if current_user.class == Group
-      @first_level_request_lists = EmployeeLeavRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false)
-      @second_level_request_lists = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false)
-    else
-      @first_level_request_lists = EmployeeLeavRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false)
-      @emp_leav_req = EmployeeLeavRequest.where.not(second_reporter_id: false).pluck(:second_reporter_id)
-      @second_level_request_lists = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,second_reporter_id: @emp_leav_req)
-    end
-    # @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
+    @first_level_request_lists = EmployeeLeavRequest.where(is_pending: true, is_second_approved: false,is_first_rejected: false, is_cancelled: false, is_second_rejected: false)
+    @emp_leav_req = EmployeeLeavRequest.where.not(second_reporter_id: false).pluck(:second_reporter_id)
+    @second_level_request_lists = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,second_reporter_id: @emp_leav_req)
+  # @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
     session[:active_tab] ="LeaveManagement"
     session[:active_tab1] ="LeaveProcess"
   end
@@ -709,6 +743,18 @@ class EmployeeLeavRequestsController < ApplicationController
           @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Supervisor'
+        if @company_id == "" || @location == "" || @department == ""
+          @emp = Employee.find(current_user.employee_id)
+          @employees = @emp.subordinates
+          @employee_leav_request_id = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+       else
+          @emp = Employee.find(current_user.employee_id)
+          @employees = @emp.subordinates
+          @employee_leav_request_id = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        end
+      elsif current_user.role.name == 'CEO'
         if @company_id == "" || @location == "" || @department == ""
           @emp = Employee.find(current_user.employee_id)
           @employees = @emp.subordinates
@@ -900,12 +946,12 @@ class EmployeeLeavRequestsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
+# Use callbacks to share common setup or constraints between actions.
   def set_employee_leav_request
     @employee_leav_request = EmployeeLeavRequest.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+# Never trust parameters from the scary internet, only allow the white list through.
   def employee_leav_request_params
     params.require(:employee_leav_request).permit(:present_status,:first_half,:last_half,:current_status,:current_status1,:employee_id, :leav_category_id, :leave_type, :date_range, :start_date, :end_date, :reason)
   end

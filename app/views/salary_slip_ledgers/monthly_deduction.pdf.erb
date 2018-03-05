@@ -9,38 +9,47 @@
 <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
 <thead>
   <tr>
-        <td colspan="5">
-         <% if current_user.company_location.company.company_logo == nil %>
+    <td colspan="7">
+      <% if current_user.company_location.company.company_logo == nil %>
       <% else %>
         <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
-        <%end%>
-          <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>.<br> <%= @month %> <%= @year %>  </center>
-        </td>           
-       </tr>
- <thead>
+      <%end%>
+        <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>. <br> <strong>Advance EMI</strong></center>
+          <center><strong><%= @from_date.strftime("%B-%Y") %> to <%= @to_date.strftime("%B-%Y") %></strong></center>
+    </td>        
+   </tr>
       <tr>
+        <th>Sr. No.</th>
         <th>ID</th>
         <th>Employee Name</th>
         <th>Department</th>
-        <th>Other Component</th>
-        <th>Actual Amount</th>
+        <th>EMI</th>
+        <th>EMI Amount</th>
+        <th>Month-Year</th>
     </tr>
     </thead>
     <tbody>
+    <% i = 0 %>
+     <% @amount = 0 %>
       <% @salaryslips.each do |slip| %>
         <% employee = slip.employee %>
         <tr>
+          <td><%= i = i + 1 %></td>
           <td><%= slip.employee.manual_employee_code %></td>
           <td><%= employee.try(:first_name) %> <%= employee.try(:middle_name) %> <%= employee.try(:last_name) %></td>
           <td><%= employee.company_location.try(:name) %> - <%= employee.department.try(:name) %></td>
             <% @deducted_salaryslip = slip.salaryslip_components %>
             <% @deducted_salaryslip.each do |item| %>
               <% if item.other_component_name == "Advance" %>
-                <td><%= item.other_component_name %></td>
-                <td><%= item.actual_amount.round %></td>
+                <td><%= slip.month %> - <%= slip.year %></td>
+                <td><%= amount = item.actual_amount.round %></td>
               <% end %>
+              <% @amount = @amount.to_f + amount.to_f %>
             <% end %>
+          <td><%= slip.month %>-<%= slip.year %></td>
         </tr>
-      <% end %>
+      <% end %><!-- deducted items -->
+          <tr><td colspan="5">Total</td>
+          <th colspan="2"><%= @amount %></th></tr>
     </tbody>
   </table>

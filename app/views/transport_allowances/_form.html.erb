@@ -1,0 +1,46 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Transport Allowance</h3>
+  </div><!-- /.box-header -->
+  
+  <div class="box-body">
+    <%= bootstrap_form_for(@transport_allowance,html: {id: 'transport'}) do |f| %>
+        <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.select :employee_id, employee_list_by_company_location, {label: 'Employee ',include_blank: " Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
+           </div>
+        </div>
+            
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :amount %>
+           </div>
+          </div>
+
+          <div class="col-sm-3">
+            <label>Option </label>
+            <div class="field">
+              <%= f.check_box :option, label: 'Yes'%>
+            </div>
+          </div>
+            
+         <div class="col-sm-3"> 
+          <div class="field">
+            <%= f.label :status %><br>
+            <%= f.check_box :status %>
+          </div>
+        </div>  
+      </div>
+
+      <div class="row">
+          <div class="col-sm-6">
+         <label></label>
+          <div class="actions">
+            <%= f.submit "New Transport Allowance",:class => class_name, data: { disable_with: data_info } %>
+            <%= link_to 'Back', transport_allowances_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+          </div>
+        </div>
+        </div>
+        <% end %>

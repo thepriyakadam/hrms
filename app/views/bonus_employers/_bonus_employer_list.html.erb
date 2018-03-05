@@ -25,10 +25,13 @@
             <%= link_to '', edit_bonus_employer_path(bonus_employer) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '',  bonus_employer, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
             <%= link_to '', is_confirm_bonus_employers_path(bonus_employer: bonus_employer),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-            <%= link_to '', bonus_employer,class: 'btn btn-xs btn-eye fa fa-eye' %>
+           <%= link_to '', bonus_employers_modal_bonus_employers_path(bonus_employer), class: 'btn btn-xs btn-default fa fa-eye',remote: true%>
           <% end %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+
+<div id="Mymodal" class="modal fade"></div>

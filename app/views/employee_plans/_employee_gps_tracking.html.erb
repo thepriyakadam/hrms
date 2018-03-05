@@ -1,0 +1,53 @@
+<div class="box">
+  <div class="box-header">
+    <div class="box-body">
+      <div class="pull-right">
+        <%= link_to " Excel Report ", employee_gps_tracking_employee_plans_path(employee_id: params[:employee_plan][:employee_id],format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+        <%= link_to " Print Report ", employee_gps_tracking_employee_plans_path(employee_id: params[:employee_plan][:employee_id],format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+      </div><br /> <br />
+      <!-- <div class="col-sm-6"> -->
+        <table id="example6" class="table table-bordered table-hover table-condensed">
+          <thead>
+           <!-- <tr><td colspan="3"><center>First Level Request</center></td></tr> -->
+            <tr>
+              <th>Sr.No.</th>
+              <th>From Date</th>
+              <th>To Time</th>
+              <th>Location</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <%i = 0%>
+            <% @emp_report.try(:each) do |employee_plan| %>
+              <tr>
+                <td><%= i = i+1 %></td>
+                <td><%= employee_plan.date%></td>
+                <td><%= employee_plan.time %></td>
+                <td><%= employee_plan.location %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+  </div>
+</div>
+<div id="modal_employee_plan_detail" class="modal fade"></div>
+<div id="employee_feedback" class="modal fade"></div>
+<div id="employee_reason" class="modal fade"></div>
+<div id="employee_plan_detail_list" ></div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example7').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

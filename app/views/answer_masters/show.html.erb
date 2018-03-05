@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @answer_master.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @answer_master.name %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @answer_master.status %>
+</p>
+
+<%= link_to 'Edit', edit_answer_master_path(@answer_master) %> |
+<%= link_to 'Back', answer_masters_path %>

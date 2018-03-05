@@ -12,14 +12,23 @@ class MonthlyExpence < ActiveRecord::Base
     spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
 
-        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'A').to_i)
+        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        if @employee.nil?
+        else
         employee_id = @employee.id
-        @expence = ExpencessType.find_by_name(spreadsheet.cell(i,'B'))
-        expencess_type_id = @expence.id
-        amount = spreadsheet.cell(i,'C')
-        expence_date = spreadsheet.cell(i,'D')
+        @expencess_type = ExpencessType.find_by_name(spreadsheet.cell(i,'C'))
+        if @expencess_type == nil
+          expencess_type_name = spreadsheet.cell(i,'C')
+           @expencess_type_entry = ExpencessType.create(name: expencess_type_name)
+           expencess_type_id = @expencess_type_entry.id
+        else
+        expencess_type_id = @expencess_type.id
+        end
+        amount = spreadsheet.cell(i,'D')
+        expence_date = spreadsheet.cell(i,'E')
    
         @monthly_expence = MonthlyExpence.create(:employee_id => employee_id, :expencess_type_id => expencess_type_id,:amount => amount,:expence_date => expence_date)
+      end
     end
     # spreadsheet = open_spreadsheet(file)
     # header = spreadsheet.row(1)

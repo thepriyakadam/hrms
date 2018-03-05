@@ -28,7 +28,7 @@
   <div class="row">
     <div class="col-sm-3">  
       <div class="form-group required">
-        <%= f.select :transfer_to_id, all_active_employee_with_code,{label: 'Transfer To',include_blank: " Select Employee"}  %>
+        <%= f.select :transfer_to_id, all_active_employee_with_code1,{include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
       </div>
     </div>
 

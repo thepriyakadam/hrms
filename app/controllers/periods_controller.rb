@@ -37,11 +37,32 @@ class PeriodsController < ApplicationController
     @periods = Period.all
 	end
 
-  def is_confirm
-    @period = Period.find(params[:period])
-    Period.find(@period.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to periods_path
+ def period_master
+      @periods = Period.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'periods/period_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'period_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'periods/period_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+  end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_periods_path
+      else
+     Period.import(params[:file])
+     redirect_to periods_path, notice: "File imported."
+     end
   end
 
 	private

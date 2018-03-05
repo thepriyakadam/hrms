@@ -1,6 +1,6 @@
 class EmployeeTypesController < ApplicationController
   before_action :set_employee_type, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
 
   def new
     @employee_type = EmployeeType.new
@@ -38,11 +38,32 @@ class EmployeeTypesController < ApplicationController
     @employee_types = EmployeeType.all
   end
 
-  def is_confirm
-    @employee_type = EmployeeType.find(params[:employee_type])
-    EmployeeType.find(@employee_type.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_employee_type_path
+   def employee_type_master
+     @employee_types = EmployeeType.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_types/employee_type_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' employee_type_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_types/employee_type_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+    end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_employee_types_path
+      else
+     EmployeeType.import(params[:file])
+     redirect_to new_employee_type_path, notice: "File imported."
+     end
   end
   
   private
@@ -54,6 +75,6 @@ class EmployeeTypesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_type_params
-    params.require(:employee_type).permit(:is_confirm,:name ,:code)
+    params.require(:employee_type).permit(:is_confirm,:name ,:code,:description)
   end
 end

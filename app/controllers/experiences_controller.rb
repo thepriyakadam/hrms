@@ -35,7 +35,7 @@ class ExperiencesController < ApplicationController
             Experience.create(employee_id: params['experience']['employee_id'], no_of_year: params['experience'][i.to_s]['no_of_year'], company_name: params['experience'][i.to_s]['company_name'], designation: params['experience'][i.to_s]['designation'], ctc: params['experience'][i.to_s]['ctc'],start_date: params['experience'][i.to_s]['start_date'],end_date: params['experience'][i.to_s]['end_date'],description: params['experience'][i.to_s]['description'])
           end
           @experiences = @employee.experiences
-        EmployeeMailer.experience_create(@employee,@experience).deliver_now
+        # EmployeeMailer.experience_create(@employee,@experience).deliver_now
           format.html { redirect_to @experience, notice: 'Experience was successfully created.' }
           format.json { render :show, status: :created, location: @experience }
           format.js { @flag = true }
@@ -56,9 +56,11 @@ class ExperiencesController < ApplicationController
       if @experience.update(experience_params)
         # format.html { redirect_to @experience, notice: 'Experience was successfully updated.' }
         # format.json { render :show, status: :ok, location: @experience }
+        EmployeeMailer.experience_create(@employee,@experience).deliver_now
 
         @experiences = @employee.experiences
         format.js { @flag = true }
+        # EmployeeMailer.experience_create(@employee,@experience).deliver_now
       else
         # format.html { render :edit }
         # format.json { render json: @experience.errors, status: :unprocessable_entity }
@@ -89,19 +91,20 @@ class ExperiencesController < ApplicationController
   end
 
    def import_xl
-    @experiences = Experience.all
-    respond_to do |format|
-    format.html
-    format.csv { send_data @experiences.to_csv }
-    format.xls
-     session[:active_tab] = "import"
-   end   
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Import"   
   end
 
   def import
     # byebug
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_experiences_path
+    else
     Experience.import(params[:file])
-    redirect_to root_url, notice: "File imported."
+    redirect_to import_xl_experiences_path, notice: "File imported."
+    end
   end
 
   def exp_modal

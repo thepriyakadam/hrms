@@ -1,0 +1,43 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title"> Overall Rating </h3>
+  </div>
+    <div class="box-body">
+   
+      <table class="table table-bordered table-hover table-condensed">
+     <% i = 0 %>
+      
+      <tr>
+        <th> Sr.No.</th>
+        <th> Question</th>
+        <th> Excellent</th>
+        <th> Very Good</th>
+        <th> Good </th>
+        <th> Needs Improvement</th>
+        <th> Unsatisfied</th>
+        
+      </tr>
+      <% @survey_details.each do |sq| %>      
+      <tr>
+      <th> <%= i = i + 1  %></th>
+        <td><%= sq.survey_question.try(:question)  %></td>
+        <%# byebug %>
+       <td><%= @exl %></td>
+       <td><%= @vg %></td>
+       <td><%= @g %></td>
+       <td><%= @ni %></td> 
+       <td><%= @un %></td>
+       
+       <% end %>
+      <tr>
+        <th>Total</th>
+        <td colspan="6"><%= @tot %></td>
+      </tr>
+      </tr>    
+      </table>
+      
+     
+    
+
+  </div>
+</div>

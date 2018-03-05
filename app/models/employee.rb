@@ -1,9 +1,12 @@
 class Employee < ActiveRecord::Base
+ has_many :employee_attendences
+
   protokoll :employee_code, pattern: 'EMP#######'
   belongs_to :department
   belongs_to :sub_department
   belongs_to :company_location
   belongs_to :company
+  belongs_to :sub_department
   belongs_to :nationality
   belongs_to :blood_group
   belongs_to :employee_type
@@ -12,10 +15,15 @@ class Employee < ActiveRecord::Base
   belongs_to :district
   belongs_to :religion
   belongs_to :employee_code_master
+  belongs_to :service_master
+  belongs_to :resource_pool_master
+  belongs_to :cost_center
   # has_many :employee_resignations
   has_many :trainees
   has_many :gps_dailies
   has_many :exit_interviews
+  has_many :latemark_deductions
+  has_many :latemark_totals
 
   has_many :reporting_masters
   has_many :employee_attendances
@@ -148,6 +156,8 @@ class Employee < ActiveRecord::Base
   has_many :loan_approvals, class_name: "Membership", foreign_key: "approval_id"
   has_many :change_designations
   has_many :change_designations, class_name: "Employee", foreign_key: "change_by_id"
+  has_many :frequest_questions
+  has_many :contact_details
 
 
   # has_many :reporting_masters, class_name: "Employee",
@@ -160,8 +170,8 @@ class Employee < ActiveRecord::Base
   # before_update :add_department
 
   validates :manual_employee_code, presence: true, uniqueness: { case_sensitive: false }
-  # validates :first_name, presence: true
-  # validates :email, presence: true
+  validates :first_name, presence: true
+  validates :email, presence: true
 
   has_attached_file :passport_photo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'Profile11.jpg'
   validates_attachment_content_type :passport_photo,  :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
@@ -361,7 +371,82 @@ class Employee < ActiveRecord::Base
       end
     end
   end
-  
+
+  def self.fetch_data
+    matrix = CheckInOut.where("CHECKTIME > ? ", Time.now - 2.days)
+    matrix.each do |mat|
+      edate_time = mat.CHECKTIME
+      edate = edate_time.to_date
+      etime = mat.CHECKTIME
+      user_id = mat.USERID
+      month_nm = etime.strftime("%B")
+      emp =  Employee.find_by_manual_employee_code(user_id)
+      empa =  Employee.find_by_manual_employee_code(user_id)
+      if empa.nil?
+        puts "Employee Id not found"
+      else
+        emp_id = empa.id
+        emp_first = emp.first_name
+        emp_last = emp.last_name
+        space = " "
+        emp_name = emp_first + space + emp_last
+        daily_att = DailyAttendance.where(employee_code: user_id, time: etime)
+        if daily_att.empty?
+          daily_att_updated = DailyAttendance.create(employee_code: user_id, date: edate_time.to_date, time: etime)
+        else 
+        end
+        emp_att = EmployeeAttendance.where(employee_id: emp_id, day: edate)
+        if emp_att.present?
+          time = EmployeeAttendance.where(employee_id: emp_id, in_time: etime)
+          if time.present?
+          else
+            emp_att_time = emp_att.update_all(out_time: etime)
+          end
+        else
+          emp_att_time = EmployeeAttendance.create(employee_id: emp_id, day: edate, present: "P", in_time: etime, month_name: month_nm, employee_code: user_id, employee_name: emp_name)
+        end
+      end
+    end
+  end
+
+ def self.cal_data
+    emp = EmployeeAttendance.where("in_time > ? ", Time.now - 7.days)
+    emp.each do |emp|
+      id = emp.employee_id
+      in_t = emp.in_time
+      out_t = emp.out_time
+      emp_att = EmployeeAttendance.where(employee_id: id, in_time: in_t)
+      if emp_att.last.working_hrs.present?
+          in_time = in_t.to_time
+          out_time = out_t.to_time
+          total_hrms = out_time - in_time 
+          working_hrs = Time.at(total_hrms).utc.strftime("%H:%M")
+          if working_hrs > "07:00" 
+            emp_att.update_all(working_hrs: working_hrs)
+          else
+            emp_att.update_all(present: "HD")
+          end
+      else
+        if emp_att.last.out_time.present?
+          in_time = in_t.to_time
+          out_time = out_t.to_time
+          total_hrms = out_time - in_time 
+          working_hrs = Time.at(total_hrms).utc.strftime("%H:%M")
+          if working_hrs > "07:00" 
+            emp_att.update_all(working_hrs: working_hrs)
+          else
+            emp_att.update_all(present: "HD")
+          end
+        else
+          emp_att.update_all(present: "HD")
+        end
+      end
+    end
+  end
+
+
+
+
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
@@ -373,15 +458,188 @@ class Employee < ActiveRecord::Base
   end
 
   def self.import(file)
-    spreadsheet = open_spreadsheet(file)
-    header = spreadsheet.row(1)
+  spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-      row = Hash[[header, spreadsheet.row(i)].transpose]
-      employee = find_by_id(row["id"]) || new
-      employee.attributes = row.to_hash.slice(*row.to_hash.keys)
-      employee.save!
+        manual_employee_code = spreadsheet.cell(i,'B').to_i
+        if manual_employee_code == 0
+           manual_employee_code = spreadsheet.cell(i,'B')
+        else
+           manual_employee_code = spreadsheet.cell(i,'B').to_i
+        end
+        prefix = spreadsheet.cell(i,'C')
+        first_name = spreadsheet.cell(i,'D')
+        middle_name = spreadsheet.cell(i,'E')
+        last_name = spreadsheet.cell(i,'F')
+        gender = spreadsheet.cell(i,'G')
+        email = spreadsheet.cell(i,'H')
+        if email.nil?
+          email = first_name+'@gmail.com'
+        else
+          email = spreadsheet.cell(i,'H')
+        end
+        optional_email = spreadsheet.cell(i,'I')
+        adhar_no = spreadsheet.cell(i,'J').to_i
+        pan_no = spreadsheet.cell(i,'K')
+        licence_no = spreadsheet.cell(i,'L')
+        contact_no = spreadsheet.cell(i,'M').to_i
+        optinal_contact_no = spreadsheet.cell(i,'N').to_i
+        optinal_contact_no1 = spreadsheet.cell(i,'O').to_i
+        emergency_contact_no = spreadsheet.cell(i,'P').to_i
+        @religion = Religion.find_by_name(spreadsheet.cell(i,'Q'))
+        if @religion == nil
+           religion_name = spreadsheet.cell(i,'Q')
+           @religion_entry = Religion.create(name: religion_name)
+           religion_id = @religion_entry.id
+        else
+        religion_id = @religion.id
+        end
+        status = spreadsheet.cell(i,'R')
+        @employee_type = EmployeeType.find_by_name(spreadsheet.cell(i,'S'))
+        if @employee_type == nil
+           employee_type_name = spreadsheet.cell(i,'S')
+           @employee_type_entry = EmployeeType.create(name: employee_type_name)
+           employee_type_id = @employee_type_entry.id
+        else
+        employee_type_id = @employee_type.id
+        end
+        marital_status = spreadsheet.cell(i,'T')
+        @nationality = Nationality.find_by_name(spreadsheet.cell(i,'U'))
+        if @nationality == nil
+           nationality_name = spreadsheet.cell(i,'U')
+           @nationality_entry = Nationality.create(name: nationality_name)
+           nationality_id = @nationality_entry.id
+        else
+        nationality_id = @nationality.id
+        end
+        date_of_birth = spreadsheet.cell(i,'V')
+        @blood_group = BloodGroup.find_by_name(spreadsheet.cell(i,'W'))
+        if @blood_group == nil
+           blood_group_name = spreadsheet.cell(i,'W')
+           @blood_group_entry = BloodGroup.create(name: blood_group_name)
+           blood_group_id = @blood_group_entry.id
+        else
+        blood_group_id = @blood_group.id
+        end
+        permanent_address = spreadsheet.cell(i,'X')
+        pin_code = spreadsheet.cell(i,'Y')
+        @country = Country.find_by_name(spreadsheet.cell(i,'Z'))
+        if @country == nil
+           country_name = spreadsheet.cell(i,'Z')
+           @country_entry = Country.create(name: country_name)
+           country_id = @country_entry.id
+        else
+        country_id = @country.id
+      end
+        @state = State.find_by_name(spreadsheet.cell(i,'AA'))
+        if @state == nil
+           state_name = spreadsheet.cell(i,'AA')
+           @state_entry = State.create(name: state_name, country_id: country_id)
+           state_id = @state_entry.id
+        else
+        state_id = @state.id
+      end
+        @district = District.find_by_name(spreadsheet.cell(i,'AB'))
+        if @district == nil
+           district_name = spreadsheet.cell(i,'AB')
+           @district_entry = District.create(name: district_name, state_id: state_id)
+           district_id = @district_entry.id
+        else
+        district_id = @district.id
+        end
+        city = spreadsheet.cell(i,'AC')
+        current_address = spreadsheet.cell(i,'AD')
+        handicap = spreadsheet.cell(i,'AE')
+        handicap_type = spreadsheet.cell(i,'AF')
+        @company = Company.find_by_name(spreadsheet.cell(i,'AG'))
+        if @company == nil
+          @company_name = Company.last
+          company_id = @company_name.id
+        else
+        company_id = @company.id
+        end
+        @company_location = CompanyLocation.find_by_name(spreadsheet.cell(i,'AH'))
+        if @company_location == nil
+          @company_location_name = CompanyLocation.last
+          company_location_id = @company_location_name.id
+        else
+        company_location_id = @company_location.id
+        end
+        @department = Department.find_by_name(spreadsheet.cell(i,'AI'))
+       if @department == nil
+          department_name = spreadsheet.cell(i,'AI')
+          @department_entry = Department.create(name: department_name, company_location_id: company_location_id)
+          department_id = @department_entry.id
+       else
+        department_id = @department.id
+        end
+        @sub_department = SubDepartment.find_by_name(spreadsheet.cell(i,'AJ'))
+        if @sub_department == nil
+          sub_department_name = spreadsheet.cell(i,'AJ')
+          @sub_department_entry = SubDepartment.create(name: sub_department_name, department_id: department_id)
+          sub_department_id = @sub_department_entry.id
+        else
+        sub_department_id = @sub_department.id
+      end
+      @employee_code_master = EmployeeCodeMaster.find_by_name(spreadsheet.cell(i,'AK'))
+       if @employee_code_master == nil
+       else
+        employee_code_master_id = @employee_code_master.id
+        @employee_code_master.update(last_range:  manual_employee_code)
+       end
+        @employee_prsent = Employee.find_by(manual_employee_code: manual_employee_code)
+        if @employee_prsent.nil?
+          @employee = Employee.create(manual_employee_code: manual_employee_code,prefix: prefix,first_name: first_name,middle_name: middle_name,last_name: last_name,date_of_birth: date_of_birth,gender: gender,contact_no: contact_no,optinal_contact_no: optinal_contact_no,email: email,permanent_address: permanent_address,
+          country_id: country_id,state_id: state_id,district_id: district_id,city: city,pin_code: pin_code,current_address: current_address,adhar_no: adhar_no,pan_no: pan_no,licence_no: licence_no,marital_status: marital_status,blood_group_id: blood_group_id,employee_type_id: employee_type_id,nationality_id: nationality_id,religion_id: religion_id,
+          handicap: handicap,handicap_type: handicap_type,status: status,company_id: company_id,company_location_id: company_location_id,department_id: department_id,employee_code_master_id: employee_code_master_id,optional_email: optional_email,optinal_contact_no1: optinal_contact_no1)
+        else
+          @employee_prsent.update(prefix: prefix,first_name: first_name,middle_name: middle_name,last_name: last_name,date_of_birth: date_of_birth,gender: gender,contact_no: contact_no,optinal_contact_no: optinal_contact_no,email: email,permanent_address: permanent_address,
+          country_id: country_id,state_id: state_id,district_id: district_id,city: city,pin_code: pin_code,current_address: current_address,adhar_no: adhar_no,pan_no: pan_no,licence_no: licence_no,marital_status: marital_status,blood_group_id: blood_group_id,employee_type_id: employee_type_id,nationality_id: nationality_id,religion_id: religion_id,
+          handicap: handicap,handicap_type: handicap_type,status: status,company_id: company_id,company_location_id: company_location_id,department_id: department_id,employee_code_master_id: employee_code_master_id,optional_email: optional_email,optinal_contact_no1: optinal_contact_no1)
+        end
+  end
+end
+
+  def self.import_create_new_user(file)
+  spreadsheet = open_spreadsheet(file)
+    (2..spreadsheet.last_row).each do |i|
+       manual_member_code = spreadsheet.cell(i,'B').to_i
+       @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        if @employee.nil?
+        else
+        employee_id = @employee.id
+        email = @employee.email
+        @member = Member.where(email: email)
+        if @member.nil?
+          email = @employee.email
+        else
+        email = "#{@employee.manual_employee_code}@xyz.com" 
+        end
+        company_id = @employee.company_id
+        company_location_id = @employee.company_location_id
+        password = @employee.first_name+'hrms'+@employee.manual_employee_code
+
+        @role = Role.find_by_name(spreadsheet.cell(i,'C'))
+        if @role == nil
+           @role_entry = Role.find_by(name: "Employee")
+           role_id = @role_entry.id
+        else
+        role_id = @role.id
+        end
+        @manager = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'D').to_i)
+        manager_id = @manager.id
+
+        @manager_2 = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'E').to_i)
+        if @manager_2.nil?
+        else
+        manager_2_id = @manager_2.id
+        end
+        @employee.update(manager_id: manager_id,manager_2_id: manager_2_id)
+
+        @member = Member.create(manual_member_code: manual_member_code,employee_id: employee_id,email: email,password: password,role_id: role_id,company_id: company_id,company_location_id: company_location_id)
     end
   end
+end
+
 
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)
@@ -390,7 +648,5 @@ class Employee < ActiveRecord::Base
       when ".xlsx" then Roo::Excelx.new(file.path, file_warning: :ignore)
       else raise "Unknown file type: #{file.original_filename}"
     end
-  end
-
-  
+  end  
 end

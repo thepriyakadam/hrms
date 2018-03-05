@@ -1,0 +1,199 @@
+<!-- <div class="box">
+    <%#= link_to 'Investment Declaration',ajax_investment_declaration_investment_declarations_path(id: @investment_declaration),class: 'btn btn-sm btn-primary ', remote:true%>
+    <%#= link_to 'Previous Income Details',ajax_investment_declaration_investment_declarations_path(id: @investment_declaration.try(:id)),class: 'btn btn-sm btn-primary ', remote:true%>
+    <div id='info'>
+    <%#= render 'investment_declaration'%>
+    </div>
+</div>
+    <div id="myModal" class="modal fade"></div>
+ -->
+<script>
+  $('#btnSave').click(function() {
+    var value = $('input').val();
+    $('h1').html(value);
+    // $('#myModal').modal('hide');
+  });
+</script>
+
+
+
+<div class="box">
+  <div class="box-header">
+    <% if @emp.present? %>
+      <div class="box-body">
+        <table id="example6" class="table table-bordered table-hover table-condensed">
+          <div>
+            <tr>
+              <th colspan="10"><%= @employee.try(:manual_employee_code) %> <%= full_name(@employee) %></th>
+              <td colspan="2"><%= link_to " Print Form ", display_declaration_details_investment_declarations_path(id: current_user.id,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+          </td>
+            </tr>
+            <tr>
+              <th colspan="1">Gender: <%= @employee.try(:gender) %></th>
+
+              <th colspan="3">PAN No.: <%= @employee.try(:pan_no) %></th>
+              <th colspan="4">Date of Birth: <%= @employee.try(:date_of_birth) %></th>
+              <th colspan="4">Date of Joining: <%= @employee.try(:joining_detail).try(:joining_date) %></th>
+            </tr>
+            <tr>
+              <th colspan="">Declaration Number</th>
+              <td> </td>
+              <td> </td>
+              <th colspan="2">Estimated</th>
+              <th colspan="2">Actual</th>
+              <th colspan="2">Accepted</th>
+              <th colspan="2">Rejected</th>
+              <th colspan="2">Comment</th>
+            </tr>
+          </div>
+          <div>
+            <% @total = 0 %>
+            <% @section_code.each do |section_code, investment_declaration| %>
+            
+              <tr>
+                <th colspan="2">Section <%= section_code %></th>
+                <% if section_code == '80C' %>
+                  <th colspan="10"><%= 'Maximum Limit Rs.1,50,000/-' %></th>
+                <% elsif section_code == '80D' %> 
+                  <th colspan="10"><%= 'Maximum Limit Rs.25,000/-' %></th>
+                <% elsif section_code == '24' %>  
+                  <th colspan="10"><%= 'Maximum Limit Rs.2,00,000/-' %></th>
+                <% else %>  
+                  <th colspan="10"></th>
+                <% end %> 
+                
+                </tr>
+              
+                <% investment_declaration.each do |investment_declaration|%>
+                  <tr>
+                    <td><%= investment_declaration.investment_head.try(:description) %></td>
+                      <% if investment_declaration.document_file_name.nil? %>
+                        <td align="center">
+                        <%= link_to '', upload_file_modal_investment_declarations_path(investment_declaration), class: 'fa-lg fa fa-paperclip', remote:true %>
+                        <%#= form_tag document_upload_investment_declarations_path(investment_declaration), multipart: true do %>
+                          <%#= file_field_tag :document %>
+                          <!-- <span class="btn btn-large btn-warning btn-file">
+              +
+                <%#= file_field_tag :document %>
+              </span>
+                            <%#= submit_tag 'Upload' %>
+                      <%# end %>  -->
+                        </td>    
+                      <% else %>
+                        <td align="center">
+                          <%= link_to '', investment_download_document_path(id: investment_declaration.id), class: 'btn btn-xs fa fa-download',target: "_blank" %>
+                        </td>
+                      <% end %>
+                      <% if investment_declaration.investment_head.description == "Life Insurance Premium" %>
+                        <td>
+                          <%= link_to '', policy_details_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-plus', remote:true %>
+                          <%= link_to '', show_policy_details_investment_declarations_path(investment_declaration),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
+                        </td>
+                        <% elsif investment_declaration.investment_head.description == "Unit Linked Insurance Policy (ULIP)" %>
+                        <td>
+                          <%= link_to '', policy_details_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-plus', remote:true %>
+                          <%= link_to '', show_policy_details_investment_declarations_path(investment_declaration),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
+                        </td>
+                      <% elsif investment_declaration.investment_head.description == "Medical Bill Reimbursement" %>
+                        <td>
+                          <%= link_to '', medicle_reimbursement_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-plus', remote:true %>
+                          <%= link_to '', show_medicle_reimbursement_details_investment_declarations_path(investment_declaration),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
+                        </td>
+                      <% elsif investment_declaration.investment_head.description == "House Rent paid to the Landlord" %>
+                        <td>
+                          <%= link_to '', housing_rent_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-plus', remote:true %>
+                          <%= link_to '', show_housing_rent_details_investment_declarations_path(investment_declaration),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
+                        </td> 
+                      <% elsif investment_declaration.investment_head.description == "Housing Loan-Stamp duty/Registration Charges/Principal Amount repayment-Self" %>
+                        <td>
+                          <%= link_to '', houseloan_interest_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-plus', remote:true %>
+                          <%= link_to '', show_housingloan_details_investment_declarations_path(investment_declaration),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
+                        </td>    
+                      <% elsif investment_declaration.investment_head.description == "b. Income/ loss from House Property" %>
+                        <td>
+                          <%= link_to '', income_loss_house_property_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-plus', remote:true %>
+                          <%= link_to '', show_income_loss_house_property_details_investment_declarations_path(investment_declaration),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
+                        </td>  
+                        <% elsif investment_declaration.investment_head.description == "Leave Travel Allowance" %>
+                        <td>
+                          <%= link_to '', leave_travel_assistance_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-plus', remote:true %>
+                        </td>  
+                      <% else %>  
+                        <td>
+                          <%= link_to '', add_amount_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-edit', remote:true %>
+
+                        </td> 
+                      <% end %>
+                      <td colspan="2"><%= best_in_place investment_declaration, :amount %></td>
+                      <td colspan="2"><%= investment_declaration.actual_amt %></td>
+                      <td colspan="2"><%= investment_declaration.accepted_amt %></td>
+                      <td colspan="2"><%= investment_declaration.rejected_amt %></td>
+                      <td><%= investment_declaration.comment %></td>
+                    </tr>
+                 <% @total = @total + investment_declaration.amount %>
+                        </tr>
+                <% end %>
+                <% end %>
+                    <tr>
+                      <th>Total Investment Amount Declared</th>
+                      <td colspan="11"><%= @total %></td>
+                    </tr>
+                  
+                    
+          </div>
+                <tr>
+                  <th colspan="12">Declaration</th>
+                </tr>
+                
+                <tr>    
+                  <td colspan="12">
+                  I hereby declare that the information  given above is correct and true in all respects. I am also aware that the company will be considering the above details in utmost good faith based on the details provided by me and that am personally liable for any consequences arising out of errors, if any, in the above information.
+                  I hereby confirm that my PAN  quoted above is correct.
+                  </td>
+                </tr>
+        </table>
+        </div>
+      <div id="policy_details_modal" class="modal fade"></div>
+      <div id="medicle_reimbursement_modal" class="modal fade"></div>
+      <div id="housing_rent_modal" class="modal fade"></div>
+      <div id="houseloan_interest_modal" class="modal fade"></div>
+      <div id="income_loss_house_property_modal" class="modal fade"></div>
+      <div id="add_amount_modal" class="modal fade"></div>
+      <div id="leave_travel_assistance_modal" class="modal fade"></div>
+      <div id="show_policy_details" class="modal fade"></div>
+      <div id="show_medicle_reimbursement_details" class="modal fade"></div>
+      <div id="show_income_loss_house_property_details" class="modal fade"></div>
+      <div id="show_housingloan_details" class="modal fade"></div>
+      <div id="upload_file_modal" class="modal fade"></div>
+      <div id="show_housing_rent_details" class="modal fade"></div>
+                 
+
+    <% else %>
+      <h1><%= 'Please Contact Your Manager' %></h1>
+
+    <% end %>
+
+  </div>
+</div>
+
+<script>
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+</script>

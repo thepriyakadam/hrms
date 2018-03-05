@@ -1,7 +1,7 @@
 class OnDutyRequestsController < ApplicationController
   before_action :set_on_duty_request, only: [:show, :edit, :update, :destroy]
   
-  load_and_authorize_resource
+  ##load_and_authorize_resource
 
   # GET /on_duty_requests
   # GET /on_duty_requests.json
@@ -22,7 +22,7 @@ class OnDutyRequestsController < ApplicationController
     @employee = Employee.find_by(id: current_user.employee_id)
   end
 
-  # GET /on_duty_requests/1/edit
+  # GET /n_duty_requests/1/edit
   def edit
   end
 
@@ -44,12 +44,14 @@ class OnDutyRequestsController < ApplicationController
       end
 
     payroll_period = PayrollPeriod.where(status: true).take 
-  if payroll_period.nil?
-    flash[:alert] = "Payroll Period Not set!"
-    redirect_to new_on_duty_request_path
-  else
-    if  start_date.to_date >= payroll_period.from.to_date && end_date.to_date <= payroll_period.to.to_date
-      
+  # if payroll_period.nil?
+  #   flash[:alert] = "Payroll Period Not set!"
+  #   redirect_to new_on_duty_request_path
+  # else
+
+    # if  start_date.to_date >= payroll_period.from.to_date && end_date.to_date <= payroll_period.to.to_date
+
+   
       if @on_duty_request.is_available?
         flash[:alert] = "Your Request already has been sent"
         if current_user.employee_id == @on_duty_request.employee_id
@@ -95,6 +97,8 @@ class OnDutyRequestsController < ApplicationController
               @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f + 0.5
             end  
           elsif @on_duty_request.leave_type == 'Half Day'
+
+            #byebug
             if @on_duty_request.first_half == true || @on_duty_request.last_half == true
               @on_duty_request.no_of_day = @on_duty_request.no_of_day.to_f + 0.5
             elsif @on_duty_request.last_half == true && @on_duty_request.last_half == true
@@ -121,16 +125,19 @@ class OnDutyRequestsController < ApplicationController
                   @on_duty_request.save
                 end
               end
-          for i in @on_duty_request.start_date.to_date..@on_duty_request.end_date.to_date
-            OdRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',day: i)
-          end
+          # for i in @on_duty_request.start_date.to_date..@on_duty_request.end_date.to_date
+          #   OdRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',day: i)
+          # end
+
+          #ATTENDANCE
+            @on_duty_request.create_attendance_od
             OdStatusRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',change_date: Date.today)
 
             if @employee.manager.email.nil? or @employee.manager.email == ""
               flash[:notice] = "Send request without email."
             else
               flash[:notice] = 'OD Request sent successfully.'
-              OdRequestMailer.pending(@on_duty_request).deliver_now
+               OdRequestMailer.pending(@on_duty_request).deliver_now
             end
             
               if @on_duty_request.id != nil
@@ -141,7 +148,8 @@ class OnDutyRequestsController < ApplicationController
                 end
               else
               end
-
+              @od_record = OdRecord.where(on_duty_request_id: @on_duty_request.id).count
+              #@on_duty_request.update(no_of_day: @od_record)
           flash[:notice] = "Request Created Successfully"
           if current_user.employee_id == @on_duty_request.employee_id
             redirect_to on_duty_requests_path
@@ -150,16 +158,16 @@ class OnDutyRequestsController < ApplicationController
           end
         end #manager_id nil
       end #is_available
-    else #start_date == payroll_period.from.to_date
-      if current_user.employee_id == @on_duty_request.employee_id
-        flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
-        redirect_to on_duty_requests_path
-      else
-        flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
-        redirect_to employee_list_on_duty_requests_path
-      end
-    end
-  end#payroll_period.nil?
+      # if current_user.employee_id == @on_duty_request.employee_id
+      #   redirect_to on_duty_requests_path
+      # else
+      #   redirect_to employee_list_on_duty_requests_path
+      # end
+      
+    # else #start_date == payroll_period.from.to_date
+    #   flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+    # end
+  #end#payroll_period.nil?
   end
 
   # PATCH/PUT /on_duty_requests/1
@@ -187,7 +195,7 @@ class OnDutyRequestsController < ApplicationController
   end
 
   def select_checkbox
-    if params[:leave_type] == "Full/Half" || params[:leave_type] == "Half Day"
+    if params[:leave_type] == "Half Day"
       @flag = true
     else
       @flag = false
@@ -200,10 +208,10 @@ class OnDutyRequestsController < ApplicationController
     @employees_ind = @emp.indirect_subordinates
     
     if current_user.class == Group
-      @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: false, is_first_rejected: false, is_cancelled: false,employee_id: @employees)
+      @pending_on_duty_requests = OnDutyRequest.where("current_status = ? OR current_status = ?", "Pending","FirstApproved").where(first_reporter_id: current_user.employee_id,employee_id: @employees)
       @first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,employee_id: @employees_ind)
     else
-      @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: false, is_first_rejected: false, is_cancelled: false,employee_id: @employees)
+      @pending_on_duty_requests = OnDutyRequest.where("current_status = ? OR current_status = ?", "Pending","FirstApproved").where(first_reporter_id: current_user.employee_id,employee_id: @employees)
       @first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,employee_id: @employees_ind)
     end
     
@@ -257,14 +265,11 @@ class OnDutyRequestsController < ApplicationController
   end
 
   def od_request_list
-    if current_user.class == Group
-      @first_level_request_lists = OnDutyRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false)
-      @second_level_request_lists = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false)
-    else
-      @first_level_request_lists = OnDutyRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false)
+    
+      @first_level_request_lists = OnDutyRequest.where(current_status: "Pending")
       @on_duty_request = OnDutyRequest.where.not(second_reporter_id: nil).pluck(:second_reporter_id)
       @second_level_request_lists = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,second_reporter_id: @on_duty_request)
-    end
+    
     session[:active_tab] ="LeaveManagement"
     session[:active_tab1] ="ODProcess"
   end

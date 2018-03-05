@@ -85,6 +85,10 @@ class EmployerInsurancesController < ApplicationController
     redirect_to new_employer_insurance_path
   end
 
+  def employer_insurances_modal
+    @employer_insurance = EmployerInsurance.find(params[:format])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employer_insurance

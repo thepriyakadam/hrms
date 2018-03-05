@@ -2,25 +2,32 @@
         <thead>
           
           <tr>
-             <th>ID</th>
+            <th>ID</th>
             <th>Employee</th>
             <% @from_date.step(@to_date).each do |l| %>
-            <th colspan="4"><%= l %> - <%= l.strftime("%A") %></th>
+              <% if @code == "1" %>
+                <th colspan="4"><%= l %> - <%= l.strftime("%A") %></th>
+              <% else %>
+                <th><%= l.strftime("%d") %> - <%= l.strftime("%a") %></th>
               <%end%>
-
+            <% end %>
           </tr>
           <tr> 
           <th colspan="2"></th>
 
             <% @from_date.step(@to_date).each do |l| %>
+            <% if @code == "1" %>
               <th>Present</th>
                <th>In Time</th>
                <th>Out Time</th>
                <th>Working Hrs.</th> 
+            <% else %>
+              <th>Present</th>
+            <% end %>
             <%end%>             
               <th>P</th>
-              <th>WOP</th>
-              <th>HP</th>
+              <th>WO</th>
+              <th>H</th>
               <th>OD</th>
                <th>A</th>
               <th>Payable Leave</th>
@@ -38,10 +45,14 @@
               <td><%= full_name(e.employee) %></td>
               <% sorted_exists = calculate_attendance_datewise(@from_date,@to_date, exist, e)%>
               <% sorted_exists.each do |k,v|%>
+              <% if @code == "1" %>
                 <td><%= v %></td>
                 <td><%= e.try(:in_time )%></td>
                 <td><%= e.try(:out_time )%></td>
                 <td><%= e.try(:working_hrs )%></td>
+              <% else %>
+                <td><%= v %></td>
+              <% end %>
               <%end%>
             
             <% holiday_in_month = holiday_in_month_count(exist) %>

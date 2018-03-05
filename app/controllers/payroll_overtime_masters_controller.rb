@@ -70,6 +70,9 @@ class PayrollOvertimeMastersController < ApplicationController
 
   end
 
+  def payroll_overtime_masters_modal
+    @payroll_overtime_master = PayrollOvertimeMaster.find(params[:format])
+  end
 
   # DELETE /payroll_overtime_masters/1
   # DELETE /payroll_overtime_masters/1.json

@@ -55,13 +55,38 @@ class GoalPerspectivesController < ApplicationController
     @goal_perspectives = GoalPerspective.all
   end
 
-  def is_confirm
-    @goal_perspective = GoalPerspective.find(params[:goal_perspective])
-    GoalPerspective.find(@goal_perspective.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_goal_perspective_path
+  def modal
+    @goal_perspective = GoalPerspective.find(params[:format]) 
   end
-  
+
+  def goal_perspective_master
+      @goal_perspectives = GoalPerspective.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'goal_perspectives/goal_perspective_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'goal_perspective_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'goal_perspectives/goal_perspective_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+  end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_goal_perspectives_path
+      else
+     GoalPerspective.import(params[:file])
+     redirect_to new_goal_perspective_path, notice: "File imported."
+     end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal_perspective

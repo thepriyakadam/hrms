@@ -1,11 +1,12 @@
-require 'query_report/helper' # need to require the helper
+
+# require 'query_report/helper' # need to require the helper
 
 class InterviewSchedulesController < ApplicationController
   before_action :set_interview_schedule, only: [:show, :edit, :update, :destroy]
 
   # GET /interview_schedules
   # GET /interview_schedules.json
-  include QueryReport::Helper # need to include it
+  # include QueryReport::Helper # need to include it
   def index
     @vacancy_master = VacancyMaster.where(recruiter_id: current_user.employee_id).pluck(:id)
     @selected_resume = SelectedResume.where(vacancy_master_id: @vacancy_master).pluck(:id)

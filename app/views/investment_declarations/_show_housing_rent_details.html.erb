@@ -1,0 +1,65 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <center>Housing Rent Details</center>
+    </div>
+
+    <div class="modal-body">
+    <% i = 0 %>
+    <% @housing_rents.each do |hr| %>
+    <% i = i + 1 %>
+    <div align="right">
+     <%#= link_to 'Edit', edit_policy_detail_path(policy_detail),class: "btn btn-success btn-sm fa fa-edit" %>
+     <%= link_to '',hr, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-trash-o' %>
+     </div>
+    <table id="example6" class="table table-bordered table-hover table-condensed">
+      <tr>
+        <th>Sr. No</th>
+        <td><%= i %></td>
+        <th>Is Metro City:</th>
+        <td><%= hr.metro_city ? "Yes": "No" %></td>
+      </tr>
+
+      <tr>
+        <th>Month</th>
+        <td><%= hr.month %></td>
+        <th>Year</th>
+        <td><%= hr.year %></td>
+      </tr>
+
+      <tr>
+        <th>Estimated Rent:</th>
+        <td><%= best_in_place hr, :estimated_rent %></td>
+        <th>Actual Rent:</th>
+        <td><%= best_in_place hr, :actual_rent %></td>
+      </tr>
+
+      <tr>
+        <th>Accepted Rent:</th>
+        <td><%= best_in_place hr, :accepted_rent %></td>
+        <th>Rejected Rent:</th>
+        <td><%= best_in_place hr, :rejected_rent %></td>
+      </tr>
+
+      <tr>
+        <th>Landlord Name:</th>
+        <td><%= best_in_place hr, :landlord_name %></td>
+        <th>Landlord PAN No:</th>
+        <td><%= best_in_place hr, :landlord_pan_no %></td>
+      </tr>
+
+      <tr>
+        <th>Address:</th>
+        <td colspan="3"><%= best_in_place hr, :address %></td>
+      </tr>
+
+        <%#= link_to 'Edit', edit_housing_rent_path(hr) %> |
+        <%#= link_to 'Back', housing_rents_path %>
+
+    </table>
+    <% end %>
+    </div> 
+  </div>   
+ </div>
+  

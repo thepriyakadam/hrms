@@ -3,7 +3,7 @@
   <div class="box-header with-border">
     <h3 class="box-title">Confirm Employee Attendance</h3>
   </div><!-- /.box-header -->
-
+<div class="calendar"></div>
   <div class="box-body">
     <%= bootstrap_form_for(:employee_attendance, url: { action: 'display_attendance_1'},html: {id: 'employee_attendance'},remote: true) do |f| %>
       <div class="row">
@@ -45,6 +45,10 @@
     $('.ajax-progress').show();
     $("#employee_attendance").submit();
   })
+
+  $('#calendar').fullCalendar({
+});
+
 </script>
 
 <script>

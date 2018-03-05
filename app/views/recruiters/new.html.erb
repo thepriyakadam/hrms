@@ -1,6 +1,15 @@
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Recruiter</h3>
+    <div class="pull-right">
+    <%= link_to " PDF ", recruiter_master_recruiters_path(id: @recruiter.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
+    
+    <%= link_to " XLS ", recruiter_master_recruiters_path(id: @recruiter.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
+
+    <%= link_to " Upload ", import_xl_recruiters_path, class: 'fa fa-upload btn btn-xl btn-primary' %>
+    
+     <%= link_to " Template", "/Templates/53.Recruiter.xls", :class=>"fa fa-download  btn-xl btn btn-warning" %>
+     </div>
   </div><!-- /.box-header -->
 	<div class="box-body">
 		<div id="form">

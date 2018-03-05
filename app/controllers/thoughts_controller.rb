@@ -4,6 +4,7 @@ class ThoughtsController < ApplicationController
   # GET /thoughts
   # GET /thoughts.json
   def index
+    @thought = Thought.new
     @thoughts = Thought.all
   end
 
@@ -15,6 +16,9 @@ class ThoughtsController < ApplicationController
   # GET /thoughts/new
   def new
     @thought = Thought.new
+    @thoughts = Thought.all
+    session[:active_tab] = "InformationManagement"
+    session[:active_tab1] = "Events"
   end
 
   # GET /thoughts/1/edit
@@ -25,14 +29,14 @@ class ThoughtsController < ApplicationController
   # POST /thoughts.json
   def create
     @thought = Thought.new(thought_params)
-
+    @thoughts = Thought.all
     respond_to do |format|
       if @thought.save
-        format.html { redirect_to @thought, notice: 'Thought was successfully created.' }
-        format.json { render :show, status: :created, location: @thought }
+         @thought = Thought.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @thought.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Thought Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +44,45 @@ class ThoughtsController < ApplicationController
   # PATCH/PUT /thoughts/1
   # PATCH/PUT /thoughts/1.json
   def update
-    respond_to do |format|
-      if @thought.update(thought_params)
-        format.html { redirect_to @thought, notice: 'Thought was successfully updated.' }
-        format.json { render :show, status: :ok, location: @thought }
-      else
-        format.html { render :edit }
-        format.json { render json: @thought.errors, status: :unprocessable_entity }
-      end
-    end
+    @thought.update(thought_params)
+    @thoughts = Thought.all
+    @thought = Thought.new
   end
 
   # DELETE /thoughts/1
   # DELETE /thoughts/1.json
   def destroy
     @thought.destroy
-    respond_to do |format|
-      format.html { redirect_to thoughts_url, notice: 'Thought was successfully destroyed.' }
-      format.json { head :no_content }
+    @thoughts = Thought.all
+  end
+
+  def import
+    # byebug
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_thoughts_path
+    else
+    Thought.import(params[:file])
+    redirect_to new_thought_path, notice: "File imported."
     end
+  end
+
+  def thought_master
+    @thoughts = Thought.all
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'thoughts/thought_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' thought_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'thoughts/thought_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
   end
 
   private

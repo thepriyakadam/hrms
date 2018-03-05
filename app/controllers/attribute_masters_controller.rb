@@ -57,11 +57,36 @@ class AttributeMastersController < ApplicationController
     @attribute_masters = AttributeMaster.all
   end
 
-  def is_confirm
-    @attribute_master = AttributeMaster.find(params[:attribute_master])
-    AttributeMaster.find(@attribute_master.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_attribute_master_path
+  def modal
+    @attribute_master = AttributeMaster.find(params[:format])
+  end
+
+  def attribute_master
+      @attribute_masters = AttributeMaster.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'attribute_masters/attribute_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'attribute_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'attribute_masters/attribute_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+  end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_attribute_masters_path
+      else
+     AttributeMaster.import(params[:file])
+     redirect_to new_attribute_master_path, notice: "File imported."
+     end
   end
   
   private

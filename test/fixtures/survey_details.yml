@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 
+  survey_question_id: 
+  answer_master_id: 
+
+two:
+  employee_id: 
+  survey_question_id: 
+  answer_master_id: 

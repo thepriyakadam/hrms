@@ -35,7 +35,7 @@ class SkillsetsController < ApplicationController
             Skillset.create(employee_id: params['skillset']['employee_id'], name: params['skillset'][i.to_s]['name'], skill_level: params['skillset'][i.to_s]['skill_level'])
           end
           @skillsets = @employee.skillsets
-        EmployeeMailer.skillset_create(@employee,@skillset).deliver_now
+          EmployeeMailer.skillset_create(@employee,@skillset).deliver_now
           flash[:notice] = 'skillset was successfully created'
           format.html { redirect_to @skillset, notice: 'Skillset was successfully created.' }
           format.json { render :show, status: :created, location: @skillset }
@@ -57,8 +57,10 @@ class SkillsetsController < ApplicationController
       if @skillset.update(skillset_params)
         # format.html { redirect_to @skillset, notice: 'Skillset was successfully updated.' }
         # format.json { render :show, status: :ok, location: @skillset }
+        # EmployeeMailer.skillset_create(@employee,@skillset).deliver_now
         @skillsets = @employee.skillsets
         format.js { @flag = true }
+        EmployeeMailer.skillset_create(@employee,@skillset).deliver_now
       else
         # format.html { render :edit }
         # format.json { render json: @skillset.errors, status: :unprocessable_entity }
@@ -68,19 +70,19 @@ class SkillsetsController < ApplicationController
   end
 
   def import_xl
-    @skillsets = Skillset.all
-    respond_to do |format|
-    format.html
-    format.csv { send_data @skillsets.to_csv }
-    format.xls
-     session[:active_tab] = "import"
-   end   
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Import"   
   end
 
   def import
-    # byebug
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_skillsets_path
+    else
     Skillset.import(params[:file])
-    redirect_to root_url, notice: "File imported."
+    redirect_to import_xl_skillsets_path, notice: "File imported."
+    end
   end
   # DELETE /skillsets/1
   # DELETE /skillsets/1.json

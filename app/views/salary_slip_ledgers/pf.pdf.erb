@@ -8,65 +8,90 @@
 
 <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
 <thead>
-  <tr>
-        <td colspan="6">
-         <% if current_user.company_location.company.company_logo == nil %>
-      <% else %>
-        <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
+      <td colspan="9">
+        <% if current_user.company_location.company.company_logo == nil %>
+        <% else %>
+          <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
         <%end%>
-          <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>. <br> <%= @month %> <%= @year %> </center>
-        </td>           
-       </tr>
-      <tr>
+        <center><strong><%= current_user.employee.company_location.company.description %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>.<br><strong>PF Report</strong></center>
+        <center><strong><%= @from.strftime("%B-%Y") %> to <%= @to.strftime("%B-%Y") %></strong></center>   
+      </td>
+    <tr>
+        <th>Sr. No.</th>
         <th>ID</th>
         <th>Employee Name</th>
         <th>PF No.</th>
         <th>Payble Days</th>
         <th>Amount</th>
         <th>PF Amount</th>
+        <th>Employer Contribution</th>
+        <th>Month/Year</th>
       </tr>
     </thead>
 
     <tbody>
+      <% @payable_day = 0 %>
+      <% @amount = 0 %>
+      <% @pf_amount = 0 %>
+      <% @contribution = 0 %>
+      <% i = 0 %>
       <% @salaryslips.each do |slip| %>
-        <% employee = slip.employee %>
-        <% joining = employee.joining_detail %>
-        <% bank = employee.employee_bank_detail %>
-        <% workingday = slip.workingday %>
-        <tr>
-          <td><%= slip.employee.manual_employee_code %></td>
-          <td><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></td>
-          <td><%= joining.try(:employee_pf_no) %></td>
-          <td><%= workingday.payable_day %></td>
-          <% @addable_salaryslip_items = slip.salaryslip_components.where(is_deducted: false) %>
-          <%basic_amt = 0%>
-          <%da_amt = 0%>
-          <%basic_a_amt = 0 %>
-          <% @addable_salaryslip_items.each do |item| %>
-          
-            <% case item.salary_component.try(:name) %>
-            <% when "Basic" %>
-            <% basic_amt = item.calculated_amount.round %>
-            <% when "DA" %>
-           <% da_amt = item.calculated_amount.round %>
-            <% else %>
-           
-            <% end %> <!-- switch case --> 
-  
-          <% end %><!-- addable items -->
+        <%if slip.employee.joining_detail.select_pf == "Yes" %>
+          <% employee = slip.employee %>
+          <% joining = employee.joining_detail %>
+          <% bank = employee.employee_bank_detail %>
+          <% workingday = slip.workingday %>
+          <tr>
+            <td><%= i=i+1 %></td>
+            <td><%= slip.employee.manual_employee_code %></td>
+            <td><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></td>
+            <td><%= joining.try(:employee_pf_no) %></td>
+            <td><%= payable_day = workingday.payable_day %></td>
 
-          
-          <td><%= basic_amt+da_amt %></td>
-           
-          <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
-          <% @deducted_salaryslip_items.each do |item| %>
-              <% if item.other_component_name == "Provident Fund" %>
-               <td><%= item.calculated_amount.round %></td>
-            <% end %>
+              <% @addable_salaryslip_items = slip.salaryslip_components.where(is_deducted: false) %>
+              <%basic_amt = 0%>
+              <%da_amt = 0 %>
+              <%basic_a_amt = 0 %>
+              <% @addable_salaryslip_items.each do |item| %>
+                <% case item.salary_component.try(:name) %>
+                <% when "Basic" %>
+                <% basic_amt = item.calculated_amount.round %>
+                <% when "DA" %>
+               <% da_amt = item.calculated_amount.round %>
+                <% else %>
+                <% end %> <!-- switch case --> 
+              <% end %><!-- addable items -->
+ 
+            <td><%= amount = basic_amt+da_amt %></td>
              
-      <% end %><!-- slip -->
-     
-        </tr>
+              <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
+                <% @deducted_salaryslip_items.each do |item| %>
+                  <% if item.other_component_name == "Provident Fund" %>
+                    <td><%= pf_amount = item.calculated_amount.round * 12  %></td>
+
+                    <% @pf_amount = @pf_amount.to_f + pf_amount.to_f %>
+                  <% end %>
+                <% end %><!-- slip -->
+                <% @date = slip.month_year %>
+                <% @emp_id = slip.employee_id %>
+                <% emp_contribution = EmployerContribution.where(date: @date.to_date, employee_id: @emp_id) %>
+                  <% emp_contribution.each do |emp_con| %>
+                    <td><%= contribution = emp_con.pf  %></td>
+                    
+                    <% @contribution = @contribution.to_f + contribution.to_f %>
+                  <% end%>
+            <td><%= slip.month %> <%= slip.year %></td>
+            <% @payable_day = @payable_day.to_f + payable_day.to_f %>
+            <% @amount = @amount.to_f + amount.to_f %>
+            </tr>
+          <% end %>
         <% end %>
+          <tr>
+            <td colspan="4">Total</td>
+            <th><%= @payable_day %></th>
+            <th><%= @amount %></th>
+            <th><%= @pf_amount %></th>
+            <th colspan="2"><%= @contribution %></th>
+          </tr>
     </tbody>
   </table>

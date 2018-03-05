@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee plan:</strong>
+  <%= @meeting_minute.employee_plan %>
+</p>
+
+<p>
+  <strong>Minutes:</strong>
+  <%= @meeting_minute.minutes %>
+</p>
+
+<%= link_to 'Edit', edit_meeting_minute_path(@meeting_minute) %> |
+<%= link_to 'Back', meeting_minutes_path %>

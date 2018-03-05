@@ -28,7 +28,7 @@ class ManagerSelfServicesController < ApplicationController
       @pending_employee_leav_requests = EmployeeLeavRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false)
       @first_approved_employee_leav_requests = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false)
     else
-      @pending_employee_leav_requests = EmployeeLeavRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false, first_reporter_id: current_user.employee_id)
+      @pending_employee_leav_requests = EmployeeLeavRequest.where(current_status: "Pending", first_reporter_id: current_user.employee_id)
       @first_approved_employee_leav_requests = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false, second_reporter_id: current_user.employee_id)
     end
     session[:active_tab] ="ManagerSelfService"
@@ -51,25 +51,17 @@ class ManagerSelfServicesController < ApplicationController
     @emp = Employee.find(current_user.employee_id)
     @employees = @emp.subordinates
     @employees_ind = @emp.indirect_subordinates
-    if current_user.class == Group
-      @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: false, is_first_rejected: false, is_cancelled: false,employee_id: @employees)
+      @pending_on_duty_requests = OnDutyRequest.where(current_status: "Pending", employee_id: @employees)
       @first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,employee_id: @employees_ind)
-    else
-      @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: false, is_first_rejected: false, is_cancelled: false,employee_id: @employees)
-      @first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,employee_id: @employees_ind)
-    end
     session[:active_tab] ="ManagerSelfService"
   end
 
   def od_request_list
-    if current_user.class == Group
-      @first_level_request_lists = OnDutyRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false)
-      @second_level_request_lists = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false)
-    else
-      @first_level_request_lists = OnDutyRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false)
+   
+      @first_level_request_lists = OnDutyRequest.where(current_status: "Pending")
       @on_duty_request = OnDutyRequest.where.not(second_reporter_id: false).pluck(:second_reporter_id)
       @second_level_request_lists = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,second_reporter_id: @on_duty_request)
-    end
+    
     session[:active_tab] ="ManagerSelfService"
   end
   
@@ -87,6 +79,15 @@ class ManagerSelfServicesController < ApplicationController
     @pending_resignation_requests = EmployeeResignation.where(is_pending: true, is_first_approved: false,is_first_rejected: false, is_cancelled: false,reporting_master_id: current_user.employee_id)
     @first_approved_resignation_requests = EmployeeResignation.where(is_first_approved: true, is_second_approved: false,is_second_rejected: false, is_cancelled: false,second_reporter_id: current_user.employee_id)
     session[:active_tab] ="ManagerSelfService"
+  end
+
+  def employee_resignation_history
+    @emp = Employee.find(current_user.employee_id)
+    @sub = @emp.subordinates
+    @ind_sub = @emp.indirect_subordinates
+    @employee = @sub + @ind_sub
+
+    @employee_resignations = EmployeeResignation.where(employee_id: @employee).group(:employee_id)
   end
 
   def final_approval_emp_resignation_list
@@ -107,6 +108,9 @@ class ManagerSelfServicesController < ApplicationController
     @from = params[:employee][:from]
     @to = params[:employee][:to]
     @employee_id = params[:employee][:employee_id]
+    @latemark_master = LatemarkMaster.last
+    @latemark_master_time = @latemark_master.company_time
+    @company_time = @latemark_master_time.strftime("%I:%M")
     @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day ASC")
   end
 
@@ -122,7 +126,7 @@ class ManagerSelfServicesController < ApplicationController
     @employees_ind = @emp.indirect_subordinates
     @employee_id = @employees + @employees_ind
 
-    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id)
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day DESC")
 
      respond_to do |format|
         format.js
@@ -169,6 +173,7 @@ class ManagerSelfServicesController < ApplicationController
   end
 
   def leave_c_off
+    # byebug
     session[:active_tab] ="ManagerSelfService"
     current_login = Employee.find_by(id: current_user.employee_id)
     @sub = current_login.subordinates
@@ -179,6 +184,24 @@ class ManagerSelfServicesController < ApplicationController
     @leave_c_off_first_approved = LeaveCOff.where(employee_id: @ind_sub,is_taken: false,status: false,is_expire: false,current_status: "FirstApproved")
 
   end
+
+  def employee_resignation_history
+    @emp = Employee.find(current_user.employee_id)
+    @sub = @emp.subordinates
+    @ind_sub = @emp.indirect_subordinates
+    @employee = @sub + @ind_sub
+
+    @employee_resignations = EmployeeResignation.where(employee_id: @employee).group(:employee_id)
+  end
+
+  def vacancy_request
+  end
+
+  def vacancy_request_create
+    @employee_designation = params[:vacancy_master][:employee_designation_id]
+    flash[:notice] = "Vacancy Request Created!"
+    redirect_to vacancy_request_manager_self_services_path   
+   end
 
 
 end

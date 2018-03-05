@@ -1,11 +1,12 @@
-require 'query_report/helper' # need to require the helper
+
+# require 'query_report/helper' # need to require the helper
 class AdvanceSalariesController < ApplicationController
   before_action :set_advance_salary, only: [:show, :edit, :update, :destroy]
   before_filter only: [:index]
-  load_and_authorize_resource
+  # ##load_and_authorize_resource
   # GET /advance_salaries
   # GET /advance_salaries.json
-  include QueryReport::Helper # need to include it
+  # include QueryReport::Helper # need to include it
   def index
     @advance_salaries = AdvanceSalary.group("DATE_FORMAT
       ('%Y',advance_date)")

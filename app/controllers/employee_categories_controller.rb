@@ -30,7 +30,7 @@ end
        @employee_category = EmployeeCategory.new
       format.js { @flag = true }
       else
-        flash.now[:alert] = 'Degree Already Exist.'
+        flash.now[:alert] = 'Leave Category Already Exist.'
         format.js { @flag = false }
       end
     end
@@ -55,11 +55,32 @@ end
     @employee_categories = EmployeeCategory.all
   end
 
-  def is_confirm
-    @employee_category = EmployeeCategory.find(params[:employee_category])
-    EmployeeCategory.find(@employee_category.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_employee_category_path
+    def employee_category_master
+     @employee_categories = EmployeeCategory.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_categories/employee_category_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' employee_category_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_categories/employee_category_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+    end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_employee_categories_path
+      else
+     EmployeeCategory.import(params[:file])
+     redirect_to new_employee_category_path, notice: "File imported."
+     end
   end
   
   private

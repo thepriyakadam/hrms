@@ -47,11 +47,32 @@ class AssetTypesController < ApplicationController
     redirect_to new_asset_type_path
   end
 
-  def is_confirm
-    @asset_type = AssetType.find(params[:asset_type])
-    AssetType.find(@asset_type.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_asset_type_path
+def asset_type_master
+      @asset_types = AssetType.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'asset_types/asset_type_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'asset_type_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'asset_types/asset_type_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+  end
+
+    def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_asset_types_path
+      else
+     AssetType.import(params[:file])
+     redirect_to new_asset_type_path, notice: "File imported."
+     end
   end
   
   private

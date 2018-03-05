@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Investment declaration:</strong>
+  <%= @income_loss_house_property.investment_declaration %>
+</p>
+
+<p>
+  <strong>Property type:</strong>
+  <%= @income_loss_house_property.property_type %>
+</p>
+
+<p>
+  <strong>Rental income:</strong>
+  <%= @income_loss_house_property.rental_income %>
+</p>
+
+<p>
+  <strong>Less taxes:</strong>
+  <%= @income_loss_house_property.less_taxes %>
+</p>
+
+<p>
+  <strong>Less repairs:</strong>
+  <%= @income_loss_house_property.less_repairs %>
+</p>
+
+<p>
+  <strong>Income:</strong>
+  <%= @income_loss_house_property.income %>
+</p>
+
+<p>
+  <strong>Less interest:</strong>
+  <%= @income_loss_house_property.less_interest %>
+</p>
+
+<p>
+  <strong>Less pre emi interest:</strong>
+  <%= @income_loss_house_property.less_pre_emi_interest %>
+</p>
+
+<p>
+  <strong>Estimated total amt:</strong>
+  <%= @income_loss_house_property.estimated_total_amt %>
+</p>
+
+<p>
+  <strong>Actual total amt:</strong>
+  <%= @income_loss_house_property.actual_total_amt %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @income_loss_house_property.total %>
+</p>
+
+<%= link_to 'Edit', edit_income_loss_house_property_path(@income_loss_house_property) %> |
+<%= link_to 'Back', income_loss_house_properties_path %>

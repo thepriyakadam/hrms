@@ -1,0 +1,61 @@
+<%= form_for(@income_loss_house_property) do |f| %>
+  <% if @income_loss_house_property.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@income_loss_house_property.errors.count, "error") %> prohibited this income_loss_house_property from being saved:</h2>
+
+      <ul>
+      <% @income_loss_house_property.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :investment_declaration_id %><br>
+    <%= f.text_field :investment_declaration_id %>
+  </div>
+  <div class="field">
+    <%= f.label :property_type %><br>
+    <%= f.text_field :property_type %>
+  </div>
+  <div class="field">
+    <%= f.label :rental_income %><br>
+    <%= f.text_field :rental_income %>
+  </div>
+  <div class="field">
+    <%= f.label :less_taxes %><br>
+    <%= f.text_field :less_taxes %>
+  </div>
+  <div class="field">
+    <%= f.label :less_repairs %><br>
+    <%= f.text_field :less_repairs %>
+  </div>
+  <div class="field">
+    <%= f.label :income %><br>
+    <%= f.text_field :income %>
+  </div>
+  <div class="field">
+    <%= f.label :less_interest %><br>
+    <%= f.text_field :less_interest %>
+  </div>
+  <div class="field">
+    <%= f.label :less_pre_emi_interest %><br>
+    <%= f.text_field :less_pre_emi_interest %>
+  </div>
+  <div class="field">
+    <%= f.label :estimated_total_amt %><br>
+    <%= f.text_field :estimated_total_amt %>
+  </div>
+  <div class="field">
+    <%= f.label :actual_total_amt %><br>
+    <%= f.text_field :actual_total_amt %>
+  </div>
+  <div class="field">
+    <%= f.label :total %><br>
+    <%= f.text_field :total %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

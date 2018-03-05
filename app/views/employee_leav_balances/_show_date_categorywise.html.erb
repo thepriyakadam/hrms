@@ -1,0 +1,38 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Leave Balance</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+
+	  <table id="example1" class="table table-bordered table-hover table-condensed">
+		  <thead>
+		    <tr>
+		      <th>ID</th>
+		      <th>Employee</th>
+		      <th>Leave Category</th>
+		      <th>No. Of Leave</th>
+		      <th>Total Leave</th>
+		      <th>Status</th>
+		    </tr>
+		  </thead>
+
+		  <tbody>
+		    <% @employee_leav_balances.each do |employee_leav_balance| %>
+		      <tr>
+		        <td><%= employee_leav_balance.employee.try(:manual_employee_code) %></td>
+		        <td><%= full_name(employee_leav_balance.employee) %></td>
+		        <td><%= employee_leav_balance.leav_category.try(:name) %></td>
+		        <td><%= employee_leav_balance.no_of_leave %></td>
+		        <td><%= employee_leav_balance.total_leave %></td>
+		        <td><%= employee_leav_balance.is_active ? "Active" : "Inactive" %></td>
+		      </tr>
+		    <% end %>
+		   </tbody>
+		  </table>
+		  <br>
+		 <%= link_to " Excel Report ",show_date_categorywise_employee_leav_balances_path(from_date: params[:employee][:from_date],to_date: params[:employee][:to_date],leav_category_id: params[:employee][:leav_category_id],format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+
+	    <%= link_to " PDF Report ",show_date_categorywise_employee_leav_balances_path(from_date: params[:employee][:from_date],to_date: params[:employee][:to_date],leav_category_id: params[:employee][:leav_category_id],format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+		 </div>
+	</div>

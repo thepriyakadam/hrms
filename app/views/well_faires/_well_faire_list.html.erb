@@ -17,13 +17,17 @@
           <% if well_faire.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>
             <%= link_to '', edit_well_faire_path(well_faire),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '', modal_well_faires_path(well_faire), class: 'btn btn-xs btn-default fa fa-eye',remote: true%>
           <% else %>
             <%= link_to '', edit_well_faire_path(well_faire),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  well_faire, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
             <%= link_to '', is_confirm_well_faires_path(well_faire: well_faire),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+            <%= link_to '', modal_well_faires_path(well_faire), class: 'btn btn-xs btn-default fa fa-eye',remote: true%>
           <% end %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<div id="Mymodal" class="modal fade"></div>

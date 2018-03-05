@@ -1,0 +1,94 @@
+<div class="box">
+  <div class="box-header">
+    <div class="box-body">
+      <div class="pull-right">
+        <%= link_to " Excel Report ", company_report_employee_plans_path(employee_id: params[:employee_plan][:employee_id],format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+        <%= link_to " Print Report ", company_report_employee_plans_path(employee_id: params[:employee_plan][:employee_id],format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+      </div><br /> <br />
+      <!-- <div class="col-sm-6"> -->
+        <table id="example6" class="table table-bordered table-hover table-condensed">
+          <thead>
+           <!-- <tr><td colspan="3"><center>First Level Request</center></td></tr> -->
+            <tr>
+              <th>Sr.No.</th>
+              <th>Employee ID</th>
+              <th>Employee Name</th>
+              <th>From Date</th>
+              <th>To Date</th>
+              <th>From Time</th>
+              <th>To Time</th>
+              <th>Meeting With</th>              
+              <th>Location</th>
+              <th>Current Status</th>
+              <!-- <th>Meeting agenda</th> -->
+              <!-- <th>Lat</th>
+              <th>Lng</th>
+              <th>Conform</th>
+              <th>Status</th>
+              <th>Current status</th>
+              <th>Manager</th> -->
+            </tr>
+          </thead>
+
+          <tbody>
+            <%i = 0%>
+            <% @emp_report.try(:each) do |employee_plan| %>
+              <tr>
+                <td><%= i = i+1 %></td>
+                <td><%= employee_plan.employee.try(:manual_employee_code) %></td>
+                <td><%= employee_plan.employee.try(:first_name) %> <%= employee_plan.employee.try(:middle_name) %> <%= employee_plan.employee.try(:last_name) %></td>
+                <td><%= employee_plan.from_date%></td>
+                <td><%= employee_plan.to_date %></td>
+                <td><%= employee_plan.from_time %></td>
+                <td><%= employee_plan.to_time %></td>
+                <td><%= employee_plan.meeting_with %></td>
+                <td><%= employee_plan.location %></td>
+                <td>
+                  <% case employee_plan.current_status %>
+                    <% when "Pending" %>
+                      <small class="label label-default">Pending</small>
+                    <% when "Approved"   %>
+                      <small class="label label-success">Approved</small>
+                    <% when "Rejected" %>
+                      <small class="label label-danger">Rejected</small>
+                    <% when "Cancelled" %>
+                      <small class="label label-warning">Cancelled</small>
+                    <% else %>
+                      <small class="label label-info">Else</small>
+                  <%end%>
+                </td>
+                <!-- <td><%#= employee_plan.meeting_agenda %></td> -->
+                <!-- <td><%#= employee_plan.lat %></td>
+                <td><%#= employee_plan.lng %></td>
+                <td><%#= employee_plan.conform %></td>
+                <td><%#= employee_plan.status %></td>
+                <td><%#= employee_plan.current_status %></td>
+                <td><%#= employee_plan.manager_id %></td> -->
+                <%# binding.pry %>
+                
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+  </div>
+</div>
+<div id="modal_employee_plan_detail" class="modal fade"></div>
+<div id="employee_feedback" class="modal fade"></div>
+<div id="employee_reason" class="modal fade"></div>
+<div id="employee_plan_detail_list" ></div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example7').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

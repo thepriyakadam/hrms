@@ -1,10 +1,10 @@
-require 'query_report/helper'
+# require 'query_report/helper'
 class GoalBunchesController < ApplicationController
   before_action :set_goal_bunch, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  ##load_and_authorize_resource
 
   #before_filter :authenticate_user!
- include QueryReport::Helper  # need to include it
+ # include QueryReport::Helper  # need to include it
   # GET /goal_bunches
   # GET /goal_bunches.json
   def index
@@ -61,6 +61,51 @@ class GoalBunchesController < ApplicationController
 
   # POST /goal_bunches
   # POST /goal_bunches.json
+  def self_evaluation
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:employee_id])
+    @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
+
+  end
+
+  def import_xl
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:employee_id])
+  end
+
+  def import
+    goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    employee = Employee.find(params[:employee_id])
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_goal_bunches_path
+      else
+        GoalBunch.import(params[:file])
+        redirect_to appraisee_comment_goal_bunches_path(emp_id: employee.id,id: goal_bunch.id), notice: "File imported."
+      end
+  end
+
+  def admin_level_period
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
+    @employees = Employee.where(status: "Active")
+  end
+
+  def create_admin_level_period
+    @employee_ids = params[:employee_ids]
+    period_id = params[:goal_bunches][:period_id]
+    if @employee_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+    else
+      @employee_ids.each do |eid|
+        GoalBunch.create(employee_id: eid,period_id: period_id)
+        flash[:notice] = "Created successfully"
+      end
+    end
+    redirect_to admin_level_period_goal_bunches_path
+  end
+
   def appraiser_confirm
     @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
     @employee = Employee.find(params[:emp_id])
@@ -116,6 +161,30 @@ class GoalBunchesController < ApplicationController
     @goal_bunches = GoalBunch.where(goal_confirm: true).group(:period_id)
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_cycle"
+  end
+
+  def admin_self_evaluation_period
+    @periods = Period.where(status: true).group(:id)
+    @goal_bunches = GoalBunch.where(goal_confirm: true).group(:period_id)
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
+  end
+  
+  def admin_level_self_evaluation
+    @period = Period.find(params[:period_id])
+    @goal_bunches = GoalBunch.where(period_id: @period.id,goal_approval: true)
+  end
+
+  def admin_goal_approval_period
+    @periods = Period.where(status: true).group(:id)
+    @goal_bunches = GoalBunch.where(goal_confirm: true).group(:period_id)
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
+  end
+
+  def admin_level_goal_approval
+    @period = Period.find(params[:period_id])
+    @goal_bunches = GoalBunch.where(period_id: @period.id,goal_confirm: true,goal_approval: false)
   end
 
   def goal_period_list
@@ -203,6 +272,12 @@ class GoalBunchesController < ApplicationController
   #   session[:active_tab] ="selfservice"
   # end
 
+  def self_comment_modal
+    @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:emp_id])
+    @goal_rating = GoalRating.find(params[:goal_rating_id])
+  end 
+
   def self_comment
     @goal_rating_ids = params[:goal_rating_ids]
     comments = params[:appraisee_comment]
@@ -240,8 +315,8 @@ class GoalBunchesController < ApplicationController
   end
   
   def appraisee_comment
-    @employee = Employee.find(current_user.employee_id)
     @goal_bunch_id = GoalBunch.find(params[:id]) 
+    @employee = Employee.find(params[:emp_id])
     @goal_bunches = GoalBunch.find_by(id: @goal_bunch_id.id)
 
     @employees = Employee.where(id: @employee.id)
@@ -324,7 +399,6 @@ class GoalBunchesController < ApplicationController
     @period = Period.find(params[:period_id])
     current_login = Employee.find(current_user.employee_id)
     @emps = current_login.indirect_subordinates.pluck(:id)
-    #@emp1 = Employee.where(id: @emps).pluck(:id)
     @employees = GoalBunch.where(employee_id: @emps,appraiser_confirm: true,period_id: @period.id)
   end
 

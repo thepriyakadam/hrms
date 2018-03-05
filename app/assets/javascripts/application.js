@@ -13,32 +13,14 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.purr
 //= require jquery-ui
 //= require jquery.validate
 //= require jquery.validate.additional-methods
 
-//= require chartkick
-
-
-//= require moment
 //= require bootstrap-datetimepicker
-
 //= require_tree .
 
-// $(function () {
-//   setTimeout(updateComments, 10000);
-// });
 
-// function updateComments() {
-//   $.getScript('/employee_leav_requests/approved_or_rejected_leave_request');
-//   setTimeout(updateComments, 10000);
-// }
-
-// $(document).ready(function() {
-//    Activating Best In Place
-//   jQuery(".best_in_place").best_in_place();
-// });
 
   $("#example1").DataTable();
   $('#example2').DataTable({

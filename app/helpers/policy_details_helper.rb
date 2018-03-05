@@ -1,0 +1,2 @@
+module PolicyDetailsHelper
+end

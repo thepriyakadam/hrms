@@ -43,12 +43,23 @@ class AdvanceTypesController < ApplicationController
     @advance_types = AdvanceType.all
   end
 
-  def is_confirm
-    @advance_type = AdvanceType.find(params[:advance_type])
-    AdvanceType.find(@advance_type.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_advance_type_path
+  def advance_type_master
+    @advance_types = AdvanceType.all
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'advance_types/advance_type_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' advance_type_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'advance_types/advance_type_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
   end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -58,6 +69,6 @@ class AdvanceTypesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def advance_type_params
-    params.require(:advance_type).permit(:is_confirm,:code, :name, :description)
+    params.require(:advance_type).permit(:intrest,:rate,:is_confirm,:code, :name, :description)
   end
 end

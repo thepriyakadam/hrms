@@ -8,11 +8,12 @@
     <Table>
       <Row>
         <Cell ss:Index="1"><Data ss:Type="String">Sr No.</Data></Cell>
-        <Cell ss:Index="2"><Data ss:Type="String">Employee Code</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">ID</Data></Cell>
         <Cell ss:Index="3"><Data ss:Type="String">Employee Name</Data></Cell>
         <Cell ss:Index="4"><Data ss:Type="String">Retention Money</Data></Cell>
       </Row>
       <% i = 0 %>
+      <% @retention_money = 0 %>
       <% @salaryslips.each do |slip| %>
         <% employee = slip.employee %>
         <% joining = employee.joining_detail %>
@@ -26,11 +27,16 @@
           <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
           <% @deducted_salaryslip_items.each do |item| %>
               <% if item.other_component_name == "Retention" %>
-                <Cell ss:Index="4"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
+                <Cell ss:Index="4"><Data ss:Type="Number"><%= retention_money = item.calculated_amount.round %></Data></Cell>
+                <% @retention_money = @retention_money.to_f + retention_money.to_f %>
               <% end %>
           <% end %><!-- deducted items -->
         </Row><!-- Row -->
       <% end %><!-- slip -->
+      <Row>
+          <Cell ss:Index="3"><Data ss:Type="String">Total</Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="Number"><%= @retention_money %></Data></Cell>
+        </Row>
     </Table>
   </Worksheet>
 </Workbook>

@@ -42,11 +42,32 @@ class DegreesController < ApplicationController
     @degrees = Degree.all
   end
 
-  def is_confirm
-    @degree = Degree.find(params[:degree])
-    Degree.find(@degree.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_degree_path
+  def print_qualification
+      @degrees = Degree.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'degrees/print_qualification.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'print_qualification',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'degrees/print_qualification.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+  end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_degrees_path
+      else
+     Degree.import(params[:file])
+     redirect_to new_degree_path, notice: "File imported."
+     end
   end
   
   private
@@ -58,6 +79,6 @@ class DegreesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def degree_params
-    params.require(:degree).permit(:is_confirm,:name)
+    params.require(:degree).permit(:is_confirm,:name,:code,:description)
   end
 end

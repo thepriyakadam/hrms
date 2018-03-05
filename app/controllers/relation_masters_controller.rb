@@ -58,12 +58,33 @@ class RelationMastersController < ApplicationController
     redirect_to new_relation_master_path
   end
 
-  def is_confirm
-    @relation_master = RelationMaster.find(params[:relation_master])
-    RelationMaster.find(@relation_master.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_relation_master_path
-  end
+  def relation_master
+     @relation_masters = RelationMaster.all
+     respond_to do |f|
+      f.js
+      f.xls {render template: 'relation_masters/relation_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' relation_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'relation_masters/relation_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+    end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_relation_masters_path
+      else
+     RelationMaster.import(params[:file])
+     redirect_to new_relation_master_path, notice: "File imported."
+     end
+  end 
 
   private
     # Use callbacks to share common setup or constraints between actions.

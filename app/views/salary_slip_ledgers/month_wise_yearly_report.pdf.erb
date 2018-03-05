@@ -1,0 +1,109 @@
+<div class="ajax-progress"></div>
+<% i = 0 %>
+<table style="border-collapse: collapse; font-size:15pt;" border=1 width=1000 cellpadding="15">
+  <thead>
+    <tr>
+      <td colspan="7">
+        <% if current_user.company_location.company.company_logo == nil %>
+        <% else %>
+          <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
+        <%end%>
+        <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>.<br><strong>Monthwise Report</strong></center>
+          <center><strong><%= @from.strftime("%B-%Y") %> to <%= @to.strftime("%B-%Y") %></strong></center>
+        </td>          
+    </tr>
+
+        <tr>
+          <th>ID</th>
+          <th>Employee Name</th>
+          <th>PF No.</th>
+          <th>Amount</th>
+          <th>PF Amount/Company Contribution</th>
+          <th>Employer Contribution</th>
+        </tr>
+        <% @salaryslips.each do |slip| %>
+          <%if slip.employee.joining_detail.select_pf == "Yes" %>
+            <% employee = slip.employee %>
+            <% joining = employee.joining_detail %>
+            <% bank = employee.employee_bank_detail %>
+            <% workingday = slip.workingday %>
+            <% month_from = params[:from_date].to_date.strftime("%B") %>
+            <% month_to = params[:to_date].to_date.strftime("%B") %>
+            <% year_from = params[:from_date].to_date.strftime("%Y") %>
+            <% year_to = params[:to_date].to_date.strftime("%Y") %>
+            <% @salaryslips2 = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: employee.id) %>
+            <% total_amt = 0 %>
+            <% @salaryslips2.each do |salary| %>
+              <% @salary_slip_cmop = salary.salaryslip_components.where(is_deducted: true) %>
+              <% @salary_slip_cmop.each do |item| %>
+                <% if item.other_component_name == "Provident Fund" %>
+                  <% total_amt += item.calculated_amount.round %>
+                <% end %>
+              <% end %>
+            <% end %>
+        
+          <tr>
+            <td><%= slip.employee.manual_employee_code %></td>
+            <td><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></td>
+            <td><%= joining.try(:employee_pf_no) %></td>
+            <% @addable_salaryslip_items = slip.salaryslip_components.where(is_deducted: false) %>
+            <%basic_amt = 0%>
+            <%da_amt = 0 %>
+            <%basic_a_amt = 0 %>
+            <% @addable_salaryslip_items.each do |item| %>
+              <% case item.salary_component.try(:name) %>
+              <% when "Basic" %>
+                <% basic_amt = item.calculated_amount.round %>
+              <% when "DA" %>
+                <% da_amt = item.calculated_amount.round %>
+              <% else %>
+              <% end %> <!-- switch case --> 
+            <% end %><!-- addable items -->
+            <td><%= basic_amt+da_amt %></td>
+            <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
+            <% @salaryslips2 = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: employee.id) %>
+            <% total_amt = 0 %>
+            <% @salaryslips2.each do |salary| %>
+              <% @salary_slip_cmop = salary.salaryslip_components.where(is_deducted: true) %>
+              <% @salary_slip_cmop.each do |item| %>
+                <% if item.other_component_name == "Provident Fund" %>
+                  <% total_amt += item.calculated_amount.round %>
+                <% end %>
+              <% end %>
+            <% end %>
+            <td><%= total_amt %></td>
+            <% emp_contribution = EmployerContribution.where(date: @from_date.to_date..@to_date.to_date, employee_id: employee.id) %>
+            <% total_emp_cont = 0 %>
+            <% emp_contribution.each do |emp_con| %>
+              <% total_emp_cont += emp_con.pf %>
+            <% end%>
+            <td><%= total_emp_cont %></td>
+          </tr>
+          <% end %>
+        
+        <% end %>
+      </div>
+    <div>
+    <tr>
+      <th>Month</th>
+      <th>Company Contribution</th>
+    </tr>
+    <% @month_year.each do |month_year, salaryslip_components| %>
+      <tr>
+        <td><%= month_year %></td>
+            <% total_amt = 0 %>
+            <% salaryslip_components.each do |components|%>
+              <% total_amt += components.calculated_amount.round %>
+            <% end %>
+        <td><%= total_amt %></td>
+      </tr>
+    <% end %>
+  </div>
+ </tbody>
+</table>
+
+<style type="text/css">
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak { page-break-inside: avoid; }
+</style>

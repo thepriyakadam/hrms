@@ -1,6 +1,7 @@
  class EmployeesController < ApplicationController
+
   before_action :set_employee, only: [:show, :edit, :update, :destroy, :ajax_joining_detail, :ajax_bank_detail, :ajax_qualification_detail, :ajax_new_qualification, :ajax_experience_detail, :ajax_new_experience, :ajax_skillset_detail, :ajax_new_skillset, :ajax_certification_detail, :ajax_new_certification, :ajax_award_detail, :ajax_new_award, :ajax_physical_detail, :ajax_family_detail, :ajax_new_family,:ajax_employee_document_detail,:ajax_new_employee_document]
-  # load_and_authorize_resource
+  load_and_authorize_resource
   # GET /employees
   # GET /employees.json
   def index
@@ -12,10 +13,14 @@
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'HOD'
-        @employees = Employee.where(department_id: current_user.department_id)
+          @emp = Employee.find(current_user.employee_id)
+         @employees = Employee.where(manager_id: @emp,status: "Active")
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
-        @employees = @emp.subordinates
+         @employees = Employee.where(manager_id: @emp)
+      elsif current_user.role.name == 'CEO'
+        @emp = Employee.find(current_user.employee_id)
+         @employees = Employee.where(manager_id: @emp).where.not(id: 1)
       elsif current_user.role.name == 'NewEmployee'
         @employees = Employee.where(id: current_user.employee_id)
       else current_user.role.name == 'Employee'
@@ -28,21 +33,52 @@
       session[:active_tab] ="EmployeeManagement"
       session[:active_tab1] ="Employee1"
   end
-  
+
+  def fetch_data
+    empp = Employee.all 
+    abc = empp.fetch_data
+  end
+
+  def cal_data
+    empp = Employee.all 
+    abc = empp.cal_data
+  end
 
   def import_xl
-    @employees = Employee.all
-    respond_to do |format|
-    format.html
-    format.csv { send_data @employee_bank_details.to_csv }
-    format.xls
-   end     
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Import"   
   end
 
   def import
+    # Employee.import(params[:file])
+    # redirect_to root_url, notice: "File imported."
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_employees_path
+    else
     Employee.import(params[:file])
-    redirect_to root_url, notice: "File imported."
+    redirect_to import_xl_employees_path, notice: "File imported."
+    end
   end
+  
+  def import_assign_role
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Import" 
+  end
+
+  def import_create_new_user
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_assign_role_employees_path
+    else
+    Employee.import_create_new_user(params[:file])
+    redirect_to assign_role_employees_path, notice: "File imported."
+    end
+  end
+
+
 
   def report
     @employees = Employee.all
@@ -86,15 +122,74 @@
     authorize! :show, @employee
     # @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
   end
+  
+  def display_emp_code_master
+    @emp1= params[:employee_code_master_id]
+    @emp_master_code = EmployeeCodeMaster.where(id: @emp1,is_active: true).take
+    @last = @emp_master_code.last_range.succ
+  end
 
   # GET /employees/new
   def new
+    # @employee = Employee.new(:parent_id => params[:parent_id])
     # UserPasswordMailer.test.deliver_now
     @employee = Employee.new
     # authorize! :create, @employee
     # @employee.build_joining_detail #here
   end
 
+  def show_employee_dropdown
+    @employee_option = params[:employee_option]
+    if params[:employee_option] == "Rehire"
+      @flag = true
+    else
+      @flag = false
+    end
+  end
+
+  def collect_self_data
+    @emp = params[:emp_id]
+    if @emp == ""
+    else
+      @employee = Employee.find(params[:emp_id])
+      @prefix = @employee.try(:prefix)
+      @first_name = @employee.try(:first_name)
+      @middle_name = @employee.try(:middle_name)
+      @last_name = @employee.try(:last_name)
+      @gender = @employee.try(:gender)
+      @email = @employee.try(:email)
+      @optional_email = @employee.try(:optional_email)
+      @adhar_no = @employee.try(:adhar_no)
+      @pan_no = @employee.try(:pan_no)
+      @licence_no = @employee.try(:licence_no)
+      @contact_no = @employee.try(:contact_no)
+      @optinal_contact_no1 = @employee.try(:optinal_contact_no1)
+      @optinal_contact_no = @employee.try(:optinal_contact_no)
+      @emergency_contact_no = @employee.try(:emergency_contact_no)
+      @religion_id = @employee.try(:religion_id)
+      @status = @employee.try(:status)
+      @employee_type_id = @employee.try(:employee_type_id)
+      @marital_status = @employee.try(:marital_status)
+      @nationality_id = @employee.try(:nationality_id)
+      @date_of_birth = @employee.try(:date_of_birth)
+      @blood_group_id = @employee.try(:blood_group_id)
+      @permanent_address = @employee.try(:permanent_address)
+      @pin_code = @employee.try(:pin_code)
+      @country_id = @employee.try(:country_id)
+      @city = @employee.try(:city)
+      @state_id = @employee.try(:state_id)
+      @district_id = @employee.try(:district_id)
+      @current_address = @employee.try(:current_address)
+      @handicap = @employee.try(:handicap)
+      @handicap_type = @employee.try(:handicap_type)
+      @company_id = @employee.try(:company_id)
+      @company_location_id = @employee.try(:company_location_id)
+      @department_id = @employee.try(:department_id)
+      @sub_department_id = @employee.try(:sub_department_id)
+      @passport_photo = @employee.try(:passport_photo)
+      @employee_signature = @employee.try(:employee_signature)
+    end
+  end
   # GET /employees/1/edit
   def edit
     authorize! :edit, @employee
@@ -146,31 +241,43 @@
   # POST /employees
   # POST /employees.json
   def create
+    @employee_option = params[:employee][:employee_option]
     @employee = Employee.new(employee_params)
-    @employee_type = EmployeeType.find_by(name: "Probation")
-    @employees = Employee.where(employee_type_id: @employee_type.id)
-    @department = Department.find(@employee.department_id)
-    @sub_department = SubDepartment.find(@employee.sub_department_id)
-    authorize! :create, @employee
-      if @employee.save
-        @emp1=params[:employee][:employee_code_master_id]
-        EmployeeCodeMaster.where(id: @emp1).update_all(last_range: @employee.manual_employee_code)
-        @employee.update(company_location_id: @department.company_location_id,company_id: @department.company_location.company_id,sub_department_id: @sub_department.department.company_location.company_id)
-        @employees.each do |e|
-          if e.joining_detail.try(:confirmation_date) != nil && e.joining_detail.try(:confirmation_date) <= Date.today
-            employee_type = EmployeeType.find_by(name: "Permanent")
-            e.update(employee_type_id: employee_type.id)
+
+    if @employee_option == "Rehire"
+      @employee_id = params[:common][:employee_id]
+      @emp = Employee.find_by(id: @employee_id)
+      @emp.update(employee_params)
+      @employee.save
+      flash[:notice] = "Updated Successfully !"
+      #EmployeeMailer.employee_create(@employee).deliver_now   
+      redirect_to @employee
+    else
+      @employee_type = EmployeeType.find_by(name: "Probation")
+      @employees = Employee.where(employee_type_id: @employee_type.id)
+      @department = Department.find(@employee.department_id)
+      @sub_department = SubDepartment.find(@employee.sub_department_id)
+      authorize! :create, @employee
+        if @employee.save
+          @emp1=params[:employee][:employee_code_master_id]
+          EmployeeCodeMaster.where(id: @emp1).update_all(last_range: @employee.manual_employee_code)
+          # @employee.update(company_location_id: @department.company_location_id,company_id: @department.company_location.company_id,sub_department_id: @sub_department.department.company_location.company_id)
+          @employees.each do |e|
+            if e.joining_detail.try(:confirmation_date) != nil && e.joining_detail.try(:confirmation_date) <= Date.today
+              employee_type = EmployeeType.find_by(name: "Permanent")
+              e.update(employee_type_id: employee_type.id)
+            end
           end
+          @joining_checklist_master = JoiningChecklistMaster.where(status: true)
+          @joining_checklist_master.each do |jc|
+          EmployeeJcList.create(joining_checklist_master_id: jc.id,employee_id: @employee.id,status: false)
+          end
+          EmployeeMailer.employee_create(@employee).deliver_now   
+          redirect_to @employee
+        else
+          render :new
         end
-        @joining_checklist_master = JoiningChecklistMaster.where(status: true)
-        @joining_checklist_master.each do |jc|
-        EmployeeJcList.create(joining_checklist_master_id: jc.id,employee_id: @employee.id,status: false)
-        end
-        EmployeeMailer.employee_create(@employee).deliver_now   
-        redirect_to @employee    
-      else
-        render :new
-      end
+    end#"Rehire"
   end
 
   def is_confirm
@@ -179,13 +286,6 @@
     EmployeeJcList.find(@employee_jc_list.id).update(status: true,admin_id: current_user.employee_id)
     flash[:notice] = "Confirmed Successfully"
     redirect_to request.referrer
-  end
-
-
-  def display_emp_code_master
-    @emp1= params[:id]
-    @emp_master_code = EmployeeCodeMaster.where(id: @emp1,is_active: true).take
-    @last = @emp_master_code.last_range.succ
   end
 
   # PATCH/PUT /employees/1
@@ -203,6 +303,7 @@
          format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
          format.json { render :show, status: :ok, location: @employee }
        end
+        # EmployeeMailer.employee_create(@employee).deliver_now  
      else
        format.html { render :edit }
        format.json { render json: @employee.errors, status: :unprocessable_entity }
@@ -264,7 +365,7 @@
                     else
                       employee.email
                     end
-          u.password = employee.first_name+'-'+employee.manual_employee_code
+          u.password = employee.first_name+'hrms'+employee.manual_employee_code
           u.employee_id = employee.id
           u.department_id = employee.department_id
           u.company_id = employee.company_location.company_id
@@ -277,6 +378,8 @@
         ActiveRecord::Base.transaction do
           if user.save
             password = user.password
+            manual_employee_code = employee.manual_employee_code
+
             manager_id = params[:manager_id]
             manager_2_id = params[:manager_2_id]
 
@@ -291,7 +394,8 @@
             employee.update_attributes(manager_id: @reporting_master1.employee_id, manager_2_id: @reporting_master2.try(:employee_id))
 
             ManagerHistory.create(employee_id: employee.id,manager_id: manager_1,manager_2_id: manager_2,effective_from: params["login"]["effec_date"])
-            EmployeeMailer.user_confirmation(employee,password).deliver_now
+
+            EmployeeMailer.user_confirmation(employee,password,manual_employee_code).deliver_now
             EmployeeMailer.manager_detail(manager_1,employee).deliver_now
             flash[:notice] = "Employee assigned successfully."
             #redirect_to assign_role_employees_path
@@ -312,7 +416,6 @@
   #   respond_to do |format|
   #     format.xls {render template: 'employees/index.xls.erb'}
   #   end
-
   # end
 
   def basic_detail
@@ -415,9 +518,9 @@
 
   def joining_checklist
      @employee = Employee.find(params[:id])
-    @employee = Employee.find(params[:id])
+    # @employee = Employee.find(params[:id])
      # @employee1 = Employee.where(employee_id: current_user.employee_id)
-end
+  end
 
   def manager
     @employees = Employee.where.not(manager_id: nil)
@@ -517,10 +620,7 @@ end
     redirect_to change_password_form_employees_path
   end
 
-
-
   def collect_company_location
-    # byebug
     @company = Company.find(params[:id])
     # @company_locations = @company.company_locations
     if current_user.class == Group
@@ -630,6 +730,7 @@ end
   def reset_password
     @member = Member.find(params[:id])
     @member_password_reset = Member.find_by(manual_member_code: @member.manual_member_code).update(password: "12345678")
+    EmployeeMailer.employee_reset_password(@member).deliver_now
     flash[:notice] = "Password Changed Successfully"
     redirect_to member_list_for_update_password_employees_path
   end
@@ -676,7 +777,6 @@ end
   end
 
   def selected_employee_pdf
-
     @employee_id = params[:employee_id]
       @employees = Employee.where(id: @employee_id)
       @employee_id.each do |e|
@@ -1483,6 +1583,56 @@ def show_all_record
   end
 
 
+  def new_employee_list
+     if current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @employees = Employee.all
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
+      elsif current_user.role.name == 'NewEmployee'
+        @employees = Employee.where(id: current_user.employee_id)
+      else current_user.role.name == 'Employee'
+        @employees = Employee.where(id: current_user.employee_id)
+        redirect_to home_index_path
+      end
+    else
+      @employees = Employee.all
+    end
+  end
+
+  def skillset_employee_list
+     @employee = Employee.find(params[:format])
+     @skillsets = Skillset.where(employee_id: @employee.id)
+  end
+
+  # def update_skillset
+  #   @name = params[:name]
+  #   @skill_level = params[:skill_level]
+
+  # end
+
+  def reporting_manager_list
+    @emp = current_user.employee_id
+    @employees = Employee.where("manager_id = ? OR manager_2_id = ?", @emp,@emp).where.not(manager_id: @emp)
+  end
+
+  def employee_asset
+    @employees = Employee.all
+  end
+
+  def admin_asset_employee_list
+     @employee = Employee.find(params[:format])
+     @assigned_assets = AssignedAsset.where(employee_id: @employee.id)
+ end
+
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -1497,7 +1647,8 @@ def show_all_record
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_params
     # params.require(:employee).permit(:department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :district, :state, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender)
-    params.require(:employee).permit(:optional_email,:optinal_contact_no,:optinal_contact_no1,:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id,:sub_department_id,:first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id,:employee_signature,:emergency_contact_no)
+    params.require(:employee).permit(:employee_option,:optional_email,:optinal_contact_no,:optinal_contact_no1,:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id,:sub_department_id,:first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id,:employee_signature,:emergency_contact_no,:cost_center_id,:service_master_id,:resource_pool_master_id)
+
     # joining_detail_attributes: [:joining_date, :reference_from, :admin_hr, :tech_hr, :designation, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem])
   end
 end

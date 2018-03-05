@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Investment declaration:</strong>
+  <%= @interest_on_housing_loan.investment_declaration %>
+</p>
+
+<p>
+  <strong>Property name:</strong>
+  <%= @interest_on_housing_loan.property_name %>
+</p>
+
+<p>
+  <strong>Property address:</strong>
+  <%= @interest_on_housing_loan.property_address %>
+</p>
+
+<p>
+  <strong>Date of possession:</strong>
+  <%= @interest_on_housing_loan.date_of_possession %>
+</p>
+
+<p>
+  <strong>Lender name:</strong>
+  <%= @interest_on_housing_loan.lender_name %>
+</p>
+
+<p>
+  <strong>Lender address:</strong>
+  <%= @interest_on_housing_loan.lender_address %>
+</p>
+
+<p>
+  <strong>Lender pan no:</strong>
+  <%= @interest_on_housing_loan.lender_pan_no %>
+</p>
+
+<p>
+  <strong>Estimated interest:</strong>
+  <%= @interest_on_housing_loan.estimated_interest %>
+</p>
+
+<p>
+  <strong>Actual interest:</strong>
+  <%= @interest_on_housing_loan.actual_interest %>
+</p>
+
+<p>
+  <strong>Total interest:</strong>
+  <%= @interest_on_housing_loan.total_interest %>
+</p>
+
+<%= link_to 'Edit', edit_interest_on_housing_loan_path(@interest_on_housing_loan) %> |
+<%= link_to 'Back', interest_on_housing_loans_path %>

@@ -58,6 +58,34 @@ class TargetCompaniesController < ApplicationController
 
   end
 
+     def target_company_master
+      @target_companies = TargetCompany.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'target_companies/target_company_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'target_company_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'target_companies/target_company_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+  end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_target_companies_path
+      else
+     TargetCompany.import(params[:file])
+     redirect_to new_target_company_path, notice: "File imported."
+     end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_target_company

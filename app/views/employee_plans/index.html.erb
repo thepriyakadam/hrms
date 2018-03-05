@@ -1,0 +1,108 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Plans List</h3>
+    <div class="pull-right">
+      <%= link_to 'New Meeting Plan', new_employee_plan_path, class: "btn btn-primary btn-sm" %> </div>
+  </div>
+  <div class="box-body">
+        <table id="example6" class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+              <th>Sr.No.</th>
+              <th>Employee Name</th>
+              <th>From Date / From Time</th>
+              <th>To Date / To Time</th>
+              <th>Meeting With</th>
+              <th>Location</th>
+              <th>Current Status</th>
+              <th colspan="3"> Action </th>
+            </tr>
+          </thead>
+          <tbody>
+            <%i = 0%>
+            <% @employee_plans.try(:each) do |employee_plan| %>
+              <tr>
+                <td><%= i = i+1 %></td>
+                <td><%= full_name(employee_plan.employee) %></td>
+                <td><%= employee_plan.from_date%> - <%= employee_plan.from_time %></td>
+                <td><%= employee_plan.to_date %> - <%= employee_plan.to_time %></td>
+                <td><%= employee_plan.meeting_with %></td>
+                <td><%= employee_plan.location %></td>
+                <td>
+                  <% case employee_plan.current_status %>
+                    <% when "Pending" %>
+                      <small class="label label-default">Pending</small>
+                    <% when "Approved"   %>
+                      <small class="label label-success">Approved</small>
+                    <% when "Rejected" %>
+                      <small class="label label-danger">Rejected</small>
+                    <% when "Cancelled" %>
+                      <small class="label label-warning">Cancelled</small>
+                    <% else %>
+                      <small class="label label-info">Else</small>
+                  <%end%>
+                </td>
+                <% if employee_plan.start_time.present? %>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                <% elsif employee_plan.start_time.nil? && employee_plan.current_status == "Pending" %>
+                  <td>
+                    <%= link_to 'Attend', employee_feedback_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit'%>
+                  </td>
+                  <td>
+                    <%= link_to 'Not Attend', employee_reason_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit' %>
+                  </td>
+                  <td>
+                    <%= link_to '', edit_employee_plan_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit' %>
+                  </td>
+                  <td>
+                    <%= link_to '', employee_plan, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-xs btn-danger fa fa-close' %>
+                  </td>
+                <% elsif employee_plan.start_time.nil? && employee_plan.current_status == "Approved" %>
+                  <td>
+                    <%= link_to 'Attend', employee_feedback_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit'%>
+                  </td>
+                  <td>
+                    <%= link_to 'Not Attend', employee_reason_employee_plans_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit' %>
+                  </td>
+                  <td> </td>
+                  <td> </td>
+                <% elsif employee_plan.current_status == "Rejected" %>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                <% elsif employee_plan.current_status == "Cancelled" %>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+  </div>
+</div>
+<div id="modal_employee_plan_detail" class="modal fade"></div>
+
+<div id="employee_feedback" class="modal fade"></div>
+<div id="employee_reason" class="modal fade"></div>
+<div id="employee_plan_detail_list" ></div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example7').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

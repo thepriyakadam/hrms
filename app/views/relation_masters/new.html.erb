@@ -1,6 +1,15 @@
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Relation</h3>
+     <div class="pull-right">
+    <%= link_to " PDF ", relation_master_relation_masters_path(id: @relation_master.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
+    
+    <%= link_to " XLS ", relation_master_relation_masters_path(id: @relation_master.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
+
+    <%= link_to " Upload ", import_xl_relation_masters_path, class: 'fa fa-upload btn btn-xl btn-primary' %>
+    
+    <%= link_to " Template", "/Templates/29.Relation.xls", :class=>"fa fa-download  btn-xl btn btn-warning" %>
+    </div>
   </div><!-- /.box-header -->
     <div class="box-body">
 	    <div id="form">

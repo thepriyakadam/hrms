@@ -1,0 +1,105 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title"> Month Wise Report</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= bootstrap_form_for(:salary_slip_ledger, url: { action: 'month_wise_yearly_report'},html: {id: 'yearly_reports'},remote: true ) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <label>From Date</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :yearly_reports, :from_date,label: 'From Date',placeholder: "From Date",class: 'form-control request_date'%>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+        <label>To Date</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+             <%= text_field :yearly_reports,:to_date,label: 'To Date',placeholder: "To Date", class: 'form-control request_date'%>
+            </div>
+          </div>
+        </div>
+      <div class="col-sm-3">
+        <label>Company</label>
+        <div class="form-group required">
+          <%= f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form : 'food_deduction'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="field">
+          <div id="company_location_with_label">
+            <%= render 'employees/company_location_dropdown_with_label' %> 
+        </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+     <div class="row">
+        <div class="col-sm-3">
+        <label></label>
+          <div class="actions">
+            <%= f.submit "Display Report", class: "btn btn-sm btn-primary",id: "buttonCtc" %>
+          </div>
+        </div>
+        </div><br>
+        <div class="ajax-progress"></div>
+        <div id="pf_detail_li"></div>
+
+      <br>
+    <% end %>
+</div>
+
+<div id="month_wise_yearly_report"></div>
+
+<script type="text/javascript">
+  $(function(){
+    $('.request_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:-0',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#yearly_reports").submit();
+  })
+</script>
+
+<script>
+$("#yearly_reports").validate({
+    rules: {
+      "yearly_reports[from_date]":{
+        required: true,
+      },
+      "yearly_reports[to_date]":{
+        required: true,
+      }
+    },
+    messages: {
+      "yearly_reports[from_date]":{
+        required: "Please select From Date",
+      },
+      "yearly_reports[to_date]":{
+        required: "Please select To Date",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+
+

@@ -1,7 +1,8 @@
-require 'query_report/helper'  # need to require the helper
+
+# require 'query_report/helper'  # need to require the helper
 class IssueRequestsController < ApplicationController
   before_action :set_issue_request, only: [:show, :edit, :update, :destroy]
-   include QueryReport::Helper  # need to include it
+   # include QueryReport::Helper  # need to include it
 
   # GET /issue_requests
   # GET /issue_requests.json
@@ -36,6 +37,7 @@ class IssueRequestsController < ApplicationController
   def create
      # byebug
    @issue_request = IssueRequest.new(issue_request_params)
+
     respond_to do |format|
       if @issue_request.save
         # byebug
@@ -54,6 +56,13 @@ class IssueRequestsController < ApplicationController
         format.json { render json: @issue_request.errors, status: :unprocessable_entity }  
       end
     end
+  end
+
+
+  def select_description
+    @issue_master_id = IssueMaster.find(params[:issue_master_id])
+    @issue_master = IssueMaster.find_by(id: @issue_master_id)
+    @des = @issue_master.description
   end
 
   # PATCH/PUT /issue_requests/1
@@ -248,7 +257,7 @@ def group_report_list
 end
 
   def issue_tracker_pdf
-     @start = params[:date].to_date unless params[:date].nil?
+    @start = params[:date].to_date unless params[:date].nil?
     @en = params[:to_date].to_date unless params[:to_date].nil?
     @issue_tracker_group = IssueTrackerGroup.where(params[:id]).take 
     unless @start.nil? or @en.nil?

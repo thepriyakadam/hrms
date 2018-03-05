@@ -55,11 +55,32 @@ class InterviewDecisionsController < ApplicationController
     @interview_decisions = InterviewDecision.all
   end
 
-  def is_confirm
-    @interview_decision = InterviewDecision.find(params[:interview_decision])
-    InterviewDecision.find(@interview_decision.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_interview_decision_path
+   def interview_decision_master
+      @interview_decisions = InterviewDecision.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'interview_decisions/interview_decision_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'interview_decision_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'interview_decisions/interview_decision_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+  end
+
+    def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_interview_decisions_path
+      else
+     InterviewDecision.import(params[:file])
+     redirect_to new_interview_decision_path, notice: "File imported."
+     end
   end
   
   private

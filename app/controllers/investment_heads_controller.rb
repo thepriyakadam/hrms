@@ -4,7 +4,7 @@ class InvestmentHeadsController < ApplicationController
   # GET /investment_heads
   # GET /investment_heads.json
   def index
-     @investment_head = InvestmentHead.new
+    @investment_head = InvestmentHead.new
     @investment_heads = InvestmentHead.all
   end
 
@@ -66,6 +66,6 @@ class InvestmentHeadsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def investment_head_params
-      params.require(:investment_head).permit(:document_name,:section_id, :description, :limit)
-    end
+      params.require(:investment_head).permit(:document_name,:section_id, :description, :limit, :multiple_investment)
+  end
 end

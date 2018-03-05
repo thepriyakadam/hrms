@@ -32,8 +32,8 @@ class FamiliesController < ApplicationController
     @employee = Employee.find(params[:family][:employee_id])
     respond_to do |format|
       if @family.save
-        EmployeeMailer.family_detail_create(@employee,@family).deliver_now
-        format.html { redirect_to @family, notice: 'Asset was successfully created.' }
+        # EmployeeMailer.family_detail_create(@employee,@family).deliver_now
+        format.html { redirect_to @family, notice: 'Family Member was successfully created.' }
         format.json { render :show, status: :created, location: @family }
         @families = @employee.families
         format.js { @flag = true }
@@ -84,8 +84,10 @@ class FamiliesController < ApplicationController
       if @family.update(family_params)
         # format.html { redirect_to @family, notice: 'Family was successfully updated.' }
         # format.json { render :show, status: :ok, location: @family }
+        EmployeeMailer.family_detail_create(@employee,@family).deliver_now
         @families = @employee.families
         format.js { @flag = true }
+        EmployeeMailer.family_detail_create(@employee,@family).deliver_now
       else
         # format.html { render :edit }
         # format.json { render json: @family.errors, status: :unprocessable_entity }
@@ -105,19 +107,19 @@ class FamiliesController < ApplicationController
   end
 
    def import_xl
-    @families = Family.all
-    respond_to do |format|
-    format.html
-    format.csv { send_data @families.to_csv }
-    format.xls
-     session[:active_tab] = "import"
-   end   
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Import"  
   end
 
   def import
-    # byebug
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to import_xl_families_path
+    else
     Family.import(params[:file])
-    redirect_to root_url, notice: "File imported."
+    redirect_to import_xl_families_path, notice: "File imported."
+    end
   end
 
   def ajax_show_handicap_type_textbox

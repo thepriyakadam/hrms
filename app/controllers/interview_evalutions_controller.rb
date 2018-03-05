@@ -57,11 +57,32 @@ class InterviewEvalutionsController < ApplicationController
     @interview_evalutions = InterviewEvalution.all
   end
 
-  def is_confirm
-    @interview_evalution = InterviewEvalution.find(params[:interview_evalution])
-    InterviewEvalution.find(@interview_evalution.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_interview_evalution_path
+    def interview_evalution_master
+      @interview_evalutions = InterviewEvalution.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'interview_evalutions/interview_evalution_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'interview_evalution_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'interview_evalutions/interview_evalution_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+     end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_interview_evalutions_path
+      else
+     InterviewEvalution.import(params[:file])
+     redirect_to new_interview_evalution_path, notice: "File imported."
+     end
   end
   
   private

@@ -1,0 +1,1 @@
+json.partial! "income_loss_house_properties/income_loss_house_property", income_loss_house_property: @income_loss_house_property

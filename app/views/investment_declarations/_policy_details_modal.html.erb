@@ -1,0 +1,108 @@
+
+<script>
+  function calcPremium()
+  {
+
+      var a=(document.getElementById('sp1').value);
+      var b=(document.getElementById('sp2').value);
+
+      if (a == 'Monthly')
+        {
+          var c=(12*Number(b));
+        }
+      else if (a == 'Quarterly')
+        {
+          var c=(4*Number(b));
+        }  
+      else if (a == 'Half Yearly')
+        {
+          var c=(2*Number(b));
+        }  
+      else
+        {
+          var c=(Number(b));
+        }      
+      document.getElementById('estimatedAmount').value=Number(c);
+  }
+</script>
+  
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <center>Add Policy Detail</center>
+    </div>
+    <div class="modal-body">
+      <%#= bootstrap_form_for :policy_detail,url:{action:"policy_details"},html: {id: 'policy_detail'}, remote:true  do |f| %>
+      <%= bootstrap_form_for(@policy_detail,html: {id: 'policy_detail'} ) do |f| %>
+       <%#= f.hidden_field :investment_declaration_id , value: current_user.employee_id %>
+       
+        <%= f.hidden_field :investment_declaration_id , value: params[:format] %>
+        <!-- <div class="col-sm-4">
+          <div class="field">
+            <%#= f.text_field :investment_declaration_id %>
+          </div>
+        </div> -->
+        
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :insurer, label:'Insurer' %>
+            </div>
+          </div>
+          
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :policy_no, label:'Policy No.' %>
+            </div>
+          </div>
+        </div>
+          
+        <div class="row">  
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.select :relation ,['Husband','Wife','Son','Daughter'] ,{label: 'Relation with Employee',include_blank: "Select Relation"} %>
+              </div>
+          </div>
+          
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.select :frequency ,['Monthly','Quarterly','Half Yearly','Yearly'] ,{label: 'Frequency',include_blank: "Select Frequency"}, id:'sp1', onchange:'calcPremium()' %>
+              <%#= f.text_field :frequency, label:'Frequency', id:'sp1', onchange:'calcPremium()' %>
+            </div>
+          </div>
+        </div>  
+          
+        <div class="row">  
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :premium_amount, label:'Premium Amount', id:'sp2', onchange:'calcPremium()' %>
+            </div>
+          </div>
+          
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :estimated_annual_amount, label:'Estimated Annual Premium Payable' %>
+            </div>
+          </div>
+        </div>  
+          
+        <div class="row">  
+          <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_field :actual_annual_amount, label:'Actual Annual Premium Paid', id:'estimatedAmount', :readonly => true %>
+            </div>
+          </div>
+        </div>  
+
+          <div class="row" align="center">
+            <div class="col-sm-12">
+              <%= f.submit "Submit", class: 'btn btn-sm btn-success fa fa-modx', id:"btnSave" %>
+              <!-- <button type="button" id="btnSave" class="btn btn-primary">Save changes</button> -->
+       
+            </div>
+
+      <% end %>
+    </div>
+  </div>
+</div>

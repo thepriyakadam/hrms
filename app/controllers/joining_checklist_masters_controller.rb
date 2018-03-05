@@ -58,6 +58,34 @@ class JoiningChecklistMastersController < ApplicationController
     @joining_checklist_masters = JoiningChecklistMaster.all
   end
 
+   def joining_checklist_master
+      @joining_checklist_masters = JoiningChecklistMaster.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'joining_checklist_masters/joining_checklist_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'joining_checklist_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'joining_checklist_masters/joining_checklist_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+  end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_joining_checklist_masters_path
+      else
+     JoiningChecklistMaster.import(params[:file])
+     redirect_to new_joining_checklist_master_path, notice: "File imported."
+     end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_joining_checklist_master

@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title"> Employee Resignation </h3>
+    <h3 class="box-title"> Initiate Resignation </h3>
   </div><!-- /.box-header -->
   <div class="box-body">
     <%= bootstrap_form_for(@employee_resignation,url: {action: 'create_self_resignation'},html: {id: 'employee_resignation'}) do |f| %>
@@ -9,53 +9,70 @@
       <%= hidden_field_tag :notice_period, @notice_period %>
 
       <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :resignation_date,label:'Resignation Date',class: 'employee_resignation'%>
+              <%= f.text_field :resignation_date,{onchange:"var a={id:$(this).val()}; $.get('/self_services/display_notice_period',a,function(response){});" ,class: 'company_start_date'}%>
             </div>
           </div>
         </div>
 
-        <div class="col-sm-3">
+
+          <div class="col-sm-4">
+         <div class="form-group required">
+           <%= f.text_field :notice_period,id: "employee_resignation_notice_period" ,label:'Notice Period',readonly: true %>
+         </div>
+        </div> 
+        <div class="col-sm-4">
           <div class="form-group required">
-            <%= f.select :leaving_reason_id, all_leaving_reason,{label: 'Reason of Leaving',include_blank: " Select Reason of Leaving"} %>
+            <%= f.select :leaving_reason_id, active_leaving_reason,{label: 'Reason of Leaving',include_blank: " Select Reason of Leaving",id: "employee_resignation_leaving_reason_id"},class: 'employee_resignation' %>
           </div>
         </div>
 
-        <div class="col-sm-3">
-          <div class="form-group required">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-              <%= f.text_field :tentative_leaving_date, class: 'employee_resignation',label:'Requested Releaving Date'%>
-            </div>
-          </div>
-        </div>
+
+        
       </div>  
 
       <div class="row">
-        <div class="col-sm-6">
+       <div class="col-sm-4">
           <div class="form-group required">
-            <%= f.text_area :reason, label: "Reason" %>
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :tentative_leaving_date, class: 'company_start_date',label:'Requested Relieving Date'%>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-sm-4">
+       <div class="field">
+         <%= f.text_field :short_notice_period,disabled_id: "employee_resignation_short_notice_period",label:'Leaving Date (As per notice period)',readonly: true  %>
+       </div>
+      </div>
+       </div>
+        <div class="row">
+       
+
+        <div class="col-sm-12">
+          <div class="form-group required">
+            <%= f.text_field :reason, label: "Reason" %>
           </div>
         </div>
         
-        <div class="col-sm-6">
+       <!--  <div class="col-sm-6">
           <div class="field">
-            <%= f.text_area :note, label:'Note' %>
+            <= f.text_area :note, label:'Note' %>
           </div>
-        </div>
-      </div>
-    
-      <div class="row">
+        </div> -->
+      
         <div class="col-sm-6">
-          <div class="actions">
-            <%= f.submit 'Create Employee Resignation',class: "btn btn-primary btn-sm"  %>
+          <div class="actions" style="top-padding: 20px">
+            <%= f.submit 'Initiate Resignation',class: "btn btn-primary btn-sm"  %>
             <!-- <= link_to 'Back', employee_resignations_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %> -->
           </div>
         </div>
@@ -66,35 +83,22 @@
 
 <script type="text/javascript">
    $(function(){
-    $('.employee_resignation').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-200:+1',
-    dateFormat: 'dd-mm-yy' });
-  }); 
-</script>
+    $('#employee_resignation_leaving_reason_id').on('change', function() {
 
-<script>
-$("#employee_resignation").validate({
-    rules: {
-      "employee_resignation[resignation_date]":{
-        required: true,
-      },
-      "employee_resignation[reason]":{
-        required: true,
+      var employee_resignation_resignation_date = parseInt($('#employee_resignation_resignation_date').val());
+      var employee_resignation_notice_period = parseInt($('#employee_resignation_notice_period').val());
+
+      var ans="";
+      if (isNaN(employee_resignation_resignation_date) || isNaN(employee_resignation_notice_period)) {
+        ans = ""
       }
-    },
-    messages: {
-      "employee_resignation[resignation_date]":{
-        required: "Please select resignation date",
-      },
-      "employee_resignation[reason]":{
-        required: "Please Specify reason",
+      else{
+        ans = (employee_resignation_resignation_date + employee_resignation_notice_period);
+        var date = new Date ()
+        date.setDate(ans);
       }
-    },
-    errorPlacement: function(error, element) {
-     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
-     error.insertAfter(element.parent(element));
-    }
-   });
+      $('#employee_resignation_short_notice_period').val(date);
+
+    });
+  });
 </script>

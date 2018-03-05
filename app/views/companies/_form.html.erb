@@ -97,7 +97,7 @@
               <div class="input-group-addon">
                 <%= link_to "", new_country_path,class: "fa fa-plus fa-success",:target => "_blank" %>
               </div>
-            <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'company'}; $.get('/companies/collect_states',a,function(response){});",:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}%>
+           <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'company_location'}; $.get('/companies/collect_states',a,function(response){});"}%>
           </div>
           </div>
         </div>
@@ -177,14 +177,57 @@
 <script>
 $("#company").validate({
     rules: {
-      "company[state_id]":{
+      "company[manual_company_code]":{
+        required: true,
+      },
+      "company[name]":{
+        required: true,
+      },
+      "company[registration_no]":{
+        required: true,
+      },
+      "company[address]":{
+        required: true,
+      },
+      "company[pin_code]":{
+        required: true,
+      },
+      "company[country_id]":{
+        required: true,
+      },
+      "company[city]":{
+        required: true,
+      },
+      "company[web_site]":{
         required: true,
       }
     },
     messages: {
-      "company[state_id]":{
-        required: "Please specify state",
+      "company[manual_company_code]":{
+        required: "Please specify company code",
+      },
+      "company[name]":{
+        required: "Please specify company name",
+      },
+      "company[registration_no]":{
+        required: "Please specify registration no. ",
+      },
+      "company[address]":{
+        required: "Please specify address",
+      },
+      "company[pin_code]":{
+        required: "Please specify pin code",
+      },
+      "company[country_id]":{
+        required: "Please select country",
+      },
+      "company[city]":{
+        required: "Please specify city",
+      },
+      "company[web_site]":{
+        required: "Please specify website",
       }
+      
     },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
@@ -192,3 +235,4 @@ $("#company").validate({
     }
    });
 </script>
+

@@ -55,11 +55,21 @@ class TravelExpenceTypesController < ApplicationController
    @travel_expence_types = TravelExpenceType.all
   end
 
-  def is_confirm
-    @travel_expence_type = TravelExpenceType.find(params[:travel_expence_type])
-    TravelExpenceType.find(@travel_expence_type.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_travel_expence_type_path
+   def travel_expence_type_master
+      @travel_expence_types = TravelExpenceType.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'travel_expence_types/travel_expence_type_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'travel_expence_type_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'travel_expence_types/travel_expence_type_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
   end
   
   private

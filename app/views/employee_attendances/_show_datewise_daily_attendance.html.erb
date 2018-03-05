@@ -1,3 +1,12 @@
+<script>
+function displayResult()
+{
+    var a=(document.getElementById('sp1').value);
+    var b=(document.getElementById('sp2').value);
+    
+    document.getElementById('total').value=((b - a) / 3600).round;
+}
+</script>
 <br>
       <table id="example6" class="table table-bordered table-hover table-condensed">
         <thead>
@@ -17,13 +26,15 @@
             <tr>
               <td><%= a.employee.try(:manual_employee_code) %></td>
               <td><%= full_name(a.employee) %></td>
-              <td><%= a.try(:present) %></td>
-              <td><%= a.try(:in_time) %></td>
-              <td><%= a.try(:out_time) %></td>
-              <td><%= a.try(:working_hrs) %></td>
-              <td><%= a.try(:comment) %></td>
+              <td><%=a. present%></td>
+
+              <td><%= a.in_time %></td>
+              <td><%= a.out_time %></td>
+              <td><%= a.working_hrs %></td>
+              
+              <td><%= a.comment %></td>
               <td>
-                <% if  @leav_category = LeavCategory.exists?(code: a.try(:present)) %>
+                <% if  a.employee_leav_request_id != nil %>
                   <small class="label label-primary">Leave</small>
                 <% else %>
                   <%= link_to ' ',modal_edit_daily_attendance_employee_attendances_path(a),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>

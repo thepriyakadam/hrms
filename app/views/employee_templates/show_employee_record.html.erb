@@ -1,10 +1,10 @@
 <div class="box box-default">
+  <div class="pull-right">
+    <%= link_to 'PDF Report', salary_breakup_pdf_employee_templates_path(format: 'pdf',employee_template_ids: @employee_template_ids ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+    <%= link_to "Excel Report",salary_breakup_xls_employee_templates_path(format: "xls",employee_template_ids: @employee_template_ids ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+  </div>
   <div class="box-body">
-     <div class="pull-right">
-        <%= link_to 'PDF Report', salary_breakup_pdf_employee_templates_path(format: 'pdf',employee_template_ids: @employee_template_ids ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
-        <%= link_to "Excel Report",salary_breakup_xls_employee_templates_path(format: "xls",employee_template_ids: @employee_template_ids ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
-      </div>
-      <br>
+      <br><br>
       <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
       <tbody>
        <% i=0 %>

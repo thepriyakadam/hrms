@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Sr.No.</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Period</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Performance Activity</Data></Cell>
+		<Cell ss:Index="4"><Data ss:Type="String">Start Date</Data></Cell>
+		<Cell ss:Index="5"><Data ss:Type="String">End Date</Data></Cell>
+
+	  </Row>
+
+        <% i = 0 %>
+        <% @performance_calendars.each do |performance_calendar| %>
+        <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= performance_calendar.period.name %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= performance_calendar.performance_activity.name %></Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="String"><%= performance_calendar.start_date %></Data></Cell>
+           <Cell ss:Index="5"><Data ss:Type="String"><%= performance_calendar.end_date %></Data></Cell>
+      
+           </Row><!-- Row -->
+      <% end %><!-- slip -->
+    </Table>
+  </Worksheet>
+</Workbook>

@@ -10,10 +10,14 @@
                 <th> Employee </th>
                 <td><%= @employee.manual_employee_code %> - <%= full_name(@employee) %></td>
               </tr>
-              <tr>
-                <th>Manager 1 </th>
-                <td><%= @employee.manager.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager)) %></td>
-              </tr>
+             <tr>
+            <th>Manager 1 </th>
+            <%if @employee.id == @employee.manager_id %>
+               <td>Time & Attendance Team</td>
+             <%else%>
+              <td><%= @employee.manager.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager)) %></td>
+              <%end%>
+            </tr>
               <tr>
                 <th>Manager 2 </th>
                 <td><%= @employee.manager_2.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager_2)) %></td>
@@ -91,8 +95,8 @@
 
      
     <% if @current_request.current_status == "Pending" %>
-        <%= link_to 'Approve', first_approve_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> 
-        <%= link_to 'Reject', first_reject_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
+        <%= link_to 'Approve', second_approve_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> 
+        <%= link_to 'Reject', second_reject_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
       <% else %>
         <%= link_to 'Approve', second_approve_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> 
         <%= link_to 'Reject', second_reject_od_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>

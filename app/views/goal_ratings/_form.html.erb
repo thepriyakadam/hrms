@@ -15,35 +15,41 @@
 
       <div id="dropdown"></div>
       
-      
-      <div class="col-sm-6">
-        <div class="form-group required">
-          <%= f.text_field :goal_measure,{label: 'Measure',placeholder: 'Measure'} %>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
       <div class="col-sm-6">
         <div class="field">
           <%= f.text_field :target,{label: 'Target/Unit',placeholder: 'Target/Unit'} %>
         </div>
       </div>
-        <div class="col-sm-3">
-          <div class="form-group required">
-            <%= f.text_field :goal_weightage,{label: 'Weightage',placeholder: 'Weightage'} %>
-          </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group required">
+          <%= f.text_area :goal_measure,{label: 'Measure',placeholder: 'Measure'} %>
+        </div>
       </div>
 
+      <div class="col-sm-6">
+        <div class="form-group required">
+          <%= f.text_area :activity,{label: 'Activity',placeholder: 'Activity'} %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.text_field :goal_weightage,{label: 'Weightage',placeholder: 'Weightage'} %>
+        </div>
+      </div>
+    
       <div class="col-sm-3">
         <div class="field">
           <%= f.select :aligned,["Yes","No"],{label: 'Aligned To Supervisor',include_blank: "Select Option"} %>
         </div>
       </div>
-    
-    </div>
-    <div class="row">
-      <div class="col-sm-3">
+
+      <div class="col-sm-3" style="padding-top: 22px">
         <div class="actions">
           <%= f.submit "Create Goal/Attribute", class: 'btn btn-primary btn-xs ' %>
         </div>
@@ -58,10 +64,12 @@
       },
       "goal_rating[goal_weightage]":{
         required: true,
-        numbersOnly:true,
         range:[1,100]
       },
       "goal_rating[goal_measure]":{
+        required: true
+      },
+      "goal_rating[activity]":{
         required: true
       }
     },
@@ -74,6 +82,9 @@
       },
       "goal_rating[goal_measure]":{
         required: "Please specify Goal Measure"
+      },
+      "goal_rating[activity]":{
+        required: "Please specify Activity"
       }
     },
     errorPlacement: function(error, element) {

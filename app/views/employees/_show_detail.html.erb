@@ -91,22 +91,22 @@
         <td colspan="3"><%= @employee.current_address %></td>
       </tr>
        <tr>
-        <th><strong>Email</strong></th>
+        <th><strong>Official Email</strong></th>
         <td><%= @employee.email %></td>
 
-        <th><strong>Optional Email</strong></th>
+        <th><strong>Personal Email</strong></th>
         <td><%= @employee.optional_email %></td>
       </tr>
         <tr>
-        <th><strong>Official Contact No.</strong></th>
+        <th><strong>Extension Line 1</strong></th>
         <td><%= @employee.contact_no %></td>
 
-        <th><strong>Extension No.</strong></th>
-        <td><%= @employee.optinal_contact_no %></td>
+        <th><strong>Extension Line 2</strong></th>
+        <td><%= @employee.try(:optinal_contact_no1) %></td>
       </tr>
       <tr>
         <th> Personal Contact No.</th>
-        <td><%= @employee.try(:optinal_contact_no1) %></td>
+        <td><%= @employee.optinal_contact_no %></td>
 
         <th> Emergency Contact No.</th>
         <td><%= @employee.try(:emergency_contact_no) %></td>
@@ -123,12 +123,25 @@
         <td><%= @employee.handicap_type %></td>
       </tr>
       <tr>
-        <th><strong>Employment Type</strong></th>
+        <th><strong>Employment Status</strong></th>
         <td><%= @employee.employee_type.try(:name) %></td>
 
+        <th><strong>Religion</strong></th>
+        <td><%= @employee.religion.try(:name) %></td>
+        </tr>
+        <tr>
+
         <th><strong>Employee Status</strong></th>
-        <td><%= @employee.status%></td>
+        <td colspan="3"><%= @employee.status%></td>
       </tr>
+
+<!--       <tr>
+        <th><strong>Service Master</strong></th>
+        <td><= @employee.try(:service_master).try(:name) %></td>
+        <th>Resource Pool</th>
+        <td><= @employee.try(:resource_pool_master).try(:code) %></td>
+      </tr> -->
+
       <tr>
         <th><strong>Company</strong></th>
         <td><%= @employee.try(:company).try(:name) %></td>
@@ -139,16 +152,21 @@
         <th>Department</th>
         <td><%= @employee.try(:department).try(:name) %></td>
 
+   
         <th>Sub Department</th>
         <td><%= @employee.try(:sub_department).try(:name) %></td>
       </tr>
 
       <tr>
         <th>Reporting Manager 1</th>
-        <td><% emp=Employee.where(id: @employee.manager_id).take %><%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
-
+        <td>
+           <% if @employee.id == @employee.manager_id%>
+       
+        <%else%>
+         <% emp=Employee.where(id: @employee.manager_id).take %><%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
+        <%end%>
         <th>Reporting Manager 2</th>
-        <td><% emp=Employee.where(id: @employee.manager_2_id).take %><%= emp.try(:first_name) %><%= emp.try(:middle_name) %><%= emp.try(:last_name) %></td>
+        <td><% emp=Employee.where(id: @employee.manager_2_id).take %><%= emp.try(:first_name) %> <%= emp.try(:middle_name) %> <%= emp.try(:last_name) %></td>
       </tr>
 
      <tr>

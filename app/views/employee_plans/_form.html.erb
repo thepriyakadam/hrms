@@ -1,0 +1,185 @@
+<%= bootstrap_form_for(@employee_plan, html: {id: 'employee_plan' } ) do |f| %>
+  <div class="row">
+    <%= f.hidden_field :employee_id , value: current_user.employee_id %>
+    <%= f.hidden_field :manager_id,  value: current_user.employee.manager_id %>
+    <%= f.hidden_field :current_status, value: "Pending"%>
+    <%= f.hidden_field :created_date, value: Time.now.to_date %>
+    <%= f.hidden_field :created_time, value: Time.now.to_time %>
+      
+    <div class="col-sm-1">
+      <div class="radio_button required">
+        <%= f.radio_button :plan_or_unplan, 'true', :checked => true, label:'Plan' %>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="radio_button required">
+        <%= f.radio_button :plan_or_unplan, 'false', label:'Unplan' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <div class="form-group required">
+          <label> Select Company </label>
+          <%= select :employee_plan, :listed_company_id, all_listed_companies, { hide_label:true,include_blank: " Select Company" },{ :class=>"select2 select2-hidden-accessible", :style=>"width: 100%;",:tabindex=>"-1" }  %>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :from_date, label:'From Date', placeholder: '01-01-2018', class: 'from_date' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :to_date, label: 'To Date', placeholder: '01-01-2018', class: 'to_date' %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+        <div class="bootstrap-timepicker">
+          <div class="form-group required">
+            <label> From Time </label>
+            <div class="input-group">
+              <%= f.text_field :from_time, hide_label:true, placeholder: '09:00', class: 'form-control timepicker' %>
+              <div class="input-group-addon">
+                <i class="fa fa-clock-o"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    <div class="col-sm-3">
+      <div class="bootstrap-timepicker">
+        <div class="form-group required">
+          <label> To Time</label>
+          <div class="input-group">
+            <%= f.text_field :to_time, hide_label:true, placeholder: '10:00', class: 'form-control timepicker' %>
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :meeting_with, label:'Meeting With', placeholder: 'ABC'%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :location, label:'Location', placeholder: 'Pune' %>
+      </div>
+    </div>
+    
+
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_area :meeting_agenda, label: 'Meeting Agenda', placeholder: 'Meeting Agenda' %>
+      </div>
+    </div>
+   
+    <div class="col-sm-3">
+      <div class="actions" style="padding-top: 20px;">
+        <%= f.submit 'Create',class: "btn btn-primary btn-sm"%>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(function(){
+    $('.from_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+25',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.to_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+25',
+    dateFormat: 'dd-mm-yy' });
+
+    $(".timepicker").timepicker({
+    showInputs: false });
+  });
+</script>
+
+<script>
+  $("#employee_plan").validate({
+    rules: {
+      "employee_plan[listed_company_id]":{
+        required: true,
+      },
+      "employee_plan[from_date]":{
+        required: true,
+      },
+      "employee_plan[to_date]":{
+        required: true,
+      },
+      "employee_plan[from_time]":{
+        required: true,
+      },
+      "employee_plan[to_time]":{
+        required: true,
+      },
+      "employee_plan[meeting_with]":{
+        required: true,
+      },
+      "employee_plan[location]":{
+        required: true,
+      },
+      "employee_plan[meeting_agenda]":{
+        required: true,
+      },
+      "employee_plan[plan_or_unplan]":{
+        required: true,
+      },
+    
+      "employee_plan[current_status]":{
+        required: true,
+      }
+    },
+    messages: {
+      "employee_plan[listed_company_id]":{
+        required: "Please Specify From Date",
+      },
+      "employee_plan[from_date]":{
+        required: "Please Specify From Date",
+      },
+       "employee_plan[to_date]":{
+        required: "Please Specify To Date",
+      },
+      "employee_plan[from_time]":{
+        required: "Please Specify From Time",
+      },
+      "employee_plan[to_time]":{
+        required: "Please Specify To Time",
+      },
+      "employee_plan[meeting_with]":{
+        required: "Please Specify Meeting With",
+      },
+      "employee_plan[location]":{
+        required: "Please Specify Location",
+      },
+      "employee_plan[meeting_agenda]":{
+        required: "Please Specify Meeting Agenda",
+      },
+      "employee_plan[plan_or_unplan]":{
+        required: "Please Select Plan Type",
+      }
+      "employee_plan[current_status]":{
+        required: "Please Specify Current Status",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+  });
+</script>

@@ -8,53 +8,80 @@
     <Table>
       <Row>
         <Cell ss:Index="1"><Data ss:Type="String">Sr No.</Data></Cell>
-        <Cell ss:Index="2"><Data ss:Type="String">Month - Year</Data></Cell>
-        <Cell ss:Index="3"><Data ss:Type="String">Employee Code</Data></Cell>
-        <Cell ss:Index="4"><Data ss:Type="String">Employee Name</Data></Cell>
-        <Cell ss:Index="5"><Data ss:Type="String">PF No.</Data></Cell>
-        <Cell ss:Index="6"><Data ss:Type="String">Payble Days</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">ID</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Employee Name</Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">PF No.</Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String">Payble Days</Data></Cell>
        
-        <Cell ss:Index="7"><Data ss:Type="String">Amount</Data></Cell>
-         <Cell ss:Index="8"><Data ss:Type="String">Amount PF</Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String">Amount</Data></Cell>
+        <Cell ss:Index="7"><Data ss:Type="String">PF Amount</Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String">Employer Contribution</Data></Cell>
+        <Cell ss:Index="9"><Data ss:Type="String">Month/Year</Data></Cell>
       </Row>
       <% i = 0 %>
+      <% @payable_day = 0 %>
+      <% @amount = 0 %>
+      <% @pf_amount = 0 %>
+      <% @contribution = 0 %>
+
       <% @salaryslips.each do |slip| %>
+      <%if slip.employee.joining_detail.select_pf == "Yes" %>
         <% employee = slip.employee %>
         <% joining = employee.joining_detail %>
         <% bank = employee.employee_bank_detail %>
         <% workingday = slip.workingday %>
         <Row>
           <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
-           <Cell ss:Index="2"><Data ss:Type="String"><%= slip.month %> <%= slip.year %></Data></Cell>
-          <Cell ss:Index="3"><Data ss:Type="String"><%= slip.employee.manual_employee_code %></Data></Cell>
-          <Cell ss:Index="4"><Data ss:Type="String"><%=full_name(employee) %></Data></Cell>
-          <Cell ss:Index="5"><Data ss:Type="String"><%= joining.try(:employee_pf_no) %></Data></Cell>
-          <Cell ss:Index="6"><Data ss:Type="Number"><%= workingday.payable_day %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= slip.employee.manual_employee_code %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%=full_name(employee) %></Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="String"><%= joining.try(:employee_pf_no) %></Data></Cell>
+          <Cell ss:Index="5"><Data ss:Type="Number"><%= payable_day = workingday.payable_day %></Data></Cell>
+            <% @payable_day = @payable_day.to_f + payable_day.to_f %>
 
-          <% @addable_salaryslip_items = slip.salaryslip_components.where(is_deducted: false) %>
-          <%basic_amt = 0%>
-          <%da_amt = 0%>
-          <% @addable_salaryslip_items.each do |item| %>
-          
-            <% case item.salary_component.try(:name) %>
-            <% when "Basic" %>
-              <% basic_amt = item.calculated_amount.round %>
-            <% when "DA" %>
-              <% da_amt = item.calculated_amount.round %>
-            <% else %>
-            <% end %> <!-- switch case -->
+            <% @addable_salaryslip_items = slip.salaryslip_components.where(is_deducted: false) %>
+            <%basic_amt = 0%>
+            <%da_amt = 0%>
+            <% @addable_salaryslip_items.each do |item| %>
             
-          <% end %><!-- addable items -->
-          <Cell ss:Index="7"><Data ss:Type="Number"><%= basic_amt+da_amt %></Data></Cell>
+              <% case item.salary_component.try(:name) %>
+              <% when "Basic" %>
+                <% basic_amt = item.calculated_amount.round %>
+              <% when "DA" %>
+                <% da_amt = item.calculated_amount.round %>
+              <% else %>
+              <% end %> <!-- switch case -->
+              
+            <% end %><!-- addable items -->
+          <Cell ss:Index="6"><Data ss:Type="Number"><%= amount = basic_amt+da_amt %></Data></Cell>
+            <% @amount = @amount.to_f + amount.to_f %>
 
-          <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
-          <% @deducted_salaryslip_items.each do |item| %>
-              <% if item.other_component_name == "Provident Fund" %>
-                <Cell ss:Index="8"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
-              <% end %>
-          <% end %><!-- deducted items -->
+            <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
+            <% @deducted_salaryslip_items.each do |item| %>
+                <% if item.other_component_name == "Provident Fund" %>
+                  <Cell ss:Index="7"><Data ss:Type="Number"><%= pf_amount = item.calculated_amount.round %></Data></Cell>
+                  <% @pf_amount = @pf_amount.to_f + pf_amount.to_f %>
+                <% end %>
+            <% end %><!-- deducted items -->
+            <% @date = slip.month_year %>
+            <% @emp_id = slip.employee_id %>
+            <% emp_contribution = EmployerContribution.where(date: @date.to_date, employee_id: @emp_id) %>
+            <% emp_contribution.each do |emp_con| %>
+              <Cell ss:Index="8"><Data ss:Type="Number"><%= contribution = emp_con.pf %></Data></Cell>
+                  <% @contribution = @contribution.to_f + contribution.to_f %>
+            <% end %>
+
+          <Cell ss:Index="9"><Data ss:Type="String"><%= slip.month %> <%= slip.year %></Data></Cell>
         </Row><!-- Row -->
+      <% end %>
       <% end %><!-- slip -->
+      <Row>
+          <Cell ss:Index="4"><Data ss:Type="String">Total</Data></Cell>
+          <Cell ss:Index="5"><Data ss:Type="Number"><%= @payable_day %></Data></Cell>
+          <Cell ss:Index="6"><Data ss:Type="Number"><%= @amount %></Data></Cell>
+          <Cell ss:Index="7"><Data ss:Type="Number"><%= @pf_amount %></Data></Cell>
+          <Cell ss:Index="8"><Data ss:Type="Number"><%= @contribution %></Data></Cell>
+        </Row>
+
     </Table>
   </Worksheet>
 </Workbook>

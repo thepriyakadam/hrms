@@ -84,6 +84,10 @@ class PfEmployersController < ApplicationController
     redirect_to new_pf_employer_path
   end
 
+  def pf_employers_modal
+    @pf_employer = PfEmployer.find(params[:format])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_pf_employer

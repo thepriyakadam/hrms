@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  investment_declaration_id: 
+  property_type: MyString
+  rental_income: 9.99
+  less_taxes: 9.99
+  less_repairs: 9.99
+  income: 9.99
+  less_interest: 9.99
+  less_pre_emi_interest: 9.99
+  estimated_total_amt: 9.99
+  actual_total_amt: 9.99
+  total: 9.99
+
+two:
+  investment_declaration_id: 
+  property_type: MyString
+  rental_income: 9.99
+  less_taxes: 9.99
+  less_repairs: 9.99
+  income: 9.99
+  less_interest: 9.99
+  less_pre_emi_interest: 9.99
+  estimated_total_amt: 9.99
+  actual_total_amt: 9.99
+  total: 9.99

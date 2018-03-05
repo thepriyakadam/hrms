@@ -1,0 +1,101 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <center>Add details of Housing Rent/ Lease Rent paid/ payable during the year</center>
+    </div>
+
+    <div class="modal-body">
+      <%#= bootstrap_form_for :policy_detail,url:{action:"policy_details"},html: {id: 'policy_detail'}, remote:true  do |f| %>
+      <%= bootstrap_form_for(@housing_rent,html: {id: 'housing_rent'} ) do |f| %>
+       <%#= f.hidden_field :investment_declaration_id , value: current_user.employee_id %>
+       
+        <%= f.hidden_field :investment_declaration_id , value: params[:format] %>
+        <!-- <div class="col-sm-4">
+          <div class="field">
+            <%#= f.text_field :investment_declaration_id %>
+          </div>
+        </div> -->
+        
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="field">
+              <%= f.label :'metro_city', 'Is Metro City ?' %>
+              <%= f.check_box :metro_city, label:'Yes' %>
+              <%#= f.text_field :metro_city, label:'Is Metro City ?' %>
+            </div>
+          </div>
+        </div>  
+
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="field">
+               <%= f.select :month ,['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] ,{label: 'MONTH',include_blank: "Select Month"} %>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="field">
+               <%= f.select :year ,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'] ,{label: 'YEAR',include_blank: "Select Year"} %>
+            </div>
+          </div>
+        
+        
+          <div class="col-sm-4">
+            <div class="field">
+              <%= f.text_field :estimated_rent, label:'ESTIMATED RENT' %>
+            </div>
+          </div>
+        </div>  
+        
+        <div class="row">  
+          <div class="col-sm-4">
+            <div class="field">
+              <%= f.text_field :actual_rent, label:'ACTUAL RENT' %>
+            </div>
+          </div>
+         
+          
+          <div class="col-sm-4">
+            <div class="field">
+              <%= f.text_field :accepted_rent, label:'ACCEPTED RENT' %>
+            </div>
+          </div>
+        
+          <div class="col-sm-4">
+            <div class="field">
+              <%= f.text_field :rejected_rent, label:'REJECTED RENT' %>
+            </div>
+          </div>
+        </div>  
+         
+        <div class="row">  
+          <div class="col-sm-4">
+            <div class="field">
+              <%= f.text_field :landlord_name, label:'LANDLORD NAME' %>
+            </div>
+          </div>
+          
+          <div class="col-sm-4">
+            <div class="field">
+              <%= f.text_field :landlord_pan_no, label:'LANDORD PAN NUMBER' %>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="field">
+              <%= f.text_field :address, label:'ADDRESS' %>
+            </div>
+          </div>
+        </div>  
+
+        <div class="row"> 
+        </div>
+        <div class="row" align="center">
+          <div class="col-sm-10">
+            <%= f.submit "Submit", class: 'btn btn-sm btn-success fa fa-modx' %>
+          </div>
+      <% end %>
+      </div>
+  </div>
+</div>

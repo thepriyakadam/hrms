@@ -1,8 +1,8 @@
 <div class="box">
   <div class="box-header">
-   <h3 class="box-title">On Duty</h3>
+ <h3 class="box-title">On Duty</h3>
     <div class="pull-right">
-      <%= link_to "New OD Request", new_on_duty_request_path, class: 'btn btn-sm btn-primary' %> 
+      <%= link_to "New On Duty Request", new_on_duty_request_path, class: 'btn btn-sm btn-primary' %> 
     </div>
     <br><br>
     <div class="box-body">
@@ -11,14 +11,18 @@
         <div class="field">
          <table class="table table-bordered table-hover table-condensed'">
            <thead>
-           <tr><th colspan="2"><center> OD Process </center></th></tr>
+           <tr><th colspan="2"><center> On Duty Process </center></th></tr>
            <tr>
              <th>Employee </th>
              <td><%= @employee.manual_employee_code %> - <%= full_name(@employee) %></td>
            </tr>
            <tr>
-              <th>Manager 1 </th>
+            <th>Manager 1 </th>
+            <%if @employee.id == @employee.manager_id %>
+               <td>Time & Attendance Team</td>
+             <%else%>
               <td><%= @employee.manager.try(:manual_employee_code) %> - <%= full_name(@employee.try(:manager)) %></td>
+              <%end%>
             </tr>
             <tr>
               <th>Manager 2 </th>

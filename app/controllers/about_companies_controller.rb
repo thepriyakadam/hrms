@@ -55,11 +55,33 @@ class AboutCompaniesController < ApplicationController
     @about_companies = AboutCompany.all
   end
 
-  def is_confirm
-    @about_company = AboutCompany.find(params[:about_company])
-    AboutCompany.find(@about_company.id).update(is_confirm: true)
-    flash[:notice] = "Confirmed Successfully"
-    redirect_to new_about_company_path
+ 
+     def about_company_master
+      @about_companies = AboutCompany.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'about_companies/about_company_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'about_company_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'about_companies/about_company_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+  end
+
+    def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_about_companies_path
+      else
+     AboutCompany.import(params[:file])
+     redirect_to new_about_company_path, notice: "File imported."
+     end
   end
   
   private

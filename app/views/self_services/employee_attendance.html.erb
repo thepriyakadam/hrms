@@ -1,11 +1,16 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title"> Employee Attendance</h3>
+    <h3 class="box-title"> Attendance </h3>
+
+    <div class="pull-right">
+      <%= link_to '', modal_info_about_attendance_self_services_path, class: 'btn btn-default fa fa-eye btn-sm',remote:true %>
+    </div>
+    <div id="info_about_attendance" class="modal fade"></div>
+  </div>
  <div class="box-body">
-  <%= bootstrap_form_for(:employee, url: { action: 'show_self_datewise_attendance'},html: {id: "employee"}) do |f| %>
+  <%= bootstrap_form_for(:employee, url: { action: 'show_self_datewise_attendance'},html: {id: "employee"},remote: true) do |f| %>
 
   <%= hidden_field :employee,:employee_id, value: current_user.employee_id %>
-
     <div class="row">
         <div class="col-sm-3">
           <label>From </label>
@@ -14,7 +19,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-                <%= text_field :employee,:from,hide_label: true,placeholder: "From Date",class: 'request_date form-control'%>
+                <%= text_field :employee,:from,hide_label: true,placeholder: "From Date",class: 'from_date form-control'%>
             </div>
           </div>
         </div>
@@ -26,36 +31,39 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= text_field :employee,:to,hide_label: true,placeholder: "To Date",class: 'request_date form-control'%>
+              <%= text_field :employee,:to,hide_label: true,placeholder: "To Date",class: 'from_date form-control'%>
             </div>
           </div>
         </div>
-
         <div class="col-sm-2" style="padding-top:20px;">
           <%= f.submit "Submit",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %>
         </div>
-      </div>
-     </div>
-  <% end %>
-</div>
-</div>
-<script type="text/javascript">
-  $("#buttonCtc").click(function(){
-    $('.ajax-progress').show();
-    $("#advance_salary").submit();
-  })
-</script>
 
+    <!--     <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              < link_to 'Change', present_to_title_self_services_path, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary btn-primary fa fa-check' %>
+            </div>
+          </div>
+        </div> -->
+        <div id="self_datewise_attendance"></div>
+      
+      </div>
+    
+  <% end %>
+ </div>
+</div>
+    
 <script type="text/javascript">
-  $(function(){
-    $('.request_date').datepicker({
+  
+   $(function(){
+    $('.from_date').datepicker({
     changeYear:true,
     changeMonth: true,
-    yearRange: '-200:+1',
+    yearRange: '-2:+5',
     dateFormat: 'dd-mm-yy' });
   }); 
 </script>
-
 <script>
 $("#employee").validate({
     rules: {

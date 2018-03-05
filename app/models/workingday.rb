@@ -33,7 +33,7 @@ class Workingday < ActiveRecord::Base
       year = spreadsheet.cell(i,'C').to_i
       day_in_month = spreadsheet.cell(i,'D')
       payable_day = spreadsheet.cell(i,'E')
-      @workingday_data = Workingday.where(employee_id: employee_id,month_name: month_name).take 
+      @workingday_data = Workingday.where(employee_id: employee_id,month_name: month_name,year: year).take 
       if @workingday_data == nil
       @workingday = Workingday.create(employee_id: employee_id,month_name: month_name,year: year,day_in_month: day_in_month,payable_day: payable_day)
       else

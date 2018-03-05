@@ -12,7 +12,7 @@ class SalaryReport
 
                 :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, 
                 :pantry_deduction,
-                :welfair, :deduction_total, :net_payable, :other_deduction,  :pf_ctc, :esic_ctc,:bonus_ctc, 
+                :welfair, :deduction_total, :net_payable, :other_deduction,  :pf_ctc, :esic_ctc,:bonus_ctc, :gmk_deduction,
 
                 :total_leave, :pay_leave, :nonpay_leave, :gatepass, :day_in_month, :payable_day, 
                 :present_day, :absent_day, :holiday, :weekoff, :month, :year, 
@@ -126,6 +126,8 @@ class SalaryReport
         sr.mobile = d.calculated_amount
         when "Other Deduction"
         sr.other_deduction = d.calculated_amount
+         when "GMK"
+        sr.gmk_deduction = d.calculated_amount
         when "Retention"
         sr.retention = d.calculated_amount
         when "WelFare"
@@ -347,6 +349,9 @@ class SalaryReport
 
     array_other_deduction = reports.collect {|r| r.try(:other_deduction)}.compact
     @sum.other_deduction = array_other_deduction.inject(0){|sum,x| sum + x }
+
+     array_gmk_deduction = reports.collect {|r| r.try(:gmk_deduction)}.compact
+    @sum.gmk_deduction = array_gmk_deduction.inject(0){|sum,x| sum + x }
 
     array_retention = reports.collect {|r| r.try(:retention)}.compact
     @sum.retention = array_retention.inject(0){|sum,x| sum + x }
@@ -593,6 +598,8 @@ class SalaryReport
         sr.mobile = d.calculated_amount
         when "Other Deduction"
         sr.other_deduction = d.calculated_amount
+        when "GMK"
+        sr.gmk_deduction = d.calculated_amount
         when "Retention"
         sr.retention = d.calculated_amount
         when "WelFare"

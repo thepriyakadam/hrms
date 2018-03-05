@@ -20,13 +20,15 @@
             <%= f.select :attribute_master_id,all_attribute_type,{hide_label:true, include_blank: "Select Attribute"} %>    
           </div>
         <% end %>
-          <div class="col-sm-3">
-          <label>Measure</label>
-            <%= f.text_field :goal_measure,hide_label:true, placeholder: "Goal Measure" %>
-          </div>
+        
           <div class="col-sm-3">
           <label>Target/Unit</label>
             <%= f.text_field :target,hide_label:true, placeholder: "Target/Unit" %>
+          </div>
+
+          <div class="col-sm-6">
+          <label>Measure</label>
+            <%= f.text_area :goal_measure,hide_label:true, placeholder: "Goal Measure" %>
           </div>
         </div>
         <div class="row">

@@ -8,7 +8,7 @@
       <div class="row">
       <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :employee_code_master_id, all_employee_code_master,{include_blank: "Select Code Serial",label: "Code Serial"},{onchange:"var a={id:$(this).val()}; $.get('/employees/display_emp_code_master',a,function(response){});"}%>
+            <%= f.select :employee_code_master_id, all_employee_code_master,{include_blank: "Select Code Serial",label: "Code Serial"},{onchange:"var a={employee_code_master_id:$(this).val()}; $.get('/employees/display_emp_code_master',a,function(response){});"}%>
           </div>
         </div>  
         <div class="col-sm-3">
@@ -16,7 +16,18 @@
            <%= f.text_field :manual_employee_code,label: 'Employee ID',placeholder: "Employee ID",readonly: true %>
            </div>
         </div>
-           <div class="col-sm-3">
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :employee_option ,['New','Rehire'],{label: 'Employee Option',include_blank: "Select Option"},{onchange:"var a={employee_option:$(this).val()}; $.get('/employees/show_employee_dropdown',a,function(response){});",class: 'form-control'} %>
+          </div>
+        </div>
+
+        <div id="dropdown"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
           <div class="field">
             <%= f.select :prefix ,['Mr.','Mrs.','Miss.'] ,{label: 'Prefix',include_blank: "Select Prefix"} %>
           </div>
@@ -28,7 +39,7 @@
           </div>
         </div>
 
-              <div class="col-sm-3">
+        <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :middle_name, label: 'Middle Name',placeholder: 'Middle Name' %>
           </div>
@@ -298,7 +309,7 @@
         <div class="col-sm-6">
         <label></label>
           <div class="actions">
-            <%= f.submit "Create Employee",class: "btn btn-primary btn-sm" %>
+            <%= f.submit "Save Details",class: "btn btn-primary btn-sm" %>
             <% if params['controller'] == 'employees' and params['action'] == 'edit' %>      
             <%end%>
             <%= link_to 'Back', employees_path,class:"btn btn-sm btn-default fa fa-arrow-left" %>
@@ -376,12 +387,7 @@ $("#employee").validate({
       "employee[company_id]":{
         required: true
       },
-      "employee[company_location_id]":{
-        required: true
-      },
-      "employee[department_id]":{
-        required: true
-      },
+     
        
        "employee[email]":{
         required: true
@@ -450,12 +456,7 @@ $("#employee").validate({
       "employee[company_id]":{
         required: "Please select company"
       },
-      "employee[company_location_id]":{
-        required: "Please select company location"
-      },
-      "employee[department_id]":{
-        required: "Please select department"
-      },
+     
       "employee[email]":{
         required: "Please specify email id"
          },

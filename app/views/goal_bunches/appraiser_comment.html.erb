@@ -126,20 +126,22 @@
     <% if @goal_bunch.appraiser_comment == nil %>
       <div class="box box-default">
         <div class="box-body">
-        <%= bootstrap_form_for (@goal_rating),url:{action:'appraiser_create',emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id,period_id: @period.id} do |f| %>  
+        <%#= bootstrap_form_for (@goal_rating),url:{action:'appraiser_create',emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id,period_id: @period.id} do |f| %>  
           <table class="table table-bordered table-hover table-condensed">
             <thead>
             <tr><th colspan="9"><center>Goal Rating</center></th></tr>
               <tr>
                 <th>Goal Perspective</th>
                 <th>Measure</th>
+                <th>Activity</th>
                 <th>Target/Unit</th>
                 <th>Weightage</th>
                 <th>Aligned</th>
                 <th>Self Comment</th>
                 <th>Self Rating</th>
-                <th>Appraiser Comment</th>
-                <th>Appraiser Rating</th>
+                <!-- <th>Appraiser Comment</th>
+                <th>Appraiser Rating</th> -->
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -147,13 +149,16 @@
                 <tr>
                   <td><%= goal_rating.goal_perspective.try(:name) %></td>
                   <td><%= goal_rating.goal_measure %></td>
+                  <td><%= goal_rating.activity %></td>
                   <td><%= goal_rating.target %></td>
                   <td><%= goal_rating.goal_weightage %></td>
                   <td><%= goal_rating.aligned %></td>
                   <td><%= goal_rating.appraisee_comment %></td>
                   <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
-                  <td><%= text_field_tag 'appraiser_comments[]',"",class: "form-control",autofocus: true %></td>
-                  <td><%= select_tag 'appraiser_ratings[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %></td>
+
+                  <!-- <td><%#= text_field_tag 'appraiser_comments[]',"",class: "form-control",autofocus: true %></td>
+                  <td><%#= select_tag 'appraiser_ratings[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %></td> -->
+
                   <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
                 </tr>
               <% end %>
@@ -166,13 +171,15 @@
               <tr>
                 <th>Attribute</th>
                 <th>Measure</th>
+                <th>Activity</th>
                 <th>Target/Unit</th>
                 <th>Weightage</th>
                 <th>Aligned</th>
                 <th>Self Comment</th>
                 <th>Self Rating</th>
-                <th>Appraiser Comment</th>
-                <th>Appraiser Rating</th>
+                <!-- <th>Appraiser Comment</th>
+                <th>Appraiser Rating</th> -->
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -180,24 +187,26 @@
                 <tr>
                   <td><%= goal_rating.attribute_master.try(:name) %></td>
                   <td><%= goal_rating.goal_measure %></td>
+                  <td><%= goal_rating.activity %></td>
                   <td><%= goal_rating.target %></td>
                   <td><%= goal_rating.goal_weightage %></td>
                   <td><%= goal_rating.aligned %></td>
                   <td><%= goal_rating.appraisee_comment %></td>
                   <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
-                  <td><%= text_field_tag 'appraiser_comments[]',"",class: "form-control" %></td>
-                  <td><%= select_tag 'appraiser_ratings[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %></td>
+
+                  <!-- <td><%#= text_field_tag 'appraiser_comments[]',"",class: "form-control" %></td>
+                  <td><%#= select_tag 'appraiser_ratings[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %></td> -->
                   <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
                 </tr>
               <% end %>
             </tbody>
           </table>
-
+          <br>
         <% unless @goal_ratings.empty? && @goal_attribute_ratings.empty? %>
           <div class="row">
             <div class="col-sm-3">
               <div class="actions">
-                <%= f.submit "Create Comment & Rating", class: 'btn btn-primary btn-sm' %>
+                <%#= f.submit "Create Comment & Rating", class: 'btn btn-primary btn-sm' %>
                 <%= link_to 'Back',period_list_appraiser_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
               </div>
             </div>
@@ -205,7 +214,7 @@
         <% end %>
       </div>
       </div>
-    <% end %>
+    <%# end %>
   <% end %>
 
 <div class="box box-default">
@@ -217,10 +226,11 @@
 
     <table class="table table-bordered table-hover table-condensed">
       <thead>
-      <tr><th colspan="10"><center>Goal Details</center></th></tr>
+      <tr><th colspan="11"><center>Goal Details</center></th></tr>
         <tr>
           <th>Goal Perspective</th>
           <th>Measure</th>
+          <th>Activity</th>
           <th>Target/Unit</th>
           <th>Weightage</th>
           <th>Aligned</th>
@@ -237,6 +247,7 @@
           <tr>
             <td><%= goal_rating.goal_perspective.try(:name) %></td>
             <td><%= goal_rating.goal_measure %></td>
+            <td><%= goal_rating.activity %></td>
             <td><%= goal_rating.target %></td>
             <td><%= weightage = goal_rating.goal_weightage %></td>
             <td><%= goal_rating.aligned %></td>
@@ -260,7 +271,7 @@
         <% end %>
         <tr>
           <th colspan="2"><h6><font color='red' size='2'>Appraiser Rating For Goal</font></h6> </th>
-          <th colspan="8"><h6><font color='red' size='2'> <%= appraiser_goal_sum.round(2) %></font></h6> </th>
+          <th colspan="9"><h6><font color='red' size='2'> <%= appraiser_goal_sum.round(2) %></font></h6> </th>
         </tr>
       </tbody>
     </table>
@@ -268,10 +279,11 @@
    
      <table class="table table-bordered table-hover table-condensed">
       <thead>
-      <tr><th colspan="10"><center>Attribute Details</center></th></tr>
+      <tr><th colspan="11"><center>Attribute Details</center></th></tr>
         <tr>
           <th>Attribute</th>
           <th>Measure</th>
+          <th>Activity</th>
           <th>Target/Unit</th>
           <th>Weightage</th>
           <th>Aligned</th>
@@ -288,6 +300,7 @@
           <tr>
             <td><%= goal_rating.attribute_master.try(:name) %></td>
             <td><%= goal_rating.goal_measure %></td>
+            <td><%= goal_rating.activity %></td>
             <td><%= goal_rating.target %></td>
             <td><%= weightage = goal_rating.goal_weightage %></td>
             <td><%= goal_rating.aligned %></td>
@@ -311,12 +324,12 @@
         <% end %>
         <tr>
           <th colspan="2"> <h6><font color='red' size='2'>Appraiser Rating For Attribute </font></h6></th>
-           <th colspan="8"> <h6><font color='red' size='2'><%= appraiser_attribute_sum.round(2) %></font></h6></th>
+           <th colspan="9"> <h6><font color='red' size='2'><%= appraiser_attribute_sum.round(2) %></font></h6></th>
         </tr>
         <tr>
           <th colspan="2"> <h6><font color='red' size='2'>Overall </font></h6></th>
          
-          <th colspan="8"> <h6><font color='red' size='2'><%= (appraiser_attribute_sum + appraiser_goal_sum).round(2) %></font></h6></th>
+          <th colspan="9"> <h6><font color='red' size='2'><%= (appraiser_attribute_sum + appraiser_goal_sum).round(2) %></font></h6></th>
            <% @Overall = (appraiser_attribute_sum + appraiser_goal_sum ).round(2) %>
         </tr>
       </tbody>

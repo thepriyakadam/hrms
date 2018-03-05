@@ -1,0 +1,63 @@
+<div class="box">
+  <div class="box-body">
+    <% if @from == @payroll_period.from.to_date && @to == @payroll_period.to.to_date %>
+
+      <table id="example5" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr><td colspan="13"><center>Working Days : <%= @from %> - <%= @to %></center></td></tr>
+          <tr>
+            <th>ID</th>
+            <th>Employee</th>
+            <th>Present Day</th>
+            <th>Holiday</th>
+            <th>Week Off</th>
+            <th>OD</th>
+            <th>Gate Pass</th>
+            <th>Pay Leave</th>
+            <th>Non Pay Leave</th>
+            <th>Absent</th>
+            <th>Payable Day</th>
+            <th>Days In Month</th>
+          </tr>
+        </thead>
+
+        <tbody>
+           <% @workingdays.each do |workingday| %>
+            <tr>
+              <td><%= workingday.employee.try(:manual_employee_code) %></td>
+              <td><%= full_name(workingday.employee) %></td>
+              <td><%= workingday.present_day %></td>
+              <td><%= workingday.holiday_in_month %></td>
+              <td><%= workingday.week_off_day %></td>
+              <td><%= workingday.od_day %></td>
+              <td><%= workingday.gatepass %></td>
+              <td><%= workingday.pay_leave %></td>
+              <td><%= workingday.nonpay_leave %></td>
+              <td><%= workingday.absent_day %></td>
+              <th><%= workingday.payable_day %></th>
+              <td><%= workingday.day_in_month %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+
+        <%= link_to "PDF",show_datewise_workingday_workingdays_path(:employee => {:from => params[:employee][:from],:to => params[:employee][:to],:company_id => params[:employee][:company_id],:company_location_id => params[:employee][:company_location_id],:department_id => params[:employee][:department_id],:status => params[:employee][:status]},format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+        <%= link_to " Excel ",show_datewise_workingday_workingdays_path(:employee => {:from => params[:employee][:from],:to => params[:employee][:to],:company_id => params[:employee][:company_id],:company_location_id => params[:employee][:company_location_id],:department_id => params[:employee][:department_id],:status => params[:employee][:status]},format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+        
+    <% else %>
+      <center><div style="color: Red"><h6>Please Select Date Within Payroll Period</h6></div></center>
+    <% end %>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example5').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true
+    } );
+} );
+</script>
+

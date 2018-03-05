@@ -131,6 +131,16 @@
        <li id="ProjectMaster">
         <li><a href="/project_masters/new"><i class="fa fa-tags"></i> Project Master </a></li>
         </li>
+
+        <li id="PayrollComponent">
+         <a href="#"><i class="fa fa-edit"></i> Payroll Component <i class="fa fa-angle-left pull-right"></i></a>
+          <ul class="treeview-menu">
+          <li><a href="/advance_types/new"><i class="fa fa-tags"></i> Advance Type </a></li>
+          <li><a href="/expencess_types/new"><i class="fa fa-tags"></i> Expenses Type </a></li>
+          <li><a href="/food_coupan_masters/new"><i class="fa fa-tags"></i> Food Coupon Type </a></li>
+        </ul>
+      </li>
+
          
        <!-- <li id="rembursment">
         <li><a href="/rembursmentmasters/new"><i class="fa fa-tags"></i> Reimbursement Master </a></li>
@@ -247,6 +257,7 @@
             <li><a href="/employee_plans/meeting_minutes_history" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Meeting Minutes History Reports </a></li>
             <li><a href="/employee_plans/meeting_follow_up" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Meeting Plan Follow-up </a></li>
             <li><a href="/listed_companies"><i class="fa fa-tags"></i> Listed Company </a></li>
+            <li><a href="/daily_attendances/daily_attendance" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Daily Attendances Report </a></li>     
           </ul>
         </li>
 
@@ -280,12 +291,12 @@
            <!--  <li><a href="/self_services/add_attendance" title="For adding self attendance"><i class="fa fa-tags"> </i> Add Attendance</a></li> -->
             <!--  <li><a href="/employee_attendances/loginwise_attendance_form"><i class="fa fa-tags"></i>Attendance </a></li> --> 
             <li><a href="/self_services/holiday_setup" title="Holiday calender , Holidays which is assigned to employees"><i class="fa fa-tags"></i> Holiday Calender</a></li>
-            <li><a href="/self_services/employee_template" title="To view the self salary structure"><i class="fa fa-tags"> </i> Salary Structure </a></li>
+           <!--  <li><a href="/self_services/employee_template" title="To view the self salary structure"><i class="fa fa-tags"> </i> Salary Structure </a></li> -->
             <li><a href="/self_services/salaryslip" title="To view the self salary slip of particular month and year "><i class="fa fa-tags"></i> Salary Slip </a></li>
             <li><a href="/self_services/advance"><i class="fa fa-tags"></i> Advance & Installment </a></li>
             <!-- <li><a href="/employee_plans" title="To view the details of creating user"><i class="fa fa-tags"></i> Meeting Plans </a></li> -->
             <!-- <li><a href="/employee_daily_activities/new"><i class="fa fa-tags"></i> Daily Activity </a></li> -->
-            <li><a href="/self_services/employee_transfer" title="Requesting for sef transfer"><i class="fa fa-tags"></i> Transfer Request</a></li>
+           <!--  <li><a href="/self_services/employee_transfer" title="Requesting for sef transfer"><i class="fa fa-tags"></i> Transfer Request</a></li> -->
             <li><a href="/self_services/travel_request" title="For initiating self travel request"><i class="fa fa-tags"></i> Travel Request </a></li>
             <!-- <li><a href="/travel_requests/daily_bill" title="For initiating self expense claim"><i class="fa fa-tags"></i> Expense Claim </a></li> -->
             <li><a href="/training_plans/trainee_list" title="Training feedback form for employee for expressing his/her views about given training"><i class="fa fa-tags"></i> Training Feedback </a></li>
@@ -437,6 +448,7 @@
                 <li><a href="/employee_week_offs/revert_selective" title="For reverting the week off effective from to effective to of a particular date "><i class="fa fa-tags"></i> Revert Date Wise </a></li>
                 <!-- <li><a href="/week_off_masters/revert_week_off_master" title="For reverting the week off master data "><i class="fa fa-tags"></i> Revert Master </a></li> -->
                 <li><a href="/employee_week_offs/date_wise_week_off" title="Employee list of week of report"><i class="fa fa-tags"></i> Week Off Report </a></li>
+                <li><a href="/employee_week_offs/datewise_report" title="Employee list of week of report"><i class="fa fa-tags"></i> Datewise Report </a></li>
               </ul>
             </li> 
             <li class="treeview" id="GpsSetup">
@@ -473,6 +485,17 @@
                 <li><a href="/attendances"><i class="fa fa-tags"></i> Employee Attendance </a></li> -->
               </ul>
             </li> 
+            <li class="treeview" id="latemark">
+              <a href="#">
+                <i class="fa fa-edit"></i> Late Mark <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="/latemark_masters/new"><i class="fa fa-tags"> </i> Latemark Master </a></li>
+                <li><a href="/latemark_masters/latemark_calculation"><i class="fa fa-tags"> </i> Latemark Calculation </a></li>
+                <li><a href="/latemark_masters/latemark_report"><i class="fa fa-tags"> </i> Latemark Report </a></li>
+              </ul>
+            </li>
+
             <li class="treeview" id="daily_attendance">
               <a href="#">
                 <i class="fa fa-edit"></i> Payroll Attendance <i class="fa fa-angle-left pull-right"></i>
@@ -506,6 +529,7 @@
                 <li><a href="/employee_attendances/attendance_average_report"><i class="fa fa-tags"></i> Average Attendance </a></li>
                 <li><a href="/employee_attendances/managerwise_average_report"><i class="fa fa-tags"></i> Manager Wise </a></li>
                 <li><a href="/employee_plans/gps_tracking"><i class="fa fa-tags"></i> GPS Tracking </a></li>
+                <li><a href="/workingdays/datewise_workingday"><i class="fa fa-tags"></i> Workingday </a></li>
               </ul>
             </li> 
           </ul>
@@ -555,7 +579,7 @@
               <li id="PeriodicComponents">
                 <a href="#"><i class="fa fa-edit"></i> Periodic Components <i class="fa fa-angle-left pull-right"></i></a>
                   <ul class="treeview-menu">
-                    <li><a href="/food_deductions" title="To see the food deduction list of particular month and year . Also can create new food deduction"><i class="fa fa-tags"> </i> Food Coupan </a></li>
+                    <li><a href="/food_deductions" title="To see the food deduction list of particular month and year . Also can create new food deduction"><i class="fa fa-tags"> </i> Food Coupon </a></li>
                     <li><a href="/monthly_expences" title="To see the monthly expenses list of particular month and year . Also can create new monthly expenses"><i class="fa fa-tags"> </i> Monthly Expenses </a></li>
                     <li><a href="/monthly_arrears/new" title="For creating monthly arrears for employee of particular dates "><i class="fa fa-tags"> </i> Monthly Arrears </a></li>
                     <li><a href="/society_member_ships" title="To create new membership for employee"><i class="fa fa-tags"> </i> Membership </a></li>
@@ -602,7 +626,7 @@
                 <li id="SalaryReport">
                   <a href="#" title="All reports related to salary"><i class="fa fa-line-chart"></i> Salary Report <i class="fa fa-angle-left   pull-right"></i></a>
                     <ul class="treeview-menu">
-                      <li><a href="/salaryslips/salary_slip_report_form"><i class="fa fa-tags"></i> Monthly Report </a></li>
+                      <!-- <li><a href="/salaryslips/salary_slip_report_form"><i class="fa fa-tags"></i> Monthly Report </a></li> -->
                       <li><a href="/salaryslips/salaryslip_daterange_report"><i class="fa fa-tags"></i> Datewise Report </a></li>
                       <li><a href="/salary_slip_ledgers/select_month_year_form"><i class="fa fa-tags"> </i> Bank Wise </a></li>
                       <li><a href="/salary_slip_ledgers/cost_unit_wise"><i class="fa fa-tags"></i> Unit Wise </a></li>
@@ -772,10 +796,14 @@
             <li id="perform_cycle">
               <a href="#"><i class="fa fa-edit"></i> Performance Cycle <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <li><a href="/goal_bunches/subordinate_list" title="Employee goal list comes for goal approval"><i class="fa fa-thumbs-upfa fa-thumbs-up"></i> Goal Approval </a></li>
+                <!-- <li><a href="/goal_bunches/subordinate_list" title="Employee goal list comes for goal approval"><i class="fa fa-thumbs-upfa fa-thumbs-up"></i> Goal Approval </a></li> -->
                 <li><a href="/goal_bunches/appraiser_subordinate" title="For appraiser rating and comment"><i class="fa fa-tags"></i> Appraiser Evaluation </a></li>
                 <li><a href="/goal_bunches/reviewer_subordinate" title="For reviewer rating and comment"><i class="fa fa-tags"></i> Reviewer Evaluation </a></li>
                 <li><a href="/goal_bunches/employee_list" title="For final rating and comment"><i class="fa fa-tags"></i> Final Evaluation </a></li>
+                <li><a href="/goal_bunches/admin_level_period" title="For admin level period setting"><i class="fa fa-tags"></i> Period Setting </a></li>
+                <li><a href="/goal_ratings/admin_level_goal_set" title="For admin level goal setting"><i class="fa fa-tags"></i> Goal Setting </a></li>
+                <li><a href="/goal_bunches/admin_goal_approval_period" title="For admin level goal setting"><i class="fa fa-tags"></i> Goal Approval </a></li>
+                <li><a href="/goal_bunches/admin_self_evaluation_period" title="For admin level goal setting"><i class="fa fa-tags"></i> Self Evaluation </a></li>
               </ul>
             </li> 
             <li id="perform_cycle1">
@@ -991,3 +1019,4 @@
   document.getElementById("<%= session[:active_tab2] %>").classList.add("active");
   <%end%>
 </script>
+

@@ -1,5 +1,18 @@
 Rails.application.routes.draw do
 
+  resources :latemark_deductions
+  resources :latemark_masters do
+    collection do
+      get :latemark_calculation
+      post :show_employee_list
+      get :show_employee_list
+      post :calculate_latemark
+      get :latemark_total
+      get :latemark_report
+      post :show_datewise_report
+      get :datewise_report
+    end
+  end
   resources :meeting_follow_ups do
     collection do
       get :view_meeting_follow_up
@@ -22,17 +35,15 @@ Rails.application.routes.draw do
   resources :events
   resources :resource_pool_masters
   resources :service_masters
-  resources :daily_attendances do 
-    collection do
-      get :attendance
-      get :calculate
-    end
-  end
 
   resources :daily_attendances do 
     collection do
       get :attendance
       get :calculate
+      get :daily_attendance
+      post :daily_attendance
+      get :daily_attendances_report
+      post :daily_attendances_report
     end
   end
 
@@ -353,9 +364,11 @@ Rails.application.routes.draw do
   end
   resources :employee_gps_histories
   resources :gratuities
+
   resources :gratuity_masters do
     collection do
       get :is_confirm
+      get :gratuity_master_modal
     end
   end
   resources :monthly_arrears  do
@@ -443,6 +456,9 @@ Rails.application.routes.draw do
       post :show_employee_list
       post :revert_selective_week_off
       post :revert_selective_data
+      get :datewise_report
+      post :show_datewise_employee
+      get :show_datewise_employee
     end
   end
   resources :late_mark_masters do
@@ -555,11 +571,13 @@ Rails.application.routes.draw do
   resources :employer_insurances do
     collection do
       get :is_confirm
+      get :employer_insurances_modal
     end
   end
   resources :employer_family_pensions do
     collection do
       get :is_confirm
+      get :employer_family_pensions_modal
     end
   end
 
@@ -1149,7 +1167,7 @@ end
       post :training_plan_create
       get :modal_training_plan
       get :goal_set_modal
-      patch :update_goal_set_modal
+      post :update_goal_set_modal
       get :trainee_list
       post :print_employee_detail
       get :all_emp_list
@@ -1182,6 +1200,13 @@ end
       get :show_attribute
       get :show_goal_modal
       get :show_attribute_modal
+      get :import_xl
+      post :import
+      get :goal_set
+      get :admin_level_goal_set
+      get :admin_level_period
+      get :admin_appraiser_evaluation_period
+      get :admin_level_appraiser_evaluation
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -1190,7 +1215,6 @@ end
       get :goal_approval
       post :appraiser_confirm
       get :appraisee_comment
-      post :self_comment
       post :self_comment_confirm
       get :appraiser_subordinate
       get :appraiser_comment
@@ -1250,6 +1274,17 @@ end
       get :period_for_multiple
       post :create_multiple_bunch
       get :revert_goal
+      get :self_evaluation
+      get :import_xl
+      post :import
+      get :self_comment_modal
+      post :self_comment
+      get :admin_level_period
+      post :create_admin_level_period
+      get :admin_goal_approval_period
+      get :admin_level_goal_approval
+      get :admin_self_evaluation_period
+      get :admin_level_self_evaluation
     end
   end
   resources :goal_perspectives do
@@ -1905,6 +1940,7 @@ end
       get :display_notice_period
       get :exit_interview
       get :present_to_title
+      get :modal_info_about_attendance
     end
   end
 
@@ -2312,7 +2348,8 @@ end
       get :leave_detail_xls
       get :import_xl
       post :import
-
+      get :dynamic_daterange_report
+      post :dynamic_daterange_report
     end
   end
 
@@ -2456,6 +2493,7 @@ end
       post :import_day
       get :datewise_total_workingday
       post :show_total_workingday
+      get :show_total_workingday
     end
   end
 
@@ -2690,6 +2728,9 @@ end
       get :basic_report
       post :report
       get :report
+      get :date_categorywise_balance
+      post :show_date_categorywise
+      get :show_date_categorywise
 
     end
   end
@@ -2723,6 +2764,7 @@ end
       post :show_balancewise_report
       get :show_balancewise_report
       get :leave_request_modal
+      get :c_off_date
     end
   end
   resources :company_leavs
@@ -2932,6 +2974,8 @@ end
       get :reporting_manager_list
       get :employee_asset
       get :admin_asset_employee_list
+      get :show_employee_dropdown
+      get :collect_self_data
     end
     member do
       get :edit_manager
@@ -3157,7 +3201,6 @@ end
     get 'user_auths/employee_wise_attendance' => 'user_auths#employee_wise_attendance', defaults:{format: 'json'}
     get 'user_auths/date_wise_location_history' => 'user_auths#date_wise_location_history', defaults:{format: 'json'}
     get 'user_auths/leave_coff' => 'user_auths#leave_coff', defaults:{format: 'json'}
-
     post 'user_auths/notes_details' => 'user_auths#notes_details', defaults:{format: 'json'}
     get 'user_auths/all_plan_list' => 'user_auths#all_plan_list', defaults:{format: 'json'}
     get 'user_auths/listed_company' => 'user_auths#listed_company', defaults:{format: 'json'}
@@ -3165,6 +3208,7 @@ end
     post 'user_auths/end_meeting' => 'user_auths#end_meeting', defaults:{format: 'json'}
     post 'user_auths/meeting_minutes' => 'user_auths#meeting_minutes', defaults:{format: 'json'}
     get 'user_auths/meeting_plan_minutes' => 'user_auths#meeting_plan_minutes', defaults:{format: 'json'}
-    
+    get 'user_auths/particular_emp_status_wise_plan_list' => 'user_auths#particular_emp_status_wise_plan_list', defaults:{format: 'json'}
+    get 'user_auths/notifications_count' => 'user_auths#notifications_count', defaults:{format: 'json'}
   end
 end

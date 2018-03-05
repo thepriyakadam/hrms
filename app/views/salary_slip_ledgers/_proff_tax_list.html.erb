@@ -1,48 +1,68 @@
-<div class="box-header">
-    <div class="pull-right">
-    </div>
-  </div><!-- /.box-header -->
+<div class="ajax-progress"></div>
+<div class="box">
   <div class="box-body">
-  <div id="comments">
-    <table id="example" class="table table-bordered table-hover table-condensed">
-    <thead>
-      <tr>
-        <th>ID</Data></th>
-        <th>Employee Name</th>
-        <th>Department</th>
-        <th>Professional Tax</th>
-    </tr>
-    </thead>
-    <tbody>
-      <% @salaryslips.each do |slip| %>
-        <% employee = slip.employee %>
-        <% bank = employee.employee_bank_detail %>
-        <% workingday = slip.workingday %>
+    <% i = 0 %>
+    <% @proff_tax = 0 %>
+    <table id="example6" class="table table-bordered table-hover table-condensed">
+      <thead>
         <tr>
-          <td><%= slip.employee.manual_employee_code %></td>
-          <td><%= employee.try(:first_name) %> <%= employee.try(:middle_name) %> <%= employee.try(:last_name) %></td>
-           <td><%= employee.company_location.try(:name) %> - <%= employee.department.try(:name) %></td>
+          <td colspan="5">
+              <center><strong>Professional Tax Report</strong></center>
+              <center><strong><%= @from.strftime("%B-%Y") %> to <%= @to.strftime("%B-%Y") %></strong></center>
+          </td>           
+        </tr>
+        <tr>
+          <th>Sr. No.</th>
+          <th>ID</Data></th>
+          <th>Employee Name</th>
+          <th>Department</th>
+          <th>Professional Tax</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @salaryslips.each do |slip| %>
+          <% employee = slip.employee %>
+          <% bank = employee.employee_bank_detail %>
+          <% workingday = slip.workingday %>
+          <tr>
+            <td><%= i = i + 1 %></td>
+            <td><%= slip.employee.manual_employee_code %></td>
+            <td><%= employee.try(:first_name) %> <%= employee.try(:middle_name) %> <%= employee.try(:last_name) %></td>
+             <td><%= employee.company_location.try(:name) %> - <%= employee.department.try(:name) %></td>
 
-          <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
-          <% @deducted_salaryslip_items.each do |item| %>
-              <% if item.other_component_name == "Professional Tax" %>
-                <td><%= item.calculated_amount.round %></td>
-              <% end %>
-          <% end %><!-- deducted items -->
-        </Row><!-- Row -->
-      <% end %><!-- slip -->
-   </tbody>
-  </table>
+            <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
+            <% @deducted_salaryslip_items.each do |item| %>
+                <% if item.other_component_name == "Professional Tax" %>
+                  <td><%= proff_tax = item.calculated_amount.round %></td>
+                  <% @proff_tax = @proff_tax.to_f + proff_tax.to_f %>
+                <% end %>
+            <% end %><!-- deducted items -->
+          </tr><!-- Row -->
+        <% end %><!-- slip -->
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>Total</td>
+          <td><%= @proff_tax %></td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div class="col-sm-6">
+      <%= link_to " Excel Report ",professional_tax_master_dynamic_report_salary_slip_ledgers_path(:employee => {:from => params[:employee][:from],:to => params[:employee][:to],:company_id => params[:employee][:company_id],:company_location_id => params[:employee][:company_location_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%= link_to " PDF Report ",professional_tax_master_dynamic_report_salary_slip_ledgers_path(:employee => {:from => params[:employee][:from],:to => params[:employee][:to],:company_id => params[:employee][:company_id],:company_location_id => params[:employee][:company_location_id]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+    </div>
   </div>
-
-  <%= link_to " Excel Report ",professional_tax_master_dynamic_report_salary_slip_ledgers_path(:food_deduction => {:month => params[:food_deduction][:month],:year => params[:food_deduction][:year],:company_id => params[:food_deduction][:company_id],:company_location_id => params[:food_deduction][:company_location_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <%= link_to " PDF Report ",professional_tax_master_dynamic_report_salary_slip_ledgers_path(:food_deduction => {:month => params[:food_deduction][:month],:year => params[:food_deduction][:year],:company_id => params[:food_deduction][:company_id],:company_location_id => params[:food_deduction][:company_location_id]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>
 
+
 <script type="text/javascript">
-  $(document).ready(function() {
-    $('#example').DataTable( {
-        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true,
+        "scrollY": 500
     } );
 } );
 </script>

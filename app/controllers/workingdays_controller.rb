@@ -573,6 +573,8 @@ class WorkingdaysController < ApplicationController
   end
 
   def datewise_workingday
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Report"
   end
 
   def show_datewise_workingday
@@ -583,13 +585,12 @@ class WorkingdaysController < ApplicationController
     @department = params[:employee][:department_id]
     @from = from.to_date
     @to = to.to_date
-    payroll_period = PayrollPeriod.where(status: true).take
-     #byebug
-    if @from == payroll_period.from.to_date && @to == payroll_period.to.to_date
+    @payroll_period = PayrollPeriod.where(status: true).take
+    
       if current_user.class == Group
         if @company_id == ""
           @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date)
-        elsif @location == ""
+        elsif @location == "" || @location == nil
           @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
           @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
         elsif @department == ""
@@ -604,7 +605,7 @@ class WorkingdaysController < ApplicationController
           if @company_id == ""
             @employees = Employee.where(status: 'Active')
             @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
-          elsif @location == ""
+          elsif @location == "" || @location == nil
             @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
           @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
           elsif @department == ""
@@ -618,7 +619,7 @@ class WorkingdaysController < ApplicationController
           if @company_id == ""
             @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
           @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
-          elsif @location == ""
+          elsif @location == "" || @location == nil
             @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
           @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
           elsif @department == ""
@@ -629,7 +630,7 @@ class WorkingdaysController < ApplicationController
           @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
           end
         elsif current_user.role.name == 'Branch'
-          if @company_id == "" || @location == ""
+          if @company_id == "" || @location == "" || @location == nil
             @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
           @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
           elsif @department == ""
@@ -640,7 +641,7 @@ class WorkingdaysController < ApplicationController
           @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
           end
         elsif current_user.role.name == 'HOD'
-          if @company_id == "" || @location == "" || @department == ""
+          if @company_id == "" || @location == "" || @location == nil || @department == ""
             @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
           @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
           else 
@@ -648,7 +649,7 @@ class WorkingdaysController < ApplicationController
           @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
           end
         elsif current_user.role.name == 'Supervisor'
-          if @company_id == "" || @location == "" || @department == ""
+          if @company_id == "" || @location == "" || @location == nil || @department == ""
             @emp = Employee.find(current_user.employee_id)
             @employees = @emp.subordinates
           @workingdays = Workingday.where(from: @from.to_date,to: @to.to_date,employee_id: @employees)
@@ -660,10 +661,25 @@ class WorkingdaysController < ApplicationController
         elsif current_user.role.name == 'Employee'
         end #current_user.role
       end #current_user.class
-    else
-      flash[:alert] = "Please Select Date Within payroll Period!"
-      redirect_to datewise_workingday_workingdays_path
-    end
+      respond_to do |format|
+        format.js
+        format.xls {render template: 'workingdays/datewise_workingday.xls.erb'}
+        format.html
+        format.pdf do
+          render pdf: 'date_report_pdf',
+                layout: 'pdf.html',
+                orientation: 'Landscape',
+                template: 'workingdays/datewise_workingday.pdf.erb',
+                # show_as_html: params[:debug].present?,
+                :page_height      => 1000,
+                :dpi              => '300',
+                :margin           => {:top    => 10, # default 10 (mm)
+                              :bottom => 10,
+                              :left   => 20,
+                              :right  => 20},
+                :show_as_html => params[:debug].present?
+          end
+        end
   end
 
   def datewise_total_workingday
@@ -675,7 +691,21 @@ class WorkingdaysController < ApplicationController
     to = params[:employee][:to]
     @from = from.to_date
     @to = to.to_date
-    @workingdays = Workingday.where(from: @from,to: @to)
+    @emp = Employee.where(status: "Active")
+    @workingdays = Workingday.where(date: @from..@to,employee_id: @emp).group(:employee_id)
+
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'workingdays/total_workingday.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'workingday',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'workingdays/total_workingday.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
+    end
   end
 
   def import_working_day

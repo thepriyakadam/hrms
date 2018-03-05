@@ -61,7 +61,14 @@
       <tr>
         <th>Meeting Start Time - End Time</th>
         <td><%= @emp_plan.try(:start_time) %> - <%= @emp_plan.try(:end_time) %></td>
-        <th></th>
+        <th>Meeting Duration</th>
+        <% start_time = @emp_plan.try(:start_time) %>
+        <% end_time = @emp_plan.try(:end_time) %>
+        <% if end_time.present? %>
+          <% total_hrms = end_time - start_time %> 
+          <% meeting_hrms = Time.at(total_hrms).utc.strftime("%H:%M") %>
+        <td><%= meeting_hrms %></td>
+        <% end %>
         <td></td>
       </tr>
 
@@ -112,6 +119,7 @@
       <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
         <thead>
           <tr><th colspan="8"><center><font color='#0077b3'> Follow-up History </font></center> </th></tr>
+          <% if @meeting_follow_up.present? %>
           <tr>
             <th>Sr.No.</th>
             <th>Contact Person</th>
@@ -134,4 +142,5 @@
               </tr>
             <% end %>
         </tbody>
+        <% end %>
       </table>

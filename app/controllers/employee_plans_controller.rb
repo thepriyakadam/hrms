@@ -452,6 +452,11 @@ class EmployeePlansController < ApplicationController
   end
 
   def end_meeting
+    emp_paln_id = params[:format]
+    emp_plan = EmployeePlan.find_by_id(emp_paln_id)
+    emp_plan.update(end_date: Time.now.to_date, end_time: Time.now.to_time)
+    redirect_to employee_feedback_employee_plans_path(emp_paln_id)
+    flash[:notice] = 'Meeting Successfully End..!!'
   end
 
   def feedback

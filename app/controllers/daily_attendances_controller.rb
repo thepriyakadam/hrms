@@ -1,7 +1,6 @@
 class DailyAttendancesController < ApplicationController
 
-	before_action :set_daily_attendance, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_daily_attendance, only: [:show, :edit, :update, :destroy]
   # GET /daily_attendances
   # GET /daily_attendances.json
   def index
@@ -30,6 +29,50 @@ class DailyAttendancesController < ApplicationController
 
   # GET /daily_attendances/1/edit
   def edit
+  end
+
+  def daily_attendance
+    session[:active_tab] = "MeetingPlan"
+  end
+
+  def daily_attendances_report
+    from_date = params[:daily_attendance] ? params[:daily_attendance][:from_date] : params[:from_date]
+    to_date = params[:daily_attendance] ? params[:daily_attendance][:to_date] : params[:to_date]
+    manual_employee_code = params[:daily_attendance] ? params[:daily_attendance][:employee_id] : params[:employee_id]
+    emp = Employee.find(manual_employee_code)
+    @employee = Employee.find(manual_employee_code)
+    emp_id = emp.manual_employee_code
+    if from_date.present? && !to_date.present?
+      @daily_atten_report = DailyAttendance.where("date >= ? and employee_code =?", from_date.to_date, emp_id).order("date DESC")
+    end
+    if !from_date.present? && to_date.present?
+      @daily_atten_report = DailyAttendance.where("date <= ? and employee_code =?", to_date.to_date, emp_id).order("date DESC")
+    end
+    if from_date.present? && to_date.present?
+      @daily_atten_report = DailyAttendance.where(date: from_date.to_date..to_date.to_date, employee_code: emp_id).order("date DESC")
+    end
+    if !from_date.present? && !to_date.present? && emp_id.present?
+      @daily_atten_report = DailyAttendance.where("employee_code =?", emp_id).order("date DESC")
+    end
+
+    respond_to do |format|
+      format.js
+      format.xls {render template: 'daily_attendances/daily_attendances_report_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'print_employee_wise_report_pdf',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'daily_attendances/daily_attendances_report_pdf.pdf.erb',
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+      end
+    end
   end
 
   # POST /daily_attendances

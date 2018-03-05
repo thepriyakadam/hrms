@@ -74,6 +74,9 @@
       },
       "salary[to_date]":{
         required: true,
+      },
+      "salary[employee_id]":{
+        required: true,
       }
     },
     messages: {
@@ -82,6 +85,9 @@
       },
       "salary[to_date]":{
         required: "Please Specify Date Range",
+      },
+      "salary[employee_id]":{
+        required: "Please Specify Employee",
       }
     },
     errorPlacement: function(error, element) {

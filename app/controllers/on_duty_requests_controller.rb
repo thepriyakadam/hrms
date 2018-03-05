@@ -22,7 +22,7 @@ class OnDutyRequestsController < ApplicationController
     @employee = Employee.find_by(id: current_user.employee_id)
   end
 
-  # GET /on_duty_requests/1/edit
+  # GET /n_duty_requests/1/edit
   def edit
   end
 
@@ -49,8 +49,9 @@ class OnDutyRequestsController < ApplicationController
   #   redirect_to new_on_duty_request_path
   # else
 
-    #if  start_date.to_date >= payroll_period.from.to_date && end_date.to_date <= payroll_period.to.to_date
-      
+    # if  start_date.to_date >= payroll_period.from.to_date && end_date.to_date <= payroll_period.to.to_date
+
+   
       if @on_duty_request.is_available?
         flash[:alert] = "Your Request already has been sent"
         if current_user.employee_id == @on_duty_request.employee_id
@@ -96,6 +97,8 @@ class OnDutyRequestsController < ApplicationController
               @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f + 0.5
             end  
           elsif @on_duty_request.leave_type == 'Half Day'
+
+            #byebug
             if @on_duty_request.first_half == true || @on_duty_request.last_half == true
               @on_duty_request.no_of_day = @on_duty_request.no_of_day.to_f + 0.5
             elsif @on_duty_request.last_half == true && @on_duty_request.last_half == true
@@ -126,6 +129,7 @@ class OnDutyRequestsController < ApplicationController
           #   OdRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',day: i)
           # end
 
+          #ATTENDANCE
             @on_duty_request.create_attendance_od
             OdStatusRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',change_date: Date.today)
 
@@ -133,7 +137,7 @@ class OnDutyRequestsController < ApplicationController
               flash[:notice] = "Send request without email."
             else
               flash[:notice] = 'OD Request sent successfully.'
-              # OdRequestMailer.pending(@on_duty_request).deliver_now
+               OdRequestMailer.pending(@on_duty_request).deliver_now
             end
             
               if @on_duty_request.id != nil
@@ -145,7 +149,7 @@ class OnDutyRequestsController < ApplicationController
               else
               end
               @od_record = OdRecord.where(on_duty_request_id: @on_duty_request.id).count
-              @on_duty_request.update(no_of_day: @od_record)
+              #@on_duty_request.update(no_of_day: @od_record)
           flash[:notice] = "Request Created Successfully"
           if current_user.employee_id == @on_duty_request.employee_id
             redirect_to on_duty_requests_path
@@ -154,7 +158,6 @@ class OnDutyRequestsController < ApplicationController
           end
         end #manager_id nil
       end #is_available
-
       # if current_user.employee_id == @on_duty_request.employee_id
       #   redirect_to on_duty_requests_path
       # else
@@ -192,7 +195,7 @@ class OnDutyRequestsController < ApplicationController
   end
 
   def select_checkbox
-    if params[:leave_type] == "Full/Half" || params[:leave_type] == "Half Day"
+    if params[:leave_type] == "Half Day"
       @flag = true
     else
       @flag = false

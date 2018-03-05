@@ -2,10 +2,8 @@ class EmployeeMailer < ApplicationMailer
   def birthday_email
     date = Date.today
     @employees = Employee.where("status = ? AND strftime('%d/%m', date_of_birth) = ?", "Active" , date.strftime('%d/%m')).pluck(:email)
-    # @employees.each do |e|
-    # attachments.inline['bday.jpg'] = File.read("#{Rails.root}/app/assets/images/bday.jpg")
+   
     mail(to: @employees, subject: 'Birthday Wishes')
-   # end
   end
  
   def user_confirmation(emp,pwd,code)

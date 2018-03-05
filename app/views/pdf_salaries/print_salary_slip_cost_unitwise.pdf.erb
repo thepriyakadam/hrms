@@ -12,115 +12,116 @@
    <% @leave_details = LeaveDetail.where(salaryslip_id: e.id) %>
    <% @slip_information = SlipInformation.find_by(salaryslip_id: e.id) %>
      <div class="page-break">
-        <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
+ <div class="row">
+  <div class="col-sm-12">
+<table style="border-collapse: collapse; font-size:14pt;" border=1 width=1640 cellpadding="10">
       <thead>
         <tr>
-          <td colspan="4">
+          <td colspan="12">
            <% if @employee.company_location.company.company_logo == nil %>
            <% else %>
         <center> <%= wicked_pdf_image_tag @employee.company_location.company.company_logo.url, :size => "90x50" %></center>
         <%end%>
-           <center><strong><%= @employee.company_location.company.try(:description) %></strong><br> <%= @employee.company_location.try(:address) %> - <%= @employee.company_location.try(:name) %></center>
+           <center><strong><%= @employee.company_location.company.try(:description) %></strong><br> <%= @employee.company_location.try(:address) %></center>
           </td>           
         </tr>
      </thead>
      <tbody>
-        <tr>
-       <td>
-       <strong> Employee Code : </strong> <%= @employee.manual_employee_code%><br><br> 
-       <strong> Name : </strong> <%= full_name(@employee) %><br><br>
-       <strong> Designation : </strong> <%= @employee.joining_detail.try(:employee_designation).try(:name) %><br><br>
-       <strong> Department : </strong> <%= @slip_information.try(:department).try(:name) %><br><br>
-       <strong> Date Of Joining : </strong> <%= @employee.joining_detail.try(:joining_date) %><br><br>
-       </td>
-       
-       <td>
-       <strong> UAN No : </strong> <%= @slip_information.try(:uan_no) %><br><br>
-       <strong> PF No :   </strong><%= @slip_information.try(:pf_no) %><br><br>
-       <strong> PAN No  : </strong> <%= @salaryslip.try(:pan_no) %><br><br> 
-       <strong> Account No. :</strong><%= @employee.try(:employee_bank_detail).try(:account_no) %><br><br> 
-       </td>
+       <tr>
+      <td colspan="4">
+      <strong> Employee Code :</strong> <%= @employee.manual_employee_code%> <br><br>
+      <strong> Name :</strong> <%= full_name(@employee) %> <br><br>
+      <strong> Designation :</strong> <%= @employee.joining_detail.try(:employee_designation).try(:name) %> <br><br>
+      <strong> Department : </strong><%= @employee.department.try(:name) %> <br><br>
+      <strong> Date Of Joining : </strong><%= @employee.joining_detail.try(:joining_date) %> <br><br>
+      </td>
 
-        <td>
-        <strong> Salary Slip : <%= @working_day.try(:month_name) %> - <%= @working_day.try(:year) %> <br><br>
-        <% @leave_details.each do |ld| %>
-             <strong> <%= ld.leav_category.name %>  - Leave: </strong> <%= ld.no_of_leave %> - <strong> Balance: </strong> <%= ld.balance %><br><br>
-        <% end %>
-        <strong> Days in Month : </strong><%= @working_day.try(:day_in_month) %> <br><br> 
-        <strong> Payble Days : </strong><%= @working_day.try(:payable_day) %><br><br> 
-        </td>
-       </tr>
+      <td colspan="4">
+      <strong> UAN No. :</strong> <%= @employee.joining_detail.try(:employee_uan_no) %><br><br> 
+      <strong> PF No. :</strong> <%= @employee.joining_detail.try(:employee_pf_no) %><br><br>
+      <strong> ESIC No. :</strong> <%= @employee.joining_detail.try(:employee_efic_no) %><br><br>
+      <strong> PAN No.  : </strong> <%= @employee.joining_detail.try(:pan_no) %><br><br> 
+      <strong> Account No. :</strong><%= @employee.try(:employee_bank_detail).try(:account_no) %><br><br> 
+      <strong> Bank Name :</strong><%= @employee.try(:employee_bank_detail).try(:bank_name) %><br><br>
+      </td>
 
-         
+      <td colspan="4">
+      <strong> Days in Month : </strong><%= @working_day.try(:day_in_month) %> <br><br> 
+      <strong> Payble Days : </strong><%= @working_day.try(:payable_day) %><br><br>
+      <% @leave_details.each do |ld| %>
+        <strong> <%= ld.leav_category.name %>  - Leave: </strong> <%= ld.no_of_leave %> - <strong> Balance: </strong> <%= ld.balance %><br><br>
+      <% end %>
+      </td>
+    </tr>   
       </tbody>
-    </table>
+    </table>   
+    </div>
+    </div>
+ <div class="row">
+  <div class="col-sm-12">
+<table style="border-collapse: collapse; font-size:14pt;" border=1 width=800 cellpadding="10">
 
-   
-       <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
-      <thead>
-      <tr><td colspan="3"><center><strong> Salary Details </strong></center></td></tr>
-        <tr>
-          <th><center>Salary Component</center></th>
-          <th style="text-align: right;"><center>Actual Amount</center></th>
-          <th style="text-align: right;"><center>Calculated Amount</center></th>
-          <!-- <th>Action</th> -->
+      <tr><th colspan="6"><center> Earning Details </center></th> <th colspan="6"><center> Deduction Details </center></th></tr>
+        <tr >
+          <td style="border: 1;" colspan="4" ><strong>Component &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
+          <td style="border: 1;"  align="right"><strong>Gross</strong></td>
+          <td style="border: 1;"  align="right"><strong>Earning</strong></td>
+        
+          <td style="border: 1;" colspan="4"><strong>Component &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
+          <td style="border: 1;"  align="right"><strong>Amount</strong></td>
+          <td style="border: 1;"  align="right"><strong> &nbsp;&nbsp;&nbsp; Amount</strong></td>
         </tr>
-      </thead>
-      <tbody>
+      <tr>
+      <td colspan="6"  align="right">
+       <table style="border-collapse: collapse; font-size:14pt;" border=0 width=800 cellpadding="10" cellspacing="10">
+
         <% @addable_salary_components.each do |item| %>
           <tr>
-            <td><%= item.salary_component.try(:name) %></td>
+            <td   colspan="4" ><%= item.salary_component.name %></td>
             <td align="right"><%= item.actual_amount.round %></td>
             <td align="right"><%= item.calculated_amount.round %></td>
-            <!-- <td align="center">< link_to "", edit_salaryslip_component_path(item),remote:true,class: "fa fa-edit" %></td> -->
           </tr>
         <% end %>
-        <tr>
-          <td><strong>Total Gross</strong></td>
-          <td align="right"><strong><%= e.actual_gross_salary.round %></strong></td>
-          <td align="right"><strong><%= e.calculated_gross_salary.round %></strong></td>
-         <!--  <td></td> -->
-        </tr>
-         <tr>
-          <td><strong><center>Deduction Component</center></strong></td>
-          <td align="right"><strong></strong></td>
-          <td align="right"><strong><center>Amount</center></strong></td>
-         <!--  <td></td> -->
-        </tr>
+       </table></td>
+       <td colspan="6">
+       <table style="border-collapse: collapse; font-size:14pt;" border=0 width=800 cellpadding="10" cellspacing="10">
+       
         <% @deducted_salary_components.each do |item| %>
           <tr>
             <% unless item.salary_component_id.nil? %>
-              <td><%= item.salary_component.name %></td>
+              <td colspan="4" ><%= item.salary_component.name %></td>
               <td align="right"><%= item.actual_amount.round %></td>
               <td align="right"><%= item.calculated_amount.round %></td>
-             <!--  <td align="center"> link_to "", edit_salaryslip_component_path(item),remote:true,class: "fa fa-edit" %></td> -->
             <%else%>
-              <td><%= item.other_component_name %></td>
-              <td align="right"><%= item.actual_amount.round %></td>
+              <td colspan="4" ><%= item.other_component_name %></td>
+              <td align="right"><%= 0 %></td>
               <td align="right"><%= item.calculated_amount.round %></td>
-             <!--  <td align="center">link_to "", edit_salaryslip_component_path(item),remote:true,class: "fa fa-edit" %></td> -->
             <%end%>
           </tr>
-        <% end %>
-        <tr>
-          <td><strong>Total Deduction</strong></td>
+        <% end %></table></td></tr>
+      <tr>
+          <td colspan="4"><strong>  Gross Salary &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
+          <td align="right"><strong><%= e.actual_gross_salary.round %></strong></td>
+          <td align="right"><strong><%= e.calculated_gross_salary.round %></strong></td>
+
+          <td colspan="4"><strong>Deduction</strong></td>
           <td align="right"><strong><%= e.actual_total_deduction.round %></strong></td>
           <td align="right"><strong><%= e.calculated_total_deduction.round %></strong></td>
-          <!-- <td></td> -->
+        </tr>
+          <tr>
+          <td colspan="4"><strong>  Net Salary &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
+       
+          <td colspan="2" align="right"><strong><%= e.calculated_net_salary.round %></strong></td>
+          <td colspan="6"><strong><%= e.calculated_net_salary.round.in_words.titleize %> Only.</strong></td>
         </tr>
         <tr>
-          <td><strong>Net Salary</strong></td>
-          <td align="right"><strong><%= e.actual_net_salary.round %></strong></td>
-          <td align="right"><strong><%= e.calculated_net_salary.round %></strong></td>
-          <!-- <td></td> -->
+        <td colspan="12"><center>**This is a computer generated slip, hence no signature is required.**</center></td>
         </tr>
-         <tr>
-        <td colspan="3"><center>This is a computer generated slip, hence no signature is required.</center></td>
-        </tr>
-      </tbody>
     </table>
-   <br><br>
-   </div>
+    </div>
+    </div>
+    </div>
+    <br><br>
 <% end %>
 
  

@@ -1,15 +1,4 @@
-<style>
-  th {
-      text-align: left;
-  }
-  tr {
-      page-break-inside: avoid;
-  }
-  div.alwaysbreak { page-break-before: always; }
-  div.nobreak:before { clear:both; }
-  div.nobreak{ page-break-inside: avoid;
-    /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
-  }</style>
+
  
  <div class="row">
   <div class="col-sm-12">
@@ -64,18 +53,22 @@
 <table style="border-collapse: collapse; font-size:14pt;" border=1 width=800 cellpadding="10">
 
       <tr><th colspan="6"><center> Earning Details </center></th> <th colspan="6"><center> Deduction Details </center></th></tr>
-      
+        <tr >
+          <td style="border: 1;" colspan="4" ><strong>Component &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
+          <td style="border: 1;"  align="right"><strong>Gross</strong></td>
+          <td style="border: 1;"  align="right"><strong>Earning</strong></td>
+        
+          <td style="border: 1;" colspan="4"><strong>Component &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
+          <td style="border: 1;"  align="right"><strong>Amount</strong></td>
+          <td style="border: 1;"  align="right"><strong> &nbsp;&nbsp;&nbsp; Amount</strong></td>
+        </tr>
       <tr>
       <td colspan="6"  align="right">
        <table style="border-collapse: collapse; font-size:14pt;" border=0 width=800 cellpadding="10" cellspacing="10">
-        <tr>
-          <td ><strong>Component</strong></td>
-          <td align="right"><strong>Gross</strong></td>
-          <td align="right"><strong>Earning</strong></td>
-        </tr>
+
         <% @addable_salary_components.each do |item| %>
           <tr>
-            <td  ><%= item.salary_component.name %></td>
+            <td   colspan="4" ><%= item.salary_component.name %></td>
             <td align="right"><%= item.actual_amount.round %></td>
             <td align="right"><%= item.calculated_amount.round %></td>
           </tr>
@@ -83,26 +76,22 @@
        </table></td>
        <td colspan="6">
        <table style="border-collapse: collapse; font-size:14pt;" border=0 width=800 cellpadding="10" cellspacing="10">
-        <tr>
-          <td ><strong>Component 123</strong></td>
-          <td align="right"><strong>Amount</strong></td>
-          <td align="right"><strong>Amount</strong></td>
-        </tr>
+       
         <% @deducted_salary_components.each do |item| %>
           <tr>
             <% unless item.salary_component_id.nil? %>
-              <td><%= item.salary_component.name %></td>
+              <td colspan="4" ><%= item.salary_component.name %></td>
               <td align="right"><%= item.actual_amount.round %></td>
               <td align="right"><%= item.calculated_amount.round %></td>
             <%else%>
-              <td><%= item.other_component_name %></td>
+              <td colspan="4" ><%= item.other_component_name %></td>
               <td align="right"><%= 0 %></td>
               <td align="right"><%= item.calculated_amount.round %></td>
             <%end%>
           </tr>
         <% end %></table></td></tr>
       <tr>
-          <td colspan="4"><strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gross Salary</strong></td>
+          <td colspan="4"><strong>  Gross Salary &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
           <td align="right"><strong><%= @salaryslip.actual_gross_salary.round %></strong></td>
           <td align="right"><strong><%= @salaryslip.calculated_gross_salary.round %></strong></td>
 
@@ -111,7 +100,7 @@
           <td align="right"><strong><%= @salaryslip.calculated_total_deduction.round %></strong></td>
         </tr>
           <tr>
-          <td colspan="4"><strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Net Salary</strong></td>
+          <td colspan="4"><strong>  Net Salary &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
        
           <td colspan="2" align="right"><strong><%= @salaryslip.calculated_net_salary.round %></strong></td>
           <td colspan="6"><strong><%= @salaryslip.calculated_net_salary.round.in_words.titleize %> Only.</strong></td>

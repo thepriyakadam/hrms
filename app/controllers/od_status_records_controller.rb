@@ -9,12 +9,12 @@ class OdStatusRecordsController < ApplicationController
   		OdStatusRecord.create(on_duty_request_id: @on_duty_request.id,employee_id: current_user.employee_id,status: 'FinalApproved',change_date: Date.today)
   		#@on_duty_request.create_for_particular_od_record(@on_duty_request)
       @on_duty_request.create_od_in_attendance
-      # OdRequestMailer.first_approve_final(@on_duty_request).deliver_now
+       OdRequestMailer.first_approve_final(@on_duty_request).deliver_now
   	else #manager_2 available
   		@on_duty_request.update(is_first_approved: true,current_status: 'FirstApproved',second_reporter_id: @on_duty_request.employee.manager_2_id)
   		OdRecord.where(on_duty_request_id: @on_duty_request.id).update_all(status: 'FirstApproved')
   		OdStatusRecord.create(on_duty_request_id: @on_duty_request.id,employee_id: current_user.employee_id,status: 'FirstApproved',change_date: Date.today)
-  	  # OdRequestMailer.first_approve(@on_duty_request).deliver_now
+  	   OdRequestMailer.first_approve(@on_duty_request).deliver_now
     end	
   	flash[:notice] = "Approved Successfully"
     if @on_duty_request.first_reporter_id == current_user.employee_id
@@ -31,7 +31,7 @@ class OdStatusRecordsController < ApplicationController
   	OdStatusRecord.create(on_duty_request_id: @on_duty_request.id,employee_id: current_user.employee_id,status: 'FinalApproved',change_date: Date.today)
   	#@on_duty_request.create_for_particular_od_record(@on_duty_request)
     @on_duty_request.create_od_in_attendance
-    # OdRequestMailer.second_approve(@on_duty_request).deliver_now
+     OdRequestMailer.second_approve(@on_duty_request).deliver_now
   	flash[:notice] = "Approved Successfully"
   	if @on_duty_request.first_reporter_id == current_user.employee_id
      redirect_to request_approval_list_manager_self_services_path
@@ -45,7 +45,7 @@ class OdStatusRecordsController < ApplicationController
   	@on_duty_request.update(is_first_rejected: true,current_status: 'Rejected')
   	OdRecord.where(on_duty_request_id: @on_duty_request.id).update_all(status: 'Rejected')
   	OdStatusRecord.create(on_duty_request_id: @on_duty_request.id,employee_id: current_user.employee_id,status: 'Rejected',change_date: Date.today)
-  	# OdRequestMailer.first_reject(@on_duty_request).deliver_now
+  	 OdRequestMailer.first_reject(@on_duty_request).deliver_now
 
   	flash[:notice] = "Rejected Successfully"
   	if @on_duty_request.first_reporter_id == current_user.employee_id
@@ -60,7 +60,7 @@ class OdStatusRecordsController < ApplicationController
     @on_duty_request.update(is_second_rejected: true,current_status: 'Rejected')
     OdRecord.where(on_duty_request_id: @on_duty_request.id).update_all(status: 'Rejected')
     OdStatusRecord.create(on_duty_request_id: @on_duty_request.id,employee_id: current_user.employee_id,status: 'Rejected',change_date: Date.today)
-    # OdRequestMailer.second_reject(@on_duty_request).deliver_now
+     OdRequestMailer.second_reject(@on_duty_request).deliver_now
     flash[:notice] = "Rejected Successfully"
     if @on_duty_request.first_reporter_id == current_user.employee_id
      redirect_to request_approval_list_manager_self_services_path
@@ -78,7 +78,7 @@ class OdStatusRecordsController < ApplicationController
     if @on_duty_request.first_reporter.email.nil? || @on_duty_request.first_reporter.email == ''
       flash[:notice] = 'Leave Cancelled Successfully without email.'
     else
-      # OdRequestMailer.cancel(@on_duty_request).deliver_now
+       OdRequestMailer.cancel(@on_duty_request).deliver_now
       flash[:notice] = 'OD Cancelled Successfully.'
     end
     if @on_duty_request.employee_id == current_user.employee_id
@@ -102,7 +102,7 @@ class OdStatusRecordsController < ApplicationController
         flash[:notice] = 'OD Cancelled Successfully without email.'
       else
         flash[:notice] = 'OD Cancelled Successfully.'
-        # OdRequestMailer.cancel_after_approve(@particular_od_record,@current_emp).deliver_now
+         OdRequestMailer.cancel_after_approve(@particular_od_record,@current_emp).deliver_now
       end
       redirect_to show_od_record_on_duty_requests_path(format: @particular_od_record.on_duty_request_id)
   end

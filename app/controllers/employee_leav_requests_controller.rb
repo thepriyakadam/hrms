@@ -1,4 +1,3 @@
-
 # require 'query_report/helper'  # need to require the helper
 class EmployeeLeavRequestsController < ApplicationController
   before_action :set_employee_leav_request, only: [:show, :edit,:update, :destroy]
@@ -141,7 +140,7 @@ class EmployeeLeavRequestsController < ApplicationController
         if end_date == "" || @leave_c_off_id == "" || @leave_c_off_id == nil
           flash[:alert] = "Please Fill mendatory Fields"
         else#end_date == nil
-          if  start_date.to_date >= payroll_period.from.to_date && start_date.to_date <= payroll_period.to.to_date        
+          #if  start_date.to_date >= payroll_period.from.to_date && start_date.to_date <= payroll_period.to.to_date 
               @leave_c_off_id = params[:common][:c_off_date]
               @leave_c_off = LeaveCOff.find_by(id: @leave_c_off_id)
             if start_date.to_date > @leave_c_off.c_off_date.to_date
@@ -196,15 +195,17 @@ class EmployeeLeavRequestsController < ApplicationController
                         @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
                     end
                     flash[:notice] = "Created successfully!"
-                       LeaveRequestMailer.pending(@employee_leav_request).deliver_now        
-                end
+                       LeaveRequestMailer.pending(@employee_leav_request).deliver_now    
+                end#@leave_c_off.expiry_date < start_date.to_date
 
-              else
+              else#start_date.to_date > @leave_c_off.c_off_date.to_date
                 flash[:alert] = "C.Off Not Available For #{start_date}"
               end#c_off_date
-            else
-              flash[:alert] = "Please Select Date Within Payroll Period"
-            end
+
+            # else#start_date.to_date >= payroll_period.from.to_date && start_date.to_date <= payroll_period.to.to_date 
+            #   flash[:alert] = "Please Select Date Within Payroll Period"
+            # end
+
           end#end_date == nil
             if current_user.employee_id == @employee_leav_request.employee_id
               redirect_to employee_leav_requests_path
@@ -234,8 +235,10 @@ class EmployeeLeavRequestsController < ApplicationController
           flash[:alert] = "Please fill all mandatory fields "
         redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
         else
+
             # if  start_date.to_date >= payroll_period.from.to_date && end_date.to_date <= payroll_period.to.to_date
             
+
               if @employee_leav_request.end_date == nil 
                 flash[:alert] = "please Fill all mendatory fields"
                 redirect_to new_employee_leav_request_path
@@ -529,18 +532,18 @@ class EmployeeLeavRequestsController < ApplicationController
                   end
                 else
                 end
+              # if current_user.employee_id == @employee_leav_request.employee_id
+              #   redirect_to employee_leav_requests_path
+              # else
+              #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+              #   #redirect_to employee_list_on_duty_requests_path
+              # end  
+              
             # else #start_date == payroll_period.from.to_date
-            #    if current_user.employee_id == @employee_leav_request.employee_id
-            #     flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
-            #     redirect_to employee_leav_requests_path
-            #   else
-            #     flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
-            #     redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-            #     #redirect_to employee_list_on_duty_requests_path
-            #   end  
-            # end#start_date == payroll_period.from.to_date
+            #   flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+            # end
           end#start_date == nil
-      #end#if payroll_period.nil?
+      # end#if payroll_period.nil?
     end#c_off
   end
 
@@ -952,12 +955,12 @@ class EmployeeLeavRequestsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
+# Use callbacks to share common setup or constraints between actions.
   def set_employee_leav_request
     @employee_leav_request = EmployeeLeavRequest.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+# Never trust parameters from the scary internet, only allow the white list through.
   def employee_leav_request_params
     params.require(:employee_leav_request).permit(:present_status,:first_half,:last_half,:current_status,:current_status1,:employee_id, :leav_category_id, :leave_type, :date_range, :start_date, :end_date, :reason)
   end

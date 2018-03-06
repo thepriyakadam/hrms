@@ -1475,6 +1475,7 @@ end
       get :edit_n_approve_modal
       get :display_notice_period
       post :first_approve
+      get :first_approve
       get :second_approve
       get :final_approval_emp_resignation_list
       get :final_approve

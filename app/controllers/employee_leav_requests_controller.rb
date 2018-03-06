@@ -523,12 +523,12 @@ class EmployeeLeavRequestsController < ApplicationController
                   end
                 else
                 end
-              if current_user.employee_id == @employee_leav_request.employee_id
-                redirect_to employee_leav_requests_path
-              else
-                redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-                #redirect_to employee_list_on_duty_requests_path
-              end  
+              # if current_user.employee_id == @employee_leav_request.employee_id
+              #   redirect_to employee_leav_requests_path
+              # else
+              #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+              #   #redirect_to employee_list_on_duty_requests_path
+              # end  
               
             # else #start_date == payroll_period.from.to_date
             #   flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"

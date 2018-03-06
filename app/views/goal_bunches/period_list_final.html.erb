@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="box-body">
-    <table id="example" class="table table-bordered table-hover table-condensed">
+    <table id="example6" class="table table-bordered table-hover table-condensed">
      <thead>
         <tr>
           <th>ID</th>
@@ -31,8 +31,13 @@
     <%= link_to 'Back',employee_list_goal_bunches_path,class: 'btn btn-sm btn-default fa fa-arrow-left'%>
   </div>
 </div>
-<script>
-$(document).ready(function() {
-    $('#example').DataTable();
-} );
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example6').DataTable( {
+      "lengthMenu": [[10, 25, 50, 100, -1],[10,25, 50, 100, "ALL"]],
+      "scrollX": true,
+      "scrollY": 500
+    });
+  });
 </script>

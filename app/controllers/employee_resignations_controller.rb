@@ -225,7 +225,11 @@ class EmployeeResignationsController < ApplicationController
       # EmployeeResignationMailer.second_level_request_email_to_reporting_manager(@employee_resignation).deliver_now
     end
     flash[:notice] = 'Resignation Request Approved Successfully'
-    # redirect_to resignation_history_employee_resignations_path
+    if @employee_resignation.employee_id == current_user.employee_id 
+      redirect_to resignation_history_employee_resignations_path
+    else
+      redirect_to resignation_history_manager_self_services_path
+    end
   end
 
   # def first_approve
@@ -250,7 +254,11 @@ class EmployeeResignationsController < ApplicationController
     ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "SecondApproved",change_date: Date.today)
     EmployeeResignationMailer.second_level_approval_email_to_employee(@employee_resignation).deliver_now
     flash[:notice] = 'Resignation Request Approved Successfully'
-    redirect_to resignation_history_employee_resignations_path
+    if @employee_resignation.employee_id == current_user.employee_id 
+      redirect_to resignation_history_employee_resignations_path
+    else
+      redirect_to resignation_history_manager_self_services_path
+    end
   end
 
   def final_approve

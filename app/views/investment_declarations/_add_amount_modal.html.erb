@@ -6,7 +6,7 @@
     </div>
 
     <div class="modal-body">
-      <%= bootstrap_form_for :investment_declaration, url:{action:"update_amount"},html: {id: 'investment_declaration'}, remote:true  do |f| %>
+      <%= bootstrap_form_for :investment_declaration, url:{action:"update_amount"},html: {id: 'investment_declaration'} do |f| %>
       
         <%= f.hidden_field :investment_declaration_id , value: params[:format] %>
         

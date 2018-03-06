@@ -242,7 +242,8 @@ class InvestmentDeclarationsController < ApplicationController
     amount = params[:investment_declaration][:amount]
     @investment_declarations = InvestmentDeclaration.find(investment_declaration_id)
     @investment_declarations_update = @investment_declarations.update(actual_amt: amount)
-    redirect_to show_employee_declaration_investment_declarations_path
+    flash[:notice] = "Updated Successfully!"
+    redirect_to show_declaration_details_investment_declarations_path(employee_id: @investment_declarations.employee_id)
   end
 
   # def upload_file_modal

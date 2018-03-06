@@ -1210,6 +1210,8 @@ end
       get :admin_level_period
       get :admin_appraiser_evaluation_period
       get :admin_level_appraiser_evaluation
+      get :admin_reviewer_evaluation_period
+      get :admin_level_reviewer_evaluation
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -1282,12 +1284,19 @@ end
       post :import
       get :self_comment_modal
       post :self_comment
-      get :admin_level_period
+      get :admin_period_set
       post :create_admin_level_period
       get :admin_goal_approval_period
       get :admin_level_goal_approval
       get :admin_self_evaluation_period
       get :admin_level_self_evaluation
+      get :appraiser_comment_modal
+      get :appraiser_evaluation
+      get :import_appraiser_evaluation_xl
+      post :import_appraiser
+      get :reviewer_evaluation
+      get :import_reviewer_evaluation_xl
+      post :import_reviewer
     end
   end
   resources :goal_perspectives do
@@ -1469,6 +1478,7 @@ end
       get :edit_n_approve_modal
       get :display_notice_period
       post :first_approve
+      get :first_approve
       get :second_approve
       get :final_approval_emp_resignation_list
       get :final_approve

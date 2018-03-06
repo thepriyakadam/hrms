@@ -1329,9 +1329,11 @@ require 'numbers_in_words/duck_punch'
          # @salary_component=SalaryComponent.find_by(name: "Mobile Deduction")
           @salary_comp=SalaryComponent.find_by(name: "Other Deduction")
           @salary_compon=SalaryComponent.find_by(name: "Income Tax")
+           @salary_compon1=SalaryComponent.find_by(name: "GMC")
           @mobile_deduction = 0
           @income_tax_deduction = 0
           @other_deduction = 0
+           @gmk_deduction = 0
           @monthly_expences.try(:each) do |m|
           #  if m.expencess_type.name == @salary_component.name
            #   @mobile_deduction = @mobile_deduction + m.amount
@@ -1339,6 +1341,8 @@ require 'numbers_in_words/duck_punch'
               @other_deduction = @other_deduction + m.amount
             elsif m.expencess_type.name == @salary_compon.name
               @income_tax_deduction = @income_tax_deduction + m.amount
+            elsif m.expencess_type.name == @salary_compon1.name
+              @gmk_deduction = @gmk_deduction + m.amount
             end
           end
            # if @salary_component.name
@@ -1349,6 +1353,10 @@ require 'numbers_in_words/duck_punch'
             end
             if @salary_compon.name
               SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @income_tax_deduction, calculated_amount: @income_tax_deduction, is_deducted: true, other_component_name: @salary_compon.name,salary_component_id:  @salary_compon.id)
+            end
+
+            if @salary_compon1.name
+              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @gmk_deduction, calculated_amount: @gmk_deduction, is_deducted: true, other_component_name: @salary_compon1.name,salary_component_id:  @salary_compon1.id)
             end
      
         

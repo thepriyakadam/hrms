@@ -47,9 +47,11 @@
           <label>Aligned To Supervisor</label>
             <%= f.select :aligned ,['Yes','No'] ,{hide_label:true,include_blank: "Select"} %> 
           </div>
-          <div class="col-sm-12" style="padding-top:20px;">
-            <center><%= f.submit "Update", class: 'btn btn-success btn-sm' %></center>
           </div>
+          <div class="row">
+            <div class="col-sm-12" style="padding-top:20px;">
+              <center><%= f.submit "Update", class: 'btn btn-success btn-sm' %></center>
+            </div>
         </div>
       <% end %>
     

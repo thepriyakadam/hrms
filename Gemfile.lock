@@ -68,15 +68,9 @@ GEM
       momentjs-rails (>= 2.8.1)
     bootstrap_form (2.6.0)
     builder (3.2.3)
-<<<<<<< HEAD
     byebug (9.0.6)
     cancancan (1.16.0)
     capybara (2.13.0)
-=======
-    byebug (10.0.0)
-    cancancan (1.17.0)
-    capybara (2.18.0)
->>>>>>> 54826cbae5ac48f88c1983c4e6542a01d2cb3e76
       addressable
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -146,14 +140,8 @@ GEM
     eventmachine (1.2.3)
     eventmachine (1.2.3-x64-mingw32)
     execjs (2.7.0)
-<<<<<<< HEAD
     ffi (1.9.18)
     ffi (1.9.18-x64-mingw32)
-=======
-    ffi (1.9.21)
-    ffi (1.9.21-x64-mingw32)
-    ffi (1.9.21-x86-mingw32)
->>>>>>> 54826cbae5ac48f88c1983c4e6542a01d2cb3e76
     fullcalendar-rails (3.4.0.0)
       jquery-rails (>= 4.0.5, < 5.0.0)
       jquery-ui-rails (>= 5.0.2)
@@ -164,11 +152,7 @@ GEM
       activesupport (>= 4.1.0)
     hirb (0.7.3)
     htmlentities (4.3.4)
-<<<<<<< HEAD
     i18n (0.9.5)
-=======
-    i18n (0.9.4)
->>>>>>> 54826cbae5ac48f88c1983c4e6542a01d2cb3e76
       concurrent-ruby (~> 1.0)
     jbuilder (2.6.3)
       activesupport (>= 3.0.0, < 5.2)
@@ -192,12 +176,8 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.7.0)
       mini_mime (>= 0.1.1)
-<<<<<<< HEAD
-    method_source (0.8.2)
-=======
     mdb (0.4.1)
-    method_source (0.9.0)
->>>>>>> 54826cbae5ac48f88c1983c4e6542a01d2cb3e76
+    method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
@@ -211,18 +191,9 @@ GEM
     multi_test (0.1.2)
     mysql2 (0.3.21)
     mysql2 (0.3.21-x64-mingw32)
-<<<<<<< HEAD
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     nokogiri (1.8.2-x64-mingw32)
-=======
-    mysql2 (0.3.21-x86-mingw32)
-    nokogiri (1.8.2)
-      mini_portile2 (~> 2.3.0)
-    nokogiri (1.8.2-x64-mingw32)
-      mini_portile2 (~> 2.3.0)
-    nokogiri (1.8.2-x86-mingw32)
->>>>>>> 54826cbae5ac48f88c1983c4e6542a01d2cb3e76
       mini_portile2 (~> 2.3.0)
     numbers_in_words (0.4.0)
       activesupport
@@ -242,14 +213,9 @@ GEM
       rails (>= 4.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
-<<<<<<< HEAD
       method_source (~> 0.8.1)
       slop (~> 3.4)
     public_suffix (2.0.5)
-=======
-      method_source (~> 0.9.0)
-    public_suffix (3.0.2)
->>>>>>> 54826cbae5ac48f88c1983c4e6542a01d2cb3e76
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.9)
@@ -334,14 +300,10 @@ GEM
     tilt (2.0.7)
     time_difference (0.5.0)
       activesupport
-<<<<<<< HEAD
     tiny_tds (1.3.0)
       mini_portile2 (~> 2.0)
     tiny_tds (1.3.0-x64-mingw32)
       mini_portile2 (~> 2.0)
-=======
-    tiny_tds (2.1.1)
->>>>>>> 54826cbae5ac48f88c1983c4e6542a01d2cb3e76
     ttfunk (1.4.0)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
@@ -354,11 +316,7 @@ GEM
       thread_safe (~> 0.1)
     tzinfo-data (1.2017.2)
       tzinfo (>= 1.0.0)
-<<<<<<< HEAD
     uglifier (3.2.0)
-=======
-    uglifier (4.1.6)
->>>>>>> 54826cbae5ac48f88c1983c4e6542a01d2cb3e76
       execjs (>= 0.3.0, < 3)
     warden (1.2.7)
       rack (>= 1.0)

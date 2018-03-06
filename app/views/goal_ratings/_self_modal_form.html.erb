@@ -8,7 +8,6 @@
 
       <%= bootstrap_form_for @goal_rating,url:{action: "update_self_modal",goal_rating_id:@goal_rating.id} do |f| %>
         <div class="row">
-
           <div class="col-sm-9">
             <label>Self Comment</label>
             <%= f.text_area :appraisee_comment,hide_label:true, placeholder: "Self comment" %>    

@@ -48,17 +48,23 @@ bower.json
 # Ignore pow environment settings
 .powenv
 
+<<<<<<< HEAD
 # Ignore .byebug_history
 .byebug_history
 
+=======
+>>>>>>> 6ed3805ef6fffe02b5265ca1203dcf26e9e48ba4
 # Ignore files
 app/models/daily_attendance.rb
 app/mailers/application_mailer.rb
 config/environments/development.rb
 config/database.yml
+<<<<<<< HEAD
 
 # Ignore .byebug_history
 .byebug_history
 
 # Ignore schema file
 db/schema.rb
+=======
+>>>>>>> 6ed3805ef6fffe02b5265ca1203dcf26e9e48ba4

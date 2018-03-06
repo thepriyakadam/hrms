@@ -3237,5 +3237,7 @@ end
     get 'user_auths/notifications_count' => 'user_auths#notifications_count', defaults:{format: 'json'}
     post 'user_auths/employee_wise_date' => 'user_auths#employee_wise_date', defaults:{format: 'json'}
     post 'user_auths/holiday_setup_manager' => 'user_auths#holiday_setup_manager', defaults:{format: 'json'}
+    get 'user_auths/manager_wise_emp_list' => 'user_auths#manager_wise_emp_list', defaults:{format: 'json'}
+    get 'user_auths/admin_wise_emp_list' => 'user_auths#admin_wise_emp_list', defaults:{format: 'json'}
   end
 end

@@ -220,43 +220,42 @@
               </tr>
             </thead>
                    
-                  <% @employees.each do |e| %>
-                      <tr>
-                       <td>
-                  <%unless e.nil? or e.nil? or  e.employee.member.nil? or e.employee.member.avatar.nil? %>
-                 <% if e.employee.gender == "Male" && e.employee.member.avatar_file_name == nil  %>
-                 <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                  <% elsif e.employee.gender == "Female" && e.employee.member.avatar_file_name == nil  %>
-                  <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                   <%else%>
-                   <%= image_tag e.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
-                  <%end%> <!-- if -->
-                   <%end%> <!-- unless -->
+                <% @employees.each do |e| %>
+                <% if e.joining_date == Date.today%>
+                  <tr>
+                    <td>
+                      <%unless e.nil? or e.nil? or  e.employee.member.nil? or e.employee.member.avatar.nil? %>
+                        <% if e.employee.gender == "Male" && e.employee.member.avatar_file_name == nil  %>
+                          <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                        <% elsif e.employee.gender == "Female" && e.employee.member.avatar_file_name == nil  %>
+                          <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                        <%else%>
+                          <%= image_tag e.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
+                        <%end%> <!-- if -->
+                      <%end%> <!-- unless -->
                    </td>
-                       <td><%= full_name(e.employee) %>
-                        <span class="users-list-date"><%= e.employee.try(:cost_center).try(:name) %> - <%= e.employee.try(:department).try(:name) %> <%= e.employee.try(:sub_department).try(:name) %></span>
-                       </td>
-                       <td>
-                       <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today,receiver_id: e.employee_id,greeting_type: "Anniversary") %>
-                  <% if e.employee_id == current_user.employee_id %>
-                      <small class="label label-success">Happy Work Anniversary!</small>
-                  <% else %>
-                    <% if @greeting.empty? %>
-                        <%= link_to 'Wish', anniversary_mail_greetings_path(emp_id: e.employee_id),class: 'btn btn-xs btn-primary',remote:true %>
-                    <% else %>
-                        <small class="label label-success">Message Sent</small>
-                    <% end %>
-                  <% end %>
-                      </td>
-                      <% end %> <!-- do -->
-                    </tr>
-                     <%end%> <!-- if employee.empty? -->
-                   
-                  </table>
-
-                </div><!-- /.box-body -->
-                 
-              </div><!-- /.box -->
+                    <td><%= full_name(e.employee) %>
+                      <span class="users-list-date"><%= e.employee.try(:cost_center).try(:name) %> - <%= e.employee.try(:department).try(:name) %> <%= e.employee.try(:sub_department).try(:name) %></span>
+                    </td>
+                    <td>
+                      <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today,receiver_id: e.employee_id,greeting_type: "Anniversary") %>
+                      <% if e.employee_id == current_user.employee_id %>
+                        <small class="label label-success">Happy Work Anniversary!</small>
+                      <% else %>
+                        <% if @greeting.empty? %>
+                          <%= link_to 'Wish', anniversary_mail_greetings_path(emp_id: e.employee_id),class: 'btn btn-xs btn-primary',remote:true %>
+                        <% else %>
+                          <small class="label label-success">Message Sent</small>
+                        <% end %>
+                      <% end %>
+                    </td>
+                  <% end %> <!-- do -->
+                 </tr>
+               <% end %>
+              <%end%> <!-- if employee.empty? -->
+            </table>
+          </div><!-- /.box-body -->
+        </div><!-- /.box -->
               
             
 

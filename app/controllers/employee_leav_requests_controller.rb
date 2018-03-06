@@ -91,7 +91,8 @@ class EmployeeLeavRequestsController < ApplicationController
     end
   end
 
-   def c_off_date_admin
+
+  def c_off_date_admin
     @employee_id = params[:employee_id]
     if params[:leave_type] == "Full Day" || params[:leave_type] == " "
       @flag = true
@@ -201,7 +202,6 @@ class EmployeeLeavRequestsController < ApplicationController
               else#start_date.to_date > @leave_c_off.c_off_date.to_date
                 flash[:alert] = "C.Off Not Available For #{start_date}"
               end#c_off_date
-
             # else#start_date.to_date >= payroll_period.from.to_date && start_date.to_date <= payroll_period.to.to_date 
             #   flash[:alert] = "Please Select Date Within Payroll Period"
             # end

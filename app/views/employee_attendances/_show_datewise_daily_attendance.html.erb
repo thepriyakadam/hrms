@@ -8,8 +8,12 @@ function displayResult()
 }
 </script>
 <br>
+<div class="box">
+  <div class="box-header">
+    <div class="box-body">
       <table id="example6" class="table table-bordered table-hover table-condensed">
         <thead>
+          <tr><center><strong> Date <%= @employee_attendances.first.day %></strong></center> </tr>
           <tr>
             <th>ID</th>
             <th>Employee Name</th>
@@ -47,8 +51,10 @@ function displayResult()
         </tbody>
       </table>
       <!-- <= link_to "Back",datewise_daily_attendance_employee_attendances_path,class: "btn btn-sm btn-default" %> -->
-      <div id="myModal" class="modal fade"></div>
-    
+    </div>
+  </div>
+</div>
+<div id="myModal" class="modal fade"></div>
 
 <script type="text/javascript">
 $(document).ready(function() {

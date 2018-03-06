@@ -20,6 +20,7 @@ class GoalRating < ActiveRecord::Base
   #validates :attribute_master_id, presence: true
   #validates_length_of :goal_measure, :maximum => 255
   
+ 
   def self.import(file,emp,goal_bunch)
      spreadsheet = open_spreadsheet(file)
      (2..spreadsheet.last_row).each do |i|
@@ -194,7 +195,6 @@ class GoalRating < ActiveRecord::Base
       end#weight <=100
     end#do
   end
-
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)
       when ".csv" then Roo::CSV.new(file.path, file_warning: :ignore)

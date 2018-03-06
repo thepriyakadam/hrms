@@ -27,7 +27,6 @@ def self.import_deduction_file(file)
         end
         amount = spreadsheet.cell(i,'G')
         food_date = spreadsheet.cell(i,'H')
-     
         @food_deduction = FoodDeduction.create(employee_id: employee_id,no_of_coupan: no_of_coupan,return_coupan: return_coupan,total_coupan: total_coupan,food_coupan_master_id: food_coupan_master_id,amount: amount,food_date: food_date)
     end
   end

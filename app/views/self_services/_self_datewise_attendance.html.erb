@@ -16,13 +16,10 @@
           <th>In Time</th>
           <th>Out Time</th>
           <th>Working Hrs.</th>
-          <% if @company_time.present? %>
-            <th>Late Mark</th>
-          <% end %>
+          <th>Comment</th>
           <th>Present</th>
         </tr>
       </thead>
-
       <tbody>
         <% @employee_attendances.each do |employee_attendance| %>
           <tr>
@@ -32,22 +29,7 @@
             <td><%= employee_attendance.try(:in_time) %></td>
             <td><%= employee_attendance.try(:out_time) %></td>
             <td><%= employee_attendance.try(:working_hrs) %></td>
-            <% if @company_time.present? %>
-              <% if employee_attendance.try(:holiday_id).present? || employee_attendance.try(:employee_week_off_id).present?  || employee_attendance.try(:on_duty_request_id).present? || employee_attendance.try(:employee_leav_request_id).present? %>
-                <% if employee_attendance.try(:in_time).present? %>
-                  <% time = Time.at(employee_attendance.try(:in_time)).utc.strftime("%H:%M") %>
-                  <% if time > @company_time %>
-                    <td class="danger"><%= employee_attendance.try(:in_time) %></td>
-                  <% else %>
-                    <td></td>
-                  <% end %>
-                <% else %>
-                  <td></td>
-                <% end %>
-              <% else %>
-                <td></td>
-              <% end %>
-            <% end %> 
+            <td><%= employee_attendance.try(:comment) %></td>
             <td><%= employee_attendance.try(:present) %></td>
           </tr>
         <% end %>
@@ -56,7 +38,5 @@
     <br>
      <%= link_to " Excel Report ",self_service_datewise_attendance_employee_attendances_path(:employee => {:from => params[:employee][:from],:to => params[:employee][:to],:employee_id => params[:employee][:employee_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
  
-     <%= link_to " Print Report ",self_service_datewise_attendance_employee_attendances_path(:employee => {:from => params[:employee][:from],:to =>  params[:employee][:to],:employee_id => params[:employee][:employee_id]},format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %> 
-
-
+     <%= link_to " Print Report ",self_service_datewise_attendance_employee_attendances_path(:employee => {:from => params[:employee][:from],:to =>  params[:employee][:to],:employee_id => params[:employee][:employee_id]},format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
   </div>

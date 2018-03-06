@@ -16,10 +16,10 @@ module LeaveCOffsHelper
   end
 
   def leav_c_off_half_admin(emp)
-    LeaveCOff.where(c_off_type: "Half Day",taken_date: nil,current_status: "FinalApproved",employee_id: emp).collect { |x| [x.c_off_date.to_s + ' - ' + x.c_off_date.strftime("%A").to_s, x.id] }
+    LeaveCOff.where(c_off_type: "Half Day",taken_date: nil,current_status: "FinalApproved",employee_id: params[:employee_id]).collect { |x| [x.c_off_date.to_s + ' - ' + x.c_off_date.strftime("%A").to_s, x.id] }
   end
 
   def leav_c_off_full_admin(emp)
-    LeaveCOff.where(c_off_type: "Full Day",taken_date: nil,current_status: "FinalApproved",employee_id: emp).collect { |x| [x.c_off_date.to_s + ' - ' + x.c_off_date.strftime("%A").to_s, x.id] }
+    LeaveCOff.where(c_off_type: "Full Day",taken_date: nil,current_status: "FinalApproved",employee_id: params[:employee_id]).collect { |x| [x.c_off_date.to_s + ' - ' + x.c_off_date.strftime("%A").to_s, x.id] }
   end
 end

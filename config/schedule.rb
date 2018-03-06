@@ -15,11 +15,11 @@ end
 #   # rake 'task_namespace:birthday_invitation_mail' , :environment => 'development',   :output => 'log/birthday_invitation_mail.log'
 # end
 
-every 1.hours do
-  runner "DailyAttendance.fetch_data"
-end
+#every 1.hours do
+ # runner "DailyAttendance.fetch_data"
+#end
 
 
-every 11.minutes do 
-   rake 'atte_task:calculate'
-end
+#every 11.minutes do 
+  #  rake 'atte_task:calculate'
+#end

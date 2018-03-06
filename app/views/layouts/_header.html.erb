@@ -79,8 +79,10 @@
           <span class="label label-warning">
               <% if current_user.class == Group %>
           <% else %>
-            <%  @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: false,is_second_approved: false, is_first_rejected: false, is_cancelled: false, first_reporter_id: current_user.employee_id) %> 
-            
+            <% @emp = Employee.find(current_user.employee_id) %>
+            <% @employees = @emp.subordinates %>
+            <% @pending_on_duty_requests_all = OnDutyRequest.where(current_status: "Pending", employee_id: @employees).count %>
+            <%  @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: false,is_second_approved: false, is_first_rejected: false, is_cancelled: false, first_reporter_id: current_user.employee_id) %>            
             <% count1 = 0 %>
             <% @pending_on_duty_requests.try(:each) do |on_duty_request| %>
             <% count1 += 1 %>
@@ -92,7 +94,8 @@
            
 
             <% count = count1 + count2 %>
-            <%= count %>
+            <% count %>
+            <%= @pending_on_duty_requests_all %>
 
           <%end%>
           </span>
@@ -103,7 +106,7 @@
             <!-- Inner Menu: contains the notifications -->
             <ul class="products-list product-list-in-box">
               <li><!-- start notification -->
-                 <center> <small class="label label-warning">  You Have <%= count %> On Duty Request  </small></center>
+                 <center> <small class="label label-warning">  You Have <%= @pending_on_duty_requests_all %> On Duty Request  </small></center>
               </li><!-- end notification -->
             </ul>
           </li>

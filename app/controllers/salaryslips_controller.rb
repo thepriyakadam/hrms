@@ -1,7 +1,8 @@
 # require 'query_report/helper'
 class SalaryslipsController < ApplicationController
  # include QueryReport::Helper
-
+require 'numbers_in_words'
+require 'numbers_in_words/duck_punch'
   def salary_slip_report_form
     session[:active_tab] ="PayrollManagement"
     session[:active_tab1] ="SalaryProcess"
@@ -228,8 +229,8 @@ class SalaryslipsController < ApplicationController
         :dpi              => '300',
         :margin           => {:top    => 20, # default 10 (mm)
                       :bottom => 30,
-                      :left   => 10,
-                      :right  => 10},
+                      :left   => 20,
+                      :right  => 20},
               :show_as_html => params[:debug].present?
       end
     end
@@ -700,24 +701,24 @@ class SalaryslipsController < ApplicationController
           end
 
           @monthly_expences = MonthlyExpence.where(employee_id: @employee.id, expence_date: date.all_month)
-          @salary_component=SalaryComponent.find_by(name: "Mobile Deduction")
+          #@salary_component=SalaryComponent.find_by(name: "Mobile Deduction")
           @salary_comp=SalaryComponent.find_by(name: "Other Deduction")
           @salary_compon=SalaryComponent.find_by(name: "Income Tax")
           @mobile_deduction = 0
           @income_tax_deduction = 0
           @other_deduction = 0
           @monthly_expences.try(:each) do |m|
-            if m.expencess_type.name == @salary_component.name
-              @mobile_deduction = @mobile_deduction + m.amount
-            elsif m.expencess_type.name == @salary_comp.name
+           # if m.expencess_type.name == @salary_component.name
+            #  @mobile_deduction = @mobile_deduction + m.amount
+            if m.expencess_type.name == @salary_comp.name
               @other_deduction = @other_deduction + m.amount
             elsif m.expencess_type.name == @salary_compon.name
               @income_tax_deduction = @income_tax_deduction + m.amount
             end
           end
-            if @salary_component.name
-              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @mobile_deduction, calculated_amount: @mobile_deduction, is_deducted: true, other_component_name: @salary_component.name,salary_component_id:  @salary_component.id)
-            end
+            #if @salary_component.name
+             # SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @mobile_deduction, calculated_amount: @mobile_deduction, is_deducted: true, other_component_name: @salary_component.name,salary_component_id:  @salary_component.id)
+           # end
             if @salary_comp.name
               SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @other_deduction, calculated_amount: @other_deduction, is_deducted: true, other_component_name: @salary_comp.name,salary_component_id:  @salary_comp.id)
             end
@@ -1145,7 +1146,7 @@ class SalaryslipsController < ApplicationController
             @total_actual = formula_item.sum(:actual_amount)
             @total = formula_item.sum(:calculated_amount)
             formula_item_actual_amount = @total_actual
-            formula_item_calculated_amount = (@total / working_day.try(:day_in_month) * working_day.try(:payable_day))
+            formula_item_calculated_amount = (@total_actual / working_day.try(:day_in_month) * working_day.try(:payable_day))
             deducted_actual_amount = (formula_item_actual_amount / 100 * @master_esic.percentage).ceil
             deducted_calculated_amount = (formula_item_calculated_amount / 100 * @master_esic.percentage).ceil
             @salary_component = SalaryComponent.find_by(name: "ESIC")
@@ -1325,7 +1326,7 @@ class SalaryslipsController < ApplicationController
 
 
           @monthly_expences = MonthlyExpence.where(employee_id: @employee.id, expence_date: date.all_month)
-          @salary_component=SalaryComponent.find_by(name: "Mobile Deduction")
+         # @salary_component=SalaryComponent.find_by(name: "Mobile Deduction")
           @salary_comp=SalaryComponent.find_by(name: "Other Deduction")
           @salary_compon=SalaryComponent.find_by(name: "Income Tax")
            @salary_compon1=SalaryComponent.find_by(name: "GMC")
@@ -1334,9 +1335,9 @@ class SalaryslipsController < ApplicationController
           @other_deduction = 0
            @gmk_deduction = 0
           @monthly_expences.try(:each) do |m|
-            if m.expencess_type.name == @salary_component.name
-              @mobile_deduction = @mobile_deduction + m.amount
-            elsif m.expencess_type.name == @salary_comp.name
+          #  if m.expencess_type.name == @salary_component.name
+           #   @mobile_deduction = @mobile_deduction + m.amount
+            if m.expencess_type.name == @salary_comp.name
               @other_deduction = @other_deduction + m.amount
             elsif m.expencess_type.name == @salary_compon.name
               @income_tax_deduction = @income_tax_deduction + m.amount
@@ -1344,9 +1345,9 @@ class SalaryslipsController < ApplicationController
               @gmk_deduction = @gmk_deduction + m.amount
             end
           end
-            if @salary_component.name
-              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @mobile_deduction, calculated_amount: @mobile_deduction, is_deducted: true, other_component_name: @salary_component.name,salary_component_id:  @salary_component.id)
-            end
+           # if @salary_component.name
+            #  SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @mobile_deduction, calculated_amount: @mobile_deduction, is_deducted: true, other_component_name: @salary_component.name,salary_component_id:  @salary_component.id)
+           # end
             if @salary_comp.name
               SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @other_deduction, calculated_amount: @other_deduction, is_deducted: true, other_component_name: @salary_comp.name,salary_component_id:  @salary_comp.id)
             end
@@ -1455,32 +1456,32 @@ class SalaryslipsController < ApplicationController
     end
 
 
-     if @employee.joining_detail.ot_option == true && working_day.ot_hours != 0
-        @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)
+     # if @employee.joining_detail.ot_option == true && working_day.ot_hours != 0
+     #    @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)
         
-        @payroll_overtime_masters.try(:each) do |pom|
-        formula_string = pom.base_component.split(',').map {|i| i.to_i}
-        formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  
-        @total = formula_item.sum(:calculated_amount)
-        @total_actual = formula_item.sum(:actual_amount)
-        base_amount = (@total.to_f / working_day.try(:day_in_month).to_f) / pom.company_hrs.to_f
-        overtime_payment = working_day.try(:ot_hours).to_f * pom.rate.to_f * base_amount.to_f
-        @salary_component = SalaryComponent.find_by(name: "Overtime")
-        SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
-        puts "ffffffffffffffffffff"
-        end
-      end
+     #    @payroll_overtime_masters.try(:each) do |pom|
+     #    formula_string = pom.base_component.split(',').map {|i| i.to_i}
+     #    formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  
+     #    @total = formula_item.sum(:calculated_amount)
+     #    @total_actual = formula_item.sum(:actual_amount)
+     #    base_amount = (@total.to_f / working_day.try(:day_in_month).to_f) / pom.company_hrs.to_f
+     #    overtime_payment = working_day.try(:ot_hours).to_f * pom.rate.to_f * base_amount.to_f
+     #    @salary_component = SalaryComponent.find_by(name: "Overtime")
+     #    SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
+     #    puts "ffffffffffffffffffff"
+     #    end
+     #  end
 
 
-      transport_allowance = TransportAllowance.find_by_employee_id(@employee.id)
-      unless transport_allowance.nil?
-        if transport_allowance.option
-          addable_actual_amount = 0
-          addable_calculated_amount = transport_allowance.amount * working_day.try(:payable_day)/working_day.try(:day_in_month)
-          @salary_component = SalaryComponent.find_by(name: "Transport Allowance")
-          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: addable_calculated_amount, calculated_amount: addable_calculated_amount, is_deducted: false, other_component_name: 'Transport Allowance',salary_component_id: @salary_component.id)
-        end
-      end
+      # transport_allowance = TransportAllowance.find_by_employee_id(@employee.id)
+      # unless transport_allowance.nil?
+      #   if transport_allowance.option
+      #     addable_actual_amount = 0
+      #     addable_calculated_amount = transport_allowance.amount * working_day.try(:payable_day)/working_day.try(:day_in_month)
+      #     @salary_component = SalaryComponent.find_by(name: "Transport Allowance")
+      #     SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: addable_calculated_amount, calculated_amount: addable_calculated_amount, is_deducted: false, other_component_name: 'Transport Allowance',salary_component_id: @salary_component.id)
+      #   end
+      # end
 
 
 
@@ -2062,6 +2063,333 @@ end
       flash[:notice] = "Confirm successfully"
       redirect_to confirm_salaryslip_salaryslips_path
     end
+  end
+
+  def statutory_computation
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] ="StatutoryReport"
+  end
+  
+  def statutory_computation_report
+    @from_date = params[:statutory_report] ? params[:statutory_report][:from_date] : params[:from_date]
+    @to_date = params[:statutory_report] ? params[:statutory_report][:to_date] : params[:to_date]
+    @company = params[:salaryslip] ? params[:salaryslip][:company_id] : params[:company_id]
+    @company_location = params[:salaryslip] ? params[:salaryslip][:company_location_id] : params[:company_location_id]
+
+    if @company.present? and @company_location.present?
+      @employees = Employee.where(company_id: @company.to_i, company_location_id: @company_location.to_i).pluck(:id)
+      @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: @employees).pluck(:id)
+      @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
+      @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
+      @salaryslip_professional_tax = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Professional Tax")
+      @total_professional_tax = @salaryslip_professional_tax.sum(:actual_amount)
+    elsif @company.present? and !@company_location.present?
+      @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+      @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: @employees).pluck(:id)
+      @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
+      @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
+      @salaryslip_professional_tax = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Professional Tax")
+      @total_professional_tax = @salaryslip_professional_tax.sum(:actual_amount)
+    elsif !@company.present? and @company_location.present?
+      @employees = Employee.where(company_location_id: @company_location.to_i).pluck(:id)
+      @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: @employees).pluck(:id)
+      @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
+      @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
+      @salaryslip_professional_tax = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Professional Tax")
+      @total_professional_tax = @salaryslip_professional_tax.sum(:actual_amount)
+    else
+      @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date).pluck(:id)
+      @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
+      @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
+      @salaryslip_professional_tax = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Professional Tax")
+      @total_professional_tax = @salaryslip_professional_tax.sum(:actual_amount)
+      # binding.pry
+      # @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date).pluck(:id)
+      # @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
+      # @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
+      # @salaryslip_professional_tax = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Professional Tax")
+      # @total_professional_tax = @salaryslip_professional_tax.sum(:actual_amount)
+      # @total_amt = @employee_statutory_deduction + @total_professional_tax
+    end
+    @employer_contribution = EmployerContribution.where(date: @from_date.to_date..@to_date.to_date)
+    @employer_statutory_contribution = @employer_contribution.sum(:actual_pf)
+    @employer_other_charges = (@employer_statutory_contribution.to_f / 100) * 1.61
+    @total_amt = @employee_statutory_deduction + @employer_other_charges + @total_professional_tax
+    respond_to do |format|
+      format.js
+      format.xls {render template: 'salaryslips/statutory_computation_report_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'statutory_computation_report_pdf',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'salaryslips/statutory_computation_report_pdf.pdf.erb',
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+      end
+    end
+  end
+
+  def pf_computation
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] ="StatutoryReport"
+  end
+  
+  def pf_computation_report
+    @from_date = params[:statutory_report] ? params[:statutory_report][:from_date] : params[:from_date]
+    @to_date = params[:statutory_report] ? params[:statutory_report][:to_date] : params[:to_date]
+    @company = params[:salaryslip] ? params[:salaryslip][:company_id] : params[:company_id]
+    @company_location = params[:salaryslip] ? params[:salaryslip][:company_location_id] : params[:company_location_id]
+
+    if @company.present? and @company_location.present?
+      @employees = Employee.where(company_id: @company.to_i, company_location_id: @company_location.to_i).pluck(:id)
+      @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: @employees).pluck(:id)
+      @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
+      @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
+      # @salaryslip_professional_tax = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Professional Tax")
+      # @total_professional_tax = @salaryslip_professional_tax.sum(:actual_amount)
+    elsif @company.present? and !@company_location.present?
+      @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+      @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: @employees).pluck(:id)
+      @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
+      @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
+      # @salaryslip_professional_tax = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Professional Tax")
+      # @total_professional_tax = @salaryslip_professional_tax.sum(:actual_amount)
+    elsif !@company.present? and @company_location.present?
+      @employees = Employee.where(company_location_id: @company_location.to_i).pluck(:id)
+      @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: @employees).pluck(:id)
+      @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
+      @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
+      # @salaryslip_professional_tax = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Professional Tax")
+      # @total_professional_tax = @salaryslip_professional_tax.sum(:actual_amount)
+    else
+      @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date).pluck(:id)
+      @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
+      @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
+      # @salaryslip_professional_tax = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Professional Tax")
+      # @total_professional_tax = @salaryslip_professional_tax.sum(:actual_amount)
+      # binding.pry
+      # @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date).pluck(:id)
+      # @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
+      # @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
+      # @salaryslip_professional_tax = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Professional Tax")
+      # @total_professional_tax = @salaryslip_professional_tax.sum(:actual_amount)
+      # @total_amt = @employee_statutory_deduction + @total_professional_tax
+    end
+    @employer_contribution = EmployerContribution.where(date: @from_date.to_date..@to_date.to_date)
+    @employer_statutory_contribution = @employer_contribution.sum(:actual_pf)
+    @employer_other_charges = (@employer_statutory_contribution.to_i / 100)*1.61
+    @total_amt = @employee_statutory_deduction + @employer_other_charges
+    respond_to do |format|
+      format.js
+      format.xls {render template: 'salaryslips/pf_computation_report_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'pf_computation_report_pdf',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'salaryslips/pf_computation_report_pdf.pdf.erb',
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+      end
+    end
+  end
+
+  def provident_fund
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] ="StatutoryReport"
+  end
+  
+  def provident_fund_report
+    @from_date = params[:provident_fund] ? params[:provident_fund][:from_date] : params[:from_date]
+    @to_date = params[:provident_fund] ? params[:provident_fund][:to_date] : params[:to_date]
+    @company = params[:salaryslip] ? params[:salaryslip][:company_id] : params[:company_id]
+    @company_location = params[:salaryslip] ? params[:salaryslip][:company_location_id] : params[:company_location_id]
+
+    if @company.present? and @company_location.present?
+      @employees = Employee.where(company_id: @company.to_i, company_location_id: @company_location.to_i).pluck(:id)
+      @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: @employees).pluck(:id)
+      @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
+      @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
+      # @salaryslip_professional_tax = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Professional Tax")
+      # @total_professional_tax = @salaryslip_professional_tax.sum(:actual_amount)
+    elsif @company.present? and !@company_location.present?
+      @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+      @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: @employees).pluck(:id)
+      @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
+      @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
+      # @salaryslip_professional_tax = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Professional Tax")
+      # @total_professional_tax = @salaryslip_professional_tax.sum(:actual_amount)
+    elsif !@company.present? and @company_location.present?
+      @employees = Employee.where(company_location_id: @company_location.to_i).pluck(:id)
+      @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: @employees).pluck(:id)
+      @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
+      @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
+      # @salaryslip_professional_tax = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Professional Tax")
+      # @total_professional_tax = @salaryslip_professional_tax.sum(:actual_amount)
+    else
+      @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date).pluck(:id)
+      @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
+      @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
+      @emp_statutory_deduction_twelve_percent_all = (@employee_statutory_deduction.to_i / 12)* 100
+      @emp_statutory_deduction_twelve_percent = (@employee_statutory_deduction.to_i / 100)* 12
+      # @salaryslip_professional_tax = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Professional Tax")
+      # @total_professional_tax = @salaryslip_professional_tax.sum(:actual_amount)
+      # binding.pry
+      # @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date).pluck(:id)
+      # @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
+      # @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
+      # @salaryslip_professional_tax = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Professional Tax")
+      # @total_professional_tax = @salaryslip_professional_tax.sum(:actual_amount)
+      # @total_amt = @employee_statutory_deduction + @total_professional_tax
+    end
+    @employer_contribution = EmployerContribution.where(date: @from_date.to_date..@to_date.to_date)
+    @employer_statutory_contribution = @employer_contribution.sum(:actual_pf)
+
+    # @employer_statutory_contribution_all = (@employer_statutory_contribution.to_i / 3.67)* 1000
+    @employer_statutory_contribution_eight_point = (@employer_statutory_contribution.to_i / 12)* 8.33
+    @employer_statutory_contribution_three_point = (@employer_statutory_contribution.to_i / 12)* 3.67
+        
+    @employer_other_charges_one_percent = (@employer_statutory_contribution.to_i / 100)* 0.01
+    @employer_other_charges_five_percent  = (@employer_statutory_contribution.to_i / 100)* 0.50
+    @employer_other_charges_ten_percent = (@employer_statutory_contribution.to_i / 100)* 1.10
+
+    @total_gross_amt = @employee_statutory_deduction + @employer_statutory_contribution_eight_point
+    @total_all_percent = @employee_statutory_deduction + @employer_statutory_contribution_eight_point + @employer_statutory_contribution_three_point + @employer_other_charges_one_percent + @employer_other_charges_five_percent + @employer_other_charges_ten_percent
+    respond_to do |format|
+      format.js
+      format.xls {render template: 'salaryslips/provident_fund_report_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'provident_fund_report_pdf',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'salaryslips/provident_fund_report_pdf.pdf.erb',
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+      end
+    end
+  end
+
+  def pf_monthly_statement
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] ="StatutoryReport"
+  end
+  
+  def pf_monthly_statement_report
+    @from_date = params[:pf_monthly_statement] ? params[:pf_monthly_statement][:from_date] : params[:from_date]
+    @to_date = params[:pf_monthly_statement] ? params[:pf_monthly_statement][:to_date] : params[:to_date]
+    @company = params[:salaryslip] ? params[:salaryslip][:company_id] : params[:company_id]
+    @company_location = params[:salaryslip] ? params[:salaryslip][:company_location_id] : params[:company_location_id]
+    if @company.present? and @company_location.present?
+      @employees = Employee.where(company_id: @company.to_i, company_location_id: @company_location.to_i).pluck(:id)
+      @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: @employees).pluck(:id)
+    elsif @company.present? and !@company_location.present?
+      @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+      @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: @employees).pluck(:id)
+    elsif !@company.present? and @company_location.present?
+      @employees = Employee.where(company_location_id: @company_location.to_i).pluck(:id)
+      @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: @employees).pluck(:id)
+    else
+      @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date).pluck(:id)
+      @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
+    end
+    respond_to do |format|
+      format.js
+      format.xls {render template: 'salaryslips/pf_monthly_statement_report_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'pf_monthly_statement_report_pdf',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'salaryslips/pf_monthly_statement_report_pdf.pdf.erb',
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+      end
+    end
+  end
+
+  def form_3A
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] ="StatutoryReport"
+  end
+
+  def form_3A_report
+    @from_date = params[:from_3A] ? params[:from_3A][:from_date] : params[:from_date]
+    @to_date = params[:from_3A] ? params[:from_3A][:to_date] : params[:to_date]
+    @employee_id = params[:salaryslip] ? params[:salaryslip][:employee_id] : params[:employee_id]
+    @company = params[:salaryslip] ? params[:salaryslip][:company_id] : params[:company_id]
+    @company_location = params[:salaryslip] ? params[:salaryslip][:company_location_id] : params[:company_location_id]
+    @employee = Employee.find(@employee_id)
+
+    @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: @employee).pluck(:id)
+    @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
+    @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
+
+    @employer_contribution = EmployerContribution.where(date: @from_date.to_date..@to_date.to_date, employee_id: @employee_id)
+    @employer_statutory_contribution = @employer_contribution.sum(:actual_pf)
+
+    # try(:salaryslip).try(:calculated_gross_salary)
+
+    # @salaryslips3 = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date)
+    # @year_wise = Salaryslip.where(year: year_from..year_to)
+    # @month_year = {}
+    # @salaryslips3.each do |month_year|
+    #   @month_year[month_year.month_year.strftime("%B %Y")] = month_year.salaryslip_components.each { |cat| cat.calculated_amount.round }
+    # end
+  end
+
+  def form_6A
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] ="StatutoryReport"
+  end
+
+  def form_6A_report
+    @from_date = params[:from_6A] ? params[:from_6A][:from_date] : params[:from_date]
+    @to_date = params[:from_6A] ? params[:from_6A][:to_date] : params[:to_date]
+    @employee_id = params[:salaryslip] ? params[:salaryslip][:employee_id] : params[:employee_id]
+    @company = params[:salaryslip] ? params[:salaryslip][:company_id] : params[:company_id]
+    @company_location = params[:salaryslip] ? params[:salaryslip][:company_location_id] : params[:company_location_id]
+  end
+  
+  def form_12A
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] ="StatutoryReport"
+  end
+
+  def form_12A_report
+    @from_date = params[:from_12A] ? params[:from_12A][:from_date] : params[:from_date]
+    @to_date = params[:from_12A] ? params[:from_12A][:to_date] : params[:to_date]
+    @employee_id = params[:salaryslip] ? params[:salaryslip][:employee_id] : params[:employee_id]
+    @company = params[:salaryslip] ? params[:salaryslip][:company_id] : params[:company_id]
+    @company_location = params[:salaryslip] ? params[:salaryslip][:company_location_id] : params[:company_location_id]
   end
 
   def leave_detail

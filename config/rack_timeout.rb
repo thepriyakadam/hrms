@@ -1,4 +1,6 @@
+
 # Rack::Timeout.service_timeout = 9000  # seconds
+
 
 # insert middleware wherever you want in the stack, optionally pass initialization arguments
 

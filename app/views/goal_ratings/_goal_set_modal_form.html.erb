@@ -23,7 +23,7 @@
 
           <div class="col-sm-6">
           <label>Target/Unit</label>
-            <%= f.text_field :target,hide_label:true, placeholder: "Target/Unit" %>    
+            <%= f.text_area :target,hide_label:true, placeholder: "Target/Unit" %>    
           </div>
         </div>
 
@@ -52,6 +52,7 @@
             <%= f.select :aligned ,['Yes','No'] ,{hide_label:true,include_blank: "Select"} %>   
           </div>
         </div>
+
 
         <div class="row">
           <div class="col-sm-12">

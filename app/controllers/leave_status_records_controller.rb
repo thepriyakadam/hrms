@@ -13,7 +13,7 @@ class LeaveStatusRecordsController < ApplicationController
           @employee_leav_request.update(is_cancelled: true, current_status: 'Cancelled')
 
           LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Cancelled")
-          EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).update_all(employee_leav_request_id: nil,present: "A")
+          EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).update_all(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled")
 
           @employee_leav_request.revert_leave(@employee_leav_request)
           if @employee_leav_request.first_reporter.email.nil? || @employee_leav_request.first_reporter.email == ''
@@ -252,7 +252,7 @@ class LeaveStatusRecordsController < ApplicationController
           @employee_leav_balance.update(no_of_leave: no_of_leave)
         end
         @particular_leave_record.update(is_cancel_after_approve: true)
-        EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).update_all(employee_leav_request_id: nil,present: "A")
+        EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).update_all(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled after approve")
           
         ActiveRecord::Base.transaction do
           @employee_leav_balance.save
@@ -282,7 +282,7 @@ class LeaveStatusRecordsController < ApplicationController
 
       else#is_balance = false
         @particular_leave_record.update(is_cancel_after_approve: true)
-        EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).update_all(employee_leav_request_id: nil,present: "A")
+        EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).update_all(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled after approve")
           
         	
         ActiveRecord::Base.transaction do

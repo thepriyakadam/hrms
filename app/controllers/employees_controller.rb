@@ -642,7 +642,7 @@
   end
 
    def collect_company_location_dropdown_with_label
-    @company = Company.find(params[:id])
+    @company = Company.find(params[:company_id])
     if current_user.class == Group
     @company_locations = CompanyLocation.all
     else
@@ -668,7 +668,7 @@
   # end
 
   def collect_department
-     @company_location = CompanyLocation.find(params[:id])
+     @company_location = CompanyLocation.find(params[:company_location_id])
       # if current_user.role.name == 'HOD' ||  current_user.role.name == 'Supervisor'
       #   @departments = Department.where(id: current_user.department_id)
       # else

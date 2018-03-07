@@ -248,7 +248,7 @@
           <div class="col-sm-3">
             <div class="form-group required">
             <div class="input-group">
-              <%=f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
+              <%=f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={company_id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
             </div>
             </div>
           </div>

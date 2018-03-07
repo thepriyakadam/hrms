@@ -6,8 +6,8 @@ class LeaveDetail < ActiveRecord::Base
   	LeaveDetail.new do |l|
   		l.salaryslip_id = salaryslip.id
   		l.leav_category_id = elb.leav_category_id
-  		l.balance = elb.no_of_leave
-  		l.no_of_leave = leave_count
+  		l.balance = elb.no_of_leave.to_f
+  		l.no_of_leave = leave_count.to_f
       l.save
   	end
   end

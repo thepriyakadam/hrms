@@ -9,7 +9,7 @@ gem 'mysql2', '~> 0.3.18'
 
 # gem "rack-timeout", require:"rack/timeout/base"
 
-
+gem 'numbers_in_words'
 
  gem 'tiny_tds'
  gem 'activerecord-sqlserver-adapter'

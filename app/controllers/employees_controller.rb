@@ -729,7 +729,7 @@
   end
 
   def reset_password
-    @member = Member.find(params[:id])
+    @member = Member.find(params[:member_id])
     @member_password_reset = Member.find_by(manual_member_code: @member.manual_member_code).update(password: "12345678")
     EmployeeMailer.employee_reset_password(@member).deliver_now
     flash[:notice] = "Password Changed Successfully"

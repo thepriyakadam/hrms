@@ -3046,6 +3046,7 @@ end
       get :created_user
       patch :update_form
       get :hrms_data_sheet
+	get :assigned_user
       # get "downloads/xls/:id" => "downloads#xls", :as => :download_xls
 
       # get :show
@@ -3195,5 +3196,15 @@ end
     post 'user_auths/meeting_minutes' => 'user_auths#meeting_minutes', defaults:{format: 'json'}
     get 'user_auths/meeting_plan_minutes' => 'user_auths#meeting_plan_minutes', defaults:{format: 'json'}
     get 'user_auths/particular_emp_status_wise_plan_list' => 'user_auths#particular_emp_status_wise_plan_list', defaults:{format: 'json'}
+    get 'user_auths/notifications_count' => 'user_auths#notifications_count', defaults:{format: 'json'}
+    post 'user_auths/employee_wise_date' => 'user_auths#employee_wise_date', defaults:{format: 'json'}
+    post 'user_auths/holiday_setup_manager' => 'user_auths#holiday_setup_manager', defaults:{format: 'json'}
+    get 'user_auths/manager_wise_emp_list' => 'user_auths#manager_wise_emp_list', defaults:{format: 'json'}
+    get 'user_auths/admin_wise_emp_list' => 'user_auths#admin_wise_emp_list', defaults:{format: 'json'}
+    get 'user_auths/manager_wise_att' => 'user_auths#manager_wise_att', defaults:{format: 'json'}
+    post 'user_auths/manager_attendance_list' => 'user_auths#manager_attendance_list', defaults:{format: 'json'}
+    get 'user_auths/admin_att' => 'user_auths#admin_att', defaults:{format: 'json'}
+    post 'user_auths/admin_attendance_list' => 'user_auths#admin_attendance_list', defaults:{format: 'json'}
+    get 'user_auths/yearly_company_holiday' => 'user_auths#yearly_company_holiday', defaults:{format: 'json'}
   end
 end

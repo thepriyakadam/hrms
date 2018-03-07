@@ -243,19 +243,19 @@
           <div class="row">
             <center>Recommendation For Employee</center>
           <div class="col-sm-3">
-              <%= f.select :f_promotion,[['Yes','true'],['No','false']],{label: 'Promotion',include_blank: " Select Promotion Option"},autofocus: true %>
+            <%= f.select :f_promotion,[['Yes','true'],['No','false']],{label: 'Promotion',include_blank: " Select Promotion Option"},autofocus: true %>
           </div>
 
           <div class="col-sm-3">
-              <%= f.select :f_increment,[['Yes','true'],['No','false']],{label: 'Increment',include_blank: " Select Increment Option"} %>
+            <%= f.select :f_increment,[['Yes','true'],['No','false']],{label: 'Increment',include_blank: " Select Increment Option"} %>
           </div>
 
           <div class="col-sm-3">
-              <%= f.select :f_designation_id,all_employee_designation,{label: 'Designation',include_blank: " Select Designation"} %>
+            <%= f.select :f_designation_id,all_employee_designation,{label: 'Designation',include_blank: " Select Designation"} %>
           </div>
 
           <div class="col-sm-3">
-          <label>Revised CTC</label>
+            <label>Revised CTC</label>
             <%= f.text_field :f_ctc,hide_label:true,placeholder: 'CTC' %>
           </div>
           </div>

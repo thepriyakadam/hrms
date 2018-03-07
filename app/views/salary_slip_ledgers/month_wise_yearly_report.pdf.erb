@@ -103,21 +103,45 @@
 <br />
 <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="10">
   <thead>
-    <tr>
-      <th colspan="4">Month</th>
-      <th colspan="2">Company Contribution</th>
-    </tr>
-    <% @month_year.each do |month_year, salaryslip_components| %>
       <tr>
-        <td colspan="4"><%= month_year %></td>
+        <th colspan="1">Sr. No.</th>
+        <th colspan="2"><center>Reconciliation of Remittances</center></th>
+        <th colspan="2"><center>Adm Charges Wages</center></th>
+        <th colspan="2"><center>Aggregate ()</center></th>
+        <th colspan="1"></th>
+      </tr>
+      <tr>
+        <th></th>
+        <th>Month/Year</th>
+        <th>Company Contribution</th>
+        <th>Pension Fund Contribution</th>
+        <th>EDLI Contribution</th>
+        <th>Adm. Charges</th>
+        <th>EDLI Adm. Charges</th>
+        <th>Date of Remittances</th>
+      </tr>
+    </thead>
+    <% i = 0 %>
+    <tbody>
+      <% @month_year.each do |month_year, salaryslip_components| %>
+        <tr>
+
+          <td><%= i = i + 1 %></td>
+          <td><%= month_year %></td>
             <% total_amt = 0 %>
+            <!-- @employer_contribution = EmployerContribution.where(date: @from_date.to_date..@to_date.to_date) -->
             <% salaryslip_components.each do |components|%>
               <% total_amt += components.calculated_amount.round %>
             <% end %>
-        <td colspan="2"><%= total_amt %></td>
-      </tr>
-    <% end %>
- </thead>
+          <td><%= total_amt %></td>
+          <td><%= total_amt %></td>
+          <td><%= total_amt %></td>
+          <td><%= total_amt %></td>
+          <td><%= total_amt %></td>
+          <td><%= month_year.to_date.end_of_month %></td>
+        </tr>
+      <% end %>
+    </tbody>
 </table>
 
 <style type="text/css">

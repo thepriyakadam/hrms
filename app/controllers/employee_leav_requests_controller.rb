@@ -92,6 +92,16 @@ class EmployeeLeavRequestsController < ApplicationController
     end
   end
 
+
+  def c_off_date_admin
+    @employee_id = params[:employee_id]
+    if params[:leave_type] == "Full Day" || params[:leave_type] == " "
+      @flag = true
+    else
+      @flag = false
+    end
+  end
+
   def select_form
     @employee_leav_request = EmployeeLeavRequest.new
     @employee = Employee.find_by(id: current_user.employee_id)
@@ -132,7 +142,7 @@ class EmployeeLeavRequestsController < ApplicationController
         if end_date == "" || @leave_c_off_id == "" || @leave_c_off_id == nil
           flash[:alert] = "Please Fill mendatory Fields"
         else#end_date == nil
-          if  start_date.to_date >= payroll_period.from.to_date && start_date.to_date <= payroll_period.to.to_date        
+          #if  start_date.to_date >= payroll_period.from.to_date && start_date.to_date <= payroll_period.to.to_date        
               @leave_c_off_id = params[:common][:c_off_date]
               @leave_c_off = LeaveCOff.find_by(id: @leave_c_off_id)
             if start_date.to_date > @leave_c_off.c_off_date.to_date
@@ -193,9 +203,9 @@ class EmployeeLeavRequestsController < ApplicationController
               else
                 flash[:alert] = "C.Off Not Available For #{start_date}"
               end#c_off_date
-            else
-              flash[:alert] = "Please Select Date Within Payroll Period"
-            end
+            # else
+            #   flash[:alert] = "Please Select Date Within Payroll Period"
+            # end
           end#end_date == nil
             if current_user.employee_id == @employee_leav_request.employee_id
               redirect_to employee_leav_requests_path

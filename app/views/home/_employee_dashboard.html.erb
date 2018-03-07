@@ -220,6 +220,8 @@
             </thead>
                    
                      <% @employees.each do |e| %>
+                     <% if e.joining_date == Date.today %>
+                     <% else %>
                       <tr>
                        <td>
                   <%unless e.nil? or e.nil? or  e.employee.member.nil? or e.employee.member.avatar.nil? %>
@@ -249,6 +251,7 @@
                       </td>
                       <% end %> <!-- do -->
                     </tr>
+                    <% end%>
                      <%end%> <!-- if employee.empty? -->
                    
                   </table>

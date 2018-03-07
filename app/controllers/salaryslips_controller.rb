@@ -2324,6 +2324,65 @@ end
     end
   end
 
+  def form_3A
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] ="StatutoryReport"
+  end
+
+  def form_3A_report
+    @from_date = params[:from_3A] ? params[:from_3A][:from_date] : params[:from_date]
+    @to_date = params[:from_3A] ? params[:from_3A][:to_date] : params[:to_date]
+    @employee_id = params[:salaryslip] ? params[:salaryslip][:employee_id] : params[:employee_id]
+    @company = params[:salaryslip] ? params[:salaryslip][:company_id] : params[:company_id]
+    @company_location = params[:salaryslip] ? params[:salaryslip][:company_location_id] : params[:company_location_id]
+    @employee = Employee.find(@employee_id)
+
+    @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: @employee).pluck(:id)
+    @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
+    @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
+
+    @employer_contribution = EmployerContribution.where(date: @from_date.to_date..@to_date.to_date, employee_id: @employee_id)
+    @employer_statutory_contribution = @employer_contribution.sum(:actual_pf)
+
+    # try(:salaryslip).try(:calculated_gross_salary)
+
+    # @salaryslips3 = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date)
+    # @year_wise = Salaryslip.where(year: year_from..year_to)
+    # @month_year = {}
+    # @salaryslips3.each do |month_year|
+    #   @month_year[month_year.month_year.strftime("%B %Y")] = month_year.salaryslip_components.each { |cat| cat.calculated_amount.round }
+    # end
+  end
+
+  def form_6A
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] ="StatutoryReport"
+  end
+
+  def form_6A_report
+    @from_date = params[:from_6A] ? params[:from_6A][:from_date] : params[:from_date]
+    @to_date = params[:from_6A] ? params[:from_6A][:to_date] : params[:to_date]
+    @employee_id = params[:salaryslip] ? params[:salaryslip][:employee_id] : params[:employee_id]
+    @company = params[:salaryslip] ? params[:salaryslip][:company_id] : params[:company_id]
+    @company_location = params[:salaryslip] ? params[:salaryslip][:company_location_id] : params[:company_location_id]
+  end
+  
+  def form_12A
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] ="StatutoryReport"
+  end
+
+  def form_12A_report
+    @from_date = params[:from_12A] ? params[:from_12A][:from_date] : params[:from_date]
+    @to_date = params[:from_12A] ? params[:from_12A][:to_date] : params[:to_date]
+    @employee_id = params[:salaryslip] ? params[:salaryslip][:employee_id] : params[:employee_id]
+    @company = params[:salaryslip] ? params[:salaryslip][:company_id] : params[:company_id]
+    @company_location = params[:salaryslip] ? params[:salaryslip][:company_location_id] : params[:company_location_id]
+  end
+
   def leave_detail
     @leave_details = LeaveDetail.all
   end

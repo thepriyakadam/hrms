@@ -1,0 +1,68 @@
+<div class="box-header">
+  <div class="pull-right">
+  </div>
+</div><!-- /.box-header -->
+<div class="box-body">
+  <div id="comments">
+    <table id="example" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th colspan="1">Sr.No.</th>
+          <th colspan="1"><center>Account Number</center></th>
+          <th colspan="1"><center>Name Of The Member</center></th>
+          <th colspan="1"><center>Wages, retaining allowance (if any) & DA including cash value of food </center></th>
+          <th colspan="1"><center>Amount of worker's contribution deducted from the wages on 12% E.P.F</center></th>
+          <th colspan="2"><center>Employer's Contribution</center></th>
+          <th colspan="1"><center>Refund of Advance </center></th>
+          <th colspan="1"><center>Rete of higher valuntary contribution </center></th>
+          <th colspan="1"><center>Remarks </center></th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>E.P.F Difference between 12% & 8.33% </th>
+          <th>Pension Fund 8.33%</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <% i = 0 %>
+      <tbody>
+        <%# @month_year.each do |month_year, salaryslip_components| %>
+          <tr>
+
+            <td><%#= i = i + 1 %></td>
+            <td><%#= month_year %></td>
+              <%# total_amt = 0 %>
+              <!-- @employer_contribution = EmployerContribution.where(date: @from_date.to_date..@to_date.to_date) -->
+              <%# salaryslip_components.each do |components|%>
+                <%# total_amt += components.calculated_amount.round %>
+              <%# end %>
+            <td><%#= total_amt %></td>
+            <td><%#= total_amt %></td>
+            <td><%#= total_amt %></td>
+            <td><%#= total_amt %></td>
+            <td><%#= total_amt %></td>
+            <td><%#= month_year.to_date.end_of_month %></td>
+            <td><%#= month_year.to_date.end_of_month %></td>
+          </tr>
+        <%# end %>
+      </tbody>
+    </table>
+  <br>
+  <%#= link_to " Excel Report ", month_wise_yearly_report_salary_slip_ledgers_path(from_date: params[:yearly_reports][:from_date], to_date: params[:yearly_reports][:to_date], company_id: params[:salary_slip_ledger][:company_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>  
+  
+  <%#= link_to "PDF Report ", month_wise_yearly_report_salary_slip_ledgers_path(from_date: params[:yearly_reports][:from_date], to_date: params[:yearly_reports][:to_date], company_id: params[:salary_slip_ledger][:company_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

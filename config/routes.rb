@@ -2363,6 +2363,15 @@ end
       get :pf_monthly_statement
       get :pf_monthly_statement_report
       post :pf_monthly_statement_report
+      get :form_3A
+      get :form_3A_report
+      post :form_3A_report
+      get :form_6A
+      get :form_6A_report
+      post :form_6A_report
+      get :form_12A
+      get :form_12A_report
+      post :form_12A_report
       get :dynamic_daterange_report
       post :dynamic_daterange_report
     end
@@ -2780,6 +2789,7 @@ end
       get :show_balancewise_report
       get :leave_request_modal
       get :c_off_date
+      get :c_off_date_admin
     end
   end
   resources :company_leavs
@@ -3227,5 +3237,11 @@ end
     get 'user_auths/notifications_count' => 'user_auths#notifications_count', defaults:{format: 'json'}
     post 'user_auths/employee_wise_date' => 'user_auths#employee_wise_date', defaults:{format: 'json'}
     post 'user_auths/holiday_setup_manager' => 'user_auths#holiday_setup_manager', defaults:{format: 'json'}
+    get 'user_auths/manager_wise_emp_list' => 'user_auths#manager_wise_emp_list', defaults:{format: 'json'}
+    get 'user_auths/admin_wise_emp_list' => 'user_auths#admin_wise_emp_list', defaults:{format: 'json'}
+    get 'user_auths/manager_wise_att' => 'user_auths#manager_wise_att', defaults:{format: 'json'}
+    post 'user_auths/manager_attendance_list' => 'user_auths#manager_attendance_list', defaults:{format: 'json'}
+    get 'user_auths/admin_att' => 'user_auths#admin_att', defaults:{format: 'json'}
+    post 'user_auths/admin_attendance_list' => 'user_auths#admin_attendance_list', defaults:{format: 'json'}
   end
 end

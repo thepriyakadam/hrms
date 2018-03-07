@@ -3243,5 +3243,6 @@ end
     post 'user_auths/manager_attendance_list' => 'user_auths#manager_attendance_list', defaults:{format: 'json'}
     get 'user_auths/admin_att' => 'user_auths#admin_att', defaults:{format: 'json'}
     post 'user_auths/admin_attendance_list' => 'user_auths#admin_attendance_list', defaults:{format: 'json'}
+    get 'user_auths/yearly_company_holiday' => 'user_auths#yearly_company_holiday', defaults:{format: 'json'}
   end
 end

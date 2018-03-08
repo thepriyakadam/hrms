@@ -1692,11 +1692,11 @@ class Api::UserAuthsController < ApplicationController
   end
 
   def yearly_company_holiday
-    holiday = Holiday.all
+    today = Date.today
+    beginning_of_year = today.beginning_of_year
+    end_of_year = today.end_of_year
+    holiday = Holiday.where(holiday_date: beginning_of_year..end_of_year)
     render :json => holiday.present? ? holiday.collect{|holi| { :id => holi.try(:id), :code => holi.try(:code), :name => holi.try(:name), :description => holi.try(:description), :holiday_date => holi.try(:holiday_date), :day => holi.try(:holiday_date).strftime("%A"), :holiday_type => holi.try(:holiday_type) }} : []
-  
-    # employee_attendances = EmployeeAttendance.where.not(holiday_id: nil).order("day ASC")
-    # render :json => employee_attendances.present? ? employee_attendances.collect{|eat| {:id => eat.id, :employee_id => eat.employee_id, :day => eat.day, :present => eat.present, :in_time => eat.in_time, :out_time => eat.out_time, :machine_attendance_id => eat.machine_attendance_id, :is_confirm => eat.is_confirm, :department_id => eat.department_id, :count => eat.count, :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :company_time_master_id => eat.company_time_master_id, :working_hrs => eat.working_hrs, :rest_time => eat.rest_time, :holiday_id => eat.holiday.name }} : []
   end
 
 end

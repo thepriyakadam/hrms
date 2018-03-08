@@ -4,6 +4,10 @@
   </div><!-- /.box-header -->
   <div class="box-body">
   <%= bootstrap_form_for(@vacancy_master,html: {id: 'vacancy_master'}) do |f| %>
+  <% emp = Employee.find_by(id: current_user.employee_id) %>
+  <% manager = emp.manager_id %>
+  <% reporting_master = ReportingMaster.find_by(employee_id: manager) %>
+  <%= f.hidden_field :reporting_master_id, :value => reporting_master.id %>
   <%= f.hidden_field :employee_id, :value => current_user.employee_id %>
   <%= f.hidden_field :vacancy_post_date, value: Date.today %>
       <div class="row">

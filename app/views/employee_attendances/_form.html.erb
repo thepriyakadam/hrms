@@ -32,12 +32,47 @@
         </div>
         <br>
       <% end %>
+
+      <%= bootstrap_form_for(:daily_attendance, url: { action: 'fetch_attendance'},html: {id: "daily_attendance"},remote: true) do |f| %>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group">
+              <%= f.text_field :day, label: "Day's", placeholder: "2" %>
+            </div>
+          </div>
+
+          <div class="col-sm-3" style="padding-top:20px;">
+            <div class="actions">
+              <%= f.submit "Add Attendance" ,class: 'btn btn-primary btn-sm', id: "buttonCtc" %>
+            </div>
+          </div>
+        </div>
+        <br>
+      <% end %>
+
+      <%= bootstrap_form_for(:daily_attendance, url: { action: 'calculate'},html: {id: "daily_attendance"},remote: true) do |f| %>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group">
+              <%= f.text_field :day, label: "Day's", placeholder: "2" %>
+            </div>
+          </div>
+
+          <div class="col-sm-3" style="padding-top:20px;">
+            <div class="actions">
+              <%= f.submit "Calculate Attendance" ,class: 'btn btn-primary btn-sm', id: "buttonCtc" %>
+            </div>
+          </div>
+        </div>
+        <br>
+      <% end %>
+
       <div>
-        <%= link_to 'Refresh', attendance_daily_attendances_path ,class: "btn btn-xl btn-primary" %>
+        <%#= link_to 'Refresh', attendance_daily_attendances_path ,class: "btn btn-xl btn-primary" %>
       </div>
       <br />
       <div>
-        <%= link_to 'Calculate_Att.', calculate_daily_attendances_path ,class: "btn btn-xl btn-primary" %>
+        <%#= link_to 'Calculate_Att.', calculate_daily_attendances_path ,class: "btn btn-xl btn-primary" %>
       </div>
 
       <div class="ajax-progress"></div>
@@ -72,11 +107,26 @@
     }
    });
 
-    $(function(){
-      $('.day_date').datepicker({
-      changeYear:true,
-      changeMonth: true,
-      yearRange: '-2:+20',
-      dateFormat: 'dd-mm-yy' });
-    });
+  <script type="text/javascript">
+    $("#buttonCtc").click(function(){
+      $('.ajax-progress').show();
+      $("#daily_attendance").submit();
+    })
+
+    $("#daily_attendance").validate({
+    rules: {
+      "daily_attendance[day]":{
+        required: true
+      }
+    },
+    messages: {
+      "daily_attendance[day]":{
+        required: "Please specify date"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
 </script>

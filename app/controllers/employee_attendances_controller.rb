@@ -3002,6 +3002,28 @@ end
    
   end
 
+  def fetch_attendance
+    day = params[:daily_attendance][:day].to_i
+    if day.present?
+      DailyAttendance.fetch_data(day)
+      redirect_to subordinate_attendance_manager_self_services_path
+    else
+      DailyAttendance.fetch_data(1)
+      redirect_to subordinate_attendance_manager_self_services_path
+    end
+  end
+
+  def calculate
+    day = params[:daily_attendance][:day].to_i
+    if day.present?
+      DailyAttendance.calculate_attendance(day)
+      redirect_to subordinate_attendance_manager_self_services_path
+    else
+      DailyAttendance.calculate_attendance(1)
+      redirect_to subordinate_attendance_manager_self_services_path
+    end
+  end
+
   # def create_self_attendance
   #   @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
   #   employee_id = params[:salary][:employee_id]

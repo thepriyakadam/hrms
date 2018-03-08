@@ -1,10 +1,11 @@
 class VacancyMasterMailer < ApplicationMailer
 
   def vacancy_request(vacancy_master)
-    @employee = Employee.find_by(id: vacancy_master.reporting_master_id)
+    @employee = Employee.find_by(id: vacancy_master.employee_id)
     @vacancy_master = VacancyMaster.find(vacancy_master.id)
-    @emp = VacancyMaster.find_by_employee_id(vacancy_master.employee_id)
-    mail(to: @employee.email, subject: 'Vacancy Request')
+    @manager = Employee.find_by(id: @employee.manager_id)
+    @reporting_master = ReportingMaster.find_by(employee_id: @manager)
+    mail(to: @manager.email, subject: 'Vacancy Request')
   end
 
   def first_approve_email(vacancy_master)

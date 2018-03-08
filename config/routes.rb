@@ -959,6 +959,10 @@ end
   end
   resources :employee_attendances do
     collection do
+      post :fetch_attendance
+      post :calculate
+      get :fetch_attendance
+      get :calculate
       get :employee_not_found
       post :not_found
       post :department_wise_employee_list

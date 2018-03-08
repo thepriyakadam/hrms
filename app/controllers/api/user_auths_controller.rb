@@ -85,7 +85,7 @@ class Api::UserAuthsController < ApplicationController
     @employee_id = params[:employee_id].to_i
     if @employee_id.present?
       leave_list = EmployeeLeavRequest.where(employee_id: @employee_id).order("id DESC")
-      render :json => leave_list.present? ? leave_list.collect{|ll| { :id => ll.id, :employee_id => ll.employee_id, :leav_category_initial => ll.leav_category.try(:code), :leav_category_id => ll.leav_category.try(:name), :leave_type => ll.leave_type, :start_date => ll.start_date, :end_date => ll.end_date, :reason=> ll.reason, :current_status=> ll.current_status, :no_of_day => ll.leave_count, :leave_status_records => ll.leave_status_records }} : []
+      render :json => leave_list.present? ? leave_list.collect{|ll| { :id => ll.id, :manual_employee_code => ll.try(:employee).try(:manual_employee_code), :employee_id => ll.employee_id, :leav_category_initial => ll.leav_category.try(:code), :leav_category_id => ll.leav_category.try(:name), :leave_type => ll.leave_type, :start_date => ll.start_date, :end_date => ll.end_date, :reason=> ll.reason, :current_status=> ll.current_status, :no_of_day => ll.leave_count, :leave_status_records => ll.leave_status_records }} : []
     else
       render :status=>200, :json=>{:status=>"Employee is not Found."}
     end
@@ -1698,5 +1698,4 @@ class Api::UserAuthsController < ApplicationController
     holiday = Holiday.where(holiday_date: beginning_of_year..end_of_year)
     render :json => holiday.present? ? holiday.collect{|holi| { :id => holi.try(:id), :code => holi.try(:code), :name => holi.try(:name), :description => holi.try(:description), :holiday_date => holi.try(:holiday_date), :day => holi.try(:holiday_date).strftime("%A"), :holiday_type => holi.try(:holiday_type) }} : []
   end
-
 end

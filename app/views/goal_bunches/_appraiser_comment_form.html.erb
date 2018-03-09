@@ -10,17 +10,17 @@
       <%= hidden_field_tag 'goal_rating_ids[]',"",value: @goal_rating.id %>
 
         <div class="row">
-          <div class="col-sm-9">
+          <div class="col-sm-12">
             <label>Comment</label>
             <%= text_area_tag 'appraiser_comments[]',"",class: "form-control",autofocus: true %>    
           </div>
-          <div class="col-sm-3">
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
             <label>Rating</label>
             <%= select_tag 'appraiser_ratings[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12" style="padding-top:20px;">
+          <div class="col-sm-3" style="padding-top:20px;">
             <center><%= f.submit "Create", class: 'btn btn-success btn-sm' %></center>
           </div>
         </div>

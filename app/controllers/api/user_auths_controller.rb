@@ -1536,11 +1536,12 @@ class Api::UserAuthsController < ApplicationController
     if emp_att.present?
       render :json => emp_att.present? ? emp_att.collect{|emp_att| 
         if emp_att.in_time.present? and emp_att.out_time.present?
-          { :id => emp_att.id, :day => emp_att.day, :in_time => emp_att.try(:in_time).strftime("%I:%M %p"), :out_time => emp_att.try(:out_time).strftime("%I:%M %p"), :working_hrs => emp_att.working_hrs, :present => emp_att.present, :comment => eat.comment }
+          { :id => emp_att.id, :day => emp_att.day, :in_time => emp_att.try(:in_time).strftime("%I:%M %p"), :out_time => emp_att.try(:out_time).strftime("%I:%M %p"), :working_hrs => emp_att.working_hrs, :present => emp_att.present, :comment => emp_att.comment }
         elsif emp_att.in_time.present? and !emp_att.out_time.present?
-          { :id => emp_att.id, :day => emp_att.day, :in_time => emp_att.try(:in_time).strftime("%I:%M %p"), :out_time => emp_att.try(:out_time), :working_hrs => emp_att.working_hrs, :present => emp_att.present, :comment => eat.comment }
+          { :id => emp_att.id, :day => emp_att.day, :in_time => emp_att.try(:in_time).strftime("%I:%M %p"), :out_time => emp_att.try(:out_time), :working_hrs => emp_att.working_hrs, :present => emp_att.present, :comment => emp_att.comment }
         else
-          { :id => emp_att.id, :day => emp_att.day, :in_time => emp_att.try(:in_time), :out_time => emp_att.try(:out_time), :working_hrs => emp_att.working_hrs, :present => emp_att.present, :comment => eat.comment }
+          { :id => emp_att.id, :day => emp_att.day, :in_time => emp_att.try(:in_time), :out_time => emp_att.try(:out_time), :working_hrs => emp_att.working_hrs, :present => emp_att.present, :comment => emp_att.comment }
+
         end
         } : []
     else

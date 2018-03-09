@@ -14,7 +14,7 @@
       <% else %>
         <center> <%= image_tag @employee.company_location.company.company_logo.url, :size => "120x70" %></center><br>
         <%end%>
-        <center><strong><%= @employee.company_location.company.try(:description) %></strong><br><%= @employee.company_location.try(:address) %>, <%= @employee.company_location.try(:name) %>  </center>
+        <center><strong><%= @employee.company_location.company.try(:description) %></strong><br><%= @employee.company_location.try(:address) %> </center>
         <center><strong> Payslip for the Month of <%= @salaryslip.month%> - <%= @salaryslip.year%></strong></center> 
       </td>           
     </tr>
@@ -39,7 +39,7 @@
       <strong> Days in Month : </strong><%= @working_day.try(:day_in_month) %> <br><br> 
       <strong> Payble Days : </strong><%= @working_day.try(:payable_day) %><br><br>
        <% @leave_details.each do |ld| %>
-            <strong> <%= ld.leav_category.name %>  - Leave: </strong> <%= ld.no_of_leave %> - <strong> Balance: </strong> <%= ld.balance %><br><br>
+            <strong> <%= ld.leav_category.name %>  <strong> Balance: </strong> <%= ld.balance %><br><br>
         <% end %>
       </td>   
     </tr>
@@ -106,7 +106,8 @@
         </tr>
           <tr>
           <td colspan="4"><strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Net Salary (In Word) </strong></td>
-          <td colspan="8"><strong> <%= @salaryslip.calculated_net_salary.round.in_words %></strong></td>
+
+          <td colspan="8"><strong> <%= @salaryslip.calculated_net_salary.round.in_words.titleize  %> Only.</strong></td>
         
         </tr>
         <tr>
@@ -118,5 +119,3 @@
 
 <div><%= link_to 'Back', employee_salary_list_salaryslips_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %></div>
 </div>
-
-

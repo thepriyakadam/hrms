@@ -522,7 +522,7 @@ require 'numbers_in_words/duck_punch'
             @total_actual = formula_item.sum(:actual_amount)
             @total = formula_item.sum(:calculated_amount)
             formula_item_actual_amount = @total_actual
-            formula_item_calculated_amount = (@total_actual / working_day.try(:day_in_month) * working_day.try(:calculated_payable_days))
+            formula_item_calculated_amount = @total
             deducted_actual_amount = (formula_item_actual_amount / 100 * @master_esic.percentage).ceil
             deducted_calculated_amount = (formula_item_calculated_amount / 100 * @master_esic.percentage).ceil
             @salary_component = SalaryComponent.find_by(name: "ESIC")
@@ -1146,7 +1146,7 @@ require 'numbers_in_words/duck_punch'
             @total_actual = formula_item.sum(:actual_amount)
             @total = formula_item.sum(:calculated_amount)
             formula_item_actual_amount = @total_actual
-            formula_item_calculated_amount = (@total_actual / working_day.try(:day_in_month) * working_day.try(:payable_day))
+            formula_item_calculated_amount = @total
             deducted_actual_amount = (formula_item_actual_amount / 100 * @master_esic.percentage).ceil
             deducted_calculated_amount = (formula_item_calculated_amount / 100 * @master_esic.percentage).ceil
             @salary_component = SalaryComponent.find_by(name: "ESIC")
@@ -1380,7 +1380,7 @@ require 'numbers_in_words/duck_punch'
             formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
             @total = formula_item.sum(:calculated_amount)
             @total_actual = formula_item.sum(:actual_amount)
-            formula_item_calculated_amount = (@total / 100 * @esic_employer.percentage).ceil
+            formula_item_calculated_amount = (@total_actual / 100 * @esic_employer.percentage).ceil
             formula_item_actual_amount = (@total_actual / 100 * @esic_employer.percentage).ceil
 
             @e1=EmployerContribution.where(id: a.id).update_all(date: date,esic: formula_item_calculated_amount,actual_esic: formula_item_actual_amount)
@@ -2417,3 +2417,4 @@ end
     end
   end
 end
+

@@ -1297,6 +1297,7 @@ end
       get :reviewer_evaluation
       get :import_reviewer_evaluation_xl
       post :import_reviewer
+      get :reviewer_comment_modal
     end
   end
   resources :goal_perspectives do

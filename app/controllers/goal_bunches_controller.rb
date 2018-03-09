@@ -485,6 +485,13 @@ class GoalBunchesController < ApplicationController
     #@goal_ratings = GoalRating.where(appraisee_id: @employee.id,reviewer_comment: nil)
   end
 
+  def reviewer_comment_modal
+    @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:emp_id])
+    @goal_rating = GoalRating.find(params[:goal_rating_id])
+    @period = Period.find(params[:period_id])
+  end
+  
   def reviewer_create
     @employee = Employee.find(params[:emp_id])
     goal_rating_ids = params[:goal_rating_ids]

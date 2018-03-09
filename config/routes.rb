@@ -3248,5 +3248,8 @@ end
     get 'user_auths/admin_att' => 'user_auths#admin_att', defaults:{format: 'json'}
     post 'user_auths/admin_attendance_list' => 'user_auths#admin_attendance_list', defaults:{format: 'json'}
     get 'user_auths/yearly_company_holiday' => 'user_auths#yearly_company_holiday', defaults:{format: 'json'}
+    get 'user_auths/all_employee_details' => 'user_auths#all_employee_details', defaults:{format: 'json'}
+    get 'user_auths/all_emp_leave_details' => 'user_auths#all_emp_leave_details', defaults:{format: 'json'}
+    get 'user_auths/all_emp_od_details' => 'user_auths#all_emp_od_details', defaults:{format: 'json'}
   end
 end

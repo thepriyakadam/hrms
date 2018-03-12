@@ -1176,18 +1176,18 @@ end
     @status =params[:salary][:status]
     @from_date = @from.to_date
     @to_date = @to.to_date
+    @code = params[:salary][:code]
     
     if @status == 'Active'
-      @employees = Employee.where(status: 'Active').pluck(:id)
+      @employee = Employee.where(status: 'Active').pluck(:id)
     elsif @status == 'Inactive'
-      @employees = Employee.where(status: 'Inactive').pluck(:id)
+      @employee = Employee.where(status: 'Inactive').pluck(:id)
     else
-      @employees = Employee.all.pluck(:id)
+      @employee = Employee.all.pluck(:id)
     end
-
-    @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id, employee_id: @employees).pluck(:employee_id)
+    @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id, employee_id: @employee).pluck(:employee_id)
   
-    @employees = EmployeeAttendance.where(day: @from.to_date..@to.to_date,is_confirm: false,employee_id: @costcenter)
+    @employees = EmployeeAttendance.where(day: @from.to_date..@to.to_date,is_confirm: false,employee_id: @costcenter).group(:employee_id)
     
     respond_to do |f|
       f.js

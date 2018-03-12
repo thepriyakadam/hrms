@@ -2,14 +2,50 @@
 
 one:
   employee_id: 
-  day: 2016-06-11
+  department_id: 
+  employee_leav_request_id: 
+  company_time_master_id: 
+  machine_attendance_id: 
+  on_duty_request_id: 
+  holiday_id: 
+  employee_week_off_id: 
+  employee_code: 1
+  employee_name: MyString
+  in_time: 2018-03-07 10:58:31
+  out_time: 2018-03-07 10:58:31
+  day: 2018-03-07
   present: MyString
-  in: 2016-06-11 18:13:14
-  out: 2016-06-11 18:13:14
+  is_confirm: false
+  count: 9.99
+  working_hrs: MyString
+  rest_time: MyString
+  difference_hrs: 9.99
+  overtime_hrs: 9.99
+  month_name: MyString
+  late_mark: 9.99
+  comment: MyString
 
 two:
   employee_id: 
-  day: 2016-06-11
+  department_id: 
+  employee_leav_request_id: 
+  company_time_master_id: 
+  machine_attendance_id: 
+  on_duty_request_id: 
+  holiday_id: 
+  employee_week_off_id: 
+  employee_code: 1
+  employee_name: MyString
+  in_time: 2018-03-07 10:58:31
+  out_time: 2018-03-07 10:58:31
+  day: 2018-03-07
   present: MyString
-  in: 2016-06-11 18:13:14
-  out: 2016-06-11 18:13:14
+  is_confirm: false
+  count: 9.99
+  working_hrs: MyString
+  rest_time: MyString
+  difference_hrs: 9.99
+  overtime_hrs: 9.99
+  month_name: MyString
+  late_mark: 9.99
+  comment: MyString

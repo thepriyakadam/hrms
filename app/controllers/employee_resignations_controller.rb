@@ -225,7 +225,12 @@ class EmployeeResignationsController < ApplicationController
       # EmployeeResignationMailer.second_level_request_email_to_reporting_manager(@employee_resignation).deliver_now
     end
     flash[:notice] = 'Resignation Request Approved Successfully'
-    # redirect_to resignation_history_employee_resignations_path
+
+    if @employee_resignation.employee_id == current_user.employee_id
+      redirect_to resignation_history_employee_resignations_path
+    else
+      redirect_to resignation_history_manager_self_services_path
+    end
   end
 
   # def first_approve
@@ -250,7 +255,12 @@ class EmployeeResignationsController < ApplicationController
     ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "SecondApproved",change_date: Date.today)
     EmployeeResignationMailer.second_level_approval_email_to_employee(@employee_resignation).deliver_now
     flash[:notice] = 'Resignation Request Approved Successfully'
-    redirect_to resignation_history_employee_resignations_path
+
+    if @employee_resignation.employee_id == current_user.employee_id 
+      redirect_to resignation_history_employee_resignations_path
+    else
+      redirect_to resignation_history_manager_self_services_path
+    end
   end
 
   def final_approve
@@ -572,7 +582,7 @@ class EmployeeResignationsController < ApplicationController
     @exit_interview_date = params[:employee_resignation][:exit_interview_date]
     @leaving_date = params[:employee_resignation][:leaving_date]
     @employee_resignation.update(exit_interview_date: @exit_interview_date,leaving_date: @leaving_date,resign_status: "FinalApproved")
-    flash[:notice] = 'Updated Successfully!'
+    flash[:notice] = 'Updated and approved Successfully!'
     redirect_to final_approval_emp_resignation_list_employee_resignations_path
   end
 
@@ -593,8 +603,7 @@ class EmployeeResignationsController < ApplicationController
     @question_master = QuestionMaster.all
      @question_master.each do |qc|
     ExitInterview.create(question_master_id: qc.id,employee_id: @employee)
-
-  end
+    end
     @employee_resignations = EmployeeResignation.where(employee_id: @employee,resign_status: "FinalApproved")
     @employee_resignations.update_all(exit_interview_status: true)
     flash[:notice] = "Created Successfully"

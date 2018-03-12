@@ -56,7 +56,7 @@ class GoalRatingsController < ApplicationController
     file = params[:file]
       if file.nil?
         flash[:alert] = "Please Select File!"
-        redirect_to import_xl_goal_ratings_path
+        redirect_to import_xl_goal_ratings_path(emp_id: employee.id,goal_bunch_id: goal_bunch.id)
       else
         @method = GoalRating.import(params[:file],employee,goal_bunch)
         if @method == false
@@ -65,6 +65,18 @@ class GoalRatingsController < ApplicationController
           redirect_to new_goal_rating_path(emp_id: employee.id,id: goal_bunch.id), notice: "File imported."
         end
       end
+  end
+  
+   def admin_reviewer_evaluation_period
+    @periods = Period.where(status: true).group(:id)
+    @goal_bunches = GoalBunch.where(goal_confirm: true).group(:period_id)
+  end
+
+  def admin_level_reviewer_evaluation
+    @period = Period.find(params[:period_id])
+    @goal_bunches = GoalBunch.where(period_id: @period.id,appraisee_confirm: true)
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
   end
 
   def admin_appraiser_evaluation_period
@@ -81,7 +93,7 @@ class GoalRatingsController < ApplicationController
 
   def admin_level_period
     @periods = Period.where(status: true).group(:id)
-    @goal_bunches = GoalBunch.where(goal_confirm: true).group(:period_id)
+    @goal_bunches = GoalBunch.where(period_id: @periods).group(:period_id)
   end
 
   def admin_level_goal_set
@@ -178,7 +190,7 @@ class GoalRatingsController < ApplicationController
 
   def update_goal_set_modal
     #byebug
-    @goal_rating = GoalRating.find(params[:goal_id])
+    @goal_rating = GoalRating.find(params[:goal_rating_id])
     @employee = Employee.find(@goal_rating.appraisee_id)
     @goal_bunch = GoalBunch.find(@goal_rating.goal_bunch_id)
     goal_weightage_sum = @goal_rating.goal_weightage_sumdate(@goal_bunch, @goal_rating.goal_weightage, params)
@@ -201,22 +213,22 @@ class GoalRatingsController < ApplicationController
                 @flag1 = true
                 @flag = true
               flash[:notice] = "Updated Successfully !"
-              redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+              redirect_to new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id)
               else
                 @flag1 = false
               flash[:alert] = "Weightage Limit should be within range "
-              redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+              redirect_to new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id)
               end
             else
               @flag2 = false
               flash[:alert] = "Weightage should be within range "
-              redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+              redirect_to new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id)
             end
           else
             @goal_rating.update(goal_rating_params)
             @flag = true
             flash[:notice] = "Updated Successfully !"
-            redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+            redirect_to new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id)
           end
 
         elsif @goal_rating.goal_type == "Attribute"
@@ -233,27 +245,27 @@ class GoalRatingsController < ApplicationController
                 @flag1 = true
                 @flag = true
               flash[:notice] = "Updated Successfully !"
-              redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+              redirect_to new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id)
               else
                 @flag1 = false
               flash[:alert] = "Weightage Limit should be within range "
-              redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+              redirect_to new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id)
               end
             else
               flash[:alert] = "Weightage should be within range "
-              redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+              redirect_to new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id)
             end
           else
             @goal_rating.update(goal_rating_params)
             @flag = true
             flash[:notice] = "Updated Successfully !"
-            redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+            redirect_to new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id)
           end
         end
       else
          @flag = false
             flash[:alert] = "Weightage Sum should be 100 "
-         redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+         redirect_to new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id)
       end 
   end
 

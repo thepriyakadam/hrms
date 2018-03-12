@@ -1,0 +1,33 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Appraiser Evaluation </center></h4>
+    </div>
+    <div class="modal-body">
+
+      <%= bootstrap_form_for :goal_bunches,url:{action:'appraiser_create',emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id,period_id: @period.id} do |f| %> 
+      <%= hidden_field_tag 'goal_rating_ids[]',"",value: @goal_rating.id %>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <label>Comment</label>
+            <%= text_area_tag 'appraiser_comments[]',"",class: "form-control",autofocus: true %>    
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <label>Rating</label>
+            <%= select_tag 'appraiser_ratings[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %>
+          </div>
+          <div class="col-sm-3" style="padding-top:20px;">
+            <center><%= f.submit "Create", class: 'btn btn-success btn-sm' %></center>
+          </div>
+        </div>
+      <% end %>
+
+  	</div>
+    <div class="modal-footer"></div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+	

@@ -1202,18 +1202,18 @@ end
     @status =params[:salary][:status]
     @from_date = @from.to_date
     @to_date = @to.to_date
+    @code = params[:salary][:code]
     
     if @status == 'Active'
-      @employees = Employee.where(status: 'Active').pluck(:id)
+      @employee = Employee.where(status: 'Active').pluck(:id)
     elsif @status == 'Inactive'
-      @employees = Employee.where(status: 'Inactive').pluck(:id)
+      @employee = Employee.where(status: 'Inactive').pluck(:id)
     else
-      @employees = Employee.all.pluck(:id)
+      @employee = Employee.all.pluck(:id)
     end
-
-    @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id, employee_id: @employees).pluck(:employee_id)
+    @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id, employee_id: @employee).pluck(:employee_id)
   
-    @employees = EmployeeAttendance.where(day: @from.to_date..@to.to_date,is_confirm: false,employee_id: @costcenter)
+    @employees = EmployeeAttendance.where(day: @from.to_date..@to.to_date,is_confirm: false,employee_id: @costcenter).group(:employee_id)
     
     respond_to do |f|
       f.js
@@ -3026,6 +3026,32 @@ end
     @to = params[:salary][:to]
     @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).group(:day)
    
+  end
+
+  def fetch_attendance
+    day = params[:daily_attendance][:day].to_i
+    if day.present?
+      DailyAttendance.fetch_data(day)
+      flash[:notice] = "Employee Attendance Added Successfully..!"
+      redirect_to new_employee_attendance_path
+    else
+      DailyAttendance.fetch_data(1)
+      flash[:notice] = "Employee Attendance Added Successfully..!"
+      redirect_to new_employee_attendance_path
+    end
+  end
+
+  def calculate
+    day = params[:daily_attendance][:day].to_i
+    if day.present?
+      DailyAttendance.calculate_attendance(day)
+      flash[:notice] = "Employee Attendance Calculated Successfully..!"
+      redirect_to new_employee_attendance_path
+    else
+      DailyAttendance.calculate_attendance(1)
+      flash[:notice] = "#{day} Day's Employee Attendance Calculated Successfully..!"      
+      redirect_to new_employee_attendance_path
+    end
   end
 
   # def create_self_attendance

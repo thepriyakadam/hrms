@@ -241,47 +241,48 @@
           <%= hidden_field_tag :final_id, {},value: current_user.employee_id %>
 
           <div class="row">
-            <h6><center>Recommendation For Employee</center></h6>
+            <center>Recommendation For Employee</center>
           <div class="col-sm-3">
-              <%= f.select :f_promotion,[['Yes','true'],['No','false']],{label: 'Promotion',include_blank: " Select Promotion Option"},autofocus: true %>
+            <%= f.select :f_promotion,[['Yes','true'],['No','false']],{label: 'Promotion',include_blank: " Select Promotion Option"},autofocus: true %>
           </div>
 
           <div class="col-sm-3">
-              <%= f.select :f_increment,[['Yes','true'],['No','false']],{label: 'Increment',include_blank: " Select Increment Option"} %>
+            <%= f.select :f_increment,[['Yes','true'],['No','false']],{label: 'Increment',include_blank: " Select Increment Option"} %>
           </div>
 
           <div class="col-sm-3">
-              <%= f.select :f_designation_id,all_employee_designation,{label: 'Designation',include_blank: " Select Designation"} %>
+            <%= f.select :f_designation_id,all_employee_designation,{label: 'Designation',include_blank: " Select Designation"} %>
           </div>
 
           <div class="col-sm-3">
-          <label>Revised CTC</label>
+            <label>Revised CTC</label>
             <%= f.text_field :f_ctc,hide_label:true,placeholder: 'CTC' %>
           </div>
           </div>
           <br>
 
             <div class="box-header with-border">
-              <h6><center>Final Comment/Rating For Employee</center></h6>
+              <center>Final Comment/Rating For Employee</center>
             </div>
               <div class="row">
-                <div class="col-sm-9">
+                <div class="col-sm-12">
                   <div class="field">
-                  <%= f.text_field :final_comment,hide_label:true,placeholder: 'Final Comment'%>
+                  <%= f.text_area :final_comment,hide_label:true,placeholder: 'Final Comment'%>
                   </div>
                 </div>
-                <div class="col-sm-3">
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
                   <div class="field">
                   <%= f.select :final_rating_id,all_rating_type,{hide_label:true, include_blank: 'Select Rating'} %>
                   </div>
                 </div>
-              </div>
 
               <% if @goal_bunch.final_comment == nil %>
                 <% if @goal_bunch.final_confirm == true %>
                 <% else %>
-                  <div class="row">
-                    <div class="col-sm-3">
+
+                    <div class="col-sm-6">
                       <div class="actions">
                         <%= f.submit "Create" , class: "btn btn-primary btn-sm" %>
                         <%= link_to 'Back',period_list_final_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
@@ -292,7 +293,7 @@
               <% end %>
 
           <% end %> <!-- <h5><center>Reviewer Comment not Confirmed</center></h5> -->
-
+<br>
       <% else %> <!-- manager2 available -->
           <% if @goal_bunch.reviewer_confirm == true %>
 

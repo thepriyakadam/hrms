@@ -242,25 +242,40 @@
             <!-- <li><a href="/employees/transfer_employee_list"><i class="fa fa-tags"></i>Transfer Employee</a></li> -->
           </ul>
         </li>
+
         <li class="treeview" id="MeetingPlan">
           <a href="#">
-            <i class="glyphicon glyphicon-th-large"></i> <span> Employee Meeting Plan </span>
+            <i class="glyphicon glyphicon-th-large"></i> <span> Meeting Plan </span>
             <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu" >
-            <li><a href="/plan_reason_masters"><i class="fa fa-tags"></i> Plan Reason </a></li>
-            <li><a href="/employee_plans/new" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Create New Plan </a></li>
-            <li><a href="/employee_plans/employee_wise_report" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Employee Wise Reports </a></li>
-            <li><a href="/employee_plans/manager_wise_report" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Manager Wise Reports </a></li>
-            <li><a href="/employee_plans/company_wise_report" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Company Wise Reports </a></li>
-            <li><a href="/employee_plans/status_wise_report" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Status Wise Reports </a></li>
-            <li><a href="/employee_plans/meeting_minutes_history" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Meeting Minutes History Reports </a></li>
-            <li><a href="/employee_plans/meeting_follow_up" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Meeting Plan Follow-up </a></li>
-            <li><a href="/listed_companies"><i class="fa fa-tags"></i> Listed Company </a></li>
-            <li><a href="/daily_attendances/daily_attendance" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Daily Attendances Report </a></li>     
+            <li id="Master">
+              <a href="#"><i class="fa fa-edit"></i> Master <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li><a href="/plan_reason_masters"><i class="fa fa-tags"></i> Plan Reason  </a></li>
+                <li><a href="/listed_companies"><i class="fa fa-tags"></i> Listed Company  </a></li>
+              </ul>
+            </li>
+            <li id="Process">
+              <a href="#"><i class="fa fa-edit"></i> Process <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li><a href="/employee_plans/new" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Create New Plan </a></li>
+                <li><a href="/employee_plans/meeting_follow_up" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Meeting Plan Follow-up </a></li>
+              </ul>
+            </li>
+            <li id="Reports">
+              <a href="#"><i class="fa fa-edit"></i> Reports <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li><a href="/employee_plans/employee_wise_report" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Employee Wise Reports </a></li>
+                <li><a href="/employee_plans/meeting_follow_up" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Meeting Plan Follow-up </a></li>
+                <li><a href="/employee_plans/manager_wise_report" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Manager Wise Reports </a></li>
+                <li><a href="/employee_plans/company_wise_report" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Company Wise Reports </a></li>
+                <li><a href="/employee_plans/status_wise_report" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Status Wise Reports </a></li>
+                <li><a href="/employee_plans/meeting_minutes_history" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Meeting Minutes Reports </a></li>
+              </ul>
+            </li>
           </ul>
         </li>
-
         <!-- <li class="treeview" id="ListedCompany">
           <a href="#">
             <i class="glyphicon glyphicon-th-large"></i><span> Listed Company </span>
@@ -477,6 +492,7 @@
                 <li><a href="/employee_attendances/import_employee_attendance" title="For upload daily attendance sheet"><i class="fa fa-upload"></i> Upload Attendance File </a></li>
                 <li><a href="/employee_attendances/admin_level_acf" title="For assigining the access card of particular date"><i class="fa fa-upload"></i> Admin ACF </a></li>
                 <li><a href="/employee_attendances/datewise_attendance_with_options" title="To view attendance all and selective"><i class="fa fa-tags"></i> Attendance Report </a></li>
+                <li><a href="/daily_attendances/daily_attendance" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Daily Attendances Report </a></li> 
                 <!-- <li><a href="/workingdays/search_month_year"><i class="fa fa-tags"> </i>Attendace Update(Auto) </a></li> -->
                 <!--  <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
                 <li><a href="/company_shifts/new"><i class="fa fa-tags"></i> Shifts Maintenance </a></li>
@@ -814,10 +830,12 @@
                 <li><a href="/goal_bunches/appraiser_subordinate" title="For appraiser rating and comment"><i class="fa fa-tags"></i> Appraiser Evaluation </a></li>
                 <li><a href="/goal_bunches/reviewer_subordinate" title="For reviewer rating and comment"><i class="fa fa-tags"></i> Reviewer Evaluation </a></li>
                 <li><a href="/goal_bunches/employee_list" title="For final rating and comment"><i class="fa fa-tags"></i> Final Evaluation </a></li>
-                <li><a href="/goal_bunches/admin_level_period" title="For admin level period setting"><i class="fa fa-tags"></i> Period Setting </a></li>
-                <li><a href="/goal_ratings/admin_level_goal_set" title="For admin level goal setting"><i class="fa fa-tags"></i> Goal Setting </a></li>
-                <li><a href="/goal_bunches/admin_goal_approval_period" title="For admin level goal setting"><i class="fa fa-tags"></i> Goal Approval </a></li>
-                <li><a href="/goal_bunches/admin_self_evaluation_period" title="For admin level goal setting"><i class="fa fa-tags"></i> Self Evaluation </a></li>
+                <li><a href="/goal_bunches/admin_period_set" title="For admin level period setting"><i class="fa fa-tags"></i> Period Setting </a></li>
+                <li><a href="/goal_ratings/admin_level_period" title="For admin level goal approval period list"><i class="fa fa-tags"></i> Goal Setting </a></li>
+                <li><a href="/goal_bunches/admin_goal_approval_period" title="For admin level goal approval"><i class="fa fa-tags"></i> Goal Approval </a></li>
+                <li><a href="/goal_bunches/admin_self_evaluation_period" title="For admin level self evaluation"><i class="fa fa-tags"></i> Self Evaluation </a></li>
+                <li><a href="/goal_ratings/admin_appraiser_evaluation_period" title="For admin level appraiser evaluation"><i class="fa fa-tags"></i> Admin Appraiser Evaluation </a></li>
+                <li><a href="/goal_ratings/admin_reviewer_evaluation_period" title="For admin level appraiser evaluation"><i class="fa fa-tags"></i> Admin Reviewer Evaluation </a></li>
               </ul>
             </li> 
             <li id="perform_cycle1">

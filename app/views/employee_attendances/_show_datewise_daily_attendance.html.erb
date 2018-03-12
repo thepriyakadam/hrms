@@ -38,10 +38,12 @@ function displayResult()
               
               <td><%= a.comment %></td>
               <td>
-                <% if  a.employee_leav_request_id != nil %>
-                  <small class="label label-primary">Leave</small>
-                <% else %>
+                <% if a.employee_leav_request_id == nil %>
+                  
                   <%= link_to ' ',modal_edit_daily_attendance_employee_attendances_path(a),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
+                  <% else %>
+                  <small class="label label-primary">Leave</small>
+                
                 <% end %>
               </td>
             </tr>

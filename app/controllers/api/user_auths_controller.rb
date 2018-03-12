@@ -85,7 +85,7 @@ class Api::UserAuthsController < ApplicationController
     @employee_id = params[:employee_id].to_i
     if @employee_id.present?
       leave_list = EmployeeLeavRequest.where(employee_id: @employee_id).order("id DESC")
-      render :json => leave_list.present? ? leave_list.collect{|ll| { :id => ll.id, :employee_id => ll.employee_id, :leav_category_initial => ll.leav_category.try(:code), :leav_category_id => ll.leav_category.try(:name), :leave_type => ll.leave_type, :start_date => ll.start_date, :end_date => ll.end_date, :reason=> ll.reason, :current_status=> ll.current_status, :no_of_day => ll.leave_count, :leave_status_records => ll.leave_status_records }} : []
+      render :json => leave_list.present? ? leave_list.collect{|ll| { :id => ll.id, :manual_employee_code => ll.try(:employee).try(:manual_employee_code), :employee_id => ll.employee_id, :leav_category_initial => ll.leav_category.try(:code), :leav_category_id => ll.leav_category.try(:name), :leave_type => ll.leave_type, :start_date => ll.start_date, :end_date => ll.end_date, :reason=> ll.reason, :current_status=> ll.current_status, :no_of_day => ll.leave_count, :leave_status_records => ll.leave_status_records }} : []
     else
       render :status=>200, :json=>{:status=>"Employee is not Found."}
     end
@@ -1515,11 +1515,11 @@ class Api::UserAuthsController < ApplicationController
       # render :json => emp_att.present? ? emp_att.collect{|emp_att| { :id => emp_att.id, :day => emp_att.day, :in_time => emp_att.try(:in_time).try(:strftime("%I:%M:%S %p")), :out_time => emp_att.try(:out_time).try(:strftime("%I:%M:%S %p")), :working_hrs => emp_att.working_hrs, :present => emp_att.present }} : []
       render :json => emp_att.present? ? emp_att.collect{|emp_att| 
         if emp_att.in_time.present? and emp_att.out_time.present?
-          { :id => emp_att.id, :day => emp_att.day, :in_time => emp_att.try(:in_time).strftime("%I:%M %p"), :out_time => emp_att.try(:out_time).strftime("%I:%M %p"), :working_hrs => emp_att.working_hrs, :present => emp_att.present }
+          { :id => emp_att.id, :day => emp_att.day, :in_time => emp_att.try(:in_time).strftime("%I:%M %p"), :out_time => emp_att.try(:out_time).strftime("%I:%M %p"), :working_hrs => emp_att.working_hrs, :present => emp_att.present, :comment => eat.comment }
         elsif emp_att.in_time.present? and !emp_att.out_time.present?
-          { :id => emp_att.id, :day => emp_att.day, :in_time => emp_att.try(:in_time).strftime("%I:%M %p"), :out_time => emp_att.try(:out_time), :working_hrs => emp_att.working_hrs, :present => emp_att.present }
+          { :id => emp_att.id, :day => emp_att.day, :in_time => emp_att.try(:in_time).strftime("%I:%M %p"), :out_time => emp_att.try(:out_time), :working_hrs => emp_att.working_hrs, :present => emp_att.present, :comment => eat.comment }
         else
-          { :id => emp_att.id, :day => emp_att.day, :in_time => emp_att.try(:in_time), :out_time => emp_att.try(:out_time), :working_hrs => emp_att.working_hrs, :present => emp_att.present }
+          { :id => emp_att.id, :day => emp_att.day, :in_time => emp_att.try(:in_time), :out_time => emp_att.try(:out_time), :working_hrs => emp_att.working_hrs, :present => emp_att.present, :comment => eat.comment }
         end
         } : []
     else
@@ -1648,7 +1648,7 @@ class Api::UserAuthsController < ApplicationController
     time_now = Time.now.to_date
     @employees = Employee.where(manager_id: manager_id).pluck(:id)
     employee_attendances = EmployeeAttendance.where(employee_id: @employees, day: time_now).order("day DESC")
-    render :json => employee_attendances.present? ? employee_attendances.collect{|eat| {:id => eat.id, :manual_employee_code => eat.try(:employee).try(:manual_employee_code), :employee_id => eat.employee_id, :prefix => eat.try(:employee).try(:prefix), :employee_first_name => eat.try(:employee).try(:first_name), :employee_middle_name => eat.try(:employee).try(:middle_name), :employee_last_name => eat.try(:employee).try(:last_name), :day => eat.day, :present => eat.present, :in_time => eat.in_time, :out_time => eat.out_time, :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs }} : []
+    render :json => employee_attendances.present? ? employee_attendances.collect{|eat| {:id => eat.id, :manual_employee_code => eat.try(:employee).try(:manual_employee_code), :employee_id => eat.employee_id, :prefix => eat.try(:employee).try(:prefix), :employee_first_name => eat.try(:employee).try(:first_name), :employee_middle_name => eat.try(:employee).try(:middle_name), :employee_last_name => eat.try(:employee).try(:last_name), :day => eat.day, :present => eat.present, :in_time => eat.in_time, :out_time => eat.out_time, :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs, :comment => eat.comment }} : []
   end
 
   def manager_attendance_list
@@ -1665,14 +1665,14 @@ class Api::UserAuthsController < ApplicationController
       @employees = Employee.where(manager_id: manager_id).pluck(:id)
       employee_attendances = EmployeeAttendance.where(employee_id: employee_id, day: time_now).order("day DESC")
     end
-    render :json => employee_attendances.present? ? employee_attendances.collect{|eat| {:id => eat.id, :manual_employee_code => eat.try(:employee).try(:manual_employee_code), :employee_id => eat.employee_id, :prefix => eat.try(:employee).try(:prefix), :employee_first_name => eat.try(:employee).try(:first_name), :employee_middle_name => eat.try(:employee).try(:middle_name), :employee_last_name => eat.try(:employee).try(:last_name), :day => eat.day, :present => eat.present, :in_time => eat.in_time, :out_time => eat.out_time, :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs }} : []
+    render :json => employee_attendances.present? ? employee_attendances.collect{|eat| {:id => eat.id, :manual_employee_code => eat.try(:employee).try(:manual_employee_code), :employee_id => eat.employee_id, :prefix => eat.try(:employee).try(:prefix), :employee_first_name => eat.try(:employee).try(:first_name), :employee_middle_name => eat.try(:employee).try(:middle_name), :employee_last_name => eat.try(:employee).try(:last_name), :day => eat.day, :present => eat.present, :in_time => eat.in_time, :out_time => eat.out_time, :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs, :comment => eat.comment }} : []
   end
 
   def admin_att
     time_now = Time.now.to_date
     employee_attendances = EmployeeAttendance.where(day: time_now).order("day ASC")
     # render :json => employee_attendances.present? ? employee_attendances.collect{|eat| {:id => eat.id, :employee_id => eat.employee_id, :day => eat.day, :prefix => emp.prefix, :employee_first_name => emp.first_name, :employee_middle_name => emp.middle_name, :employee_last_name => emp.last_name, :present => eat.present, :in_time => eat.in_time, :out_time => eat.out_time, :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs }} : []
-    render :json => employee_attendances.present? ? employee_attendances.collect{|eat| {:id => eat.id, :manual_employee_code => eat.try(:employee).try(:manual_employee_code), :employee_id => eat.employee_id, :prefix => eat.try(:employee).try(:prefix), :employee_first_name => eat.try(:employee).try(:first_name), :employee_middle_name => eat.try(:employee).try(:middle_name), :employee_last_name => eat.try(:employee).try(:last_name), :day => eat.day, :present => eat.present, :in_time => eat.in_time, :out_time => eat.out_time, :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs }} : []
+    render :json => employee_attendances.present? ? employee_attendances.collect{|eat| {:id => eat.id, :manual_employee_code => eat.try(:employee).try(:manual_employee_code), :employee_id => eat.employee_id, :prefix => eat.try(:employee).try(:prefix), :employee_first_name => eat.try(:employee).try(:first_name), :employee_middle_name => eat.try(:employee).try(:middle_name), :employee_last_name => eat.try(:employee).try(:last_name), :day => eat.day, :present => eat.present, :in_time => eat.in_time, :out_time => eat.out_time, :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs, :comment => eat.comment }} : []
   end
 
   def admin_attendance_list
@@ -1688,13 +1688,15 @@ class Api::UserAuthsController < ApplicationController
       employee_attendances = EmployeeAttendance.where(day: time_now).order("day DESC")
     end
     # render :json => employee_attendances.present? ? employee_attendances.collect{|eat| {:id => eat.id, :employee_id => eat.employee_id,:prefix => emp.prefix, :employee_first_name => emp.first_name, :employee_middle_name => emp.middle_name, :employee_last_name => emp.last_name, :day => eat.day, :present => eat.present, :in_time => eat.in_time, :out_time => eat.out_time, :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs }} : []
-    render :json => employee_attendances.present? ? employee_attendances.collect{|eat| {:id => eat.id, :manual_employee_code => eat.try(:employee).try(:manual_employee_code), :employee_id => eat.employee_id, :prefix => eat.try(:employee).try(:prefix), :employee_first_name => eat.try(:employee).try(:first_name), :employee_middle_name => eat.try(:employee).try(:middle_name), :employee_last_name => eat.try(:employee).try(:last_name), :day => eat.day, :present => eat.present, :in_time => eat.in_time, :out_time => eat.out_time, :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs }} : []
+    render :json => employee_attendances.present? ? employee_attendances.collect{|eat| {:id => eat.id, :manual_employee_code => eat.try(:employee).try(:manual_employee_code), :employee_id => eat.employee_id, :prefix => eat.try(:employee).try(:prefix), :employee_first_name => eat.try(:employee).try(:first_name), :employee_middle_name => eat.try(:employee).try(:middle_name), :employee_last_name => eat.try(:employee).try(:last_name), :day => eat.day, :present => eat.present, :in_time => eat.in_time, :out_time => eat.out_time, :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs, :comment => eat.comment }} : []
   end
 
   def yearly_company_holiday
-    holiday = Holiday.all
-    render :json => holiday.present? ? holiday.collect{|holi| { :id => holi.try(:id), :code => holi.try(:code), :name => holi.try(:name), :description => holi.try(:description), :holiday_date => holi.try(:holiday_date), :holiday_type => holi.try(:holiday_type) }} : []
+    today = Date.today
+    beginning_of_year = today.beginning_of_year
+    end_of_year = today.end_of_year
+    holiday = Holiday.where(holiday_date: beginning_of_year..end_of_year)
+    render :json => holiday.present? ? holiday.collect{|holi| { :id => holi.try(:id), :code => holi.try(:code), :name => holi.try(:name), :description => holi.try(:description), :holiday_date => holi.try(:holiday_date), :day => holi.try(:holiday_date).strftime("%A"), :holiday_type => holi.try(:holiday_type) }} : []
   end
-
 end
 

@@ -68,6 +68,12 @@ class GoalBunchesController < ApplicationController
 
   end
 
+  def appraiser_evaluation
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:employee_id])
+    @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
+  end
+
   def import_xl
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @employee = Employee.find(params[:employee_id])
@@ -79,14 +85,32 @@ class GoalBunchesController < ApplicationController
     file = params[:file]
       if file.nil?
         flash[:alert] = "Please Select File!"
-        redirect_to import_xl_goal_bunches_path
+        redirect_to import_xl_goal_bunches_path(employee_id: employee.id,goal_bunch_id: goal_bunch.id)
       else
         GoalBunch.import(params[:file])
         redirect_to appraisee_comment_goal_bunches_path(emp_id: employee.id,id: goal_bunch.id), notice: "File imported."
       end
   end
 
-  def admin_level_period
+  def import_appraiser_evaluation_xl
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:employee_id])
+  end
+
+  def import_appraiser
+    goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    employee = Employee.find(params[:employee_id])
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+      redirect_to import_appraiser_evaluation_xl_goal_bunches_path
+    else
+      GoalBunch.import_appraiser_evaluation(params[:file])
+      redirect_to appraiser_comment_goal_bunches_path(emp_id: employee.id,goal_id: goal_bunch.id,period_id: goal_bunch.period_id), notice: "File imported."
+    end
+  end
+  
+  def admin_period_set
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_cycle"
     @employees = Employee.where(status: "Active")
@@ -103,7 +127,7 @@ class GoalBunchesController < ApplicationController
         flash[:notice] = "Created successfully"
       end
     end
-    redirect_to admin_level_period_goal_bunches_path
+    redirect_to admin_period_set_goal_bunches_path
   end
 
   def appraiser_confirm
@@ -346,6 +370,12 @@ class GoalBunchesController < ApplicationController
     # @goal_ratings = GoalRating.where(appraisee_id: current_user.employee_id,appraisee_comment: nil)  
   end
 
+  def appraiser_comment_modal
+    @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:emp_id])
+    @goal_rating = GoalRating.find(params[:goal_rating_id])
+    @period = Period.find(params[:period_id])
+  end
   
   def appraiser_create
     @employee = Employee.find(params[:emp_id])
@@ -386,6 +416,31 @@ class GoalBunchesController < ApplicationController
         end
       end
     redirect_to appraiser_comment_goal_bunches_path(id: @employee.id)
+  end
+
+
+  def import_reviewer_evaluation_xl
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:employee_id])
+  end
+
+  def import_reviewer
+    goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    employee = Employee.find(params[:employee_id])
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+      redirect_to import_reviewer_evaluation_xl_goal_bunches_path
+    else
+      GoalBunch.import_reviewer_evaluation(params[:file])
+      redirect_to reviewer_comment_goal_bunches_path(emp_id: employee.id,id: goal_bunch.id,period_id: goal_bunch.period_id), notice: "File imported."
+    end
+  end
+
+  def reviewer_evaluation
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:employee_id])
+    @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
   end
 
   def reviewer_subordinate
@@ -474,7 +529,6 @@ class GoalBunchesController < ApplicationController
 
   def period_list_final
     @period = Period.find(params[:period_id])
-    #@emp1 = Employee.all.pluck(:id)
     @emp1 = GoalBunch.where(" appraiser_confirm = ? OR reviewer_confirm = ?", true,true).pluck(:employee_id)
 
     @employees = GoalBunch.where(employee_id: @emp1,period_id: @period.id)

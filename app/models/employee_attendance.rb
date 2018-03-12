@@ -1,6 +1,9 @@
 class EmployeeAttendance < ActiveRecord::Base
-  # has_fullcalendar
   belongs_to :employee
+  belongs_to :department
+  belongs_to :on_duty_request
+  belongs_to :employee_week_off
+  # has_fullcalendar
   belongs_to :employee_leav_request
   belongs_to :machine_attendance
   belongs_to :company_time_master
@@ -80,20 +83,20 @@ class EmployeeAttendance < ActiveRecord::Base
         employee_name = spreadsheet.cell(i,'B')
         day = spreadsheet.cell(i,'C')
 
-        in_time = spreadsheet.cell(i,'D') #@employee.id
+        in_time1 = spreadsheet.cell(i,'D') #@employee.id
         #byebug
-        # in_time2 = in_time1.to_f/3600
-        # in_time3 = in_time2.to_s
-        # in_time = in_time3.to_datetime
+        in_time2 = in_time1.to_f/3600
+        in_time3 = in_time2.to_s
+        in_time = in_time3.to_datetime
 
-        out_time = spreadsheet.cell(i,'E')
+        out_time1 = spreadsheet.cell(i,'E')
 
-        # out_time2 = out_time1.to_f/3600
-        # out_time3 = out_time2.to_s
-        # out_time = out_time3.to_datetime
+        out_time2 = out_time1.to_f/3600
+        out_time3 = out_time2.to_s
+        out_time = out_time3.to_datetime
 
-        working_hrs = spreadsheet.cell(i,'F')
-        # working_hrs = working_hrs1.to_f/3600
+        working_hrs1 = spreadsheet.cell(i,'F')
+        working_hrs = working_hrs1.to_f/3600
         present = spreadsheet.cell(i,'G')
 
         employee = Employee.find_by(manual_employee_code: employee_code)

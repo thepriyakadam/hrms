@@ -642,7 +642,7 @@
   end
 
    def collect_company_location_dropdown_with_label
-    @company = Company.find(params[:id])
+    @company = Company.find(params[:company_id])
     if current_user.class == Group
     @company_locations = CompanyLocation.all
     else
@@ -668,7 +668,7 @@
   # end
 
   def collect_department
-     @company_location = CompanyLocation.find(params[:id])
+     @company_location = CompanyLocation.find(params[:company_location_id])
       # if current_user.role.name == 'HOD' ||  current_user.role.name == 'Supervisor'
       #   @departments = Department.where(id: current_user.department_id)
       # else
@@ -728,9 +728,9 @@
   end
 
   def reset_password
-    @member = Member.find(params[:id])
+    @member = Member.find(params[:member_id])
     @member_password_reset = Member.find_by(manual_member_code: @member.manual_member_code).update(password: "12345678")
-    EmployeeMailer.employee_reset_password(@member).deliver_now
+    #EmployeeMailer.employee_reset_password(@member).deliver_now
     flash[:notice] = "Password Changed Successfully"
     redirect_to member_list_for_update_password_employees_path
   end

@@ -28,7 +28,8 @@
             <tr>
               <th colspan="10"><%= @employee.try(:manual_employee_code) %> <%= full_name(@employee) %></th>
               <td colspan="2"><%#= link_to " Print Form ", display_declaration_details_investment_declarations_path(id: @employee.id,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
-              <%= link_to 'Update Declaration', show_declaration_details_investment_declarations_path(employee_id: params[:employee_id]),class: "btn btn-primary btn-sm" %> 
+              <%#= link_to 'Update Declaration', show_declaration_details_investment_declarations_path(employee_id: params[:employee_id]),class: "btn btn-primary btn-sm" %> 
+              <%= link_to 'Edit Declaration', show_employee_declaration_investment_declarations_path(employee_id: params[:employee_id]),class: "btn btn-primary btn-sm" %> 
               </td>
             </tr>
             <tr>
@@ -132,9 +133,9 @@
                       <% end %>
                       <td colspan="2"><%= investment_declaration.amount %></td>
                       <td colspan="2"><%= investment_declaration.actual_amt %></td>
-                      <td colspan="2"><%= best_in_place investment_declaration, :accepted_amt %></td>
-                      <td colspan="2"><%= best_in_place investment_declaration, :rejected_amt %></td>
-                      <td><%= best_in_place investment_declaration,:comment %></td>
+                      <td colspan="2"><%= investment_declaration.accepted_amt %></td>
+                      <td colspan="2"><%= investment_declaration.rejected_amt %></td>
+                      <td><%= investment_declaration.comment %></td>
                       
                       <% @total = @total + investment_declaration.amount.to_f %>
                       <% @accepted_total = @accepted_total + investment_declaration.accepted_amt.to_f %>

@@ -1,7 +1,8 @@
 # require 'query_report/helper'
 class SalaryslipsController < ApplicationController
  # include QueryReport::Helper
-
+require 'numbers_in_words'
+require 'numbers_in_words/duck_punch'
   def salary_slip_report_form
     session[:active_tab] ="PayrollManagement"
     session[:active_tab1] ="SalaryProcess"
@@ -228,8 +229,8 @@ class SalaryslipsController < ApplicationController
         :dpi              => '300',
         :margin           => {:top    => 20, # default 10 (mm)
                       :bottom => 30,
-                      :left   => 10,
-                      :right  => 10},
+                      :left   => 20,
+                      :right  => 20},
               :show_as_html => params[:debug].present?
       end
     end
@@ -521,7 +522,7 @@ class SalaryslipsController < ApplicationController
             @total_actual = formula_item.sum(:actual_amount)
             @total = formula_item.sum(:calculated_amount)
             formula_item_actual_amount = @total_actual
-            formula_item_calculated_amount = (@total_actual / working_day.try(:day_in_month) * working_day.try(:calculated_payable_days))
+            formula_item_calculated_amount = @total
             deducted_actual_amount = (formula_item_actual_amount / 100 * @master_esic.percentage).ceil
             deducted_calculated_amount = (formula_item_calculated_amount / 100 * @master_esic.percentage).ceil
             @salary_component = SalaryComponent.find_by(name: "ESIC")
@@ -1145,7 +1146,7 @@ class SalaryslipsController < ApplicationController
             @total_actual = formula_item.sum(:actual_amount)
             @total = formula_item.sum(:calculated_amount)
             formula_item_actual_amount = @total_actual
-            formula_item_calculated_amount = (@total / working_day.try(:day_in_month) * working_day.try(:payable_day))
+            formula_item_calculated_amount = @total
             deducted_actual_amount = (formula_item_actual_amount / 100 * @master_esic.percentage).ceil
             deducted_calculated_amount = (formula_item_calculated_amount / 100 * @master_esic.percentage).ceil
             @salary_component = SalaryComponent.find_by(name: "ESIC")
@@ -1328,9 +1329,11 @@ class SalaryslipsController < ApplicationController
          # @salary_component=SalaryComponent.find_by(name: "Mobile Deduction")
           @salary_comp=SalaryComponent.find_by(name: "Other Deduction")
           @salary_compon=SalaryComponent.find_by(name: "Income Tax")
+           @salary_compon1=SalaryComponent.find_by(name: "GMC")
           @mobile_deduction = 0
           @income_tax_deduction = 0
           @other_deduction = 0
+           @gmk_deduction = 0
           @monthly_expences.try(:each) do |m|
           #  if m.expencess_type.name == @salary_component.name
            #   @mobile_deduction = @mobile_deduction + m.amount
@@ -1338,6 +1341,8 @@ class SalaryslipsController < ApplicationController
               @other_deduction = @other_deduction + m.amount
             elsif m.expencess_type.name == @salary_compon.name
               @income_tax_deduction = @income_tax_deduction + m.amount
+            elsif m.expencess_type.name == @salary_compon1.name
+              @gmk_deduction = @gmk_deduction + m.amount
             end
           end
            # if @salary_component.name
@@ -1348,6 +1353,10 @@ class SalaryslipsController < ApplicationController
             end
             if @salary_compon.name
               SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @income_tax_deduction, calculated_amount: @income_tax_deduction, is_deducted: true, other_component_name: @salary_compon.name,salary_component_id:  @salary_compon.id)
+            end
+
+            if @salary_compon1.name
+              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @gmk_deduction, calculated_amount: @gmk_deduction, is_deducted: true, other_component_name: @salary_compon1.name,salary_component_id:  @salary_compon1.id)
             end
      
         
@@ -1371,7 +1380,7 @@ class SalaryslipsController < ApplicationController
             formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
             @total = formula_item.sum(:calculated_amount)
             @total_actual = formula_item.sum(:actual_amount)
-            formula_item_calculated_amount = (@total / 100 * @esic_employer.percentage).ceil
+            formula_item_calculated_amount = (@total_actual / 100 * @esic_employer.percentage).ceil
             formula_item_actual_amount = (@total_actual / 100 * @esic_employer.percentage).ceil
 
             @e1=EmployerContribution.where(id: a.id).update_all(date: date,esic: formula_item_calculated_amount,actual_esic: formula_item_actual_amount)
@@ -2408,3 +2417,4 @@ end
     end
   end
 end
+

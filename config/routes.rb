@@ -959,6 +959,10 @@ end
   end
   resources :employee_attendances do
     collection do
+      post :fetch_attendance
+      post :calculate
+      get :fetch_attendance
+      get :calculate
       get :employee_not_found
       post :not_found
       post :department_wise_employee_list
@@ -3239,5 +3243,13 @@ end
     post 'user_auths/holiday_setup_manager' => 'user_auths#holiday_setup_manager', defaults:{format: 'json'}
     get 'user_auths/manager_wise_emp_list' => 'user_auths#manager_wise_emp_list', defaults:{format: 'json'}
     get 'user_auths/admin_wise_emp_list' => 'user_auths#admin_wise_emp_list', defaults:{format: 'json'}
+    get 'user_auths/manager_wise_att' => 'user_auths#manager_wise_att', defaults:{format: 'json'}
+    post 'user_auths/manager_attendance_list' => 'user_auths#manager_attendance_list', defaults:{format: 'json'}
+    get 'user_auths/admin_att' => 'user_auths#admin_att', defaults:{format: 'json'}
+    post 'user_auths/admin_attendance_list' => 'user_auths#admin_attendance_list', defaults:{format: 'json'}
+    get 'user_auths/yearly_company_holiday' => 'user_auths#yearly_company_holiday', defaults:{format: 'json'}
+    get 'user_auths/all_employee_details' => 'user_auths#all_employee_details', defaults:{format: 'json'}
+    get 'user_auths/all_emp_leave_details' => 'user_auths#all_emp_leave_details', defaults:{format: 'json'}
+    get 'user_auths/all_emp_od_details' => 'user_auths#all_emp_od_details', defaults:{format: 'json'}
   end
 end

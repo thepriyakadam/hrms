@@ -10,8 +10,6 @@ gem 'mysql2', '~> 0.3.18'
 # gem "rack-timeout", require:"rack/timeout/base"
 
 
-
-
 gem 'tiny_tds'
 gem 'activerecord-sqlserver-adapter'
 gem 'ruby-odbc'

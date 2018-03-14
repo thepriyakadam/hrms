@@ -7,8 +7,8 @@
   <Worksheet ss:Name="Sheet1">
     <Table>
       <Row>
-        <Cell ss:Index="1"><Data ss:Type="String">Employee Name</Data></Cell>
-        <Cell ss:Index="2"><Data ss:Type="String">Employee ID</Data></Cell>
+        <Cell ss:Index="1"><Data ss:Type="String">Sr.No.</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Employee Code</Data></Cell>
         <Cell ss:Index="3"><Data ss:Type="String">Relation</Data></Cell>
         <Cell ss:Index="4"><Data ss:Type="String">First Name</Data></Cell>
         <Cell ss:Index="5"><Data ss:Type="String">Middle Name</Data></Cell>
@@ -20,7 +20,7 @@
         <Cell ss:Index="11"><Data ss:Type="String">Current Address</Data></Cell>
         <Cell ss:Index="12"><Data ss:Type="String">Gender</Data></Cell>
         <Cell ss:Index="13"><Data ss:Type="String">Blood Group</Data></Cell>
-        <Cell ss:Index="14"><Data ss:Type="String">Aadhaar No</Data></Cell>
+        <Cell ss:Index="14"><Data ss:Type="String">Aadhaar Card No</Data></Cell>
         <Cell ss:Index="15"><Data ss:Type="String">PAN Card No</Data></Cell>
         <Cell ss:Index="16"><Data ss:Type="String">Marital Status</Data></Cell>
         <Cell ss:Index="17"><Data ss:Type="String">Medical Insurance</Data></Cell>
@@ -36,7 +36,7 @@
         <% i = 0 %>
          <% @families.each do |family| %>
         <Row>
-        <Cell ss:Index="1"><Data ss:Type="String"><%= full_name(family.employee)%></Data></Cell>
+        <Cell ss:Index="1"><Data ss:Type="String"><%= i = i + 1 %></Data></Cell>
         <Cell ss:Index="2"><Data ss:Type="String"><%= family.employee.try(:manual_employee_code) %></Data></Cell>
         <Cell ss:Index="3"><Data ss:Type="String"><%= family.relation_master.try(:name) %></Data></Cell>
         <Cell ss:Index="4"><Data ss:Type="String"><%= family.f_name %></Data></Cell>

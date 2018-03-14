@@ -1,8 +1,7 @@
 <div class="box box-default">
 <div class="box-header with-border">
 <h3 class="box-title">Import File</h3>
-<div class="box-body">
-<%= form_tag import_assigned_assets_path, multipart: true do %>
+<%= form_tag import_latemark_masters_path, multipart: true do %>
 <label> File </label>
   <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
   <br>

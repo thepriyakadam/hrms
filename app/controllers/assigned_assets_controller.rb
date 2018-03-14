@@ -94,19 +94,22 @@ class AssignedAssetsController < ApplicationController
     @assigned_asset = AssignedAsset.find(params[:format])
   end
 
-  def import_xl
+  def import_asset
     session[:active_tab] ="EmployeeManagement"
-    session[:active_tab1] ="Import" 
+    session[:active_tab1] ="Reports" 
+  end
+
+  def import_xl
   end
 
   def import
     file = params[:file]
     if file.nil?
       flash[:alert] = "Please Select File!"
-    redirect_to import_xl_assigned_assets_path
+    redirect_to import_asset_assigned_assets_path
     else
     AssignedAsset.import(params[:file])
-    redirect_to import_xl_assigned_assets_path, notice: "File imported."
+    redirect_to import_asset_assigned_assets_path, notice: "File imported."
     end
   end
 

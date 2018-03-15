@@ -11,6 +11,10 @@ Rails.application.routes.draw do
       get :latemark_report
       post :show_datewise_report
       get :datewise_report
+      get :import_xl
+      post :import
+      get :revert_latemark
+      post :revert_latemark_value
     end
   end
   resources :meeting_follow_ups do
@@ -1301,6 +1305,7 @@ end
       get :reviewer_evaluation
       get :import_reviewer_evaluation_xl
       post :import_reviewer
+      get :reviewer_comment_modal
     end
   end
   resources :goal_perspectives do
@@ -1591,6 +1596,7 @@ end
     get :import_xl
     post :import
     get :asset_modal
+    get :import_asset
     end
   end
   resources :asset_types do
@@ -1730,37 +1736,13 @@ end
     get 'advance_salaries/new'
     post 'advance_salaries/advance_salary_report'
 
-    get 'family_details/new'
-    post 'family_details/family_detail_report'
-
     get 'physical_details/new'
     post 'physical_details/physical_detail_report'
 
-    get 'award_details/new'
-    post 'award_details/award_detail_report'
-
-    get 'certification_details/new'
-    post 'certification_details/certification_detail_report'
-
-    get 'skillset_details/new'
-    post 'skillset_details/skillset_detail_report'
-
-    get 'experience_details/new'
-    post 'experience_details/experience_detail_report'
-
-    get 'qualification_details/new'
-    post 'qualification_details/qualification_detail_report'
-
-    get 'bank_details/new'
-    post 'bank_details/bank_detail_report'
-
-
     get 'joining_details/new'
-    post 'joining_details/joining_detail_report'
     get 'joining_details/collect_departments'
 
     get 'basic_details/new'
-    post 'basic_details/employee_basic_report'
     get 'basic_details/employee_basic_info'
     get 'basic_details/collect_departments'
     get 'basic_details/employee_list'
@@ -2744,6 +2726,8 @@ end
     collection do
       post :import
       get :import_xl
+      get :import_bank_detail
+      post :bank_detail_report
     end
   end
 
@@ -2818,6 +2802,8 @@ end
     collection do
       get :import_xl
       post :import
+      get :import_physical
+      post :physical_detail_report
        end
   end
   resources :joining_details do
@@ -2830,6 +2816,8 @@ end
       get :certificate_print
       get :joining_certificate
       get :offer_letter_prin
+      get :import_joining_detail
+      post :joining_detail_report
     end
   end
   resources :employee_grades do
@@ -2847,13 +2835,17 @@ end
       get :import_xl
       post :import
       get :award_modal
+      get :import_award
+      post :award_detail_report
     end
   end
   resources :skillsets  do
     collection do
       get :import_xl
       post :import
-       end
+      get :import_skillset
+      post :skillset_detail_report
+    end
   end
   resources :experiences  do
     collection do
@@ -2862,6 +2854,8 @@ end
       get :modal_experience
       post :update_experience
       get :exp_modal
+      get :import_experience
+      post :experience_detail_report
     end
   end
   resources :certifications do
@@ -2869,6 +2863,8 @@ end
       get :import_xl
       post :import
       get :certificate_modal
+      get :import_certification
+      post :certification_detail_report
     end
   end
   resources :qualifications do
@@ -2878,6 +2874,8 @@ end
       get :modal
       post :update_qualification
       get :qualification_modal 
+      get :import_qualification
+      post :qualification_detail_report
      end
    end
   resources :families do
@@ -2888,6 +2886,8 @@ end
       post :import
       get :collect_age
       get :family_modal
+      get :import_family
+      post :family_detail_report
     end
   end
   resources :employees do
@@ -3015,6 +3015,8 @@ end
       get :admin_asset_employee_list
       get :show_employee_dropdown
       get :collect_self_data
+      get :import_basic_detail
+      post :employee_basic_report
     end
     member do
       get :edit_manager

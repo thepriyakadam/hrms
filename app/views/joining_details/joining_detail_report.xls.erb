@@ -7,50 +7,53 @@
   <Worksheet ss:Name="Sheet1">
     <Table>
       <Row>
-        <Cell ss:Index="1"><Data ss:Type="String">Employee</Data></Cell>
-        <Cell ss:Index="2"><Data ss:Type="String">ID</Data></Cell>
-        <Cell ss:Index="3"><Data ss:Type="String">PF No.</Data></Cell>
-        <Cell ss:Index="4"><Data ss:Type="String">UAN No.</Data></Cell>
+        <Cell ss:Index="1"><Data ss:Type="String">Sr.No.</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Employee Code</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">UAN No.</Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">PF No.</Data></Cell>
         <Cell ss:Index="5"><Data ss:Type="String">Joining Date</Data></Cell>
         <Cell ss:Index="6"><Data ss:Type="String">Confirmation Date</Data></Cell>
         <Cell ss:Index="7"><Data ss:Type="String">Employee Grade</Data></Cell>
-        <Cell ss:Index="8"><Data ss:Type="String">Designation</Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String">Employee Designation</Data></Cell>
         <Cell ss:Index="9"><Data ss:Type="String">Employee Category</Data></Cell>
         <Cell ss:Index="10"><Data ss:Type="String">Probation Period</Data></Cell>
         <Cell ss:Index="11"><Data ss:Type="String">Notice Period</Data></Cell>
         <Cell ss:Index="12"><Data ss:Type="String">Notice Period After Probation</Data></Cell>
-        <Cell ss:Index="13"><Data ss:Type="String">Passport</Data></Cell>
+        <Cell ss:Index="13"><Data ss:Type="String">Have Passport</Data></Cell>
         <Cell ss:Index="14"><Data ss:Type="String">Passport No.</Data></Cell>
         <Cell ss:Index="15"><Data ss:Type="String">Passport Issue Date</Data></Cell>
         <Cell ss:Index="16"><Data ss:Type="String">Passport Expiry Date</Data></Cell>
         <Cell ss:Index="17"><Data ss:Type="String">Leaving Date</Data></Cell>
         <Cell ss:Index="18"><Data ss:Type="String">Retirement Date</Data></Cell>
-        <Cell ss:Index="19"><Data ss:Type="String">C.off</Data></Cell>
+        <Cell ss:Index="19"><Data ss:Type="String">Compensatory Off</Data></Cell>
         <Cell ss:Index="20"><Data ss:Type="String">Payment Mode</Data></Cell>
         <Cell ss:Index="21"><Data ss:Type="String">Basis Of Time</Data></Cell>
-        <Cell ss:Index="22"><Data ss:Type="String">Is Employeer PF</Data></Cell>
+        <Cell ss:Index="22"><Data ss:Type="String">Is Employer PF</Data></Cell>
         <Cell ss:Index="23"><Data ss:Type="String">Employee PF Option</Data></Cell>
         <Cell ss:Index="24"><Data ss:Type="String">PF Max. Amount</Data></Cell> 
         <Cell ss:Index="25"><Data ss:Type="String">PF No.</Data></Cell>
-        <Cell ss:Index="26"><Data ss:Type="String">Is Employeer ESIC</Data></Cell>
+        <Cell ss:Index="26"><Data ss:Type="String">Is Employer ESIC</Data></Cell>
         <Cell ss:Index="27"><Data ss:Type="String">ESIC Option</Data></Cell>
         <Cell ss:Index="28"><Data ss:Type="String">ESIC No.</Data></Cell>
-        <Cell ss:Index="29"><Data ss:Type="String">Retension</Data></Cell>
+        <Cell ss:Index="29"><Data ss:Type="String">Retention</Data></Cell>
         <Cell ss:Index="30"><Data ss:Type="String">Insurance</Data></Cell>
         <Cell ss:Index="31"><Data ss:Type="String">Family Insurance</Data></Cell>
         <Cell ss:Index="32"><Data ss:Type="String">Bonus</Data></Cell>
         <Cell ss:Index="33"><Data ss:Type="String">OT Option</Data></Cell>
         <Cell ss:Index="34"><Data ss:Type="String">OT Rate</Data></Cell>
+        <Cell ss:Index="35"><Data ss:Type="String">Cost Center</Data></Cell>
+        <Cell ss:Index="36"><Data ss:Type="String">Welfare</Data></Cell>
+        <Cell ss:Index="37"><Data ss:Type="String">Contact Library</Data></Cell>
 
       </Row>
 
       <% i = 0 %>
       <% @joining_details.each do |joining_detail| %>
       <Row>
-   <Cell ss:Index="1"><Data ss:Type="String"><%= full_name(joining_detail.employee) %></Data></Cell> 
+   <Cell ss:Index="1"><Data ss:Type="String"><%= i = i + 1 %></Data></Cell> 
         <Cell ss:Index="2"><Data ss:Type="String"><%= joining_detail.employee.try(:manual_employee_code) %></Data></Cell>
-        <Cell ss:Index="3"><Data ss:Type="String"><%= joining_detail.try(:employee_pf_no) %></Data></Cell>
-        <Cell ss:Index="4"><Data ss:Type="String"><%= joining_detail.try(:employee_uan_no) %></Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String"><%= joining_detail.try(:employee_uan_no) %></Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String"><%= joining_detail.try(:employee_pf_no) %></Data></Cell>
         <Cell ss:Index="5"><Data ss:Type="String"><%= joining_detail.try(:joining_date) %></Data></Cell>
         <Cell ss:Index="6"><Data ss:Type="String"><%= joining_detail.try(:confirmation_date) %></Data></Cell>
         <Cell ss:Index="7"><Data ss:Type="String"><%= joining_detail.try(:employee_grade).try(:name) %></Data></Cell>
@@ -81,6 +84,9 @@
         <Cell ss:Index="32"><Data ss:Type="String"><%= joining_detail.try(:is_bonus) ? 'Yes' : 'No' %></Data></Cell>
         <Cell ss:Index="33"><Data ss:Type="String"><%= joining_detail.try(:ot_option) ? 'Yes' : 'No' %></Data></Cell>
         <Cell ss:Index="34"><Data ss:Type="String"><%= joining_detail.try(:ot_rate)%></Data></Cell>
+        <Cell ss:Index="35"><Data ss:Type="String"><%= joining_detail.try(:cost_center).try(:name) %></Data></Cell>
+        <Cell ss:Index="36"><Data ss:Type="String"><%= joining_detail.try(:welfare) %></Data></Cell>
+        <Cell ss:Index="37"><Data ss:Type="String"><%= joining_detail.try(:contact_library) %></Data></Cell>
 
 
       </Row><!-- Row -->

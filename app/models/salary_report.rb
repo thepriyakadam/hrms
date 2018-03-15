@@ -154,7 +154,7 @@ class SalaryReport
     sr.absent_day = wd.absent_day
     sr.holiday = wd.holiday_in_month.to_i
     sr.weekoff = wd.week_off_day
-    sr.gatepass = wd.gatepass
+    # sr.gatepass = wd.gatepass
     sr
   end
 

@@ -281,14 +281,14 @@ require 'numbers_in_words/duck_punch'
       format.pdf do
         render pdf: 'print_salary_slip_rg',
               layout: 'pdf.html',
-              # :orientation      => 'Landscape', # default , Landscape
+               :orientation      => 'Landscape', # default , Landscape
               # :page_height      => 1000,
               # :dpi              => '300',
               template: 'salaryslips/print_salary_slip_rg.pdf.erb',
                :page_height      => 1000,
         :dpi              => '300',
-        :margin           => {:top    => 20, # default 10 (mm)
-                      :bottom => 30,
+        :margin           => {:top    => 10, # default 10 (mm)
+                      :bottom => 10,
                       :left   => 10,
                       :right  => 10},
               :show_as_html => params[:debug].present?

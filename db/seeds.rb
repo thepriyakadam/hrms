@@ -36,19 +36,37 @@ require 'roo'
 #   end
 # end
 
-ex = Roo::Excel.new("#{Rails.root}/public/2.xls")
-# ex = Roo::Excel.new("#{Rails.root}/public/Employee Wise_Service Master.xls")
+# ex = Roo::Excel.new("#{Rails.root}/public/2.xls")
+# # ex = Roo::Excel.new("#{Rails.root}/public/Employee Wise_Service Master.xls")
+# ex.default_sheet = ex.sheets[0] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(107) do |line| # siya Feb 2016
+#  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#   @installment = Instalment.find_by_id(ex.cell(line,'A').to_i)
+#  puts "#{i} Record inserting.----------------------------"
+
+#  Instalment.where(id: @installment).update_all(instalment_date: (ex.cell(line,'C')))
+#  # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
+#  puts "#{i} Record inserted.-----------------------------------------------"
+#  i += 1
+#  end
+#  end
+
+
+ex = Roo::Excel.new("#{Rails.root}/public/sparkline jan.xls")
 ex.default_sheet = ex.sheets[0] #siya feb
 i = 1
 ActiveRecord::Base.transaction do
-2.upto(107) do |line| # siya Feb 2016
- puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-  @installment = Instalment.find_by_id(ex.cell(line,'A').to_i)
+2.upto(132) do |line| # siya Feb 2016
+ puts "Starting Record
+{ex.cell(line,'B')}---------------------------------------"
+  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
  puts "#{i} Record inserting.----------------------------"
-
- Instalment.where(id: @installment).update_all(instalment_date: (ex.cell(line,'C')))
- # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
- puts "#{i} Record inserted.-----------------------------------------------"
+ Workingday.where(employee_id: @employee).update_all(payable_day: (ex.cell(line,'C')))
+ puts "#{i} Record inserted.---------------------"
  i += 1
  end
  end
+
+

@@ -907,6 +907,7 @@ end
     department = params[:employee][:department_id]
     from = @from.to_date
     to = @to.to_date
+    @day = from.end_of_month.day
     payroll_period = PayrollPeriod.where(status: true).take
 
     if from == payroll_period.from.to_date && to == payroll_period.to.to_date
@@ -1079,7 +1080,7 @@ end
         end
       end
     else
-      flash[:alert] = "Please select correct date (i.e. 26 to 25)"
+      flash[:alert] = "Please select date within payroll period"
       redirect_to datewise_attendance_employee_attendances_path
     end
   end
@@ -2912,6 +2913,21 @@ end
     elsif params[:onduty]
       @name = params[:onduty]
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(on_duty_request_id: nil)
+    elsif params[:latemark]
+      @name = params[:latemark]
+        latemark_master = LatemarkMaster.last
+        latemark_master_time = latemark_master.company_time
+        @company_time = latemark_master_time.strftime("%I:%M")
+        latemark_master_late_time = latemark_master.late_limit
+        @late_limit = latemark_master_late_time.strftime("%I:%M")
+        @employee_attendances = []
+        employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,late_mark: nil).where.not(in_time: nil)
+        @time = 0 
+        employee_attendances.each do |att|
+          if att.in_time.strftime("%I:%M") > @company_time && att.in_time.strftime("%I:%M") < @late_limit
+            @employee_attendances << att
+          end
+        end
     else
       @name = params[:leave]
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
@@ -2935,6 +2951,20 @@ end
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(on_duty_request_id: nil)
     elsif @name == "Leave"
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
+    elsif @name == "Latemark"
+      latemark_master = LatemarkMaster.last
+        latemark_master_time = latemark_master.company_time
+        @company_time = latemark_master_time.strftime("%I:%M")
+        latemark_master_late_time = latemark_master.late_limit
+        @late_limit = latemark_master_late_time.strftime("%I:%M")
+        @emp_att = []
+        employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,late_mark: nil).where.not(in_time: nil)
+        @time = 0 
+        employee_attendances.each do |att|
+          if att.in_time.strftime("%I:%M") > @company_time && att.in_time.strftime("%I:%M") < @late_limit
+            @employee_attendances << att
+          end
+        end
     else
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
     end

@@ -57,6 +57,20 @@ class LatemarkMastersController < ApplicationController
     session[:active_tab1] ="latemark"
   end
 
+  def import_xl
+  end
+
+  def import
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+    redirect_to latemark_calculation_latemark_masters_path
+    else
+    LatemarkMaster.import(params[:file])
+    redirect_to latemark_calculation_latemark_masters_path, notice: "File imported."
+    end
+  end
+
   def show_employee_list
     @from_date = params[:latemark_master][:from_date]
     @to_date = params[:latemark_master][:to_date]
@@ -75,6 +89,19 @@ class LatemarkMastersController < ApplicationController
         @emp_att << att
       end
     end
+
+    # respond_to do |f|
+    #   f.js
+    #   f.xls {render template: 'latemark_masters/latemark_report.xls.erb'}
+    #   f.html
+    #   f.pdf do
+    #     render pdf: 'employee_attendance',
+    #     layout: 'pdf.html',
+    #     orientation: 'Landscape',
+    #     template: 'latemark_masters/latemark_report.pdf.erb',
+    #     show_as_html: params[:debug].present?
+    #   end
+    # end
   end
   
   # def calculate_latemark
@@ -121,11 +148,11 @@ class LatemarkMastersController < ApplicationController
         amount = total_count.to_f * company_amount.to_f
         LatemarkDeduction.create(employee_id: lt.employee_id,latemark_day: lt.latemark_date,
           latemark_count: @employee_count,latemark_amount: amount)
-        @latemark_total = LatemarkTotal.find_by(id: lt.id).update(confirm: true)
+        @latemark_total = LatemarkTotal.find_by(id: lt.id).update(confirm: "confirm")
       else
         LatemarkDeduction.create(employee_id: lt.employee_id,latemark_day: lt.latemark_date,
           latemark_count: @employee_count,latemark_amount: 0)
-        @latemark_total = LatemarkTotal.find_by(id: lt.id).update(confirm: true)
+        @latemark_total = LatemarkTotal.find_by(id: lt.id).update(confirm: "confirm")
       end
     end
     flash[:notice] = "Created successfully"
@@ -186,6 +213,30 @@ class LatemarkMastersController < ApplicationController
     end
   end
 
+  def revert_latemark
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="latemark"
+  end
+
+  def revert_latemark_value
+    from = params[:latemark_master][:from_date]
+    to = params[:latemark_master][:to_date]
+    @from = from.to_date
+    @to = to.to_date
+    @latemark_deduction = LatemarkDeduction.where(latemark_day: @from..@to).where.not(paid: true)
+    @latemark_deduction.each do |l|
+      LatemarkTotal.where(latemark_date: l.latemark_day,employee_id: l.employee_id).destroy_all
+      EmployeeAttendance.where(day: l.latemark_day).update_all(late_mark: nil)
+    end
+
+    # @employee_attendances = EmployeeAttendance.where(day: @from..@to).where.not(late_mark: nil) 
+    # @employee_attendances.each do |att|
+    #   att.update(late_mark: nil)
+    # end
+    @latemark_deduction.destroy_all
+    flash[:notice] = "Latemark reverted successfully!!"
+    redirect_to revert_latemark_latemark_masters_path
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

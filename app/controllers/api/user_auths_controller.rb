@@ -1727,7 +1727,6 @@ class Api::UserAuthsController < ApplicationController
   end
 
   def employee_c_off_request
-
     status  = ''
     @employee_id = params[:employee_id]
     @c_off_date = params[:selected_date]
@@ -1739,17 +1738,13 @@ class Api::UserAuthsController < ApplicationController
     # end
     @leave_c_off = LeaveCOff.new
     @joining_detail = JoiningDetail.find_by(employee_id: @employee_id)
-
-
     if @joining_detail.c_off == true
       if @leave_c_off.is_self_present(@employee_id, @c_off_date)
         status = "Your COff already set for that day"
       else
         @leave_c_off = LeaveCOff.new(employee_id: @employee_id, c_off_date: @c_off_date, comment: @comment)
         @leave_c_offs = LeaveCOff.all
-        
         @emp_attendance = EmployeeAttendance.where(employee_id: @employee_id,day: @c_off_date.to_date).take
-        
           if leav_category.nil?
           else
             @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
@@ -1769,7 +1764,7 @@ class Api::UserAuthsController < ApplicationController
             end#c_off.nil?
             #byebug
 
-            if @emp_attendance.holiday_id.present? || @emp_attendance.employee_week_off_id.present?
+            if @emp_attendance.try(:holiday_id).try(:present?) || @emp_attendance.try(:employee_week_off_id).try(:present?)
               if @emp_attendance.on_duty_request_id.present?
                 @on_duty_request = OnDutyRequest.find_by(id: @emp_attendance.on_duty_request_id)
                 if @on_duty_request.leave_type == "Half Day"
@@ -1812,7 +1807,11 @@ class Api::UserAuthsController < ApplicationController
     else
       status = "You are not applicable for compansatory off!"
     end
-    # redirect_to leave_c_off_self_services_path
+    if status.empty?
+      render :status=>200, :json=>{:status=> " Successfully "}
+    else
+      render :status=>200, :json=>{:status=> status}
+    end
   end
 
 end

@@ -106,23 +106,51 @@ class JoiningDetailsController < ApplicationController
     end
  end
 
-  def import_xl
+ def import_joining_detail
     session[:active_tab] ="EmployeeManagement"
-    session[:active_tab1] ="Import"  
+    session[:active_tab1] ="Reports"  
+ end
+
+  def joining_detail_report
+    @location = params[:salary][:company_location_id]
+    if current_user.class == Group
+      if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+        @joining_details = JoiningDetail.all
+      else
+        @employees = Employee.where(company_location_id: @location.to_i)
+        @joining_details = JoiningDetail.where(employee_id: @employees)
+      end
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+          @joining_details = JoiningDetail.all
+        else
+          @employees = Employee.where(company_location_id: @location.to_i)
+          @joining_details = JoiningDetail.where(employee_id: @employees)
+        end
+      elsif current_user.role.name == 'Branch'
+        params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @joining_details = JoiningDetail.where(employee_id: @employees)
+      elsif current_user.role.name == 'HOD'
+        @joining_details = JoiningDetail.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Superviser'
+      elsif current_user.role.name == 'Employee'
+      end
+       end
+   end
+
+  def import_xl
   end
 
- 
   def import
-    # byebug
-    # JoiningDetail.import(params[:file])
-    # redirect_to root_url, notice: "File imported."
     file = params[:file]
     if file.nil?
       flash[:alert] = "Please Select File!"
-    redirect_to import_xl_joining_details_path
+    redirect_to import_joining_detail_joining_details_path
     else
     JoiningDetail.import(params[:file])
-    redirect_to import_xl_joining_details_path, notice: "File imported."
+    redirect_to import_joining_detail_joining_details_path, notice: "File imported."
     end
   end
 

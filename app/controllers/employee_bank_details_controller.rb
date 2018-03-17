@@ -56,9 +56,43 @@ class EmployeeBankDetailsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to employee_bank_details_url, notice: 'Employee bank detail was successfully destroyed.' }
       format.json { head :no_content }
+    end
   end
-end
   
+  def import_bank_detail
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Reports"
+  end
+  
+  def bank_detail_report
+    @location = params[:salary][:company_location_id]
+    if current_user.class == Group
+      if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+        @employee_bank_details = EmployeeBankDetail.all
+      else
+        @employees = Employee.where(company_location_id: @location.to_i)
+        @employee_bank_details = EmployeeBankDetail.where(employee_id: @employees)
+      end
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+          @employee_bank_details = EmployeeBankDetail.all
+        else
+          @employees = Employee.where(company_location_id: @location.to_i)
+          @employee_bank_details = EmployeeBankDetail.where(employee_id: @employees)
+        end
+      elsif current_user.role.name == 'Branch'
+        params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @employee_bank_details = EmployeeBankDetail.where(employee_id: @employees)
+      elsif current_user.role.name == 'HOD'
+        @employee_bank_details = EmployeeBankDetail.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Superviser'
+      elsif current_user.role.name == 'Employee'
+      end
+    end
+  end
+
   def import_xl
     session[:active_tab] ="EmployeeManagement"
     session[:active_tab1] ="Import" 
@@ -70,10 +104,10 @@ end
     file = params[:file]
     if file.nil?
       flash[:alert] = "Please Select File!"
-    redirect_to import_xl_employee_bank_details_path
+    redirect_to import_bank_detail_employee_bank_details_path
     else
     EmployeeBankDetail.import(params[:file])
-    redirect_to import_xl_employee_bank_details_path, notice: "File imported."
+    redirect_to import_bank_detail_employee_bank_details_path, notice: "File imported."
     end
   end
 

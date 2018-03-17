@@ -3262,5 +3262,8 @@ end
     get 'user_auths/all_employee_details' => 'user_auths#all_employee_details', defaults:{format: 'json'}
     get 'user_auths/all_emp_leave_details' => 'user_auths#all_emp_leave_details', defaults:{format: 'json'}
     get 'user_auths/all_emp_od_details' => 'user_auths#all_emp_od_details', defaults:{format: 'json'}
+    get 'user_auths/all_com_off_request_list' => 'user_auths#all_com_off_request_list', defaults:{format: 'json'}
+    post 'user_auths/employee_c_off_request' => 'user_auths#employee_c_off_request', defaults:{format: 'json'}
+        
   end
 end

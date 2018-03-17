@@ -1541,7 +1541,6 @@ class Api::UserAuthsController < ApplicationController
           { :id => emp_att.id, :day => emp_att.day, :in_time => emp_att.try(:in_time).strftime("%I:%M %p"), :out_time => emp_att.try(:out_time), :working_hrs => emp_att.working_hrs, :present => emp_att.present, :comment => emp_att.comment }
         else
           { :id => emp_att.id, :day => emp_att.day, :in_time => emp_att.try(:in_time), :out_time => emp_att.try(:out_time), :working_hrs => emp_att.working_hrs, :present => emp_att.present, :comment => emp_att.comment }
-
         end
         } : []
     else
@@ -1719,6 +1718,101 @@ class Api::UserAuthsController < ApplicationController
     od_id = params[:od_id]
     on_duty_requests = OnDutyRequest.where(id: od_id).order("id DESC")
     render :json => on_duty_requests.present? ? on_duty_requests.collect{|odr| {:id => odr.id, :manual_employee_code => odr.try(:employee).try(:manual_employee_code), :employee_id => odr.employee_id, :leave_type => odr.leave_type, :start_date => odr.start_date, :end_date => odr.end_date, :no_of_day => odr.no_of_day, :reason => odr.reason, :first_half => odr.first_half, :last_half => odr.last_half,:present_status => odr.present_status,:first_reporter_id => odr.first_reporter_id, :second_reporter_id => odr.second_reporter_id, :current_status => odr.current_status,:is_pending => odr.is_pending,:is_cancelled => odr.is_cancelled,:is_first_approved => odr.is_first_approved,:is_second_approved => odr.is_second_approved,:is_first_rejected => odr.is_first_rejected,:is_second_rejected => odr.is_second_rejected, :status => odr.od_status_records}} : []
+  end
+
+  def all_com_off_request_list
+    employee_id = params[:employee_id]
+    @leave_c_offs = LeaveCOff.where(employee_id: employee_id).order("id ASC")
+    render :json => @leave_c_offs.present? ? @leave_c_offs.collect{|coff| {:id => coff.try(:id), :employee_id => coff.try(:employee_id), :c_off_date => coff.try(:c_off_date), :c_off_type => coff.try(:c_off_type),:c_off_expire_day => coff.try(:c_off_expire_day),:expiry_status => coff.try(:expiry_status),:is_taken => coff.try(:is_taken),:expiry_date => coff.try(:expiry_date),:leave_count => coff.try(:leave_count),:is_expire => coff.try(:is_expire),:created_at => coff.try(:created_at),:status => coff.try(:status),:current_status => coff.try(:current_status),:taken_date => coff.try(:taken_date), :comment => coff.try(:comment) }} : []
+  end
+
+  def employee_c_off_request
+
+    status  = ''
+    @employee_id = params[:employee_id]
+    @c_off_date = params[:selected_date]
+    @c_off_type = "Full Day"
+    @comment = params[:comment]
+    leav_category = LeavCategory.find_by(code: 'C.Off')
+    # if @c_off_type == nil || @c_off_type == ""
+    #   @c_off_type = "Full Day"
+    # end
+    @leave_c_off = LeaveCOff.new
+    @joining_detail = JoiningDetail.find_by(employee_id: @employee_id)
+
+
+    if @joining_detail.c_off == true
+      if @leave_c_off.is_self_present(@employee_id, @c_off_date)
+        status = "Your COff already set for that day"
+      else
+        @leave_c_off = LeaveCOff.new(employee_id: @employee_id, c_off_date: @c_off_date, comment: @comment)
+        @leave_c_offs = LeaveCOff.all
+        
+        @emp_attendance = EmployeeAttendance.where(employee_id: @employee_id,day: @c_off_date.to_date).take
+        
+          if leav_category.nil?
+          else
+            @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
+            if @c_off.nil?
+            else
+              @c_off.each do |l|
+                if l.try(:expiry_date).to_date < Date.today
+                  @employee_leave_balance = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take  
+                  @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - l.leave_count
+                  LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
+                  @employee_leave_balance.save
+                else
+                  @employee_leave_balance = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take
+                  @employee_leave_balance.save
+                end
+              end#do
+            end#c_off.nil?
+            #byebug
+
+            if @emp_attendance.holiday_id.present? || @emp_attendance.employee_week_off_id.present?
+              if @emp_attendance.on_duty_request_id.present?
+                @on_duty_request = OnDutyRequest.find_by(id: @emp_attendance.on_duty_request_id)
+                if @on_duty_request.leave_type == "Half Day"
+                  @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Half Day",c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending",comment: @comment)
+                  StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
+                  # flash[:notice] = "Your COff Created Successfully!"
+                  status = "Your COff already set for that day"
+                  COffMailer.pending(@leave_c_off).deliver_now
+                else#@on_duty_request.leave_type == "Full Day"
+                  @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Full Day",c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending",comment: @comment)
+                  StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
+                  status = "Your COff Created Successfully!"
+                  COffMailer.pending(@leave_c_off).deliver_now
+                end#@on_duty_request.leave_type == "Half Day"
+              else#emp_attendance.on_duty_request_id != nil
+                if @emp_attendance.working_hrs.to_s < "07:00"
+                  if @emp_attendance.working_hrs.to_s < "04:00"
+                    status = "Working hours less then 4"
+                  else#working_hrs.to_s < "4:00"
+                    @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Half Day",
+                      c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending",comment: @comment)
+                    StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
+                    status = "Your COff Created Successfully!"
+                    COffMailer.pending(@leave_c_off).deliver_now
+                  end#working_hrs.to_s < "4:00"
+                else#@emp_attendance.working_hrs.to_s < "7:00"
+                  @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Full Day",c_off_expire_day: 0,
+                    expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending",comment: @comment)
+                  StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
+                  status = "Your COff Created Successfully!"
+                  COffMailer.pending(@leave_c_off).deliver_now
+                end#@emp_attendance.working_hrs.to_s < "7:00"
+              end#@emp_attendance.on_duty_request_id != nil
+            else#@emp_attendance.holiday_id != nil
+              status = "Holiday Or Week Off not available !"
+            end#@emp_attendance.holiday_id != nil
+
+          end#leav_category.nil?
+      end#@leave_c_off.is_self_present(@employee_id,@c_off_date)
+    else
+      status = "You are not applicable for compansatory off!"
+    end
+    # redirect_to leave_c_off_self_services_path
   end
 
 end

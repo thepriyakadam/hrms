@@ -15,6 +15,9 @@ Rails.application.routes.draw do
       post :import
       get :revert_latemark
       post :revert_latemark_value
+      get :deduction_report
+      post :show_deduction_report
+      get :show_deduction_report
     end
   end
   resources :meeting_follow_ups do
@@ -1593,6 +1596,7 @@ end
     post :import
     get :asset_modal
     get :import_asset
+    post :assigned_asset_report
     end
   end
   resources :asset_types do

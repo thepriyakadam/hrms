@@ -12,6 +12,7 @@
           <th><input type="checkbox" id="selectAll" value="selectAll"></th>
           <th>Base</th>
           <th>Period</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -20,6 +21,11 @@
             <td><%= check_box_tag "goal_bunch_ids[]", g.id %></td>
             <td><%= g.period.try(:name) %></td>
             <td> From: <%= g.period.try(:from) %> To: <%= g.period.try(:to) %> </td>
+            <td>
+              <% a = g.id %>
+              <%= link_to 'PDF', detail_employee_wise_goal_ratings_path(format: 'pdf',employee_id: @employee.id,goal_bunch_ids: [a]),class: "btn btn-sm btn-info fa fa-print", :target => "_blank" %>
+              <%= link_to " Excel ",detail_employee_wise_goal_ratings_path(format: "xls",employee_id: @employee.id,goal_bunch_ids: [a]), class: "btn btn-sm btn-primary fa fa-print", :target => "_blank" %>
+            </td>
            <!--  <= f.hidden_field :employee_id, value: g.employee_id  %> -->
           </tr>
         <% end %>

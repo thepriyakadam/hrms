@@ -103,21 +103,6 @@ class LatemarkMastersController < ApplicationController
     #   end
     # end
   end
-  
-  # def calculate_latemark
-  #   @employee_attendance_ids = params[:employee_attendance_ids]
-  #   if @employee_attendance_ids.nil?
-  #     flash[:alert] = "Please Select the Checkbox"
-  #   else
-  #     @employee_attendance_ids.each do |eid|
-  #       @employee_attendance = EmployeeAttendance.find_by_id(eid)
-  #       LatemarkTotal.create(employee_id: @employee_attendance.employee_id,latemark_date: @employee_attendance.day,in_time: @employee_attendance.in_time)
-  #       @employee_attendance.update(late_mark: 0)
-  #       flash[:notice] = "Created successfully"
-  #     end
-  #   end
-  #     redirect_to latemark_calculation_latemark_masters_path
-  # end
 
   def latemark_total
     @from_date = params[:from_date]
@@ -208,6 +193,32 @@ class LatemarkMastersController < ApplicationController
         layout: 'pdf.html',
         orientation: 'Landscape',
         template: 'latemark_masters/latemark_report.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
+    end
+  end
+
+  def deduction_report
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="latemark"
+  end
+
+  def show_deduction_report
+    from_date = params[:latemark_master][:from_date]
+    @to_date = params[:latemark_master][:to_date]
+    @from = from_date.to_date
+    @to = @to_date.to_date
+    @latemark_deductions = LatemarkDeduction.where(latemark_day: @from..@to,paid: false)
+
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'latemark_masters/deduction_report.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'employee_attendance',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'latemark_masters/deduction_report.pdf.erb',
         show_as_html: params[:debug].present?
       end
     end

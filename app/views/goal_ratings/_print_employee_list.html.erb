@@ -15,6 +15,7 @@
           <th>Appraiser Rating</th>
           <th>Reviewer Rating</th>
           <th>Final Rating</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -29,6 +30,11 @@
         <td><%= e.appraiser_rating %></td>
         <td><%= e.reviewer_rating.try(:value) %></td>
         <td><%= e.final_rating_id %></td>
+        <td>
+        <% a = e.id %>
+          <%= link_to 'PDF', print_goal_wise_goal_ratings_path(format: "pdf",goal_bunch_ids: [a],period_id: @period.id ), method: :post,class: "btn btn-sm btn-info", :target => "_blank" %>
+          <%= link_to "Excel ",detail_goal_wise_goal_ratings_path(format: "xls",goal_bunch_ids: [a],period_id: @period.id), method: :post,class: "btn btn-sm btn-primary", :target => "_blank" %>
+        </td>
         </tr>
         <% end %>
       </tbody>

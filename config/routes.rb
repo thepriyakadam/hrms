@@ -3270,6 +3270,10 @@ end
     get 'user_auths/all_emp_od_details' => 'user_auths#all_emp_od_details', defaults:{format: 'json'}
     get 'user_auths/all_com_off_request_list' => 'user_auths#all_com_off_request_list', defaults:{format: 'json'}
     post 'user_auths/employee_c_off_request' => 'user_auths#employee_c_off_request', defaults:{format: 'json'}
-        
+    get 'user_auths/travel_option_list' => 'user_auths#travel_option_list', defaults:{format: 'json'}
+    get 'user_auths/travel_mode_list' => 'user_auths#travel_mode_list', defaults:{format: 'json'}
+    post 'user_auths/employee_travel_request' => 'user_auths#employee_travel_request', defaults:{format: 'json'}
+    get 'user_auths/travel_approval_list' => 'user_auths#travel_approval_list', defaults:{format: 'json'}
+    get 'user_auths/cancel_travel_request' => 'user_auths#cancel_travel_request', defaults:{format: 'json'}
   end
 end

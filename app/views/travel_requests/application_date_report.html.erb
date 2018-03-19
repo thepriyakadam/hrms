@@ -29,24 +29,26 @@
          </div>
         </div>
 
-       <div class="col-sm-2">
-            <div class="form-group required">
+       <div class="col-sm-3">
+            <div class="field">
             <div class="input-group">
-              <%= f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'travel_request'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
+              <%= f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={company_id:$(this).val(), form : 'travel_request'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
             </div>
             </div>
       </div>
      
-      <div class="col-sm-2">
-            <div class="form-group required">
+      <div class="col-sm-3">
+            <div class="field">
               <div id="company_location_with_label">
                 <%= render 'employees/company_location_dropdown_with_label' %> 
             </div> 
             </div>
           </div>
+        </div>
+     <div class="row">
 
-       <div class="col-sm-2">
-            <div class="form-group required">
+       <div class="col-sm-3">
+            <div class="field">
             <div class="input-group">
               <div id="department">
                 <%= render 'employees/department_dropdown' %> 
@@ -54,9 +56,8 @@
             </div>
             </div>
         </div>
-        </div>
-     <div class="row">
-       <div class="col-sm-2">
+
+       <div class="col-sm-3">
        <label></label>
           <div class="actions">
             <%= f.submit "Display Report", class: "btn btn-sm btn-primary",id: "buttonCtc" %>

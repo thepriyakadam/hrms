@@ -167,7 +167,7 @@
                 <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
                 <td><%= goal_rating.appraiser_comment %></td>
                 <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
-                <td><%= text_field_tag 'reviewer_comments[]',"",class: "form-control",autofocus: true %></td>
+                <td><%= link_to 'Comment', reviewer_comment_modal_goal_bunches_path(goal_rating_id: goal_rating.id,emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id,period_id: @period.id),class: 'btn btn-xs btn-warning',remote: true %></td>
                 <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
               </tr>
             <% end %>
@@ -202,26 +202,29 @@
                 <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
                 <td><%= goal_rating.appraiser_comment %></td>
                 <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
-                <td><%= text_field_tag 'reviewer_comments[]',"",class: "form-control" %></td>
+                <td><%= link_to 'Comment', reviewer_comment_modal_goal_bunches_path(goal_rating_id: goal_rating.id,emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id,period_id: @period.id),class: 'btn btn-xs btn-warning',remote: true %></td>
                 <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
               </tr>
             <% end %>
           </tbody>
         </table>
 
-        <% unless @goal_ratings.empty? && @goal_attribute_ratings.empty? %>
+      <!--   <#% unless @goal_ratings.empty? && @goal_attribute_ratings.empty? %>
           <div class="row">
             <div class="col-sm-3">
               <div class="actions">
-                <%= f.submit "Create Comment", class: 'btn btn-primary btn-sm' %>
-                <!-- <= link_to 'Back',period_list_reviewer_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %> -->
+                <#%= f.submit "Create Comment", class: 'btn btn-primary btn-sm' %>
+               
               </div>
             </div>
           </div>
-        <% end %>
+        <#% end %> -->
+        
       <% end %> <!-- review_commentnil -->
   <% end %>
 <hr>
+
+    <div id="reviewer_comment_form" class="modal fade"></div>
 
   <%= bootstrap_form_for GoalBunch.new,url:{action:'reviewer_comment_confirm',id: @employee.id} do |f| %>
     <table class="table table-bordered table-hover table-condensed">

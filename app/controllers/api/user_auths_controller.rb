@@ -1727,7 +1727,6 @@ class Api::UserAuthsController < ApplicationController
   end
 
   def employee_c_off_request
-
     status  = ''
     @employee_id = params[:employee_id]
     @c_off_date = params[:selected_date]
@@ -1739,17 +1738,13 @@ class Api::UserAuthsController < ApplicationController
     # end
     @leave_c_off = LeaveCOff.new
     @joining_detail = JoiningDetail.find_by(employee_id: @employee_id)
-
-
     if @joining_detail.c_off == true
       if @leave_c_off.is_self_present(@employee_id, @c_off_date)
         status = "Your COff already set for that day"
       else
         @leave_c_off = LeaveCOff.new(employee_id: @employee_id, c_off_date: @c_off_date, comment: @comment)
         @leave_c_offs = LeaveCOff.all
-        
         @emp_attendance = EmployeeAttendance.where(employee_id: @employee_id,day: @c_off_date.to_date).take
-        
           if leav_category.nil?
           else
             @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
@@ -1769,7 +1764,7 @@ class Api::UserAuthsController < ApplicationController
             end#c_off.nil?
             #byebug
 
-            if @emp_attendance.holiday_id.present? || @emp_attendance.employee_week_off_id.present?
+            if @emp_attendance.try(:holiday_id).try(:present?) || @emp_attendance.try(:employee_week_off_id).try(:present?)
               if @emp_attendance.on_duty_request_id.present?
                 @on_duty_request = OnDutyRequest.find_by(id: @emp_attendance.on_duty_request_id)
                 if @on_duty_request.leave_type == "Half Day"
@@ -1812,7 +1807,74 @@ class Api::UserAuthsController < ApplicationController
     else
       status = "You are not applicable for compansatory off!"
     end
-    # redirect_to leave_c_off_self_services_path
+    if status.empty?
+      render :status=>200, :json=>{:status=> " Successfully "}
+    else
+      render :status=>200, :json=>{:status=> status}
+    end
   end
 
+  def travel_option_list
+    travel_option = TravelOption.all
+    render :json => travel_option.present? ? travel_option.collect{|trav_option| {:id => trav_option.try(:id), :code => trav_option.try(:code), :name => trav_option.try(:name), :description => trav_option.try(:description),:is_confirm => trav_option.try(:is_confirm) }} : []
+  end
+
+  def travel_mode_list
+    travel_mode = TravelMode.all
+    render :json => travel_mode.present? ? travel_mode.collect{|trav_mode| {:id => trav_mode.try(:id), :code => trav_mode.try(:code), :name => trav_mode.try(:name), :description => trav_mode.try(:description),:is_confirm => trav_mode.try(:is_confirm) }} : []
+  end
+
+  def employee_travel_request
+    status  = ''
+    employee_id = params[:employee_id]
+    travel_option_id = params[:travel_option_id]
+    travel_mode_id = params[:travel_mode_id]
+    place = params[:place]
+    from_date = params[:from_date]
+    to_date = params[:to_date]
+    total_advance = params[:total_advance]
+    tour_purpose = params[:tour_purpose]
+    manager1_id = params[:manager1_id]
+    manager2_id = params[:manager2_id]
+    application_date = Time.zone.now.to_date
+    reporting_master_id = ReportingMaster.find_by(employee_id: manager1_id)
+    @travel_request = TravelRequest.new(employee_id: employee_id, application_date: application_date, traveling_date: from_date, tour_purpose: tour_purpose, place: place, traveling_advance: total_advance, travel_option_id: travel_option_id, travel_mode_id: travel_mode_id, to: to_date, reporting_master_id: reporting_master_id.id)
+    emp = Employee.find_by(id: employee_id)
+    if reporting_master_id.nil?
+      status = "Reporting Manager not set please set Reporting Manager"
+    else
+      if @travel_request.save
+        TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: reporting_master_id.id , current_status: "Pending")
+        ReportingMastersTravelRequest.create(reporting_master_id: reporting_master_id.id, travel_request_id: @travel_request.id,travel_status: "Pending")
+        TravelRequestHistory.create(employee_id: employee_id,travel_request_id: @travel_request.id,application_date: application_date, traveling_date: from_date, tour_purpose: tour_purpose, place: place, total_advance: total_advance, reporting_master_id: reporting_master_id.id, travel_option_id: travel_option_id, current_status: @travel_request.current_status)
+        @c1 = (@travel_request.to - @travel_request.traveling_date).to_i
+        TravelRequest.where(id: @travel_request.id).update_all(day: @c1)
+        status = "Travel request was successfully created."
+      else
+        status = "unprocessable_entity"
+      end
+    end#emp.try(:manager_id).nil?
+    if status.empty?
+      render :status=>200, :json=>{:status=> " Successfully "}
+    else
+      render :status=>200, :json=>{:status=> status}
+    end
+  end
+
+  def travel_approval_list
+    employee_id = params[:employee_id]
+    reporting_master_id = ReportingMaster.find_by(employee_id: employee_id)
+    travel_requests = TravelRequest.where("reporting_master_id = ? and (current_status = ? or current_status = ? or current_status = ?)",reporting_master_id.id,"Pending","FirstApproved","Approved & Send Next")
+    render :json => travel_requests.present? ? travel_requests.collect{|travel_list| {:id => travel_list.try(:id), :manual_employee_code => travel_list.try(:employee).try(:manual_employee_code), :prefix => travel_list.employee.try(:prefix), :employee_first_name => travel_list.employee.try(:first_name), :employee_middle_name => travel_list.employee.try(:middle_name), :employee_last_name => travel_list.employee.try(:last_name),:code => travel_list.try(:code), :place => travel_list.try(:place), :current_status => travel_list.try(:current_status),:is_confirm => travel_list.try(:is_confirm) }} : []
+  end
+
+  def cancel_travel_request
+    employee_id = params[:employee_id]
+    travel_req_id = params[:travel_req_id]
+    @travel_request = TravelRequest.find(travel_req_id)
+    @travel_request.update(current_status: "Cancelled",reporting_master_id: @travel_request.travel_option_id)
+    TravelRequestHistory.create(employee_id: employee_id, travel_request_id: travel_req_id ,application_date: @travel_request.application_date, traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id, current_status: "Cancelled")
+    ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id, reporting_master_id: employee_id, travel_status: "Cancelled")
+    render :status=>200, :json=>{:status=> "Travel Request Cancelled"}
+  end
 end

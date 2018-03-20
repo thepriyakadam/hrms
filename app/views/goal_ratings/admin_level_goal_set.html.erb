@@ -11,21 +11,19 @@
         <tr>
           <th>ID</th>
           <th>Employee</th>
-          <th>Period</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        <% @goal_bunches.each do |g| %>
+        <% @employees.each do |e| %>
           <tr>
-            <td><%= g.employee.manual_employee_code %></td>
-            <td><%= full_name(g.employee) %></td>
-            <td><%= g.period.name %></td>
+            <td><%= e.manual_employee_code %></td>
+            <td><%= full_name(e) %></td>
            <td>
-            <% if g.goal_confirm == true %>
-              <%= link_to 'View Goal', new_goal_rating_path(emp_id: g.employee_id,id: g.id),class: 'btn btn-info btn-xs' %>
+            <% if goal_confirm(e,@period.id) %>
+              <%= link_to 'Set Goal', new_goal_rating_path(emp_id: e.id,id: @goal_bunch.id),class: 'btn btn-warning btn-xs' %>
             <% else %>
-              <%= link_to 'Set Goal', new_goal_rating_path(emp_id: g.employee_id,id: g.id),class: 'btn btn-primary btn-xs' %>
+              <%= link_to 'View Goal', new_goal_rating_path(emp_id: e.id,id: @goal_bunch.id),class: 'btn btn-primary btn-xs' %>
             <% end %>
          
             </td>

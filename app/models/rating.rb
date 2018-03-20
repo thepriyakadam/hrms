@@ -14,25 +14,25 @@ class Rating < ActiveRecord::Base
                           foreign_key: "final_rating_id"
 
 
-    def self.import(file)
-     spreadsheet = open_spreadsheet(file)
-     (2..spreadsheet.last_row).each do |i|
-        
-        value = spreadsheet.cell(i,'B')
-        discription = spreadsheet.cell(i,'C')
-        status = spreadsheet.cell(i,'D')
-        if status == "Yes" || status == "yes"
-        	status = true
-        else
-        	status = false
-        end
+  def self.import(file)
+    spreadsheet = open_spreadsheet(file)
+    (2..spreadsheet.last_row).each do |i|
+      
+      value = spreadsheet.cell(i,'B')
+      discription = spreadsheet.cell(i,'C')
+      status = spreadsheet.cell(i,'D')
+      if status == "Yes" || status == "yes"
+      	status = true
+      else
+      	status = false
+      end
 
-        @rating = Rating.find_by(value: value)
-        if @rating.nil?
+      @rating = Rating.find_by(value: value)
+      if @rating.nil?
         @degree = Rating.create(value: value,discription: discription,status: status)     
-        else
-          @rating.update(value: value,discription: discription,status: status)
-        end
+      else
+        @rating.update(value: value,discription: discription,status: status)
+      end
     end
   end
 

@@ -29,6 +29,7 @@
       <th>Period</th>
       <th>From</th>
       <th>To</th>
+      <th>Marks</th>
       <th>Status</th>
     </tr>
   </thead>
@@ -40,6 +41,7 @@
         <td><%= c.name %></td>
         <td><%= c.from %></td>
         <td><%= c.to %></td>
+        <td><%= c.marks ? "Yes" : "No" %></td>
         <td><%= c.status ? "Active" : "Inactive" %></td>
    </tr>
    <%end%>

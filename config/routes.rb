@@ -1224,6 +1224,7 @@ end
   #post 'goal_ratings/update_goal_set_modal'
   resources :goal_bunches do
     collection do
+      post :show_periodwise_employee
       get :goal_approval
       post :appraiser_confirm
       get :appraisee_comment

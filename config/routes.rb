@@ -3280,5 +3280,7 @@ end
     get 'user_auths/admin_com_off_aprroval' => 'user_auths#admin_com_off_aprroval', defaults:{format: 'json'}
     get 'user_auths/approve_c_off_request' => 'user_auths#approve_c_off_request', defaults:{format: 'json'}
     get 'user_auths/reject_c_off_request' => 'user_auths#reject_c_off_request', defaults:{format: 'json'}
+    get 'user_auths/travel_request_list' => 'user_auths#travel_request_list', defaults:{format: 'json'}
+    
   end
 end

@@ -230,7 +230,7 @@ class TravelRequestsController < ApplicationController
         @employees = Employee.where(company_id: @company.to_i).pluck(:id)
         @travel_requests = TravelRequest.where(application_date:  @from.to_date..@to.to_date,employee_id: @employees)
       elsif  @department == ""
-        @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+        @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i).pluck(:id)
         @travel_requests = TravelRequest.where(application_date:  @from.to_date..@to.to_date,employee_id: @employees)
        else
         @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i).pluck(:id)
@@ -249,9 +249,9 @@ class TravelRequestsController < ApplicationController
         else 
           @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i).pluck(:id)
           @travel_requests = TravelRequest.where(application_date:  @from.to_date..@to.to_date,employee_id: @employees)
-      end
-    elsif current_user.role.name == 'Admin'
-         if @company == ""
+        end
+      elsif current_user.role.name == 'Admin'
+        if @company == ""
           @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
            @travel_requests = TravelRequest.where(application_date:  @from.to_date..@to.to_date).where(employee_id: @employees)
         elsif @company_location == ""
@@ -263,19 +263,19 @@ class TravelRequestsController < ApplicationController
         else 
           @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
           @travel_requests = TravelRequest.where(application_date:  @from.to_date..@to.to_date,employee_id: @employees)
-      end
-    elsif current_user.role.name == 'Branch'
-          if @company == "" || @company_location == ""
+        end
+      elsif current_user.role.name == 'Branch'
+        if @company == "" || @company_location == ""
           @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
           @travel_requests = TravelRequest.where(application_date:  @from.to_date..@to.to_date,employee_id: @employees)
-         elsif @department == ""
+        elsif @department == ""
           @employees = Employee.where(company_location_id: @company_location.to_i).pluck(:id)
           @travel_requests = TravelRequest.where(application_date:  @from.to_date..@to.to_date,employee_id: @employees)
-          else 
+        else 
           @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
           @travel_requests = TravelRequest.where(application_date:  @from.to_date..@to.to_date,employee_id: @employees)
-      end
-    elsif current_user.role.name == 'HOD'
+        end
+      elsif current_user.role.name == 'HOD'
           if @company == "" || @company_location == "" || @department == ""
           @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
           @travel_requests = TravelRequest.where(application_date:  @from.to_date..@to.to_date,employee_id: @employees)

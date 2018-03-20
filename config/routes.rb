@@ -1228,6 +1228,7 @@ end
   #post 'goal_ratings/update_goal_set_modal'
   resources :goal_bunches do
     collection do
+      post :show_periodwise_employee
       get :goal_approval
       post :appraiser_confirm
       get :appraisee_comment
@@ -3275,5 +3276,11 @@ end
     post 'user_auths/employee_travel_request' => 'user_auths#employee_travel_request', defaults:{format: 'json'}
     get 'user_auths/travel_approval_list' => 'user_auths#travel_approval_list', defaults:{format: 'json'}
     get 'user_auths/cancel_travel_request' => 'user_auths#cancel_travel_request', defaults:{format: 'json'}
+    get 'user_auths/com_off_aprroval_list' => 'user_auths#com_off_aprroval_list', defaults:{format: 'json'}
+    get 'user_auths/admin_com_off_aprroval' => 'user_auths#admin_com_off_aprroval', defaults:{format: 'json'}
+    get 'user_auths/approve_c_off_request' => 'user_auths#approve_c_off_request', defaults:{format: 'json'}
+    get 'user_auths/reject_c_off_request' => 'user_auths#reject_c_off_request', defaults:{format: 'json'}
+    get 'user_auths/travel_request_list' => 'user_auths#travel_request_list', defaults:{format: 'json'}
+    
   end
 end

@@ -329,12 +329,15 @@ class GoalBunchesController < ApplicationController
         flash[:alert] = 'Fill ratings'
       else
         if @period.marks == true
+          @rating = Rating.find_by(id: r)
           weightage = goal_rating.goal_weightage
-          if r.to_i <= weightage.to_i
+          rating = @rating.value
+
+          if rating.to_i <= weightage.to_i
             goal_rating.update(appraisee_comment: c, appraisee_rating_id: r)
           else
-            rating = Rating.where(value: goal_rating.goal_weightage).take
-            goal_rating.update(appraisee_comment: c, appraisee_rating_id: rating.id)
+            rating1 = Rating.where(value: goal_rating.goal_weightage).take
+            goal_rating.update(appraisee_comment: c, appraisee_rating_id: rating1.id)
           end
         else
           goal_rating.update(appraisee_comment: c, appraisee_rating_id: r)

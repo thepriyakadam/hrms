@@ -7,7 +7,7 @@ class GoalRatingsController < ApplicationController
     @employee = Employee.find(params[:emp_id])
     @goal_rating = GoalRating.new
     @goal_ratings = GoalRating.where(appraisee_id: @employee.id,goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
-    @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
+    @goal_attribute_ratings = GoalRating.where("appraisee_id = ? AND goal_bunch_id = ? AND goal_type = ?", @employee.id,@goal_bunch.id ,'Attribute')
     @goal_bunches = GoalBunch.all    
   end
 
@@ -102,7 +102,7 @@ class GoalRatingsController < ApplicationController
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_cycle"
     goal_bunches = GoalBunch.where(period_id: @period.id).pluck(:employee_id)
-    @employees = Employee.where(status: "Active")
+    @employees = Employee.where(status: "Active",id: goal_bunches)
     #@goal_bunches = GoalBunch.where(period_id: @period.id,goal_confirm: nil).group(:employee_id,:period_id)
     @goal_bunches = GoalBunch.all
     # @goal_bunches = []
@@ -391,7 +391,23 @@ class GoalRatingsController < ApplicationController
 
   def update_self_modal
     @goal_rating = GoalRating.find(params[:goal_rating_id])
-    @goal_rating.update(goal_rating_params)
+    appraisee_comment = params[:goal_rating][:appraisee_comment]
+    appraisee_rating_id = params[:goal_rating][:appraisee_rating_id]
+    period = Period.find_by(id: @goal_rating.period_id)
+
+    @rating = Rating.find_by(id: appraisee_rating_id)
+    if period.marks == true
+      weightage = @goal_rating.goal_weightage
+      rating = @rating.value
+      if rating.to_i < weightage.to_i
+        @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: appraisee_rating_id)
+      else
+        rating1 = Rating.where(value: @goal_rating.goal_weightage).take
+        @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: rating1.id)
+      end
+    else
+      @goal_rating.update(goal_rating_params)
+    end
     flash[:notice] = 'Updated Successfully'
     redirect_to appraisee_comment_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id)
   end

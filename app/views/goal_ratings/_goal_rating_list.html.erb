@@ -1,7 +1,7 @@
  <table class="table table-bordered table-hover table-condensed">
       <thead>
        <tr>
-         <td colspan="3"><center><%= @goal_bunch.employee.manual_employee_code %> - <%= full_name(@goal_bunch.employee) %></center></td>
+         <td colspan="3"><center><%= @employee.manual_employee_code %> - <%= full_name(@employee) %></center></td>
          <td>
          <div class="pull-right">
              <%= link_to " ",goal_set_goal_ratings_path(format: "xls",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id), class: "btn btn-xl btn-success fa fa-print", :target => "_blank" %>
@@ -16,11 +16,11 @@
          </tr>
         
          <th>Appraiser</th>
-         <td><%= @goal_bunch.employee.try(:manager).try(:manual_employee_code) %> - <%= full_name(@goal_bunch.employee.manager)  %></td>
+         <td><%= @employee.try(:manager).try(:manual_employee_code) %> - <%= full_name(@employee.manager)  %></td>
        
   
          <th>Reviewer</th>
-         <td><%= @goal_bunch.employee.try(:manager_2).try(:manual_employee_code) %> - <%= full_name(@goal_bunch.employee.manager_2) %></td>
+         <td><%= @employee.try(:manager_2).try(:manual_employee_code) %> - <%= full_name(@employee.manager_2) %></td>
          </tr>
          </thead>
   </table>

@@ -113,12 +113,19 @@ class GoalBunchesController < ApplicationController
   def admin_period_set
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_cycle"
-    @employees = Employee.where(status: "Active")
   end
 
+  def show_periodwise_employee
+    @period_id = params[:salary][:period_id]
+    goal_bunches = GoalBunch.where(period_id: @period_id).pluck(:employee_id)
+    @employees = Employee.where(status: "Active").where.not(id: goal_bunches)
+  end
+  
   def create_admin_level_period
+
     @employee_ids = params[:employee_ids]
-    period_id = params[:goal_bunches][:period_id]
+    @period = Period.find_by_id(params[:period_id1])
+    period_id = @period.id
     if @employee_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
     else

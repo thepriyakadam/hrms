@@ -98,9 +98,11 @@ class GoalRatingsController < ApplicationController
 
   def admin_level_goal_set
     @period = Period.find(params[:period_id])
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_cycle"
-    @goal_bunches = GoalBunch.where(period_id: @period.id,goal_confirm: nil).group(:employee_id,:period_id)
+    #@goal_bunches = GoalBunch.where(period_id: @period.id,goal_confirm: nil).group(:employee_id,:period_id)
+    @goal_bunches = GoalBunch.all
     # @goal_bunches = []
     # goal_bunches.each do |g|
     #   @goal_bunches << g

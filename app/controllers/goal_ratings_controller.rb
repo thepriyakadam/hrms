@@ -275,7 +275,7 @@ class GoalRatingsController < ApplicationController
   end
 
   def send_mail_to_appraiser
-    @employee = Employee.find(current_user.employee_id)
+    @employee = Employee.find(params[:emp_id])
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
 
     sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
@@ -284,7 +284,11 @@ class GoalRatingsController < ApplicationController
       #GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
       @gol_bunch = GoalBunch.find_by(id: @goal_bunch.id).update(goal_confirm: true,appraiser_confirm: false,goal_approval: false)
       flash[:notice] = "Mail Sent Successfully"
-      redirect_to new_goal_bunch_path
+      if @employee.id == current_user.employee_id
+        redirect_to new_goal_bunch_path
+      else
+        redirect_to admin_level_period_goal_ratings_path
+      end
     else
       flash[:alert] = "Goal weightage sum should be 100 !!"
       redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id: @employee.id)

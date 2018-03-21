@@ -6,6 +6,7 @@ class CreateLeavCategories < ActiveRecord::Migration
       t.string :description
       t.boolean :is_confirm
       t.boolean :is_payble
+
       t.decimal :from
       t.decimal :to
       t.boolean :is_active
@@ -19,6 +20,7 @@ class CreateLeavCategories < ActiveRecord::Migration
       t.boolean :weekoff_sandwich
       t.boolean :holiday_sandwich
       t.boolean :transfer
+
       t.timestamps null: false
     end
   end

@@ -5,7 +5,7 @@
     <tr>
       <th colspan="6"><center> BASIC DETAILS</center></th>
       <th colspan="13"><center> SALARY DETAILS</center></th>
-      <th colspan="8"><center> WORKING DAYS</center></th>
+      <th colspan="7"><center> WORKING DAYS</center></th>
       <th colspan="13"><center> EARNED SALARY</center></th>
       <th colspan="12"><center>DEDUCTION</center></th>
       <th><center> NET </center></th>
@@ -40,7 +40,6 @@
       <th>PD</th>
       <th>AD</th>
       <th>HD</th>
-      <th>GP</th>
       <th>WOff</th>
 
       <th>Basic</th>
@@ -105,7 +104,6 @@
         <td><%= r.try(:present_day) %></td>
         <td><%= r.try(:absent_day) %></td>
         <td><%= r.try(:holiday) %></td>
-        <td><%= r.try(:gatepass) %></td>
         <td><%= r.try(:weekoff) %></td>
 
         <td><%= r.try(:earned_basic).try(:round) %></td>
@@ -169,7 +167,6 @@
       <td><%= @sum.present_day %></td>
       <td><%= @sum.absent_day %></td>
       <td><%= @sum.holiday %></td>
-      <td><%= @sum.gatepass %></td>
       <td><%= @sum.weekoff %></td>
 
       <td><%= @sum.earned_basic.try(:round) %></td>

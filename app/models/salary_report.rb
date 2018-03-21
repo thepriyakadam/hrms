@@ -6,12 +6,12 @@ class SalaryReport
                 :earned_special, :earned_washing, :earned_total,:earned_monthly_arrear,
                 :actual_medical,:actual_driver, :actual_child_edu, :actual_mra, :actual_medical_rem, 
                 :earned_medical,:earned_driver,  :earned_child_edu,:earned_mra ,:earned_medical_rem, 
-                :actual_lta,:actual_progressive_alw,:actual_transport_alw,
-                :earned_lta,:earned_progressive_alw,:earned_transport_alw,
+                :actual_lta,:actual_progressive_alw,:actual_transport_alw,:actual_newspaper_alw,
+                :earned_lta,:earned_progressive_alw,:earned_transport_alw,:earned_newspaper_alw,
                 
 
                 :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, 
-                :pantry_deduction,
+                :pantry_deduction,:latemark_deduction,
                 :welfair, :deduction_total, :net_payable, :other_deduction,  :pf_ctc, :esic_ctc,:bonus_ctc, :gmk_deduction,
 
                 :total_leave, :pay_leave, :nonpay_leave, :gatepass, :day_in_month, :payable_day, 
@@ -47,7 +47,7 @@ class SalaryReport
         sr.actual_hra = a.actual_amount
         sr.earned_hra = a.calculated_amount
 
-        when "Convenience Allowance"
+        when "Conveyance Allowance"
         sr.actual_convenience = a.actual_amount
         sr.earned_convenience = a.calculated_amount
 
@@ -98,6 +98,10 @@ class SalaryReport
         when "Transport Allowance"
         sr.actual_transport_alw = a.actual_amount
         sr.earned_transport_alw = a.calculated_amount
+
+        when "Newspaper Allowance"
+         sr.actual_newspaper_alw = a.actual_amount
+         sr.earned_newspaper_alw = a.calculated_amount
         
       end
     end
@@ -133,6 +137,10 @@ class SalaryReport
         sr.welfair = d.calculated_amount
         when "Pantry Deduction"
         sr.pantry_deduction = d.calculated_amount
+
+        when "Latemark Deduction"
+        sr.latemark_deduction = d.calculated_amount
+
       end
     end
   
@@ -277,6 +285,9 @@ class SalaryReport
     array_actual_transport_alw = reports.collect {|r| r.try(:actual_transport_alw)}.compact
     @sum.actual_transport_alw = array_actual_transport_alw.inject(0){|sum,x| sum + x}
 
+     array_actual_newspaper_alw = reports.collect {|r| r.try(:actual_newspaper_alw)}.compact
+    @sum.actual_newspaper_alw = array_actual_newspaper_alw.inject(0){|sum,x| sum + x}
+
 
     array_actual_total = reports.collect {|r| r.try(:actual_total)}.compact
     @sum.actual_total = array_actual_total.inject(0){|sum,x| sum + x }
@@ -361,6 +372,9 @@ class SalaryReport
     array_pantry_deduction = reports.collect {|r| r.try(:pantry_deduction)}.compact
     @sum.pantry_deduction = array_pantry_deduction.inject(0){|sum,x| sum + x }
 
+     array_latemark_deduction = reports.collect {|r| r.try(:latemark_deduction)}.compact
+    @sum.latemark_deduction = array_latemark_deduction.inject(0){|sum,x| sum + x }
+
     array_deduction_total = reports.collect {|r| r.try(:deduction_total)}.compact
     @sum.deduction_total = array_deduction_total.inject(0){|sum,x| sum + x }
 
@@ -437,7 +451,7 @@ class SalaryReport
         when "HRA"
         sr.actual_hra = a.annual_amount
 
-        when "Convenience Allowance"
+        when "Conveyance Allowance"
         sr.actual_convenience = a.annual_amount
 
         when "Other Allowance"
@@ -475,6 +489,9 @@ class SalaryReport
 
         when "Transport Allowance"
         sr.actual_transport_alw = a.actual_amount
+
+        when "Newspaper Allowance"
+        sr.actual_newspaper_alw = a.actual_amount
         
       end
     end
@@ -519,7 +536,7 @@ class SalaryReport
         sr.actual_hra = a.actual_amount
         sr.earned_hra = a.calculated_amount
 
-        when "Convenience Allowance"
+        when "Conveyance Allowance"
         sr.actual_convenience = a.actual_amount
         sr.earned_convenience = a.calculated_amount
 
@@ -570,6 +587,10 @@ class SalaryReport
         when "Transport Allowance"
         sr.actual_transport_alw = a.actual_amount
         sr.earned_transport_alw = a.calculated_amount
+
+          when "Newspaper Allowance"
+        sr.actual_newspaper_alw = a.actual_amount
+        sr.earned_newspaper_alw = a.calculated_amount
         
       end
     end

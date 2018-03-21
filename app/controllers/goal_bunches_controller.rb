@@ -122,6 +122,7 @@ class GoalBunchesController < ApplicationController
   end
   
   def create_admin_level_period
+
     @employee_ids = params[:employee_ids]
     @period = Period.find_by_id(params[:period_id1])
     period_id = @period.id

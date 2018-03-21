@@ -115,11 +115,11 @@ class VacancyMastersController < ApplicationController
         redirect_to new_vacancy_master_path
       else
         @vacancy_master.current_status = "Pending"
-        @vacancy_master.reporting_master_id = employee.manager_id
+        #@vacancy_master.reporting_master_id = employee.manager_id
         respond_to do |format|
       if @vacancy_master.save
-        dept_id = params[:employee][:department_id]
-        location = params[:employee][:company_location_id]
+        dept_id = params[:vacancy_master][:department_id]
+        location = params[:vacancy_master][:company_location_id]
         company = params[:vacancy_master][:company_id]
         VacancyMaster.where(id: @vacancy_master.id).update_all(company_id: company,company_location_id: location,department_id: dept_id)
         ReportingMastersVacancyMaster.create(reporting_master_id: current_user.employee_id, vacancy_master_id: @vacancy_master.id,vacancy_status: "Pending")
@@ -203,7 +203,8 @@ end
   end
 
   def vacancy_history
-    @vacancy_masters = VacancyMaster.where("reporting_master_id = ? and (current_status = ? or current_status = ? or current_status = ?)",current_user.employee_id,"Pending","FirstApproved","Approved & Send Next")
+    @reporting_master = ReportingMaster.find_by(employee_id: current_user.employee_id,is_active: true)
+    @vacancy_masters = VacancyMaster.where("reporting_master_id = ? and (current_status = ? or current_status = ? or current_status = ?)",@reporting_master.id,"Pending","FirstApproved","Approved & Send Next")
     
     session[:active_tab] ="recruitment"
     session[:active_tab1] ="particular_vacancy"

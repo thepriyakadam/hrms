@@ -72,7 +72,7 @@ class DailyAttendance < ActiveRecord::Base
   # end
 
   def self.calculate_attendance
-    emp = EmployeeAttendance.where("in_time > ? ", Time.now - 2.days)
+    emp = EmployeeAttendance.where("in_time > ? ", Time.now - 7.days)
     emp.each do |emp|
       id = emp.employee_id
       in_t = emp.in_time
@@ -107,7 +107,7 @@ class DailyAttendance < ActiveRecord::Base
   end
 
   def self.fetch_data
-    punch = MxAtdeventTrn.where("Edatetime > ? ", Time.now - 2.days)
+    punch = MxAtdeventTrn.where("Edatetime > ? ", Time.now - 7.days)
     punch.each do |mat|
       punch_date_time = mat.Edatetime
       punch_date = punch_date_time.to_date

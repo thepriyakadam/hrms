@@ -37,9 +37,9 @@
       <td colspan="4">
       <strong> Days in Month : </strong><%= @working_day.try(:day_in_month) %> <br><br> 
       <strong> Payble Days : </strong><%= @working_day.try(:payable_day) %><br><br>
-      <% @leave_details.each do |ld| %>
-        <strong> <%= ld.leav_category.name %>  - Leave: </strong> <%= ld.no_of_leave %> - <strong> Balance: </strong> <%= ld.balance %><br><br>
-      <% end %>
+     <!--  <% @leave_details.each do |ld| %>
+        <strong> <= ld.leav_category.try(:code) %>  - Leave: </strong> <strong> Balance: </strong> <%= ld.balance %><br><br>
+      <% end %> -->
       </td>
     </tr>
   
@@ -54,11 +54,11 @@
 
       <tr><th colspan="6"><center> Earning Details </center></th> <th colspan="6"><center> Deduction Details </center></th></tr>
         <tr >
-          <td style="border: 1;" colspan="4" ><strong>Component &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
+          <td style="border: 1;" colspan="4" ><strong>Component &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
           <td style="border: 1;"  align="right"><strong>Gross</strong></td>
           <td style="border: 1;"  align="right"><strong>Earning</strong></td>
         
-          <td style="border: 1;" colspan="4"><strong>Component &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
+          <td style="border: 1;" colspan="4"><strong>Component &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
           <td style="border: 1;"  align="right"><strong>Amount</strong></td>
           <td style="border: 1;"  align="right"><strong> &nbsp;&nbsp;&nbsp; Amount</strong></td>
         </tr>

@@ -37,7 +37,7 @@ class GoalBunch < ActiveRecord::Base
           else
             @self_rating = Rating.find_by(value: rating)
             if @self_rating == nil
-              rating = Rating.create(value: rating,status: true)
+              rating = Rating.last
               @self_rating_id = rating.id
             else
               @self_rating_id = @self_rating.id
@@ -74,7 +74,7 @@ class GoalBunch < ActiveRecord::Base
             else
               @appraiser_rating = Rating.find_by(value: rating)
               if @appraiser_rating == nil
-                rating = Rating.create(value: rating,status: true)
+                rating = Rating.last
                 @appraiser_rating_id = rating.id
               else
                 @appraiser_rating_id = @appraiser_rating.id

@@ -1,4 +1,4 @@
-SrSrclass FoodDeduction < ActiveRecord::Base
+class FoodDeduction < ActiveRecord::Base
   belongs_to :employee
   belongs_to :food_coupan_master
 
@@ -30,6 +30,7 @@ def self.import_deduction_file(file)
         @food_deduction = FoodDeduction.create(employee_id: employee_id,no_of_coupan: no_of_coupan,return_coupan: return_coupan,total_coupan: total_coupan,food_coupan_master_id: food_coupan_master_id,amount: amount,food_date: food_date)
     end
   end
+end
 	# spreadsheet = open_spreadsheet(file)
 	# header = spreadsheet.row(1)
  #  	(2..spreadsheet.last_row).each do |i|
@@ -39,7 +40,7 @@ def self.import_deduction_file(file)
  #  	  food_deduction.attributes = row.to_hash.slice(*row.to_hash.keys)
  #  	  food_deduction.save!
  #  	end
-  end
+  # end
 
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)

@@ -281,7 +281,7 @@ require 'numbers_in_words/duck_punch'
       format.pdf do
         render pdf: 'print_salary_slip_rg',
               layout: 'pdf.html',
-              # :orientation      => 'Landscape', # default , Landscape
+               :orientation      => 'Landscape', # default , Landscape
               # :page_height      => 1000,
               # :dpi              => '300',
               template: 'salaryslips/print_salary_slip_rg.pdf.erb',

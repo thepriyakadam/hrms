@@ -7,7 +7,7 @@
     <div class="modal-body">
 
       <%#= bootstrap_form_for @goal_rating,url:{action: "update_goal_set_modal",goal_rating_id: @goal_rating.id} do |f| %>
-      <%= bootstrap_form_for :goal_rating,url:{action: "update_goal_set_modal",goal_id: @goal_rating.id } do |f| %>
+      <%= bootstrap_form_for :goal_rating,url:{action: "update_goal_set_modal",goal_rating_id: @goal_rating.id } do |f| %>
         <div class="row">
           <% if @goal_rating.goal_type == "Goal" %>
             <div class="col-sm-6">

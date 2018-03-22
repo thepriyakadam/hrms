@@ -2375,6 +2375,9 @@ end
       post :form_12A_report
       get :dynamic_daterange_report
       post :dynamic_daterange_report
+      get :form_16A
+      get :form_16A_report
+      post :form_16A_report
     end
   end
 

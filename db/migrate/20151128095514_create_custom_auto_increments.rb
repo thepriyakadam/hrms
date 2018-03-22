@@ -3,7 +3,7 @@ class CreateCustomAutoIncrements < ActiveRecord::Migration
     create_table :custom_auto_increments, :force => true do |t|
       t.string  :counter_model_name
       t.integer :counter, :default => 0
-      t.timestamps
+     t.timestamps null: false
     end
 
     add_index :custom_auto_increments, :counter_model_name

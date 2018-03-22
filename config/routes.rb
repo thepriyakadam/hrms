@@ -3282,5 +3282,9 @@ end
     get 'user_auths/reject_c_off_request' => 'user_auths#reject_c_off_request', defaults:{format: 'json'}
     get 'user_auths/travel_request_list' => 'user_auths#travel_request_list', defaults:{format: 'json'}
     get 'user_auths/admin_travel_approval_list' => 'user_auths#admin_travel_approval_list', defaults:{format: 'json'}
+    get 'user_auths/expense_claim_list' => 'user_auths#expense_claim_list', defaults:{format: 'json'}
+    get 'user_auths/expense_type_list' => 'user_auths#expense_type_list', defaults:{format: 'json'}
+    get 'user_auths/all_currency' => 'user_auths#all_currency', defaults:{format: 'json'}
+    get 'user_auths/claim_list' => 'user_auths#claim_list', defaults:{format: 'json'}
   end
 end

@@ -7,8 +7,8 @@
     <table id="example" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr><th colspan="4">Account No. </th> <td colspan="5"><%= @employee.try(:employee_bank_detail).try(:account_no) %></td></tr>
-        <tr><th colspan="4">Name/Surname </th><td colspan="5"> <%= @employee.first_name %> / <%= @employee.last_name %></td></tr>
-        <tr><th colspan="4">Father's/Husband's Name </th><td colspan="5"> MR.<%= @employee.middle_name %> </td></tr>
+        <tr><th colspan="4">Name/Surname </th><td colspan="5"> <%= @employee.try(:first_name) %> / <%= @employee.try(:last_name) %></td></tr>
+        <tr><th colspan="4">Father's/Husband's Name </th><td colspan="5"> MR.<%= @employee.try(:middle_name) %> </td></tr>
         <tr><th colspan="4">Statutory Rate of Contribution </th><td colspan="5"> 12% </td></tr>
         <tr><th colspan="4">Voluntary Higher Rate of Employee's Contribution if any </th><td colspan="5"> <%= %></td></tr>
         <tr><th colspan="4">Name & Address of the Factory/Establishment </th><td colspan="5"> <%= @employee.try(:company_location).try(:address) %></td></tr>
@@ -35,16 +35,16 @@
       </thead>
       <% i = 0 %>
       <tbody>
-        <%# @month_year.each do |month_year, salaryslip_components| %>
-          <tr>
+        <% @month_year.try(:each) do |month_year, salaryslip_components| %>
 
-            <td><%#= i = i + 1 %></td>
-            <td><%#= month_year %></td>
-              <%# total_amt = 0 %>
+          <tr>
+            <td><%= i = i + 1 %></td>
+            <td><%= month_year %></td>
+              <% total_amt = 0 %>
               <!-- @employer_contribution = EmployerContribution.where(date: @from_date.to_date..@to_date.to_date) -->
-              <%# salaryslip_components.each do |components|%>
-                <%# total_amt += components.calculated_amount.round %>
-              <%# end %>
+              <% salaryslip_components.each do |components|%>
+                <% total_amt += components.calculated_amount.round %>
+              <% end %>
             <td><%#= total_amt %></td>
             <td><%#= total_amt %></td>
             <td><%#= total_amt %></td>
@@ -53,7 +53,7 @@
             <td><%#= month_year.to_date.end_of_month %></td>
             <td><%#= month_year.to_date.end_of_month %></td>
           </tr>
-        <%# end %>
+        <% end %>
       </tbody>
     </table>
   <br>

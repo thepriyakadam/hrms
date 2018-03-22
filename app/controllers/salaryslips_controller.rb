@@ -1712,14 +1712,14 @@ end
     @employer_contribution = EmployerContribution.where(date: @from_date.to_date..@to_date.to_date, employee_id: @employee_id)
     @employer_statutory_contribution = @employer_contribution.sum(:actual_pf)
 
-    # try(:salaryslip).try(:calculated_gross_salary)
+     # try(:salaryslip).try(:calculated_gross_salary)
 
-    # @salaryslips3 = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date)
+    @salaryslips3 = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date)
     # @year_wise = Salaryslip.where(year: year_from..year_to)
-    # @month_year = {}
-    # @salaryslips3.each do |month_year|
-    #   @month_year[month_year.month_year.strftime("%B %Y")] = month_year.salaryslip_components.each { |cat| cat.calculated_amount.round }
-    # end
+    @month_year = {}
+    @salaryslips3.each do |month_year|
+      @month_year[month_year.month_year.strftime("%B %Y")] = month_year.salaryslip_components.each { |cat| cat.calculated_amount.round }
+    end
   end
 
   def form_6A

@@ -14,6 +14,7 @@ gem 'numbers_in_words'
 # gem 'tiny_tds'
 # gem 'activerecord-sqlserver-adapter'
 # gem 'ruby-odbc'
+
 gem 'dbi'
 gem 'activerecord-session_store'
 

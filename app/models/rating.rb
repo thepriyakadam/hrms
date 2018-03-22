@@ -21,7 +21,7 @@ class Rating < ActiveRecord::Base
       value = spreadsheet.cell(i,'B')
       discription = spreadsheet.cell(i,'C')
       status = spreadsheet.cell(i,'D')
-      if status == "Yes" || status == "yes"
+      if status == "Active" || status == "Yes"
       	status = true
       else
       	status = false

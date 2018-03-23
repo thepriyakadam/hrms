@@ -1,0 +1,24 @@
+
+<table id="example5" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr><th colspan="5"><center>From <%= @from %> To <%= @to %></center></th></tr>
+    <tr>
+      <th>ID</th>
+      <th>Employee</th>
+      <th>Date</th>
+      <th>Count</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @latemark_deductions.each do |latemark_deduction| %>
+      <tr>
+        <td><%= latemark_deduction.employee.manual_employee_code %></td>
+        <td><%= full_name(latemark_deduction.employee) %></td>
+        <td><%= latemark_deduction.latemark_day %></td>
+        <td><%= latemark_deduction.latemark_count %></td>
+        <td><%= latemark_deduction.latemark_amount %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -591,6 +591,10 @@ class Employee < ActiveRecord::Base
           @employee = Employee.create(manual_employee_code: manual_employee_code,prefix: prefix,first_name: first_name,middle_name: middle_name,last_name: last_name,date_of_birth: date_of_birth,gender: gender,contact_no: contact_no,optinal_contact_no: optinal_contact_no,email: email,permanent_address: permanent_address,
           country_id: country_id,state_id: state_id,district_id: district_id,city: city,pin_code: pin_code,current_address: current_address,adhar_no: adhar_no,pan_no: pan_no,licence_no: licence_no,marital_status: marital_status,blood_group_id: blood_group_id,employee_type_id: employee_type_id,nationality_id: nationality_id,religion_id: religion_id,
           handicap: handicap,handicap_type: handicap_type,status: status,company_id: company_id,company_location_id: company_location_id,department_id: department_id,employee_code_master_id: employee_code_master_id,optional_email: optional_email,optinal_contact_no1: optinal_contact_no1)
+          if @employee_code_master == nil
+          else
+            @employee_code_master.update(last_range:  manual_employee_code)
+          end
         else
           @employee_prsent.update(prefix: prefix,first_name: first_name,middle_name: middle_name,last_name: last_name,date_of_birth: date_of_birth,gender: gender,contact_no: contact_no,optinal_contact_no: optinal_contact_no,email: email,permanent_address: permanent_address,
           country_id: country_id,state_id: state_id,district_id: district_id,city: city,pin_code: pin_code,current_address: current_address,adhar_no: adhar_no,pan_no: pan_no,licence_no: licence_no,marital_status: marital_status,blood_group_id: blood_group_id,employee_type_id: employee_type_id,nationality_id: nationality_id,religion_id: religion_id,

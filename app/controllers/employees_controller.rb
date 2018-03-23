@@ -44,21 +44,52 @@
     abc = empp.cal_data
   end
 
+  def import_basic_detail
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Reports"
+  end
+
+  def employee_basic_report
+    @company_location = params[:salary][:company_location_id]
+    @employees = Employee.where(company_location_id: @company_location)
+    if current_user.class == Group
+      if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+        @employees = Employee.all
+      else
+        @employees = Employee.where(company_location_id: params[:salary][:company_location_id])
+      end
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+          @employees = Employee.all
+        else
+          @employees = Employee.where(company_location_id: params[:salary][:company_location_id])
+        end
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Superviser'
+      elsif current_user.role.name == 'Employee'
+      end
+    end
+  end
+
   def import_xl
     session[:active_tab] ="EmployeeManagement"
-    session[:active_tab1] ="Import"   
+    session[:active_tab1] ="Reports"
   end
 
   def import
-    # Employee.import(params[:file])
-    # redirect_to root_url, notice: "File imported."
     file = params[:file]
     if file.nil?
       flash[:alert] = "Please Select File!"
-    redirect_to import_xl_employees_path
+    redirect_to import_basic_detail_employees_path
     else
     Employee.import(params[:file])
-    redirect_to import_xl_employees_path, notice: "File imported."
+    redirect_to import_basic_detail_employees_path, notice: "File imported."
     end
   end
   
@@ -77,8 +108,6 @@
     redirect_to assign_role_employees_path, notice: "File imported."
     end
   end
-
-
 
   def report
     @employees = Employee.all
@@ -678,7 +707,7 @@
   end
 
   def collect_sub_department
-    @department = Department.find(params[:id])
+    @department = Department.find(params[:department_id])
     @sub_departments = SubDepartment.where(department_id: @department.id)
     @form = params[:form]
   end
@@ -728,9 +757,9 @@
   end
 
   def reset_password
-    @member = Member.find(params[:id])
+    @member = Member.find(params[:member_id])
     @member_password_reset = Member.find_by(manual_member_code: @member.manual_member_code).update(password: "12345678")
-    EmployeeMailer.employee_reset_password(@member).deliver_now
+    #EmployeeMailer.employee_reset_password(@member).deliver_now
     flash[:notice] = "Password Changed Successfully"
     redirect_to member_list_for_update_password_employees_path
   end

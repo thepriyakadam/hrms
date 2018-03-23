@@ -20,6 +20,32 @@ class EmployeeAttendancesController < ApplicationController
     
   end
 
+  def fetch_attendance
+    day = params[:daily_attendance][:day].to_i
+    if day.present?
+      DailyAttendance.fetch_data(day)
+      flash[:notice] = "Employee Attendance Added Successfully..!"
+      redirect_to new_employee_attendance_path
+    else
+      DailyAttendance.fetch_data(1)
+      flash[:notice] = "Employee Attendance Added Successfully..!"
+      redirect_to new_employee_attendance_path
+    end
+  end
+
+  def calculate
+    day = params[:daily_attendance][:day].to_i
+    if day.present?
+      DailyAttendance.calculate_attendance(day)
+      flash[:notice] = "Employee Attendance Calculated Successfully..!"
+      redirect_to new_employee_attendance_path
+    else
+      DailyAttendance.calculate_attendance(1)
+      flash[:notice] = "#{day} Day's Employee Attendance Calculated Successfully..!"      
+      redirect_to new_employee_attendance_path
+    end
+  end
+
   # GET /employee_attendances/1
   # GET /employee_attendances/1.json
   def show
@@ -907,6 +933,7 @@ end
     department = params[:employee][:department_id]
     from = @from.to_date
     to = @to.to_date
+    @day = from.end_of_month.day
     payroll_period = PayrollPeriod.where(status: true).take
 
     if from == payroll_period.from.to_date && to == payroll_period.to.to_date
@@ -1079,7 +1106,7 @@ end
         end
       end
     else
-      flash[:alert] = "Please select correct date (i.e. 26 to 25)"
+      flash[:alert] = "Please select date within payroll period"
       redirect_to datewise_attendance_employee_attendances_path
     end
   end
@@ -1176,18 +1203,18 @@ end
     @status =params[:salary][:status]
     @from_date = @from.to_date
     @to_date = @to.to_date
+    @code = params[:salary][:code]
     
     if @status == 'Active'
-      @employees = Employee.where(status: 'Active').pluck(:id)
+      @employee = Employee.where(status: 'Active').pluck(:id)
     elsif @status == 'Inactive'
-      @employees = Employee.where(status: 'Inactive').pluck(:id)
+      @employee = Employee.where(status: 'Inactive').pluck(:id)
     else
-      @employees = Employee.all.pluck(:id)
+      @employee = Employee.all.pluck(:id)
     end
-
-    @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id, employee_id: @employees).pluck(:employee_id)
+    @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id, employee_id: @employee).pluck(:employee_id)
   
-    @employees = EmployeeAttendance.where(day: @from.to_date..@to.to_date,is_confirm: false,employee_id: @costcenter)
+    @employees = EmployeeAttendance.where(day: @from.to_date..@to.to_date,is_confirm: false,employee_id: @costcenter).group(:employee_id)
     
     respond_to do |f|
       f.js
@@ -2912,6 +2939,21 @@ end
     elsif params[:onduty]
       @name = params[:onduty]
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(on_duty_request_id: nil)
+    elsif params[:latemark]
+      @name = params[:latemark]
+        latemark_master = LatemarkMaster.last
+        latemark_master_time = latemark_master.company_time
+        @company_time = latemark_master_time.strftime("%I:%M")
+        latemark_master_late_time = latemark_master.late_limit
+        @late_limit = latemark_master_late_time.strftime("%I:%M")
+        @employee_attendances = []
+        employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,late_mark: nil).where.not(in_time: nil)
+        @time = 0 
+        employee_attendances.each do |att|
+          if att.in_time.strftime("%I:%M") > @company_time && att.in_time.strftime("%I:%M") < @late_limit
+            @employee_attendances << att
+          end
+        end
     else
       @name = params[:leave]
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
@@ -2930,11 +2972,25 @@ end
     elsif @name == "Holiday"
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(holiday_id: nil)
     elsif @name == "Week Off"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).not(employee_week_off_id: nil)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_week_off_id: nil)
     elsif @name == "onduty"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).not(on_duty_request_id: nil)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(on_duty_request_id: nil)
     elsif @name == "Leave"
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
+    elsif @name == "Latemark"
+      latemark_master = LatemarkMaster.last
+        latemark_master_time = latemark_master.company_time
+        @company_time = latemark_master_time.strftime("%I:%M")
+        latemark_master_late_time = latemark_master.late_limit
+        @late_limit = latemark_master_late_time.strftime("%I:%M")
+        @emp_att = []
+        employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,late_mark: nil).where.not(in_time: nil)
+        @time = 0 
+        employee_attendances.each do |att|
+          if att.in_time.strftime("%I:%M") > @company_time && att.in_time.strftime("%I:%M") < @late_limit
+            @employee_attendances << att
+          end
+        end
     else
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
     end
@@ -3000,6 +3056,32 @@ end
     @to = params[:salary][:to]
     @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).group(:day)
    
+  end
+
+  def fetch_attendance
+    day = params[:daily_attendance][:day].to_i
+    if day.present?
+      DailyAttendance.fetch_data(day)
+      flash[:notice] = "Employee Attendance Added Successfully..!"
+      redirect_to new_employee_attendance_path
+    else
+      DailyAttendance.fetch_data(1)
+      flash[:notice] = "Employee Attendance Added Successfully..!"
+      redirect_to new_employee_attendance_path
+    end
+  end
+
+  def calculate
+    day = params[:daily_attendance][:day].to_i
+    if day.present?
+      DailyAttendance.calculate_attendance(day)
+      flash[:notice] = "Employee Attendance Calculated Successfully..!"
+      redirect_to new_employee_attendance_path
+    else
+      DailyAttendance.calculate_attendance(1)
+      flash[:notice] = "#{day} Day's Employee Attendance Calculated Successfully..!"      
+      redirect_to new_employee_attendance_path
+    end
   end
 
   # def create_self_attendance

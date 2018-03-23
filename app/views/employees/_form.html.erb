@@ -249,6 +249,7 @@
           <div class="form-group required">
             <div class="input-group">
               <%=f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={company_id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
+
             </div>
           </div>
         </div>
@@ -282,7 +283,7 @@
       <div class="row">
 
           <!-- <div class="col-sm-3">
-            <div class="form-group required">
+            <div class="form-group">
             <div class="input-group">
               <div id="sub_department">
                 <%#= render 'employees/sub_department_dropdown' %> 
@@ -290,7 +291,8 @@
            </div>
           </div>
         </div> -->
-        <div class="col-sm-3">
+
+              <div class="col-sm-3">
           <div class="field">
             <%= f.file_field :passport_photo,label: 'Upload Photo' %>
           </div>

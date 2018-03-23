@@ -6,12 +6,19 @@ arch = 'wkhtmltopdf_darwin_386'
 # else
 # raise "Invalid platform. Must be running Intel-based Linux or OSX."
 end
- WickedPdf.config = {
-    # exe_path: "#{ENV['GEM_HOME']}/gems/wkhtmltopdf-binary-#{Gem.loaded_specs['wkhtmltopdf-binary'].version}/bin/#{arch}"
+#  WickedPdf.config = {
+#     # exe_path: "#{ENV['GEM_HOME']}/gems/wkhtmltopdf-binary-#{Gem.loaded_specs['wkhtmltopdf-binary'].version}/bin/#{arch}"
 
-    :exe_path => 'c:/Program Files (x86)/wkhtmltopdf/bin/wkhtmltopdf.exe'
+#      :exe_path => 'c:/Program Files (x86)/wkhtmltopdf/bin/wkhtmltopdf.exe'
 
 
-#  # exe_path: "#{ENV['GEM_HOME']}/gems/wkhtmltopdf-binary-#{Gem.loaded_specs['wkhtmltopdf-binary'].version}/bin/#{arch}"
-# :exe_path => 'c:/Program Files (x86)/wkhtmltopdf/bin/wkhtmltopdf.exe'
+# #  # exe_path: "#{ENV['GEM_HOME']}/gems/wkhtmltopdf-binary-#{Gem.loaded_specs['wkhtmltopdf-binary'].version}/bin/#{arch}"
+# # :exe_path => 'c:/Program Files (x86)/wkhtmltopdf/bin/wkhtmltopdf.exe'
+# }
+
+
+WickedPdf.config = {
+  #:wkhtmltopdf => '/usr/local/bin/wkhtmltopdf',
+  #:layout => "pdf.html",
+  :exe_path => 'C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe'
 }

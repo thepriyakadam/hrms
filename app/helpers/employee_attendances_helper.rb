@@ -75,12 +75,12 @@ module EmployeeAttendancesHelper
   end
 
   def present_count(exist)
-     exist.select {|k,v| v == "P" }.count + (exist.select {|k,v| v == "HDL" }.count)/2.to_f  +
+     exist.select {|k,v| v == "P" }.count + (exist.select {|k,v| v == "HD" }.count)/2.to_f  +
      (exist.select {|k,v| v == "P/OD" }.count)/2.to_f +  (exist.select {|k,v| v == "OD/P" }.count)/2.to_f
   end
 
   def absent_count(exist)
-     exist.select {|k,v| v == "A" }.count + (exist.select {|k,v| v == "HDL" }.count)/2.to_f + (exist.select {|k,v| v == "A/OD" }.count)/2.to_f +  
+     exist.select {|k,v| v == "A" }.count + (exist.select {|k,v| v == "HD" }.count)/2.to_f + (exist.select {|k,v| v == "A/OD" }.count)/2.to_f +  
      (exist.select {|k,v| v == "OD/A" }.count)/2.to_f
   end
 
@@ -90,8 +90,9 @@ module EmployeeAttendancesHelper
   end
 
   def holiday_count(exist)
-     exist.select {|k,v| v == "H" }.count +  exist.select {|k,v| v == "H/P" }.count  +  exist.select {|k,v| v == "H/OD" }.count +  
-     exist.select {|k,v| v == "OD/H" }.count +  exist.select {|k,v| v == "H/HD" }.count  +  exist.select {|k,v| v == "H/HDOD" }.count  
+     exist.select {|k,v| v == "H" }.count + exist.select {|k,v| v == "H/P" }.count + exist.select {|k,v| v == "HP" }.count  + 
+     exist.select {|k,v| v == "H/OD" }.count + exist.select {|k,v| v == "OD/H" }.count + exist.select {|k,v| v == "H/HD" }.count + 
+     exist.select {|k,v| v == "H/HDOD" }.count
   end
 
   def weekoff_count(exist)

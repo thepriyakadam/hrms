@@ -109,16 +109,22 @@ class GoalBunchesController < ApplicationController
       redirect_to appraiser_comment_goal_bunches_path(emp_id: employee.id,goal_id: goal_bunch.id,period_id: goal_bunch.period_id), notice: "File imported."
     end
   end
-  
+
   def admin_period_set
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_cycle"
-    @employees = Employee.where(status: "Active")
   end
 
+  def show_periodwise_employee
+    @period_id = params[:salary][:period_id]
+    goal_bunches = GoalBunch.where(period_id: @period_id).pluck(:employee_id)
+    @employees = Employee.where(status: "Active").where.not(id: goal_bunches)
+  end
+  
   def create_admin_level_period
     @employee_ids = params[:employee_ids]
-    period_id = params[:goal_bunches][:period_id]
+    @period = Period.find_by_id(params[:period_id1])
+    period_id = @period.id
     if @employee_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
     else
@@ -128,6 +134,12 @@ class GoalBunchesController < ApplicationController
       end
     end
     redirect_to admin_period_set_goal_bunches_path
+  end
+
+  def period_list_appraisee
+    @employee = Employee.find(current_user.employee_id)
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id)
+    session[:active_tab] ="EmployeeSelfService"
   end
 
   def appraiser_confirm
@@ -306,6 +318,8 @@ class GoalBunchesController < ApplicationController
     @goal_rating_ids = params[:goal_rating_ids]
     comments = params[:appraisee_comment]
     ratings = params[:appraisee_rating]
+    goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @period = Period.find_by(id: goal_bunch.period_id)
     final = @goal_rating_ids.zip(comments,ratings)
     final.each do |e, c, r|
       goal_rating = GoalRating.find(e)
@@ -314,7 +328,20 @@ class GoalBunchesController < ApplicationController
       elsif r == ''
         flash[:alert] = 'Fill ratings'
       else
-        goal_rating.update(appraisee_comment: c, appraisee_rating_id: r)
+        if @period.marks == true
+          @rating = Rating.find_by(id: r)
+          weightage = goal_rating.goal_weightage
+          rating = @rating.value
+
+          if rating.to_i <= weightage.to_i
+            goal_rating.update(appraisee_comment: c, appraisee_rating_id: r)
+          else
+            rating1 = Rating.where(value: goal_rating.goal_weightage).take
+            goal_rating.update(appraisee_comment: c, appraisee_rating_id: rating1.id)
+          end
+        else
+          goal_rating.update(appraisee_comment: c, appraisee_rating_id: r)
+        end
         flash[:notice] = 'Self Comment & Rating Created Successfully'
       end
     end
@@ -485,6 +512,13 @@ class GoalBunchesController < ApplicationController
     #@goal_ratings = GoalRating.where(appraisee_id: @employee.id,reviewer_comment: nil)
   end
 
+  def reviewer_comment_modal
+    @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:emp_id])
+    @goal_rating = GoalRating.find(params[:goal_rating_id])
+    @period = Period.find(params[:period_id])
+  end
+  
   def reviewer_create
     @employee = Employee.find(params[:emp_id])
     goal_rating_ids = params[:goal_rating_ids]
@@ -903,12 +937,6 @@ class GoalBunchesController < ApplicationController
     @goal_bunches = GoalBunch.where(employee_id: @employee.id,id: @goal_bunch.id)                                 
   end
   
-  def period_list_appraisee
-    @employee = Employee.find(current_user.employee_id)
-    @goal_bunches = GoalBunch.where(employee_id: @employee.id)
-    session[:active_tab] ="EmployeeSelfService"
-  end
-
   def period_list_print
     @employee = Employee.find(params[:emp_id])
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)

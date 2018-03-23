@@ -26,9 +26,11 @@ class GoalRating < ActiveRecord::Base
      (2..spreadsheet.last_row).each do |i|
         
         goal_rating = GoalRating.where(appraisee_id: emp,period_id: goal_bunch.period_id)
+        
         weigh = 0
         goal_rating.each do |g|
           weigh = g.goal_weightage + weigh
+          weigh.round
         end
         weigh
         previous_weightage = weigh
@@ -66,7 +68,6 @@ class GoalRating < ActiveRecord::Base
             type = spreadsheet.cell(i,'D')
            
             if type == "Goal" || type == "Attribute"
-              
               #if weightage_sum <= 100
                 weightage_sum1 = true
                 perspective = spreadsheet.cell(i,'E')
@@ -134,7 +135,9 @@ class GoalRating < ActiveRecord::Base
                       goal_perspective_id = goal.id
                       end
 
-                      GoalRating.create(goal_bunch_id: goal_bunch_id,goal_perspective_id: goal_perspective_id,goal_weightage: weightage,goal_measure: measure,activity: activity,target: target,aligned: align_to_supervisor,period_id: period_id,goal_type: type,goal_setter_id: emp.id,appraisee_id: emp.id,appraiser_id: emp.manager_id)
+                      GoalRating.create(goal_bunch_id: goal_bunch_id,goal_perspective_id: goal_perspective_id,goal_weightage: weightage,
+                        goal_measure: measure,activity: activity,target: target,aligned: align_to_supervisor,period_id: period_id,
+                        goal_type: type,goal_setter_id: emp.id,appraisee_id: emp.id,appraiser_id: emp.manager_id)
 
                     else
                       goal_perspective_id = goal_perspective.id

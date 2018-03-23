@@ -40,15 +40,46 @@ class GoalBunch < ActiveRecord::Base
               rating = Rating.last
               @self_rating_id = rating.id
             else
-              @self_rating_id = @self_rating.id
-            end
-          end#rating == nil
+              @self_rating = Rating.find_by(value: rating.to_f)
+              if period.marks == true 
+                
+                if @self_rating == nil
+                  rating = Rating.last
+                  rating_id = rating.id
+                  weightage = goal_rating.goal_weightage
+                  if rating_id.to_f < weightage.to_f
+                    @self_rating_id = rating_id
+                  else
+                    weightage_rating = Rating.find_by(value: weightage)
+                    weightage_rating_id = weightage_rating.id
+                    @self_rating_id = weightage_rating_id.to_f
+                  end#rating_id.to_i < weightage.to_i
+                else
+                  self_rating_value = @self_rating.value
+                  weightage = goal_rating.goal_weightage
+                  if self_rating_value.to_f < weightage.to_f
+                    @self_rating_id = @self_rating.id
+                  else
+                    weightage_rating = Rating.find_by(value: weightage)
+                    weightage_rating_id = weightage_rating.id
+                    @self_rating_id = weightage_rating_id.to_f
+                  end
+                end#@self_rating == nil      
+              else
+                if @self_rating == nil
+                  rating = Rating.last
+                  @self_rating_id = rating.id
+                else
+                  @self_rating_id = @self_rating.id
+                end
+              end#period.marks == true
+            end#rating == nil
 
-          goal_rating = GoalRating.find_by(id: goal_rating_id)
-          if goal_rating_id.to_i == goal_rating.id
-            goal_rating.update(appraisee_comment: self_comment,appraisee_rating_id: @self_rating_id)
-          end
-        end# goal_rating_id == nil
+            goal_rating = GoalRating.find_by(id: goal_rating_id)
+            if goal_rating_id.to_i == goal_rating.id
+              goal_rating.update(appraisee_comment: self_comment,appraisee_rating_id: @self_rating_id)
+            end
+          end# goal_rating_id == nil
     end#do
   end
 

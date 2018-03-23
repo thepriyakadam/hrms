@@ -6,7 +6,7 @@
     </div>
     <div class="modal-body">
 
-      <%= bootstrap_form_for :goal_bunches,url:{action:'self_comment',emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id} do |f| %> 
+      <%= bootstrap_form_for :goal_ratings,url:{action:'self_comment',emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id} do |f| %> 
       <%= hidden_field_tag 'goal_rating_ids[]',"",value: @goal_rating.id %>
 
         <div class="row">
@@ -20,10 +20,10 @@
             <label>Rating</label>
             <%= select_tag 'appraisee_rating[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %>
           </div>
-            <div class="col-sm-3" style="padding-top:20px;">
-              <center><%= f.submit "Create", class: 'btn btn-success btn-sm' %></center>
-            </div>
+          <div class="col-sm-3" style="padding-top:20px;">
+            <center><%= f.submit "Create", class: 'btn btn-success btn-sm' %></center>
           </div>
+        </div>
       <% end %>
 
   	</div>
@@ -31,3 +31,16 @@
   </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
 	
+<script type="text/javascript">
+  $('#goal_rating_appraisee_rating').on('change', function() {
+    if ($('#goal_rating_appraisee_rating').val() <= $('#goal_rating_goal_weightage').val()){
+
+      $("#goal_rating_appraisee_rating").val('<%= params[:appraisee_rating] %>');
+      
+    }
+    else{
+      $("#goal_rating_appraisee_rating").val('<%= %>');
+    }
+  });
+</script>
+  

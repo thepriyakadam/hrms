@@ -20,6 +20,32 @@ class EmployeeAttendancesController < ApplicationController
     
   end
 
+  def fetch_attendance
+    day = params[:daily_attendance][:day].to_i
+    if day.present?
+      DailyAttendance.fetch_data(day)
+      flash[:notice] = "Employee Attendance Added Successfully..!"
+      redirect_to new_employee_attendance_path
+    else
+      DailyAttendance.fetch_data(1)
+      flash[:notice] = "Employee Attendance Added Successfully..!"
+      redirect_to new_employee_attendance_path
+    end
+  end
+
+  def calculate
+    day = params[:daily_attendance][:day].to_i
+    if day.present?
+      DailyAttendance.calculate_attendance(day)
+      flash[:notice] = "Employee Attendance Calculated Successfully..!"
+      redirect_to new_employee_attendance_path
+    else
+      DailyAttendance.calculate_attendance(1)
+      flash[:notice] = "#{day} Day's Employee Attendance Calculated Successfully..!"      
+      redirect_to new_employee_attendance_path
+    end
+  end
+
   # GET /employee_attendances/1
   # GET /employee_attendances/1.json
   def show
@@ -3036,10 +3062,12 @@ end
     day = params[:daily_attendance][:day].to_i
     if day.present?
       DailyAttendance.fetch_data(day)
-      redirect_to subordinate_attendance_manager_self_services_path
+      flash[:notice] = "Employee Attendance Added Successfully..!"
+      redirect_to new_employee_attendance_path
     else
       DailyAttendance.fetch_data(1)
-      redirect_to subordinate_attendance_manager_self_services_path
+      flash[:notice] = "Employee Attendance Added Successfully..!"
+      redirect_to new_employee_attendance_path
     end
   end
 
@@ -3047,10 +3075,12 @@ end
     day = params[:daily_attendance][:day].to_i
     if day.present?
       DailyAttendance.calculate_attendance(day)
-      redirect_to subordinate_attendance_manager_self_services_path
+      flash[:notice] = "Employee Attendance Calculated Successfully..!"
+      redirect_to new_employee_attendance_path
     else
       DailyAttendance.calculate_attendance(1)
-      redirect_to subordinate_attendance_manager_self_services_path
+      flash[:notice] = "#{day} Day's Employee Attendance Calculated Successfully..!"      
+      redirect_to new_employee_attendance_path
     end
   end
 

@@ -49,6 +49,7 @@
         <Cell ss:Index="34"><Data ss:Type="String">PF</Data></Cell>
         <Cell ss:Index="35"><Data ss:Type="String">ESIC</Data></Cell>
         <Cell ss:Index="36"><Data ss:Type="String">Professional Tax</Data></Cell>
+
         <Cell ss:Index="37"><Data ss:Type="String">Retention</Data></Cell>
         <Cell ss:Index="38"><Data ss:Type="String">Welfare</Data></Cell>
         <Cell ss:Index="39"><Data ss:Type="String">Society</Data></Cell>
@@ -58,25 +59,26 @@
         <Cell ss:Index="43"><Data ss:Type="String">Mobile Expences</Data></Cell>
         <Cell ss:Index="44"><Data ss:Type="String">Other Deduction</Data></Cell>  
         <Cell ss:Index="45"><Data ss:Type="String">Latemark Deduction</Data></Cell>
-        
+        <Cell ss:Index="41"><Data ss:Type="String">Income Tax</Data></Cell>
 
-        <Cell ss:Index="46"><Data ss:Type="String">Total Deduction</Data></Cell>
 
-        <Cell ss:Index="47"><Data ss:Type="String">Net Salary</Data></Cell>
+        <Cell ss:Index="42"><Data ss:Type="String">Total Deduction</Data></Cell>
 
-        <Cell ss:Index="48"><Data ss:Type="String">No. of Days in Month</Data></Cell>
-        <Cell ss:Index="49"><Data ss:Type="String">Present Days</Data></Cell>
-        <Cell ss:Index="50"><Data ss:Type="String">Weekoff</Data></Cell>
+        <Cell ss:Index="43"><Data ss:Type="String">Net Salary</Data></Cell>
 
-        <Cell ss:Index="51"><Data ss:Type="String">Pay Leave</Data></Cell>
-        <Cell ss:Index="52"><Data ss:Type="String">Non Pay Leave</Data></Cell>
+        <Cell ss:Index="44"><Data ss:Type="String">No. of Days in Month</Data></Cell>
+        <Cell ss:Index="45"><Data ss:Type="String">Present Days</Data></Cell>
+        <Cell ss:Index="46"><Data ss:Type="String">Weekoff</Data></Cell>
+
+        <Cell ss:Index="47"><Data ss:Type="String">Pay Leave</Data></Cell>
+        <Cell ss:Index="48"><Data ss:Type="String">Non Pay Leave</Data></Cell>
      
 
-        <Cell ss:Index="53"><Data ss:Type="String">Holiday</Data></Cell>
+        <Cell ss:Index="49"><Data ss:Type="String">Holiday</Data></Cell>
         
-        <Cell ss:Index="54"><Data ss:Type="String">Absent Days</Data></Cell>
-        <Cell ss:Index="55"><Data ss:Type="String">Payable Days</Data></Cell>
-        <Cell ss:Index="56"><Data ss:Type="String">Location</Data></Cell>
+        <Cell ss:Index="50"><Data ss:Type="String">Absent Days</Data></Cell>
+        <Cell ss:Index="51"><Data ss:Type="String">Payable Days</Data></Cell>
+        <Cell ss:Index="52"><Data ss:Type="String">Location</Data></Cell>
 
 
       </Row>
@@ -88,7 +90,7 @@
         <% workingday = slip.workingday %>
         <Row>
           <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
-          <Cell ss:Index="2"><Data ss:Type="String"><%= slip.employee.manual_employee_code %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="Number"><%= slip.employee.manual_employee_code %></Data></Cell>
           <Cell ss:Index="3"><Data ss:Type="String"><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></Data></Cell>
           
           <Cell ss:Index="4"><Data ss:Type="String"><%= joining.employee_designation.try(:name) %></Data></Cell>
@@ -121,7 +123,8 @@
               <Cell ss:Index="21"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
             <% when "Washing Allowance" %>
               <Cell ss:Index="22"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
-            <% when "Newspaper Allowence" %>
+
+            <% when "Newspaper Allowance" %>
               <Cell ss:Index="23"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
             <% else %>
             
@@ -145,7 +148,8 @@
               <Cell ss:Index="30"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "Washing Allowance" %>
               <Cell ss:Index="31"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
-            <% when "Newspaper Allowence" %>
+
+            <% when "Newspaper Allowance" %>
               <Cell ss:Index="32"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
 
             <% else %>
@@ -162,37 +166,36 @@
                 <Cell ss:Index="35"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% elsif item.other_component_name == "Professional Tax" %>
                 <Cell ss:Index="36"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
-              <% elsif item.other_component_name == "Retention" %>
-                <Cell ss:Index="37"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
+
               <% elsif item.other_component_name == "WelFare" %>
+                <Cell ss:Index="37"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
+              <% elsif item.other_component_name == "Latemark Deduction" %>
                 <Cell ss:Index="38"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% elsif item.other_component_name == "Advance" %>
-                <Cell ss:Index="41"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
-              <% elsif item.other_component_name == "Income Tax" %>
-                <Cell ss:Index="42"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
+                <Cell ss:Index="39"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% elsif item.other_component_name == "Mobile Deduction" %>
-                <Cell ss:Index="43"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
-              <% elsif item.other_component_name == "Other Deduction" %>
-                <Cell ss:Index="44"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
-              <% elsif item.other_component_name == "Latemark Deduction" %>
-                <Cell ss:Index="45"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
+                <Cell ss:Index="40"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
+             
+              <% elsif item.other_component_name == "Income Tax" %>
+                <Cell ss:Index="41"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
+             
               <% end %>
           <% end %><!-- deducted items -->
 
-          <Cell ss:Index="46"><Data ss:Type="Number"><%= slip.calculated_total_deduction.round %></Data></Cell>
-          <Cell ss:Index="47"><Data ss:Type="Number"><%= slip.calculated_net_salary.round %></Data>
+          <Cell ss:Index="42"><Data ss:Type="Number"><%= slip.calculated_total_deduction.round %></Data></Cell>
+          <Cell ss:Index="43"><Data ss:Type="Number"><%= slip.calculated_net_salary.round %></Data>
           </Cell>
           
-          <Cell ss:Index="48"><Data ss:Type="Number"><%= workingday.day_in_month %></Data></Cell>
-          <Cell ss:Index="49"><Data ss:Type="Number"><%= workingday.present_day %></Data></Cell>
+          <Cell ss:Index="44"><Data ss:Type="Number"><%= workingday.day_in_month %></Data></Cell>
+          <Cell ss:Index="45"><Data ss:Type="Number"><%= workingday.present_day %></Data></Cell>
          
-          <Cell ss:Index="50"><Data ss:Type="Number"><%= workingday.week_off_day %></Data></Cell>
-          <Cell ss:Index="51"><Data ss:Type="Number"><%= workingday.pay_leave %></Data></Cell>
-          <Cell ss:Index="52"><Data ss:Type="Number"><%= workingday.nonpay_leave %></Data></Cell>
-          <Cell ss:Index="53"><Data ss:Type="Number"><%= workingday.holiday_in_month %></Data></Cell>
-          <Cell ss:Index="54"><Data ss:Type="Number"><%= workingday.absent_day %></Data></Cell>
-          <Cell ss:Index="55"><Data ss:Type="Number"><%= workingday.payable_day %></Data></Cell>
-          <Cell ss:Index="56"><Data ss:Type="String"><%= employee.company_location.name %></Data></Cell>
+          <Cell ss:Index="46"><Data ss:Type="Number"><%= workingday.week_off_day %></Data></Cell>
+          <Cell ss:Index="47"><Data ss:Type="Number"><%= workingday.pay_leave %></Data></Cell>
+          <Cell ss:Index="48"><Data ss:Type="Number"><%= workingday.nonpay_leave %></Data></Cell>
+          <Cell ss:Index="49"><Data ss:Type="Number"><%= workingday.holiday_in_month %></Data></Cell>
+          <Cell ss:Index="50"><Data ss:Type="Number"><%= workingday.absent_day %></Data></Cell>
+          <Cell ss:Index="51"><Data ss:Type="Number"><%= workingday.payable_day %></Data></Cell>
+          <Cell ss:Index="52"><Data ss:Type="String"><%= employee.company_location.name %></Data></Cell>
         </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

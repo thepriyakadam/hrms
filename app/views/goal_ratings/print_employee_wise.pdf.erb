@@ -171,7 +171,7 @@
     <tr>
     <% i=i+1%>
     <th><%= i %></th>
-    <th colspan="11"><center>Performance Report for Period: <%= goal_bunch.period.name %> From: <%= goal_bunch.period.from %> To: <%= goal_bunch.period.to %></center></th></tr>
+    <th colspan="11"><center>Performance Report for Period: <%= goal_bunch.period.try(:name) %> From: <%= goal_bunch.period.try(:from) %> To: <%= goal_bunch.period.try(:to)%></center></th></tr>
     <tr><th colspan="11"><center>Goals</center></th></tr>
       <tr>
         <th>Goal Perspective</th>

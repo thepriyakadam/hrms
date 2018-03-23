@@ -197,7 +197,7 @@ class DailyBillDetailsController < ApplicationController
      # @travel_requests = TravelRequest.where(daily_bill_status: true,reporting_master_id: reporting_masters)
 
      # @travel_requests = TravelRequest.where(daily_bill_status: true,current_status: "Approved",reporting_master_id: @reporting_masters)
-     @travel_requests = TravelRequest.where(current_status: "FinalApproved",reporting_master_id: current_user.employee_id)
+     @travel_requests = TravelRequest.where(current_status: "FinalApproved",reporting_master_id: current_user.employee_id,is_confirm: true)
      # @travel_request_histories = TravelRequestHistory.where(daily_bill_status: true,reporting_master_id: reporting_masters)
 
      # @travel_request_histories = TravelRequestHistory.where(daily_bill_status: true,reporting_master_id: reporting_masters)

@@ -587,6 +587,10 @@ class SalaryReport
         when "Transport Allowance"
         sr.actual_transport_alw = a.actual_amount
         sr.earned_transport_alw = a.calculated_amount
+
+          when "Newspaper Allowance"
+        sr.actual_newspaper_alw = a.actual_amount
+        sr.earned_newspaper_alw = a.calculated_amount
         
       end
     end

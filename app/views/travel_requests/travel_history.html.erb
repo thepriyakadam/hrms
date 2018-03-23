@@ -33,6 +33,8 @@
          <small class="label label-success">Edit And Approved</small>
          <% elsif travel_request.current_status == "Approved" %>
          <small class="label label-primary">Approved</small>
+         <% elsif travel_request.current_status == "FirstApproved" %>
+         <small class="label label-info">FirstApproved</small>
          <% elsif travel_request.current_status == "Rejected" %>
          <small class="label label-primary">Rejected</small>
          <% else %>

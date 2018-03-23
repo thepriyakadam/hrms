@@ -26,6 +26,7 @@ class GoalRating < ActiveRecord::Base
      (2..spreadsheet.last_row).each do |i|
         
         goal_rating = GoalRating.where(appraisee_id: emp,period_id: goal_bunch.period_id)
+        
         weigh = 0
         goal_rating.each do |g|
           weigh = g.goal_weightage + weigh

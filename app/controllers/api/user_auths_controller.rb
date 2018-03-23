@@ -2060,4 +2060,25 @@ class Api::UserAuthsController < ApplicationController
     ReportingMastersTravelRequest.create(reporting_master_id: employee_id, travel_request_id: @travel_request.id,travel_status: "Rejected")
     render :status=>200, :json=>{:status=> "Travel Request Rejected Successfully" }
   end
+
+  def employee_expense_claim_request
+    employee_id = params[:employee_id]
+    manager1_id = params[:manager1_id]
+    manager2_id = params[:manager2_id]
+    travel_request_id = params[:id]
+    expence_date = params[:selectedDate]
+    e_place = params[:place]
+    travel_expence_type_id = params[:expense_type]
+    travel_expence = params[:expense_amount]
+    currency_master_id = params[:currency]
+
+    @daily_bill_detail = DailyBillDetail.new(travel_request_id: travel_request_id, expence_date: expence_date, e_place: e_place, travel_expence_type_id: travel_request_id, travel_expence: travel_expence , currency_master_id: currency_master_id)
+    @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
+    if @daily_bill_detail.save
+      @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
+      @daily_bill_detail = DailyBillDetail.new
+      render :status=>200, :json=>{:status=> "Daily Bill Detail saved Successfully." }
+    end
+  end
+
 end

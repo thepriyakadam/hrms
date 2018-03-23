@@ -3294,5 +3294,6 @@ end
     get 'user_auths/cancel_coff_request' => 'user_auths#cancel_coff_request', defaults:{format: 'json'}
     get 'user_auths/approve_travel_request' => 'user_auths#approve_travel_request', defaults:{format: 'json'}
     get 'user_auths/reject_travel_request' => 'user_auths#reject_travel_request', defaults:{format: 'json'}
+    post 'user_auths/employee_expense_claim_request' => 'user_auths#employee_expense_claim_request', defaults:{format: 'json'}
   end
 end

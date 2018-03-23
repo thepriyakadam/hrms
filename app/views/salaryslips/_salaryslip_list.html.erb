@@ -62,9 +62,7 @@
     <% item.try(:actual_amount).try(:round) %>
   <% when "HRA" %>
     <% item.try(:actual_amount).try(:round) %>
-  <% when "Special Allowance" %>
-    <% item.try(:actual_amount).try(:round) %>
-  <% when "Convenience Allowance" %>
+  <% when "Conveyance Allowance" %>
     <% item.try(:actual_amount).try(:round) %>
   <% when "Other Allowance" %>
     <% item.try(:actual_amount).try(:round) %>
@@ -72,13 +70,11 @@
     <% item.try(:actual_amount).try(:round) %>
   <% when "DA" %>
     <% item.try(:actual_amount).try(:round) %>
-  <% when "Driver Allowance" %>
-    <% item.try(:actual_amount).try(:round) %>
   <% when "Medical Allowance" %>
     <% item.try(:actual_amount).try(:round) %>
   <% when "Children Education Allowance" %>
     <% item.try(:actual_amount).try(:round) %>
-  <% when "Rembursement of Medical Allowence" %>
+  <% when "Newspaper Allowance" %>
     <% item.try(:actual_amount).try(:round) %>
   <% when "Monthly Arrear" %>
     <% item.try(:actual_amount).try(:round) %>
@@ -94,9 +90,7 @@
     <% item.try(:calculated_amount).try(:round) %>
   <% when "HRA" %>
     <% item.try(:calculated_amount).try(:round) %>
-  <% when "Special Allowance" %>
-    <% item.try(:calculated_amount).try(:round) %>
-  <% when "Convenience Allowance" %>
+  <% when "Conveyance Allowance" %>
     <% item.try(:calculated_amount).try(:round) %>
   <% when "Other Allowance" %>
     <% item.try(:calculated_amount).try(:round) %>
@@ -104,13 +98,11 @@
     <% item.try(:calculated_amount).try(:round) %>
   <% when "DA" %>
     <% item.try(:calculated_amount).try(:round) %>
-  <% when "Driver Allowance" %>
-    <% item.try(:calculated_amount).try(:round) %>
   <% when "Medical Allowance" %>
     <% item.try(:calculated_amount).try(:round) %>
   <% when "Children Education Allowance" %>
     <% item.try(:calculated_amount).try(:round) %>
-  <% when "Rembursement of Medical Allowence" %>
+  <% when "Newspaper Allowance" %>
     <% item.try(:calculated_amount).try(:round) %>
   <% when "Monthly Arrear" %>
     <% item.try(:calculated_amount).try(:round) %>
@@ -144,7 +136,7 @@
       <% item.try(:calculated_amount).try(:round) %>
     <% elsif item.other_component_name == "Other Deduction" %>
       <% item.try(:calculated_amount).try(:round) %>
-    <% elsif item.other_component_name == "Society Loan" %>
+    <% elsif item.other_component_name == "Latemark Deduction" %>
       <% item.try(:calculated_amount).try(:round) %>
     <% end %>
 <% end %><!-- deducted items -->

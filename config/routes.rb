@@ -1155,6 +1155,8 @@ end
 
   resources :goal_ratings do
     collection do
+      get :periodwise_goal_set
+      post :periodwise_goal_list
       get :select_dropdown
       get :self_modal
       patch :update_self_modal
@@ -2375,6 +2377,9 @@ end
       post :form_12A_report
       get :dynamic_daterange_report
       post :dynamic_daterange_report
+      get :form_16A
+      get :form_16A_report
+      post :form_16A_report
     end
   end
 

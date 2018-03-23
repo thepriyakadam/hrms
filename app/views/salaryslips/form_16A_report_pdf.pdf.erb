@@ -1,0 +1,330 @@
+<div class="box-header">
+  <div class="pull-right">
+  </div>
+</div><!-- /.box-header -->
+<div class="box-body">
+  <div id="comments">
+    <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
+      <thead>
+        <tr>
+          <td colspan="10"><center> 
+            <% if current_user.employee.company_location.company.company_logo == nil %>
+            <%else %>
+              <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+            <%end%> 
+            <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+            <center><strong>PF Computation Report</strong></center>
+            <center><strong><%= @from_date %> <b>-</b> <%= @to_date  %></strong></center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="10">
+            <center><strong>Certificate under Section 203 of the Income-tax Act, 1961 for tax deducted at source on salary</strong></center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5">
+            <strong>Certificate No.</strong> DHWZUVO
+          </td>
+          <td colspan="5">
+            <strong>Last updated on.</strong> DHWZUVO
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5">
+            <center><strong>Name and address of the Employer</strong></center>
+          </td>
+          <td colspan="5">
+            <center><strong>Name and address of the Employee</strong></center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5">
+            <center><% @employee.try(:company).try(:description)%><br />
+            <%= @employee.current_address %>
+            </center></center>
+          <td colspan="5">
+            <center><%= full_name(@employee) %> <br /><%= @employee.current_address %><%= @employee.try(:city)%> <%= @employee.try(:district).try(:name)%><%= @employee.try(:country).try(:name)%></center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <center><strong>PAN of the Deductor</strong></center>
+          </td>
+          <td colspan="3">
+            <center><strong>TAN of the Deductor</strong></center>
+          </td>
+          <td colspan="2">
+            <center><strong>PAN of the Employee</strong></center>
+          </td>
+          <td colspan="2">
+            <center><strong>Employee Reference No.</strong></center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <center><% @employee.pan_no %></center>
+          </td>
+          <td colspan="3">
+            <center><% @employee.try(:company).try(:professional_tax_no)%></center>
+          </td>
+          <td colspan="2">
+            <center><% @employee.try(:company).try(:pan_card_no)%></center>
+          </td>
+          <td colspan="2">
+            <center> </center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <center><strong>CIT (TDS)</strong></center>
+          </td>
+          <td colspan="3">
+            <center><strong>Assessment Year</strong></center>
+          </td>
+          <td colspan="3">
+            <center><strong>Period with the Employer</strong></center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <center> </center>
+          </td>
+          <td colspan="3">
+            <center> </center>
+          </td>
+          <td colspan="2">
+            <center> From <br />
+              <%= params[:from_date] %>
+            </center>
+          </td>
+          <td colspan="2">
+            <center> To <br />
+              <%= params[:to_date] %>
+            </center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="10">
+            <center><strong>Summary of amount paid/credited and tax deducted at source thereon in respect of the employee</strong></center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <center><strong>Quarter(s)</strong></center>
+          </td>
+          <td colspan="2">
+            <center><strong>Receipt Numbers of original quarterly statements of TDS under sub-section (3) of Section 200</strong></center>
+          </td>
+          <td colspan="2">
+            <center><strong>Amount paid/credited</strong></center>
+          </td>
+          <td colspan="2">
+            <center><strong>Amount of tax deducted (Rs.)</strong></center>
+          </td>
+          <td colspan="2">
+            <center><strong>Amount of tax deposited / remitted (Rs.)</strong></center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <center>Q4</center>
+          </td>
+          <td colspan="2">
+            <center>FFXFYJKZ</center>
+          </td>
+          <td colspan="2">
+            <center>135000.00</center>
+          </td>
+          <td colspan="2">
+            <center>6900.00</center>
+          </td>
+          <td colspan="2">
+            <center>6900.00</center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <center>Total (Rs.)</center>
+          </td>
+          <td colspan="2">
+            <center> </center>
+          </td>
+          <td colspan="2">
+            <center>135000.00</center>
+          </td>
+          <td colspan="2">
+            <center>6900.00</center>
+          </td>
+          <td colspan="2">
+            <center>6900.00</center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="10">
+            <center><strong>I. DETAILS OF TAX DEDUCTED AND DEPOSITED IN THE CENTRAL GOVERNMENT ACCOUNT THROUGH BOOK ADJUSTMENT</strong></center>
+            <center>(The deductor to provide payment wise details of tax deducted and deposited with respect to the deductee)</center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="1">
+            <center><strong>Sl. No.</strong></center>
+          </td>
+          <td colspan="1">
+            <center><strong>Tax Deposited in respect of the deductee (Rs.)</strong></center>
+          </td>
+          <td colspan="8">
+            <center><strong>Book Identification Number (BIN)</strong></center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="0.5">
+          </td>
+          <td colspan="0.5">
+          </td>
+          <td colspan="2">
+            <center><strong>Receipt Numbers of Form No. 24G</strong></center>
+          </td>
+          <td colspan="2">
+            <center><strong>DDO serial number in Form no. 24G</strong></center>
+          </td>
+          <td colspan="2">
+            <center><strong>Date of transfer voucher (dd/mm/yyyy)</strong></center>
+          </td>
+          <td colspan="2">
+            <center><strong>Status of matching with Form no. 24G</strong></center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="0.5">
+            <center>Total (Rs.)</center>
+          </td>
+          <td colspan="0.5">
+          </td>
+          <td colspan="8">
+            <center><strong> </strong></center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="10">
+            <center><strong>II. DETAILS OF TAX DEDUCTED AND DEPOSITED IN THE CENTRAL GOVERNMENT ACCOUNT THROUGH CHALLAN</strong></center>
+            <center>(The deductor to provide payment wise details of tax deducted and deposited with respect to the deductee)</center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="1">
+            <center><strong>Sl. No.</strong></center>
+          </td>
+          <td colspan="1">
+            <center><strong>Tax Deposited in respect of the deductee (Rs.)</strong></center>
+          </td>
+          <td colspan="8">
+            <center><strong>Challan Identification Number (CIN)</strong></center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="0.5">
+          </td>
+          <td colspan="0.5">
+          </td>
+          <td colspan="2">
+            <center><strong>BSR Code of the Bank Branch</strong></center>
+          </td>
+          <td colspan="2">
+            <center><strong>Date on which Tax deposited (dd/mm/yyyy)</strong></center>
+          </td>
+          <td colspan="2">
+            <center><strong>Challan Serial Number</strong></center>
+          </td>
+          <td colspan="2">
+            <center><strong>Status of matching with OLTAS*</strong></center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="0.5">1
+
+          </td>
+          <td colspan="0.5">2300.00
+          </td>
+          <td colspan="2">
+            <center>0011352</center>
+          </td>
+          <td colspan="2">
+            <center>08-02-2017</center>
+          </td>
+          <td colspan="2">
+            <center>05145</center>
+          </td>
+          <td colspan="2">
+            <center>F</center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="0.5">2
+          </td>
+          <td colspan="0.5">2300.00
+          </td>
+          <td colspan="2">
+            <center>0013283</center>
+          </td>
+          <td colspan="2">
+            <center>24-03-2017</center>
+          </td>
+          <td colspan="2">
+            <center>07982</center>
+          </td>
+          <td colspan="2">
+            <center>F</center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="0.5">3
+          </td>
+          <td colspan="0.5">2300.00
+          </td>
+          <td colspan="2">
+            <center>0013283</center>
+          </td>
+          <td colspan="2">
+            <center>08-04-2017</center>
+          </td>
+          <td colspan="2">
+            <center>03115</center>
+          </td>
+          <td colspan="2">
+            <center>F</center>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="0.5">
+            <center><strong> Total (Rs.)</strong></center>
+          </td>
+          <td colspan="0.5">
+            <strong>6900.00</strong>
+          </td>
+          <td colspan="2">
+          </td>
+          <td colspan="2">
+          </td>
+          <td colspan="2">
+          </td>
+          <td colspan="2">
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <%#= link_to " Excel Report ", pf_computation_report_salaryslips_path(from_date: params[:statutory_report][:from_date], to_date: params[:statutory_report][:to_date], company_id: params[:salaryslip][:company_id], company_location_id: params[:salaryslip][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  
+
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

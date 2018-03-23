@@ -48,6 +48,7 @@ class OnDutyRequestsController < ApplicationController
     #   redirect_to new_on_duty_request_path
     # else
       # if  start_date.to_date >= payroll_period.from.to_date && end_date.to_date <= payroll_period.to.to_date
+
       if @on_duty_request.is_available?
         flash[:alert] = "Your Request already has been sent"
         if current_user.employee_id == @on_duty_request.employee_id

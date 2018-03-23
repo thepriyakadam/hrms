@@ -1436,13 +1436,14 @@ class Api::UserAuthsController < ApplicationController
   end
 
   def current_location_particular_emp
+    date = params[:date].to_date
     emp_id = params[:employee_id]
-    elh = EmployeeLocationHistory.where(employee_id: emp_id).last
-    if elh.present?
-      render :status=>200, :json=>{ :id => elh.id, :employee_id => elh.employee_id, :date => elh.date, :time => elh.time, :latitude => elh.latitude, :longitude => elh.longitude, :location => elh.location }
+    if date.present?
+      elh = EmployeeLocationHistory.where(employee_id: emp_id, date: date.to_date)
     else
-      render :status=>200, :json=>{:status=>"Employee location history not Found..."}
+      elh = EmployeeLocationHistory.where(employee_id: emp_id, date: Time.now.to_date)
     end
+    render :json => elh.present? ? elh.collect{|elh| { :id => elh.id, :employee_id => elh.employee_id, :date => elh.date, :time => elh.time.strftime("%I:%M %p"), :latitude => elh.latitude, :longitude => elh.longitude, :location => elh.location }} : []
   end
 
   def project_master_list

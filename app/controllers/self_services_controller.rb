@@ -244,7 +244,6 @@ class SelfServicesController < ApplicationController
                 end
               end#do
             end#c_off.nil?
-            #byebug
 
             if @emp_attendance.holiday_id.present? || @emp_attendance.employee_week_off_id.present?
               if @emp_attendance.on_duty_request_id.present?

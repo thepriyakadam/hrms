@@ -1754,9 +1754,9 @@ class Api::UserAuthsController < ApplicationController
               @c_off.each do |l|
                 if l.try(:expiry_date).to_date < Date.today
                   @employee_leave_balance = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take  
-                  @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - l.leave_count
+                 # @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - l.leave_count
                   LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
-                  @employee_leave_balance.save
+                 # @employee_leave_balance.save
                 else
                   @employee_leave_balance = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take
                   @employee_leave_balance.save

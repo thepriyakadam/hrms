@@ -269,6 +269,7 @@ class SalaryslipsController < ApplicationController
         template: 'salaryslips/print_salary_slip_rg.pdf.erb',
         :page_height  => 1000,
         :dpi          => '300',
+
         :margin       => {:top    => 10, :bottom => 10,:left   => 10,:right  => 10},
         :show_as_html => params[:debug].present?
       end
@@ -495,8 +496,6 @@ class SalaryslipsController < ApplicationController
                   is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
               end
             end
-
-
             transport_allowance = TransportAllowance.find_by_employee_id(@employee.id)
             unless transport_allowance.nil?
               if transport_allowance.option
@@ -852,7 +851,6 @@ class SalaryslipsController < ApplicationController
                   end
                 end
               end
-
               @salaryslip = Salaryslip.last
               @salaryslip_component1 = SalaryslipComponent.where(salaryslip_id: @salaryslip.id)
               @salaryslip_component2 = SalaryslipComponent.where(salaryslip_id: @salaryslip.id,is_deducted: true)
@@ -1748,6 +1746,39 @@ end
     @employee_id = params[:salaryslip] ? params[:salaryslip][:employee_id] : params[:employee_id]
     @company = params[:salaryslip] ? params[:salaryslip][:company_id] : params[:company_id]
     @company_location = params[:salaryslip] ? params[:salaryslip][:company_location_id] : params[:company_location_id]
+  end
+
+  def form_16A
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] ="StatutoryReport"
+  end
+
+  def form_16A_report
+    @from_date = params[:from_16A] ? params[:from_16A][:from_date] : params[:from_date]
+    @to_date = params[:from_16A] ? params[:from_16A][:to_date] : params[:to_date]
+    @employee_id = params[:salaryslip] ? params[:salaryslip][:employee_id] : params[:employee_id]
+    @employee = Employee.find(@employee_id)
+    # @company = params[:salaryslip] ? params[:salaryslip][:company_id] : params[:company_id]
+    # @company_location = params[:salaryslip] ? params[:salaryslip][:company_location_id] : params[:company_location_id]
+    respond_to do |format|
+      format.js
+      format.xls {render template: 'salaryslips/form_16A_report_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'form_16A_report_pdf',
+            layout: 'pdf.html',
+            orientation: 'Portrait',
+            template: 'salaryslips/form_16A_report_pdf.pdf.erb',
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 10,
+                          :right  => 10},
+            :show_as_html => params[:debug].present?
+      end
+    end
   end
 
   def leave_detail

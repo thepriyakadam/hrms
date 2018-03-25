@@ -79,7 +79,8 @@ class GoalBunch < ActiveRecord::Base
               goal_rating.update(appraisee_comment: self_comment,appraisee_rating_id: @self_rating_id)
             end
           end# goal_rating_id == nil
-    end#do
+      end#do
+    end
   end
 
    def self.import_appraiser_evaluation(file)

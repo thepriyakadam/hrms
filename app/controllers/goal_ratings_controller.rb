@@ -92,6 +92,8 @@ class GoalRatingsController < ApplicationController
   end
 
   def admin_level_period
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
     @periods = Period.where(status: true).group(:id)
     @goal_bunches = GoalBunch.where(period_id: @periods).group(:period_id)
   end
@@ -99,8 +101,6 @@ class GoalRatingsController < ApplicationController
   def admin_level_goal_set
     @period = Period.find(params[:period_id])
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
-    session[:active_tab] ="performancemgmt"
-    session[:active_tab1] ="perform_cycle"
     # goal_bunches = GoalBunch.where(period_id: @period.id).pluck(:employee_id)
     # @employees = Employee.where(status: "Active",id: goal_bunches)
 
@@ -762,24 +762,50 @@ class GoalRatingsController < ApplicationController
   end
 
   def periodwise_goal_set
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
   end
 
   def periodwise_goal_list
-    period_id = params[:salary][:period_id]
-    period_id1 = params[:salary][:period_id1]
-    @goal_bunches = GoalBunch.where(period_id: period_id)
-    @goal_bunches1 = GoalBunch.where(period_id: period_id1)
-    @goal_bunches.each do |g|
-      goal_ratings = GoalRating.where(appraisee_id: g.employee_id,period_id: period_id1)
-      if goal_ratings.nil?
-        goal_rating = GoalRating.where(appraisee_id: g.employee_id,period_id: period_id)
-        if goal_rating.nil?
-        else
-          # GoalRating.create(goal_bunch_id: )
-        end
+    @period_id = params[:salary][:period_id]
+    @period_id1 = params[:salary][:period_id1]
+    @goal_bunches1 = GoalBunch.where(period_id: @period_id)
+    @goal_bunches2 = GoalBunch.where(period_id: @period_id1).pluck(:employee_id)
+    @goal_bunches = GoalBunch.where(period_id: @period_id).where.not(employee_id: @goal_bunches2)
+    
+  end
+
+  def set_goal_periodwise
+    period1 = Period.find(params[:period_id1])
+    period = Period.find(params[:period_id])
+    @period_id1 = period1.id
+    @period_id = period.id
+      @goal_bunches_ids = params[:goal_bunches_ids]
+      if @goal_bunches_ids.nil?
+        flash[:alert] = "Please Select the Checkbox"
       else
-      end#goal_ratings.nil?
-    end#do
+        @goal_bunches_ids.each do |g|
+          @goal_bunch = GoalBunch.find_by(id: g)
+          goal_rating1 = GoalRating.where(appraisee_id: @goal_bunch.employee_id,period_id: @period_id1)
+          if goal_rating1 == [] || goal_rating1.nil?
+            goal_rating = GoalRating.where(appraisee_id: @goal_bunch.employee_id,period_id: @period_id).take
+            goal_ratings = GoalRating.where(appraisee_id: @goal_bunch.employee_id,period_id: @period_id)
+              goal_bunch = GoalBunch.create(period_id: @period_id1,employee_id: @goal_bunch.employee_id)
+            if goal_rating.nil?
+            else
+              goal_ratings.each do |gr|
+                GoalRating.create(goal_bunch_id: goal_bunch.id,goal_perspective_id: gr.goal_perspective_id,goal_weightage: gr.goal_weightage,
+                goal_measure: gr.goal_measure,target: gr.target,aligned: gr.aligned,goal_setter_id: current_user.employee_id,
+                appraisee_id: gr.appraisee_id,appraiser_id: gr.appraiser_id,attribute_master_id: gr.attribute_master_id,
+                goal_type: gr.goal_type,period_id: @period_id1,activity: gr.activity)
+              end
+              flash[:notice] = "Goal Set Successfully!"        
+            end
+          else
+          end#goal_rating1.nil?
+        end#do
+      end#@goal_bunches_ids.nil?
+      redirect_to periodwise_goal_set_goal_ratings_path
   end
 
     private

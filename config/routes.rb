@@ -1157,6 +1157,7 @@ end
     collection do
       get :periodwise_goal_set
       post :periodwise_goal_list
+      post :set_goal_periodwise
       get :select_dropdown
       get :self_modal
       patch :update_self_modal

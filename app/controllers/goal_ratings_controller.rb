@@ -105,7 +105,7 @@ class GoalRatingsController < ApplicationController
     # @employees = Employee.where(status: "Active",id: goal_bunches)
 
     #@goal_bunches = GoalBunch.where(period_id: @period.id,goal_confirm: nil).group(:employee_id,:period_id)
-    @goal_bunches = GoalBunch.all
+    @goal_bunches = GoalBunch.where(period_id: @period.id)
     # @goal_bunches = []
     # goal_bunches.each do |g|
     #   @goal_bunches << g
@@ -279,7 +279,7 @@ class GoalRatingsController < ApplicationController
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
 
     sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
-    if sum == 100
+    if sum.round == 100
       @emp = Employee.find(current_user.employee_id)
       #GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
       @gol_bunch = GoalBunch.find_by(id: @goal_bunch.id).update(goal_confirm: true,appraiser_confirm: false,goal_approval: false)

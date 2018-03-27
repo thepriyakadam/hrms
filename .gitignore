@@ -62,3 +62,7 @@ config/database.yml
 
 # Ignore schema file
 db/schema.rb
+
+#Gemfiles
+Gemfile
+Gemfile.lock

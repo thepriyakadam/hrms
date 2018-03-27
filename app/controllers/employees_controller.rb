@@ -424,8 +424,8 @@
 
             ManagerHistory.create(employee_id: employee.id,manager_id: manager_1,manager_2_id: manager_2,effective_from: params["login"]["effec_date"])
 
-            EmployeeMailer.user_confirmation(employee,password,manual_employee_code).deliver_now
-            EmployeeMailer.manager_detail(manager_1,employee).deliver_now
+#            EmployeeMailer.user_confirmation(employee,password,manual_employee_code).deliver_now
+ #           EmployeeMailer.manager_detail(manager_1,employee).deliver_now
             flash[:notice] = "Employee assigned successfully."
             #redirect_to assign_role_employees_path
             # UserPasswordMailer.welcome_email(company,pass).deliver_now

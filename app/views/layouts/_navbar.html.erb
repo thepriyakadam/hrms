@@ -125,6 +125,14 @@
         </div>
         <!-- Default to the left -->
         <strong> Copyright © <%= Time.new.year %> <a href="#">HCM-ZONE</a>.</strong> All Right Reserved.| Powered By : Indiba Business Solutions.
+
+	<% @comapny = current_user.company_location.company.try(:name) %>
+        <% @location = current_user.company_location.try(:name) %>
+        <% @manual_employee_code = current_user.try(:manual_member_code) %>
+        <% @employee = current_user.employee %>
+        <% @employee_name = full_name(@employee) %>
+        
+        <%= link_to "Support", "http://localhost:3002/support_requests/new?company=#{@comapny}&location=#{@location}&manual_employee_code=#{@manual_employee_code}&employee_name=#{@employee_name}", :company => current_user.company_location.company.try(:name), :user => current_user.id, :target => "_blank" %>
       </footer>
       <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->

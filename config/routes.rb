@@ -3119,7 +3119,7 @@ end
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-
+  
   namespace :api do
     resources :user_auths,:only => [:create], defaults: {format: 'json'}
     post 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
@@ -3206,5 +3206,29 @@ end
     get 'user_auths/admin_att' => 'user_auths#admin_att', defaults:{format: 'json'}
     post 'user_auths/admin_attendance_list' => 'user_auths#admin_attendance_list', defaults:{format: 'json'}
     get 'user_auths/yearly_company_holiday' => 'user_auths#yearly_company_holiday', defaults:{format: 'json'}
+    get 'user_auths/all_employee_details' => 'user_auths#all_employee_details', defaults:{format: 'json'}
+    get 'user_auths/all_emp_leave_details' => 'user_auths#all_emp_leave_details', defaults:{format: 'json'}
+    get 'user_auths/all_emp_od_details' => 'user_auths#all_emp_od_details', defaults:{format: 'json'}
+    get 'user_auths/all_com_off_request_list' => 'user_auths#all_com_off_request_list', defaults:{format: 'json'}
+    post 'user_auths/employee_c_off_request' => 'user_auths#employee_c_off_request', defaults:{format: 'json'}
+    get 'user_auths/travel_option_list' => 'user_auths#travel_option_list', defaults:{format: 'json'}
+    get 'user_auths/travel_mode_list' => 'user_auths#travel_mode_list', defaults:{format: 'json'}
+    post 'user_auths/employee_travel_request' => 'user_auths#employee_travel_request', defaults:{format: 'json'}
+    get 'user_auths/travel_approval_list' => 'user_auths#travel_approval_list', defaults:{format: 'json'}
+    get 'user_auths/cancel_travel_request' => 'user_auths#cancel_travel_request', defaults:{format: 'json'}
+    get 'user_auths/com_off_aprroval_list' => 'user_auths#com_off_aprroval_list', defaults:{format: 'json'}
+    get 'user_auths/admin_com_off_aprroval' => 'user_auths#admin_com_off_aprroval', defaults:{format: 'json'}
+    get 'user_auths/approve_c_off_request' => 'user_auths#approve_c_off_request', defaults:{format: 'json'}
+    get 'user_auths/reject_c_off_request' => 'user_auths#reject_c_off_request', defaults:{format: 'json'}
+    get 'user_auths/travel_request_list' => 'user_auths#travel_request_list', defaults:{format: 'json'}
+    get 'user_auths/admin_travel_approval_list' => 'user_auths#admin_travel_approval_list', defaults:{format: 'json'}
+    get 'user_auths/expense_claim_list' => 'user_auths#expense_claim_list', defaults:{format: 'json'}
+    get 'user_auths/expense_type_list' => 'user_auths#expense_type_list', defaults:{format: 'json'}
+    get 'user_auths/all_currency' => 'user_auths#all_currency', defaults:{format: 'json'}
+    get 'user_auths/claim_list' => 'user_auths#claim_list', defaults:{format: 'json'}
+    get 'user_auths/cancel_coff_request' => 'user_auths#cancel_coff_request', defaults:{format: 'json'}
+    get 'user_auths/approve_travel_request' => 'user_auths#approve_travel_request', defaults:{format: 'json'}
+    get 'user_auths/reject_travel_request' => 'user_auths#reject_travel_request', defaults:{format: 'json'}
+    post 'user_auths/employee_expense_claim_request' => 'user_auths#employee_expense_claim_request', defaults:{format: 'json'}
   end
 end

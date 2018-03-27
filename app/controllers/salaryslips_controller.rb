@@ -809,7 +809,7 @@ require 'numbers_in_words/duck_punch'
           formula_item_calculated_amount = (@total / 100 * @bonus_employer.percentage).ceil
           formula_item_actual_amount = (@total_actual / 100 * @bonus_employer.percentage).ceil
 
-          @e1=EmployerContribution.where(id: a.id).update_all(date: date,bonus: formula_item_calculated_amount,actual_bonus: formula_item_actual_amount)
+         @e1=EmployerContribution.where(id: a.id).update_all(date: date,bonus: formula_item_calculated_amount,actual_bonus: formula_item_actual_amount)
           else
           formula_item_calculated_amount = (@bonus_employer.limit_amount / 100 * @bonus_employer.percentage).ceil
           formula_item_actual_amount = (@bonus_employer.limit_amount / 100 * @bonus_employer.percentage).ceil
@@ -1082,7 +1082,7 @@ require 'numbers_in_words/duck_punch'
           addable_actual_amount = 0
           addable_calculated_amount = transport_allowance.amount * working_day.try(:payable_day)/working_day.try(:day_in_month)
           @salary_component = SalaryComponent.find_by(name: "Transport Allowance")
-          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: addable_calculated_amount, calculated_amount: addable_calculated_amount, is_deducted: false, other_component_name: 'Transport Allowance',salary_component_id: @salary_component.id)
+          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: addable_actual_amount, calculated_amount: addable_calculated_amount, is_deducted: false, other_component_name: 'Transport Allowance',salary_component_id: @salary_component.id)
         end
       end
 

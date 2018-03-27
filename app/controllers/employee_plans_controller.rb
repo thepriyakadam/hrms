@@ -71,16 +71,16 @@ class EmployeePlansController < ApplicationController
     @employee = Employee.find(emp_id)
     @employee_plan = EmployeeLocationHistory.where(employee_id: emp_id)
     if from_date.present? && !to_date.present?
-      @emp_report = EmployeeLocationHistory.where("date >= ? and employee_id =?", from_date.to_date, emp_id).order("from_date DESC")
+      @emp_report = EmployeeLocationHistory.where("date >= ? and employee_id =?", from_date.to_date, emp_id).order("date DESC")
     end
     if !from_date.present? && to_date.present?
-      @emp_report = EmployeeLocationHistory.where("date <= ? and employee_id =?", to_date.to_date, emp_id).order("from_date DESC")
+      @emp_report = EmployeeLocationHistory.where("date <= ? and employee_id =?", to_date.to_date, emp_id).order("date DESC")
     end
     if from_date.present? && to_date.present?
-      @emp_report = EmployeeLocationHistory.where(date:  from_date.to_date..to_date.to_date, employee_id: emp_id).order("from_date DESC")
+      @emp_report = EmployeeLocationHistory.where(date:  from_date.to_date..to_date.to_date, employee_id: emp_id).order("date DESC")
     end
     if !from_date.present? && !to_date.present? && emp_id.present?
-      @emp_report = EmployeeLocationHistory.where("employee_id =?", emp_id).order("from_date DESC")
+      @emp_report = EmployeeLocationHistory.where("employee_id =?", emp_id).order("date DESC")
     end
 
     respond_to do |format|

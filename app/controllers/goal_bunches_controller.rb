@@ -369,6 +369,7 @@ class GoalBunchesController < ApplicationController
     @goal_bunch_id = GoalBunch.find(params[:id]) 
     @employee = Employee.find(params[:emp_id])
     @goal_bunches = GoalBunch.find_by(id: @goal_bunch_id.id)
+    @period = Period.find_by(id: @goal_bunches.period_id)
 
     @employees = Employee.where(id: @employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)
@@ -376,16 +377,16 @@ class GoalBunchesController < ApplicationController
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
 
-    @employee_promotions = EmployeePromotion.where(employee_id: current_user.employee_id)
+    @employee_promotions = EmployeePromotion.where(employee_id: @employee.id)
     #@self_goal_ratings = GoalRating.where(appraisee_id: current_user.employee_id, goal_bunch_id: @goal_bunch_id.id).where.not(appraisee_comment: nil)
     @goal_rating = GoalRating.new
 
-    @self_goal_ratings = GoalRating.where(appraisee_id: current_user.employee_id, goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal').where.not(appraisee_comment: nil)
+    @self_goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal').where.not(appraisee_comment: nil)
     @self_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch_id.id ,'Attribute').where.not(appraisee_comment: nil)
     
      @goal_bunche = GoalBunch.where(employee_id: @employee.id)
 
-    @goal_bunch = GoalBunch.where(employee_id: current_user.employee_id, goal_approval: true, id: @goal_bunch_id.id).take
+    @goal_bunch = GoalBunch.where(employee_id:@employee.id, goal_approval: true, id: @goal_bunch_id.id).take
     if @goal_bunch.nil?
       @goal_ratings = []
       flash[:alert] = "Not Approved By Appraiser"
@@ -781,6 +782,7 @@ class GoalBunchesController < ApplicationController
   def modal_self_overall
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @appraisee_overall = params[:appraisee_overall]
+    @employee = Employee.find(params[:employee_id])
   end
 
   def self_overall_comment_create
@@ -809,10 +811,11 @@ class GoalBunchesController < ApplicationController
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @appraiser_overall = params[:appraiser_overall]
     @period = Period.find(params[:period_id])
+    @employee = Employee.find(params[:employee_id])
   end
 
   def appraiser_overall_comment_create
-    @employee = Employee.find(current_user.employee_id)
+    @employee = Employee.find(params[:employee_id])
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @appraiser_overall = params[:appraiser_overall]
     @period = Period.find(params[:period_id])
@@ -842,10 +845,11 @@ class GoalBunchesController < ApplicationController
   def modal_reviewer_overall
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @period = Period.find(params[:period_id])
+    @employee = Employee.find(params[:employee_id])
   end
 
   def reviewer_overall_comment_create
-    @employee = Employee.find(current_user.employee_id)
+    @employee = Employee.find(params[:employee_id])
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @period = Period.find(params[:period_id])
 

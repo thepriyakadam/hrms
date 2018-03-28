@@ -68,6 +68,7 @@ GEM
       railties (>= 3.0)
     bootstrap3-datetimepicker-rails (4.0.0)
       momentjs-rails (>= 2.8.1)
+    bootstrap_form (2.7.0)
     builder (3.2.3)
     byebug (10.0.1)
     cancancan (1.17.0)
@@ -353,6 +354,7 @@ DEPENDENCIES
   bcrypt-ruby (~> 3.0.0)
   bootstrap-datepicker-rails
   bootstrap3-datetimepicker-rails (~> 4.0.0)
+  bootstrap_form
   bundler
   byebug
   cancancan (~> 1.10)
@@ -413,3 +415,6 @@ DEPENDENCIES
   wirble
   wkhtmltopdf-binary (~> 0.9.9.3)
   yaml_db
+
+BUNDLED WITH
+   1.16.1

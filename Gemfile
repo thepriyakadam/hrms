@@ -133,7 +133,6 @@ gem 'apartment'
 gem 'local-subdomain'
 # Bootstrap form
 gem 'bootstrap_form'
-
 # Jquery validation
 gem 'jquery-validation-rails'
 

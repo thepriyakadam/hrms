@@ -17,7 +17,7 @@ gem 'ruby-odbc'
 gem 'dbi'
 gem 'activerecord-session_store'
 
-# gem 'mdb'
+gem 'mdb'
 
 gem 'ruby-graphviz', '~> 1.2', '>= 1.2.2'
 
@@ -64,6 +64,7 @@ gem 'json', '~> 1.8', '>= 1.8.3'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'thin', '~> 1.6', '>= 1.6.4'
+
 gem 'bundler'
 
 gem 'delayed_job_active_record'
@@ -93,15 +94,22 @@ gem 'bcrypt-ruby', '~> 3.0.0', :require => 'bcrypt'
 gem 'bcrypt'
 
 # gem 'backup', '~> 4.4'
+# Use ActiveModel has_secure_password
+# gem 'bcrypt', '~> 3.1.7'
+
+
+# Use Unicorn as the app server
+# gem 'unicorn'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
-        # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-        gem 'byebug'
-        gem 'cucumber-rails', :require => false
-        # database_cleaner is not required, but highly recommended
-        gem 'database_cleaner'
+	# Call 'byebug' anywhere in the code to stop execution and get a debugger console
+	gem 'byebug'
+	gem 'cucumber-rails', :require => false
+	# database_cleaner is not required, but highly recommended
+	gem 'database_cleaner'
 end
 
 group :development do
@@ -124,6 +132,7 @@ gem 'cancancan', '~> 1.10'
 gem 'apartment'
 gem 'local-subdomain'
 # Bootstrap form
+gem 'bootstrap_form'
 
 # Jquery validation
 gem 'jquery-validation-rails'
@@ -139,7 +148,8 @@ gem 'protokoll'
 # gem 'countries'
 gem 'city-state'
 
-# gem 'rmagick', '~> 2.15.4'
+
+ # gem 'rmagick', '~> 2.15.4'
 
 # infinite-cove-6619
 # DateTimePicker
@@ -163,6 +173,3 @@ gem "axlsx_rails"
 #Chart
 gem "chartkick"
 gem 'pry'
-
-
-

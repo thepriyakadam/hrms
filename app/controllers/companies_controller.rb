@@ -27,7 +27,7 @@ class CompaniesController < ApplicationController
     @country = @company.country
     @states = @country.states
     @state = @company.state
-    @cities = @state.districts
+    @cities = @state.try(:districts)
     @form = 'company'
   end
 

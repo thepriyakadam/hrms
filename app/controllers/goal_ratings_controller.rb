@@ -406,7 +406,7 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.find(params[:goal_rating_id])
     appraisee_comment = params[:goal_rating][:appraisee_comment]
     appraisee_rating_id = params[:goal_rating][:appraisee_rating_id]
-    document = params[:goal_rating][:document]
+    #document = params[:goal_rating][:document]
     period = Period.find_by(id: @goal_rating.period_id)
 
     @rating = Rating.find_by(id: appraisee_rating_id)
@@ -414,10 +414,10 @@ class GoalRatingsController < ApplicationController
       weightage = @goal_rating.goal_weightage
       rating = @rating.value
       if rating.to_i < weightage.to_i
-        @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: appraisee_rating_id,document: document)
+        @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: appraisee_rating_id)
       else
         rating1 = Rating.where(value: @goal_rating.goal_weightage).take
-        @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: rating1.id,document: document)
+        @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: rating1.id)
       end
     else
       @goal_rating.update(goal_rating_params)

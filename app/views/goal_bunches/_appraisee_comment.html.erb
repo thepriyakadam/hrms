@@ -299,7 +299,7 @@
                   <%= link_to '', self_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote: true %> 
                   <% if goal_rating.document_file_name.nil? %>
                   <% else %>
-                   <%= link_to ' ',download_self_document_path(id: goal_rating.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
+<!--                    <#%= link_to ' ',download_self_document_path(id: goal_rating.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %> -->
                   <% end %>
                 <% else %>
                 <% end %>
@@ -358,7 +358,7 @@
                   <%= link_to '', self_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote: true %> 
                   <% if goal_rating.document_file_name.nil? %>
                   <% else %>
-                   <%= link_to ' ',download_self_document_path(id: goal_rating.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
+                  <!--  <#%= link_to ' ',download_self_document_path(id: goal_rating.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %> -->
                   <% end %>
                 <% else %>
                 <% end %>

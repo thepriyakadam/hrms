@@ -28,8 +28,8 @@
       <span class="info-box-icon bg-green"><i class="glyphicon glyphicon-th"></i></span>
       <div class="info-box-content">
        <span class="info-box-text">Departments</span>
-        <span class="info-box-number"><%= 16 %></span>
-        <!-- <span class="info-box-number"><= @departments.try(:count) %></span> -->
+       <!-- <span class="info-box-number"><= 16 %></span> -->
+        <span class="info-box-number"><%= @departments.try(:count) %></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
   </div><!-- /.col -->
@@ -411,9 +411,8 @@
         </div><!-- /.box-header -->
         <div class="box-body">
           <ul class="products-list product-list-in-box">
-          <% fifteen_days_back = Time.now.to_date - 15.days %>
-          <% JoiningDetail.where(joining_date: fifteen_days_back.to_date..Time.now.to_date).try(:each) do |j| %>
-              
+              <% fifteen_days_back = Time.now.to_date - 15.days %>
+               <% JoiningDetail.where(joining_date: fifteen_days_back.to_date..Time.now.to_date).try(:each) do |j| %>
                 <% if j.employee.status == "Active" %>
                   <li class="item">
                     <div class="product-img">

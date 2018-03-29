@@ -11,11 +11,11 @@ gem 'mysql2', '~> 0.3.18'
 
 gem 'numbers_in_words'
 
-gem 'tiny_tds'
-gem 'activerecord-sqlserver-adapter'
-gem 'ruby-odbc'
-gem 'dbi'
-gem 'activerecord-session_store'
+#gem 'tiny_tds'
+#gem 'activerecord-sqlserver-adapter'
+#gem 'ruby-odbc'
+#gem 'dbi'
+#gem 'activerecord-session_store'
 
 # gem 'mdb'
 
@@ -125,6 +125,8 @@ gem 'apartment'
 gem 'local-subdomain'
 # Bootstrap form
 
+gem 'bootstrap_form'
+
 # Jquery validation
 gem 'jquery-validation-rails'
 
@@ -139,7 +141,7 @@ gem 'protokoll'
 # gem 'countries'
 gem 'city-state'
 
-# gem 'rmagick', '~> 2.15.4'
+gem 'rmagick', '~> 2.15.4'
 
 # infinite-cove-6619
 # DateTimePicker

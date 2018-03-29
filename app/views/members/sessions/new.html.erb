@@ -9,11 +9,10 @@
 
   <!-- <= image_tag "redefine_logo.jpg",size: "120x120" %> -->
  <!--  <= image_tag "spark.jpg",size: "270x100" %> -->
-<!--   <= image_tag "span_pumps_logo.jpg",size: "120x120" %> -->
+<!--   <= image_tag "span_pumps_logo.jpg",size: "120x150" %> -->
    <% t = Company.first %>
-   <% company_logo = t.company_logo.url %>
-   <%= image_tag company_logo, size: "120x120" %>
-   
+<% company_logo = t.company_logo.url %>
+<%= image_tag company_logo, size: "300x90" %>  
   </div><!-- /.login-logo -->
   <p><center><strong>Welcome To HCMZONE </strong></center></p>
   <div class="login-box-body">

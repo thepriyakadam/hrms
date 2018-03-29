@@ -31,6 +31,14 @@ class GoalRatingsController < ApplicationController
     redirect_to new_goal_rating_path(id: @goal_bunch, emp_id:@employee)
   end
   
+  def download_self_document
+    @goal_rating = GoalRating.find(params[:id])
+    send_file @goal_rating.document.path,
+              filename: @goal_rating.document_file_name,
+              type: @goal_rating.document_content_type,
+              disposition: 'attachment'
+  end
+
   def goal_set
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @employee = Employee.find(params[:employee_id])
@@ -398,6 +406,7 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.find(params[:goal_rating_id])
     appraisee_comment = params[:goal_rating][:appraisee_comment]
     appraisee_rating_id = params[:goal_rating][:appraisee_rating_id]
+    document = params[:goal_rating][:document]
     period = Period.find_by(id: @goal_rating.period_id)
 
     @rating = Rating.find_by(id: appraisee_rating_id)
@@ -405,10 +414,10 @@ class GoalRatingsController < ApplicationController
       weightage = @goal_rating.goal_weightage
       rating = @rating.value
       if rating.to_i < weightage.to_i
-        @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: appraisee_rating_id)
+        @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: appraisee_rating_id,document: document)
       else
         rating1 = Rating.where(value: @goal_rating.goal_weightage).take
-        @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: rating1.id)
+        @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: rating1.id,document: document)
       end
     else
       @goal_rating.update(goal_rating_params)

@@ -156,15 +156,18 @@ class GoalBunchesController < ApplicationController
 
       @goal_bunch = GoalBunch.find_by(id: @goal_bunch_id)
       sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
-    if sum == 100
+    if sum.round == 100
       @goal_bunch.update(goal_approval: true)
       flash[:notice] = "Confirmed Successfully" 
       GoalBunchMailer.send_email_to_appraisee(@goal_bunch).deliver_now
-      redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
     else
       flash[:alert] = "Goal weightage sum should be 100"
-      redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
     end 
+    if @employee.id == current_user.employee_id
+      redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
+    else
+      redirect_to admin_level_goal_approval_goal_bunches_path(period_id: @period.id)
+    end
   end
 
   def revert_goal
@@ -318,12 +321,13 @@ class GoalBunchesController < ApplicationController
     @goal_rating_ids = params[:goal_rating_ids]
     comments = params[:appraisee_comment]
     ratings = params[:appraisee_rating]
-    @document = params[:goal_ratings][:document]
+    documents = params[:goal_ratings][:document]
+    doc = [documents]
 
     goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @period = Period.find_by(id: goal_bunch.period_id)
-    final = @goal_rating_ids.zip(comments,ratings)
-    final.each do |e, c, r|
+    final = @goal_rating_ids.zip(comments,ratings,doc)
+    final.each do |e, c, r,d|
       @goal_rating = GoalRating.find(e)
       if c == ''
         flash[:alert] = 'Fill comments'
@@ -332,17 +336,17 @@ class GoalBunchesController < ApplicationController
       else
         if @period.marks == true
           @rating = Rating.find_by(id: r)
-          weightage = goal_rating.goal_weightage
+          weightage = @goal_rating.goal_weightage
           rating = @rating.value
 
           if rating.to_i <= weightage.to_i
-            @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r,document: @document)
+            @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r,document: d)
           else
             rating1 = Rating.where(value: goal_rating.goal_weightage).take
-            @goal_rating.update(appraisee_comment: c, appraisee_rating_id: rating1.id,document: @document)
+            @goal_rating.update(appraisee_comment: c, appraisee_rating_id: rating1.id,document: d)
           end
         else
-          @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r,document: @document)
+          @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r,document: d)
         end
         flash[:notice] = 'Self Comment & Rating Created Successfully'
       end
@@ -394,7 +398,7 @@ class GoalBunchesController < ApplicationController
       flash[:alert] = "Not Approved By Appraiser"
     else
       #@goal_ratings = @goal_bunch.goal_ratings.where(appraisee_comment: nil)
-      @goal_ratings = @goal_bunch.goal_ratings.where(appraisee_comment: nil,goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
+      @goal_ratings = @goal_bunch.goal_ratings.where(appraisee_comment: nil,goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal')
       @goal_attribute_ratings = @goal_bunch.goal_ratings.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch_id.id ,'Attribute').where(appraisee_comment: nil)
     end
     # @goal_ratings = GoalRating.where(appraisee_id: current_user.employee_id,appraisee_comment: nil)  

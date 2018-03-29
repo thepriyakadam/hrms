@@ -2046,6 +2046,8 @@ end
       get :show_approved_record
     end
   end
+
+  match 'goal_ratings/:id/download_self_document/:id' => 'goal_ratings#download_self_document', :via => [:get], :as => :download_self_document
   match 'selected_resumes/:id/download_resume/:id' => 'selected_resumes#download_resume', :via => [:get], :as => :download_resume
   match 'selected_resumes/:id/download_image/:id' => 'selected_resumes#download_image', :via => [:get], :as => :download_image
   match 'accident_records/:id/download_jpg/:id' => 'accident_records#download_jpg', :via => [:get], :as => :download_jpg

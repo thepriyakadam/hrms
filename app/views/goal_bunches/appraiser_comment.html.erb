@@ -4,12 +4,12 @@
      
       <% if  @goal_bunch.nil? %>
       <% else %>
-          <% if @goal_bunch.appraiser_confirm == true %>
-            <%= link_to " Template ",appraiser_evaluation_goal_bunches_path(format: "xls",employee_id: @employee.id,goal_bunch_id: @goal_bunch_id.id), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
-          <% else %>
-            <%= link_to " Upload ",import_appraiser_evaluation_xl_goal_bunches_path(goal_bunch_id: @goal_bunch_id.id,employee_id: @employee.id), class: 'fa fa-upload btn btn-xl btn-success' %>
-            <%= link_to " Template ",appraiser_evaluation_goal_bunches_path(format: "xls",employee_id: @employee.id,goal_bunch_id: @goal_bunch_id.id), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
-          <% end %>
+         <!--  <#% if @goal_bunch.appraiser_confirm == true %>
+            <#%= link_to " Template ",appraiser_evaluation_goal_bunches_path(format: "xls",employee_id: @employee.id,goal_bunch_id: @goal_bunch_id.id), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+          <#% else %>
+            <#%= link_to " Upload ",import_appraiser_evaluation_xl_goal_bunches_path(goal_bunch_id: @goal_bunch_id.id,employee_id: @employee.id), class: 'fa fa-upload btn btn-xl btn-success' %>
+            <#%= link_to " Template ",appraiser_evaluation_goal_bunches_path(format: "xls",employee_id: @employee.id,goal_bunch_id: @goal_bunch_id.id), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+          <#% end %> -->
       <% end %>
     </div> <!-- pull right -->
     <br>

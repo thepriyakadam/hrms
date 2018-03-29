@@ -5,12 +5,12 @@
      
       <% if  @goal_bunch.nil? %>
       <% else %>
-          <% if @goal_bunch.appraisee_confirm == true %>
-            <%= link_to " Template ",self_evaluation_goal_bunches_path(format: "xls",employee_id: @employee.id,goal_bunch_id: @goal_bunch_id.id), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
-          <% else %>
-            <%= link_to " Upload ", import_xl_goal_bunches_path(goal_bunch_id: @goal_bunch_id.id,employee_id: @employee.id), class: 'fa fa-upload btn btn-xl btn-success' %>
-            <%= link_to " Template ",self_evaluation_goal_bunches_path(format: "xls",employee_id: @employee.id,goal_bunch_id: @goal_bunch_id.id), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
-          <% end %>
+         <!--  <#% if @goal_bunch.appraisee_confirm == true %>
+            <#%= link_to " Template ",self_evaluation_goal_bunches_path(format: "xls",employee_id: @employee.id,goal_bunch_id: @goal_bunch_id.id), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+          <#% else %>
+            <#%= link_to " Upload ", import_xl_goal_bunches_path(goal_bunch_id: @goal_bunch_id.id,employee_id: @employee.id), class: 'fa fa-upload btn btn-xl btn-success' %>
+            <#%= link_to " Template ",self_evaluation_goal_bunches_path(format: "xls",employee_id: @employee.id,goal_bunch_id: @goal_bunch_id.id), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+          <#% end %> -->
       <% end %>
      </div> <!-- pull right -->
 <br>
@@ -297,6 +297,10 @@
               <% else %>
                 <% if @goal_bunch.appraisee_rating_id == nil %>
                   <%= link_to '', self_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote: true %> 
+                  <% if goal_rating.document_file_name.nil? %>
+                  <% else %>
+                   <%= link_to ' ',download_self_document_path(id: goal_rating.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
+                  <% end %>
                 <% else %>
                 <% end %>
               <% end %>
@@ -352,6 +356,10 @@
               <% else %>
                 <% if @goal_bunch.appraisee_rating_id == nil %>
                   <%= link_to '', self_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote: true %> 
+                  <% if goal_rating.document_file_name.nil? %>
+                  <% else %>
+                   <%= link_to ' ',download_self_document_path(id: goal_rating.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
+                  <% end %>
                 <% else %>
                 <% end %>
               <% end %>

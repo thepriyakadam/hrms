@@ -8,18 +8,20 @@
 
       <%= bootstrap_form_for @goal_rating,url:{action: "update_self_modal",goal_rating_id:@goal_rating.id} do |f| %>
         <div class="row">
-          <div class="col-sm-9">
+          <div class="col-sm-12">
             <label>Self Comment</label>
             <%= f.text_area :appraisee_comment,hide_label:true, placeholder: "Self comment" %>    
           </div>
+        </div>
+        <div class="row">
           <div class="col-sm-3">
             <label>Self Rating</label>
             <%= f.select :appraisee_rating_id,all_rating_type,{hide_label:true, include_blank: "select rating"} %>
           </div>
-
-        </div>
-        <div class="row">
-          <div class="col-sm-12" style="padding-top:20px;">
+          <div class="col-sm-5">
+            <%=  f.file_field :document,label: 'Document(doc,docx,pdf only)' %>
+          </div>
+          <div class="col-sm-4" style="padding-top:20px;">
             <center><%= f.submit "Update", class: 'btn btn-success btn-sm' %></center>
           </div>
         </div>

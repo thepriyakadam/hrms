@@ -27,6 +27,7 @@ class GoalBunch < ActiveRecord::Base
         end
         self_rating = spreadsheet.cell(i,'L')
         goal_rating_id = spreadsheet.cell(i,'M')
+
         if goal_rating_id == nil
         else    
           int_rating = self_rating.to_i
@@ -80,6 +81,7 @@ class GoalBunch < ActiveRecord::Base
             end
           end# goal_rating_id == nil
     end#do
+  end
   end
 
    def self.import_appraiser_evaluation(file)

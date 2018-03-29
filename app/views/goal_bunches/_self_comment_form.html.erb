@@ -20,9 +20,9 @@
             <label>Rating</label>
             <%= select_tag 'appraisee_rating[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %>
           </div>
-          <div class="col-sm-5">
-              <%=  f.file_field :document,label: 'Document(doc,docx,pdf only)' %>
-          </div>
+          <!-- <div class="col-sm-5">
+              <#%=  f.file_field :document,label: 'Document(doc,docx,pdf only)' %>
+          </div> -->
           <div class="col-sm-4" style="padding-top:20px;">
             <center><%= f.submit "Create", class: 'btn btn-success btn-sm' %></center>
           </div>

@@ -321,13 +321,13 @@ class GoalBunchesController < ApplicationController
     @goal_rating_ids = params[:goal_rating_ids]
     comments = params[:appraisee_comment]
     ratings = params[:appraisee_rating]
-    documents = params[:goal_ratings][:document]
-    doc = [documents]
+    # documents = params[:goal_ratings][:document]
+    # doc = [documents]
 
     goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @period = Period.find_by(id: goal_bunch.period_id)
-    final = @goal_rating_ids.zip(comments,ratings,doc)
-    final.each do |e, c, r,d|
+    final = @goal_rating_ids.zip(comments,ratings)
+    final.each do |e, c, r|
       @goal_rating = GoalRating.find(e)
       if c == ''
         flash[:alert] = 'Fill comments'
@@ -340,13 +340,13 @@ class GoalBunchesController < ApplicationController
           rating = @rating.value
 
           if rating.to_i <= weightage.to_i
-            @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r,document: d)
+            @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r)
           else
             rating1 = Rating.where(value: goal_rating.goal_weightage).take
-            @goal_rating.update(appraisee_comment: c, appraisee_rating_id: rating1.id,document: d)
+            @goal_rating.update(appraisee_comment: c, appraisee_rating_id: rating1.id)
           end
         else
-          @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r,document: d)
+          @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r)
         end
         flash[:notice] = 'Self Comment & Rating Created Successfully'
       end

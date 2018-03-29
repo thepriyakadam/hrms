@@ -2012,4 +2012,26 @@ class Api::UserAuthsController < ApplicationController
     render :json => travel_requests.present? ? travel_requests.collect{|travel_list| {:id => travel_list.try(:id), :manual_employee_code => travel_list.try(:employee).try(:manual_employee_code), :prefix => travel_list.employee.try(:prefix), :employee_first_name => travel_list.employee.try(:first_name), :employee_middle_name => travel_list.employee.try(:middle_name), :employee_last_name => travel_list.employee.try(:last_name),:code => travel_list.try(:code), :place => travel_list.try(:place), :current_status => travel_list.try(:current_status),:is_confirm => travel_list.try(:is_confirm), :all_status => travel_list.try(:reporting_masters_travel_requests) }} : []
   end
 
+
+  def expense_claim_list
+    employee_id = params[:employee_id]
+    travel_requests = TravelRequest.where("employee_id = ?, current_status = ?", employee_id, "FinalApproved" )
+    render :json => travel_requests.present? ? travel_requests.collect{|travel_list| {:id => travel_list.try(:id), :manual_employee_code => travel_list.try(:employee).try(:manual_employee_code), :prefix => travel_list.employee.try(:prefix), :employee_first_name => travel_list.employee.try(:first_name), :employee_middle_name => travel_list.employee.try(:middle_name), :employee_last_name => travel_list.employee.try(:last_name),:code => travel_list.try(:code), :place => travel_list.try(:place), :current_status => travel_list.try(:current_status),:is_confirm => travel_list.try(:is_confirm), :all_status => travel_list.try(:reporting_masters_travel_requests) }} : []
+  end
+
+  def expense_type_list
+    all_travel_expence_type = TravelExpenceType.all
+    render :json => all_travel_expence_type.present? ? all_travel_expence_type.collect{|tet| {:id => tet.try(:id), :code => tet.try(:code), :name => tet.try(:name), :description => tet.try(:description), :is_confirm => tet.try(:is_confirm) }} : []
+  end
+  
+  def all_currency
+    all_currency = CurrencyMaster.all
+    render :json => all_currency.present? ? all_currency.collect{|cm| {:id => cm.try(:id), :code => cm.try(:code), :name => cm.try(:name), :description => cm.try(:description), :is_confirm => cm.try(:is_confirm) }} : []
+  end
+
+  def claim_list
+    travel_request_id = params[:travel_request_id]
+    @daily_bill_details = DailyBillDetail.where(travel_request_id: travel_request_id).order("expence_date ASC") 
+  end
 end
+

@@ -262,15 +262,18 @@ class SalaryslipsController < ApplicationController
       format.html
       format.pdf do
         render pdf: 'print_salary_slip_rg',
-        layout: 'pdf.html',
-        :orientation  => 'Landscape', # default , Landscape
-        :page_height  => 1000,
-        :dpi          => '300',
-        template: 'salaryslips/print_salary_slip_rg.pdf.erb',
-        :page_height  => 1000,
-        :dpi          => '300',
-        :margin       => {:top    => 10, :bottom => 10,:left   => 10,:right  => 10},
-        :show_as_html => params[:debug].present?
+              layout: 'pdf.html',
+               :orientation      => 'Landscape', # default , Landscape
+              # :page_height      => 1000,
+              # :dpi              => '300',
+              template: 'salaryslips/print_salary_slip_rg.pdf.erb',
+               :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 30,
+                      :left   => 10,
+                      :right  => 10},
+              :show_as_html => params[:debug].present?
       end
     end
   end
@@ -1712,14 +1715,14 @@ end
     @employer_contribution = EmployerContribution.where(date: @from_date.to_date..@to_date.to_date, employee_id: @employee_id)
     @employer_statutory_contribution = @employer_contribution.sum(:actual_pf)
 
-    # try(:salaryslip).try(:calculated_gross_salary)
+     # try(:salaryslip).try(:calculated_gross_salary)
 
-    # @salaryslips3 = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date)
+    @salaryslips3 = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date)
     # @year_wise = Salaryslip.where(year: year_from..year_to)
-    # @month_year = {}
-    # @salaryslips3.each do |month_year|
-    #   @month_year[month_year.month_year.strftime("%B %Y")] = month_year.salaryslip_components.each { |cat| cat.calculated_amount.round }
-    # end
+    @month_year = {}
+    @salaryslips3.each do |month_year|
+      @month_year[month_year.month_year.strftime("%B %Y")] = month_year.salaryslip_components.each { |cat| cat.calculated_amount.round }
+    end
   end
 
   def form_6A
@@ -1748,6 +1751,39 @@ end
     @employee_id = params[:salaryslip] ? params[:salaryslip][:employee_id] : params[:employee_id]
     @company = params[:salaryslip] ? params[:salaryslip][:company_id] : params[:company_id]
     @company_location = params[:salaryslip] ? params[:salaryslip][:company_location_id] : params[:company_location_id]
+  end
+
+  def form_16A
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] ="StatutoryReport"
+  end
+
+  def form_16A_report
+    @from_date = params[:from_16A] ? params[:from_16A][:from_date] : params[:from_date]
+    @to_date = params[:from_16A] ? params[:from_16A][:to_date] : params[:to_date]
+    @employee_id = params[:salaryslip] ? params[:salaryslip][:employee_id] : params[:employee_id]
+    @employee = Employee.find(@employee_id)
+    # @company = params[:salaryslip] ? params[:salaryslip][:company_id] : params[:company_id]
+    # @company_location = params[:salaryslip] ? params[:salaryslip][:company_location_id] : params[:company_location_id]
+    respond_to do |format|
+      format.js
+      format.xls {render template: 'salaryslips/form_16A_report_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'form_16A_report_pdf',
+            layout: 'pdf.html',
+            orientation: 'Portrait',
+            template: 'salaryslips/form_16A_report_pdf.pdf.erb',
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 10,
+                          :right  => 10},
+            :show_as_html => params[:debug].present?
+      end
+    end
   end
 
   def leave_detail

@@ -1155,6 +1155,8 @@ end
 
   resources :goal_ratings do
     collection do
+      get :periodwise_goal_set
+      post :periodwise_goal_list
       get :select_dropdown
       get :self_modal
       patch :update_self_modal
@@ -2375,6 +2377,9 @@ end
       post :form_12A_report
       get :dynamic_daterange_report
       post :dynamic_daterange_report
+      get :form_16A
+      get :form_16A_report
+      post :form_16A_report
     end
   end
 
@@ -3282,5 +3287,9 @@ end
     get 'user_auths/reject_c_off_request' => 'user_auths#reject_c_off_request', defaults:{format: 'json'}
     get 'user_auths/travel_request_list' => 'user_auths#travel_request_list', defaults:{format: 'json'}
     get 'user_auths/admin_travel_approval_list' => 'user_auths#admin_travel_approval_list', defaults:{format: 'json'}
+    get 'user_auths/expense_claim_list' => 'user_auths#expense_claim_list', defaults:{format: 'json'}
+    get 'user_auths/expense_type_list' => 'user_auths#expense_type_list', defaults:{format: 'json'}
+    get 'user_auths/all_currency' => 'user_auths#all_currency', defaults:{format: 'json'}
+    get 'user_auths/claim_list' => 'user_auths#claim_list', defaults:{format: 'json'}
   end
 end

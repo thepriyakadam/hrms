@@ -22,7 +22,7 @@
             <% @emp_report.try(:each) do |employee_plan| %>
               <tr>
                 <td><%= i = i+1 %></td>
-                <td><%= employee_plan.date%></td>
+                <td><%= employee_plan.date %></td>
                 <td><%= employee_plan.time %></td>
                 <td><%= employee_plan.location %></td>
               </tr>

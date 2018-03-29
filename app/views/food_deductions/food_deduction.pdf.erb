@@ -15,7 +15,7 @@
         <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
         <%end%>
         <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>.<br><strong>Food Deduction</strong></center>
-            <center><strong><%= @from.strftime("%B-%Y") %> to <%= @to.strftime("%B-%Y") %></strong></center>
+          <!--   <center><strong><= @from.strftime("%B-%Y") %> to <= @to.strftime("%B-%Y") %></strong></center> -->
         </td>  
       <tr>
         <th>Sr. No.</th>
@@ -45,7 +45,7 @@
           <td><%= food_deduction.no_of_coupan %></td>
           <td><%= food_deduction.return_coupan %></td>
           <td><%= food_deduction.total_coupan %></td>
-          <td><%= food_deduction.food_coupan_master.price %></td>
+          <td><%= food_deduction.food_coupan_master.try(:price) %></td>
           <td><%= food_deduction.employee.company_location.name %></td>
           <td><%= amount = food_deduction.amount %></td>
               <% @amount = @amount.to_f + amount.to_f %>

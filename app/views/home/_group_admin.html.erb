@@ -411,7 +411,9 @@
         </div><!-- /.box-header -->
         <div class="box-body">
           <ul class="products-list product-list-in-box">
-              <% JoiningDetail.all.order("joining_date desc").limit(5).each do |j| %>
+          <% fifteen_days_back = Time.now.to_date - 15.days %>
+          <% JoiningDetail.where(joining_date: fifteen_days_back.to_date..Time.now.to_date).try(:each) do |j| %>
+              
                 <% if j.employee.status == "Active" %>
                   <li class="item">
                     <div class="product-img">

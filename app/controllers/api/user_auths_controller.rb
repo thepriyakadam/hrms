@@ -2060,4 +2060,9 @@ class Api::UserAuthsController < ApplicationController
     ReportingMastersTravelRequest.create(reporting_master_id: employee_id, travel_request_id: @travel_request.id,travel_status: "Rejected")
     render :status=>200, :json=>{:status=> "Travel Request Rejected Successfully" }
   end
+
+  def final_approval_travel_list
+    travel_requests = TravelRequest.where(current_status: "Approved")
+    render :json => travel_requests.present? ? travel_requests.collect{|travel_req| {:id => travel_req.try(:id), :manual_employee_code => travel_req.try(:employee).try(:manual_employee_code), :prefix => travel_req.employee.try(:prefix), :employee_first_name => travel_req.employee.try(:first_name), :employee_middle_name => travel_req.employee.try(:middle_name), :employee_last_name => travel_req.employee.try(:last_name), :employee_id => travel_req.try(:employee_id), :application_date => travel_req.try(:application_date), :traveling_date => travel_req.try(:traveling_date), :to => travel_req.try(:to), :total_advance => travel_req.try(:total_advance), :tour_purpose => travel_req.try(:tour_purpose), :place => travel_req.try(:place), :current_status => travel_req.try(:current_status), :traveling_advance => travel_req.try(:traveling_advance), :department => travel_req.try(:employee).try(:department).try(:name), :day => travel_req.try(:day), :travel_mode => travel_req.try(:travel_mode).try(:name) }} : []
+  end
 end

@@ -121,7 +121,7 @@
   
   <table class="table table-bordered table-hover table-condensed">
     <thead>
-      <tr><th colspan="11"><center>Goal Rating</center></th></tr>
+      <tr><th colspan="12"><center>Goal Rating</center></th></tr>
       <tr>
         <th>Goal Perspective</th>
         <th>Measure</th>
@@ -131,6 +131,7 @@
         <th>Aligned</th>
         <th>Self Comment</th>
         <th>Self Rating</th>
+        <th>Document</th>
         <th>Appraiser Comment</th>
         <th>Appraiser Rating</th>
         <th>Reviewer Comment</th>
@@ -147,6 +148,12 @@
           <td><%= goal_rating.aligned %></td>
           <td><%= goal_rating.appraisee_comment %></td>
           <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
+          <td>
+            <% if goal_rating.document_file_name == nil %>
+            <% else %>
+              <%= link_to ' ',download_self_document_path(id: goal_rating.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
+            <% end %>
+          </td>
           <td><%= goal_rating.appraiser_comment %></td>
           <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
           <td><%= goal_rating.reviewer_comment %></td>
@@ -158,7 +165,7 @@
   
   <table class="table table-bordered table-hover table-condensed">
     <thead>
-      <tr><th colspan="11"><center>Attribute Rating</center></th></tr>
+      <tr><th colspan="12"><center>Attribute Rating</center></th></tr>
       <tr>
         <th>Attribute</th>
         <th>Measure</th>
@@ -168,6 +175,7 @@
         <th>Aligned</th>
         <th>Self Comment</th>
         <th>Self Rating</th>
+        <th>Document</th>
         <th>Appraiser Comment</th>
         <th>Appraiser Rating</th>
         <th>Reviewer Comment</th>
@@ -184,6 +192,12 @@
           <td><%= goal_rating.aligned %></td>
           <td><%= goal_rating.appraisee_comment %></td>
           <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
+          <td>
+            <% if goal_rating.document_file_name == nil %>
+            <% else %>
+              <%= link_to ' ',download_self_document_path(id: goal_rating.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
+            <% end %>
+          </td>
           <td><%= goal_rating.appraiser_comment %></td>
           <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
           <td><%= goal_rating.reviewer_comment %></td>

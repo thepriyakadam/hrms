@@ -317,38 +317,82 @@ class GoalBunchesController < ApplicationController
     @goal_rating = GoalRating.find(params[:goal_rating_id])
   end 
 
+  def ajax_upload_document
+    if params[:document_present] == "Yes"
+      @flag = true
+    else
+      @flag = false
+    end
+  end
+
   def self_comment
     @goal_rating_ids = params[:goal_rating_ids]
     comments = params[:appraisee_comment]
     ratings = params[:appraisee_rating]
-    # documents = params[:goal_ratings][:document]
-    # doc = [documents]
+    
+    document_present = params[:goal_ratings][:document_present]
 
-    goal_bunch = GoalBunch.find(params[:goal_bunch_id])
-    @period = Period.find_by(id: goal_bunch.period_id)
-    final = @goal_rating_ids.zip(comments,ratings)
-    final.each do |e, c, r|
-      @goal_rating = GoalRating.find(e)
-      if c == ''
-        flash[:alert] = 'Fill comments'
-      elsif r == ''
-        flash[:alert] = 'Fill ratings'
-      else
-        if @period.marks == true
-          @rating = Rating.find_by(id: r)
-          weightage = @goal_rating.goal_weightage
-          rating = @rating.value
+    if document_present == "Yes"
+      documents = params[:goal_ratings][:document]
+      doc = [documents]
+      # documents = params[:goal_ratings][:document]
+      # doc = [documents]
 
-          if rating.to_i <= weightage.to_i
-            @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r)
-          else
-            rating1 = Rating.where(value: goal_rating.goal_weightage).take
-            @goal_rating.update(appraisee_comment: c, appraisee_rating_id: rating1.id)
-          end
+      goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+      @period = Period.find_by(id: goal_bunch.period_id)
+      final = @goal_rating_ids.zip(comments,ratings,doc)
+      final.each do |e, c, r,d|
+        @goal_rating = GoalRating.find(e)
+        if c == ''
+          flash[:alert] = 'Fill comments'
+        elsif r == ''
+          flash[:alert] = 'Fill ratings'
         else
-          @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r)
+          if @period.marks == true
+            @rating = Rating.find_by(id: r)
+            weightage = @goal_rating.goal_weightage
+            rating = @rating.value
+
+            if rating.to_i <= weightage.to_i
+              @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r,document: d,document_present: "Yes")
+            else
+              rating1 = Rating.where(value: @goal_rating.goal_weightage).take
+              @goal_rating.update(appraisee_comment: c, appraisee_rating_id: rating1.id,document: d,document_present: "Yes")
+            end
+          else
+            @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r,document: d,document_present: "Yes")
+          end
+          flash[:notice] = 'Self Comment & Rating Created Successfully'
         end
-        flash[:notice] = 'Self Comment & Rating Created Successfully'
+      end
+    else
+      @checkbox = false
+      goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+      @period = Period.find_by(id: goal_bunch.period_id)
+      final = @goal_rating_ids.zip(comments,ratings)
+      final.each do |e, c, r|
+        @goal_rating = GoalRating.find(e)
+        if c == ''
+          flash[:alert] = 'Fill comments'
+        elsif r == ''
+          flash[:alert] = 'Fill ratings'
+        else
+          if @period.marks == true
+            @rating = Rating.find_by(id: r)
+            weightage = @goal_rating.goal_weightage
+            rating = @rating.value
+
+            if rating.to_i <= weightage.to_i
+              @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r,document_present: "No",document: nil)
+            else
+              rating1 = Rating.where(value: goal_rating.goal_weightage).take
+              @goal_rating.update(appraisee_comment: c, appraisee_rating_id: rating1.id,document_present: "No",document: nil)
+            end
+          else
+            @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r,document_present: "No",document: nil)
+          end
+          flash[:notice] = 'Self Comment & Rating Created Successfully!'
+        end
       end
     end
     @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])

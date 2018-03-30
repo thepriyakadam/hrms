@@ -406,22 +406,33 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.find(params[:goal_rating_id])
     appraisee_comment = params[:goal_rating][:appraisee_comment]
     appraisee_rating_id = params[:goal_rating][:appraisee_rating_id]
-    #document = params[:goal_rating][:document]
+    document_present = params[:goal_rating][:document_present]
     period = Period.find_by(id: @goal_rating.period_id)
 
     @rating = Rating.find_by(id: appraisee_rating_id)
-    if period.marks == true
-      weightage = @goal_rating.goal_weightage
-      rating = @rating.value
-      if rating.to_i < weightage.to_i
-        @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: appraisee_rating_id)
+
+      if period.marks == true
+        weightage = @goal_rating.goal_weightage
+        rating = @rating.value
+        if rating.to_i < weightage.to_i
+          if document_present == "Yes"
+            document = params[:goal_rating][:document]
+            @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: appraisee_rating_id,document: document,document_present: "Yes")
+          else
+            @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: appraisee_rating_id,document: nil,document_present: "No")
+          end
+        else
+          rating1 = Rating.where(value: @goal_rating.goal_weightage).take
+          if document_present == "Yes"
+            document = params[:goal_rating][:document]
+            @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: rating1.id,document: document,document_present: "Yes")
+          else
+            @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: rating1.id,document: nil,document_present: "No")
+          end
+        end
       else
-        rating1 = Rating.where(value: @goal_rating.goal_weightage).take
-        @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: rating1.id)
+        @goal_rating.update(goal_rating_params)
       end
-    else
-      @goal_rating.update(goal_rating_params)
-    end
     flash[:notice] = 'Updated Successfully'
     redirect_to appraisee_comment_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id)
   end

@@ -18,12 +18,20 @@
         <div class="row">
           <div class="col-sm-3">
             <label>Rating</label>
-            <%= select_tag 'appraisee_rating[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %>
+            <%= select_tag 'appraisee_rating[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: "Select Rating"} %>
           </div>
-          <!-- <div class="col-sm-5">
-              <#%=  f.file_field :document,label: 'Document(doc,docx,pdf only)' %>
-          </div> -->
-          <div class="col-sm-4" style="padding-top:20px;">
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.select :document_present, ['Yes','No'],{label:"Document",include_blank: "Please Select"} %>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label>Document(doc,docx,pdf only)</label>
+              <%= f.file_field :document,hide_label: true,class: "form-control" %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2" style="padding-top:20px;">
             <center><%= f.submit "Create", class: 'btn btn-success btn-sm' %></center>
           </div>
         </div>
@@ -46,4 +54,3 @@
     }
   });
 </script>
-  

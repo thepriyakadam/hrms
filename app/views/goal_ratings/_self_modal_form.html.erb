@@ -2,20 +2,20 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <h5 class="modal-title"><center> Update Comment & Rating </center></h5>
+      <h5 class="modal-title"><center> Self Evaluation </center></h5>
     </div>
     <div class="modal-body">
 
       <%= bootstrap_form_for @goal_rating,url:{action: "update_self_modal",goal_rating_id:@goal_rating.id} do |f| %>
         <div class="row">
           <div class="col-sm-12">
-            <label>Self Comment</label>
+            <label>Comment</label>
             <%= f.text_area :appraisee_comment,hide_label:true, placeholder: "Self comment" %>    
           </div>
         </div>
         <div class="row">
           <div class="col-sm-3">
-            <label>Self Rating</label>
+            <label>Rating</label>
             <%= f.select :appraisee_rating_id,all_rating_type,{hide_label:true, include_blank: "select rating"} %>
           </div>
           <div class="col-sm-3">
@@ -29,8 +29,8 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-4" style="padding-top:20px;">
-            <center><%= f.submit "Update", class: 'btn btn-success btn-sm' %></center>
+          <center><div class="col-sm-12" style="padding-top:20px;"></center>
+            <center><%= f.submit "Self Evaluation", class: 'btn btn-success btn-sm' %></center>
           </div>
         </div>
       <% end %>

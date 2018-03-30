@@ -417,17 +417,17 @@ class GoalRatingsController < ApplicationController
         if rating.to_i < weightage.to_i
           if document_present == "Yes"
             document = params[:goal_rating][:document]
-            @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: appraisee_rating_id,document: document)
+            @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: appraisee_rating_id,document: document,document_present: "Yes")
           else
-            @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: appraisee_rating_id,document: nil)
+            @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: appraisee_rating_id,document: nil,document_present: "No")
           end
         else
           rating1 = Rating.where(value: @goal_rating.goal_weightage).take
           if document_present == "Yes"
             document = params[:goal_rating][:document]
-            @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: rating1.id,document: document)
+            @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: rating1.id,document: document,document_present: "Yes")
           else
-            @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: rating1.id,document: nil)
+            @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: rating1.id,document: nil,document_present: "No")
           end
         end
       else

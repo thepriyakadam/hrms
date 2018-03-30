@@ -335,8 +335,6 @@ class GoalBunchesController < ApplicationController
     if document_present == "Yes"
       documents = params[:goal_ratings][:document]
       doc = [documents]
-      # documents = params[:goal_ratings][:document]
-      # doc = [documents]
 
       goal_bunch = GoalBunch.find(params[:goal_bunch_id])
       @period = Period.find_by(id: goal_bunch.period_id)

@@ -9,11 +9,11 @@ gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
 gem 'twilio-ruby', '~> 4.11', '>= 4.11.1'
 gem 'numbers_in_words'
 
-# gem 'tiny_tds'
-# gem 'activerecord-sqlserver-adapter'
-# gem 'ruby-odbc'
-# gem 'dbi'
-# gem 'activerecord-session_store'
+gem 'tiny_tds'
+gem 'activerecord-sqlserver-adapter'
+gem 'ruby-odbc'
+gem 'dbi'
+gem 'activerecord-session_store'
 
 gem 'mdb'
 

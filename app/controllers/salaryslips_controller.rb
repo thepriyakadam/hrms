@@ -262,7 +262,6 @@ class SalaryslipsController < ApplicationController
       format.html
       format.pdf do
         render pdf: 'print_salary_slip_rg',
-
         layout: 'pdf.html',
         :orientation  => 'Landscape', # default , Landscape
         :page_height  => 1000,
@@ -496,8 +495,6 @@ class SalaryslipsController < ApplicationController
                   is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
               end
             end
-
-
             transport_allowance = TransportAllowance.find_by_employee_id(@employee.id)
             unless transport_allowance.nil?
               if transport_allowance.option
@@ -853,7 +850,6 @@ class SalaryslipsController < ApplicationController
                   end
                 end
               end
-
               @salaryslip = Salaryslip.last
               @salaryslip_component1 = SalaryslipComponent.where(salaryslip_id: @salaryslip.id)
               @salaryslip_component2 = SalaryslipComponent.where(salaryslip_id: @salaryslip.id,is_deducted: true)

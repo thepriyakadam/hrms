@@ -9,7 +9,11 @@ gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
 gem 'twilio-ruby', '~> 4.11', '>= 4.11.1'
 gem 'numbers_in_words'
 
+<<<<<<< HEAD
 gem 'tiny_tds'
+=======
+#gem 'tiny_tds'
+>>>>>>> ac087a432c5fa7a96800f774f9a3606d8624f239
 gem 'activerecord-sqlserver-adapter'
 gem 'ruby-odbc'
 gem 'dbi'
@@ -127,6 +131,10 @@ gem 'protokoll'
 # gem 'countries'
 gem 'city-state'
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ac087a432c5fa7a96800f774f9a3606d8624f239
 gem 'rmagick', '~> 2.15.4'
 
 # infinite-cove-6619

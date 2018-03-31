@@ -24,10 +24,10 @@ class CompaniesController < ApplicationController
 
   # GET /companies/1/edit
   def edit
-    @country = @company.country
-    @states = @country.states
-    @state = @company.state
-    @cities = @state.districts
+    @country = @company.try(:country)
+    @states = @country.try(:states)
+    @state = @company.try(:state)
+    @cities = @state.try(:districts)
     @form = 'company'
   end
 

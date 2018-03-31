@@ -3291,5 +3291,10 @@ end
     get 'user_auths/expense_type_list' => 'user_auths#expense_type_list', defaults:{format: 'json'}
     get 'user_auths/all_currency' => 'user_auths#all_currency', defaults:{format: 'json'}
     get 'user_auths/claim_list' => 'user_auths#claim_list', defaults:{format: 'json'}
+    get 'user_auths/cancel_coff_request' => 'user_auths#cancel_coff_request', defaults:{format: 'json'}
+    get 'user_auths/approve_travel_request' => 'user_auths#approve_travel_request', defaults:{format: 'json'}
+    get 'user_auths/reject_travel_request' => 'user_auths#reject_travel_request', defaults:{format: 'json'}
+    get 'user_auths/final_approval_travel_list' => 'user_auths#final_approval_travel_list', defaults:{format: 'json'}
+    post 'user_auths/employee_expense_claim_request' => 'user_auths#employee_expense_claim_request', defaults:{format: 'json'}
   end
 end

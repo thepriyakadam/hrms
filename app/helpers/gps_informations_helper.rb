@@ -1,0 +1,2 @@
+module GpsInformationsHelper
+end

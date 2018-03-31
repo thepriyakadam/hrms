@@ -117,6 +117,14 @@
         <th><strong>Cost Center</strong></th>
         <td><%= @joining_detail.cost_center.try(:name) %></td>
       </tr>
+
+      <tr>
+        <th><strong>Gps Track</strong></th>
+        <td><%= @joining_detail.gps_track ? "Yes" : "No" %></td>
+
+        <th><strong>Restricted Area</strong></th>
+        <td><%= @joining_detail.restricted_area ? "Yes" : "No" %></td>
+      </tr>
       
 
   <tr><th colspan="4"><center><font color='#0077b3'>Employee Payroll Detail</font></center> </th></tr>

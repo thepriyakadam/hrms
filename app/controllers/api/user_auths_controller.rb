@@ -1607,18 +1607,21 @@ class Api::UserAuthsController < ApplicationController
   def notifications_count
     employee_id = params[:employee_id]
     keyword = params[:keyword]
+    @joining_detail = JoiningDetail.find_by(employee_id: employee_id)
+    @gps_track = @joining_detail.try(:gps_track)
+    @restricted_area = @joining_detail.try(:restricted_area)
     if keyword == "employee"
       self_pending_od = OnDutyRequest.where(current_status: "Pending", employee_id: employee_id).count
       self_pending_leave  = EmployeeLeavRequest.where(current_status: "Pending", employee_id: employee_id).count
-      render :status=>200, :json=>{:self_pending_od => self_pending_od, :self_pending_leave => self_pending_leave }
+      render :status=>200, :json=>{:self_pending_od => self_pending_od, :self_pending_leave => self_pending_leave, :gps_track => @gps_track, :restricted_area => @restricted_area }
     elsif keyword == "manager"
       pending_od = OnDutyRequest.where(current_status: "Pending", first_reporter_id: employee_id).count
       pending_leave  = EmployeeLeavRequest.where(current_status: "Pending", first_reporter_id: employee_id).count
-      render :status=>200, :json=>{:pending_leave => pending_leave, :pending_od => pending_od }
+      render :status=>200, :json=>{:pending_leave => pending_leave, :pending_od => pending_od, :gps_track => @gps_track, :restricted_area => @restricted_area  }
     else keyword == "admin"
       all_pending_od = OnDutyRequest.where(current_status: "Pending").count
       all_pending_leave  = EmployeeLeavRequest.where(current_status: "Pending").count
-      render :status=>200, :json=>{:all_pending_leave => all_pending_leave, :all_pending_od => all_pending_od }
+      render :status=>200, :json=>{:all_pending_leave => all_pending_leave, :all_pending_od => all_pending_od, :gps_track => @gps_track, :restricted_area => @restricted_area  }
     end
   end
 
@@ -2030,8 +2033,9 @@ class Api::UserAuthsController < ApplicationController
   end
 
   def claim_list
-    travel_request_id = params[:travel_request_id]
+    travel_request_id = params[:travel_req_id]
     @daily_bill_details = DailyBillDetail.where(travel_request_id: travel_request_id).order("expence_date ASC") 
+    render :json => @daily_bill_details.present? ? @daily_bill_details.collect{|dbd| {:id => dbd.try(:id), :expence_date => dbd.try(:expence_date), :travel_request_id => dbd.try(:travel_request_id), :e_place => dbd.try(:e_place), :travel_expence_type => dbd.try(:travel_expence_type).try(:name), :travel_expence => dbd.try(:travel_expence) }} : []
   end
 
   def cancel_coff_request
@@ -2077,7 +2081,7 @@ class Api::UserAuthsController < ApplicationController
     travel_expence = params[:expense_amount]
     currency_master_id = params[:currency]
 
-    @daily_bill_detail = DailyBillDetail.new(travel_request_id: travel_request_id, expence_date: expence_date, e_place: e_place, travel_expence_type_id: travel_request_id, travel_expence: travel_expence , currency_master_id: currency_master_id)
+    @daily_bill_detail = DailyBillDetail.new(travel_request_id: travel_request_id, expence_date: expence_date, e_place: e_place, travel_expence_type_id: travel_expence_type_id, travel_expence: travel_expence , currency_master_id: currency_master_id)
     @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
     if @daily_bill_detail.save
       @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
@@ -2086,4 +2090,44 @@ class Api::UserAuthsController < ApplicationController
     end
   end
 
+  def final_approve_travel_request
+    employee_id = params[:employee_id]
+    travel_req_id = params[:travel_req_id]
+    @travel_request = TravelRequest.find(travel_req_id)
+    @travel_request.update(current_status: "FinalApproved",reporting_master_id: employee_id)
+    ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id,reporting_master_id: employee_id, travel_status: "FinalApproved")
+    render :status=>200, :json=>{:status=> "Travel Request Approved Successfully" }
+  end
+  
+  def final_reject_travel_request
+    employee_id = params[:employee_id]
+    travel_req_id = params[:travel_req_id]
+    @travel_request = TravelRequest.find(travel_req_id)
+    @travel_request.update(current_status: "Rejected", reporting_master_id: employee_id)
+    ReportingMastersTravelRequest.create(reporting_master_id: employee_id, travel_request_id: @travel_request.id,travel_status: "Rejected")
+    render :status=>200, :json=>{:status=> "Travel Request Rejected Successfully" }
+  end
+
+  def edit_claim
+    employee_id = params[:employee_id]
+    manager1_id = params[:manager1_id]
+    manager2_id = params[:manager2_id]
+    travel_request_id = params[:id]
+    expence_date = params[:selectedDate]
+    e_place = params[:place]
+    travel_expence_type_id = params[:expense_type]
+    travel_expence = params[:expense_amount]
+    currency_master_id = params[:currency]
+    daily_bill_detail = params[:daily_bill_detail]
+    @daily_bill = DailyBillDetail.find(daily_bill_detail)
+    @daily_bill_detail = @daily_bill.update(travel_request_id: travel_request_id, expence_date: expence_date, e_place: e_place, travel_expence_type_id: travel_expence_type_id, travel_expence: travel_expence , currency_master_id: currency_master_id)
+    render :status=>200, :json=>{:status=> "Updated successfully" }
+  end
+  
+  def delete_expense_claim
+    daily_bill_detail = params[:expense_req_id]
+    @daily_bill = DailyBillDetail.find(daily_bill_detail)
+    @daily_bill.destroy
+    render :status=>200, :json=>{:status=> "Deleted successfully" }
+  end
 end

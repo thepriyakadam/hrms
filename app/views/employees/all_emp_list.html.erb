@@ -5,7 +5,7 @@
 
 <p id="notice"><%= notice %></p>
 <div class="box-body">
-<%= bootstrap_form_for Employee.new,url:{action:'update_status'},html: {id: 'employee'} do |f| %>
+<%= bootstrap_form_for Employee.new,url:{action:'update_gps_info'},html: {id: 'employee'} do |f| %>
 <div class="row">
   <div class="col-sm-4">
     <%= select :employee,:status,['Active','Inactive'],{label: 'Status',include_blank: " Select Status"}, class: "form-control" %>

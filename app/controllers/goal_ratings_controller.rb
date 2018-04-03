@@ -419,6 +419,7 @@ class GoalRatingsController < ApplicationController
             document = params[:goal_rating][:document]
             @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: appraisee_rating_id,document: document,document_present: "Yes")
           else
+            
             @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: appraisee_rating_id,document: nil,document_present: "No")
           end
         else

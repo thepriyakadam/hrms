@@ -96,7 +96,7 @@ module EmployeeAttendancesHelper
   end
 
   def weekoff_count(exist)
-     exist.select {|k,v| v == "WO" }.count + exist.select {|k,v| v == "WO/P" }.count + exist.select {|k,v| v == "P/WO" }.count + 
+     exist.select {|k,v| v == "WO" }.count + exist.select {|k,v| v == "WO/P" }.count + exist.select {|k,v| v == "WOP" }.count + exist.select {|k,v| v == "PWO" }.count + exist.select {|k,v| v == "ODWO" }.count + exist.select {|k,v| v == "WOOD" }.count + exist.select {|k,v| v == "WOHDP" }.count  +  exist.select {|k,v| v == "P/WO" }.count + 
      exist.select {|k,v| v == "WO/HD" }.count +  exist.select {|k,v| v == "WO/HOOD" }.count 
   end
 

@@ -1157,6 +1157,7 @@ end
     collection do
       get :periodwise_goal_set
       post :periodwise_goal_list
+      post :set_goal_periodwise
       get :select_dropdown
       get :self_modal
       patch :update_self_modal
@@ -1230,6 +1231,7 @@ end
   #post 'goal_ratings/update_goal_set_modal'
   resources :goal_bunches do
     collection do
+      get :ajax_upload_document
       post :show_periodwise_employee
       get :goal_approval
       post :appraiser_confirm
@@ -2045,6 +2047,8 @@ end
       get :show_approved_record
     end
   end
+
+  match 'goal_ratings/:id/download_self_document/:id' => 'goal_ratings#download_self_document', :via => [:get], :as => :download_self_document
   match 'selected_resumes/:id/download_resume/:id' => 'selected_resumes#download_resume', :via => [:get], :as => :download_resume
   match 'selected_resumes/:id/download_image/:id' => 'selected_resumes#download_image', :via => [:get], :as => :download_image
   match 'accident_records/:id/download_jpg/:id' => 'accident_records#download_jpg', :via => [:get], :as => :download_jpg

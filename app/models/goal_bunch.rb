@@ -27,7 +27,6 @@ class GoalBunch < ActiveRecord::Base
         end
         self_rating = spreadsheet.cell(i,'L')
         goal_rating_id = spreadsheet.cell(i,'M')
-<<<<<<< HEAD
         goal_rating = GoalRating.find_by(id: goal_rating_id)
         @period = Period.find_by(id: goal_rating.period_id)
           if goal_rating_id == nil
@@ -36,19 +35,6 @@ class GoalBunch < ActiveRecord::Base
             rating = int_rating.to_s
             if rating == nil
               @self_rating_id = 0
-=======
-        if goal_rating_id == nil
-        else    
-          int_rating = self_rating.to_i
-          rating = int_rating.to_s
-          if rating == nil
-            @self_rating_id = 0
-          else
-            @self_rating = Rating.find_by(value: rating)
-            if @self_rating == nil
-              rating = Rating.last
-              @self_rating_id = rating.id
->>>>>>> 4e1f696688d83c3d43b581ff828f3b1a798245e9
             else
               @self_rating = Rating.find_by(value: rating.to_f)
               if @period.marks == true 

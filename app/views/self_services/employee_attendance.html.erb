@@ -9,7 +9,6 @@
   </div>
  <div class="box-body">
   <%= bootstrap_form_for(:employee, url: { action: 'show_self_datewise_attendance'},html: {id: "employee"},remote: true) do |f| %>
-
   <%= hidden_field :employee,:employee_id, value: current_user.employee_id %>
     <div class="row">
         <div class="col-sm-3">

@@ -3304,5 +3304,11 @@ end
     post 'user_auths/employee_expense_claim_request' => 'user_auths#employee_expense_claim_request', defaults:{format: 'json'}
     get 'user_auths/edit_claim' => 'user_auths#edit_claim', defaults:{format: 'json'}
     get 'user_auths/delete_expense_claim' => 'user_auths#delete_expense_claim', defaults:{format: 'json'}
+    get 'user_auths/employee_claim_request' => 'user_auths#employee_claim_request', defaults:{format: 'json'}
+    get 'user_auths/claim_list_total' => 'user_auths#claim_list_total', defaults:{format: 'json'}
+    get 'user_auths/final_reject_travel_request' => 'user_auths#final_reject_travel_request', defaults:{format: 'json'}
+    get 'user_auths/final_approve_travel_request' => 'user_auths#final_approve_travel_request', defaults:{format: 'json'}
+    
+    
   end
 end

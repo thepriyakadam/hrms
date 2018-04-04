@@ -2035,7 +2035,13 @@ class Api::UserAuthsController < ApplicationController
   def claim_list
     travel_request_id = params[:travel_req_id]
     @daily_bill_details = DailyBillDetail.where(travel_request_id: travel_request_id).order("expence_date ASC") 
-    render :json => @daily_bill_details.present? ? @daily_bill_details.collect{|dbd| {:id => dbd.try(:id), :expence_date => dbd.try(:expence_date), :travel_request_id => dbd.try(:travel_request_id), :e_place => dbd.try(:e_place), :travel_expence_type => dbd.try(:travel_expence_type).try(:name), :travel_expence => dbd.try(:travel_expence) }} : []
+    render :json => @daily_bill_details.present? ? @daily_bill_details.collect{|dbd| {:id => dbd.try(:id), :expence_date => dbd.try(:expence_date), :travel_request_id => dbd.try(:travel_request_id), :e_place => dbd.try(:e_place), :travel_expence_type => dbd.try(:travel_expence_type).try(:name), :travel_expence => dbd.try(:travel_expence), :currency_master => dbd.try(:currency_master).try(:name), :request_status => dbd.try(:request_status), :is_confirm => dbd.try(:is_confirm) }} : []
+  end
+
+  def claim_list_total
+    travel_request_id = params[:travel_req_id]
+    @daily_bill_details = DailyBillDetail.where(travel_request_id: travel_request_id).order("expence_date ASC") 
+    render :status=>200, :json=>{:total=> @daily_bill_details.sum(:travel_expence) }
   end
 
   def cancel_coff_request
@@ -2130,4 +2136,48 @@ class Api::UserAuthsController < ApplicationController
     @daily_bill.destroy
     render :status=>200, :json=>{:status=> "Deleted successfully" }
   end
+
+  def employee_claim_request
+    travel_request_id = params[:travel_req_id]
+    @travel_request = TravelRequest.find(travel_request_id)
+    @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
+    @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[0]
+    @reporting_masters_travel_requests_1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[1] #new code
+    ReportingMastersTravelRequest.where(id: @reporting_masters_travel_requests.id).update_all(status: true) #new code
+    DailyBillDetail.where(travel_request_id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests.reporting_master_id,is_confirm: true)
+    c1 = @daily_bill_details.sum(:travel_expence).to_i
+    TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests_1.reporting_master_id,is_confirm: true,expense: c1)
+    @travel_req = TravelRequest.find_by(id: @travel_request.id)
+    @report = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).first
+    c1 = @travel_request.total_advance - @travel_req.expense
+    if @report.status == true  && @report.travel_status == "Pending"
+      @travel_expence = TravelExpence.create(travel_request_id: @travel_request.id,total_advance_amount: @travel_request.total_advance,total_expence_amount: @travel_req.expense,remaining_amount: c1)
+    else
+    end
+    if c1<0
+      TravelExpence.where(travel_request_id: @travel_request.id).update_all(employee_amount: c1.abs)
+    else
+      TravelExpence.where(travel_request_id: @travel_request.id).update_all(company_amount: c1.abs)
+    end
+    render :status=>200, :json=>{:status=> "Confirmed Successfully" }
+  end
+
+  def final_reject_travel_request
+    travel_request_id = params[:travel_req_id]
+    employee_id = params[:employee_id]
+    @travel_request = TravelRequest.find(travel_request_id)
+    @travel_request.update(current_status: "Rejected",reporting_master_id: employee_id)
+    ReportingMastersTravelRequest.create(reporting_master_id: employee_id, travel_request_id: @travel_request.id,travel_status: "Rejected")
+    render :status=>200, :json=>{:status=> "Travel Request Rejected Successfully" }
+  end
+
+  def final_approve_travel_request
+    travel_request_id = params[:travel_req_id]
+    employee_id = params[:employee_id]
+    @travel_request = TravelRequest.find(travel_request_id)
+    @travel_request.update(current_status: "FinalApproved",reporting_master_id: employee_id)
+    ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id,reporting_master_id: employee_id,travel_status: "FinalApproved")
+    render :status=>200, :json=>{:status=> "Travel Request FinalApproved Successfully" }
+  end
+
 end

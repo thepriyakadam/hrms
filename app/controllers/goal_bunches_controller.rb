@@ -351,16 +351,23 @@ class GoalBunchesController < ApplicationController
             weightage = @goal_rating.goal_weightage
             rating = @rating.value
 
-            if rating.to_i <= weightage.to_i
+            if rating.to_f <= weightage.to_f
               @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r,document: d,document_present: "Yes")
+              flash[:notice] = 'Self Comment & Rating Created Successfully'
             else
-              rating1 = Rating.where(value: @goal_rating.goal_weightage).take
-              @goal_rating.update(appraisee_comment: c, appraisee_rating_id: rating1.id,document: d,document_present: "Yes")
+              rating1 = Rating.where(value: weightage.to_f).take
+              if rating1.nil?
+                flash[:notice] = 'Please Select Rating less then or equals to weightage'
+              else
+                @goal_rating.update(appraisee_comment: c, appraisee_rating_id: rating1.id,document: d,document_present: "Yes")
+                flash[:notice] = 'Self Comment & Rating Created Successfully'
+              end
             end
           else
             @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r,document: d,document_present: "Yes")
+            flash[:notice] = 'Self Comment & Rating Created Successfully'
           end
-          flash[:notice] = 'Self Comment & Rating Created Successfully'
+          
         end
       end
     else
@@ -380,16 +387,22 @@ class GoalBunchesController < ApplicationController
             weightage = @goal_rating.goal_weightage
             rating = @rating.value
 
-            if rating.to_i <= weightage.to_i
+            if rating.to_f <= weightage.to_f
               @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r,document_present: "No",document: nil)
+              flash[:notice] = 'Self Comment & Rating Created Successfully'
             else
-              rating1 = Rating.where(value: goal_rating.goal_weightage).take
-              @goal_rating.update(appraisee_comment: c, appraisee_rating_id: rating1.id,document_present: "No",document: nil)
+              rating1 = Rating.where(value: weightage.to_f).take
+              if rating1.nil?
+                flash[:notice] = 'Please Select Rating less then or equals to weightage'
+              else
+                @goal_rating.update(appraisee_comment: c, appraisee_rating_id: rating1.id,document_present: "No",document: nil)
+                flash[:notice] = 'Self Comment & Rating Created Successfully'
+              end
             end
           else
             @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r,document_present: "No",document: nil)
+            flash[:notice] = 'Self Comment & Rating Created Successfully'
           end
-          flash[:notice] = 'Self Comment & Rating Created Successfully!'
         end
       end
     end

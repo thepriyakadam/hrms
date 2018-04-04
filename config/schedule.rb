@@ -14,6 +14,29 @@ end
 #   rake 'task_namespace:pending_request_mail' , :environment => 'development',   :output => 'log/pending_request_mail.log'
 #   # rake 'task_namespace:birthday_invitation_mail' , :environment => 'development',   :output => 'log/birthday_invitation_mail.log'
 # end
+every :day, :at => '09:00am' do
+  runner "DailyAttendance.fetch_data(2)"
+end
+
+every :day, :at => '09:10am' do
+  runner "DailyAttendance.calculate_attendance(2)"
+end
+
+every :day, :at => '11:00am' do
+  runner "DailyAttendance.fetch_data(2)"
+end
+
+every :day, :at => '11:10am' do
+  runner "DailyAttendance.calculate_attendance(2)"
+end
+
+every :day, :at => '07:00pm' do
+  runner "DailyAttendance.fetch_data(2)"
+end
+
+every :day, :at => '07:10pm' do
+  runner "DailyAttendance.calculate_attendance(2)"
+end
 
 #every 1.hours do
  # runner "DailyAttendance.fetch_data"

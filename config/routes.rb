@@ -3308,11 +3308,13 @@ end
     post 'user_auths/employee_expense_claim_request' => 'user_auths#employee_expense_claim_request', defaults:{format: 'json'}
     get 'user_auths/edit_claim' => 'user_auths#edit_claim', defaults:{format: 'json'}
     get 'user_auths/delete_expense_claim' => 'user_auths#delete_expense_claim', defaults:{format: 'json'}
-    get 'user_auths/employee_claim_request' => 'user_auths#employee_claim_request', defaults:{format: 'json'}
+    post 'user_auths/employee_claim_request' => 'user_auths#employee_claim_request', defaults:{format: 'json'}
     get 'user_auths/claim_list_total' => 'user_auths#claim_list_total', defaults:{format: 'json'}
     get 'user_auths/final_reject_travel_request' => 'user_auths#final_reject_travel_request', defaults:{format: 'json'}
     get 'user_auths/final_approve_travel_request' => 'user_auths#final_approve_travel_request', defaults:{format: 'json'}
-    
-    
+    get 'user_auths/expense_claim_approval_list' => 'user_auths#expense_claim_approval_list', defaults:{format: 'json'}
+    get 'user_auths/all_claim_expense_list' => 'user_auths#all_claim_expense_list', defaults:{format: 'json'}
+    get 'user_auths/second_expense_claim_list' => 'user_auths#second_expense_claim_list', defaults:{format: 'json'}
+
   end
 end

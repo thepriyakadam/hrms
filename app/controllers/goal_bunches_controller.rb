@@ -159,7 +159,7 @@ class GoalBunchesController < ApplicationController
     if sum.round == 100
       @goal_bunch.update(goal_approval: true)
       flash[:notice] = "Confirmed Successfully" 
-      GoalBunchMailer.send_email_to_appraisee(@goal_bunch).deliver_now
+      # GoalBunchMailer.send_email_to_appraisee(@goal_bunch).deliver_now
     else
       flash[:alert] = "Goal weightage sum should be 100"
     end 

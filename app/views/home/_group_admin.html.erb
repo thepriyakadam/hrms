@@ -371,7 +371,7 @@
                
                 <div class="box-body">
     
-              <% date = Date.today + 1 %>
+               <% date = Time.now.to_date + 30.days %>
               <% @employees = Employee.where("status = ? AND DATE_FORMAT(date_of_birth,'%d/%m') = ?", "Active" , date.strftime('%d/%m')) %>
             <% if @employees.empty? %>
             <%else%>
@@ -457,7 +457,7 @@
 
             <div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">Upcoming Retirement Employees</h3>
+          <h3 class="box-title">Upcoming Retirement</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -499,7 +499,7 @@
 
       <div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">Upcoming Probation  Completing Employees</h3>
+          <h3 class="box-title">Probation  Completing</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>

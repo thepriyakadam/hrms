@@ -128,7 +128,6 @@ class LeaveStatusRecordsController < ApplicationController
         @employee_leav_request.create_attendance
         LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FinalApproved")
         
-        LeaveRequestMailer.second_approve(@employee_leav_request).deliver_now
         # LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
         if @employee_leav_request.first_reporter_id == current_user.employee_id
           redirect_to approved_or_rejected_leave_request_manager_self_services_path
@@ -137,6 +136,7 @@ class LeaveStatusRecordsController < ApplicationController
           redirect_to all_leave_request_list_employee_leav_requests_path
           flash[:notice] = 'Leave Request Approved Successfully by Admin.'
         end
+        #LeaveRequestMailer.second_approve(@employee_leav_request).deliver_now
       else
         if @employee_leav_request.first_reporter_id == current_user.employee_id
           flash[:alert] = 'Leave Already Approved. Please refresh page.'
@@ -237,7 +237,7 @@ class LeaveStatusRecordsController < ApplicationController
     if @flag.nil?
       @particular_leave_record.is_cancel_after_approve = true
 
-      EmployeeAttendance.where("employee_id = ? AND day = ?", @particular_leave_record.employee_id,@particular_leave_record.leave_date.to_date).destroy_all
+      #EmployeeAttendance.where("employee_id = ? AND day = ?", @particular_leave_record.employee_id,@particular_leave_record.leave_date.to_date).destroy_all
       #@employee_leav_balance = EmployeeLeavBalance.where("employee_id = ? AND leav_category_id = ? AND is_active = ?", @particular_leave_record.employee_id, @particular_leave_record.leav_category_id,true).take
      @employee_leav_balance = EmployeeLeavBalance.where(employee_id: @particular_leave_record.employee_id,leav_category_id: @particular_leave_record.leav_category_id,is_active: true).take
 
@@ -252,7 +252,7 @@ class LeaveStatusRecordsController < ApplicationController
           @employee_leav_balance.update(no_of_leave: no_of_leave)
         end
         @particular_leave_record.update(is_cancel_after_approve: true)
-        EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).update_all(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled after approve")
+        EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id,day: @date).update_all(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled after approve")
           
         ActiveRecord::Base.transaction do
           @employee_leav_balance.save
@@ -280,11 +280,10 @@ class LeaveStatusRecordsController < ApplicationController
           # LeaveStatusRecordMailer.cancel_after_approve(@particular_leave_record,@current_emp).deliver_now
         end
 
-      else#is_balance = false
+      else#@particular_leave_record.try(:leav_category).try(:is_balance) == false
         @particular_leave_record.update(is_cancel_after_approve: true)
-        EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).update_all(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled after approve")
-          
-        	
+        EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id,day: @date).update_all(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled after approve")
+          	
         ActiveRecord::Base.transaction do
           @particular_leave_record.save
           if @particular_leave_record.employee_leav_request.leav_category.code == "C.Off"

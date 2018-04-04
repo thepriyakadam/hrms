@@ -20,6 +20,12 @@ class GoalRating < ActiveRecord::Base
   #validates :attribute_master_id, presence: true
   #validates_length_of :goal_measure, :maximum => 255
   
+  has_attached_file :document,
+    :path => "attachments/attach_company_policy/:basename.:extension"
+
+  # validates_attachment_presence :avatar
+  validates_attachment_size :document, less_than: 15.megabytes
+  validates_attachment :document, content_type: { content_type: %w(application/pdf application/txt application/msword application/msexcel application/vnd.openxmlformats-officedocument.wordprocessingml.document) }
  
   def self.import(file,emp,goal_bunch)
      spreadsheet = open_spreadsheet(file)

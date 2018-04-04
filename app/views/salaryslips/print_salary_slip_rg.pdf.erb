@@ -37,6 +37,7 @@
       <td colspan="4">
       <strong> Days in Month : </strong><%= @working_day.try(:day_in_month) %> <br><br> 
       <strong> Payble Days : </strong><%= @working_day.try(:payable_day) %><br><br>
+
       <% @leave_details.each do |ld| %>
         <strong> <%= ld.leav_category.code %>  Balance : </strong> <%= ld.balance %><br><br>
       <% end %>

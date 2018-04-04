@@ -269,7 +269,6 @@ class SalaryslipsController < ApplicationController
         template: 'salaryslips/print_salary_slip_rg.pdf.erb',
         :page_height  => 1000,
         :dpi          => '300',
-
         :margin       => {:top    => 10, :bottom => 10,:left   => 10,:right  => 10},
         :show_as_html => params[:debug].present?
       end

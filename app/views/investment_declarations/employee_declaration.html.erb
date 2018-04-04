@@ -14,7 +14,7 @@
             <td><%= e.manual_employee_code %></td>
             <td><%= full_name(e) %></td>
             <td>
-              <%= link_to 'Declaration', add_employee_declaration_investment_declarations_path(employee_id: e.id),class: 'btn btn-primary btn-xs' %> 
+              <%= link_to 'Add', add_employee_declaration_investment_declarations_path(employee_id: e.id),class: 'btn btn-primary btn-xs' %>
             </td>
           </tr>
         <% end %>

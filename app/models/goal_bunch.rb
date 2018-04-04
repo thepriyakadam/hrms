@@ -30,18 +30,15 @@ class GoalBunch < ActiveRecord::Base
 
         goal_rating = GoalRating.find_by(id: goal_rating_id)
         @period = Period.find_by(id: goal_rating.period_id)
-
           if goal_rating_id == nil
           else    
-            goal_rating = GoalRating.find_by(id: goal_rating_id)
-        period = Period.find_by(id: goal_rating.period_id)
             int_rating = self_rating.to_i
             rating = int_rating.to_s
             if rating == nil
               @self_rating_id = 0
             else
               @self_rating = Rating.find_by(value: rating.to_f)
-              if @period.marks == true 
+              if @period.marks == true
                 
                 if @self_rating == nil
                   rating = Rating.last
@@ -81,7 +78,8 @@ class GoalBunch < ActiveRecord::Base
             end
           end# goal_rating_id == nil
       end#do
-    end
+#    end
+  end
   end
 
    def self.import_appraiser_evaluation(file)

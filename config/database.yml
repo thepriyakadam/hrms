@@ -56,7 +56,7 @@ development:
   pool: 5
   socket: /var/run/mysqld/mysqld.sock
   reconnect: true
-  database: newDB
+  database: hrms_development
   username: root
   password: root
   host: localhost
@@ -67,15 +67,15 @@ production:
   pool: 5
   username: root
   password: root
-  database: newDB
+  database: hrms_production
 
 test:
   adapter: mysql2
-  encoding: utf8
+  encoding: hrms_testing
   pool: 5
   username: root
   password: root
-  database: newDB
+  database: 
 
 development_sec:
   adapter: sqlserver

@@ -2275,11 +2275,21 @@ class Api::UserAuthsController < ApplicationController
     travel_requests = TravelRequest.where(current_status: "FinalApproved")
     render :json => travel_requests.present? ? travel_requests.collect{|travel_list| {:id => travel_list.try(:id), :manual_employee_code => travel_list.try(:employee).try(:manual_employee_code), :prefix => travel_list.employee.try(:prefix), :employee_first_name => travel_list.employee.try(:first_name), :employee_middle_name => travel_list.employee.try(:middle_name), :employee_last_name => travel_list.employee.try(:last_name),:code => travel_list.try(:code), :place => travel_list.try(:place), :current_status => travel_list.try(:current_status),:is_confirm => travel_list.try(:is_confirm), :all_status => travel_list.try(:reporting_masters_travel_requests), :application_date => travel_list.try(:application_date), :company_location => travel_list.try(:employee).try(:company_location).try(:name), :department => travel_list.try(:employee).try(:department).try(:name), :travel_option => travel_list.try(:travel_option).try(:name), :travel_mode => travel_list.try(:travel_mode).try(:name), :from_date => travel_list.try(:traveling_date), :to_date => travel_list.try(:to), :day => travel_list.try(:day), :total_advance => travel_list.try(:total_advance) }} : []
   end
-  
+
   def all_travel_history
     employee_id = params[:employee_id]
     travel_requests = TravelRequest.where(employee_id: employee_id)
     render :json => travel_requests.present? ? travel_requests.collect{|travel_list| {:id => travel_list.try(:id), :manual_employee_code => travel_list.try(:employee).try(:manual_employee_code), :prefix => travel_list.employee.try(:prefix), :employee_first_name => travel_list.employee.try(:first_name), :employee_middle_name => travel_list.employee.try(:middle_name), :employee_last_name => travel_list.employee.try(:last_name),:code => travel_list.try(:code), :place => travel_list.try(:place), :current_status => travel_list.try(:current_status),:is_confirm => travel_list.try(:is_confirm), :all_status => travel_list.try(:reporting_masters_travel_requests), :application_date => travel_list.try(:application_date), :company_location => travel_list.try(:employee).try(:company_location).try(:name), :department => travel_list.try(:employee).try(:department).try(:name), :travel_option => travel_list.try(:travel_option).try(:name), :travel_mode => travel_list.try(:travel_mode).try(:name), :from_date => travel_list.try(:traveling_date), :to_date => travel_list.try(:to), :day => travel_list.try(:day), :total_advance => travel_list.try(:total_advance) }} : []
+  end
+
+  def cancel_travel_history
+    employee_id = params[:employee_id]
+    travel_req_id = params[:travel_req_id]
+    @travel_request = TravelRequest.find(travel_req_id)
+    @travel_request.update(current_status: "Cancelled",reporting_master_id: employee_id)
+    TravelRequestHistory.create(employee_id: employee_id,travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Cancelled")
+    ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id, reporting_master_id: employee_id, travel_status: "Cancelled")
+    render :status=>200, :json=>{:status=> "Travel Request Cancelled"}
   end
 
 end

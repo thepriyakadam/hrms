@@ -115,14 +115,14 @@
 </div>
 
 <div class="row">
-  <div class="col-sm-3">
+  <div class="col-sm-6">
     <div class="actions">
-      <%= f.submit "Create Travel Request",class: 'btn btn-sm btn-primary' %>
+      <%= f.submit "Create Travel Request",class: 'btn btn-sm btn-primary' %> |
       <%= link_to 'Back', travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
     </div>
   </div>
 </div>
-
+<%= render 'travel_request_list' %>  
 </div>
 </div>
 <% end %>

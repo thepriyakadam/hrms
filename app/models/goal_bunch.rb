@@ -82,6 +82,7 @@ class GoalBunch < ActiveRecord::Base
       end#do
 #    end
   end
+  end
 
    def self.import_appraiser_evaluation(file)
      spreadsheet = open_spreadsheet(file)

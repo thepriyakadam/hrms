@@ -79,25 +79,46 @@ class EmployeeAttendance < ActiveRecord::Base
       (2..spreadsheet.last_row).each do |i|
         
         employee_code = spreadsheet.cell(i,'A').to_i
-
+         if employee_code == 0
+           employee_code = spreadsheet.cell(i,'A')
+        else
+           employee_code = spreadsheet.cell(i,'A').to_i
+        end
         employee_name = spreadsheet.cell(i,'B')
         day = spreadsheet.cell(i,'C')
 
         in_time1 = spreadsheet.cell(i,'D') #@employee.id
         #byebug
-        in_time2 = in_time1.to_f/3600
-        in_time3 = in_time2.to_s
-        in_time = in_time3.to_datetime
+        if in_time1 == nil
+          in_time = nil
+        else
+          in_time2 = in_time1.to_f/3600
+          in_time3 = in_time2.to_s
+          in_time = in_time3.to_datetime
+        end
 
         out_time1 = spreadsheet.cell(i,'E')
-
-        out_time2 = out_time1.to_f/3600
-        out_time3 = out_time2.to_s
-        out_time = out_time3.to_datetime
+        if out_time1 == nil
+          out_time = nil
+        else
+          out_time2 = out_time1.to_f/3600
+          out_time3 = out_time2.to_s
+          out_time = out_time3.to_datetime
+        end
 
         working_hrs1 = spreadsheet.cell(i,'F')
-        working_hrs = working_hrs1.to_f/3600
+        if working_hrs1 == nil
+          working_hrs = nil
+        else
+          working_hrs = working_hrs1.to_f/3600
+        end
+
         present = spreadsheet.cell(i,'G')
+        if present == nil
+          present == nil
+        else
+          present = spreadsheet.cell(i,'G')
+        end
 
         employee = Employee.find_by(manual_employee_code: employee_code)
         if employee.nil?
@@ -106,7 +127,7 @@ class EmployeeAttendance < ActiveRecord::Base
           if employee_atten.nil?
             employee_attendance = EmployeeAttendance.create(employee_name: employee_name,day: day.to_date,working_hrs: working_hrs,present: present,in_time: in_time,out_time: out_time) 
             employee_attendance.save
-          employee_attendance.update(in_time: in_time,out_time: out_time)
+            employee_attendance.update(in_time: in_time,out_time: out_time)
           else
             if employee_atten.employee_leav_request_id.nil? || employee_atten.on_duty_request_id.nil?
 
@@ -117,13 +138,13 @@ class EmployeeAttendance < ActiveRecord::Base
             else
             end
           end
+            @employee_attendance = EmployeeAttendance.last
+            employee = Employee.find_by(manual_employee_code: employee_code)
+            @employee_attendance.update(employee_id: employee.id)
         end
-
-        @employee_attendance = EmployeeAttendance.last
-        employee = Employee.find_by(manual_employee_code: employee_code)
-        @employee_attendance.update(employee_id: employee.id)
+        
         EmployeeAttendance.where(employee_id: nil).destroy_all
-      end
+      end#do
 
         # spreadsheet = open_spreadsheet(file)
         # header = spreadsheet.row(1)

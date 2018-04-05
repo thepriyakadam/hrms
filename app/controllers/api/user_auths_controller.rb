@@ -1027,7 +1027,7 @@ class Api::UserAuthsController < ApplicationController
 
   def contact_details
     contact_details = ContactDetail.where(status: true)
-    render :json => contact_details.present? ? contact_details.collect{|cd| {:id => cd.id, :employee_id => cd.employee_id, :passport_photo_file_name => cd.employee.try(:passport_photo_file_name), :prefix => cd.employee.try(:prefix), :employee_first_name => cd.employee.try(:first_name), :employee_middle_name => cd.employee.try(:middle_name), :employee_last_name => cd.employee.try(:last_name), :contact_no => cd.employee.try(:contact_no), :email => cd.employee.try(:email), :current_role => cd.employee.try(:joining_detail).try(:employee_designation).try(:name), :description => cd.description, :status => cd.status, :role1 => cd.role1, :role2 => cd.role2, :role3 => cd.role3, :role4 => cd.role4, :role5 => cd.role5, :role6 => cd.role6, :role6 => cd.role6, :role7 => cd.role7,:role8 => cd.role8  }} : []
+    render :json => contact_details.present? ? contact_details.collect{|cd| {:id => cd.id, :employee_id => cd.employee_id, :passport_photo_file_name => cd.employee.try(:passport_photo_file_name), :prefix => cd.employee.try(:prefix), :employee_first_name => cd.employee.try(:first_name), :employee_middle_name => cd.employee.try(:middle_name), :employee_last_name => cd.employee.try(:last_name), :contact_no => cd.employee.try(:contact_no), :email => cd.employee.try(:email), :current_role => cd.employee.try(:joining_detail).try(:employee_designation).try(:name), :description => cd.description, :status => cd.status, :role1 => cd.role1, :role2 => cd.role2, :role3 => cd.role3, :role4 => cd.role4, :role5 => cd.role5, :role6 => cd.role6, :role7 => cd.role7,:role8 => cd.role8  }} : []
   end
 
   def all_employee_list
@@ -2184,7 +2184,11 @@ class Api::UserAuthsController < ApplicationController
     employee_id = params[:employee_id]
     @reporting_masters = ReportingMaster.find_by_employee_id(employee_id)
     travel_requests = TravelRequest.where(current_status: "FinalApproved",reporting_master_id: employee_id,is_confirm: true)
+<<<<<<< HEAD
     render :json => travel_requests.present? ? travel_requests.collect{|travel_list| {:id => travel_list.try(:id), :manual_employee_code => travel_list.try(:employee).try(:manual_employee_code), :prefix => travel_list.employee.try(:prefix), :employee_first_name => travel_list.employee.try(:first_name), :employee_middle_name => travel_list.employee.try(:middle_name), :employee_last_name => travel_list.employee.try(:last_name),:code => travel_list.try(:code), :place => travel_list.try(:place), :current_status => travel_list.try(:current_status),:is_confirm => travel_list.try(:is_confirm), :all_status => travel_list.try(:reporting_masters_travel_requests), :application_date => travel_list.try(:application_date), :company_location => travel_list.try(:employee).try(:company_location).try(:name), :department => travel_list.try(:employee).try(:department).try(:name), :travel_option => travel_list.try(:travel_option).try(:name), :travel_mode => travel_list.try(:travel_mode).try(:name), :from_date => travel_list.try(:traveling_date), :to_date => travel_list.try(:to), :day => travel_list.try(:day), :total_advance => travel_list.try(:total_advance) }} : []
+=======
+    render :json => travel_requests.present? ? travel_requests.collect{|travel_list| {:id => travel_list.try(:id), :manual_employee_code => travel_list.try(:employee).try(:manual_employee_code), :prefix => travel_list.employee.try(:prefix), :employee_first_name => travel_list.employee.try(:first_name), :employee_middle_name => travel_list.employee.try(:middle_name), :employee_last_name => travel_list.employee.try(:last_name),:code => travel_list.try(:code), :place => travel_list.try(:place), :current_status => travel_list.try(:current_status), :all_status => travel_list.try(:reporting_masters_travel_requests), :application_date => travel_list.try(:application_date), :company_location => travel_list.try(:employee).try(:company_location).try(:name), :department => travel_list.try(:employee).try(:department).try(:name), :travel_option => travel_list.try(:travel_option).try(:name), :travel_mode => travel_list.try(:travel_mode).try(:name), :from_date => travel_list.try(:traveling_date), :to_date => travel_list.try(:to), :day => travel_list.try(:day), :total_advance => travel_list.try(:total_advance), :is_confirm => travel_list.try(:is_confirm) }} : []
+>>>>>>> 77324ae8ebaabc067ca41b56151e48ab02eb7853
   end
 
   def all_claim_expense_list
@@ -2203,6 +2207,77 @@ class Api::UserAuthsController < ApplicationController
     @travel_request = TravelRequest.find(travel_request_id)
     @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id, is_confirm: true)
     render :json => @daily_bill_details.present? ? @daily_bill_details.collect{|dbd| {:id => dbd.try(:id), :expence_date => dbd.try(:expence_date), :e_place => dbd.try(:e_place), :travel_expence_type => dbd.try(:travel_expence_type).try(:name), :travel_expence => dbd.try(:travel_expence) }} : []
+  end
+ 
+  def claim_approve_request
+    status  = ''
+    travel_request_id = params[:travel_req_id]
+    comment = params[:comment]
+    @travel_request = TravelRequest.find(travel_request_id)
+
+    DailyBillDetail.where(travel_request_id: @travel_request.id).update_all(request_status: "Approved & Send Next")
+
+    @reporting_masters_travel_requests2 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[1]
+    @reporting_masters_travel_requests3_new = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[2]
+    @reporting_masters_travel_requests4_new = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[3]
+    @reporting_masters_travel_requests5_new = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[4]
+    @reporting_masters_travel_requests6_new = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[5]
+    @reporting_masters_travel_requests7_new = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[6]
+    @reporting_masters_travel_requests8_new = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[7]
+    @reporting_masters_travel_requests9_new = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[8]
+    @reporting_masters_travel_requests10_new = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[9]
+
+    if @reporting_masters_travel_requests2.try(:status) == nil
+      ReportingMastersTravelRequest.where(id: @reporting_masters_travel_requests2.id).update_all(status: true,daily_bill_comment: comment)
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests3_new.reporting_master_id)
+      status = 'Daily Bill Request Send To Higher Authority For Approval'
+
+    elsif @reporting_masters_travel_requests3_new.try(:status) == nil
+      ReportingMastersTravelRequest.where(id: @reporting_masters_travel_requests3_new.try(:id)).update_all(status: true,daily_bill_comment: comment)
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests4_new.try(:reporting_master_id))
+      status = 'Daily Bill Request Send To Higher Authority For Approval'
+
+    elsif @reporting_masters_travel_requests4_new.try(:status) == nil
+      ReportingMastersTravelRequest.where(id: @reporting_masters_travel_requests4_new.try(:id)).update_all(status: true,daily_bill_comment: comment)
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests5_new.try(:reporting_master_id))
+      status = 'Daily Bill Request Send To Higher Authority For Approval'
+
+    elsif @reporting_masters_travel_requests5_new.try(:status) == nil
+      ReportingMastersTravelRequest.where(id: @reporting_masters_travel_requests5_new.try(:id)).update_all(status: true,daily_bill_comment: comment)
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests6_new.try(:reporting_master_id))
+      status = 'Daily Bill Request Send To Higher Authority For Approval'
+
+    elsif @reporting_masters_travel_requests6_new.try(:status) == nil
+      ReportingMastersTravelRequest.where(id: @reporting_masters_travel_requests6_new.try(:id)).update_all(status: true,daily_bill_comment: comment)
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests7_new.try(:reporting_master_id))
+      status = 'Daily Bill Request Send To Higher Authority For Approval'
+
+    elsif @reporting_masters_travel_requests7_new.try(:status) == nil
+      ReportingMastersTravelRequest.where(id: @reporting_masters_travel_requests7_new.try(:id)).update_all(status: true,daily_bill_comment: comment)
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests8_new.try(:reporting_master_id))
+      status = 'Daily Bill Request Send To Higher Authority For Approval'
+
+    elsif @reporting_masters_travel_requests8_new.try(:status) == nil
+      ReportingMastersTravelRequest.where(id: @reporting_masters_travel_requests8_new.try(:id)).update_all(status: true,daily_bill_comment: comment)
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests9_new.try(:reporting_master_id))
+      status = 'Daily Bill Request Send To Higher Authority For Approval'
+
+    elsif @reporting_masters_travel_requests9_new.try(:status) == nil
+      ReportingMastersTravelRequest.where(id: @reporting_masters_travel_requests9_new.try(:id)).update_all(status: true,daily_bill_comment: comment)
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests10_new.try(:reporting_master_id))
+      status = 'Daily Bill Request Send To Higher Authority For Approval'
+    else
+    end
+    if status.empty?
+      render :status=>200, :json=>{:status=> "Success"}
+    else
+      render :status=>200, :json=>{:status=> status }
+    end
+  end
+
+  def admin_expense_claim_approval_list
+    travel_requests = TravelRequest.where(current_status: "FinalApproved")
+    render :json => travel_requests.present? ? travel_requests.collect{|travel_list| {:id => travel_list.try(:id), :manual_employee_code => travel_list.try(:employee).try(:manual_employee_code), :prefix => travel_list.employee.try(:prefix), :employee_first_name => travel_list.employee.try(:first_name), :employee_middle_name => travel_list.employee.try(:middle_name), :employee_last_name => travel_list.employee.try(:last_name),:code => travel_list.try(:code), :place => travel_list.try(:place), :current_status => travel_list.try(:current_status),:is_confirm => travel_list.try(:is_confirm), :all_status => travel_list.try(:reporting_masters_travel_requests), :application_date => travel_list.try(:application_date), :company_location => travel_list.try(:employee).try(:company_location).try(:name), :department => travel_list.try(:employee).try(:department).try(:name), :travel_option => travel_list.try(:travel_option).try(:name), :travel_mode => travel_list.try(:travel_mode).try(:name), :from_date => travel_list.try(:traveling_date), :to_date => travel_list.try(:to), :day => travel_list.try(:day), :total_advance => travel_list.try(:total_advance) }} : []
   end
 
 

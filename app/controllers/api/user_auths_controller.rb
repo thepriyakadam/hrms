@@ -1842,7 +1842,7 @@ class Api::UserAuthsController < ApplicationController
     manager2_id = params[:manager2_id]
     application_date = Time.zone.now.to_date
     reporting_master_id = ReportingMaster.find_by(employee_id: manager1_id)
-    @travel_request = TravelRequest.new(employee_id: employee_id, application_date: application_date, traveling_date: from_date, tour_purpose: tour_purpose, place: place, traveling_advance: total_advance, travel_option_id: travel_option_id, travel_mode_id: travel_mode_id, to: to_date, reporting_master_id: manager1_id)
+    @travel_request = TravelRequest.new(employee_id: employee_id, application_date: application_date, traveling_date: from_date, tour_purpose: tour_purpose, place: place, total_advance: total_advance, travel_option_id: travel_option_id, travel_mode_id: travel_mode_id, to: to_date, reporting_master_id: manager1_id)
     emp = Employee.find_by(id: employee_id)
     if reporting_master_id.nil?
       status = "Reporting Manager not set please set Reporting Manager"
@@ -2035,7 +2035,13 @@ class Api::UserAuthsController < ApplicationController
   def claim_list
     travel_request_id = params[:travel_req_id]
     @daily_bill_details = DailyBillDetail.where(travel_request_id: travel_request_id).order("expence_date ASC") 
-    render :json => @daily_bill_details.present? ? @daily_bill_details.collect{|dbd| {:id => dbd.try(:id), :expence_date => dbd.try(:expence_date), :travel_request_id => dbd.try(:travel_request_id), :e_place => dbd.try(:e_place), :travel_expence_type => dbd.try(:travel_expence_type).try(:name), :travel_expence => dbd.try(:travel_expence) }} : []
+    render :json => @daily_bill_details.present? ? @daily_bill_details.collect{|dbd| {:id => dbd.try(:id), :expence_date => dbd.try(:expence_date), :travel_request_id => dbd.try(:travel_request_id), :e_place => dbd.try(:e_place), :travel_expence_type => dbd.try(:travel_expence_type).try(:name), :travel_expence => dbd.try(:travel_expence), :currency_master => dbd.try(:currency_master).try(:name), :request_status => dbd.try(:request_status), :is_confirm => dbd.try(:is_confirm) }} : []
+  end
+
+  def claim_list_total
+    travel_request_id = params[:travel_req_id]
+    @daily_bill_details = DailyBillDetail.where(travel_request_id: travel_request_id).order("expence_date ASC") 
+    render :status=>200, :json=>{:total=> @daily_bill_details.sum(:travel_expence) }
   end
 
   def cancel_coff_request
@@ -2130,4 +2136,75 @@ class Api::UserAuthsController < ApplicationController
     @daily_bill.destroy
     render :status=>200, :json=>{:status=> "Deleted successfully" }
   end
+
+  def employee_claim_request
+    travel_request_id = params[:id]
+    @travel_request = TravelRequest.find(travel_request_id)
+    @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
+    @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[0]
+    @reporting_masters_travel_requests_1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[1] #new code
+    ReportingMastersTravelRequest.where(id: @reporting_masters_travel_requests.id).update_all(status: true) #new code
+    DailyBillDetail.where(travel_request_id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests.reporting_master_id,is_confirm: true)
+    c1 = @daily_bill_details.sum(:travel_expence).to_i
+    TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests_1.reporting_master_id,is_confirm: true,expense: c1)
+    @travel_req = TravelRequest.find_by(id: @travel_request.id)
+    @report = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).first
+    c1 = @travel_request.total_advance - @travel_req.expense
+    if @report.status == true  && @report.travel_status == "Pending"
+      @travel_expence = TravelExpence.create(travel_request_id: @travel_request.id,total_advance_amount: @travel_request.total_advance,total_expence_amount: @travel_req.expense,remaining_amount: c1)
+    else
+    end
+    if c1<0
+      TravelExpence.where(travel_request_id: @travel_request.id).update_all(employee_amount: c1.abs)
+    else
+      TravelExpence.where(travel_request_id: @travel_request.id).update_all(company_amount: c1.abs)
+    end
+    render :status=>200, :json=>{:status=> "Confirmed Successfully" }
+  end
+
+  def final_reject_travel_request
+    travel_request_id = params[:travel_req_id]
+    employee_id = params[:employee_id]
+    @travel_request = TravelRequest.find(travel_request_id)
+    @travel_request.update(current_status: "Rejected",reporting_master_id: employee_id)
+    ReportingMastersTravelRequest.create(reporting_master_id: employee_id, travel_request_id: @travel_request.id,travel_status: "Rejected")
+    render :status=>200, :json=>{:status=> "Travel Request Rejected Successfully" }
+  end
+
+  def final_approve_travel_request
+    travel_request_id = params[:travel_req_id]
+    employee_id = params[:employee_id]
+    @travel_request = TravelRequest.find(travel_request_id)
+    @travel_request.update(current_status: "FinalApproved",reporting_master_id: employee_id)
+    ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id,reporting_master_id: employee_id,travel_status: "FinalApproved")
+    render :status=>200, :json=>{:status=> "Travel Request FinalApproved Successfully" }
+  end
+
+  def expense_claim_approval_list
+    employee_id = params[:employee_id]
+    @reporting_masters = ReportingMaster.find_by_employee_id(employee_id)
+    travel_requests = TravelRequest.where(current_status: "FinalApproved",reporting_master_id: employee_id,is_confirm: true)
+    render :json => travel_requests.present? ? travel_requests.collect{|travel_list| {:id => travel_list.try(:id), :manual_employee_code => travel_list.try(:employee).try(:manual_employee_code), :prefix => travel_list.employee.try(:prefix), :employee_first_name => travel_list.employee.try(:first_name), :employee_middle_name => travel_list.employee.try(:middle_name), :employee_last_name => travel_list.employee.try(:last_name),:code => travel_list.try(:code), :place => travel_list.try(:place), :current_status => travel_list.try(:current_status),:is_confirm => travel_list.try(:is_confirm), :all_status => travel_list.try(:reporting_masters_travel_requests), :application_date => travel_list.try(:application_date), :company_location => travel_list.try(:employee).try(:company_location).try(:name), :department => travel_list.try(:employee).try(:department).try(:name), :travel_option => travel_list.try(:travel_option).try(:name), :travel_mode => travel_list.try(:travel_mode).try(:name), :from_date => travel_list.try(:traveling_date), :to_date => travel_list.try(:to), :day => travel_list.try(:day), :total_advance => travel_list.try(:total_advance) }} : []
+  end
+
+  def all_claim_expense_list
+    travel_request_id = params[:travel_req_id]
+    @travel_request = TravelRequest.find(travel_request_id)
+    travel_expence = TravelExpence.where(travel_request_id: @travel_request.id)
+    if travel_expence.present?
+      render :json => travel_expence.present? ? travel_expence.collect{|travel_list| {:id => travel_list.try(:id), :total_advance_amount => travel_list.try(:total_advance_amount), :total_expence_amount => travel_list.try(:total_expence_amount), :company_amount => travel_list.try(:company_amount), :employee_amount => travel_list.try(:employee_amount) }} : []
+    else
+      render :status=>200, :json=>{:status=> "Travel Expence Not present" }
+    end    
+  end
+
+  def second_expense_claim_list
+    travel_request_id = params[:travel_req_id]
+    @travel_request = TravelRequest.find(travel_request_id)
+    @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id, is_confirm: true)
+    render :json => @daily_bill_details.present? ? @daily_bill_details.collect{|dbd| {:id => dbd.try(:id), :expence_date => dbd.try(:expence_date), :e_place => dbd.try(:e_place), :travel_expence_type => dbd.try(:travel_expence_type).try(:name), :travel_expence => dbd.try(:travel_expence) }} : []
+  end
+
+
 end
+

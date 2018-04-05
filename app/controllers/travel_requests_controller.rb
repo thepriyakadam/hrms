@@ -67,15 +67,16 @@ class TravelRequestsController < ApplicationController
     #   flash[:alert] = "Your Request already has been sent"
     #   redirect_to travel_requests_path
     #  else
+    @manager_id = emp.try(:manager_id)
     if emp.try(:manager_id).nil?
         flash[:alert] = "Reporting Manager not set please set Reporting Manager"
         redirect_to travel_requests_path
     else
       respond_to do |format|
         if @travel_request.save
-          TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: reporting_master_id.id,current_status: "Pending")
-          ReportingMastersTravelRequest.create(reporting_master_id: reporting_master_id.id, travel_request_id: @travel_request.id,travel_status: "Pending")
-          TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: reporting_master_id.id, travel_option_id: @travel_request.travel_option_id,current_status: @travel_request.current_status)
+          TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @manager_id,current_status: "Pending")
+          ReportingMastersTravelRequest.create(reporting_master_id: @manager_id, travel_request_id: @travel_request.id,travel_status: "Pending")
+          TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @manager_id, travel_option_id: @travel_request.travel_option_id,current_status: @travel_request.current_status)
           @c1 = (@travel_request.to - @travel_request.traveling_date).to_i
           # ReportingMastersTravelRequest.create(reporting_master_id: @current_user.employee_id, travel_request_id: @travel_request.id)
           # TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id)

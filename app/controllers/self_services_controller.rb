@@ -56,7 +56,7 @@ class SelfServicesController < ApplicationController
     @employee_resignation = EmployeeResignation.new
     @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
     joining_detail = JoiningDetail.find_by(employee_id: current_user.employee_id)
-    @notice_period = joining_detail.notice_period
+    @notice_period = joining_detail.try(:notice_period)
     session[:active_tab] ="EmployeeSelfService"
   end
 
@@ -244,7 +244,6 @@ class SelfServicesController < ApplicationController
                 end
               end#do
             end#c_off.nil?
-            #byebug
 
             if @emp_attendance.holiday_id.present? || @emp_attendance.employee_week_off_id.present?
               if @emp_attendance.on_duty_request_id.present?

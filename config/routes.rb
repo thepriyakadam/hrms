@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :gps_informations do
+    collection do
+      get :all_emp_list
+      post :update_gps_info
+    end
+  end
   resources :latemark_deductions
   resources :latemark_masters do
     collection do
@@ -1157,6 +1163,7 @@ end
     collection do
       get :periodwise_goal_set
       post :periodwise_goal_list
+      post :set_goal_periodwise
       get :select_dropdown
       get :self_modal
       patch :update_self_modal
@@ -1230,6 +1237,7 @@ end
   #post 'goal_ratings/update_goal_set_modal'
   resources :goal_bunches do
     collection do
+      get :ajax_upload_document
       post :show_periodwise_employee
       get :goal_approval
       post :appraiser_confirm
@@ -2045,6 +2053,8 @@ end
       get :show_approved_record
     end
   end
+
+  match 'goal_ratings/:id/download_self_document/:id' => 'goal_ratings#download_self_document', :via => [:get], :as => :download_self_document
   match 'selected_resumes/:id/download_resume/:id' => 'selected_resumes#download_resume', :via => [:get], :as => :download_resume
   match 'selected_resumes/:id/download_image/:id' => 'selected_resumes#download_image', :via => [:get], :as => :download_image
   match 'accident_records/:id/download_jpg/:id' => 'accident_records#download_jpg', :via => [:get], :as => :download_jpg
@@ -3184,8 +3194,7 @@ end
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-
-  namespace :api do
+ namespace :api do
     resources :user_auths,:only => [:create], defaults: {format: 'json'}
     post 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
     get 'user_auths/employee_list' => 'user_auths#employee_list', defaults:{format: 'json'}
@@ -3291,5 +3300,25 @@ end
     get 'user_auths/expense_type_list' => 'user_auths#expense_type_list', defaults:{format: 'json'}
     get 'user_auths/all_currency' => 'user_auths#all_currency', defaults:{format: 'json'}
     get 'user_auths/claim_list' => 'user_auths#claim_list', defaults:{format: 'json'}
+    get 'user_auths/cancel_coff_request' => 'user_auths#cancel_coff_request', defaults:{format: 'json'}
+    get 'user_auths/approve_travel_request' => 'user_auths#approve_travel_request', defaults:{format: 'json'}
+    get 'user_auths/reject_travel_request' => 'user_auths#reject_travel_request', defaults:{format: 'json'}
+    get 'user_auths/final_approval_travel_list' => 'user_auths#final_approval_travel_list', defaults:{format: 'json'}
+    post 'user_auths/employee_expense_claim_request' => 'user_auths#employee_expense_claim_request', defaults:{format: 'json'}
+    get 'user_auths/edit_claim' => 'user_auths#edit_claim', defaults:{format: 'json'}
+    get 'user_auths/delete_expense_claim' => 'user_auths#delete_expense_claim', defaults:{format: 'json'}
+    post 'user_auths/employee_claim_request' => 'user_auths#employee_claim_request', defaults:{format: 'json'}
+    get 'user_auths/claim_list_total' => 'user_auths#claim_list_total', defaults:{format: 'json'}
+    get 'user_auths/final_reject_travel_request' => 'user_auths#final_reject_travel_request', defaults:{format: 'json'}
+    get 'user_auths/final_approve_travel_request' => 'user_auths#final_approve_travel_request', defaults:{format: 'json'}
+    get 'user_auths/expense_claim_approval_list' => 'user_auths#expense_claim_approval_list', defaults:{format: 'json'}
+    get 'user_auths/all_claim_expense_list' => 'user_auths#all_claim_expense_list', defaults:{format: 'json'}
+    get 'user_auths/second_expense_claim_list' => 'user_auths#second_expense_claim_list', defaults:{format: 'json'}
+    get 'user_auths/claim_approve_request' => 'user_auths#claim_approve_request', defaults:{format: 'json'}
+    get 'user_auths/admin_expense_claim_approval_list' => 'user_auths#admin_expense_claim_approval_list', defaults:{format: 'json'}
+    get 'user_auths/all_travel_history' => 'user_auths#all_travel_history', defaults:{format: 'json'}
+    get 'user_auths/cancel_travel_history' => 'user_auths#cancel_travel_history', defaults:{format: 'json'}
+    
   end
+
 end

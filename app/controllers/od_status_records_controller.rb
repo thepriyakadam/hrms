@@ -97,7 +97,7 @@ class OdStatusRecordsController < ApplicationController
     OdRecord.where("on_duty_request_id =? AND day =?", @particular_od_record.on_duty_request_id, @date).update_all(status: "Cancelled")
     @particular_od_record.update(is_cancel_after_approve: true)
     #EmployeeAttendance.where("employee_id = ? AND day = ?", @particular_od_record.employee_id,@particular_od_record.leave_date.to_date).destroy_all    
-    EmployeeAttendance.where(on_duty_request_id: @particular_od_record.on_duty_request_id).update_all(on_duty_request_id: nil,present: "A",comment: "OD cancelled after approve")
+    EmployeeAttendance.where(on_duty_request_id: @particular_od_record.on_duty_request_id,day: @date).update_all(on_duty_request_id: nil,present: "A",comment: "OD cancelled after approve")
       if @on_duty_request.employee.email.nil? || @on_duty_request.employee.email == ''
         flash[:notice] = 'OD Cancelled Successfully without email.'
       else

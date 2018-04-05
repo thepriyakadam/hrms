@@ -70,7 +70,7 @@ class JoiningDetailsController < ApplicationController
         # format.json { render json: @joining_detail.errors, status: :unprocessable_entity }
         format.js { @flag = true }
       end
-        EmployeeMailer.joining_create(@employee,@joining_detail).deliver_now  
+        # EmployeeMailer.joining_create(@employee,@joining_detail).deliver_now  
     end
   end
 
@@ -219,6 +219,6 @@ class JoiningDetailsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def joining_detail_params
-    params.require(:joining_detail).permit(:c_off,:company_rfid,:gate_rfid,:leaving_date,:employee_id, :ot_rate, :ot_option, :is_new,:replacement_id,:joining_date, :basis_of_time, :employee_grade_id, :confirmation_date, :employee_uan_no, :employee_pf_no, :employee_efic_no, :probation_period, :notice_period, :medical_schem, :employee_designation_id, :passport_no, :passport_issue_date, :passport_expiry_date, :select_pf, :pf_max_amount, :have_esic, :payment_mode_id, :cost_center_id, :employee_category_id, :department_id, :have_retention, :retirement_date, :reserved_category_id, :is_da,:is_employeer_pf,:is_employeer_esic,:is_insurance,:have_passport, :is_family_pension, :is_bonus)
+    params.require(:joining_detail).permit(:c_off,:company_rfid,:gate_rfid,:leaving_date,:employee_id, :ot_rate, :ot_option, :is_new,:replacement_id,:joining_date, :basis_of_time, :employee_grade_id, :confirmation_date, :employee_uan_no, :employee_pf_no, :employee_efic_no, :probation_period, :notice_period, :medical_schem, :employee_designation_id, :passport_no, :passport_issue_date, :passport_expiry_date, :select_pf, :pf_max_amount, :have_esic, :payment_mode_id, :cost_center_id, :employee_category_id, :department_id, :have_retention, :retirement_date, :reserved_category_id, :is_da,:is_employeer_pf,:is_employeer_esic,:is_insurance,:have_passport, :is_family_pension, :is_bonus, :gps_track, :restricted_area)
   end
 end

@@ -156,15 +156,18 @@ class GoalBunchesController < ApplicationController
 
       @goal_bunch = GoalBunch.find_by(id: @goal_bunch_id)
       sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
-    if sum == 100
+    if sum.round == 100
       @goal_bunch.update(goal_approval: true)
       flash[:notice] = "Confirmed Successfully" 
-      GoalBunchMailer.send_email_to_appraisee(@goal_bunch).deliver_now
-      redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
+      # GoalBunchMailer.send_email_to_appraisee(@goal_bunch).deliver_now
     else
       flash[:alert] = "Goal weightage sum should be 100"
-      redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
     end 
+    if @employee.id == current_user.employee_id
+      redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
+    else
+      redirect_to admin_level_goal_approval_goal_bunches_path(period_id: @period.id)
+    end
   end
 
   def revert_goal
@@ -314,35 +317,93 @@ class GoalBunchesController < ApplicationController
     @goal_rating = GoalRating.find(params[:goal_rating_id])
   end 
 
+  def ajax_upload_document
+    if params[:document_present] == "Yes"
+      @flag = true
+    else
+      @flag = false
+    end
+  end
+
   def self_comment
     @goal_rating_ids = params[:goal_rating_ids]
     comments = params[:appraisee_comment]
     ratings = params[:appraisee_rating]
-    goal_bunch = GoalBunch.find(params[:goal_bunch_id])
-    @period = Period.find_by(id: goal_bunch.period_id)
-    final = @goal_rating_ids.zip(comments,ratings)
-    final.each do |e, c, r|
-      goal_rating = GoalRating.find(e)
-      if c == ''
-        flash[:alert] = 'Fill comments'
-      elsif r == ''
-        flash[:alert] = 'Fill ratings'
-      else
-        if @period.marks == true
-          @rating = Rating.find_by(id: r)
-          weightage = goal_rating.goal_weightage
-          rating = @rating.value
+    
+    document_present = params[:goal_ratings][:document_present]
 
-          if rating.to_i <= weightage.to_i
-            goal_rating.update(appraisee_comment: c, appraisee_rating_id: r)
-          else
-            rating1 = Rating.where(value: goal_rating.goal_weightage).take
-            goal_rating.update(appraisee_comment: c, appraisee_rating_id: rating1.id)
-          end
+    if document_present == "Yes"
+      documents = params[:goal_ratings][:document]
+      doc = [documents]
+
+      goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+      @period = Period.find_by(id: goal_bunch.period_id)
+      final = @goal_rating_ids.zip(comments,ratings,doc)
+      final.each do |e, c, r,d|
+        @goal_rating = GoalRating.find(e)
+        if c == ''
+          flash[:alert] = 'Fill comments'
+        elsif r == ''
+          flash[:alert] = 'Fill ratings'
         else
-          goal_rating.update(appraisee_comment: c, appraisee_rating_id: r)
+          if @period.marks == true
+            @rating = Rating.find_by(id: r)
+            weightage = @goal_rating.goal_weightage
+            rating = @rating.value
+
+            if rating.to_f <= weightage.to_f
+              @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r,document: d,document_present: "Yes")
+              flash[:notice] = 'Self Comment & Rating Created Successfully'
+            else
+              rating1 = Rating.where(value: weightage.to_f).take
+              if rating1.nil?
+                flash[:notice] = 'Please Select Rating less then or equals to weightage'
+              else
+                @goal_rating.update(appraisee_comment: c, appraisee_rating_id: rating1.id,document: d,document_present: "Yes")
+                flash[:notice] = 'Self Comment & Rating Created Successfully'
+              end
+            end
+          else
+            @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r,document: d,document_present: "Yes")
+            flash[:notice] = 'Self Comment & Rating Created Successfully'
+          end
+          
         end
-        flash[:notice] = 'Self Comment & Rating Created Successfully'
+      end
+    else
+      @checkbox = false
+      goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+      @period = Period.find_by(id: goal_bunch.period_id)
+      final = @goal_rating_ids.zip(comments,ratings)
+      final.each do |e, c, r|
+        @goal_rating = GoalRating.find(e)
+        if c == ''
+          flash[:alert] = 'Fill comments'
+        elsif r == ''
+          flash[:alert] = 'Fill ratings'
+        else
+          if @period.marks == true
+            @rating = Rating.find_by(id: r)
+            weightage = @goal_rating.goal_weightage
+            rating = @rating.value
+
+            if rating.to_f <= weightage.to_f
+              @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r,document_present: "No",document: nil)
+              flash[:notice] = 'Self Comment & Rating Created Successfully'
+            else
+              rating1 = Rating.where(value: weightage.to_f).take
+              if rating1.nil?
+                flash[:notice] = 'Please Select Rating less then or equals to weightage'
+              else
+                @goal_rating.update(appraisee_comment: c, appraisee_rating_id: rating1.id,document_present: "No",document: nil)
+                flash[:notice] = 'Self Comment & Rating Created Successfully'
+              end
+            end
+          else
+            @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r,document_present: "No",document: nil)
+            flash[:notice] = 'Self Comment & Rating Created Successfully'
+          end
+        end
       end
     end
     @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
@@ -369,6 +430,7 @@ class GoalBunchesController < ApplicationController
     @goal_bunch_id = GoalBunch.find(params[:id]) 
     @employee = Employee.find(params[:emp_id])
     @goal_bunches = GoalBunch.find_by(id: @goal_bunch_id.id)
+    @period = Period.find_by(id: @goal_bunches.period_id)
 
     @employees = Employee.where(id: @employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)
@@ -376,22 +438,22 @@ class GoalBunchesController < ApplicationController
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
 
-    @employee_promotions = EmployeePromotion.where(employee_id: current_user.employee_id)
+    @employee_promotions = EmployeePromotion.where(employee_id: @employee.id)
     #@self_goal_ratings = GoalRating.where(appraisee_id: current_user.employee_id, goal_bunch_id: @goal_bunch_id.id).where.not(appraisee_comment: nil)
     @goal_rating = GoalRating.new
 
-    @self_goal_ratings = GoalRating.where(appraisee_id: current_user.employee_id, goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal').where.not(appraisee_comment: nil)
+    @self_goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal').where.not(appraisee_comment: nil)
     @self_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch_id.id ,'Attribute').where.not(appraisee_comment: nil)
     
      @goal_bunche = GoalBunch.where(employee_id: @employee.id)
 
-    @goal_bunch = GoalBunch.where(employee_id: current_user.employee_id, goal_approval: true, id: @goal_bunch_id.id).take
+    @goal_bunch = GoalBunch.where(employee_id:@employee.id, goal_approval: true, id: @goal_bunch_id.id).take
     if @goal_bunch.nil?
       @goal_ratings = []
       flash[:alert] = "Not Approved By Appraiser"
     else
       #@goal_ratings = @goal_bunch.goal_ratings.where(appraisee_comment: nil)
-      @goal_ratings = @goal_bunch.goal_ratings.where(appraisee_comment: nil,goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
+      @goal_ratings = @goal_bunch.goal_ratings.where(appraisee_comment: nil,goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal')
       @goal_attribute_ratings = @goal_bunch.goal_ratings.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch_id.id ,'Attribute').where(appraisee_comment: nil)
     end
     # @goal_ratings = GoalRating.where(appraisee_id: current_user.employee_id,appraisee_comment: nil)  
@@ -781,6 +843,7 @@ class GoalBunchesController < ApplicationController
   def modal_self_overall
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @appraisee_overall = params[:appraisee_overall]
+    @employee = Employee.find(params[:employee_id])
   end
 
   def self_overall_comment_create
@@ -809,10 +872,11 @@ class GoalBunchesController < ApplicationController
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @appraiser_overall = params[:appraiser_overall]
     @period = Period.find(params[:period_id])
+    @employee = Employee.find(params[:employee_id])
   end
 
   def appraiser_overall_comment_create
-    @employee = Employee.find(current_user.employee_id)
+    @employee = Employee.find(params[:employee_id])
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @appraiser_overall = params[:appraiser_overall]
     @period = Period.find(params[:period_id])
@@ -842,10 +906,11 @@ class GoalBunchesController < ApplicationController
   def modal_reviewer_overall
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @period = Period.find(params[:period_id])
+    @employee = Employee.find(params[:employee_id])
   end
 
   def reviewer_overall_comment_create
-    @employee = Employee.find(current_user.employee_id)
+    @employee = Employee.find(params[:employee_id])
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @period = Period.find(params[:period_id])
 

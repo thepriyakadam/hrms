@@ -176,6 +176,20 @@
         <%end%>
       </div>
       </div>
+      <div class="col-sm-3">
+        <div class="field" style="padding: 10px">
+          <% if current_user.role.name == 'GroupAdmin' %>
+            <%= f.check_box :gps_track, label: 'Gps Track'%>
+          <%end%>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="field" style="padding: 10px">
+          <% if current_user.role.name == 'GroupAdmin' %>
+            <%= f.check_box :restricted_area, label: 'Restricted Area'%>
+          <%end%>
+        </div>
+      </div>
     </div>
   <div class="box-header with-border">
     <strong><font color='#0077b3'> EMPLOYEE PAYROLL DETAILS</font></strong>

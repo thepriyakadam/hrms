@@ -56,7 +56,7 @@ class SelfServicesController < ApplicationController
     @employee_resignation = EmployeeResignation.new
     @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
     joining_detail = JoiningDetail.find_by(employee_id: current_user.employee_id)
-    @notice_period = joining_detail.notice_period
+    @notice_period = joining_detail.try(:notice_period)
     session[:active_tab] ="EmployeeSelfService"
   end
 

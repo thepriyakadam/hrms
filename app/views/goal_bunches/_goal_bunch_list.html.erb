@@ -17,8 +17,7 @@
            <!-- link_to '', edit_goal_bunch_path(goal_bunch),class: 'btn btn-xs btn-success fa fa-edit',remote:true %> -->
             <!-- link_to '', modal_period_goal_bunches_path(goal_bunch),class: 'btn btn-xs btn-success fa fa-edit',remote:true %> -->
           <% if goal_bunch.goal_approval == true %>
-            <small class="label label-info">Goal Created</small>
-          
+            <%= link_to 'Show Goals', new_goal_rating_path(id: goal_bunch,emp_id: goal_bunch.employee_id),class: 'btn btn-xs btn-info'%>
           <% else %>
             <% if goal_bunch.employee_id == current_user.employee_id %>
               <%= link_to 'Set Goals', new_goal_rating_path(id: goal_bunch,emp_id: goal_bunch.employee_id),class: 'btn btn-xs btn-primary'%>

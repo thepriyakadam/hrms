@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :gps_informations do
+    collection do
+      get :all_emp_list
+      post :update_gps_info
+    end
+  end
   resources :latemark_deductions
   resources :latemark_masters do
     collection do
@@ -3308,6 +3314,11 @@ end
     get 'user_auths/expense_claim_approval_list' => 'user_auths#expense_claim_approval_list', defaults:{format: 'json'}
     get 'user_auths/all_claim_expense_list' => 'user_auths#all_claim_expense_list', defaults:{format: 'json'}
     get 'user_auths/second_expense_claim_list' => 'user_auths#second_expense_claim_list', defaults:{format: 'json'}
-
+    get 'user_auths/claim_approve_request' => 'user_auths#claim_approve_request', defaults:{format: 'json'}
+    get 'user_auths/admin_expense_claim_approval_list' => 'user_auths#admin_expense_claim_approval_list', defaults:{format: 'json'}
+    get 'user_auths/all_travel_history' => 'user_auths#all_travel_history', defaults:{format: 'json'}
+    get 'user_auths/cancel_travel_history' => 'user_auths#cancel_travel_history', defaults:{format: 'json'}
+    
   end
+
 end

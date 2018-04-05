@@ -32,7 +32,6 @@ class DailyBillDetailsController < ApplicationController
 
     @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
 
-
     # reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
     # @reporting_master = ReportingMaster.find(@travel_request.reporting_master_id)
     # @employee = Employee.find(@reporting_master.employee_id)

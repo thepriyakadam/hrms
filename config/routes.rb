@@ -3316,6 +3316,8 @@ end
     get 'user_auths/second_expense_claim_list' => 'user_auths#second_expense_claim_list', defaults:{format: 'json'}
     get 'user_auths/claim_approve_request' => 'user_auths#claim_approve_request', defaults:{format: 'json'}
     get 'user_auths/admin_expense_claim_approval_list' => 'user_auths#admin_expense_claim_approval_list', defaults:{format: 'json'}
+    get 'user_auths/all_travel_history' => 'user_auths#all_travel_history', defaults:{format: 'json'}
+    
   end
 
 end

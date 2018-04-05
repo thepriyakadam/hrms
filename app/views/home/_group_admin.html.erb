@@ -373,7 +373,6 @@
     
                <% date = Time.now.to_date + 30.days %>
               <% @employees = Employee.where("status = ? AND DATE_FORMAT(date_of_birth,'%d/%m') = ?", "Active" , date.strftime('%d/%m'))..Time.now.to_date).try(:each) do |et| %>
-               <# JoiningDetail.where(joining_date: fifteen_days_back.to_date..Time.now.to_date).try(:each) do |j| %>
 
             <% if @employees.empty? %>
             <%else%>

@@ -10,7 +10,7 @@ class GoalBunch < ActiveRecord::Base
 
   belongs_to :r_designation, class_name: 'EmployeeDesignation'
   belongs_to :f_designation, class_name: 'EmployeeDesignation'
-  
+ 
   belongs_to :reviewer_rating, class_name: 'Rating'
   belongs_to :final_rating, class_name: 'Rating'
 
@@ -30,6 +30,7 @@ class GoalBunch < ActiveRecord::Base
         goal_rating = GoalRating.find_by(id: goal_rating_id)
         @period = Period.find_by(id: goal_rating.period_id)
 
+
           if goal_rating_id == nil
           else    
             goal_rating = GoalRating.find_by(id: goal_rating_id)
@@ -40,7 +41,7 @@ class GoalBunch < ActiveRecord::Base
               @self_rating_id = 0
             else
               @self_rating = Rating.find_by(value: rating.to_f)
-              if @period.marks == true
+              if period.marks == true
                 
                 if @self_rating == nil
                   rating = Rating.last
@@ -79,8 +80,7 @@ class GoalBunch < ActiveRecord::Base
               goal_rating.update(appraisee_comment: self_comment,appraisee_rating_id: @self_rating_id)
             end
           end# goal_rating_id == nil
-      end#do
-#    end
+    end#do
   end
   end
 
@@ -98,7 +98,7 @@ class GoalBunch < ActiveRecord::Base
           goal_rating_id = spreadsheet.cell(i,'O')
 
           if goal_rating_id == nil
-          else 
+          else
             int_rating = appraiser_rating.to_i
             rating = int_rating.to_s
             if rating == nil
@@ -131,7 +131,7 @@ class GoalBunch < ActiveRecord::Base
         end
         goal_rating_id = spreadsheet.cell(i,'P')
         if goal_rating_id == nil
-        else 
+        else
           goal_rating = GoalRating.find_by(id: goal_rating_id)
           goal_rating.update(reviewer_comment: reviewer_comment)
         end#goal_rating_id == nil
@@ -150,21 +150,21 @@ class GoalBunch < ActiveRecord::Base
   def self.appraisergoal_sum(appraiser_goal_ratings)
     appraiser_goal_sum = 0
     appraiser_goal_ratings.each do |goal_rating|     
-      weightage = goal_rating.goal_weightage 
-      appraiser_rating = goal_rating.appraiser_rating_id 
-      appraiser_output = weightage * appraiser_rating.to_i / 100.to_f 
-      appraiser_goal_sum = appraiser_goal_sum + appraiser_output 
+      weightage = goal_rating.goal_weightage
+      appraiser_rating = goal_rating.appraiser_rating_id
+      appraiser_output = weightage * appraiser_rating.to_i / 100.to_f
+      appraiser_goal_sum = appraiser_goal_sum + appraiser_output
     end
     appraiser_goal_sum
   end
 
   def self.appraiser_attribute_sum(appraiser_attribute_ratings)
-    appraiser_attribute_sum = 0 
+    appraiser_attribute_sum = 0
     appraiser_attribute_ratings.each do |goal_rating|     
-      weightage = goal_rating.goal_weightage 
-      appraiser_rating = goal_rating.appraiser_rating_id 
-      appraiser_output = weightage * appraiser_rating.to_i / 100.to_f 
-      appraiser_attribute_sum = appraiser_attribute_sum + appraiser_output 
+      weightage = goal_rating.goal_weightage
+      appraiser_rating = goal_rating.appraiser_rating_id
+      appraiser_output = weightage * appraiser_rating.to_i / 100.to_f
+      appraiser_attribute_sum = appraiser_attribute_sum + appraiser_output
     end
     appraiser_attribute_sum
   end

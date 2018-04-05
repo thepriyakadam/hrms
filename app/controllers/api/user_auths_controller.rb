@@ -2204,7 +2204,7 @@ class Api::UserAuthsController < ApplicationController
     @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id, is_confirm: true)
     render :json => @daily_bill_details.present? ? @daily_bill_details.collect{|dbd| {:id => dbd.try(:id), :expence_date => dbd.try(:expence_date), :e_place => dbd.try(:e_place), :travel_expence_type => dbd.try(:travel_expence_type).try(:name), :travel_expence => dbd.try(:travel_expence) }} : []
   end
-  
+
   def claim_approve_request
     status  = ''
     travel_request_id = params[:travel_req_id]
@@ -2275,6 +2275,10 @@ class Api::UserAuthsController < ApplicationController
     travel_requests = TravelRequest.where(current_status: "FinalApproved")
     render :json => travel_requests.present? ? travel_requests.collect{|travel_list| {:id => travel_list.try(:id), :manual_employee_code => travel_list.try(:employee).try(:manual_employee_code), :prefix => travel_list.employee.try(:prefix), :employee_first_name => travel_list.employee.try(:first_name), :employee_middle_name => travel_list.employee.try(:middle_name), :employee_last_name => travel_list.employee.try(:last_name),:code => travel_list.try(:code), :place => travel_list.try(:place), :current_status => travel_list.try(:current_status),:is_confirm => travel_list.try(:is_confirm), :all_status => travel_list.try(:reporting_masters_travel_requests), :application_date => travel_list.try(:application_date), :company_location => travel_list.try(:employee).try(:company_location).try(:name), :department => travel_list.try(:employee).try(:department).try(:name), :travel_option => travel_list.try(:travel_option).try(:name), :travel_mode => travel_list.try(:travel_mode).try(:name), :from_date => travel_list.try(:traveling_date), :to_date => travel_list.try(:to), :day => travel_list.try(:day), :total_advance => travel_list.try(:total_advance) }} : []
   end
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8a6cc39191f6c57793eb6f21a8dc53e3b94df2d3
 
 end
 

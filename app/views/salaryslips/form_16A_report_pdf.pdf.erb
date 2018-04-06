@@ -502,7 +502,7 @@
       </tr>
 
       <tr>
-          <td colspan="12" style="text-align: justify; text-indent: 20px;">I, <b>SANJAYKUMAR PARSHOTTAMBHAI MOVALIYA,</b> son / daughter of <b>PARSHOTTAMBHAI RATANSHIBHAI MOVALIYA</b> working in the capacity of <b>DIRECTOR</b>
+          <td colspan="12" style="text-align: justify; text-indent: 20px;">I, <b>S<%= full_name(@employee) %>,</b> son / daughter of <b><%= @employee.try(:middle_name)%> <%= @employee.try(:last_name) %></b> working in the capacity of <b>DIRECTOR</b>
           (designation) do hereby certify that the information given above is true, complete and correct and is based on the book of accounts, documents, TDS statements, and other available records.</td>
         </tr>
 

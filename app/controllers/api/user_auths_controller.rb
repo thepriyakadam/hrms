@@ -2292,5 +2292,12 @@ class Api::UserAuthsController < ApplicationController
     render :status=>200, :json=>{:status=> "Travel Request Cancelled"}
   end
 
+  def get_time_sheet
+    employee_id = params[:employee_id]
+    @employee = Employee.where(manager_id: employee_id).pluck(:id)
+    employee_daily_activities = EmployeeDailyActivity.where(employee_id: @employee).order("day asc")
+    render :json => employee_daily_activities.present? ? employee_daily_activities.collect{|emp| { id: emp.id, :employee_id => emp.employee_id, :project_master_id => emp.project_master_id, :today_activity => emp.today_activity, :tomorrow_plan => tomorrow_plan, :day => day }} : []
+  end
+
 end
 

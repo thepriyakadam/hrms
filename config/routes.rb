@@ -3194,7 +3194,9 @@ end
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
- namespace :api do
+  
+
+  namespace :api do
     resources :user_auths,:only => [:create], defaults: {format: 'json'}
     post 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
     get 'user_auths/employee_list' => 'user_auths#employee_list', defaults:{format: 'json'}
@@ -3318,7 +3320,6 @@ end
     get 'user_auths/admin_expense_claim_approval_list' => 'user_auths#admin_expense_claim_approval_list', defaults:{format: 'json'}
     get 'user_auths/all_travel_history' => 'user_auths#all_travel_history', defaults:{format: 'json'}
     get 'user_auths/cancel_travel_history' => 'user_auths#cancel_travel_history', defaults:{format: 'json'}
-    
+    get 'user_auths/get_time_sheet' => 'user_auths#get_time_sheet', defaults:{format: 'json'}
   end
-
 end

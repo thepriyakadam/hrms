@@ -2294,9 +2294,15 @@ class Api::UserAuthsController < ApplicationController
 
   def get_time_sheet
     employee_id = params[:employee_id]
-    @employee = Employee.where(manager_id: employee_id).pluck(:id)
-    employee_daily_activities = EmployeeDailyActivity.where(employee_id: @employee).order("day asc")
-    render :json => employee_daily_activities.present? ? employee_daily_activities.collect{|emp| { id: emp.id, :employee_id => emp.employee_id, :project_master_id => emp.project_master_id, :today_activity => emp.today_activity, :tomorrow_plan => tomorrow_plan, :day => day }} : []
+    manager_id = params[:manager_id]
+    date = params[:date]
+    if !employee_id.present? and manager_id.present?
+      @employee = Employee.where(manager_id: employee_id).pluck(:id)
+      employee_daily_activities = EmployeeDailyActivity.where(employee_id: @employee, day: date.to_date).order("day asc")
+    else employee_id.present? and manager_id.present?
+      employee_daily_activities = EmployeeDailyActivity.where(employee_id: employee_id, day: date.to_date).order("day asc")
+    end
+    render :json => employee_daily_activities.present? ? employee_daily_activities.collect{|emp| { id: emp.id, :employee_id => emp.employee_id, :project_master_id => emp.project_master_id, :today_activity => emp.today_activity, :tomorrow_plan => emp.tomorrow_plan, :day => emp.day }} : []
   end
 
 end

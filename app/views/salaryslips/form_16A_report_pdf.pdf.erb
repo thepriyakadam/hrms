@@ -128,19 +128,19 @@
         </tr>
         <tr>
           <td colspan="2">
-            <center>Q4</center>
+            <center> </center>
           </td>
           <td colspan="2">
-            <center>FFXFYJKZ</center>
+            <center> </center>
           </td>
           <td colspan="2">
-            <center>135000.00</center>
+            <center> </center>
           </td>
           <td colspan="2">
-            <center>6900.00</center>
+            <center> </center>
           </td>
           <td colspan="2">
-            <center>6900.00</center>
+            <center> </center>
           </td>
         </tr>
         <tr>
@@ -151,13 +151,13 @@
             <center> </center>
           </td>
           <td colspan="2">
-            <center>135000.00</center>
+            <center> </center>
           </td>
           <td colspan="2">
-            <center>6900.00</center>
+            <center> </center>
           </td>
           <td colspan="2">
-            <center>6900.00</center>
+            <center> </center>
           </td>
         </tr>
         <tr>
@@ -244,55 +244,55 @@
           <td colspan="0.5">1
 
           </td>
-          <td colspan="0.5">2300.00
+          <td colspan="0.5">
           </td>
           <td colspan="2">
-            <center>0011352</center>
+            <center></center>
           </td>
           <td colspan="2">
-            <center>08-02-2017</center>
+            <center></center>
           </td>
           <td colspan="2">
-            <center>05145</center>
+            <center></center>
           </td>
           <td colspan="2">
-            <center>F</center>
+            <center></center>
           </td>
         </tr>
         <tr>
           <td colspan="0.5">2
           </td>
-          <td colspan="0.5">2300.00
+          <td colspan="0.5">
           </td>
           <td colspan="2">
-            <center>0013283</center>
+            <center></center>
           </td>
           <td colspan="2">
-            <center>24-03-2017</center>
+            <center></center>
           </td>
           <td colspan="2">
-            <center>07982</center>
+            <center></center>
           </td>
           <td colspan="2">
-            <center>F</center>
+            <center></center>
           </td>
         </tr>
         <tr>
           <td colspan="0.5">3
           </td>
-          <td colspan="0.5">2300.00
+          <td colspan="0.5">
           </td>
           <td colspan="2">
-            <center>0013283</center>
+            <center></center>
           </td>
           <td colspan="2">
-            <center>08-04-2017</center>
+            <center></center>
           </td>
           <td colspan="2">
-            <center>03115</center>
+            <center></center>
           </td>
           <td colspan="2">
-            <center>F</center>
+            <center></center>
           </td>
         </tr>
         <tr>
@@ -300,7 +300,7 @@
             <center><strong> Total (Rs.)</strong></center>
           </td>
           <td colspan="0.5">
-            <strong>6900.00</strong>
+            <strong></strong>
           </td>
           <td colspan="2">
           </td>
@@ -316,7 +316,7 @@
     </table>
 
     <br /><br /> 
-        <p style="font-size: 8pt; ">Certificate Number: DHWZUVO &nbsp;&nbsp;&nbsp;&nbsp;   TAN of Employer: SRTR05307B  &nbsp;&nbsp;  PAN of Employee: ACSPM1293P &nbsp;&nbsp;&nbsp; Assessment Year: 2017-18</p>
+        <p style="font-size: 8pt; ">Certificate Number: DHWZUVO &nbsp;&nbsp;&nbsp;&nbsp;   TAN of Employer: <%= current_user.employee.company_location.company.tax_no %>  &nbsp;&nbsp;  PAN of Employee: <%= @employee.try(:pan_no)%> &nbsp;&nbsp;&nbsp; Assessment Year: 2017-18</p>
         <br /><br /> 
         
 
@@ -326,22 +326,22 @@
         </tr>
 
         <tr>
-          <td colspan="12" style="text-align: justify; text-indent: 20px;">I, <b>SANJAYKUMAR PARSHOTTAMBHAI MOVALIYA,</b> son / daughter of <b>PARSHOTTAMBHAI RATANSHIBHAI MOVALIYA</b> working in the capacity of <b>DIRECTOR</b>
-          (designation) do hereby certify that a sum of <b>Rs. 6900.00 [Rs. Six Thousand Nine Hundred Only (in words)]</b> has been deducted and a sum of <b>Rs. 6900.00 [Rs. Six
+          <td colspan="12" style="text-align: justify; text-indent: 20px;">I, <b><%= full_name(@employee) %>,</b> son / daughter of <b><%= @employee.try(:middle_name)%> <%= @employee.try(:last_name) %></b> working in the capacity of <b>DIRECTOR</b>
+          (designation) do hereby certify that a sum of <b>Rs. 00.00 [Rs. Zero (in words)]</b> has been deducted and a sum of <b>Rs. 6900.00 [Rs. Six
           Thousand Nine Hundred Only]</b> has been deposited to the credit of the Central Government. I further certify that the information given above is true, complete and
           correct and is based on the books of account, documents, TDS statements, TDS deposited and other available records.</td>
         </tr>
 
         <tr>
-          <th colspan="2">Place</th><th colspan="2">SURAT</th><th colspan="8"></th>
+          <th colspan="2">Place</th><th colspan="2"><%= current_user.employee.try(:company_location).try(:name) %></th><th colspan="8"></th>
         </tr>
         
         <tr>  
-          <th colspan="2">Date</th> <th colspan="2"><%=  %></th><th colspan="8">(Signature of person responsible for deduction of Tax)</th>
+          <th colspan="2">Date</th> <th colspan="2"><%= Time.now.to_date %></th><th colspan="8">(Signature of person responsible for deduction of Tax)</th>
         </tr>
         
         <tr>  
-          <th colspan="4">Designation: DIRECTOR</th><th colspan="8">Full Name:SANJAYKUMAR PARSHOTTAMBHAI MOVALIYA</th>
+          <th colspan="4">Designation: DIRECTOR</th><th colspan="8">Full Name: <%= full_name(@employee) %></th>
         </tr>
 
       </tbody>
@@ -392,7 +392,7 @@
     </table>
 
     <br /><br /> 
-        <p style="text-align: center; font-size:8pt;">Certificate Number: DHWZUVO &nbsp;&nbsp;&nbsp;&nbsp;   TAN of Employer: SRTR05307B  &nbsp;&nbsp;&nbsp;&nbsp;  PAN of Employee: ACSPM1293P &nbsp;&nbsp;&nbsp; Assessment Year: 2017-18</p>
+        <p style="text-align: center; font-size:8pt;">Certificate Number: DHWZUVO &nbsp;&nbsp;&nbsp;&nbsp;   TAN of Employer: <%= current_user.employee.company_location.company.tax_no %>  &nbsp;&nbsp;&nbsp;&nbsp;  PAN of Employee: ACSPM1293P &nbsp;&nbsp;&nbsp; Assessment Year: 2017-18</p>
         <br /><br /> 
 
     <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
@@ -469,7 +469,7 @@
 
         <td colspan="2" style="text-align: right"> 
             <ul style="list-style-type: none;">
-                <li>540,000.00</li>
+                <li><%= @gross_annual_amount %></li>
                 <li>Nil</li>
                 <li>Nil</li>
                 <li> <br /> </li>
@@ -478,7 +478,7 @@
                 <li> <br /> </li>
                 <li> <br /> </li>
                 <li>Nil</li>  
-                <li>2,400.00</li>
+                <li><%= @employee_professional_tax %></li>
                 <li> <br /> </li>
                 <li> <br /> </li>
                 <li> <br /> </li>
@@ -486,7 +486,7 @@
                 <li> <br /> </li>
                 <li style="text-align: justify;">Gross Amount</li>
                 <li> <br /> </li>
-                <li>191,962.00</li>
+                <li>Nil</li>
                 <li>Nil</li>
                 <li>Nil</li>
 
@@ -507,7 +507,7 @@
         </tr>
 
         <tr>
-          <th colspan="2">Place</th><th colspan="2">SURAT</th><th colspan="8"></th>
+          <th colspan="2">Place</th><th colspan="2"><%= current_user.employee.try(:company_location).try(:name) %></th><th colspan="8"></th>
         </tr>
         
         <tr>  
@@ -515,7 +515,7 @@
         </tr>
         
         <tr>  
-          <th colspan="4" style="text-align: left;">Designation: DIRECTOR</th><th colspan="8">Full Name:SANJAYKUMAR PARSHOTTAMBHAI MOVALIYA</th>
+          <th colspan="4" style="text-align: left;">Designation: DIRECTOR</th><th colspan="8">Full Name: <%= full_name(@employee) %></th>
         </tr>
 
     </table>  

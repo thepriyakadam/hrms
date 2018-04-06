@@ -310,7 +310,7 @@
       </table>
 
       <br /><br /> 
-      <p style="text-align: center; font-style: bold;">Certificate Number: DHWZUVO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   TAN of Employer: SRTR05307B  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  PAN of Employee: <%= @employee.try(:pan_no)%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assessment Year: 2017-18</p>
+      <p style="text-align: center; font-style: bold;">Certificate Number: DHWZUVO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   TAN of Employer: <%= current_user.employee.company_location.company.tax_no %>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  PAN of Employee: <%= @employee.try(:pan_no)%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assessment Year: 2017-18</p>
       <br /><br /> 
         
 
@@ -373,7 +373,7 @@
       </tr>
     </table>
     <br /><br /> 
-      <p style="text-align: center; font-style: bold;">Certificate Number: DHWZUVO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   TAN of Employer: SRTR05307B  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  PAN of Employee: <%= @employee.try(:pan_no)%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assessment Year: 2017-18</p>
+      <p style="text-align: center; font-style: bold;">Certificate Number: DHWZUVO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   TAN of Employer: <%= current_user.employee.company_location.company.tax_no %>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  PAN of Employee: <%= @employee.try(:pan_no)%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assessment Year: 2017-18</p>
     <br /><br /> 
 
     <table id="example" class="table table-bordered table-hover table-condensed">

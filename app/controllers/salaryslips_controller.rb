@@ -1758,6 +1758,12 @@ end
     @to_date = params[:from_16A] ? params[:from_16A][:to_date] : params[:to_date]
     @employee_id = params[:salaryslip] ? params[:salaryslip][:employee_id] : params[:employee_id]
     @employee = Employee.find(@employee_id)
+
+    @employees = Employee.where(company_id: @company.to_i, company_location_id: @company_location.to_i).pluck(:id)
+    @salaryslips = Salaryslip.where(month_year: @from_date.to_date..@to_date.to_date, employee_id: @employees).pluck(:id)
+    @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Provident Fund")
+    @employee_statutory_deduction = @salaryslip_components.sum(:actual_amount)
+
     # @company = params[:salaryslip] ? params[:salaryslip][:company_id] : params[:company_id]
     # @company_location = params[:salaryslip] ? params[:salaryslip][:company_location_id] : params[:company_location_id]
     respond_to do |format|

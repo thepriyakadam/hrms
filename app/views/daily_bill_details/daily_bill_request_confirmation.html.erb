@@ -66,7 +66,7 @@
     <div class="row">
       <div class="col-sm-6">
         <div class="actions">
-        <% @daily_bill = ReportingMastersTravelRequest.where(status: nil).count %>
+        <% @daily_bill = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).count %>
         <% if @daily_bill == 1 %>
         <%= link_to 'Approve',comment_modal_daily_bill_details_path(@travel_request.id),class: 'btn btn-sm btn-info',remote: true %> 
          <% else %>

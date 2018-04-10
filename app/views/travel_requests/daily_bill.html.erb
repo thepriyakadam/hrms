@@ -22,7 +22,7 @@
         <td><%= full_name(travel_request.employee) %></td>
         <td><%= travel_request.place %></td>
         <td>
-            <% if @a = ReportingMastersTravelRequest.where(travel_request_id: travel_request).pluck(:status).last == true %>
+            <% if @a = ReportingMastersTravelRequest.where(travel_request_id: travel_request.id).pluck(:status).first == true %>
             <%= link_to 'View Expense Claim', new_daily_bill_detail_path(travel_request_id: travel_request.id),class: 'btn btn-info btn-sm' %>
             <% else %>
             <%= link_to 'Add Expense Claim', new_daily_bill_detail_path(travel_request_id: travel_request.id),class: 'btn btn-primary btn-sm' %>

@@ -1670,6 +1670,8 @@ end
   end
   resources :travel_requests do
     collection do
+      get :show_travel_process
+      get :show_request_modal
       get :daily_bill
       get :travel_history
       get :travel_request_confirmation

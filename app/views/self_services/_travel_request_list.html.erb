@@ -1,0 +1,68 @@
+<div class="box">
+  <div class="box-body">
+
+    <table id="example5" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th colspan="6"><center>Employee : <%= @employee.try(:manual_employee_code) %> - <%= full_name(@employee) %></center></th>
+        </tr>
+        <tr>
+          <th>Sr.No</th>
+          <th>Date</th>
+          <th>Place</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% i = 0 %>
+        <% @travel_requests.each do |travel_request| %>
+          <tr>
+            <td><%= i = i + 1 %></td>
+            <td><%= travel_request.try(:traveling_date) %> - <%= travel_request.try(:to) %></td>
+            <td><%= travel_request.try(:place) %></td>
+            <td>
+                <% travel_request.reporting_masters_travel_requests.try(:each) do |rmt| %>
+                  <% case rmt.travel_status %>
+                  <% when "Pending" %>
+                    <small class="label label-default">Pending</small>
+                  <% when "FirstApproved" %>
+                    <small class="label label-warning">FirstApproved</small>
+                    <% when "Approved" %>
+                    <small class="label label-primary">Approved</small>
+                    <% when "FinalApproved" %>
+                    <small class="label label-success">FinalApproved</small>
+                    <% when "Approved & Send Next" %>
+                    <small class="label label-info">Approved & Send Next</small>
+                    <% when "Rejected" %>
+                    <small class="label label-danger">Rejected</small>
+                    <% when "Cancelled" %>
+                    <small class="label label-danger">Cancelled</small>
+                   <% end %>
+                <% end %>
+            </td>
+            <td>
+              <% if travel_request.current_status == "Pending" %>
+                <%= link_to '', show_request_modal_travel_requests_path(travel_request_id: travel_request),class: 'btn btn-xs btn-default fa fa-eye',remote: true %>
+                <%= link_to '', cancel_travel_request_travel_requests_path(travel_request),class: 'btn btn-xs btn-danger fa fa-trash-o' %>
+              <% else %>
+                <%= link_to '', show_request_modal_travel_requests_path(travel_request_id: travel_request),class: 'btn btn-xs btn-default fa fa-eye',remote: true %>
+              <% end %>
+
+            
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div id="request_modal" class="modal fade"></div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example5').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+

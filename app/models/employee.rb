@@ -603,11 +603,17 @@ class Employee < ActiveRecord::Base
   end
 end
 
+       
+
   def self.import_create_new_user(file)
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
        manual_member_code = spreadsheet.cell(i,'B').to_i
-       @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+       if manual_employee_code == 0
+          @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B'))
+       else
+         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+       end
         if @employee.nil?
         else
         employee_id = @employee.id

@@ -59,7 +59,7 @@
     </div><!-- /.box-header -->
     <div class="box-body">
       Date of Birth : <%= current_user.employee.try(:date_of_birth) %><br>
-      Designation : <%= current_user.employee.joining_detail.employee_designation.try(:name) %><br>
+      Designation : <%= current_user.employee.try(:joining_detail).try(:employee_designation).try(:name) %><br>
     </div><!-- /.box-body -->
   </div><!-- /.box -->
 </div><!-- /.col -->

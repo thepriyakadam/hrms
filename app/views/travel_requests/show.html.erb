@@ -99,6 +99,10 @@
       </tbody>
 </table><br>
     <!-- <= link_to 'Edit', edit_travel_request_path(@travel_request),class: 'btn btn-success btn-sm fa fa-edit' %> | -->
-    <%= link_to 'Back', travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>
+    <% if @travel_request.employee_id == current_user.employee_id %>
+      <%= link_to 'Back', travel_request_self_services_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>
+    <% else %>
+      <%= link_to 'Back', travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>
+    <% end %>
     </div>
   </div>

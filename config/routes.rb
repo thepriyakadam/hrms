@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :event_details
   resources :latemark_deductions
   resources :latemark_masters do
     collection do

@@ -20,13 +20,16 @@
     </div><!-- /.info-box -->
   </div><!-- /.col -->
 
- <div class="col-md-3 col-sm-6 col-xs-12">
+  <!-- fix for small devices only -->
+  <div class="clearfix visible-sm-block"></div>
+
+  <div class="col-md-3 col-sm-6 col-xs-12">
     <div class="info-box">
       <span class="info-box-icon bg-green"><i class="glyphicon glyphicon-th"></i></span>
       <div class="info-box-content">
        <span class="info-box-text">Departments</span>
-        <span class="info-box-number"><%= 16 %></span>
-        <!-- <span class="info-box-number"><= @departments.try(:count) %></span> -->
+       <!-- <span class="info-box-number"><= 16 %></span> -->
+        <span class="info-box-number"><%= @departments.try(:count) %></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
   </div><!-- /.col -->
@@ -40,8 +43,6 @@
     </div><!-- /.info-box -->
   </div><!-- /.col -->
 </div><!-- /.row -->
-
-
 
   <!-- Main row -->
   <div class="row">
@@ -186,11 +187,35 @@
     
 
 
+
     </section><!-- /.Left col -->
     <!-- right col (We are only adding the ID to make the widgets sortable)-->
     <section class="col-lg-6 connectedSortable">
-    
-          <!-- USERS LIST -->
+
+      <!-- Start Thought of The Day -->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Thought of The Day</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <% t=Thought.where(date: Date.today) %>
+           <% t.each do |t| %>
+           <div style="padding-top: 5px; font-size: 12pt;font-style: italic;color: #000000; font-family: 'Times New Roman', Times, serif;">
+            <%= t.thought %>
+          </div>
+           <div  style="font-size: 12pt;font-style: italic;color: #000000; font-family: 'Times New Roman', Times, serif; text-align: right;">
+           -<%= t.thought_of %>
+           </div>
+          <% end %>
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+      <!-- End Thought of The Day -->
+
+          <!-- Start Work Anniversary-->
       <div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title">Work Anniversary</h3>
@@ -199,70 +224,59 @@
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
           </div>
         </div><!-- /.box-header -->
+        <div class="box-body">
+          <% date = Date.today %>
+            <% @employee = Employee.where(status: "Active") %>
+           <% @employees = JoiningDetail.where("DATE_FORMAT(joining_date,'%d/%m') = ?", date.strftime('%d/%m')).where(employee_id: @employee) %>
+          <% if @employees.empty? %>
+           <%else%>
+            <table id="example2" class="table no-margin">
+           <thead>
+            <tr>
+              <th></th>
+              <th>Employee</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <% @employees.each do |e| %>
+            <% if e.joining_date == Date.today %>
+            <% else %>
+            <tr>
+              <td>
+                <%unless e.nil? or e.nil? or  e.employee.member.nil? or e.employee.member.avatar.nil? %>
+                   <% if e.employee.gender == "Male" && e.employee.member.avatar_file_name == nil  %>
+                   <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                   <% elsif e.employee.gender == "Female" && e.employee.member.avatar_file_name == nil  %>
+                   <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                   <%else%>
+                   <%= image_tag e.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
+                   <%end%> <!-- if -->
+                <%end%> <!-- unless -->
+              </td>
+              <td><%= full_name(e.employee) %>
+                  <span class="users-list-date"><%= e.employee.try(:cost_center).try(:name) %> - <%= e.employee.try(:department).try(:name) %> <%= e.employee.try(:sub_department).try(:name) %></span>
+              </td>
+              <td>
+                  <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today,receiver_id: e.employee_id,greeting_type: "Anniversary") %>
+                  <% if e.employee_id == current_user.employee_id %>
+                  <small class="label label-success">Happy Work Anniversary!</small>
+                  <% else %>
+                  <% if @greeting.empty? %>
+                    <%= link_to 'Wish', anniversary_mail_greetings_path(emp_id: e.employee_id),class: 'btn btn-xs btn-primary',remote:true %>
+                  <% else %>
+                    <small class="label label-success">Message Sent</small>
+                  <% end %>
+                  <% end %>
+              </td>
+              <% end %> <!-- do -->
+            </tr>
+            <% end %>
+          <%end%> <!-- if employee.empty? -->
+          </table>
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
 
-               
-                <!-- <div class="box-body"> -->
-           
-                    <%# date = Date.today %>
-                    <%# @employee = Employee.where(status: "Active") %>
-                    <%# @employees = JoiningDetail.where("DATE_FORMAT(joining_date,'%d/%m') = ?", date.strftime('%d/%m')).where(employee_id: @employee) %>
-
-                   <%# if @employees.empty? %>
-             
-                   <%#else%>
-                    <!-- <table id="example2" class="table no-margin">
-                   <thead>
-              <tr>
-                <th></th>
-                <th>Employee</th>
-                <th>Action</th>
-              </tr>
-            </thead> -->
-                   
-                     <%# @employees.each do |e| %>
-                     <%# if e.joining_date == Date.today %>
-                     <%# else %>
-                      <!-- <tr>
-                       <td> -->
-                  <%#unless e.nil? or e.nil? or  e.employee.member.nil? or e.employee.member.avatar.nil? %>
-                 <%# if e.employee.gender == "Male" && e.employee.member.avatar_file_name == nil  %>
-                 <%#= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                  <%# elsif e.employee.gender == "Female" && e.employee.member.avatar_file_name == nil  %>
-                  <%#= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                   <%#else%>
-                   <%#= image_tag e.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
-                  <%#end%> <!-- if -->
-                   <%#end%> <!-- unless -->
-                   <!-- </td> -->
-                       <!-- <td> --><%#= full_name(e.employee) %>
-                        <!-- <span class="users-list-date"> --><%#= e.employee.try(:cost_center).try(:name) %> - <%#= e.employee.try(:department).try(:name) %> <%#= e.employee.try(:sub_department).try(:name) %><!-- </span> -->
-                       <!-- </td>
-                       <td> -->
-                       <%# @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today,receiver_id: e.employee_id,greeting_type: "Anniversary") %>
-                  <%# if e.employee_id == current_user.employee_id %>
-                      <!-- <small class="label label-success">Happy Work Anniversary!</small> -->
-                  <%# else %>
-                    <%# if @greeting.empty? %>
-                        <%#= link_to 'Wish', anniversary_mail_greetings_path(emp_id: e.employee_id),class: 'btn btn-xs btn-primary',remote:true %>
-                    <%# else %>
-                        <!-- <small class="label label-success">Message Sent</small> -->
-                    <%# end %>
-                  <%# end %>
-                      <!-- </td> -->
-                      <%# end %> <!-- do -->
-                   <!--  </tr> -->
-                    <%# end%>
-                     <%#end%> <!-- if employee.empty? -->
-                   
-                  <!-- </table> -->
-
-                <!-- </div> --><!-- /.box-body -->
-                 
-              <!-- </div> --><!-- /.box -->
-              
-            
-
-  <!-- <script type="text/javascript">
+  <script type="text/javascript">
   $(document).ready(function() {
 
     $('#example1').DataTable( {
@@ -271,12 +285,8 @@
         "scrollY": 100
     } );
 } );
-</script> -->
-
- 
-              
-
-      <!-- <div id="anniversary_email" class="modal fade"></div>
+</script>
+      <div id="anniversary_email" class="modal fade"></div>
 
       
       <div class="box box-info">
@@ -286,67 +296,67 @@
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
           </div>
-        </div> --><!-- /.box-header -->
+        </div><!-- /.box-header -->
 
                
-                <!-- <div class="box-body"> -->
+                <div class="box-body">
                   
                    
-              <%# date = Date.today %>
-             <%# @employees = Employee.where("status = ? AND DATE_FORMAT(date_of_birth,'%d/%m') = ?", "Active" , date.strftime('%d/%m')) %>
-            <%# if @employees.empty? %>
+              <% date = Date.today %>
+             <% @employees = Employee.where("status = ? AND DATE_FORMAT(date_of_birth,'%d/%m') = ?", "Active" , date.strftime('%d/%m')) %>
+            <% if @employees.empty? %>
              
-            <%#else%>
-            <!-- <table id="birthday" class="table no-margin">
+            <%else%>
+            <table id="birthday" class="table no-margin">
                    <thead>
               <tr>
                 <th></th>
                 <th>Employee</th>
                 <th>Action</th>
               </tr>
-            </thead> -->
+            </thead>
                   
-              <%# @employees.each do |e| %>
-                <!-- <tr>
-                       <td> -->
-                     <%#unless e.nil? or e.nil? or  e.member.nil? or e.member.avatar.nil? %>
-                 <%# if e.gender == "Male" && e.member.avatar_file_name == nil  %>
-                 <%#= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                  <%# elsif e.gender == "Female" && e.member.avatar_file_name == nil  %>
-                  <%#= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                   <%#else%>
-                   <%#= image_tag e.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
-                  <%#end%>
-                   <%#end%>
-                   <!-- </td>
-                       <td> --> <%#= full_name(e) %>
-                        <!-- <span class="users-list-date"> --><%#= e.try(:cost_center).try(:name) %>  <%#= e.try(:department).try(:name) %> <%#= e.try(:sub_department).try(:name) %><!-- </span> -->
+              <% @employees.each do |e| %>
+                <tr>
+                       <td>
+                     <%unless e.nil? or e.nil? or  e.member.nil? or e.member.avatar.nil? %>
+                 <% if e.gender == "Male" && e.member.avatar_file_name == nil  %>
+                 <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                  <% elsif e.gender == "Female" && e.member.avatar_file_name == nil  %>
+                  <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                   <%else%>
+                   <%= image_tag e.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
+                  <%end%>
+                   <%end%>
+                   </td>
+                       <td> <%= full_name(e) %>
+                        <span class="users-list-date"><%= e.try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
 
-                       <!-- </td>
-                       <td> -->
-                       <%# @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today,receiver_id: e.id,greeting_type: "Birthday") %>
-                    <%# if e.id == current_user.employee_id %>
-                      <!-- <small class="label label-success">Happy Birthday!</small> -->
-                    <%# else %>
-                      <%# if @greeting.empty? %>
-                        <%#= link_to '', modal_for_mail_greetings_path(emp_id: e.id),class: 'btn btn-xs fa fa-birthday-cake',remote:true %>
-                      <%# else %>
-                          <!-- <small class="label label-success">Message Sent</small> -->
-                      <%# end %>
-                    <%# end %>
-                      <!-- </td> -->
+                       </td>
+                       <td>
+                       <% @greeting = Greeting.where(sender_id: current_user.employee_id,date: Date.today,receiver_id: e.id,greeting_type: "Birthday") %>
+                    <% if e.id == current_user.employee_id %>
+                      <small class="label label-success">Happy Birthday!</small>
+                    <% else %>
+                      <% if @greeting.empty? %>
+                        <%= link_to '', modal_for_mail_greetings_path(emp_id: e.id),class: 'btn btn-xs fa fa-birthday-cake',remote:true %>
+                      <% else %>
+                          <small class="label label-success">Message Sent</small>
+                      <% end %>
+                    <% end %>
+                      </td>
                    
-                    <%# end %> <!-- do -->
-                     <!-- </tr> -->
-                      <%#end%> <!-- if employee.empty? -->
-                  <!-- </table> -->
+                    <% end %> <!-- do -->
+                     </tr>
+                      <%end%> <!-- if employee.empty? -->
+                  </table>
                 
                  
-                  <!-- </div> --><!-- /.box-body -->
-              <!-- </div> --><!-- /.box -->
+                  </div><!-- /.box-body -->
+              </div><!-- /.box -->
               
 
-      <!-- <div id="birthday_email" class="modal fade"></div>
+      <div id="birthday_email" class="modal fade"></div>
 
 
       <div class="box box-info">
@@ -356,52 +366,49 @@
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
           </div>
-        </div> --><!-- /.box-header -->
+        </div><!-- /.box-header -->
 
-               
-                <!-- <div class="box-body"> -->
+                <div class="box-body">
     
-              <%# date = Date.today + 1 %>
-              <%# @employees = Employee.where("status = ? AND DATE_FORMAT(date_of_birth,'%d/%m') = ?", "Active" , date.strftime('%d/%m')) %>
-            <%# if @employees.empty? %>
-            <%#else%>
-            <!-- <table id="birthday" class="table no-margin">
+               <% date = Time.now.to_date + 30.days %>
+              <% @employees = Employee.where("status = ? AND DATE_FORMAT(date_of_birth,'%d/%m') = ?", "Active" , date.strftime('%d/%m')) do |et| %>
+             
+            <% if @employees.empty? %>
+            <%else%>
+            <table id="birthday" class="table no-margin">
             <thead>
               <tr>
                 <th></th>
                 <th>Employee</th>
                 <th>Date</th>
               </tr>
-            </thead> -->
+            </thead>
                   
-              <%# @employees.each do |e| %>
-                <!-- <tr>
-                   <td> -->
-                     <%#unless e.nil? or e.nil? or  e.member.nil? or e.member.avatar.nil? %>
-                 <%# if e.gender == "Male" && e.member.avatar_file_name == nil  %>
-                 <%#= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                  <%# elsif e.gender == "Female" && e.member.avatar_file_name == nil  %>
-                  <%#= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                   <%#else%>
-                   <%#= image_tag e.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
-                  <%#end%>
-                   <%#end%>
-                   <!-- </td>
-                       <td> --> <%#= full_name(e) %>
-                        <!-- <span class="users-list-date"> --><%#= e.try(:cost_center).try(:name) %>  <%#= e.try(:department).try(:name) %> <%#= e.try(:sub_department).try(:name) %><!-- </span> -->
+            <% @employees.each do |e| %>
+              <tr>
+                <td>
+                <%unless e.nil? or e.nil? or  e.member.nil? or e.member.avatar.nil? %>
+                 <% if e.gender == "Male" && e.member.avatar_file_name == nil  %>
+                   <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                 <% elsif e.gender == "Female" && e.member.avatar_file_name == nil  %>
+                   <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                 <%else%>
+                   <%= image_tag e.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
+                 <%end%>
+                <%end%>
+                </td>
+                <td> <%= full_name(e) %>
+                 <span class="users-list-date"><%= e.try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
 
-                       <!-- </td>
-                       <td> --> <%#= e.date_of_birth.strftime("%d %b") %><!-- </td> -->
-
-                    <%# end %> <!-- do -->
-                     <!-- </tr> -->
-                      <%#end%> <!-- if employee.empty? -->
-                  <!-- </table> -->
-                
-                 
-                  <!-- </div> --><!-- /.box-body -->
-              <!-- </div> --><!-- /.box -->
-              
+                </td>
+                <td> <%= e.date_of_birth.strftime("%d %b") %></td>
+              <% end %> <!-- do -->
+              </tr>
+            <%end%> <!-- if employee.empty? -->
+            </table>
+         </div><!-- /.box-body -->
+        </div><!-- /.box -->
+              <%end%>
 
       <!-- PRODUCT LIST -->
       
@@ -415,7 +422,8 @@
         </div><!-- /.box-header -->
         <div class="box-body">
           <ul class="products-list product-list-in-box">
-              <% JoiningDetail.all.order("joining_date desc").limit(5).each do |j| %>
+              <% fifteen_days_back = Time.now.to_date - 30.days %>
+               <% JoiningDetail.where(joining_date: fifteen_days_back.to_date..Time.now.to_date).try(:each) do |j| %>
                 <% if j.employee.status == "Active" %>
                   <li class="item">
                     <div class="product-img">
@@ -445,7 +453,6 @@
           </ul>
         </div><!-- /.box-body -->
       </div><!-- /.box -->
-      
     </section><!-- right col -->
 
 

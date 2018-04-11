@@ -80,9 +80,9 @@ class Ability
         can :manage, Employee, id: user.employee_id
         can :manage, [JoiningDetail, Qualification, Experience, Skillset, EmployeePhysical, Certification,Family,Award,AssignedAsset], employee_id: user.employee_id
         can :manage,EmployeeBankDetail, employee_id: user.employee_id
-        cannot [:destroy,:update,:create],JoiningDetail
+        # cannot [:destroy,:update,:create],JoiningDetail
         cannot [:destroy,:update,:create],EmployeeBankDetail
-        cannot [:destroy,:update,:create],EmployeeDocument
+        # cannot [:destroy,:update,:create],EmployeeDocument
         cannot [:destroy,:update,:create],EmployeeJcList
         can :read, [EmployeeTemplate, EmployeeSalaryTemplate]
         can :manage, EmployeeLeavRequest, employee_id: user.employee_id

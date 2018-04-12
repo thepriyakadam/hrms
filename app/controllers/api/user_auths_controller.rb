@@ -1613,15 +1613,28 @@ class Api::UserAuthsController < ApplicationController
     if keyword == "employee"
       self_pending_od = OnDutyRequest.where(current_status: "Pending", employee_id: employee_id).count
       self_pending_leave  = EmployeeLeavRequest.where(current_status: "Pending", employee_id: employee_id).count
-      render :status=>200, :json=>{:self_pending_od => self_pending_od, :self_pending_leave => self_pending_leave, :gps_track => @gps_track, :restricted_area => @restricted_area }
+      leave_c_off = LeaveCOff.where(employee_id: employee_id, current_status: "Pending").count
+      employee_plan = EmployeePlan.where(employee_id: employee_id, current_status: "Pending").count
+      travel_requests = TravelRequest.where(employee_id: employee_id, current_status: "Pending").count
+      expense_claim = TravelRequest.where(employee_id: employee_id, current_status: "FinalApproved").count
+      render :status=>200, :json=>{:self_pending_od => self_pending_od, :self_pending_leave => self_pending_leave, :gps_track => @gps_track, :restricted_area => @restricted_area, :leave_c_off => leave_c_off, :employee_plan => employee_plan, :travel_requests => travel_requests, :expense_claim => expense_claim }
     elsif keyword == "manager"
       pending_od = OnDutyRequest.where(current_status: "Pending", first_reporter_id: employee_id).count
       pending_leave  = EmployeeLeavRequest.where(current_status: "Pending", first_reporter_id: employee_id).count
-      render :status=>200, :json=>{:pending_leave => pending_leave, :pending_od => pending_od, :gps_track => @gps_track, :restricted_area => @restricted_area  }
+      leave_c_off = LeaveCOff.where(employee_id: employee_id, current_status: "Pending").count
+      employee_plan = EmployeePlan.where(employee_id: employee_id, current_status: "Pending").count
+      travel_requests = TravelRequest.where(employee_id: employee_id, current_status: "Pending").count
+      expense_claim = TravelRequest.where(employee_id: employee_id, current_status: "FinalApproved").count
+      render :status=>200, :json=>{:pending_leave => pending_leave, :pending_od => pending_od, :gps_track => @gps_track, :restricted_area => @restricted_area, :leave_c_off => leave_c_off, :employee_plan => employee_plan, :travel_requests => travel_requests, :expense_claim => expense_claim }
     else keyword == "admin"
       all_pending_od = OnDutyRequest.where(current_status: "Pending").count
       all_pending_leave  = EmployeeLeavRequest.where(current_status: "Pending").count
-      render :status=>200, :json=>{:all_pending_leave => all_pending_leave, :all_pending_od => all_pending_od, :gps_track => @gps_track, :restricted_area => @restricted_area  }
+      leave_c_off = LeaveCOff.where(current_status: "Pending").count
+      employee_plan = EmployeePlan.where(current_status: "Pending").count
+      travel_requests = TravelRequest.where(current_status: "Pending").count
+      expense_claim = TravelRequest.where(current_status: "FinalApproved").count
+      final_travel_requests = TravelRequest.where(current_status: "Approved").count
+      render :status=>200, :json=>{:all_pending_leave => all_pending_leave, :all_pending_od => all_pending_od, :gps_track => @gps_track, :restricted_area => @restricted_area,:leave_c_off => leave_c_off, :employee_plan => employee_plan, :travel_requests => travel_requests, :expense_claim => expense_claim, :final_travel_requests => final_travel_requests }
     end
   end
 

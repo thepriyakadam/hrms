@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
-
   resources :gps_informations do
     collection do
       get :all_emp_list
       post :update_gps_info
     end
   end
+  resources :event_details
   resources :latemark_deductions
   resources :latemark_masters do
     collection do
@@ -416,6 +416,8 @@ Rails.application.routes.draw do
 
   resources :manager_self_services do
     collection do
+      get :reporties_list
+      get :reporties_profile_modal
       get :subordinate_list
       get :appraiser_subordinate
       get :reviewer_subordinate

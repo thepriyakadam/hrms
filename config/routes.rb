@@ -411,6 +411,8 @@ Rails.application.routes.draw do
 
   resources :manager_self_services do
     collection do
+      get :reporties_list
+      get :reporties_profile_modal
       get :subordinate_list
       get :appraiser_subordinate
       get :reviewer_subordinate

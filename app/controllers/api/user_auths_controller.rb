@@ -1831,8 +1831,8 @@ class Api::UserAuthsController < ApplicationController
   def employee_travel_request
     status  = ''
     employee_id = params[:employee_id]
-    travel_option_id = params[:travel_option_id]
-    travel_mode_id = params[:travel_mode_id]
+    travel_option = params[:travel_option]
+    travel_mode = params[:travel_mode]
     place = params[:place]
     from_date = params[:from_date]
     to_date = params[:to_date]
@@ -1842,7 +1842,7 @@ class Api::UserAuthsController < ApplicationController
     manager2_id = params[:manager2_id]
     application_date = Time.zone.now.to_date
     reporting_master_id = ReportingMaster.find_by(employee_id: manager1_id)
-    @travel_request = TravelRequest.new(employee_id: employee_id, application_date: application_date, traveling_date: from_date, tour_purpose: tour_purpose, place: place, total_advance: total_advance, travel_option_id: travel_option_id, travel_mode_id: travel_mode_id, to: to_date, reporting_master_id: manager1_id)
+    @travel_request = TravelRequest.new(employee_id: employee_id, application_date: application_date, traveling_date: from_date, tour_purpose: tour_purpose, place: place, total_advance: total_advance, travel_option_id: travel_option, travel_mode_id: travel_mode, to: to_date, reporting_master_id: manager1_id)
     emp = Employee.find_by(id: employee_id)
     if reporting_master_id.nil?
       status = "Reporting Manager not set please set Reporting Manager"
@@ -1850,8 +1850,8 @@ class Api::UserAuthsController < ApplicationController
       if @travel_request.save
         TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: manager1_id , current_status: "Pending")
         ReportingMastersTravelRequest.create(reporting_master_id: manager1_id, travel_request_id: @travel_request.id,travel_status: "Pending")
-        TravelRequestHistory.create(employee_id: employee_id,travel_request_id: @travel_request.id,application_date: application_date, traveling_date: from_date, tour_purpose: tour_purpose, place: place, total_advance: total_advance, reporting_master_id: manager1_id, travel_option_id: travel_option_id, current_status: @travel_request.current_status)
-        @c1 = (@travel_request.to - @travel_request.traveling_date).to_i
+        TravelRequestHistory.create(employee_id: employee_id,travel_request_id: @travel_request.id,application_date: application_date, traveling_date: from_date, tour_purpose: tour_purpose, place: place, total_advance: total_advance, reporting_master_id: manager1_id, travel_option_id: travel_option, current_status: @travel_request.current_status)
+        @c1 = (@travel_request.to - @travel_request.traveling_date).to_i + 1
         TravelRequest.where(id: @travel_request.id).update_all(day: @c1)
         status = "Travel request was successfully created."
       else

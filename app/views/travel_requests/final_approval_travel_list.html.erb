@@ -12,6 +12,7 @@
     <tr>
       <th>ID</th>
       <th>Employee Name</th>
+      <th>Date</th>
       <th>Place</th>
       <th>Action</th>
     </tr>
@@ -22,10 +23,10 @@
       <tr>
         <td><%= travel_request.employee.try(:manual_employee_code) %></td>
         <td><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></td>
+        <td><%= travel_request.try(:traveling_date) %> - <%= travel_request.try(:to) %></td>
         <td><%= travel_request.place %></td>
         <td>
            <%= link_to 'View Detail',travel_request_confirmation_travel_requests_path(travel_request),class: 'btn btn-xs btn-primary' %>
-                </td>
         </td>
       </tr>
     <% end %>

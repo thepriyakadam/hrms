@@ -50,9 +50,17 @@
       <td><%= @travel_request.total_advance %></td>  
     </tr>
 
-      <tr>
+    <tr>
       <th><strong>Tour Purpose</strong></th>
-      <td colspan="3"><%= @travel_request.tour_purpose %></td>
+      <td><%= @travel_request.tour_purpose %></td>
+
+      <th><strong>Current Status</strong></th>
+      <td><font color='green'><%= @travel_request.current_status %></font></td>
     </tr>
 
+    <tr>
+      <td><strong>Travel Process</strong></td>
+      <td colspan="3"><%= link_to 'Show Process', show_travel_process_travel_requests_path(travel_request_id: @travel_request.id),class: 'btn btn-xs btn-info',remote: true %></td>
+    </tr>
   </table>
+<div id="travel_process" class="modal fade"></div>

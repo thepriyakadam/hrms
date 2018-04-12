@@ -73,32 +73,29 @@
   </div>
   
   <div class="col-sm-3">
-<!--     <label>Traveling Date </label>
- -->    <div class="field">
+    <div class="form-group required">
       <div class="input-group">
         <div class="input-group-addon">
           <i class="fa fa-calendar"></i>
         </div>
-        <%= f.text_field :traveling_date, label: 'From Date', class: 'traveling_date'%>
+        <%= f.text_field :traveling_date, label: 'From Date', class: 'request_from_date'%>
       </div>
     </div>
   </div>
 
 </div>
 <div class="row">
-
   <div class="col-sm-3">
-<!--     <label>Traveling Date </label>
- -->    <div class="field">
+    <div class="form-group required">
       <div class="input-group">
         <div class="input-group-addon">
           <i class="fa fa-calendar"></i>
         </div>
-        <%= f.text_field :to, label: 'To Date', class: 'traveling_date1'%>
+        <%= f.text_field :to, label: 'To Date', class: 'request_from_date'%>
       </div>
     </div>
   </div>
-  
+
   <div class="col-sm-3">
     <div class="form-group required">
       <%= f.text_field :total_advance, label: 'Total Advance' %>
@@ -115,38 +112,28 @@
 </div>
 
 <div class="row">
-  <div class="col-sm-3">
+  <div class="col-sm-6">
     <div class="actions">
       <%= f.submit "Create Travel Request",class: 'btn btn-sm btn-primary' %>
-      <%= link_to 'Back', travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      <%#= link_to 'Back', travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
     </div>
   </div>
 </div>
 
 </div>
+
+<%= render 'travel_request_list' %>  
 </div>
 <% end %>
 
 <script type="text/javascript">
   $(function(){
-    $('.application_date').datepicker({
+    $('.request_from_date').datepicker({
     changeYear:true,
     changeMonth: true,
-    yearRange: '-200:-0',
+    yearRange: '-2:+5',
     dateFormat: 'dd-mm-yy' });
-
-    $('.traveling_date').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-200:-0',
-    dateFormat: 'dd-mm-yy' });
-
-     $('.traveling_date1').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-200:-0',
-    dateFormat: 'dd-mm-yy' });
-    });
+  }); 
 </script>
 
 <script>

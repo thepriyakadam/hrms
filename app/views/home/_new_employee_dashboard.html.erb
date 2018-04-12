@@ -230,6 +230,33 @@
     </section><!-- /.Left col -->
     <!-- right col (We are only adding the ID to make the widgets sortable)-->
     <section class="col-lg-6 connectedSortable">
+
+        <!-- Start Thought of The Day -->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Thought of The Day</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <% t=Thought.where(date: Date.today) %>
+           <% t.each do |t| %>
+           <div style="padding-top: 5px; font-size: 12pt;font-style: italic;color: #000000; font-family: 'Times New Roman', Times, serif;">
+            <%= t.thought %>
+          </div>
+           <div  style="font-size: 12pt;font-style: italic;color: #000000; font-family: 'Times New Roman', Times, serif; text-align: right;">
+           -<%= t.thought_of %>
+           </div>
+          <% end %>
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+      <!-- End Thought of The Day -->
+
+
+
+<!-- Start Work Anniversary -->
     
           <!-- USERS LIST -->
       <div class="box box-info">
@@ -239,7 +266,7 @@
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
           </div>
-        </div><!-- /.box-header -->
+        </div> 
 
                
                 <div class="box-body">
@@ -290,16 +317,16 @@
                     <% end %>
                   <% end %>
                       </td>
-                      <% end %> <!-- do -->
+                      <% end %>  do
                     </tr>
                     <%end%>
                      <%end%> <!-- if employee.empty? -->
                    
                   </table>
 
-                </div><!-- /.box-body -->
+                </div> <!-- /.box-body -->
                  
-              </div><!-- /.box -->
+              </div> <!-- /.box -->
               
             
 
@@ -314,7 +341,10 @@
 } );
 </script>
 
- 
+ <!-- End Work Anniversary -->
+
+
+ <!-- Start Today's Birthday -->
               
 
       <div id="anniversary_email" class="modal fade"></div>
@@ -327,7 +357,7 @@
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
           </div>
-        </div><!-- /.box-header -->
+        </div> <!-- /.box-header -->
 
                
                 <div class="box-body">
@@ -357,7 +387,7 @@
                   <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
                    <%else%>
                    <%= image_tag e.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
-                  <%end%>
+                  <% end%>
                    <%end%>
                    </td>
                        <td> <%= full_name(e) %>
@@ -383,12 +413,14 @@
                   </table>
                 
                  
-                  </div><!-- /.box-body -->
-              </div><!-- /.box -->
+                  </div> <!-- /.box-body -->
+              </div> <!-- /.box -->
               
 
       <div id="birthday_email" class="modal fade"></div>
+<!-- End Today's Birthday -->
 
+<!-- Start Upcoming Birthday -->
 
       <div class="box box-info">
         <div class="box-header with-border">
@@ -397,7 +429,7 @@
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
           </div>
-        </div><!-- /.box-header -->
+        </div> <!-- /.box-header-->
 
                
                 <div class="box-body">
@@ -418,7 +450,7 @@
               <% @employees.each do |e| %>
                 <tr>
                    <td>
-                     <%unless e.nil? or e.nil? or  e.member.nil? or e.member.avatar.nil? %>
+                     <% unless e.nil? or e.nil? or  e.member.nil? or e.member.avatar.nil? %>
                  <% if e.gender == "Male" && e.member.avatar_file_name == nil  %>
                  <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
                   <% elsif e.gender == "Female" && e.member.avatar_file_name == nil  %>
@@ -429,10 +461,10 @@
                    <%end%>
                    </td>
                        <td> <%= full_name(e) %>
-                        <span class="users-list-date"><%= e.try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
+                        <span class="users-list-date"><%= e.try(:cost_center).try(:name) %>  <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
 
                        </td>
-                       <td> <%= e.date_of_birth.strftime("%d %b") %></td>
+                       <td> <%= e.date_of_birth.strftime("%d %b") %><!-- </td> -->
 
                     <% end %> <!-- do -->
                      </tr>
@@ -440,9 +472,10 @@
                   </table>
                 
                  
-                  </div><!-- /.box-body -->
-              </div><!-- /.box -->
-              
+                  </div> <!-- /.box-body -->
+              </div> <!-- /.box -->
+   <!-- End Upcoming Birthday -->
+   <!-- Start Newly Joined Employees -->           
 
       <!-- PRODUCT LIST -->
       
@@ -486,9 +519,10 @@
           </ul>
         </div><!-- /.box-body -->
       </div><!-- /.box -->
+
       
     </section><!-- right col -->
-
+<!-- End Newly Joined Employees -->           
 
       <!-- Control Sidebar -->
       <aside class="control-sidebar control-sidebar-dark">

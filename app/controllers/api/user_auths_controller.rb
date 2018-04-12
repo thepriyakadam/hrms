@@ -1458,7 +1458,7 @@ class Api::UserAuthsController < ApplicationController
     tomorrow_plan = params[:tomorrow_plan]
     day = params[:date]
     EmployeeDailyActivity.create(employee_id: employee_id, project_master_id: project_master_id, today_activity: today_activity, tomorrow_plan: tomorrow_plan, day: day)
-    render :status=>200, :json=>{:status=>"Employee Daily Activity Successfully Updated.."}
+    render :status=>200, :json=>{:status=>"Created Successfully."}
   end
 
   def emp_activity
@@ -1726,7 +1726,7 @@ class Api::UserAuthsController < ApplicationController
 
   def all_com_off_request_list
     employee_id = params[:employee_id]
-    @leave_c_offs = LeaveCOff.where(employee_id: employee_id).order("id ASC")
+    @leave_c_offs = LeaveCOff.where(employee_id: employee_id).order("id DESC")
     render :json => @leave_c_offs.present? ? @leave_c_offs.collect{|coff| {:id => coff.try(:id), :employee_id => coff.try(:employee_id), :c_off_date => coff.try(:c_off_date), :c_off_type => coff.try(:c_off_type),:c_off_expire_day => coff.try(:c_off_expire_day),:expiry_status => coff.try(:expiry_status),:is_taken => coff.try(:is_taken),:expiry_date => coff.try(:expiry_date),:leave_count => coff.try(:leave_count),:is_expire => coff.try(:is_expire),:created_at => coff.try(:created_at),:status => coff.try(:status),:current_status => coff.try(:current_status),:taken_date => coff.try(:taken_date), :comment => coff.try(:comment), :all_status => coff.try(:status_c_offs)  }} : []
   end
 
@@ -1831,8 +1831,8 @@ class Api::UserAuthsController < ApplicationController
   def employee_travel_request
     status  = ''
     employee_id = params[:employee_id]
-    travel_option_id = params[:travel_option_id]
-    travel_mode_id = params[:travel_mode_id]
+    travel_option = params[:travel_option]
+    travel_mode = params[:travel_mode]
     place = params[:place]
     from_date = params[:from_date]
     to_date = params[:to_date]
@@ -1842,7 +1842,7 @@ class Api::UserAuthsController < ApplicationController
     manager2_id = params[:manager2_id]
     application_date = Time.zone.now.to_date
     reporting_master_id = ReportingMaster.find_by(employee_id: manager1_id)
-    @travel_request = TravelRequest.new(employee_id: employee_id, application_date: application_date, traveling_date: from_date, tour_purpose: tour_purpose, place: place, total_advance: total_advance, travel_option_id: travel_option_id, travel_mode_id: travel_mode_id, to: to_date, reporting_master_id: manager1_id)
+    @travel_request = TravelRequest.new(employee_id: employee_id, application_date: application_date, traveling_date: from_date, tour_purpose: tour_purpose, place: place, total_advance: total_advance, travel_option_id: travel_option, travel_mode_id: travel_mode, to: to_date, reporting_master_id: manager1_id)
     emp = Employee.find_by(id: employee_id)
     if reporting_master_id.nil?
       status = "Reporting Manager not set please set Reporting Manager"
@@ -1850,8 +1850,8 @@ class Api::UserAuthsController < ApplicationController
       if @travel_request.save
         TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: manager1_id , current_status: "Pending")
         ReportingMastersTravelRequest.create(reporting_master_id: manager1_id, travel_request_id: @travel_request.id,travel_status: "Pending")
-        TravelRequestHistory.create(employee_id: employee_id,travel_request_id: @travel_request.id,application_date: application_date, traveling_date: from_date, tour_purpose: tour_purpose, place: place, total_advance: total_advance, reporting_master_id: manager1_id, travel_option_id: travel_option_id, current_status: @travel_request.current_status)
-        @c1 = (@travel_request.to - @travel_request.traveling_date).to_i
+        TravelRequestHistory.create(employee_id: employee_id,travel_request_id: @travel_request.id,application_date: application_date, traveling_date: from_date, tour_purpose: tour_purpose, place: place, total_advance: total_advance, reporting_master_id: manager1_id, travel_option_id: travel_option, current_status: @travel_request.current_status)
+        @c1 = (@travel_request.to - @travel_request.traveling_date).to_i + 1
         TravelRequest.where(id: @travel_request.id).update_all(day: @c1)
         status = "Travel request was successfully created."
       else
@@ -2018,7 +2018,7 @@ class Api::UserAuthsController < ApplicationController
 
   def expense_claim_list
     employee_id = params[:employee_id]
-    travel_requests = TravelRequest.where("employee_id = ? AND current_status = ?", employee_id, "FinalApproved" )
+    travel_requests = TravelRequest.where("employee_id = ? AND current_status = ?", employee_id, "FinalApproved" ).order("id DESC")
     render :json => travel_requests.present? ? travel_requests.collect{|travel_list| {:id => travel_list.try(:id), :manual_employee_code => travel_list.try(:employee).try(:manual_employee_code), :prefix => travel_list.employee.try(:prefix), :employee_first_name => travel_list.employee.try(:first_name), :employee_middle_name => travel_list.employee.try(:middle_name), :employee_last_name => travel_list.employee.try(:last_name),:code => travel_list.try(:code), :place => travel_list.try(:place), :current_status => travel_list.try(:current_status),:is_confirm => travel_list.try(:is_confirm), :all_status => travel_list.try(:reporting_masters_travel_requests) }} : []
   end
 
@@ -2182,8 +2182,7 @@ class Api::UserAuthsController < ApplicationController
 
   def expense_claim_approval_list
     employee_id = params[:employee_id]
-    @reporting_masters = ReportingMaster.find_by_employee_id(employee_id)
-    travel_requests = TravelRequest.where(current_status: "FinalApproved",reporting_master_id: employee_id,is_confirm: true)
+    travel_requests = TravelRequest.where(current_status: "FinalApproved",reporting_master_id: employee_id, is_confirm: true)
     render :json => travel_requests.present? ? travel_requests.collect{|travel_list| {:id => travel_list.try(:id), :manual_employee_code => travel_list.try(:employee).try(:manual_employee_code), :prefix => travel_list.employee.try(:prefix), :employee_first_name => travel_list.employee.try(:first_name), :employee_middle_name => travel_list.employee.try(:middle_name), :employee_last_name => travel_list.employee.try(:last_name),:code => travel_list.try(:code), :place => travel_list.try(:place), :current_status => travel_list.try(:current_status), :all_status => travel_list.try(:reporting_masters_travel_requests), :application_date => travel_list.try(:application_date), :company_location => travel_list.try(:employee).try(:company_location).try(:name), :department => travel_list.try(:employee).try(:department).try(:name), :travel_option => travel_list.try(:travel_option).try(:name), :travel_mode => travel_list.try(:travel_mode).try(:name), :from_date => travel_list.try(:traveling_date), :to_date => travel_list.try(:to), :day => travel_list.try(:day), :total_advance => travel_list.try(:total_advance), :is_confirm => travel_list.try(:is_confirm) }} : []
   end
 
@@ -2278,7 +2277,7 @@ class Api::UserAuthsController < ApplicationController
 
   def all_travel_history
     employee_id = params[:employee_id]
-    travel_requests = TravelRequest.where(employee_id: employee_id)
+    travel_requests = TravelRequest.where(employee_id: employee_id).order("id DESC")
     render :json => travel_requests.present? ? travel_requests.collect{|travel_list| {:id => travel_list.try(:id), :manual_employee_code => travel_list.try(:employee).try(:manual_employee_code), :prefix => travel_list.employee.try(:prefix), :employee_first_name => travel_list.employee.try(:first_name), :employee_middle_name => travel_list.employee.try(:middle_name), :employee_last_name => travel_list.employee.try(:last_name),:code => travel_list.try(:code), :place => travel_list.try(:place), :current_status => travel_list.try(:current_status),:is_confirm => travel_list.try(:is_confirm), :all_status => travel_list.try(:reporting_masters_travel_requests), :application_date => travel_list.try(:application_date), :company_location => travel_list.try(:employee).try(:company_location).try(:name), :department => travel_list.try(:employee).try(:department).try(:name), :travel_option => travel_list.try(:travel_option).try(:name), :travel_mode => travel_list.try(:travel_mode).try(:name), :from_date => travel_list.try(:traveling_date), :to_date => travel_list.try(:to), :day => travel_list.try(:day), :total_advance => travel_list.try(:total_advance) }} : []
   end
 
@@ -2297,12 +2296,12 @@ class Api::UserAuthsController < ApplicationController
     manager_id = params[:manager_id]
     date = params[:date]
     if !employee_id.present? and manager_id.present?
-      @employee = Employee.where(manager_id: employee_id).pluck(:id)
+      @employee = Employee.where(manager_id: manager_id).pluck(:id)
       employee_daily_activities = EmployeeDailyActivity.where(employee_id: @employee, day: date.to_date).order("day asc")
     else employee_id.present? and manager_id.present?
       employee_daily_activities = EmployeeDailyActivity.where(employee_id: employee_id, day: date.to_date).order("day asc")
     end
-    render :json => employee_daily_activities.present? ? employee_daily_activities.collect{|emp| { id: emp.id, :employee_id => emp.employee_id, :project_master_id => emp.project_master_id, :today_activity => emp.today_activity, :tomorrow_plan => emp.tomorrow_plan, :day => emp.day }} : []
+    render :json => employee_daily_activities.present? ? employee_daily_activities.collect{|emp| { id: emp.id, :manual_employee_code => emp.try(:employee).try(:manual_employee_code), :prefix => emp.employee.try(:prefix), :employee_first_name => emp.employee.try(:first_name), :employee_middle_name => emp.employee.try(:middle_name), :employee_last_name => emp.employee.try(:last_name), :employee_id => emp.employee_id, :project_master_id => emp.try(:project_master).try(:name), :today_activity => emp.today_activity, :tomorrow_plan => emp.tomorrow_plan, :day => emp.day }} : []
   end
 
 end

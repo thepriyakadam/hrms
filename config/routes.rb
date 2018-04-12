@@ -2832,6 +2832,7 @@ end
   end
   resources :joining_details do
     collection do
+      get :show_contract
       get :search_by_joining_date
       get :import_xl
       post :import

@@ -878,43 +878,44 @@ class Api::UserAuthsController < ApplicationController
   def employee_plan_list
     manager_id = params[:manager_id]
     employee_id = params[:employee_id]
-    date = params[:date]
+    from_date = params[:fromdate]
+    to_date = params[:todate]
     status = params[:status]
     if manager_id.empty?
       if status == "All"
-        employee_plan = EmployeePlan.where(employee_id: employee_id).where("? BETWEEN from_date AND from_date", date).order("id DESC")
+        employee_plan = EmployeePlan.where(employee_id: employee_id, from_date: from_date..to_date).order("id DESC")
       elsif status == "Attend"
-        employee_plan = EmployeePlan.where('employee_id = ? AND plan_reason_master_id IS ? AND start_latitude IS NOT NULL', employee_id, nil).where("? BETWEEN from_date AND from_date", date).order("id DESC")
+        employee_plan = EmployeePlan.where('employee_id = ? AND plan_reason_master_id IS ? AND start_latitude IS NOT NULL', employee_id, nil).where(from_date: from_date..to_date).order("id DESC")
       elsif status == "Not Attend"
-        employee_plan = EmployeePlan.where.not('plan_reason_master_id IS ?', nil).where(employee_id: employee_id).where("? BETWEEN from_date AND from_date", date).order("id DESC")
+        employee_plan = EmployeePlan.where.not('plan_reason_master_id IS ?', nil).where(employee_id: employee_id).where(from_date: from_date..to_date).order("id DESC")
       elsif status.present? && status != "All" && status != "Attend" && status != "Not Attend"
-        employee_plan = EmployeePlan.where(employee_id: employee_id, current_status: status ).where("? BETWEEN from_date AND from_date", date).order("id DESC")
+        employee_plan = EmployeePlan.where(employee_id: employee_id, current_status: status ).where(from_date: from_date..to_date).order("id DESC")
       else
-        employee_plan = EmployeePlan.where(employee_id: employee_id).where("? BETWEEN from_date AND from_date", date).order("id DESC")
+        employee_plan = EmployeePlan.where(employee_id: employee_id).where(from_date: from_date..to_date).order("id DESC")
       end
     elsif manager_id.present? && employee_id.present?
       if status == "All"
-        employee_plan = EmployeePlan.where(employee_id: employee_id).where("? BETWEEN from_date AND from_date", date).order("id DESC")
+        employee_plan = EmployeePlan.where(employee_id: employee_id).where(from_date: from_date..to_date).order("id DESC")
       elsif status == "Attend"
-        employee_plan = EmployeePlan.where('employee_id = ? AND plan_reason_master_id IS ?', employee_id, nil).where("? BETWEEN from_date AND from_date", date).order("id DESC")
+        employee_plan = EmployeePlan.where('employee_id = ? AND plan_reason_master_id IS ?', employee_id, nil).where(from_date: from_date..to_date).order("id DESC")
       elsif status == "Not Attend"
-        employee_plan = EmployeePlan.where.not('plan_reason_master_id IS ?', nil).where(employee_id: employee_id).where("? BETWEEN from_date AND from_date", date).order("id DESC")
+        employee_plan = EmployeePlan.where.not('plan_reason_master_id IS ?', nil).where(employee_id: employee_id).where(from_date: from_date..to_date).order("id DESC")
       elsif status.present? && status != "All" && status != "Attend" && status != "Not Attend"
-        employee_plan = EmployeePlan.where(employee_id: employee_id, current_status: status ).where("? BETWEEN from_date AND from_date", date).order("id DESC")
+        employee_plan = EmployeePlan.where(employee_id: employee_id, current_status: status ).where(from_date: from_date..to_date).order("id DESC")
       else
-        employee_plan = EmployeePlan.where(employee_id: employee_id).where("? BETWEEN from_date AND from_date", date).order("id DESC")
+        employee_plan = EmployeePlan.where(employee_id: employee_id).where(from_date: from_date..to_date).order("id DESC")
       end
     else manager_id.present? && employee_id.empty?
       if status == "All"
-        employee_plan = EmployeePlan.where("? BETWEEN from_date AND from_date", date).where(manager_id: manager_id).order("id DESC")
+        employee_plan = EmployeePlan.where(from_date: from_date..to_date).where(manager_id: manager_id).order("id DESC")
       elsif status == "Attend"
-        employee_plan = EmployeePlan.where('plan_reason_master_id IS ?', nil).where("? BETWEEN from_date AND from_date", date).where(manager_id: manager_id).order("id DESC")
+        employee_plan = EmployeePlan.where('plan_reason_master_id IS ?', nil).where(from_date: from_date..to_date).where(manager_id: manager_id).order("id DESC")
       elsif status == "Not Attend"
-        employee_plan = EmployeePlan.where.not('plan_reason_master_id IS ?', nil).where("? BETWEEN from_date AND from_date", date).where(manager_id: manager_id).order("id DESC")
+        employee_plan = EmployeePlan.where.not('plan_reason_master_id IS ?', nil).where(from_date: from_date..to_date).where(manager_id: manager_id).order("id DESC")
       elsif status.present? && status != "All" && status != "Attend" && status != "Not Attend"
-        employee_plan = EmployeePlan.where(current_status: status ).where("? BETWEEN from_date AND from_date", date).where(manager_id: manager_id).order("id DESC")
+        employee_plan = EmployeePlan.where(current_status: status ).where(from_date: from_date..to_date).where(manager_id: manager_id).order("id DESC")
       else
-        employee_plan = EmployeePlan.where("? BETWEEN from_date AND from_date", date).where(manager_id: manager_id).order("id DESC")
+        employee_plan = EmployeePlan.where(from_date: from_date..to_date).where(manager_id: manager_id).order("id DESC")
       end
     end
     if employee_plan.present?
@@ -1505,7 +1506,7 @@ class Api::UserAuthsController < ApplicationController
   def emp_daily_activity_list
     employee = params[:employee_id]
     emp_daily_list = EmployeeDailyActivity.where(employee_id: employee).order("id DESC")
-    render :json => emp_daily_list.present? ? emp_daily_list.collect{|sal| { :id => sal.id, :employee_id => sal.employee_id, :prefix => sal.employee.try(:prefix), :first_name => sal.employee.try(:first_name), :middle_name => sal.employee.try(:middle_name), :last_name => sal.employee.try(:last_name), :project_master_id => sal.try(:project_master).try(:name), :today_activity => sal.today_activity, :tomorrow_plan => sal.tomorrow_plan, :day => sal.day }} : []
+    render :json => emp_daily_list.present? ? emp_daily_list.collect{|sal| { :id => sal.id, :employee_id => sal.employee_id, :prefix => sal.employee.try(:prefix), :first_name => sal.employee.try(:first_name), :middle_name => sal.employee.try(:middle_name), :last_name => sal.employee.try(:last_name), :manager_id => sal.employee.try(:manager_id), :project_master_id => sal.try(:project_master).try(:name), :today_activity => sal.today_activity, :tomorrow_plan => sal.tomorrow_plan, :day => sal.day }} : []
   end
 
   def employee_wise_attendance
@@ -1613,15 +1614,28 @@ class Api::UserAuthsController < ApplicationController
     if keyword == "employee"
       self_pending_od = OnDutyRequest.where(current_status: "Pending", employee_id: employee_id).count
       self_pending_leave  = EmployeeLeavRequest.where(current_status: "Pending", employee_id: employee_id).count
-      render :status=>200, :json=>{:self_pending_od => self_pending_od, :self_pending_leave => self_pending_leave, :gps_track => @gps_track, :restricted_area => @restricted_area }
+      leave_c_off = LeaveCOff.where(employee_id: employee_id, current_status: "Pending").count
+      employee_plan = EmployeePlan.where(employee_id: employee_id, current_status: "Pending").count
+      travel_requests = TravelRequest.where(employee_id: employee_id, current_status: "Pending").count
+      expense_claim = TravelRequest.where(employee_id: employee_id, current_status: "FinalApproved").count
+      render :status=>200, :json=>{:self_pending_od => self_pending_od, :self_pending_leave => self_pending_leave, :gps_track => @gps_track, :restricted_area => @restricted_area, :leave_c_off => leave_c_off, :employee_plan => employee_plan, :travel_requests => travel_requests, :expense_claim => expense_claim }
     elsif keyword == "manager"
       pending_od = OnDutyRequest.where(current_status: "Pending", first_reporter_id: employee_id).count
       pending_leave  = EmployeeLeavRequest.where(current_status: "Pending", first_reporter_id: employee_id).count
-      render :status=>200, :json=>{:pending_leave => pending_leave, :pending_od => pending_od, :gps_track => @gps_track, :restricted_area => @restricted_area  }
+      leave_c_off = LeaveCOff.where(employee_id: employee_id, current_status: "Pending").count
+      employee_plan = EmployeePlan.where(employee_id: employee_id, current_status: "Pending").count
+      travel_requests = TravelRequest.where(employee_id: employee_id, current_status: "Pending").count
+      expense_claim = TravelRequest.where(employee_id: employee_id, current_status: "FinalApproved").count
+      render :status=>200, :json=>{:pending_leave => pending_leave, :pending_od => pending_od, :gps_track => @gps_track, :restricted_area => @restricted_area, :leave_c_off => leave_c_off, :employee_plan => employee_plan, :travel_requests => travel_requests, :expense_claim => expense_claim }
     else keyword == "admin"
       all_pending_od = OnDutyRequest.where(current_status: "Pending").count
       all_pending_leave  = EmployeeLeavRequest.where(current_status: "Pending").count
-      render :status=>200, :json=>{:all_pending_leave => all_pending_leave, :all_pending_od => all_pending_od, :gps_track => @gps_track, :restricted_area => @restricted_area  }
+      leave_c_off = LeaveCOff.where(current_status: "Pending").count
+      employee_plan = EmployeePlan.where(current_status: "Pending").count
+      travel_requests = TravelRequest.where(current_status: "Pending").count
+      expense_claim = TravelRequest.where(current_status: "FinalApproved").count
+      final_travel_requests = TravelRequest.where(current_status: "Approved").count
+      render :status=>200, :json=>{:all_pending_leave => all_pending_leave, :all_pending_od => all_pending_od, :gps_track => @gps_track, :restricted_area => @restricted_area,:leave_c_off => leave_c_off, :employee_plan => employee_plan, :travel_requests => travel_requests, :expense_claim => expense_claim, :final_travel_requests => final_travel_requests }
     end
   end
 

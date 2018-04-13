@@ -13,7 +13,7 @@
     </div>
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :quarter,hide_label:true, placeholder: 'Quarter' %>
+        <%= f.select :quarter,['Q1','Q2','Q3','Q4'],{hide_label:true, include_blank: 'Select Quarter'} %>
       </div>
     </div>
     <div class="col-sm-3">

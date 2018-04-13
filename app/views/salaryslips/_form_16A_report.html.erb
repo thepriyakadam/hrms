@@ -7,29 +7,27 @@
     <table id="example" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
-          <td colspan="10"><center> 
-            <% if current_user.employee.company_location.company.company_logo == nil %>
-            <%else %>
-              <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
-            <%end%> 
-            <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
-            <center><strong>PF Computation Report</strong></center>
-            <center><strong><%= @from_date %> <b>-</b> <%= @to_date  %></strong></center>
-          </td>
+          <th colspan="10"><center><h3> FORM NO : 16</h3></center></th>
+        </tr>
+        <tr>
+          <th colspan="10"><center>[See rule 31(1)(a)]</center></th>
+        </tr>
+          <tr>
+          <th colspan="10"><center><h3> PART A</h3></center></th>
         </tr>
         <tr>
           <td colspan="10">
             <center><strong>Certificate under Section 203 of the Income-tax Act, 1961 for tax deducted at source on salary</strong></center>
           </td>
         </tr>
-        <tr>
+      <!--   <tr>
           <td colspan="5">
             <strong>Certificate No.</strong> DHWZUVO
           </td>
           <td colspan="5">
             <strong>Last updated on.</strong> DHWZUVO
           </td>
-        </tr>
+        </tr> -->
         <tr>
           <td colspan="5">
             <center><strong>Name and address of the Employer</strong></center>
@@ -40,11 +38,10 @@
         </tr>
         <tr>
           <td colspan="5">
-            <center><% @employee.try(:company).try(:description)%><br />
-            <%= @employee.current_address %>
-            </center></center>
+            <center><%= @employee.try(:company).try(:description)%> <br/><%= @employee.try(:company).try(:address)%> <br/> <%= @employee.try(:company).try(:city)%> <%= @employee.try(:district).try(:company).try(:name)%> <%= @employee.try(:company).try(:state).try(:name)%> <%= @employee.try(:company).try(:country).try(:name)%> <%= @employee.try(:company).try(:pin_code) %><br/>
+            </center>
           <td colspan="5">
-            <center><%= full_name(@employee) %> <br /><%= @employee.current_address %><%= @employee.try(:city)%> <%= @employee.try(:district).try(:name)%><%= @employee.try(:country).try(:name)%></center>
+            <center><%= full_name(@employee) %> <br /> <%= @employee.permanent_address %> <br/> <%= @employee.try(:city)%> <%= @employee.try(:district).try(:name)%> <%= @employee.try(:state).try(:name)%> <%= @employee.try(:country).try(:name)%> <%= @employee.try(:pin_code) %></center>
           </td>
         </tr>
         <tr>
@@ -63,13 +60,13 @@
         </tr>
         <tr>
           <td colspan="3">
-            <center><% @employee.pan_no %></center>
+            <center><%= @employee.try(:company).try(:pan_card_no) %></center>
           </td>
           <td colspan="3">
-            <center><% @employee.try(:company).try(:professional_tax_no)%></center>
+            <center><%= @employee.try(:company).try(:tax_no)%></center>
           </td>
           <td colspan="2">
-            <center><% @employee.try(:company).try(:pan_card_no)%></center>
+            <center><%= @employee.try(:pan_no)%></center>
           </td>
           <td colspan="2">
             <center> </center>
@@ -88,10 +85,10 @@
         </tr>
         <tr>
           <td colspan="3">
-            <center> </center>
+            <center>  </center>
           </td>
           <td colspan="3">
-            <center> </center>
+            <center>2016-17 </center>
           </td>
           <td colspan="2">
             <center> From <br />
@@ -310,7 +307,7 @@
       </table>
 
       <br /><br /> 
-      <p style="text-align: center; font-style: bold;">Certificate Number: DHWZUVO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   TAN of Employer: <%= current_user.employee.company_location.company.tax_no %>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  PAN of Employee: <%= @employee.try(:pan_no)%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assessment Year: 2017-18</p>
+      <p style="text-align: center; font-style: bold;">Certificate Number: DHWZUVO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   TAN of Employer: <%= current_user.employee.company_location.company.tax_no %>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  PAN of Employee: <%= @employee.try(:pan_no)%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assessment Year: 2018-19</p>
       <br /><br /> 
         
 
@@ -319,8 +316,9 @@
           <th colspan="12" style="text-align: center;">Verification</th>
         </tr>
         <tr>
-          <td colspan="12" style="text-align: justify; text-indent: 20px;">I, <b><%#= full_name(@employee) %>,</b> son / daughter of <b><%#= @employee.try(:middle_name)%> <%#= @employee.try(:last_name) %></b> working in the capacity of <b>DIRECTOR</b>
-          (designation) do hereby certify that a sum of <b>Rs. 0.0 [Rs. Zero (in words)]</b> has been deducted and a sum of <b>Rs. 0.0 [Rs. Zero (in words)]</b> has been deposited to the credit of the Central Government. I further certify that the information given above is true, complete and
+          <td colspan="12" style="text-align: justify; text-indent: 20px;">I, <b><%= full_name(@employee) %>,</b> son / daughter of <b><%= @employee.try(:middle_name)%> <%= @employee.try(:last_name) %></b> working in the capacity of <b>DIRECTOR</b>
+          (designation) do hereby certify that a sum of <b>Rs. 0.0 [Rs. Zero (in words)]</b> has been deducted and a sum of <b>Rs. 6900.00 [Rs. Six
+          Thousand Nine Hundred Only]</b> has been deposited to the credit of the Central Government. I further certify that the information given above is true, complete and
           correct and is based on the books of account, documents, TDS statements, TDS deposited and other available records.</td>
         </tr>
         <tr>
@@ -411,21 +409,21 @@
                   <ol style="list-style-type: lower-alpha;">
                     <li>Section 80C
                       <ol style="list-style-type: decimal;">
-                        <li>SCHOOL FEES </li>
-                        <li>LIC PREMIUM </li>
-                      </ol> 
-                    </li>
+                        <li>SCHOOL FEES                       46,860.00</li>
+                        <li>LIC PREMIUM                       145,102.00</li>
+                      </ol>  
+                    </li>  
                     <li>Section 80CCC</li>
                     <li>Section 80CCD</li>
                   </ol>
                 </li>
                 <li>Other Sections under Chapter VIA                Gross Amount
                   <ol style="list-style-type: lower-alpha;">
-                    <li> </li>
-                    <li>SECTION 80D </li>
-                  </ol>
+                    <li>-                                         15,000.00</li>
+                    <li>SECTION 80D                               21,750.00</li>
+                  </ol>    
                 </li>
-              </ol>
+              </ol>  
             </li>
             <li>Aggregate of deductible amount under Chapter VIA</li>
             <li>Total income (8 - 10)</li>
@@ -495,7 +493,7 @@
     <th colspan="12" style="text-align: center;">Verification</th>
   </tr>
   <tr>
-    <td colspan="12" style="text-align: justify; text-indent: 20px;">I, <b><%#= full_name(@employee) %>,</b> son / daughter of <b><%#= @employee.try(:middle_name)%> <%#= @employee.try(:last_name) %></b> working in the capacity of <b>DIRECTOR</b>
+    <td colspan="12" style="text-align: justify; text-indent: 20px;">I, <b><%= full_name(@employee) %>,</b> son / daughter of <b><%= @employee.try(:middle_name)%> <%= @employee.try(:last_name) %></b> working in the capacity of <b>DIRECTOR</b>
       (designation) do hereby certify that the information given above is true, complete and correct and is based on the book of accounts, documents, TDS statements, and other available records.
     </td>
   </tr>

@@ -305,7 +305,7 @@
                 <% end %>
               <% end %>
             </td>
-            <% appraisee_output = weightage * appraisee_rating.to_i / 100.to_f %>
+            <% appraisee_output = weightage.to_f * appraisee_rating.to_f / 100.to_f %>
             <% appraisee_goal_sum = appraisee_goal_sum + appraisee_output %>
             <% appraisee_goalrating_sum = appraisee_goalrating_sum.to_f + appraisee_rating.to_f %>
           </tr>
@@ -364,7 +364,7 @@
                 <% end %>
               <% end %>
             </td>
-            <% appraisee_output = weightage * appraisee_rating.to_f.to_f / 100.to_f %>
+            <% appraisee_output = weightage.to_f * appraisee_rating.to_f / 100.to_f %>
             <% appraisee_attribute_sum = appraisee_attribute_sum.to_f + appraisee_output.to_f %>
             <% appraisee_attributerating_sum = appraisee_attributerating_sum.to_f + appraisee_rating.to_f %>
           </tr>

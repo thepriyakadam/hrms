@@ -1,0 +1,76 @@
+<%= bootstrap_form_for(@event_detail,html: {id: 'event_detail'},remote:true) do |f| %>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+            <%= f.text_field :date,hide_label: true, class: 'effective_date'%>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Name' %>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="field">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Event Description' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.check_box :status, label: 'Status' %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Event Detail", :class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+
+<% end %>
+<br>
+<script type="text/javascript">
+  $(function(){
+    $('.effective_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+  });
+</script>
+
+<script>
+$("#event_detail").validate({
+    rules: {
+      "event_detail[date]":{
+        required: true,
+      },
+      "event_detail[name]":{
+        required: true,
+      }
+    },
+    messages: {
+      "event_detail[date]":{
+        required: "Please specify Date",
+      },
+      "event_detail[name]":{
+        required: "Please specify Name",
+      }        
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

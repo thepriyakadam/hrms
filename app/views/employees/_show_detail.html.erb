@@ -1,22 +1,22 @@
 <div class="box box-default">
   <div class="box-header with-border">
   <div class="row">
-  <div class="col-sm-1">
-  <% if @employee.passport_photo_file_name == nil %>
-  <% if @employee.gender == "Female" %>
-   <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "70x70" %>
-  <%else%>
-   <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "70x70" %>
-  <%end%>
- <%else%>
-      <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+    <div class="col-sm-1">
+      <% if @employee.passport_photo_file_name == nil %>
+        <% if @employee.gender == "Female" %>
+         <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "70x70" %>
+        <%else%>
+         <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "70x70" %>
+        <%end%>
+      <%else%>
+        <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
       <%end%>
-  </div>
+    </div>
     <div class="col-sm-6">
-     <font color='#0077b3'>
-        ID : <%= @employee.try(:manual_employee_code) %><br>
-        Name : <%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %><br>
-        Email : <%= @employee.email %></font>
+      <font color='#0077b3'>
+          ID : <%= @employee.try(:manual_employee_code) %><br>
+          Name : <%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %><br>
+          Email : <%= @employee.email %></font>
     </div>
   </div>
   <div class="box-tools pull-right">

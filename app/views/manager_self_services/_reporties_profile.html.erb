@@ -1,0 +1,114 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Employee Profile </center></h4>
+    </div>
+    <div class="modal-body">
+    	<div class="row">
+	      <div class="col-sm-2">
+	        <% if @employee.passport_photo_file_name == nil %>
+	          <% if @employee.gender == "Female" %>
+	           <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "70x70" %>
+	          <%else%>
+	           <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "70x70" %>
+	          <%end%>
+	        <%else%>
+	          <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+	        <%end%>
+	      </div>
+	      <div class="col-sm-6">
+	        <font color='#0077b3'>
+	            ID : <%= @employee.try(:manual_employee_code) %><br>
+	            Name : <%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %><br>
+	            Email : <%= @employee.email %></font>
+	      </div>
+	    </div>
+	    <br>
+			<table class="table table-bordered table-hover table-condensed">
+  			<thead>
+  				<tr>
+		        <th><strong>Official No.</strong></th>
+		        <td><%= @employee.try(:optional_contact_no) %></td>
+		      </tr>
+
+		      <tr>
+		        <th><strong>Personal No.</strong></th>
+		        <td><%= @employee.try(:contact_no) %></td>
+		      </tr>
+
+		      <tr>
+		        <th><strong>Emergency No</strong></th>
+		        <td><%= @employee.try(:emergency_contact_no) %></td>
+		      </tr>
+
+		      <tr>
+		        <th><strong>Designation:</strong></th>
+		        <td><%= @joining_detail.try(:employee_designation).try(:name) %></td>
+		      </tr>
+
+		      <tr>
+		        <th><strong>UAN No</strong></th>
+		        <td><%= @joining_detail.try(:employee_uan_no)  %></td>
+		      </tr>
+
+		      <tr>
+		        <th><strong>PAN No</strong></th>
+		        <td><%= @employee.try(:pan_no) %></td>
+		      </tr>
+
+		      <tr>
+		        <th><strong>Adhar No</strong></th>
+		        <td><%= @employee.try(:adhar_no) %></td>
+		      </tr>
+
+		      <tr>
+		        <th><strong>Date Of Birth</strong></th>
+		        <td><%= @employee.try(:date_of_birth) %></td>
+		      </tr>
+
+		      <tr>
+		        <th><strong>Gender</strong></th>
+		        <td><%= @employee.try(:gender) %></td>
+		      </tr>
+
+		      <tr>
+		        <th><strong>Blood Group</strong></th>
+		        <td><%= @employee.try(:blood_group).try(:name) %></td>
+		      </tr>
+
+		      <tr>
+		        <th><strong>Company Name</strong></th>
+		        <td><%= @employee.try(:company).try(:name) %></td>
+		      </tr>
+
+		      <tr>
+		        <th><strong>Branch</strong></th>
+		        <td><%= @employee.try(:company_location).try(:name) %></td>
+		      </tr>
+
+		      <tr>
+		        <th><strong>Department</strong></th>
+		        <td><%= @employee.try(:department).try(:name) %></td>
+		      </tr>
+
+		      <tr>
+		        <th><strong>City</strong></th>
+		        <td><%= @employee.try(:city) %></td>
+		      </tr>
+
+		      <tr>
+		        <th><strong>Manager 1</strong></th>
+		        <td><%= full_name(@employee.manager) %></td>
+		      </tr>
+
+		      <tr>
+		        <th><strong>Manager 2</strong></th>
+		        <td><%= full_name(@employee.manager_2) %></td>
+		      </tr>
+			  </thead>
+			</table>
+		</div>
+		<div class="modal-footer"></div>
+	</div>
+</div>  

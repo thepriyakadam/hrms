@@ -1,6 +1,6 @@
 <% if EmployeeDocument.exists?(employee_id: params[:id]) %>
 <% @employee_documents = EmployeeDocument.where("employee_id = ?", params[:id]) %>
-$('#info').html("<%= j render 'employee_documents/show_detail' %>");
+$('#info').html("<%= j render 'employee_documents/show_detail' %>")
 <%else%>
-$('#info').html("<%= j render 'employee_documents/form' %>");
+$('#info').html("<%= j render 'employee_documents/form' %>")
 <%end%>

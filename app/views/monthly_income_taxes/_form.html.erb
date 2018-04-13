@@ -1,0 +1,93 @@
+<%= bootstrap_form_for(@monthly_income_tax,html: {id: 'monthly_income_tax'},remote:true) do |f| %>
+  
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :date, hide_label: true, placeholder: 'Date', class: 'holiday_date'%>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :tax_deposited,hide_label:true, placeholder: 'Deposited Tax' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :bsr_code,hide_label:true, placeholder: 'BSR Code' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :challan_no,hide_label:true, placeholder: 'Challan No' %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :status,hide_label:true, placeholder: 'Status' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Monthly Incometax", :class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<br>
+<script type="text/javascript">
+$(function(){
+    $('.holiday_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-5:+10',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+    
+$("#monthly_income_tax").validate({
+    rules: {
+      "monthly_income_tax[date]":{
+        required: true,
+      },
+      "monthly_income_tax[tax_deposited]":{
+        required: true,
+      },
+      "monthly_income_tax[bsr_code]":{
+        required: true,
+      },
+      "monthly_income_tax[challan_no]":{
+        required: true,
+      },
+      "monthly_income_tax[status]":{
+        required: true,
+      }
+    },
+    messages: {
+      "monthly_income_tax[date]":{
+        required: "Please specify Date",
+      },
+      "monthly_income_tax[tax_deposited]":{
+        required: "Please specify Deposited Tax",
+      },
+      "monthly_income_tax[bsr_code]":{
+        required: "Please specify BSR Code",
+      },
+      "monthly_income_tax[challan_no]":{
+        required: "Please specify Challan No",
+      },
+      "monthly_income_tax[status]":{
+        required: "Please specify Status",
+      }     
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

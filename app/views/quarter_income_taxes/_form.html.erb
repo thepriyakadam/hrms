@@ -1,0 +1,99 @@
+<%= bootstrap_form_for(@quarter_income_tax,html: {id: 'quarter_income_tax'},remote:true) do |f| %>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :date, hide_label: true, placeholder: 'Date', class: 'holiday_date'%>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :quarter,hide_label:true, placeholder: 'Quarter' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :reciept_no,hide_label:true, placeholder: 'Reciept No' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :paid_amount,hide_label:true, placeholder: 'Paid Amount' %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :tax_amount_deducted,hide_label:true, placeholder: 'Deducted Tax' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :tax_amount_deposited,hide_label:true, placeholder: 'Deposited Tax' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Quarter Incometax", :class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<br>
+
+<script>
+$(function(){
+    $('.holiday_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-5:+10',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+  
+$("#quarter_income_tax").validate({
+    rules: {
+      "quarter_income_tax[date]":{
+        required: true,
+      },
+      "quarter_income_tax[quarter]":{
+        required: true,
+      },
+      "quarter_income_tax[reciept_no]":{
+        required: true,
+      },
+      "quarter_income_tax[paid_amount]":{
+        required: true,
+      },
+      "quarter_income_tax[tax_amount_deducted]":{
+        required: true,
+      }
+    },
+    messages: {
+      "quarter_income_tax[date]":{
+        required: "Please specify Date",
+      },
+      "quarter_income_tax[quarter]":{
+        required: "Please specify Quarter",
+      },
+      "quarter_income_tax[reciept_no]":{
+        required: "Please specify Reciept No",
+      },
+      "quarter_income_tax[paid_amount]":{
+        required: "Please specify Paid Amount",
+      },
+      "quarter_income_tax[tax_amount_deducted]":{
+        required: "Please specify Paid Deducted Tax",
+      }     
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

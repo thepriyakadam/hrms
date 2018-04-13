@@ -16,6 +16,8 @@ class IncomeTaxMastersController < ApplicationController
   def new
     @income_tax_master = IncomeTaxMaster.new
     @income_tax_masters = IncomeTaxMaster.all
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] = "IncomeTax"
   end
 
   # GET /income_tax_masters/1/edit

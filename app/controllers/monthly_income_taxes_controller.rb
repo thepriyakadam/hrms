@@ -16,6 +16,8 @@ class MonthlyIncomeTaxesController < ApplicationController
   def new
     @monthly_income_tax = MonthlyIncomeTax.new
     @monthly_income_taxes = MonthlyIncomeTax.all
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] = "IncomeTax"
   end
 
   # GET /monthly_income_taxes/1/edit

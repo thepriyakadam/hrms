@@ -16,6 +16,8 @@ class QuarterIncomeTaxesController < ApplicationController
   def new
     @quarter_income_tax = QuarterIncomeTax.new
     @quarter_income_taxes = QuarterIncomeTax.all
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] = "IncomeTax"
   end
 
   # GET /quarter_income_taxes/1/edit

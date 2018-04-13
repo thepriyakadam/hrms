@@ -1,0 +1,7 @@
+<% if @flag %>
+$("#contract_month").html("<%= j render 'contract' %>");
+$("#contract_month").show();
+<% else %>
+$("#contract_month").html("<%= %>");
+$("#contract_month").hide();
+<% end %>

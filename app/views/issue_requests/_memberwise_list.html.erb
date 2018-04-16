@@ -6,8 +6,9 @@
       <table id="example1" class="table table-bordered table-hover table-condensed">
           <thead>
             <tr><td colspan="12"><center><strong><%= current_user.employee.company_location.company.try(:description) %></strong> <br>
-        <%= current_user.employee.company_location.company.try(:address) %><br> <%= current_user.employee.department.try(:name) %> -
-        <%= current_user.employee.company_location.try(:name) %></center> </td></tr>
+        			<%= current_user.employee.company_location.company.try(:address) %><br> <%= current_user.employee.department.try(:name) %> -
+        			<%= current_user.employee.company_location.try(:name) %></center> </td>
+        		</tr>
            <tr>
 			        <th>Support ID</th>
 			        <th>Support</th>
@@ -44,7 +45,7 @@
       </tbody>
     </table>
     </div>
-    <%= link_to " Excel Report ",memberwise_report_list_xls_issue_requests_path(date: params[:issue_request][:date], issue_tracker_group_id: params[:issue_request][:issue_tracker_group_id], issue_tracker_member_id: params[:issue_requests][:issue_tracker_member_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+    <%= link_to " Excel Report ",memberwise_report_list_xls_issue_requests_path(from: params[:issue_request][:from],to: params[:issue_request][:to], issue_tracker_group_id: params[:issue_request][:issue_tracker_group_id], issue_tracker_member_id: params[:issue_requests][:issue_tracker_member_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
  
-       <%= link_to " Print Report ",memberwise_report_list_pdf_issue_requests_path(date: @date , issue_tracker_member_id: @member_id,issue_tracker_group_id: @group_id,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+       <%= link_to " Print Report ",memberwise_report_list_pdf_issue_requests_path(from: @from ,to: @to, issue_tracker_member_id: @member_id,issue_tracker_group_id: @group_id,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>

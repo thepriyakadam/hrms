@@ -156,7 +156,7 @@ def self.to_csv(options = {})
         else
         cost_center_id = @cost_center.id
         end
-         welfare = spreadsheet.cell(i,'AJ')
+        welfare = spreadsheet.cell(i,'AJ')
          if welfare == "Yes"
            welfare = true
          else
@@ -168,18 +168,40 @@ def self.to_csv(options = {})
          else
            contact_library = false
          end
-        
+        gps_track = spreadsheet.cell(i,'AL')
+        restricted_area = spreadsheet.cell(i,'AM')
+        contract_month = spreadsheet.cell(i,'AN')
+        contract_end_date = spreadsheet.cell(i,'AO')
+
         @employee_prsent = JoiningDetail.find_by(employee_id: employee_id)
         if @employee_prsent.nil?
-        @joining_detail = JoiningDetail.create(employee_id: employee_id,employee_uan_no: employee_uan_no,joining_date: joining_date,confirmation_date: confirmation_date,employee_grade_id: employee_grade_id,employee_designation_id: employee_designation_id,employee_category_id: employee_category_id,probation_period: probation_period,
-        notice_period: notice_period,have_passport: have_passport,passport_no: passport_no,passport_issue_date: passport_issue_date,passport_expiry_date: passport_expiry_date,leaving_date: leaving_date,payment_mode_id: payment_mode_id,basis_of_time: basis_of_time,is_employeer_pf: is_employeer_pf,select_pf: select_pf,pf_max_amount: pf_max_amount,employee_pf_no: employee_pf_no,
-        is_employeer_esic: is_employeer_esic,have_esic: have_esic,employee_efic_no: employee_efic_no,have_retention: have_retention,is_insurance: is_insurance,is_family_pension: is_family_pension,is_bonus: is_bonus,ot_option: ot_option,ot_rate: ot_rate,cost_center_id: cost_center_id,welfare: welfare,contact_library: contact_library)
+        @joining_detail = JoiningDetail.create(employee_id: employee_id,employee_uan_no: employee_uan_no,
+          joining_date: joining_date,confirmation_date: confirmation_date,employee_grade_id: employee_grade_id,
+          employee_designation_id: employee_designation_id,employee_category_id: employee_category_id,
+          probation_period: probation_period,notice_period: notice_period,have_passport: have_passport,
+          passport_no: passport_no,passport_issue_date: passport_issue_date,passport_expiry_date: passport_expiry_date,
+          leaving_date: leaving_date,payment_mode_id: payment_mode_id,basis_of_time: basis_of_time,is_employeer_pf: is_employeer_pf,
+          select_pf: select_pf,pf_max_amount: pf_max_amount,employee_pf_no: employee_pf_no,
+          is_employeer_esic: is_employeer_esic,have_esic: have_esic,employee_efic_no: employee_efic_no,
+          have_retention: have_retention,is_insurance: is_insurance,is_family_pension: is_family_pension,
+          is_bonus: is_bonus,ot_option: ot_option,ot_rate: ot_rate,cost_center_id: cost_center_id,
+          welfare: welfare,contact_library: contact_library,gps_track: gps_track,restricted_area: restricted_area,
+          contract_month: contract_month,contract_end_date: contract_end_date)
         else
-        @employee_prsent.update(employee_id: employee_id,employee_uan_no: employee_uan_no,c_off: c_off,joining_date: joining_date,confirmation_date: confirmation_date,employee_grade_id: employee_grade_id,employee_designation_id: employee_designation_id,employee_category_id: employee_category_id,probation_period: probation_period,
-        notice_period: notice_period,have_passport: have_passport,passport_no: passport_no,passport_issue_date: passport_issue_date,passport_expiry_date: passport_expiry_date,leaving_date: leaving_date,payment_mode_id: payment_mode_id,basis_of_time: basis_of_time,is_employeer_pf: is_employeer_pf,select_pf: select_pf,pf_max_amount: pf_max_amount,employee_pf_no: employee_pf_no,
-        is_employeer_esic: is_employeer_esic,have_esic: have_esic,employee_efic_no: employee_efic_no,have_retention: have_retention,is_insurance: is_insurance,is_family_pension: is_family_pension,is_bonus: is_bonus,ot_option: ot_option,ot_rate: ot_rate,cost_center_id: cost_center_id,welfare: welfare,contact_library: contact_library)
-    end
-     end
+        @employee_prsent.update(employee_id: employee_id,employee_uan_no: employee_uan_no,c_off: c_off,
+          joining_date: joining_date,confirmation_date: confirmation_date,employee_grade_id: employee_grade_id,
+          employee_designation_id: employee_designation_id,employee_category_id: employee_category_id,
+          probation_period: probation_period,notice_period: notice_period,have_passport: have_passport,
+          passport_no: passport_no,passport_issue_date: passport_issue_date,passport_expiry_date: passport_expiry_date,
+          leaving_date: leaving_date,payment_mode_id: payment_mode_id,basis_of_time: basis_of_time,is_employeer_pf: is_employeer_pf,
+          select_pf: select_pf,pf_max_amount: pf_max_amount,employee_pf_no: employee_pf_no,
+          is_employeer_esic: is_employeer_esic,have_esic: have_esic,employee_efic_no: employee_efic_no,
+          have_retention: have_retention,is_insurance: is_insurance,is_family_pension: is_family_pension,
+          is_bonus: is_bonus,ot_option: ot_option,ot_rate: ot_rate,cost_center_id: cost_center_id,
+          welfare: welfare,contact_library: contact_library,gps_track: gps_track,restricted_area: restricted_area,
+          contract_month: contract_month,contract_end_date: contract_end_date)
+        end
+      end
     end
   end
 

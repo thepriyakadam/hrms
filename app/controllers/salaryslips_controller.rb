@@ -1754,6 +1754,14 @@ end
   end
 
   def form_16A_report
+    @income_tax_master = IncomeTaxMaster.last
+    @quarter_income_tax = QuarterIncomeTax.all
+    @total_amount_paid = @quarter_income_tax.sum(:paid_amount)
+    @total_amount_of_tax_deducted = @quarter_income_tax.sum(:tax_amount_deducted)
+    @total_amount_of_tax_deposited = @quarter_income_tax.sum(:tax_amount_deposited)
+    @monthly_income_tax = MonthlyIncomeTax.all
+    @total_amount_of_tax_deposited = @monthly_income_tax.sum(:tax_deposited)
+
     @from_date = params[:from_16A] ? params[:from_16A][:from_date] : params[:from_date]
     @to_date = params[:from_16A] ? params[:from_16A][:to_date] : params[:to_date]
     @employee_id = params[:salaryslip] ? params[:salaryslip][:employee_id] : params[:employee_id]

@@ -7,29 +7,27 @@
     <table id="example" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
-          <td colspan="10"><center> 
-            <% if current_user.employee.company_location.company.company_logo == nil %>
-            <%else %>
-              <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
-            <%end%> 
-            <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
-            <center><strong>PF Computation Report</strong></center>
-            <center><strong><%= @from_date %> <b>-</b> <%= @to_date  %></strong></center>
-          </td>
+          <th colspan="10"><center><h3> FORM NO : 16</h3></center></th>
+        </tr>
+        <tr>
+          <th colspan="10"><center>[See rule 31(1)(a)]</center></th>
+        </tr>
+          <tr>
+          <th colspan="10"><center><h3> PART A</h3></center></th>
         </tr>
         <tr>
           <td colspan="10">
             <center><strong>Certificate under Section 203 of the Income-tax Act, 1961 for tax deducted at source on salary</strong></center>
           </td>
         </tr>
-        <tr>
+      <!--   <tr>
           <td colspan="5">
             <strong>Certificate No.</strong> DHWZUVO
           </td>
           <td colspan="5">
             <strong>Last updated on.</strong> DHWZUVO
           </td>
-        </tr>
+        </tr> -->
         <tr>
           <td colspan="5">
             <center><strong>Name and address of the Employer</strong></center>
@@ -40,11 +38,10 @@
         </tr>
         <tr>
           <td colspan="5">
-            <center><% @employee.try(:company).try(:description)%><br />
-            <%= @employee.current_address %>
-            </center></center>
+            <center><%= @employee.try(:company).try(:description)%> <br/><%= @employee.try(:company).try(:address)%> <br/> <%= @employee.try(:company).try(:city)%> <%= @employee.try(:district).try(:company).try(:name)%> <%= @employee.try(:company).try(:state).try(:name)%> <%= @employee.try(:company).try(:country).try(:name)%> <%= @employee.try(:company).try(:pin_code) %><br/>
+            </center>
           <td colspan="5">
-            <center><%= full_name(@employee) %> <br /><%= @employee.current_address %><%= @employee.try(:city)%> <%= @employee.try(:district).try(:name)%><%= @employee.try(:country).try(:name)%></center>
+            <center><%= full_name(@employee) %> <br /> <%= @employee.permanent_address %> <br/> <%= @employee.try(:city)%> <%= @employee.try(:district).try(:name)%> <%= @employee.try(:state).try(:name)%> <%= @employee.try(:country).try(:name)%> <%= @employee.try(:pin_code) %></center>
           </td>
         </tr>
         <tr>
@@ -63,13 +60,13 @@
         </tr>
         <tr>
           <td colspan="3">
-            <center><% @employee.pan_no %></center>
+            <center><%= @employee.try(:company).try(:pan_card_no) %></center>
           </td>
           <td colspan="3">
-            <center><% @employee.try(:company).try(:professional_tax_no)%></center>
+            <center><%= @employee.try(:company).try(:tax_no)%></center>
           </td>
           <td colspan="2">
-            <center><% @employee.try(:company).try(:pan_card_no)%></center>
+            <center><%= @employee.try(:pan_no)%></center>
           </td>
           <td colspan="2">
             <center> </center>
@@ -88,10 +85,10 @@
         </tr>
         <tr>
           <td colspan="3">
-            <center> </center>
+            <center>  </center>
           </td>
           <td colspan="3">
-            <center> </center>
+            <center>2016-17 </center>
           </td>
           <td colspan="2">
             <center> From <br />

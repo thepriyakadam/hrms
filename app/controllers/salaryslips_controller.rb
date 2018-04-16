@@ -1772,6 +1772,9 @@ end
     @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Professional Tax")
     @employee_professional_tax = @salaryslip_components.sum(:actual_amount)
 
+    @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Conveyance Allowance")
+    @employee_conveyance_allowance = @salaryslip_components.sum(:actual_amount)
+
     @current_template = EmployeeTemplate.where(employee_id: @employee_id, is_active: true).take
     @employee_salary_templates = @current_template.employee_salary_templates
     @gross_annual_amount = @employee_salary_templates.sum(:annual_amount)

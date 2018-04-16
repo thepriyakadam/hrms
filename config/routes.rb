@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :monthly_income_taxes
+  resources :quarter_income_taxes
+  resources :income_tax_masters
+  resources :galleries 
+  resources :pictures
   resources :gps_informations do
     collection do
       get :all_emp_list

@@ -24,6 +24,7 @@ class ManagerSelfServicesController < ApplicationController
   end
 
   def reporties_list
+    session[:active_tab] ="ManagerSelfService"
     @employee = Employee.find_by(id: current_user.employee_id)
     @employees = Employee.where("manager_id = ? OR manager_2_id = ?",@employee,@employee)
   end

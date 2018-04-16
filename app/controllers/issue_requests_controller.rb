@@ -295,22 +295,25 @@ end
   end
 
   def datewise_report_list
-    @date = params[:date].to_date
-    @issue_requests = IssueRequest.where(date: @date)
+    @from = params[:issue_request][:from].to_date
+    @to = params[:issue_request][:to].to_date
+    @issue_requests = IssueRequest.where(date: @from..@to)
     session[:active_tab] = "HelpDesk"
     session[:active_tab1] = "SupportReport" 
   end
 
   def datewise_report_xls
-    @date = params[:date].to_date
-    @issue_requests = IssueRequest.where(date: @date)
+    @from = params[:from].to_date
+    @to = params[:to].to_date
+    @issue_requests = IssueRequest.where(date: @from..@to)
   end
 
   def datewise_report_pdf
     session[:active_tab] = "HelpDesk"
     session[:active_tab1] = "SupportReport" 
-    @date = params[:date].to_date
-    @issue_requests = IssueRequest.where(date: @date)
+    @from = params[:from].to_date
+    @to = params[:to].to_date
+    @issue_requests = IssueRequest.where(date: @from..@to)
     respond_to do |format|
           format.json
           format.pdf do
@@ -375,10 +378,11 @@ end
 
 def memberwise_report_list
       # byebug
-     @date = params[:issue_request][:date]
+     @from = params[:issue_request][:from]
+     @to = params[:issue_request][:to]
      @group_id = params[:issue_request][:issue_tracker_group_id]
      @member_id = params[:issue_requests][:issue_tracker_member_id]
-     @issue_requests = IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @date.to_date) 
+     @issue_requests = IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @from.to_date..@to.to_date) 
     #  respond_to do |format|
     #  format.xls {render template: 'issue_requests/memberwise_report_list_xls.xls.erb'}
     # end
@@ -386,10 +390,11 @@ def memberwise_report_list
 
   def memberwise_report_list_xls
     # byebug
-     @date = params[:date]
+     @from = params[:from]
+     @to = params[:to]
      @group_id = params[:issue_tracker_group_id]
      @member_id = params[:issue_tracker_member_id]
-     @issue_requests = IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @date.to_date)    
+     @issue_requests = IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @from.to_date..@to.to_date)    
      respond_to do |format|
      format.xls {render template: 'issue_requests/memberwise_report_list_xls.xls.erb'}
     end
@@ -397,10 +402,11 @@ def memberwise_report_list
 
   def memberwise_report_list_pdf
     # byebug
-     @date = params[:date]
+     @from = params[:from]
+     @to = params[:to]
      @group_id = params[:issue_tracker_group_id]
      @member_id = params[:issue_tracker_member_id]
-     @issue_requests = IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @date.to_date)   
+     @issue_requests = IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @from.to_date..@to.to_date)   
       respond_to do |format|
           format.json
           format.pdf do

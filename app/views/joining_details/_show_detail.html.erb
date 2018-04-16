@@ -53,10 +53,11 @@
       <th><strong>Employee Designation</strong></th>
       <td><%= @joining_detail.employee_designation.try(:name) %></td>
     </tr>
+
     <tr>
       <th><strong>Employee Category</strong></th>
       <td><%= @joining_detail.employee_category.try(:name) %></td>
-      
+
       <th><strong>Contract Month</strong></th>
       <td><%= @joining_detail.try(:contract_month) %></td>
     </tr>

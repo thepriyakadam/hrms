@@ -56,17 +56,17 @@
     <tr>
       <th><strong>Employee Category</strong></th>
       <td><%= @joining_detail.employee_category.try(:name) %></td>
-
-      <th><strong>Probation Period</strong></th>
-      <td><%= @joining_detail.probation_period %></td>
+      
+      <th><strong>Contract Month</strong></th>
+      <td><%= @joining_detail.try(:contract_month) %></td>
     </tr>
 
      <tr>
-      <th><strong>Contract Month</strong></th>
-      <td><%= @joining_detail.try(:contract_month) %></td>
-      
       <th><strong>Contract End Date</strong></th>
       <td><%= @joining_detail.try(:contract_end_date) %></td>
+      
+      <th><strong>Probation Period</strong></th>
+      <td><%= @joining_detail.probation_period %></td>
     </tr>
 
     <tr>

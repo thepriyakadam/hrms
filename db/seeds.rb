@@ -72,7 +72,7 @@
 require 'rubygems'
 require 'roo'
 
-ex = Roo::Excel.new("#{Rails.root}/public/aaa.xls")
+ex = Roo::Excel.new("#{Rails.root}/public/rb.xls")
 ex.default_sheet = ex.sheets[0]
 j = 1
 gross_salary = 0

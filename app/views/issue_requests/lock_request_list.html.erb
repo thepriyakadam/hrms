@@ -64,6 +64,7 @@
                      <% end %> 
                   <% end %> 
                    <%= link_to '', issue_request,class: 'btn btn-sm btn-default fa fa-eye' %>
+                   <%= link_to 'Detail',request_detail_modal_issue_requests_path(issue_request),class: 'btn btn-xs btn-success',remote: true %>
               </td>
                   <% end %>
               </tr>

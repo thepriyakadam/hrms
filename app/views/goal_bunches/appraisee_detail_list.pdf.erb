@@ -39,10 +39,10 @@
             <% day = Date.today - a.try(:date_of_birth).to_date %><% d = day.to_i/365 %><%= d %>
           <% end %>
         </td>
-        <td><%= a.department.name %></td>
-        <td><%= @joining_detail.joining_date %></td>
-        <td><%= @joining_detail.employee_grade.name %></td>
-        <td><%= @joining_detail.employee_designation.name %></td>
+        <td><%= a.department.try(:name) %></td>
+        <td><%= @joining_detail.try(:joining_date) %></td>
+        <td><%= @joining_detail.try(:employee_grade).try(:name) %></td>
+        <td><%= @joining_detail.try(:employee_designation).try(:name) %></td>
         <td>
           <% if @joining_detail.joining_date == nil %>
             <%= %>
@@ -95,10 +95,10 @@
     <tbody>
       <% @qualifications.each do |q| %>
         <tr>
-          <td><%= q.degree.name %></td>
-          <td><%= q.year.name%> </td>
+          <td><%= q.degree.try(:name) %></td>
+          <td><%= q.try(:year).try(:name)%> </td>
           <td><%= q.marks %></td>
-          <td><%= q.degree_type.name %></td>
+          <td><%= q.degree_type.try(:name) %></td>
         </tr>
       <% end %>
     </tbody>

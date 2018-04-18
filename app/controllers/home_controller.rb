@@ -11,6 +11,7 @@ class HomeController < ApplicationController
     @circulars = Circular.where(is_active: true)
     @company_policies = CompanyPolicy.group("policy_type_id")
     @company_events = CompanyEvent.all
+    @galleries = Gallery.all
     @companies = Company.all
     @company_locations = CompanyLocation.all
     @departments = Department.all

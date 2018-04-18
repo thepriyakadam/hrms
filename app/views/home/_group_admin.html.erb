@@ -184,6 +184,46 @@
         </div><!-- /.box-footer -->
       </div><!-- /.box -->
 
+       <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Policy Corner</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table no-margin">
+            <thead>
+         <tr>
+         <th>Sr.No.</th>
+         <th>Gallery</th>
+         <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% i = 0 %>
+      <% @galleries.each do |gallery| %>
+        <tr> 
+          <td><%= i = i +1%></td>
+          <td><%= gallery.name.truncate(14) %></td>
+          <td>
+              <%= link_to " ", gallery_path(gallery),class: 'btn btn-sm btn-default fa fa-eye' %>
+            
+          </td>
+        </tr>
+      <% end %> 
+              </tbody>
+            </table>
+          </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+
     
 
 

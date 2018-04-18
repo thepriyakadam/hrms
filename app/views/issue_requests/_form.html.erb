@@ -14,8 +14,9 @@
         <div class="col-sm-4">
           <div class="form-group required">
             <div id="issues">
-              <%= render 'issue_masters/issue_dropdown' %> 
-            </div> 
+          <%= f.select :issue_master_id,all_issue_types,{label: "Type" ,include_blank: "Select Group"} %>
+           <!-- <%#= render 'issue_masters/issue_dropdown' %> -->
+            </div>
           </div>
         </div>
         <div class="col-sm-4">

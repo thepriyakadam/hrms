@@ -1,0 +1,83 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title"> Request List </h3>
+    <!-- <div class="pull-right">
+      <%#= link_to "New Support Request",  new_issue_request_path, class: 'btn btn-primary btn-sm' %> 
+    </div> -->
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example6" class="table table-bordered table-hover table-condensed'">
+      <thead>
+        <tr>
+          <th>Sr. No</th>
+          <th>Type</th>
+          <th>Date</th>
+          <th>Group</th>
+          <th>Priority</th>
+    <!--       <th>Download Document</th>
+          <th>Download Image</th> -->
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% i = 0 %>
+        <% @issue_requests.each do |issue_request| %>
+          <tr>
+            <td><%= i = i + 1 %></td>
+            <td><%= issue_request.issue_master.try(:name) %></td>
+            <td><%= issue_request.date %></td>
+            <td><%= issue_request.issue_tracker_group.try(:name) %></td>
+            <td><%= issue_request.issue_priority %></td>
+           <!--  <td>
+             < if issue_request.document1_file_name == nil %>
+               <small class="label label-default">Not Available</small>
+                 < else %>
+                 <center><= link_to '',download_screenshot_path(id: issue_request.id),class: 'btn btn-xs fa fa-download' %>
+
+                 < end %>
+                 </center>
+            </td>
+            <td>
+              < if issue_request.document2_file_name == nil %>
+                  <small class="label label-default">Not Available</small>
+                  < else %>
+                  <center>< link_to '',download_screenshot_image_path(id: issue_request.id),class: 'btn btn-xs fa fa-picture-o' %></center>
+                  < end %>
+            </td>
+         -->
+            <td><%#= link_to '', issue_request, class: 'btn btn-default fa fa-eye btn-xs' %>
+                <%= link_to '',request_detail_modal_issue_requests_path(issue_request_id: issue_request),class: 'btn btn-xs btn-default fa fa-eye',remote: true %>
+                  <div id="request_detail_form" class="modal fade"></div>
+
+                <% if issue_request.issue_tracker_member_id == nil %>
+                  <%= link_to '', edit_issue_request_path(issue_request), class: 'btn btn-xs btn-success fa fa-edit' %>
+                  <%= link_to '', issue_request, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close' %>
+                <% else %>
+                  <% if issue_request.effort_time == nil %>
+                  <% else %>
+                    <% if issue_request.is_complete == true %>
+                      <small class="label label-primary">Done</small>
+                    <% else %>
+                      <%= link_to 'Done',solved_confirm_issue_requests_path(issue_request),class: 'btn btn-xs btn-primary',data: { confirm: 'Are you sure?' } %>
+                      <%= link_to 'Resend',resend_request_issue_requests_path(issue_request),class: 'btn btn-xs btn-info',data: { confirm: 'Are you sure?' } %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+                </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

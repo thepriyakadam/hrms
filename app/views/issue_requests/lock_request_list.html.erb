@@ -2,16 +2,18 @@
 <% if e.role == 'Admin'%>
   <div class="box">
     <div class="box-header">
-       <strong> <font color='#0077b3' , size="4"> 
+        <font color='#0077b3' , size="3"> 
         <% emp = current_user.employee_id %>
        <% issue = IssueTrackerMember.find_by(employee_id: emp)%>
-       Support List of : <%= issue.issue_tracker_group.name %> Group  - Member : <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:middle_name) %> <%= current_user.employee.try(:last_name) %> - Role : <%= issue.role %> </font></strong>
+       Support List of : <%= issue.issue_tracker_group.name %> Group  - Member : <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:middle_name) %> <%= current_user.employee.try(:last_name) %> - Role : <%= issue.role %> </font>
 
     </div>
     <div class="box-body">
         <table id="example6" class="table table-bordered table-hover table-condensed'">
           <thead>
             <tr>
+              <th>Sr. No</th>
+              <th>Requested By</th>
               <th>Support</th>
               <th>Date</th>
               <th>Priority</th>
@@ -22,10 +24,13 @@
           </thead>
 
           <tbody>
+            <% i = 0 %>
             <% @issue_requests.each do |issue_request| %>
               <tr>
                 <% if issue_request.status == 'true' %>
                   <% else %>
+                    <td><%= i = i + 1 %></td>
+                    <td><%= full_name(issue_request.employee) %></td>
                     <td><%= issue_request.issue_master.try(:name) %></td>
                     <td><%= issue_request.date %></td>
                     <td><%= issue_request.issue_priority %></td>
@@ -63,7 +68,10 @@
                     
                      <% end %> 
                   <% end %> 
-                   <%= link_to '', issue_request,class: 'btn btn-sm btn-default fa fa-eye' %>
+                   <%#= link_to '', issue_request,class: 'btn btn-sm btn-default fa fa-eye' %>
+                   <%= link_to '',request_detail_modal_issue_requests_path(issue_request_id: issue_request),class: 'btn btn-sm btn-default fa fa-eye',remote: true %>
+
+                     <div id="request_detail_form" class="modal fade"></div>
               </td>
                   <% end %>
               </tr>

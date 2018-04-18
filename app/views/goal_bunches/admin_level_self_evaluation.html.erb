@@ -18,7 +18,13 @@
             <td><%= e.employee.manual_employee_code %></td>
             <td><%= full_name(e.employee) %></td>
             <td><%= e.employee.company_location.try(:name) %> - <%= e.employee.department.try(:name) %></td> 
-            <td><%= link_to 'Self Evaluation', appraisee_comment_goal_bunches_path(emp_id: e.employee_id,id: e.id,) ,class: 'btn btn-xs btn-info' %></td>
+            <td>
+              <% if e.appraisee_confirm == true %>
+                <%= link_to 'Show Evaluation', appraisee_comment_goal_bunches_path(emp_id: e.employee_id,id: e.id,) ,class: 'btn btn-xs btn-primary' %>
+              <% else %>
+                <%= link_to 'Self Evaluation', appraisee_comment_goal_bunches_path(emp_id: e.employee_id,id: e.id,) ,class: 'btn btn-xs btn-info' %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
@@ -32,8 +38,7 @@
 $(document).ready(function() {
     $('#example6').DataTable( {
         "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
-        "scrollX": true,
-        "scrollY": 500
+        "scrollX": true
     } );
 } );
 </script>

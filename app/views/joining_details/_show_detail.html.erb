@@ -30,13 +30,6 @@
     <table id="example2" class="table table-bordered table-hover table-condensed">
    <tr><th colspan="4"><center><font color='#0077b3'>Employee On Boarding Detail</font></center> </th></tr>
 
-     <tr>
-      <th><strong>Contract Month</strong></th>
-      <td><%= @joining_detail.try(:contract_month) %></td>
-      <th><strong>Contract End Date</strong></th>
-      <td><%= @joining_detail.try(:contract_end_date) %></td>
-    </tr>
-
     <tr>
       <th><strong>UAN No.</strong></th>
       <td><%= @joining_detail.employee_uan_no %></td>
@@ -60,13 +53,23 @@
       <th><strong>Employee Designation</strong></th>
       <td><%= @joining_detail.employee_designation.try(:name) %></td>
     </tr>
+
     <tr>
       <th><strong>Employee Category</strong></th>
       <td><%= @joining_detail.employee_category.try(:name) %></td>
 
+      <th><strong>Contract Month</strong></th>
+      <td><%= @joining_detail.try(:contract_month) %></td>
+    </tr>
+
+     <tr>
+      <th><strong>Contract End Date</strong></th>
+      <td><%= @joining_detail.try(:contract_end_date) %></td>
+      
       <th><strong>Probation Period</strong></th>
       <td><%= @joining_detail.probation_period %></td>
-      </tr>
+    </tr>
+
     <tr>
       <th><strong>Notice Period After Probation</strong></th>
       <td><%= @joining_detail.notice_period_after_probation %></td> 

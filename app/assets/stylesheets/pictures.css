@@ -10,6 +10,14 @@
   margin-right: auto;
 }
 
+.thumbnail1 a > img {
+  display: block;
+  max-width: 10%;
+  max-height: 10%;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 .thumbnail .preview > img {
   display: block;
   max-width: 100%;

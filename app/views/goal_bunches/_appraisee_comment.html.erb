@@ -3,6 +3,7 @@
   <div class="box-body">
     <div class="pull-right">
      
+      <%= link_to 'PDF', appraisee_comment_goal_bunches_path(format: 'pdf',emp_id:@employee.id,id: @goal_bunch.id,target: '_blank'),class: "btn btn-xl btn-info fa fa-print" %>
       <% if  @goal_bunch.nil? %>
       <% else %>
          <!--  <#% if @goal_bunch.appraisee_confirm == true %>

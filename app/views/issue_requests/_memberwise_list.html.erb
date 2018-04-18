@@ -3,7 +3,7 @@
 </div><!-- /.box-header -->
 <div class="box-body">
     <div id="comments">
-      <table id="example1" class="table table-bordered table-hover table-condensed">
+      <table id="example5" class="table table-bordered table-hover table-condensed">
           <thead>
             <tr><td colspan="12"><center><strong><%= current_user.employee.company_location.company.try(:description) %></strong> <br>
         			<%= current_user.employee.company_location.company.try(:address) %><br> <%= current_user.employee.department.try(:name) %> -
@@ -49,3 +49,12 @@
  
        <%= link_to " Print Report ",memberwise_report_list_pdf_issue_requests_path(from: @from ,to: @to, issue_tracker_member_id: @member_id,issue_tracker_group_id: @group_id,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example5').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true
+    } );
+} );
+</script>

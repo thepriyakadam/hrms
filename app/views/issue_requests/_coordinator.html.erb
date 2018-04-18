@@ -14,6 +14,8 @@
     <table id="example6" class="table table-bordered table-hover table-condensed'">
   <thead>
     <tr>
+      <th>Sr. No</th>
+      <th>Requested By</th>
       <th>Support</th>
 <!--       <th>Support Group</th>
  -->      <th>Date</th>
@@ -25,10 +27,13 @@
   </thead>
 
   <tbody>
+    <% i = 0 %>
     <% @issue_requests.each do |issue_request| %>
       <tr>
         <% if issue_request.status == 'true' %>
         <% else %>
+            <td><%= i = i + 1 %></td>
+            <td><%= full_name(issue_request.employee) %></td>
             <td><%= issue_request.issue_master.try(:name) %></td>
 <!--             <td>< issue_request.issue_tracker_group.try(:name) %></td>
  -->            <td><%= issue_request.date %></td>
@@ -64,7 +69,11 @@
                      <% else %>
                     
                      <% end %> 
-                  <%= link_to '', issue_request,class: 'btn btn-sm btn-default fa fa-eye' %>
+                  <%#= link_to '', issue_request,class: 'btn btn-sm btn-default fa fa-eye' %>
+                  <%= link_to '',request_detail_modal_issue_requests_path(issue_request_id: issue_request),class: 'btn btn-sm btn-default fa fa-eye',remote: true %>
+
+                     <div id="request_detail_form" class="modal fade"></div>
+
             </td>
           <% end %>
       </tr>
@@ -74,3 +83,11 @@
 </div>
 </div>
 <br>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

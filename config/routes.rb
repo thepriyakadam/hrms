@@ -666,7 +666,8 @@ Rails.application.routes.draw do
       get :memberwise_report_list_xls
       get :memberwise_report_list_pdf
       get :select_description
-
+      get :request_detail_modal
+      get :solved_issue_list
     end
    end
   resources :issue_masters do

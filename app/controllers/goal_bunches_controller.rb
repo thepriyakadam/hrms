@@ -451,8 +451,8 @@ class GoalBunchesController < ApplicationController
     @goal_bunch = GoalBunch.where(employee_id:@employee.id, goal_approval: true, id: @goal_bunch_id.id).take
     
     #pdf
-     @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal')
-     @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch_id.id ,'Attribute')
+     @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal',appraisee_comment: nil)
+     @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ? AND appraisee_comment = ?", @goal_bunch_id.id ,'Attribute',nil)
 
     if @goal_bunch.nil?
       @goal_ratings = []

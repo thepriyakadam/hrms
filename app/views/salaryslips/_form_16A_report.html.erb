@@ -281,7 +281,7 @@
       </table>
 
       <br /><br /> 
-      <p style="text-align: center; font-style: bold;">Certificate Number: DHWZUVO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   TAN of Employer: <%= current_user.employee.company_location.company.tax_no %>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  PAN of Employee: <%= @employee.try(:pan_no)%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assessment Year: 2017-18</p>
+      <p style="text-align: center; font-style: bold;">Certificate Number: DHWZUVO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   TAN of Employer: <%= current_user.employee.company_location.company.tax_no %>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  PAN of Employee: <%= @employee.try(:pan_no)%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assessment Year: 2018-19</p>
       <br /><br /> 
         
 
@@ -292,8 +292,7 @@
         <tr>
         <%# binding.pry %>
           <td colspan="12" style="text-align: justify; text-indent: 20px;">I, <b><%= @income_tax_master.try(:name) %>,</b> <%= @income_tax_master.try(:relation) %> of <b><%= @income_tax_master.try(:second_name) %></b> working in the capacity of <b><%= @income_tax_master.try(:designation) %></b>
-          (designation) do hereby certify that a sum of <b>Rs.<%= @total_amount_of_tax_deposited %> [Rs. <%= @total_amount_of_tax_deposited.in_words.titleize %> Only (in words)]</b> has been deducted and a sum of <b>Rs.<%= @total_amount_of_tax_deposited %> [Rs. <%= @total_amount_of_tax_deposited.in_words.titleize %> Only (in words)]</b> has been deposited to the credit of the Central Government. I further certify that the information given above is true, complete and
-          correct and is based on the books of account, documents, TDS statements, TDS deposited and other available records.</td>
+          (designation) do hereby certify that a sum of <b>Rs.<%= @total_amount_of_tax_deposited %> [Rs. <%= @total_amount_of_tax_deposited.in_words.titleize %> Only (in words)]</b> has been deducted and a sum of <b>Rs.<%= @total_amount_of_tax_deposited %> [Rs. <%= @total_amount_of_tax_deposited.in_words.titleize %> Only (in words)]</b> has been deposited to the credit of the Central Government. I further certify that the information given above is true, complete and correct and is based on the books of account, documents, TDS statements, TDS deposited and other available records.</td>
         </tr>
         <tr>
           <th colspan="2">Place</th><th colspan="2"><%= current_user.employee.try(:company_location).try(:name) %></th><th colspan="8"></th>
@@ -383,21 +382,21 @@
                   <ol style="list-style-type: lower-alpha;">
                     <li>Section 80C
                       <ol style="list-style-type: decimal;">
-                        <li>SCHOOL FEES </li>
-                        <li>LIC PREMIUM </li>
-                      </ol> 
-                    </li>
+                        <li>SCHOOL FEES                       46,860.00</li>
+                        <li>LIC PREMIUM                       145,102.00</li>
+                      </ol>  
+                    </li>  
                     <li>Section 80CCC</li>
                     <li>Section 80CCD</li>
                   </ol>
                 </li>
                 <li>Other Sections under Chapter VIA                Gross Amount
                   <ol style="list-style-type: lower-alpha;">
-                    <li> </li>
-                    <li>SECTION 80D </li>
-                  </ol>
+                    <li>-                                         15,000.00</li>
+                    <li>SECTION 80D                               21,750.00</li>
+                  </ol>    
                 </li>
-              </ol>
+              </ol>  
             </li>
             <li>Aggregate of deductible amount under Chapter VIA</li>
             <li>Total income (8 - 10)</li>

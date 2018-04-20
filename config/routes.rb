@@ -649,7 +649,7 @@ Rails.application.routes.draw do
       get :unlock_by_admin
       get :solved_confirm
       get :resend_request
-      get :datewise_report_list
+      post :datewise_report_list
       get :datewise_report
       get :datewise_report_xls
       get :datewise_report_pdf
@@ -666,7 +666,8 @@ Rails.application.routes.draw do
       get :memberwise_report_list_xls
       get :memberwise_report_list_pdf
       get :select_description
-
+      get :request_detail_modal
+      get :solved_issue_list
     end
    end
   resources :issue_masters do

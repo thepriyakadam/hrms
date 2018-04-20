@@ -24,7 +24,24 @@
               <% b=a.reporting_master_id
                   emp=Employee.where(id: b).take %>
               <td><%= emp.try(:first_name)%> <%= emp.try(:middle_name)%> <%= emp.try(:last_name)%></td>
-    	        <td><%= a.travel_status %></td>
+    	        <td>
+                <% case a.travel_status %>
+                  <% when "Pending" %>
+                    <small class="label label-default">Pending</small>
+                  <% when "FirstApproved" %>
+                    <small class="label label-warning">FirstApproved</small>
+                  <% when "Approved" %>
+                    <small class="label label-primary">Approved</small>
+                  <% when "FinalApproved" %>
+                    <small class="label label-success">FinalApproved</small>
+                  <% when "Approved & Send Next" %>
+                    <small class="label label-info">Approved & Send Next</small>
+                  <% when "Rejected" %>
+                    <small class="label label-danger">Rejected</small>
+                  <% when "Cancelled" %>
+                    <small class="label label-danger">Cancelled</small>
+                  <% end %> 
+              </td>
               
               <td>
                 <% if a.status == true %>

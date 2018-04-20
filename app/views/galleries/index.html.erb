@@ -1,34 +1,45 @@
-<div class="box box-default">
-  <div class="box-header with-border">
+<div class="box">
+  <div class="box-header">
     <h3 class="box-title"> Event Photo Galleries </h3>
     <div class="pull-right">
-      <%= link_to 'New', new_gallery_path, class: "btn btn-sm btn-primary" %> <br />
-      </div>
-      <br />
-      <p></p>
-        <ul class="thumbnails files">
-        <% @galleries.each do |gallery| %>
-            <li class="span4" id="gallery_<%= gallery.id %>">
-              <div class="thumbnail">
-                <p style="text-align: center;">
-                    <%= gallery.name.truncate(14) %>
-                <% if gallery.pictures.first %>
-                <%= link_to image_tag(gallery.pictures.first.image.url), gallery_path(gallery) %>
-                <% else %>
-                  N/A
-                <% end %>
-                <div class="caption">
-                  <p style="text-align: center;">
-                    <%= gallery.try(:description) %><br />
-                    <%= link_to "Show", gallery_path(gallery) %>
-                    <%= link_to 'Edit', edit_gallery_path(gallery), class: "btn btn-xs btn-success fa fa-edit" %>
-                    <%= link_to "Delete", gallery, :data => { :confirm => "Are you sure?" },:method => :delete,class: 'btn btn-xs btn-danger fa fa-trash'
-                    %>
-                  </p>
-                </div>
-              </div>
-            </li>
-        <% end %>
-        </ul>
+      <%= link_to 'Create New Event', new_gallery_path, class: "btn btn-sm btn-primary" %> 
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example1" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+         <th>Sr.No.</th>
+         <th>Event</th>
+         <th>Photo</th>
+         <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% i = 0 %>
+      <% @galleries.each do |gallery| %>
+        <tr> 
+          <td><%= i = i +1%></td>
+          <td><%= gallery.name.truncate(14) %></td>
+          <td>
+            <div class="thumbnail1"> 
+              <% if gallery.pictures.first %>
+              <%= link_to image_tag(gallery.pictures.first.image.url), gallery_path(gallery) %>
+              <% else %>
+                N/A
+              <% end %>
+            </div>
+          </td>
+          <td>
+              <%= link_to "Show", gallery_path(gallery) %>
+              <%= link_to 'Edit', edit_gallery_path(gallery), class: "btn btn-xs btn-success fa fa-edit" %>
+              <%= link_to "Delete", gallery, :data => { :confirm => "Are you sure?" },:method => :delete,class: 'btn btn-xs btn-danger fa fa-trash'
+              %>
+          </td>
+        </tr>
+      <% end %> 
+    </tbody>
+  </table>
   </div>
-  </div>
+</div>
+       

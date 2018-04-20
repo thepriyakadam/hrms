@@ -4,95 +4,85 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed'">
-    <tr>
-           <th colspan="4"><center> Employee Details </center></th>
-    </tr>
-<tr>
-  <th><strong>Request By</strong></th>
-  <td><%= @issue_request.employee.try(:first_name) %> <%= @issue_request.employee.try(:middle_name) %> <%= @issue_request.employee.try(:last_name) %></td>
+      <tr>
+        <th colspan="4"><center> Employee Details </center></th>
+      </tr>
 
-  <th><strong>Extension Line 1</strong></th>
-  <td><%= @issue_request.employee.try(:contact_no) %></td>
+      <tr>
+        <th><strong>Request By</strong></th>
+        <td><%= @issue_request.employee.try(:first_name) %> <%= @issue_request.employee.try(:middle_name) %> <%= @issue_request.employee.try(:last_name) %></td>
 
-</tr>
+        <th><strong>Extension Line 1</strong></th>
+        <td><%= @issue_request.employee.try(:contact_no) %></td>
+      </tr>
 
-<tr>
-  <th><strong>Official Email</strong></th>
-  <td><%= @issue_request.employee.try(:email) %></td>
+      <tr>
+        <th><strong>Official Email</strong></th>
+        <td><%= @issue_request.employee.try(:email) %></td>
 
-  <th><strong>Department</strong></th>
-  <td><%= @issue_request.employee.try(:department).try(:name) %></td>
-</tr>
+        <th><strong>Department</strong></th>
+        <td><%= @issue_request.employee.try(:department).try(:name) %></td>
+      </tr>
 
-</table><br>
+    </table><br>
 
- <table id="example2" class="table table-bordered table-hover table-condensed'">
-     <tr>
-           <th colspan="4"><center> Support Request Details </center></th>
-    </tr>
-<tr>  
+    <table id="example2" class="table table-bordered table-hover table-condensed'">
+      <tr>
+        <th colspan="4"><center> Support Request Details </center></th>
+      </tr>
 
-  <th><strong>Support</strong></th>
-  <td colspan="3"><%= @issue_request.issue_master.try(:name) %></td>
-</tr>
-<tr>
-  <th><strong>Support Description</strong></th>
-  <td colspan="3"><%= @issue_request.issue_master.try(:description) %></td>
- 
-</tr>
+      <tr> 
+        <th><strong>Support</strong></th>
+        <td colspan="3"><%= @issue_request.issue_master.try(:name) %></td>
+      </tr>
 
-  <tr>
+      <tr>
+        <th><strong>Support Description</strong></th>
+        <td colspan="3"><%= @issue_request.issue_master.try(:description) %></td>
+      </tr>
 
-  <th><strong>Description</strong></th>
-  <td colspan="3"><%= @issue_request.description %></td>
+      <tr>
+        <th><strong>Description</strong></th>
+        <td colspan="3"><%= @issue_request.description %></td>
+      </tr>
 
-</tr>
+      <tr>
+        <th><strong>Group</strong></th>
+        <td><%= @issue_request.issue_tracker_group.try(:name) %></td>
+        
+        <th><strong>Priority</strong></th>
+        <td><%= @issue_request.issue_priority %></td>
+      </tr>
 
- 
-<tr>
-  <th><strong>Group</strong></th>
-  <td><%= @issue_request.issue_tracker_group.try(:name) %></td>
-  
-  <th><strong>Priority</strong></th>
-  <td><%= @issue_request.issue_priority %></td>
-  
-  
-</tr>
+      <tr>
+        <th><strong>Date</strong></th>
+        <td><%= @issue_request.date %></td>
 
-<tr>
-  <th><strong>Date</strong></th>
-  <td><%= @issue_request.date %></td>
+        <th><strong>Time</strong></th>
+        <td><%= @issue_request.time %></td>
+      </tr>
 
-  <th><strong>Time</strong></th>
-  <td><%= @issue_request.time %></td>
-</tr>
+      <tr>
+        <th><strong>Download Document</strong></th>
+        <td>
+          <% if @issue_request.document1_file_name == nil %>
+            <small class="label label-default">Not Available</small>
+                <% else %>
+                  <center><%= link_to '',download_screenshot_path(@issue_request),class: 'btn btn-xs fa fa-download' %>
+            <% end %>
+          </center>
+        </td>
 
-
-<tr>
-  <th><strong>Download Document</strong></th>
-  <td>
-    <% if @issue_request.document1_file_name == nil %>
-      <small class="label label-default">Not Available</small>
-          <% else %>
-            <center><%= link_to '',download_screenshot_path(@issue_request),class: 'btn btn-xs fa fa-download' %>
-      <% end %>
-    </center>
-  </td>
-
-  <th><strong>Download Image</strong></th>
-  <td>
-  <% if @issue_request.document2_file_name == nil %>
-    <small class="label label-default">Not Available</small>
-      <% else %>
-    <center><%= link_to '',download_screenshot_image_path(@issue_request),class: 'btn btn-xs fa fa-picture-o' %></center>
-  <% end %></td>
-</tr>
-
-
-
-</table><br>
-<%= link_to 'Back', lock_request_list_issue_requests_path,class: 'btn btn-default fa fa-arrow-left' %>
-
-
-</div>
+        <th><strong>Download Image</strong></th>
+        <td>
+        <% if @issue_request.document2_file_name == nil %>
+          <small class="label label-default">Not Available</small>
+            <% else %>
+          <center><%= link_to '',download_screenshot_image_path(@issue_request),class: 'btn btn-xs fa fa-picture-o' %></center>
+        <% end %></td>
+      </tr>
+    </table><br>
+    
+    <%= link_to 'Back', lock_request_list_issue_requests_path,class: 'btn btn-default fa fa-arrow-left' %>
+  </div>
 </div>

@@ -55,7 +55,24 @@
       <td><%= @travel_request.tour_purpose %></td>
 
       <th><strong>Current Status</strong></th>
-      <td><font color='green'><%= @travel_request.current_status %></font></td>
+      <td>
+          <% case @travel_request.current_status %>
+          <% when "Pending" %>
+            <small class="label label-default">Pending</small>
+          <% when "FirstApproved" %>
+            <small class="label label-warning">FirstApproved</small>
+          <% when "Approved" %>
+            <small class="label label-primary">Approved</small>
+          <% when "FinalApproved" %>
+            <small class="label label-success">FinalApproved</small>
+          <% when "Approved & Send Next" %>
+            <small class="label label-info">Approved & Send Next</small>
+          <% when "Rejected" %>
+            <small class="label label-danger">Rejected</small>
+          <% when "Cancelled" %>
+            <small class="label label-danger">Cancelled</small>
+          <% end %>
+      </td>
     </tr>
 
     <tr>

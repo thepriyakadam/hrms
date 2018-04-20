@@ -26,15 +26,15 @@
   <ul class="thumbnails files">
 <% unless @pictures.empty? %>
   <% @pictures.each do |pic| %>
-    <li class="span3" id="picture_<%= pic.id %>">
+    <li class="span3">
     <div class="thumbnail">
-      <%= image_tag pic.image.url %>
+
+      <%= image_tag pic.image.url%>
       <div class="caption">
         <p style="text-align: center;">
-        <%= link_to "Edit picture", picture_path(pic) %>
-
+        <%= link_to "Edit", picture_path(pic) %> |
         <%=
-          link_to "Delete picture", pic,
+          link_to "Delete", pic,
             :data => { :confirm => "Are you sure?" },
             :method => :delete
           %>

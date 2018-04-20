@@ -21,6 +21,7 @@ class IssueRequestsController < ApplicationController
   # GET /issue_requests/new
   def new
     @issue_request = IssueRequest.new
+    @issue_requests = IssueRequest.where(employee_id: current_user.employee_id)
     session[:active_tab] = "HelpDesk"
     session[:active_tab1] = "Process"
   end
@@ -49,7 +50,7 @@ class IssueRequestsController < ApplicationController
         # IssueRequestMailer.issue_tracker_group_email(s.email).deliver_now
         IssueRequestMailer.issue_tracker_group_email(s.email, @issue_request, @c1, @c2).deliver_now
         end
-        format.html { redirect_to @issue_request, notice: 'Support request was successfully saved Successfully.' }
+        format.html { redirect_to new_issue_request_path, notice: 'Support request was successfully saved Successfully.' }
         format.json { render :show, status: :created, location: @issue_request }
       else
         format.html { render :new }
@@ -90,7 +91,10 @@ class IssueRequestsController < ApplicationController
     end
   end
 
-  
+  def request_detail_modal
+    @issue_request = IssueRequest.find(params[:issue_request_id])
+  end
+
   def is_confirm
     @issue_request = IssueRequest.find(params[:issue_request])
     IssueRequest.find(@issue_request.id).update(is_confirm: true)
@@ -126,13 +130,25 @@ class IssueRequestsController < ApplicationController
     if @issue_tracker_member = IssueTrackerMember.where(employee_id: current_user.employee_id)
     if @issue_tracker_member_id = IssueTrackerMember.find_by(employee_id: current_user.employee_id)
     @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member_id.issue_tracker_group_id,status: nil)   
+    
     else
-      redirect_to issue_requests_path
-      # flash[:alert] = "This Member Is Not Present In Member List To Solve Support "
+      flash[:alert] = "You are not member of any group"
+      redirect_to root_url
     end
     end
     session[:active_tab] = "HelpDesk"
     session[:active_tab1] = "Process"
+  end
+
+  def solved_issue_list
+    if @issue_tracker_member_id = IssueTrackerMember.find_by(employee_id: current_user.employee_id)
+      @solved_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member_id.issue_tracker_group_id,status: true)
+      #redirect_to solved_issue_list_issue_requests_path
+    else
+      flash[:alert] = "You are not member of any group"
+      redirect_to root_url
+      #redirect_to solved_issue_list_issue_requests_path
+    end
   end
 
   def modal
@@ -295,22 +311,25 @@ end
   end
 
   def datewise_report_list
-    @date = params[:date].to_date
-    @issue_requests = IssueRequest.where(date: @date)
+    @from = params[:issue_request][:from].to_date
+    @to = params[:issue_request][:to].to_date
+    @issue_requests = IssueRequest.where(date: @from..@to)
     session[:active_tab] = "HelpDesk"
     session[:active_tab1] = "SupportReport" 
   end
 
   def datewise_report_xls
-    @date = params[:date].to_date
-    @issue_requests = IssueRequest.where(date: @date)
+    @from = params[:from].to_date
+    @to = params[:to].to_date
+    @issue_requests = IssueRequest.where(date: @from..@to)
   end
 
   def datewise_report_pdf
     session[:active_tab] = "HelpDesk"
     session[:active_tab1] = "SupportReport" 
-    @date = params[:date].to_date
-    @issue_requests = IssueRequest.where(date: @date)
+    @from = params[:from].to_date
+    @to = params[:to].to_date
+    @issue_requests = IssueRequest.where(date: @from..@to)
     respond_to do |format|
           format.json
           format.pdf do
@@ -375,10 +394,11 @@ end
 
 def memberwise_report_list
       # byebug
-     @date = params[:issue_request][:date]
+     @from = params[:issue_request][:from]
+     @to = params[:issue_request][:to]
      @group_id = params[:issue_request][:issue_tracker_group_id]
      @member_id = params[:issue_requests][:issue_tracker_member_id]
-     @issue_requests = IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @date.to_date) 
+     @issue_requests = IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @from.to_date..@to.to_date) 
     #  respond_to do |format|
     #  format.xls {render template: 'issue_requests/memberwise_report_list_xls.xls.erb'}
     # end
@@ -386,10 +406,11 @@ def memberwise_report_list
 
   def memberwise_report_list_xls
     # byebug
-     @date = params[:date]
+     @from = params[:from]
+     @to = params[:to]
      @group_id = params[:issue_tracker_group_id]
      @member_id = params[:issue_tracker_member_id]
-     @issue_requests = IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @date.to_date)    
+     @issue_requests = IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @from.to_date..@to.to_date)    
      respond_to do |format|
      format.xls {render template: 'issue_requests/memberwise_report_list_xls.xls.erb'}
     end
@@ -397,10 +418,11 @@ def memberwise_report_list
 
   def memberwise_report_list_pdf
     # byebug
-     @date = params[:date]
+     @from = params[:from]
+     @to = params[:to]
      @group_id = params[:issue_tracker_group_id]
      @member_id = params[:issue_tracker_member_id]
-     @issue_requests = IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @date.to_date)   
+     @issue_requests = IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @from.to_date..@to.to_date)   
       respond_to do |format|
           format.json
           format.pdf do

@@ -99,21 +99,21 @@ ActiveRecord::Base.transaction do
       est.employee_template_id = EmployeeTemplate.last.id
     
       if t.salary_component.name == "Basic"
-      est.monthly_amount = ex.cell(line,'C') unless ex.cell(line,'C').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      gross_salary = gross_salary + ex.cell(line,'C').to_i
-      puts "Basic..................Salary"
-
-      elsif t.salary_component.name == "HRA"
       est.monthly_amount = ex.cell(line,'D') unless ex.cell(line,'D').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       gross_salary = gross_salary + ex.cell(line,'D').to_i
-      puts "HRA..................Salary"
+      puts "Basic..................Salary"
 
-      elsif t.salary_component.name == "Special Allowance"
+      elsif t.salary_component.name == "HRA"
       est.monthly_amount = ex.cell(line,'E') unless ex.cell(line,'E').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       gross_salary = gross_salary + ex.cell(line,'E').to_i
+      puts "HRA..................Salary"
+
+      elsif t.salary_component.name == "Special Allowance"
+      est.monthly_amount = ex.cell(line,'F') unless ex.cell(line,'F').nil?
+      est.annual_amount = est.monthly_amount.to_i * 12
+      gross_salary = gross_salary + ex.cell(line,'F').to_i
       puts "Convenience Allowance..................Salary"
 
       # elsif t.salary_component.name == "Other Allowance"

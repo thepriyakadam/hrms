@@ -149,8 +149,7 @@ am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 libsybdb_la_DEPENDENCIES = ../tds/libtds.la \
-	../replacements/libreplacements.la $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1)
+	../replacements/libreplacements.la $(am__DEPENDENCIES_1)
 am__libsybdb_la_SOURCES_DIST = dblib.c dbutil.c rpc.c bcp.c xact.c \
 	dbpivot.c dbopen.c winmain.c
 #am__objects_1 = dbopen.lo
@@ -281,7 +280,7 @@ AUTOCONF = ${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing autoconf
 AUTOHEADER = ${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing autoheader
 AUTOMAKE = ${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing automake-1.15
 AWK = gawk
-BUILD_NUMBER = 6683
+BUILD_NUMBER = 6702
 CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2  -Wdeclaration-after-statement
@@ -302,7 +301,7 @@ EXEEXT =
 FGREP = /bin/grep -F
 FREETDS_LIBGCC = 
 FREETDS_ODBC_MODULE = 
-FREETDS_SYMBOLIC = 
+FREETDS_SYMBOLIC = -Wl,-Bsymbolic
 GCRYPT_CFLAGS = 
 GCRYPT_LIBS = 
 GNUTLS_CFLAGS = 
@@ -321,13 +320,11 @@ LIBADD_DL = -ldl
 LIBADD_DLD_LINK = 
 LIBADD_DLOPEN = -ldl
 LIBADD_SHL_LOAD = 
-LIBICONV = 
 LIBOBJS =  ${LIBOBJDIR}readpassphrase$U.o ${LIBOBJDIR}strlcpy$U.o ${LIBOBJDIR}strlcat$U.o
 LIBS = -lpthread  
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
-LTLIBICONV = 
 LTLIBOBJS =  ${LIBOBJDIR}readpassphrase$U.lo ${LIBOBJDIR}strlcpy$U.lo ${LIBOBJDIR}strlcat$U.lo
 LT_DLLOADERS =  dlopen.la
 LT_DLPREOPEN = -dlpreopen dlopen.la 
@@ -424,6 +421,7 @@ pdfdir = ${docdir}
 prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
+runstatedir = ${localstatedir}/run
 sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
 srcdir = .

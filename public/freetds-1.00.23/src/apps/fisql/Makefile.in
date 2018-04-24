@@ -129,7 +129,7 @@ fisql_OBJECTS = $(am_fisql_OBJECTS)
 am__DEPENDENCIES_1 =
 @MINGW32_FALSE@fisql_DEPENDENCIES = ../../dblib/libsybdb.la \
 @MINGW32_FALSE@	../../replacements/libreplacements.la \
-@MINGW32_FALSE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+@MINGW32_FALSE@	$(am__DEPENDENCIES_1)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
@@ -248,13 +248,11 @@ LIBADD_DL = @LIBADD_DL@
 LIBADD_DLD_LINK = @LIBADD_DLD_LINK@
 LIBADD_DLOPEN = @LIBADD_DLOPEN@
 LIBADD_SHL_LOAD = @LIBADD_SHL_LOAD@
-LIBICONV = @LIBICONV@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
 LIPO = @LIPO@
 LN_S = @LN_S@
-LTLIBICONV = @LTLIBICONV@
 LTLIBOBJS = @LTLIBOBJS@
 LT_DLLOADERS = @LT_DLLOADERS@
 LT_DLPREOPEN = @LT_DLPREOPEN@
@@ -351,6 +349,7 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@

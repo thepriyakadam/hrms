@@ -149,8 +149,7 @@ am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 libsybdb_la_DEPENDENCIES = ../tds/libtds.la \
-	../replacements/libreplacements.la $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1)
+	../replacements/libreplacements.la $(am__DEPENDENCIES_1)
 am__libsybdb_la_SOURCES_DIST = dblib.c dbutil.c rpc.c bcp.c xact.c \
 	dbpivot.c dbopen.c winmain.c
 @SYBASE_COMPAT_TRUE@am__objects_1 = dbopen.lo
@@ -321,13 +320,11 @@ LIBADD_DL = @LIBADD_DL@
 LIBADD_DLD_LINK = @LIBADD_DLD_LINK@
 LIBADD_DLOPEN = @LIBADD_DLOPEN@
 LIBADD_SHL_LOAD = @LIBADD_SHL_LOAD@
-LIBICONV = @LIBICONV@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
 LIPO = @LIPO@
 LN_S = @LN_S@
-LTLIBICONV = @LTLIBICONV@
 LTLIBOBJS = @LTLIBOBJS@
 LT_DLLOADERS = @LT_DLLOADERS@
 LT_DLPREOPEN = @LT_DLPREOPEN@
@@ -424,6 +421,7 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@

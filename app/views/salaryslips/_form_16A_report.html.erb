@@ -123,38 +123,39 @@
             <center><strong>Amount of tax deposited / remitted (Rs.)</strong></center>
           </td>
         </tr>
+        <% @quarter_income_tax.try(:each) do |quarter| %>
         <tr>
           <td colspan="2">
-            <center> </center>
+            <center><%= quarter.try(:quarter) %></center>
           </td>
           <td colspan="2">
-            <center> </center>
+            <center><%= quarter.try(:reciept_no) %></center>
           </td>
           <td colspan="2">
-            <center> </center>
+            <center><%= quarter.try(:paid_amount) %></center>
           </td>
           <td colspan="2">
-            <center> </center>
+            <center><%= quarter.try(:tax_amount_deducted) %></center>
           </td>
           <td colspan="2">
-            <center> </center>
+            <center><%= quarter.try(:tax_amount_deposited) %></center>
           </td>
         </tr>
+        <% end %>
         <tr>
           <td colspan="2">
             <center>Total (Rs.)</center>
           </td>
           <td colspan="2">
-            <center> </center>
           </td>
           <td colspan="2">
-            <center> </center>
+            <center><%= @total_amount_paid %></center>
           </td>
           <td colspan="2">
-            <center> </center>
+            <center><%= @total_amount_of_tax_deducted %></center>
           </td>
           <td colspan="2">
-            <center> </center>
+            <center><%= @total_amount_of_tax_deposited %></center>
           </td>
         </tr>
         <tr>
@@ -237,60 +238,33 @@
             <center><strong>Status of matching with OLTAS*</strong></center>
           </td>
         </tr>
+        <% i = 0 %>
+        <% @monthly_income_tax.try(:each) do |monthly| %>
         <tr>
-          <td colspan="0.5"> </td>
-          <td colspan="0.5"> </td>
-          <td colspan="2">
-            <center> </center>
+          <td colspan="0.5"><%= i = i + 1 %></td>
+          <td colspan="0.5">
+            <center><%= monthly.try(:tax_deposited) %></center>
           </td>
           <td colspan="2">
-            <center> </center>
+            <center><%= monthly.try(:bsr_code) %></center>
           </td>
           <td colspan="2">
-            <center> </center>
+            <center><%= monthly.try(:date) %></center>
           </td>
           <td colspan="2">
-            <center> </center>
+            <center><%= monthly.try(:challan_no) %></center>
+          </td>
+          <td colspan="2">
+            <center><%= monthly.try(:status) %></center>
           </td>
         </tr>
-        <tr>
-          <td colspan="0.5"> </td>
-          <td colspan="0.5"> </td>
-          <td colspan="2">
-            <center> </center>
-          </td>
-          <td colspan="2">
-            <center> </center>
-          </td>
-          <td colspan="2">
-            <center> </center>
-          </td>
-          <td colspan="2">
-            <center> </center>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="0.5"> </td>
-          <td colspan="0.5"> </td>
-          <td colspan="2">
-            <center> </center>
-          </td>
-          <td colspan="2">
-            <center> </center>
-          </td>
-          <td colspan="2">
-            <center> </center>
-          </td>
-          <td colspan="2">
-            <center> </center>
-          </td>
-        </tr>
+        <% end %>
         <tr>
           <td colspan="0.5">
             <center><strong> Total (Rs.)</strong></center>
           </td>
           <td colspan="0.5">
-            <strong> </strong>
+            <strong><center><%= @total_amount_of_tax_deposited %></center></strong>
           </td>
           <td colspan="2">
           </td>
@@ -316,10 +290,9 @@
           <th colspan="12" style="text-align: center;">Verification</th>
         </tr>
         <tr>
-          <td colspan="12" style="text-align: justify; text-indent: 20px;">I, <b><%= full_name(@employee) %>,</b> son / daughter of <b><%= @employee.try(:middle_name)%> <%= @employee.try(:last_name) %></b> working in the capacity of <b>DIRECTOR</b>
-          (designation) do hereby certify that a sum of <b>Rs. 0.0 [Rs. Zero (in words)]</b> has been deducted and a sum of <b>Rs. 6900.00 [Rs. Six
-          Thousand Nine Hundred Only]</b> has been deposited to the credit of the Central Government. I further certify that the information given above is true, complete and
-          correct and is based on the books of account, documents, TDS statements, TDS deposited and other available records.</td>
+        <%# binding.pry %>
+          <td colspan="12" style="text-align: justify; text-indent: 20px;">I, <b><%= @income_tax_master.try(:name) %>,</b> <%= @income_tax_master.try(:relation) %> of <b><%= @income_tax_master.try(:second_name) %></b> working in the capacity of <b><%= @income_tax_master.try(:designation) %></b>
+          (designation) do hereby certify that a sum of <b>Rs.<%= @total_amount_of_tax_deposited %> [Rs. <%= @total_amount_of_tax_deposited.in_words.titleize %> Only (in words)]</b> has been deducted and a sum of <b>Rs.<%= @total_amount_of_tax_deposited %> [Rs. <%= @total_amount_of_tax_deposited.in_words.titleize %> Only (in words)]</b> has been deposited to the credit of the Central Government. I further certify that the information given above is true, complete and correct and is based on the books of account, documents, TDS statements, TDS deposited and other available records.</td>
         </tr>
         <tr>
           <th colspan="2">Place</th><th colspan="2"><%= current_user.employee.try(:company_location).try(:name) %></th><th colspan="8"></th>
@@ -328,7 +301,7 @@
           <th colspan="2">Date</th> <th colspan="2"><%= Time.now.to_date %></th><th colspan="8">(Signature of person responsible for deduction of Tax)</th>
         </tr>
         <tr>
-          <th colspan="4">Designation: DIRECTOR</th><th colspan="8">Full Name: <%= full_name(@employee) %></th>
+          <th colspan="4">Designation: <%= @income_tax_master.try(:designation) %></th><th colspan="8">Full Name: <%= @income_tax_master.try(:name) %></th>
         </tr>
       </tbody>
     </table>
@@ -493,7 +466,7 @@
     <th colspan="12" style="text-align: center;">Verification</th>
   </tr>
   <tr>
-    <td colspan="12" style="text-align: justify; text-indent: 20px;">I, <b><%= full_name(@employee) %>,</b> son / daughter of <b><%= @employee.try(:middle_name)%> <%= @employee.try(:last_name) %></b> working in the capacity of <b>DIRECTOR</b>
+    <td colspan="12" style="text-align: justify; text-indent: 20px;">I, <b><%= @income_tax_master.try(:name) %>,</b> <%= @income_tax_master.try(:relation) %> of <b><%= @income_tax_master.try(:second_name) %></b> working in the capacity of <b><%= @income_tax_master.try(:designation) %></b>
       (designation) do hereby certify that the information given above is true, complete and correct and is based on the book of accounts, documents, TDS statements, and other available records.
     </td>
   </tr>
@@ -504,7 +477,7 @@
     <th colspan="2"><%= Date %></th> <th colspan="2"><%= Time.now.to_date  %></th><th colspan="8">(Signature of person responsible for deduction of Tax)</th>
   </tr>
   <tr>  
-    <th colspan="4">Designation: DIRECTOR</th><th colspan="8">Full Name: <%= full_name(@employee) %></th>
+    <th colspan="4">Designation: <%= @income_tax_master.try(:designation) %> </th><th colspan="8">Full Name: <%= @income_tax_master.try(:name) %></th>
   </tr>
   </table>  
   </div>

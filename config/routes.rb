@@ -3332,5 +3332,8 @@ end
     get 'user_auths/all_travel_history' => 'user_auths#all_travel_history', defaults:{format: 'json'}
     get 'user_auths/cancel_travel_history' => 'user_auths#cancel_travel_history', defaults:{format: 'json'}
     get 'user_auths/get_time_sheet' => 'user_auths#get_time_sheet', defaults:{format: 'json'}
+    get 'user_auths/get_help_disk_list' => 'user_auths#get_help_disk_list', defaults:{format: 'json'}
+    get 'user_auths/all_issue_tracker_group' => 'user_auths#all_issue_tracker_group', defaults:{format: 'json'}
+    
   end
 end

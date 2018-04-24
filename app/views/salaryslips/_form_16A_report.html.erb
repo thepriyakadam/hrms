@@ -88,7 +88,7 @@
             <center>  </center>
           </td>
           <td colspan="3">
-            <center>2016-17 </center>
+            <center><%= @from_assessment_year %> - <%= @to_assessment_year %></center>
           </td>
           <td colspan="2">
             <center> From <br />
@@ -281,7 +281,7 @@
       </table>
 
       <br /><br /> 
-      <p style="text-align: center; font-style: bold;">Certificate Number: DHWZUVO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   TAN of Employer: <%= current_user.employee.company_location.company.tax_no %>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  PAN of Employee: <%= @employee.try(:pan_no)%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assessment Year: 2018-19</p>
+      <p style="text-align: center; font-style: bold;">Certificate Number: DHWZUVO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   TAN of Employer: <%= current_user.employee.company_location.company.tax_no %>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  PAN of Employee: <%= @employee.try(:pan_no)%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assessment Year: <%= @from_assessment_year %> - <%= @to_assessment_year %></p>
       <br /><br /> 
         
 
@@ -343,7 +343,7 @@
       </tr>
     </table>
     <br /><br /> 
-      <p style="text-align: center; font-style: bold;">Certificate Number: DHWZUVO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   TAN of Employer: <%= current_user.employee.company_location.company.tax_no %>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  PAN of Employee: <%= @employee.try(:pan_no)%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assessment Year: 2017-18</p>
+      <p style="text-align: center; font-style: bold;">Certificate Number: DHWZUVO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   TAN of Employer: <%= current_user.employee.company_location.company.tax_no %>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  PAN of Employee: <%= @employee.try(:pan_no)%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assessment Year: <%= @from_assessment_year %> - <%= @to_assessment_year %></p>
     <br /><br /> 
 
     <table id="example" class="table table-bordered table-hover table-condensed">
@@ -360,7 +360,7 @@
               <ol style="list-style-type: lower-alpha;">
                 <li>Salary as per provisions contained in section 17(1)</li>
                 <li>Value of perquisites under section 17(2) (as per Form No. 12BA, wherever applicable)</li>
-                <li>Profits in lieu of salary under section 17(3) (as per Form No. 12BA, wherever applicable)</li>
+                <li>Profits in lieu of salary under section 17(3)(as per Form No. 12BA, wherever applicable)</li>
                 <li>Total</li>
               </ol>
             </li>
@@ -407,18 +407,34 @@
             <li>Tax payable (14-15)</li>
           </ol>
         </td>
-        <td colspan="2" style="text-align: right"> 
+        <td colspan="1" style="text-align: right">
+          <ul style="list-style-type: none;">
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li><%= @employee_professional_tax %></li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <%= @employee_conveyance_allowance %> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>            
+          </ul>
+        </td>
+        <td colspan="1" style="text-align: right"> 
           <ul style="list-style-type: none;">
             <li> <br /> </li>              
             <li><%= @gross_annual_amount %></li>
             <li>Nil</li>
             <li>Nil</li>
             <li> <br /> </li>
+            <li> <%= @deduct_professional_tax %> </li>
             <li> <br /> </li>
             <li> <br /> </li>
             <li> <br /> </li>
-            <li> <br /> </li>
-            <li> <br /> </li>
+            <li> <%= @deduct_conveyance_allowance %> </li>
             <li>Nil</li>  
             <li><%= @employee_professional_tax %></li>
             <li> <br /> </li>
@@ -433,7 +449,7 @@
             <li>Nil</li>
           </ul>
         </td>
-        <td colspan="2" style="text-align: right">
+        <td colspan="1" style="text-align: right">
           <ul style="list-style-type: none;">
             <li> <br /> </li>
             <li> <br /> </li>
@@ -455,7 +471,7 @@
             <li>Deductible Amount</li>
           </ul>      
         </td>
-        <td colspan="2" style="text-align: right">
+        <td colspan="1" style="text-align: right">
           <ul style="list-style-type: none;">
             <li> <br /> </li> 
             <li><%= @gross_annual_amount %></li>

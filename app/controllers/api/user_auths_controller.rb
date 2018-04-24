@@ -2101,8 +2101,10 @@ class Api::UserAuthsController < ApplicationController
     travel_expence_type_id = params[:expense_type]
     travel_expence = params[:expense_amount]
     currency_master_id = params[:currency]
+    image_file = params[:imageFile]
+    doc_file = params[:DocFile]
 
-    @daily_bill_detail = DailyBillDetail.new(travel_request_id: travel_request_id, expence_date: expence_date, e_place: e_place, travel_expence_type_id: travel_expence_type_id, travel_expence: travel_expence , currency_master_id: currency_master_id)
+    @daily_bill_detail = DailyBillDetail.new(travel_request_id: travel_request_id, expence_date: expence_date, e_place: e_place, travel_expence_type_id: travel_expence_type_id, travel_expence: travel_expence , currency_master_id: currency_master_id, avatar_file: image_file, passport_photo: doc_file)
     @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
     if @daily_bill_detail.save
       @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
@@ -2319,6 +2321,17 @@ class Api::UserAuthsController < ApplicationController
     render :json => employee_daily_activities.present? ? employee_daily_activities.collect{|emp| { id: emp.id, :manual_employee_code => emp.try(:employee).try(:manual_employee_code), :prefix => emp.employee.try(:prefix), :employee_first_name => emp.employee.try(:first_name), :employee_middle_name => emp.employee.try(:middle_name), :employee_last_name => emp.employee.try(:last_name), :employee_id => emp.employee_id, :project_master_id => emp.try(:project_master).try(:name), :today_activity => emp.today_activity, :tomorrow_plan => emp.tomorrow_plan, :day => emp.day }} : []
   end
 
+  def get_help_disk_list
+    employee_id = params[:employee_id]
+    issue_requests = IssueRequest.where(employee_id: employee_id)
+    render :json => issue_requests.present? ? issue_requests.collect{|issue_requests| {:id => issue_requests.try(:id), :manual_employee_code => issue_requests.try(:employee).try(:manual_employee_code), :prefix => issue_requests.employee.try(:prefix), :employee_first_name => issue_requests.employee.try(:first_name), :employee_middle_name => issue_requests.employee.try(:middle_name), :employee_last_name => issue_requests.employee.try(:last_name), :issue_master_id => issue_requests.try(:issue_master).try(:name), :issue_tracker_member_id => issue_requests.try(:issue_tracker_member).try(:name), :issue_tracker_group_id => issue_requests.try(:issue_tracker_group).try(:name), :description => issue_requests.try(:description), :date => issue_requests.try(:date),:time => issue_requests.try(:time), :employee_id => issue_requests.try(:employee_id), :issue_priority => issue_requests.try(:issue_priority),:is_confirm => issue_requests.try(:is_confirm), :status => issue_requests.try(:status), :issue_root_cause => issue_requests.try(:issue_root_cause).try(:name), :effort_time => issue_requests.try(:effort_time).try(:name), :comment => issue_requests.try(:comment), :is_complete => issue_requests.try(:is_complete) }} : []
+  end
+
+  def all_issue_tracker_group
+    issue_tracker_group = IssueTrackerGroup.where(status: true).all.collect { |x| [x.try(:name), x.id] }
+    # render :json => issue_tracker_group.present? ? issue_tracker_group.collect{|issue_tracker_group| { id: emp.id, :manual_employee_code => emp.try(:employee).try(:manual_employee_code), :prefix => emp.employee.try(:prefix), :employee_first_name => emp.employee.try(:first_name), :employee_middle_name => emp.employee.try(:middle_name), :employee_last_name => emp.employee.try(:last_name), :employee_id => emp.employee_id, :project_master_id => emp.try(:project_master).try(:name), :today_activity => emp.today_activity, :tomorrow_plan => emp.tomorrow_plan, :day => emp.day }} : []
+    # IssueTrackerGroup(id: integer, name: string, email: string, contact_number: string, status: boolean, is_confirm: boolean
+  end
 end
 
 

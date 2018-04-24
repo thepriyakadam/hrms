@@ -1767,7 +1767,7 @@ end
     @employee_id = params[:salaryslip] ? params[:salaryslip][:employee_id] : params[:employee_id]
     @employee = Employee.find(@employee_id)
 
-    @from_assessment = @from_date.to_date 
+    @from_assessment = @from_date.to_date + 1.year
     @from_assessment_year = @from_assessment.year
     @to_assessment = @to_date.to_date + 1.year
     @to_assessment_year = @to_assessment.year

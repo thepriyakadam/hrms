@@ -480,7 +480,8 @@
         </div><!-- /.box-header -->
         <div class="box-body">
           <ul class="products-list product-list-in-box">
-              <% JoiningDetail.all.order("joining_date desc").limit(5).each do |j| %>
+<% days_back = Time.now.to_date - 30.days %>
+              <% JoiningDetail.where(joining_date: days_back.to_date..Time.now.to_date).try(:each) do |j| %>
                 <% if j.employee.status == "Active" %>
                   <li class="item">
                     <div class="product-img">

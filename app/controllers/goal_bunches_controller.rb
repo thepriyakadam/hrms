@@ -446,16 +446,39 @@ class GoalBunchesController < ApplicationController
     @self_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch_id.id ,'Attribute').where.not(appraisee_comment: nil)
     
      @goal_bunche = GoalBunch.where(employee_id: @employee.id)
+     @goal_bunch_group = GoalBunch.where(employee_id: @employee.id, id: @goal_bunch_id.id).group(:employee_id)
 
     @goal_bunch = GoalBunch.where(employee_id:@employee.id, goal_approval: true, id: @goal_bunch_id.id).take
+    
+    #pdf
+     @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal',appraisee_comment: nil)
+     @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ? AND appraisee_comment = ?", @goal_bunch_id.id ,'Attribute',nil)
+
     if @goal_bunch.nil?
       @goal_ratings = []
       flash[:alert] = "Not Approved By Appraiser"
     else
       #@goal_ratings = @goal_bunch.goal_ratings.where(appraisee_comment: nil)
-      @goal_ratings = @goal_bunch.goal_ratings.where(appraisee_comment: nil,goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal')
-      @goal_attribute_ratings = @goal_bunch.goal_ratings.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch_id.id ,'Attribute').where(appraisee_comment: nil)
+      #@goal_ratings = @goal_bunch.goal_ratings.where(appraisee_comment: nil,goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal')
+      #@goal_attribute_ratings = @goal_bunch.goal_ratings.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch_id.id ,'Attribute').where(appraisee_comment: nil)
     end
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: 'appraisee_comment',
+               layout: 'pdf.html',
+               :page_height      => 1000,
+               :dpi              => '300',
+               :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 14,
+                          :right  => 14},
+               orientation: 'Landscape',
+               template: 'goal_bunches/appraisee_detail_list.pdf.erb',
+              :show_as_html => params[:debug].present?
+      end
+    end  
+
     # @goal_ratings = GoalRating.where(appraisee_id: current_user.employee_id,appraisee_comment: nil)  
   end
 
@@ -920,7 +943,10 @@ class GoalBunchesController < ApplicationController
     increment = params[:goal_bunch][:r_increment]
     designation = params[:goal_bunch][:r_designation_id]
     ctc = params[:goal_bunch][:r_ctc]
-    @goal_bunch.update(review_comment: comment,reviewer_rating_id: rating,reviewer_id: @employee.id,r_promotion: promotion,r_increment: increment,r_designation_id: designation,r_ctc: ctc)
+    transfer_option = params[:goal_bunch][:transfer_option]
+    transfer = params[:goal_bunch][:transfer]
+    comment = params[:goal_bunch][:comment]
+    @goal_bunch.update(comment: comment,transfer_option: transfer_option,transfer: transfer,review_comment: comment,reviewer_rating_id: rating,reviewer_id: @employee.id,r_promotion: promotion,r_increment: increment,r_designation_id: designation,r_ctc: ctc)
     flash[:notice] = "Overall Comment/Rating Created Successfully"
     redirect_to reviewer_comment_goal_bunches_path(emp_id: @goal_bunch.employee_id,id: @goal_bunch.id,period_id: @period.id)
   end
@@ -1137,6 +1163,6 @@ class GoalBunchesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_bunch_params
-      params.require(:goal_bunch).permit(:goal_approval,:appraisee_rating_id,:f_promotion,:f_increment,:f_designation_id,:f_ctc,:goal_confirm,:period_id, :employee_id, :appraisee_id, :appraisee_comment, :appraisee_confirm, :appraiser_id, :appraiser_rating, :appraiser_comment, :appraiser_confirm, :reviewer_id, :review_comment, :reviewer_rating_id, :reviewer_confirm, :final_id, :final_comment, :final_rating_id, :final_confirm)
+      params.require(:goal_bunch).permit(:transfer_option,:transfer,:comment,:goal_approval,:appraisee_rating_id,:f_promotion,:f_increment,:f_designation_id,:f_ctc,:goal_confirm,:period_id, :employee_id, :appraisee_id, :appraisee_comment, :appraisee_confirm, :appraiser_id, :appraiser_rating, :appraiser_comment, :appraiser_confirm, :reviewer_id, :review_comment, :reviewer_rating_id, :reviewer_confirm, :final_id, :final_comment, :final_rating_id, :final_confirm)
     end
 end

@@ -9,6 +9,7 @@
         
         <div class="row">
         <center>Recommendation For Employee</center>
+
           <div class="col-sm-3">
               <%= f.select :r_promotion,[['Yes','true'],['No','false']],{label: 'Promotion',include_blank: " Select Promotion Option"} %>
           </div>
@@ -27,6 +28,24 @@
           </div>
           </div>
           <br>
+
+          <div class="row">
+            <div class="col-sm-3">
+              <%= f.check_box :transfer_option,hide_label:true %>
+            </div>
+
+            <div class="col-sm-6">
+              <label>Transfer</label>
+              <%= f.text_field :transfer,hide_label:true,placeholder: 'Transfer' %>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <label>Comment</label>
+              <%= f.text_area :comment,hide_label:true,placeholder: 'Comment' %>
+            </div>
+          </div>
 
           <div class="row">
           <hr>

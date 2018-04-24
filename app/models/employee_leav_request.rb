@@ -519,7 +519,7 @@ def is_there(i)
   def weekoff_present(i,employee)
     flag = 0
     flag = EmployeeAttendance.exists?(day: i,employee_id: employee,present: "WO")
-    flag
+    flagemployee_
   end
 
   def holiday_present(i,employee)

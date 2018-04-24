@@ -28,6 +28,10 @@ class IssueRequestsController < ApplicationController
 
   # GET /issue_requests/1/edit
   def edit
+    authorize! :edit, @issue_request
+    @issue_master = @issue_request.issue_master
+
+    @form = 'issue_request'
   end
 
 

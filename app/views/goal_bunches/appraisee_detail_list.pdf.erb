@@ -135,11 +135,12 @@
   <br>
     <table style="border-collapse: collapse; font-size:8pt;" border=1 width=1200 cellpadding="5">
       <thead>
-      <tr><th colspan="9"><center>Performance Record</center></th></tr>
-      <tr><th colspan="9">Goals</th></tr>
+      <tr><th colspan="10"><center>Performance Record</center></th></tr>
+      <tr><th colspan="10">Goals</th></tr>
         <tr>
           <th>Goal Perspective</th>
           <th>Goal Measure</th>
+          <th>Activity</th>
           <th>Target/Unit</th>
           <th>Goal Weightage</th>
           <th>Aligned</th>
@@ -154,6 +155,7 @@
           <tr>
             <td><%= goal_rating.goal_perspective.try(:name) %></td>
             <td><%= goal_rating.goal_measure %></td>
+            <td><%= goal_rating.activity %></td>
             <td><%= goal_rating.target %></td>
             <td><%= goal_rating.goal_weightage %></td>
             <td><%= goal_rating.aligned %></td>
@@ -170,6 +172,7 @@
         <tr>
           <th>Attributes</th>
           <th>Goal Measure</th>
+          <th>Activity</th>
           <th>Target/Unit</th>
           <th>Goal Weightage</th>
           <th>Aligned</th>
@@ -184,6 +187,7 @@
           <tr>
             <td><%= goal_rating.attribute_master.try(:name) %></td>
             <td><%= goal_rating.goal_measure %></td>
+            <td><%= goal_rating.activity %></td>
             <td><%= goal_rating.target %></td>
             <td><%= goal_rating.goal_weightage %></td>
             <td><%= goal_rating.aligned %></td>

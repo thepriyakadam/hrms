@@ -86,7 +86,7 @@ class EmployeeResignationsController < ApplicationController
              end   
 
               @emp = Employee.find_by(id: @employee_resignation.employee_id)
-              @emp.update(status: "Inactive")
+              #@emp.update(status: "Inactive")
               # EmployeeResignationMailer.no_second_reporter_approval_email_to_employee(@employee_resignation).deliver_now
               EmployeeResignationMailer.final_approval_email_to_employee(@employee_resignation).deliver_now
 
@@ -537,7 +537,7 @@ class EmployeeResignationsController < ApplicationController
   def confirm_resignation
      @employee_resignation = EmployeeResignation.find(params[:format])
      JoiningDetail.where(employee_id: @employee_resignation.employee_id).update_all(leaving_date: @employee_resignation.leaving_date)
-     Employee.where(id: @employee_resignation.employee_id).update_all(status: "Inactive")
+     #Employee.where(id: @employee_resignation.employee_id).update_all(status: "Inactive")
      redirect_to final_approved_list_employee_resignations_path
      flash[:notice] = 'Resignation Request Confirmed Successfully.'   
   end

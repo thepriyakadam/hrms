@@ -13,6 +13,28 @@
       <% end %>
     </div> <!-- pull right -->
     <br>
+    <table class="table table-bordered table-hover table-condensed">
+     <thead>
+        <tr>
+         <th>Base</th>
+         <th>Period</th>
+         <th>Employee</th>
+         <th>Appraiser</th>
+         <th>Reviewer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- < @goal_bunche.each do |g| %> -->
+          <tr>
+          <td><%= @goal_bunches.period.try(:name) %></td>
+          <td>From: <%= @goal_bunches.period.try(:from) %> To: <%= @goal_bunches.period.try(:to) %> </td>
+          <td><%= @goal_bunches.employee.try(:manual_employee_code) %> - <%= full_name(@goal_bunches.employee) %></td>
+          <td><%= @goal_bunches.employee.try(:manager).try(:manual_employee_code) %> - <%= full_name(@goal_bunches.employee.try(:manager)) %></td>
+          <td><%= @goal_bunches.employee.try(:manager_2).try(:manual_employee_code) %> - <%= full_name(@goal_bunches.employee.try(:manager_2)) %></td>
+          </tr>
+        <!-- < end %> -->
+      </tbody>
+    </table>
 
 <table class="table table-bordered table-hover table-condensed">     
   <thead>
@@ -139,50 +161,53 @@
   <% else %>
     <% if @goal_bunch.review_comment == nil %>
       <%= bootstrap_form_for @goal_rating,url:{action:'reviewer_create',emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id,period_id: @period.id} do |f| %>
-      <%= hidden_field_tag :reviewer_id, {},value: current_user.employee_id %> 
-        <table id="example4" class="table table-bordered table-hover table-condensed">
-          <thead>
-          <tr><th colspan="12"><center>Goal Rating</center></th></tr>
-            <tr>
-              <th>Goal perspective</th>
-              <th>Measure</th>
-              <th>Activity</th>
-              <th>Target/Unit</th>
-              <th>Weightage</th>
-              <th>Aligned</th>
-              <th>Self Comment</th>
-              <th>Self Rating</th>
-              <th>Document</th>
-              <th>Appraiser Comment</th>
-              <th>Appraiser Rating</th>
-              <th>Reviewer Comment</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @goal_ratings.each do |goal_rating| %>
+      <%= hidden_field_tag :reviewer_id, {},value: current_user.employee_id %>
+        <% if @goal_ratings.empty? %>
+        <% else %>
+          <table id="example4" class="table table-bordered table-hover table-condensed">
+            <thead>
+            <tr><th colspan="12"><center>Goal Rating</center></th></tr>
               <tr>
-                <td><%= goal_rating.goal_perspective.try(:name) %></td>
-                <td><%= goal_rating.goal_measure %></td>
-                <td><%= goal_rating.activity %></td>
-                <td><%= goal_rating.target %></td>
-                <td><%= goal_rating.goal_weightage %></td>
-                <td><%= goal_rating.aligned %></td>
-                <td><%= goal_rating.appraisee_comment %></td>
-                <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
-                <td>
-                  <% if goal_rating.document_file_name == nil %>
-                  <% else %>
-                    <%= link_to ' ',download_self_document_path(id: goal_rating.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
-                  <% end %>
-                </td>
-                <td><%= goal_rating.appraiser_comment %></td>
-                <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
-                <td><%= link_to 'Comment', reviewer_comment_modal_goal_bunches_path(goal_rating_id: goal_rating.id,emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id,period_id: @period.id),class: 'btn btn-xs btn-warning',remote: true %></td>
-                <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
+                <th>Goal perspective</th>
+                <th>Measure</th>
+                <th>Activity</th>
+                <th>Target/Unit</th>
+                <th>Weightage</th>
+                <th>Aligned</th>
+                <th>Self Comment</th>
+                <th>Self Rating</th>
+                <th>Document</th>
+                <th>Appraiser Comment</th>
+                <th>Appraiser Rating</th>
+                <th>Reviewer Comment</th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <% @goal_ratings.each do |goal_rating| %>
+                <tr>
+                  <td><%= goal_rating.goal_perspective.try(:name) %></td>
+                  <td><%= goal_rating.goal_measure %></td>
+                  <td><%= goal_rating.activity %></td>
+                  <td><%= goal_rating.target %></td>
+                  <td><%= goal_rating.goal_weightage %></td>
+                  <td><%= goal_rating.aligned %></td>
+                  <td><%= goal_rating.appraisee_comment %></td>
+                  <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
+                  <td>
+                    <% if goal_rating.document_file_name == nil %>
+                    <% else %>
+                      <%= link_to ' ',download_self_document_path(id: goal_rating.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
+                    <% end %>
+                  </td>
+                  <td><%= goal_rating.appraiser_comment %></td>
+                  <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
+                  <td><%= link_to 'Comment', reviewer_comment_modal_goal_bunches_path(goal_rating_id: goal_rating.id,emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id,period_id: @period.id),class: 'btn btn-xs btn-warning',remote: true %></td>
+                  <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
 
         <script type="text/javascript">
           $(document).ready(function() {
@@ -193,49 +218,52 @@
           } );
           </script>
 
-        <table id ="example5" class="table table-bordered table-hover table-condensed">
-          <thead>
-          <tr><th colspan="12"><center>Attribute Rating</center></th></tr>
-            <tr>
-              <th>Attribute</th>
-              <th>Measure</th>
-              <th>Activity</th>
-              <th>Target/Unit</th>
-              <th>Weightage</th>
-              <th>Aligned</th>
-              <th>Self Comment</th>
-              <th>Self Rating</th>
-              <th>Document</th>
-              <th>Appraiser Comment</th>
-              <th>Appraiser Rating</th>
-              <th>Reviewer Comment</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @goal_attribute_ratings.each do |goal_rating| %>
+        <% if @goal_attribute_ratings.empty? %>
+        <% else %>
+          <table id ="example5" class="table table-bordered table-hover table-condensed">
+            <thead>
+            <tr><th colspan="12"><center>Attribute Rating</center></th></tr>
               <tr>
-                <td><%= goal_rating.attribute_master.try(:name) %></td>
-                <td><%= goal_rating.goal_measure %></td>
-                <td><%= goal_rating.activity %></td>
-                <td><%= goal_rating.target %></td>
-                <td><%= goal_rating.goal_weightage %></td>
-                <td><%= goal_rating.aligned %></td>
-                <td><%= goal_rating.appraisee_comment %></td>
-                <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
-                <td>
-                  <% if goal_rating.document_file_name == nil %>
-                  <% else %>
-                    <%= link_to ' ',download_self_document_path(id: goal_rating.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
-                  <% end %>
-                </td>
-                <td><%= goal_rating.appraiser_comment %></td>
-                <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
-                <td><%= link_to 'Comment', reviewer_comment_modal_goal_bunches_path(goal_rating_id: goal_rating.id,emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id,period_id: @period.id),class: 'btn btn-xs btn-warning',remote: true %></td>
-                <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
+                <th>Attribute</th>
+                <th>Measure</th>
+                <th>Activity</th>
+                <th>Target/Unit</th>
+                <th>Weightage</th>
+                <th>Aligned</th>
+                <th>Self Comment</th>
+                <th>Self Rating</th>
+                <th>Document</th>
+                <th>Appraiser Comment</th>
+                <th>Appraiser Rating</th>
+                <th>Reviewer Comment</th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <% @goal_attribute_ratings.each do |goal_rating| %>
+                <tr>
+                  <td><%= goal_rating.attribute_master.try(:name) %></td>
+                  <td><%= goal_rating.goal_measure %></td>
+                  <td><%= goal_rating.activity %></td>
+                  <td><%= goal_rating.target %></td>
+                  <td><%= goal_rating.goal_weightage %></td>
+                  <td><%= goal_rating.aligned %></td>
+                  <td><%= goal_rating.appraisee_comment %></td>
+                  <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
+                  <td>
+                    <% if goal_rating.document_file_name == nil %>
+                    <% else %>
+                      <%= link_to ' ',download_self_document_path(id: goal_rating.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
+                    <% end %>
+                  </td>
+                  <td><%= goal_rating.appraiser_comment %></td>
+                  <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
+                  <td><%= link_to 'Comment', reviewer_comment_modal_goal_bunches_path(goal_rating_id: goal_rating.id,emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id,period_id: @period.id),class: 'btn btn-xs btn-warning',remote: true %></td>
+                  <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
 
 
         <script type="text/javascript">

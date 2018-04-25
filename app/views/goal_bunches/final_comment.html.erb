@@ -1,5 +1,28 @@
 <div class="box">
   <div class="box-body">
+    <table class="table table-bordered table-hover table-condensed">
+     <thead>
+        <tr>
+         <th>Base</th>
+         <th>Period</th>
+         <th>Employee</th>
+         <th>Appraiser</th>
+         <th>Reviewer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- < @goal_bunche.each do |g| %> -->
+          <tr>
+          <td><%= @goal_bunches.period.try(:name) %></td>
+          <td>From: <%= @goal_bunches.period.try(:from) %> To: <%= @goal_bunches.period.try(:to) %> </td>
+          <td><%= @goal_bunches.employee.try(:manual_employee_code) %> - <%= full_name(@goal_bunches.employee) %></td>
+          <td><%= @goal_bunches.employee.try(:manager).try(:manual_employee_code) %> - <%= full_name(@goal_bunches.employee.try(:manager)) %></td>
+          <td><%= @goal_bunches.employee.try(:manager_2).try(:manual_employee_code) %> - <%= full_name(@goal_bunches.employee.try(:manager_2)) %></td>
+          </tr>
+        <!-- < end %> -->
+      </tbody>
+    </table>
+
    <table class="table table-bordered table-hover table-condensed">     
       <thead>
         <tr><th colspan="8"><center>Employee Details</center></th></tr>
@@ -290,6 +313,24 @@
             <%= f.text_field :f_ctc,hide_label:true,placeholder: 'CTC' %>
           </div>
           </div>
+
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.check_box :f_transfer_option,hide_label:true %>
+              </div>
+
+              <div class="col-sm-6">
+                <label>Transfer</label>
+                <%= f.text_field :f_transfer,hide_label:true,placeholder: 'Transfer' %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <label>Comment</label>
+                <%= f.text_area :f_comment,hide_label:true,placeholder: 'Comment' %>
+              </div>
+            </div>
           <br>
 
             <div class="box-header with-border">
@@ -351,6 +392,26 @@
                   <%= f.text_field :f_ctc,hide_label:true,placeholder: 'CTC' %>
                 </div>
                 </div>
+
+
+                <div class="row">
+                  <div class="col-sm-3">
+                    <%= f.check_box :f_transfer_option,hide_label:true %>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label>Transfer</label>
+                    <%= f.text_field :f_transfer,hide_label:true,placeholder: 'Transfer' %>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-12">
+                    <label>Comment</label>
+                    <%= f.text_area :f_comment,hide_label:true,placeholder: 'Comment' %>
+                  </div>
+                </div>
+
               <br>
 
               <div class="box-header with-border">
@@ -400,12 +461,15 @@
 
           <table class="table table-bordered table-hover table-condensed">
             <thead>
-              <tr><th colspan="4"><center>Recommendation For Employee</center></th></tr>
+              <tr><th colspan="7"><center>Recommendation For Employee</center></th></tr>
               <tr>
                 <th>Promotion</th>
                 <th>Increment</th>
                 <th>Designation</th>
                 <th>CTC</th>
+                <th>Transfer Option</th>
+                <th>Transfer</th>
+                <th>Comment</th>
               </tr>
             </thead>
             <tbody>
@@ -414,6 +478,9 @@
                 <td><%= @goal_bunches.f_increment ? "Yes" : "No" %></td>
                 <td><%= @goal_bunches.f_designation.try(:name) %></td>
                 <td><%= @goal_bunches.f_ctc %></td>
+                <td><%= @goal_bunches.f_transfer_option %></td>
+                <td><%= @goal_bunches.f_transfer %></td>
+                <td><%= @goal_bunches.f_comment %></td>
               </tr>
             </tbody>
           </table>
@@ -471,12 +538,15 @@
 
           <table class="table table-bordered table-hover table-condensed">
             <thead>
-              <tr><th colspan="4"><center>Recommendation For Employee</center></th></tr>
+              <tr><th colspan="7"><center>Recommendation For Employee</center></th></tr>
               <tr>
                 <th>Promotion</th>
                 <th>Increment</th>
                 <th>Designation</th>
                 <th>CTC</th>
+                <th>Transfer Option</th>
+                <th>Transfer</th>
+                <th>Comment</th>
               </tr>
             </thead>
             <tbody>
@@ -485,6 +555,9 @@
                 <td><%= @goal_bunches.f_increment ? "Yes" : "No" %></td>
                 <td><%= @goal_bunches.f_designation.try(:name) %></td>
                 <td><%= @goal_bunches.f_ctc %></td>
+                <td><%= @goal_bunches.f_transfer_option %></td>
+                <td><%= @goal_bunches.f_transfer %></td>
+                <td><%= @goal_bunches.f_comment %></td>
               </tr>
             </tbody>
           </table>

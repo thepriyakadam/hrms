@@ -5,6 +5,7 @@
       <%= link_to 'Print PDF', print_goal_wise_goal_ratings_path(format: "pdf",goal_bunch_ids: @goal_bunches,period_id: @period.id ), method: :post,class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 
       <%= link_to " Print excel ",detail_goal_wise_goal_ratings_path(format: "xls",goal_bunch_ids: @goal_bunches,period_id: @period.id), method: :post,class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+      <%= link_to 'PDF', detail_goal_wise_goal_ratings_path(format: "pdf",goal_bunch_ids: @goal_bunches,period_id: @period.id ), method: :post,class: "btn btn-xl btn-success fa fa-print", :target => "_blank" %>
     </div>
     <h6><center>Performance Report for Period: <%= @period.name %> From: <%= @period.from %> To: <%= @period.to %></center></h6>
     <% i=0%>
@@ -144,11 +145,12 @@
       
       <table id="example" class="table table-bordered table-hover table-condensed">
           <thead>
-          <tr><th colspan="10"><center>Performance Record</center></th></tr>
-          <tr><th colspan="10"><center>Goals</center></th></tr>
+          <tr><th colspan="11"><center>Performance Record</center></th></tr>
+          <tr><th colspan="11"><center>Goals</center></th></tr>
             <tr>
               <th>Goal Perspective</th>
               <th>Goal Measure</th>
+              <th>Activity</th>
               <th>Target/Unit</th>
               <th>Goal Weightage</th>
               <th>Aligned</th>
@@ -164,6 +166,7 @@
               <tr>
                 <td><%= goal_rating.try(:goal_perspective).try(:name) %></td>
                 <td><%= goal_rating.try(:goal_measure) %></td>
+                <td><%= goal_rating.try(:activity) %></td>
                 <td><%= goal_rating.try(:target) %></td>
                 <td><%= goal_rating.try(:goal_weightage) %></td>
                 <td><%= goal_rating.try(:aligned) %></td>
@@ -180,10 +183,11 @@
        
       <table id="example" class="table table-bordered table-hover table-condensed">
           <thead>
-          <tr><th colspan="10"><center>Attributes</center></th></tr>
+          <tr><th colspan="11"><center>Attributes</center></th></tr>
             <tr>
               <th>Attribute</th>
               <th>Goal Measure</th>
+              <th>Activity</th>
               <th>Target/Unit</th>
               <th>Goal Weightage</th>
               <th>Aligned</th>
@@ -199,6 +203,7 @@
               <tr>
                 <td><%= attribute_rating.try(:attribute_master).try(:name) %></td>
                 <td><%= attribute_rating.try(:goal_measure) %></td>
+                <td><%= attribute_rating.try(:activity) %></td>
                 <td><%= attribute_rating.try(:target) %></td>
                 <td><%= attribute_rating.try(:goal_weightage) %></td>
                 <td><%= attribute_rating.try(:aligned) %></td>

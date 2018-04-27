@@ -14,7 +14,7 @@
           <#% end %> -->
       <% end %>
      </div> <!-- pull right -->
-<br>
+<br><br>
  <table id="example2" class="table table-bordered table-hover table-condensed">
      <thead>
         <tr>
@@ -438,13 +438,22 @@
 
     <% unless @goal_bunch.nil? %>
       <% if @goal_bunch.appraisee_comment == nil or @goal_bunch.appraisee_confirm == true %>
-       <%= link_to 'Back',period_list_appraisee_goal_bunches_path,class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+
+       <% if @employee.id == current_user.employee_id %>
+          <%= link_to 'Back',period_list_appraisee_goal_bunches_path,class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+        <% else %>
+          <%= link_to 'Back',admin_level_self_evaluation_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+        <% end %>
       <% else %>
         <div class="row">
           <div class="col-sm-3">
             <div class="actions">
               <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> |
-              <%= link_to 'Back',period_list_appraisee_goal_bunches_path,class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+              <% if @employee.id == current_user.employee_id %>
+                <%= link_to 'Back',period_list_appraisee_goal_bunches_path,class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+              <% else %>
+                <%= link_to 'Back',admin_level_self_evaluation_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+              <% end %>
             </div>
           </div>
         </div>

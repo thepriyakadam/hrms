@@ -204,21 +204,21 @@
      <table style="border-collapse: collapse; font-size:8pt;" border=1 width=1200 cellpadding="5">
       <tbody>
         <% @goal_bunch_group.each do |goal_bunch| %>
-        <tr><th colspan="2"><center>Overall Performance Detail</center></th></tr>
+        <tr><th colspan="2">Overall Performance Detail</th></tr>
           <tr>
-            <th>Self Comment</th>
+            <td>Self Comment</td>
             <td><%= goal_bunch.try(:appraisee_comment) %></td>
           </tr>
           <tr>
-            <th>Self Rating</th>
+            <td>Self Rating</td>
             <td><%= goal_bunch.try(:appraisee_rating_id) %></td>
           </tr>
           <tr>
-          <th>Appraiser Comment</th>
+          <td>Appraiser Comment</td>
           <td><%= goal_bunch.try(:appraiser_comment) %></td>
         </tr>
         <tr>
-          <th>Appraiser Rating</th>
+          <td>Appraiser Rating</td>
           <td><%= goal_bunch.try(:appraiser_rating) %></td>
         </tr>
         <% end %>

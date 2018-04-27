@@ -61,6 +61,7 @@ class OdStatusRecordsController < ApplicationController
     OdRecord.where(on_duty_request_id: @on_duty_request.id).update_all(status: 'Rejected')
     OdStatusRecord.create(on_duty_request_id: @on_duty_request.id,employee_id: current_user.employee_id,status: 'Rejected',change_date: Date.today)
      OdRequestMailer.second_reject(@on_duty_request).deliver_now
+    EmployeeAttendance.where(on_duty_request_id: @on_duty_request.id).update_all(comment: "OD cancelled after approve")
     flash[:notice] = "Rejected Successfully"
     if @on_duty_request.first_reporter_id == current_user.employee_id
      redirect_to request_approval_list_manager_self_services_path

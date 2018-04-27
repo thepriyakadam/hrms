@@ -241,7 +241,8 @@ class GoalBunchesController < ApplicationController
     @goal_bunch_id = GoalBunch.find(params[:id])
     @employee = Employee.find(params[:emp_id])
     @period =  Period.find(params[:period_id])
-    
+    @goal_bunches = GoalBunch.find_by(id: @goal_bunch_id.id)
+
     @employees = Employee.where(id: @employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
@@ -943,7 +944,10 @@ class GoalBunchesController < ApplicationController
     increment = params[:goal_bunch][:r_increment]
     designation = params[:goal_bunch][:r_designation_id]
     ctc = params[:goal_bunch][:r_ctc]
-    @goal_bunch.update(review_comment: comment,reviewer_rating_id: rating,reviewer_id: @employee.id,r_promotion: promotion,r_increment: increment,r_designation_id: designation,r_ctc: ctc)
+    transfer_option = params[:goal_bunch][:transfer_option]
+    transfer = params[:goal_bunch][:transfer]
+    comment = params[:goal_bunch][:comment]
+    @goal_bunch.update(comment: comment,transfer_option: transfer_option,transfer: transfer,review_comment: comment,reviewer_rating_id: rating,reviewer_id: @employee.id,r_promotion: promotion,r_increment: increment,r_designation_id: designation,r_ctc: ctc)
     flash[:notice] = "Overall Comment/Rating Created Successfully"
     redirect_to reviewer_comment_goal_bunches_path(emp_id: @goal_bunch.employee_id,id: @goal_bunch.id,period_id: @period.id)
   end
@@ -1160,6 +1164,6 @@ class GoalBunchesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_bunch_params
-      params.require(:goal_bunch).permit(:goal_approval,:appraisee_rating_id,:f_promotion,:f_increment,:f_designation_id,:f_ctc,:goal_confirm,:period_id, :employee_id, :appraisee_id, :appraisee_comment, :appraisee_confirm, :appraiser_id, :appraiser_rating, :appraiser_comment, :appraiser_confirm, :reviewer_id, :review_comment, :reviewer_rating_id, :reviewer_confirm, :final_id, :final_comment, :final_rating_id, :final_confirm)
+      params.require(:goal_bunch).permit(:f_transfer_option,:f_transfer,:f_comment,:transfer_option,:transfer,:comment,:goal_approval,:appraisee_rating_id,:f_promotion,:f_increment,:f_designation_id,:f_ctc,:goal_confirm,:period_id, :employee_id, :appraisee_id, :appraisee_comment, :appraisee_confirm, :appraiser_id, :appraiser_rating, :appraiser_comment, :appraiser_confirm, :reviewer_id, :review_comment, :reviewer_rating_id, :reviewer_confirm, :final_id, :final_comment, :final_rating_id, :final_confirm)
     end
 end

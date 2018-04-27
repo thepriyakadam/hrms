@@ -88,7 +88,7 @@ class EmployeeAttendance < ActiveRecord::Base
         day = spreadsheet.cell(i,'C')
 
         in_time1 = spreadsheet.cell(i,'D') #@employee.id
-        #byebug
+
         if in_time1 == nil
           in_time = nil
         else

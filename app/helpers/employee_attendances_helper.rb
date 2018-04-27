@@ -227,7 +227,7 @@ module EmployeeAttendancesHelper
           if a.employee_leav_request.leav_category.is_payble == true
             if a.employee_leav_request.present_status == false
               pay_leave = pay_leave + 0.5
-              absent_day = absent_day + 0.5
+              absent_day = absent_day + 1.0
             else
               pay_leave = pay_leave + 0.5
               present_day = present_day + 0.5

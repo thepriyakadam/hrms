@@ -5,6 +5,29 @@
   <div class="box-body">
   <%= bootstrap_form_for GoalBunch.new,url:{action:'appraiser_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id,period_id: @period.id} do |f| %>  
 
+  <table class="table table-bordered table-hover table-condensed">
+     <thead>
+        <tr>
+         <th>Base</th>
+         <th>Period</th>
+         <th>Employee</th>
+         <th>Appraiser</th>
+         <th>Reviewer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- < @goal_bunche.each do |g| %> -->
+          <tr>
+          <td><%= @goal_bunches.period.try(:name) %></td>
+          <td>From: <%= @goal_bunches.period.try(:from) %> To: <%= @goal_bunches.period.try(:to) %> </td>
+          <td><%= @goal_bunches.employee.try(:manual_employee_code) %> - <%= full_name(@goal_bunches.employee) %></td>
+          <td><%= @goal_bunches.employee.try(:manager).try(:manual_employee_code) %> - <%= full_name(@goal_bunches.employee.try(:manager)) %></td>
+          <td><%= @goal_bunches.employee.try(:manager_2).try(:manual_employee_code) %> - <%= full_name(@goal_bunches.employee.try(:manager_2)) %></td>
+          </tr>
+        <!-- < end %> -->
+      </tbody>
+    </table>
+
   <table class="table table-bordered table-hover table-condensed">     
     <thead>
       <tr><th colspan="4"><center>Employee Details</center></th></tr>

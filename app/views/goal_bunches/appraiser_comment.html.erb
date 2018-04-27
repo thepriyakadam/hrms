@@ -316,9 +316,9 @@
             <tr>
               <th colspan="2"><h6><font color='red' size='2'>Appraiser Rating For Goal</font></h6> </th>
               <% if @period.marks == true %>
-                <th colspan="10"><h6><font color='red' size='2'> <%= appraiser_goalrating_sum.round(2) %></font></h6> </th>
+                <th colspan="10"><h6><font color='red' size='2'> <%= goal_sum = appraiser_goalrating_sum.round(2) %></font></h6> </th>
               <% else %>
-                <th colspan="10"><h6><font color='red' size='2'> <%= appraiser_goal_sum.round(2) %></font></h6> </th>
+                <th colspan="10"><h6><font color='red' size='2'> <%= goal_sum = appraiser_goal_sum.round(2) %></font></h6> </th>
               <% end %>
             </tr>
           </tbody>
@@ -382,24 +382,17 @@
             <tr>
               <th colspan="2"> <h6><font color='red' size='2'>Appraiser Rating For Attribute </font></h6></th>
               <% if @period.marks == true %>
-                <th colspan="10"> <h6><font color='red' size='2'><%= appraiser_attributerating_sum.round(2) %></font></h6></th>
+                <th colspan="10"> <h6><font color='red' size='2'><%= attribute_sum = appraiser_attributerating_sum.round(2) %></font></h6></th>
               <% else %>
-                <th colspan="10"> <h6><font color='red' size='2'><%= appraiser_attribute_sum.round(2) %></font></h6></th>
+                <th colspan="10"> <h6><font color='red' size='2'><%= attribute_sum = appraiser_attribute_sum.round(2) %></font></h6></th>
               <% end %>
             </tr>
             <tr>
               <th colspan="2"> <h6><font color='red' size='2'>Overall </font></h6></th>
-              <% if @period.marks == true %>
-                <th colspan="10"> <h6><font color='red' size='2'><%= (appraiser_attributerating_sum + appraiser_goalrating_sum).round(2) %></font></h6></th>
-              <% else %>
-                <th colspan="10"> <h6><font color='red' size='2'><%= (appraiser_attribute_sum + appraiser_goal_sum).round(2) %></font></h6></th>
-              <% end %>
-
-                <% if @period.marks == true %>
-                  <% @Overall = (appraiser_attributerating_sum + appraiser_goalrating_sum ).round(2) %>
-                <% else %>
-                  <% @Overall = (appraiser_attribute_sum + appraiser_goal_sum ).round(2) %>
-                <% end %>
+             
+                <th colspan="10"> <h6><font color='red' size='2'><%= (goal_sum + attribute_sum).round(2) %></font></h6></th>
+              
+                  <% @Overall = (goal_sum + attribute_sum ).round(2) %>
             </tr>
           </tbody>
         </table>

@@ -84,20 +84,37 @@ class EmployeeAttendance < ActiveRecord::Base
         day = spreadsheet.cell(i,'C')
 
         in_time1 = spreadsheet.cell(i,'D') #@employee.id
-        #byebug
-        in_time2 = in_time1.to_f/3600
-        in_time3 = in_time2.to_s
-        in_time = in_time3.to_datetime
+       
+        if in_time1 == nil
+          in_time = nil
+        else
+          in_time2 = in_time1.to_f/3600
+          in_time3 = in_time2.to_s
+          in_time = in_time3.to_datetime
+        end
 
         out_time1 = spreadsheet.cell(i,'E')
-
-        out_time2 = out_time1.to_f/3600
-        out_time3 = out_time2.to_s
-        out_time = out_time3.to_datetime
+        if out_time1 == nil
+          out_time = nil
+        else
+          out_time2 = out_time1.to_f/3600
+          out_time3 = out_time2.to_s
+          out_time = out_time3.to_datetime
+        end
 
         working_hrs1 = spreadsheet.cell(i,'F')
-        working_hrs = working_hrs1.to_f/3600
+        if working_hrs1 == nil
+          working_hrs = nil
+        else
+          working_hrs = working_hrs1.to_f/3600
+        end
+
         present = spreadsheet.cell(i,'G')
+        if present == nil
+          present == nil
+        else
+          present = spreadsheet.cell(i,'G')
+        end
 
         employee = Employee.find_by(manual_employee_code: employee_code)
         if employee.nil?

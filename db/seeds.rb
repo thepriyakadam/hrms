@@ -54,14 +54,14 @@ require 'roo'
 #  end
 
 ex = Roo::Excel.new("#{Rails.root}/public/sparline jan.xls")
-ex.default_sheet = ex.sheets[0] #siya feb
+ex.default_sheet = ex.sheets[2] #siya feb
 i = 1
 ActiveRecord::Base.transaction do
-2.upto(132) do |line| # siya Feb 2016
+2.upto(134) do |line| # siya Feb 2016
  puts "Starting Record #{ex.cell(line,'B')}---------------------------------------"
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
  puts "#{i} Record inserting.----------------------------"
- Workingday.where(employee_id: @employee).update_all(payable_day: (ex.cell(line,'C')), calculated_payable_days: (ex.cell(line,'C')) )
+ Workingday.where(employee_id: @employee, month_name: "February").update_all(payable_day: (ex.cell(line,'C')), calculated_payable_days: (ex.cell(line,'C')) )
  puts "#{i} Record inserted. #{ex.cell(line,'C')}----------------------"
  i += 1
  end

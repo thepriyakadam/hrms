@@ -351,10 +351,10 @@ class GoalBunchesController < ApplicationController
             weightage = @goal_rating.goal_weightage
             rating = @rating.value
 
-            if rating.to_i <= weightage.to_i
+            if rating.to_f <= weightage.to_f
               @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r,document: d,document_present: "Yes")
             else
-              rating1 = Rating.where(value: @goal_rating.goal_weightage).take
+              rating1 = Rating.where(value: weightage.to_f).take
               @goal_rating.update(appraisee_comment: c, appraisee_rating_id: rating1.id,document: d,document_present: "Yes")
             end
           else
@@ -380,10 +380,10 @@ class GoalBunchesController < ApplicationController
             weightage = @goal_rating.goal_weightage
             rating = @rating.value
 
-            if rating.to_i <= weightage.to_i
+            if rating.to_f <= weightage.to_f
               @goal_rating.update(appraisee_comment: c, appraisee_rating_id: r,document_present: "No",document: nil)
             else
-              rating1 = Rating.where(value: goal_rating.goal_weightage).take
+              rating1 = Rating.where(value: weightage.to_f).take
               @goal_rating.update(appraisee_comment: c, appraisee_rating_id: rating1.id,document_present: "No",document: nil)
             end
           else

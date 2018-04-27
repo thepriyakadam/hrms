@@ -163,6 +163,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
         EmployeeAttendance.where(employee_id: e.employee_id,day: e.day).update_all(present: e.try(:leav_category).try(:code),employee_leav_request_id: e.employee_leav_request_id,count: 1,comment: nil)
       else
         employee_leav_request.particular_leave_records.create(employee_id: e.employee_id, leave_date: e.day, is_full: false, leav_category_id: e.leav_category_id)
+
         if employee_leav_request.present_status == false 
           EmployeeAttendance.where(employee_id: e.employee_id,day: e.day).update_all(present: "A/"+e.try(:leav_category).try(:code).to_s ,employee_leav_request_id: e.employee_leav_request_id,count: 0.5,comment: nil)
         else

@@ -205,7 +205,6 @@
                       <td><%#= select_tag 'appraisee_rating[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %></td> -->
                       <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
                     </tr>​
-
                   <% end %>
                 </tbody>
               </table>
@@ -240,7 +239,6 @@
 
                       <td><%= link_to 'Comment/Rating', self_comment_modal_goal_bunches_path(goal_rating_id: goal_rating.id,emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id),class: 'btn btn-xs btn-warning',remote: true %>
                       </td>
-
                       <!-- <td><%#= text_field_tag 'appraisee_comment[]',"",class: "form-control" %></td>
                       <td><%#= select_tag 'appraisee_rating[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %></td> -->
                       <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>

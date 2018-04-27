@@ -412,9 +412,10 @@ class GoalRatingsController < ApplicationController
     @rating = Rating.find_by(id: appraisee_rating_id)
 
       if period.marks == true
-        weightage = @goal_rating.goal_weightage
+        @weightage = @goal_rating.goal_weightage
+        weightage = @weightage.round
         rating = @rating.value
-        if rating.to_i < weightage.to_i
+        if rating.to_f < weightage.to_f
           if document_present == "Yes"
             document = params[:goal_rating][:document]
             @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: appraisee_rating_id,document: document,document_present: "Yes")

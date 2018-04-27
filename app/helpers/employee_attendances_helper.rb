@@ -168,13 +168,13 @@ module EmployeeAttendancesHelper
     attendances.each do |a|
       if a.employee_leav_request_id != nil
         if a.count == 1.0
-          if a.employee_leav_request.leav_category.is_payble
+          if a.employee_leav_request.leav_category.is_payble == true
             pay_leave = pay_leave + 1
           else
             non_pay_leave = non_pay_leave + 1
           end
         else
-          if a.employee_leav_request.leav_category.is_payble
+          if a.employee_leav_request.leav_category.is_payble == true
             if a.employee_leav_request.present_status == false
               pay_leave = pay_leave + 0.5
               absent_day = absent_day + 0.5
@@ -188,7 +188,7 @@ module EmployeeAttendancesHelper
               absent_day = absent_day + 0.5
             else
                non_pay_leave = non_pay_leave + 0.5
-              present_day = present_day + 0.5
+               present_day = present_day + 0.5
             end
           end
         end 
@@ -218,13 +218,13 @@ module EmployeeAttendancesHelper
     attendances.each do |a|
       if a.employee_leav_request_id != nil
         if a.count == 1.0
-          if a.employee_leav_request.leav_category.is_payble
+          if a.employee_leav_request.leav_category.is_payble == true
             pay_leave = pay_leave + 1
           else
             non_pay_leave = non_pay_leave + 1
           end
         else
-          if a.employee_leav_request.leav_category.is_payble
+          if a.employee_leav_request.leav_category.is_payble == true
             if a.employee_leav_request.present_status == false
               pay_leave = pay_leave + 0.5
               absent_day = absent_day + 0.5
@@ -238,7 +238,7 @@ module EmployeeAttendancesHelper
               absent_day = absent_day + 0.5
             else
                non_pay_leave = non_pay_leave + 0.5
-              present_day = present_day + 0.5
+               present_day = present_day + 0.5
             end
           end
         end 

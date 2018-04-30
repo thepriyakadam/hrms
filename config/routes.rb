@@ -1211,6 +1211,8 @@ end
       post :create_for_multiple
       get :employee_goal_wise
       post :print_employee
+      post :detail_goal_wise_pdf
+      get :detail_goal_wise_pdf
       post :detail_goal_wise
       get :detail_goal_wise
       get :detail_goal_wise_xls

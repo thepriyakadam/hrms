@@ -649,9 +649,16 @@ class GoalBunchesController < ApplicationController
 
   def period_list_final
     @period = Period.find(params[:period_id])
-    @emp1 = GoalBunch.where(" appraiser_confirm = ? OR reviewer_confirm = ?", true,true).pluck(:employee_id)
-
-    @employees = GoalBunch.where(employee_id: @emp1,period_id: @period.id)
+    emp_manager_nil = Employee.where(manager_2_id: nil).pluck(:id)
+    emp_manager_present = Employee.where.not(manager_2_id: nil).pluck(:id)
+    goal_bunch_appraiser = GoalBunch.where(period_id: @period.id,appraiser_confirm: true).where(employee_id: emp_manager_nil).pluck(:employee_id)
+    goal_bunch_reviewer = GoalBunch.where(period_id: @period.id,reviewer_confirm: true).where(employee_id: emp_manager_present).pluck(:employee_id)
+    
+    employee = goal_bunch_appraiser + goal_bunch_reviewer
+    @employees = GoalBunch.where(employee_id: employee)
+    #@employees = GoalBunch.where("employee_id = ? OR employee_id = ?",goal_bunch_appraiser,goal_bunch_reviewer).where(period_id: @period.id)
+    # @emp1 = GoalBunch.where(" appraiser_confirm = ? OR reviewer_confirm = ?", true,true).pluck(:employee_id)
+    # @employees = GoalBunch.where(employee_id: @emp1,period_id: @period.id)
   end
 
   def final_comment
@@ -905,8 +912,21 @@ class GoalBunchesController < ApplicationController
     @appraiser_overall = params[:appraiser_overall]
     @period = Period.find(params[:period_id])
 
-    comment = params[:goal_bunch][:appraiser_comment]
-    @goal_bunch.update(appraiser_comment: comment,appraiser_id: params[:employee_id])
+    if @employee.manager_2_id.nil? 
+      promotion = params[:goal_bunch][:r_promotion]
+      increment = params[:goal_bunch][:r_increment]
+      designation = params[:goal_bunch][:r_designation_id]
+      ctc = params[:goal_bunch][:r_ctc]
+      transfer_option = params[:goal_bunch][:transfer_option]
+      transfer = params[:goal_bunch][:transfer]
+      comment = params[:goal_bunch][:comment]
+      appraiser_comment = params[:goal_bunch][:appraiser_comment]
+      @goal_bunch.update(comment: comment,transfer_option: transfer_option,transfer: transfer,r_promotion: promotion,r_increment: increment,r_designation_id: designation,r_ctc: ctc,appraiser_comment: appraiser_comment,appraiser_id: params[:employee_id])
+    else
+      appraiser_comment = params[:goal_bunch][:appraiser_comment]
+      @goal_bunch.update(appraiser_comment: appraiser_comment,appraiser_id: params[:employee_id])
+    end
+
     @goal_bunch.update(appraiser_rating: @appraiser_overall)
     flash[:notice] = "Overall Comment Created Successfully"
     redirect_to appraiser_comment_goal_bunches_path(emp_id: @goal_bunch.employee_id,goal_id: @goal_bunch.id,period_id: @period.id)

@@ -527,7 +527,6 @@ end
     status = params[:employee][:status]
     @from_date = @from.to_date
     @to_date = @to.to_date
-    #byebug
     @code = params[:employee][:code]
     #@date = Date.new(@year.to_i, Workingday.months[@month])
     #@day = @date.end_of_month.day
@@ -544,7 +543,7 @@ end
           @employees = Employee.all.pluck(:id)
         end
         @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
-      elsif location == ""
+      elsif location == "" || location == nil
         if status == 'Active'
           @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
         elsif status == 'Inactive'
@@ -553,7 +552,7 @@ end
           @employees = Employee.where(company_id: company.to_i).pluck(:id)
         end
         @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
-      elsif department == ""
+      elsif department == "" || department == nil
         if status == 'Active'
           @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
         elsif status == 'Inactive'
@@ -582,8 +581,8 @@ end
           else
             @employees = Employee.all.pluck(:id)
           end
-          @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
-        elsif location == ""
+          @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where(employee_id: @employees).group(:employee_id)
+        elsif location == "" || location == nil
 
           if status == 'Active'
             @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
@@ -593,7 +592,7 @@ end
             @employees = Employee.where(company_id: company.to_i).pluck(:id)
           end
           @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
-        elsif department == ""
+        elsif department == "" || department == nil
           if status == 'Active'
             @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
           elsif status == 'Inactive'
@@ -622,7 +621,7 @@ end
             @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
           end
           @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
-        elsif location == ""
+        elsif location == "" || location == nil
           if status == 'Active' 
             @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
           elsif status == 'Inactive' 
@@ -631,7 +630,7 @@ end
             @employees = Employee.where(company_id: company.to_i).pluck(:id)
           end
           @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
-        elsif department == ""
+        elsif department == "" || department == nil
           if status == 'Active' 
             @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
           elsif status == 'Inactive' 
@@ -651,7 +650,7 @@ end
           @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
         end
         elsif current_user.role.name == 'Branch' || current_user.role.name == 'Recruitment' || current_user.role.name == 'TimeAndAttendance'
-          if company == "" || location == ""
+          if company == "" || location == "" || location == nil
             if status == 'Active' 
               @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
             elsif status == 'Inactive' 
@@ -660,7 +659,7 @@ end
               @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
             end
           @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
-         elsif department == ""
+         elsif department == "" || department == nil
             if status == 'Active' 
               @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
             elsif status == 'Inactive' 
@@ -680,7 +679,7 @@ end
           @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employees).group(:employee_id)
         end
         elsif current_user.role.name == 'HOD'
-          if company == "" || location == "" || department == ""
+          if company == "" || location == "" || department == "" || department == nil || location == nil
             if status == 'Active' 
               @employees = Employee.where(status: 'Active',department_id: current_user.department_id).pluck(:id)
             elsif status == 'Inactive' 

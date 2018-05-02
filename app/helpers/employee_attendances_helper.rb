@@ -35,12 +35,14 @@ module EmployeeAttendancesHelper
           end
         end
       elsif
+        exist[d] = attendance_record.in_time
+        exist[d] = attendance_record.out_time
         exist[d] = attendance_record.present
       end
 
-      unless exist.key?(d)
-        exist[d] = ""
-      end
+      # unless exist.key?(d)
+      #   exist[d] = ""
+      # end
     end
     Hash[exist.sort]
   end

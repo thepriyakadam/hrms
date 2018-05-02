@@ -1169,6 +1169,7 @@ end
 
   resources :goal_ratings do
     collection do
+      get :goal_wise
       get :periodwise_goal_set
       post :periodwise_goal_list
       post :set_goal_periodwise
@@ -1210,6 +1211,8 @@ end
       post :create_for_multiple
       get :employee_goal_wise
       post :print_employee
+      post :detail_goal_wise_pdf
+      get :detail_goal_wise_pdf
       post :detail_goal_wise
       get :detail_goal_wise
       get :detail_goal_wise_xls
@@ -1221,6 +1224,7 @@ end
       get :print_employee_wise
       get :detail_employee_wise_xls
       get :period_rating_wise
+      post :period_rating_wise
       post :Period_rating_wise_employee
       get :Period_rating_wise_employee
       get :period_rating_wise_pdf

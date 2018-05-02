@@ -4,8 +4,8 @@ class LeaveRequestMailer < ApplicationMailer
     @manager = Employee.find(@leave_request.employee.try(:manager_id))
     @emp = Employee.find_by(id: @leave_request.employee_id)
     if @emp == @manager
-
-    mail(to: 'time@sganalytics.com',cc: @emp.company_location.email, subject: 'Leave request pending for approval')
+       email = @manager.email
+    mail(to: email,cc: @emp.company_location.email, subject: 'Leave request pending for approval')
     else
     email = @manager.email
     mail(to: email,cc: @emp.company_location.email, subject: 'Leave request pending for approval')
@@ -60,7 +60,7 @@ class LeaveRequestMailer < ApplicationMailer
 
     email = @manager.try(:email)
     if @emp == @manager
-    mail(to: 'time@sganalytics.com',cc: @emp.company_location.email, subject: 'Leave request cancellation by your direct reportee')
+    mail(to: email,cc: @emp.company_location.email, subject: 'Leave request cancellation by your direct reportee')
     else
     mail(to: email,cc: @employee.company_location.email, subject: 'Leave request cancellation by your direct reportee')
   end

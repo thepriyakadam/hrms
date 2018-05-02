@@ -15,25 +15,25 @@ end
 #   # rake 'task_namespace:birthday_invitation_mail' , :environment => 'development',   :output => 'log/birthday_invitation_mail.log'
 # end
 
-# every :day, :at => '09:00am' do
-#   runner "DailyAttendance.fetch_data(2)"
-# end
+#every :day, :at => '12:30pm' do
+# rake 'atte_task:fetch_att'
+#end
 
-# every :day, :at => '09:10am' do
-#   runner "DailyAttendance.calculate_attendance(2)"
-# end
+#every :day, :at => '12:35pm' do
+#  rake 'atte_task:calculate'
+#end
 
-# every :day, :at => '11:00am' do
-#   runner "DailyAttendance.fetch_data(2)"
-# end
+#every :day, :at => '11:00am' do
+#  rake 'atte_task:fetch_att'
+#end
 
 # every :day, :at => '11:10am' do
 #   runner "DailyAttendance.calculate_attendance(2)"
 # end
 
-# every :day, :at => '07:00pm' do
-#   runner "DailyAttendance.fetch_data(2)"
-# end
+#every :day, :at => '07:00pm' do
+#  rake 'atte_task:fetch_att'
+#end
 
 # every :day, :at => '07:10pm' do
 #   runner "DailyAttendance.calculate_attendance(2)"
@@ -44,6 +44,10 @@ end
 #end
 
 
-every 1.minutes do 
-   rake 'atte_task:fetch_data'
+every 5.hours do 
+   rake 'atte_task:fetch_att'
 end
+
+every 7.hours do
+   rake 'atte_task:calculate'
+end 

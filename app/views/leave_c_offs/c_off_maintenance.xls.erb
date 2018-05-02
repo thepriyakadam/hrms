@@ -11,6 +11,7 @@
       <th>Taken</th>
       <th>Taken Date</th>
       <th>Comment</th>
+      <th>ID</th>
     </tr>
   </thead>
 
@@ -28,6 +29,7 @@
           <td><%= leave_c_off.is_taken ? "Yes" : "No" %></td>
           <td><%= leave_c_off.taken_date %></td>
           <td><%= leave_c_off.comment %></td>
+          <td><%= leave_c_off.id %></td>
         </tr>
       <% end %>
     <% end %>

@@ -33,8 +33,30 @@ class LeaveCOffsController < ApplicationController
         @leave_c_offs = LeaveCOff.where(employee_id: @employees)
       end
     end
-     session[:active_tab] ="LeaveManagement"
-    session[:active_tab1] ="leaveadministration"
+  end
+
+  def maintenance_report
+    @leave_c_off = LeaveCOff.new
+    if current_user.class == Group
+      @leave_c_offs = LeaveCOff.all
+    else
+      if current_user.role.name == 'GroupAdmin'
+        @leave_c_offs = LeaveCOff.all
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
+        @leave_c_offs = LeaveCOff.where(employee_id: @employees)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @leave_c_offs = LeaveCOff.where(employee_id: @employees)
+      end
+    end
+      respond_to do |f|
+        f.js
+        f.xls {render template: 'leave_c_offs/c_off_maintenance.xls.erb'}
+        f.html
+      end
+      session[:active_tab] ="LeaveManagement"
+      session[:active_tab1] ="leaveadministration"
   end
 
   # GET /leave_c_offs/1/edit

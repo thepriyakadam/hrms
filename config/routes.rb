@@ -1923,6 +1923,8 @@ end
       get :modal
       get :detail_modal
       get :modal_c_off
+      get :c_off_maintenance
+      get :maintenance_report
     end
   end
 

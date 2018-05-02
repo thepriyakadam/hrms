@@ -332,15 +332,15 @@
       $(document).ready(function() {
           $('#example5').DataTable( {
               "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
-              "scrollY": 100,
-              "scrollX": 100
+              "scrollX": true,
+              "scrollY": 200
           } );
       } );
       </script>
 
     <% if @self_attribute_ratings.empty? %>
     <% else %>
-      <table class="table table-bordered table-hover table-condensed">
+      <table id="example6" class="table table-bordered table-hover table-condensed">
         <thead>
          <tr><th colspan="9"><center>Attribute Details</center></th></tr>
           <tr>
@@ -406,6 +406,16 @@
         </tbody>
       </table>
     <% end %>
+
+      <script type="text/javascript">
+      $(document).ready(function() {
+          $('#example6').DataTable( {
+              "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+              "scrollX": true,
+              "scrollY": 200
+          } );
+      } );
+      </script>
 
       <% if @period.marks == true %>
         <% @Overall = (appraisee_attributerating_sum.to_f + appraisee_goalrating_sum.to_f ).round(2) %>

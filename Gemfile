@@ -30,7 +30,7 @@ gem 'sass-rails', '~> 5.0'
  gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'coffee-rails', '~> 4.0.0'
-gem 'whenever', :require => false
+gem 'whenever', '~> 0.9.7', :require => false
 gem 'geocoder'
 gem 'therubyracer', platforms: :ruby
 # gem 'query_report'
@@ -149,7 +149,7 @@ gem 'protokoll'
 gem 'city-state'
 
 
-gem 'rmagick', '~> 2.15.4'
+ # gem 'rmagick', '~> 2.15.4'
 
 # infinite-cove-6619
 # DateTimePicker

@@ -92,7 +92,7 @@ module EmployeeAttendancesHelper
   def holiday_count(exist)
      exist.select {|k,v| v == "H" }.count + exist.select {|k,v| v == "H/P" }.count + exist.select {|k,v| v == "HP" }.count  + 
      exist.select {|k,v| v == "H/OD" }.count + exist.select {|k,v| v == "OD/H" }.count + exist.select {|k,v| v == "H/HD" }.count + 
-     exist.select {|k,v| v == "H/HDOD" }.count
+     exist.select {|k,v| v == "H/HDOD" }.count + exist.select {|k,v| v == "HOD" }.count
   end
 
   def weekoff_count(exist)

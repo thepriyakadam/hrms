@@ -553,8 +553,8 @@ class GoalRatingsController < ApplicationController
         layout: 'pdf.html',
         orientation: 'Landscape',
         template: 'goal_ratings/goal_wise.pdf.erb',
-        show_as_html: params[:debug].present?
-        #margin:  { top:1,bottom:1,left:1,right:1 }
+        show_as_html: params[:debug].present?,
+        margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
 

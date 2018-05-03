@@ -15,7 +15,7 @@ module EmployeeAttendancesHelper
     Hash[exist.sort]
   end
 
-  def calculate_attendance_datewise(from,to, exist, e)
+   def calculate_attendance_datewise(from,to, exist, e)
     start_date = from.to_date
     end_date = to.to_date
     joining_detail = JoiningDetail.find_by(employee_id: e.employee_id)
@@ -35,18 +35,16 @@ module EmployeeAttendancesHelper
           end
         end
       elsif
-        exist[d] = attendance_record.in_time
-        exist[d] = attendance_record.out_time
         exist[d] = attendance_record.present
       end
 
-      # unless exist.key?(d)
-      #   exist[d] = ""
-      # end
+      unless exist.key?(d)
+        exist[d] = ""
+      end
     end
     Hash[exist.sort]
   end
-
+  
   # def total_attendance(date, exist, e)
   #   start_date = date.beginning_of_month
   #   end_date = date.end_of_month

@@ -182,14 +182,28 @@
         <%end%>
       </div>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-2">
+      <div class="field" style="padding: 10px">
+       <% if current_user.role.name == 'GroupAdmin' %>
+        <%= f.check_box :c_off_expire, label: 'COff Expire'%>
+        <%end%>
+      </div>
+      </div>
+       <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :c_off_applicable_day,label: 'COff Applicable Day'%>
+       </div>
+      </div> 
+
+      <div class="col-sm-2">
         <div class="field" style="padding: 10px">
           <% if current_user.role.name == 'GroupAdmin' %>
             <%= f.check_box :gps_track, label: 'Gps Track'%>
           <%end%>
         </div>
       </div>
-      <div class="col-sm-3">
+
+      <div class="col-sm-2">
         <div class="field" style="padding: 10px">
           <% if current_user.role.name == 'GroupAdmin' %>
             <%= f.check_box :restricted_area, label: 'Restricted Area'%>

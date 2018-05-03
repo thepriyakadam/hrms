@@ -32,8 +32,8 @@ function displayResult()
               <td><%= full_name(a.employee) %></td>
               <td><%=a. present%></td>
 
-              <td><%= a.in_time %></td>
-              <td><%= a.out_time %></td>
+              <td><%= a.try(:in_time ) %></td>
+              <td><%= a.try(:out_time ) %></td>
               <td><%= a.working_hrs %></td>
               
               <td><%= a.comment %></td>

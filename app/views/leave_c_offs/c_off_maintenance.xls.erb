@@ -6,11 +6,16 @@
       <th>Date</th>
       <th>Day</th>
       <th>Compensatory Off</th>
+      <th>Compensatory Off Type</th>
       <th>Expiry Days</th>
       <th>Expiry Date</th>
+      <th>Expiry status</th>
+      <th>Expire</th>
       <th>Taken</th>
       <th>Taken Date</th>
       <th>Comment</th>
+      <th>Current Status</th>
+      <th>ID</th>
     </tr>
   </thead>
 
@@ -21,13 +26,18 @@
           <td><%= leave_c_off.employee.try(:manual_employee_code) %></td>
           <td><%= leave_c_off.employee.try(:first_name) %> <%= leave_c_off.employee.try(:middle_name) %> <%= leave_c_off.employee.try(:last_name) %></td>
           <td><%= leave_c_off.c_off_date %></td>
+          <td><%= leave_c_off.c_off_type %></td>
           <td><%= leave_c_off.c_off_date.strftime("%A") %></td>
           <td><%= leave_c_off.leave_count %></td>
           <td><%= leave_c_off.c_off_expire_day %></td>
           <td><%= leave_c_off.expiry_date %></td>
+          <td><%= leave_c_off.expiry_status %></td>
+          <td><%= leave_c_off.is_expire ? "Yes" : "No" %></td>
           <td><%= leave_c_off.is_taken ? "Yes" : "No" %></td>
           <td><%= leave_c_off.taken_date %></td>
           <td><%= leave_c_off.comment %></td>
+          <td><%= leave_c_off.current_status %></td>
+          <td><%= leave_c_off.id %></td>
         </tr>
       <% end %>
     <% end %>

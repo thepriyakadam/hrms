@@ -617,7 +617,7 @@ class SalaryslipsController < ApplicationController
                 formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
                 @total = formula_item.sum(:calculated_amount)
                 @total_actual = formula_item.sum(:actual_amount)
-                if @employee.gender = "Female" && @total < 10000
+                if @employee.gender = "Female" && @total.to_f < 10000
                 else
                   if s.basis_actual_amount == true
                     if @total_actual.between?(s.min_amount, s.max_amount) && @month != "February" && @employee.company_location_id == s.company_location_id

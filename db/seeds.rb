@@ -162,7 +162,7 @@ ActiveRecord::Base.transaction do
 2.upto(26) do |line|
   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
 
-  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_s)
  
   @salary_template = SalaryTemplate.find_by_id(ex.cell(line,'B'))
   @salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?

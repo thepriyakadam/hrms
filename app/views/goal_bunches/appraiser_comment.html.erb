@@ -13,7 +13,7 @@
       <% end %>
     </div> <!-- pull right -->
     <br>
-    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <table class="table table-bordered table-hover table-condensed">
      <thead>
         <tr>
          <th>Base</th>
@@ -165,7 +165,7 @@
             <%#= bootstrap_form_for (@goal_rating),url:{action:'appraiser_create',emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id,period_id: @period.id} do |f| %>  
               <% if @goal_ratings.empty? %>
               <% else %>
-                <table class="table table-bordered table-hover table-condensed">
+                <table id="example1" class="table table-bordered table-hover table-condensed">
                   <thead>
                   <tr><th colspan="10"><center>Goal Rating</center></th></tr>
                     <tr>
@@ -203,10 +203,8 @@
 
                         <td><%= link_to 'Comment/Rating', appraiser_comment_modal_goal_bunches_path(goal_rating_id: goal_rating.id,emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id,period_id: @period.id),class: 'btn btn-xs btn-warning',remote: true %>
                         </td>
-
                         <!-- <td><%#= text_field_tag 'appraiser_comments[]',"",class: "form-control",autofocus: true %></td>
                         <td><%#= select_tag 'appraiser_ratings[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %></td> -->
-
                         <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
                       </tr>
                     <% end %>
@@ -214,9 +212,20 @@
                 </table>
               <% end %>
 
+        <script type="text/javascript">
+          $(document).ready(function() {
+              $('#example1').DataTable( {
+                  "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+                  "scrollX": true,
+                  "scrollY": 400
+              } );
+          } );
+        </script>
+
+
               <% if @goal_attribute_ratings.empty? %>
               <% else %>
-                <table class="table table-bordered table-hover table-condensed">
+                <table id="example2" class="table table-bordered table-hover table-condensed">
                   <thead>
                   <tr><th colspan="10"><center>Attribute Rating</center></th></tr>
                     <tr>
@@ -263,6 +272,16 @@
                 </table>
               <% end %>
               
+            <script type="text/javascript">
+              $(document).ready(function() {
+                  $('#example2').DataTable( {
+                      "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+                      "scrollX": true,
+                      "scrollY": 400
+                  } );
+              } );
+            </script>
+
               <br>
             <% unless @goal_ratings.empty? && @goal_attribute_ratings.empty? %>
               <div class="row">
@@ -287,144 +306,170 @@
       </div><!-- /.box-header -->
       <div class="box-body">
       <%= bootstrap_form_for GoalBunch.new,url:{action:'appraiser_comment_confirm',id: @employee.id,goal_bunch_id: @goal_bunch_id.id} do |f| %>
-
-        <table class="table table-bordered table-hover table-condensed">
-          <thead>
-          <tr><th colspan="12"><center>Goal Details</center></th></tr>
-            <tr>
-              <th>Goal Perspective</th>
-              <th>Measure</th>
-              <th>Activity</th>
-              <th>Target/Unit</th>
-              <th>Weightage</th>
-              <th>Aligned</th>
-              <th>Self Comment</th>
-              <th>Self Rating</th>
-              <th>Document</th>
-              <th>Appraiser Comment</th>
-              <th>Appraiser Rating</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% appraiser_goal_sum = 0 %>
-            <% appraiser_goalrating_sum = 0 %>
-            <% @appraiser_goal_ratings.each do |goal_rating| %>
+        <% if @appraiser_goal_ratings.empty? %>
+        <% else %>
+          <table id="example6" class="table table-bordered table-hover table-condensed">
+            <thead>
+              <tr><th colspan="12"><center>Goal Details</center></th></tr>
               <tr>
-                <td><%= goal_rating.goal_perspective.try(:name) %></td>
-                <td><%= goal_rating.goal_measure %></td>
-                <td><%= goal_rating.activity %></td>
-                <td><%= goal_rating.target %></td>
-                <td><%= weightage = goal_rating.goal_weightage %></td>
-                <td><%= goal_rating.aligned %></td>
-                <td><%= goal_rating.appraisee_comment %></td>
-                <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
-                <td>
-                  <% if goal_rating.document_file_name == nil %>
-                  <% else %>
-                    <%= link_to ' ',download_self_document_path(id: goal_rating.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
-                  <% end %>
-                </td>
-                <td><%= goal_rating.appraiser_comment %></td>
-                <td><%= appraiser_rating = goal_rating.try(:appraiser_rating).try(:value) %></td>
-                <td>
-                  <% if @goal_bunch.appraiser_confirm == true %>
-                    <small class="label label-info">Confirmed</small>
-                  <% else %>
-                    <% if @goal_bunch.appraiser_rating == nil %>
-                      <%= link_to '',appraiser_modal_goal_ratings_path(goal_rating_id: goal_rating,period_id: @period.id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
-                    <% else %>
-                    <% end %>
-                  <% end %>
-                </td>
-                <% appraiser_output = weightage * appraiser_rating.to_f / 100.to_f %>
-                <% appraiser_goal_sum = appraiser_goal_sum.to_f + appraiser_output.to_f %>
-                <% appraiser_goalrating_sum = appraiser_goalrating_sum.to_f + appraiser_rating.to_f %>
+                <th>Goal Perspective</th>
+                <th>Measure</th>
+                <th>Activity</th>
+                <th>Target/Unit</th>
+                <th>Weightage</th>
+                <th>Aligned</th>
+                <th>Self Comment</th>
+                <th>Self Rating</th>
+                <th>Document</th>
+                <th>Appraiser Comment</th>
+                <th>Appraiser Rating</th>
+                <th>Action</th>
               </tr>
-            <% end %>
-            <tr>
-              <th colspan="2"><h6><font color='red' size='2'>Appraiser Rating For Goal</font></h6> </th>
-              <% if @period.marks == true %>
-                <th colspan="10"><h6><font color='red' size='2'> <%= goal_sum = appraiser_goalrating_sum.round(2) %></font></h6> </th>
-              <% else %>
-                <th colspan="10"><h6><font color='red' size='2'> <%= goal_sum = appraiser_goal_sum.round(2) %></font></h6> </th>
+            </thead>
+            <tbody>
+              <% appraiser_goal_sum = 0 %>
+              <% appraiser_goalrating_sum = 0 %>
+              <% @appraiser_goal_ratings.each do |goal_rating| %>
+                <tr>
+                  <td><%= goal_rating.goal_perspective.try(:name) %></td>
+                  <td><%= goal_rating.goal_measure %></td>
+                  <td><%= goal_rating.activity %></td>
+                  <td><%= goal_rating.target %></td>
+                  <td><%= weightage = goal_rating.goal_weightage %></td>
+                  <td><%= goal_rating.aligned %></td>
+                  <td><%= goal_rating.appraisee_comment %></td>
+                  <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
+                  <td>
+                    <% if goal_rating.document_file_name == nil %>
+                    <% else %>
+                      <%= link_to ' ',download_self_document_path(id: goal_rating.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
+                    <% end %>
+                  </td>
+                  <td><%= goal_rating.appraiser_comment %></td>
+                  <td><%= appraiser_rating = goal_rating.try(:appraiser_rating).try(:value) %></td>
+                  <td>
+                    <% if @goal_bunch.appraiser_confirm == true %>
+                      <small class="label label-info">Confirmed</small>
+                    <% else %>
+                      <% if @goal_bunch.appraiser_rating == nil %>
+                        <%= link_to '',appraiser_modal_goal_ratings_path(goal_rating_id: goal_rating,period_id: @period.id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+                      <% else %>
+                      <% end %>
+                    <% end %>
+                  </td>
+                  <% appraiser_output = weightage * appraiser_rating.to_f / 100.to_f %>
+                  <% appraiser_goal_sum = appraiser_goal_sum.to_f + appraiser_output.to_f %>
+                  <% appraiser_goalrating_sum = appraiser_goalrating_sum.to_f + appraiser_rating.to_f %>
+                </tr>
               <% end %>
-            </tr>
-          </tbody>
-        </table>
-
-       
-         <table class="table table-bordered table-hover table-condensed">
-          <thead>
-          <tr><th colspan="12"><center>Attribute Details</center></th></tr>
-            <tr>
-              <th>Attribute</th>
-              <th>Measure</th>
-              <th>Activity</th>
-              <th>Target/Unit</th>
-              <th>Weightage</th>
-              <th>Aligned</th>
-              <th>Self Comment</th>
-              <th>Self Rating</th>
-              <th>Document</th>
-              <th>Appraiser Comment</th>
-              <th>Appraiser Rating</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% appraiser_attribute_sum = 0 %>
-            <% appraiser_attributerating_sum = 0 %>
-            <% @appraiser_attribute_ratings.each do |goal_rating| %>
               <tr>
-                <td><%= goal_rating.attribute_master.try(:name) %></td>
-                <td><%= goal_rating.goal_measure %></td>
-                <td><%= goal_rating.activity %></td>
-                <td><%= goal_rating.target %></td>
-                <td><%= weightage = goal_rating.goal_weightage %></td>
-                <td><%= goal_rating.aligned %></td>
-                <td><%= goal_rating.appraisee_comment %></td>
-                <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
-                <td>
-                  <% if goal_rating.document_file_name == nil %>
-                  <% else %>
-                    <%= link_to ' ',download_self_document_path(id: goal_rating.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
-                  <% end %>
-                </td>
-                <td><%= goal_rating.appraiser_comment %></td>
-                <td><%= appraiser_rating = goal_rating.try(:appraiser_rating).try(:value) %></td>
-                <td>
-                  <% if @goal_bunch.appraiser_confirm == true %>
-                  <small class="label label-info">Confirmed</small>
-                  <% else %>
-                    <% if @goal_bunch.appraiser_rating == nil %>
-                      <%= link_to '',appraiser_modal_goal_ratings_path(goal_rating_id: goal_rating,period_id: @period.id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
-                    <% else %>
-                    <% end %>
-                  <% end %>
-                </td>
-                <% appraiser_output = weightage * appraiser_rating.to_f / 100.to_f %>
-                <% appraiser_attribute_sum = appraiser_attribute_sum.to_f + appraiser_output.to_f %>
-                <% appraiser_attributerating_sum = appraiser_attributerating_sum.to_f + appraiser_rating.to_f %>
+                <th colspan="2"><h6><font color='red' size='2'>Appraiser Rating For Goal</font></h6> </th>
+                <% if @period.marks == true %>
+                  <th colspan="10"><h6><font color='red' size='2'> <%= goal_sum = appraiser_goalrating_sum.round(2) %></font></h6> </th>
+                <% else %>
+                  <th colspan="10"><h6><font color='red' size='2'> <%= goal_sum = appraiser_goal_sum.round(2) %></font></h6> </th>
+                <% end %>
               </tr>
-            <% end %>
-            <tr>
-              <th colspan="2"> <h6><font color='red' size='2'>Appraiser Rating For Attribute </font></h6></th>
-              <% if @period.marks == true %>
-                <th colspan="10"> <h6><font color='red' size='2'><%= attribute_sum = appraiser_attributerating_sum.round(2) %></font></h6></th>
-              <% else %>
-                <th colspan="10"> <h6><font color='red' size='2'><%= attribute_sum = appraiser_attribute_sum.round(2) %></font></h6></th>
-              <% end %>
-            </tr>
-            <tr>
-              <th colspan="2"> <h6><font color='red' size='2'>Overall </font></h6></th>
-             
-                <th colspan="10"> <h6><font color='red' size='2'><%= (goal_sum + attribute_sum).round(2) %></font></h6></th>
-              
-                  <% @Overall = (goal_sum + attribute_sum ).round(2) %>
-            </tr>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        <% end %>
+
+         <script type="text/javascript">
+          $(document).ready(function() {
+            $('#example6').DataTable( {
+              "lengthMenu": [[10, 25, 50, 100, -1],[10,25, 50, 100, "ALL"]],
+              "scrollX": true,
+              "scrollY": 400
+            });
+          });
+        </script>
+
+        <% if @appraiser_attribute_ratings.empty? %>
+        <% else %>
+             <table id="example4" class="table table-bordered table-hover table-condensed">
+              <thead>
+              <tr><th colspan="12"><center>Attribute Details</center></th></tr>
+                <tr>
+                  <th>Attribute</th>
+                  <th>Measure</th>
+                  <th>Activity</th>
+                  <th>Target/Unit</th>
+                  <th>Weightage</th>
+                  <th>Aligned</th>
+                  <th>Self Comment</th>
+                  <th>Self Rating</th>
+                  <th>Document</th>
+                  <th>Appraiser Comment</th>
+                  <th>Appraiser Rating</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% appraiser_attribute_sum = 0 %>
+                <% appraiser_attributerating_sum = 0 %>
+                <% @appraiser_attribute_ratings.each do |goal_rating| %>
+                  <tr>
+                    <td><%= goal_rating.attribute_master.try(:name) %></td>
+                    <td><%= goal_rating.goal_measure %></td>
+                    <td><%= goal_rating.activity %></td>
+                    <td><%= goal_rating.target %></td>
+                    <td><%= weightage = goal_rating.goal_weightage %></td>
+                    <td><%= goal_rating.aligned %></td>
+                    <td><%= goal_rating.appraisee_comment %></td>
+                    <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
+                    <td>
+                      <% if goal_rating.document_file_name == nil %>
+                      <% else %>
+                        <%= link_to ' ',download_self_document_path(id: goal_rating.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
+                      <% end %>
+                    </td>
+                    <td><%= goal_rating.appraiser_comment %></td>
+                    <td><%= appraiser_rating = goal_rating.try(:appraiser_rating).try(:value) %></td>
+                    <td>
+                      <% if @goal_bunch.appraiser_confirm == true %>
+                      <small class="label label-info">Confirmed</small>
+                      <% else %>
+                        <% if @goal_bunch.appraiser_rating == nil %>
+                          <%= link_to '',appraiser_modal_goal_ratings_path(goal_rating_id: goal_rating,period_id: @period.id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+                        <% else %>
+                        <% end %>
+                      <% end %>
+                    </td>
+                    <% appraiser_output = weightage * appraiser_rating.to_f / 100.to_f %>
+                    <% appraiser_attribute_sum = appraiser_attribute_sum.to_f + appraiser_output.to_f %>
+                    <% appraiser_attributerating_sum = appraiser_attributerating_sum.to_f + appraiser_rating.to_f %>
+                  </tr>
+                <% end %>
+                <tr>
+                  <th colspan="2"> <h6><font color='red' size='2'>Appraiser Rating For Attribute </font></h6></th>
+                  <% if @period.marks == true %>
+                    <th colspan="10"> <h6><font color='red' size='2'><%= attribute_sum = appraiser_attributerating_sum.round(2) %></font></h6></th>
+                  <% else %>
+                    <th colspan="10"> <h6><font color='red' size='2'><%= attribute_sum = appraiser_attribute_sum.round(2) %></font></h6></th>
+                  <% end %>
+                </tr>
+                <tr>
+                  <th colspan="2"> <h6><font color='red' size='2'>Overall </font></h6></th>
+                 
+                    <th colspan="10"> <h6><font color='red' size='2'><%= (goal_sum + attribute_sum).round(2) %></font></h6></th>
+                  
+                      <% @Overall = (goal_sum + attribute_sum ).round(2) %>
+                </tr>
+              </tbody>
+            </table>
+        <% end %>
+
+
+            <script type="text/javascript">
+              $(document).ready(function() {
+                  $('#example4').DataTable( {
+                      "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+                      "scrollX": true,
+                      "scrollY": 400
+                  } );
+              } );
+            </script>
+
           <!-- <= f.hidden_field :appraiser_overall, value: appraiser_attribute_sum + appraiser_goal_sum / 2 %> -->
         <div class="row">
           <div class="col-sm-3">
@@ -447,6 +492,35 @@
         <h3 class="box-title">Overall Comment</h3>
       </div>
       <%= bootstrap_form_for GoalBunch.new,url:{action:'appraiser_overall_comment_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunches.id,period_id: @period.id} do |f| %>
+
+        <% if @employee.manager_2_id.nil? %>
+          <table class="table table-bordered table-hover table-condensed">
+            <thead>
+            <tr><th colspan="7"><center>Recommendation For Employee</center></th></tr>
+              <tr>
+                <th>Promotion</th>
+                <th>Increment</th>
+                <th>Designation</th>
+                <th>CTC</th>
+                <th>Transfer Option</th>
+                <th>Transfer</th>
+                <th>Comment</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><%= @goal_bunches.r_promotion ? "Yes" : "No" %></td>
+                <td><%= @goal_bunches.r_increment ? "Yes" : "No" %></td>
+                <td><%= @goal_bunches.r_designation.try(:name) %></td>
+                <td><%= @goal_bunches.r_ctc %></td>
+                <td><%= @goal_bunches.transfer_option %></td>
+                <td><%= @goal_bunches.transfer %></td>
+                <td><%= @goal_bunches.comment %></td>
+              </tr>
+            </tbody>
+          </table>
+        <% end %>
+
         <table class="table table-bordered table-hover table-condensed">
           <thead>
             <tr>

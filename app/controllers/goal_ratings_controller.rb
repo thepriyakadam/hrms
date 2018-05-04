@@ -82,7 +82,8 @@ class GoalRatingsController < ApplicationController
 
   def admin_level_reviewer_evaluation
     @period = Period.find(params[:period_id])
-    @goal_bunches = GoalBunch.where(period_id: @period.id,appraisee_confirm: true)
+    @emp = Employee.where.not(manager_2_id: nil).pluck(:id)
+    @goal_bunches = GoalBunch.where(period_id: @period.id,employee_id: @emp,appraiser_confirm: true)
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_cycle"
   end
@@ -202,7 +203,6 @@ class GoalRatingsController < ApplicationController
   end
 
   def update_goal_set_modal
-    puts '-----------------------------'
     @goal_rating = GoalRating.find(params[:goal_rating_id])
     @employee = Employee.find(@goal_rating.appraisee_id)
     @goal_bunch = GoalBunch.find(@goal_rating.goal_bunch_id)
@@ -545,6 +545,24 @@ class GoalRatingsController < ApplicationController
       end
     end 
 
+  end
+
+ def detail_goal_wise_pdf
+  @period = Period.find(params[:period_id])
+    goal_bunch_ids = params[:goal_bunch_ids]
+    if goal_bunch_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      @goal_bunches = []
+      #redirect_to employee_goal_wise_goal_ratings_path
+    else
+      @goal_bunches = []
+      goal_bunch_ids.each do |g|
+      emp = GoalBunch.find(g)
+      @goal_bunches << emp
+      @goal_bunch = GoalBunch.find(g)
+      end
+    end 
+
     respond_to do |f|
       f.js
       f.html
@@ -553,13 +571,11 @@ class GoalRatingsController < ApplicationController
         layout: 'pdf.html',
         orientation: 'Landscape',
         template: 'goal_ratings/goal_wise.pdf.erb',
-        show_as_html: params[:debug].present?
-        #margin:  { top:1,bottom:1,left:1,right:1 }
+        show_as_html: params[:debug].present?,
+        margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
-
-  
-  end
+ end 
 
   def print_goal_wise
     @period = Period.find(params[:period_id])

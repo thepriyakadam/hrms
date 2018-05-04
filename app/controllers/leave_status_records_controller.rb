@@ -162,6 +162,7 @@ class LeaveStatusRecordsController < ApplicationController
         LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Rejected")   
         @employee_leav_request.revert_leave(@employee_leav_request)
       #taken_date:nil
+      EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).update_all(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled")
         if @employee_leav_request.leav_category_id = @leav_category.id
           @leave_c_off = LeaveCOff.where(employee_id: @employee_leav_request.employee_id,taken_date: @employee_leav_request.start_date)
           @leave_c_off.update_all(taken_date: nil)
@@ -183,8 +184,8 @@ class LeaveStatusRecordsController < ApplicationController
           flash[:alert] = 'Leave Already Rejected. Please refresh page.'
           redirect_to all_leave_request_list_employee_leav_requests_path
         end
-      end
-    end
+      end#@leave_status.save
+    end#do
   end
 
   def second_reject
@@ -200,6 +201,7 @@ class LeaveStatusRecordsController < ApplicationController
         LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Rejected")
         @employee_leav_request.revert_leave(@employee_leav_request)
         @leav_category = LeavCategory.find_by(code: "C.Off")
+        EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).update_all(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled")
       #taken_date:nil
         if @employee_leav_request.leav_category_id = @leav_category.id
           @leave_c_off = LeaveCOff.where(employee_id: @employee_leav_request.employee_id,taken_date: @employee_leav_request.start_date)

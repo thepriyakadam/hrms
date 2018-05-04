@@ -1211,6 +1211,8 @@ end
       post :create_for_multiple
       get :employee_goal_wise
       post :print_employee
+      post :detail_goal_wise_pdf
+      get :detail_goal_wise_pdf
       post :detail_goal_wise
       get :detail_goal_wise
       get :detail_goal_wise_xls
@@ -1921,6 +1923,8 @@ end
       get :modal
       get :detail_modal
       get :modal_c_off
+      get :c_off_maintenance
+      get :maintenance_report
     end
   end
 

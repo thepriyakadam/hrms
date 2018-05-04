@@ -145,12 +145,16 @@ class EmployeeLeavRequestsController < ApplicationController
               @leave_c_off_id = params[:common][:c_off_date]
               @leave_c_off = LeaveCOff.find_by(id: @leave_c_off_id)
             if start_date.to_date > @leave_c_off.c_off_date.to_date
-                if @leave_c_off.expiry_date < start_date.to_date
-                  flash[:alert] = "Compensatory off expired for this day"
-                elsif @leave_c_off.c_off_date > start_date.to_date
-                  flash[:alert] = "Please check Compensatory off day"
+                if @leave_c_off.expiry_date == nil
+                else
+                  if @leave_c_off.expiry_date < start_date.to_date
+                    flash[:alert] = "Compensatory off expired for this day"
+                  elsif @leave_c_off.c_off_date > start_date.to_date
+                    flash[:alert] = "Please check Compensatory off day"
+                  end
+                end
 
-                elsif @employee_leav_request.is_available_coff?
+                if @employee_leav_request.is_available_coff?
                   flash[:alert] = "Your Leave Request already has been sent"
                 elsif @employee_leav_request.is_salary_processed_coff?
                   flash[:alert] = "Salary Processed for this month"

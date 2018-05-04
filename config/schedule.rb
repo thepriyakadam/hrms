@@ -31,9 +31,9 @@ end
 #   runner "DailyAttendance.calculate_attendance(2)"
 # end
 
-#every :day, :at => '07:00pm' do
-#  rake 'atte_task:fetch_att'
-#end
+every :day, :at => '10:30am' do
+  rake 'atte_task:fetch_att'
+end
 
 # every :day, :at => '07:10pm' do
 #   runner "DailyAttendance.calculate_attendance(2)"
@@ -44,7 +44,7 @@ end
 #end
 
 
-every 5.hours do 
+every 10.minutes do 
    rake 'atte_task:fetch_att'
 end
 

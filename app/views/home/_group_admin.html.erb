@@ -427,15 +427,15 @@
             <% @employees.each do |e| %>
               <tr>
                 <td>
-                <%unless e.nil? or e.nil? or  e.member.nil? or e.member.avatar.nil? %>
-                 <% if e.gender == "Male" && e.member.avatar_file_name == nil  %>
-                   <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                 <% elsif e.gender == "Female" && e.member.avatar_file_name == nil  %>
-                   <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                 <%else%>
-                   <%= image_tag e.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
-                 <%end%>
-                <%end%>
+                  <%unless e.nil? or e.nil? or  e.member.nil? or e.member.avatar.nil? %>
+                   <% if e.gender == "Male" && e.member.avatar_file_name == nil  %>
+                     <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                   <% elsif e.gender == "Female" && e.member.avatar_file_name == nil  %>
+                     <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                   <%else%>
+                     <%= image_tag e.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
+                   <%end%>
+                  <%end%>
                 </td>
                 <td> <%= full_name(e) %>
                  <span class="users-list-date"><%= e.try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
@@ -446,9 +446,10 @@
               </tr>
             <%end%> <!-- if employee.empty? -->
             </table>
+            
+              <%end%>
          </div><!-- /.box-body -->
         </div><!-- /.box -->
-              <%end%>
 
       <!-- PRODUCT LIST -->
       
@@ -493,6 +494,9 @@
           </ul>
         </div><!-- /.box-body -->
       </div><!-- /.box -->
+
+
+
 
 
             <div class="box box-primary">

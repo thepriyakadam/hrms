@@ -23,6 +23,34 @@ class HomeController < ApplicationController
     if current_user.class == Member
       # @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id, status: true)
       
+      #if current_user.role.name == "Employee" 
+        @self_pending_od = OnDutyRequest.where(current_status: "Pending", employee_id: current_user.employee_id).count
+        @self_pending_leave  = EmployeeLeavRequest.where(current_status: "Pending", employee_id: current_user.employee_id).count
+        @self_leave_c_off = LeaveCOff.where(employee_id: current_user.employee_id, current_status: "Pending").count
+        @self_employee_plan = EmployeePlan.where(employee_id: current_user.employee_id, current_status: "Pending").count
+        @self_travel_requests = TravelRequest.where(employee_id: current_user.employee_id, current_status: "Pending").count
+        @self_expense_claim = TravelRequest.where(employee_id: current_user.employee_id, current_status: "FinalApproved").count
+     
+      #elsif current_user.role.name == "Admin"
+        @all_pending_od = OnDutyRequest.where(current_status: "Pending").count
+        @all_pending_leave  = EmployeeLeavRequest.where(current_status: "Pending").count
+        @admin_c_off = LeaveCOff.where(current_status: "Pending").count
+        @admin_employee_plan = EmployeePlan.where(current_status: "Pending").count
+        @admin_travel_requests = TravelRequest.where(current_status: "Pending").count
+        @admin_expense_claim = TravelRequest.where(current_status: "FinalApproved").count
+        @final_travel_requests = TravelRequest.where(current_status: "Approved").count
+
+      #else 
+        @pending_od = OnDutyRequest.where(current_status: "Pending", first_reporter_id: current_user.employee_id).count
+        @pending_leave  = EmployeeLeavRequest.where(current_status: "Pending", first_reporter_id: current_user.employee_id).count
+          @emp = Employee.find(current_user.employee_id)
+          @employees = @emp.subordinates
+        @leave_c_off = LeaveCOff.where(employee_id: @employees, current_status: "Pending").count
+        @employee_plan = EmployeePlan.where(employee_id: current_user.employee_id, current_status: "Pending").count
+        @travel_requests = TravelRequest.where(reporting_master_id: current_user.employee_id, current_status: "Pending").count
+        @expense_claim = TravelRequest.where(employee_id: current_user.employee_id, current_status: "FinalApproved").count
+      #end
+
       if current_user.role.name == 'GroupAdmin'
         @employees = Employee.all
       elsif current_user.role.name == 'Admin'

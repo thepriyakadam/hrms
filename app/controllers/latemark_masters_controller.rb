@@ -75,9 +75,9 @@ class LatemarkMastersController < ApplicationController
     @from_date = params[:latemark_master][:from_date]
     @to_date = params[:latemark_master][:to_date]
     @latemark_master = LatemarkMaster.last
-    @latemark_master_time = @latemark_master.company_time
+    @latemark_master_time = @latemark_master.company_time #from_time
     @company_time = @latemark_master_time.strftime("%I:%M")
-    @latemark_master_late_time = @latemark_master.late_limit
+    @latemark_master_late_time = @latemark_master.late_limit #to_time
     @late_limit = @latemark_master_late_time.strftime("%I:%M")
     @emp_att = []
     @employee_attendances = EmployeeAttendance.where(day: @from_date.to_date..@to_date.to_date,employee_leav_request_id: nil,on_duty_request_id: nil,employee_week_off_id: nil,holiday_id: nil,late_mark: nil).where.not(in_time: nil)

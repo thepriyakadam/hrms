@@ -51,10 +51,10 @@
             <td><%= joining_detail.try(:employee_grade).try(:name) %></td>
             <td><%= joining_detail.try(:employee_designation).try(:name) %></td>
             <td>
-              <% if joining_detail.joining_date == nil %>
+              <% if joining_detail.try(:joining_date) == nil %>
                 <%= %> 
               <% else %>
-                <% day = Date.today - joining_detail.joining_date.to_date %><% d = day.to_f/365 %><% int = d.to_i %><% remaining = d.to_f - int.to_f %><% day1 = remaining.to_f * 365 %><% day2 = day1.to_f/30 %>
+                <% day = Date.today - joining_detail.try(:joining_date).to_date %><% d = day.to_f/365 %><% int = d.to_i %><% remaining = d.to_f - int.to_f %><% day1 = remaining.to_f * 365 %><% day2 = day1.to_f/30 %>
                 <% if int.to_i > 0 %>
                   <%= int.to_i %>.<%= day2.to_i %> <%= "year" %>
                 <% else %>

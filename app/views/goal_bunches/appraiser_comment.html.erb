@@ -451,15 +451,16 @@
                 <tr>
                   <th colspan="2"> <h6><font color='red' size='2'>Overall </font></h6></th>
                  
-                    <th colspan="10"> <h6><font color='red' size='2'><%= (goal_sum + attribute_sum).round(2) %></font></h6></th>
+                    <th colspan="10"> <h6><font color='red' size='2'><%= (goal_sum.to_f + attribute_sum.to_f).round(2) %></font></h6></th>
                   
-                      <% @Overall = (goal_sum + attribute_sum ).round(2) %>
+                      <% @Overall = (goal_sum.to_f + attribute_sum.to_f ).round(2) %>
                 </tr>
               </tbody>
             </table>
         <% end %>
 
-
+          <% @Overall = (goal_sum.to_f + attribute_sum.to_f ).round(2) %>
+          
             <script type="text/javascript">
               $(document).ready(function() {
                   $('#example4').DataTable( {
@@ -479,7 +480,8 @@
                 <% unless @goal_bunch.nil? %>
                   <% if @goal_bunch.appraiser_confirm == true %>
                   <% else %>
-                  <%= link_to 'Overall Comment', modal_appraiser_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id,appraiser_overall: @Overall,period_id: @period.id,employee_id: @employee.id), class: 'btn btn-primary btn-sm',remote: true %>
+
+                  <%= link_to 'Overall Comment', modal_appraiser_overall_goal_bunches_path(appraiser_overall: @Overall,goal_bunch_id: @goal_bunch.id,period_id: @period.id,employee_id: @employee.id), class: 'btn btn-primary btn-sm',remote: true %>
                   <% end %>
                 <% end %>
               <% end %>

@@ -427,15 +427,15 @@
             <% @employees.each do |e| %>
               <tr>
                 <td>
-                <%unless e.nil? or e.nil? or  e.member.nil? or e.member.avatar.nil? %>
-                 <% if e.gender == "Male" && e.member.avatar_file_name == nil  %>
-                   <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                 <% elsif e.gender == "Female" && e.member.avatar_file_name == nil  %>
-                   <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                 <%else%>
-                   <%= image_tag e.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
-                 <%end%>
-                <%end%>
+                  <%unless e.nil? or e.nil? or  e.member.nil? or e.member.avatar.nil? %>
+                   <% if e.gender == "Male" && e.member.avatar_file_name == nil  %>
+                     <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                   <% elsif e.gender == "Female" && e.member.avatar_file_name == nil  %>
+                     <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                   <%else%>
+                     <%= image_tag e.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
+                   <%end%>
+                  <%end%>
                 </td>
                 <td> <%= full_name(e) %>
                  <span class="users-list-date"><%= e.try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
@@ -446,9 +446,10 @@
               </tr>
             <%end%> <!-- if employee.empty? -->
             </table>
+            
+              <%end%>
          </div><!-- /.box-body -->
         </div><!-- /.box -->
-              <%end%>
 
       <!-- PRODUCT LIST -->
       
@@ -493,6 +494,247 @@
           </ul>
         </div><!-- /.box-body -->
       </div><!-- /.box -->
+
+
+
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Employee Requests</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table no-margin">
+            <thead>
+              <tr>
+                <th>Request</th>
+                <th>Count</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <th>Leave</th>
+                <td><%= @self_pending_leave %></td>
+                <td>
+                   <%= link_to '', approved_or_rejected_leave_request_manager_self_services_path ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                </td>
+              </tr>
+              <tr>
+                <th>OD</th>
+                <td><%= @self_pending_od %></td>
+                <td>
+                   <%= link_to '', request_approval_list_manager_self_services_path ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                </td>
+              </tr>
+              <tr>
+                <th>COff</th>
+                <td><%= @self_leave_c_off %></td>
+                <td>
+                   <%= link_to '', leave_c_off_manager_self_services_path ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                </td>
+              </tr>
+              <tr>
+                <th>Travel</th>
+                <td><%= @self_travel_requests %></td>
+                <td>
+                   <%= link_to '', travel_history_travel_requests_path ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                </td>
+              </tr>
+              <tr>
+                <th>Expence</th>
+                <td><%= @self_expense_claim %></td>
+                <td>
+                   <%= link_to '', travel_request_list_daily_bill_details_path ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                </td>
+              </tr>
+              <tr>
+                <th>Meeting</th>
+                <td><%= @self_employee_plan %></td>
+                <td>
+                   <%= link_to '', meeting_plan_approval_employee_plans_path ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+
+
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Admin Requests</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table no-margin">
+            <thead>
+              <tr>
+                <td>
+                  <a href="/employee_leav_requests/all_leave_request_list" class="dropdown-toggle" data-toggle="dropdown" title="Leave Request">
+                  <i class="fa fa-bell-o" ></i>
+                  <span class="label label-warning">
+                  </span>
+                  </a>
+                </td>
+                <td>
+                  <a href="on_duty_requests/od_request_list" class="dropdown-toggle" data-toggle="dropdown" title="On Duty Request">
+                  <i class="fa fa-bell-o" ></i>
+                  <span class="label label-warning">
+                  </span>
+                  </a>
+                </td>
+                <td>
+                  <a href="leave_c_offs/admin_c_off_approval" class="dropdown-toggle" data-toggle="dropdown" title="COff Request">
+                  <i class="fa fa-bell-o" ></i>
+                  <span class="label label-warning">
+                  </span>
+                  </a>
+                </td>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <th>Leave</th>
+                <td><%= @all_pending_leave %></td>
+                <td>
+                   <%= link_to '', approved_or_rejected_leave_request_manager_self_services_path ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                </td>
+              </tr>
+              <tr>
+                <th>OD</th>
+                <td><%= @all_pending_od %></td>
+                <td>
+                   <%= link_to '', request_approval_list_manager_self_services_path ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                </td>
+              </tr>
+              <tr>
+                <th>COff</th>
+                <td><%= @admin_c_off %></td>
+                <td>
+                   <%= link_to '', leave_c_off_manager_self_services_path ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                </td>
+              </tr>
+              <tr>
+                <th>Travel</th>
+                <td><%= @admin_travel_requests %></td>
+                <td>
+                   <%= link_to '', travel_history_travel_requests_path ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                </td>
+              </tr>
+              <tr>
+                <th>Expence</th>
+                <td><%= @admin_expense_claim %></td>
+                <td>
+                   <%= link_to '', travel_request_list_daily_bill_details_path ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                </td>
+              </tr>
+              <tr>
+                <th>Meeting</th>
+                <td><%= @admin_employee_plan %></td>
+                <td>
+                   <%= link_to '', meeting_plan_approval_employee_plans_path ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+
+
+
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Manager Requests</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table no-margin">
+            <thead>
+              <tr>
+                <th>Request</th>
+                <th>Count</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <th>Leave</th>
+                <td><%= @pending_leave %></td>
+                <td>
+                   <%= link_to '', approved_or_rejected_leave_request_manager_self_services_path ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                </td>
+              </tr>
+              <tr>
+                <th>OD</th>
+                <td><%= @pending_od %></td>
+                <td>
+                   <%= link_to '', request_approval_list_manager_self_services_path ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                </td>
+              </tr>
+              <tr>
+                <th>COff</th>
+                <td><%= @leave_c_off %></td>
+                <td>
+                   <%= link_to '', leave_c_off_manager_self_services_path ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                </td>
+              </tr>
+              <tr>
+                <th>Travel</th>
+                <td><%= @travel_requests %></td>
+                <td>
+                   <%= link_to '', travel_history_travel_requests_path ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                </td>
+              </tr>
+              <tr>
+                <th>Expence</th>
+                <td><%= @expense_claim %></td>
+                <td>
+                   <%= link_to '', travel_request_list_daily_bill_details_path ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                </td>
+              </tr>
+              <tr>
+                <th>Meeting</th>
+                <td><%= @employee_plan %></td>
+                <td>
+                   <%= link_to '', meeting_plan_approval_employee_plans_path ,class: 'btn btn-xs btn-primary fa fa-info-circle' %>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+
+
 
 
             <div class="box box-primary">

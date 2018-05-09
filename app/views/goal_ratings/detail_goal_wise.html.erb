@@ -47,14 +47,14 @@
               <% end %>
             </td>   
             <td><%= e.employee.department.try(:name) %></td>
-            <td><%= joining_detail.joining_date %></td>
-            <td><%= joining_detail.employee_grade.try(:name) %></td>
-            <td><%= joining_detail.employee_designation.try(:name) %></td>
+            <td><%= joining_detail.try(:joining_date) %></td>
+            <td><%= joining_detail.try(:employee_grade).try(:name) %></td>
+            <td><%= joining_detail.try(:employee_designation).try(:name) %></td>
             <td>
-              <% if joining_detail.joining_date == nil %>
+              <% if joining_detail.try(:joining_date) == nil %>
                 <%= %> 
               <% else %>
-                <% day = Date.today - joining_detail.joining_date.to_date %><% d = day.to_f/365 %><% int = d.to_i %><% remaining = d.to_f - int.to_f %><% day1 = remaining.to_f * 365 %><% day2 = day1.to_f/30 %>
+                <% day = Date.today - joining_detail.try(:joining_date).to_date %><% d = day.to_f/365 %><% int = d.to_i %><% remaining = d.to_f - int.to_f %><% day1 = remaining.to_f * 365 %><% day2 = day1.to_f/30 %>
                 <% if int.to_i > 0 %>
                   <%= int.to_i %>.<%= day2.to_i %> <%= "year" %>
                 <% else %>
@@ -131,12 +131,12 @@
           <% @employee_promotions.each do |employee_promotion| %>
             <tr>
               <td><%= employee_promotion.employee.try(:company_location).try(:name) %> - <%= employee_promotion.employee.try(:department).try(:name) %></td>
-              <td><%= employee_promotion.employee_designation.try(:name) %></td>
-              <td><%= employee_promotion.employee_grade.try(:name) %></td>
-              <td><%= employee_promotion.employee_category.try(:name) %></td>
+              <td><%= employee_promotion.try(:employee_designation).try(:name) %></td>
+              <td><%= employee_promotion.try(:employee_grade).try(:name) %></td>
+              <td><%= employee_promotion.try(:employee_category).try(:name) %></td>
               <td><%= employee_promotion.try(:ctc) %></td>
-              <td><%= employee_promotion.effective_from %></td>
-              <td><%= employee_promotion.effective_to %></td>
+              <td><%= employee_promotion.try(:effective_from) %></td>
+              <td><%= employee_promotion.try(:effective_to) %></td>
             </tr>
           <% end %>
         </tbody>

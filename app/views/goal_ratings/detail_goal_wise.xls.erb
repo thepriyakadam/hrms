@@ -36,6 +36,10 @@
         <Cell ss:Index="25"><Data ss:Type="String">Reviewer Rating </Data></Cell>
         <Cell ss:Index="26"><Data ss:Type="String">Final Comment </Data></Cell>
         <Cell ss:Index="27"><Data ss:Type="String">Final Rating </Data></Cell>
+        <Cell ss:Index="28"><Data ss:Type="String">Promotion </Data></Cell>
+        <Cell ss:Index="29"><Data ss:Type="String">Increment </Data></Cell>
+        <Cell ss:Index="30"><Data ss:Type="String">Designation </Data></Cell>
+        <Cell ss:Index="31"><Data ss:Type="String">CTC </Data></Cell>
         </Row>
 
         <% i = 0 %>
@@ -88,6 +92,10 @@
           <Cell ss:Index="25"><Data ss:Type="String"><%= goal_bunch.try(:reviewer_rating).try(:value) %></Data></Cell>
           <Cell ss:Index="26"><Data ss:Type="String"><%= goal_bunch.try(:final_comment) %></Data></Cell>
           <Cell ss:Index="27"><Data ss:Type="String"><%= goal_bunch.try(:final_rating).try(:value) %></Data></Cell>
+          <Cell ss:Index="28"><Data ss:Type="String"><%= goal_bunch.try(:r_promotion) ? "Yes" : "No" %></Data></Cell>
+          <Cell ss:Index="29"><Data ss:Type="String"><%= goal_bunch.try(:r_increment) ? "Yes" : "No" %></Data></Cell>
+          <Cell ss:Index="30"><Data ss:Type="String"><%= goal_bunch.try(:r_designation).try(:name) %></Data></Cell>
+          <Cell ss:Index="31"><Data ss:Type="String"><%= goal_bunch.try(:r_ctc) %></Data></Cell>
      </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

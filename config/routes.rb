@@ -1664,6 +1664,7 @@ end
   resources :daily_bill_details do
     collection do
     # post :is_confirm
+    get :all_expence_request
     get :is_confirm
     get :print_daily_bill
     get :daily_bill_history
@@ -1689,6 +1690,7 @@ end
   end
   resources :travel_requests do
     collection do
+      get :all_travel_request
       get :show_travel_process
       get :show_request_modal
       get :daily_bill

@@ -129,6 +129,10 @@ class TravelRequestsController < ApplicationController
     end
   end
 
+  def all_travel_request
+    @travel_requests = TravelRequest.where("current_status = ? or current_status = ? or current_status = ?","Pending","FirstApproved","Approved & Send Next")
+  end
+
   def travel_request_confirmation
       @travel_request = TravelRequest.find(params[:format])
       @travel_requests = TravelRequest.where(id: @travel_request.id)
@@ -181,8 +185,12 @@ class TravelRequestsController < ApplicationController
       TravelRequestHistory.find_by(travel_request_id: @travel_request.id).update(current_status: "Rejected")
     else
     end
+      if @travel_request.employee.manager_id == current_user.employee_id
+        redirect_to travel_history_travel_requests_path
+      else
+        redirect_to all_travel_request_travel_requests_path
+      end
     flash[:alert] = 'Travel Request Rejected Successfully'
-    redirect_to travel_history_travel_requests_path
   end
 
   def approve
@@ -194,8 +202,12 @@ class TravelRequestsController < ApplicationController
      TravelRequestHistory.find_by(travel_request_id: @travel_request.id).update(current_status: "Approved")
     else
     end
-     flash[:notice] = 'Travel Request Approved Successfully'
-     redirect_to travel_history_travel_requests_path
+      if @travel_request.employee.manager_id == current_user.employee_id
+        redirect_to travel_history_travel_requests_path
+      else
+        redirect_to all_travel_request_travel_requests_path
+      end
+    flash[:notice] = 'Travel Request Approved Successfully'
   end
 
   def final_approval_travel_list

@@ -657,7 +657,7 @@ class GoalBunchesController < ApplicationController
     goal_bunch_reviewer = GoalBunch.where(id: @goal_bunch_reviewer).where(reviewer_confirm: true).pluck(:employee_id)
 
     employee = goal_bunch_appraiser + goal_bunch_reviewer
-    @employees = GoalBunch.where(employee_id: employee)
+    @employees = GoalBunch.where(employee_id: employee,period_id: @period.id)
     #@employees = GoalBunch.where("employee_id = ? OR employee_id = ?",goal_bunch_appraiser,goal_bunch_reviewer).where(period_id: @period.id)
     # @emp1 = GoalBunch.where(" appraiser_confirm = ? OR reviewer_confirm = ?", true,true).pluck(:employee_id)
     # @employees = GoalBunch.where(employee_id: @emp1,period_id: @period.id)

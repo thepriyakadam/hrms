@@ -63,115 +63,116 @@ def self.to_csv(options = {})
         else
         employee_category_id = @employee_category.id
         end
-        probation_period = spreadsheet.cell(i,'J')
-        notice_period = spreadsheet.cell(i,'K')
-         notice_period_after_probation = spreadsheet.cell(i,'L')
-        have_passport = spreadsheet.cell(i,'M')
-        passport_no = spreadsheet.cell(i,'N')
-        passport_issue_date = spreadsheet.cell(i,'O')
-        passport_expiry_date = spreadsheet.cell(i,'P')
-        leaving_date = spreadsheet.cell(i,'Q')
-        retirement_date = spreadsheet.cell(i,'R')
+
+        contract_month = spreadsheet.cell(i,'J')
+        contract_end_date = spreadsheet.cell(i,'K')
+        probation_period = spreadsheet.cell(i,'L')
+        notice_period = spreadsheet.cell(i,'M')
+         notice_period_after_probation = spreadsheet.cell(i,'N')
+        have_passport = spreadsheet.cell(i,'O')
+        passport_no = spreadsheet.cell(i,'P')
+        passport_issue_date = spreadsheet.cell(i,'Q')
+        passport_expiry_date = spreadsheet.cell(i,'R')
+        leaving_date = spreadsheet.cell(i,'S')
+        retirement_date = spreadsheet.cell(i,'T')
 
 
-         c_off = spreadsheet.cell(i,'S')
+         c_off = spreadsheet.cell(i,'U')
          if c_off == "Yes"
            c_off = true
          else
            c_off = false
          end
-        @payment_mode = PaymentMode.find_by_name(spreadsheet.cell(i,'T'))
+        @payment_mode = PaymentMode.find_by_name(spreadsheet.cell(i,'V'))
         if @payment_mode == nil
-           payment_mode_name = spreadsheet.cell(i,'T')
+           payment_mode_name = spreadsheet.cell(i,'V')
            @payment_mode_entry = PaymentMode.create(name: payment_mode_name)
            payment_mode_id = @payment_mode_entry.id
         else
         payment_mode_id = @payment_mode.id
         end
-        basis_of_time = spreadsheet.cell(i,'U')
+        basis_of_time = spreadsheet.cell(i,'W')
         if basis_of_time == "Yes"
           basis_of_time = true
         else
           basis_of_time = false
         end
-        is_employeer_pf = spreadsheet.cell(i,'V')
+        is_employeer_pf = spreadsheet.cell(i,'X')
         if is_employeer_pf == "Yes"
           is_employeer_pf = true
         else
           is_employeer_pf = false
         end
-        select_pf = spreadsheet.cell(i,'W')
-        pf_max_amount = spreadsheet.cell(i,'X')
-        employee_pf_no = spreadsheet.cell(i,'Y')
-        is_employeer_esic = spreadsheet.cell(i,'Z')
+        select_pf = spreadsheet.cell(i,'Y')
+        pf_max_amount = spreadsheet.cell(i,'Z')
+        employee_pf_no = spreadsheet.cell(i,'AA')
+        is_employeer_esic = spreadsheet.cell(i,'AB')
         if is_employeer_esic == "Yes"
           is_employeer_esic = true
         else
           is_employeer_esic = false
         end
-        have_esic = spreadsheet.cell(i,'AA')
+        have_esic = spreadsheet.cell(i,'AC')
         if have_esic == "Yes"
           have_esic = true
         else
           have_esic = false
         end
-        employee_efic_no = spreadsheet.cell(i,'AB')
-        have_retention = spreadsheet.cell(i,'AC')
+        employee_efic_no = spreadsheet.cell(i,'AD')
+        have_retention = spreadsheet.cell(i,'AE')
         if have_retention == "Yes"
           have_retention = true
         else
           have_retention = false
         end
-        is_insurance = spreadsheet.cell(i,'AD')
+        is_insurance = spreadsheet.cell(i,'AF')
         if is_insurance == "Yes"
           is_insurance = true
         else
           is_insurance = false
         end
-        is_family_pension = spreadsheet.cell(i,'AE')
+        is_family_pension = spreadsheet.cell(i,'AG')
         if is_family_pension == "Yes"
           is_family_pension = true
         else
           is_family_pension = false
         end
-        is_bonus = spreadsheet.cell(i,'AF')
+        is_bonus = spreadsheet.cell(i,'AH')
         if is_bonus == "Yes"
           is_bonus = true
         else
           is_bonus = false
         end
-        ot_option = spreadsheet.cell(i,'AG')
+        ot_option = spreadsheet.cell(i,'AI')
         if ot_option == "Yes"
           ot_option = true
         else
           ot_option = false
         end
-        ot_rate = spreadsheet.cell(i,'AH')
+        ot_rate = spreadsheet.cell(i,'AJ')
 
-        @cost_center = CostCenter.find_by_name(spreadsheet.cell(i,'AI'))
+        @cost_center = CostCenter.find_by_name(spreadsheet.cell(i,'AK'))
         if @cost_center == nil
-           cost_center_name = spreadsheet.cell(i,'AI')
+           cost_center_name = spreadsheet.cell(i,'AK')
            @cost_center_entry = CostCenter.create(name: cost_center_name)
            cost_center_id = @cost_center_entry.id
         else
         cost_center_id = @cost_center.id
         end
-        welfare = spreadsheet.cell(i,'AJ')
+        welfare = spreadsheet.cell(i,'AL')
          if welfare == "Yes"
            welfare = true
          else
            welfare = false
          end
-         contact_library = spreadsheet.cell(i,'AK')
+         contact_library = spreadsheet.cell(i,'AM')
          if contact_library == "Yes"
            contact_library = true
          else
            contact_library = false
          end
-        gps_track = spreadsheet.cell(i,'AL')
-        restricted_area = spreadsheet.cell(i,'AM')
-        contract_month = spreadsheet.cell(i,'AN')
-        contract_end_date = spreadsheet.cell(i,'AO')
+        gps_track = spreadsheet.cell(i,'AN')
+        restricted_area = spreadsheet.cell(i,'AO')
 
         @employee_prsent = JoiningDetail.find_by(employee_id: employee_id)
         if @employee_prsent.nil?

@@ -188,7 +188,7 @@ module EmployeeAttendancesHelper
               absent_day = absent_day + 0.5
             else
                non_pay_leave = non_pay_leave + 0.5
-              present_day = present_day + 0.5
+               present_day = present_day + 0.5
             end
           end
         end 
@@ -238,7 +238,7 @@ module EmployeeAttendancesHelper
               absent_day = absent_day + 0.5
             else
                non_pay_leave = non_pay_leave + 0.5
-              present_day = present_day + 0.5
+               present_day = present_day + 0.5
             end
           end
         end 

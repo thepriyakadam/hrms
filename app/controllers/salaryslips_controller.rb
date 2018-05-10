@@ -740,10 +740,12 @@ class SalaryslipsController < ApplicationController
               @salary_comp=SalaryComponent.find_by(name: "Other Deduction")
               @salary_compon=SalaryComponent.find_by(name: "Income Tax")
               @salary_compon1=SalaryComponent.find_by(name: "GMC")
+              @salary_compon2=SalaryComponent.find_by(name: "Bank Loan")
               @mobile_deduction = 0
               @income_tax_deduction = 0
               @other_deduction = 0
               @gmk_deduction = 0
+              @bank_loan = 0
               @monthly_expences.try(:each) do |m|
                 if m.expencess_type.name == @salary_component.name
                  @mobile_deduction = @mobile_deduction + m.amount
@@ -753,6 +755,8 @@ class SalaryslipsController < ApplicationController
                   @income_tax_deduction = @income_tax_deduction + m.amount
                 elsif m.expencess_type.name == @salary_compon1.name
                   @gmk_deduction = @gmk_deduction + m.amount
+                elsif m.expencess_type.name == @salary_compon2.name
+                  @bank_loan = @bank_loan + m.amount
                 end
               end
               if @salary_component.name &&  @salary_component.is_active == true
@@ -770,6 +774,10 @@ class SalaryslipsController < ApplicationController
               if @salary_compon1.name && @salary_compon1.is_active == true
                 SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @gmk_deduction, calculated_amount: @gmk_deduction, 
                   is_deducted: true, other_component_name: @salary_compon1.name,salary_component_id:  @salary_compon1.id)
+              end
+              if @salary_compon2.name && @salary_compon2.is_active == true
+                SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @bank_loan, calculated_amount: @bank_loan, 
+                  is_deducted: true, other_component_name: @salary_compon2.name,salary_component_id:  @salary_compon2.id)
               end
  
               # BonusEmployee.create_bonus(basic_calculated_amount, @employee.id, date)

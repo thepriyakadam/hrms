@@ -328,6 +328,52 @@
 </script>
       <div id="anniversary_email" class="modal fade"></div>
 
+  <!-- Attendance Leave -->
+       <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Leave</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <% date = Date.today %>
+            <% @employee = Employee.where(status: "Active").pluck(:id) %>
+           <% @employees = EmployeeAttendance.where(day: date,employee_id: @employee).where.not(employee_leav_request_id: nil) %>
+          <% if @employees.empty? %>
+          <%else%>
+            <table id="example2" class="table no-margin">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Employee</th>
+                  <th>Manager</th>
+                </tr>
+              </thead>
+              <% @employees.each do |e| %>
+                  <tr>
+                    <td>
+                      <%unless e.nil? or e.nil? or  e.employee.member.nil? or e.employee.member.avatar.nil? %>
+                         <% if e.employee.gender == "Male" && e.employee.member.avatar_file_name == nil  %>
+                         <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                         <% elsif e.employee.gender == "Female" && e.employee.member.avatar_file_name == nil  %>
+                         <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                         <%else%>
+                         <%= image_tag e.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
+                         <%end%> <!-- if -->
+                      <%end%> <!-- unless -->
+                    </td>
+                    <td><%= e.employee.manual_employee_code %> - <%= full_name(e.employee) %></td>
+                    <td><%= full_name(e.employee.manager) %></td>
+                  </tr>
+              <% end %> <!-- do -->
+            </table>
+          <%end%> <!-- if employee.empty? -->
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+
+
       
       <div class="box box-info">
         <div class="box-header with-border">
@@ -409,8 +455,13 @@
         </div><!-- /.box-header -->
 
                 <div class="box-body">
-    
+           
                <% date = Time.now.to_date + 15.days %>
+               <% todays_date = Time.now.to_date %>
+               <!-- <#% @employees = Employee.where("status = ? AND FORMAT(date_of_birth,'dd/MM','en-US') = ?", "Active" ,todays_date.strftime('%d/%m')..date.strftime('%d/%m')) do |et| %> -->
+
+              <!--  <#% @employees = Employee.where("status = ? AND FORMAT(date_of_birth,'dd/MM','en-US') > ? AND FORMAT(date_of_birth,'dd/MM','en-US') <= ?", "Active" ,todays_date.strftime('%d/%m'),date.strftime('%d/%m')) do |et| %> -->
+
               <% @employees = Employee.where("status = ? AND DATE_FORMAT(date_of_birth,'%d/%m') = ?", "Active" , date.strftime('%d/%m')) do |et| %>
              
             <% if @employees.empty? %>
@@ -817,7 +868,7 @@
         </div><!-- /.box-header -->
         <div class="box-body">
           <ul class="products-list product-list-in-box">
-              <% fifteen_days_back = Time.now.to_date + 60.days %>
+              <% fifteen_days_back = Time.now.to_date + 58.days %>
                <% JoiningDetail.where(retirement_date: Time.now.to_date..fifteen_days_back.to_date).try(:each) do |j| %>
                 <% if j.employee.status == "Active" %>
                   <li class="item">

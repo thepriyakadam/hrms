@@ -191,6 +191,10 @@ class DailyBillDetailsController < ApplicationController
               disposition: 'attachment'
   end
 
+  def all_expence_request
+    @travel_requests = TravelRequest.where(is_confirm: true, current_status: "FinalApproved")
+  end
+
    def travel_request_list
      @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
      # @travel_requests = TravelRequest.where(daily_bill_status: true,reporting_master_id: reporting_masters)

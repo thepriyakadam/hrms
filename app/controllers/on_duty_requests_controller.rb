@@ -262,11 +262,10 @@ class OnDutyRequestsController < ApplicationController
   end
 
   def od_request_list
-    
-      @first_level_request_lists = OnDutyRequest.where(current_status: "Pending")
-      @on_duty_request = OnDutyRequest.where.not(second_reporter_id: nil).pluck(:second_reporter_id)
-      @second_level_request_lists = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,second_reporter_id: @on_duty_request)
-    
+    @first_level_request_lists = OnDutyRequest.where(current_status: "Pending")
+    @on_duty_request = OnDutyRequest.where.not(second_reporter_id: nil).pluck(:second_reporter_id)
+    @second_level_request_lists = OnDutyRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,second_reporter_id: @on_duty_request)
+  
     session[:active_tab] ="LeaveManagement"
     session[:active_tab1] ="ODProcess"
   end

@@ -37,7 +37,7 @@ class HomeController < ApplicationController
         @admin_c_off = LeaveCOff.where(current_status: "Pending").count
         @admin_employee_plan = EmployeePlan.where(current_status: "Pending").count
         @admin_travel_requests = TravelRequest.where(current_status: "Pending").count
-        @admin_expense_claim = TravelRequest.where(current_status: "FinalApproved").count
+        @admin_expense_claim = TravelRequest.where(current_status: "FinalApproved",is_confirm: true).count
         @final_travel_requests = TravelRequest.where(current_status: "Approved").count
 
       #else 

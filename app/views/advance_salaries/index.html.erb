@@ -12,29 +12,21 @@
     <thead>
       <tr>
         <th>Year</th>
-        <th>Months</th>
+        <th>Month</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
       <% @advance_salaries.each do |a| %>
+
+        <% year = a.advance_date.strftime('%Y') %>
+        <% month = a.advance_date.strftime('%B') %>
         <tr>
-          <%year = a.advance_date.strftime("%Y")%>
           <td><%= year %></td>
-          <td>
-            <%= link_to 'January',advances_advance_salaries_path(year: year, month: "January") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'February',advances_advance_salaries_path(year: year, month: "February") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'March',advances_advance_salaries_path(year: year, month: "March") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'April',advances_advance_salaries_path(year: year, month: "April") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'May',advances_advance_salaries_path(year: year, month: "May") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'June',advances_advance_salaries_path(year: year, month: "June") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'July',advances_advance_salaries_path(year: year, month: "July") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'August',advances_advance_salaries_path(year: year, month: "August") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'September',advances_advance_salaries_path(year: year, month: "September") , class: 'btn btn-xs btn-danger' %>
-            <%= link_to 'October',advances_advance_salaries_path(year: year, month: "October") , class: 'btn btn-xs btn-danger' %>
-            <%= link_to 'November',advances_advance_salaries_path(year: year, month: "November") , class: 'btn btn-xs btn-danger' %>
-            <%= link_to 'December',advances_advance_salaries_path(year: year, month: "December") , class: 'btn btn-xs btn-danger' %>
-          </td>
+          <td><%= month %></td>
+          <td><%= link_to '', advances_advance_salaries_path(year: year, month: month), class: 'btn btn-xs btn-default fa fa-eye' %></td>
         </tr>
+        
       <% end %>
     </tbody>
   </table>

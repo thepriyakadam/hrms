@@ -506,7 +506,6 @@ class TravelRequestsController < ApplicationController
     end
 
     def print_travel_request_employee_name_report
-
     session[:active_tab] = "TravelManagemnt"
     session[:active_tab1] = "travelrequestreports"
 

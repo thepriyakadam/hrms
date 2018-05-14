@@ -44,7 +44,7 @@ end
 #end
 
 
-every 10.minutes do 
+every 1.hours do 
    rake 'atte_task:fetch_att'
 end
 

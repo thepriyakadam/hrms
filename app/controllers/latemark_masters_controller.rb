@@ -209,14 +209,14 @@ class LatemarkMastersController < ApplicationController
     @to_date = params[:latemark_master][:to_date]
     @from = from_date.to_date
     @to = @to_date.to_date
-    @latemark_deductions = LatemarkDeduction.where(latemark_day: @from..@to,paid: false)
+    @latemark_deductions = LatemarkDeduction.where(latemark_day: @from..@to,paid: nil)
 
     respond_to do |f|
       f.js
       f.xls {render template: 'latemark_masters/deduction_report.xls.erb'}
       f.html
       f.pdf do
-        render pdf: 'employee_attendance',
+        render pdf: 'deduction_report',
         layout: 'pdf.html',
         orientation: 'Landscape',
         template: 'latemark_masters/deduction_report.pdf.erb',

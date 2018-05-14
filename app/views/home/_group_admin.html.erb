@@ -604,7 +604,7 @@
 
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">Employee Requests</h3>
+          <h3 class="box-title">PMS</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -617,66 +617,170 @@
                 <tr>
                   <td>
                     <div></div>
-                    <a href="/employee_leav_requests" class="dropdown-toggle" title="Leave Request"> <i class="fa fa-bell-o"></i>
-                      <span class="label label-info">
-                        <%= @self_pending_leave %>
-                      </span><br>
-                      <span class="label label-info">
-                        Leave
+                    <a href="/goal_bunches/admin_period_set" class="dropdown-toggle" title="Period Not Set">
+                      <span class="label label-success">
+                        Period Not Set
                       </span>
+                      <span class="label label-danger">
+                        <%= @period_not_set %>
+                      </span><br>
                     </a>
                   </td>
 
                   <td>
-                    <a href="/on_duty_requests" class="dropdown-toggle" title="On Duty Request"> <i class="fa fa-bell-o"></i>
-                      <span class="label label-warning">
-                        <%= @self_pending_od %>
-                      </span><br>
-                      <span class="label label-warning">
-                        OD
+                    <div></div>
+                    <a href="/goal_ratings/admin_level_period" class="dropdown-toggle" title="Goal Set">
+                      <span class="label label-info">
+                        Goal Set
                       </span>
+                      <span class="label label-danger">
+                        <%= @goal_set %>
+                      </span><br>
+                    </a>
+                  </td>
+
+                  <td>
+                    <a href="/goal_bunches/admin_goal_approval_period" class="dropdown-toggle" title="Goal Approved">
+                      <span class="label label-primary">
+                        Goal Approved
+                      </span>
+                      <span class="label label-danger">
+                        <%= @goal_approved %>
+                      </span><br>
                     </a>
                   </td>
                   <td>
-                    <a href="/self_services/leave_c_off" class="dropdown-toggle" title="COff Request"> <i class="fa fa-bell-o"></i>
-                      <span class="label label-primary">
-                        <%= @self_leave_c_off %>
-                      </span><br>
-                      <span class="label label-primary">
-                        COff
+                    <a href="/goal_bunches/admin_self_evaluation_period" class="dropdown-toggle" title="Self Evaluation">
+                      <span class="label label-warning">
+                        Self 
                       </span>
+                      <span class="label label-danger">
+                        <%= @self_evaluation %>
+                      </span><br>
                     </a>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <a href="/self_services/travel_request" class="dropdown-toggle" title="Travel Request"> <i class="fa fa-bell-o"></i>
+                    <a href="/goal_ratings/admin_appraiser_evaluation_period" class="dropdown-toggle" title="Appraiser Evaluation">
                       <span class="label label-success">
-                        <%= @self_travel_requests %>
+                        Appraiser 
+                      </span>
+                      <span class="label label-danger">
+                        <%= @appraiser_evaluation %>
                       </span><br>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="/goal_ratings/admin_reviewer_evaluation_period" class="dropdown-toggle" title="Reviewer Evaluation">
+                      <span class="label label-info">
+                        Reviewer 
+                      </span>
+                      <span class="label label-danger">
+                        <%= @reviewer_evaluation %>
+                      </span><br>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="/goal_bunches/employee_list" class="dropdown-toggle" title="Final Evaluation">
+                      <span class="label label-primary">
+                        Final 
+                      </span>
+                      <span class="label label-danger">
+                        <%= @final_evaluation %>
+                      </span><br>
+                    </a>
+                  </td>
+                  <td></td>
+                </tr>
+              </thead>
+            </table>
+          </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+
+<!-- ============== -->
+
+
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Employee Pending Requests</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table no-margin">
+            <thead>
+                <tr>
+                  <td>
+                    <div></div>
+                    <a href="/employee_leav_requests" class="dropdown-toggle" title="Leave Request">
+                      <span class="label label-success">
+                        Leave
+                      </span>
+                      <span class="label label-danger">
+                        <%= @self_pending_leave %>
+                      </span><br>
+                    </a>
+                  </td>
+
+                  <td>
+                    <a href="/on_duty_requests" class="dropdown-toggle" title="On Duty Request">
+                      <span class="label label-info">
+                        OD
+                      </span>
+                      <span class="label label-danger">
+                        <%= @self_pending_od %>
+                      </span><br>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="/self_services/leave_c_off" class="dropdown-toggle" title="COff Request">
+                      <span class="label label-primary">
+                        COff
+                      </span>
+                      <span class="label label-danger">
+                        <%= @self_leave_c_off %>
+                      </span><br>
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="/self_services/travel_request" class="dropdown-toggle" title="Travel Request">
                       <span class="label label-success">
                         Travel
                       </span>
+                      <span class="label label-danger">
+                        <%= @self_travel_requests %>
+                      </span><br>
                     </a>
                   </td>
                   <td>
-                    <a href="/travel_requests/daily_bill" class="dropdown-toggle" title="Expence Request"> <i class="fa fa-bell-o"></i>
-                      <span class="label label-warning">
-                        <%= @self_expense_claim %>
-                      </span><br>
-                      <span class="label label-warning">
+                    <a href="/travel_requests/daily_bill" class="dropdown-toggle" title="Expence Request">
+                      <span class="label label-info">
                         Expence
                       </span>
+                      <span class="label label-danger">
+                        <%= @self_expense_claim %>
+                      </span><br>
                     </a>
                   </td>
                   <td>
-                    <a href="/employee_plans" class="dropdown-toggle" title="Employee Plan Request"> <i class="fa fa-bell-o"></i>
-                      <span class="label label-info">
-                        <%= @self_employee_plan %>
-                      </span><br>
-                      <span class="label label-info">
+                    <a href="/employee_plans" class="dropdown-toggle" title="Employee Plan Request">
+                      <span class="label label-primary">
                         Meeting
                       </span>
+                      <span class="label label-danger">
+                        <%= @self_employee_plan %>
+                      </span><br>
                     </a>
                   </td>
                 </tr>
@@ -690,59 +794,10 @@
         </div><!-- /.box-footer -->
       </div><!-- /.box -->
 
-       <div class="box">
-          <div class="box-header">
-            <h3 class="box-title">Application Buttons</h3>
-          </div>
-                <div class="box-body">
-                  <p>Add the classes <code>.btn.btn-app</code> to an <code>&lt;a></code> tag to achieve the following:</p>
-                  <a class="btn btn-app">
-                    <i class="fa fa-edit"></i> Edit
-                  </a>
-                  <a class="btn btn-app">
-                    <i class="fa fa-play"></i> Play
-                  </a>
-                  <a class="btn btn-app">
-                    <i class="fa fa-repeat"></i> Repeat
-                  </a>
-                  <a class="btn btn-app">
-                    <i class="fa fa-pause"></i> Pause
-                  </a>
-                  <a class="btn btn-app">
-                    <i class="fa fa-save"></i> Save
-                  </a>
-                  <a href="/on_duty_requests" class="btn btn-app">
-                    <span class="badge bg-yellow"><%= @pending_od %></span>
-                    <i class="fa fa-bullhorn"></i> OD
-                  </a>
-                  
-                  <a class="btn btn-app">
-                    <span class="badge bg-green">300</span>
-                    <i class="fa fa-barcode"></i> Products
-                  </a>
-                  <a class="btn btn-app">
-                    <span class="badge bg-purple">891</span>
-                    <i class="fa fa-users"></i> Users
-                  </a>
-                  <a class="btn btn-app">
-                    <span class="badge bg-teal">67</span>
-                    <i class="fa fa-inbox"></i> Orders
-                  </a>
-                  <a class="btn btn-app">
-                    <span class="badge bg-aqua">12</span>
-                    <i class="fa fa-envelope"></i> Inbox
-                  </a>
-                  <a class="btn btn-app">
-                    <span class="badge bg-red">531</span>
-                    <i class="fa fa-heart-o"></i> Likes
-                  </a>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-
-
+<!-- manager -->
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">Manager Requests</h3>
+          <h3 class="box-title">Manager Pending Task</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -753,64 +808,69 @@
             <table class="table no-margin">
             <thead>
               <tr>
-                  <td>
+                <td>
                   <div>
-                    <a href="/employee_leav_requests" class="dropdown-toggle" title="Leave Request"><%= @pending_leave %> <i class="fa fa-calendar-check-o" style="font-size:36px"></i>
-                      
+                    <a href="/employee_leav_requests" class="dropdown-toggle" title="Leave Request">
+                      <span class="label label-success">
+                        Leave
+                      </span>
+                      <span class="label label-danger">
+                        <%= @pending_leave %>
+                      </span><br>
                     </a>
-                    </div>
-                  </td>
+                  </div>
+                </td>
 
                   <td>
-                    <a href="/on_duty_requests" class="dropdown-toggle" title="On Duty Request"> <i class="fa fa-bell-o"></i>
-                      <span class="label label-success">
-                        <%= @pending_od %>
-                      </span><br>
-                      <span class="label label-success">
+                    <a href="/on_duty_requests" class="dropdown-toggle" title="On Duty Request">
+                      <span class="label label-info">
                         OD
                       </span>
+                      <span class="label label-danger">
+                        <%= @pending_od %>
+                      </span><br>
                     </a>
                   </td>
                   <td>
-                    <a href="/self_services/leave_c_off" class="dropdown-toggle" title="COff Request"> <i class="fa fa-bell-o"></i>
-                      <span class="label label-primary">
-                        <%= @leave_c_off %>
-                      </span><br>
+                    <a href="/self_services/leave_c_off" class="dropdown-toggle" title="COff Request">
                       <span class="label label-primary">
                         COff
                       </span>
+                      <span class="label label-danger">
+                        <%= @leave_c_off %>
+                      </span><br>
                     </a>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <a href="/self_services/travel_request" class="dropdown-toggle" title="Travel Request"> <i class="fa fa-bell-o"></i>
-                      <span class="label label-info">
-                        <%= @travel_requests %>
-                      </span><br>
-                      <span class="label label-info">
+                    <a href="/self_services/travel_request" class="dropdown-toggle" title="Travel Request">
+                      <span class="label label-success">
                         Travel
                       </span>
+                      <span class="label label-danger">
+                        <%= @travel_requests %>
+                      </span><br>
                     </a>
                   </td>
                   <td>
-                    <a href="/travel_requests/daily_bill" class="dropdown-toggle" title="Expence Request"> <i class="fa fa-bell-o"></i>
-                      <span class="label label-success">
-                        <%= @expense_claim %>
-                      </span><br>
-                      <span class="label label-success">
+                    <a href="/travel_requests/daily_bill" class="dropdown-toggle" title="Expence Request">
+                      <span class="label label-info">
                         Expence
                       </span>
+                      <span class="label label-danger">
+                        <%= @expense_claim %>
+                      </span><br>
                     </a>
                   </td>
                   <td>
-                    <a href="/employee_plans" class="dropdown-toggle" title="Employee Plan Request"> <i class="fa fa-bell-o"></i>
-                      <span class="label label-primary">
-                        <%= @employee_plan %>
-                      </span><br>
+                    <a href="/employee_plans" class="dropdown-toggle" title="Employee Plan Request">
                       <span class="label label-primary">
                         Meeting
                       </span>
+                      <span class="label label-danger">
+                        <%= @employee_plan %>
+                      </span><br>
                     </a>
                   </td>
               </tr>
@@ -828,7 +888,7 @@
 
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">Admin Requests</h3>
+          <h3 class="box-title">Admin Task</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -853,10 +913,10 @@
                   <td>
                     <a href="/on_duty_requests/od_request_list" class="dropdown-toggle" title="On Duty Request">
                       
-                      <span class="label label-success">
+                      <span class="label label-info">
                         On Duty
                       </span>
-                      <span class="label label-info">
+                      <span class="label label-danger">
                         <%= @all_pending_od %>
                       </span><br>
                     </a>
@@ -879,7 +939,7 @@
                       <span class="label label-success">
                         Travel
                       </span>
-                      <span class="label label-warning">
+                      <span class="label label-danger">
                         <%= @admin_travel_requests %>
                       </span><br>
                     </a>
@@ -887,10 +947,10 @@
                   <td>
                     <a href="/daily_bill_details/all_expence_request" class="dropdown-toggle" title="Expence Request">
                       
-                      <span class="label label-primary">
+                      <span class="label label-info">
                         Expence
                       </span>
-                      <span class="label label-default">
+                      <span class="label label-danger">
                         <%= @admin_expense_claim %>
                       </span><br>
                     </a>

@@ -604,6 +604,109 @@
 
       <div class="box box-info">
         <div class="box-header with-border">
+          <h3 class="box-title">PMS</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table no-margin">
+            <thead>
+                <tr>
+                  <td>
+                    <div></div>
+                    <a href="/goal_bunches/admin_period_set" class="dropdown-toggle" title="Period Not Set"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-info">
+                        <%= @period_not_set %>
+                      </span><br>
+                      <span class="label label-info">
+                        Period Not Set
+                      </span>
+                    </a>
+                  </td>
+
+                  <td>
+                    <div></div>
+                    <a href="/goal_ratings/admin_level_period" class="dropdown-toggle" title="Goal Set"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-info">
+                        <%= @goal_set %>
+                      </span><br>
+                      <span class="label label-info">
+                        Goal Set
+                      </span>
+                    </a>
+                  </td>
+
+                  <td>
+                    <a href="/goal_bunches/admin_goal_approval_period" class="dropdown-toggle" title="Goal Approved"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-warning">
+                        <%= @goal_approved %>
+                      </span><br>
+                      <span class="label label-warning">
+                        Goal Approved
+                      </span>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="/goal_bunches/admin_self_evaluation_period" class="dropdown-toggle" title="Self Evaluation"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-primary">
+                        <%= @self_evaluation %>
+                      </span><br>
+                      <span class="label label-primary">
+                        Self Evaluation
+                      </span>
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="/goal_ratings/admin_appraiser_evaluation_period" class="dropdown-toggle" title="Appraiser Evaluation"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-success">
+                        <%= @appraiser_evaluation %>
+                      </span><br>
+                      <span class="label label-success">
+                        Appraiser Evaluation
+                      </span>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="/goal_ratings/admin_reviewer_evaluation_period" class="dropdown-toggle" title="Reviewer Evaluation"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-warning">
+                        <%= @reviewer_evaluation %>
+                      </span><br>
+                      <span class="label label-warning">
+                        Reviewer Evaluation
+                      </span>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="/goal_bunches/employee_list" class="dropdown-toggle" title="Final Evaluation"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-info">
+                        <%= @final_evaluation %>
+                      </span><br>
+                      <span class="label label-info">
+                        Final Evaluation
+                      </span>
+                    </a>
+                  </td>
+                </tr>
+              </thead>
+            </table>
+          </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+
+<!-- ============== -->
+
+
+      <div class="box box-info">
+        <div class="box-header with-border">
           <h3 class="box-title">Employee Requests</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>

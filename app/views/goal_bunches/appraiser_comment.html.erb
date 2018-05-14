@@ -429,7 +429,7 @@
               $('#example2').DataTable( {
                   "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
                   "scrollX": true,
-                  "scrollY": 200
+                  "scrollY": 300
               } );
           } );
         </script>
@@ -443,9 +443,9 @@
             <th>Overall</th>
           </thead>
           <tbody>
-            <td><%= @appraiser_overall_for_goal.to_f %></td>
-            <td><%= @appraiser_overall_for_attribute.to_f %></td>
-            <td><%= @Overall.to_f %></td>
+            <td><h6><font color='red' size='2'><%= @appraiser_overall_for_goal.to_f %></font></h6></td>
+            <td><h6><font color='red' size='2'><%= @appraiser_overall_for_attribute.to_f %></font></h6></td>
+            <td><h6><font color='red' size='2'><%= @Overall.to_f %></font></h6></td>
           </tbody>
         </table>
 
@@ -544,7 +544,7 @@
               $('#example1').DataTable( {
                   "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
                   "scrollX": true,
-                  "scrollY": 200
+                  "scrollY": 300
               } );
           } );
         </script>

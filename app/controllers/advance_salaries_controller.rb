@@ -8,7 +8,7 @@ class AdvanceSalariesController < ApplicationController
   # GET /advance_salaries.json
   # include QueryReport::Helper # need to include it
   def index
-    @advance_salaries = AdvanceSalary.group("DATE_FORMAT(advance_date,'%Y')")
+    @advance_salaries = AdvanceSalary.group("DATE_FORMAT(advance_date,'%Y')","DATE_FORMAT(advance_date,'%b')")
     # @advance_salaries = AdvanceSalary.group("strftime('%Y',advance_date)")
     session[:active_tab] ="PayrollManagement"
     session[:active_tab1] ="AdvanceSalary"

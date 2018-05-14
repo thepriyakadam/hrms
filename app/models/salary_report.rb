@@ -626,6 +626,8 @@ class SalaryReport
         sr.welfair = d.calculated_amount
          when "Pantry Deduction"
         sr.pantry_deduction = d.calculated_amount
+        when "Latemark Deduction"
+        sr.latemark_deduction = d.calculated_amount
       end
     end
       

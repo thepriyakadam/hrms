@@ -648,14 +648,17 @@ class GoalBunchesController < ApplicationController
   end
 
   def period_list_final
-    @period = Period.find(params[:period_id])
+   @period = Period.find(params[:period_id])
     emp_manager_nil = Employee.where(manager_2_id: nil).pluck(:id)
     emp_manager_present = Employee.where.not(manager_2_id: nil).pluck(:id)
-    goal_bunch_appraiser = GoalBunch.where(period_id: @period.id,appraiser_confirm: true).where(employee_id: emp_manager_nil).pluck(:employee_id)
-    goal_bunch_reviewer = GoalBunch.where(period_id: @period.id,reviewer_confirm: true).where(employee_id: emp_manager_present).pluck(:employee_id)
-    
+    @goal_bunch_appraiser = GoalBunch.where(period_id: @period.id,employee_id: emp_manager_nil).pluck(:id)
+    goal_bunch_appraiser = GoalBunch.where(id: @goal_bunch_appraiser).where(appraiser_confirm: true).pluck(:employee_id)
+    @goal_bunch_reviewer = GoalBunch.where(period_id: @period.id,employee_id: emp_manager_present).pluck(:id)
+    goal_bunch_reviewer = GoalBunch.where(id: @goal_bunch_reviewer).where(reviewer_confirm: true).pluck(:employee_id)
+
+
     employee = goal_bunch_appraiser + goal_bunch_reviewer
-    @employees = GoalBunch.where(employee_id: employee)
+    @employees = GoalBunch.where(employee_id: employee,period_id: @period.id)
     #@employees = GoalBunch.where("employee_id = ? OR employee_id = ?",goal_bunch_appraiser,goal_bunch_reviewer).where(period_id: @period.id)
     # @emp1 = GoalBunch.where(" appraiser_confirm = ? OR reviewer_confirm = ?", true,true).pluck(:employee_id)
     # @employees = GoalBunch.where(employee_id: @emp1,period_id: @period.id)
@@ -899,7 +902,7 @@ class GoalBunchesController < ApplicationController
     redirect_to appraisee_comment_goal_bunches_path(emp_id: @employee.id,id: @goal_bunch.id)
   end
 
-  def modal_appraiser_overall
+  def   modal_appraiser_overall
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @appraiser_overall = params[:appraiser_overall]
     @period = Period.find(params[:period_id])

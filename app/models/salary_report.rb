@@ -12,7 +12,7 @@ class SalaryReport
 
                 :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, 
                 :pantry_deduction,:latemark_deduction,:bank_loan,
-                :welfair, :deduction_total, :net_payable, :other_deduction,  :pf_ctc, :esic_ctc,:bonus_ctc, :gmk_deduction,
+                :welfair, :deduction_total, :net_payable, :other_deduction,  :pf_ctc, :esic_ctc,:bonus_ctc, :gmk_deduction,:latemark_deduction,
 
                 :total_leave, :pay_leave, :nonpay_leave, :gatepass, :day_in_month, :payable_day, 
                 :present_day, :absent_day, :holiday, :weekoff, :month, :year, 
@@ -634,6 +634,8 @@ class SalaryReport
         sr.welfair = d.calculated_amount
         when "Pantry Deduction"
         sr.pantry_deduction = d.calculated_amount
+         when "Latemark Deduction"
+        sr.latemark_deduction = d.calculated_amount
         when "Bank Loan"
         sr.bank_loan = d.calculated_amount
       end

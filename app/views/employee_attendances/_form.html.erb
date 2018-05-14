@@ -53,19 +53,7 @@
           </div>
         </div>
       <% end %>
-      <%= bootstrap_form_for(:daily_attendance, url: { action: 'calculate'},html: {id: "daily_attendance"}) do |f| %>
-        <div class="col-sm-3">
-          <div class="form-group">
-            <%= f.text_field :day, label: "Day's", placeholder: "No.of Days i.e: 2 Calculate Hrs." %>
-          </div>
-        </div>
-        <div class="col-sm-3" style="padding-top:20px;">
-          <div class="actions">
-            <%= f.submit "Calculate Hrs." ,class: 'btn btn-primary btn-sm', id: "buttonCtc" %>
-          </div>
-        </div>
-        <br>
-      <% end %>
+      
     </div><!-- /.box-header -->
   </div>
 </div>

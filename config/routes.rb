@@ -57,7 +57,6 @@ Rails.application.routes.draw do
   resources :daily_attendances do 
     collection do
       get :third_attendance
-      get :third_calculate
       get :attendance
       get :calculate
       get :daily_attendance

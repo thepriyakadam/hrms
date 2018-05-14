@@ -136,6 +136,15 @@ class GoalBunchesController < ApplicationController
     redirect_to admin_period_set_goal_bunches_path
   end
 
+  def period_list_for_status
+    @period = Period.where(status: true)
+  end
+
+  def status_list
+    @period = Period.find_by(id: params[:period_id])
+    @goal_bunches = GoalBunch.where(period_id: @period.id)
+  end
+
   def period_list_appraisee
     @employee = Employee.find(current_user.employee_id)
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
@@ -453,7 +462,7 @@ class GoalBunchesController < ApplicationController
     
     #pdf
      @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal',appraisee_comment: nil)
-     @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ? AND appraisee_comment = ?", @goal_bunch_id.id ,'Attribute',nil)
+     @goal_attribute_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id.id, goal_type: 'Attribute',appraisee_comment: nil)
 
     if @goal_bunch.nil?
       @goal_ratings = []
@@ -655,7 +664,6 @@ class GoalBunchesController < ApplicationController
     goal_bunch_appraiser = GoalBunch.where(id: @goal_bunch_appraiser).where(appraiser_confirm: true).pluck(:employee_id)
     @goal_bunch_reviewer = GoalBunch.where(period_id: @period.id,employee_id: emp_manager_present).pluck(:id)
     goal_bunch_reviewer = GoalBunch.where(id: @goal_bunch_reviewer).where(reviewer_confirm: true).pluck(:employee_id)
-
 
     employee = goal_bunch_appraiser + goal_bunch_reviewer
     @employees = GoalBunch.where(employee_id: employee,period_id: @period.id)

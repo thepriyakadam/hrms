@@ -1359,7 +1359,7 @@ class Api::UserAuthsController < ApplicationController
     emp_code = emp.manual_employee_code
     date = params[:date]
     emp_daily_att = DailyAttendance.where(employee_code: emp_code, date: date).order("id DESC")
-    render :json => emp_daily_att.present? ? emp_daily_att.collect{|eda| { :id => eda.id, :date => eda.date, :time => eda.time.strftime("%I:%M:%S %p"), :employee_code => eda.employee_code, :latitude => eda.latitude, :longitude => eda.longitude, :place => eda.place, :note => eda.comment }} : []
+    render :json => emp_daily_att.present? ? emp_daily_att.collect{|eda| { :id => eda.id, :date => eda.date, :time => eda.time.strftime("%I:%M %p"), :employee_code => eda.employee_code, :latitude => eda.latitude, :longitude => eda.longitude, :place => eda.place, :note => eda.comment }} : []
   end
 
   def admin_all_leave_request_list

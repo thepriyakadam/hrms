@@ -4,32 +4,32 @@
     <div class="pull-right"></div>
   </div><!-- /.box-header -->
   <div class="box-body">
-        <table id="example6" class="table table-bordered table-hover table-condensed">
-          <thead>
+      <table id="example6" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Employee</th>
+            <th>Manager</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @first_level_request_lists.try(:each) do |fl| %>
             <tr>
-              <th>ID</th>
-              <th>Employee</th>
-              <th>Manager</th>
-              <th>Date</th>
-              <th>Action</th>
+              <td><%= fl.employee.try(:manual_employee_code) %></td>
+
+              <td><%= full_name(fl.employee) %></td>
+              <td><%= fl.employee.try(:manager).try(:first_name) %> <%= fl.employee.try(:manager).try(:middle_name) %> <%= fl.employee.try(:manager).try(:last_name) %></td>
+              <td><%= fl.start_date.to_date %> - <%= fl.end_date.to_date %></td>
+              <td>
+                <%= link_to 'View Detail', admin_employee_history_with_current_leave_employee_leav_requests_path(fl),class: 'btn btn-xs btn-info' %>
+              </td>
             </tr>
-          </thead>
-
-          <tbody>
-            <% @first_level_request_lists.try(:each) do |fl| %>
-              <tr>
-                <td><%= fl.employee.try(:manual_employee_code) %></td>
-
-                <td><%= full_name(fl.employee) %></td>
-                <td><%= fl.employee.try(:manager).try(:first_name) %> <%= fl.employee.try(:manager).try(:middle_name) %> <%= fl.employee.try(:manager).try(:last_name) %></td>
-                <td><%= fl.start_date.to_date %> - <%= fl.end_date.to_date %></td>
-                <td>
-                  <%= link_to 'View Detail', admin_employee_history_with_current_leave_employee_leav_requests_path(fl),class: 'btn btn-xs btn-info' %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+          <% end %>
+        </tbody>
+      </table>
         <!-- 
         <table id="example7" class="table table-bordered table-hover table-condensed">
           <thead>

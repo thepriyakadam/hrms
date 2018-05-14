@@ -209,16 +209,6 @@
           </table>
         <% end %>
 
-        <script type="text/javascript">
-          $(document).ready(function() {
-              $('#example4').DataTable( {
-                  "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
-                  "scrollX": true,
-                  "scrollY": 400
-              } );
-          } );
-          </script>
-
         <% if @goal_attribute_ratings.empty? %>
         <% else %>
           <table id ="example5" class="table table-bordered table-hover table-condensed">
@@ -266,16 +256,6 @@
           </table>
         <% end %>
 
-
-        <script type="text/javascript">
-          $(document).ready(function() {
-              $('#example5').DataTable( {
-                  "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
-                  "scrollX": true,
-                  "scrollY": 400
-              } );
-          } );
-          </script>
       <!--   <#% unless @goal_ratings.empty? && @goal_attribute_ratings.empty? %>
           <div class="row">
             <div class="col-sm-3">
@@ -286,10 +266,19 @@
             </div>
           </div>
         <#% end %> -->
-        
       <% end %> <!-- review_commentnil -->
   <% end %>
 <hr>
+
+        <script type="text/javascript">
+          $(document).ready(function() {
+              $('#example5').DataTable( {
+                  "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+                  "scrollX": true,
+                  "scrollY": 300
+              } );
+          } );
+          </script>
 
     <div id="reviewer_comment_form" class="modal fade"></div>
 
@@ -348,16 +337,16 @@
       </table>
     <% end %>
 
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#example6').DataTable( {
-        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
-        "scrollX": true,
-        "scrollY": 400
-    } );
-} );
-</script>
-    
+        <script type="text/javascript">
+          $(document).ready(function() {
+              $('#example6').DataTable( {
+                  "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+                  "scrollX": true,
+                  "scrollY": 300
+              } );
+          } );
+          </script>
+
     <% if @reviewer_attribute_ratings.empty? %>
     <% else %>
       <table id="example7" class="table table-bordered table-hover table-condensed">
@@ -412,15 +401,15 @@ $(document).ready(function() {
       </table>
     <% end %>
 
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#example7').DataTable( {
-        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
-        "scrollX": true,
-        "scrollY": 400
-    } );
-} );
-</script>
+        <script type="text/javascript">
+          $(document).ready(function() {
+              $('#example7').DataTable( {
+                  "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+                  "scrollX": true,
+                  "scrollY": 300
+              } );
+          } );
+        </script>
 
     <div class="row">
       <div class="col-sm-3">
@@ -508,3 +497,13 @@ $(document).ready(function() {
 
 <div id="myModal" class="modal fade"></div>
 
+
+        <script type="text/javascript">
+          $(document).ready(function() {
+              $('#example4').DataTable( {
+                  "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+                  "scrollX": true,
+                  "scrollY": 300
+              } );
+          } );
+          </script>

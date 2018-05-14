@@ -1249,6 +1249,8 @@ end
   #post 'goal_ratings/update_goal_set_modal'
   resources :goal_bunches do
     collection do
+      get :period_list_for_status
+      get :status_list
       get :appraisee_detail_list
       get :ajax_upload_document
       post :show_periodwise_employee
@@ -1664,6 +1666,7 @@ end
   resources :daily_bill_details do
     collection do
     # post :is_confirm
+    get :all_expence_request
     get :is_confirm
     get :print_daily_bill
     get :daily_bill_history
@@ -1689,6 +1692,7 @@ end
   end
   resources :travel_requests do
     collection do
+      get :all_travel_request
       get :show_travel_process
       get :show_request_modal
       get :daily_bill

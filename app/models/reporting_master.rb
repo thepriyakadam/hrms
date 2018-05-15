@@ -5,7 +5,8 @@ class ReportingMaster < ActiveRecord::Base
   has_many :reporting_masters_vacancy_masters
   has_many :vacancy_masters, :through =>:reporting_masters_vacancy_masters
   has_many :training_requests, :through =>:reporting_masters_training_reqs 
-  has_many :employee_transfers, :through =>:reporting_employee_transfers  
+  has_many :employee_transfers, :through =>:reporting_employee_transfers
+    
   has_many :travel_requests
   has_many :training_requests
   has_many :vacancy_request_histories

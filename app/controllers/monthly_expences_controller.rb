@@ -108,6 +108,8 @@ class MonthlyExpencesController < ApplicationController
   end
 
   def employee_expences
+    @month = params[:month]
+    @year = params[:year]
     date = Date.new(params[:year].to_i, Workingday.months[params[:month]])
     if current_user.class == Group
       @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y'))
@@ -131,6 +133,19 @@ class MonthlyExpencesController < ApplicationController
         @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y'))
       elsif current_user.role.name == 'Employee'
         @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y'))
+      end
+    end
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'monthly_expences/monthly_expences.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'dynamic_report',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'monthly_expences/monthly_expences.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
   end

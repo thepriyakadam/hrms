@@ -53,15 +53,32 @@ class HomeController < ApplicationController
 
       #pms
         @period = Period.where(status: true).last
-        @goal_set = GoalBunch.where(period_id: @period.id,goal_confirm: true,goal_approval: false,appraiser_confirm: false).count
-        @goal_approved = GoalBunch.where(period_id: @period.id,goal_approval: true,appraisee_confirm: nil).count
-        @self_evaluation = GoalBunch.where(period_id: @period.id,appraisee_confirm: true,appraiser_confirm: nil).count
-        @appraiser_evaluation = GoalBunch.where(period_id: @period.id,appraiser_confirm: true,reviewer_confirm: nil).count
-        @reviewer_evaluation = GoalBunch.where(period_id: @period.id,reviewer_confirm: true,final_confirm: nil).count
+
+        goal_bunches = GoalBunch.where(period_id: @period.id).pluck(:employee_id)
+        @period_not_set = Employee.where(status: "Active").where.not(id: goal_bunches).count
+        @period_set = GoalBunch.where(period_id: @period.id).where.not(employee_id: nil).count
+
+        @goal_set = GoalBunch.where(period_id: @period.id,goal_confirm: true).count
+        @goal_set_not_confirm = GoalBunch.where(period_id: @period.id).where.not(goal_confirm: true).count
+
+        @goal_approved = GoalBunch.where(period_id: @period.id,goal_approval: true,goal_confirm: true).count
+        @goal_approved_not_confirm = GoalBunch.where(period_id: @period.id,goal_confirm: true).where.not(goal_approval: true).count
+
+        @self_evaluation = GoalBunch.where(period_id: @period.id,appraisee_confirm: true,goal_approval: true).count
+        @self_evaluation_not_confirm = GoalBunch.where(period_id: @period.id,appraisee_confirm: nil,goal_approval: true).count
+
+        @appraiser_evaluation = GoalBunch.where(period_id: @period.id,appraisee_confirm: true,appraiser_confirm: true).count
+        @appraiser_evaluation_not_confirm = GoalBunch.where(period_id: @period.id,appraisee_confirm: true).where.not(appraiser_confirm: true).count
+
+        @reviewer_evaluation = GoalBunch.where(period_id: @period.id,reviewer_confirm: true,appraiser_confirm: true).count
+        @reviewer_evaluation_not_confirm = GoalBunch.where(period_id: @period.id,reviewer_confirm: nil,appraiser_confirm: true).count
+
         @final_evaluation =  GoalBunch.where(period_id: @period.id,final_confirm: true).count
+        @final_evaluation_not_confirm =  GoalBunch.where(period_id: @period.id).where.not(final_confirm: true).count
+
         @total_set = @goal_set.to_f + @goal_approved.to_f + @self_evaluation.to_f + @appraiser_evaluation.to_f + @reviewer_evaluation.to_f + @final_evaluation.to_f
         @employee = Employee.all.count
-        @period_not_set =  @employee.to_i - @total_set.to_i
+        #@period_not_set =  @employee.to_i - @total_set.to_i
 
       if current_user.role.name == 'GroupAdmin'
         @employees = Employee.all

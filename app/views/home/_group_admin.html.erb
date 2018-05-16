@@ -615,83 +615,69 @@
             <table class="table no-margin">
             <thead>
                 <tr>
+                  <th>Process</th>
+                  <th>Set</th>
+                  <th>Not Set</th>
+                  <th>Action</th>
+                </tr>
+                <tr>
+                  <td>Period</td>
+                  <td><%= @period_set %></td>
+                  <td><%= @period_not_set %></td>
                   <td>
-                    <div></div>
-                    <a href="/goal_bunches/admin_period_set" class="dropdown-toggle" title="Period Not Set">
-                      <span class="label label-success">
-                        Period Not Set
-                      </span>
-                      <span class="label label-danger">
-                        <%= @period_not_set %>
-                      </span><br>
-                    </a>
-                  </td>
-
-                  <td>
-                    <div></div>
-                    <a href="/goal_ratings/admin_level_period" class="dropdown-toggle" title="Goal Set">
-                      <span class="label label-info">
-                        Goal Set
-                      </span>
-                      <span class="label label-danger">
-                        <%= @goal_set %>
-                      </span><br>
-                    </a>
-                  </td>
-
-                  <td>
-                    <a href="/goal_bunches/admin_goal_approval_period" class="dropdown-toggle" title="Goal Approved">
-                      <span class="label label-primary">
-                        Goal Approved
-                      </span>
-                      <span class="label label-danger">
-                        <%= @goal_approved %>
-                      </span><br>
-                    </a>
-                  </td>
-                  <td>
-                    <a href="/goal_bunches/admin_self_evaluation_period" class="dropdown-toggle" title="Self Evaluation">
-                      <span class="label label-warning">
-                        Self 
-                      </span>
-                      <span class="label label-danger">
-                        <%= @self_evaluation %>
-                      </span><br>
-                    </a>
+                    <%= link_to 'Set Period', admin_period_set_goal_bunches_path,class: 'btn btn-xs btn-success'%>
                   </td>
                 </tr>
                 <tr>
+                  <td>Goal Set</td>
+                  <td><%= @goal_set %></td>
+                  <td><%= @goal_set_not_confirm %></td>
                   <td>
-                    <a href="/goal_ratings/admin_appraiser_evaluation_period" class="dropdown-toggle" title="Appraiser Evaluation">
-                      <span class="label label-success">
-                        Appraiser 
-                      </span>
-                      <span class="label label-danger">
-                        <%= @appraiser_evaluation %>
-                      </span><br>
-                    </a>
+                    <%= link_to 'Set Goals', admin_level_period_goal_ratings_path,class: 'btn btn-xs btn-success'%>
                   </td>
+                </tr>
+                <tr>
+                  <td> Goal Approval</td>
+                  <td><%= @goal_approved %></td>
+                  <td><%= @goal_approved_not_confirm %></td>
                   <td>
-                    <a href="/goal_ratings/admin_reviewer_evaluation_period" class="dropdown-toggle" title="Reviewer Evaluation">
-                      <span class="label label-info">
-                        Reviewer 
-                      </span>
-                      <span class="label label-danger">
-                        <%= @reviewer_evaluation %>
-                      </span><br>
-                    </a>
+                    <%= link_to 'Approval', admin_goal_approval_period_goal_bunches_path,class: 'btn btn-xs btn-success'%>
                   </td>
+                </tr>
+                <tr>
+                  <td> Self </td>
+                  <td><%= @self_evaluation %></td>
+                  <td><%= @self_evaluation_not_confirm %></td>
                   <td>
-                    <a href="/goal_bunches/employee_list" class="dropdown-toggle" title="Final Evaluation">
-                      <span class="label label-primary">
-                        Final 
-                      </span>
-                      <span class="label label-danger">
-                        <%= @final_evaluation %>
-                      </span><br>
-                    </a>
+                    <%= link_to 'Evaluation', admin_self_evaluation_period_goal_bunches_path,class: 'btn btn-xs btn-success'%>
                   </td>
-                  <td></td>
+                </tr>
+                <tr>
+                  <td> Appraiser </td>
+                  <td><%= @appraiser_evaluation %></td>
+                  <td><%= @appraiser_evaluation_not_confirm %></td>
+                  <td>
+                    <%= link_to 'Evaluation', admin_appraiser_evaluation_period_goal_ratings_path,class: 'btn btn-xs btn-success'%>
+                  </td>
+                </tr>
+                <tr>
+                  <td> Reviewer </td>
+                  <td><%= @reviewer_evaluation %></td>
+                  <td><%= @reviewer_evaluation_not_confirm %></td>
+                  <td>
+                    <%= link_to 'Evaluation', admin_reviewer_evaluation_period_goal_ratings_path,class: 'btn btn-xs btn-success'%>
+                  </td>
+                </tr>
+                <tr>
+                  <td> Final </td>
+                  <td><%= @final_evaluation %></td>
+                  <td><%= @final_evaluation_not_confirm %></td>
+                  <td>
+                    <%= link_to 'Evaluation', employee_list_goal_bunches_path,class: 'btn btn-xs btn-success'%>
+                  </td>
+                </tr>
+                <tr> 
+                  
                 </tr>
               </thead>
             </table>

@@ -10,10 +10,12 @@
     
   </div><!-- /.box-header -->
   <div class="box-body">
+  <% i = 0 %>
     <table id="example6" class="table table-bordered table-hover table-condensed">
     <thead>
     <tr><td colspan="4"><center><strong>Monthly Expenses</strong></center></td></tr>
       <tr>
+        <th>Sr. No</th>
         <th>Year</th>
         <th>Month</th>
         <th>Action</th>
@@ -26,6 +28,7 @@
         <% year = w.expence_date.strftime('%Y') %>
         <% month = w.expence_date.strftime('%B') %>
         <tr>
+          <td><%= i = i + 1 %></td>
           <td><%= year %></td>
           <td><%= month %></td>
           <td><%= link_to '', employee_expences_monthly_expences_path(year: year, month: month), class: 'btn btn-xs btn-default fa fa-eye' %></td>

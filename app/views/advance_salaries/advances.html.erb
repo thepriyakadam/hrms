@@ -31,8 +31,11 @@
           <td><%= full_name(advance_salary.employee) %></td>
           <td><%= advance_salary.advance_amount %></td>
           <td>
-            <%= link_to '', edit_advance_salary_path(advance_salary), class: 'btn btn-xs btn-success fa fa-edit' %>
-            <!-- link_to '', advance_salary, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-sm  btn-danger fa fa-close' -->
+            <% instalment_paid = advance_salary.instalments.where(is_complete: true).sum('instalment_amount') %>
+            <% if instalment_paid.to_f == 0.0 %>
+              <%= link_to '', edit_advance_salary_path(advance_salary), class: 'btn btn-xs btn-success fa fa-edit' %>
+            <%= link_to '', advance_salary, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-xs  btn-danger fa fa-close'  %>
+            <% end %>
             <%= link_to '', advance_salary ,class: 'btn btn-xs btn-default fa fa-eye' %>
           </td>
         </tr>

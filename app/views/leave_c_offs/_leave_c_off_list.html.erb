@@ -4,6 +4,7 @@
     	<th>ID</th>
       <th>Employee</th>
     	<th>Date</th>
+      <th>Days</th>
       <th>Status</th>
     	<th>Action</th>
    </tr>
@@ -16,6 +17,7 @@
         <td><%= leave_c_off.employee.try(:manual_employee_code) %></td>
         <td><%= leave_c_off.employee.try(:first_name) %> <%= leave_c_off.employee.try(:middle_name) %> <%= leave_c_off.employee.try(:last_name) %></td>
         <td><%= leave_c_off.c_off_date %></td>
+        <td><%= leave_c_off.c_off_expire_day %></td>
         <td>
           <% leave_c_off.status_c_offs.try(:each) do |r| %>
             <% case r.status %>

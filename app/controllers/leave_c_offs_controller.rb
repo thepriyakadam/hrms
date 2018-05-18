@@ -76,11 +76,25 @@ class LeaveCOffsController < ApplicationController
         @leave_c_offs = LeaveCOff.all
         leav_category = LeavCategory.find_by(code: 'C.Off')
 
-        if @leave_c_off.expiry_status == true
-          @leave_c_off.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
+
+        joining_detail = JoiningDetail.find_by(employee_id: @leave_c_off.employee_id)
+        if joining_detail.c_off_expire == true
+          c_off_expire_day = joining_detail.c_off_applicable_day.to_f
+          @expiry_date = @leave_c_off.c_off_date + c_off_expire_day.to_f
+          @expiry_status = true
         else
-          # @leave_c_off.expiry_date = nil
+          c_off_expire_day = nil
+          @expiry_date = nil
+          @expiry_status = joining_detail.c_off_expire
         end
+        @leave_c_off.c_off_expire_day = c_off_expire_day
+        @leave_c_off.expiry_date = @expiry_date
+        @leave_c_off.expiry_status = @expiry_status
+        # if @leave_c_off.expiry_status == true
+        #   @leave_c_off.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
+        # else
+        #   # @leave_c_off.expiry_date = nil
+        # end
         @c_off = LeaveCOff.where(is_expire: false,expiry_status: true)
 
         if leav_category.nil?
@@ -134,10 +148,10 @@ class LeaveCOffsController < ApplicationController
               b.employee_id = @leave_c_off.employee_id
               b.leav_category_id = leav_category.id
 
-              if @leave_c_off.expiry_status == true
-                b.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
-              else
-              end
+              # if @leave_c_off.expiry_status == true
+              #   b.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
+              # else
+              # end
               
               b.from_date = @leave_c_off.c_off_date
               b.is_active = true
@@ -193,19 +207,31 @@ class LeaveCOffsController < ApplicationController
     params_c_off_type = leave_c_off_params["c_off_type"]
     params_expiry_status = leave_c_off_params["expiry_status"]
     params_c_off_expire_day = leave_c_off_params["c_off_expire_day"]
-    expiry_date = @leave_c_off.try(:c_off_date) + @leave_c_off.try(:c_off_expire_day)
+
+    #expiry_date = @leave_c_off.try(:c_off_date) + @leave_c_off.try(:c_off_expire_day)
     leav_category = LeavCategory.find_by_code('C.Off')
     @employee_leave_balance = EmployeeLeavBalance.where(employee_id: params_employee_id, leav_category_id: leav_category.id).take
    
+    joining_detail = JoiningDetail.find_by(employee_id: params_employee_id)
+    if joining_detail.c_off_expire == true
+      c_off_expire_day = joining_detail.c_off_applicable_day.to_f
+      @expiry_date = params_c_off_date + c_off_expire_day.to_f
+      @expiry_status = true
+    else
+      c_off_expire_day = nil
+      @expiry_date = nil
+      @expiry_status = joining_detail.c_off_expire
+    end
+
     if @leave_c_off.c_off_type == params_c_off_type
-      @leave_c_off.update(employee_id: params_employee_id,c_off_date: params_c_off_date,c_off_type: params_c_off_type,c_off_expire_day: params_c_off_expire_day,expiry_status: params_expiry_status,is_taken: false,expiry_date: expiry_date,leave_count: @leave_c_off.leave_count,is_expire: nil)
+      @leave_c_off.update(employee_id: params_employee_id,c_off_date: params_c_off_date,c_off_type: params_c_off_type,c_off_expire_day: c_off_expire_day,expiry_status: @expiry_status,is_taken: false,expiry_date: @expiry_date,leave_count: @leave_c_off.leave_count,is_expire: nil)
     else
       if params_c_off_type == "Full Day"
-        @leave_c_off.update(employee_id: params_employee_id,c_off_date: params_c_off_date,c_off_type: params_c_off_type,c_off_expire_day: params_c_off_expire_day,expiry_status: params_expiry_status,is_taken: false,expiry_date: expiry_date,leave_count: 1,is_expire: nil) 
+        @leave_c_off.update(employee_id: params_employee_id,c_off_date: params_c_off_date,c_off_type: params_c_off_type,c_off_expire_day: c_off_expire_day,expiry_status: @expiry_status,is_taken: false,expiry_date: @expiry_date,leave_count: 1,is_expire: nil) 
         @employee_leave_balance.update(total_leave: @employee_leave_balance.total_leave.to_f + 0.5)
         @employee_leave_balance.update(no_of_leave: @employee_leave_balance.no_of_leave.to_f + 0.5)
       else
-        @leave_c_off.update(employee_id: params_employee_id,c_off_date: params_c_off_date,c_off_type: params_c_off_type,c_off_expire_day: params_c_off_expire_day,expiry_status: params_expiry_status,is_taken: false,expiry_date: expiry_date,leave_count: 0.5,is_expire: nil)
+        @leave_c_off.update(employee_id: params_employee_id,c_off_date: params_c_off_date,c_off_type: params_c_off_type,c_off_expire_day: c_off_expire_day,expiry_status: @expiry_status,is_taken: false,expiry_date: @expiry_date,leave_count: 0.5,is_expire: nil)
         @employee_leave_balance.update(total_leave: @employee_leave_balance.total_leave.to_f - 0.5)
         @employee_leave_balance.update(no_of_leave: @employee_leave_balance.no_of_leave.to_f - 0.5)
       end
@@ -299,15 +325,22 @@ class LeaveCOffsController < ApplicationController
 
     @leave_c_off = LeaveCOff.find(params[:format])
     #expiry_status = params[:leave_c_off][:expiry_status]
-    @leave_c_off.update(expiry_status: true)
+
+    joining_detail = JoiningDetail.find_by(employee_id: @leave_c_off.employee_id)
+    if joining_detail.c_off_expire == true
+      @leave_c_off.update(expiry_status: true)
+      c_off_expire_day = joining_detail.c_off_applicable_day.to_f
+      @expiry_date = @leave_c_off.c_off_date + c_off_expire_day.to_f
+    else
+      c_off_expire_day = nil
+      @expiry_date = nil
+    end
+
     #c_off_expire_day = params[:leave_c_off][:c_off_expire_day]
-    c_off_expire_day = 45
+    # c_off_expire_day = 45
     leav_category = LeavCategory.find_by_code('C.Off')
-    #if @leave_c_off.expiry_status == true
-      @expiry_date = @leave_c_off.c_off_date + c_off_expire_day.to_i
-    # else
-    #   @expiry_date = nil
-    # end
+      # @expiry_date = @leave_c_off.c_off_date + c_off_expire_day.to_i
+
     #@status_c_off = StatusCOff.find_by(leave_c_off_id: @leave_c_off.id)
     if @leave_c_off.employee.manager_2_id == nil
       @leave_c_off.update(c_off_expire_day: c_off_expire_day,expiry_date: @expiry_date,current_status: "FinalApproved")

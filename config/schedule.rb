@@ -32,6 +32,6 @@ every :day, :at => '08:10pm' do
 end
 
 
-#every 11.minutes do 
-  #  rake 'atte_task:calculate'
-#end
+every 2.hours do 
+  rake 'atte_task:fetch_data'
+end

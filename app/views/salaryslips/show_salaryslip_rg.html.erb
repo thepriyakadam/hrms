@@ -22,9 +22,9 @@
       <td>
       <strong> Employee Code :</strong> <%= @employee.manual_employee_code%> <br><br>
       <strong> Name :</strong> <%= full_name(@employee) %> <br><br>
-      <strong> Designation :</strong> <%= @employee.joining_detail.try(:employee_designation).name %> <br><br>
-      <strong> Department : </strong><%= @employee.department.try(:name) %> <br><br>
-      <strong> Date Of Joining : </strong><%= @employee.joining_detail.try(:joining_date) %> <br><br>
+      <strong> Designation :</strong> <%= @employee.try(:joining_detail).try(:employee_designation).try(:name) %> <br><br>
+      <strong> Department : </strong><%= @employee.try(:department).try(:name) %> <br><br>
+      <strong> Date Of Joining : </strong><%= @employee.try(:joining_detail).try(:joining_date) %> <br><br>
       </td>
 
       <td>

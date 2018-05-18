@@ -33,6 +33,20 @@ class EmployeeAttendancesController < ApplicationController
     end
   end
 
+  def third_attendance
+    day = params[:daily_attendance][:day].to_i
+    if day.present?
+      DailyAttendance.third_fetch_data(day)
+      flash[:notice] = "Employee Attendance Added Successfully..!"
+      redirect_to new_employee_attendance_path
+    else
+      DailyAttendance.third_fetch_data(1)
+      flash[:notice] = "Employee Attendance Added Successfully..!"
+      redirect_to new_employee_attendance_path
+    end
+  end
+
+
   def calculate
     day = params[:daily_attendance][:day].to_i
     if day.present?

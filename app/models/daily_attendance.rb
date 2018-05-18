@@ -1,5 +1,5 @@
-class DailyAttendance < ActiveRecord::Base
 
+class DailyAttendance < ActiveRecord::Base
   # validates :employee_code, uniqueness: { scope: [:date, :time, :controller] }
 
   #validates_uniqueness_of :employee_code, {scope: [:time]}
@@ -220,19 +220,25 @@ class DailyAttendance < ActiveRecord::Base
     punch = ThirdDatabase.where("RecDate > ?", Time.now - day.days)
       punch.each do |mat|
       #punch_date_time = mat.Edatetime
+      puts "second attendance"
       punch_date = mat.RecDate.to_date
       punch_time = mat.RecTime.to_time
       punch_month = punch_date.strftime("%B")
       user_i = mat.CardNo
-      user_split = user_i.split("00")
-      user_id = user_split.second
-      @employee = Employee.find_by_manual_employee_code(user_id)
-      if @employee.nil?
-      @employee1 = Employee.find_by_manual_employee_code(user_i)
-      elsif @employee1.nil?
-        puts "Employee Id Not Found"
+      if user_i.nil?
+         puts "Employee Id Not Found first"
       else
+       user_split = user_i.match /(\d{2})(\d{3})(\s)/
+       split = user_split.captures
+       user_id = split.second
+       puts "Split number"
+       @employee = Employee.find_by_manual_employee_code(user_id)
+       puts "Employee id is @employee"
+       if @employee.nil?
+         puts "Employee ID is not present in our HRMS"
+       else
         employee_id = @employee.id
+        puts "employee att working"
         employee_first_name = @employee.first_name
         employee_last_name = @employee.last_name
         space = " "
@@ -247,8 +253,8 @@ class DailyAttendance < ActiveRecord::Base
           puts "-----DailyAttendance Created 0 #{Time.now}---------"
         end
         daily_att_day = DailyAttendance.where(employee_code: user_id, date: punch_date).order("time ASC")
-        @employee_in_time = daily_att_day.first.time.to_time
-        @employee_out_time = daily_att_day.last.time.to_time
+        @employee_in_time = daily_att_day.first.try(:time)
+        @employee_out_time = daily_att_day.last.try(:time)
 
         @employee_att_present = EmployeeAttendance.where(employee_id: employee_id, day: punch_date)
         if @employee_att_present.present?
@@ -266,5 +272,6 @@ class DailyAttendance < ActiveRecord::Base
       end
     end
   end
+ end
  
 end

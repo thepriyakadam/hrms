@@ -22,6 +22,17 @@ class DailyAttendancesController < ApplicationController
     redirect_to subordinate_attendance_manager_self_services_path
   end
 
+  def third_attendance
+    DailyAttendance.third_fetch_data
+    redirect_to subordinate_attendance_manager_self_services_path
+  end
+
+  def third_calculate
+    DailyAttendance.third_calculate_attendance
+    redirect_to subordinate_attendance_manager_self_services_path
+  end
+
+
   # GET /daily_attendances/new
   def new
     @daily_attendance = DailyAttendance.new

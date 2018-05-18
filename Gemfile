@@ -8,6 +8,7 @@ gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
 
 gem 'twilio-ruby', '~> 4.11', '>= 4.11.1'
 gem 'numbers_in_words'
+gem 'backup'
 
 gem 'tiny_tds'
 gem 'activerecord-sqlserver-adapter'

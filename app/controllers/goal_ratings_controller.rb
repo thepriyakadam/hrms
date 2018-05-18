@@ -82,7 +82,8 @@ class GoalRatingsController < ApplicationController
 
   def admin_level_reviewer_evaluation
     @period = Period.find(params[:period_id])
-    @goal_bunches = GoalBunch.where(period_id: @period.id,appraisee_confirm: true)
+    @emp = Employee.where.not(manager_2_id: nil).pluck(:id)
+    @goal_bunches = GoalBunch.where(period_id: @period.id,employee_id: @emp,appraiser_confirm: true)
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_cycle"
   end
@@ -202,7 +203,6 @@ class GoalRatingsController < ApplicationController
   end
 
   def update_goal_set_modal
-    puts '-----------------------------'
     @goal_rating = GoalRating.find(params[:goal_rating_id])
     @employee = Employee.find(@goal_rating.appraisee_id)
     @goal_bunch = GoalBunch.find(@goal_rating.goal_bunch_id)
@@ -412,9 +412,10 @@ class GoalRatingsController < ApplicationController
     @rating = Rating.find_by(id: appraisee_rating_id)
 
       if period.marks == true
-        weightage = @goal_rating.goal_weightage
+        @weightage = @goal_rating.goal_weightage
+        weightage = @weightage.round
         rating = @rating.value
-        if rating.to_i < weightage.to_i
+        if rating.to_f < weightage.to_f
           if document_present == "Yes"
             document = params[:goal_rating][:document]
             @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: appraisee_rating_id,document: document,document_present: "Yes")
@@ -534,7 +535,7 @@ class GoalRatingsController < ApplicationController
     if goal_bunch_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
       @goal_bunches = []
-      redirect_to employee_goal_wise_goal_ratings_path
+      #redirect_to employee_goal_wise_goal_ratings_path
     else
       @goal_bunches = []
       goal_bunch_ids.each do |g|
@@ -542,8 +543,39 @@ class GoalRatingsController < ApplicationController
       @goal_bunches << emp
       @goal_bunch = GoalBunch.find(g)
       end
-    end  
+    end 
+
   end
+
+ def detail_goal_wise_pdf
+  @period = Period.find(params[:period_id])
+    goal_bunch_ids = params[:goal_bunch_ids]
+    if goal_bunch_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      @goal_bunches = []
+      #redirect_to employee_goal_wise_goal_ratings_path
+    else
+      @goal_bunches = []
+      goal_bunch_ids.each do |g|
+      emp = GoalBunch.find(g)
+      @goal_bunches << emp
+      @goal_bunch = GoalBunch.find(g)
+      end
+    end 
+
+    respond_to do |f|
+      f.js
+      f.html
+      f.pdf do
+        render pdf: 'detail_goal_wise',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'goal_ratings/goal_wise.pdf.erb',
+        show_as_html: params[:debug].present?,
+        margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+ end 
 
   def print_goal_wise
     @period = Period.find(params[:period_id])
@@ -564,7 +596,7 @@ class GoalRatingsController < ApplicationController
               orientation: 'Landscape',
               template: 'goal_ratings/print_goal_wise.pdf.erb',
               show_as_html: params[:debug].present?,
-              margin:  { top:1,bottom:1,left:1,right:1 }
+              margin:  { top:10,bottom:10,left:10,right:10 }
         end
       end
   end
@@ -772,8 +804,9 @@ class GoalRatingsController < ApplicationController
 
   def Period_rating_wise_employee
     period_id = params[:salary][:period_id]
-    rating_id = params[:salary][:rating_id]
-    @goal_bunches = GoalBunch.where(period_id: period_id,final_rating_id: rating_id)
+    rating1 = params[:salary][:rating1]
+    rating2 = params[:salary][:rating2]
+    @goal_bunches = GoalBunch.where(period_id: period_id,final_rating_id: rating1..rating2)
     respond_to do |f|
       f.js
       f.xls {render template: 'goal_ratings/period_rating_wise.xls.erb'}

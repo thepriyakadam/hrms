@@ -37,7 +37,7 @@
       <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
       <div class="info-box-content">
         <span class="info-box-text">Direct Reportees</span>
-        <span class="info-box-number"><%= @employees.try(:count) %></span>
+        <span class="info-box-number"><%= @employees.where(status: "Active").try(:count) %></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
   </div><!-- /.col -->
@@ -253,7 +253,6 @@
       </div><!-- /.box -->
       <!-- End Thought of The Day -->
 
-      
     
           <!-- USERS LIST -->
       <div class="box box-info">
@@ -325,7 +324,56 @@
                  
               </div><!-- /.box -->
               
-            
+         
+  
+<!-- MANAGER Attendance Leave -->
+       <div class="box box-info">
+        <div class="box-header with-border">
+            <% @employee = Employee.where("status = ? AND manager_id = ? OR manager_2_id = ?", "Active",current_user.employee_id,current_user.employee_id).pluck(:id) %>
+        <% @employees = EmployeeAttendance.where(day: Date.today,employee_id: @employee).where.not(employee_leav_request_id: nil) %>
+          <h3 class="box-title"><font color="red">Manager Leave - <%= @employees.count %></font></h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <% date = Date.today %>
+            <% @employee = Employee.where("status = ? AND manager_id = ? OR manager_2_id = ?", "Active",current_user.employee_id,current_user.employee_id).pluck(:id) %>
+           <% @employees = EmployeeAttendance.where(day: date,employee_id: @employee).where.not(employee_leav_request_id: nil) %>
+          <% if @employees.empty? %>
+          <%else%>
+            <table id="example2" class="table no-margin">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Employee</th>
+                  <th>Department</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <% @employees.each do |e| %>
+                  <tr>
+                    <td>
+                      <%unless e.nil? or e.nil? or  e.employee.member.nil? or e.employee.member.avatar.nil? %>
+                         <% if e.employee.gender == "Male" && e.employee.member.avatar_file_name == nil  %>
+                         <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                         <% elsif e.employee.gender == "Female" && e.employee.member.avatar_file_name == nil  %>
+                         <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                         <%else%>
+                         <%= image_tag e.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
+                         <%end%> <!-- if -->
+                      <%end%> <!-- unless -->
+                    </td>
+                    <td><%= e.employee.manual_employee_code %> - <%= full_name(e.employee) %></td>
+                    <td><%= e.employee.try(:department).try(:name) %></td>
+                    <td><%= e.present %></td>
+                  </tr>
+              <% end %> <!-- do -->
+            </table>
+          <%end%> <!-- if employee.empty? -->
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->   
 
   <script type="text/javascript">
   $(document).ready(function() {
@@ -511,6 +559,267 @@
           </ul>
         </div><!-- /.box-body -->
       </div><!-- /.box -->
+      
+
+
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Employee Requests</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table no-margin">
+            <thead>
+                <tr>
+                  <td>
+                    <a href="/employee_leav_requests" class="dropdown-toggle" title="Leave Request"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-info">
+                        <%= @self_pending_leave %>
+                      </span><br>
+                      <span class="label label-info">
+                        Leave
+                      </span>
+                    </a>
+                  </td>
+
+                  <td>
+                    <a href="/on_duty_requests" class="dropdown-toggle" title="On Duty Request"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-warning">
+                        <%= @self_pending_od %>
+                      </span><br>
+                      <span class="label label-warning">
+                        OD
+                      </span>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="/self_services/leave_c_off" class="dropdown-toggle" title="COff Request"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-primary">
+                        <%= @self_leave_c_off %>
+                      </span><br>
+                      <span class="label label-primary">
+                        COff
+                      </span>
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="/self_services/travel_request" class="dropdown-toggle" title="Travel Request"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-success">
+                        <%= @self_travel_requests %>
+                      </span><br>
+                      <span class="label label-success">
+                        Travel
+                      </span>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="/travel_requests/daily_bill" class="dropdown-toggle" title="Expence Request"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-warning">
+                        <%= @self_expense_claim %>
+                      </span><br>
+                      <span class="label label-warning">
+                        Expence
+                      </span>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="/employee_plans" class="dropdown-toggle" title="Employee Plan Request"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-info">
+                        <%= @self_employee_plan %>
+                      </span><br>
+                      <span class="label label-info">
+                        Meeting
+                      </span>
+                    </a>
+                  </td>
+                </tr>
+              </thead>
+            </table>
+          </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+
+
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Admin Requests</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table no-margin">
+              <thead>
+                <tr>
+                  <td>
+                    <a href="/employee_leav_requests/all_leave_request_list" class="dropdown-toggle" title="Leave Request"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-info">
+                        <%= @all_pending_leave %>
+                      </span><br>
+                      <span class="label label-info">
+                        Leave
+                      </span>
+                    </a>
+                  </td>
+
+                  <td>
+                    <a href="/on_duty_requests/od_request_list" class="dropdown-toggle" title="On Duty Request"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-warning">
+                        <%= @all_pending_od %>
+                      </span><br>
+                      <span class="label label-warning">
+                        OD
+                      </span>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="/leave_c_offs/admin_c_off_approval" class="dropdown-toggle" title="COff Request"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-primary">
+                        <%= @admin_c_off %>
+                      </span><br>
+                      <span class="label label-primary">
+                        COff
+                      </span>
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="/travel_requests/all_travel_request" class="dropdown-toggle" title="Travel Request"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-success">
+                        <%= @admin_travel_requests %>
+                      </span><br>
+                      <span class="label label-success">
+                        Travel
+                      </span>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="/daily_bill_details/all_expence_request" class="dropdown-toggle" title="Expence Request"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-warning">
+                        <%= @admin_expense_claim %>
+                      </span><br>
+                      <span class="label label-warning">
+                        Expence
+                      </span>
+                    </a>
+                  </td>
+                  <td></td>
+                </tr>
+              </thead>
+            </table>
+          </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+
+
+
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Manager Requests</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table no-margin">
+            <thead>
+              <tr>
+                  <td>
+                    <a href="/employee_leav_requests" class="dropdown-toggle" title="Leave Request"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-info">
+                        <%= @pending_leave %>
+                      </span><br>
+                      <span class="label label-info">
+                        Leave
+                      </span>
+                    </a>
+                  </td>
+
+                  <td>
+                    <a href="/on_duty_requests" class="dropdown-toggle" title="On Duty Request"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-success">
+                        <%= @pending_od %>
+                      </span><br>
+                      <span class="label label-success">
+                        OD
+                      </span>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="/self_services/leave_c_off" class="dropdown-toggle" title="COff Request"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-primary">
+                        <%= @leave_c_off %>
+                      </span><br>
+                      <span class="label label-primary">
+                        COff
+                      </span>
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="/self_services/travel_request" class="dropdown-toggle" title="Travel Request"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-info">
+                        <%= @travel_requests %>
+                      </span><br>
+                      <span class="label label-info">
+                        Travel
+                      </span>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="/travel_requests/daily_bill" class="dropdown-toggle" title="Expence Request"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-success">
+                        <%= @expense_claim %>
+                      </span><br>
+                      <span class="label label-success">
+                        Expence
+                      </span>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="/employee_plans" class="dropdown-toggle" title="Employee Plan Request"> <i class="fa fa-bell-o"></i>
+                      <span class="label label-primary">
+                        <%= @employee_plan %>
+                      </span><br>
+                      <span class="label label-primary">
+                        Meeting
+                      </span>
+                    </a>
+                  </td>
+              </tr>
+              </tbody>
+            </table>
+          </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+
+
+
+
       
     </section><!-- right col -->
 

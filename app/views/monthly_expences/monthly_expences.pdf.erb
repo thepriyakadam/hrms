@@ -15,7 +15,6 @@
         <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
         <%end%>
           <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>.<br><strong>Monthly Expence</strong></center>
-          <center><strong><%= @from.strftime("%B-%Y")%> to <%= @to.strftime("%B-%Y") %></strong></center>
         </td>           
        </tr>
     <thead>

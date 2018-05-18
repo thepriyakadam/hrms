@@ -20,7 +20,7 @@
             <td><%= e.employee.company_location.try(:name) %> - <%= e.employee.department.try(:name) %></td>
             <td>
               <% if e.appraiser_confirm == true %>
-                <%= link_to 'Show Comment', appraiser_comment_goal_bunches_path(goal_id: e.id,emp_id: e.employee_id,period_id: e.period_id) ,class: 'btn btn-xs btn-primary' %>
+                <%= link_to 'Show Detail', appraiser_comment_goal_bunches_path(goal_id: e.id,emp_id: e.employee_id,period_id: e.period_id) ,class: 'btn btn-xs btn-primary' %>
               <% else %>
                 <%= link_to 'Appraiser Comment', appraiser_comment_goal_bunches_path(goal_id: e.id,emp_id: e.employee_id,period_id: e.period_id) ,class: 'btn btn-xs btn-info' %>
               <% end %>

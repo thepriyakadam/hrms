@@ -33,8 +33,30 @@ class LeaveCOffsController < ApplicationController
         @leave_c_offs = LeaveCOff.where(employee_id: @employees)
       end
     end
-     session[:active_tab] ="LeaveManagement"
-    session[:active_tab1] ="leaveadministration"
+  end
+
+  def maintenance_report
+    @leave_c_off = LeaveCOff.new
+    if current_user.class == Group
+      @leave_c_offs = LeaveCOff.all
+    else
+      if current_user.role.name == 'GroupAdmin'
+        @leave_c_offs = LeaveCOff.all
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
+        @leave_c_offs = LeaveCOff.where(employee_id: @employees)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @leave_c_offs = LeaveCOff.where(employee_id: @employees)
+      end
+    end
+      respond_to do |f|
+        f.js
+        f.xls {render template: 'leave_c_offs/c_off_maintenance.xls.erb'}
+        f.html
+      end
+      session[:active_tab] ="LeaveManagement"
+      session[:active_tab1] ="leaveadministration"
   end
 
   # GET /leave_c_offs/1/edit
@@ -340,20 +362,25 @@ class LeaveCOffsController < ApplicationController
 
     # if @leave_c_off.current_status != "FirstApproved"
     #   #expiry_status = params[:leave_c_off][:expiry_status]
+    joining_detail = JoiningDetail.find_by(employee_id: @leave_c_off.employee_id)
+    if joining_detail.c_off_expire == true
       @leave_c_off.update(expiry_status: true)
-      # c_off_expire_day = params[:leave_c_off][:c_off_expire_day]
-      c_off_expire_day = 45
+      c_off_expire_day = joining_detail.c_off_applicable_day.to_f
+      @expiry_date = @leave_c_off.c_off_date + c_off_expire_day.to_f
+    else
+      c_off_expire_day = nil
+      @expiry_date = nil
+    end
       # if @leave_c_off.expiry_status == true
-        @expiry_date = @leave_c_off.c_off_date + c_off_expire_day.to_i
       # else
       #   @expiry_date = nil
       # end
         @leave_c_off.update(status: true,current_status: "FinalApproved",expiry_date: @expiry_date,c_off_expire_day: c_off_expire_day)
         StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FinalApproved")
-    # else
-    #     @leave_c_off.update(status: true,current_status: "FinalApproved")
-    #     StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FinalApproved")     
-    # end#@leave_c_off.current_status != "FirstApproved" 
+      # else
+      #     @leave_c_off.update(status: true,current_status: "FinalApproved")
+      #     StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FinalApproved")     
+      # end#@leave_c_off.current_status != "FirstApproved" 
 
         is_exist = EmployeeLeavBalance.exists?(employee_id: @leave_c_off.employee_id, leav_category_id: leav_category.id)
         if is_exist

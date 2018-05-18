@@ -25,6 +25,7 @@
             <div class="thumbnail1"> 
               <% if gallery.pictures.first %>
               <%= link_to image_tag(gallery.pictures.first.image.url), gallery_path(gallery) %>
+              
               <% else %>
                 N/A
               <% end %>

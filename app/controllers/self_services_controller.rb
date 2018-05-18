@@ -245,42 +245,46 @@ class SelfServicesController < ApplicationController
               end#do
             end#c_off.nil?
 
-            if @emp_attendance.holiday_id.present? || @emp_attendance.employee_week_off_id.present?
-              if @emp_attendance.on_duty_request_id.present?
-                @on_duty_request = OnDutyRequest.find_by(id: @emp_attendance.on_duty_request_id)
-                if @on_duty_request.leave_type == "Half Day"
-                  @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Half Day",c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending",comment: @comment)
-                  StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
-                  flash[:notice] = "Your COff Created Successfully!"
-                  COffMailer.pending(@leave_c_off).deliver_now
-                else#@on_duty_request.leave_type == "Full Day"
-                  @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Full Day",c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending",comment: @comment)
-                  StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
-                  flash[:notice] = "Your COff Created Successfully!"
-                  COffMailer.pending(@leave_c_off).deliver_now
-                end#@on_duty_request.leave_type == "Half Day"
-              else#emp_attendance.on_duty_request_id != nil
-                if @emp_attendance.working_hrs.to_s < "07:00"
-                  if @emp_attendance.working_hrs.to_s < "04:00"
-                    flash[:alert] = "Working hours less then 4"
-                  else#working_hrs.to_s < "4:00"
-                    @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Half Day",
-                      c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending",comment: @comment)
+            if  @emp_attendance.present?
+              if @emp_attendance.holiday_id.present? || @emp_attendance.employee_week_off_id.present?
+                if @emp_attendance.on_duty_request_id.present?
+                  @on_duty_request = OnDutyRequest.find_by(id: @emp_attendance.on_duty_request_id)
+                  if @on_duty_request.leave_type == "Half Day"
+                    @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Half Day",c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending",comment: @comment)
                     StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
                     flash[:notice] = "Your COff Created Successfully!"
                     COffMailer.pending(@leave_c_off).deliver_now
-                  end#working_hrs.to_s < "4:00"
-                else#@emp_attendance.working_hrs.to_s < "7:00"
-                  @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Full Day",c_off_expire_day: 0,
-                    expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending",comment: @comment)
-                  StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
-                  flash[:notice] = "Your COff Created Successfully!"
-                  COffMailer.pending(@leave_c_off).deliver_now
-                end#@emp_attendance.working_hrs.to_s < "7:00"
-              end#@emp_attendance.on_duty_request_id != nil
-            else#@emp_attendance.holiday_id != nil
-              flash[:alert] = "Holiday Or Week Off not available !"
-            end#@emp_attendance.holiday_id != nil
+                  else#@on_duty_request.leave_type == "Full Day"
+                    @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Full Day",c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending",comment: @comment)
+                    StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
+                    flash[:notice] = "Your COff Created Successfully!"
+                    COffMailer.pending(@leave_c_off).deliver_now
+                  end#@on_duty_request.leave_type == "Half Day"
+                else#emp_attendance.on_duty_request_id != nil
+                  if @emp_attendance.working_hrs.to_s < "07:00"
+                    if @emp_attendance.working_hrs.to_s < "04:00"
+                      flash[:alert] = "Working hours less then 4"
+                    else#working_hrs.to_s < "4:00"
+                      @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Half Day",
+                        c_off_expire_day: 0,expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending",comment: @comment)
+                      StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
+                      flash[:notice] = "Your COff Created Successfully!"
+                      COffMailer.pending(@leave_c_off).deliver_now
+                    end#working_hrs.to_s < "4:00"
+                  else#@emp_attendance.working_hrs.to_s < "7:00"
+                    @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Full Day",c_off_expire_day: 0,
+                      expiry_status: nil,expiry_date: nil,is_expire: false,leave_count: 1,status: false,current_status: "Pending",comment: @comment)
+                    StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
+                    flash[:notice] = "Your COff Created Successfully!"
+                    COffMailer.pending(@leave_c_off).deliver_now
+                  end#@emp_attendance.working_hrs.to_s < "7:00"
+                end#@emp_attendance.on_duty_request_id != nil
+              else#@emp_attendance.holiday_id != nil
+                flash[:alert] = "Holiday Or Week Off not available !"
+              end#@emp_attendance.holiday_id != nil
+            else
+              flash[:alert] = "Attendance not available !"
+            end#@emp_attendance.present?
 
           end#leav_category.nil?
       end#@leave_c_off.is_self_present(@employee_id,@c_off_date)

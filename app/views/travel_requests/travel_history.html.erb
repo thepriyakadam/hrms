@@ -36,6 +36,7 @@
          <small class="label label-primary">Approved</small>
          <% elsif travel_request.current_status == "FirstApproved" %>
          <small class="label label-info">FirstApproved</small>
+         <%= link_to 'Approve', travel_request_confirmation_travel_requests_path(travel_request),class: 'btn btn-xs btn-primary' %>
          <% elsif travel_request.current_status == "Rejected" %>
          <small class="label label-primary">Rejected</small>
          <% else %>

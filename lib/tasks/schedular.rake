@@ -1,8 +1,9 @@
 require 'rake'
+
 namespace :atte_task do
   desc 'attendance data'
   task :fetch_att => :environment do
-    DailyAttendance.fetch_data(2)
+    DailyAttendance.fetch_data(10)
   end
 
   desc 'calculate attendance'

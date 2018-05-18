@@ -56,7 +56,6 @@ Rails.application.routes.draw do
 
   resources :daily_attendances do 
     collection do
-      get :third_attendance
       get :attendance
       get :calculate
       get :daily_attendance
@@ -1170,7 +1169,6 @@ end
 
   resources :goal_ratings do
     collection do
-      get :goal_wise
       get :periodwise_goal_set
       post :periodwise_goal_list
       post :set_goal_periodwise
@@ -1212,8 +1210,6 @@ end
       post :create_for_multiple
       get :employee_goal_wise
       post :print_employee
-      post :detail_goal_wise_pdf
-      get :detail_goal_wise_pdf
       post :detail_goal_wise
       get :detail_goal_wise
       get :detail_goal_wise_xls
@@ -1225,7 +1221,6 @@ end
       get :print_employee_wise
       get :detail_employee_wise_xls
       get :period_rating_wise
-      post :period_rating_wise
       post :Period_rating_wise_employee
       get :Period_rating_wise_employee
       get :period_rating_wise_pdf
@@ -1665,7 +1660,6 @@ end
   resources :daily_bill_details do
     collection do
     # post :is_confirm
-    get :all_expence_request
     get :is_confirm
     get :print_daily_bill
     get :daily_bill_history
@@ -1691,7 +1685,6 @@ end
   end
   resources :travel_requests do
     collection do
-      get :all_travel_request
       get :show_travel_process
       get :show_request_modal
       get :daily_bill
@@ -1926,8 +1919,6 @@ end
       get :modal
       get :detail_modal
       get :modal_c_off
-      get :c_off_maintenance
-      get :maintenance_report
     end
   end
 

@@ -3335,6 +3335,12 @@ end
     get 'user_auths/get_time_sheet' => 'user_auths#get_time_sheet', defaults:{format: 'json'}
     get 'user_auths/get_help_disk_list' => 'user_auths#get_help_disk_list', defaults:{format: 'json'}
     get 'user_auths/all_issue_tracker_group' => 'user_auths#all_issue_tracker_group', defaults:{format: 'json'}
-    
+    get 'user_auths/cancel_help_desk_request' => 'user_auths#cancel_help_desk_request', defaults:{format: 'json'}
+    get 'user_auths/group_type' => 'user_auths#group_type', defaults:{format: 'json'}
+    get 'user_auths/collect_issues' => 'user_auths#collect_issues', defaults:{format: 'json'}
+    get 'user_auths/daily_bill_request_confirmation' => 'user_auths#daily_bill_request_confirmation', defaults:{format: 'json'}
+    get 'user_auths/lock_request_list' => 'user_auths#lock_request_list', defaults:{format: 'json'}
+    get 'user_auths/solved_issue_list' => 'user_auths#solved_issue_list', defaults:{format: 'json'}
+    get 'user_auths/manager_daily_attendance' => 'user_auths#manager_daily_attendance', defaults:{format: 'json'}
   end
 end

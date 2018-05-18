@@ -44,6 +44,6 @@ end
 #end
 
 
-every 1.minutes do 
-   rake 'atte_task:fetch_data'
-end
+# every 1.minutes do 
+#    rake 'atte_task:fetch_data'
+# end

@@ -2,16 +2,21 @@
   <div class="box-header">
     <h3 class="box-title">Employee Advance Salary</h3>
     <div class="pull-right">
-      <%= link_to 'New Advance salary', new_advance_salary_path, class: 'btn btn-sm btn-primary' %> 
+      <%= link_to 'New Advance salary', new_advance_salary_path, class: 'btn btn-xs btn-primary' %> 
+
+      <%= link_to " Excel ",advances_advance_salaries_path(month: @month,year: @year, format: "xls"), class: "btn btn-sm btn-success fa fa-print" %>
+      <%= link_to " PDF ",advances_advance_salaries_path(month: @month,year: @year, format: "pdf"), class: "btn btn-sm btn-info fa fa-print", :target => "_blank" %>
     </div>
-    
   </div><!-- /.box-header -->
   <div class="box-body">
   <div id="comments">
+
+  <% i = 0 %>
     <table id="example6" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>Employee ID</th>
+        <th>Sr No.</th>
+        <th>ID</th>
         <th>Employee Name</th>
         <th>Advance Amount</th>
         <th>Action</th>
@@ -21,10 +26,11 @@
     <tbody>
       <% @advance_salaries.each do |advance_salary| %>
         <tr>
-         <td><%= advance_salary.employee.try(:manual_employee_code) %></td>
-         <td><%= full_name(advance_salary.employee) %></td>
-         <td><%= advance_salary.advance_amount %></td>
-         <td>
+          <td><%= i = i + 1 %></td>
+          <td><%= advance_salary.employee.try(:manual_employee_code) %></td>
+          <td><%= full_name(advance_salary.employee) %></td>
+          <td><%= advance_salary.advance_amount %></td>
+          <td>
             <%= link_to '', edit_advance_salary_path(advance_salary), class: 'btn btn-xs btn-success fa fa-edit' %>
             <!-- link_to '', advance_salary, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-sm  btn-danger fa fa-close' -->
             <%= link_to '', advance_salary ,class: 'btn btn-xs btn-default fa fa-eye' %>

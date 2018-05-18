@@ -1249,8 +1249,6 @@ end
   #post 'goal_ratings/update_goal_set_modal'
   resources :goal_bunches do
     collection do
-      get :period_list_for_status
-      get :status_list
       get :appraisee_detail_list
       get :ajax_upload_document
       post :show_periodwise_employee
@@ -2202,6 +2200,8 @@ end
       get :modal
       get :import_monthly_expence
       post :import
+      get :delete_monthly_expence
+      get :edit_monthly_expence
     end
   end
   resources :expencess_types do

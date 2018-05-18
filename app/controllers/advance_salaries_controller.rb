@@ -67,6 +67,8 @@ class AdvanceSalariesController < ApplicationController
   # DELETE /advance_salaries/1
   # DELETE /advance_salaries/1.json
   def destroy
+    advance_salary = @advance_salary.id
+    Instalment.where(advance_salary_id: advance_salary).destroy_all
     @advance_salary.destroy
     respond_to do |format|
       format.html { redirect_to advance_salaries_url, notice: 'Advance salary was successfully destroyed.' }
@@ -116,6 +118,20 @@ class AdvanceSalariesController < ApplicationController
         @advance_salaries = AdvanceSalary.where("DATE_FORMAT(advance_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
       end
      end
+
+      respond_to do |f|
+        f.js
+        f.xls {render template: 'advance_salaries/advance_salary_xls.xls.erb'}
+        f.html
+        f.pdf do
+          render pdf: 'advance_salary',
+          layout: 'pdf.html',
+          orientation: 'Landscape',
+          template: 'advance_salaries/advance_salary.pdf.erb',
+          show_as_html: params[:debug].present?
+          #margin:  { top:1,bottom:1,left:1,right:1 }
+        end
+      end
   end
 
   def advance_salary_report

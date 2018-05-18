@@ -388,17 +388,17 @@ class SalaryslipsController < ApplicationController
             end
           end
 
-          date = Date.new(@year.to_i, Workingday.months[@month])
-          @latemark_deductions = LatemarkDeduction.where(latemark_day: date..date.at_end_of_month, employee_id: @employee.id)
-          unless @latemark_deductions.empty?
-            @latemark_deductions.each do |f|
-              f.update(paid: true)
-              deducted_actual_amount = 0
-              deducted_calculated_amount = f.latemark_amount
-              deducted_total_actual_amount += deducted_actual_amount
-              deducted_total_calculated_amount += deducted_calculated_amount
-            end
-          end
+          # date = Date.new(@year.to_i, Workingday.months[@month])
+          # @latemark_deductions = LatemarkDeduction.where(latemark_day: date..date.at_end_of_month, employee_id: @employee.id)
+          # unless @latemark_deductions.empty?
+          #   @latemark_deductions.each do |f|
+          #     f.update(paid: true)
+          #     deducted_actual_amount = 0
+          #     deducted_calculated_amount = f.latemark_amount
+          #     deducted_total_actual_amount += deducted_actual_amount
+          #     deducted_total_calculated_amount += deducted_calculated_amount
+          #   end
+          # end
 
           @monthly_expences = MonthlyExpence.where(employee_id: @employee.id, expence_date: date.all_month)
           @monthly_expences.try(:each) do |m|
@@ -617,8 +617,8 @@ class SalaryslipsController < ApplicationController
                 formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
                 @total = formula_item.sum(:calculated_amount)
                 @total_actual = formula_item.sum(:actual_amount)
-                if @employee.gender = "Female" && @total.to_f < 10001
-                else
+                #if @employee.gender = "Female" && @total.to_f < 10001
+                #else
                   if s.basis_actual_amount == true
                     if @total_actual.between?(s.min_amount, s.max_amount) && @month != "February" && @employee.company_location_id == s.company_location_id
                       @salary_component = SalaryComponent.find_by(name: "Professional Tax")
@@ -640,7 +640,7 @@ class SalaryslipsController < ApplicationController
                         is_deducted: true, other_component_name: 'Professional Tax',salary_component_id: @salary_component.id)
                     end
                   end
-                end
+                #end
               end
 
               if @employee.joining_detail.have_retention == true      
@@ -741,11 +741,13 @@ class SalaryslipsController < ApplicationController
               @salary_compon=SalaryComponent.find_by(name: "Income Tax")
               @salary_compon1=SalaryComponent.find_by(name: "GMC")
               @salary_compon2=SalaryComponent.find_by(name: "Bank Loan")
+               @salary_compon3=SalaryComponent.find_by(name: "Latemark Deduction")
               @mobile_deduction = 0
               @income_tax_deduction = 0
               @other_deduction = 0
               @gmk_deduction = 0
               @bank_loan = 0
+              @latemark_deduction = 0
               @monthly_expences.try(:each) do |m|
                 if m.expencess_type.name == @salary_component.name
                  @mobile_deduction = @mobile_deduction + m.amount
@@ -757,6 +759,8 @@ class SalaryslipsController < ApplicationController
                   @gmk_deduction = @gmk_deduction + m.amount
                 elsif m.expencess_type.name == @salary_compon2.name
                   @bank_loan = @bank_loan + m.amount
+                elsif m.expencess_type.name == @salary_compon3.name
+                  @latemark_deduction = @latemark_deduction + m.amount
                 end
               end
               if @salary_component.name &&  @salary_component.is_active == true
@@ -778,6 +782,11 @@ class SalaryslipsController < ApplicationController
               if @salary_compon2.name && @salary_compon2.is_active == true
                 SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @bank_loan, calculated_amount: @bank_loan, 
                   is_deducted: true, other_component_name: @salary_compon2.name,salary_component_id:  @salary_compon2.id)
+              end
+
+              if @salary_compon3.name && @salary_compon3.is_active == true
+                SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @latemark_deduction, calculated_amount: @latemark_deduction, 
+                  is_deducted: true, other_component_name: @salary_compon3.name,salary_component_id:  @salary_compon3.id)
               end
  
               # BonusEmployee.create_bonus(basic_calculated_amount, @employee.id, date)

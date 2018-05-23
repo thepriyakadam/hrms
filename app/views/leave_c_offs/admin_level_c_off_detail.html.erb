@@ -65,18 +65,22 @@
         <tr>
           <th>ID</th>
           <td><%= @current_request.employee.try(:manual_employee_code) %></td>
-        </tr>
-        <tr>
           <th>Employee</th>
           <td><%= full_name(@employee) %></td>
         </tr>
         <tr>
           <th>Date</th>
           <td><%= @current_request.c_off_date %></td>
+          <th>COff Count</th>
+          <td><%= @current_request.leave_count %></td>
+        </tr>
+        <tr>
+          <th>Comment</th>
+          <td colspan="3"><%= @current_request.comment %></td>
         </tr>
         <tr>
           
-            <th colspan="2"><center>
+            <th colspan="4"><center>
               <%= link_to 'Approve', final_approve_leave_c_offs_path(@current_request.id),class: 'btn btn-xs btn-success' %>
               <%= link_to 'Reject', final_reject_leave_c_offs_path(@current_request.id),class: 'btn btn-xs btn-danger' %>
             </th>

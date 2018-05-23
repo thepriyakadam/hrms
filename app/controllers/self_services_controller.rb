@@ -218,6 +218,12 @@ class SelfServicesController < ApplicationController
 
     if @joining_detail.c_off == true
 
+      if @leave_c_off.is_self_present(@employee_id,@c_off_date)
+        flash[:alert] = "Your COff already set for that day"
+      else
+        @leave_c_off = LeaveCOff.new(leave_c_off_params)
+        @leave_c_offs = LeaveCOff.all
+        
         if @joining_detail.c_off_expire == true
           c_off_expire_day = @joining_detail.c_off_applicable_day.to_f
           @expiry_date = @c_off_date.to_date + c_off_expire_day.to_f
@@ -232,11 +238,6 @@ class SelfServicesController < ApplicationController
         @leave_c_off.expiry_status = @expiry_status
 
 
-      if @leave_c_off.is_self_present(@employee_id,@c_off_date)
-        flash[:alert] = "Your COff already set for that day"
-      else
-        @leave_c_off = LeaveCOff.new(leave_c_off_params)
-        @leave_c_offs = LeaveCOff.all
         @emp_attendance = EmployeeAttendance.where(employee_id: @employee_id,day: @c_off_date.to_date).take
         
           if leav_category.nil?

@@ -54,19 +54,20 @@
                    <% if issue_request.status == true %>
                     <small class="label label-primary">Solved By <!--<= current_user.employee.try(:manual_employee_code) %>--><%= issue_request.issue_tracker_member.employee.try(:manual_employee_code)%></small>
                    <% else %>
-                  <% if issue_request.issue_tracker_member_id == nil %>
-                  <div id="myModal" class="modal fade"></div>
-                    <%= link_to '',modal_issue_requests_path(issue_request),class: 'btn btn-sm btn-danger fa fa-lock ',remote: true %> 
-                  <% else %> 
-                    <small class="label label-primary">Locked by <%= issue_request.issue_tracker_member.employee.try(:manual_employee_code) %></small>
-                  <% end %> 
-                    <% if issue_request.issue_tracker_member.try(:employee_id) == current_user.employee_id %>
-                     <%= link_to '',unlock_request_issue_requests_path(issue_request),class: 'btn btn-sm btn-warning fa fa-unlock-alt',data: { confirm: 'Are you sure?' } %> |
-                     <%= link_to 'Solved',modal1_issue_requests_path(issue_request),class: 'btn btn-xs btn-success',remote: true %>
-                     <div id="myModal1" class="modal fade"></div>
-                     <% else %>
-                    
-                     <% end %> 
+                   
+                        <% if issue_request.issue_tracker_member_id == nil %>
+                          <div id="myModal" class="modal fade"></div>
+                            <%= link_to '',modal_issue_requests_path(issue_request),class: 'btn btn-sm btn-danger fa fa-lock ',remote: true %> 
+                          <% else %> 
+                            <small class="label label-primary">Locked by <%= issue_request.issue_tracker_member.employee.try(:manual_employee_code) %></small>
+                          <% end %> 
+                          <% if issue_request.issue_tracker_member.try(:employee_id) == current_user.employee_id %>
+                           <%= link_to '',unlock_request_issue_requests_path(issue_request),class: 'btn btn-sm btn-warning fa fa-unlock-alt',data: { confirm: 'Are you sure?' } %> |
+                           <%= link_to 'Solved',modal1_issue_requests_path(issue_request),class: 'btn btn-xs btn-success',remote: true %>
+                           <div id="myModal1" class="modal fade"></div>
+                           <% else %>
+                          
+                           <% end %> 
                   <% end %> 
                    <%#= link_to '', issue_request,class: 'btn btn-sm btn-default fa fa-eye' %>
                    <%= link_to '',request_detail_modal_issue_requests_path(issue_request_id: issue_request),class: 'btn btn-sm btn-default fa fa-eye',remote: true %>

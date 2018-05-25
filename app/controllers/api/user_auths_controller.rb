@@ -2354,6 +2354,12 @@ class Api::UserAuthsController < ApplicationController
     render :json => issue_masters.present? ? issue_masters.collect{|issue_masters| { :id => issue_tracker_group.id, :issue_tracker_group_id => issue_masters.issue_tracker_group_id, :issue_type_id => issue_masters.try(:issue_type_id), :name => issue_masters.name, :description => issue_masters.description, :status => issue_masters.status, :is_confirm => issue_masters.is_confirm }} : []
   end
 
+  def collect_issues_description
+    @issue_master_id = IssueMaster.find(params[:issue_type_id])
+    @des = @issue_master_id.description
+    render :status=>200, :json=>{:description => @des }
+  end
+  
   def daily_bill_request_confirmation
     travel_request_id = params[:travel_requests_id]
     @travel_request = TravelRequest.find(travel_request_id)
@@ -2365,7 +2371,7 @@ class Api::UserAuthsController < ApplicationController
     employee_id = params[:employee_id]
     @issue_tracker_member_id = IssueTrackerMember.find_by(employee_id: employee_id)
     issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member_id.issue_tracker_group_id,status: nil)
-    render :json => issue_requests.present? ? issue_requests.collect{|issue_requests| {:id => issue_requests.try(:id), :tracker_member_employee_id => issue_requests.try(:issue_tracker_member).try(:employee_id), :manual_employee_code => issue_requests.try(:employee).try(:manual_employee_code), :prefix => issue_requests.employee.try(:prefix), :employee_first_name => issue_requests.employee.try(:first_name), :employee_middle_name => issue_requests.employee.try(:middle_name), :employee_last_name => issue_requests.employee.try(:last_name), :issue_master_id => issue_requests.try(:issue_master).try(:name), :issue_tracker_member_id => issue_requests.try(:issue_tracker_member).try(:name), :issue_tracker_group_id => issue_requests.try(:issue_tracker_group).try(:name), :description => issue_requests.try(:description), :date => issue_requests.try(:date),:time => issue_requests.try(:time), :employee_id => issue_requests.try(:employee_id), :issue_priority => issue_requests.try(:issue_priority),:is_confirm => issue_requests.try(:is_confirm), :status => issue_requests.try(:status), :issue_root_cause => issue_requests.try(:issue_root_cause).try(:name), :effort_time => issue_requests.try(:effort_time).try(:name), :comment => issue_requests.try(:comment), :is_complete => issue_requests.try(:is_complete), :contact_no => issue_requests.try(:employee).try(:contact_no), :email => issue_requests.try(:employee).try(:email), :department => issue_requests.try(:employee).try(:department).try(:name), :document1_file_name => issue_requests.try(:document1_file_name), :document2_file_name => issue_requests.try(:document2_file_name), :support_description => issue_requests.try(:issue_master).try(:description) }} : []
+    render :json => issue_requests.present? ? issue_requests.collect{|issue_requests| {:id => issue_requests.try(:id), :tracker_member_employee_id => issue_requests.try(:issue_tracker_member).try(:employee_id), :manual_employee_code => issue_requests.try(:employee).try(:manual_employee_code), :prefix => issue_requests.employee.try(:prefix), :employee_first_name => issue_requests.employee.try(:first_name), :employee_middle_name => issue_requests.employee.try(:middle_name), :employee_last_name => issue_requests.employee.try(:last_name), :issue_master_id => issue_requests.try(:issue_master).try(:name), :issue_tracker_member_id => issue_requests.try(:issue_tracker_member).try(:name), :issue_tracker_group_id => issue_requests.try(:issue_tracker_group).try(:name), :description => issue_requests.try(:description), :date => issue_requests.try(:date),:time => issue_requests.try(:time), :employee_id => issue_requests.try(:employee_id), :issue_priority => issue_requests.try(:issue_priority),:is_confirm => issue_requests.try(:is_confirm), :status => issue_requests.try(:status), :issue_root_cause => issue_requests.try(:issue_root_cause).try(:name), :effort_time => issue_requests.try(:effort_time).try(:name), :comment => issue_requests.try(:comment), :is_complete => issue_requests.try(:is_complete), :contact_no => issue_requests.try(:employee).try(:contact_no), :email => issue_requests.try(:employee).try(:email), :department => issue_requests.try(:employee).try(:department).try(:name), :document1_file_name => issue_requests.try(:document1_file_name), :document2_file_name => issue_requests.try(:document2_file_name), :support_description => issue_requests.try(:issue_master).try(:description), :statuss => issue_requests.try(:status) }} : []
   end
 
   def solved_issue_list
@@ -2382,4 +2388,80 @@ class Api::UserAuthsController < ApplicationController
     render :json => emp_daily_att.present? ? emp_daily_att.collect{|eda| { :id => eda.id, :date => eda.date, :time => eda.time.strftime("%I:%M %p"), :employee_code => eda.employee_code, :latitude => eda.latitude, :longitude => eda.longitude, :place => eda.place, :note => eda.comment }} : []
   end
 
+  def create_support_request
+    employee_id = params[:employee_id]
+    date = params[:date]
+    time = params[:time]
+    group_id = params[:group_id]
+    master_id = params[:master_id]
+    issue_priority = params[:issue_priority]
+    description = params[:description]
+
+    @issue_request = IssueRequest.new(employee_id: employee_id, date: date, time: time, issue_tracker_group_id: group_id, issue_master_id: master_id, issue_priority: issue_priority, description: description)
+    if @issue_request.save
+      IssueHistory.create(issue_tracker_group_id: @issue_request.issue_tracker_group_id,issue_request_id: @issue_request.id,issue_master_id: @issue_request.issue_master_id,description: @issue_request.description,date: @issue_request.date,time: @issue_request.time,employee_id: @issue_request.employee_id,status: @issue_request.status,issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_priority: @issue_request.issue_priority)
+      @c1 = IssueTrackerGroup.where(id: @issue_request.issue_tracker_group_id).pluck(:id)
+      @c2 = IssueTrackerMember.where(issue_tracker_group_id: @c1).pluck(:employee_id)
+      @emp = Employee.where(id: @c2)
+      @emp.each do |s|
+        IssueRequestMailer.issue_tracker_group_email(s.email, @issue_request, @c1, @c2).deliver_now
+      end
+      render :status=>200, :json=>{:status=> 'Support request was Successfully saved' }
+    else
+      render :status=>200, :json=>{:status=> 'unprocessable_entity' }
+    end
+  end
+
+  def unlock_request
+    issue_request = params[:issue_request]
+    @issue_request = IssueRequest.find(issue_request)
+    @issue_request.update(issue_tracker_member_id: nil,status: nil)
+    @issue_locker = IssueLocker.where(issue_request_id: @issue_request.id).take
+    IssueLocker.where(issue_request_id: @issue_request.id).update_all(status: nil)
+    IssueLockerHistory.create(issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_locker_id: @issue_locker.id,issue_request_id: @issue_request.id,status: nil)
+    render :status=>200, :json=>{:status=> 'Support Request Unlocked Successfully' }
+  end
+
+  def lock_request
+    issue_request = params[:issue_request]
+    lock_date = params[:date]
+    lock_time = params[:time]
+    employee_id = params[:employee_id]
+    @issue_tracker_member = params[:issue_tracker_member_id]
+    @issue_request = IssueRequest.find(issue_request)
+    IssueRequest.where(id: @issue_request.id).update_all(issue_tracker_member_id: @issue_tracker_member)
+    @issue_tracker_member_id = IssueTrackerMember.find_by(employee_id: employee_id)
+    @c1=IssueLocker.create(lock_time: lock_time,lock_date: lock_date,issue_request_id: @issue_request.id,status: true,issue_tracker_member_id: @issue_tracker_member)
+    IssueLockerHistory.create(lock_time: lock_time,lock_date: lock_date,issue_tracker_member_id: @issue_tracker_member,issue_locker_id: @c1.id,issue_request_id: @issue_request.id,status: true)
+    render :status=>200, :json=>{:status=> 'Support Request Locked Successfully' }
+  end
+
+  def solved_request
+    issue_request = params[:issue_request]
+    description = params[:description]
+    effort_time = params[:effort_time]
+    time = params[:time]
+    employee_id = params[:employee_id]
+    support_root_cause = params[:support_root_cause_id]
+    comment = params[:comment]
+    @issue_request = IssueRequest.find(issue_request)
+    @issue_request.update(status: true, issue_root_cause_id: support_root_cause, comment: comment, time: time, effort_time: effort_time)
+    IssueHistory.create(issue_tracker_group_id: @issue_request.issue_tracker_group_id,issue_request_id: @issue_request.id,issue_master_id: @issue_request.issue_master_id,description: @issue_request.description,date: @issue_request.date,time: @issue_request.time,employee_id: employee_id,issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_priority: @issue_request.issue_priority,status: true)
+    render :status=>200, :json=>{:status=> 'Support Request Solved Successfully' }
+  end
+
+  def issue_tracker_member_list
+    issue_request = params[:issue_request]
+    issue_tracker_member = IssueTrackerMember.where(status: true,issue_tracker_group_id: issue_request)
+    render :json => issue_tracker_member.present? ? issue_tracker_member.collect{|itm| { :id => itm.id, :prefix => itm.employee.prefix, :employee_first_name => itm.employee.first_name, :employee_middle_name => itm.employee.middle_name, :employee_last_name => itm.employee.last_name }} : []
+  end
+
+  def support_root_cause_list
+    all_issue_root_cause = IssueRootCause.all
+    render :json => all_issue_root_cause.present? ? all_issue_root_cause.collect{|itm| { :id => itm.id, :name => itm.name }} : []
+  end
+
+ def apk_link
+  @a = href="/Apk/android-armv7-debug.apk"
+ end
 end

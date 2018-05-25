@@ -3342,5 +3342,13 @@ end
     get 'user_auths/lock_request_list' => 'user_auths#lock_request_list', defaults:{format: 'json'}
     get 'user_auths/solved_issue_list' => 'user_auths#solved_issue_list', defaults:{format: 'json'}
     get 'user_auths/manager_daily_attendance' => 'user_auths#manager_daily_attendance', defaults:{format: 'json'}
+    get 'user_auths/collect_issues_description' => 'user_auths#collect_issues_description', defaults:{format: 'json'}
+    post 'user_auths/create_support_request' => 'user_auths#create_support_request', defaults:{format: 'json'}
+    get 'user_auths/unlock_request' => 'user_auths#unlock_request', defaults:{format: 'json'}
+    post 'user_auths/lock_request' => 'user_auths#lock_request', defaults:{format: 'json'}
+    post 'user_auths/solved_request' => 'user_auths#solved_request', defaults:{format: 'json'}
+    get 'user_auths/issue_tracker_member_list' => 'user_auths#issue_tracker_member_list', defaults:{format: 'json'}
+    get 'user_auths/support_root_cause_list' => 'user_auths#support_root_cause_list', defaults:{format: 'json'}
+    get 'user_auths/apk_link' => 'user_auths#apk_link', defaults:{format: 'json'}
   end
 end

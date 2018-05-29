@@ -76,7 +76,6 @@ class LeaveCOffsController < ApplicationController
         @leave_c_offs = LeaveCOff.all
         leav_category = LeavCategory.find_by(code: 'C.Off')
 
-
         joining_detail = JoiningDetail.find_by(employee_id: @leave_c_off.employee_id)
         if joining_detail.c_off_expire == true
           c_off_expire_day = joining_detail.c_off_applicable_day.to_f
@@ -373,17 +372,6 @@ class LeaveCOffsController < ApplicationController
     redirect_to leave_c_off_manager_self_services_path
   end
 
-  def reject_c_off
-    @leave_c_off = LeaveCOff.find(params[:format])
-    @status_c_off = StatusCOff.find_by(leave_c_off_id: @leave_c_off.id)
-    @status_c_off.destroy
-    @leave_c_off.destroy
-    #StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FirstRejected")
-    flash[:notice] = "Rejected successfully"
-    COffMailer.first_reject(@leave_c_off).deliver_now
-    redirect_to leave_c_off_manager_self_services_path
-  end
-
   def admin_approve_modal
     @leave_c_off = LeaveCOff.find(params[:format])
   end
@@ -429,11 +417,17 @@ class LeaveCOffsController < ApplicationController
             @c_off.each do |l|
               if l.try(:expiry_date).to_date < Date.today
                 @employee_leave_balance = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take  
-                @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - l.leave_count
-                LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
-                @employee_leave_balance.save
+                if @employee_leave_balance.nil?
+                else
+                  @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - l.leave_count
+                  LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
+                  @employee_leave_balance.save
+                end
               else
-                @employee_leave_balance.save
+                if @employee_leave_balance.nil?
+                else
+                  @employee_leave_balance.save
+                end
               end
             end
           else #Half Day
@@ -446,11 +440,17 @@ class LeaveCOffsController < ApplicationController
             @c_off.each do |l|
               if l.try(:expiry_date) < Date.today
                 @employee_leave_balance = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take
-                @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - l.leave_count
-                LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
-              @employee_leave_balance.save
+                if @employee_leave_balance.nil?
+                else
+                  @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - l.leave_count
+                  LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
+                  @employee_leave_balance.save
+                end
               else
-              @employee_leave_balance.save
+                if @employee_leave_balance.nil?
+                else
+                  @employee_leave_balance.save
+                end
               end
             end
           end
@@ -485,11 +485,17 @@ class LeaveCOffsController < ApplicationController
             @c_off.each do |l|
               if l.try(:expiry_date).to_date < Date.today
                 @employee_leave_balance = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take  
-                @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - l.leave_count
-                LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
-                @employee_leave_balance.save
+                if @employee_leave_balance.nil?
+                else
+                  @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - l.leave_count
+                  LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
+                  @employee_leave_balance.save
+                end
               else
-                @employee_leave_balance.save
+                if @employee_leave_balance.nil?
+                else
+                  @employee_leave_balance.save
+                end
               end
             end #do
         end #is_exist
@@ -512,6 +518,17 @@ class LeaveCOffsController < ApplicationController
     #StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FinalRejected")
     flash[:notice] = "Rejected successfully"
     COffMailer.final_reject(@leave_c_off,@current_emp).deliver_now
+    redirect_to leave_c_off_manager_self_services_path
+  end
+
+  def reject_c_off
+    @leave_c_off = LeaveCOff.find(params[:format])
+    @status_c_off = StatusCOff.find_by(leave_c_off_id: @leave_c_off.id)
+    @status_c_off.destroy
+    @leave_c_off.destroy
+    #StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: current_user.employee_id,status: "FirstRejected")
+    flash[:notice] = "Rejected successfully"
+    COffMailer.first_reject(@leave_c_off).deliver_now
     redirect_to leave_c_off_manager_self_services_path
   end
 

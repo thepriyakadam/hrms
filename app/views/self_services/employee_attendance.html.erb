@@ -1,10 +1,14 @@
 <div class="box">
   <div class="box-header">
     <h3 class="box-title"> Attendance </h3>
+
+    <div class="pull-right">
+      <%= link_to '', modal_info_about_attendance_self_services_path, class: 'btn btn-default fa fa-eye btn-sm',remote:true %>
+    </div>
+    <div id="info_about_attendance" class="modal fade"></div>
   </div>
  <div class="box-body">
-  <%= bootstrap_form_for(:employee, url: { action: 'show_self_datewise_attendance'},html: {id: "employee"}) do |f| %>
-
+  <%= bootstrap_form_for(:employee, url: { action: 'show_self_datewise_attendance'},html: {id: "employee"},remote: true) do |f| %>
   <%= hidden_field :employee,:employee_id, value: current_user.employee_id %>
     <div class="row">
         <div class="col-sm-3">
@@ -41,6 +45,7 @@
             </div>
           </div>
         </div> -->
+        <div id="self_datewise_attendance"></div>
       
       </div>
     
@@ -49,6 +54,11 @@
 </div>
     
 <script type="text/javascript">
+    $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#employee_attendance").submit();
+  })
+  
   
    $(function(){
     $('.from_date').datepicker({

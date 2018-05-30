@@ -28,7 +28,8 @@
             <tr>
               <th colspan="10"><%= @employee.try(:manual_employee_code) %> <%= full_name(@employee) %></th>
               <td colspan="2"><%#= link_to " Print Form ", display_declaration_details_investment_declarations_path(id: @employee.id,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
-              <%= link_to 'Update Declaration', show_declaration_details_investment_declarations_path(employee_id: params[:employee_id]),class: "btn btn-primary btn-sm" %> 
+              <%#= link_to 'Update Declaration', show_declaration_details_investment_declarations_path(employee_id: params[:employee_id]),class: "btn btn-primary btn-sm" %> 
+              <%= link_to 'Edit Declaration', show_employee_declaration_investment_declarations_path(employee_id: params[:employee_id]),class: "btn btn-primary btn-sm" %> 
               </td>
             </tr>
             <tr>
@@ -67,6 +68,20 @@
               		<th colspan="10"><%= 'Maximum Limit Rs.25,000/-' %></th>
               	<% elsif section_code == '24' %>	
               		<th colspan="10"><%= 'Maximum Limit Rs.2,00,000/-' %></th>
+                <% elsif section_code == '80CCC' %> 
+                  <th colspan="10"><%= 'Maximum Limit Rs.1,50,000/-' %></th>
+                <% elsif section_code == '80CCD' %> 
+                  <th colspan="10"><%= 'Maximum Limit less than 10% of the salary' %></th> 
+                <% elsif section_code == '80CCF' %> 
+                  <th colspan="10"><%= 'Maximum Limit Rs.20,000/-' %></th>   
+                <% elsif section_code == '80CCG' %> 
+                  <th colspan="10"><%= 'Maximum Limit Rs.25,000/-' %></th>    
+                <% elsif section_code == '80DD' %> 
+                  <th colspan="10"><%= 'Maximum Limit Rs.1,25,000/-' %></th> 
+                <% elsif section_code == '80EE' %> 
+                  <th colspan="10"><%= 'Maximum Limit Rs.3,00,000/-' %></th> 
+                <% elsif section_code == '80GG' %> 
+                  <th colspan="10"><%= 'Maximum Limit Rs.24,000/-' %></th>                
               	<% else %>	
               		<th colspan="10"></th>
               	<% end %>	
@@ -94,27 +109,32 @@
                         </td>
                       <% end %>
 
-                      <% if investment_declaration.investment_head.description == "Life Insurance Premium" %>
+                      <% if investment_declaration.investment_head.description == "Health Insurance Policy" %>
                         <td>
                           <%= link_to '', policy_details_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-plus', remote:true %>
                           <%= link_to '', show_policy_details_investment_declarations_path(investment_declaration),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
                         </td>
-                        <% elsif investment_declaration.investment_head.description == "Unit Linked Insurance Policy (ULIP)" %>
+                        <% elsif investment_declaration.investment_head.description == "insurance policy for dependant with Disability" %>
                         <td>
                           <%= link_to '', policy_details_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-plus', remote:true %>
                           <%= link_to '', show_policy_details_investment_declarations_path(investment_declaration),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
                         </td>
-                      <% elsif investment_declaration.investment_head.description == "Medicle Insurance Premium for self/ spouse/ child" %>
+                        <% elsif investment_declaration.investment_head.description == "Dependants with Disability" %>
+                        <td>
+                          <%= link_to '', policy_details_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-plus', remote:true %>
+                          <%= link_to '', show_policy_details_investment_declarations_path(investment_declaration),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
+                        </td>
+                      <% elsif investment_declaration.investment_head.description == "Individual/family towards medical treatment" %>
                         <td>
                           <%= link_to '', medicle_reimbursement_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-plus', remote:true %>
                           <%= link_to '', show_medicle_reimbursement_details_investment_declarations_path(investment_declaration),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
                         </td>
-                      <% elsif investment_declaration.investment_head.description == "Housing Rent/ Lease Rent paid/ payable during the year" %>
+                      <% elsif investment_declaration.investment_head.description == "House Rent paid to the Landlord" %>
                         <td>
                           <%= link_to '', housing_rent_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-plus', remote:true %>
                           <%= link_to '', show_housing_rent_details_investment_declarations_path(investment_declaration),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
                         </td> 
-                      <% elsif investment_declaration.investment_head.description == "a. Interest on Housing Loan" %>
+                      <% elsif investment_declaration.investment_head.description == "Interest on Repayment Loan on Housing Property" %>
                         <td>
                           <%= link_to '', houseloan_interest_modal_investment_declarations_path(investment_declaration), class: 'btn btn-success btn-xs fa fa-plus', remote:true %>
                           <%= link_to '', show_housingloan_details_investment_declarations_path(investment_declaration),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
@@ -132,9 +152,9 @@
                       <% end %>
                       <td colspan="2"><%= investment_declaration.amount %></td>
                       <td colspan="2"><%= investment_declaration.actual_amt %></td>
-                      <td colspan="2"><%= best_in_place investment_declaration, :accepted_amt %></td>
-                      <td colspan="2"><%= best_in_place investment_declaration, :rejected_amt %></td>
-                      <td><%= best_in_place investment_declaration,:comment %></td>
+                      <td colspan="2"><%= investment_declaration.accepted_amt %></td>
+                      <td colspan="2"><%= investment_declaration.rejected_amt %></td>
+                      <td><%= investment_declaration.comment %></td>
                       
                       <% @total = @total + investment_declaration.amount.to_f %>
                       <% @accepted_total = @accepted_total + investment_declaration.accepted_amt.to_f %>

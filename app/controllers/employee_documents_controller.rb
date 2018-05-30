@@ -26,7 +26,7 @@ class EmployeeDocumentsController < ApplicationController
 
   # GET /employee_documents/1/edit
   def edit
-    @info = 'employee_document'
+    # @info = 'employee_document'
     @employee = @employee_document.employee
   end
 

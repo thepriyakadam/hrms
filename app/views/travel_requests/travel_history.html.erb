@@ -12,6 +12,7 @@
     <tr>
       <th>ID</th>
       <th>Employee Name</th>
+      <th>Date</th>
       <th>Place</th>
       <th>Action</th>
     </tr>
@@ -22,7 +23,7 @@
       <tr>
         <td><%= travel_request.employee.try(:manual_employee_code) %></td>
         <td><%= full_name(travel_request.employee) %></td>
-     
+        <td><%= travel_request.try(:traveling_date) %> - <%= travel_request.try(:to) %></td>
         <td><%= travel_request.place %></td>
        <td>
          <% if travel_request.current_status == "Pending" %>
@@ -33,6 +34,9 @@
          <small class="label label-success">Edit And Approved</small>
          <% elsif travel_request.current_status == "Approved" %>
          <small class="label label-primary">Approved</small>
+         <% elsif travel_request.current_status == "FirstApproved" %>
+         <small class="label label-info">FirstApproved</small>
+         <%= link_to 'Approve', travel_request_confirmation_travel_requests_path(travel_request),class: 'btn btn-xs btn-primary' %>
          <% elsif travel_request.current_status == "Rejected" %>
          <small class="label label-primary">Rejected</small>
          <% else %>

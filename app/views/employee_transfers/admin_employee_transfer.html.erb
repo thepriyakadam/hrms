@@ -4,16 +4,12 @@
     <div class="box-body">
       <%= bootstrap_form_for(:employee_transfer,html: {id: 'employee_transfer'},url: {action: 'final_approve_by_admin'}) do |f| %>
 
-
       <div id="company_detail"></div>
-
       
         <div class="row">
           <div class="col-sm-3">
             <div class="form-group required">
-
-            <%= f.select :employee_id, all_active_employee_with_code,{include_blank: "Select Employee"},{onchange:"var a={id:$(this).val()}; $.get('/employee_transfers/collect_company',a,function(response){});", :class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}%>
-
+              <%= f.select :employee_id, all_active_employee_with_code,{include_blank: "Select Employee"},{onchange:"var a={id:$(this).val()}; $.get('/employee_transfers/collect_company',a,function(response){});", :class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}%>
             </div>
           </div>
 
@@ -30,7 +26,7 @@
           <div class="col-sm-3">
             <div class="form-group required">
               <div class="input-group">
-                <%=f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
+                <%=f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={company_id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
               </div>
             </div>
           </div>
@@ -67,8 +63,7 @@
            </div>
          </div>
        </div>
-    </div>
-        <div class="row">
+
           <div class="col-sm-3" style="padding-top: 20px">
             <div class="actions">
               <%= f.submit 'Create' ,class: 'btn btn-primary btn-sm' %> 

@@ -5,7 +5,7 @@
   </head>
   
   <body>
-    <p><center><%= image_tag  attachments['mail_signature.png'].url  -%></center></p><br>
+    <p><center><%#= image_tag  attachments['mail_signature.png'].url  -%></center></p><br>
 
     <p><center><b> Welcome to the <%= @emp.company.name %> Family!!</b></center>
 
@@ -13,7 +13,6 @@
 
     <p>This is to inform you that your employee ID is <b><%= @manual_employee_code %></b> and default password is <b><%= @password %></b>.
     
-    <p>You can access the system using the link <a href="192.168.1.38:3000">192.168.1.38:3000</a></p>.
-     You can change your password by going to the My Profile  section -> Add the current password and new password and click on update profile.</p><br>
+    <p>You can change your password by going to the My Profile  section -> Add the current password and new password and click on update profile.</p><br>
   </body>
 </html>

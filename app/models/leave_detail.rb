@@ -12,7 +12,7 @@ class LeaveDetail < ActiveRecord::Base
   	end
   end
 
-   def self.filter_records(current_user)
+  def self.filter_records(current_user)
     @leave_details =  if current_user.class == Group
       LeaveDetail.all
     elsif current_user.class == Member

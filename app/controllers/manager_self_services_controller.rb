@@ -23,6 +23,17 @@ class ManagerSelfServicesController < ApplicationController
     session[:active_tab] ="ManagerSelfService"
   end
 
+  def reporties_list
+    session[:active_tab] ="ManagerSelfService"
+    @employee = Employee.find_by(id: current_user.employee_id)
+    @employees = Employee.where("manager_id = ? OR manager_2_id = ?",@employee,@employee)
+  end
+
+  def reporties_profile_modal
+    @employee = Employee.find(params[:employee_id])
+    @joining_detail = JoiningDetail.find_by(employee_id: @employee.id)
+  end
+
   def approved_or_rejected_leave_request
     if current_user.class == Group
       @pending_employee_leav_requests = EmployeeLeavRequest.where(is_pending: true, is_first_approved: false, is_first_rejected: false, is_cancelled: false)

@@ -1,5 +1,5 @@
 <% if Qualification.exists?(employee_id: params[:id]) %>
-<%@qualifications = Qualification.where('employee_id=?',params[:id])%>
+<%@qualifications = Qualification.where('employee_id = ?',params[:id])%>
 <% @employee = Employee.find(params[:id]) %>
 $('#info').html("<%= j render 'qualifications/show_detail' %>")
 <%else%>

@@ -1,12 +1,12 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">My Team</h3>
+    <h3 class="box-title">Employee List</h3>
     <div class="pull-right">  
     </div>
   </div>
   <div class="box-body">
-    <table id="example" class="table table-bordered table-hover table-condensed">
-     <thead>
+    <table id="example6" class="table table-bordered table-hover table-condensed">
+      <thead>
         <tr>
           <th>ID</th>
            <th>Employee</th>
@@ -17,13 +17,13 @@
       </thead>
       <tbody>
         <% @employees.each do |e| %>
-        <tr>
-        <td><%= e.employee.manual_employee_code %></td>
-        <td><%= full_name(e.employee) %></td>
-        <td><%= e.employee.company_location.try(:name) %> - <%= e.employee.department.try(:name) %></td> 
-        <td><%= e.employee.joining_detail.try(:employee_designation).try(:name) %></td>
-        <td><%= link_to 'Final Comment', final_comment_goal_bunches_path(id: e,emp_id: e.employee_id,period_id: e.period_id) ,class: 'btn btn-xs btn-info' %></td>
-        </tr>
+          <tr>
+            <td><%= e.employee.manual_employee_code %></td>
+            <td><%= full_name(e.employee) %></td>
+            <td><%= e.employee.company_location.try(:name) %> - <%= e.employee.department.try(:name) %></td> 
+            <td><%= e.employee.joining_detail.try(:employee_designation).try(:name) %></td>
+            <td><%= link_to 'Final Comment', final_comment_goal_bunches_path(id: e,emp_id: e.employee_id,period_id: e.period_id) ,class: 'btn btn-xs btn-info' %></td>
+          </tr>
         <% end %>
       </tbody>
     </table>
@@ -31,8 +31,13 @@
     <%= link_to 'Back',employee_list_goal_bunches_path,class: 'btn btn-sm btn-default fa fa-arrow-left'%>
   </div>
 </div>
-<script>
-$(document).ready(function() {
-    $('#example').DataTable();
-} );
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example6').DataTable( {
+      "lengthMenu": [[10, 25, 50, 100, -1],[10,25, 50, 100, "ALL"]],
+      "scrollX": true,
+      "scrollY": 500
+    });
+  });
 </script>

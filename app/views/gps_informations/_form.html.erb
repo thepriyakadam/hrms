@@ -1,0 +1,36 @@
+<%= bootstrap_form_for(@gps_information,html: {id: 'gps_information'},remote:true) do |f| %>
+  <div class="field">
+    <%= f.text_field :employee_id %>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :longitude, label:true, placeholder: 'longitude' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :latitude, label:true, placeholder: 'latitude' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :place, label:true, placeholder: 'place' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :radius, label:true, placeholder: 'radius' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create GPS Information", :class => class_name, data: { disable_with: data_info } %>
+    </div>
+  </div>
+<% end %>

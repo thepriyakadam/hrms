@@ -1,82 +1,156 @@
-  <div class="box box-default">
-    <div class="box-header with-border">
-      <h3 class="box-title">Attendance</h3>
-    </div><!-- /.box-header -->
-    <div class="box-body">
-      <%= bootstrap_form_for(:salary, url: { action: 'department_wise_employee_list'},html: {id: "salary"},remote: true) do |f| %>
-        <div class="row">
-          <div class="col-sm-3">
-            <label>Cost Center</label>
-            <div class="form-group required">
-              <%= select :salary, :name, all_cost_center, {include_blank: "Select Cost Center"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
-            </div>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Calculate Attendance </h3>
+  </div>
+  <div class="box-body">
+    <div class="row">
+      <%= bootstrap_form_for(:daily_attendance, url: { action: 'fetch_attendance'},html: {id: "daily_attendance"}) do |f| %>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <%= f.text_field :day, label: "Day's", placeholder: "No.of Days i.e: 2 Refresh" %>
           </div>
-
-          <div class="col-sm-3">
-            <label>Date </label>
-            <div class="form-group required">
-              <div class="input-group">
-                <div class="input-group-addon">
-                  <i class="fa fa-calendar"></i>
-                </div>
-                  <%= text_field :salary,:day,hide_label: true,class: 'day_date form-control'%>
-              </div>
-            </div>
+        </div>
+        <div class="col-sm-3" style="padding-top:20px;">
+          <div class="actions">
+            <%= f.submit "Refresh" ,class: 'btn btn-primary btn-sm', id: "buttonCtc" %>
           </div>
-
-          <div class="col-sm-3" style="padding-top:20px;">
-            <div class="actions">
-              <%= f.submit "Create Attendance" ,class: 'btn btn-primary btn-sm', id: "buttonCtc" %>
-            </div>
+        </div>
+      <% end %>
+      <%= bootstrap_form_for(:daily_attendance, url: { action: 'calculate'},html: {id: "daily_attendance"}) do |f| %>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <%= f.text_field :day, label: "Day's", placeholder: "No.of Days i.e: 2 Calculate Hrs." %>
+          </div>
+        </div>
+        <div class="col-sm-3" style="padding-top:20px;">
+          <div class="actions">
+            <%= f.submit "Calculate Hrs." ,class: 'btn btn-primary btn-sm', id: "buttonCtc" %>
           </div>
         </div>
         <br>
       <% end %>
-      <div>
-        <%= link_to 'Refresh', attendance_daily_attendances_path ,class: "btn btn-xl btn-primary" %>
-      </div>
-      <br />
-      <div>
-        <%= link_to 'Calculate_Att.', calculate_daily_attendances_path ,class: "btn btn-xl btn-primary" %>
-      </div>
+    </div><!-- /.box-header -->
+  </div>
+</div>
 
-      <div class="ajax-progress"></div>
+
+<% if Company.first.name == "Uttamenergy" %>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title"> Aurangabad Calculate Attendance </h3>
+  </div>
+  <div class="box-body">
+    <div class="row">
+      <%= bootstrap_form_for(:daily_attendance, url: { action: 'third_attendance'},html: {id: "daily_attendance"}) do |f| %>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <%= f.text_field :day, label: "Day's", placeholder: "No.of Days i.e: 2 Refresh" %>
+          </div>
+        </div>
+        <div class="col-sm-3" style="padding-top:20px;">
+          <div class="actions">
+            <%= f.submit "Refresh" ,class: 'btn btn-primary btn-sm' %>
+          </div>
+        </div>
+      <% end %>
+    </div><!-- /.box-header -->
+  </div>
+</div>
+<% end %>
+ 
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title"> Add Attendance</h3>
+  </div>
+  <div class="box-body">
+    <%= bootstrap_form_for(:salary, url: { action: 'department_wise_employee_list'},html: {id: "salary"},remote: true) do |f| %>
       <div class="row">
-        <div class="col-sm-12">
-          <div id="employee_list"></div>    
+        <div class="col-sm-3">
+          <label>Cost Center</label>
+          <div class="form-group required">
+            <%= select :salary, :name, all_cost_center, {include_blank: "Select Cost Center"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <label>Date </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :salary,:day,hide_label: true,class: 'day_date form-control'%>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3" style="padding-top:20px;">
+          <div class="actions">
+            <%= f.submit "Create Attendance" ,class: 'btn btn-primary btn-sm', id: "buttonCtc" %>
+          </div>
         </div>
       </div>
-    </div><!-- /.box-body -->
-  </div><!-- /.box -->
+    <br>
+    <% end %>
 
-  <script type="text/javascript">
-    $("#buttonCtc").click(function(){
-      $('.ajax-progress').show();
-      $("#salary").submit();
-    })
+    <div>
+      <%#= link_to 'Refresh', attendance_daily_attendances_path ,class: "btn btn-xl btn-primary" %>
+    </div>
+    <br />
+    <div>
+      <%#= link_to 'Calculate_Att.', calculate_daily_attendances_path ,class: "btn btn-xl btn-primary" %>
+    </div>
 
-     $("#salary").validate({
-    rules: {
-      "salary[day]":{
-        required: true
-      }
-    },
-    messages: {
-      "salary[day]":{
-        required: "Please specify date"
-      }
-    },
-    errorPlacement: function(error, element) {
-     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
-     error.insertAfter(element.parent(element));
+    <div class="ajax-progress"></div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div id="employee_list"></div>    
+      </div>
+    </div>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#salary").submit();
+  })
+
+   $("#salary").validate({
+  rules: {
+    "salary[day]":{
+      required: true
     }
-   });
+  },
+  messages: {
+    "salary[day]":{
+      required: "Please specify date"
+    }
+  },
+  errorPlacement: function(error, element) {
+   error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+   error.insertAfter(element.parent(element));
+  }
+ });
 
-    $(function(){
-      $('.day_date').datepicker({
-      changeYear:true,
-      changeMonth: true,
-      yearRange: '-2:+20',
-      dateFormat: 'dd-mm-yy' });
-    });
+<script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#daily_attendance").submit();
+  })
+
+  $("#daily_attendance").validate({
+  rules: {
+    "daily_attendance[day]":{
+      required: true
+    }
+  },
+  messages: {
+    "daily_attendance[day]":{
+      required: "Please specify date"
+    }
+  },
+  errorPlacement: function(error, element) {
+   error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+   error.insertAfter(element.parent(element));
+  }
+ });
 </script>

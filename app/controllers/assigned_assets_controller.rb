@@ -94,19 +94,51 @@ class AssignedAssetsController < ApplicationController
     @assigned_asset = AssignedAsset.find(params[:format])
   end
 
-  def import_xl
+  def import_asset
     session[:active_tab] ="EmployeeManagement"
-    session[:active_tab1] ="Import" 
+    session[:active_tab1] ="Reports" 
+  end
+
+  def import_xl
   end
 
   def import
     file = params[:file]
     if file.nil?
       flash[:alert] = "Please Select File!"
-    redirect_to import_xl_assigned_assets_path
+    redirect_to import_asset_assigned_assets_path
     else
     AssignedAsset.import(params[:file])
-    redirect_to import_xl_assigned_assets_path, notice: "File imported."
+    redirect_to import_asset_assigned_assets_path, notice: "File imported."
+    end
+  end
+
+  def assigned_asset_report
+    @location = params[:salary][:company_location_id]
+    if current_user.class == Group
+      if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+        @assigned_assets = AssignedAsset.all
+      else
+        @employees = Employee.where(company_location_id: @location.to_i)
+        @assigned_assets = AssignedAsset.where(employee_id: @employees)
+      end
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+          @assigned_assets = AssignedAsset.all
+        else
+          @employees = Employee.where(company_location_id: @location.to_i)
+          @assigned_assets = AssignedAsset.where(employee_id: @employees)
+        end
+      elsif current_user.role.name == 'Branch'
+        params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @assigned_assets = AssignedAsset.where(employee_id: @employees)
+      elsif current_user.role.name == 'HOD'
+        @assigned_assets = AssignedAsset.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Superviser'
+      elsif current_user.role.name == 'Employee'
+      end
     end
   end
 

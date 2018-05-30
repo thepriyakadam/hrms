@@ -77,16 +77,16 @@ class EmployeeResignationsController < ApplicationController
              ResignationHistory.create(employee_resignation_id: @employee_resignation.id,employee_id: @employee_resignation.employee_id,reporting_master_id: @employee_resignation.reporting_master_id,resignation_date: @employee_resignation.resignation_date,reason: @employee_resignation.reason,is_notice_period: @employee_resignation.is_notice_period,notice_period: @employee_resignation.notice_period,short_notice_period: @employee_resignation.short_notice_period,tentative_leaving_date: @employee_resignation.tentative_leaving_date,remark: @employee_resignation.remark,exit_interview_date: @employee_resignation.exit_interview_date,note: @employee_resignation.note,leaving_date: @employee_resignation.leaving_date,settled_on: @employee_resignation.settled_on,has_left: @employee_resignation.has_left,notice_served: @employee_resignation.notice_served,rehired: @employee_resignation.rehired,leaving_reason_id: @employee_resignation.leaving_reason_id,resign_status: @employee_resignation.resign_status)
 
              EmployeeResignationMailer.hr_request_to_employee(@employee_resignation).deliver_now
-          
-           if @employee_resignation.employee.manager_2_id.nil?  
-             EmployeeResignationMailer.hr_request_to_manager_one(@employee_resignation).deliver_now
-           else  
-            EmployeeResignationMailer.hr_request_to_manager_one(@employee_resignation).deliver_now
-             EmployeeResignationMailer.hr_request_to_manager_two(@employee_resignation).deliver_now
-           end   
+            
+             if @employee_resignation.employee.manager_2_id.nil?  
+              EmployeeResignationMailer.hr_request_to_manager_one(@employee_resignation).deliver_now
+             else  
+              EmployeeResignationMailer.hr_request_to_manager_one(@employee_resignation).deliver_now
+              EmployeeResignationMailer.hr_request_to_manager_two(@employee_resignation).deliver_now
+             end   
 
               @emp = Employee.find_by(id: @employee_resignation.employee_id)
-              @emp.update(status: "Inactive")
+              #@emp.update(status: "Inactive")
               # EmployeeResignationMailer.no_second_reporter_approval_email_to_employee(@employee_resignation).deliver_now
               EmployeeResignationMailer.final_approval_email_to_employee(@employee_resignation).deliver_now
 
@@ -225,7 +225,12 @@ class EmployeeResignationsController < ApplicationController
       # EmployeeResignationMailer.second_level_request_email_to_reporting_manager(@employee_resignation).deliver_now
     end
     flash[:notice] = 'Resignation Request Approved Successfully'
-    # redirect_to resignation_history_employee_resignations_path
+
+    if @employee_resignation.employee_id == current_user.employee_id
+      redirect_to resignation_history_employee_resignations_path
+    else
+      redirect_to resignation_history_manager_self_services_path
+    end
   end
 
   # def first_approve
@@ -250,7 +255,12 @@ class EmployeeResignationsController < ApplicationController
     ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "SecondApproved",change_date: Date.today)
     EmployeeResignationMailer.second_level_approval_email_to_employee(@employee_resignation).deliver_now
     flash[:notice] = 'Resignation Request Approved Successfully'
-    redirect_to resignation_history_employee_resignations_path
+
+    if @employee_resignation.employee_id == current_user.employee_id 
+      redirect_to resignation_history_employee_resignations_path
+    else
+      redirect_to resignation_history_manager_self_services_path
+    end
   end
 
   def final_approve
@@ -527,7 +537,7 @@ class EmployeeResignationsController < ApplicationController
   def confirm_resignation
      @employee_resignation = EmployeeResignation.find(params[:format])
      JoiningDetail.where(employee_id: @employee_resignation.employee_id).update_all(leaving_date: @employee_resignation.leaving_date)
-     Employee.where(id: @employee_resignation.employee_id).update_all(status: "Inactive")
+     #Employee.where(id: @employee_resignation.employee_id).update_all(status: "Inactive")
      redirect_to final_approved_list_employee_resignations_path
      flash[:notice] = 'Resignation Request Confirmed Successfully.'   
   end
@@ -572,7 +582,9 @@ class EmployeeResignationsController < ApplicationController
     @exit_interview_date = params[:employee_resignation][:exit_interview_date]
     @leaving_date = params[:employee_resignation][:leaving_date]
     @employee_resignation.update(exit_interview_date: @exit_interview_date,leaving_date: @leaving_date,resign_status: "FinalApproved")
-    flash[:notice] = 'Updated Successfully!'
+    ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "FinalApproved",change_date: Date.today)
+
+    flash[:notice] = 'Updated and approved Successfully!'
     redirect_to final_approval_emp_resignation_list_employee_resignations_path
   end
 
@@ -593,8 +605,7 @@ class EmployeeResignationsController < ApplicationController
     @question_master = QuestionMaster.all
      @question_master.each do |qc|
     ExitInterview.create(question_master_id: qc.id,employee_id: @employee)
-
-  end
+    end
     @employee_resignations = EmployeeResignation.where(employee_id: @employee,resign_status: "FinalApproved")
     @employee_resignations.update_all(exit_interview_status: true)
     flash[:notice] = "Created Successfully"

@@ -40,9 +40,11 @@ class Workingday < ActiveRecord::Base
       holiday_in_month = spreadsheet.cell(i,'J')
       payable_day = spreadsheet.cell(i,'K')
       ot_hours = spreadsheet.cell(i,'L')
-      @workingday_data = Workingday.where(employee_id: employee_id,month_name: month_name).take 
-      if @workingday_data == nil
+      @workingday_data = Workingday.where(employee_id: employee_id,month_name: month_name,year: year).take 
+
+    if @workingday_data == nil
       @workingday = Workingday.create(employee_id: employee_id,ot_hours: ot_hours, month_name: month_name,year: year,day_in_month: day_in_month,present_day: present_day,week_off_day: week_off_day,od_day: od_day,pay_leave: pay_leave,holiday_in_month: holiday_in_month,payable_day: payable_day)
+
       else
        if @workingday_data.paid == nil
           @workingday_data.update(employee_id: employee_id,ot_hours: ot_hours,month_name: month_name,year: year,day_in_month: day_in_month,present_day: present_day,week_off_day: week_off_day,od_day: od_day,pay_leave: pay_leave,holiday_in_month: holiday_in_month,payable_day: payable_day)

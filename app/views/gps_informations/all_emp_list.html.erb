@@ -1,0 +1,124 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee List Of Gps Tracker</h3>
+  </div>
+  <p id="notice"><%= notice %></p>
+  <div class="box-body">
+    <%= bootstrap_form_for GpsInformation.new,url:{action:'update_gps_info'},html: {id: 'employee'} do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :day, label: 'From Date', class: 'birth_date'%>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :to_days, label: 'To Date', class: 'birth_date'%>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :place,label: 'Place',placeholder: 'Pune.' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :radius,label: 'Radius',placeholder: 'Radius.' %>
+          </div>
+        </div>
+      </div>
+      <br />
+      <table id="example2" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+            <th>Employee ID</th>
+            <th>Name</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @employees.each do |e|  %>
+            <tr>
+              <td><%= check_box_tag "employee_ids[]", e.employee_id %></td>
+              <td><%= e.try(:employee).try(:manual_employee_code) %></td>
+              <td><%= e.try(:employee).try(:prefix) %> <%= e.try(:employee).try(:first_name) %> <%= e.try(:employee).try(:middle_name) %> <%= e.try(:employee).try(:last_name) %></td>
+              <td><%= e.try(:employee).try(:status) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Submit", class: 'btn btn-primary btn-sm' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+    $('.birth_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+
+<script>
+  $("#employee").validate({
+    rules: {
+      "employee[day]":{
+        required: true,
+      }
+    },
+    messages: {
+      "employee[day]":{
+        required: "Please specify date",
+      }
+    },
+    errorPlacement: function(error, element) {
+      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+      error.insertAfter(element.parent(element));
+    }
+  });
+</script>
+
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example2').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

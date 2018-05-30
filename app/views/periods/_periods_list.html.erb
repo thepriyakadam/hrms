@@ -4,6 +4,7 @@
       <th>Period</th>
       <th>From</th>
       <th>To</th>
+      <th>Marks</th>
       <th>Status</th>
       <th>Action</th>
     </tr>
@@ -15,6 +16,7 @@
         <td><%= period.name %></td>
         <td><%= period.from %></td>
         <td><%= period.to %></td>
+        <td><%= period.marks ? "Yes" : "No" %></td>
         <td><%= period.status ? "Active" : "Inactive" %></td>
         <td>
             <%= link_to '', edit_period_path(period),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>

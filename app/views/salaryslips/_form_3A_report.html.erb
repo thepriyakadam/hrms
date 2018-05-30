@@ -1,0 +1,71 @@
+<div class="box-header">
+  <div class="pull-right">
+  </div>
+</div><!-- /.box-header -->
+<div class="box-body">
+  <div id="comments">
+    <table id="example" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr><th colspan="4">Account No. </th> <td colspan="5"><%= @employee.try(:employee_bank_detail).try(:account_no) %></td></tr>
+        <tr><th colspan="4">Name/Surname </th><td colspan="5"> <%= @employee.try(:first_name) %> / <%= @employee.try(:last_name) %></td></tr>
+        <tr><th colspan="4">Father's/Husband's Name </th><td colspan="5"> MR.<%= @employee.try(:middle_name) %> </td></tr>
+        <tr><th colspan="4">Statutory Rate of Contribution </th><td colspan="5"> 12% </td></tr>
+        <tr><th colspan="4">Voluntary Higher Rate of Employee's Contribution if any </th><td colspan="5"> <%= %></td></tr>
+        <tr><th colspan="4">Name & Address of the Factory/Establishment </th><td colspan="5"> <%= @employee.try(:company_location).try(:address) %></td></tr>
+        <tr><th colspan="4">Code Number </th><td colspan="5"> <%= @employee.try(:company_location).try(:pin_code)%></td></tr>
+        <tr>
+          <th colspan="1">Month</th>
+          <th colspan="3"><center>Worker's Share</center></th>
+          <th colspan="2"><center>Employer's Share</center></th>
+          <th colspan="1"><center>Refund Of Advance</center></th>
+          <th colspan="1"><center>No. Of Days</center></th>
+          <th colspan="1"><center>Remarks</center></th>
+        </tr>
+        <tr>
+          <th></th>
+          <th>Amount of Wages</th>
+          <th>E.P.F.12%</th>
+          <th>Rate of Higher Voluntary Contribution</th>
+          <th>E.P.F.12 Diffrence between 12% & 8.33% if any </th>
+          <th>Pension Fund Contribution 8.33%</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <% i = 0 %>
+      <tbody>
+        <% @month_year.try(:each) do |month_year, salaryslip_components| %>
+
+          <tr>
+            <td><%= i = i + 1 %></td>
+            <td><%= month_year %></td>
+              <% total_amt = 0 %>
+              <!-- @employer_contribution = EmployerContribution.where(date: @from_date.to_date..@to_date.to_date) -->
+              <% salaryslip_components.each do |components|%>
+                <% total_amt += components.calculated_amount.round %>
+              <% end %>
+            <td><%#= total_amt %></td>
+            <td><%#= total_amt %></td>
+            <td><%#= total_amt %></td>
+            <td><%#= total_amt %></td>
+            <td><%#= total_amt %></td>
+            <td><%#= month_year.to_date.end_of_month %></td>
+            <td><%#= month_year.to_date.end_of_month %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <br>
+  <%#= link_to " Excel Report ", month_wise_yearly_report_salary_slip_ledgers_path(from_date: params[:yearly_reports][:from_date], to_date: params[:yearly_reports][:to_date], company_id: params[:salary_slip_ledger][:company_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>  
+  
+  <%#= link_to "PDF Report ", month_wise_yearly_report_salary_slip_ledgers_path(from_date: params[:yearly_reports][:from_date], to_date: params[:yearly_reports][:to_date], company_id: params[:salary_slip_ledger][:company_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

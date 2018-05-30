@@ -52,7 +52,26 @@
       <td><%= @travel_request.total_advance %></td>
 
       <th><strong>Current Status</strong></th>
-      <td><%= @travel_request.current_status %></td>
+      <td>
+        <% @travel_request.reporting_masters_travel_requests.try(:each) do |rmt| %>
+          <% case rmt.travel_status %>
+          <% when "Pending" %>
+            <small class="label label-default">Pending</small>
+          <% when "FirstApproved" %>
+            <small class="label label-warning">FirstApproved</small>
+          <% when "Approved" %>
+            <small class="label label-primary">Approved</small>
+          <% when "FinalApproved" %>
+            <small class="label label-success">FinalApproved</small>
+          <% when "Approved & Send Next" %>
+            <small class="label label-info">Approved & Send Next</small>
+          <% when "Rejected" %>
+            <small class="label label-danger">Rejected</small>
+          <% when "Cancelled" %>
+            <small class="label label-danger">Cancelled</small>
+          <% end %>
+        <% end %>
+      </td>
     </tr>
 
     <tr>
@@ -83,7 +102,24 @@
             <% b=a.reporting_master_id
                 emp=Employee.where(id: b).take %>
             <td><%= emp.try(:prefix)%>  <%= emp.try(:first_name)%> <%= emp.try(:middle_name)%> <%= emp.try(:last_name)%></td>
-            <td><%= a.travel_status %></td>
+            <td>
+              <% case a.travel_status %>
+                <% when "Pending" %>
+                  <small class="label label-default">Pending</small>
+                <% when "FirstApproved" %>
+                  <small class="label label-warning">FirstApproved</small>
+                <% when "Approved" %>
+                  <small class="label label-primary">Approved</small>
+                <% when "FinalApproved" %>
+                  <small class="label label-success">FinalApproved</small>
+                <% when "Approved & Send Next" %>
+                  <small class="label label-info">Approved & Send Next</small>
+                <% when "Rejected" %>
+                  <small class="label label-danger">Rejected</small>
+                <% when "Cancelled" %>
+                  <small class="label label-danger">Cancelled</small>
+                <% end %>
+            </td>
             <td>
                <% if a.status == true %>
                <small class="label label-primary">Confirmed & Send Next</small>
@@ -99,6 +135,10 @@
       </tbody>
 </table><br>
     <!-- <= link_to 'Edit', edit_travel_request_path(@travel_request),class: 'btn btn-success btn-sm fa fa-edit' %> | -->
-    <%= link_to 'Back', travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>
+    <% if @travel_request.employee_id == current_user.employee_id %>
+      <%= link_to 'Back', travel_request_self_services_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>
+    <% else %>
+      <%= link_to 'Back', travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>
+    <% end %>
     </div>
   </div>

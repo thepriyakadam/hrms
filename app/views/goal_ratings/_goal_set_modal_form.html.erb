@@ -6,61 +6,64 @@
     </div>
     <div class="modal-body">
 
-      <%= bootstrap_form_for @goal_rating,url:{action: "update_goal_set_modal",goal_id: @goal_rating.id} do |f| %>
-
+      <%#= bootstrap_form_for @goal_rating,url:{action: "update_goal_set_modal",goal_rating_id: @goal_rating.id} do |f| %>
+      <%= bootstrap_form_for :goal_rating,url:{action: "update_goal_set_modal",goal_rating_id: @goal_rating.id } do |f| %>
         <div class="row">
-        <% if @goal_rating.goal_type == "Goal" %>
-          <div class="col-sm-6">
-          <label>Goal Perspective</label>
-            <%= f.select :goal_perspective_id,all_goal_perspective,{hide_label:true, include_blank: "Select Goal Perspective"} %>    
-          </div>
-        <% else %>
-          <div class="col-sm-6">
-          <label>Attribute</label>
-            <%= f.select :attribute_master_id,all_attribute_type,{hide_label:true, include_blank: "Select Attribute"} %>    
-          </div>
-        <% end %>
+          <% if @goal_rating.goal_type == "Goal" %>
+            <div class="col-sm-6">
+            <label>Goal Perspective</label>
+              <%= f.select :goal_perspective_id,all_goal_perspective,{hide_label:true, include_blank: "Select Goal Perspective"} %>    
+            </div>
+          <% else %>
+            <div class="col-sm-6">
+            <label>Attribute</label>
+              <%= f.select :attribute_master_id,all_attribute_type,{hide_label:true, include_blank: "Select Attribute"} %>    
+            </div>
+          <% end %>
 
-        <div class="col-sm-6">
+          <div class="col-sm-6">
           <label>Target/Unit</label>
-            <%= f.text_field :target,hide_label:true, placeholder: "Target/Unit" %>    
-          </div>
-      </div>
-
-        <div class="row">
-          <div class="col-sm-12">
-          <label>Measure</label>
-            <%= f.text_area :goal_measure,hide_label:true, placeholder: "Goal Measure" %> 
+            <%= f.text_area :target,hide_label:true, placeholder: "Target/Unit" %>    
           </div>
         </div>
 
+        <div class="row">
+          <div class="col-sm-12">
+            <label>Measure</label>
+              <%= f.text_area :goal_measure,hide_label:true, placeholder: "Goal Measure" %> 
+          </div>
+        </div>
+
+        
         <div class="row">
           <div class="col-sm-12">
           <label>Activity</label>
             <%= f.text_area :activity,hide_label:true, placeholder: "Activity" %>   
+
           </div>
         </div>
 
         <div class="row">
-          
           <div class="col-sm-6">
           <label>Weightage</label>
             <%= f.text_field :goal_weightage,hide_label:true, placeholder: "Goal Weightage" %>    
           </div>
+
           <div class="col-sm-6">
           <label>Aligned To Supervisor</label>
             <%= f.select :aligned ,['Yes','No'] ,{hide_label:true,include_blank: "Select"} %>   
           </div>
         </div>
-        <div class="row">
 
+
+        <div class="row">
           <div class="col-sm-12">
             <center><%= f.submit "Update", class: 'btn btn-success btn-sm' %></center>
           </div>
         </div>
       <% end %>
-     
-      </div>
-    <div class="modal-footer"></div>
-  </div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
+       
+      <div class="modal-footer"></div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>

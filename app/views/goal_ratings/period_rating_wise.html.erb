@@ -14,7 +14,12 @@
         </div>
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= select :salary, :rating_id, all_rating_type,{label: 'Rating',include_blank: " Select Rating"},{class: "form-control"} %>
+            <%= select :salary, :rating1, all_rating_type,{label: 'Rating From',include_blank: " Select Rating From"},{class: "form-control"} %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= select :salary, :rating2, all_rating_type,{label: 'Rating To',include_blank: " Select Rating To"},{class: "form-control"} %>
           </div>
         </div>
         <div class="col-sm-3">

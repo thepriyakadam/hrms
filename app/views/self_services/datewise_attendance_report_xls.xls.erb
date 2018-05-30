@@ -14,7 +14,8 @@
         <Cell ss:Index="4"><Data ss:Type="String">Day</Data></Cell>
         <Cell ss:Index="5"><Data ss:Type="String">In Time</Data></Cell> 
         <Cell ss:Index="6"><Data ss:Type="String">Out Time</Data></Cell> 
-        <Cell ss:Index="7"><Data ss:Type="String">Present</Data></Cell> 
+        <Cell ss:Index="7"><Data ss:Type="String">Working Hrs.</Data></Cell> 
+        <Cell ss:Index="8"><Data ss:Type="String">Present</Data></Cell> 
         </Row>
 
         <% i = 0 %>
@@ -28,7 +29,8 @@
           <Cell ss:Index="4"><Data ss:Type="String"><%= a.try(:day).strftime("%A") %></Data></Cell>
           <Cell ss:Index="5"><Data ss:Type="String"><%= a.try(:in_time) %></Data></Cell>
           <Cell ss:Index="6"><Data ss:Type="String"><%= a.try(:out_time) %></Data></Cell>
-          <Cell ss:Index="7"><Data ss:Type="String"><%= a.try(:present) %></Data></Cell>
+          <Cell ss:Index="7"><Data ss:Type="String"><%= a.try(:working_hrs) %></Data></Cell>
+          <Cell ss:Index="8"><Data ss:Type="String"><%= a.try(:present) %></Data></Cell>
         </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

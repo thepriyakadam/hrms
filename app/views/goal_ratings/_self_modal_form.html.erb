@@ -2,24 +2,36 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <h5 class="modal-title"><center> Update Comment & Rating </center></h5>
+      <h5 class="modal-title"><center> Self Evaluation </center></h5>
     </div>
     <div class="modal-body">
 
       <%= bootstrap_form_for @goal_rating,url:{action: "update_self_modal",goal_rating_id:@goal_rating.id} do |f| %>
         <div class="row">
-          <div class="col-sm-4">
-            <label>Self Comment</label>
-            <%= f.text_field :appraisee_comment,hide_label:true, placeholder: "Self comment" %>    
+          <div class="col-sm-12">
+            <label>Comment</label>
+            <%= f.text_area :appraisee_comment,hide_label:true, placeholder: "Self comment" %>    
           </div>
-          <div class="col-sm-4">
-            <label>Self Rating</label>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <label>Rating</label>
             <%= f.select :appraisee_rating_id,all_rating_type,{hide_label:true, include_blank: "select rating"} %>
           </div>
-
-          <div class="col-sm-2" style="padding-top:20px;">
-            <%= f.submit "Update", class: 'btn btn-success btn-sm' %>
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.select :document_present, ['Yes','No'],{label:"Document",include_blank: "Please Select"} %>
+            </div>
           </div>
+          <div class="col-sm-6">
+            <label>Document(doc,docx,pdf only)</label>
+              <%= f.file_field :document,hide_label: true,class: "form-control" %>
+          </div>
+        </div>
+        <div class="row">
+          <center><div class="col-sm-12" style="padding-top:20px;"></div></center>
+            <center><%= f.submit "Self Evaluation", class: 'btn btn-success btn-sm' %></center>
+          
         </div>
       <% end %>
      

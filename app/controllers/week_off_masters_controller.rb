@@ -147,9 +147,22 @@ class WeekOffMastersController < ApplicationController
              @emp_attendance = EmployeeAttendance.where(employee_id: week_off_master.employee_id,day: i).take
               if @emp_attendance.try(:present) == nil
                 employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
-                EmployeeAttendance.create(employee_id: week_off_master.employee_id,day: i,present: "WO",department_id: week_off_master.employee.department_id,is_confirm: false,employee_week_off_id: employee_week_off.id)
+                EmployeeAttendance.create(employee_id: week_off_master.employee_id,day: i,present: "WO",department_id: week_off_master.employee.department_id,is_confirm: false,employee_week_off_id: employee_week_off.id,comment: "Week off set")
                 
               else
+                if @emp_attendance.try(:employee_leav_request_id) != nil
+                  employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                  @emp_attendance.update(employee_week_off_id: employee_week_off.id,comment: "Leave Request has been sent before week off set")
+                elsif @emp_attendance.try(:on_duty_request_id) != nil
+                  employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                  @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WOOD",comment: "Od Request has been sent before week off")
+                elsif @emp_attendance.try(:holiday_id) != nil
+                  employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                  @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WOH",comment: "Holiday has been set before week off") 
+                else
+                  employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                  @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WO",comment: "Week off set after attendance setup")
+                end
               end
             else
             end

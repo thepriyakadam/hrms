@@ -1,12 +1,12 @@
 <style type="text/css">
- .page-break { display:block; clear:both; page-break-after:always; }
- table {
-  page-break-inside: avoid;
- }
- tr {
+  .page-break { display:block; clear:both; page-break-after:always; }
+  table {
     page-break-inside: avoid;
-}
-th {
+  }
+  tr {
+    page-break-inside: avoid;
+  }
+  th {
     page-break-inside: avoid;
 }
 </style>
@@ -164,83 +164,87 @@ th {
     <% @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", goal_bunch.id ,'Attribute') %>
     <% @goal_bunches = GoalBunch.where(employee_id: goal_bunch.employee_id, id: goal_bunch.id).group(:employee_id) %>
 
-
-  <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="5">
-    <thead>
-
-    <tr>
-    <% i=i+1%>
-    <th><%= i %></th>
-    <th colspan="11"><center>Performance Report for Period: <%= goal_bunch.period.name %> From: <%= goal_bunch.period.from %> To: <%= goal_bunch.period.to %></center></th></tr>
-    <tr><th colspan="11"><center>Goals</center></th></tr>
+  <% if @goal_ratings.empty? %>
+  <% else %>
+    <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="5">
+      <thead>
       <tr>
-        <th>Goal Perspective</th>
-        <th>Measure</th>
-        <th>Activity</th>
-        <th>Target/Unit</th>
-        <th>Goal Weightage</th>
-        <th>Aligned</th>
-        <th>Self Comment</th>
-        <th>Self Rating</th>
-        <th>Appraiser Comment</th>
-        <th>Appraiser Rating</th>
-        <th>Reviewer Comment</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @goal_ratings.each do |goal_rating| %>
+      <% i=i+1%>
+      <th><%= i %></th>
+      <th colspan="11"><center>Performance Report for Period: <%= goal_bunch.period.try(:name) %> From: <%= goal_bunch.period.try(:from) %> To: <%= goal_bunch.period.try(:to)%></center></th></tr>
+      <tr><th colspan="11"><center>Goals</center></th></tr>
         <tr>
-          <td><%= goal_rating.goal_perspective.try(:name) %></td>
-          <td><%= goal_rating.goal_measure %></td>
-          <td><%= goal_rating.activity %></td>
-          <td><%= goal_rating.target %></td>
-          <td><%= goal_rating.goal_weightage %></td>
-          <td><%= goal_rating.aligned %></td>
-          <td><%= goal_rating.appraisee_comment %></td>
-          <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
-          <td><%= goal_rating.appraiser_comment %></td>
-          <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
-          <td><%= goal_rating.reviewer_comment %></td>
+          <th>Goal Perspective</th>
+          <th>Measure</th>
+          <th>Activity</th>
+          <th>Target/Unit</th>
+          <th>Goal Weightage</th>
+          <th>Aligned</th>
+          <th>Self Comment</th>
+          <th>Self Rating</th>
+          <th>Appraiser Comment</th>
+          <th>Appraiser Rating</th>
+          <th>Reviewer Comment</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @goal_ratings.each do |goal_rating| %>
+          <tr>
+            <td><%= goal_rating.goal_perspective.try(:name) %></td>
+            <td><%= goal_rating.goal_measure %></td>
+            <td><%= goal_rating.activity %></td>
+            <td><%= goal_rating.target %></td>
+            <td><%= goal_rating.goal_weightage %></td>
+            <td><%= goal_rating.aligned %></td>
+            <td><%= goal_rating.appraisee_comment %></td>
+            <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
+            <td><%= goal_rating.appraiser_comment %></td>
+            <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
+            <td><%= goal_rating.reviewer_comment %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
 
-  <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="5">
-    <thead>
-    <tr><th colspan="11"><center>Attributes</center></th></tr>
-      <tr>
-        <th>Attribute</th>
-        <th>Measure</th>
-        <th>Activity</th>
-        <th>Target/Unit</th>
-        <th>Goal Weightage</th>
-        <th>Aligned</th>
-        <th>Self Comment</th>
-        <th>Self Rating</th>
-        <th>Appraiser Comment</th>
-        <th>Appraiser Rating</th>
-        <th>Reviewer Comment</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @goal_attribute_ratings.each do |goal_rating| %>
+  <% if @goal_attribute_ratings.empty? %>
+  <% else %>
+    <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="5">
+      <thead>
+      <tr><th colspan="11"><center>Attributes</center></th></tr>
         <tr>
-          <td><%= goal_rating.attribute_master.try(:name) %></td>
-          <td><%= goal_rating.goal_measure %></td>
-          <td><%= goal_rating.activity %></td>
-          <td><%= goal_rating.target %></td>
-          <td><%= goal_rating.goal_weightage %></td>
-          <td><%= goal_rating.aligned %></td>
-          <td><%= goal_rating.appraisee_comment %></td>
-          <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
-          <td><%= goal_rating.appraiser_comment %></td>
-          <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
-          <td><%= goal_rating.reviewer_comment %></td>
+          <th>Attribute</th>
+          <th>Measure</th>
+          <th>Activity</th>
+          <th>Target/Unit</th>
+          <th>Goal Weightage</th>
+          <th>Aligned</th>
+          <th>Self Comment</th>
+          <th>Self Rating</th>
+          <th>Appraiser Comment</th>
+          <th>Appraiser Rating</th>
+          <th>Reviewer Comment</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @goal_attribute_ratings.each do |goal_rating| %>
+          <tr>
+            <td><%= goal_rating.attribute_master.try(:name) %></td>
+            <td><%= goal_rating.goal_measure %></td>
+            <td><%= goal_rating.activity %></td>
+            <td><%= goal_rating.target %></td>
+            <td><%= goal_rating.goal_weightage %></td>
+            <td><%= goal_rating.aligned %></td>
+            <td><%= goal_rating.appraisee_comment %></td>
+            <td><%= goal_rating.try(:appraisee_rating).try(:value) %></td>
+            <td><%= goal_rating.appraiser_comment %></td>
+            <td><%= goal_rating.try(:appraiser_rating).try(:value) %></td>
+            <td><%= goal_rating.reviewer_comment %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
   <br>
    <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 cellpadding="5">
     <tbody>

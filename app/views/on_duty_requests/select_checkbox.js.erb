@@ -3,7 +3,15 @@
 	$("#checkbox1").html("<%= j render 'first_half_checkbox' %>");
 	$("#checkbox").show();
 	$("#checkbox1").show();
+
+  $("#on_duty_request_end_date").attr('readonly', true);
+  $("#on_duty_request_end_date").val('<%= @start_date %>');
+    
+
 <% else %>
 	$("#checkbox").hide();
 	$("#checkbox1").hide();
+
+	$("#on_duty_request_end_date").attr('readonly', false);
+  $("#on_duty_request_end_date").val('');
 <% end %>

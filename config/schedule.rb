@@ -39,3 +39,18 @@ every 1.hours do
   rake 'log:clear'
 end
 
+every :day, :at => '10:30am' do
+  rake 'atte_task:fetch_att'
+end
+
+every 1.hours do 
+   rake 'atte_task:fetch_att'
+end
+
+every 1.hours + 10.minutes do
+   rake 'atte_task:third_fetch_att'
+end
+
+every 7.hours do
+   rake 'atte_task:calculate'
+end

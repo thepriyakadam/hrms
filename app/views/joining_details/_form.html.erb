@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <strong> <font color='#0077b3'> EMPLOYEE ONBOARDING DETAILS</font></strong>
+    <strong> <font color='#0077b3'> EMPLOYEE ONBOARDING DETAILS </font></strong>
   </div><!-- /.box-header -->
   <div class="box-body">
 <%= bootstrap_form_for(@joining_detail,html: {id: 'joining_detail'},remote:true) do |f| %>
@@ -71,28 +71,34 @@
 
       <div class="col-sm-3">
         <div class="form-group required">
-           <%= f.select :employee_category_id, all_employee_category, {label: 'Employee Category',include_blank: " Select Employee Category"} %>
+           <%= f.select :employee_category_id, all_employee_category,{label: 'Employee Category',include_blank: "Select Employee Category" },{onchange:"var a={employee_category_id:$(this).val()}; $.get('/joining_details/show_contract',a,function(response){});",class: 'form-control'} %>
         </div>
       </div>
+     </div>
 
-      <div class="col-sm-3">
+      <div class="row">
+
+      <div id="contract_month"></div>
+
+        <div class="col-sm-3">
         <div class="field">
            <%= f.select :cost_center_id, all_cost_center, {label: 'Cost Center',include_blank: " Select Cost Center"} %>
         </div>
       </div>
-     
-      <div class="col-sm-3">
-        <div class="form-group required">
-          <%= f.text_field :probation_period,label: 'Probation Period',placeholder: 'e.g. 6 months' %>
-        </div>
-      </div> 
-       </div>
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :probation_period,label: 'Probation Period',placeholder: 'e.g. 6 months' %>
+          </div>
+        </div> 
+      </div>
+
       <div class="row">
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :notice_period,label: 'Notice Period',placeholder: 'e.g. 1 months' %>
-        </div>
-      </div> 
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :notice_period,label: 'Notice Period',placeholder: 'e.g. 1 months' %>
+          </div>
+        </div> 
 
             <div class="col-sm-3">
         <div class="field">
@@ -158,25 +164,73 @@
       </div>
        </div>
       <div class="row">
-       <div class="col-sm-3">
+       <!-- <div class="col-sm-3">
       <label>Retirement Date </label>
         <div class="field">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-             <%= f.text_field :retirement_date,hide_label:true, class: 'retirement_date'%>
+             <%#= f.text_field :retirement_date,hide_label:true, class: 'retirement_date'%>
           </div>
+        </div>
+      </div> -->
+      <div class="col-sm-3">
+        <div class="field" style="padding: 10px">
+         <% if current_user.role.name == 'GroupAdmin' %>
+          <%= f.check_box :c_off, label: 'Compensatory Off'%>
+          <%end%>
         </div>
       </div>
       <div class="col-sm-3">
-      <div class="field" style="padding: 10px">
-       <% if current_user.role.name == 'GroupAdmin' %>
-        <%= f.check_box :c_off, label: 'Compensatory Off'%>
-        <%end%>
+        <div class="field" style="padding: 10px">
+         <% if current_user.role.name == 'GroupAdmin' %>
+          <%= f.check_box :c_off_expire, label: 'COff Expire'%>
+          <%end%>
+        </div>
       </div>
+       <div class="col-sm-4">
+        <div class="field">
+          <%= f.text_field :c_off_applicable_day,label: 'COff Applicable Day'%>
+       </div>
+      </div> 
+
+    </div>
+
+     <div class="row">
+      <div class="col-sm-3">
+        <div class="field" style="padding: 10px">
+          <% if current_user.role.name == 'GroupAdmin' %>
+            <%= f.check_box :gps_track, label: 'Gps Track'%>
+          <%end%>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="field" style="padding: 10px">
+          <% if current_user.role.name == 'GroupAdmin' %>
+            <%= f.check_box :restricted_area, label: 'Restricted Area'%>
+          <%end%>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="field" style="padding: 10px">
+          <% if current_user.role.name == 'GroupAdmin' %>
+            <%= f.check_box :welfare, label: 'Welfare'%>
+          <%end%>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="field" style="padding: 10px">
+          <% if current_user.role.name == 'GroupAdmin' %>
+            <%= f.check_box :contact_library, label: 'Contact Library'%>
+          <%end%>
+        </div>
       </div>
     </div>
+
   <div class="box-header with-border">
     <strong><font color='#0077b3'> EMPLOYEE PAYROLL DETAILS</font></strong>
   </div><!-- /.box-header -->

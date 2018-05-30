@@ -7,20 +7,20 @@ class GoalRatingsController < ApplicationController
     @employee = Employee.find(params[:emp_id])
     @goal_rating = GoalRating.new
     @goal_ratings = GoalRating.where(appraisee_id: @employee.id,goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
-    @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
+    @goal_attribute_ratings = GoalRating.where("appraisee_id = ? AND goal_bunch_id = ? AND goal_type = ?", @employee.id,@goal_bunch.id ,'Attribute')
     @goal_bunches = GoalBunch.all    
   end
 
   def show_goal_rating
     @goal_rating = GoalRating.find(params[:goal_rating_id])
-    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
-    @employee = Employee.find(params[:employee_id])
+    # @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    # @employee = Employee.find(params[:employee_id])
   end
 
   def show_attribute
     @goal_rating = GoalRating.find(params[:goal_rating_id])
-    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
-    @employee = Employee.find(params[:employee_id])
+    # @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    # @employee = Employee.find(params[:employee_id])
   end
  
   def destroy
@@ -29,6 +29,20 @@ class GoalRatingsController < ApplicationController
     @goal_rating.destroy
     flash[:notice] = "Deleted Successfully"
     redirect_to new_goal_rating_path(id: @goal_bunch, emp_id:@employee)
+  end
+  
+  def download_self_document
+    @goal_rating = GoalRating.find(params[:id])
+    send_file @goal_rating.document.path,
+              filename: @goal_rating.document_file_name,
+              type: @goal_rating.document_content_type,
+              disposition: 'attachment'
+  end
+
+  def goal_set
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @employee = Employee.find(params[:employee_id])
+    @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id) 
   end
 
   def select_dropdown
@@ -50,7 +64,7 @@ class GoalRatingsController < ApplicationController
     file = params[:file]
       if file.nil?
         flash[:alert] = "Please Select File!"
-        redirect_to import_xl_goal_ratings_path
+        redirect_to import_xl_goal_ratings_path(emp_id: employee.id,goal_bunch_id: goal_bunch.id)
       else
         @method = GoalRating.import(params[:file],employee,goal_bunch)
         if @method == false
@@ -59,6 +73,52 @@ class GoalRatingsController < ApplicationController
           redirect_to new_goal_rating_path(emp_id: employee.id,id: goal_bunch.id), notice: "File imported."
         end
       end
+  end
+  
+   def admin_reviewer_evaluation_period
+    @periods = Period.where(status: true).group(:id)
+    @goal_bunches = GoalBunch.where(goal_confirm: true).group(:period_id)
+  end
+
+  def admin_level_reviewer_evaluation
+    @period = Period.find(params[:period_id])
+    @emp = Employee.where.not(manager_2_id: nil).pluck(:id)
+    @goal_bunches = GoalBunch.where(period_id: @period.id,employee_id: @emp,appraiser_confirm: true)
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
+  end
+
+  def admin_appraiser_evaluation_period
+    @periods = Period.where(status: true).group(:id)
+    @goal_bunches = GoalBunch.where(goal_confirm: true).group(:period_id)
+  end
+
+  def admin_level_appraiser_evaluation
+    @period = Period.find(params[:period_id])
+    @goal_bunches = GoalBunch.where(period_id: @period.id,appraisee_confirm: true)
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
+  end
+
+  def admin_level_period
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
+    @periods = Period.where(status: true).group(:id)
+    @goal_bunches = GoalBunch.where(period_id: @periods).group(:period_id)
+  end
+
+  def admin_level_goal_set
+    @period = Period.find(params[:period_id])
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    # goal_bunches = GoalBunch.where(period_id: @period.id).pluck(:employee_id)
+    # @employees = Employee.where(status: "Active",id: goal_bunches)
+
+    #@goal_bunches = GoalBunch.where(period_id: @period.id,goal_confirm: nil).group(:employee_id,:period_id)
+    @goal_bunches = GoalBunch.where(period_id: @period.id)
+    # @goal_bunches = []
+    # goal_bunches.each do |g|
+    #   @goal_bunches << g
+    # end
   end
 
   # POST /goal_ratings
@@ -137,11 +197,13 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.find(params[:format])
     if @goal_rating.goal_type == "Goal" || @goal_rating.goal_type == "Attribute"
       @flag = true
+    else
+      @flag = false
     end
   end
 
   def update_goal_set_modal
-    @goal_rating = GoalRating.find(params[:goal_id])
+    @goal_rating = GoalRating.find(params[:goal_rating_id])
     @employee = Employee.find(@goal_rating.appraisee_id)
     @goal_bunch = GoalBunch.find(@goal_rating.goal_bunch_id)
     goal_weightage_sum = @goal_rating.goal_weightage_sumdate(@goal_bunch, @goal_rating.goal_weightage, params)
@@ -164,22 +226,22 @@ class GoalRatingsController < ApplicationController
                 @flag1 = true
                 @flag = true
               flash[:notice] = "Updated Successfully !"
-              redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+              redirect_to new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id)
               else
                 @flag1 = false
               flash[:alert] = "Weightage Limit should be within range "
-              redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+              redirect_to new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id)
               end
             else
               @flag2 = false
               flash[:alert] = "Weightage should be within range "
-              redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+              redirect_to new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id)
             end
           else
             @goal_rating.update(goal_rating_params)
             @flag = true
             flash[:notice] = "Updated Successfully !"
-            redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+            redirect_to new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id)
           end
 
         elsif @goal_rating.goal_type == "Attribute"
@@ -196,43 +258,47 @@ class GoalRatingsController < ApplicationController
                 @flag1 = true
                 @flag = true
               flash[:notice] = "Updated Successfully !"
-              redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+              redirect_to new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id)
               else
                 @flag1 = false
               flash[:alert] = "Weightage Limit should be within range "
-              redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+              redirect_to new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id)
               end
             else
               flash[:alert] = "Weightage should be within range "
-              redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+              redirect_to new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id)
             end
           else
             @goal_rating.update(goal_rating_params)
             @flag = true
             flash[:notice] = "Updated Successfully !"
-            redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+            redirect_to new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id)
           end
         end
       else
          @flag = false
             flash[:alert] = "Weightage Sum should be 100 "
-         redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+         redirect_to new_goal_rating_path(emp_id: @employee.id,id: @goal_bunch.id)
       end 
   end
 
   def send_mail_to_appraiser
-    @employee = Employee.find(current_user.employee_id)
+    @employee = Employee.find(params[:emp_id])
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
 
     sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
-    if sum == 100
+    if sum.round == 100
       @emp = Employee.find(current_user.employee_id)
       #GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
       @gol_bunch = GoalBunch.find_by(id: @goal_bunch.id).update(goal_confirm: true,appraiser_confirm: false,goal_approval: false)
       flash[:notice] = "Mail Sent Successfully"
-      redirect_to new_goal_bunch_path
+      if @employee.id == current_user.employee_id
+        redirect_to new_goal_bunch_path
+      else
+        redirect_to admin_level_period_goal_ratings_path
+      end
     else
-      flash[:alert] = "Goal weightage sum should be 100"
+      flash[:alert] = "Goal weightage sum should be 100 !!"
       redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id: @employee.id)
     end 
   end
@@ -338,8 +404,45 @@ class GoalRatingsController < ApplicationController
 
   def update_self_modal
     @goal_rating = GoalRating.find(params[:goal_rating_id])
-    @goal_rating.update(goal_rating_params)
-    flash[:notice] = 'Updated Successfully'
+    appraisee_comment = params[:goal_rating][:appraisee_comment]
+    appraisee_rating_id = params[:goal_rating][:appraisee_rating_id]
+    document_present = params[:goal_rating][:document_present]
+    period = Period.find_by(id: @goal_rating.period_id)
+
+    @rating = Rating.find_by(id: appraisee_rating_id)
+
+      if period.marks == true
+        @weightage = @goal_rating.goal_weightage
+        weightage = @weightage.round
+        rating = @rating.value
+        if rating.to_f < weightage.to_f
+          if document_present == "Yes"
+            document = params[:goal_rating][:document]
+            @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: appraisee_rating_id,document: document,document_present: "Yes")
+            flash[:notice] = 'Updated Successfully'
+          else
+            @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: appraisee_rating_id,document: nil,document_present: "No")
+            flash[:notice] = 'Updated Successfully'
+          end
+        else
+          rating1 = Rating.where(value: @goal_rating.goal_weightage).take
+          if rating1.nil?
+            flash[:alert] = 'Please Select Rating less then or equals to weightage'
+          else  
+            if document_present == "Yes"
+              document = params[:goal_rating][:document]
+              @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: rating1.id,document: document,document_present: "Yes")
+              flash[:notice] = 'Updated Successfully'
+            else
+              @goal_rating.update(appraisee_comment: appraisee_comment,appraisee_rating_id: rating1.id,document: nil,document_present: "No")
+              flash[:notice] = 'Updated Successfully'
+            end
+          end#rating1.nil?
+        end#rating.to_i < weightage.to_i
+      else
+        @goal_rating.update(goal_rating_params)
+      flash[:notice] = 'Updated Successfully'
+      end
     redirect_to appraisee_comment_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id)
   end
 
@@ -432,7 +535,7 @@ class GoalRatingsController < ApplicationController
     if goal_bunch_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
       @goal_bunches = []
-      redirect_to employee_goal_wise_goal_ratings_path
+      #redirect_to employee_goal_wise_goal_ratings_path
     else
       @goal_bunches = []
       goal_bunch_ids.each do |g|
@@ -440,8 +543,39 @@ class GoalRatingsController < ApplicationController
       @goal_bunches << emp
       @goal_bunch = GoalBunch.find(g)
       end
-    end  
+    end 
+
   end
+
+ def detail_goal_wise_pdf
+  @period = Period.find(params[:period_id])
+    goal_bunch_ids = params[:goal_bunch_ids]
+    if goal_bunch_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      @goal_bunches = []
+      #redirect_to employee_goal_wise_goal_ratings_path
+    else
+      @goal_bunches = []
+      goal_bunch_ids.each do |g|
+      emp = GoalBunch.find(g)
+      @goal_bunches << emp
+      @goal_bunch = GoalBunch.find(g)
+      end
+    end 
+
+    respond_to do |f|
+      f.js
+      f.html
+      f.pdf do
+        render pdf: 'detail_goal_wise',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'goal_ratings/goal_wise.pdf.erb',
+        show_as_html: params[:debug].present?,
+        margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+ end 
 
   def print_goal_wise
     @period = Period.find(params[:period_id])
@@ -462,7 +596,7 @@ class GoalRatingsController < ApplicationController
               orientation: 'Landscape',
               template: 'goal_ratings/print_goal_wise.pdf.erb',
               show_as_html: params[:debug].present?,
-              margin:  { top:1,bottom:1,left:1,right:1 }
+              margin:  { top:10,bottom:10,left:10,right:10 }
         end
       end
   end
@@ -670,8 +804,9 @@ class GoalRatingsController < ApplicationController
 
   def Period_rating_wise_employee
     period_id = params[:salary][:period_id]
-    rating_id = params[:salary][:rating_id]
-    @goal_bunches = GoalBunch.where(period_id: period_id,final_rating_id: rating_id)
+    rating1 = params[:salary][:rating1]
+    rating2 = params[:salary][:rating2]
+    @goal_bunches = GoalBunch.where(period_id: period_id,final_rating_id: rating1..rating2)
     respond_to do |f|
       f.js
       f.xls {render template: 'goal_ratings/period_rating_wise.xls.erb'}
@@ -687,6 +822,53 @@ class GoalRatingsController < ApplicationController
     end
   end
 
+  def periodwise_goal_set
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
+  end
+
+  def periodwise_goal_list
+    @period_id = params[:salary][:period_id]
+    @period_id1 = params[:salary][:period_id1]
+    @goal_bunches1 = GoalBunch.where(period_id: @period_id)
+    @goal_bunches2 = GoalBunch.where(period_id: @period_id1).pluck(:employee_id)
+    @goal_bunches = GoalBunch.where(period_id: @period_id).where.not(employee_id: @goal_bunches2)
+    
+  end
+
+  def set_goal_periodwise
+    period1 = Period.find(params[:period_id1])
+    period = Period.find(params[:period_id])
+    @period_id1 = period1.id
+    @period_id = period.id
+      @goal_bunches_ids = params[:goal_bunches_ids]
+      if @goal_bunches_ids.nil?
+        flash[:alert] = "Please Select the Checkbox"
+      else
+        @goal_bunches_ids.each do |g|
+          @goal_bunch = GoalBunch.find_by(id: g)
+          goal_rating1 = GoalRating.where(appraisee_id: @goal_bunch.employee_id,period_id: @period_id1)
+          if goal_rating1 == [] || goal_rating1.nil?
+            goal_rating = GoalRating.where(appraisee_id: @goal_bunch.employee_id,period_id: @period_id).take
+            goal_ratings = GoalRating.where(appraisee_id: @goal_bunch.employee_id,period_id: @period_id)
+              goal_bunch = GoalBunch.create(period_id: @period_id1,employee_id: @goal_bunch.employee_id)
+            if goal_rating.nil?
+            else
+              goal_ratings.each do |gr|
+                GoalRating.create(goal_bunch_id: goal_bunch.id,goal_perspective_id: gr.goal_perspective_id,goal_weightage: gr.goal_weightage,
+                goal_measure: gr.goal_measure,target: gr.target,aligned: gr.aligned,goal_setter_id: current_user.employee_id,
+                appraisee_id: gr.appraisee_id,appraiser_id: gr.appraiser_id,attribute_master_id: gr.attribute_master_id,
+                goal_type: gr.goal_type,period_id: @period_id1,activity: gr.activity)
+              end
+              flash[:notice] = "Goal Set Successfully!"        
+            end
+          else
+          end#goal_rating1.nil?
+        end#do
+      end#@goal_bunches_ids.nil?
+      redirect_to periodwise_goal_set_goal_ratings_path
+  end
+
     private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal_rating
@@ -695,6 +877,6 @@ class GoalRatingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_rating_params
-      params.require(:goal_rating).permit(:activity,:appraisee_rating_id,:period_id,:is_hide,:attribute_master_id,:goal_bunch_id, :goal_perspective_id, :goal_weightage, :goal_measure, :target, :aligned, :goal_setter_id, :appraisee_id, :appraisee_comment, :appraiser_id, :appraiser_comment, :appraiser_rating_id, :reviewer_id, :reviewer_comment,:goal_type)
+      params.require(:goal_rating).permit(:document,:activity,:appraisee_rating_id,:period_id,:is_hide,:attribute_master_id,:goal_bunch_id, :goal_perspective_id, :goal_weightage, :goal_measure, :target, :aligned, :goal_setter_id, :appraisee_id, :appraisee_comment, :appraiser_id, :appraiser_comment, :appraiser_rating_id, :reviewer_id, :reviewer_comment,:goal_type)
     end
 end

@@ -1,0 +1,83 @@
+<style>
+  th {
+      text-align: left;
+  }
+  tr {
+      page-break-inside: avoid;
+  }
+  div.alwaysbreak { page-break-before: always; }
+  div.nobreak:before { clear:both; }
+  div.nobreak{ page-break-inside: avoid;
+    /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+  }
+</style>
+  <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
+      <thead>
+        <tr>
+          <td colspan="12"><center> 
+            <% if current_user.employee.company_location.company.company_logo == nil %>
+            <%else %>
+              <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+            <%end%> 
+            <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+            <center><strong>PF Monthly Statement Report</strong></center>
+            <center><strong><%= @from_date %> <b>-</b> <%= @to_date  %></strong></center>
+
+          </td>
+        </tr>
+        <tr> 
+          <th>Sr. No.</th>
+          <th>Employee ID</th>
+          <th>PF Number</th>
+          <th>Employee Name</th>
+          <th>Worked</th>
+          <th>Earned Wages(gross)</th>
+          <th>PF @12%</th>
+          <th>VPF</th>
+          <th>Total</th>
+          <th>EPS@8.33%</th>
+          <th>EPF@3.67%</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%i = 0%>
+        <% @salaryslip_components.try(:each) do |salaryslip_comp| %>
+          
+          <% @emp_id = salaryslip_comp.try(:salaryslip).try(:employee_id) %>
+          <% @employee = Employee.find(@emp_id) %>
+          <% if @employee.joining_detail.select_pf == "Yes" || @employee.joining_detail.select_pf == "Limit" %>
+            <% @emp_id = salaryslip_comp.try(:salaryslip).try(:employee_id) %>
+            <% date = salaryslip_comp.try(:salaryslip).try(:month_year) %>
+            <% salary_slip_code = salaryslip_comp.try(:salaryslip).try(:salary_slip_code) %>
+            <% employee = Employee.find(@emp_id) %>
+            <% @employee_pf_no = employee.try(:joining_detail).try(:employee_pf_no) %>
+            <% manual_employee_code = employee.manual_employee_code %>
+            <% employee_name = full_name(employee) %>
+            <% @calculated_gross_salary = salaryslip_comp.try(:salaryslip).try(:calculated_gross_salary) %>
+            <% @workingday = salaryslip_comp.try(:salaryslip).try(:workingday).try(:payable_day) %>
+            <% employee_contribution = salaryslip_comp.try(:actual_amount) %>
+            <% employer_contribution = EmployerContribution.where(employee_id: @emp_id, date: date.to_date) %>
+            <% @current_employer_contribution = employer_contribution.last.try(:actual_pf) %>
+            <% total = employee_contribution.to_i + @current_employer_contribution.to_i   %>
+            <% @current_employer_statutory_contribution_eight_point = (@current_employer_contribution.to_i / 12)* 8.33 %>
+            <% @currentemployer_statutory_contribution_three_point = (@current_employer_contribution.to_i / 12)* 3.67 %>
+            <tr>
+              <td><%= i = i+1 %></td>
+              <td><%= manual_employee_code %></td>
+              <td><%= @employee_pf_no %></td>
+              <td><%= employee_name %></td>
+              <td><%= @workingday.round %></td>
+              <td><%= @calculated_gross_salary %></td>
+              <td><%= employee_contribution %></td>
+              <td><%=  %></td>
+              <td><%= employee_contribution %></td>
+              <td><%= @current_employer_statutory_contribution_eight_point.round %></td>
+              <td><%= @currentemployer_statutory_contribution_three_point.round %></td>
+              <td><%= @current_employer_contribution %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+</table>

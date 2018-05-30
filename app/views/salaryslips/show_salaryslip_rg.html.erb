@@ -33,14 +33,13 @@
       <strong> ESIC No. :</strong> <%= @employee.joining_detail.try(:employee_efic_no) %><br><br>
       <strong> PAN No.  : </strong> <%= @salaryslip.employee.pan_no %><br><br> 
       <strong> Account No. :</strong><%= @employee.try(:employee_bank_detail).try(:account_no) %><br><br> 
-      <strong> Bank Name :</strong><%= @employee.try(:employee_bank_detail).try(:bank_name) %><br><br>     
-      </td>
+    <strong> Bank Name :</strong><%= @employee.try(:employee_bank_detail).try(:bank).try(:name) %><br>
       <td>
       <strong> Days in Month : </strong><%= @working_day.try(:day_in_month) %> <br><br> 
       <strong> Payble Days : </strong><%= @working_day.try(:payable_day) %><br><br>
-       <% @leave_details.each do |ld| %>
-            <strong> <%= ld.leav_category.name %>  <strong> Balance: </strong> <%= ld.balance %><br><br>
-        <% end %>
+      <!--  < @leave_details.each do |ld| %>
+            <strong> <= ld.leav_category.code %> Balance: </strong> <= ld.balance %><br><br>
+        < end %> -->
       </td>   
     </tr>
   </thead>
@@ -96,7 +95,7 @@
           <td align="right"><strong><%= @salaryslip.calculated_gross_salary.round %></strong></td>
 
           <td colspan="4"><strong>Deduction</strong></td>
-          <td align="right"><strong><%= @salaryslip.calculated_total_deduction.round%></strong></td>
+          <td align="right"><strong><%= @salaryslip.actual_total_deduction.round%></strong></td>
           <td align="right"><strong><%= @salaryslip.calculated_total_deduction.round %></strong></td>
         </tr>
           <tr>
@@ -106,6 +105,7 @@
         </tr>
           <tr>
           <td colspan="4"><strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Net Salary (In Word) </strong></td>
+
           <td colspan="8"><strong> <%= @salaryslip.calculated_net_salary.round.in_words.titleize  %> Only.</strong></td>
         
         </tr>
@@ -118,4 +118,3 @@
 
 <div><%= link_to 'Back', employee_salary_list_salaryslips_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %></div>
 </div>
-

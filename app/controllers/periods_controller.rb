@@ -72,6 +72,6 @@ class PeriodsController < ApplicationController
 	 end
 
     def period_params
-      params.require(:period).permit(:is_confirm,:name, :from, :to, :status)
+      params.require(:period).permit(:marks,:is_confirm,:name, :from, :to, :status)
 	 end
 end

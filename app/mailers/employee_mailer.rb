@@ -11,14 +11,14 @@ class EmployeeMailer < ApplicationMailer
     @employee = emp
     @manual_employee_code = code
     @emp = Employee.find_by(id: @employee.id)
-    attachments.inline['mail_signature.png'] = File.read('app/assets/images/mail_signature.png')
-    mail(to: @emp.email, subject: 'HRMS Password Detail')
+    # attachments.inline['mail_signature.png'] = File.read('app/assets/images/mail_signature.png')
+    mail(to: @emp.email, cc: @emp.company_location.email, subject: 'HRMS Password Detail')
   end
 
   def employee_reset_password(member)
     @member = member
     @emp = Member.find_by(manual_member_code: @member.manual_member_code)
-    attachments.inline['mail_signature.png'] = File.read('app/assets/images/mail_signature.png')
+    # attachments.inline['mail_signature.png'] = File.read('app/assets/images/mail_signature.png')
     mail(to: @emp.email, subject: 'HRMS Password Detail')
   end
 

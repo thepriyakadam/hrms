@@ -8,8 +8,12 @@ function displayResult()
 }
 </script>
 <br>
+<div class="box">
+  <div class="box-header">
+    <div class="box-body">
       <table id="example6" class="table table-bordered table-hover table-condensed">
         <thead>
+          <tr><center><strong> Date <%= @employee_attendances.first.day %></strong></center> </tr>
           <tr>
             <th>ID</th>
             <th>Employee Name</th>
@@ -28,16 +32,18 @@ function displayResult()
               <td><%= full_name(a.employee) %></td>
               <td><%=a. present%></td>
 
-              <td><%= a.in_time %></td>
-              <td><%= a.out_time %></td>
+              <td><%= a.try(:in_time ) %></td>
+              <td><%= a.try(:out_time ) %></td>
               <td><%= a.working_hrs %></td>
               
               <td><%= a.comment %></td>
               <td>
-                <% if  a.employee_leav_request_id != nil %>
-                  <small class="label label-primary">Leave</small>
-                <% else %>
+                <% if a.employee_leav_request_id == nil %>
+                  
                   <%= link_to ' ',modal_edit_daily_attendance_employee_attendances_path(a),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
+                  <% else %>
+                  <small class="label label-primary">Leave</small>
+                
                 <% end %>
               </td>
             </tr>
@@ -45,8 +51,10 @@ function displayResult()
         </tbody>
       </table>
       <!-- <= link_to "Back",datewise_daily_attendance_employee_attendances_path,class: "btn btn-sm btn-default" %> -->
-      <div id="myModal" class="modal fade"></div>
-    
+    </div>
+  </div>
+</div>
+<div id="myModal" class="modal fade"></div>
 
 <script type="text/javascript">
 $(document).ready(function() {

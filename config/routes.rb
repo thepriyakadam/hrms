@@ -1,5 +1,16 @@
 Rails.application.routes.draw do
-
+  resources :galleries 
+  resources :pictures
+  resources :monthly_income_taxes
+  resources :quarter_income_taxes
+  resources :income_tax_masters
+  resources :gps_informations do
+    collection do
+      get :all_emp_list
+      post :update_gps_info
+    end
+  end
+  resources :event_details
   resources :latemark_deductions
   resources :latemark_masters do
     collection do
@@ -11,6 +22,13 @@ Rails.application.routes.draw do
       get :latemark_report
       post :show_datewise_report
       get :datewise_report
+      get :import_xl
+      post :import
+      get :revert_latemark
+      post :revert_latemark_value
+      get :deduction_report
+      post :show_deduction_report
+      get :show_deduction_report
     end
   end
   resources :meeting_follow_ups do
@@ -38,6 +56,7 @@ Rails.application.routes.draw do
 
   resources :daily_attendances do 
     collection do
+      get :third_attendance_uttam
       get :attendance
       get :calculate
       get :daily_attendance
@@ -403,6 +422,8 @@ Rails.application.routes.draw do
 
   resources :manager_self_services do
     collection do
+      get :reporties_list
+      get :reporties_profile_modal
       get :subordinate_list
       get :appraiser_subordinate
       get :reviewer_subordinate
@@ -629,7 +650,7 @@ Rails.application.routes.draw do
       get :unlock_by_admin
       get :solved_confirm
       get :resend_request
-      get :datewise_report_list
+      post :datewise_report_list
       get :datewise_report
       get :datewise_report_xls
       get :datewise_report_pdf
@@ -646,7 +667,8 @@ Rails.application.routes.draw do
       get :memberwise_report_list_xls
       get :memberwise_report_list_pdf
       get :select_description
-
+      get :request_detail_modal
+      get :solved_issue_list
     end
    end
   resources :issue_masters do
@@ -959,6 +981,12 @@ end
   end
   resources :employee_attendances do
     collection do
+      post :third_attendance
+      get :third_attendance
+      post :fetch_attendance
+      post :calculate
+      get :fetch_attendance
+      get :calculate
       get :employee_not_found
       post :not_found
       post :department_wise_employee_list
@@ -1040,6 +1068,7 @@ end
       post :show_datewise_daily_attendance
       get :modal_edit_daily_attendance
       post :update_daily_attendance
+      post :update_daily_attendance
       post :create_self_attendance
       get :daily_attendance_datewise
       post :show_daily_attendance_datewise
@@ -1049,7 +1078,9 @@ end
       post :show_daily_attendance_for_destroy
       post :destroy_daily_attendance_datewise
       get :modal_edit_for_show
+      post :modal_edit_for_show
       post :update_attendance_for_show
+      get :update_attendance_for_show
       get :access_record
       post :access_card_list
       get :access_card_approval
@@ -1141,6 +1172,9 @@ end
 
   resources :goal_ratings do
     collection do
+      get :periodwise_goal_set
+      post :periodwise_goal_list
+      post :set_goal_periodwise
       get :select_dropdown
       get :self_modal
       patch :update_self_modal
@@ -1167,7 +1201,7 @@ end
       post :training_plan_create
       get :modal_training_plan
       get :goal_set_modal
-      patch :update_goal_set_modal
+      post :update_goal_set_modal
       get :trainee_list
       post :print_employee_detail
       get :all_emp_list
@@ -1202,15 +1236,24 @@ end
       get :show_attribute_modal
       get :import_xl
       post :import
+      get :goal_set
+      get :admin_level_goal_set
+      get :admin_level_period
+      get :admin_appraiser_evaluation_period
+      get :admin_level_appraiser_evaluation
+      get :admin_reviewer_evaluation_period
+      get :admin_level_reviewer_evaluation
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
   resources :goal_bunches do
     collection do
+      get :appraisee_detail_list
+      get :ajax_upload_document
+      post :show_periodwise_employee
       get :goal_approval
       post :appraiser_confirm
       get :appraisee_comment
-      post :self_comment
       post :self_comment_confirm
       get :appraiser_subordinate
       get :appraiser_comment
@@ -1273,6 +1316,22 @@ end
       get :self_evaluation
       get :import_xl
       post :import
+      get :self_comment_modal
+      post :self_comment
+      get :admin_period_set
+      post :create_admin_level_period
+      get :admin_goal_approval_period
+      get :admin_level_goal_approval
+      get :admin_self_evaluation_period
+      get :admin_level_self_evaluation
+      get :appraiser_comment_modal
+      get :appraiser_evaluation
+      get :import_appraiser_evaluation_xl
+      post :import_appraiser
+      get :reviewer_evaluation
+      get :import_reviewer_evaluation_xl
+      post :import_reviewer
+      get :reviewer_comment_modal
     end
   end
   resources :goal_perspectives do
@@ -1454,6 +1513,7 @@ end
       get :edit_n_approve_modal
       get :display_notice_period
       post :first_approve
+      get :first_approve
       get :second_approve
       get :final_approval_emp_resignation_list
       get :final_approve
@@ -1562,6 +1622,8 @@ end
     get :import_xl
     post :import
     get :asset_modal
+    get :import_asset
+    post :assigned_asset_report
     end
   end
   resources :asset_types do
@@ -1626,6 +1688,8 @@ end
   end
   resources :travel_requests do
     collection do
+      get :show_travel_process
+      get :show_request_modal
       get :daily_bill
       get :travel_history
       get :travel_request_confirmation
@@ -1701,37 +1765,13 @@ end
     get 'advance_salaries/new'
     post 'advance_salaries/advance_salary_report'
 
-    get 'family_details/new'
-    post 'family_details/family_detail_report'
-
     get 'physical_details/new'
     post 'physical_details/physical_detail_report'
 
-    get 'award_details/new'
-    post 'award_details/award_detail_report'
-
-    get 'certification_details/new'
-    post 'certification_details/certification_detail_report'
-
-    get 'skillset_details/new'
-    post 'skillset_details/skillset_detail_report'
-
-    get 'experience_details/new'
-    post 'experience_details/experience_detail_report'
-
-    get 'qualification_details/new'
-    post 'qualification_details/qualification_detail_report'
-
-    get 'bank_details/new'
-    post 'bank_details/bank_detail_report'
-
-
     get 'joining_details/new'
-    post 'joining_details/joining_detail_report'
     get 'joining_details/collect_departments'
 
     get 'basic_details/new'
-    post 'basic_details/employee_basic_report'
     get 'basic_details/employee_basic_info'
     get 'basic_details/collect_departments'
     get 'basic_details/employee_list'
@@ -1928,6 +1968,7 @@ end
       get :display_notice_period
       get :exit_interview
       get :present_to_title
+      get :modal_info_about_attendance
     end
   end
 
@@ -2026,6 +2067,8 @@ end
       get :show_approved_record
     end
   end
+
+  match 'goal_ratings/:id/download_self_document/:id' => 'goal_ratings#download_self_document', :via => [:get], :as => :download_self_document
   match 'selected_resumes/:id/download_resume/:id' => 'selected_resumes#download_resume', :via => [:get], :as => :download_resume
   match 'selected_resumes/:id/download_image/:id' => 'selected_resumes#download_image', :via => [:get], :as => :download_image
   match 'accident_records/:id/download_jpg/:id' => 'accident_records#download_jpg', :via => [:get], :as => :download_jpg
@@ -2152,6 +2195,8 @@ end
       get :modal
       get :import_monthly_expence
       post :import
+      get :delete_monthly_expence
+      get :edit_monthly_expence
     end
   end
   resources :expencess_types do
@@ -2335,7 +2380,32 @@ end
       get :leave_detail_xls
       get :import_xl
       post :import
-
+      get :statutory_computation
+      get :statutory_computation_report
+      post :statutory_computation_report
+      get :pf_computation
+      get :pf_computation_report
+      post :pf_computation_report
+      get :provident_fund
+      get :provident_fund_report
+      post :provident_fund_report
+      get :pf_monthly_statement
+      get :pf_monthly_statement_report
+      post :pf_monthly_statement_report
+      get :form_3A
+      get :form_3A_report
+      post :form_3A_report
+      get :form_6A
+      get :form_6A_report
+      post :form_6A_report
+      get :form_12A
+      get :form_12A_report
+      post :form_12A_report
+      get :dynamic_daterange_report
+      post :dynamic_daterange_report
+      get :form_16A
+      get :form_16A_report
+      post :form_16A_report
     end
   end
 
@@ -2692,6 +2762,8 @@ end
     collection do
       post :import
       get :import_xl
+      get :import_bank_detail
+      post :bank_detail_report
     end
   end
 
@@ -2751,6 +2823,7 @@ end
       get :show_balancewise_report
       get :leave_request_modal
       get :c_off_date
+      get :c_off_date_admin
     end
   end
   resources :company_leavs
@@ -2765,10 +2838,13 @@ end
     collection do
       get :import_xl
       post :import
+      get :import_physical
+      post :physical_detail_report
        end
   end
   resources :joining_details do
     collection do
+      get :show_contract
       get :search_by_joining_date
       get :import_xl
       post :import
@@ -2777,6 +2853,8 @@ end
       get :certificate_print
       get :joining_certificate
       get :offer_letter_prin
+      get :import_joining_detail
+      post :joining_detail_report
     end
   end
   resources :employee_grades do
@@ -2794,13 +2872,17 @@ end
       get :import_xl
       post :import
       get :award_modal
+      get :import_award
+      post :award_detail_report
     end
   end
   resources :skillsets  do
     collection do
       get :import_xl
       post :import
-       end
+      get :import_skillset
+      post :skillset_detail_report
+    end
   end
   resources :experiences  do
     collection do
@@ -2809,6 +2891,8 @@ end
       get :modal_experience
       post :update_experience
       get :exp_modal
+      get :import_experience
+      post :experience_detail_report
     end
   end
   resources :certifications do
@@ -2816,6 +2900,8 @@ end
       get :import_xl
       post :import
       get :certificate_modal
+      get :import_certification
+      post :certification_detail_report
     end
   end
   resources :qualifications do
@@ -2825,6 +2911,8 @@ end
       get :modal
       post :update_qualification
       get :qualification_modal 
+      get :import_qualification
+      post :qualification_detail_report
      end
    end
   resources :families do
@@ -2835,6 +2923,8 @@ end
       post :import
       get :collect_age
       get :family_modal
+      get :import_family
+      post :family_detail_report
     end
   end
   resources :employees do
@@ -2962,6 +3052,8 @@ end
       get :admin_asset_employee_list
       get :show_employee_dropdown
       get :collect_self_data
+      get :import_basic_detail
+      post :employee_basic_report
     end
     member do
       get :edit_manager
@@ -3046,7 +3138,7 @@ end
       get :created_user
       patch :update_form
       get :hrms_data_sheet
-	get :assigned_user
+      get :assigned_user
       # get "downloads/xls/:id" => "downloads#xls", :as => :download_xls
 
       # get :show
@@ -3263,5 +3355,5 @@ end
     get 'user_auths/issue_tracker_member_list' => 'user_auths#issue_tracker_member_list', defaults:{format: 'json'}
     get 'user_auths/support_root_cause_list' => 'user_auths#support_root_cause_list', defaults:{format: 'json'}
     get 'user_auths/apk_link' => 'user_auths#apk_link', defaults:{format: 'json'}
-  end  
+  end
 end

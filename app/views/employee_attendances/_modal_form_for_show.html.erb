@@ -6,8 +6,10 @@
 		 <center><%= @employee_attendance.employee.try(:manual_employee_code) %> - <%= full_name(@employee_attendance.employee) %></center>
     </div>
     <div class="modal-body">
-     		
     	<%= bootstrap_form_for :employee_attendance,url:{action:"update_attendance_for_show",employee_attendance_id: @employee_attendance.id} do |f| %>
+    		<%= f.hidden_field :from , value: params[:from] %>
+    		<%= f.hidden_field :to , value: params[:to] %>
+    		<%= f.hidden_field :employee_id , value: params[:employee_id] %>
 
     		<div class="row">
 	    		<div class="col-sm-3">

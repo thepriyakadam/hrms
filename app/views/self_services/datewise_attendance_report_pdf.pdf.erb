@@ -27,7 +27,7 @@ div.nobreak{ page-break-inside: avoid;
         <tr><th colspan="7"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
         <tr>
           <td>ID : <%= current_user.employee.manual_employee_code %></td>
-          <td colspan="2">Employee : <%= full_name(current_user.employee) %></td>
+          <td colspan="3">Employee : <%= full_name(current_user.employee) %></td>
           <td colspan="3">Department : <%= current_user.employee.company_location.try(:name) %> - <%= current_user.employee.try(:joining_detail).try(:cost_center).try(:name) %> - <%= current_user.employee.try(:department).try(:name) %> <%= current_user.employee.try(:sub_department).try(:name) %></td>
         </tr>
           <tr>

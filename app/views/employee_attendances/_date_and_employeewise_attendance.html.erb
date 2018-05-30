@@ -1,6 +1,14 @@
 <br>
+<div class="box">
+  <div class="box-header">
+    <div class="box-body">
     <table id="example6" class="table table-bordered table-hover table-condensed">
       <thead>
+      <% if params[:employee].present? %>
+        <tr><center><strong> From Date <%= params[:employee][:from] %> - To Date <%= params[:employee][:to] %></strong></center> </tr>
+      <% else params[:employee_attendance].present? %>
+        <tr><center><strong> From Date <%= params[:employee_attendance][:from] %> - To Date <%= params[:employee_attendance][:to] %></strong></center> </tr>
+      <% end%>
         <tr>
           <th>ID</th>
           <th>Employee Name</th>
@@ -28,13 +36,20 @@
               <% if @leav_category = LeavCategory.exists?(code: a.try(:present)) %>
                 <small class="label label-primary">Leave</small>
               <%else%>
-                <%= link_to ' ',modal_edit_for_show_employee_attendances_path(a),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
+                <% if params[:employee].present? %>
+                  <%= link_to ' ',modal_edit_for_show_employee_attendances_path(a,from: params[:employee][:from],to: params[:employee][:to],employee_id: params[:employee][:employee_id]),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
+                <% else params[:employee_attendance].present? %>
+                  <%= link_to ' ',modal_edit_for_show_employee_attendances_path(a,from: params[:employee_attendance][:from],to: params[:employee_attendance][:to],employee_id: params[:employee_attendance][:employee_id]),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
+                <% end%>
               <% end %>
             </td>
           </tr>
         <% end %>
       </tbody>
     </table>
+    </div>
+  </div>
+</div>
   <div id="myModal" class="modal fade"></div>
 
 

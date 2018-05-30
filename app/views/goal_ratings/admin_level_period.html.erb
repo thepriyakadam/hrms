@@ -1,0 +1,26 @@
+
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Period List</h3>
+  </div>
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+     <thead>
+        <tr>
+         <th>Base</th>
+         <th>Period</th>
+         <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @goal_bunches.each do |g| %>
+          <tr>
+            <td><%= g.period.try(:name) %></td>
+            <td> From: <%= g.period.try(:from) %> To: <%= g.period.try(:to) %> </td>
+            <td><%= link_to 'Show Employee List', admin_level_goal_set_goal_ratings_path(period_id: g.period_id,goal_bunch_id: g.id) ,class: 'btn btn-xs btn-info' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

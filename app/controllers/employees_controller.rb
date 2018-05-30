@@ -11,20 +11,20 @@
       elsif current_user.role.name == 'Admin'
         @employees = Employee.where(company_id: current_user.company_location.company_id)
       elsif current_user.role.name == 'Branch'
-        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @employees = Employee.where(company_location_id: current_user.company_location_id,status: "Active")
       elsif current_user.role.name == 'HOD'
           @emp = Employee.find(current_user.employee_id)
          @employees = Employee.where(manager_id: @emp,status: "Active")
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
-         @employees = Employee.where(manager_id: @emp)
+         @employees = Employee.where(manager_id: @emp,status: "Active")
       elsif current_user.role.name == 'CEO'
         @emp = Employee.find(current_user.employee_id)
-         @employees = Employee.where(manager_id: @emp).where.not(id: 1)
+         @employees = Employee.where(manager_id: @emp,status: "Active").where.not(id: 1)
       elsif current_user.role.name == 'NewEmployee'
-        @employees = Employee.where(id: current_user.employee_id)
+        @employees = Employee.where(id: current_user.employee_id,status: "Active")
       else current_user.role.name == 'Employee'
-        @employees = Employee.where(id: current_user.employee_id)
+        @employees = Employee.where(id: current_user.employee_id,status: "Active")
         redirect_to home_index_path
       end
     else
@@ -44,21 +44,52 @@
     abc = empp.cal_data
   end
 
+  def import_basic_detail
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Reports"
+  end
+
+  def employee_basic_report
+    @company_location = params[:salary][:company_location_id]
+    @employees = Employee.where(company_location_id: @company_location)
+    if current_user.class == Group
+      if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+        @employees = Employee.all
+      else
+        @employees = Employee.where(company_location_id: params[:salary][:company_location_id])
+      end
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+          @employees = Employee.all
+        else
+          @employees = Employee.where(company_location_id: params[:salary][:company_location_id])
+        end
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Superviser'
+      elsif current_user.role.name == 'Employee'
+      end
+    end
+  end
+
   def import_xl
     session[:active_tab] ="EmployeeManagement"
-    session[:active_tab1] ="Import"   
+    session[:active_tab1] ="Reports"
   end
 
   def import
-    # Employee.import(params[:file])
-    # redirect_to root_url, notice: "File imported."
     file = params[:file]
     if file.nil?
       flash[:alert] = "Please Select File!"
-    redirect_to import_xl_employees_path
+    redirect_to import_basic_detail_employees_path
     else
     Employee.import(params[:file])
-    redirect_to import_xl_employees_path, notice: "File imported."
+    redirect_to import_basic_detail_employees_path, notice: "File imported."
     end
   end
   
@@ -77,8 +108,6 @@
     redirect_to assign_role_employees_path, notice: "File imported."
     end
   end
-
-
 
   def report
     @employees = Employee.all
@@ -256,7 +285,7 @@
       @employee_type = EmployeeType.find_by(name: "Probation")
       @employees = Employee.where(employee_type_id: @employee_type.id)
       @department = Department.find(@employee.department_id)
-      @sub_department = SubDepartment.find(@employee.sub_department_id)
+      # @sub_department = SubDepartment.find(@employee.sub_department_id)
       authorize! :create, @employee
         if @employee.save
           @emp1=params[:employee][:employee_code_master_id]
@@ -395,8 +424,8 @@
 
             ManagerHistory.create(employee_id: employee.id,manager_id: manager_1,manager_2_id: manager_2,effective_from: params["login"]["effec_date"])
 
-            EmployeeMailer.user_confirmation(employee,password,manual_employee_code).deliver_now
-            EmployeeMailer.manager_detail(manager_1,employee).deliver_now
+#            EmployeeMailer.user_confirmation(employee,password,manual_employee_code).deliver_now
+ #           EmployeeMailer.manager_detail(manager_1,employee).deliver_now
             flash[:notice] = "Employee assigned successfully."
             #redirect_to assign_role_employees_path
             # UserPasswordMailer.welcome_email(company,pass).deliver_now
@@ -621,7 +650,6 @@
   end
 
   def collect_company_location
-    # byebug
     @company = Company.find(params[:id])
     # @company_locations = @company.company_locations
     if current_user.class == Group
@@ -643,7 +671,7 @@
   end
 
    def collect_company_location_dropdown_with_label
-    @company = Company.find(params[:id])
+    @company = Company.find(params[:company_id])
     if current_user.class == Group
     @company_locations = CompanyLocation.all
     else
@@ -669,7 +697,7 @@
   # end
 
   def collect_department
-     @company_location = CompanyLocation.find(params[:id])
+     @company_location = CompanyLocation.find(params[:company_location_id])
       # if current_user.role.name == 'HOD' ||  current_user.role.name == 'Supervisor'
       #   @departments = Department.where(id: current_user.department_id)
       # else
@@ -679,7 +707,7 @@
   end
 
   def collect_sub_department
-    @department = Department.find(params[:id])
+    @department = Department.find(params[:department_id])
     @sub_departments = SubDepartment.where(department_id: @department.id)
     @form = params[:form]
   end
@@ -731,7 +759,7 @@
   def reset_password
     @member = Member.find(params[:member_id])
     @member_password_reset = Member.find_by(manual_member_code: @member.manual_member_code).update(password: "12345678")
-    EmployeeMailer.employee_reset_password(@member).deliver_now
+    #EmployeeMailer.employee_reset_password(@member).deliver_now
     flash[:notice] = "Password Changed Successfully"
     redirect_to member_list_for_update_password_employees_path
   end
@@ -1648,7 +1676,7 @@ def show_all_record
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_params
     # params.require(:employee).permit(:department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :district, :state, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender)
-    params.require(:employee).permit(:employee_option,:optional_email,:optinal_contact_no,:optinal_contact_no1,:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id,:sub_department_id,:first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id,:employee_signature,:emergency_contact_no,:cost_center_id,:service_master_id,:resource_pool_master_id)
+    params.require(:employee).permit(:employee_option,:optional_email,:optinal_contact_no,:optinal_contact_no1,:employee_code_master_id,:prefix,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id,:first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id,:employee_signature,:emergency_contact_no,:cost_center_id,:service_master_id,:resource_pool_master_id)
 
     # joining_detail_attributes: [:joining_date, :reference_from, :admin_hr, :tech_hr, :designation, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem])
   end

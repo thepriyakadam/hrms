@@ -2461,7 +2461,8 @@ class Api::UserAuthsController < ApplicationController
     render :json => all_issue_root_cause.present? ? all_issue_root_cause.collect{|itm| { :id => itm.id, :name => itm.name }} : []
   end
 
- def apk_link
-  @a = href="/Apk/android-armv7-debug.apk"
- end
+  def apk_link
+    @a = href="/public/Apk/android-armv7-debug.apk"
+    render :status=>200, :json=>{:status=> @a }
+  end
 end

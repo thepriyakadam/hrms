@@ -7,7 +7,7 @@
       <td colspan="12">
        <% if @employee.company_location.company.company_logo == nil %>
       <% else %>
-        <center> <%= wicked_pdf_image_tag @employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+        <center> <%= wicked_pdf_image_tag @employee.company_location.company.company_logo.url, :size => "210x120" %></center>
         <%end%>
      <!--  <center> <= wicked_pdf_image_tag @employee.company.company_logo.url, :size => "90x50" %></center>  -->
         <center><strong><%= @employee.company_location.company.try(:description) %></strong><br><%= @employee.company_location.try(:address) %></center>
@@ -31,15 +31,16 @@
       <strong> ESIC No. :</strong> <%= @employee.joining_detail.try(:employee_efic_no) %><br><br>
       <strong> PAN No.  : </strong> <%= @salaryslip.employee.pan_no %><br><br> 
       <strong> Account No. :</strong><%= @employee.try(:employee_bank_detail).try(:account_no) %><br><br> 
-      <strong> Bank Name :</strong><%= @employee.try(:employee_bank_detail).try(:bank_name) %><br><br>
+      <strong> Bank Name :</strong><%= @employee.try(:employee_bank_detail).try(:bank).try(:name) %><br><br>
       </td>
 
       <td colspan="4">
       <strong> Days in Month : </strong><%= @working_day.try(:day_in_month) %> <br><br> 
       <strong> Payble Days : </strong><%= @working_day.try(:payable_day) %><br><br>
-      <% @leave_details.each do |ld| %>
-        <strong> <%= ld.leav_category.name %>  <strong> Balance: </strong> <%= ld.balance %><br><br>
-      <% end %>
+
+    <!--   < @leave_details.each do |ld| %>
+        <strong> <= ld.leav_category.code %>  Balance : </strong> <= ld.balance %><br><br>
+      < end %> -->
       </td>
     </tr>
   
@@ -54,11 +55,11 @@
 
       <tr><th colspan="6"><center> Earning Details </center></th> <th colspan="6"><center> Deduction Details </center></th></tr>
         <tr >
-          <td style="border: 1;" colspan="4" ><strong>Component &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
+          <td style="border: 1;" colspan="4" ><strong>Component &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
           <td style="border: 1;"  align="right"><strong>Gross</strong></td>
           <td style="border: 1;"  align="right"><strong>Earning</strong></td>
         
-          <td style="border: 1;" colspan="4"><strong>Component &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
+          <td style="border: 1;" colspan="4"><strong>Component &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
           <td style="border: 1;"  align="right"><strong>Amount</strong></td>
           <td style="border: 1;"  align="right"><strong> &nbsp;&nbsp;&nbsp; Amount</strong></td>
         </tr>
@@ -111,4 +112,3 @@
     </table>
     </div>
     </div>
-

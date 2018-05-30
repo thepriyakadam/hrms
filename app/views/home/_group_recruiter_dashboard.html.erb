@@ -229,6 +229,30 @@
     </section><!-- /.Left col -->
     <!-- right col (We are only adding the ID to make the widgets sortable)-->
     <section class="col-lg-6 connectedSortable">
+
+    <!-- Start Thought of The Day -->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Thought of The Day</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <% t=Thought.where(date: Date.today) %>
+           <% t.each do |t| %>
+           <div style="padding-top: 5px; font-size: 12pt;font-style: italic;color: #000000; font-family: 'Times New Roman', Times, serif;">
+            <%= t.thought %>
+          </div>
+           <div  style="font-size: 12pt;font-style: italic;color: #000000; font-family: 'Times New Roman', Times, serif; text-align: right;">
+           -<%= t.thought_of %>
+           </div>
+          <% end %>
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+      <!-- End Thought of The Day -->
+      
     
           <!-- USERS LIST -->
       <div class="box box-info">
@@ -260,6 +284,8 @@
             </thead>
                    
                      <% @employees.each do |e| %>
+                     <% if e.joining_date == Date.today %>
+                     <% else %>
                       <tr>
                        <td>
                   <%unless e.nil? or e.nil? or  e.employee.member.nil? or e.employee.member.avatar.nil? %>
@@ -289,6 +315,7 @@
                       </td>
                       <% end %> <!-- do -->
                     </tr>
+                    <% end%>
                      <%end%> <!-- if employee.empty? -->
                    
                   </table>

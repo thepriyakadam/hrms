@@ -32,7 +32,6 @@ class DailyBillDetailsController < ApplicationController
 
     @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
 
-
     # reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
     # @reporting_master = ReportingMaster.find(@travel_request.reporting_master_id)
     # @employee = Employee.find(@reporting_master.employee_id)
@@ -192,12 +191,20 @@ class DailyBillDetailsController < ApplicationController
               disposition: 'attachment'
   end
 
+  def all_expence_request
+    @travel_requests = TravelRequest.where(is_confirm: true, current_status: "FinalApproved")
+  end
+
    def travel_request_list
      @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
      # @travel_requests = TravelRequest.where(daily_bill_status: true,reporting_master_id: reporting_masters)
+      @emp = Employee.find_by(id: current_user.employee_id)
+    @employees = @emp.subordinates
+    @employees_ind = @emp.indirect_subordinates
+    @employee = @employees + @employees_ind
 
      # @travel_requests = TravelRequest.where(daily_bill_status: true,current_status: "Approved",reporting_master_id: @reporting_masters)
-     @travel_requests = TravelRequest.where(current_status: "FinalApproved",reporting_master_id: current_user.employee_id)
+     @travel_requests = TravelRequest.where(current_status: "FinalApproved",is_confirm: true,reporting_master_id: current_user.employee_id)
      # @travel_request_histories = TravelRequestHistory.where(daily_bill_status: true,reporting_master_id: reporting_masters)
 
      # @travel_request_histories = TravelRequestHistory.where(daily_bill_status: true,reporting_master_id: reporting_masters)
@@ -242,41 +249,49 @@ class DailyBillDetailsController < ApplicationController
      if @reporting_masters_travel_requests2.try(:status) == nil
       ReportingMastersTravelRequest.where(id: @reporting_masters_travel_requests2.id).update_all(status: true,daily_bill_comment: @comment)
       TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests3_new.reporting_master_id)
+      DailyBillDetail.where(travel_request_id: @travel_request.id).update_all(request_status: @reporting_masters_travel_requests3_new.try(:travel_status))
       flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
 
      elsif @reporting_masters_travel_requests3_new.try(:status) == nil
       ReportingMastersTravelRequest.where(id: @reporting_masters_travel_requests3_new.try(:id)).update_all(status: true,daily_bill_comment: @comment)
       TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests4_new.try(:reporting_master_id))
+      DailyBillDetail.where(travel_request_id: @travel_request.id).update_all(request_status: @reporting_masters_travel_requests4_new.try(:travel_status))
       flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
 
       elsif @reporting_masters_travel_requests4_new.try(:status) == nil
       ReportingMastersTravelRequest.where(id: @reporting_masters_travel_requests4_new.try(:id)).update_all(status: true,daily_bill_comment: @comment)
       TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests5_new.try(:reporting_master_id))
+      DailyBillDetail.where(travel_request_id: @travel_request.id).update_all(request_status: @reporting_masters_travel_requests5_new.try(:travel_status))
       flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
 
       elsif @reporting_masters_travel_requests5_new.try(:status) == nil
       ReportingMastersTravelRequest.where(id: @reporting_masters_travel_requests5_new.try(:id)).update_all(status: true,daily_bill_comment: @comment)
       TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests6_new.try(:reporting_master_id))
+      DailyBillDetail.where(travel_request_id: @travel_request.id).update_all(request_status: @reporting_masters_travel_requests6_new.try(:travel_status))
       flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
 
       elsif @reporting_masters_travel_requests6_new.try(:status) == nil
       ReportingMastersTravelRequest.where(id: @reporting_masters_travel_requests6_new.try(:id)).update_all(status: true,daily_bill_comment: @comment)
       TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests7_new.try(:reporting_master_id))
+      DailyBillDetail.where(travel_request_id: @travel_request.id).update_all(request_status: @reporting_masters_travel_requests7_new.travel_status)
       flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
 
       elsif @reporting_masters_travel_requests7_new.try(:status) == nil
       ReportingMastersTravelRequest.where(id: @reporting_masters_travel_requests7_new.try(:id)).update_all(status: true,daily_bill_comment: @comment)
       TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests8_new.try(:reporting_master_id))
+      DailyBillDetail.where(travel_request_id: @travel_request.id).update_all(request_status: @reporting_masters_travel_requests8_new.travel_status)
       flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
  
       elsif @reporting_masters_travel_requests8_new.try(:status) == nil
       ReportingMastersTravelRequest.where(id: @reporting_masters_travel_requests8_new.try(:id)).update_all(status: true,daily_bill_comment: @comment)
       TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests9_new.try(:reporting_master_id))
+      DailyBillDetail.where(travel_request_id: @travel_request.id).update_all(request_status: @reporting_masters_travel_requests9_new.travel_status)
       flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
   
       elsif @reporting_masters_travel_requests9_new.try(:status) == nil
       ReportingMastersTravelRequest.where(id: @reporting_masters_travel_requests9_new.try(:id)).update_all(status: true,daily_bill_comment: @comment)
       TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests10_new.try(:reporting_master_id))
+      DailyBillDetail.where(travel_request_id: @travel_request.id).update_all(request_status: @reporting_masters_travel_requests10_new.travel_status)
       flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
     else
   end
@@ -349,7 +364,7 @@ class DailyBillDetailsController < ApplicationController
     @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
     @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[0]
     @reporting_masters_travel_requests_1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[1] #new code
-    ReportingMastersTravelRequest.where(id: @reporting_masters_travel_requests.id).update_all(status: true) #new code
+    @reporting_masters_travel_requests.update(status: true) #new code
     DailyBillDetail.where(travel_request_id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests.reporting_master_id,is_confirm: true)
     c1 = @daily_bill_details.sum(:travel_expence).to_i
     TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests_1.reporting_master_id,is_confirm: true,expense: c1)
@@ -380,89 +395,98 @@ class DailyBillDetailsController < ApplicationController
   end
 
   def print_expence_date_report
-    # byebug
       @from = params[:salary] ? params[:salary][:from_date] : params[:from_date]
       @to = params[:salary] ? params[:salary][:to_date] : params[:to_date]
       @company = params[:employee] ? params[:employee][:company_id] : params[:company_id]
       @company_location = params[:employee] ? params[:employee][:company_location_id] : params[:company_location_id]
       @department = params[:employee] ? params[:employee][:department_id] : params[:department_id]
-      @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
-      @travel_requests = TravelRequest.where(employee_id: @employees)
-      @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
+      # @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+      # @travel_requests = TravelRequest.where(employee_id: @employees)
+      # @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
       @detail = DailyBillDetail.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department)
       # @expence_date = DailyBillDetail.where(travel_request_id: @travel_requests).take
 
-if current_user.class == Group
-      if @company_location == ""
+      if current_user.class == Group
+        if @company == ""
+          @employees = Employee.where(status: 'Active').pluck(:id)
+          @travel_requests = TravelRequest.where(employee_id: @employees)
+          @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests)
+        elsif @company_location == ""
           @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
           @travel_requests = TravelRequest.where(employee_id: @employees)
           @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
-      elsif  @department == ""
-          @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
-           @travel_requests = TravelRequest.where(employee_id: @employees)
+        elsif  @department == ""
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i).pluck(:id)
+          @travel_requests = TravelRequest.where(employee_id: @employees)
           @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
         else
           @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i).pluck(:id)
-           @travel_requests = TravelRequest.where(employee_id: @employees)
+          @travel_requests = TravelRequest.where(employee_id: @employees)
           @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
-      end
-
+        end
       elsif current_user.class == Member
-      if current_user.role.name == 'GroupAdmin'
-         if @company_location == ""
-          @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
-           @travel_requests = TravelRequest.where(employee_id: @employees)
-          @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
-    
-        elsif  @department == ""
-          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i).pluck(:id)
-           @travel_requests = TravelRequest.where(employee_id: @employees)
-          @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
-    
-        else 
-          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i).pluck(:id)
-           @travel_requests = TravelRequest.where(employee_id: @employees)
-          @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
-    
+        if current_user.role.name == 'GroupAdmin'
+          if @company == ""
+            @employees = Employee.where(status: 'Active').pluck(:id)
+            @travel_requests = TravelRequest.where(employee_id: @employees)
+            @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests)
+          elsif @company_location == ""
+            @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
+            @travel_requests = TravelRequest.where(employee_id: @employees)
+            @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
+          elsif  @department == ""
+            @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i).pluck(:id)
+            @travel_requests = TravelRequest.where(employee_id: @employees)
+            @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
+          else 
+            @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i).pluck(:id)
+            @travel_requests = TravelRequest.where(employee_id: @employees)
+            @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests)  
+          end
+        elsif current_user.role.name == 'Admin'
+          if @company == ""
+            @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
+            @travel_requests = TravelRequest.where(employee_id: @employees)
+            @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests)
+          elsif @company_location == ""
+            @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
+            @travel_requests = TravelRequest.where(employee_id: @employees)
+            @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
+          elsif  @department == ""
+            @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i).pluck(:id)
+            @travel_requests = TravelRequest.where(employee_id: @employees)
+            @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
+          else 
+            @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+             @travel_requests = TravelRequest.where(employee_id: @employees)
+            @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
+          end
+        elsif current_user.role.name == 'Branch'
+          if @company == "" || @company_location == ""
+            @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
+            @travel_requests = TravelRequest.where(employee_id: @employees)
+            @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests)
+          else 
+            @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+            @travel_requests = TravelRequest.where(employee_id: @employees)
+            @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
+          end
+        elsif current_user.role.name == 'HOD'
+          if @company == "" || @company_location == "" || @department == ""
+            @employees = Employee.where(status: 'Active',department_id: current_user.department_id).pluck(:id)
+            @travel_requests = TravelRequest.where(employee_id: @employees)
+            @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests)
+          else 
+            @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i).pluck(:id)
+            @travel_requests = TravelRequest.where(employee_id: @employees)
+            @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests)
+          end
+        elsif current_user.role.name == 'Superviser'
+        elsif current_user.role.name == 'Employee'
         end
- elsif current_user.role.name == 'Admin'
-         if @company_location == ""
-          @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
-           @travel_requests = TravelRequest.where(employee_id: @employees)
-          @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
-        elsif @company == ""
-          @employees = Employee.where(status: 'Active',company_location_id: @company_location.to_i).pluck(:id)
-           @travel_requests = TravelRequest.where(employee_id: @employees)
-          @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
-        else 
-          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
-           @travel_requests = TravelRequest.where(employee_id: @employees)
-          @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
-        end
-elsif current_user.role.name == 'Branch'
-         if @company_location == ""
-          @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
-           @travel_requests = TravelRequest.where(employee_id: @employees)
-          @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
-        elsif @company == ""
-          @employees = Employee.where(status: 'Active',company_location_id: @company_location.to_i).pluck(:id)
-           @travel_requests = TravelRequest.where(employee_id: @employees)
-          @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
-        else 
-          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
-           @travel_requests = TravelRequest.where(employee_id: @employees)
-          @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
-        end
- elsif current_user.role.name == 'HOD'
-        @daily_bill_details = DailyBillDetail.where(department_id: current_user.department_id)
-      elsif current_user.role.name == 'Superviser'
-      elsif current_user.role.name == 'Employee'
       end
-    end
 
-
-
-     respond_to do |format|
+      respond_to do |format|
       format.js
       format.xls {render template: 'daily_bill_details/expence_date_xls.xls.erb'}
       format.html
@@ -479,8 +503,8 @@ elsif current_user.role.name == 'Branch'
                             :left   => 20,
                             :right  => 20},
               :show_as_html => params[:debug].present?
-          end
         end
+      end
   end
 
   def modal_expense_claim_list

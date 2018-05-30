@@ -4,7 +4,7 @@ class MonthlyExpencesController < ApplicationController
   # GET /monthly_expences
   # GET /monthly_expences.json
   def index
-    @monthly_expences = MonthlyExpence.group("DATE_FORMAT(expence_date,'%Y')")
+    @monthly_expences = MonthlyExpence.group("DATE_FORMAT(expence_date,'%Y')","DATE_FORMAT(expence_date,'%b')")
 
     session[:active_tab] ="PayrollManagement"
     session[:active_tab1] ="PayrollSetup"
@@ -52,9 +52,13 @@ class MonthlyExpencesController < ApplicationController
   # PATCH/PUT /monthly_expences/1
   # PATCH/PUT /monthly_expences/1.json
   def update
+    date = monthly_expence_params["expence_date"]
+    @date = date.to_date
+    @month = @date.strftime("%B")
+    @year = @date.strftime("%Y")
     respond_to do |format|
       if @monthly_expence.update(monthly_expence_params)
-        format.html { redirect_to monthly_expences_path, notice: 'Monthly expence was successfully updated.' }
+        format.html { redirect_to employee_expences_monthly_expences_path(month: @month,year: @year), notice: 'Monthly expence was successfully updated.' }
         format.json { render :show, status: :ok, location: @monthly_expence }
       else
         format.html { render :edit }
@@ -63,14 +67,32 @@ class MonthlyExpencesController < ApplicationController
     end
   end
 
+  def edit_monthly_expence
+    monthly_expence = MonthlyExpence.find(params[:expence_id])
+    @month = params[:month]
+    @year = params[:year]
+    @monthly_expence.update(monthly_expence_params)
+    flash[:notice] = "updated successfully!"
+    redirect_to employee_expences_monthly_expences_path(month: @month,year: @year)
+  end
+
   # DELETE /monthly_expences/1
   # DELETE /monthly_expences/1.json
-  def destroy
-    @monthly_expence.destroy
-    respond_to do |format|
-      format.html { redirect_to monthly_expences_url, notice: 'Monthly expence was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+  # def destroy
+  #   @monthly_expence.destroy
+  #   respond_to do |format|
+  #     format.html { redirect_to monthly_expences_url, notice: 'Monthly expence was successfully destroyed.' }
+  #     format.json { head :no_content }
+  #   end
+  # end
+
+  def delete_monthly_expence
+    @monthly_expence = MonthlyExpence.find(params[:expence_id])
+    @month = params[:month]
+    @year = params[:year]
+    MonthlyExpence.where(id: @monthly_expence).destroy_all
+    flash[:alert] = "Record Deleted successfully!"
+    redirect_to employee_expences_monthly_expences_path(month: @month,year: @year)
   end
 
   def modal
@@ -108,29 +130,44 @@ class MonthlyExpencesController < ApplicationController
   end
 
   def employee_expences
+    @month = params[:month]
+    @year = params[:year]
     date = Date.new(params[:year].to_i, Workingday.months[params[:month]])
     if current_user.class == Group
-      @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: params[:employee_id])
+      @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y'))
     else
       if current_user.role.name == 'GroupAdmin' 
-        @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: params[:employee_id])
+        @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y'))
       elsif current_user.role.name == 'Admin'
         @employees = Employee.where(company_id: current_user.company_location.company_id)
-        @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: params[:employee_id])
+        @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y'))
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
-        @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: params[:employee_id])
+        @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y'))
       elsif current_user.role.name == 'HOD'
         @employees = Employee.where(department_id: current_user.department_id)
-        @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: params[:employee_id])
+        @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y'))
       elsif current_user.role.name == 'AccountAdmin'
         @employees = Employee.where(company_id: current_user.company_location.company_id)
-        @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: params[:employee_id])
+        @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y'))
        elsif current_user.role.name == 'Account'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
-        @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: params[:employee_id])
+        @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y'))
       elsif current_user.role.name == 'Employee'
-        @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+        @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y'))
+      end
+    end
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'monthly_expences/monthly_expences.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'dynamic_report',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'monthly_expences/monthly_expences.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
   end
@@ -142,81 +179,69 @@ class MonthlyExpencesController < ApplicationController
   end
 
   def dynamic_report
-    # byebug
-    @month = params[:food_deduction][:month]
-    @year = params[:food_deduction][:year]
-    @company = params[:food_deduction][:company_id]
-    @location = params[:food_deduction][:company_location_id]
-    date = Date.new(@year.to_i, Workingday.months[@month])
+    from = params[:employee][:from]
+    to = params[:employee][:to]
+    @company_id = params[:employee][:company_id]
+    @location = params[:employee][:company_location_id]
+    @from = from.to_date
+    @to = to.to_date
     if current_user.class == Group
       if @company_id == ""
-        @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y'))
-      elsif @location == ""
+        @monthly_expences = MonthlyExpence.where(expence_date: @from..@to)
+      elsif @location == "" || @location == nil
         @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
-        @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
-      elsif @department == ""
-        @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
-        @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
       else
         @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i).pluck(:id)
-        @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
       end
     elsif current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
         if @company_id == ""
-          @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y'))
-        elsif @location == ""
+          @monthly_expences = MonthlyExpence.where(expence_date: @from..@to)
+        elsif @location == "" || @location == nil
           @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
-          @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
-        elsif @department == ""
-          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
-          @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+          @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
         else
           @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i).pluck(:id)
-          @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+          @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Admin'
         if @company_id == ""
           @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-          @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
-        elsif @location == ""
+          @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
+        elsif @location == "" || @location == nil
           @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
-          @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
-        elsif @department == ""
-          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
-          @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+          @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
         else
           @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i).pluck(:id)
-          @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+          @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Branch'
-        if @company_id == "" || @location == ""
+        if @company_id == "" || @location == "" || @location == nil
           @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-          @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
-        elsif @department == ""
-          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
-          @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+          @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
         else
           @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i).pluck(:id)
-          @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+          @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'HOD'
-        if @company_id == "" || @location == ""
+        if @company_id == "" || @location == "" || @location == nil
           @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
-          @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+          @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
         else
           @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i).pluck(:id)
-          @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+          @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Superviser'
-        if @company_id == "" || @location == ""
+        if @company_id == "" || @location == "" || @location == nil
           @emp = Employee.find(current_user.employee_id)
           @employees = @emp.subordinates
-          @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+          @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
         else
           @emp = Employee.find(current_user.employee_id)
           @employees = @emp.subordinates
-          @monthly_expences = MonthlyExpence.where("DATE_FORMAT(expence_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+          @monthly_expences = MonthlyExpence.where(expence_date: @from..@to).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Employee'
       end

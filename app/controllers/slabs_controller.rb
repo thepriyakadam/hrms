@@ -120,7 +120,6 @@ class SlabsController < ApplicationController
       flash[:alert] = "Template Not Available for this Employee!"
     else
       @employee_salary_templates = @current_template.employee_salary_templates
-  
       @ctc = @employee_salary_templates.sum(:annual_amount)
       @slabs = Slab.all
         slab_value = 0
@@ -132,7 +131,6 @@ class SlabsController < ApplicationController
           @value = @ctc.to_d - texable.to_d
           last_value = (@value * s.percentage) / 100
           last_value1 = slab_value + last_value
-          flash[:notice] = "Successfully created!"
         else
           texable = texable + s.texable_amount
           value = (s.texable_amount * s.percentage) / 100
@@ -143,6 +141,7 @@ class SlabsController < ApplicationController
       slab_value
       monthly = last_value1.to_d / 12
       TexableAmount.create(employee_id: employee.id,yearly: last_value1,monthly: monthly.round(2))
+      flash[:alert] = "Applied Successfully!"
     end #if @current_template == nil
     redirect_to employee_list_slabs_path
   end

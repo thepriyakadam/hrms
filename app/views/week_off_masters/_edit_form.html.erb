@@ -13,29 +13,27 @@
         		</div>
       	   </div>
 
-           <div class="col-sm-2">
+           <div class="col-sm-3">
               <div class="form-group required">
                 <%= f.date_field :from, label: "From", class: 'from form-control'%>
               </div>
            </div>
-         	<div class="col-sm-2">
+         	<div class="col-sm-3">
           	<div class="form-group required">
               <%= f.date_field :to, label: "To", class: 'to form-control'%>
             </div>
           </div>
-        </div>
 
-        <div class="row">
-    	    <div class="col-sm-3">
-    	      <label>Status</label>
+    	    <div class="col-sm-3" style="padding-top: 20px" >
     	      <div class="form-group required">
     	        <%= f.check_box :is_active,label:'Active' %>
     	      </div>
     	    </div><br>
-    	    <div class="col-sm-3">
-    	      <div class="actions">
-    	        <%= f.submit "Update Week Off" ,class: "btn btn-primary btn-sm" %>
-    	      </div>
+        </div>
+
+        <div class="row">
+    	    <div class="col-sm-12" style="padding-top: 20px" >
+    	        <center><%= f.submit "Update Week Off" ,class: "btn btn-primary btn-sm" %></center>
     	    </div>
     	  </div>
   	   <% end %>

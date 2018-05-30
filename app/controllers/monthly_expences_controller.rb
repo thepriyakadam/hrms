@@ -52,9 +52,13 @@ class MonthlyExpencesController < ApplicationController
   # PATCH/PUT /monthly_expences/1
   # PATCH/PUT /monthly_expences/1.json
   def update
+    date = monthly_expence_params["expence_date"]
+    @date = date.to_date
+    @month = @date.strftime("%B")
+    @year = @date.strftime("%Y")
     respond_to do |format|
       if @monthly_expence.update(monthly_expence_params)
-        format.html { redirect_to monthly_expences_path, notice: 'Monthly expence was successfully updated.' }
+        format.html { redirect_to employee_expences_monthly_expences_path(month: @month,year: @year), notice: 'Monthly expence was successfully updated.' }
         format.json { render :show, status: :ok, location: @monthly_expence }
       else
         format.html { render :edit }
@@ -63,14 +67,32 @@ class MonthlyExpencesController < ApplicationController
     end
   end
 
+  def edit_monthly_expence
+    monthly_expence = MonthlyExpence.find(params[:expence_id])
+    @month = params[:month]
+    @year = params[:year]
+    @monthly_expence.update(monthly_expence_params)
+    flash[:notice] = "updated successfully!"
+    redirect_to employee_expences_monthly_expences_path(month: @month,year: @year)
+  end
+
   # DELETE /monthly_expences/1
   # DELETE /monthly_expences/1.json
-  def destroy
-    @monthly_expence.destroy
-    respond_to do |format|
-      format.html { redirect_to monthly_expences_url, notice: 'Monthly expence was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+  # def destroy
+  #   @monthly_expence.destroy
+  #   respond_to do |format|
+  #     format.html { redirect_to monthly_expences_url, notice: 'Monthly expence was successfully destroyed.' }
+  #     format.json { head :no_content }
+  #   end
+  # end
+
+  def delete_monthly_expence
+    @monthly_expence = MonthlyExpence.find(params[:expence_id])
+    @month = params[:month]
+    @year = params[:year]
+    MonthlyExpence.where(id: @monthly_expence).destroy_all
+    flash[:alert] = "Record Deleted successfully!"
+    redirect_to employee_expences_monthly_expences_path(month: @month,year: @year)
   end
 
   def modal

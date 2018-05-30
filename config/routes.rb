@@ -2195,6 +2195,8 @@ end
       get :modal
       get :import_monthly_expence
       post :import
+      get :delete_monthly_expence
+      get :edit_monthly_expence
     end
   end
   resources :expencess_types do

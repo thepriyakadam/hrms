@@ -28,9 +28,9 @@
             <%= f.text_field :employee_company,label: 'Company', class: 'employee_transfer'%>
           </div>
         </div>
-        </div>
-         <div class="row">
-         <div class="col-sm-3">
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
           <div class="form-group required">
             <%= f.text_field :employee_company_location,label: 'Company Location', class: 'employee_transfer'%>
           </div>
@@ -41,17 +41,20 @@
             <%= f.text_field :employee_department,label: 'Department', class: 'employee_transfer'%>
           </div>
         </div>
+
         <div class="col-sm-6">
           <div class="field">
             <%= f.text_field :justification %>
           </div>
-          </div>
         </div>
+      </div>
  
       <div class="row">
-        <div class="actions">
-          <%= f.submit'Initiate Transfer', :class => class_name, data: { disable_with: data_info } %> | <%= link_to 'Back', employee_transfers_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
-          <!--  <= link_to 'Back',employee_list_employee_transfers_path,class: 'btn btn-default btn-sm fa fa-arrow-left'%> -->
+        <div class="col-sm-6">
+          <div class="actions">
+            <%= f.submit'Initiate Transfer', :class => class_name, data: { disable_with: data_info } %> | <%= link_to 'Back', employee_transfers_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
+            <!--  <= link_to 'Back',employee_list_employee_transfers_path,class: 'btn btn-default btn-sm fa fa-arrow-left'%> -->
+          </div>
         </div>
       </div>
     </div>

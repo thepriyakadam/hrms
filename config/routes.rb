@@ -56,6 +56,7 @@ Rails.application.routes.draw do
 
   resources :daily_attendances do 
     collection do
+      get :third_attendance_uttam
       get :attendance
       get :calculate
       get :daily_attendance
@@ -980,6 +981,8 @@ end
   end
   resources :employee_attendances do
     collection do
+      post :third_attendance
+      get :third_attendance
       post :fetch_attendance
       post :calculate
       get :fetch_attendance

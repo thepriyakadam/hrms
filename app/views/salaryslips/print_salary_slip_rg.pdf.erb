@@ -31,16 +31,16 @@
       <strong> ESIC No. :</strong> <%= @employee.joining_detail.try(:employee_efic_no) %><br><br>
       <strong> PAN No.  : </strong> <%= @salaryslip.employee.pan_no %><br><br> 
       <strong> Account No. :</strong><%= @employee.try(:employee_bank_detail).try(:account_no) %><br><br> 
-      <strong> Bank Name :</strong><%= @employee.try(:employee_bank_detail).try(:bank_name) %><br><br>
+      <strong> Bank Name :</strong><%= @employee.try(:employee_bank_detail).try(:bank).try(:name) %><br><br>
       </td>
 
       <td colspan="4">
       <strong> Days in Month : </strong><%= @working_day.try(:day_in_month) %> <br><br> 
       <strong> Payble Days : </strong><%= @working_day.try(:payable_day) %><br><br>
 
-      <% @leave_details.each do |ld| %>
-        <strong> <%= ld.leav_category.code %>  Balance : </strong> <%= ld.balance %><br><br>
-      <% end %>
+    <!--   < @leave_details.each do |ld| %>
+        <strong> <= ld.leav_category.code %>  Balance : </strong> <= ld.balance %><br><br>
+      < end %> -->
       </td>
     </tr>
   

@@ -22,7 +22,7 @@ class DailyAttendancesController < ApplicationController
     redirect_to subordinate_attendance_manager_self_services_path
   end
 
-  def third_attendance
+  def third_attendance_uttam
     DailyAttendance.third_fetch_data
     redirect_to subordinate_attendance_manager_self_services_path
   end

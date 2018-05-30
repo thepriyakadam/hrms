@@ -16,7 +16,7 @@ end
 # end
 
 every :day, :at => '10:00am' do
- runner "DailyAttendance.fetch_data"
+ runner "DailyAttendance.fetch_att"
 end
 
 every :day, :at => '10:10am' do
@@ -24,14 +24,18 @@ every :day, :at => '10:10am' do
 end
 
 every :day, :at => '08:00pm' do
- runner "DailyAttendance.fetch_data"
+ runner "DailyAttendance.fetch_att"
 end
 
 every :day, :at => '08:10pm' do
   runner "DailyAttendance.calculate_attendance"
 end
 
-
 every 2.hours do 
-  rake 'atte_task:fetch_data'
+  rake 'atte_task:fetch_att'
 end
+
+every 1.hours do 
+  rake 'log:clear'
+end
+

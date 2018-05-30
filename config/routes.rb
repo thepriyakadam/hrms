@@ -3120,6 +3120,7 @@ end
   #     resources :products
   #   end
   
+
   namespace :api do
     resources :user_auths,:only => [:create], defaults: {format: 'json'}
     post 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
@@ -3229,6 +3230,38 @@ end
     get 'user_auths/cancel_coff_request' => 'user_auths#cancel_coff_request', defaults:{format: 'json'}
     get 'user_auths/approve_travel_request' => 'user_auths#approve_travel_request', defaults:{format: 'json'}
     get 'user_auths/reject_travel_request' => 'user_auths#reject_travel_request', defaults:{format: 'json'}
+    get 'user_auths/final_approval_travel_list' => 'user_auths#final_approval_travel_list', defaults:{format: 'json'}
     post 'user_auths/employee_expense_claim_request' => 'user_auths#employee_expense_claim_request', defaults:{format: 'json'}
-  end
+    get 'user_auths/edit_claim' => 'user_auths#edit_claim', defaults:{format: 'json'}
+    get 'user_auths/delete_expense_claim' => 'user_auths#delete_expense_claim', defaults:{format: 'json'}
+    post 'user_auths/employee_claim_request' => 'user_auths#employee_claim_request', defaults:{format: 'json'}
+    get 'user_auths/claim_list_total' => 'user_auths#claim_list_total', defaults:{format: 'json'}
+    get 'user_auths/final_reject_travel_request' => 'user_auths#final_reject_travel_request', defaults:{format: 'json'}
+    get 'user_auths/final_approve_travel_request' => 'user_auths#final_approve_travel_request', defaults:{format: 'json'}
+    get 'user_auths/expense_claim_approval_list' => 'user_auths#expense_claim_approval_list', defaults:{format: 'json'}
+    get 'user_auths/all_claim_expense_list' => 'user_auths#all_claim_expense_list', defaults:{format: 'json'}
+    get 'user_auths/second_expense_claim_list' => 'user_auths#second_expense_claim_list', defaults:{format: 'json'}
+    get 'user_auths/claim_approve_request' => 'user_auths#claim_approve_request', defaults:{format: 'json'}
+    get 'user_auths/admin_expense_claim_approval_list' => 'user_auths#admin_expense_claim_approval_list', defaults:{format: 'json'}
+    get 'user_auths/all_travel_history' => 'user_auths#all_travel_history', defaults:{format: 'json'}
+    get 'user_auths/cancel_travel_history' => 'user_auths#cancel_travel_history', defaults:{format: 'json'}
+    get 'user_auths/get_time_sheet' => 'user_auths#get_time_sheet', defaults:{format: 'json'}
+    get 'user_auths/get_help_disk_list' => 'user_auths#get_help_disk_list', defaults:{format: 'json'}
+    get 'user_auths/all_issue_tracker_group' => 'user_auths#all_issue_tracker_group', defaults:{format: 'json'}
+    get 'user_auths/cancel_help_desk_request' => 'user_auths#cancel_help_desk_request', defaults:{format: 'json'}
+    get 'user_auths/group_type' => 'user_auths#group_type', defaults:{format: 'json'}
+    get 'user_auths/collect_issues' => 'user_auths#collect_issues', defaults:{format: 'json'}
+    get 'user_auths/daily_bill_request_confirmation' => 'user_auths#daily_bill_request_confirmation', defaults:{format: 'json'}
+    get 'user_auths/lock_request_list' => 'user_auths#lock_request_list', defaults:{format: 'json'}
+    get 'user_auths/solved_issue_list' => 'user_auths#solved_issue_list', defaults:{format: 'json'}
+    get 'user_auths/manager_daily_attendance' => 'user_auths#manager_daily_attendance', defaults:{format: 'json'}
+    get 'user_auths/collect_issues_description' => 'user_auths#collect_issues_description', defaults:{format: 'json'}
+    post 'user_auths/create_support_request' => 'user_auths#create_support_request', defaults:{format: 'json'}
+    get 'user_auths/unlock_request' => 'user_auths#unlock_request', defaults:{format: 'json'}
+    post 'user_auths/lock_request' => 'user_auths#lock_request', defaults:{format: 'json'}
+    post 'user_auths/solved_request' => 'user_auths#solved_request', defaults:{format: 'json'}
+    get 'user_auths/issue_tracker_member_list' => 'user_auths#issue_tracker_member_list', defaults:{format: 'json'}
+    get 'user_auths/support_root_cause_list' => 'user_auths#support_root_cause_list', defaults:{format: 'json'}
+    get 'user_auths/apk_link' => 'user_auths#apk_link', defaults:{format: 'json'}
+  end  
 end

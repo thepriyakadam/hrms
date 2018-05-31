@@ -49,7 +49,7 @@
     <!-- Left col -->
     <section class="col-lg-6 connectedSortable">
     <h3>My Chart</h3>
-     <%= @chart.render() %>
+     <%#= @chart.render() %>
        <!-- TABLE: LATEST ORDERS -->
       <div class="box box-info">
         <div class="box-header with-border">
@@ -602,94 +602,6 @@
         </div><!-- /.box-body -->
       </div><!-- /.box -->
 
-
-
-      <div class="box box-info">
-        <div class="box-header with-border">
-          <h3 class="box-title">PMS</h3>
-          <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-          </div>
-        </div><!-- /.box-header -->
-        <div class="box-body">
-          <div class="table-responsive">
-            <table class="table no-margin">
-            <thead>
-                <tr>
-                  <th>Process</th>
-                  <th>Set</th>
-                  <th>Not Set</th>
-                  <th>Action</th>
-                </tr>
-                <tr>
-                  <td>Period</td>
-                  <td><%= @period_set %></td>
-                  <td><%= @period_not_set %></td>
-                  <td>
-                    <%= link_to 'Set Period', admin_period_set_goal_bunches_path,class: 'btn btn-xs btn-success'%>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Goal Set</td>
-                  <td><%= @goal_set %></td>
-                  <td><%= @goal_set_not_confirm %></td>
-                  <td>
-                    <%= link_to 'Set Goals', admin_level_period_goal_ratings_path,class: 'btn btn-xs btn-success'%>
-                  </td>
-                </tr>
-                <tr>
-                  <td> Goal Approval</td>
-                  <td><%= @goal_approved %></td>
-                  <td><%= @goal_approved_not_confirm %></td>
-                  <td>
-                    <%= link_to 'Approval', admin_goal_approval_period_goal_bunches_path,class: 'btn btn-xs btn-success'%>
-                  </td>
-                </tr>
-                <tr>
-                  <td> Self </td>
-                  <td><%= @self_evaluation %></td>
-                  <td><%= @self_evaluation_not_confirm %></td>
-                  <td>
-                    <%= link_to 'Evaluation', admin_self_evaluation_period_goal_bunches_path,class: 'btn btn-xs btn-success'%>
-                  </td>
-                </tr>
-                <tr>
-                  <td> Appraiser </td>
-                  <td><%= @appraiser_evaluation %></td>
-                  <td><%= @appraiser_evaluation_not_confirm %></td>
-                  <td>
-                    <%= link_to 'Evaluation', admin_appraiser_evaluation_period_goal_ratings_path,class: 'btn btn-xs btn-success'%>
-                  </td>
-                </tr>
-                <tr>
-                  <td> Reviewer </td>
-                  <td><%= @reviewer_evaluation %></td>
-                  <td><%= @reviewer_evaluation_not_confirm %></td>
-                  <td>
-                    <%= link_to 'Evaluation', admin_reviewer_evaluation_period_goal_ratings_path,class: 'btn btn-xs btn-success'%>
-                  </td>
-                </tr>
-                <tr>
-                  <td> Final </td>
-                  <td><%= @final_evaluation %></td>
-                  <td><%= @final_evaluation_not_confirm %></td>
-                  <td>
-                    <%= link_to 'Evaluation', employee_list_goal_bunches_path,class: 'btn btn-xs btn-success'%>
-                  </td>
-                </tr>
-                <tr> 
-                  
-                </tr>
-              </thead>
-            </table>
-          </div><!-- /.table-responsive -->
-        </div><!-- /.box-body -->
-        <div class="box-footer clearfix">
-          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
-          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
-        </div><!-- /.box-footer -->
-      </div><!-- /.box -->
 
 <!-- ============== -->
 

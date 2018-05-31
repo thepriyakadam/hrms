@@ -1302,7 +1302,8 @@ class Api::UserAuthsController < ApplicationController
     emp_id = params[:employee_id]
     date = params[:date].to_date
     month_nm = date.to_date.strftime("%B")
-    in_time = params[:in_time]
+    in_t = params[:in_time].to_time
+    in_time = in_t + 330.minutes
     latitude = params[:latitude]
     longitude = params[:longitude]
     place = params[:place]
@@ -1319,7 +1320,7 @@ class Api::UserAuthsController < ApplicationController
       time = EmployeeAttendance.where(employee_id: emp_id, in_time: in_time.to_time)
       if time.present?
       else
-        emp_att_time = emp_att.update_all(out_time: in_time.to_time)
+        emp_att_time = emp_att.update_all(in_time: in_time.to_time)
       end
     else
       emp_att_time = EmployeeAttendance.create(employee_id: emp_id, employee_code: emp_code, day: date, present: "P", in_time: in_time.to_time, month_name: month_nm, employee_name: emp_name)

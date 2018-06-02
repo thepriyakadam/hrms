@@ -37,56 +37,59 @@ class DailyAttendance < ActiveRecord::Base
   #=============================================== NEW =============================================================
 
   def self.fetch_data(day)
-    punch = Access.where(Edatetime: "2018-05-02".to_date)
-      punch.each do |mat|
-      punch_date_time = mat.Edatetime
-      punch_date = punch_date_time.to_date
-      punch_time = punch_date_time.to_time
-      punch_month = punch_date.strftime("%B")
-      user_i = mat.UserID
-      user_split = user_i.split("00")
-      user_id = user_split.second
-      @employee = Employee.find_by_manual_employee_code(user_id)
-      if @employee.nil?
-      @employee1 = Employee.find_by_manual_employee_code(user_i)
-      elsif @employee1.nil?
-        puts "Employee Id Not Found"
+  punch = Access.where("Edatetime > ? ", Time.now - day.days)
+    punch.each do |mat|
+    punch_date_time = mat.Edatetime
+    punch_date = punch_date_time.to_date
+    punch_time = punch_date_time.to_time
+    punch_month = punch_date.strftime("%B")
+    user_i = mat.UserID
+    user_split = user_i.split("00")
+    user_id = user_split.second
+    @employee = Employee.find_by_manual_employee_code(user_id)
+    if @employee.nil?
+    @employee1 = Employee.find_by_manual_employee_code(user_i)
+    elsif @employee1.nil?
+      puts "Employee Id Not Found"
+    else
+      employee_id = @employee.id
+      employee_first_name = @employee.first_name
+      employee_last_name = @employee.last_name
+      space = " "
+      if employee_last_name.present?
+        employee_name = employee_first_name + space + employee_last_name
       else
-        employee_id = @employee.id
-        employee_first_name = @employee.first_name
-        employee_last_name = @employee.last_name
-        space = " "
-        if employee_last_name.present?
-          employee_name = employee_first_name + space + employee_last_name
+        employee_name = employee_first_name
+      end
+      daily_att_employee_present = DailyAttendance.where(employee_code: user_id, time: punch_time)
+      if daily_att_employee_present.present?
+        puts "Employee Attendance Already Added"
+      else
+        daily_att_employee_create = DailyAttendance.create(employee_code: user_id, date: punch_date.to_date, time: punch_time)
+      end
+      daily_att_day = DailyAttendance.where(employee_code: user_id, date: punch_date).order("time ASC")
+      if daily_att_day.present?
+        @employee_in_time = daily_att_day.first.time.to_time
+        @employee_out_time = daily_att_day.last.time.to_time
+      else
+        puts "Employee Attendance Not Present in DailyAttendance Table"
+      end
+      @employee_att_present = EmployeeAttendance.where(employee_id: employee_id, day: punch_date)
+      if @employee_att_present.present?
+        if @employee_att_present.first.in_time.present?
+          emp_att_out_time = @employee_att_present.update_all(in_time: @employee_in_time, out_time: @employee_out_time)
+          puts "-----------EmployeeAttendance Out Time 1 updated #{Time.now}-----------"
         else
-          employee_name = employee_first_name
+          emp_att_out_time = @employee_att_present.update_all(in_time: @employee_in_time, out_time: @employee_out_time)
+          puts "-----------EmployeeAttendance Out Time 2 updated #{Time.now}-----------"
         end
-        daily_att_employee_present = DailyAttendance.where(employee_code: user_id, time: punch_time)
-        if daily_att_employee_present.empty?
-          daily_att_employee_create = DailyAttendance.create(employee_code: user_id, date: punch_date.to_date, time: punch_time)
-          puts "-----DailyAttendance Created 0 #{Time.now}---------"
-        end
-        daily_att_day = DailyAttendance.where(employee_code: user_id, date: punch_date).order("time ASC")
-        if daily_att_day.present?
-           @employee_in_time = daily_att_day.first.time.to_time
-           @employee_out_time = daily_att_day.last.time.to_time
-        end
-        @employee_att_present = EmployeeAttendance.where(employee_id: employee_id, day: punch_date)
-        if @employee_att_present.present?
-          if @employee_att_present.first.in_time.present?
-            emp_att_out_time = @employee_att_present.update_all(in_time: @employee_in_time, out_time: @employee_out_time)
-            puts "-----------EmployeeAttendance Out Time 1 updated #{Time.now}-----------"
-          else
-            emp_att_out_time = @employee_att_present.update_all(in_time: @employee_in_time, out_time: @employee_out_time)
-            puts "-----------EmployeeAttendance Out Time 1 updated #{Time.now}-----------"
-          end
-        else
-          emmployee_att_first = EmployeeAttendance.create(employee_id: employee_id, day: punch_date, present: "P", in_time: punch_time, month_name: punch_month, employee_code: user_id, employee_name: employee_name)
-          puts "-------EmployeeAttendance created 1 In Time created..#{Time.now.to_date} .. #{Time.now}---------"
-        end
+      else
+        emmployee_att_first = EmployeeAttendance.create(employee_id: employee_id, day: punch_date, present: "P", in_time: punch_time, month_name: punch_month, employee_code: user_id, employee_name: employee_name)
+        puts "-------EmployeeAttendance created 1 In Time created..#{Time.now.to_date} .. #{Time.now}---------"
       end
     end
   end
+end
 
   def self.calculate_attendance(day)
     puts "-----calculate attendance start  #{Time.now.to_date} -- #{Time.now}-------"

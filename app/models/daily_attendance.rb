@@ -68,6 +68,7 @@ class DailyAttendance < ActiveRecord::Base
         daily_att_employee_create = DailyAttendance.create(employee_code: user_id, date: punch_date.to_date, time: punch_time)
       end
       daily_att_day = DailyAttendance.where(employee_code: user_id, date: punch_date).order("time ASC")
+      puts "--------------Employee DailyAttendance Table"
       if daily_att_day.present?
         @employee_in_time = daily_att_day.first.time.to_time
         @employee_out_time = daily_att_day.last.time.to_time

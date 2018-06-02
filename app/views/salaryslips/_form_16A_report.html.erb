@@ -378,23 +378,18 @@
             <li> Gross total income (6 + 7)</li>
             <li> Deductions under Chapter VIA
               <ol style="list-style-type: upper-alpha;">
-                <li> Sections 80C, 80CCC and 80CCD
+                <li> Sections <% @sections.each do |sections| %> <%= sections.code %>, <% end %>
                   <ol style="list-style-type: lower-alpha;">
-                    <li>Section 80C
-                      <ol style="list-style-type: decimal;">
-                        <li>SCHOOL FEES                       </li>
-                        <li>LIC PREMIUM                       </li>
-                      </ol>  
-                    </li>  
-                    <li>Section 80CCC</li>
-                    <li>Section 80CCD</li>
+                    <% @section_code.each do |section_code, investment_declaration| %>
+                      <li>Section <%= section_code %>
+                        <% investment_declaration.each do |invest_decl|%>
+                          <ol style="list-style-type: decimal;">
+                            <li><%= invest_decl.try(:investment_head).try(:description) %></li>
+                          </ol>
+                        <% end %>  
+                      </li>
+                    <% end %>
                   </ol>
-                </li>
-                <li>Other Sections under Chapter VIA                Gross Amount
-                  <ol style="list-style-type: lower-alpha;">
-                    <li>-                                     </li>
-                    <li>SECTION 80D                           </li>
-                  </ol>    
                 </li>
               </ol>  
             </li>
@@ -420,9 +415,25 @@
             <li> <br /> </li>
             <li> <%= @employee_professional_tax %> </li>
             <li> <br /> </li>
-            <li> <br /> </li>            
+            <li> <br /> </li> 
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li>
+              <% @section_code.each do |section_code, investment_declaration| %>
+                <li>--<% section_code %>
+                  <% investment_declaration.each do |invest_decl|%>
+                    <li><%= invest_decl.try(:amount) %></li>
+                  <% end %>  
+                </li>
+              <% end %>
+            </li>           
           </ul>
         </td>
+
         <td colspan="1" style="text-align: right"> 
           <ul style="list-style-type: none;">
             <li> <br /> </li>              
@@ -435,18 +446,24 @@
             <li> <br /> </li>
             <li> <br /> </li>
             <li> <%= @deduct_professional_tax %> </li>
-            <li>Nil</li>  
-            <li><%= @employee_professional_tax %></li>
+            <li>Nil</li> 
+            <li><%= @tax_on_employment %></li>
+            <% @employee_professional_tax  %>
             <li> <br /> </li>
             <li> <br /> </li>
             <li> <br /> </li>
             <li> <br /> </li>
             <li> <br /> </li>
             <li style="text-align: justify;">Gross Amount</li>
-            <li> <br /> </li>
-            <li>Nil</li>
-            <li>Nil</li>
-            <li>Nil</li>
+            <li>
+              <% @section_code.each do |section_code, investment_declaration| %>
+                <li>--<% section_code %>
+                  <% investment_declaration.each do |invest_decl|%>
+                    <li><%= invest_decl.try(:amount) %></li>
+                  <% end %>  
+                </li>
+              <% end %>
+            </li>
           </ul>
         </td>
         <td colspan="1" style="text-align: right">
@@ -468,13 +485,47 @@
             <li>Nil</li>
             <li> <br /> </li>
             <li> <br /> </li>
-            <li>Deductible Amount</li>
+            <li style="text-align: justify;">Deductible Amount</li>
+            <li>
+              <% @section_code.each do |section_code, investment_declaration| %>
+                <li>--<% section_code %>
+                  <% investment_declaration.each do |invest_decl|%>
+                    <li><%= invest_decl.try(:amount) %></li>
+                  <% end %>  
+                </li>
+              <% end %>
+            </li>
           </ul>
         </td>
         <td colspan="1" style="text-align: right">
           <ul style="list-style-type: none;">
-            <li> <br /> </li> 
             <li><%= @gross_annual_amount %></li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <%= @income_chargeable_under_the_head %></li>
+            <li> <br /> </li>
+            <li> <%= @gross_total_income %></li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li><%= @aggregate_of_deductible_amount %></li>
+            <li> <%= @total_income %> </li>
           </ul>
         </td>
       </tr>

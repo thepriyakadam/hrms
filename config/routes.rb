@@ -3349,6 +3349,6 @@ end
     post 'user_auths/solved_request' => 'user_auths#solved_request', defaults:{format: 'json'}
     get 'user_auths/issue_tracker_member_list' => 'user_auths#issue_tracker_member_list', defaults:{format: 'json'}
     get 'user_auths/support_root_cause_list' => 'user_auths#support_root_cause_list', defaults:{format: 'json'}
-    get 'user_auths/apk_link' => 'user_auths#apk_link', defaults:{format: 'json'}
+    # get 'user_auths/apk_link.pdf' => 'user_auths#apk_link.pdf', defaults:{format: 'json'}
   end
 end

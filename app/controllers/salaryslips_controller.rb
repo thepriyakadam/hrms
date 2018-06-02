@@ -1777,6 +1777,8 @@ end
     @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Professional Tax")
     @employee_professional_tax = @salaryslip_components.sum(:actual_amount)
 
+    @tax_on_employment = @employee_professional_tax * 11 + 300
+
     @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips, other_component_name: "Conveyance Allowance")
     @employee_conveyance_allowance = @salaryslip_components.sum(:actual_amount)
 
@@ -1787,6 +1789,30 @@ end
     @deduct_professional_tax = @gross_annual_amount - @employee_professional_tax
     @deduct_conveyance_allowance = @gross_annual_amount - @employee_conveyance_allowance
 
+    @investment_declaration = InvestmentDeclaration.where(employee_id: @employee_id)
+    @aggregate_of_deductible_amount = @investment_declaration.sum(:amount)
+    @investment_head_id = @investment_declaration.pluck(:investment_head_id)
+    @investment_head = InvestmentHead.where(id: @investment_head_id)
+    @section_id = @investment_head.pluck(:section_id)
+    @sections = Section.where(id: @section_id)
+
+    @section_code = {}
+    @sections.each do |section|
+      @section_code[section.code] = @investment_declarations_c = InvestmentDeclaration.select(InvestmentDeclaration.arel_table[Arel.star]).where(Section.arel_table[:code].eq(section.code).and(InvestmentDeclaration.arel_table[:employee_id].eq(@employee))).joins(InvestmentDeclaration.arel_table.join(InvestmentHead.arel_table).on(InvestmentDeclaration.arel_table[:investment_head_id].eq(InvestmentHead.arel_table[:id])).join_sources).joins(InvestmentDeclaration.arel_table.join(Section.arel_table).on(Section.arel_table[:id].eq(InvestmentHead.arel_table[:section_id])).join_sources)
+    end
+
+    @income_chargeable_under_the_head = @gross_annual_amount - @tax_on_employment
+    @any_other_income = 0
+    @gross_total_income = @income_chargeable_under_the_head + @any_other_income
+    @total_income = @gross_total_income - @aggregate_of_deductible_amount
+
+    if @total_income.present?
+      if (100..250000).include?(@total_income)
+      elsif (250000..500000).include?(@total_income)
+      elsif (500000..1000000).include?(@total_income)
+      else 1000000 >= @total_income
+      end
+    end
     # @company = params[:salaryslip] ? params[:salaryslip][:company_id] : params[:company_id]
     # @company_location = params[:salaryslip] ? params[:salaryslip][:company_location_id] : params[:company_location_id]
     respond_to do |format|

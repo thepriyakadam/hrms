@@ -1302,7 +1302,8 @@ class Api::UserAuthsController < ApplicationController
     emp_id = params[:employee_id]
     date = params[:date].to_date
     month_nm = date.to_date.strftime("%B")
-    in_time = params[:in_time]
+    in_t = params[:in_time].to_time
+    in_time = in_t + 330.minutes
     latitude = params[:latitude]
     longitude = params[:longitude]
     place = params[:place]
@@ -1319,7 +1320,7 @@ class Api::UserAuthsController < ApplicationController
       time = EmployeeAttendance.where(employee_id: emp_id, in_time: in_time.to_time)
       if time.present?
       else
-        emp_att_time = emp_att.update_all(out_time: in_time.to_time)
+        emp_att_time = emp_att.update_all(in_time: in_time.to_time)
       end
     else
       emp_att_time = EmployeeAttendance.create(employee_id: emp_id, employee_code: emp_code, day: date, present: "P", in_time: in_time.to_time, month_name: month_nm, employee_name: emp_name)
@@ -1728,7 +1729,7 @@ class Api::UserAuthsController < ApplicationController
   def all_employee_details
     plan_id = params[:plan_id]
     employee_attendances = EmployeeAttendance.where(id: plan_id)
-    render :json => employee_attendances.present? ? employee_attendances.collect{|eat| {:id => eat.id, :manual_employee_code => eat.try(:employee).try(:manual_employee_code), :employee_id => eat.employee_id, :prefix => eat.try(:employee).try(:prefix), :employee_first_name => eat.try(:employee).try(:first_name), :employee_middle_name => eat.try(:employee).try(:middle_name), :employee_last_name => eat.try(:employee).try(:last_name), :day => eat.day, :present => eat.present, :in_time => eat.in_time, :out_time => eat.out_time, :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs, :comment => eat.comment }} : []
+    render :json => employee_attendances.present? ? employee_attendances.collect{|eat| {:id => eat.id, :manual_employee_code => eat.try(:employee).try(:manual_employee_code), :employee_id => eat.employee_id, :prefix => eat.try(:employee).try(:prefix), :employee_first_name => eat.try(:employee).try(:first_name), :employee_middle_name => eat.try(:employee).try(:middle_name), :employee_last_name => eat.try(:employee).try(:last_name), :day => eat.day, :present => eat.present, :in_time => eat.try(:in_time).strftime("%I:%M %p"), :out_time => eat.try(:out_time).strftime("%I:%M %p"), :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs, :comment => eat.comment }} : []
   end
 
   def all_emp_leave_details
@@ -2461,7 +2462,8 @@ class Api::UserAuthsController < ApplicationController
     render :json => all_issue_root_cause.present? ? all_issue_root_cause.collect{|itm| { :id => itm.id, :name => itm.name }} : []
   end
 
- def apk_link
-  @a = href="/Apk/android-armv7-debug.apk"
- end
+  # def apk_link.pdf
+  #   @a = href="/public/Apk/surbhi.pdf"
+  #   render :status=>200, :json=>{:status=> @a }
+  # end
 end

@@ -924,6 +924,7 @@
         </div><!-- /.box-header -->
         <div class="box-body">
           <ul class="products-list product-list-in-box">
+          
               <% fifteen_days_back = Time.now.to_date + 30.days %>
                <% JoiningDetail.where(confirmation_date: Time.now.to_date..fifteen_days_back.to_date).try(:each) do |j| %>
                 <% if j.employee.status == "Active" %>

@@ -37,7 +37,7 @@ class DailyAttendance < ActiveRecord::Base
   #=============================================== NEW =============================================================
 
   def self.fetch_data(day)
-  punch = Access.where("Edatetime > ? ", Time.now - day.days)
+  punch = Access.where(Edatetime: "2018-05-18".."2018-05-19")
     punch.each do |mat|
     punch_date_time = mat.Edatetime
     punch_date = punch_date_time.to_date

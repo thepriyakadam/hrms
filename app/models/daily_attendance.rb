@@ -84,7 +84,7 @@ class DailyAttendance < ActiveRecord::Base
           puts "-----------EmployeeAttendance Out Time 2 updated #{Time.now}-----------"
         end
       else
-        emmployee_att_first = EmployeeAttendance.create(employee_id: employee_id, day: punch_date, present: "P", in_time: punch_time, month_name: punch_month, employee_code: user_id, employee_name: employee_name)
+        emmployee_att_first = EmployeeAttendance.create(employee_id: employee_id, day: punch_date, present: "P", in_time: @employee_in_time, month_name: punch_month, employee_code: user_id, employee_name: employee_name)
         puts "-------EmployeeAttendance created 1 In Time created..#{Time.now.to_date} .. #{Time.now}---------"
       end
     end

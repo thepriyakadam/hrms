@@ -50,7 +50,7 @@ class DailyAttendance < ActiveRecord::Base
     if @employee.nil?
     @employee1 = Employee.find_by_manual_employee_code(user_i)
     elsif @employee1.nil?
-      puts "Employee Id Not Found"
+      puts "-----------Employee Id Not Found"
     else
       employee_id = @employee.id
       employee_first_name = @employee.first_name
@@ -63,7 +63,7 @@ class DailyAttendance < ActiveRecord::Base
       end
       daily_att_employee_present = DailyAttendance.where(employee_code: user_id, time: punch_time)
       if daily_att_employee_present.present?
-        puts "Employee Attendance Already Added"
+        puts "--------------Employee Attendance Already Added"
       else
         daily_att_employee_create = DailyAttendance.create(employee_code: user_id, date: punch_date.to_date, time: punch_time)
       end
@@ -72,7 +72,7 @@ class DailyAttendance < ActiveRecord::Base
         @employee_in_time = daily_att_day.first.time.to_time
         @employee_out_time = daily_att_day.last.time.to_time
       else
-        puts "Employee Attendance Not Present in DailyAttendance Table"
+        puts "--------------Employee Attendance Not Present in DailyAttendance Table"
       end
       @employee_att_present = EmployeeAttendance.where(employee_id: employee_id, day: punch_date)
       if @employee_att_present.present?

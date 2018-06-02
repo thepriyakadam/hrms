@@ -75,7 +75,13 @@ def self.to_csv(options = {})
         passport_expiry_date = spreadsheet.cell(i,'R')
         leaving_date = spreadsheet.cell(i,'S')
         retirement_date = spreadsheet.cell(i,'T')
-
+        if retirement_date.nil? and employee.date_of_birth.present?
+          employee = Employee.find_by(id: employee_id)
+         date_of_birth = employee.date_of_birth
+retirement_date = date_of_birth.to_date + 58.years
+else
+retirement_date = spreadsheet.cell(i,'T')
+end
 
          c_off = spreadsheet.cell(i,'U')
          if c_off == "Yes"
@@ -200,7 +206,7 @@ def self.to_csv(options = {})
           have_retention: have_retention,is_insurance: is_insurance,is_family_pension: is_family_pension,
           is_bonus: is_bonus,ot_option: ot_option,ot_rate: ot_rate,cost_center_id: cost_center_id,
           welfare: welfare,contact_library: contact_library,gps_track: gps_track,restricted_area: restricted_area,
-          contract_month: contract_month,contract_end_date: contract_end_date)
+          contract_month: contract_month,contract_end_date: contract_end_date,retirement_date:retirement_date)
         end
       end
     end

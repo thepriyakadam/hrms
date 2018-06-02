@@ -238,7 +238,7 @@ end
        user_id = split.second
        puts "Split number"
        @employee = Employee.find_by_manual_employee_code(user_id)
-       puts "Employee id is @employee"
+       puts "Employee id is- #{@employee}"
        if @employee.nil?
          puts "Employee ID is----------------- #{@employee} not present in our HRMS"
        else

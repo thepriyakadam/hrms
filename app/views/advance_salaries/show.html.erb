@@ -5,41 +5,41 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
-    <tr>
-      <th><strong>Employee ID</strong></th>
-      <td><%= @advance_salary.employee.try(:manual_employee_code) %></td>
+      <tr>
+        <th><strong>Employee ID</strong></th>
+        <td><%= @advance_salary.employee.try(:manual_employee_code) %></td>
 
-      <th><strong>Employee Name</strong></th>
-      <td> <%= full_name(@advance_salary.employee) %></td>
-    </tr>
-    <tr>
-      <th><strong>Advance Type</strong></th>
-      <td><%= @advance_salary.advance_type.try(:name) %></td>
-   
-      <th><strong>Interest</strong></th>
-      <td><%= @advance_salary.interest %></td>
-    </tr>
-    <tr>
-      <th><strong>Advance Amount</strong></th>
-      <td><%= @advance_salary.advance_amount %></td>
-   
-      <th><strong>No. of Installment</strong></th>
-      <td><%= @advance_salary.no_of_instalment %></td>
-    </tr>
-    <tr>
-      <th><strong>Installment Amount</strong></th>
-      <td><%= @advance_salary.instalment_amount %></td>
+        <th><strong>Employee Name</strong></th>
+        <td> <%= full_name(@advance_salary.employee) %></td>
+      </tr>
+      <tr>
+        <th><strong>Advance Type</strong></th>
+        <td><%= @advance_salary.advance_type.try(:name) %></td>
+     
+        <th><strong>Interest</strong></th>
+        <td><%= @advance_salary.interest %></td>
+      </tr>
+      <tr>
+        <th><strong>Advance Amount</strong></th>
+        <td><%= @advance_salary.advance_amount %></td>
+     
+        <th><strong>No. of Installment</strong></th>
+        <td><%= @advance_salary.no_of_instalment %></td>
+      </tr>
+      <tr>
+        <th><strong>Installment Amount</strong></th>
+        <td><%= @advance_salary.instalment_amount %></td>
 
-      <th><strong>Advance Date</strong></th>
-      <td><%= @advance_salary.advance_date %></td>
-    </tr>
-    <tr>
-      <th><strong>Installment Paid</strong></th>
-      <td><%= @advance_salary.instalments.where(is_complete: true).sum('instalment_amount') %></td>
+        <th><strong>Advance Date</strong></th>
+        <td><%= @advance_salary.advance_date %></td>
+      </tr>
+      <tr>
+        <th><strong>Installment Paid</strong></th>
+        <td><%= @advance_salary.instalments.where(is_complete: true).sum('instalment_amount') %></td>
 
-      <th><strong>Installment Remain</strong></th>
-      <td><%= @advance_salary.instalments.where(is_complete: false).sum('instalment_amount') %></td>
-    </tr>
+        <th><strong>Installment Remain</strong></th>
+        <td><%= @advance_salary.instalments.where(is_complete: false).sum('instalment_amount') %></td>
+      </tr>
     </table>
     <br>
 

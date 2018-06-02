@@ -5,12 +5,12 @@
   <div class="box-body">
 <%= bootstrap_form_for(:travel_request, url: { action: 'print_travel_request_id_report'},html: {id: 'travel_request'},remote: true ) do |f| %>
 	 <div class="row">
-      <div class="col-sm-3">
+      <div class="col-sm-4">
           <div class="field">
           <%= f.select :travel_request_id,all_travel_request,{hide_label:true,include_blank: 'Select Travel Request ID'},class: 'form-control'%>
           </div>
          </div>
-         <div class="col-sm-3">
+         <div class="col-sm-4">
           <div class="actions">
             <%= f.submit "Display Report", class: "btn btn-sm btn-primary",id: "buttonCtc" %>
           </div>

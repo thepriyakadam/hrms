@@ -48,6 +48,8 @@
   <div class="row">
     <!-- Left col -->
     <section class="col-lg-6 connectedSortable">
+    <h3>My Chart</h3>
+     <%#= @chart.render() %>
        <!-- TABLE: LATEST ORDERS -->
       <div class="box box-info">
         <div class="box-header with-border">
@@ -600,108 +602,6 @@
         </div><!-- /.box-body -->
       </div><!-- /.box -->
 
-
-
-      <div class="box box-info">
-        <div class="box-header with-border">
-          <h3 class="box-title">PMS</h3>
-          <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-          </div>
-        </div><!-- /.box-header -->
-        <div class="box-body">
-          <div class="table-responsive">
-            <table class="table no-margin">
-            <thead>
-                <tr>
-                  <td>
-                    <div></div>
-                    <a href="/goal_bunches/admin_period_set" class="dropdown-toggle" title="Period Not Set">
-                      <span class="label label-success">
-                        Period Not Set
-                      </span>
-                      <span class="label label-danger">
-                        <%= @period_not_set %>
-                      </span><br>
-                    </a>
-                  </td>
-
-                  <td>
-                    <div></div>
-                    <a href="/goal_ratings/admin_level_period" class="dropdown-toggle" title="Goal Set">
-                      <span class="label label-info">
-                        Goal Set
-                      </span>
-                      <span class="label label-danger">
-                        <%= @goal_set %>
-                      </span><br>
-                    </a>
-                  </td>
-
-                  <td>
-                    <a href="/goal_bunches/admin_goal_approval_period" class="dropdown-toggle" title="Goal Approved">
-                      <span class="label label-primary">
-                        Goal Approved
-                      </span>
-                      <span class="label label-danger">
-                        <%= @goal_approved %>
-                      </span><br>
-                    </a>
-                  </td>
-                  <td>
-                    <a href="/goal_bunches/admin_self_evaluation_period" class="dropdown-toggle" title="Self Evaluation">
-                      <span class="label label-warning">
-                        Self 
-                      </span>
-                      <span class="label label-danger">
-                        <%= @self_evaluation %>
-                      </span><br>
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <a href="/goal_ratings/admin_appraiser_evaluation_period" class="dropdown-toggle" title="Appraiser Evaluation">
-                      <span class="label label-success">
-                        Appraiser 
-                      </span>
-                      <span class="label label-danger">
-                        <%= @appraiser_evaluation %>
-                      </span><br>
-                    </a>
-                  </td>
-                  <td>
-                    <a href="/goal_ratings/admin_reviewer_evaluation_period" class="dropdown-toggle" title="Reviewer Evaluation">
-                      <span class="label label-info">
-                        Reviewer 
-                      </span>
-                      <span class="label label-danger">
-                        <%= @reviewer_evaluation %>
-                      </span><br>
-                    </a>
-                  </td>
-                  <td>
-                    <a href="/goal_bunches/employee_list" class="dropdown-toggle" title="Final Evaluation">
-                      <span class="label label-primary">
-                        Final 
-                      </span>
-                      <span class="label label-danger">
-                        <%= @final_evaluation %>
-                      </span><br>
-                    </a>
-                  </td>
-                  <td></td>
-                </tr>
-              </thead>
-            </table>
-          </div><!-- /.table-responsive -->
-        </div><!-- /.box-body -->
-        <div class="box-footer clearfix">
-          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
-          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
-        </div><!-- /.box-footer -->
-      </div><!-- /.box -->
 
 <!-- ============== -->
 

@@ -2462,8 +2462,4 @@ class Api::UserAuthsController < ApplicationController
     render :json => all_issue_root_cause.present? ? all_issue_root_cause.collect{|itm| { :id => itm.id, :name => itm.name }} : []
   end
 
-  # def apk_link.pdf
-  #   @a = href="/public/Apk/surbhi.pdf"
-  #   render :status=>200, :json=>{:status=> @a }
-  # end
 end

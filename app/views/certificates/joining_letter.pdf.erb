@@ -22,4 +22,3 @@
   <p>For <b> <%= current_user.employee.company_location.company.description %> </b></p>
 </div>
 </div>
-<%= link_to "Print",joining_letter_certificates_path(employee_id: @employee.id, certificate: @certificate,format: "pdf"),class: "btn btn-xl btn-info fa fa-print",:target => "_blank"%>

@@ -495,6 +495,8 @@ Rails.application.routes.draw do
       post :selected_employee_list
       get :selected_employee_pdf
       get :selected_employee_xls
+      get :offer_letter
+      get :joining_letter
     end
   end
   resources :certificate_masters do

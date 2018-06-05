@@ -510,53 +510,52 @@
           </div>
         </div><!-- /.box-header -->
 
-                <div class="box-body">
+        <div class="box-body">
            
-               <% date = Time.now.to_date + 15.days %>
-               <% todays_date = Time.now.to_date %>
-               <!-- <#% @employees = Employee.where("status = ? AND FORMAT(date_of_birth,'dd/MM','en-US') = ?", "Active" ,todays_date.strftime('%d/%m')..date.strftime('%d/%m')) do |et| %> -->
+           <%# date = Time.now.to_date + 15.days %>
+           <%# todays_date = Time.now.to_date %>
+           <!-- <#% @employees = Employee.where("status = ? AND FORMAT(date_of_birth,'dd/MM','en-US') = ?", "Active" ,todays_date.strftime('%d/%m')..date.strftime('%d/%m')) do |et| %> -->
+          <!--  <#% @employees = Employee.where("status = ? AND FORMAT(date_of_birth,'dd/MM','en-US') > ? AND FORMAT(date_of_birth,'dd/MM','en-US') <= ?", "Active" ,todays_date.strftime('%d/%m'),date.strftime('%d/%m')) do |et| %> -->
 
-              <!--  <#% @employees = Employee.where("status = ? AND FORMAT(date_of_birth,'dd/MM','en-US') > ? AND FORMAT(date_of_birth,'dd/MM','en-US') <= ?", "Active" ,todays_date.strftime('%d/%m'),date.strftime('%d/%m')) do |et| %> -->
+          <% tomorrow = Date.today + 1 %>
+          <% @employees = Employee.where("status = ? AND DATE_FORMAT(date_of_birth,'%d/%m') = ?", "Active" , tomorrow.strftime('%d/%m')) %>
 
-              <% @employees = Employee.where("status = ? AND DATE_FORMAT(date_of_birth,'%d/%m') = ?", "Active" , date.strftime('%d/%m')) do |et| %>
-             
             <% if @employees.empty? %>
             <%else%>
-            <table id="birthday" class="table no-margin">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Employee</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-                  
-            <% @employees.each do |e| %>
-              <tr>
-                <td>
-                  <%unless e.nil? or e.nil? or  e.member.nil? or e.member.avatar.nil? %>
-                   <% if e.gender == "Male" && e.member.avatar_file_name == nil  %>
-                     <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                   <% elsif e.gender == "Female" && e.member.avatar_file_name == nil  %>
-                     <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                   <%else%>
-                     <%= image_tag e.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
-                   <%end%>
-                  <%end%>
-                </td>
-                <td> <%= full_name(e) %>
-                 <span class="users-list-date"><%= e.try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
+              <table id="birthday" class="table no-margin">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Employee</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+                    
+              <% @employees.each do |e| %>
+                <tr>
+                  <td>
+                    <%unless e.nil? or e.nil? or  e.member.nil? or e.member.avatar.nil? %>
+                     <% if e.gender == "Male" && e.member.avatar_file_name == nil  %>
+                       <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                     <% elsif e.gender == "Female" && e.member.avatar_file_name == nil  %>
+                       <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                     <%else%>
+                       <%= image_tag e.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
+                     <%end%>
+                    <%end%>
+                  </td>
+                  <td> <%= full_name(e) %>
+                   <span class="users-list-date"><%= e.try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
 
-                </td>
-                <td> <%= e.date_of_birth.strftime("%d %b") %></td>
-              <% end %> <!-- do -->
-              </tr>
-            <%end%> <!-- if employee.empty? -->
-            </table>
-            
-              <%end%>
-         </div><!-- /.box-body -->
-        </div><!-- /.box -->
+                  </td>
+                  <td> <%= e.date_of_birth.strftime("%d %b") %></td>
+                <% end %> <!-- do -->
+                </tr>
+              </table>
+              <%end%> <!-- if employee.empty? -->
+         
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
 
       <!-- PRODUCT LIST -->
       

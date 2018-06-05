@@ -2939,19 +2939,19 @@ end
 
     if params[:save]
       @name = params[:save]
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).order('day asc')
     elsif params[:absent]
       @name = params[:absent]
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "A")
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "A").order('day asc')
     elsif params[:holiday]
       @name = params[:holiday]
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(holiday_id: nil)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(holiday_id: nil).order('day asc')
     elsif params[:weekoff]
       @name = params[:weekoff]
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_week_off_id: nil)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_week_off_id: nil).order('day asc')
     elsif params[:onduty]
       @name = params[:onduty]
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(on_duty_request_id: nil)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(on_duty_request_id: nil).order('day asc')
     elsif params[:latemark]
       @name = params[:latemark]
         latemark_master = LatemarkMaster.last
@@ -2969,7 +2969,7 @@ end
         end
     else
       @name = params[:leave]
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil).order('day asc')
     end
   end
   
@@ -2979,17 +2979,16 @@ end
     @name = params[:name]
 
     if @name == "All"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).order('day asc')
     elsif @name == "Absent"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "A")
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "A").order('day ASC')
     elsif @name == "Holiday"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(holiday_id: nil)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(holiday_id: nil).order('day ASC')
     elsif @name == "Week Off"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_week_off_id: nil)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_week_off_id: nil).order('day ASC')
     elsif @name == "onduty"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(on_duty_request_id: nil)
-    elsif @name == "Leave"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(on_duty_request_id: nil).order('day ASC')
+    
     elsif @name == "Latemark"
       latemark_master = LatemarkMaster.last
         latemark_master_time = latemark_master.company_time
@@ -3004,8 +3003,9 @@ end
             @employee_attendances << att
           end
         end
-    else
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
+    else @name == "Leave"
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil).order('day asc')
+      #@employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
     end
 
      respond_to do |f|

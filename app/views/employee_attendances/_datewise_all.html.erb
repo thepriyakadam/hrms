@@ -31,9 +31,8 @@
           <% end %>
         </tbody>
       </table>
-
-
-      <%= link_to " Excel",show_datewise_all_report_employee_attendances_path(from: @from,to: @to,name: @name,format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      
+      <%= link_to " Excel",show_datewise_all_employee_attendances_path(from: params[:employee][:from], to: params[:employee][:to], save: params[:save], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
       <%= link_to " PDF",show_datewise_all_report_employee_attendances_path(from: @from,to: @to,name: @name,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 
        <!-- <= link_to "Back",datewise_attendance_with_options_employee_attendances_path,class: "btn btn-sm btn-default" %> -->

@@ -2929,37 +2929,39 @@ end
   end
 
   def datewise_attendance_with_options
-  session[:active_tab] ="TimeManagement"
-  session[:active_tab1] ="Attendance"
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Attendance"
   end
 
   def show_datewise_all
-  
-    @from = params[:employee] ? params[:employee][:from] : params[:from]
-    @to = params[:employee] ? params[:employee][:to] : params[:to]
-    @name = params[:save]
+    @from = params[:employee][:from]
+    @to = params[:employee][:to]
 
-    if @name == "All"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
-    elsif @name == "Absent"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "A")
-    elsif @name == "Holiday"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(holiday_id: nil)
-    elsif @name == "Week Off"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_week_off_id: nil)
-    elsif @name == "onduty"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(on_duty_request_id: nil)
-    elsif @name == "Leave"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
-    elsif @name == "Latemark"
-      latemark_master = LatemarkMaster.last
+    if params[:save]
+      @name = params[:save]
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).order('day asc')
+    elsif params[:absent]
+      @name = params[:absent]
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "A").order('day asc')
+    elsif params[:holiday]
+      @name = params[:holiday]
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(holiday_id: nil).order('day asc')
+    elsif params[:weekoff]
+      @name = params[:weekoff]
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_week_off_id: nil).order('day asc')
+    elsif params[:onduty]
+      @name = params[:onduty]
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(on_duty_request_id: nil).order('day asc')
+    elsif params[:latemark]
+      @name = params[:latemark]
+        latemark_master = LatemarkMaster.last
         latemark_master_time = latemark_master.company_time
         @company_time = latemark_master_time.strftime("%I:%M")
         latemark_master_late_time = latemark_master.late_limit
         @late_limit = latemark_master_late_time.strftime("%I:%M")
         @employee_attendances = []
         employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,late_mark: nil).where.not(in_time: nil)
-        @time = 0 
+        @time = 0
         employee_attendances.each do |att|
           if att.in_time.strftime("%I:%M") > @company_time && att.in_time.strftime("%I:%M") < @late_limit
             @employee_attendances << att
@@ -2967,7 +2969,43 @@ end
         end
     else
       @name = params[:leave]
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil).order('day asc')
+    end
+  end
+ 
+  def show_datewise_all_report
+    @from = params[:from]
+    @to = params[:to]
+    @name = params[:name]
+
+    if @name == "All"
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).order('day asc')
+    elsif @name == "Absent"
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "A").order('day ASC')
+    elsif @name == "Holiday"
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(holiday_id: nil).order('day ASC')
+    elsif @name == "Week Off"
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_week_off_id: nil).order('day ASC')
+    elsif @name == "onduty"
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(on_duty_request_id: nil).order('day ASC')
+    
+    elsif @name == "Latemark"
+      latemark_master = LatemarkMaster.last
+        latemark_master_time = latemark_master.company_time
+        @company_time = latemark_master_time.strftime("%I:%M")
+        latemark_master_late_time = latemark_master.late_limit
+        @late_limit = latemark_master_late_time.strftime("%I:%M")
+        @emp_att = []
+        employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,late_mark: nil).where.not(in_time: nil)
+        @time = 0
+        employee_attendances.each do |att|
+          if att.in_time.strftime("%I:%M") > @company_time && att.in_time.strftime("%I:%M") < @late_limit
+            @employee_attendances << att
+          end
+        end
+    else @name == "Leave"
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil).order('day asc')
+      #@employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
     end
 
     respond_to do |f|
@@ -2982,60 +3020,9 @@ end
         show_as_html: params[:debug].present?
       end
     end
-
-  end
-  
-  def show_datewise_all_report
-    @from = params[:from]
-    @to = params[:to]
-    @name = params[:name]
-
-    if @name == "All"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
-    elsif @name == "Absent"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "A")
-    elsif @name == "Holiday"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(holiday_id: nil)
-    elsif @name == "Week Off"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_week_off_id: nil)
-    elsif @name == "onduty"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(on_duty_request_id: nil)
-    elsif @name == "Leave"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
-    elsif @name == "Latemark"
-      latemark_master = LatemarkMaster.last
-        latemark_master_time = latemark_master.company_time
-        @company_time = latemark_master_time.strftime("%I:%M")
-        latemark_master_late_time = latemark_master.late_limit
-        @late_limit = latemark_master_late_time.strftime("%I:%M")
-        @emp_att = []
-        employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,late_mark: nil).where.not(in_time: nil)
-        @time = 0 
-        employee_attendances.each do |att|
-          if att.in_time.strftime("%I:%M") > @company_time && att.in_time.strftime("%I:%M") < @late_limit
-            @employee_attendances << att
-          end
-        end
-    else
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
-    end
-
-     respond_to do |f|
-      f.js
-      f.xls {render template: 'employee_attendances/datewise_attendance_with_option.xls.erb'}
-      f.html
-      f.pdf do
-        render pdf: 'employee_attendance',
-        layout: 'pdf.html',
-        orientation: 'Landscape',
-        template: 'employee_attendances/datewise_attendance_with_option.pdf.erb',
-        show_as_html: params[:debug].present?
-      end
-    end
-
   end
 
-   def add_attendance
+  def add_attendance
     @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
     @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id).order('day DESC')
   end

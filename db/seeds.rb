@@ -1,8 +1,4 @@
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 5dd99c479691f2d05532308a161eaba9356e35db
 # require 'rubygems'
 # require 'roo'
 

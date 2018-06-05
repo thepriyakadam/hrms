@@ -2929,8 +2929,8 @@ end
   end
 
   def datewise_attendance_with_options
-  session[:active_tab] ="TimeManagement"
-  session[:active_tab1] ="Attendance"
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Attendance"
   end
 
   def show_datewise_all
@@ -2961,7 +2961,7 @@ end
         @late_limit = latemark_master_late_time.strftime("%I:%M")
         @employee_attendances = []
         employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,late_mark: nil).where.not(in_time: nil)
-        @time = 0 
+        @time = 0
         employee_attendances.each do |att|
           if att.in_time.strftime("%I:%M") > @company_time && att.in_time.strftime("%I:%M") < @late_limit
             @employee_attendances << att
@@ -2972,7 +2972,7 @@ end
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil).order('day asc')
     end
   end
-  
+ 
   def show_datewise_all_report
     @from = params[:from]
     @to = params[:to]
@@ -2997,7 +2997,7 @@ end
         @late_limit = latemark_master_late_time.strftime("%I:%M")
         @emp_att = []
         employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,late_mark: nil).where.not(in_time: nil)
-        @time = 0 
+        @time = 0
         employee_attendances.each do |att|
           if att.in_time.strftime("%I:%M") > @company_time && att.in_time.strftime("%I:%M") < @late_limit
             @employee_attendances << att
@@ -3008,7 +3008,7 @@ end
       #@employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
     end
 
-     respond_to do |f|
+    respond_to do |f|
       f.js
       f.xls {render template: 'employee_attendances/datewise_attendance_with_option.xls.erb'}
       f.html
@@ -3020,10 +3020,9 @@ end
         show_as_html: params[:debug].present?
       end
     end
-
   end
 
-   def add_attendance
+  def add_attendance
     @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
     @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id).order('day DESC')
   end

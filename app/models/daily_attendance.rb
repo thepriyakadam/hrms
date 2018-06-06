@@ -48,7 +48,6 @@ class DailyAttendance < ActiveRecord::Base
       user_id = user_split.second
 
       @employee = Employee.find_by_manual_employee_code(user_id)
-
       @employee1 = Employee.find_by_manual_employee_code(user_i)
 
       if @employee.nil? and @employee1.nil?

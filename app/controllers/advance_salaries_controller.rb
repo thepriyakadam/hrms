@@ -67,6 +67,8 @@ class AdvanceSalariesController < ApplicationController
   # DELETE /advance_salaries/1
   # DELETE /advance_salaries/1.json
   def destroy
+    advance_salary = @advance_salary.id
+    Instalment.where(advance_salary_id: advance_salary).destroy_all
     @advance_salary.destroy
     respond_to do |format|
       format.html { redirect_to advance_salaries_url, notice: 'Advance salary was successfully destroyed.' }

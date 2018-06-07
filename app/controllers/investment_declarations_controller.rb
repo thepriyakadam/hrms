@@ -186,8 +186,9 @@ class InvestmentDeclarationsController < ApplicationController
   def add_employee_declaration
     @investment_heads = InvestmentHead.all
     @investment_heads.each do |ih|
-      InvestmentDeclaration.create(investment_head_id: ih.id, employee_id: params[:employee_id], amount: 0.0, date: Date.today )
+      InvestmentDeclaration.create(investment_head_id: ih.id, employee_id: params[:employee_id], amount: 0.0, date: Date.today)
     end
+    flash[:notice] = "Created Successfully!"
     redirect_to employee_declaration_investment_declarations_path
   end
 

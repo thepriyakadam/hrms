@@ -8,7 +8,9 @@ class GpsInformationsController < ApplicationController
   end
 
   def all_emp_list
-    @employees = Employee.where(status: "Active")
+    gps_informations = GpsInformation.all
+    @employee = Employee.where(status: "Active")
+    @employees = JoiningDetail.where(employee_id: @employee, gps_track: true)
     session[:active_tab] ="UserAdministration"
   end
 
@@ -22,10 +24,11 @@ class GpsInformationsController < ApplicationController
       flash[:alert] = "Please Select the Checkbox"
       redirect_to all_emp_list_gps_informations_path
     else
-      all_dats = @day..@to_days
+      all_dats = (@day.to_date..@to_days.to_date).map{ |date| date.strftime("%b %d %y") }
       all_dats.each do |date|
         @employee_ids.each do |eid|
-          GpsInformation.new(gps_information_params)  
+          current_date = date.to_date
+          GpsInformation.create(employee_id: eid, day: current_date, place: @place, radius: @radius)  
         end
       end
       flash[:notice] = "Updated Successfully"

@@ -75,7 +75,62 @@ test:
   pool: 5
   username: root
   password: root
-  database: 
+  database: hrms_production
+
+development_sec:
+  adapter: sqlserver
+  encoding: utf8
+  host: 192.168.2.240
+  port: 49310
+  database: COSEC
+  username: hrms
+  password: hrms
+
+production_sec:
+  adapter: sqlserver
+  encoding: utf8
+  host: 192.168.2.240
+  port: 49310
+  database: COSEC
+  username: hrms
+  password: hrms
+
+test_sec:
+  adapter: sqlserver
+  encoding: utf8
+  host: 192.168.2.240
+  database: COSEC
+  username: hrms
+  password: hrms
+
+
+development_thi:
+  adapter: sqlserver
+  encoding: utf8
+  host: 182.72.233.6
+  port: 8445
+  database: a1
+  username: hrms
+  password: hrms
+
+production_thi:
+  adapter: sqlserver
+  encoding: utf8
+  host: 182.72.233.6
+  port: 8445
+  database: a1
+  username: hrms
+  password: hrms
+
+test_thi:
+  adapter: sqlserver
+  encoding: utf8
+  host: 182.72.233.6
+  port: 8445
+  database: a1
+  username: hrms
+  password: hrms
+
 
 # development_sec:
 #   adapter: sqlserver
@@ -92,9 +147,6 @@ test:
 #   database: ZKA
 #   username: sa
 #   password: pass
-
-
-  
 
 # test_sec:
 #   adapter: sqlserver

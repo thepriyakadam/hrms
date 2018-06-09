@@ -24,27 +24,28 @@
           <%= f.select :c_off_type,['Full Day','Half Day'],{label: 'Compensatory Off Type',include_blank: " Select Compensatory Off Type"} %>
        </div>
       </div> 
-       <div class="col-sm-3">
+      <!--  <div class="col-sm-3">
         <div class="field" id="checker" style="padding: 10px">
-         <%= f.check_box :expiry_status,label: 'Expiry' %>
+         <#%= f.check_box :expiry_status,label: 'Expiry' %>
         </div>
       </div>
     
       <div class="col-sm-3">
           <div class="field" id="dependent-box">
-              <%= f.text_field :c_off_expire_day, label:'Applicable Day',class: "form-control" %>
+              <#%= f.text_field :c_off_expire_day, label:'Applicable Day',class: "form-control" %>
           </div>
-        </div>
+        </div> -->
      
-    </div>
-    <div class="row">
       <div class="col-sm-6">
         <div class="form-group required">
               <%= f.text_field :comment, label:'Comment' %>
         </div>
       </div>
+    </div>
+
+    <div class="row">
       <div class="col-sm-3">
-        <div class="actions" style="padding: 20px">
+        <div class="actions">
           <%= f.submit "Create Compensatory Off",:class => class_name, data: { disable_with: data_info } %>
         </div>
       </div>

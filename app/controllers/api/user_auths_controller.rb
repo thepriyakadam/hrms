@@ -1352,7 +1352,7 @@ class Api::UserAuthsController < ApplicationController
         emp_att_l.update_all(present: "HD")
       end
     end
-    render :status=>200, :json=>{:status=>"Attendance Successfully Store."}
+    render :status=>200, :json=>{:status=>"Attendance Successfully Stored."}
   end
 
   def employee_daily_attendance
@@ -2463,4 +2463,3 @@ class Api::UserAuthsController < ApplicationController
   end
 
 end
-

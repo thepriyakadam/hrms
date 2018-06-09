@@ -1,12 +1,18 @@
 <div class="box">
   <div class="box-header">
     <h3 class="box-title">Monthly Expenses</h3>
+    <div class="pull-right">
+      <%= link_to " Excel ",employee_expences_monthly_expences_path(month: @month,year: @year, format: "xls"), class: "btn btn-sm btn-success fa fa-print" %>
+      <%= link_to " PDF ",employee_expences_monthly_expences_path(month: @month,year: @year, format: "pdf"), class: "btn btn-sm btn-info fa fa-print", :target => "_blank" %>
+    </div>
   </div><!-- /.box-header -->
   <div class="box-body">
   <div id="comments">
-    <table id="example1" class="table table-bordered table-hover table-condensed">
+  <% i = 0 %>
+    <table id="example6" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
+        <th>Sr No.</th>
         <th>Employee ID</th>
         <th>Employee Name</th>
         <th>Expence Type</th>
@@ -16,18 +22,20 @@
     </thead>
 
     <tbody>
-      <% @monthly_expences.each do |m| %>
+      <% @monthly_expences.each do |monthly_expence| %>
         <tr>
-          <td><%= m.employee.try(:manual_employee_code) %></td>
-          <td><%= full_name(m.employee) %></td>
-          <td><%= m.expencess_type.name %></td>
-          <td><%= m.amount %></td>
+          <td><%= i = i +1 %></td>
+          <td><%= monthly_expence.employee.try(:manual_employee_code) %></td>
+          <td><%= full_name(monthly_expence.employee) %></td>
+          <td><%= monthly_expence.expencess_type.name %></td>
+          <td><%= monthly_expence.amount %></td>
           <td>
-            <% if m.is_paid == true %>
+            <% if monthly_expence.is_paid == true %>
               <small class="label label-primary">Paid</small>
             <% else %>
-              <%= link_to '', edit_monthly_expence_path(m), class: 'btn btn-xs btn-success fa fa-edit' %>
-              <%= link_to '', modal_monthly_expences_path(m), class: 'btn btn-xs btn-default fa fa-eye',remote: true%>
+              <%= link_to '', edit_monthly_expence_path(monthly_expence), class: 'btn btn-xs btn-success fa fa-edit' %>
+              <%= link_to '',  delete_monthly_expence_monthly_expences_path(expence_id: monthly_expence,month: @month,year: @year), data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close' %>
+              <%= link_to '', modal_monthly_expences_path(monthly_expence), class: 'btn btn-xs btn-default fa fa-eye',remote: true%>
             <% end %>
           </td>
         </tr>
@@ -39,3 +47,11 @@
 </div>
 </div>
 <div id="myModal" class="modal fade"></div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

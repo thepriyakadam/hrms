@@ -80,7 +80,7 @@
             <center><strong>CIT (TDS)</strong></center>
           </td>
           <td colspan="3">
-            <center><strong>Assessment Year</strong></center>
+            <center><strong>Assessment Year </strong></center>
           </td>
           <td colspan="3">
             <center><strong>Period with the Employer</strong></center>
@@ -91,7 +91,7 @@
             <center> </center>
           </td>
           <td colspan="3">
-            <center> </center>
+            <center> <%= @from_assessment_year %> - <%= @to_assessment_year %></center>
           </td>
           <td colspan="2">
             <center> From <br />
@@ -284,7 +284,7 @@
       </table>
 
       <br /><br /> 
-      <p style="text-align: center; font-style: bold;">Certificate Number: DHWZUVO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   TAN of Employer: <%= current_user.employee.company_location.company.tax_no %>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  PAN of Employee: <%= @employee.try(:pan_no)%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assessment Year: 2017-18</p>
+      <p style="text-align: center; font-style: bold;">Certificate Number: DHWZUVO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   TAN of Employer: <%= current_user.employee.company_location.company.tax_no %>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  PAN of Employee: <%= @employee.try(:pan_no)%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assessment Year: <%= @from_assessment_year %> - <%= @to_assessment_year %></p>
       <br /><br /> 
         
 
@@ -346,7 +346,7 @@
       </tr>
     </table>
     <br /><br /> 
-      <p style="text-align: center; font-style: bold;">Certificate Number: DHWZUVO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   TAN of Employer: <%= current_user.employee.company_location.company.tax_no %>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  PAN of Employee: <%= @employee.try(:pan_no)%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assessment Year: 2017-18</p>
+      <p style="text-align: center; font-style: bold;">Certificate Number: DHWZUVO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   TAN of Employer: <%= current_user.employee.company_location.company.tax_no %>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  PAN of Employee: <%= @employee.try(:pan_no)%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assessment Year: <%= @from_assessment_year %> - <%= @to_assessment_year %></p>
     <br /><br /> 
 
     <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
@@ -410,18 +410,34 @@
             <li>Tax payable (14-15)</li>
           </ol>
         </td>
-        <td colspan="2" style="text-align: right"> 
+        <td colspan="1" style="text-align: right">
+          <ul style="list-style-type: none;">
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <%= @employee_conveyance_allowance %></li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>
+            <li> <%= @employee_professional_tax %> </li>
+            <li> <br /> </li>
+            <li> <br /> </li>            
+          </ul>
+        </td>
+        <td colspan="1" style="text-align: right"> 
           <ul style="list-style-type: none;">
             <li> <br /> </li>              
             <li><%= @gross_annual_amount %></li>
             <li>Nil</li>
             <li>Nil</li>
             <li> <br /> </li>
+            <li> <%= @deduct_conveyance_allowance %> </li>
             <li> <br /> </li>
             <li> <br /> </li>
             <li> <br /> </li>
-            <li> <br /> </li>
-            <li> <br /> </li>
+            <li> <%= @deduct_professional_tax %> </li>
             <li>Nil</li>  
             <li><%= @employee_professional_tax %></li>
             <li> <br /> </li>
@@ -436,7 +452,7 @@
             <li>Nil</li>
           </ul>
         </td>
-        <td colspan="2" style="text-align: right">
+        <td colspan="1" style="text-align: right">
           <ul style="list-style-type: none;">
             <li> <br /> </li>
             <li> <br /> </li>
@@ -456,7 +472,7 @@
             <li> <br /> </li>
             <li> <br /> </li>
             <li>Deductible Amount</li>
-          </ul>      
+          </ul>
         </td>
         <td colspan="2" style="text-align: right">
           <ul style="list-style-type: none;">

@@ -1,12 +1,14 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.8'
 # Use mysql as the database for Active Record
-gem 'mysql2', '~> 0.3.18'
-gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
 
-gem 'twilio-ruby', '~> 4.11', '>= 4.11.1'
+gem 'mysql2', '~> 0.3.18'
+ #gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
+
+# gem "rack-timeout", require:"rack/timeout/base"
+
 gem 'numbers_in_words'
 
 gem 'tiny_tds'
@@ -17,23 +19,31 @@ gem 'activerecord-session_store'
 
 gem 'mdb'
 
+gem 'ruby-graphviz', '~> 1.2', '>= 1.2.2'
+
+gem 'twilio-ruby', '~> 4.11', '>= 4.11.1'
+
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
+ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
-
-gem 'whenever', '~> 0.9.4',:require => false
+# gem 'coffee-rails', '~> 4.0.0'
+gem 'whenever', '~> 0.9.7', :require => false
 gem 'geocoder'
 gem 'therubyracer', platforms: :ruby
-gem 'query_report'
+# gem 'query_report'
 gem 'kaminari', '~> 0.16.3'
 gem 'coderay'
 gem 'bootstrap-datepicker-rails'
 gem 'awesome_print'
 gem 'datagrid', '~> 1.4', '>= 1.4.1'
 gem 'quiet_assets'
+
+
+gem 'fullcalendar-rails', '~> 3.4.0.0'
+gem 'momentjs-rails'
 
 gem 'tzinfo-data', '~> 1.2016', '>= 1.2016.10'
 
@@ -48,12 +58,17 @@ gem 'jquery-rails'
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
+gem 'json', '~> 1.8', '>= 1.8.3'
+# gem 'activesupport', '~> 4.2', '>= 4.2.8'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'thin', '~> 1.6', '>= 1.6.4'
 
 gem 'bundler'
+
+gem 'delayed_job_active_record'
+gem "daemons"
 
 # for pdf generation
 gem 'prawn', '~> 1.3.0'
@@ -71,11 +86,17 @@ gem 'selenium-webdriver', '~> 3.0', '>= 3.0.5'
 gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
 
 #inline edit
-gem 'best_in_place', '~> 3.0.1'
+
+
+# gem 'best_in_place', '~> 3.0.1'
+
+gem 'bcrypt-ruby', '~> 3.0.0', :require => 'bcrypt'
+gem 'bcrypt'
 
 # gem 'backup', '~> 4.4'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+
 
 # Use Unicorn as the app server
 # gem 'unicorn'
@@ -99,7 +120,7 @@ group :development do
 	gem 'wirble'
 	gem 'hirb'
 	# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-	gem 'spring'
+	# gem 'spring'
 end
 
 # Authentication and authorization
@@ -112,7 +133,6 @@ gem 'apartment'
 gem 'local-subdomain'
 # Bootstrap form
 gem 'bootstrap_form'
-
 # Jquery validation
 gem 'jquery-validation-rails'
 
@@ -127,7 +147,8 @@ gem 'protokoll'
 # gem 'countries'
 gem 'city-state'
 
-gem 'rmagick', '~> 2.15.4'
+
+ # gem 'rmagick', '~> 2.15.4'
 
 # infinite-cove-6619
 # DateTimePicker

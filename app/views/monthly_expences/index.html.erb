@@ -10,51 +10,42 @@
     
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example" class="table table-bordered table-hover table-condensed">
+  <% i = 0 %>
+    <table id="example6" class="table table-bordered table-hover table-condensed">
     <thead>
     <tr><td colspan="4"><center><strong>Monthly Expenses</strong></center></td></tr>
       <tr>
+        <th>Sr. No</th>
         <th>Year</th>
-        <th colspan="3">Month</th>
+        <th>Month</th>
+        <th>Action</th>
         
       </tr>
     </thead>
 
     <tbody>
-       <% @monthly_expences.each do |w| %>
+      <% @monthly_expences.each do |w| %>
         <% year = w.expence_date.strftime('%Y') %>
+        <% month = w.expence_date.strftime('%B') %>
         <tr>
+          <td><%= i = i + 1 %></td>
           <td><%= year %></td>
-          
-            <td><%= link_to 'January',employees_monthly_expences_path(year: year, month: "January") , class: 'btn btn-xs btn-primary' %></td>
-            <td><%= link_to 'February',employees_monthly_expences_path(year: year, month: "February") , class: 'btn btn-xs btn-primary' %></td>  
-            <td><%= link_to 'March',employees_monthly_expences_path(year: year, month: "March") , class: 'btn btn-xs btn-primary' %></td>
-           
-           
-            </tr>
-          
-          <tr>
-          <td><%= year %></td>
-           <td><%= link_to 'April',employees_monthly_expences_path(year: year, month: "April") , class: 'btn btn-xs btn-primary' %></td>
-            <td><%= link_to 'May',employees_monthly_expences_path(year: year, month: "May") , class: 'btn btn-xs btn-primary' %></td>
-            <td><%= link_to 'June',employees_monthly_expences_path(year: year, month: "June") , class: 'btn btn-xs btn-primary' %></td>
-         
-          </tr>
-          <tr>
-          <td><%= year %></td>
-             <td><%= link_to 'July',employees_monthly_expences_path(year: year, month: "July") , class: 'btn btn-xs btn-primary' %></td>
-            <td><%= link_to 'August',employees_monthly_expences_path(year: year, month: "August") , class: 'btn btn-xs btn-primary' %></td>
-            <td><%= link_to 'September',employees_monthly_expences_path(year: year, month: "September") , class: 'btn btn-xs btn-primary' %></td>
-          </tr>
-          <tr>  
-          <td><%= year %></td>
-            <td><%= link_to 'October',employees_monthly_expences_path(year: year, month: "October") , class: 'btn btn-xs btn-primary' %></td>
-            <td><%= link_to 'November',employees_monthly_expences_path(year: year, month: "November") , class: 'btn btn-xs btn-primary' %></td>
-            <td><%= link_to 'December',employees_monthly_expences_path(year: year, month: "December") , class: 'btn btn-xs btn-primary' %></td>
-          </tr>
-       
+          <td><%= month %></td>
+          <td><%= link_to '', employee_expences_monthly_expences_path(year: year, month: month), class: 'btn btn-xs btn-default fa fa-eye' %></td>
+        </tr>
+        
       <% end %>
     </tbody>
   </table>
   </div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true,
+        "scrollY": 400
+    } );
+} );
+</script>

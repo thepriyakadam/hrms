@@ -145,12 +145,16 @@ class EmployeeLeavRequestsController < ApplicationController
               @leave_c_off_id = params[:common][:c_off_date]
               @leave_c_off = LeaveCOff.find_by(id: @leave_c_off_id)
             if start_date.to_date > @leave_c_off.c_off_date.to_date
-                if @leave_c_off.expiry_date < start_date.to_date
-                  flash[:alert] = "Compensatory off expired for this day"
-                elsif @leave_c_off.c_off_date > start_date.to_date
-                  flash[:alert] = "Please check Compensatory off day"
+                if @leave_c_off.expiry_date == nil
+                else
+                  if @leave_c_off.expiry_date < start_date.to_date
+                    flash[:alert] = "Compensatory off expired for this day"
+                  elsif @leave_c_off.c_off_date > start_date.to_date
+                    flash[:alert] = "Please check Compensatory off day"
+                  end
+                end
 
-                elsif @employee_leav_request.is_available_coff?
+                if @employee_leav_request.is_available_coff?
                   flash[:alert] = "Your Leave Request already has been sent"
                 elsif @employee_leav_request.is_salary_processed_coff?
                   flash[:alert] = "Salary Processed for this month"
@@ -579,9 +583,9 @@ class EmployeeLeavRequestsController < ApplicationController
   end
 
   def all_leave_request_list
-    @first_level_request_lists = EmployeeLeavRequest.where(is_pending: true, is_second_approved: false,is_first_rejected: false, is_cancelled: false, is_second_rejected: false)
+    @first_level_request_lists = EmployeeLeavRequest.where("current_status = ? OR current_status = ?", "Pending","FirstApproved")
     @emp_leav_req = EmployeeLeavRequest.where.not(second_reporter_id: false).pluck(:second_reporter_id)
-    @second_level_request_lists = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: false, is_second_rejected: false, is_cancelled: false,second_reporter_id: @emp_leav_req)
+    @second_level_request_lists = EmployeeLeavRequest.where("current_status = ? OR current_status = ?", "Pending","FirstApproved")
   # @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
     session[:active_tab] ="LeaveManagement"
     session[:active_tab1] ="LeaveProcess"

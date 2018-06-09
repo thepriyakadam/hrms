@@ -5,6 +5,8 @@ class ListedCompaniesController < ApplicationController
   # GET /listed_companies.json
   def index
     @listed_companies = ListedCompany.all
+    session[:active_tab] ="MeetingPlan"
+    session[:active_tab1] ="Master"
   end
 
   # GET /listed_companies/1

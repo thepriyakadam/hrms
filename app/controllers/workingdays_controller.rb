@@ -273,8 +273,8 @@ class WorkingdaysController < ApplicationController
     format.csv { send_data @workingdays.to_csv }
     format.xls
    end
-    session[:active_tab] = "EmployeeManagement"
-    session[:active_tab1] ="Imports"  
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Reports" 
   end
 
   def import

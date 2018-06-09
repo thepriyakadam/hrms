@@ -6,6 +6,7 @@
           argin: 10;">
   <div style="float:right;">Date - <%= Time.zone.now.to_date %> </div><br><br>
 
+
   <b><center>Offer Letter</center></b><br><br>
 
   <p> Dear Mr./Miss.<b> <%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %> </b> </p>
@@ -19,4 +20,4 @@
   <p>For <b> <%= current_user.employee.company_location.company.description %> </b></p>
 </div>
 </div>
-<!-- <= link_to "Print",offer_letter_certificates_path(employee_id: @employee.id, certificate: @certificate,format: "pdf"),class: "btn btn-xl btn-info fa fa-print",:target => "_blank"%> -->
+<%= link_to "Print",offer_letter_certificates_path(employee_id: @employee.id, certificate: @certificate,format: "pdf"),class: "btn btn-xl btn-info fa fa-print",:target => "_blank"%>

@@ -169,6 +169,7 @@ class LatemarkMastersController < ApplicationController
   end
 
   def datewise_report
+   
     @from_date = params[:latemark_master][:from_date]
     @to_date = params[:latemark_master][:to_date]
     @latemark_master = LatemarkMaster.last

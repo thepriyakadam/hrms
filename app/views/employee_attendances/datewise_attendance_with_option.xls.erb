@@ -1,32 +1,32 @@
 <table id="example1" class="table table-bordered table-hover table-condensed">
-      <thead>
-        <tr><th colspan="9"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
-       		<tr>
-            <th>Date</th>
-            <th>ID</th>
-            <th>Employee Name</th>
-            <th>Present</th>
-            <th>In Time</th>
-            <th>Out Time</th>
-            <th>Working Hours</th>
-            <th>Manager</th>
-            <th>Comment</th>
-          </tr>
-      </thead>
 
-      <tbody>
-         <% @employee_attendances.each do |a| %>
-            <tr>
-              <td><%= a.try(:day) %></td>
-              <td><%= a.employee.manual_employee_code %></td>
-              <td><%= full_name(a.employee) %></td>
-              <td><%= a.try(:present) %></td>
-              <td><%= a.try(:in_time) %></td>
-              <td><%= a.try(:out_time) %></td>
-              <td><%= a.try(:working_hrs) %></td>
-              <td><%= full_name(a.employee.manager) %></td>
-              <td><%= a.try(:comment) %></td>
-            </tr>
-          <% end %>
-      </tbody>
-    </table>
+  <thead>
+   		<tr>
+        <th>Date</th>
+        <th>ID</th>
+        <th>Employee Name</th>
+        <th>Present</th>
+        <th>In Time</th>
+        <th>Out Time</th>
+        <th>Working Hours</th>
+        <th>Manager</th>
+        <th>Comment</th>
+      </tr> 
+  </thead>
+
+  <tbody>
+     <% @employee_attendances.each do |a| %>
+        <tr>
+          <td><%= a.try(:day) %></td>
+          <td><%= a.employee.manual_employee_code %></td>
+          <td><%= full_name(a.employee) %></td>
+          <td><%= a.try(:present) %></td>
+          <td><%= a.try(:in_time) %></td>
+          <td><%= a.try(:out_time) %></td>
+          <td><%= a.try(:working_hrs) %></td>
+          <td><%= full_name(a.employee.manager) %></td>
+          <td><%= a.try(:comment) %></td>
+        </tr>
+      <% end %>
+  </tbody>
+</table>

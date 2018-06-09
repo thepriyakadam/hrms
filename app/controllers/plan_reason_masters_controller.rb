@@ -5,6 +5,8 @@ class PlanReasonMastersController < ApplicationController
   # GET /plan_reason_masters.json
   def index
     @plan_reason_masters = PlanReasonMaster.all
+    session[:active_tab] ="MeetingPlan"
+    session[:active_tab1] ="Master"
   end
 
   # GET /plan_reason_masters/1

@@ -17,6 +17,8 @@ class EmployeePlansController < ApplicationController
   # GET /employee_plans/new
   def new
     @employee_plan = EmployeePlan.new
+    session[:active_tab] ="MeetingPlan"
+    session[:active_tab1] ="Process"
   end
 
   # GET /employee_plans/1/edit
@@ -361,7 +363,7 @@ class EmployeePlansController < ApplicationController
   def meeting_follow_up
 
     session[:active_tab] = "MeetingPlan"
-    session[:active_tab1] = "Reports"
+    session[:active_tab1] = "Process"
   end
 
   def meeting_follow_up_report

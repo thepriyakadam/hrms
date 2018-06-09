@@ -1809,12 +1809,32 @@ end
     @any_other_income = 0
     @gross_total_income = @income_chargeable_under_the_head + @any_other_income
     @total_income = @gross_total_income - @aggregate_of_deductible_amount
-
+    
     if @total_income.present?
-      if (100..250000).include?(@total_income)
+      if (1000..250000).include?(@total_income)
+        @total_tax = 0
       elsif (250000..500000).include?(@total_income)
+        @on_tax = @total_income - 250000
+        @total_tax = @on_tax * 5 / 100
       elsif (500000..1000000).include?(@total_income)
-      else 1000000 >= @total_income
+        @on_tax = @total_income - 250000
+        @second_slabs = @on_tax * 5 / 100
+      #   @first_slabs = @on_tax * 20 / 100
+      #   @on_second_slabs =  @on_tax - 250000
+      #   @second_slabs = @on_second_slabs * 5 / 100
+      #   @on_tax = @total_income - 250000
+      #   @total_tax = @first_slabs + @second_slabs
+      # else 1000000 >= @total_income
+      #   @on_third_slabs = @total_income - 1000000
+      #   @third_slabs * 30 / 100
+      #   @on_third_slabs - 
+      #   @on_tax = @total_income - 500000
+      #   @first_slabs = @on_tax * 20 / 100
+      #   @on_second_slabs =  @on_tax - 250000
+      #   @second_slabs = @on_second_slabs * 5 / 100
+      #   @on_tax = @total_income - 250000
+      #   @total_tax = @first_slabs + @second_slabs + @third_slabs
+      #   @total_tax = @total_income * 30 / 100
       end
     end
     # @company = params[:salaryslip] ? params[:salaryslip][:company_id] : params[:company_id]

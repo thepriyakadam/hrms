@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :gps_informations do
     collection do
       get :all_emp_list
+      get :view_gps_info
       post :update_gps_info
     end
   end

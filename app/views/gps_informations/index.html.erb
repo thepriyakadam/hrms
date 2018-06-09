@@ -9,6 +9,7 @@
     <table id="example1" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
+          <th>Sr.No.</th>
           <th>Employee</th>
           <th>Day</th>
           <th>Longitude</th>
@@ -20,15 +21,17 @@
       </thead>
 
       <tbody>
+        <% i = 0 %>
         <% @gps_informations.each do |gps_information| %>
           <tr>
-            <td><%= gps_information.employee %></td>
+            <td><%= i = i+1 %></td>
+            <td><%= gps_information.employee.try(:prefix) %> <%= gps_information.employee.try(:first_name) %> <%= gps_information.employee.try(:middle_name) %> <%= gps_information.employee.try(:last_name) %></td>
             <td><%= gps_information.day %></td>
             <td><%= gps_information.longitude %></td>
             <td><%= gps_information.latitude %></td>
             <td><%= gps_information.place %></td>
             <td><%= gps_information.radius %></td>
-            <td><%= link_to ' ', gps_information, class: 'btn btn-xs btn-default fa fa-eye' %></td>
+            <td><%= link_to ' ', view_gps_info_gps_informations_path(gps_information), remote: true, class: 'btn btn-xs btn-default fa fa-eye' %></td>
             <td><%= link_to ' ', edit_gps_information_path(gps_information), class: 'btn btn-xs btn-success fa fa-edit' %></td>
             <td><%= link_to ' ', gps_information, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-xs btn-danger fa fa-trash' %></td>
           </tr>
@@ -37,3 +40,5 @@
     </table>
   </div>
 </div>
+
+<div id="view_gps_info" class="modal fade"></div>

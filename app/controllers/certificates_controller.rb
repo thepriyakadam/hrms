@@ -65,13 +65,14 @@ class CertificatesController < ApplicationController
     end
   end
 
-   def certificate_print
+def certificate_print
     @employee = Employee.find(params[:salary][:employee_id])
-    # byebug
-    @certificate = params[:salary][:certificate_master_id]
+    
+    certificate_id = params[:salary][:certificate_master_id]
+    certificate = CertificateMaster.find_by(id: certificate_id)
+    @certificate = certificate.try(:name)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
   end
-
  private
     # Use callbacks to share common setup or constraints between actions.
     def set_certificate

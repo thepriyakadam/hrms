@@ -56,6 +56,7 @@ Rails.application.routes.draw do
 
   resources :daily_attendances do 
     collection do
+      get :third_attendance_uttam
       get :attendance
       get :calculate
       get :daily_attendance
@@ -494,6 +495,8 @@ Rails.application.routes.draw do
       post :selected_employee_list
       get :selected_employee_pdf
       get :selected_employee_xls
+      get :offer_letter
+      get :joining_letter
     end
   end
   resources :certificate_masters do
@@ -980,6 +983,8 @@ end
   end
   resources :employee_attendances do
     collection do
+      post :third_attendance
+      get :third_attendance
       post :fetch_attendance
       post :calculate
       get :fetch_attendance
@@ -1108,6 +1113,8 @@ end
       post :payroll_show
       get :payroll_show
       get :employee_attendance
+      get :import_xl
+      post :attendance_upload_report
     end
   end
   resources :salary_comp_mappings
@@ -1919,6 +1926,8 @@ end
       get :modal
       get :detail_modal
       get :modal_c_off
+      get :maintenance_report
+      get :import_xl
     end
   end
 
@@ -2192,6 +2201,8 @@ end
       get :modal
       get :import_monthly_expence
       post :import
+      get :delete_monthly_expence
+      get :edit_monthly_expence
     end
   end
   resources :expencess_types do
@@ -2784,7 +2795,8 @@ end
       get :date_categorywise_balance
       post :show_date_categorywise
       get :show_date_categorywise
-
+      get :import_employee_leav_balance
+      post :employee_leav_balance_report
     end
   end
 
@@ -3333,5 +3345,22 @@ end
     get 'user_auths/all_travel_history' => 'user_auths#all_travel_history', defaults:{format: 'json'}
     get 'user_auths/cancel_travel_history' => 'user_auths#cancel_travel_history', defaults:{format: 'json'}
     get 'user_auths/get_time_sheet' => 'user_auths#get_time_sheet', defaults:{format: 'json'}
+    get 'user_auths/get_help_disk_list' => 'user_auths#get_help_disk_list', defaults:{format: 'json'}
+    get 'user_auths/all_issue_tracker_group' => 'user_auths#all_issue_tracker_group', defaults:{format: 'json'}
+    get 'user_auths/cancel_help_desk_request' => 'user_auths#cancel_help_desk_request', defaults:{format: 'json'}
+    get 'user_auths/group_type' => 'user_auths#group_type', defaults:{format: 'json'}
+    get 'user_auths/collect_issues' => 'user_auths#collect_issues', defaults:{format: 'json'}
+    get 'user_auths/daily_bill_request_confirmation' => 'user_auths#daily_bill_request_confirmation', defaults:{format: 'json'}
+    get 'user_auths/lock_request_list' => 'user_auths#lock_request_list', defaults:{format: 'json'}
+    get 'user_auths/solved_issue_list' => 'user_auths#solved_issue_list', defaults:{format: 'json'}
+    get 'user_auths/manager_daily_attendance' => 'user_auths#manager_daily_attendance', defaults:{format: 'json'}
+    get 'user_auths/collect_issues_description' => 'user_auths#collect_issues_description', defaults:{format: 'json'}
+    post 'user_auths/create_support_request' => 'user_auths#create_support_request', defaults:{format: 'json'}
+    get 'user_auths/unlock_request' => 'user_auths#unlock_request', defaults:{format: 'json'}
+    post 'user_auths/lock_request' => 'user_auths#lock_request', defaults:{format: 'json'}
+    post 'user_auths/solved_request' => 'user_auths#solved_request', defaults:{format: 'json'}
+    get 'user_auths/issue_tracker_member_list' => 'user_auths#issue_tracker_member_list', defaults:{format: 'json'}
+    get 'user_auths/support_root_cause_list' => 'user_auths#support_root_cause_list', defaults:{format: 'json'}
   end
 end
+

@@ -3365,3 +3365,4 @@ end
     get 'user_auths/support_root_cause_list' => 'user_auths#support_root_cause_list', defaults:{format: 'json'}
   end
 end
+

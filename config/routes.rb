@@ -1113,6 +1113,8 @@ end
       post :payroll_show
       get :payroll_show
       get :employee_attendance
+      get :import_xl
+      post :attendance_upload_report
     end
   end
   resources :salary_comp_mappings
@@ -1924,6 +1926,9 @@ end
       get :modal
       get :detail_modal
       get :modal_c_off
+      get :maintenance_report
+      get :import_xl
+      post :import
     end
   end
 
@@ -2791,7 +2796,8 @@ end
       get :date_categorywise_balance
       post :show_date_categorywise
       get :show_date_categorywise
-
+      get :import_employee_leav_balance
+      post :employee_leav_balance_report
     end
   end
 

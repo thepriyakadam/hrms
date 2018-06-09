@@ -183,8 +183,7 @@ class ManagerSelfServicesController < ApplicationController
     redirect_to investment_declaration_manager_self_services_path
   end
 
-  def leave_c_off
-    # byebug
+  def leave_c_off 
     session[:active_tab] ="ManagerSelfService"
     current_login = Employee.find_by(id: current_user.employee_id)
     @sub = current_login.subordinates

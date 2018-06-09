@@ -2363,7 +2363,7 @@ def import
   end
 end
 
-def import_employee_attendance
+def import_xl
   @employee_attendances = EmployeeAttendance.all
   respond_to do |format|
     format.html
@@ -2373,45 +2373,61 @@ def import_employee_attendance
     format.csv { send_data @employee_attendances.to_csv }
     format.xls
   end
-
-   session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="AttendanceSetup"
 end
 
-  def import_employee_attendance_to_txt
-    @employees = Employee.all
-    respond_to do |format|
-      format.html
-      format.csv { send_data @employees.to_txt,filename: "employees-#{Date.today}.txt" }
-    end#do
-  end
+def import_employee_attendance
+  session[:active_tab] ="TimeManagement"
+  session[:active_tab1] ="AttendanceSetup"
+end
 
-  def self_service_datewise_attendance
-    @from = params[:employee][:from]
-    @to = params[:employee][:to]
-    @employee_id = params[:employee][:employee_id]
-    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day DESC")
-    
-    respond_to do |format|
-      format.js
-      format.xls {render template: 'self_services/datewise_attendance_report_xls.xls.erb'}
-      format.html
-      format.pdf do
-        render pdf: 'self_service_datewise_attendance',
-              layout: 'pdf.html',
-              orientation: 'Landscape',
-              template: 'self_services/datewise_attendance_report_pdf.pdf.erb',
-              # show_as_html: params[:debug].present?,
-              :page_height      => 1000,
-              :dpi              => '300',
-              :margin           => {:top    => 10, # default 10 (mm)
-                            :bottom => 10,
-                            :left   => 20,
-                            :right  => 20},
-              :show_as_html => params[:debug].present?
-          end
-         end
+def attendance_upload_report
+  @from = params[:employee][:from]
+  @to = params[:employee][:to]
+  @employee = Employee.where(status: "ACtive").pluck(:id)
+  
+  if @from == "" || @to == ""
+    flash[:alert] = "Please Select Date"
+    redirect_to import_employee_attendance_employee_attendances_path
+    #@employee_attendances = EmployeeAttendance.all
+  else
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee)
   end
+end
+
+def import_employee_attendance_to_txt
+  @employees = Employee.all
+  respond_to do |format|
+    format.html
+    format.csv { send_data @employees.to_txt,filename: "employees-#{Date.today}.txt" }
+  end#do
+end
+
+def self_service_datewise_attendance
+  @from = params[:employee][:from]
+  @to = params[:employee][:to]
+  @employee_id = params[:employee][:employee_id]
+  @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day DESC")
+  
+  respond_to do |format|
+    format.js
+    format.xls {render template: 'self_services/datewise_attendance_report_xls.xls.erb'}
+    format.html
+    format.pdf do
+      render pdf: 'self_service_datewise_attendance',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'self_services/datewise_attendance_report_pdf.pdf.erb',
+            # show_as_html: params[:debug].present?,
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+        end
+       end
+end
 
   def manager_self_service_attendance
     @emp = Employee.find(current_user.employee_id)

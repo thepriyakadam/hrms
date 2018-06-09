@@ -63,6 +63,20 @@ class LeaveCOffsController < ApplicationController
   def edit
   end
 
+  def import_xl
+  end
+
+  def import
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+      redirect_to import_xl_leave_c_offs_path
+    else
+      LeaveCOff.import(params[:file])
+      redirect_to new_leave_c_off_path, notice: "File imported."
+    end
+  end
+
   # POST /leave_c_offs
   # POST /leave_c_offs.json
   

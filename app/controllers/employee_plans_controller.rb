@@ -57,7 +57,8 @@ class EmployeePlansController < ApplicationController
   end
 
   def employee_wise_report
-    session[:active_tab] = "MeetingPlan"
+    session[:active_tab] ="MeetingPlan"
+    session[:active_tab1] ="Reports"
   end
 
   def gps_tracking
@@ -144,6 +145,7 @@ class EmployeePlansController < ApplicationController
 
   def manager_wise_report
     session[:active_tab] = "MeetingPlan"
+    session[:active_tab1] = "Reports"
     # session[:active_tab1] = "travelrequestreports"
   end
 
@@ -186,6 +188,8 @@ class EmployeePlansController < ApplicationController
 
   def company_wise_report
     session[:active_tab] = "MeetingPlan"
+    session[:active_tab1] = "Reports"
+
   end
 
   def company_report
@@ -227,6 +231,7 @@ class EmployeePlansController < ApplicationController
 
   def status_wise_report
     session[:active_tab] = "MeetingPlan"
+    session[:active_tab1] = "Reports"
   end
 
   def status_report
@@ -281,6 +286,7 @@ class EmployeePlansController < ApplicationController
 
   def meeting_minutes_history
     session[:active_tab] = "MeetingPlan"
+    session[:active_tab1] = "Reports"
   end
 
   def meeting_minutes_history_report
@@ -353,7 +359,9 @@ class EmployeePlansController < ApplicationController
   end
 
   def meeting_follow_up
+
     session[:active_tab] = "MeetingPlan"
+    session[:active_tab1] = "Reports"
   end
 
   def meeting_follow_up_report

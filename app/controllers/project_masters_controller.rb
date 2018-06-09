@@ -18,7 +18,6 @@ class ProjectMastersController < ApplicationController
     @project_master = ProjectMaster.new
     @project_masters = ProjectMaster.all
     session[:active_tab] = "GlobalSetup"
-
   end
 
   # GET /project_masters/1/edit

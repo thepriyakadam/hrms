@@ -1,22 +1,88 @@
 
+<!--SELECT2 EXAMPLE -->
 <div class="box box-default">
-<div class="box-header with-border">
-<h3 class="box-title">Import File</h3>
-<div class="pull-right">
-	<%= link_to " Template ", "/Templates/62.Employee Attendance Upload.xls", :class=>" fa fa-download btn-xl btn btn-warning" %>
-</div>
-</div><!-- /.box-header -->
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Attendance Report</h3>
+    <div class="pull-right">
+      <%= link_to " Upload ", import_xl_employee_attendances_path, class: 'fa fa-upload btn btn-xl btn-info' %>
+     <%= link_to " Template ", "/Templates/62.Employee Attendance Upload.xls", :class=>" fa fa-download btn-xl btn btn-warning" %>
+    </div>
+  </div><!-- /.box-header -->
 
-<div class="box-body">
-<%= form_tag import_employee_attendances_path, multipart: true do %>
-<label> File (.xls,.csv,.xlsx only) </label>
-  <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
-  <br>
-  <%= submit_tag "Import" %>
-<% end %>
-<!-- <p>
-Download:
-<= link_to "CSV", import_employee_attendance_employee_attendances_path(format: "csv") %> |
-<= link_to "Text", import_employee_attendance_to_txt_employee_attendances_path(format: "csv") %> |
-<= link_to "Excel", import_employee_attendance_employee_attendances_path(format: "xls") %>
-</p> -->
+  <div class="box-body">
+    <%= bootstrap_form_for(:emploee, url: {action: 'attendance_upload_report',format: 'xls'}) do |f| %>
+
+		  	<div class="row">
+      		<div class="col-sm-3">
+		        <div class="form-group required">
+		          <div class="input-group">
+		            <div class="input-group-addon">
+		              <i class="fa fa-calendar"></i>
+		            </div>
+		            <%= text_field :employee,:from,placeholder: "From",class: 'request_date form-control'%>
+		          </div>
+		        </div>
+		      </div>
+
+           <div class="col-sm-3">
+            <div class="form-group required">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <%= text_field :employee,:to,placeholder: "To",class: 'request_date form-control'%>
+              </div>
+            </div>
+          </div>
+
+        	<div class="col-sm-3">
+	          <div class="actions">
+	            <%= f.submit "Download Excel", class: "btn btn-sm btn-primary" %>
+	          </div>
+	        </div>
+	      </div>
+
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+
+<script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#advance_salary").submit();
+  })
+</script>
+
+<script type="text/javascript">
+  $(function(){
+    $('.request_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+
+   $("#employee").validate({
+    rules: {
+      "employee[from]":{
+        required: true,
+      },
+      "employee[to]":{
+        required: true,
+      }
+       },
+    messages: {
+      "employee[from]":{
+        required: "Please Specify From Date",
+      },
+      "employee[to]":{
+        required: "Please Specify To Date",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+  </script>

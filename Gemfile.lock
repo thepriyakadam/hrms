@@ -70,11 +70,7 @@ GEM
       momentjs-rails (>= 2.8.1)
     bootstrap_form (2.7.0)
     builder (3.2.3)
-<<<<<<< HEAD
-    byebug (10.0.1)
-=======
     byebug (10.0.2)
->>>>>>> dbda16c7f4efa6c63f220e172959c373e96b0b78
     cancancan (1.17.0)
     capybara (3.2.1)
       addressable
@@ -150,11 +146,7 @@ GEM
     erubis (2.7.0)
     eventmachine (1.2.7)
     execjs (2.7.0)
-<<<<<<< HEAD
-    ffi (1.9.23)
-=======
     ffi (1.9.25)
->>>>>>> dbda16c7f4efa6c63f220e172959c373e96b0b78
     fullcalendar-rails (3.4.0.0)
       jquery-rails (>= 4.0.5, < 5.0.0)
       jquery-ui-rails (>= 5.0.2)
@@ -228,11 +220,7 @@ GEM
     public_suffix (3.0.2)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
-<<<<<<< HEAD
-    rack (1.6.9)
-=======
     rack (1.6.10)
->>>>>>> dbda16c7f4efa6c63f220e172959c373e96b0b78
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.8)
@@ -333,11 +321,7 @@ GEM
       thread_safe (~> 0.1)
     tzinfo-data (1.2018.5)
       tzinfo (>= 1.0.0)
-<<<<<<< HEAD
-    uglifier (4.1.8)
-=======
     uglifier (4.1.11)
->>>>>>> dbda16c7f4efa6c63f220e172959c373e96b0b78
       execjs (>= 0.3.0, < 3)
     warden (1.2.7)
       rack (>= 1.0)
@@ -435,8 +419,4 @@ DEPENDENCIES
   yaml_db
 
 BUNDLED WITH
-<<<<<<< HEAD
-   1.16.1
-=======
    1.16.2
->>>>>>> dbda16c7f4efa6c63f220e172959c373e96b0b78

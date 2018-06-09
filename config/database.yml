@@ -1,22 +1,160 @@
+production:
+  
+# development:
+#   adapter: mysql2
+#   encoding: utf8
+#   pool: 5
+#   socket: /var/run/mysqld/mysqld.sock
+#   reconnect: true
+#   database: newDB
+#   username: root
+#   password: root
+#   host: localhost
+
+# test:
+#   adapter: mysql2
+#   encoding: utf8
+#   pool: 5
+#   socket: /var/run/mysqld/mysqld.sock
+#   reconnect: true
+#   database: newDB
+#   username: root
+#   password: root
+#   host: localhost
+
+# production:
+#   adapter: mysql2
+#   encoding: utf8
+#   pool: 5
+#   username: root
+#   password: root
+#   database: newDB
+
+# development_sec:
+#   adapter: sqlserver
+#   encoding: utf8
+
+#   host: 192.168.0.15
+#   database: etimetracklite1
+#   username: SA
+
+# production_sec:
+#   adapter: sqlserver
+#   encoding: utf8
+#   host: 192.168.0.15
+#   database: etimetracklite1
+#   username: SA
+
+# test:
+#   adapter: sqlserver
+#   encoding: utf8
+#   host: 192.168.0.15
+#   database: etimetracklite1
+#   username: SA
+
 development:
   adapter: mysql2
-  username: root
-  password: root
-  database: hrms_development
-
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
-test:
-  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  socket: /var/run/mysqld/mysqld.sock
+  reconnect: true
   database: hrms_development
   username: root
   password: root
-
+  host: localhost
 
 production:
   adapter: mysql2
-  database: hrms_development
+  encoding: utf8
+  pool: 5
   username: root
   password: root
+  database: hrms_production
+
+test:
+  adapter: mysql2
+  encoding: hrms_testing
+  pool: 5
+  username: root
+  password: root
+  database: hrms_production
+
+development_sec:
+  adapter: sqlserver
+  encoding: utf8
+  host: 192.168.2.240
+  port: 49310
+  database: COSEC
+  username: hrms
+  password: hrms
+
+production_sec:
+  adapter: sqlserver
+  encoding: utf8
+  host: 192.168.2.240
+  port: 49310
+  database: COSEC
+  username: hrms
+  password: hrms
+
+test_sec:
+  adapter: sqlserver
+  encoding: utf8
+  host: 192.168.2.240
+  database: COSEC
+  username: hrms
+  password: hrms
+
+
+development_thi:
+  adapter: sqlserver
+  encoding: utf8
+  host: 182.72.233.6
+  port: 8445
+  database: a1
+  username: hrms
+  password: hrms
+
+production_thi:
+  adapter: sqlserver
+  encoding: utf8
+  host: 182.72.233.6
+  port: 8445
+  database: a1
+  username: hrms
+  password: hrms
+
+test_thi:
+  adapter: sqlserver
+  encoding: utf8
+  host: 182.72.233.6
+  port: 8445
+  database: a1
+  username: hrms
+  password: hrms
+
+
+# development_sec:
+#   adapter: sqlserver
+#   encoding: utf8
+#   host: 123.201.35.198
+#   database: ZKA
+#   username: sa
+#   password: pass
+
+# production_sec:
+#   adapter: sqlserver
+#   encoding: utf8
+#   host: 123.201.35.198
+#   database: ZKA
+#   username: sa
+#   password: pass
+
+# test_sec:
+#   adapter: sqlserver
+#   encoding: utf8
+#   host: 123.201.35.198
+#   database: ZKA
+#   username: sa
+#   password: pass
 

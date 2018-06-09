@@ -437,7 +437,7 @@ Copyright (C) 2012 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
-ac_pwd='/home/ubuntu/hrms/public/freetds-1.00.23'
+ac_pwd='/home/cpu/workspace/hrms/public/freetds-1.00.23'
 srcdir='.'
 INSTALL='/usr/bin/install -c'
 MKDIR_P='/bin/mkdir -p'
@@ -601,7 +601,7 @@ old_postuninstall_cmds=''
 old_archive_cmds='$AR $AR_FLAGS $oldlib$oldobjs~$RANLIB $tool_oldlib'
 lock_old_archive_extraction='no'
 CC='gcc'
-CFLAGS='-g -O2  -Wdeclaration-after-statement'
+CFLAGS='-g -O2   -Wdeclaration-after-statement'
 compiler=''
 GCC='yes'
 lt_cv_sys_global_symbol_pipe='sed -n -e '\''s/^.*[	 ]\([ABCDGIRSTW][ABCDGIRSTW]*\)[	 ][	 ]*\([_A-Za-z][_A-Za-z0-9]*\)$/\1 \2 \2/p'\'' | sed '\''/ __gnu_lto/d'\'''
@@ -679,8 +679,8 @@ postuninstall_cmds=''
 finish_cmds='PATH="\$PATH:/sbin" ldconfig -n $libdir'
 finish_eval=''
 hardcode_into_libs='yes'
-sys_lib_search_path_spec='/usr/lib/gcc/x86_64-linux-gnu/5 /usr/lib/x86_64-linux-gnu /usr/lib /lib/x86_64-linux-gnu /lib '
-configure_time_dlsearch_path='/lib /usr/lib /usr/local/lib /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu '
+sys_lib_search_path_spec='/usr/lib/gcc/x86_64-linux-gnu/4.8 /usr/lib/x86_64-linux-gnu /usr/lib /lib/x86_64-linux-gnu /lib '
+configure_time_dlsearch_path='/lib /usr/lib /usr/lib/x86_64-linux-gnu/libfakeroot /usr/local/lib /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/mesa-egl /usr/lib/x86_64-linux-gnu/mesa '
 configure_time_lt_sys_library_path=''
 hardcode_action='immediate'
 enable_dlopen='unknown'
@@ -919,8 +919,8 @@ S["INCSERVER_TRUE"]=""
 S["INCAPPS_FALSE"]="#"
 S["INCAPPS_TRUE"]=""
 S["HAVE_OPENSSL"]="yes"
-S["OPENSSL_LIBS"]="-lssl -lcrypto"
-S["OPENSSL_CFLAGS"]=""
+S["OPENSSL_LIBS"]="-lssl -lcrypto  "
+S["OPENSSL_CFLAGS"]=" "
 S["NETTLE_LIBS"]=""
 S["NETTLE_CFLAGS"]=""
 S["GNUTLS_LIBS"]=""
@@ -956,7 +956,7 @@ S["PTHREAD_LIBS"]=""
 S["PTHREAD_CC"]="gcc"
 S["acx_pthread_config"]=""
 S["READLINE_LIBS"]="-lncurses  -lreadline"
-S["NETWORK_LIBS"]=" -lssl -lcrypto"
+S["NETWORK_LIBS"]=" -lssl -lcrypto  "
 S["MINGW32_FALSE"]=""
 S["MINGW32_TRUE"]="#"
 S["HAVE_PERL_SOURCES"]=""
@@ -1009,7 +1009,7 @@ S["EXEEXT"]=""
 S["ac_ct_CC"]="gcc"
 S["CPPFLAGS"]=" -DUNIXODBC -D_REENTRANT -D_THREAD_SAFE -DDEBUG=1 -Wall -Wstrict-prototypes -Wmissing-prototypes -Wno-long-long -Wpointer-arith"
 S["LDFLAGS"]=""
-S["CFLAGS"]="-g -O2  -Wdeclaration-after-statement"
+S["CFLAGS"]="-g -O2   -Wdeclaration-after-statement"
 S["CC"]="gcc"
 S["MACOSX_FALSE"]=""
 S["MACOSX_TRUE"]="#"
@@ -1027,7 +1027,11 @@ S["PKG_CONFIG"]="/usr/bin/pkg-config"
 S["SED"]="/bin/sed"
 S["LN_S"]="ln -s"
 S["GREP"]="/bin/grep"
+<<<<<<< HEAD
 S["BUILD_NUMBER"]="6702"
+=======
+S["BUILD_NUMBER"]="6746"
+>>>>>>> dbda16c7f4efa6c63f220e172959c373e96b0b78
 S["SUBVERSION"]="23"
 S["MINOR"]="00"
 S["MAJOR"]="1"
@@ -1045,12 +1049,12 @@ S["mkdir_p"]="$(MKDIR_P)"
 S["MKDIR_P"]="/bin/mkdir -p"
 S["INSTALL_STRIP_PROGRAM"]="$(install_sh) -c -s"
 S["STRIP"]="strip"
-S["install_sh"]="${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/install-sh"
-S["MAKEINFO"]="${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing makeinfo"
-S["AUTOHEADER"]="${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing autoheader"
-S["AUTOMAKE"]="${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing automake-1.15"
-S["AUTOCONF"]="${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing autoconf"
-S["ACLOCAL"]="${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing aclocal-1.15"
+S["install_sh"]="${SHELL} /home/cpu/workspace/hrms/public/freetds-1.00.23/install-sh"
+S["MAKEINFO"]="${SHELL} /home/cpu/workspace/hrms/public/freetds-1.00.23/missing makeinfo"
+S["AUTOHEADER"]="${SHELL} /home/cpu/workspace/hrms/public/freetds-1.00.23/missing autoheader"
+S["AUTOMAKE"]="${SHELL} /home/cpu/workspace/hrms/public/freetds-1.00.23/missing automake-1.15"
+S["AUTOCONF"]="${SHELL} /home/cpu/workspace/hrms/public/freetds-1.00.23/missing autoconf"
+S["ACLOCAL"]="${SHELL} /home/cpu/workspace/hrms/public/freetds-1.00.23/missing aclocal-1.15"
 S["VERSION"]="1.00.23"
 S["PACKAGE"]="freetds"
 S["CYGPATH_W"]="echo"
@@ -1198,6 +1202,7 @@ D["HAVE_INTTYPES_H"]=" 1"
 D["HAVE_MALLOC_H"]=" 1"
 D["HAVE_DIRENT_H"]=" 1"
 D["HAVE_STDBOOL_H"]=" 1"
+D["HAVE_GNUTLS_ABSTRACT_H"]=" 1"
 D["HAVE_GETOPT_H"]=" 1"
 D["HAVE_SQL_H"]=" 1"
 D["HAVE_ARPA_INET_H"]=" 1"

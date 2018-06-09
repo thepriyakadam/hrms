@@ -199,7 +199,7 @@
 /* #undef HAVE_GNUTLS */
 
 /* Define to 1 if you have the <gnutls/abstract.h> header file. */
-/* #undef HAVE_GNUTLS_ABSTRACT_H */
+#define HAVE_GNUTLS_ABSTRACT_H 1
 
 /* Define to 1 if you have the `gnutls_certificate_set_verify_function'
    function. */

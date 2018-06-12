@@ -57,6 +57,8 @@ bower.json
 #config/environments/development.rb
 #config/database.yml
 
+
+
 # Ignore .byebug_history
 .byebug_history
 

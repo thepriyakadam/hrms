@@ -1729,9 +1729,27 @@ class Api::UserAuthsController < ApplicationController
 
   def all_employee_details
     plan_id = params[:plan_id]
-    employee_attendances = EmployeeAttendance.where(id: plan_id)
-    render :json => employee_attendances.present? ? employee_attendances.collect{|eat| {:id => eat.id, :manual_employee_code => eat.try(:employee).try(:manual_employee_code), :employee_id => eat.employee_id, :prefix => eat.try(:employee).try(:prefix), :employee_first_name => eat.try(:employee).try(:first_name), :employee_middle_name => eat.try(:employee).try(:middle_name), :employee_last_name => eat.try(:employee).try(:last_name), :day => eat.day, :present => eat.present, :in_time => eat.try(:in_time).strftime("%I:%M %p"), :out_time => eat.try(:out_time).strftime("%I:%M %p"), :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs, :comment => eat.comment }} : []
+    emp_att = EmployeeAttendance.where(id: plan_id)
+    if emp_att.present?
+      render :json => emp_att.present? ? emp_att.collect{|emp_att| 
+        if emp_att.in_time.present? and emp_att.out_time.present?
+          { :id => eat.id, :manual_employee_code => eat.try(:employee).try(:manual_employee_code), :employee_id => eat.employee_id, :prefix => eat.try(:employee).try(:prefix), :employee_first_name => eat.try(:employee).try(:first_name), :employee_middle_name => eat.try(:employee).try(:middle_name), :employee_last_name => eat.try(:employee).try(:last_name), :day => eat.day, :present => eat.present, :in_time => eat.in_time, :out_time => eat.out_time, :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs, :comment => eat.comment }
+        elsif emp_att.in_time.present? and !emp_att.out_time.present?
+          { :id => eat.id, :manual_employee_code => eat.try(:employee).try(:manual_employee_code), :employee_id => eat.employee_id, :prefix => eat.try(:employee).try(:prefix), :employee_first_name => eat.try(:employee).try(:first_name), :employee_middle_name => eat.try(:employee).try(:middle_name), :employee_last_name => eat.try(:employee).try(:last_name), :day => eat.day, :present => eat.present, :in_time => eat.in_time, :out_time => eat.out_time, :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs, :comment => eat.comment }
+        else
+          { :id => eat.id, :manual_employee_code => eat.try(:employee).try(:manual_employee_code), :employee_id => eat.employee_id, :prefix => eat.try(:employee).try(:prefix), :employee_first_name => eat.try(:employee).try(:first_name), :employee_middle_name => eat.try(:employee).try(:middle_name), :employee_last_name => eat.try(:employee).try(:last_name), :day => eat.day, :present => eat.present, :in_time => eat.in_time, :out_time => eat.out_time, :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs, :comment => eat.comment }
+        end
+        } : []
+    else
+      render :status=>200, :json=>{:status=>"Employee Attendance Not Found."}
+    end
   end
+
+  #def all_employee_details
+   # plan_id = params[:plan_id]
+   # employee_attendances = EmployeeAttendance.where(id: plan_id)
+   # render :json => employee_attendances.present? ? employee_attendances.collect{|eat| {:id => eat.id, :manual_employee_code => eat.try(:employee).try(:manual_employee_code), :employee_id => eat.employee_id, :prefix => eat.try(:employee).try(:prefix), :employee_first_name => eat.try(:employee).try(:first_name), :employee_middle_name => eat.try(:employee).try(:middle_name), :employee_last_name => eat.try(:employee).try(:last_name), :day => eat.day, :present => eat.present, :in_time => eat.try(:in_time).strftime("%I:%M %p"), :out_time => eat.try(:out_time).strftime("%I:%M %p"), :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs, :comment => eat.comment }} : []
+  #end
 
   def all_emp_leave_details
     leave_id = params[:leave_id]

@@ -335,7 +335,18 @@
            <!--  <li><a href="/investment_declarations/show_employee_declaration"><i class="fa fa-tags"> </i> Show Declaration </a></li> -->
             <!-- <li><a href="/investment_declarations/show_income_tax"><i class="fa fa-tags"> </i> Show Employee Declaration </a></li> -->
            <li><a href="/employee_plans" title="To view the details of creating user"><i class="fa fa-tags"></i> Meeting Plans </a></li>
-           <li><a href="/Apk/android-debug.apk" title="To view the details of creating user"><i class="fa fa-download"></i> APK </a></li>
+           <% t = Company.first %>
+            <% if t.name == "Uttamenergy" %>
+              <li><a href="/Apk/uttamenergy/uttam.apk" title="Download Latest APK"><i class="fa fa-download"></i> APK </a></li>
+            <% elsif t.name == "SPAN PUMPS " %>
+              <li><a href="/Apk/spanpum/spanpum.apk" title="Download Latest APK"><i class="fa fa-download"></i> APK </a></li>
+            <% elsif t.name == "Sparkline" %>
+              <li><a href="/Apk/sparkline/sparkline.apk" title="Download Latest APK"><i class="fa fa-download"></i> APK </a></li>
+            <% elsif t.name == "ABC" %>
+              <li><a href="/Apk/demo/demo.apk" title="Download Latest APK"><i class="fa fa-download"></i> APK </a></li>
+            <% else %>
+              <li><a href="/Apk/demo/demo.apk" title="Download Latest APK"><i class="fa fa-download"></i> APK </a></li>
+            <% end %>
           </ul>
         </li>
         <li class="treeview" id="ManagerSelfService">

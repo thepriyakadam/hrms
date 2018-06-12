@@ -1313,12 +1313,13 @@ class Api::UserAuthsController < ApplicationController
     space = " "
     emp_name = emp_first + space + emp_last
     emp_code = emp.manual_employee_code
-    
+
     DailyAttendance.create(employee_code: emp_code, date: date, time: in_time, latitude: latitude, longitude: longitude, place: place) 
     emp_att = EmployeeAttendance.where(employee_id: emp_id, day: date)
     if emp_att.present?
-      time = EmployeeAttendance.where(employee_id: emp_id, in_time: in_time.to_time)
+      time = emp_att.where(employee_id: emp_id).where.not(in_time: nil)
       if time.present?
+        emp_att_time = emp_att.update_all(out_time: in_time.to_time)
       else
         emp_att_time = emp_att.update_all(in_time: in_time.to_time)
       end
@@ -1423,7 +1424,7 @@ class Api::UserAuthsController < ApplicationController
   def date_wise_location_history
     emp_id = params[:employee_id]
     date = params[:date]
-    date_wise_history = EmployeeLocationHistory.where(employee_id: emp_id, date: date).order("id DESC")                                                             
+    date_wise_history = EmployeeLocationHistory.where(employee_id: emp_id, date: date).order("id DESC")
     render :json => date_wise_history.present? ? date_wise_history.collect{|dwh| { :employee_id => dwh.employee_id, :date => dwh.date, :time => dwh.time.strftime("%I:%M:%S %p"),:latitude => dwh.latitude, :longitude => dwh.longitude, :location => dwh.location }} : []
   end
 

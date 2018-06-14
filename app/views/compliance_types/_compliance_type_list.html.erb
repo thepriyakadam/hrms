@@ -1,0 +1,26 @@
+<br>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <!-- <th>Status</th> -->
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @compliance_types.each do |compliance_type| %>
+      <tr>
+        <td><%= compliance_type.code %></td>
+        <td><%= compliance_type.name %></td>
+        <td><%= compliance_type.description %></td>
+        <!-- <td><%= compliance_type.status %></td> -->
+        <td>
+            <%= link_to '', edit_compliance_type_path(compliance_type),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+            <%= link_to '', compliance_type, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

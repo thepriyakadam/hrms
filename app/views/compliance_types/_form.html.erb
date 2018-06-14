@@ -1,33 +1,58 @@
-<%= form_for(@compliance_type) do |f| %>
-  <% if @compliance_type.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@compliance_type.errors.count, "error") %> prohibited this compliance_type from being saved:</h2>
 
-      <ul>
-      <% @compliance_type.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= bootstrap_form_for(@compliance_type,htlm: {id: 'compliance_type'},remote: true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code, hide_label: true,placeholder: "Code"%>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :code %><br>
-    <%= f.text_field :code %>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name, hide_label: true,placeholder: "Name"%>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :description, hide_label: true,placeholder: "Description"%>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.check_box :status %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <br>
+  <div class="row">
+    <!-- <div class="col-sm-3">
+      <div class="form-group required">
+        <%#= f.check_box :status, label: "Active" %>
+      </div>
+    </div> -->
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Currency Master", class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
   </div>
 <% end %>
+
+<script>
+$("#compliance_type").validate({
+    rules: {
+      "compliance_type[code]":{
+        required: true,
+      },
+       "compliance_type[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "compliance_type[code]":{
+        required: "Please specify code",
+      },
+      "compliance_type[name]":{
+        required: "Please specify name",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

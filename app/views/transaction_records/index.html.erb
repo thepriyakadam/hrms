@@ -1,47 +1,9 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+<div class="box-header with-border">
+<h3 class="box-title">Transaction Record</h3>
 
-<h1>Listing Transaction Records</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Compliance type</th>
-      <th>Type</th>
-      <th>Submission date</th>
-      <th>Reminder date</th>
-      <th>Previous days</th>
-      <th>After days</th>
-      <th>Email 1</th>
-      <th>Email 2</th>
-      <th>Email 3</th>
-      <th>Status</th>
-      <th>Is confirm</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @transaction_records.each do |transaction_record| %>
-      <tr>
-        <td><%= transaction_record.compliance_type %></td>
-        <td><%= transaction_record.type %></td>
-        <td><%= transaction_record.submission_date %></td>
-        <td><%= transaction_record.reminder_Date %></td>
-        <td><%= transaction_record.previous_days %></td>
-        <td><%= transaction_record.after_days %></td>
-        <td><%= transaction_record.email_1 %></td>
-        <td><%= transaction_record.email_2 %></td>
-        <td><%= transaction_record.email_3 %></td>
-        <td><%= transaction_record.status %></td>
-        <td><%= transaction_record.is_confirm %></td>
-        <td><%= link_to 'Show', transaction_record %></td>
-        <td><%= link_to 'Edit', edit_transaction_record_path(transaction_record) %></td>
-        <td><%= link_to 'Destroy', transaction_record, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Transaction record', new_transaction_record_path %>
+<div class="box-body">
+<div id="form"><%= render 'form' %></div>
+<div id="transaction_record_list"><%= render 'transaction_record_list' %></div>
+</div><!-- /.box-body -->
+</div><!-- /.box -->

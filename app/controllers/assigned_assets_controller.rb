@@ -100,6 +100,8 @@ class AssignedAssetsController < ApplicationController
   end
 
   def import_xl
+    session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="Reports" 
   end
 
   def import

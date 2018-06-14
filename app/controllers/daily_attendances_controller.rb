@@ -43,7 +43,8 @@ class DailyAttendancesController < ApplicationController
   end
 
   def daily_attendance
-    session[:active_tab] = "MeetingPlan"
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Report"
   end
 
   def daily_attendances_report

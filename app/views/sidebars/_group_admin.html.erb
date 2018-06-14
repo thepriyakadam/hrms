@@ -270,17 +270,20 @@
                 <li><a href="/employee_plans/meeting_follow_up" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Meeting Follow-up </a></li>
               </ul>
             </li>
-             <li class="treeview" id="Reports">
+
+
+            <li class="treeview" id="MeetingReport">
               <a href="#"><i class="fa fa-edit"></i> Reports <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <li><a href="/employee_plans/employee_wise_report" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Employee Wise  </a></li>
-                <li><a href="/employee_plans/meeting_follow_up" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Meeting Follow-up </a></li>
+                <li><a href="/employee_plans/employee_wise_report" title="Used for report employee wise"><i class="fa fa-tags"></i>Employee Wise</a></li>
+                <li><a href="/employee_plans/meeting_follow_up" title="Used for report meeting_follow_up"><i class="fa fa-tags"></i> Meeting Follow-up </a></li>
                 <li><a href="/employee_plans/manager_wise_report" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Manager Wise </a></li>
                 <li><a href="/employee_plans/company_wise_report" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Company Wise </a></li>
                 <li><a href="/employee_plans/status_wise_report" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Status Wise </a></li>
                 <li><a href="/employee_plans/meeting_minutes_history" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Meeting Minutes </a></li>
               </ul>
             </li>
+
           </ul>
         </li>
         <!-- <li class="treeview" id="ListedCompany">
@@ -366,7 +369,7 @@
           </ul>
         </li>
 
-        <li class="treeview" id="ManagerSelfService">
+        <li class="treeview" id="AdminSelfService">
           <a href="">
             <i class="fa fa-user-plus"></i> <span> Admin Service </span><i class="fa fa-angle-left pull-right"></i>
           </a>
@@ -379,9 +382,6 @@
             <li><a href="/employee_transfers/admin_employee_transfer"><i class="fa fa-tags"></i> Admin Transfer </a></li>
             <li><a href="/vacancy_requests/admin_approval"><i class="fa fa-thumbs-up"></i>Recruitment Admin</a></li>
            
-          
-            <li><a href="/employee_transfers/admin_employee_transfer" title="For admin approval and rejection of transfer request"><i class="fa fa-tags"></i> Transfer Admin </a></li>
-            
            
               <li><a href="/training_requests/final_approval_training_list"><i class="fa fa-thumbs-up"></i>  Training Final Approval </a></li>
               <li><a href="/employee_resignations/final_approval_emp_resignation_list"><i class="fa fa-thumbs-upfa fa-thumbs-up"></i>  Resignation Final Approval </a></li>
@@ -399,7 +399,7 @@
                 <li><a href="/leave_masters/new" title="Setup for leave"><i class="fa fa-tags"></i> Leave Master </a></li>
                 <li><a href="/employee_leav_balances" title="Assign leave to employee"><i class="fa fa-tags"></i> Leave Assignment </a></li>
                 <li><a href="/leave_c_offs/new" title="Create comp. off"><i class="fa fa-tags"></i> C-Off Maintenance </a></li>
-                <li><a href="/leave_c_offs/admin_c_off_approval" title="For approval of comp. off"><i class="fa fa-thumbs-up"></i> Admin C.Off Approval </a></li>
+                <!-- <li><a href="/leave_c_offs/admin_c_off_approval" title="For approval of comp. off"><i class="fa fa-thumbs-up"></i> Admin C.Off Approval </a></li> -->
                 <li><a href="/leave_cash_masters/new" title="Define leave encashment"><i class="fa fa-tags"></i> Encashment Master </a></li>
                 <li><a href="/leave_cashables/new" title="Create leave encashment for employee"><i class="fa fa-tags"></i> Leave Encashment </a></li>
                 <li><a href="/leave_transfers/leave_transfer_approval" title="For approving leave transfer request"><i class="fa fa-tags"></i> Transfer Approval</a></li>
@@ -410,7 +410,7 @@
                 <ul class="treeview-menu">
                   <li><a href="/employee_leav_requests/employee_list" title="For creating leave request, and to view leave request"><i class="fa fa-tags"></i> Leave Request </a></li>
                   <li><a href="/employee_leav_requests/approved_or_rejected_leave_request" title="Leave approval and rejection"><i class="fa fa-thumbs-up"></i> Leave Approval </a></li>
-                  <li><a href="/employee_leav_requests/all_leave_request_list" title="Admin leave approval and rejection"><i class="fa fa-thumbs-up"></i> Admin Leave Approval </a></li>
+                  <!-- <li><a href="/employee_leav_requests/all_leave_request_list" title="Admin leave approval and rejection"><i class="fa fa-thumbs-up"></i> Admin Leave Approval </a></li> -->
                 </ul>
             </li>
             <li class="treeview" id="LeaveReports">
@@ -430,7 +430,7 @@
                 <ul class="treeview-menu">
                   <li><a href="/on_duty_requests/employee_list" title="For creating on duty request, and to view on duty request"><i class="fa fa-tags"></i> Request </a></li>
                   <li><a href="/on_duty_requests/request_approval_list" title="On Duty approval and rejection"><i class="fa fa-thumbs-up"></i> Approval </a></li>
-                  <li><a href="/on_duty_requests/od_request_list" title="On Duty admin approval and rejection"><i class="fa fa-thumbs-up"></i> Admin Approval </a></li>
+                  <!-- <li><a href="/on_duty_requests/od_request_list" title="On Duty admin approval and rejection"><i class="fa fa-thumbs-up"></i> Admin Approval </a></li> -->
                 </ul>
             </li>
             <li class="treeview" id="ODReports">
@@ -499,7 +499,8 @@
                 <!-- <li><a href="/employee_attendances/destroy_daily_attendance" title="For destroying the daily attendance of a particular date, if the wrong sheet was imported"><i class="fa fa-tags"></i> Destroy Punching Data </a></li> -->
                 <!-- <li><a href="/employee_attendances/daily_attendance_datewise" title="To view the attendance sheet of particular date"><i class="fa fa-tags"></i> Punching Detail </a></li> -->
                 <li><a href="/employee_attendances/import_employee_attendance" title="For upload daily attendance sheet"><i class="fa fa-upload"></i> Upload Attendance </a></li>
-                <li><a href="/employee_attendances/admin_level_acf" title="For assigining the access card of particular date"><i class="fa fa-upload"></i> Admin ACF </a></li>
+               <!--  <li><a href="/employee_attendances/admin_level_acf" title="For assigining the access card of particular date"><i class="fa fa-upload"></i> Admin ACF </a></li> -->
+                 
                  
                 <!-- <li><a href="/workingdays/search_month_year"><i class="fa fa-tags"> </i>Attendace Update(Auto) </a></li> -->
                 <!--  <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>

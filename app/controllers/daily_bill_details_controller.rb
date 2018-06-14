@@ -195,21 +195,20 @@ class DailyBillDetailsController < ApplicationController
     @travel_requests = TravelRequest.where(is_confirm: true, current_status: "FinalApproved")
   end
 
-   def travel_request_list
-     @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
-     # @travel_requests = TravelRequest.where(daily_bill_status: true,reporting_master_id: reporting_masters)
-      @emp = Employee.find_by(id: current_user.employee_id)
+  def travel_request_list
+    @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    # @travel_requests = TravelRequest.where(daily_bill_status: true,reporting_master_id: reporting_masters)
+    @emp = Employee.find_by(id: current_user.employee_id)
     @employees = @emp.subordinates
     @employees_ind = @emp.indirect_subordinates
     @employee = @employees + @employees_ind
 
-     # @travel_requests = TravelRequest.where(daily_bill_status: true,current_status: "Approved",reporting_master_id: @reporting_masters)
-     @travel_requests = TravelRequest.where(current_status: "FinalApproved",is_confirm: true,reporting_master_id: current_user.employee_id)
-     # @travel_request_histories = TravelRequestHistory.where(daily_bill_status: true,reporting_master_id: reporting_masters)
+    # @travel_requests = TravelRequest.where(daily_bill_status: true,current_status: "Approved",reporting_master_id: @reporting_masters)
+    @travel_requests = TravelRequest.where(current_status: "FinalApproved",is_confirm: true,reporting_master_id: current_user.employee_id)
+    # @travel_request_histories = TravelRequestHistory.where(daily_bill_status: true,reporting_master_id: reporting_masters)
 
-     # @travel_request_histories = TravelRequestHistory.where(daily_bill_status: true,reporting_master_id: reporting_masters)
-    session[:active_tab] = "TravelManagemnt"
-    session[:active_tab1] = "expensesclaimprocess"  
+    # @travel_request_histories = TravelRequestHistory.where(daily_bill_status: true,reporting_master_id: reporting_masters)
+    session[:active_tab] ="ManagerSelfService" 
   end
 
   def travel_request_history_list

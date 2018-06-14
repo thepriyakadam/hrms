@@ -79,7 +79,7 @@ end
 
   def transfer_request
     @employee_transfers = EmployeeTransfer.where("reporting_master_id = ? and (current_status = ? or current_status = ? or current_status = ?)",current_user.employee_id,"Pending","FirstApproved","Approved & Send Next")
-    session[:active_tab] = "transfer"
+    session[:active_tab] ="ManagerSelfService"
   end
 
   def first_approve
@@ -123,6 +123,7 @@ end
   end
 
   def admin_employee_transfer
+    session[:active_tab] = "AdminSelfService"
   end
 
   def final_approve_by_admin

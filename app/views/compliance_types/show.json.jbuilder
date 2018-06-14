@@ -1,0 +1,1 @@
+json.partial! "compliance_types/compliance_type", compliance_type: @compliance_type

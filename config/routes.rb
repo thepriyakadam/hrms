@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :transaction_records
+  resources :compliance_types
   resources :galleries 
   resources :pictures
   resources :monthly_income_taxes
@@ -2290,6 +2292,8 @@ end
       get :employee_wise_pdf
       get :employee_wise_xls
       get :employee_record
+      get :import_xl
+      post :import
     end
   end
   resources :retention_moneys do

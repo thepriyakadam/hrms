@@ -239,8 +239,7 @@ class TravelRequestsController < ApplicationController
     employee = Employee.find_by(id: current_user.employee_id)
     #manager = Employee.where("manager_id = ? OR manager_2_id = ?",employee.id,employee.id)
     @travel_requests = TravelRequest.where("reporting_master_id = ? and (current_status = ? or current_status = ? or current_status = ?)",employee.id,"Pending","FirstApproved","Approved & Send Next")
-    session[:active_tab] = "TravelManagemnt"
-    session[:active_tab1] = "travelrequestprocess" 
+    session[:active_tab] ="ManagerSelfService" 
   end
 
   def travel_request_list

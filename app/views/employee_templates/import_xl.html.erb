@@ -1,0 +1,16 @@
+<div class="box box-default">
+	<div class="box-header with-border">
+		<h3 class="box-title">Import Employee Template</h3>
+		<div class="pull-right">
+      <%= link_to " Template", "/Templates/65.Employee Template.xls", :class=>"fa fa-download btn-xl btn btn-warning" %>
+    </div>
+		<div class="box-body">
+			<%= form_tag import_employee_templates_path, multipart: true do %>
+				<label> File </label>
+  			<%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+  			<br>
+  			<%= submit_tag "Import", data: { confirm: 'Are you sure?' } %>
+			<% end %>
+		</div>
+	</div>
+</div>

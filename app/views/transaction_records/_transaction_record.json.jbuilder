@@ -1,0 +1,2 @@
+json.extract! transaction_record, :id, :compliance_type_id, :type, :submission_date, :reminder_Date, :previous_days, :after_days, :email_1, :email_2, :email_3, :status, :is_confirm, :created_at, :updated_at
+json.url transaction_record_url(transaction_record, format: :json)

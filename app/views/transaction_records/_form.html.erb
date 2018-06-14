@@ -1,0 +1,61 @@
+<%= form_for(@transaction_record) do |f| %>
+  <% if @transaction_record.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@transaction_record.errors.count, "error") %> prohibited this transaction_record from being saved:</h2>
+
+      <ul>
+      <% @transaction_record.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :compliance_type_id %><br>
+    <%= f.text_field :compliance_type_id %>
+  </div>
+  <div class="field">
+    <%= f.label :type %><br>
+    <%= f.text_field :type %>
+  </div>
+  <div class="field">
+    <%= f.label :submission_date %><br>
+    <%= f.date_select :submission_date %>
+  </div>
+  <div class="field">
+    <%= f.label :reminder_Date %><br>
+    <%= f.date_select :reminder_Date %>
+  </div>
+  <div class="field">
+    <%= f.label :previous_days %><br>
+    <%= f.text_field :previous_days %>
+  </div>
+  <div class="field">
+    <%= f.label :after_days %><br>
+    <%= f.text_field :after_days %>
+  </div>
+  <div class="field">
+    <%= f.label :email_1 %><br>
+    <%= f.text_field :email_1 %>
+  </div>
+  <div class="field">
+    <%= f.label :email_2 %><br>
+    <%= f.text_field :email_2 %>
+  </div>
+  <div class="field">
+    <%= f.label :email_3 %><br>
+    <%= f.text_field :email_3 %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.text_field :status %>
+  </div>
+  <div class="field">
+    <%= f.label :is_confirm %><br>
+    <%= f.check_box :is_confirm %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

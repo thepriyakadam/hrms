@@ -2377,7 +2377,7 @@ end
 
 def import_employee_attendance
   session[:active_tab] ="TimeManagement"
-  session[:active_tab1] ="AttendanceSetup"
+  session[:active_tab1] ="Attendance"
 end
 
 def attendance_upload_report
@@ -2665,8 +2665,7 @@ end
   end#def
 
   def admin_level_acf
-    session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Attendance"
+    session[:active_tab] ="AdminSelfService"
   end
 
   def admin_acf_approval
@@ -2729,7 +2728,7 @@ end
 
   def admin_access_card_approval
     @pending_requests = EmployeeAttendance.where(comment: "ACF Request")
-    session[:active_tab] = "ManagerSelfService"
+    session[:active_tab] = "AdminSelfService"
   end
 
   def view_access_card_detail
@@ -2946,7 +2945,7 @@ end
 
   def datewise_attendance_with_options
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Attendance"
+    session[:active_tab1] ="Report"
   end
 
   def show_datewise_all

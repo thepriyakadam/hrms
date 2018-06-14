@@ -1,0 +1,1 @@
+json.array! @compliance_types, partial: 'compliance_types/compliance_type', as: :compliance_type

@@ -64,4 +64,56 @@ class EmployeeTemplate < ActiveRecord::Base
     end
     employee_template
   end
+
+  def self.import(file)
+    spreadsheet = open_spreadsheet(file)
+    (2..spreadsheet.last_row).each do |i|
+      @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+      if @employee == nil
+      else
+        @employee_id = @employee.id
+        salary_template = spreadsheet.cell(i,'C')
+        template = SalaryTemplate.find_by(code: salary_template)
+        @template_id = template.id
+
+        annual_amount = spreadsheet.cell(i,'D')
+        hra = spreadsheet.cell(i,'E')
+        conveyance = spreadsheet.cell(i,'F')
+
+        if EmployeeTemplate.exists?(employee_id: @employee.id,is_active: true)
+        else
+            employee_template = EmployeeTemplate.new do |et|
+              et.employee_id = @employee_id
+              et.salary_template_id = @template_id
+              et.is_active = true
+              et.start_date = Date.today
+            end
+            employee_template.save
+
+            salary_component_template = SalaryComponentTemplate.where(salary_template_id: @template_id)
+              salary_component_template.each do |s|
+                #@employee_template = EmployeeTemplate.where(employee_id: @employee_id,salary_template_id: s.salary_template_id).take
+                  
+                if EmployeeSalaryTemplate.exists?(employee_id: @employee_id,salary_template_id: s.salary_template_id,
+                  salary_component_id: s.salary_component_id)
+                else
+                  @employee_salary_template = EmployeeSalaryTemplate.create(employee_id: @employee_id,
+                    salary_template_id: @template_id,salary_component_id: s.salary_component_id,
+                    is_deducted: false,annual_amount: annual_amount)
+                end
+              end#do
+        end#EmployeeTemplate.exists?
+      end#@employee == nil
+    end#do
+  end
+
+  def self.open_spreadsheet(file)
+    case File.extname(file.original_filename)
+      when ".csv" then Roo::CSV.new(file.path, file_warning: :ignore)
+      when ".xls" then Roo::Excel.new(file.path, file_warning: :ignore)
+      when ".xlsx" then Roo::Excelx.new(file.path, file_warning: :ignore)
+      else raise "Unknown file type: #{file.original_filename}"
+    end
+  end
+
 end

@@ -60,7 +60,7 @@ iconv.lo: iconv.c /usr/include/stdc-predef.h ../../include/config.h \
  ../../include/replacements.h ../../include/tds_sysdep_public.h \
  ../../include/replacements/readpassphrase.h /usr/include/libgen.h \
  /usr/include/getopt.h ../../include/freetds/proto.h \
- ../../include/freetds/iconv.h /usr/include/iconv.h \
+ ../../include/freetds/iconv.h \
  /usr/include/x86_64-linux-gnu/bits/wchar2.h \
  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h /usr/include/alloca.h \
@@ -243,8 +243,6 @@ iconv.lo: iconv.c /usr/include/stdc-predef.h ../../include/config.h \
 ../../include/freetds/proto.h:
 
 ../../include/freetds/iconv.h:
-
-/usr/include/iconv.h:
 
 /usr/include/x86_64-linux-gnu/bits/wchar2.h:
 

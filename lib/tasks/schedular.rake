@@ -1,4 +1,5 @@
 require 'rake'
+
 namespace :atte_task do
   desc 'attendance data'
   task :fetch_att => :environment do

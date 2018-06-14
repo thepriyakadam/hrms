@@ -65,11 +65,47 @@ class CertificatesController < ApplicationController
     end
   end
 
-   def certificate_print
+ def certificate_print
     @employee = Employee.find(params[:salary][:employee_id])
-    # byebug
-    @certificate = params[:salary][:certificate_master_id]
+    
+    certificate_id = params[:salary][:certificate_master_id]
+    certificate = CertificateMaster.find_by(id: certificate_id)
+    @certificate = certificate.try(:name)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+  end
+
+  def offer_letter
+    employee_id = params[:employee_id]
+    @employee = Employee.find_by(id: employee_id)
+
+    respond_to do |f|
+      f.js
+      f.html
+      f.pdf do
+        render pdf: 'offer_letter',
+        layout: 'pdf.html',
+        orientation: 'portrait',
+        template: 'certificates/offer_letter.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
+    end
+  end
+
+  def joining_letter
+    employee_id = params[:employee_id]
+    @employee = Employee.find_by(id: employee_id)
+
+    respond_to do |f|
+      f.js
+      f.html
+      f.pdf do
+        render pdf: 'joining_letter',
+        layout: 'pdf.html',
+        orientation: 'portrait',
+        template: 'certificates/joining_letter.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
+    end
   end
 
  private

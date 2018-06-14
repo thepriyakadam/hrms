@@ -1,5 +1,6 @@
-<% if @certificate.certificate_master.name == "Offer Letter" %>
+<% if @certificate == "Offer Letter" %>
 $("#offer_letter").html("<%= j render 'offer_letter' %>")
-<% else @certificate.certificate_master.name  == "Joining Letter"	%>
+<% elsif @certificate  == "Joining Letter"	%>
 $("#joining_letter").html("<%= j render 'joining_letter' %>")
+<% else %>
 <% end %>

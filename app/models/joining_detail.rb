@@ -66,6 +66,11 @@ def self.to_csv(options = {})
 
         contract_month = spreadsheet.cell(i,'J')
         contract_end_date = spreadsheet.cell(i,'K')
+        if contract_end_date.nil? or !contract_month.nil?
+          contract_end_date = joining_date.to_date + contract_month.months
+        else
+          ontract_end_date = spreadsheet.cell(i,'K')
+        end
         probation_period = spreadsheet.cell(i,'L')
         notice_period = spreadsheet.cell(i,'M')
          notice_period_after_probation = spreadsheet.cell(i,'N')
@@ -77,18 +82,17 @@ def self.to_csv(options = {})
         retirement_date = spreadsheet.cell(i,'T')
         if retirement_date.nil? and employee.date_of_birth.present?
           employee = Employee.find_by(id: employee_id)
-         date_of_birth = employee.date_of_birth
-retirement_date = date_of_birth.to_date + 58.years
-else
-retirement_date = spreadsheet.cell(i,'T')
-end
-
-         c_off = spreadsheet.cell(i,'U')
-         if c_off == "Yes"
-           c_off = true
-         else
-           c_off = false
-         end
+          date_of_birth = employee.date_of_birth
+          retirement_date = date_of_birth.to_date + 58.years
+        else
+          retirement_date = spreadsheet.cell(i,'T')
+        end
+        c_off = spreadsheet.cell(i,'U')
+        if c_off == "Yes"
+          c_off = true
+        else
+          c_off = false
+        end
         @payment_mode = PaymentMode.find_by_name(spreadsheet.cell(i,'V'))
         if @payment_mode == nil
            payment_mode_name = spreadsheet.cell(i,'V')

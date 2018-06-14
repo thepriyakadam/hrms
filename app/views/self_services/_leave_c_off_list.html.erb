@@ -4,6 +4,7 @@
    <tr>
       <th>Sr.No.</th>
     	<th>Date</th>
+      <th>Day</th>
     	<th>Action</th>
    </tr>
   </thead>
@@ -13,6 +14,7 @@
       <tr>
         <td><%= i = i + 1 %></td>
         <td><%= leave_c_off.c_off_date %></td>
+        <td><%= leave_c_off.c_off_expire_day %></td>
         <td>
          <% if leave_c_off.current_status == "Pending" %>
                   <small class="label label-primary">Pending</small>

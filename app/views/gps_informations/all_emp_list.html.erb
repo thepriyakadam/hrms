@@ -4,7 +4,7 @@
   </div>
   <p id="notice"><%= notice %></p>
   <div class="box-body">
-    <%= bootstrap_form_for GpsInformation.new,url:{action:'update_gps_info'},html: {id: 'employee'} do |f| %>
+    <%= bootstrap_form_for(@gps_information,url:{action:'update_gps_info'},html: {id: 'gps_info'}) do |f| %>
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
@@ -37,6 +37,7 @@
           </div>
         </div>
       </div>
+      <br />
       <table id="example2" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
@@ -49,10 +50,10 @@
         <tbody>
           <% @employees.each do |e|  %>
             <tr>
-              <td><%= check_box_tag "employee_ids[]", e.id %></td>
-              <td><%= e.manual_employee_code %></td> 
-              <td><%= full_name(e) %></td>
-              <td><%= e.status %></td>
+              <td><%= check_box_tag "employee_ids[]", e.employee_id %></td>
+              <td><%= e.try(:employee).try(:manual_employee_code) %></td>
+              <td><%= e.try(:employee).try(:prefix) %> <%= e.try(:employee).try(:first_name) %> <%= e.try(:employee).try(:middle_name) %> <%= e.try(:employee).try(:last_name) %></td>
+              <td><%= e.try(:employee).try(:status) %></td>
             </tr>
           <% end %>
         </tbody>
@@ -79,23 +80,30 @@
 </script>
 
 <script>
-  $("#employee").validate({
+$("#gps_info").validate({
     rules: {
-      "employee[day]":{
+      "gps_info[day]":{
+        required: true,
+      },
+      "gps_info[to_days]":{
         required: true,
       }
-    },
+       },
     messages: {
-      "employee[day]":{
-        required: "Please specify date",
+      "gps_info[day]":{
+        required: "Please specify day",
+      },
+       "gps_info[to_days]":{
+        required: "Please specify to_days ",
       }
-    },
+       },
     errorPlacement: function(error, element) {
-      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
-      error.insertAfter(element.parent(element));
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
     }
-  });
+   });
 </script>
+
 
 <script type="text/javascript">
   $(function () {

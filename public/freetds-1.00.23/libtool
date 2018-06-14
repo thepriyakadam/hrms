@@ -1,6 +1,6 @@
 #! /bin/bash
 # Generated automatically by config.status (freetds) 1.00.23
-# Libtool was configured on host ip-172-31-15-194:
+# Libtool was configured on host ip-172-31-2-64:
 # NOTE: Changes made to this file will be lost: look at ltmain.sh.
 
 # Provide generalized library-building support services.

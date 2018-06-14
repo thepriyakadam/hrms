@@ -1818,24 +1818,22 @@ end
         @total_tax = @on_tax * 5 / 100
       elsif (500000..1000000).include?(@total_income)
         @on_tax = @total_income - 250000
-        @second_slabs = @on_tax * 5 / 100
-      #   @first_slabs = @on_tax * 20 / 100
-      #   @on_second_slabs =  @on_tax - 250000
-      #   @second_slabs = @on_second_slabs * 5 / 100
-      #   @on_tax = @total_income - 250000
-      #   @total_tax = @first_slabs + @second_slabs
-      # else 1000000 >= @total_income
-      #   @on_third_slabs = @total_income - 1000000
-      #   @third_slabs * 30 / 100
-      #   @on_third_slabs - 
-      #   @on_tax = @total_income - 500000
-      #   @first_slabs = @on_tax * 20 / 100
-      #   @on_second_slabs =  @on_tax - 250000
-      #   @second_slabs = @on_second_slabs * 5 / 100
-      #   @on_tax = @total_income - 250000
-      #   @total_tax = @first_slabs + @second_slabs + @third_slabs
-      #   @total_tax = @total_income * 30 / 100
+        if (250000..500000).include?(@on_tax)
+          @total_tax = @on_tax * 5 / 100
+        elsif (500000..1000000).include?(@on_tax)
+          @first_slabs = @on_tax - 500000
+          @first_slabs_tax = @first_slabs * 20 / 100
+          @second_slabs = @on_tax - @first_slabs
+          @second_slabs_tax = @second_slabs * 5 / 100
+          @total_tax = @first_slabs + @second_slabs
+        end
+      else 1000000 <= @total_income
+        @on_tax = @total_income - 250000
+        
+
       end
+    else
+      puts "Total Income not present"        
     end
     # @company = params[:salaryslip] ? params[:salaryslip][:company_id] : params[:company_id]
     # @company_location = params[:salaryslip] ? params[:salaryslip][:company_location_id] : params[:company_location_id]

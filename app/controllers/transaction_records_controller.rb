@@ -37,8 +37,7 @@ class TransactionRecordsController < ApplicationController
     end
   end
 
-  def mail_for_transaction
-  end
+  
   # PATCH/PUT /transaction_records/1
   # PATCH/PUT /transaction_records/1.json
   def update

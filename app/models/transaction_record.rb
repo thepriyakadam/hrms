@@ -7,6 +7,6 @@ class TransactionRecord < ActiveRecord::Base
   	@transactions.each do |t|
   		TransactionRecordMailer.send_email(t).deliver_now
   	end
-  	puts '------cross do loop'
+  	puts "------cross do loop #{Time.now}"
   end
 end

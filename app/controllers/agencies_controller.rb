@@ -7,7 +7,7 @@ class AgenciesController < ApplicationController
     @agencies = Agency.all
     @agency = Agency.new
     session[:active_tab] ="PayrollManagement"
-    session[:active_tab1] ="compliance_report"
+    session[:active_tab1] ="complains"
   end
 
   # GET /agencies/1

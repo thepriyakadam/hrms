@@ -1,6 +1,6 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Compliance Detail</h3>
+    <h3 class="box-title">External Payment Detail</h3>
     <div class="box-body">
       <%= bootstrap_form_for(:compliance_record, url: { action: 'show_compliance_record'},html: {id: "compliance_record"},remote: true) do |f| %>
 
@@ -30,7 +30,7 @@
           </div>
 
           <div class="col-sm-3">
-            <label>Agency</label>
+            <label>External Agency</label>
             <div class="field">
               <%= select :compliance_record,:agency_id,all_agency_type,{hide_label: true,include_blank: "Select Agency"},class: 'form-control' %>
            </div>

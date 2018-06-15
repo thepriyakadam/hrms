@@ -39,7 +39,7 @@
     </div>
     <div class="col-sm-3">
       <div class="actions">
-        <%= f.submit "Create Compliance Record",class: "btn btn-primary btn-sm" %>
+        <%= f.submit "Create",class: "btn btn-primary btn-sm" %>
       </div>
     </div>
   </div>
@@ -57,10 +57,10 @@ $("#compliance_record").validate({
        },
     messages: {
       "compliance_record[compliance_type_id]":{
-        required: "Please specify compliance_type",
+        required: "Please specify Payment type",
       },
       "compliance_record[agency_id]":{
-        required: "Please specify agency",
+        required: "Please specify external agency",
       }
        },
     errorPlacement: function(error, element) {

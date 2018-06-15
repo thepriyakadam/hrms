@@ -7,7 +7,7 @@ class ComplianceRecordsController < ApplicationController
     @compliance_records = ComplianceRecord.all
     @compliance_record = ComplianceRecord.new
     session[:active_tab] ="PayrollManagement"
-    session[:active_tab1] ="compliance_report"
+    session[:active_tab1] ="complains"
   end
 
   # GET /compliance_records/1
@@ -59,7 +59,7 @@ class ComplianceRecordsController < ApplicationController
 
   def periodwise_record
     session[:active_tab] ="PayrollManagement"
-    session[:active_tab1] ="compliance_report"
+    session[:active_tab1] ="complains"
   end
 
   def show_compliance_record

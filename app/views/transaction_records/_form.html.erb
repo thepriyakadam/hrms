@@ -3,12 +3,12 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-      <%= f.select :compliance_type_id,all_compliance_type,{label:'Compliance Type',include_blank: " Select Compliance Type"} %>
+      <%= f.select :compliance_type_id,all_compliance_type,{hide_label: true,include_blank: " Select Compliance Type"} %>
       </div>
     </div>
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.select :transaction_type,['Daily','Weekly','Monthly','Quarterly','Yearly'],{label: 'Type',include_blank: "Select Type"}%>
+        <%= f.select :transaction_type,['Daily','Weekly','Monthly','Quarterly','Yearly'],{hide_label: true,include_blank: "Select Type"}%>
       </div>
     </div>
     <div class="col-sm-3">
@@ -17,7 +17,7 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :submission_date, label: 'Date of Submission', class: 'submission'%>
+          <%= f.text_field :submission_date, hide_label: true, class: 'submission'%>
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :reminder_Date, label: 'Reminder Date', class: 'submission'%>
+          <%= f.text_field :reminder_Date, hide_label: true, class: 'submission'%>
         </div>
       </div>
     </div>
@@ -69,16 +69,6 @@
 
 <% end %>
 
-<script type="text/javascript">
-  $(function(){
-    $('.submission').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-2:+8',
-    dateFormat: 'dd-mm-yy' });
-  }); 
-</script>
-
 <script>
 $("#transaction_record").validate({
     rules: {
@@ -87,38 +77,14 @@ $("#transaction_record").validate({
       },
        "transaction_record[transaction_type]":{
         required: true,
-      },
-       "transaction_record[previous_days]":{
-        required: true,
-      },
-       "transaction_record[after_days]":{
-        required: true,
-      },
-       "transaction_record[reminder_Date]":{
-        required: true,
-      },
-      "transaction_record[email_1]":{
-        loginRegex: true
       }
        },
     messages: {
       "transaction_record[compliance_type_id]":{
-        required: "Please specify Compliance Type",
+        required: "Please specify compliance_type_id",
       },
       "transaction_record[transaction_type]":{
-        required: "Please specify Type",
-      },
-      "transaction_record[previous_days]":{
-        required: "Please specify Days",
-      },
-      "transaction_record[after_days]":{
-        required: "Please specify Days",
-      },
-      "transaction_record[reminder_Date]":{
-        required: "Please specify Date",
-      },
-      "transaction_record[email_1]":{
-        required: "Please specify Email",
+        required: "Please specify transaction_type",
       }
        },
     errorPlacement: function(error, element) {
@@ -126,4 +92,14 @@ $("#transaction_record").validate({
      error.insertAfter(element.parent(element));
     }
    });
+</script>
+
+<script type="text/javascript">
+  $(function(){
+    $('.submission').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+8',
+    dateFormat: 'dd-mm-yy' });
+  }); 
 </script>

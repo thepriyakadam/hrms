@@ -92,7 +92,7 @@ class WorkingdaysController < ApplicationController
           @employees = Employee.all.pluck(:id)
         end
         @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
-      elsif location == ""
+      elsif location == "" || location == nil
         if status == 'Active'
           @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
         elsif status == 'Inactive'
@@ -131,7 +131,7 @@ class WorkingdaysController < ApplicationController
             @employees = Employee.all.pluck(:id)
           end
           @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
-        elsif location == ""
+        elsif location == "" || location == nil
           if status == 'Active'
             @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
           elsif status == 'Inactive'
@@ -169,7 +169,7 @@ class WorkingdaysController < ApplicationController
             @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
           end
           @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
-        elsif location == ""
+        elsif location == "" || location == nil
           if status == 'Active'
             @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
           elsif status == 'Inactive'
@@ -198,7 +198,7 @@ class WorkingdaysController < ApplicationController
           @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
         end
         elsif current_user.role.name == 'Branch'
-          if company == "" || location == ""
+          if company == "" || location == "" || location == nil
             if status == 'Active'
               @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
             elsif status == 'Inactive'
@@ -227,7 +227,7 @@ class WorkingdaysController < ApplicationController
             @workingdays = Workingday.where(year: @year,month_name: @month,employee_id: @employees)
         end
         elsif current_user.role.name == 'HOD'
-          if company == "" || location == "" || department == ""
+          if company == "" || location == "" || department == "" || location == nil
             if status == 'Active'
               @employees = Employee.where(status: 'Active',department_id: current_user.department_id).pluck(:id)
             elsif status == 'Inactive'

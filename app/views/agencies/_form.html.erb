@@ -1,5 +1,4 @@
-
-<%= bootstrap_form_for(@compliance_type,htlm: {id: 'compliance_type'},remote: true) do |f| %>
+<%= bootstrap_form_for(@agency,htlm: {id: 'agency'},remote: true) do |f| %>
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
@@ -19,34 +18,34 @@
   </div>
   <br>
   <div class="row">
-    <!-- <div class="col-sm-3">
+    <div class="col-sm-3">
       <div class="form-group required">
-        <%#= f.check_box :status, label: "Active" %>
+        <%= f.check_box :is_active, label: "Status" %>
       </div>
-    </div> -->
+    </div>
     <div class="col-sm-3">
       <div class="actions">
-        <%= f.submit "Create Compliance Type", class: "btn btn-primary btn-sm" %>
+        <%= f.submit "Create Agency", class: "btn btn-primary btn-sm" %>
       </div>
     </div>
   </div>
 <% end %>
 
 <script>
-$("#compliance_type").validate({
+$("#agency").validate({
     rules: {
-      "compliance_type[code]":{
+      "agency[code]":{
         required: true,
       },
-       "compliance_type[name]":{
+       "agency[name]":{
         required: true,
       }
        },
     messages: {
-      "compliance_type[code]":{
+      "agency[code]":{
         required: "Please specify code",
       },
-      "compliance_type[name]":{
+      "agency[name]":{
         required: "Please specify name",
       }
        },

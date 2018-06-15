@@ -1,5 +1,8 @@
 class TransactionRecord < ActiveRecord::Base
   belongs_to :compliance_type
+  validates :compliance_type_id, presence: true
+  validates :transaction_type, presence: true
+  validates :email_1, presence: true
 
   def self.email_to_all
   	@date = Time.now.to_date + 5

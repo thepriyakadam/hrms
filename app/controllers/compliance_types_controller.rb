@@ -6,6 +6,8 @@ class ComplianceTypesController < ApplicationController
   def index
     @compliance_types = ComplianceType.all
     @compliance_type = ComplianceType.new
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="complains"
   end
 
   # GET /compliance_types/1

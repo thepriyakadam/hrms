@@ -8,7 +8,7 @@
     </div>
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.select :transaction_type,['Daily','Weekly','Monthly','Quarterly','Yearly'],{hide_label: true,include_blank: "Select Type"}%>
+        <%= f.select :transaction_type,['Daily','Weekly','Monthly','Quarterly','Yearly'],{hide_label: true,include_blank: "Select Frequency"}%>
       </div>
     </div>
     <div class="col-sm-3">
@@ -17,7 +17,7 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :submission_date, hide_label: true, class: 'submission'%>
+          <%= f.text_field :submission_date, hide_label: true,placeholder: "Submission Date", class: 'submission'%>
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :reminder_Date, hide_label: true, class: 'submission'%>
+          <%= f.text_field :reminder_Date, hide_label: true,placeholder: "Reminder Date", class: 'submission'%>
         </div>
       </div>
     </div>
@@ -35,12 +35,12 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :previous_days, hide_label: true,placeholder: "e.g. 2"%>
+        <%= f.text_field :previous_days, hide_label: true,placeholder: "Previous Days e.g. 2"%>
       </div>
     </div>
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :after_days, hide_label: true,placeholder: "e.g. 3"%>
+        <%= f.text_field :after_days, hide_label: true,placeholder: "After Days e.g. 3"%>
       </div>
     </div>
     <div class="col-sm-3">
@@ -62,7 +62,7 @@
     </div>
     <div class="col-sm-3">
       <div class="actions">
-        <%= f.submit "Create Transaction Record",class: "btn btn-primary btn-sm" %>
+        <%= f.submit "Create Compliance",class: "btn btn-primary btn-sm" %>
       </div>
     </div>
   </div>

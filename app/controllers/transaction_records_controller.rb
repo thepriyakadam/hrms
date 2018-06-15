@@ -6,6 +6,8 @@ class TransactionRecordsController < ApplicationController
   def index
     @transaction_records = TransactionRecord.all
     @transaction_record = TransactionRecord.new
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="complains"
   end
 
   # GET /transaction_records/1

@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  resources :compliance_records do
+    collection do
+      get :periodwise_report
+      post :show_compliance_record
+    end
+  end
+  resources :agencies
   resources :transaction_records
   resources :compliance_types
   resources :galleries 

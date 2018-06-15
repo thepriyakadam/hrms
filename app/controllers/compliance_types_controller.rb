@@ -6,6 +6,8 @@ class ComplianceTypesController < ApplicationController
   def index
     @compliance_types = ComplianceType.all
     @compliance_type = ComplianceType.new
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="complains"
   end
 
   # GET /compliance_types/1
@@ -49,8 +51,13 @@ class ComplianceTypesController < ApplicationController
   # DELETE /compliance_types/1
   # DELETE /compliance_types/1.json
   def destroy
-    @compliance_type.destroy
-    @compliance_types = ComplianceType.all
+    @compliance_type
+    if TransactionRecord.exists?(compliance_type_id: @compliance_type.id)
+      flash[:alert] = "This Compliance Type is used in Transaction"
+    else
+      @compliance_type.destroy
+      @compliance_types = ComplianceType.all
+    end
     redirect_to compliance_types_path
   end
 

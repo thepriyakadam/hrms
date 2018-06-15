@@ -1,0 +1,57 @@
+<%= bootstrap_form_for(@agency,htlm: {id: 'agency'},remote: true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code, hide_label: true,placeholder: "Code"%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name, hide_label: true,placeholder: "Name"%>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :description, hide_label: true,placeholder: "Description"%>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.check_box :is_active, label: "Status" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Agency", class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+$("#agency").validate({
+    rules: {
+      "agency[code]":{
+        required: true,
+      },
+       "agency[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "agency[code]":{
+        required: "Please specify code",
+      },
+      "agency[name]":{
+        required: "Please specify name",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

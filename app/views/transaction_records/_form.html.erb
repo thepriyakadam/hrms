@@ -1,61 +1,129 @@
-<%= form_for(@transaction_record) do |f| %>
-  <% if @transaction_record.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@transaction_record.errors.count, "error") %> prohibited this transaction_record from being saved:</h2>
-
-      <ul>
-      <% @transaction_record.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= bootstrap_form_for(@transaction_record,htlm: {id: 'transaction_record'},remote: true) do |f| %>
+  
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+      <%= f.select :compliance_type_id,all_compliance_type,{label:'Compliance Type',include_blank: " Select Compliance Type"} %>
+      </div>
     </div>
-  <% end %>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :transaction_type,['Daily','Weekly','Monthly','Quarterly','Yearly'],{label: 'Type',include_blank: "Select Type"}%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :submission_date, label: 'Date of Submission', class: 'submission'%>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :reminder_Date, label: 'Reminder Date', class: 'submission'%>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :previous_days, hide_label: true,placeholder: "e.g. 2"%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :after_days, hide_label: true,placeholder: "e.g. 3"%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :email_1, hide_label: true,placeholder: 'abc@gmail.com'%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :email_2, hide_label: true,placeholder: "abc@gmail.com"%>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :status, hide_label: true,placeholder: "Status"%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Transaction Record",class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
 
-  <div class="field">
-    <%= f.label :compliance_type_id %><br>
-    <%= f.text_field :compliance_type_id %>
-  </div>
-  <div class="field">
-    <%= f.label :type %><br>
-    <%= f.text_field :type %>
-  </div>
-  <div class="field">
-    <%= f.label :submission_date %><br>
-    <%= f.date_select :submission_date %>
-  </div>
-  <div class="field">
-    <%= f.label :reminder_Date %><br>
-    <%= f.date_select :reminder_Date %>
-  </div>
-  <div class="field">
-    <%= f.label :previous_days %><br>
-    <%= f.text_field :previous_days %>
-  </div>
-  <div class="field">
-    <%= f.label :after_days %><br>
-    <%= f.text_field :after_days %>
-  </div>
-  <div class="field">
-    <%= f.label :email_1 %><br>
-    <%= f.text_field :email_1 %>
-  </div>
-  <div class="field">
-    <%= f.label :email_2 %><br>
-    <%= f.text_field :email_2 %>
-  </div>
-  <div class="field">
-    <%= f.label :email_3 %><br>
-    <%= f.text_field :email_3 %>
-  </div>
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.text_field :status %>
-  </div>
-  <div class="field">
-    <%= f.label :is_confirm %><br>
-    <%= f.check_box :is_confirm %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>
+
+<script type="text/javascript">
+  $(function(){
+    $('.submission').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+8',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+
+<script>
+$("#transaction_record").validate({
+    rules: {
+      "transaction_record[compliance_type_id]":{
+        required: true,
+      },
+       "transaction_record[transaction_type]":{
+        required: true,
+      },
+       "transaction_record[previous_days]":{
+        required: true,
+      },
+       "transaction_record[after_days]":{
+        required: true,
+      },
+       "transaction_record[reminder_Date]":{
+        required: true,
+      },
+      "transaction_record[email_1]":{
+        loginRegex: true
+      }
+       },
+    messages: {
+      "transaction_record[compliance_type_id]":{
+        required: "Please specify Compliance Type",
+      },
+      "transaction_record[transaction_type]":{
+        required: "Please specify Type",
+      },
+      "transaction_record[previous_days]":{
+        required: "Please specify Days",
+      },
+      "transaction_record[after_days]":{
+        required: "Please specify Days",
+      },
+      "transaction_record[reminder_Date]":{
+        required: "Please specify Date",
+      },
+      "transaction_record[email_1]":{
+        required: "Please specify Email",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

@@ -6,7 +6,7 @@ ex.default_sheet = ex.sheets[0]
 j = 1
 gross_salary = 0
 ActiveRecord::Base.transaction do
-2.upto(38) do |line|
+2.upto(70) do |line|
   puts "Starting Record #{ex.cell(line,'')}---------------------------------------"
 
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)

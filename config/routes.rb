@@ -1,4 +1,15 @@
 Rails.application.routes.draw do
+  resources :attendance_regularizations do 
+    collection do
+      get :show_attendance_regularization
+      get :attendance_regularization_approve
+      get :approve_attendance
+      get :rejected_attendance
+      get :emp_attendance_details
+    end
+  end
+  
+  resources :regularization_reasons
   resources :compliance_records do
     collection do
       get :periodwise_report

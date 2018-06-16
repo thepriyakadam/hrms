@@ -1,0 +1,47 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Attendance Approvel List</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Regularization reason</th>
+      <th>Date</th>
+      <th>justification</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @att_approve_list.each do |attendance_regularization| %>
+      <tr>
+        <td><%= attendance_regularization.regularization_reason.try(:name) %></td>
+        <td><%= attendance_regularization.date %></td>
+        <td><%= attendance_regularization.justification %></td>
+        <td>
+          <% if attendance_regularization.status == "Pending" %>
+            <small class="label label-default">Pending</small>
+          <% elsif attendance_regularization.status == "Approved" %>
+            <small class="label label-success">Approved</small>
+          <% elsif attendance_regularization.status == "Rejected" %>
+            <small class="label label-danger">Rejected</small>
+          <% else %>
+            <small class="label label-info">Else</small>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to ' ', emp_attendance_details_attendance_regularizations_path(attendance_regularization), remote: true, class: 'btn btn-xs btn-default fa fa-eye' %>
+          <%= link_to ' ', approve_attendance_attendance_regularizations_path(attendance_regularization), class: 'btn btn-xs btn-default fa fa-check'%>
+          <%= link_to ' ', rejected_attendance_attendance_regularizations_path(attendance_regularization),
+            data: { confirm: 'Are you sure to rejecte this request?' }, class: 'btn btn-xs btn-default fa fa-close'%>
+          <% link_to '', attendance_regularization, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+ </div><!-- /.box-body -->
+</div><!-- /.box -->
+<div id="emp_attendance_details" class="modal fade"></div>

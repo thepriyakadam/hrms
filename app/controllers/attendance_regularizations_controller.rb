@@ -6,6 +6,7 @@ class AttendanceRegularizationsController < ApplicationController
   def index
     @attendance_regularizations = AttendanceRegularization.where(employee_id: current_user.employee_id)
     @attendance_regularization = AttendanceRegularization.new
+    session[:active_tab] = "EmployeeSelfService"
   end
 
   # GET /attendance_regularizations/1
@@ -38,10 +39,10 @@ class AttendanceRegularizationsController < ApplicationController
     @date = @att_approve.date
     @emp_atte = EmployeeAttendance.where(employee_id: @employee_id, day: @date)
     if @emp_atte.present?
-      @emp_atte.update_all(is_regularization: true)
+      @emp_atte.update_all(is_regularization: true, working_hrs: "09:00".to_i, comment: "Attendance Regularizd")
       @att_approve.update(status: "Approved")
     else
-      flash.now[:alert] = 'Employee Attendance Is Not Present'
+      EmployeeAttendance.create(employee_id: @employee_id, day: @date, working_hrs: "09:00".to_i, present: "P", comment: "Attendance Regularizd", is_regularization: true)
     end
     redirect_to attendance_regularization_approve_attendance_regularizations_path
   end
@@ -69,13 +70,30 @@ class AttendanceRegularizationsController < ApplicationController
   # POST /attendance_regularizations
   # POST /attendance_regularizations.json
   def create
-    @attendance_regularization = AttendanceRegularization.new(attendance_regularization_params)
-    if @attendance_regularization.save
-      attendance_regularization = AttendanceRegularization.new 
-      @attendance_regularizations = AttendanceRegularization.where(employee_id: current_user.employee_id)
-      @flag = true
-    else 
-      @flag = false
+    @date = params[:attendance_regularization][:date]
+    @employee_id = params[:attendance_regularization][:employee_id]
+    if @date.to_date <= Time.now.to_date
+      @emp_att = EmployeeAttendance.where(employee_id: @employee_id, day: @date)
+      @emp_leav_request = @emp_att.where(employee_leav_request_id: nil).present?
+      @emp_on_duty_request = @emp_att.where(on_duty_request_id: nil).present?
+      @emp_holiday = @emp_att.where(holiday_id: nil).present?
+      @emp_week_off = @emp_att.where(employee_week_off_id: nil).present?
+      if @emp_att.present?
+        if @emp_leav_request == true || @emp_on_duty_request == true || @emp_holiday == true || @emp_week_off == true
+          @attendance_regularization = AttendanceRegularization.new(attendance_regularization_params)
+          if @attendance_regularization.save
+            attendance_regularization = AttendanceRegularization.new 
+            @attendance_regularizations = AttendanceRegularization.where(employee_id: current_user.employee_id)
+            @flag = true
+          else 
+            @flag = false
+          end
+        else
+          flash.now[:alert] = 'Plase check the record there is no ant week_off, holiday, on_duty_request, leav_request'
+        end
+      end
+    else
+      flash.now[:alert] = 'You are not attendance regularization greater then todays date'
     end
     redirect_to attendance_regularizations_path
   end
@@ -89,6 +107,46 @@ class AttendanceRegularizationsController < ApplicationController
       @flag = true
     else
       @flag = false
+    end
+    redirect_to attendance_regularizations_path
+  end
+
+  def date_wise_regularization
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Report"
+  end
+  
+  def att_regularization_report
+    @from = params[:attendance_regularization] ? params[:attendance_regularization][:from_date] : params[:from_date]
+    @to = params[:attendance_regularization] ? params[:attendance_regularization][:to_date] : params[:to_date]
+    @status = params[:attendance_regularization] ? params[:attendance_regularization][:status] : params[:status]
+    @from_date = @from.to_date
+    @to_date = @to.to_date
+
+    if @from.present? and @status == ""
+      @regularization_report = AttendanceRegularization.where(date: @from.to_date..@to.to_date)
+    else @from.present? and @status.present?
+      @regularization_report = AttendanceRegularization.where(date: @from.to_date..@to.to_date, status: @status)
+    end
+
+    respond_to do |format|
+    format.js
+    format.xls {render template: 'attendance_regularizations/att_regularization_report_xls.xls.erb'}
+    format.html
+    format.pdf do
+      render pdf: 'date_report_pdf',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'attendance_regularizations/att_regularization_report_pdf.pdf.erb',
+            # show_as_html: params[:debug].present?,
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+      end
     end
   end
 

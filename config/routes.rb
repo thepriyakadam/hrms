@@ -6,9 +6,11 @@ Rails.application.routes.draw do
       get :approve_attendance
       get :rejected_attendance
       get :emp_attendance_details
+      get :date_wise_regularization
+      get :att_regularization_report
+      post :att_regularization_report
     end
   end
-  
   resources :regularization_reasons
   resources :compliance_records do
     collection do

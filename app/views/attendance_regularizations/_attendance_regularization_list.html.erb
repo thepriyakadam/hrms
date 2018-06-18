@@ -1,20 +1,21 @@
 <br>
-<table id="example2" class="table table-bordered table-hover table-condensed">
+<table id="example6" class="table table-bordered table-hover table-condensed'">
   <thead>
-    <tr>  
-      <th>Regularization reason</th>
+    <tr>
+      <th>Sr.No.</th>
       <th>Date</th>
-      <th>justification</th>
+      <th>Regularization Reason</th>
       <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
   <tbody>
+    <% i = 0 %>
     <% @attendance_regularizations.each do |attendance_regularization| %>
       <tr>
-        <td><%= attendance_regularization.regularization_reason.try(:name) %></td>
+        <td><%= i = i+1 %></td>        
         <td><%= attendance_regularization.date %></td>
-        <td><%= attendance_regularization.justification %></td>
+        <td><%= attendance_regularization.regularization_reason.try(:name) %></td>
         <td>
           <% if attendance_regularization.status == "Pending" %>
             <small class="label label-default">Pending</small>
@@ -28,11 +29,22 @@
         </td>
         <td>
           <%= link_to ' ', show_attendance_regularization_attendance_regularizations_path(attendance_regularization), remote: true, class: 'btn btn-xs btn-default fa fa-eye' %>
-          <%= link_to '', edit_attendance_regularization_path(attendance_regularization),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
-          <%= link_to '', attendance_regularization, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close' %>
+          <% if attendance_regularization.status == "Approved" || attendance_regularization.status == "Rejected" %>
+          <% else %>
+            <%= link_to '', edit_attendance_regularization_path(attendance_regularization),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+            <%= link_to '', attendance_regularization, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close' %>
+          <% end %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 <div id="show_attendance_regularization" class="modal fade"></div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

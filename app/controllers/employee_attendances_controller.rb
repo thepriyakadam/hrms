@@ -2952,7 +2952,6 @@ end
      @from = params[:employee] ? params[:employee][:from] : params[:from]
     @to = params[:employee] ? params[:employee][:to] : params[:to]
     @name = params[:save]
-    
     if params[:save]
       @name = params[:save]
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).order('day asc')

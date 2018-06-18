@@ -4,22 +4,28 @@
     <h3 class="box-title">Attendance Approvel List</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-<table id="example2" class="table table-bordered table-hover table-condensed">
+<table id="example6" class="table table-bordered table-hover table-condensed'">
   <thead>
     <tr>  
-      <th>Regularization reason</th>
+      <th>Sr.No.</th>
+      <th>ID</th>
+      <th>Employee Name</th>
       <th>Date</th>
-      <th>justification</th>
+      <th>Regularization Reason</th>      
       <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
   <tbody>
+    <% i = 0 %>
     <% @att_approve_list.each do |attendance_regularization| %>
       <tr>
-        <td><%= attendance_regularization.regularization_reason.try(:name) %></td>
+        <td><%= i = i+1 %></td>
+        <td><%= attendance_regularization.employee.try(:manual_employee_code)%>
+        <% @employee = Employee.find(attendance_regularization.employee_id) %>
+        <td><%= full_name(@employee) %></td>
         <td><%= attendance_regularization.date %></td>
-        <td><%= attendance_regularization.justification %></td>
+        <td><%= attendance_regularization.regularization_reason.try(:name) %></td>
         <td>
           <% if attendance_regularization.status == "Pending" %>
             <small class="label label-default">Pending</small>
@@ -45,3 +51,11 @@
  </div><!-- /.box-body -->
 </div><!-- /.box -->
 <div id="emp_attendance_details" class="modal fade"></div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@attendance_regularization,htlm: {id: 'attendance_regularization'},remote: true) do |f| %>
+<%= bootstrap_form_for(@attendance_regularization,htlm: {id: 'attendance_regularization'}) do |f| %>
   <div class="row">
     <%= f.hidden_field :employee_id , value: current_user.employee_id %>
     <%= f.hidden_field :manager_id , value: current_user.employee.manager_id %>

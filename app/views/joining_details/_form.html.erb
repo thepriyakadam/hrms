@@ -231,6 +231,16 @@
       </div>
     </div>
 
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="field" style="padding: 10px">
+          <% if current_user.role.name == 'GroupAdmin' %>
+            <%= f.check_box :is_regularization, label: 'Attendance Regularization'%>
+          <%end%>
+        </div>
+      </div>
+    </div>
+
   <div class="box-header with-border">
     <strong><font color='#0077b3'> EMPLOYEE PAYROLL DETAILS</font></strong>
   </div><!-- /.box-header -->

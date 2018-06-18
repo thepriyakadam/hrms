@@ -2934,27 +2934,24 @@ end
   end
 
   def show_datewise_all
-    @from = params[:employee][:from]
-    @to = params[:employee][:to]
+     @from = params[:employee] ? params[:employee][:from] : params[:from]
+    @to = params[:employee] ? params[:employee][:to] : params[:to]
+    @name = params[:save]
 
-    if params[:save]
-      @name = params[:save]
+    if @name == "All"
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
-    elsif params[:absent]
-      @name = params[:absent]
+    elsif @name == "Absent"
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "A")
-    elsif params[:holiday]
-      @name = params[:holiday]
+    elsif @name == "Holiday"
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(holiday_id: nil)
-    elsif params[:weekoff]
-      @name = params[:weekoff]
+    elsif @name == "Week Off"
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_week_off_id: nil)
-    elsif params[:onduty]
-      @name = params[:onduty]
+    elsif @name == "onduty"
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(on_duty_request_id: nil)
-    elsif params[:latemark]
-      @name = params[:latemark]
-        latemark_master = LatemarkMaster.last
+    elsif @name == "Leave"
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
+    elsif @name == "Latemark"
+      latemark_master = LatemarkMaster.last
         latemark_master_time = latemark_master.company_time
         @company_time = latemark_master_time.strftime("%I:%M")
         latemark_master_late_time = latemark_master.late_limit
@@ -2971,6 +2968,20 @@ end
       @name = params[:leave]
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
     end
+
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_attendances/datewise_attendance_with_option.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'employee_attendance',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_attendances/datewise_attendance_with_option.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
+    end
+
   end
   
   def show_datewise_all_report

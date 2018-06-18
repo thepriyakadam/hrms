@@ -225,7 +225,7 @@
     @country = @employee.country
     @states = @country.states
     @state = @employee.state
-    @cities = @state.districts
+    @cities = @state.try(:districts)
 
     @company = @employee.company
     @company_locations = @company.try(:company_locations)

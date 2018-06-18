@@ -34,7 +34,15 @@ class AttendanceRegularizationsController < ApplicationController
   def approve_attendance
     att_approve_id = params[:format]
     @att_approve = AttendanceRegularization.find(att_approve_id)
-    @att_approve.update(status: "Approved")
+    @employee_id = @att_approve.employee_id
+    @date = @att_approve.date
+    @emp_atte = EmployeeAttendance.where(employee_id: @employee_id, day: @date)
+    if @emp_atte.present?
+      @emp_atte.update_all(is_regularization: true)
+      @att_approve.update(status: "Approved")
+    else
+      flash.now[:alert] = 'Employee Attendance Is Not Present'
+    end
     redirect_to attendance_regularization_approve_attendance_regularizations_path
   end
 

@@ -80,7 +80,8 @@ def self.to_csv(options = {})
         passport_expiry_date = spreadsheet.cell(i,'R')
         leaving_date = spreadsheet.cell(i,'S')
         retirement_date = spreadsheet.cell(i,'T')
-        if retirement_date.nil? and employee.date_of_birth.present?
+        if retirement_date.nil?
+         if !@employee.date_of_birth.nil?
           employee = Employee.find_by(id: employee_id)
           @date_of_birth = employee.date_of_birth
           retirement_date = @date_of_birth.to_date + 58.years

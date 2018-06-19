@@ -72,28 +72,32 @@ class AttendanceRegularizationsController < ApplicationController
   def create
     @date = params[:attendance_regularization][:date]
     @employee_id = params[:attendance_regularization][:employee_id]
-    if @date.to_date <= Time.now.to_date
-      @emp_att = EmployeeAttendance.where(employee_id: @employee_id, day: @date)
-      @emp_leav_request = @emp_att.where(employee_leav_request_id: nil).present?
-      @emp_on_duty_request = @emp_att.where(on_duty_request_id: nil).present?
-      @emp_holiday = @emp_att.where(holiday_id: nil).present?
-      @emp_week_off = @emp_att.where(employee_week_off_id: nil).present?
-      if @emp_att.present?
-        if @emp_leav_request == true || @emp_on_duty_request == true || @emp_holiday == true || @emp_week_off == true
-          @attendance_regularization = AttendanceRegularization.new(attendance_regularization_params)
-          if @attendance_regularization.save
-            attendance_regularization = AttendanceRegularization.new 
-            @attendance_regularizations = AttendanceRegularization.where(employee_id: current_user.employee_id)
-            @flag = true
-          else 
-            @flag = false
-          end
-        else
-          flash.now[:alert] = 'Plase check the record there is no ant week_off, holiday, on_duty_request, leav_request'
-        end
-      end
+    if @date == ""
+      flash[:alert] = 'Please Select the Date'
     else
-      flash.now[:alert] = 'You are not attendance regularization greater then todays date'
+      if @date.to_date <= Time.now.to_date
+        @emp_att = EmployeeAttendance.where(employee_id: @employee_id, day: @date)
+        @emp_leav_request = @emp_att.where(employee_leav_request_id: nil).present?
+        @emp_on_duty_request = @emp_att.where(on_duty_request_id: nil).present?
+        @emp_holiday = @emp_att.where(holiday_id: nil).present?
+        @emp_week_off = @emp_att.where(employee_week_off_id: nil).present?
+        if @emp_att.present?
+          if @emp_leav_request == true || @emp_on_duty_request == true || @emp_holiday == true || @emp_week_off == true
+            @attendance_regularization = AttendanceRegularization.new(attendance_regularization_params)
+            if @attendance_regularization.save
+              attendance_regularization = AttendanceRegularization.new 
+              @attendance_regularizations = AttendanceRegularization.where(employee_id: current_user.employee_id)
+              @flag = true
+            else 
+              @flag = false
+            end
+          else
+            flash[:alert] = 'Plase check the record there is no ant week_off, holiday, on_duty_request, leav_request'
+          end
+        end
+      else
+        flash[:alert] = 'You are not attendance regularization greater then todays date'
+      end  
     end
     redirect_to attendance_regularizations_path
   end

@@ -40,6 +40,26 @@
   </div>
 <% end %>
 
+<script type="text/javascript">
+ $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#advance_salary").submit();
+  })
+</script>
+
+<script type="text/javascript">
+  $(function(){
+    $('.date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+25',
+    dateFormat: 'dd-mm-yy' });
+
+    $(".timepicker").timepicker({
+    showInputs: false });
+  });
+</script>
+
 <script>
 $("#attendance_regularization").validate({
   rules: {
@@ -61,25 +81,12 @@ $("#attendance_regularization").validate({
       required: "Please the Reason",
     },
     "attendance_regularization[justification]":{
-      required: "Please the mention justification",
+      required: "Please the mention Justification",
     }
   },
   errorPlacement: function(error, element) {
   error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
   error.insertAfter(element.parent(element));
   }
-  });
-</script>
-
-<script type="text/javascript">
-  $(function(){
-    $('.date').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-2:+25',
-    dateFormat: 'dd-mm-yy' });
-
-    $(".timepicker").timepicker({
-    showInputs: false });
   });
 </script>

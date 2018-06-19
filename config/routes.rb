@@ -9,6 +9,9 @@ Rails.application.routes.draw do
       get :date_wise_regularization
       get :att_regularization_report
       post :att_regularization_report
+      get :employee_wise_regularization
+      get :employee_wise_regularization_report
+      post :employee_wise_regularization_report
     end
   end
   resources :regularization_reasons

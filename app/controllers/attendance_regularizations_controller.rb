@@ -110,7 +110,7 @@ class AttendanceRegularizationsController < ApplicationController
           end
         end
       else
-        flash[:alert] = 'Please Select greater then todays Date'
+        flash[:alert] = "You can't create pre-request"
       end  
     end
     redirect_to attendance_regularizations_path
@@ -168,6 +168,44 @@ class AttendanceRegularizationsController < ApplicationController
     end
   end
 
+  def employee_wise_regularization
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Report"
+  end
+
+  def employee_wise_regularization_report
+    @from = params[:attendance_regularization] ? params[:attendance_regularization][:from_date] : params[:from_date]
+    @to = params[:attendance_regularization] ? params[:attendance_regularization][:to_date] : params[:to_date]
+    @employee_id = params[:attendance_regularization] ? params[:attendance_regularization][:employee_id] : params[:employee_id]
+    @from_date = @from.to_date
+    @to_date = @to.to_date
+
+    if @from.present? and @employee_id == ""
+      @regularization_report = AttendanceRegularization.where(date: @from.to_date..@to.to_date)
+    else @from.present? and @employee_id.present?
+      @regularization_report = AttendanceRegularization.where(date: @from.to_date..@to.to_date, employee_id: @employee_id)
+    end
+
+    respond_to do |format|
+    format.js
+    format.xls {render template: 'attendance_regularizations/employee_wise_regularization_report_xls.xls.erb'}
+    format.html
+    format.pdf do
+      render pdf: 'date_report_pdf',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'attendance_regularizations/employee_wise_regularization_report_pdf.pdf.erb',
+            # show_as_html: params[:debug].present?,
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+      end
+    end
+  end
   # DELETE /attendance_regularizations/1
   # DELETE /attendance_regularizations/1.json
   def destroy

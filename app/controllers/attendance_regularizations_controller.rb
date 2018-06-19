@@ -51,11 +51,11 @@ class AttendanceRegularizationsController < ApplicationController
       if @emp_is_confirm.present?
         flash[:alert] = 'Please contact to admin.'
       else
-        @emp_atte.update_all(is_regularization: true, working_hrs: "09:00".to_i, present: "P", comment: "Attendance Regularizd")
+        @emp_atte.update_all(is_regularization: true, working_hrs: "09:00".to_i, present: "P", comment: "Attendance Regularized")
         @att_approve.update(status: "Approved")
       end
     else
-      EmployeeAttendance.create(employee_id: @employee_id, day: @date, working_hrs: "09:00".to_i, present: "P", comment: "Attendance Regularizd", is_regularization: true)
+      EmployeeAttendance.create(employee_id: @employee_id, day: @date, working_hrs: "09:00".to_i, present: "P", comment: "Attendance Regularized", is_regularization: true)
     end
     redirect_to attendance_regularization_approve_attendance_regularizations_path
   end

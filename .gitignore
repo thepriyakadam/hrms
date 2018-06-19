@@ -52,10 +52,10 @@ bower.json
 .byebug_history
 
 # Ignore files
-app/models/daily_attendance.rb
-app/mailers/application_mailer.rb
-config/environments/development.rb
-config/database.yml
+#app/models/daily_attendance.rb
+#app/mailers/application_mailer.rb
+#config/environments/development.rb
+#config/database.yml
 
 
 
@@ -66,4 +66,4 @@ config/database.yml
 db/schema.rb
 
 # Ignore salary_slip_xls.xls.erb
-app/views/salaryslips/salary_slip_xls.xls.erb
+#app/views/salaryslips/salary_slip_xls.xls.erb

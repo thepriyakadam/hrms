@@ -38,11 +38,10 @@
           <% end %>
         </td>
         <td>
-          <%= link_to ' ', emp_attendance_details_attendance_regularizations_path(attendance_regularization), remote: true, class: 'btn btn-xs btn-default fa fa-eye' %>
-          <%= link_to ' ', approve_attendance_attendance_regularizations_path(attendance_regularization), class: 'btn btn-xs btn-default fa fa-check'%>
-          <%= link_to ' ', rejected_attendance_attendance_regularizations_path(attendance_regularization),
-            data: { confirm: 'Are you sure to rejecte this request?' }, class: 'btn btn-xs btn-default fa fa-close'%>
+          <%= link_to 'Approve', approve_attendance_attendance_regularizations_path(attendance_regularization), class: 'btn btn-xs btn-success '%>
+          <%= link_to 'Reject ', rejected_attendance_attendance_regularizations_path(attendance_regularization), data: { confirm: 'Are you sure to rejecte this request?' }, class: 'btn btn-xs btn-danger '%>
           <% link_to '', attendance_regularization, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close' %>
+          <%= link_to ' ', emp_attendance_details_attendance_regularizations_path(attendance_regularization), remote: true, class: 'btn btn-xs btn-default fa fa-eye' %>
         </td>
       </tr>
     <% end %>

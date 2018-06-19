@@ -26,21 +26,34 @@ class AttendanceRegularizationsController < ApplicationController
   def show_attendance_regularization
     attendance_regularizations_id = params[:format]
     @attendance_regularizations = AttendanceRegularization.find(attendance_regularizations_id)
+    @date = @attendance_regularizations.date
+    @employee_id = @attendance_regularizations.employee_id
+    @status = @attendance_regularizations.status
+    if @status == "Approved"
+      @emp_atte = EmployeeAttendance.where(employee_id: @employee_id, day: @date)
+    else
+      puts "Attendance is not Approved"      
+    end
   end
 
   def attendance_regularization_approve
-    @att_approve_list = AttendanceRegularization.where(manager_id: current_user.employee_id)
+    @att_approve_list = AttendanceRegularization.where(manager_id: current_user.employee_id).where(status: "Pending")
   end
 
-  def approve_attendance
+  def approve_attendance #is_confirm
     att_approve_id = params[:format]
     @att_approve = AttendanceRegularization.find(att_approve_id)
     @employee_id = @att_approve.employee_id
     @date = @att_approve.date
     @emp_atte = EmployeeAttendance.where(employee_id: @employee_id, day: @date)
     if @emp_atte.present?
-      @emp_atte.update_all(is_regularization: true, working_hrs: "09:00".to_i, comment: "Attendance Regularizd")
-      @att_approve.update(status: "Approved")
+      @emp_is_confirm = @emp_atte.where(is_confirm: nil).present?
+      if @emp_is_confirm.present?
+        flash[:alert] = 'Please contact to admin.'
+      else
+        @emp_atte.update_all(is_regularization: true, working_hrs: "09:00".to_i, present: "P", comment: "Attendance Regularizd")
+        @att_approve.update(status: "Approved")
+      end
     else
       EmployeeAttendance.create(employee_id: @employee_id, day: @date, working_hrs: "09:00".to_i, present: "P", comment: "Attendance Regularizd", is_regularization: true)
     end
@@ -81,8 +94,9 @@ class AttendanceRegularizationsController < ApplicationController
         @emp_on_duty_request = @emp_att.where(on_duty_request_id: nil).present?
         @emp_holiday = @emp_att.where(holiday_id: nil).present?
         @emp_week_off = @emp_att.where(employee_week_off_id: nil).present?
+        @emp_is_confirm = @emp_att.where(is_confirm: nil).present?
         if @emp_att.present?
-          if @emp_leav_request == true || @emp_on_duty_request == true || @emp_holiday == true || @emp_week_off == true
+          if @emp_leav_request == true || @emp_on_duty_request == true || @emp_holiday == true || @emp_week_off == true || @emp_is_confirm == true
             @attendance_regularization = AttendanceRegularization.new(attendance_regularization_params)
             if @attendance_regularization.save
               attendance_regularization = AttendanceRegularization.new 
@@ -92,11 +106,11 @@ class AttendanceRegularizationsController < ApplicationController
               @flag = false
             end
           else
-            flash[:alert] = 'Plase check the record there is no ant week_off, holiday, on_duty_request, leav_request'
+            flash[:alert] = 'You are not authorized to regularization attendance please contact to admin.'
           end
         end
       else
-        flash[:alert] = 'You are not attendance regularization greater then todays date'
+        flash[:alert] = 'Please Select greater then todays Date'
       end  
     end
     redirect_to attendance_regularizations_path

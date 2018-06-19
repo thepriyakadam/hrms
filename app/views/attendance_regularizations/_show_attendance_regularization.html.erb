@@ -27,14 +27,39 @@
           </tr>
           <tr>
             <th><strong>Status</strong></th>
-            <td><%= @attendance_regularizations.status %></td>
+            <td>
+              <% if @attendance_regularizations.status == "Pending" %>
+                <small class="label label-default">Pending</small>
+              <% elsif @attendance_regularizations.status == "Approved" %>
+                <small class="label label-success">Approved</small>
+              <% elsif @attendance_regularizations.status == "Rejected" %>
+                <small class="label label-danger">Rejected</small>
+              <% else %>
+                <small class="label label-info">Else</small>
+              <% end %>
+            </td>
           </tr>
           <tr>
             <th><strong>Justification</strong></th>
             <td><%= @attendance_regularizations.justification %></td>
           </tr>
-      </tbody>
+        </tbody>
 	    </table> <br>
+      <% if @emp_atte.present? %>
+        <table id="example2" class="table table-bordered table-hover table-condensed">
+        <tr><th colspan="2"><center> Regularizd Attendance Details </center></th></tr>
+          <tbody>
+            <% @emp_atte.each do |a| %>
+              <tr><th>Day</th><td><%= a.try(:day) %></td></tr>
+              <tr><th>Present</th><td><%= a.try(:present) %></td></tr>
+              <tr><th>In Time</th><td><%= a.try(:in_time) %></td></tr>
+              <tr><th>Out Time</th><td><%= a.try(:out_time) %></td></tr>
+              <tr><th>Working Hours</th><td><%= a.try(:working_hrs) %></td></tr>
+              <tr><th>Comment</th><td><%= a.try(:comment) %></td></tr>
+            <% end %> <!-- do -->
+          </tbody>
+        </table>
+      <% end %>
 	    <div align="center">
 	    <%#= link_to 'Approve', plan_approve_employee_plans_path(@employee_plan.id), data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-sm" %>
    </div>

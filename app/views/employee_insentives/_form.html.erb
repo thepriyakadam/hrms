@@ -1,0 +1,94 @@
+<%= bootstrap_form_for(@employee_insentive, html: {id: 'employee_insentive' } ) do |f| %>
+  <div class="row">
+    <div class="col-sm-4">
+    <label> Select Employee </label>
+      <div class="field">
+        <div class="form-group required">
+          <%= select :employee_insentive,:employee_id, all_employee_list, {label: "Employee",include_blank: "Select Employee"},{:class=>"select2",:style=>"width: 100%;",:tabindex=>"-1"} %>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :date, class: 'input_expence_date',label:'Date'%>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group required">
+        <label> Amount </label>
+        <%= f.text_field :amount, hide_label: true, placeholder: "Amount"%>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="form-group required">
+        <label> Description </label>
+        <%= f.text_field :description, hide_label: true, placeholder: "Description"%>
+      </div>
+    </div>
+  </div>
+
+  <br />
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Employee Insentive Request ", class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+ $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#advance_salary").submit();
+  })
+</script>
+
+<script type="text/javascript">
+  $(function(){
+    $('.input_expence_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+25',
+    dateFormat: 'dd-mm-yy' });
+
+  });
+</script>
+
+<script>
+$("#employee_insentive").validate({
+  rules: {
+    "employee_insentive[employee_id]":{
+      required: true,
+    },
+    "employee_insentive[date]":{
+      required: true,
+    },
+    "employee_insentive[amount]":{
+      required: true,
+    }
+  },
+  messages: {
+    "employee_insentive[employee_id]":{
+      required: "Please select the Employee",
+    },
+    "employee_insentive[date]":{
+      required: "Please specify Date",
+    },
+    "employee_insentive[amount]":{
+      required: "Please specify Amount",
+    }
+  },
+  errorPlacement: function(error, element) {
+  error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+  error.insertAfter(element.parent(element));
+  }
+  });
+</script>

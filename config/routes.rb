@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  resources :employee_insentives do
+    collection do
+      get :show_employee_insentive
+      get :employee_insentive_month
+      get :import_employee_insentive
+      post :import
+    end
+  end
   resources :attendance_regularizations do 
     collection do
       get :show_attendance_regularization

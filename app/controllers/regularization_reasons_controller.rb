@@ -8,6 +8,8 @@ class RegularizationReasonsController < ApplicationController
     @regularization_reason = RegularizationReason.new
     # session[:active_tab] ="PayrollManagement"
     # session[:active_tab1] ="complains"
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="latemark"
   end
 
   # GET /regularization_reasons/1

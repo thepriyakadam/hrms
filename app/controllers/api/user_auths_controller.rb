@@ -1383,8 +1383,8 @@ class Api::UserAuthsController < ApplicationController
   def employee_location_history
     emp_id = params[:employee_id]
     date_time = params[:date_time]
-    time = Time.now.to_time.strftime("%H:%M")
-    date = Time.now.to_date.strftime("%Y-%m-%d")
+    time = params[:time]
+    date = params[:date]
     lon = params[:latitude].to_f
     lat = params[:longitude].to_f
     longitude = lon.round(4)

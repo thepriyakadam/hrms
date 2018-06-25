@@ -38,6 +38,8 @@ Rails.application.routes.draw do
       get :deduction_report
       post :show_deduction_report
       get :show_deduction_report
+      post :show_list_for_latemark
+      get :revert_latemark_value
     end
   end
   resources :meeting_follow_ups do
@@ -2651,6 +2653,9 @@ end
       post :create_employee_template
       get :is_confirm
       get :modal
+      get :salary_component_list
+      get :import_xl
+      post :import
     end
   end
   resources :universities do

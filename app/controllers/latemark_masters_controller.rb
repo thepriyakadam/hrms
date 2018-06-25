@@ -231,9 +231,17 @@ class LatemarkMastersController < ApplicationController
     session[:active_tab1] ="latemark"
   end
 
-  def revert_latemark_value
+  def show_list_for_latemark
     from = params[:latemark_master][:from_date]
     to = params[:latemark_master][:to_date]
+    @from_date = from.to_date
+    @to_date = to.to_date
+    @latemark_deductions = LatemarkDeduction.where(latemark_day: @from..@to).where(paid: nil)
+  end
+
+  def revert_latemark_value
+    from = params[:from_date]
+    to = params[:to_date]
     @from = from.to_date
     @to = to.to_date
     

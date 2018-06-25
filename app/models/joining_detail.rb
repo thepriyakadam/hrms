@@ -19,7 +19,7 @@ class JoiningDetail < ActiveRecord::Base
   # validate :status_regex
 
 
-def self.to_csv(options = {})
+  def self.to_csv(options = {})
     CSV.generate(options) do |csv|
       csv << column_names
       all.each do |joining_detail|
@@ -64,12 +64,15 @@ def self.to_csv(options = {})
         employee_category_id = @employee_category.id
         end
 
-        contract_month = spreadsheet.cell(i,'J')
+        contract_month_value = spreadsheet.cell(i,'J')
+        contract_month = contract_month_value.to_i
+
         contract_end_date = spreadsheet.cell(i,'K')
-        if contract_end_date.nil? or !contract_month.nil?
+
+        if contract_end_date.nil? or !contract_month.nil? or !contract_month == ""
           contract_end_date = joining_date.to_date + contract_month.months
         else
-          ontract_end_date = spreadsheet.cell(i,'K')
+          contract_end_date = spreadsheet.cell(i,'K')
         end
         probation_period = spreadsheet.cell(i,'L')
         notice_period = spreadsheet.cell(i,'M')

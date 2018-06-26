@@ -60,6 +60,12 @@ class EmployeeAttendancesController < ApplicationController
     end
   end
 
+  def check_attendance
+    DailyAttendance.check_attendance
+    flash[:notice] = "Employee Check Attendance Calculated Successfully..!"
+    redirect_to new_employee_attendance_path
+  end
+
   # GET /employee_attendances/1
   # GET /employee_attendances/1.json
   def show

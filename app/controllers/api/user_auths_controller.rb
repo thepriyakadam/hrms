@@ -2106,15 +2106,17 @@ class Api::UserAuthsController < ApplicationController
     travel_expence_type_id = params[:expense_type]
     travel_expence = params[:expense_amount]
     currency_master_id = params[:currency]
-    image_file = params[:imageFile]
-    doc_file = params[:DocFile]
+    # image_file = params[:imageFile]
+    # doc_file = params[:DocFile]
 
-    @daily_bill_detail = DailyBillDetail.new(travel_request_id: travel_request_id, expence_date: expence_date, e_place: e_place, travel_expence_type_id: travel_expence_type_id, travel_expence: travel_expence , currency_master_id: currency_master_id, avatar_file: image_file, passport_photo: doc_file)
+    @daily_bill_detail = DailyBillDetail.new(travel_request_id: travel_request_id, expence_date: expence_date, e_place: e_place, travel_expence_type_id: travel_expence_type_id, travel_expence: travel_expence , currency_master_id: currency_master_id)
     @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
     if @daily_bill_detail.save
       @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
       @daily_bill_detail = DailyBillDetail.new
       render :status=>200, :json=>{:status=> "Daily Bill Detail saved Successfully." }
+    else
+      render :status=>200, :json=>{:status=> "Daily Bill Detail not saved!" }
     end
   end
 

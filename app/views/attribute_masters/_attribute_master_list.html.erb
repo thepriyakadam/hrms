@@ -1,8 +1,9 @@
-<table class="table table-bordered table-hover table-condensed">
+<table id="example6" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>  
       <th>Code</th>
       <th>Attribute</th>
+      <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -12,6 +13,7 @@
       <tr>
         <td><%= attribute_master.code %></td>
         <td><%= attribute_master.name %></td>
+        <td><%= attribute_master.status ? "Active" : "Inactive" %></td>
         <td>
             <%= link_to '', edit_attribute_master_path(attribute_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  attribute_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
@@ -23,3 +25,11 @@
 </table>
 
 <div id="myModal" class="modal fade"></div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

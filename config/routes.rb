@@ -6,7 +6,11 @@ Rails.application.routes.draw do
     end
   end
   resources :agencies
-  resources :transaction_records
+  resources :transaction_records do
+    collection do
+      get :modal_show
+    end
+  end
   resources :compliance_types
   resources :galleries 
   resources :pictures

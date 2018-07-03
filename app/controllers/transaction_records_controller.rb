@@ -60,6 +60,10 @@ class TransactionRecordsController < ApplicationController
     redirect_to transaction_records_path
   end
 
+  def modal_show
+    @transaction_record = TransactionRecord.find(params[:format])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_transaction_record

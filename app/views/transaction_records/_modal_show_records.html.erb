@@ -1,0 +1,44 @@
+
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Transaction Records </center></h4>
+    </div>
+    <div class="modal-body">
+	    <table id="example2" class="table table-bordered table-hover table-condensed">
+			  <thead>
+			    <tr> 
+			      <th>Compliance Type</th>
+			      <td><%= @transaction_record.try(:compliance_type).try(:name) %></td>
+
+			      <th>Frequency</th>
+			      <td><%= @transaction_record.transaction_type %></td>
+			    </tr>
+			    <tr>
+			      <th>Submission Date</th>
+			        <td><%= @transaction_record.submission_date %></td>
+			      <th>Reminder Date</th>
+			        <td><%= @transaction_record.reminder_Date %></td>
+			    </tr>
+			    <tr>
+			      <th>Previous Days</th>
+			        <td><%= @transaction_record.previous_days %></td>
+			      <th>After Days</th>
+			        <td><%= @transaction_record.after_days %></td>
+			    </tr>
+			    <tr>
+			      <th>Email</th>
+			        <td><%= @transaction_record.email_1 %></td>
+			      <th>Official Email</th>
+			        <td><%= @transaction_record.email_2 %></td>
+			    </tr>
+			    <tr>
+			      <th>Status</th>
+			        <td><%= @transaction_record.status %></td>
+			    </tr>
+			  </thead>
+			</table>
+    </div>
+  </div>
+</div>

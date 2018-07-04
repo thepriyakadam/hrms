@@ -37,6 +37,7 @@
           </div>
         </div>
       </div>
+      <br />
       <table id="example2" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
@@ -49,10 +50,10 @@
         <tbody>
           <% @employees.each do |e|  %>
             <tr>
-              <td><%= check_box_tag "employee_ids[]", e.id %></td>
-              <td><%= e.manual_employee_code %></td> 
-              <td><%= full_name(e) %></td>
-              <td><%= e.status %></td>
+              <td><%= check_box_tag "employee_ids[]", e.employee_id %></td>
+              <td><%= e.try(:employee).try(:manual_employee_code) %></td>
+              <td><%= e.try(:employee).try(:prefix) %> <%= e.try(:employee).try(:first_name) %> <%= e.try(:employee).try(:middle_name) %> <%= e.try(:employee).try(:last_name) %></td>
+              <td><%= e.try(:employee).try(:status) %></td>
             </tr>
           <% end %>
         </tbody>

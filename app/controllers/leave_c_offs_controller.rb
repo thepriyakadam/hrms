@@ -63,6 +63,20 @@ class LeaveCOffsController < ApplicationController
   def edit
   end
 
+  def import_xl
+  end
+
+  def import
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+      redirect_to import_xl_leave_c_offs_path
+    else
+      LeaveCOff.import(params[:file])
+      redirect_to new_leave_c_off_path, notice: "File imported."
+    end
+  end
+
   # POST /leave_c_offs
   # POST /leave_c_offs.json
   
@@ -533,9 +547,9 @@ class LeaveCOffsController < ApplicationController
   end
 
   def admin_c_off_approval
-
     @first_level_request_lists = LeaveCOff.where(is_taken: false,status: false,is_expire: false).where("current_status = ? OR current_status = ?","FirstApproved" , "Pending")
     # @second_level_request_lists = LeaveCOff.where(is_taken: false,status: false,is_expire: false,current_status: "FirstApproved")
+    session[:active_tab] ="AdminSelfService"
   end
 
   def admin_level_c_off_detail

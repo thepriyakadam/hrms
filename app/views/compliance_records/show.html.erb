@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Compliance type:</strong>
+  <%= @compliance_record.compliance_type %>
+</p>
+
+<p>
+  <strong>Agency:</strong>
+  <%= @compliance_record.agency %>
+</p>
+
+<p>
+  <strong>Compliance date:</strong>
+  <%= @compliance_record.compliance_date %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @compliance_record.amount %>
+</p>
+
+<p>
+  <strong>Comment:</strong>
+  <%= @compliance_record.comment %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @compliance_record.status %>
+</p>
+
+<%= link_to 'Edit', edit_compliance_record_path(@compliance_record) %> |
+<%= link_to 'Back', compliance_records_path %>

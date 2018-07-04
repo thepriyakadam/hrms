@@ -199,10 +199,14 @@
                   <li><a href="/employee_physicals/import_physical"><i class="fa fa-tags"></i> Physical </a></li>
                   <li><a href="/families/import_family"><i class="fa fa-tags"></i> Family </a></li>
                   <li><a href="/assigned_assets/import_asset"><i class="fa fa-tags"></i> Asset </a></li>
+                  <li><a href="/assigned_assets/import_xl"><i class="fa fa-th-list"></i> Assigned Assets Detail </a></li>
+                  <li><a href="/employees/import_assign_role"><i class="fa fa-th-list"></i> Create New User </a></li>
+                  <li><a href="/workingdays/import_working_day"><i class="fa fa-th-list"></i> Working Day </a></li>
+                  <li><a href="/employee_leav_balances/import_employee_leav_balance"><i class="fa fa-th-list"></i> Leave Balance </a></li>
                 </ul>
             </li>
 
-            <li class="treeview" id="Import">
+          <!--   <li class="treeview" id="Import">
                 <a href=""><i class="glyphicon glyphicon-save"></i><span><span> Import Excel File </span></span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                   <li><a href="/employees/import_xl"><i class="fa fa-user"></i> Employee </a></li>
@@ -215,14 +219,12 @@
                   <li><a href="/awards/import_xl"><i class="fa fa-trophy"></i> Awards Detail</a></li>
                   <li><a href="/employee_physicals/import_xl"><i class="fa fa-tags"></i> Physical Detail</a></li>
                   <li><a href="/families/import_xl"><i class="fa fa-child"></i> Family </a></li>
-                  <!-- <li><a href="/employee_nominations/import_xl"><i class="fa fa-users"></i> Nomination Detail </a></li> -->
-                  <li><a href="/assigned_assets/import_xl"><i class="fa fa-th-list"></i> Assigned Assets Detail </a></li>
-                  <li><a href="/employees/import_assign_role"><i class="fa fa-th-list"></i> Create New User </a></li>
-                  <li><a href="/workingdays/import_working_day"><i class="fa fa-th-list"></i> Working Day </a></li>
-                  <li><a href="/employee_leav_balances/import_xl"><i class="fa fa-th-list"></i> Leave Balance </a></li>
+                 <li><a href="/employee_nominations/import_xl"><i class="fa fa-users"></i> Nomination Detail </a></li> 
+                
                 </ul>
-          </li>
-              <!-- <li id="certificate"><a href="/certificates/new"><i class="fa fa-tags"></i> Certificates </a></li> -->
+          </li> -->
+          <li id="certificate"><a href="/certificate_masters/new"><i class="fa fa-tags"></i> Certificate Master </a></li>
+              <li id="certificate"><a href="/certificates/certificate_form"><i class="fa fa-tags"></i> Certificates </a></li>
           </ul>
         </li>
         <li class="treeview" id="UserAdministration">
@@ -252,31 +254,36 @@
             <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu" >
-            <li id="Master">
+
+
+            <li class="treeview" id="Master">
               <a href="#"><i class="fa fa-edit"></i> Master <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <li><a href="/plan_reason_masters"><i class="fa fa-tags"></i> Plan Reason  </a></li>
-                <li><a href="/listed_companies"><i class="fa fa-tags"></i> Listed Company  </a></li>
+                <li><a href="/listed_companies"><i class="fa fa-tags"></i> Partner Companies </a></li>
               </ul>
             </li>
-            <li id="Process">
+            <li class="treeview" id="Process">
               <a href="#"><i class="fa fa-edit"></i> Process <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <li><a href="/employee_plans/new" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Create New Plan </a></li>
                 <li><a href="/employee_plans/meeting_follow_up" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Meeting Follow-up </a></li>
               </ul>
             </li>
-            <li id="Reports">
+
+
+            <li class="treeview" id="MeetingReport">
               <a href="#"><i class="fa fa-edit"></i> Reports <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <li><a href="/employee_plans/employee_wise_report" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Employee Wise  </a></li>
-                <li><a href="/employee_plans/meeting_follow_up" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Meeting Follow-up </a></li>
+                <li><a href="/employee_plans/employee_wise_report" title="Used for report employee wise"><i class="fa fa-tags"></i>Employee Wise</a></li>
+                <li><a href="/employee_plans/meeting_follow_up" title="Used for report meeting_follow_up"><i class="fa fa-tags"></i> Meeting Follow-up </a></li>
                 <li><a href="/employee_plans/manager_wise_report" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Manager Wise </a></li>
                 <li><a href="/employee_plans/company_wise_report" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Company Wise </a></li>
                 <li><a href="/employee_plans/status_wise_report" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Status Wise </a></li>
                 <li><a href="/employee_plans/meeting_minutes_history" title="Used for creating new user and for assigning the role and reporting manager to user"><i class="fa fa-tags"></i> Meeting Minutes </a></li>
               </ul>
             </li>
+
           </ul>
         </li>
         <!-- <li class="treeview" id="ListedCompany">
@@ -321,17 +328,17 @@
             <li><a href="/goal_bunches/new" title="For setting , self goals"><i class="fa fa-tags"></i> Goal Setting </a></li>
             <li><a href="/goal_bunches/period_list_appraisee" title="For making the judgement about self goals"><i class="fa fa-tags"></i> Self Evaluation </a></li>
             <li><a href="/investment_declarations/show_employee_declaration"><i class="fa fa-tags"> </i> Show Declaration </a></li>
-            <li><a href="/investment_declarations/show_income_tax"><i class="fa fa-tags"> </i> Show Declaration </a></li>
+           <!--  <li><a href="/investment_declarations/show_income_tax"><i class="fa fa-tags"> </i> Show Declaration </a></li> -->
             <li><a href="/self_services/employee_resignation" title="For initiating self resignation request"><i class="fa fa-tags"></i> Resignation Request </a></li>
             <li><a href="/self_services/resignation_history" title="For view the self resignation history"><i class="fa fa-tags"></i> Resignation History </a></li>
             <li><a href="/frequest_questions/list_of_faq" title="To view the list of frequently asked questions"><i class="fa fa-tags"></i> FAQs </a></li>
             <li><a href="/contact_details"><i class="fa fa-tags"></i> Contact Detail </a></li>
             <li><a href="/self_services/employee_transfer" title="Requesting for sef transfer"><i class="fa fa-tags"></i> Transfer Request</a></li>
             <li><a href="/employee_daily_activities/new"><i class="fa fa-tags"></i> Daily Activity </a></li>
-            <li><a href="/investment_declarations/show_employee_declaration"><i class="fa fa-tags"> </i> Show Declaration </a></li>
+           <!--  <li><a href="/investment_declarations/show_employee_declaration"><i class="fa fa-tags"> </i> Show Declaration </a></li> -->
             <!-- <li><a href="/investment_declarations/show_income_tax"><i class="fa fa-tags"> </i> Show Employee Declaration </a></li> -->
            <li><a href="/employee_plans" title="To view the details of creating user"><i class="fa fa-tags"></i> Meeting Plans </a></li>
-          <!--  <li><a href="/Apk/android-armv7-debug.apk" title="To view the details of creating user"><i class="fa fa-download"></i> APK </a></li> -->
+           <li><a href="/Apk/android-debug.apk" title="To view the details of creating user"><i class="fa fa-download"></i> APK </a></li>
           </ul>
         </li>
         <li class="treeview" id="ManagerSelfService">
@@ -362,7 +369,7 @@
           </ul>
         </li>
 
-        <li class="treeview" id="ManagerSelfService">
+        <li class="treeview" id="AdminSelfService">
           <a href="">
             <i class="fa fa-user-plus"></i> <span> Admin Service </span><i class="fa fa-angle-left pull-right"></i>
           </a>
@@ -372,13 +379,12 @@
             <li><a href="/leave_c_offs/admin_c_off_approval"><i class="fa fa-thumbs-up"></i> C.Off Approval </a></li>
             <li> <a href="/employee_attendances/admin_access_card_approval" title="For assigining the access card of particular date"><i class="fa fa-thumbs-up"></i> ACF Approval  </a></li>
               <li><a href="/employee_attendances/admin_level_acf" title="For assigining the access card of particular date"><i class="fa fa-upload"></i> Admin ACF </a></li>
-            <li><a href="/employee_transfers/admin_employee_transfer"><i class="fa fa-tags"></i> Transfer </a></li>
+            <li><a href="/employee_transfers/admin_employee_transfer"><i class="fa fa-tags"></i> Admin Transfer </a></li>
             <li><a href="/vacancy_requests/admin_approval"><i class="fa fa-thumbs-up"></i>Recruitment Admin</a></li>
-            <li><a href="/employee_transfers/admin_employee_transfer" title="For admin approval and rejection of transfer request"><i class="fa fa-tags"></i> Transfer Admin </a></li>
-              <li><a href="/training_requests/final_approval_training_list"><i class="fa fa-thumbs-up"></i> Training Final </a></li>
-              <li><a href="/employee_resignations/final_approval_emp_resignation_list"><i class="fa fa-thumbs-upfa fa-thumbs-up"></i> Resignation Final </a></li>
-              <li><a href="/travel_requests/all_travel_request"><i class="fa fa-thumbs-upfa fa-thumbs-up"></i> Travel Approval </a></li>
-              <li><a href="/daily_bill_details/all_expence_request"><i class="fa fa-thumbs-upfa fa-thumbs-up"></i> Expence Approval </a></li>
+           
+           
+              <li><a href="/training_requests/final_approval_training_list"><i class="fa fa-thumbs-up"></i>  Training Final Approval </a></li>
+              <li><a href="/employee_resignations/final_approval_emp_resignation_list"><i class="fa fa-thumbs-upfa fa-thumbs-up"></i>  Resignation Final Approval </a></li>
           </ul>
         </li>
         <li class="treeview" id="LeaveManagement">
@@ -393,7 +399,7 @@
                 <li><a href="/leave_masters/new" title="Setup for leave"><i class="fa fa-tags"></i> Leave Master </a></li>
                 <li><a href="/employee_leav_balances" title="Assign leave to employee"><i class="fa fa-tags"></i> Leave Assignment </a></li>
                 <li><a href="/leave_c_offs/new" title="Create comp. off"><i class="fa fa-tags"></i> C-Off Maintenance </a></li>
-                <li><a href="/leave_c_offs/admin_c_off_approval" title="For approval of comp. off"><i class="fa fa-thumbs-up"></i> Admin C.Off Approval </a></li>
+                <!-- <li><a href="/leave_c_offs/admin_c_off_approval" title="For approval of comp. off"><i class="fa fa-thumbs-up"></i> Admin C.Off Approval </a></li> -->
                 <li><a href="/leave_cash_masters/new" title="Define leave encashment"><i class="fa fa-tags"></i> Encashment Master </a></li>
                 <li><a href="/leave_cashables/new" title="Create leave encashment for employee"><i class="fa fa-tags"></i> Leave Encashment </a></li>
                 <li><a href="/leave_transfers/leave_transfer_approval" title="For approving leave transfer request"><i class="fa fa-tags"></i> Transfer Approval</a></li>
@@ -404,7 +410,7 @@
                 <ul class="treeview-menu">
                   <li><a href="/employee_leav_requests/employee_list" title="For creating leave request, and to view leave request"><i class="fa fa-tags"></i> Leave Request </a></li>
                   <li><a href="/employee_leav_requests/approved_or_rejected_leave_request" title="Leave approval and rejection"><i class="fa fa-thumbs-up"></i> Leave Approval </a></li>
-                  <li><a href="/employee_leav_requests/all_leave_request_list" title="Admin leave approval and rejection"><i class="fa fa-thumbs-up"></i> Admin Leave Approval </a></li>
+                  <!-- <li><a href="/employee_leav_requests/all_leave_request_list" title="Admin leave approval and rejection"><i class="fa fa-thumbs-up"></i> Admin Leave Approval </a></li> -->
                 </ul>
             </li>
             <li class="treeview" id="LeaveReports">
@@ -424,7 +430,7 @@
                 <ul class="treeview-menu">
                   <li><a href="/on_duty_requests/employee_list" title="For creating on duty request, and to view on duty request"><i class="fa fa-tags"></i> Request </a></li>
                   <li><a href="/on_duty_requests/request_approval_list" title="On Duty approval and rejection"><i class="fa fa-thumbs-up"></i> Approval </a></li>
-                  <li><a href="/on_duty_requests/od_request_list" title="On Duty admin approval and rejection"><i class="fa fa-thumbs-up"></i> Admin Approval </a></li>
+                  <!-- <li><a href="/on_duty_requests/od_request_list" title="On Duty admin approval and rejection"><i class="fa fa-thumbs-up"></i> Admin Approval </a></li> -->
                 </ul>
             </li>
             <li class="treeview" id="ODReports">
@@ -443,7 +449,7 @@
             <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu" >
-            <li class="treeview" id="AttendanceSetup">
+          <!--   <li class="treeview" id="AttendanceSetup">
               <a href="#">
                 <i class="fa fa-edit"></i> Attendance Setup <i class="fa fa-angle-left pull-right"></i>
               </a>
@@ -453,7 +459,7 @@
                 <li><a href="/machine_attendances/new"><i class="fa fa-tags"> </i> Machine Attendance </a></li>
                 <li><a href="/machine_attendances/import_machine_attendance" title="For importing the attendance sheet"><i class="fa fa-upload"></i> Machine Data Upload </a></li>
               </ul>
-            </li> 
+            </li>  -->
             <li class="treeview" id="WeekoffSetup">
               <a href="#">
                 <i class="fa fa-edit"></i> Week Off / Holiday <i class="fa fa-angle-left pull-right"></i>
@@ -469,7 +475,7 @@
                 <li><a href="/employee_week_offs/datewise_report" title="Employee list of week of report"><i class="fa fa-tags"></i> Datewise Report </a></li>
               </ul>
             </li> 
-            <li class="treeview" id="GpsSetup">
+          <!--   <li class="treeview" id="GpsSetup">
               <a href="#">
                 <i class="fa fa-edit"></i> GPS <i class="fa fa-angle-left pull-right"></i>
               </a>
@@ -477,7 +483,7 @@
                 <li><a href="/employee_gps/employee_wise_gps"><i class="fa fa-tags"> </i> GPS Setting </a></li>
                 <li><a href="/employee_gps/employeewise_daily_gps"><i class="fa fa-tags"> </i> Show GPS </a></li>
               </ul>
-            </li> 
+            </li>  -->
             <li class="treeview" id="Attendance">
               <a href="#">
                 <i class="fa fa-edit"></i> Attendance <i class="fa fa-angle-left pull-right"></i>
@@ -493,7 +499,8 @@
                 <!-- <li><a href="/employee_attendances/destroy_daily_attendance" title="For destroying the daily attendance of a particular date, if the wrong sheet was imported"><i class="fa fa-tags"></i> Destroy Punching Data </a></li> -->
                 <!-- <li><a href="/employee_attendances/daily_attendance_datewise" title="To view the attendance sheet of particular date"><i class="fa fa-tags"></i> Punching Detail </a></li> -->
                 <li><a href="/employee_attendances/import_employee_attendance" title="For upload daily attendance sheet"><i class="fa fa-upload"></i> Upload Attendance </a></li>
-                <li><a href="/employee_attendances/admin_level_acf" title="For assigining the access card of particular date"><i class="fa fa-upload"></i> Admin ACF </a></li>
+               <!--  <li><a href="/employee_attendances/admin_level_acf" title="For assigining the access card of particular date"><i class="fa fa-upload"></i> Admin ACF </a></li> -->
+                 
                  
                 <!-- <li><a href="/workingdays/search_month_year"><i class="fa fa-tags"> </i>Attendace Update(Auto) </a></li> -->
                 <!--  <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
@@ -521,9 +528,9 @@
                 <i class="fa fa-edit"></i> Payroll Attendance <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="/employee_attendances" title="For confirming the attendance of particular year and month"><i class="fa fa-tags"></i> Confirm Attendance </a></li>
+                <!-- <li><a href="/employee_attendances" title="For confirming the attendance of particular year and month"><i class="fa fa-tags"></i> Confirm Attendance </a></li> -->
                 <li><a href="/employee_attendances/datewise_attendance" title="For confirming the attendance of particular date"><i class="fa fa-tags"></i> Confirm Datewise </a></li>
-                <li><a href="/workingdays/revert_workingday" title="For reverting the attendance "><i class="fa fa-tags"> </i> Revert Working Day </a></li>
+                <!-- <li><a href="/workingdays/revert_workingday" title="For reverting the attendance "><i class="fa fa-tags"> </i> Revert Working Day </a></li> -->
                 <li><a href="/workingdays/revert_workingday_datewise" title="For reverting the attendance "><i class="fa fa-tags"> </i> Revert Datewise </a></li>
               </ul>
             </li> 
@@ -751,6 +758,27 @@
                 <li><a href="/reports/overtime_salary_details/new"><i class="fa fa-tags"> </i> Overtime Report</a></li>
               </ul>
             </li>
+
+            <li id="complains">
+              <a href="#"><i class="fa fa-edit"></i> Compliance <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                  <li><a href="/compliance_types"><i class="fa fa-tags"></i> Compliance Type </a></li>
+                  <li><a href="/transaction_records"><i class="fa fa-tags"></i> Compliance Update </a></li>
+                  <li><a href="/agencies"><i class="fa fa-tags"></i> Agency </a></li>
+                <li><a href="/compliance_records"><i class="fa fa-tags"></i> Compliance Record </a></li>
+                <li><a href="/compliance_records/periodwise_report"><i class="fa fa-tags"></i> Report </a></li>
+                </ul>
+            </li>
+
+            <!-- <li id="compliance_report">
+              <a href="#"><i class="fa fa-edit"></i> Compliance Report <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li><a href="/agencies"><i class="fa fa-tags"></i> Agency </a></li>
+                <li><a href="/compliance_records"><i class="fa fa-tags"></i> Compliance Record </a></li>
+                <li><a href="/compliance_records/periodwise_report"><i class="fa fa-tags"></i> Report </a></li>
+              </ul>
+            </li> -->
+
           </ul>
         </li>
         <li class="treeview" id="HelpDesk">
@@ -838,14 +866,14 @@
               <ul class="treeview-menu">
                 <!-- <li><a href="/goal_bunches/subordinate_list" title="Employee goal list comes for goal approval"><i class="fa fa-thumbs-upfa fa-thumbs-up"></i> Goal Approval </a></li> -->
                
+                <li><a href="/goal_bunches/employee_list" title="For final rating and comment"><i class="fa fa-tags"></i> Final Evaluation </a></li>
                 <li><a href="/goal_bunches/admin_period_set" title="For admin level period setting"><i class="fa fa-tags"></i> Period Setting </a></li>
                 <li><a href="/goal_ratings/admin_level_period" title="For admin level goal approval period list"><i class="fa fa-tags"></i> Goal Setting </a></li>
                 <li><a href="/goal_bunches/admin_goal_approval_period" title="For admin level goal approval"><i class="fa fa-tags"></i> Goal Approval </a></li>
                 <li><a href="/goal_bunches/admin_self_evaluation_period" title="For admin level self evaluation"><i class="fa fa-tags"></i> Self Evaluation </a></li>
                 <li><a href="/goal_ratings/admin_appraiser_evaluation_period" title="For admin level appraiser evaluation"><i class="fa fa-tags"></i> Appraiser Evaluation </a></li>
                 <li><a href="/goal_ratings/admin_reviewer_evaluation_period" title="For admin level appraiser evaluation"><i class="fa fa-tags"></i> Reviewer Evaluation </a></li>
-                <li><a href="/goal_bunches/employee_list" title="For final rating and comment"><i class="fa fa-tags"></i> Final Evaluation </a></li>
-                <li><a href="/goal_ratings/periodwise_goal_set" title="For admin goal set periodwise"><i class="fa fa-tags"></i> Copy Goals </a></li>
+                <li><a href="/goal_ratings/periodwise_goal_set" title="For admin goal set periodwise"><i class="fa fa-tags"></i> Goal Set Periodwise </a></li>
               </ul>
             </li> 
             <li id="perform_cycle1">

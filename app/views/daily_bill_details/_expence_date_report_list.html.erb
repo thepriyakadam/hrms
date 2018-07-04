@@ -11,7 +11,7 @@
  <td colspan="11"><center><strong>
  <%= Company.find(@company).description unless @company.nil? or @company.blank? %></strong><br> <%= Company.find(@company).address unless @company.nil? or @company.blank? %> <br><%=Department.find(@department).name unless @department.nil? or @department.blank? %> - <%= CompanyLocation.find(@company_location).name unless @company_location.nil? or @company_location.blank? %></center>
  </td></tr>
- <tr><th colspan="11"><center> Expence Report</center></th></tr>
+ <tr><th colspan="11"><center> Expence Report : <%= @from.to_date %> to <%= @to.to_date %></center></th></tr>
     <tr>
       <th>Request ID</th>
       <th>Travel Date</th>

@@ -95,7 +95,7 @@
   
   def import_assign_role
     session[:active_tab] ="EmployeeManagement"
-    session[:active_tab1] ="Import" 
+    session[:active_tab1] ="Reports"  
   end
 
   def import_create_new_user

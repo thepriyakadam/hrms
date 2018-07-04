@@ -352,6 +352,7 @@ end
 
   def final_approval_training_list
      @training_requests = TrainingRequest.where(status: "SecondApproved")
+     session[:active_tab] = "AdminSelfService"
   end
 
   def emp_training_history

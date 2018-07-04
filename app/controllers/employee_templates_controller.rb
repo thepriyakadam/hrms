@@ -83,6 +83,20 @@ class EmployeeTemplatesController < ApplicationController
     session[:active_tab2] ="SalarySetup"
   end
 
+  def import_xl
+  end
+
+  def import
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+      redirect_to import_xl_employee_templates_path
+    else
+    EmployeeTemplate.import(params[:file])
+    redirect_to import_xl_employee_templates_path, notice: "File imported."
+    end
+  end
+
   def fresh
     @employee = Employee.find(params[:format])
   end

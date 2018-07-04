@@ -1,0 +1,105 @@
+<%= bootstrap_form_for(@transaction_record,htlm: {id: 'transaction_record'},remote: true) do |f| %>
+  
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+      <%= f.select :compliance_type_id,all_compliance_type,{hide_label: true,include_blank: " Select Compliance Type"} %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :transaction_type,['Daily','Weekly','Monthly','Quarterly','Yearly'],{hide_label: true,include_blank: "Select Frequency"}%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :submission_date, hide_label: true,placeholder: "Submission Date", class: 'submission'%>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :reminder_Date, hide_label: true,placeholder: "Reminder Date", class: 'submission'%>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :previous_days, hide_label: true,placeholder: "Previous Days e.g. 2"%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :after_days, hide_label: true,placeholder: "After Days e.g. 3"%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :email_1, hide_label: true,placeholder: 'abc@gmail.com'%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :email_2, hide_label: true,placeholder: "abc@gmail.com"%>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :status, hide_label: true,placeholder: "Status"%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Compliance",class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
+
+<% end %>
+
+<script>
+$("#transaction_record").validate({
+    rules: {
+      "transaction_record[compliance_type_id]":{
+        required: true,
+      },
+       "transaction_record[transaction_type]":{
+        required: true,
+      }
+       },
+    messages: {
+      "transaction_record[compliance_type_id]":{
+        required: "Please specify compliance_type_id",
+      },
+      "transaction_record[transaction_type]":{
+        required: "Please specify transaction_type",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+<script type="text/javascript">
+  $(function(){
+    $('.submission').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+8',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

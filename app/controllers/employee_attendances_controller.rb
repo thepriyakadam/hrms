@@ -33,6 +33,20 @@ class EmployeeAttendancesController < ApplicationController
     end
   end
 
+  def third_attendance
+    day = params[:daily_attendance][:day].to_i
+    if day.present?
+      DailyAttendance.third_fetch_data(day)
+      flash[:notice] = "Employee Attendance Added Successfully..!"
+      redirect_to new_employee_attendance_path
+    else
+      DailyAttendance.third_fetch_data(1)
+      flash[:notice] = "Employee Attendance Added Successfully..!"
+      redirect_to new_employee_attendance_path
+    end
+  end
+
+
   def calculate
     day = params[:daily_attendance][:day].to_i
     if day.present?
@@ -2357,7 +2371,7 @@ def import
   end
 end
 
-def import_employee_attendance
+def import_xl
   @employee_attendances = EmployeeAttendance.all
   respond_to do |format|
     format.html
@@ -2367,45 +2381,61 @@ def import_employee_attendance
     format.csv { send_data @employee_attendances.to_csv }
     format.xls
   end
-
-   session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="AttendanceSetup"
 end
 
-  def import_employee_attendance_to_txt
-    @employees = Employee.all
-    respond_to do |format|
-      format.html
-      format.csv { send_data @employees.to_txt,filename: "employees-#{Date.today}.txt" }
-    end#do
-  end
+def import_employee_attendance
+  session[:active_tab] ="TimeManagement"
+  session[:active_tab1] ="Attendance"
+end
 
-  def self_service_datewise_attendance
-    @from = params[:employee][:from]
-    @to = params[:employee][:to]
-    @employee_id = params[:employee][:employee_id]
-    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day DESC")
-    
-    respond_to do |format|
-      format.js
-      format.xls {render template: 'self_services/datewise_attendance_report_xls.xls.erb'}
-      format.html
-      format.pdf do
-        render pdf: 'self_service_datewise_attendance',
-              layout: 'pdf.html',
-              orientation: 'Landscape',
-              template: 'self_services/datewise_attendance_report_pdf.pdf.erb',
-              # show_as_html: params[:debug].present?,
-              :page_height      => 1000,
-              :dpi              => '300',
-              :margin           => {:top    => 10, # default 10 (mm)
-                            :bottom => 10,
-                            :left   => 20,
-                            :right  => 20},
-              :show_as_html => params[:debug].present?
-          end
-         end
+def attendance_upload_report
+  @from = params[:employee][:from]
+  @to = params[:employee][:to]
+  @employee = Employee.where(status: "ACtive").pluck(:id)
+  
+  if @from == "" || @to == ""
+    flash[:alert] = "Please Select Date"
+    redirect_to import_employee_attendance_employee_attendances_path
+    #@employee_attendances = EmployeeAttendance.all
+  else
+    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee)
   end
+end
+
+def import_employee_attendance_to_txt
+  @employees = Employee.all
+  respond_to do |format|
+    format.html
+    format.csv { send_data @employees.to_txt,filename: "employees-#{Date.today}.txt" }
+  end#do
+end
+
+def self_service_datewise_attendance
+  @from = params[:employee][:from]
+  @to = params[:employee][:to]
+  @employee_id = params[:employee][:employee_id]
+  @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day DESC")
+  
+  respond_to do |format|
+    format.js
+    format.xls {render template: 'self_services/datewise_attendance_report_xls.xls.erb'}
+    format.html
+    format.pdf do
+      render pdf: 'self_service_datewise_attendance',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'self_services/datewise_attendance_report_pdf.pdf.erb',
+            # show_as_html: params[:debug].present?,
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+        end
+       end
+end
 
   def manager_self_service_attendance
     @emp = Employee.find(current_user.employee_id)
@@ -2643,8 +2673,7 @@ end
   end#def
 
   def admin_level_acf
-    session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Attendance"
+    session[:active_tab] ="AdminSelfService"
   end
 
   def admin_acf_approval
@@ -2707,7 +2736,7 @@ end
 
   def admin_access_card_approval
     @pending_requests = EmployeeAttendance.where(comment: "ACF Request")
-    session[:active_tab] = "ManagerSelfService"
+    session[:active_tab] = "AdminSelfService"
   end
 
   def view_access_card_detail
@@ -2923,8 +2952,8 @@ end
   end
 
   def datewise_attendance_with_options
-  session[:active_tab] ="TimeManagement"
-  session[:active_tab1] ="Attendance"
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Report"
   end
 
   def show_datewise_all
@@ -2933,19 +2962,19 @@ end
 
     if params[:save]
       @name = params[:save]
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).order('day asc')
     elsif params[:absent]
       @name = params[:absent]
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "A")
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "A").order('day asc')
     elsif params[:holiday]
       @name = params[:holiday]
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(holiday_id: nil)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(holiday_id: nil).order('day asc')
     elsif params[:weekoff]
       @name = params[:weekoff]
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_week_off_id: nil)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_week_off_id: nil).order('day asc')
     elsif params[:onduty]
       @name = params[:onduty]
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(on_duty_request_id: nil)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(on_duty_request_id: nil).order('day asc')
     elsif params[:latemark]
       @name = params[:latemark]
         latemark_master = LatemarkMaster.last
@@ -2955,7 +2984,7 @@ end
         @late_limit = latemark_master_late_time.strftime("%I:%M")
         @employee_attendances = []
         employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,late_mark: nil).where.not(in_time: nil)
-        @time = 0 
+        @time = 0
         employee_attendances.each do |att|
           if att.in_time.strftime("%I:%M") > @company_time && att.in_time.strftime("%I:%M") < @late_limit
             @employee_attendances << att
@@ -2963,27 +2992,26 @@ end
         end
     else
       @name = params[:leave]
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil).order('day asc')
     end
   end
-  
+ 
   def show_datewise_all_report
     @from = params[:from]
     @to = params[:to]
     @name = params[:name]
 
     if @name == "All"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).order('day asc')
     elsif @name == "Absent"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "A")
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,present: "A").order('day ASC')
     elsif @name == "Holiday"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(holiday_id: nil)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(holiday_id: nil).order('day ASC')
     elsif @name == "Week Off"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_week_off_id: nil)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_week_off_id: nil).order('day ASC')
     elsif @name == "onduty"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(on_duty_request_id: nil)
-    elsif @name == "Leave"
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil)
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(on_duty_request_id: nil).order('day ASC')
+    
     elsif @name == "Latemark"
       latemark_master = LatemarkMaster.last
         latemark_master_time = latemark_master.company_time
@@ -2992,17 +3020,18 @@ end
         @late_limit = latemark_master_late_time.strftime("%I:%M")
         @emp_att = []
         employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,late_mark: nil).where.not(in_time: nil)
-        @time = 0 
+        @time = 0
         employee_attendances.each do |att|
           if att.in_time.strftime("%I:%M") > @company_time && att.in_time.strftime("%I:%M") < @late_limit
             @employee_attendances << att
           end
         end
-    else
-      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
+    else @name == "Leave"
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil).order('day asc')
+      #@employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date)
     end
 
-     respond_to do |f|
+    respond_to do |f|
       f.js
       f.xls {render template: 'employee_attendances/datewise_attendance_with_option.xls.erb'}
       f.html
@@ -3014,10 +3043,9 @@ end
         show_as_html: params[:debug].present?
       end
     end
-
   end
 
-   def add_attendance
+  def add_attendance
     @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
     @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id).order('day DESC')
   end

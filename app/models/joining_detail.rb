@@ -19,7 +19,7 @@ class JoiningDetail < ActiveRecord::Base
   # validate :status_regex
 
 
-def self.to_csv(options = {})
+  def self.to_csv(options = {})
     CSV.generate(options) do |csv|
       csv << column_names
       all.each do |joining_detail|
@@ -64,8 +64,16 @@ def self.to_csv(options = {})
         employee_category_id = @employee_category.id
         end
 
-        contract_month = spreadsheet.cell(i,'J')
+        contract_month_value = spreadsheet.cell(i,'J')
+        contract_month = contract_month_value.to_i
+
         contract_end_date = spreadsheet.cell(i,'K')
+
+        if contract_end_date.nil? or !contract_month.nil? or !contract_month == ""
+          contract_end_date = joining_date.to_date + contract_month.months
+        else
+          contract_end_date = spreadsheet.cell(i,'K')
+        end
         probation_period = spreadsheet.cell(i,'L')
         notice_period = spreadsheet.cell(i,'M')
          notice_period_after_probation = spreadsheet.cell(i,'N')
@@ -76,6 +84,13 @@ def self.to_csv(options = {})
         leaving_date = spreadsheet.cell(i,'S')
         retirement_date = spreadsheet.cell(i,'T')
 
+        if retirement_date.nil? and employee.date_of_birth.present?
+          employee = Employee.find_by(id: employee_id)
+          date_of_birth = employee.date_of_birth
+          retirement_date = date_of_birth.to_date + 58.years
+        else
+          retirement_date = spreadsheet.cell(i,'T')
+        end
 
          c_off = spreadsheet.cell(i,'U')
          if c_off == "Yes"
@@ -200,7 +215,7 @@ def self.to_csv(options = {})
           have_retention: have_retention,is_insurance: is_insurance,is_family_pension: is_family_pension,
           is_bonus: is_bonus,ot_option: ot_option,ot_rate: ot_rate,cost_center_id: cost_center_id,
           welfare: welfare,contact_library: contact_library,gps_track: gps_track,restricted_area: restricted_area,
-          contract_month: contract_month,contract_end_date: contract_end_date)
+          contract_month: contract_month,contract_end_date: contract_end_date,retirement_date:retirement_date)
         end
       end
     end

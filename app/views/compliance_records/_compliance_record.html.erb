@@ -1,0 +1,24 @@
+
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+     <thead>
+        <tr>
+          <th>Agency</th>
+          <th>Compliance Date</th>
+          <th>Amount</th>
+          <th>Comment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @compliance_records.each do |compliance_record| %>
+          <tr>
+            <td><%= compliance_record.try(:agency).try(:name) %></td>
+            <td><%= compliance_record.compliance_date %></td>
+            <td><%= compliance_record.amount %></td>
+            <td><%= compliance_record.comment %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <br>
+
+    <%= link_to 'Back', periodwise_report_compliance_records_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>

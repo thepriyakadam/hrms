@@ -1,0 +1,24 @@
+<div class="box-body">
+
+ <div style="width: 700px; height: 700px;
+          padding: 10px;
+          border: 5px solid gray;
+          margin: 10;">
+  <div style="float:right;">Date - <%= Time.zone.now.to_date %> </div><br><br>
+
+  <b><center>Joining Letter</center></b><br><br>
+
+  <p> Dear Mr./Miss.<b> <%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %> </b> </p>
+  <p> Welcome to <b> <%= current_user.employee.company_location.company.description %> </b></p>
+  <p> I am pleased to offer you employment in the position of  <b> <%= @employee.joining_detail.employee_designation.try(:name) %> with <%= current_user.employee.company_location.company.description %> </b></p>
+
+  <p> I am eager to have you as part of our team. I foresee your potential skills as a valuable contribution to our company and clients. Your appointment as <%= @employee.joining_detail.employee_designation.try(:name) %> will commence on date --------------- . </p>
+
+  <p> As <%= @employee.joining_detail.employee_designation.try(:name) %> , you will be entitled to a monthly starting remuneration of Rs 00,000/- (Rupees…………. only) which indicates cost to company. You will be on a probation period of six months. Regular performance review will be conducted to assess your performance and suitability. Your continued employment at <%= current_user.employee.company_location.company.description %> is dependent on your successful completion of the probationary period. Your salary will be reviewed after a period of 6 months and thereafter every 12 months. You will be entitled to all allowances ad benefits whatsoever decided by the management.You shall receive your payment before 5th of every month.
+  Your signing this appointment letter confirms your acceptance of the terms and conditions and that you would be joining <%= current_user.employee.company_location.company.description %> on the given date.</p>
+
+  <p>I am looking forward to working with you. </p>
+  <P>HR</P>
+  <p>For <b> <%= current_user.employee.company_location.company.description %> </b></p>
+</div>
+</div>

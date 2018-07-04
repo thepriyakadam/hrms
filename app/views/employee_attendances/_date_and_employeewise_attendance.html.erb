@@ -33,22 +33,34 @@
             <td><%= a.try(:working_hrs) %></td>
             <td><%= a.try(:comment) %></td>
             <td>
-              <% if @leav_category = LeavCategory.exists?(code: a.try(:present)) %>
+              <% if a.employee_leav_request_id != nil %>
                 <small class="label label-primary">Leave</small>
-              <%else%>
-                <% if params[:employee].present? %>
-                  <%= link_to ' ',modal_edit_for_show_employee_attendances_path(a,from: params[:employee][:from],to: params[:employee][:to],employee_id: params[:employee][:employee_id]),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
-                <% else params[:employee_attendance].present? %>
-                  <%= link_to ' ',modal_edit_for_show_employee_attendances_path(a,from: params[:employee_attendance][:from],to: params[:employee_attendance][:to],employee_id: params[:employee_attendance][:employee_id]),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
-                <% end%>
-              <% end %>
+              <% elsif a.on_duty_request_id != nil %>
+                <small class="label label-info">On Duty</small>
+              <%elsif a.employee_week_off_id != nil %>
+                <small class="label label-warning">Week Off</small>
+              <%elsif a.holiday_id != nil %>
+                <small class="label label-success">Holiday</small>
+              <% else %>
+
+                <% if a.is_confirm == true %>
+                  <small class="label label-primary">Attendance Confirmed</small>
+                <% else %>
+                  <% if params[:employee].present? %>
+                    <%= link_to ' ',modal_edit_for_show_employee_attendances_path(a,from: params[:employee][:from],to: params[:employee][:to],employee_id: params[:employee][:employee_id]),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
+                  <% else params[:employee_attendance].present? %>
+                    <%= link_to ' ',modal_edit_for_show_employee_attendances_path(a,from: params[:employee_attendance][:from],to: params[:employee_attendance][:to],employee_id: params[:employee_attendance][:employee_id]),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
+                  <% end%> <!-- params[:employee].present? -->
+                <% end %> <!-- a.is_confirm == true -->
+
+              <% end %> <!-- if a.employee_leav_request_id != nil -->
             </td>
           </tr>
-        <% end %>
+        <% end %> <!-- do -->
       </tbody>
     </table>
     </div>
-  </div>
+  </div> 
 </div>
   <div id="myModal" class="modal fade"></div>
 

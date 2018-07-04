@@ -1,9 +1,22 @@
 Rails.application.routes.draw do
+  resources :compliance_records do
+    collection do
+      get :periodwise_report
+      post :show_compliance_record
+    end
+  end
+  resources :agencies
+  resources :transaction_records do
+    collection do
+      get :modal_show
+    end
+  end
+  resources :compliance_types
+  resources :galleries 
+  resources :pictures
   resources :monthly_income_taxes
   resources :quarter_income_taxes
   resources :income_tax_masters
-  resources :galleries 
-  resources :pictures
   resources :gps_informations do
     collection do
       get :all_emp_list
@@ -30,6 +43,8 @@ Rails.application.routes.draw do
       get :deduction_report
       post :show_deduction_report
       get :show_deduction_report
+      post :show_list_for_latemark
+      get :revert_latemark_value
     end
   end
   resources :meeting_follow_ups do
@@ -57,6 +72,7 @@ Rails.application.routes.draw do
 
   resources :daily_attendances do 
     collection do
+      get :third_attendance_uttam
       get :attendance
       get :calculate
       get :daily_attendance
@@ -495,6 +511,8 @@ Rails.application.routes.draw do
       post :selected_employee_list
       get :selected_employee_pdf
       get :selected_employee_xls
+      get :offer_letter
+      get :joining_letter
     end
   end
   resources :certificate_masters do
@@ -981,6 +999,8 @@ end
   end
   resources :employee_attendances do
     collection do
+      post :third_attendance
+      get :third_attendance
       post :fetch_attendance
       post :calculate
       get :fetch_attendance
@@ -1109,6 +1129,8 @@ end
       post :payroll_show
       get :payroll_show
       get :employee_attendance
+      get :import_xl
+      post :attendance_upload_report
     end
   end
   resources :salary_comp_mappings
@@ -1170,7 +1192,6 @@ end
 
   resources :goal_ratings do
     collection do
-      get :goal_wise
       get :periodwise_goal_set
       post :periodwise_goal_list
       post :set_goal_periodwise
@@ -1212,8 +1233,6 @@ end
       post :create_for_multiple
       get :employee_goal_wise
       post :print_employee
-      post :detail_goal_wise_pdf
-      get :detail_goal_wise_pdf
       post :detail_goal_wise
       get :detail_goal_wise
       get :detail_goal_wise_xls
@@ -1225,7 +1244,6 @@ end
       get :print_employee_wise
       get :detail_employee_wise_xls
       get :period_rating_wise
-      post :period_rating_wise
       post :Period_rating_wise_employee
       get :Period_rating_wise_employee
       get :period_rating_wise_pdf
@@ -1665,7 +1683,6 @@ end
   resources :daily_bill_details do
     collection do
     # post :is_confirm
-    get :all_expence_request
     get :is_confirm
     get :print_daily_bill
     get :daily_bill_history
@@ -1691,7 +1708,6 @@ end
   end
   resources :travel_requests do
     collection do
-      get :all_travel_request
       get :show_travel_process
       get :show_request_modal
       get :daily_bill
@@ -1926,8 +1942,9 @@ end
       get :modal
       get :detail_modal
       get :modal_c_off
-      get :c_off_maintenance
       get :maintenance_report
+      get :import_xl
+      post :import
     end
   end
 
@@ -2288,6 +2305,8 @@ end
       get :employee_wise_pdf
       get :employee_wise_xls
       get :employee_record
+      get :import_xl
+      post :import
     end
   end
   resources :retention_moneys do
@@ -2639,6 +2658,9 @@ end
       post :create_employee_template
       get :is_confirm
       get :modal
+      get :salary_component_list
+      get :import_xl
+      post :import
     end
   end
   resources :universities do
@@ -2795,7 +2817,8 @@ end
       get :date_categorywise_balance
       post :show_date_categorywise
       get :show_date_categorywise
-
+      get :import_employee_leav_balance
+      post :employee_leav_balance_report
     end
   end
 
@@ -3344,5 +3367,21 @@ end
     get 'user_auths/all_travel_history' => 'user_auths#all_travel_history', defaults:{format: 'json'}
     get 'user_auths/cancel_travel_history' => 'user_auths#cancel_travel_history', defaults:{format: 'json'}
     get 'user_auths/get_time_sheet' => 'user_auths#get_time_sheet', defaults:{format: 'json'}
+    get 'user_auths/get_help_disk_list' => 'user_auths#get_help_disk_list', defaults:{format: 'json'}
+    get 'user_auths/all_issue_tracker_group' => 'user_auths#all_issue_tracker_group', defaults:{format: 'json'}
+    get 'user_auths/cancel_help_desk_request' => 'user_auths#cancel_help_desk_request', defaults:{format: 'json'}
+    get 'user_auths/group_type' => 'user_auths#group_type', defaults:{format: 'json'}
+    get 'user_auths/collect_issues' => 'user_auths#collect_issues', defaults:{format: 'json'}
+    get 'user_auths/daily_bill_request_confirmation' => 'user_auths#daily_bill_request_confirmation', defaults:{format: 'json'}
+    get 'user_auths/lock_request_list' => 'user_auths#lock_request_list', defaults:{format: 'json'}
+    get 'user_auths/solved_issue_list' => 'user_auths#solved_issue_list', defaults:{format: 'json'}
+    get 'user_auths/manager_daily_attendance' => 'user_auths#manager_daily_attendance', defaults:{format: 'json'}
+    get 'user_auths/collect_issues_description' => 'user_auths#collect_issues_description', defaults:{format: 'json'}
+    post 'user_auths/create_support_request' => 'user_auths#create_support_request', defaults:{format: 'json'}
+    get 'user_auths/unlock_request' => 'user_auths#unlock_request', defaults:{format: 'json'}
+    post 'user_auths/lock_request' => 'user_auths#lock_request', defaults:{format: 'json'}
+    post 'user_auths/solved_request' => 'user_auths#solved_request', defaults:{format: 'json'}
+    get 'user_auths/issue_tracker_member_list' => 'user_auths#issue_tracker_member_list', defaults:{format: 'json'}
+    get 'user_auths/support_root_cause_list' => 'user_auths#support_root_cause_list', defaults:{format: 'json'}
   end
 end

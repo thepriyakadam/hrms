@@ -385,6 +385,14 @@ end
     #department = params[:employee_attendances][:department_id]
     @employee = Employee.where(id: @employee_ids)
 
+    if in_time == "" && out_time == ""
+      in_time = "08:30" 
+      out_time = "17:30"
+    elsif in_time == "" 
+      in_time = "08:30"
+    elsif out_time == ""
+      out_time = "17:30"
+    end
      total_hrs = out_time.to_time - in_time.to_time
      working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
     

@@ -509,14 +509,15 @@
         </div><!-- /.box-header -->
 
                 <div class="box-body">
-           
-               <% date = Time.now.to_date + 15.days %>
-               <% todays_date = Time.now.to_date %>
+              
+              <% tomrrow = Date.today + 1 %>
+               <%# date = Time.now.to_date + 15.days %>
+               <%# todays_date = Time.now.to_date %>
                <!-- <#% @employees = Employee.where("status = ? AND FORMAT(date_of_birth,'dd/MM','en-US') = ?", "Active" ,todays_date.strftime('%d/%m')..date.strftime('%d/%m')) do |et| %> -->
 
               <!--  <#% @employees = Employee.where("status = ? AND FORMAT(date_of_birth,'dd/MM','en-US') > ? AND FORMAT(date_of_birth,'dd/MM','en-US') <= ?", "Active" ,todays_date.strftime('%d/%m'),date.strftime('%d/%m')) do |et| %> -->
 
-              <% @employees = Employee.where("status = ? AND DATE_FORMAT(date_of_birth,'%d/%m') = ?", "Active" , date.strftime('%d/%m')) do |et| %>
+              <% @employees = Employee.where("status = ? AND DATE_FORMAT(date_of_birth,'%d/%m') = ?", "Active" , tomrrow.strftime('%d/%m')) %>
              
             <% if @employees.empty? %>
             <%else%>
@@ -552,7 +553,6 @@
             <%end%> <!-- if employee.empty? -->
             </table>
             
-              <%end%>
          </div><!-- /.box-body -->
         </div><!-- /.box -->
 

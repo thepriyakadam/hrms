@@ -741,7 +741,7 @@ class SalaryslipsController < ApplicationController
               @salary_compon=SalaryComponent.find_by(name: "Income Tax")
               @salary_compon1=SalaryComponent.find_by(name: "GMC")
               @salary_compon2=SalaryComponent.find_by(name: "Bank Loan")
-               @salary_compon3=SalaryComponent.find_by(name: "Latemark Deduction")
+               # @salary_compon3=SalaryComponent.find_by(name: "Latemark Deduction")
               @mobile_deduction = 0
               @income_tax_deduction = 0
               @other_deduction = 0
@@ -759,8 +759,8 @@ class SalaryslipsController < ApplicationController
                   @gmk_deduction = @gmk_deduction + m.amount
                 elsif m.expencess_type.name == @salary_compon2.name
                   @bank_loan = @bank_loan + m.amount
-                elsif m.expencess_type.name == @salary_compon3.name
-                  @latemark_deduction = @latemark_deduction + m.amount
+                # elsif m.expencess_type.name == @salary_compon3.name
+                #   @latemark_deduction = @latemark_deduction + m.amount
                 end
               end
               if @salary_component.name &&  @salary_component.is_active == true
@@ -784,10 +784,10 @@ class SalaryslipsController < ApplicationController
                   is_deducted: true, other_component_name: @salary_compon2.name,salary_component_id:  @salary_compon2.id)
               end
 
-              if @salary_compon3.name && @salary_compon3.is_active == true
-                SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @latemark_deduction, calculated_amount: @latemark_deduction, 
-                  is_deducted: true, other_component_name: @salary_compon3.name,salary_component_id:  @salary_compon3.id)
-              end
+              # if @salary_compon3.name && @salary_compon3.is_active == true
+              #   SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @latemark_deduction, calculated_amount: @latemark_deduction, 
+              #     is_deducted: true, other_component_name: @salary_compon3.name,salary_component_id:  @salary_compon3.id)
+              # end
  
               # BonusEmployee.create_bonus(basic_calculated_amount, @employee.id, date)
 
@@ -1378,7 +1378,7 @@ end
         Instalment.where("DATE_FORMAT( instalment_date , '%m/%Y') = ? ", date.strftime('%m/%Y')).update_all(is_complete: false) 
         MonthlyExpence.where("DATE_FORMAT(expence_date , '%m/%Y') = ? ", date.strftime('%m/%Y')).update_all(is_paid: false) 
         FoodDeduction.where("DATE_FORMAT( food_date , '%m/%Y') = ? ", date.strftime('%m/%Y')).update_all(is_paid: false)
-        LatemarkDeduction.where("DATE_FORMAT( latemark_day , '%m/%Y') = ? ", date.strftime('%m/%Y')).update_all(paid: false) 
+        LatemarkDeduction.where("DATE_FORMAT( latemark_day , '%m/%Y') = ? ", date.strftime('%m/%Y')).update_all(paid: nil) 
         # MonthlyArrear.where("DATE_FORMAT( day , '%m/%Y') = ? ", date.strftime('%m/%Y')).update_all(paid: false) 
         @bonus_employees.destroy_all
         SalaryslipComponent.where(salaryslip_id: @salaryslip.id).destroy_all

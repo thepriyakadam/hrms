@@ -51,12 +51,13 @@
         <Cell ss:Index="36"><Data ss:Type="String">Professional Tax</Data></Cell>
 
         <Cell ss:Index="37"><Data ss:Type="String">Welfare</Data></Cell>
-        
-        <Cell ss:Index="38"><Data ss:Type="String">Advance</Data></Cell>
-        <Cell ss:Index="39"><Data ss:Type="String">Mobile</Data></Cell>
+         <Cell ss:Index="38"><Data ss:Type="String">Latemark Deduction</Data></Cell>
+        <Cell ss:Index="39"><Data ss:Type="String">Advance</Data></Cell>
+
       
-        <Cell ss:Index="40"><Data ss:Type="String">Income Tax</Data></Cell>
-           <Cell ss:Index="41"><Data ss:Type="String">Latemark Deduction</Data></Cell>
+        <Cell ss:Index="40"><Data ss:Type="String">Mobile</Data></Cell>
+      
+        <Cell ss:Index="41"><Data ss:Type="String">Income Tax</Data></Cell>
 
         <Cell ss:Index="42"><Data ss:Type="String">Total Deduction</Data></Cell>
 
@@ -166,15 +167,17 @@
               <% elsif item.other_component_name == "WelFare" %>
                 <Cell ss:Index="37"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             
-              <% elsif item.other_component_name == "Advance" %>
+              
+                 <% elsif item.other_component_name == "Latemark Deduction" %>
                 <Cell ss:Index="38"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
-              <% elsif item.other_component_name == "Mobile Deduction" %>
+                <% elsif item.other_component_name == "Advance" %>
                 <Cell ss:Index="39"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
+              <% elsif item.other_component_name == "Mobile Deduction" %>
+                <Cell ss:Index="40"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             
               <% elsif item.other_component_name == "Income Tax" %>
-                <Cell ss:Index="40"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
-                  <% elsif item.other_component_name == "Latemark Deduction" %>
                 <Cell ss:Index="41"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
+                 
              
               <% end %>
           <% end %><!-- deducted items -->

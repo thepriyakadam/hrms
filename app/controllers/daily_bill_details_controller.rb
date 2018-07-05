@@ -24,7 +24,6 @@ class DailyBillDetailsController < ApplicationController
 
   # GET /daily_bill_details/new
   def new
-    # byebug
     @daily_bill_detail = DailyBillDetail.new
     
     @travel_request = TravelRequest.find(params[:travel_request_id])

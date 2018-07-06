@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :food_options
   resources :compliance_records do
     collection do
       get :periodwise_report
@@ -1682,6 +1683,7 @@ end
   resources :daily_bill_details do
     collection do
     # post :is_confirm
+    get :select_form
     get :is_confirm
     get :print_daily_bill
     get :daily_bill_history

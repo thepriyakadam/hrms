@@ -94,6 +94,22 @@ class DailyBillDetailsController < ApplicationController
     redirect_to new_daily_bill_detail_path(travel_request_id: @travel_request.id)
   end
 
+   def select_form
+    @daily_bill_detail = DailyBillDetail.new
+    @employee = Employee.find_by(id: current_user.employee_id)
+    @travel_id = params[:travel_id]
+
+    if params[:travel_id] == "1" #travel
+      @flag = true
+    elsif params[:travel_id] == "2" #food
+      @flag = "5"
+    elsif params[:travel_id] == "3" #laundary
+      @flag = false
+    elsif params[:travel_id] == "4"
+      @flag = "0"
+    else
+    end
+  end
 
   # def is_confirm
   #   @travel_request = TravelRequest.find(params[:travel_request_id])

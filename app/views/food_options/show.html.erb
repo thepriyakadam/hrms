@@ -1,0 +1,46 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">DA Details</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr> 
+      <th><strong>Travel option:</strong></th>
+      <td><%= @food_option.travel_option.try(:name) %></td>
+    </tr>
+    <tr>
+      <th><strong>Code:</strong></th>
+      <td><%= @food_option.code %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Name:</strong></th>
+      <td><%= @food_option.name %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Description:</strong></th>
+      <td><%= @food_option.description %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Amount:</strong></th>
+      <td><%= @food_option.amount %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Is optional:</strong></th>
+      <td><%= @food_option.is_optional ? "Yes" : "No" %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Status:</strong></th>
+      <td><%= @food_option.status ? "Active" : "Inactive" %></td>
+    </tr>
+ </table>
+<br>
+    <%= link_to 'Edit', edit_food_option_path(@food_option),class: 'btn btn-success btn-sm fa fa-edit' %> |
+    <%= link_to 'Back', food_options_path, class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+ 

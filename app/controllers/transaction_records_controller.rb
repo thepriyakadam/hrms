@@ -72,6 +72,6 @@ class TransactionRecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def transaction_record_params
-      params.require(:transaction_record).permit(:compliance_type_id, :transaction_type, :submission_date, :reminder_Date, :previous_days, :after_days, :email_1, :email_2, :email_3, :status, :is_confirm)
+      params.require(:transaction_record).permit(:reminder_to,:compliance_type_id, :transaction_type, :submission_date, :reminder_Date, :previous_days, :after_days, :email_1, :email_2, :email_3, :status, :is_confirm)
     end
 end

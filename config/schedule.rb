@@ -16,7 +16,7 @@ end
 # end
 
 
-every :day, :at => '02:55pm' do
+every :day, :at => '02:50pm' do
   rake 'atte_task:transaction_att', :environment => 'development',   :output => 'log/cron.log'
 end
 

@@ -18,22 +18,19 @@
 			    <tr>
 			      <th>Submission Date</th>
 			        <td><%= @transaction_record.submission_date %></td>
-			      <th>Reminder Date</th>
+			      <th>Reminder From</th>
 			        <td><%= @transaction_record.reminder_Date %></td>
 			    </tr>
 			    <tr>
-			      <th>Previous Days</th>
-			        <td><%= @transaction_record.previous_days %></td>
-			      <th>After Days</th>
-			        <td><%= @transaction_record.after_days %></td>
-			    </tr>
-			    <tr>
+			    <th>Reminder To</th>
+			        <td><%= @transaction_record.reminder_to %></td>
 			      <th>Email</th>
 			        <td><%= @transaction_record.email_1 %></td>
-			      <th>Official Email</th>
-			        <td><%= @transaction_record.email_2 %></td>
 			    </tr>
 			    <tr>
+			      
+			      <th>Official Email</th>
+			        <td><%= @transaction_record.email_2 %></td>
 			      <th>Status</th>
 			        <td><%= @transaction_record.status %></td>
 			    </tr>

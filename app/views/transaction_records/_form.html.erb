@@ -27,7 +27,7 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :reminder_Date, hide_label: true,placeholder: "Reminder Date", class: 'submission'%>
+          <%= f.text_field :reminder_Date, hide_label: true,placeholder: "Reminder From", class: 'submission'%>
         </div>
       </div>
     </div>
@@ -35,14 +35,24 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :previous_days, hide_label: true,placeholder: "Previous Days e.g. 2"%>
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :reminder_to, hide_label: true,placeholder: "Reminder To", class: 'submission'%>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-sm-3">
+      <div class="form-group required">
+        <%#= f.text_field :previous_days, hide_label: true,placeholder: "Previous Days e.g. 2"%>
       </div>
     </div>
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :after_days, hide_label: true,placeholder: "After Days e.g. 3"%>
+        <%#= f.text_field :after_days, hide_label: true,placeholder: "After Days e.g. 3"%>
       </div>
-    </div>
+    </div> -->
     <div class="col-sm-3">
       <div class="form-group required">
         <%= f.text_field :email_1, hide_label: true,placeholder: 'abc@gmail.com'%>
@@ -53,13 +63,13 @@
         <%= f.text_field :email_2, hide_label: true,placeholder: "abc@gmail.com"%>
       </div>
     </div>
-  </div>
-  <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
         <%= f.text_field :status, hide_label: true,placeholder: "Status"%>
       </div>
     </div>
+  </div>
+  <div class="row">
     <div class="col-sm-3">
       <div class="actions">
         <%= f.submit "Create Compliance",class: "btn btn-primary btn-sm" %>

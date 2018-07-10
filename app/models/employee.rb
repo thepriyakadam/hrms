@@ -221,7 +221,7 @@ class Employee < ActiveRecord::Base
     end
   end
 
-   def name
+  def name
        "#{self.department.try(:name)}"
     end
 

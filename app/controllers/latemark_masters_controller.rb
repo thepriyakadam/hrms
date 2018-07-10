@@ -129,17 +129,19 @@ class LatemarkMastersController < ApplicationController
     company_count = @latemark_master.allow_latemark
     company_amount = @latemark_master.amount
     @latemark_totals.each do |lt|
-      @employee_count = LatemarkTotal.where(employee_id: lt.employee_id).count
+      @employee_count = LatemarkTotal.where(employee_id: lt.employee_id, latemark_date: @from_date.to_date..@to_date.to_date).count
       if @employee_count.to_f > company_count.to_f
         count = @employee_count.to_f - company_count.to_f
         total_count = count
         amount = total_count.to_f * company_amount.to_f
+        if total_count > 0
         LatemarkDeduction.create(employee_id: lt.employee_id,latemark_day:  @to_date.to_date,
           latemark_count: @employee_count,latemark_amount: amount)
+        end
         #@latemark_total = LatemarkTotal.find_by(id: lt.id).update(confirm: "confirm")
       else
-        LatemarkDeduction.create(employee_id: lt.employee_id,latemark_day:  @to_date.to_date,
-          latemark_count: @employee_count,latemark_amount: 0)
+        # LatemarkDeduction.create(employee_id: lt.employee_id,latemark_day:  @to_date.to_date,
+        #   latemark_count: @employee_count,latemark_amount: 0)
         #@latemark_total = LatemarkTotal.find_by(id: lt.id).update(confirm: "confirm")
       end
     end
@@ -268,23 +270,20 @@ class LatemarkMastersController < ApplicationController
   end
 
   def show_list_for_latemark
-    from = params[:latemark_master][:from_date]
-    to = params[:latemark_master][:to_date]
-    @from_date = from.to_date
-    @to_date = to.to_date
-    @latemark_deductions = LatemarkDeduction.where(latemark_day: @from..@to).where(paid: nil)
+    @from = params[:latemark_master][:from_date]
+   @to = params[:latemark_master][:to_date]
+   
+    @latemark_deductions = LatemarkDeduction.where(latemark_day: @from.to_date..@to.to_date).where(paid: nil)
   end
 
   def revert_latemark_value
-    from = params[:from_date]
-    to = params[:to_date]
-    @from = from.to_date
-    @to = to.to_date
+    @from = params[:from_date]
+    @to = params[:to_date]
     
-    @latemark_deduction = LatemarkDeduction.where(latemark_day: @from..@to).where(paid: nil)
+    @latemark_deduction = LatemarkDeduction.where(latemark_day: @from.to_date..@to.to_date).where(paid: nil)
     @latemark_deduction.each do |l|
-      EmployeeAttendance.where(day: @from..@to).update_all(late_mark: nil)
-      LatemarkTotal.where(employee_id: l.employee_id).destroy_all
+      EmployeeAttendance.where(day: @from.to_date..@to.to_date).update_all(late_mark: nil)
+      LatemarkTotal.where(employee_id: l.employee_id,latemark_date: @from.to_date..@to.to_date).destroy_all
     end
 
     # @employee_attendances = EmployeeAttendance.where(day: @from..@to).where.not(late_mark: nil) 

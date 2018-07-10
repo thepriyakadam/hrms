@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     end
   end
   resources :regularization_reasons
+  resources :food_options
   resources :compliance_records do
     collection do
       get :periodwise_report
@@ -30,7 +31,11 @@ Rails.application.routes.draw do
     end
   end
   resources :agencies
-  resources :transaction_records
+  resources :transaction_records do
+    collection do
+      get :modal_show
+    end
+  end
   resources :compliance_types
   resources :galleries 
   resources :pictures
@@ -63,6 +68,8 @@ Rails.application.routes.draw do
       get :deduction_report
       post :show_deduction_report
       get :show_deduction_report
+      post :show_list_for_latemark
+      get :revert_latemark_value
     end
   end
   resources :meeting_follow_ups do
@@ -1701,6 +1708,7 @@ end
   resources :daily_bill_details do
     collection do
     # post :is_confirm
+    get :select_form
     get :is_confirm
     get :print_daily_bill
     get :daily_bill_history
@@ -2676,6 +2684,9 @@ end
       post :create_employee_template
       get :is_confirm
       get :modal
+      get :salary_component_list
+      get :import_xl
+      post :import
     end
   end
   resources :universities do

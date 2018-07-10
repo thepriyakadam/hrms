@@ -8,16 +8,15 @@
     </div>
 
     <div class="col-sm-3">
-    <label>Salary Component Name</label>
       <div class="form-group required">
-        <%= f.text_field :name,hide_label:true, placeholder: 'Salary Component Name' %>
+        <%= f.text_field :name,label:"Name", placeholder: 'Name' %>
       </div>
     </div>
 
     <div class="col-sm-3">
-    <label>Salary Component Description</label>
+    <label>Description</label>
       <div class="form-group">
-        <%= f.text_field :description,hide_label:true, placeholder: 'Salary Component Description' %>
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
       </div>
     </div>
 
@@ -31,7 +30,7 @@
 
      <div class="row">
       <div class="col-sm-3">
-      <div class="form-group required">       
+      <div class="field">       
         <%= f.select :is_deducted,[['Yes','true'],['No','false']],{label: 'Is Deducted',include_blank: "Select Option"} %>
       </div>
     </div>

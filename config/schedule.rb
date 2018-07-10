@@ -17,7 +17,7 @@ end
 
 ##################  Transaction Record ####################
 
-every :day, :at => '11:00am' do
+every :day, :at => '02:50pm' do
   rake 'atte_task:transaction_att', :environment => 'development',   :output => 'log/cron.log'
 end
 

@@ -1,0 +1,24 @@
+<table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+  <thead>
+    <tr>  
+      <th>Code</th>
+      <th>Name</th>
+      <th>Account Code</th>
+      <th>Deducted</th>
+      <th>Base Component</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @salary_components.each do |salary_component| %>
+      <tr>
+        <td><%= salary_component.code %></td>
+        <td><%= salary_component.name %></td>
+        <td><%= salary_component.account_code %></td>
+        <td><%= salary_component.is_deducted ? "Yes" : "No" %></td>
+        <td><%= salary_component.is_base ? "Yes" : "No" %></td>
+        <td><%= salary_component.is_active ? "Active" : "Inactive" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

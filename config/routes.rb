@@ -3398,6 +3398,11 @@ end
     post 'user_auths/solved_request' => 'user_auths#solved_request', defaults:{format: 'json'}
     get 'user_auths/issue_tracker_member_list' => 'user_auths#issue_tracker_member_list', defaults:{format: 'json'}
     get 'user_auths/support_root_cause_list' => 'user_auths#support_root_cause_list', defaults:{format: 'json'}
+    get 'user_auths/solved_confirm' => 'user_auths#solved_confirm', defaults:{format: 'json'}
+    get 'user_auths/resend_request' => 'user_auths#resend_request', defaults:{format: 'json'}
+    get 'user_auths/active_leaving_reason' => 'user_auths#active_leaving_reason', defaults:{format: 'json'}
+    get 'user_auths/display_notice_period' => 'user_auths#display_notice_period', defaults:{format: 'json'}
+    post 'user_auths/create_self_resignation' => 'user_auths#create_self_resignation', defaults:{format: 'json'}
   end
 end
 

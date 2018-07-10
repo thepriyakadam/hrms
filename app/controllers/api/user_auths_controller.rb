@@ -2507,4 +2507,78 @@ class Api::UserAuthsController < ApplicationController
     render :json => all_issue_root_cause.present? ? all_issue_root_cause.collect{|itm| { :id => itm.id, :name => itm.name }} : []
   end
 
+  def solved_confirm
+    issue_request = params[:issue_request]
+    @issue_request = IssueRequest.find(issue_request)
+    @issue_request.update(is_complete: true)
+    render :status=>200, :json=>{:status=> 'Support Request Confirmed Successfully' }
+  end
+
+  def resend_request
+    issue_request = params[:issue_request]
+    @issue_request = IssueRequest.find(issue_request)
+    IssueRequest.where(id: @issue_request.id).update_all(status: nil,issue_tracker_member_id: nil,issue_root_cause_id: nil,effort_time: nil,comment: nil) 
+    IssueHistory.create(issue_tracker_group_id: @issue_request.issue_tracker_group_id,issue_request_id: @issue_request.id,issue_master_id: @issue_request.issue_master_id,description: @issue_request.description,date: @issue_request.date,time: @issue_request.time,employee_id: @issue_request.employee_id,issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_priority: @issue_request.issue_priority,status: nil)
+    # IssueRequestMailer.issue_resend(@issue_request).deliver_now
+    render :status=>200, :json=>{:status=> 'Support Request Resend Successfully' }
+  end
+
+  def active_leaving_reason
+    leaving_reason = LeavingReason.where(is_confirm: true)
+    render :json => leaving_reason.present? ? leaving_reason.collect{|itm| { :id => itm.id, :name => itm.name, :code => itm.code, :description => itm.description, :is_confirm => itm.is_confirm}} : []
+  end
+
+  def display_notice_period
+    employee_id = params[:employee_id]
+    @employee = Employee.find(employee_id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @notice_period = @joining_detail.notice_period_after_probation
+    render :status=>200, :json=>{:status=> @notice_period}
+  end
+
+  def create_self_resignation
+    @employee_resignation = EmployeeResignation.new
+    employee_id = params[:employee_id]
+    application_date = Date.today
+    resignation_date = params[:resignation_date]
+    leaving_reason_id = params[:leaving_reason_id]
+    tentative_leaving_date = params[:tentative_leaving_date]
+    reason = params[:reason]
+    note = params[:note]
+    status  = ''
+    @employee = Employee.find_by(id: employee_id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @notice_period = @joining_detail.notice_period_after_probation
+
+    if resignation_date == "" || leaving_reason_id == "" || tentative_leaving_date == "" || reason == ""
+      status = "Please fill all mandatory fields!"
+    else
+      if @employee_resignation.is_there_self(employee_id)
+      status = "Your Request already has been sent"
+     else
+        @employees=Employee.find_by(id: employee_id)
+        @date_diff = (tentative_leaving_date.to_date - resignation_date.to_date).to_i
+
+        @employee_resignation = EmployeeResignation.create(short_notice_period: @date_diff,reporting_master_id: @employees.manager_id,is_pending: true,resign_status: "Pending",is_first_approved: false,is_first_rejected: false, is_cancelled: false,employee_id: employee_id,resignation_date: resignation_date,application_date: application_date,reason: reason,note: note,leaving_reason_id: leaving_reason_id,notice_period: @notice_period,tentative_leaving_date: tentative_leaving_date)  
+        @resignation_status_record = ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: employee_id,status: "Pending",change_date: Date.today)
+        EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
+        # status = "Created Successfully!"
+      end#is_there?
+    end#nil
+      # redirect_to employee_resignation_self_services_path
+    if status.empty?
+      render :status=>200, :json=>{:status=> "Created Successfully!"}
+    else
+      render :status=>200, :json=>{:status=> status }
+    end
+  end
+
+  def pending_resignation_requests
+    @pending_resignation_requests = EmployeeResignation.where(is_pending: true, is_first_approved: false,is_first_rejected: false, is_cancelled: false,reporting_master_id: current_user.employee_id)
+  end
+  
+  def first_approved_resignation_requests   
+    @first_approved_resignation_requests = EmployeeResignation.where(is_first_approved: true, is_second_approved: false,is_second_rejected: false, is_cancelled: false,second_reporter_id: current_user.employee_id)
+  end
+ 
 end

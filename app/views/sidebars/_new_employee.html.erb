@@ -1,5 +1,5 @@
 <ul class="sidebar-menu">
-  <li class="header"> <a href="/home"> <Center> <% if current_user.class == Member %><%= current_user.company_location.company.try(:name) %>
+  <li class="header"> <a href="/home"> <Center> <% if current_user.class == Member %><%= current_user.try(:company_location).try(:company).try(:name) %>
     <%else%><%= current_user.subdomain %> - <%= current_user.class %> <%end%>DASHBOARD</Center></a></li>
      <li class="treeview" id="EmployeeSelfService">
           <a href="">

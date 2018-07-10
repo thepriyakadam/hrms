@@ -60,6 +60,7 @@ Rails.application.routes.draw do
       get :latemark_total
       get :latemark_report
       post :show_datewise_report
+      get :show_datewise_report
       get :datewise_report
       get :import_xl
       post :import

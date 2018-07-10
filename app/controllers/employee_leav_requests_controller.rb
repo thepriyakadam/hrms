@@ -154,6 +154,7 @@ class EmployeeLeavRequestsController < ApplicationController
                   end
                 end
 
+
                 if @employee_leav_request.is_available_coff?
                   flash[:alert] = "Your Leave Request already has been sent"
                 elsif @employee_leav_request.is_salary_processed_coff?

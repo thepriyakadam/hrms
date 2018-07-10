@@ -292,7 +292,7 @@ class SalaryslipsController < ApplicationController
         @employees = Employee.where(status: "Active",id: emp_ids) 
       elsif current_user.class == Member
         if current_user.role.name == "GroupAdmin"
-          @employees = Employee.where(status: "Active",id: emp_ids)
+          @employees = Employee.where(id: emp_ids)
         elsif current_user.role.name == "Admin"
           company_employees = Employee.where(status: "Active",company_id: current_user.company_location.company_id).pluck(:id)
           new_ids = company_employees & emp_ids
@@ -388,17 +388,17 @@ class SalaryslipsController < ApplicationController
             end
           end
 
-          date = Date.new(@year.to_i, Workingday.months[@month])
-          @latemark_deductions = LatemarkDeduction.where(latemark_day: date..date.at_end_of_month, employee_id: @employee.id)
-          unless @latemark_deductions.empty?
-            @latemark_deductions.each do |f|
-              f.update(paid: true)
-              deducted_actual_amount = 0
-              deducted_calculated_amount = f.latemark_amount
-              deducted_total_actual_amount += deducted_actual_amount
-              deducted_total_calculated_amount += deducted_calculated_amount
-            end
-          end
+          # date = Date.new(@year.to_i, Workingday.months[@month])
+          # @latemark_deductions = LatemarkDeduction.where(latemark_day: date..date.at_end_of_month, employee_id: @employee.id)
+          # unless @latemark_deductions.empty?
+          #   @latemark_deductions.each do |f|
+          #     f.update(paid: true)
+          #     deducted_actual_amount = 0
+          #     deducted_calculated_amount = f.latemark_amount
+          #     deducted_total_actual_amount += deducted_actual_amount
+          #     deducted_total_calculated_amount += deducted_calculated_amount
+          #   end
+          # end
 
           @monthly_expences = MonthlyExpence.where(employee_id: @employee.id, expence_date: date.all_month)
           @monthly_expences.try(:each) do |m|
@@ -617,9 +617,6 @@ class SalaryslipsController < ApplicationController
                 formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
                 @total = formula_item.sum(:calculated_amount)
                 @total_actual = formula_item.sum(:actual_amount)
-
-               
-               
                   if s.basis_actual_amount == true
                     if @total_actual.between?(s.min_amount, s.max_amount) && @month != "February" && @employee.company_location_id == s.company_location_id
                       @salary_component = SalaryComponent.find_by(name: "Professional Tax")
@@ -640,7 +637,6 @@ class SalaryslipsController < ApplicationController
                       SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.march_amount, calculated_amount: s.march_amount,
                         is_deducted: true, other_component_name: 'Professional Tax',salary_component_id: @salary_component.id)
                     end
-                 
                 end
               end
 
@@ -747,6 +743,7 @@ class SalaryslipsController < ApplicationController
               @other_deduction = 0
               @gmk_deduction = 0
               @bank_loan = 0
+              @latemark_deduction = 0
               @monthly_expences.try(:each) do |m|
                 if m.expencess_type.name == @salary_component.name
                  @mobile_deduction = @mobile_deduction + m.amount
@@ -1212,31 +1209,28 @@ end
    
     if current_user.class == Group
       if @company == ""
-        @employees = Employee.where(status: "Active").pluck(:id)
-        @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
+        @salaryslips = Salaryslip.where(month_year: start_date..end_date)
       elsif @location == "" || @location == nil
-        @employees = Employee.where(status: "Active",company_id: @company.to_i).pluck(:id)
+        @employees = Employee.where(company_id: @company.to_i).pluck(:id)
         @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
       else
-        @employees = Employee.where(status: "Active",company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+        @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
         @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
       end
     elsif current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
         if  @company == ""
-          @employees = Employee.where(status: "Active").pluck(:id)
-          @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
+          @salaryslips = Salaryslip.where(month_year: start_date..end_date)
         elsif @location == "" || @location == nil
-          @employees = Employee.where(status: "Active",company_id: @company.to_i).pluck(:id)
+          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
         else
-          @employees = Employee.where(status: "Active",company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Admin'
         if @company == ""
-          @employees = Employee.where(status: "Active").pluck(:id)
-          @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
+          @salaryslips = Salaryslip.where(month_year: start_date..end_date)
         elsif @location == "" || @location == nil
           @employees = Employee.where(status: "Active",company_id: @company.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)

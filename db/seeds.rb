@@ -11,7 +11,6 @@ ActiveRecord::Base.transaction do
 
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   puts "#{@employee.manual_employee_code}---------------------"
- 
   @salary_template = SalaryTemplate.find_by_code(ex.cell(line,'B'))
   @salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?
 
@@ -55,4 +54,3 @@ ActiveRecord::Base.transaction do
   gross_salary = 0
 end
 end
-

@@ -21,4 +21,9 @@ namespace :atte_task do
     TransactionRecord.email_to_all
   end
 
+  desc 'check attendance data'
+  task :check_att => :environment do
+    DailyAttendance.check_attendance
+  end
+
 end

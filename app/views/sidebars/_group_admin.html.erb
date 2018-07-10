@@ -319,6 +319,7 @@
             <li><a href="/employee_leav_requests" title="For initiating self leave request"><i class="fa fa-tags"></i> Leave Request </a></li>
             <li><a href="/on_duty_requests" title="For initiating self on duty request"><i class="fa fa-tags"></i> On Duty Request </a></li>
             <li><a href="/self_services/leave_c_off" title="For creating self compensatory off"><i class="fa fa-tags"> </i> Comp. Off Request</a></li>
+            <li><a href="/attendance_regularizations" title="To view the details of attendance regularizations"><i class="fa fa-tags"></i> Regularize Attendance </a></li>
             <!-- <li><a href="/leave_transfers/new" title="For applying leave transfer request"><i class="fa fa-tags"></i> Leave Transfer </a></li> -->
             <li><a href="/self_services/employee_attendance" title="To view self attendance and can make excel and pdf report "><i class="fa fa-tags"></i> Attendance </a></li>
             <!-- <li><a href="/employee_attendances/access_record" title="To send the access card request for self"><i class="fa fa-tags"></i> ACF Request </a></li> -->
@@ -370,7 +371,7 @@
              <li><a href="/manager_self_services/approved_or_rejected_leave_request" title="Leave approval and rejection"><i class="fa fa-thumbs-up"></i> Leave Approval </a></li>
             <li><a href="/manager_self_services/request_approval_list" title="On duty approval and rejection"><i class="fa fa-thumbs-up"></i> On Duty Approval </a></li>
             <li><a href="/manager_self_services/leave_c_off" title="For approving the compensatory off which raise by employee"><i class="fa fa-thumbs-up"> </i> Comp. Off Approval </a></li>
-
+            <li><a href="/attendance_regularizations/attendance_regularization_approve" title="For approving attendance regularization"><i class="fa fa-thumbs-up"></i> Regularize Attendance </a></li>
             <li><a href="/employee_attendances/access_card_approval" title="For approving the access card"><i class="fa fa-tags"></i> ACF Approval </a></li>
            <!--  <li><a href="/manager_self_services/subordinate_attendance" title="To view all attendance report by selecting date"><i class="fa fa-tags"></i> Attendance </a></li> -->
             <li><a href="/manager_self_services/employee_attendance" title="To view the attendance report by selecting date and employee"><i class="fa fa-tags"></i> Employee Attendance </a></li>
@@ -536,6 +537,7 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="/latemark_masters/new"><i class="fa fa-tags"> </i> Latemark Master </a></li>
+                <li><a href="/regularization_reasons"><i class="fa fa-tags"> </i> Reasons Master </a></li>
                 <li><a href="/latemark_masters/latemark_calculation"><i class="fa fa-tags"> </i> Latemark Calculation </a></li>
                 <li><a href="/latemark_masters/revert_latemark"><i class="fa fa-tags"> </i> Revert Latemark </a></li>
                 <li><a href="/latemark_masters/latemark_report"><i class="fa fa-tags"> </i> Latemark Report </a></li>
@@ -579,6 +581,8 @@
                 <li><a href="/employee_attendances/managerwise_average_report"><i class="fa fa-tags"></i> Manager Wise </a></li>
                 <li><a href="/employee_plans/gps_tracking"><i class="fa fa-tags"></i> GPS Tracking </a></li>
                 <li><a href="/workingdays/datewise_workingday"><i class="fa fa-tags"></i> Workingday </a></li>
+                <li><a href="/attendance_regularizations/date_wise_regularization"><i class="fa fa-tags"></i> Attendance Regularize </a></li>
+                <li><a href="/attendance_regularizations/employee_wise_regularization"><i class="fa fa-tags"></i> Employee Wise Regularize </a></li>
               </ul>
             </li> 
           </ul>
@@ -625,18 +629,22 @@
                     <li><a href="/employee_templates" title="For incrementing the salary through the previous template and also used to view salary breakup"><i class="fa fa-tags"></i> Salary Increment </a></li>
                   </ul>
               </li>
-              <li id="PeriodicComponents">
-                <a href="#"><i class="fa fa-edit"></i> Periodic Components <i class="fa fa-angle-left pull-right"></i></a>
-                  <ul class="treeview-menu">
-                    <li><a href="/food_deductions" title="To see the food deduction list of particular month and year . Also can create new food deduction"><i class="fa fa-tags"> </i> Food Coupon </a></li>
-                    <li><a href="/monthly_expences" title="To see the monthly expenses list of particular month and year . Also can create new monthly expenses"><i class="fa fa-tags"> </i> Monthly Expenses </a></li>
-                    <li><a href="/monthly_arrears/new" title="For creating monthly arrears for employee of particular dates "><i class="fa fa-tags"> </i> Monthly Arrears </a></li>
-                    <li><a href="/society_member_ships" title="To create new membership for employee"><i class="fa fa-tags"> </i> Membership </a></li>
-                    <li><a href="/transport_allowances" title="To create new transport allowance for employee"><i class="fa fa-tags"> </i> Transport Allowance </a></li>
-                  </ul>
-              </li>
+           
             </ul>
           </li>
+
+         <li id="PeriodicComponents">
+          <a href="#"><i class="fa fa-edit"></i> Periodic Components <i class="fa fa-angle-left pull-right"></i></a>
+            <ul class="treeview-menu">
+              <li><a href="/food_deductions" title="To see the food deduction list of particular month and year . Also can create new food deduction"><i class="fa fa-tags"> </i> Food Coupon </a></li>
+              <li><a href="/monthly_expences" title="To see the monthly expenses list of particular month and year . Also can create new monthly expenses"><i class="fa fa-tags"> </i> Monthly Expenses </a></li>
+              <li><a href="/monthly_arrears/new" title="For creating monthly arrears for employee of particular dates "><i class="fa fa-tags"> </i> Monthly Arrears </a></li>
+              <li><a href="/society_member_ships" title="To create new membership for employee"><i class="fa fa-tags"> </i> Membership </a></li>
+              <li><a href="/transport_allowances" title="To create new transport allowance for employee"><i class="fa fa-tags"> </i> Transport Allowance </a></li>
+              <li><a href="/employee_insentives" title="To see the employee insentives"><i class="fa fa-tags"> </i> Employee Insentives </a></li>
+            </ul>          
+          </li>
+
           <li id="AdvanceSalary">
             <a href="#"><i class="fa fa-edit"></i> Advance Salary <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">

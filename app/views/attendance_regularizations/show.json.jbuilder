@@ -1,0 +1,1 @@
+json.partial! "attendance_regularizations/attendance_regularization", attendance_regularization: @attendance_regularization

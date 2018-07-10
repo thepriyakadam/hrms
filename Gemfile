@@ -172,3 +172,5 @@ gem "axlsx_rails"
 #Chart
 gem "chartkick"
 gem 'pry'
+
+

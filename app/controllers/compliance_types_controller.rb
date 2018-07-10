@@ -1,4 +1,4 @@
-class ComplianceTypesController < ApplicationController
+ class ComplianceTypesController < ApplicationController
   before_action :set_compliance_type, only: [:show, :edit, :update, :destroy]
 
   # GET /compliance_types

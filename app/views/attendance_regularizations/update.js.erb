@@ -1,0 +1,6 @@
+<% if @flag %>
+  	$("#form").html("<%= j render 'form' %>")
+  	$("#attendance_regularization_list").html("<%= j render 'attendance_regularization_list' %>")
+	<% else %>
+  	$("#form").html("<%= j render 'form' %>")
+	<% end %>

@@ -1,0 +1,2 @@
+module AttendanceRegularizationsHelper
+end

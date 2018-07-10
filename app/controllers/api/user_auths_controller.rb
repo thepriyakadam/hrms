@@ -1742,7 +1742,15 @@ class Api::UserAuthsController < ApplicationController
     else
       employee_attendances = EmployeeAttendance.where(day: time_now).order("day DESC")
     end
-    render :json => employee_attendances.present? ? employee_attendances.collect{|eat| {:id => eat.id, :manual_employee_code => eat.try(:employee).try(:manual_employee_code), :employee_id => eat.employee_id, :prefix => eat.try(:employee).try(:prefix), :employee_first_name => eat.try(:employee).try(:first_name), :employee_middle_name => eat.try(:employee).try(:middle_name), :employee_last_name => eat.try(:employee).try(:last_name), :day => eat.day, :present => eat.present, :in_time => eat.in_time, :out_time => eat.out_time, :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs, :comment => eat.comment }} : []
+    render :json => employee_attendances.present? ? employee_attendances.collect{|eat| 
+      if eat.in_time.present? and eat.out_time.present?
+        {:id => eat.id, :manual_employee_code => eat.try(:employee).try(:manual_employee_code), :employee_id => eat.employee_id, :prefix => eat.try(:employee).try(:prefix), :employee_first_name => eat.try(:employee).try(:first_name), :employee_middle_name => eat.try(:employee).try(:middle_name), :employee_last_name => eat.try(:employee).try(:last_name), :day => eat.day, :present => eat.present, :in_time => eat.try(:in_time).strftime("%I:%M %p"), :out_time => eat.try(:out_time).strftime("%I:%M %p"), :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs, :comment => eat.comment }
+      elsif eat.in_time.present? and !eat.out_time.present?
+        {:id => eat.id, :manual_employee_code => eat.try(:employee).try(:manual_employee_code), :employee_id => eat.employee_id, :prefix => eat.try(:employee).try(:prefix), :employee_first_name => eat.try(:employee).try(:first_name), :employee_middle_name => eat.try(:employee).try(:middle_name), :employee_last_name => eat.try(:employee).try(:last_name), :day => eat.day, :present => eat.present, :in_time => eat.try(:in_time).strftime("%I:%M %p"), :out_time => eat.try(:out_time), :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs, :comment => eat.comment }      
+      else
+        {:id => eat.id, :manual_employee_code => eat.try(:employee).try(:manual_employee_code), :employee_id => eat.employee_id, :prefix => eat.try(:employee).try(:prefix), :employee_first_name => eat.try(:employee).try(:first_name), :employee_middle_name => eat.try(:employee).try(:middle_name), :employee_last_name => eat.try(:employee).try(:last_name), :day => eat.day, :present => eat.present, :in_time => eat.try(:in_time), :out_time => eat.try(:out_time), :employee_leav_request_id => eat.employee_leav_request_id, :on_duty_request_id => eat.on_duty_request_id, :working_hrs => eat.working_hrs, :comment => eat.comment }
+      end
+      } : []  
   end
 
   def yearly_company_holiday

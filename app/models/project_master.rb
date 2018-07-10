@@ -1,5 +1,7 @@
 class ProjectMaster < ActiveRecord::Base
 
+  has_many :travel_requests
+
 	validates :code,presence:true,uniqueness:{case_sensitive:false}
     validates :name,presence:true,uniqueness:{case_sensitive:false}
 

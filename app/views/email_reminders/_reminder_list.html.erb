@@ -1,0 +1,53 @@
+<br>
+<table id="example6" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr. No</th>
+      <th>Task</th>
+      <th>Frequency</th>
+      <th>Task Date</th>
+      <th>Reminder From</th>
+      <th>Reminder To</th>
+      <!-- <th>Email to</th>
+      <th>Email cc</th>
+      <th>Email bcc</th>
+      <th>Email text</th>
+      <th>Status</th> -->
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% i = 0 %>
+    <% @email_reminders.each do |email_reminder| %>
+      <tr>
+        <td><%= i = i + 1 %></td>
+        <td><%= email_reminder.task.try(:name) %></td>
+        <td><%= email_reminder.frequency %></td>
+        <td><%= email_reminder.task_date %></td>
+        <td><%= email_reminder.reminder_from %></td>
+        <td><%= email_reminder.reminder_to %></td>
+        <!-- <td><%#= email_reminder.email_to %></td>
+        <td><%#= email_reminder.email_cc %></td>
+        <td><%#= email_reminder.email_bcc %></td>
+        <td><%#= email_reminder.email_text %></td>
+        <td><%#= email_reminder.status %></td> -->
+        <td>
+            <%= link_to '',email_reminder,class: 'btn btn-default btn-xs fa fa-eye' %>
+            <%= link_to '', edit_email_reminder_path(email_reminder),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+            <%= link_to '', email_reminder, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true,
+        "scrollY": 500
+    } );
+} );
+</script>

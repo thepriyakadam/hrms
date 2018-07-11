@@ -1,6 +1,6 @@
 
   <div class="box-body">
-    <table id="example1" class="table table-bordered table-hover table-condensed">
+    <table id="example6" class="table table-bordered table-hover table-condensed">
     <% i = 0%>
       <thead>
         <tr><th colspan="8"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
@@ -40,3 +40,11 @@
  
      <%= link_to " Print Report ",self_service_datewise_attendance_employee_attendances_path(:employee => {:from => params[:employee][:from],:to =>  params[:employee][:to],:employee_id => params[:employee][:employee_id]},format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
   </div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

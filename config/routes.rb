@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :email_reminders
+  resources :tasks
   resources :food_options
   resources :compliance_records do
     collection do

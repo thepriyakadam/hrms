@@ -20,6 +20,7 @@ class GoalBunchesController < ApplicationController
   def new
     @goal_bunch = GoalBunch.new
     @goal_bunches = GoalBunch.where(employee_id: current_user.employee_id)
+    @employee = Employee.find_by(id: current_user.employee_id)
     #@period_id = params[:period_id]
     session[:active_tab] ="EmployeeSelfService"
   end

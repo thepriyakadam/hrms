@@ -22,4 +22,8 @@ namespace :atte_task do
     TransactionRecord.email_to_all
   end
 
+  desc 'reminder data'
+  task :reminder_msg => :environment do
+    EmailReminder.reminder_mail
+  end
 end

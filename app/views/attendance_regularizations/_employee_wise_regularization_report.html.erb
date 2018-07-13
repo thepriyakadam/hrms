@@ -1,0 +1,47 @@
+<!-- SELECT2 EXAMPLE -->
+<br />
+<br />
+<div class="box box-default">
+  <div class="box-body">
+  <div class="pull-right">
+      <%= link_to " Excel Report ", employee_wise_regularization_report_attendance_regularizations_path(from_date: params[:attendance_regularization][:from_date], to_date: params[:attendance_regularization][:to_date], employee_id: params[:attendance_regularization][:employee_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%= link_to " Print Report ", employee_wise_regularization_report_attendance_regularizations_path(from_date: params[:attendance_regularization][:from_date], to_date: params[:attendance_regularization][:to_date], employee_id: params[:attendance_regularization][:employee_id], format: "xls", format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+    </div><br /> <br />
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Sr.No.</th>
+          <th>ID</th>
+          <th>Employee Name</th>
+          <th>Date</th>
+          <th>Regularization Reason</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% i = 0 %>
+        <% @regularization_report.each do |attendance_regularization| %>
+          <tr>
+            <td><%= i = i+1 %></td>
+            <td><%= attendance_regularization.employee.try(:manual_employee_code)%>
+            <% @employee = Employee.find(attendance_regularization.employee_id) %>
+            <td><%= full_name(@employee) %></td>
+            <td><%= attendance_regularization.date %></td>
+            <td><%= attendance_regularization.regularization_reason.try(:name) %></td>
+            <td>
+              <% if attendance_regularization.status == "Pending" %>
+                <small class="label label-default">Pending</small>
+              <% elsif attendance_regularization.status == "Approved" %>
+                <small class="label label-success">Approved</small>
+              <% elsif attendance_regularization.status == "Rejected" %>
+                <small class="label label-danger">Rejected</small>
+              <% else %>
+                <small class="label label-info">Else</small>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

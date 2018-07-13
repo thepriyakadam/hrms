@@ -19,7 +19,8 @@ module EmployeeAttendancesHelper
     start_date = from.to_date
     end_date = to.to_date
     joining_detail = JoiningDetail.find_by(employee_id: e.employee_id)
-    start_date.step(end_date).each do |d|
+    #start_date.step(end_date).each do |d|
+    for d in start_date..end_date
       attendance_record = EmployeeAttendance.where(day: d, employee_id: e.employee_id).take
       if attendance_record.nil?
         unless joining_detail.nil?
@@ -41,7 +42,7 @@ module EmployeeAttendancesHelper
       unless exist.key?(d)
         exist[d] = ""
       end
-    end
+    end#for
     Hash[exist.sort]
   end
   
@@ -75,6 +76,7 @@ module EmployeeAttendancesHelper
   end
 
   def present_count(exist)
+
      exist.select {|k,v| v == "P" }.count + (exist.select {|k,v| v == "HD" }.count)/2.to_f  +
      (exist.select {|k,v| v == "P/OD" }.count)/2.to_f +  (exist.select {|k,v| v == "OD/P" }.count)/2.to_f
   end
@@ -92,7 +94,7 @@ module EmployeeAttendancesHelper
   def holiday_count(exist)
      exist.select {|k,v| v == "H" }.count + exist.select {|k,v| v == "H/P" }.count + exist.select {|k,v| v == "HP" }.count  + 
      exist.select {|k,v| v == "H/OD" }.count + exist.select {|k,v| v == "OD/H" }.count + exist.select {|k,v| v == "H/HD" }.count + 
-     exist.select {|k,v| v == "H/HDOD" }.count
+     exist.select {|k,v| v == "H/HDOD" }.count + exist.select {|k,v| v == "HOD" }.count
   end
 
   def weekoff_count(exist)

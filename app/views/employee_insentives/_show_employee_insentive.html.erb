@@ -1,0 +1,44 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Employee Insentive Detail </center></h4>
+    </div>
+    <div class="modal-body">
+      <table class="table table-bordered table-hover table-condensed">
+        <thead>
+          <% emp = Employee.find(@employee_insentive.employee_id) %>
+          <tr>
+            <th>ID</th>
+            <td><%= emp.manual_employee_code %></td>
+          </tr>
+
+          <tr>
+            <th>Employee Name</th>
+            <td><%= full_name(emp) %></td>
+          </tr>
+
+          <tr>
+            <th>Date</th>
+            <td><%= @employee_insentive.date %></td>
+          </tr>
+
+          <tr>
+            <th>Amount</th>
+            <td><%= @employee_insentive.amount %></td>
+          </tr>
+
+          <tr>
+            <th>Status</th>
+            <td><%= @employee_insentive.status %></td>
+          </tr>
+
+          <tr>
+            <th>Description</th>
+            <td><%= @employee_insentive.description %></td>
+          </tr>
+       </thead>
+      </table>
+    </div>
+  </div>
+</div>

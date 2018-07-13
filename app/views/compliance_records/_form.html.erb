@@ -2,12 +2,12 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.select :compliance_type_id,all_compliance_type,{hide_label: true,include_blank: " Select Compliance Type"} %>
+        <%= f.select :compliance_type_id,all_compliance_type,{hide_label: true,include_blank: "Select Payment Type"} %>
       </div>
     </div>
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.select :agency_id,all_agency_type,{hide_label: true,include_blank: " Select Agency Type"} %>
+        <%= f.select :agency_id,all_agency_type,{hide_label: true,include_blank: "Select Agency Type"} %>
       </div>
     </div>
     <div class="col-sm-3">
@@ -29,17 +29,17 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="form-group required">
-        <%= f.text_field :comment, hide_label: true,placeholder: "comment"%>
+        <%= f.text_field :comment, hide_label: true,placeholder: "Comment"%>
       </div>
     </div>
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.check_box :status, label: "Active" %>
+        <%= f.check_box :status, label: "Acknowledged" %>
       </div>
     </div>
     <div class="col-sm-3">
       <div class="actions">
-        <%= f.submit "Create Compliance Record",class: "btn btn-primary btn-sm" %>
+        <%= f.submit "Create",class: "btn btn-primary btn-sm" %>
       </div>
     </div>
   </div>
@@ -57,10 +57,10 @@ $("#compliance_record").validate({
        },
     messages: {
       "compliance_record[compliance_type_id]":{
-        required: "Please specify compliance_type",
+        required: "Please specify Payment type",
       },
       "compliance_record[agency_id]":{
-        required: "Please specify agency",
+        required: "Please specify external agency",
       }
        },
     errorPlacement: function(error, element) {

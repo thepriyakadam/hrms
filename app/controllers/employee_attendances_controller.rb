@@ -60,6 +60,12 @@ class EmployeeAttendancesController < ApplicationController
     end
   end
 
+  def check_attendance
+    DailyAttendance.check_attendance
+    flash[:notice] = "Employee Check Attendance Calculated Successfully..!"
+    redirect_to new_employee_attendance_path
+  end
+
   # GET /employee_attendances/1
   # GET /employee_attendances/1.json
   def show
@@ -399,6 +405,14 @@ end
     #department = params[:employee_attendances][:department_id]
     @employee = Employee.where(id: @employee_ids)
 
+    if in_time == "" && out_time == ""
+      in_time = "08:30" 
+      out_time = "17:30"
+    elsif in_time == "" 
+      in_time = "08:30"
+    elsif out_time == ""
+      out_time = "17:30"
+    end
      total_hrs = out_time.to_time - in_time.to_time
      working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
     
@@ -2949,9 +2963,9 @@ end
   end
 
   def show_datewise_all
-    @from = params[:employee][:from]
-    @to = params[:employee][:to]
-
+     @from = params[:employee] ? params[:employee][:from] : params[:from]
+    @to = params[:employee] ? params[:employee][:to] : params[:to]
+    @name = params[:save]
     if params[:save]
       @name = params[:save]
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).order('day asc')
@@ -2986,6 +3000,20 @@ end
       @name = params[:leave]
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date).where.not(employee_leav_request_id: nil).order('day asc')
     end
+
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_attendances/datewise_attendance_with_option.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'employee_attendance',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_attendances/datewise_attendance_with_option.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
+    end
+
   end
  
   def show_datewise_all_report

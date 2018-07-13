@@ -11,7 +11,7 @@
   <%= bootstrap_form_for(:employee, url: { action: 'show_self_datewise_attendance'},html: {id: "employee"},remote: true) do |f| %>
   <%= hidden_field :employee,:employee_id, value: current_user.employee_id %>
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <label>From </label>
           <div class="form-group required">
             <div class="input-group">
@@ -23,7 +23,7 @@
           </div>
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <label>To </label>
           <div class="form-group required">
             <div class="input-group">
@@ -34,7 +34,7 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-2" style="padding-top:20px;">
+        <div class="col-sm-4" style="padding-top:20px;">
           <%= f.submit "Submit",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %>
         </div>
 

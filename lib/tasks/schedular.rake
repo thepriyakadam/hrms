@@ -11,7 +11,6 @@ namespace :atte_task do
     DailyAttendance.calculate_attendance(2)
   end
 
-
   desc 'attendance data'
   task :third_fetch_att => :environment do
     DailyAttendance.third_fetch_data(3)
@@ -26,4 +25,10 @@ namespace :atte_task do
   task :reminder_msg => :environment do
     EmailReminder.reminder_mail
   end
+
+  desc 'check attendance data'
+  task :check_att => :environment do
+    DailyAttendance.check_attendance
+  end
+
 end

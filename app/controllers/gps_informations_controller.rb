@@ -9,8 +9,9 @@ class GpsInformationsController < ApplicationController
 
   def all_emp_list
     gps_informations = GpsInformation.all
+    @gps_information = GpsInformation.new
     @employee = Employee.where(status: "Active")
-    @employees = JoiningDetail.where(employee_id: @employee, gps_track: true)
+    @employees = JoiningDetail.where(employee_id: @employee, restricted_area: true, gps_track: true)
     session[:active_tab] ="UserAdministration"
   end
 
@@ -24,16 +25,30 @@ class GpsInformationsController < ApplicationController
       flash[:alert] = "Please Select the Checkbox"
       redirect_to all_emp_list_gps_informations_path
     else
-      all_dats = (@day.to_date..@to_days.to_date).map{ |date| date.strftime("%b %d %y") }
-      all_dats.each do |date|
-        @employee_ids.each do |eid|
-          current_date = date.to_date
-          GpsInformation.create(employee_id: eid, day: current_date, place: @place, radius: @radius)  
+      if @day == ""
+        flash[:alert] = "Please Select From Date or To Date"
+        redirect_to all_emp_list_gps_informations_path
+      else 
+        all_dats = (@day.to_date..@to_days.to_date).map{ |date| date.strftime("%b %d %y") }
+        all_dats.each do |date|
+          @employee_ids.each do |eid|
+            current_date = date.to_date
+            @gps_data = GpsInformation.where(employee_id: eid,  day: current_date)
+            if @gps_data.present?
+              @gps_data.update_all(employee_id: eid, day: current_date, place: @place, radius: @radius)  
+            else
+              GpsInformation.create(employee_id: eid, day: current_date, place: @place, radius: @radius)  
+            end
+          end
         end
+        flash[:notice] = "Updated Successfully"
+        redirect_to all_emp_list_gps_informations_path
       end
-      flash[:notice] = "Updated Successfully"
-      redirect_to all_emp_list_gps_informations_path
     end
+  end
+
+  def view_gps_info
+    @gps_information = GpsInformation.find(params[:format])
   end
 
   # GET /gps_informations/1

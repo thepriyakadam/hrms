@@ -41,8 +41,9 @@
      <%= link_to " Print Report ",self_service_datewise_attendance_employee_attendances_path(:employee => {:from => params[:employee][:from],:to =>  params[:employee][:to],:employee_id => params[:employee][:employee_id]},format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
   </div>
 
+
 <script type="text/javascript">
-  $(document).ready(function() {
+$(document).ready(function() {
     $('#example6').DataTable( {
         "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
     } );

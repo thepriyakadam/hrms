@@ -65,7 +65,7 @@ class CertificatesController < ApplicationController
     end
   end
 
-   def certificate_print
+ def certificate_print
     @employee = Employee.find(params[:salary][:employee_id])
     
     certificate_id = params[:salary][:certificate_master_id]
@@ -107,6 +107,7 @@ class CertificatesController < ApplicationController
       end
     end
   end
+
  private
     # Use callbacks to share common setup or constraints between actions.
     def set_certificate

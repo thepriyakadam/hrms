@@ -51,9 +51,7 @@ class HomeController < ApplicationController
     #           ]
     #     }
     # })
-
-
-
+    
     @sidebar_tabs = SidebarTab.all
     
     @circulars = Circular.where(is_active: true)

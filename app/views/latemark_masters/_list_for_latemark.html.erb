@@ -6,7 +6,8 @@
       <th>ID</th>
       <th>Employee</th>
       <th>Date</th>
-      <th>In Time</th>
+      <th>Latemark Count</th>
+        <th>Latemark Amount</th>
     </tr>
   </thead>
   <tbody>
@@ -17,15 +18,16 @@
         <td><%= i = i + 1 %></td>
         <td><%= latemark_deduction.employee.manual_employee_code %></td>
         <td><%= full_name(latemark_deduction.employee) %></td>
-        <td><%= latemark_deduction.latemark_date %></td>
-        <td><%= latemark_deduction.in_time.strftime("%I:%M") %></td>
+        <td><%= latemark_deduction.latemark_day %></td>
+        <td><%= latemark_deduction.latemark_count%></td>
+          <td><%= latemark_deduction.latemark_amount%></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <div class="col-sm-2" style="padding-top: 20px">
-  <%= link_to 'Revert Latemark',revert_latemark_value_latemark_masters_path(from_date: @from_date,to_date: @to_date),class: 'btn btn-primary btn-sm ' %>
+  <%= link_to 'Revert Latemark',revert_latemark_value_latemark_masters_path(from_date:  params[:latemark_master][:from_date], to_date:  params[:latemark_master][:to_date]),class: 'btn btn-primary btn-sm ' %>
 </div>
 
 

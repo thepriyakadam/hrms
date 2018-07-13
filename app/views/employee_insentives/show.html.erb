@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @employee_insentive.employee %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @employee_insentive.date %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @employee_insentive.amount %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @employee_insentive.status %>
+</p>
+
+<%= link_to 'Edit', edit_employee_insentive_path(@employee_insentive) %> |
+<%= link_to 'Back', employee_insentives_path %>

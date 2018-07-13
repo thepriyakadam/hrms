@@ -68,8 +68,7 @@ class JoiningDetail < ActiveRecord::Base
         contract_month = contract_month_value.to_i
 
         contract_end_date = spreadsheet.cell(i,'K')
-
-        if contract_end_date.nil? or !contract_month.nil? or !contract_month == ""
+        if !contract_month.nil? or !contract_month == nil or !contract_month == ""
           contract_end_date = joining_date.to_date + contract_month.months
         else
           contract_end_date = spreadsheet.cell(i,'K')
@@ -83,21 +82,23 @@ class JoiningDetail < ActiveRecord::Base
         passport_expiry_date = spreadsheet.cell(i,'R')
         leaving_date = spreadsheet.cell(i,'S')
         retirement_date = spreadsheet.cell(i,'T')
-
-        if retirement_date.nil? and employee.date_of_birth.present?
+        if retirement_date.nil?
+         if !@employee.date_of_birth.nil?
           employee = Employee.find_by(id: employee_id)
-          date_of_birth = employee.date_of_birth
-          retirement_date = date_of_birth.to_date + 58.years
-        else
+          @date_of_birth = employee.date_of_birth
+          retirement_date = @date_of_birth.to_date + 58.years
+          else
+            retirement_date = spreadsheet.cell(i,'T')
+          end
+         else
           retirement_date = spreadsheet.cell(i,'T')
         end
-
-         c_off = spreadsheet.cell(i,'U')
-         if c_off == "Yes"
-           c_off = true
-         else
-           c_off = false
-         end
+        c_off = spreadsheet.cell(i,'U')
+        if c_off == "Yes"
+          c_off = true
+        else
+          c_off = false
+        end
         @payment_mode = PaymentMode.find_by_name(spreadsheet.cell(i,'V'))
         if @payment_mode == nil
            payment_mode_name = spreadsheet.cell(i,'V')

@@ -25,11 +25,12 @@
               <div class="input-group-addon">
                 <%= link_to "", new_travel_expence_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
               </div>
-               <%= f.select :travel_expence_type_id, all_travel_expence_type, {label: 'Expense Type',include_blank: " Select Expense Type"},{onchange:"var a={travel_id:$(this).val()}; $.get('/daily_bill_details/select_form',a,function(response){});",class: 'form-control'} %>
+               <%= f.select :travel_expence_type_id, all_travel_expence_type, {label: 'Expense Type',include_blank: " Select Expense Type"},{onchange:"var a={travel_id:$(this).val(),request_id:$('#daily_bill_detail_travel_request_id').val()}; $.get('/daily_bill_details/select_form',a,function(response){});",class: 'form-control'} %>
             </div>
           </div>
         </div>
       </div>
+
       <div class="row">
         <div id="first_form"></div>
         <div id="second_form"></div>

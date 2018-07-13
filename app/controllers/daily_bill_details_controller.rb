@@ -98,15 +98,17 @@ class DailyBillDetailsController < ApplicationController
     @daily_bill_detail = DailyBillDetail.new
     @employee = Employee.find_by(id: current_user.employee_id)
     @travel_id = params[:travel_id]
-
+    @request_id = params[:request_id]
+    @travel_request = TravelRequest.find_by(id: @request_id)
+    
     if params[:travel_id] == "1" #travel
-      @flag = true
+      @flag = "first"
     elsif params[:travel_id] == "2" #food
-      @flag = "5"
+      @flag = "second"
     elsif params[:travel_id] == "3" #laundary
-      @flag = false
+      @flag = "third"
     elsif params[:travel_id] == "4"
-      @flag = "0"
+      @flag = "forth"
     else
     end
   end

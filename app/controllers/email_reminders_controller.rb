@@ -58,6 +58,10 @@ class EmailRemindersController < ApplicationController
     redirect_to email_reminders_path
   end
 
+  def modal_show
+    @email_reminder = EmailReminder.find(params[:format])
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_email_reminder

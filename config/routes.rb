@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :email_reminders
+  resources :email_reminders do
+    collection do
+      get :modal_show
+    end
+  end
   resources :tasks
   resources :food_options
   resources :compliance_records do

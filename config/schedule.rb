@@ -15,7 +15,7 @@ end
 #   # rake 'task_namespace:birthday_invitation_mail' , :environment => 'development',   :output => 'log/birthday_invitation_mail.log'
 # end
 
-every 1.hours do
+every :day, :at => '01:00am' do
   rake 'atte_task:reminder_msg', :environment => 'development',   :output => 'log/cron.log'
 end
 

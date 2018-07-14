@@ -3417,6 +3417,13 @@ end
     post 'user_auths/create_self_resignation' => 'user_auths#create_self_resignation', defaults:{format: 'json'}
     get 'user_auths/pending_resignation_requests' => 'user_auths#pending_resignation_requests', defaults:{format: 'json'}
     get 'user_auths/first_approved_resignation_requests' => 'user_auths#first_approved_resignation_requests', defaults:{format: 'json'}
+    post 'user_auths/employee_resignation_first_approve' => 'user_auths#employee_resignation_first_approve', defaults:{format: 'json'}
+    get 'user_auths/employee_resignation_first_reject' => 'user_auths#employee_resignation_first_reject', defaults:{format: 'json'}
+    get 'user_auths/all_resignation_requests' => 'user_auths#all_resignation_requests', defaults:{format: 'json'}
+    post 'user_auths/employee_resignation_final_approve' => 'user_auths#employee_resignation_final_approve', defaults:{format: 'json'}
+    get 'user_auths/employee_resignation_final_reject' => 'user_auths#employee_resignation_final_reject', defaults:{format: 'json'}
+    get 'user_auths/final_approval_emp_resignation_list' => 'user_auths#final_approval_emp_resignation_list', defaults:{format: 'json'}
+    get 'user_auths/resignation_status_records' => 'user_auths#resignation_status_records', defaults:{format: 'json'}
   end
 end
 

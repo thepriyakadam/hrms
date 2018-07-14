@@ -1153,7 +1153,13 @@ class Api::UserAuthsController < ApplicationController
   def resignation_history
     employee_id = params[:employee_id]
     employee_resignations = EmployeeResignation.where(employee_id: employee_id)
-    render :json => employee_resignations.present? ? employee_resignations.collect{|emppl| {:id => emppl.id, :employee_id => emppl.employee_id, :prefix => emppl.employee.prefix, :employee_first_name => emppl.employee.first_name, :employee_middle_name => emppl.employee.middle_name, :employee_last_name => emppl.employee.last_name, :resignation_date => emppl.resignation_date, :is_notice_period => emppl.is_notice_period, :notice_period => emppl.notice_period, :short_notice_period => emppl.short_notice_period, :tentative_leaving_date => emppl.tentative_leaving_date, :remark => emppl.remark, :exit_interview_date => emppl.exit_interview_date, :note => emppl.note, :leaving_date => emppl.leaving_date, :settled_on => emppl.settled_on,:resign_status => emppl.resign_status }} : []
+    render :json => employee_resignations.present? ? employee_resignations.collect{|er| { :id => er.id, :manual_employee_code => er.try(:employee).try(:manual_employee_code), :prefix => er.try(:employee).try(:prefix), :employee_first_name => er.try(:employee).try(:first_name), :employee_middle_name => er.try(:employee).try(:middle_name), :employee_last_name => er.try(:employee).try(:last_name), :employee_id => er.employee_id, :resignation_date => er.resignation_date, :reason => er.reason, :notice_period => er.notice_period, :is_notice_period => er.is_notice_period, :short_notice_period => er.short_notice_period, :tentative_leaving_date => er.tentative_leaving_date, :remark => er.remark, :exit_interview_date => er.exit_interview_date, :note => er.note, :leaving_date => er.leaving_date, :settled_on => er.settled_on, :has_left => er.has_left, :notice_served => er.notice_served, :rehired => er.rehired, :resign_status => er.resign_status, :leaving_reason_id => er.leaving_reason.try(:name), :is_stop_pay_request => er.is_stop_pay_request, :second_reporter_id => er.second_reporter_id, :final_reporter_id => er.final_reporter_id, :is_pending => er.is_pending, :is_first_approved => er.is_first_approved, :is_second_approved => er.is_second_approved, :is_final_approved => er.is_final_approved, :is_cancelled => er.is_cancelled, :is_first_rejected => er.is_first_rejected, :is_second_rejected => er.is_second_rejected, :is_final_rejected => er.is_final_rejected, :application_date => er.application_date, :reporting_master_id => er.reporting_master_id }} : []
+  end
+
+  def resignation_status_records
+    employee_resignation = params[:employee_resignation_id]
+    resignation_status_records = ResignationStatusRecord.where(employee_resignation_id: employee_resignation)
+    render :json => resignation_status_records.present? ? resignation_status_records.collect{|rsr| { :id => rsr.id, :employee_resignation => rsr.employee_resignation_id, :change_status_employee_id => rsr.change_status_employee_id, :status => rsr.status, :change_date => rsr.change_date }} : []
   end
 
   def employee_feedback
@@ -1514,23 +1520,26 @@ class Api::UserAuthsController < ApplicationController
       emp = Employee.find(employee_id)
       od_employees = emp.subordinates
       employees_ind = emp.indirect_subordinates
+      @emps = od_employees + employees_ind
       pending_od = OnDutyRequest.where(current_status: "Pending", employee_id: od_employees).count
       pending_leave  = EmployeeLeavRequest.where(current_status: "Pending", first_reporter_id: employee_id).count
       @employees = Employee.where(manager_id: employee_id).pluck(:id)
-      leave_c_off = LeaveCOff.where(employee_id: @employees, current_status: "Pending").count
+      leave_c_off = LeaveCOff.where(employee_id: @emps, is_taken: false,status: false,is_expire: false,current_status: "Pending").count
       employee_plan = EmployeePlan.where(manager_id: employee_id, current_status: "Pending").count
       travel_requests = TravelRequest.where(reporting_master_id: employee_id, current_status: "Pending").count
       expense_claim = TravelRequest.where(reporting_master_id: employee_id, current_status: "FinalApproved", is_confirm: true).count
-      render :status=>200, :json=>{:pending_leave => pending_leave, :pending_od => pending_od, :gps_track => @gps_track, :restricted_area => @restricted_area, :leave_c_off => leave_c_off, :employee_plan => employee_plan, :travel_requests => travel_requests, :expense_claim => expense_claim }
+      employee_resignation = EmployeeResignation.where(is_pending: true, is_first_approved: false,is_first_rejected: false, is_cancelled: false,reporting_master_id: employee_id).count
+      render :status=>200, :json=>{:employee_resignation => employee_resignation, :pending_leave => pending_leave, :pending_od => pending_od, :gps_track => @gps_track, :restricted_area => @restricted_area, :leave_c_off => leave_c_off, :employee_plan => employee_plan, :travel_requests => travel_requests, :expense_claim => expense_claim }
     else keyword == "admin"
       all_pending_od = OnDutyRequest.where(current_status: "Pending").count
       all_pending_leave  = EmployeeLeavRequest.where(current_status: "Pending").count
-      leave_c_off = LeaveCOff.where(current_status: "Pending").count
+      leave_c_off = LeaveCOff.where(is_taken: false,status: false,is_expire: false,current_status: "Pending").count
       employee_plan = EmployeePlan.where(current_status: "Pending").count
       travel_requests = TravelRequest.where(current_status: "Pending").count
       expense_claim = TravelRequest.where(current_status: "FinalApproved").count
       final_travel_requests = TravelRequest.where(current_status: "Approved").count
-      render :status=>200, :json=>{:all_pending_leave => all_pending_leave, :all_pending_od => all_pending_od, :gps_track => @gps_track, :restricted_area => @restricted_area,:leave_c_off => leave_c_off, :employee_plan => employee_plan, :travel_requests => travel_requests, :expense_claim => expense_claim, :final_travel_requests => final_travel_requests }
+      employee_resignations = EmployeeResignation.where(resign_status: "SecondApproved").count
+      render :status=>200, :json=>{:employee_resignations => employee_resignations, :all_pending_leave => all_pending_leave, :all_pending_od => all_pending_od, :gps_track => @gps_track, :restricted_area => @restricted_area,:leave_c_off => leave_c_off, :employee_plan => employee_plan, :travel_requests => travel_requests, :expense_claim => expense_claim, :final_travel_requests => final_travel_requests }
     end
   end
 
@@ -1837,7 +1846,7 @@ class Api::UserAuthsController < ApplicationController
   def travel_approval_list
     employee_id = params[:employee_id]
     reporting_master_id = ReportingMaster.find_by(employee_id: employee_id)
-    travel_requests = TravelRequest.where("reporting_master_id = ? and (current_status = ? or current_status = ? or current_status = ?)",employee_id,"Pending","FirstApproved","Approved & Send Next")
+    travel_requests = TravelRequest.where("reporting_master_id = ? and (current_status = ? or current_status = ? or current_status = ?)",employee_id,"Pending","FirstApproved","Approved & Send Next").order("id ASC") 
     render :json => travel_requests.present? ? travel_requests.collect{|travel_list| {:id => travel_list.try(:id), :manual_employee_code => travel_list.try(:employee).try(:manual_employee_code), :prefix => travel_list.employee.try(:prefix), :employee_first_name => travel_list.employee.try(:first_name), :employee_middle_name => travel_list.employee.try(:middle_name), :employee_last_name => travel_list.employee.try(:last_name),:code => travel_list.try(:code), :place => travel_list.try(:place), :current_status => travel_list.try(:current_status),:is_confirm => travel_list.try(:is_confirm), :all_status => travel_list.try(:reporting_masters_travel_requests) }} : []
   end
 

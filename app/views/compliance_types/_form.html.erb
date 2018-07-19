@@ -1,0 +1,58 @@
+
+<%= bootstrap_form_for(@compliance_type,htlm: {id: 'compliance_type'},remote: true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code, hide_label: true,placeholder: "Code"%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name, hide_label: true,placeholder: "Name"%>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :description, hide_label: true,placeholder: "Description"%>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <!-- <div class="col-sm-3">
+      <div class="form-group required">
+        <%#= f.check_box :status, label: "Active" %>
+      </div>
+    </div> -->
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Compliance Type", class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+$("#compliance_type").validate({
+    rules: {
+      "compliance_type[code]":{
+        required: true,
+      },
+       "compliance_type[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "compliance_type[code]":{
+        required: "Please specify code",
+      },
+      "compliance_type[name]":{
+        required: "Please specify name",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

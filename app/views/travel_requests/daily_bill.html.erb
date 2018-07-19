@@ -12,6 +12,7 @@
       <th>ID</th>
       <th>Employee Name</th>
       <th>Place</th>
+      <th>Date</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -21,6 +22,7 @@
         <td><%= travel_request.try(:employee).try(:manual_employee_code) %></td>
         <td><%= full_name(travel_request.employee) %></td>
         <td><%= travel_request.place %></td>
+        <td><%= travel_request.traveling_date.to_date %> to <%= travel_request.to.to_date %></td>
         <td>
             <% if @a = ReportingMastersTravelRequest.where(travel_request_id: travel_request.id).pluck(:status).first == true %>
             <%= link_to 'View Expense Claim', new_daily_bill_detail_path(travel_request_id: travel_request.id),class: 'btn btn-info btn-sm' %>

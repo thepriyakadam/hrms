@@ -33,28 +33,40 @@
 		      <th><strong>Travel Mode</strong></th>
 		      <td><%= @travel_request.travel_mode.try(:name) %></td>
 		    </tr>
+		<tr>
+		      <th><strong>Project</strong></th>
+		      <td><%= @travel_request.project_master.try(:name) %></td>
 
-		    <tr>
 		      <th><strong>Place</strong></th>
 		      <td><%= @travel_request.place %></td>
 
-		      <th><strong>From Date</strong></th>
-		      <td><%= @travel_request.traveling_date %></td>
 		    </tr>
 
 		    <tr>
+		      <th><strong>From Date</strong></th>
+		      <td><%= @travel_request.traveling_date %></td>
+
 		      <th><strong>To Date</strong></th>
 		      <td><%= @travel_request.to %></td>
 		  
+		    </tr>
+
+		    <tr>
+		      <th><strong>From Time</strong></th>
+		      <td><%= @travel_request.from_time %></td>
+		      
+		      <th><strong>To Time</strong></th>
+		      <td><%= @travel_request.to_time %></td>
+		    </tr>
+
+		    <tr>
 		      <th><strong>Day</strong></th>
 		      <td><%= @travel_request.day %></td>
 		      
-		    </tr>
-
-		      <tr>
 		      <th><strong>Advance</strong></th>
 		      <td><%= @travel_request.total_advance %></td>
-
+		    </tr>
+		    <tr>
 		      <th><strong>Current Status</strong></th>
 		      <td>
             <% @travel_request.reporting_masters_travel_requests.try(:each) do |rmt| %>
@@ -77,9 +89,6 @@
             <% end %>
           </td>
 
-		    </tr>
-
-		    <tr>
 		      <th><strong>Tour Purpose</strong></th>
 		      <td colspan="3"><%= @travel_request.tour_purpose %></td>
 		    </tr>

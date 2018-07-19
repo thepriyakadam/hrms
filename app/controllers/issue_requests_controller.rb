@@ -22,8 +22,8 @@ class IssueRequestsController < ApplicationController
   def new
     @issue_request = IssueRequest.new
     @issue_requests = IssueRequest.where(employee_id: current_user.employee_id)
-    session[:active_tab] = "HelpDesk"
-    session[:active_tab1] = "Process"
+    session[:active_tab] ="HelpDesk"
+    session[:active_tab1] ="Process"
   end
 
   # GET /issue_requests/1/edit
@@ -153,6 +153,8 @@ class IssueRequestsController < ApplicationController
       redirect_to root_url
       #redirect_to solved_issue_list_issue_requests_path
     end
+    session[:active_tab] = "HelpDesk"
+    session[:active_tab1] = "Process"
   end
 
   def modal

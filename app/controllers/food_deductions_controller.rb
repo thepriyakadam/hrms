@@ -18,6 +18,7 @@ class FoodDeductionsController < ApplicationController
   # GET /food_deductions/new
   def new
     @food_deduction = FoodDeduction.new
+    @food_deductions = FoodDeduction.all
   end
 
   # GET /food_deductions/1/edit
@@ -29,39 +30,37 @@ class FoodDeductionsController < ApplicationController
   def create
     @food_deduction = FoodDeduction.new(food_deduction_params)
     @food_deduction.food_date = @food_deduction.food_date.end_of_month
-    respond_to do |format|
+   
       if @food_deduction.save
-        format.html { redirect_to food_deductions_path, notice: 'Food deduction was successfully created.' }
-        format.json { render :show, status: :created, location: @food_deduction }
+        @food_deduction = FoodDeduction.new
+        @food_deductions = FoodDeduction.all
+        @flag = true
       else
-        format.html { render :new }
-        format.json { render json: @food_deduction.errors, status: :unprocessable_entity }
+        @flag = false
       end
-    end
+
   end
 
   # PATCH/PUT /food_deductions/1
   # PATCH/PUT /food_deductions/1.json
   def update
-    respond_to do |format|
       if @food_deduction.update(food_deduction_params)
-        format.html { redirect_to food_deductions_path, notice: 'Food deduction was successfully updated.' }
-        format.json { render :show, status: :ok, location: @food_deduction }
+        @food_deduction = FoodDeduction.new
+        @food_deductions = FoodDeduction.all
+        @flag = true
       else
-        format.html { render :edit }
-        format.json { render json: @food_deduction.errors, status: :unprocessable_entity }
+        @flag = false
       end
-    end
   end
 
   # DELETE /food_deductions/1
   # DELETE /food_deductions/1.json
   def destroy
     @food_deduction.destroy
-    respond_to do |format|
-      format.html { redirect_to food_deductions_url, notice: 'Food deduction was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    
+    @food_deductions = FoodDeduction.all
+    redirect_to food_deductions_path
+    
   end
 
   def calculate_food_deduction_amount

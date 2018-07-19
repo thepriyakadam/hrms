@@ -158,8 +158,7 @@ class EmployeeResignationsController < ApplicationController
   def resignation_history
     @pending_resignation_requests = EmployeeResignation.where(is_pending: true, is_first_approved: false,is_first_rejected: false, is_cancelled: false,reporting_master_id: current_user.employee_id)
     @first_approved_resignation_requests = EmployeeResignation.where(is_first_approved: true, is_second_approved: false,is_second_rejected: false, is_cancelled: false,second_reporter_id: current_user.employee_id)
-    session[:active_tab] ="employee_resignation"
-    session[:active_tab1] ="resignation"
+    session[:active_tab] ="ManagerSelfService"
   end
 
   def print_resignation_detail
@@ -322,8 +321,7 @@ class EmployeeResignationsController < ApplicationController
   def final_approval_emp_resignation_list
     # @employee_resignations = EmployeeResignation.where("(resign_status = ? or resign_status = ?)","SecondApproved")
     @employee_resignations = EmployeeResignation.where("(resign_status = ?)","SecondApproved")
-    session[:active_tab] ="employee_resignation"
-    session[:active_tab1] = "resignation"
+    session[:active_tab] = "AdminSelfService"
   end
 
   # def reject_employee_resignation

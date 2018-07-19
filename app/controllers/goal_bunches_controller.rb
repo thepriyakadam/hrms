@@ -648,7 +648,7 @@ class GoalBunchesController < ApplicationController
   end
 
   def period_list_final
-    @period = Period.find(params[:period_id])
+   @period = Period.find(params[:period_id])
     emp_manager_nil = Employee.where(manager_2_id: nil).pluck(:id)
     emp_manager_present = Employee.where.not(manager_2_id: nil).pluck(:id)
     @goal_bunch_appraiser = GoalBunch.where(period_id: @period.id,employee_id: emp_manager_nil).pluck(:id)
@@ -901,7 +901,7 @@ class GoalBunchesController < ApplicationController
     redirect_to appraisee_comment_goal_bunches_path(emp_id: @employee.id,id: @goal_bunch.id)
   end
 
-  def modal_appraiser_overall
+  def   modal_appraiser_overall
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @appraiser_overall = params[:appraiser_overall]
     @period = Period.find(params[:period_id])

@@ -547,9 +547,9 @@ class LeaveCOffsController < ApplicationController
   end
 
   def admin_c_off_approval
-
     @first_level_request_lists = LeaveCOff.where(is_taken: false,status: false,is_expire: false).where("current_status = ? OR current_status = ?","FirstApproved" , "Pending")
     # @second_level_request_lists = LeaveCOff.where(is_taken: false,status: false,is_expire: false,current_status: "FirstApproved")
+    session[:active_tab] ="AdminSelfService"
   end
 
   def admin_level_c_off_detail

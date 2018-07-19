@@ -95,7 +95,7 @@
   
   def import_assign_role
     session[:active_tab] ="EmployeeManagement"
-    session[:active_tab1] ="Import" 
+    session[:active_tab1] ="Reports"  
   end
 
   def import_create_new_user
@@ -225,7 +225,7 @@
     @country = @employee.country
     @states = @country.states
     @state = @employee.state
-    @cities = @state.districts
+    @cities = @state.try(:districts)
 
     @company = @employee.company
     @company_locations = @company.try(:company_locations)
@@ -405,6 +405,7 @@
           u.role_id = role
         end
         ActiveRecord::Base.transaction do
+
           if user.save
             password = user.password
             manual_employee_code = employee.manual_employee_code
@@ -419,7 +420,11 @@
             @reporting_master2 = ReportingMaster.find_by(id: @manager2)
 
             manager_1 = @reporting_master1.employee_id
-            manager_2 = @reporting_master2.try(:employee_id)
+            if @reporting_master2.nil?
+              manager_2 = nil
+            else
+              manager_2 = @reporting_master2.try(:employee_id)
+            end
             employee.update_attributes(manager_id: @reporting_master1.employee_id, manager_2_id: @reporting_master2.try(:employee_id))
 
             ManagerHistory.create(employee_id: employee.id,manager_id: manager_1,manager_2_id: manager_2,effective_from: params["login"]["effec_date"])
@@ -1319,7 +1324,7 @@ def show_all_record
   end
 
   def set_employeewise_gps
-    byebug
+    
     @emp = params[:employee_gp][:employee_id]
     @from = params[:employee_gp][:from]
     @to = params[:employee_gp][:to]

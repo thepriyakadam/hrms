@@ -1,12 +1,12 @@
  <div class="box box-default">
 <div class="box-header with-border">
-<h3 class="box-title">Import File</h3>
+<h3 class="box-title">Import Employee File</h3>
 
 <div class="box-body">
 <%= form_tag import_employees_path, multipart: true do %>
 <label> File </label>
   <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
   <br>
-  <%= submit_tag "Import" %>
+  <%= submit_tag "Import", data: { confirm: 'Are you sure?' } %>
 <% end %>
 </div>

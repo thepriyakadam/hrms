@@ -15,8 +15,7 @@ class DailyBillDetail < ActiveRecord::Base
   has_attached_file :avatar_file,
   :path => "attachments/attach_daily_bills/:basename.:extension"
 
-  # validates_attachment_presence :avatar
+  #validates_attachment_presence :avatar
   validates_attachment_size :avatar_file, less_than: 2.megabytes
   validates_attachment :avatar_file, content_type: { content_type: %w(application/pdf application/msword application/msexcel application/vnd.openxmlformats-officedocument.wordprocessingml.document) }
-
 end

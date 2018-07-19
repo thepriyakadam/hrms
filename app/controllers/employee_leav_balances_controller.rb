@@ -779,7 +779,7 @@ def create
 
   def import_employee_leav_balance
     session[:active_tab] ="EmployeeManagement"
-    session[:active_tab1] ="Reports"
+    session[:active_tab1] ="Reports" 
   end
 
   def employee_leav_balance_report

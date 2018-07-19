@@ -1,0 +1,16 @@
+<div class="box box-default">
+	<div class="box-header with-border">
+		<h3 class="box-title">Import Employee Insentive File</h3>
+		<div class="pull-right">
+			<%= link_to "Template", "/Templates/66.Employee Insentive.xls", :class=>" btn-xs btn btn-warning" %>
+		</div>
+		<div class="box-body">
+			<%= form_tag import_employee_insentives_path, multipart: true do %>
+				<label> File (.xls,.csv,.xlsx only) </label>
+	  			<%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
+	  			<br>
+	  			<%= submit_tag "Import" %>
+			<% end %>
+		</div>
+	</div>
+</div>

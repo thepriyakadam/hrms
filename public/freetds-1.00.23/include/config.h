@@ -56,7 +56,7 @@
 #define HAVE_CLOCK_GETTIME 1
 
 /* Define to 1 if you have the <com_err.h> header file. */
-#define HAVE_COM_ERR_H 1
+/* #undef HAVE_COM_ERR_H */
 
 /* Define to 1 if you have the `daemon' function. */
 #define HAVE_DAEMON 1
@@ -199,7 +199,7 @@
 /* #undef HAVE_GNUTLS */
 
 /* Define to 1 if you have the <gnutls/abstract.h> header file. */
-#define HAVE_GNUTLS_ABSTRACT_H 1
+/* #undef HAVE_GNUTLS_ABSTRACT_H */
 
 /* Define to 1 if you have the `gnutls_certificate_set_verify_function'
    function. */
@@ -210,6 +210,9 @@
 
 /* Define to 1 if you have the `gnutls_rnd' function. */
 /* #undef HAVE_GNUTLS_RND */
+
+/* Define if you have the iconv() function and it works. */
+#define HAVE_ICONV 1
 
 /* Define to 1 if you have the `inet_ntoa_r' function. */
 /* #undef HAVE_INET_NTOA_R */
@@ -309,19 +312,19 @@
 #define HAVE_READDIR_R 1
 
 /* Define to 1 if you have the GNU Readline library. */
-#define HAVE_READLINE 1
+/* #undef HAVE_READLINE */
 
 /* Define to 1 if you have the `readpassphrase' function. */
 /* #undef HAVE_READPASSPHRASE */
 
 /* Define to 1 if you have rl_inhibit_completion. */
-#define HAVE_RL_INHIBIT_COMPLETION 1
+/* #undef HAVE_RL_INHIBIT_COMPLETION */
 
 /* Define to 1 if you have the `rl_on_new_line' function. */
-#define HAVE_RL_ON_NEW_LINE 1
+/* #undef HAVE_RL_ON_NEW_LINE */
 
 /* Define to 1 if you have the `rl_reset_line_state' function. */
-#define HAVE_RL_RESET_LINE_STATE 1
+/* #undef HAVE_RL_RESET_LINE_STATE */
 
 /* Define to 1 if you have the <roken.h> header file. */
 /* #undef HAVE_ROKEN_H */
@@ -512,7 +515,7 @@
 /* #undef HAVE___RECVFROM */
 
 /* Define as const if the declaration of iconv() needs const. */
-/* #undef ICONV_CONST */
+#define ICONV_CONST 
 
 /* Define to value of INADDR_NONE if not provided by your system header files.
    */

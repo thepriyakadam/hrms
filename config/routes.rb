@@ -2985,6 +2985,7 @@ end
   end
   resources :employees do
     collection do
+      get :org_chart
       get :print_employee_data_formate
       get :employee_list_report
       post :selected_employee_list_report

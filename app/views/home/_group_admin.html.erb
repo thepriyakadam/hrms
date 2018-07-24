@@ -510,8 +510,13 @@
           </div>
         </div><!-- /.box-header -->
 
-        <div class="box-body">
-           
+                <div class="box-body">
+              
+              <% tomrrow = Date.today + 1 %>
+               <%# date = Time.now.to_date + 15.days %>
+               <%# todays_date = Time.now.to_date %>
+               <!-- <#% @employees = Employee.where("status = ? AND FORMAT(date_of_birth,'dd/MM','en-US') = ?", "Active" ,todays_date.strftime('%d/%m')..date.strftime('%d/%m')) do |et| %> -->
+
            <%# date = Time.now.to_date + 15.days %>
            <%# todays_date = Time.now.to_date %>
            <!-- <#% @employees = Employee.where("status = ? AND FORMAT(date_of_birth,'dd/MM','en-US') = ?", "Active" ,todays_date.strftime('%d/%m')..date.strftime('%d/%m')) do |et| %> -->
@@ -519,7 +524,6 @@
 
           <% tomorrow = Date.today + 1 %>
           <% @employees = Employee.where("status = ? AND DATE_FORMAT(date_of_birth,'%d/%m') = ?", "Active" , tomorrow.strftime('%d/%m')) %>
-
             <% if @employees.empty? %>
             <%else%>
               <table id="birthday" class="table no-margin">
@@ -546,7 +550,6 @@
                   </td>
                   <td> <%= full_name(e) %>
                    <span class="users-list-date"><%= e.try(:cost_center).try(:name) %> - <%= e.try(:department).try(:name) %> <%= e.try(:sub_department).try(:name) %></span>
-
                   </td>
                   <td> <%= e.date_of_birth.strftime("%d %b") %></td>
                 <% end %> <!-- do -->

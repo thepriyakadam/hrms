@@ -63,6 +63,17 @@
             </div>
           </div>
         </div>
+        <div class="col-sm-3">
+          <label>Project</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_project_master_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :project_master_id, project_master, {hide_label: true,include_blank: " Select Project"}, class: 'input_degree_stream_id' %>
+            </div>
+          </div>
+        </div>
 
         <div class="col-sm-3">
     <div class="field">
@@ -72,6 +83,8 @@
     </div>
   </div>
   
+</div>
+<div class="row">
   <div class="col-sm-3">
     <div class="form-group required">
       <div class="input-group">
@@ -83,8 +96,6 @@
     </div>
   </div>
 
-</div>
-<div class="row">
   <div class="col-sm-3">
     <div class="form-group required">
       <div class="input-group">
@@ -95,6 +106,36 @@
       </div>
     </div>
   </div>
+  <div class="col-sm-3">
+    <div class="bootstrap-timepicker">
+      <div class="form-group">
+        <label>From Time</label>
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-clock-o"></i>
+          </div>
+          <%= f.text_field :from_time,hide_label:true, class: 'form-control timepicker' %>
+        </div><!-- /.input group -->
+      </div><!-- /.form group -->
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="bootstrap-timepicker">
+      <div class="form-group">
+        <label>To Time</label>
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-clock-o"></i>
+          </div>
+          <%= f.text_field :to_time,hide_label:true, class: 'form-control timepicker' %>
+        </div><!-- /.input group -->
+      </div><!-- /.form group -->
+    </div>
+  </div>
+
+</div>
+
+<div class="row">
 
   <div class="col-sm-3">
     <div class="form-group required">
@@ -102,17 +143,15 @@
     </div>
   </div>
 
-  <div class="col-sm-6">
+  <div class="col-sm-3">
     <div class="field">
       <div class="form-group required">
         <%= f.text_field :tour_purpose, label: 'Tour Purpose' %>
       </div>
     </div>
   </div>
-</div>
 
-<div class="row">
-  <div class="col-sm-6">
+  <div class="col-sm-6" style="padding-top: 20px">
     <div class="actions">
       <%= f.submit "Create Travel Request",class: 'btn btn-sm btn-primary' %>
       <%#= link_to 'Back', travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>

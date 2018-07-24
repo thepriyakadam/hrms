@@ -1,0 +1,30 @@
+<br>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr> 
+      <th>Compliance Type</th>
+      <th>Frequency</th>
+      <th>Submission Date</th>
+      <th>Reminder From</th>
+      <th>Reminder To</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @transaction_records.each do |transaction_record| %>
+      <tr>
+        <td><%= transaction_record.try(:compliance_type).try(:name) %></td>
+        <td><%= transaction_record.transaction_type %></td>
+        <td><%= transaction_record.submission_date %></td>
+        <td><%= transaction_record.reminder_Date %></td>
+        <td><%= transaction_record.reminder_to %></td>
+        <td>
+            <%= link_to '',modal_show_transaction_records_path(transaction_record),class: 'btn btn-default btn-xs fa fa-eye',remote: true %>
+            <%= link_to '', edit_transaction_record_path(transaction_record),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+            <%= link_to '', transaction_record, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close' %>
+        </td>
+      </tr>
+      <div id="myModal" class="modal fade"></div>
+    <% end %>
+  </tbody>
+</table>

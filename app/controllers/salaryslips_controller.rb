@@ -292,7 +292,7 @@ class SalaryslipsController < ApplicationController
         @employees = Employee.where(status: "Active",id: emp_ids) 
       elsif current_user.class == Member
         if current_user.role.name == "GroupAdmin"
-          @employees = Employee.where(status: "Active",id: emp_ids)
+          @employees = Employee.where(id: emp_ids)
         elsif current_user.role.name == "Admin"
           company_employees = Employee.where(status: "Active",company_id: current_user.company_location.company_id).pluck(:id)
           new_ids = company_employees & emp_ids
@@ -388,17 +388,17 @@ class SalaryslipsController < ApplicationController
             end
           end
 
-          date = Date.new(@year.to_i, Workingday.months[@month])
-          @latemark_deductions = LatemarkDeduction.where(latemark_day: date..date.at_end_of_month, employee_id: @employee.id)
-          unless @latemark_deductions.empty?
-            @latemark_deductions.each do |f|
-              f.update(paid: true)
-              deducted_actual_amount = 0
-              deducted_calculated_amount = f.latemark_amount
-              deducted_total_actual_amount += deducted_actual_amount
-              deducted_total_calculated_amount += deducted_calculated_amount
-            end
-          end
+          # date = Date.new(@year.to_i, Workingday.months[@month])
+          # @latemark_deductions = LatemarkDeduction.where(latemark_day: date..date.at_end_of_month, employee_id: @employee.id)
+          # unless @latemark_deductions.empty?
+          #   @latemark_deductions.each do |f|
+          #     f.update(paid: true)
+          #     deducted_actual_amount = 0
+          #     deducted_calculated_amount = f.latemark_amount
+          #     deducted_total_actual_amount += deducted_actual_amount
+          #     deducted_total_calculated_amount += deducted_calculated_amount
+          #   end
+          # end
 
           @monthly_expences = MonthlyExpence.where(employee_id: @employee.id, expence_date: date.all_month)
           @monthly_expences.try(:each) do |m|
@@ -617,9 +617,6 @@ class SalaryslipsController < ApplicationController
                 formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
                 @total = formula_item.sum(:calculated_amount)
                 @total_actual = formula_item.sum(:actual_amount)
-
-               
-               
                   if s.basis_actual_amount == true
                     if @total_actual.between?(s.min_amount, s.max_amount) && @month != "February" && @employee.company_location_id == s.company_location_id
                       @salary_component = SalaryComponent.find_by(name: "Professional Tax")
@@ -640,7 +637,6 @@ class SalaryslipsController < ApplicationController
                       SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.march_amount, calculated_amount: s.march_amount,
                         is_deducted: true, other_component_name: 'Professional Tax',salary_component_id: @salary_component.id)
                     end
-                 
                 end
               end
 
@@ -741,10 +737,13 @@ class SalaryslipsController < ApplicationController
               @salary_comp=SalaryComponent.find_by(name: "Other Deduction")
               @salary_compon=SalaryComponent.find_by(name: "Income Tax")
               @salary_compon1=SalaryComponent.find_by(name: "GMC")
+              @bank_loan_compon=SalaryComponent.find_by(name: "Bank Loan")
               @mobile_deduction = 0
               @income_tax_deduction = 0
               @other_deduction = 0
               @gmk_deduction = 0
+              @bank_loan = 0
+              @latemark_deduction = 0
               @monthly_expences.try(:each) do |m|
                 if m.expencess_type.name == @salary_component.name
                  @mobile_deduction = @mobile_deduction + m.amount
@@ -754,7 +753,10 @@ class SalaryslipsController < ApplicationController
                   @income_tax_deduction = @income_tax_deduction + m.amount
                 elsif m.expencess_type.name == @salary_compon1.name
                   @gmk_deduction = @gmk_deduction + m.amount
+                elsif m.expencess_type.name == @bank_loan_compon.name
+                  @bank_loan = @bank_loan + m.amount
                 end
+
               end
               if @salary_component.name &&  @salary_component.is_active == true
                 SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @mobile_deduction, calculated_amount: @mobile_deduction,
@@ -771,6 +773,11 @@ class SalaryslipsController < ApplicationController
               if @salary_compon1.name && @salary_compon1.is_active == true
                 SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @gmk_deduction, calculated_amount: @gmk_deduction,
                   is_deducted: true, other_component_name: @salary_compon1.name,salary_component_id:  @salary_compon1.id)
+              end
+
+              if @bank_loan_compon.name && @bank_loan_compon.is_active == true
+                SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: @bank_loan, calculated_amount: @bank_loan,
+                  is_deducted: true, other_component_name: @bank_loan_compon.name,salary_component_id:  @bank_loan_compon.id)
               end
  
               # BonusEmployee.create_bonus(basic_calculated_amount, @employee.id, date)
@@ -1202,31 +1209,28 @@ end
    
     if current_user.class == Group
       if @company == ""
-        @employees = Employee.where(status: "Active").pluck(:id)
-        @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
+        @salaryslips = Salaryslip.where(month_year: start_date..end_date)
       elsif @location == "" || @location == nil
-        @employees = Employee.where(status: "Active",company_id: @company.to_i).pluck(:id)
+        @employees = Employee.where(company_id: @company.to_i).pluck(:id)
         @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
       else
-        @employees = Employee.where(status: "Active",company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+        @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
         @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
       end
     elsif current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
         if  @company == ""
-          @employees = Employee.where(status: "Active").pluck(:id)
-          @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
+          @salaryslips = Salaryslip.where(month_year: start_date..end_date)
         elsif @location == "" || @location == nil
-          @employees = Employee.where(status: "Active",company_id: @company.to_i).pluck(:id)
+          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
         else
-          @employees = Employee.where(status: "Active",company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Admin'
         if @company == ""
-          @employees = Employee.where(status: "Active").pluck(:id)
-          @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
+          @salaryslips = Salaryslip.where(month_year: start_date..end_date)
         elsif @location == "" || @location == nil
           @employees = Employee.where(status: "Active",company_id: @company.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
@@ -1818,24 +1822,20 @@ end
         @total_tax = @on_tax * 5 / 100
       elsif (500000..1000000).include?(@total_income)
         @on_tax = @total_income - 250000
-        @second_slabs = @on_tax * 5 / 100
-      #   @first_slabs = @on_tax * 20 / 100
-      #   @on_second_slabs =  @on_tax - 250000
-      #   @second_slabs = @on_second_slabs * 5 / 100
-      #   @on_tax = @total_income - 250000
-      #   @total_tax = @first_slabs + @second_slabs
-      # else 1000000 >= @total_income
-      #   @on_third_slabs = @total_income - 1000000
-      #   @third_slabs * 30 / 100
-      #   @on_third_slabs - 
-      #   @on_tax = @total_income - 500000
-      #   @first_slabs = @on_tax * 20 / 100
-      #   @on_second_slabs =  @on_tax - 250000
-      #   @second_slabs = @on_second_slabs * 5 / 100
-      #   @on_tax = @total_income - 250000
-      #   @total_tax = @first_slabs + @second_slabs + @third_slabs
-      #   @total_tax = @total_income * 30 / 100
+        if (250000..500000).include?(@on_tax)
+          @total_tax = @on_tax * 5 / 100
+        elsif (500000..1000000).include?(@on_tax)
+          @first_slabs = @on_tax - 500000
+          @first_slabs_tax = @first_slabs * 20 / 100
+          @second_slabs = @on_tax - @first_slabs
+          @second_slabs_tax = @second_slabs * 5 / 100
+          @total_tax = @first_slabs + @second_slabs
+        end
+      else 1000000 <= @total_income
+        @on_tax = @total_income - 250000
       end
+    else
+      puts "Total Income not present"        
     end
     # @company = params[:salaryslip] ? params[:salaryslip][:company_id] : params[:company_id]
     # @company_location = params[:salaryslip] ? params[:salaryslip][:company_location_id] : params[:company_location_id]

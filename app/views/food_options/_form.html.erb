@@ -1,0 +1,49 @@
+<%= bootstrap_form_for(@food_option,html: {id: 'food_option'},remote:true) do |f| %>
+  
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :travel_option_id, all_travel_option, {hide_label: true,include_blank: " Select Travel Option"}, class: 'input_degree_stream_id' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Code' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Name' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :amount,hide_label:true, placeholder: 'Amount' %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="field">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.check_box :is_optional, label: 'Optional' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.check_box :status, label: 'Status' %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create DA", class: "btn btn-sm btn-primary" %>
+      </div>
+    </div>
+  </div>
+<% end %>

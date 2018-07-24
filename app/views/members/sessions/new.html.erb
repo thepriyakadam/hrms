@@ -13,7 +13,7 @@
 
   <% t = Company.first %>
 	<% company_logo = t.company_logo.url %>
-  <%= image_tag company_logo ,size: "120x120" %>   
+  <%= image_tag company_logo ,size: "210x100" %>   
 
   </div><!-- /.login-logo -->
 
@@ -47,7 +47,17 @@
 
       <div class="social-auth-links text-center">
         <!-- <p>- OR -</p> -->
-        <a target="_blank" href="/Apk/android-debug.apk" class="btn btn-social-icon btn-download"><i class="fa fa-download" style="font-size:35px;color:black;"></i></a>
+        <% if t.name == "Uttamenergy" %>
+          <a target="_blank" href="/Apk/uttamenergy/uttam.apk" class="btn btn-social-icon btn-download"><i class="fa fa-download" style="font-size:35px;color:black;"></i></a>
+        <% elsif t.name == "SPAN PUMPS " %>
+          <a target="_blank" href="/Apk/spanpum/spanpump.apk" class="btn btn-social-icon btn-download"><i class="fa fa-download" style="font-size:35px;color:black;"></i></a>
+        <% elsif t.name == "Sparkline" %>
+          <a target="_blank" href="/Apk/sparkline/sparkline.apk" class="btn btn-social-icon btn-download"><i class="fa fa-download" style="font-size:35px;color:black;"></i></a>
+        <% elsif t.name == "ABC" %>
+          <a target="_blank" href="/Apk/demo/demo.apk" class="btn btn-social-icon btn-download"><i class="fa fa-download" style="font-size:35px;color:black;"></i></a>
+        <% else %>
+          <a target="_blank" href="/Apk/demo/demo.apk" class="btn btn-social-icon btn-download"><i class="fa fa-download" style="font-size:35px;color:black;"></i></a>
+        <% end %>
         <a target="_blank" href="#" class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i> </a>
         <a target="_blank" href="#" class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"></i> </a>
         <a target="_blank" href="#" class="btn btn-social-icon btn-linkedin"><i class="fa fa-linkedin"></i> </a>
@@ -79,4 +89,3 @@
 </div>
 </div>
 </div>
-<

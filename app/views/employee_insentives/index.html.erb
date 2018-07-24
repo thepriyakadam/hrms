@@ -1,0 +1,46 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title"></h3>
+    <div class="pull-right"> 
+      <%= link_to 'New Employee Insentive', new_employee_insentive_path, class: "btn btn-sm btn-primary" %>
+      <%= link_to " Upload ", import_employee_insentive_employee_insentives_path, class: 'fa fa-upload btn btn-xl btn-info' %> 
+      <%= link_to " Template", "Templates/66.Employee Insentive.xls", :class=>"fa fa-download btn-xl btn btn-warning" %>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <% i = 0 %>
+    <table id="example6" class="table table-bordered table-hover table-condensed">
+    <thead>
+    <tr><td colspan="4"><center><strong>Employee Insentives</strong></center></td></tr>
+      <tr>
+        <th>Sr. No</th>
+        <th>Year</th>
+        <th>Month</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @employee_insentives.each do |w| %>
+        <% year = w.date.strftime('%Y') %>
+        <% month = w.date.strftime('%B') %>
+        <tr>
+          <td><%= i = i + 1 %></td>
+          <td><%= year %></td>
+          <td><%= month %></td>
+          <td><%= link_to '', employee_insentive_month_employee_insentives_path(year: year, month: month), class: 'btn btn-xs btn-default fa fa-eye' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true,
+        "scrollY": 400
+    } );
+} );
+</script>

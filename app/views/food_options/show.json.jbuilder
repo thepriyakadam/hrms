@@ -1,0 +1,1 @@
+json.partial! "food_options/food_option", food_option: @food_option

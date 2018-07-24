@@ -17,6 +17,7 @@ class CertificateMastersController < ApplicationController
   def new
     @certificate_master = CertificateMaster.new
     @certificate_masters = CertificateMaster.all
+    session[:active_tab] ="EmployeeManagement"
   end
 
   # GET /certificate_masters/1/edit

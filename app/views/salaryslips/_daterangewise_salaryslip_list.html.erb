@@ -155,7 +155,7 @@
               <% workingday.holiday_in_month %>
               <% workingday.absent_day %>
             <td><%= workingday.payable_day %></td>
-            <td><%= employee.company_location.name %></td>
+            <td><%= employee.try(:company_location).try(:name) %></td>
           </tr><!-- Row -->
         <%end%>
       </tbody>

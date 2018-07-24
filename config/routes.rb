@@ -1,4 +1,42 @@
 Rails.application.routes.draw do
+  resources :employee_insentives do
+    collection do
+      get :show_employee_insentive
+      get :employee_insentive_month
+      get :import_employee_insentive
+      post :import
+    end
+  end
+  resources :attendance_regularizations do 
+    collection do
+      get :show_attendance_regularization
+      get :attendance_regularization_approve
+      get :approve_attendance
+      get :rejected_attendance
+      get :emp_attendance_details
+      get :date_wise_regularization
+      get :att_regularization_report
+      post :att_regularization_report
+      get :employee_wise_regularization
+      get :employee_wise_regularization_report
+      post :employee_wise_regularization_report
+    end
+  end
+  resources :regularization_reasons
+  resources :food_options
+  resources :compliance_records do
+    collection do
+      get :periodwise_report
+      post :show_compliance_record
+    end
+  end
+  resources :agencies
+  resources :transaction_records do
+    collection do
+      get :modal_show
+    end
+  end
+  resources :compliance_types
   resources :galleries 
   resources :pictures
   resources :monthly_income_taxes
@@ -22,6 +60,7 @@ Rails.application.routes.draw do
       get :latemark_total
       get :latemark_report
       post :show_datewise_report
+      get :show_datewise_report
       get :datewise_report
       get :import_xl
       post :import
@@ -30,6 +69,8 @@ Rails.application.routes.draw do
       get :deduction_report
       post :show_deduction_report
       get :show_deduction_report
+      post :show_list_for_latemark
+      get :revert_latemark_value
     end
   end
   resources :meeting_follow_ups do
@@ -1668,6 +1709,7 @@ end
   resources :daily_bill_details do
     collection do
     # post :is_confirm
+    get :select_form
     get :is_confirm
     get :print_daily_bill
     get :daily_bill_history
@@ -2290,6 +2332,8 @@ end
       get :employee_wise_pdf
       get :employee_wise_xls
       get :employee_record
+      get :import_xl
+      post :import
     end
   end
   resources :retention_moneys do
@@ -2641,6 +2685,9 @@ end
       post :create_employee_template
       get :is_confirm
       get :modal
+      get :salary_component_list
+      get :import_xl
+      post :import
     end
   end
   resources :universities do
@@ -3363,6 +3410,20 @@ end
     post 'user_auths/solved_request' => 'user_auths#solved_request', defaults:{format: 'json'}
     get 'user_auths/issue_tracker_member_list' => 'user_auths#issue_tracker_member_list', defaults:{format: 'json'}
     get 'user_auths/support_root_cause_list' => 'user_auths#support_root_cause_list', defaults:{format: 'json'}
+    get 'user_auths/solved_confirm' => 'user_auths#solved_confirm', defaults:{format: 'json'}
+    get 'user_auths/resend_request' => 'user_auths#resend_request', defaults:{format: 'json'}
+    get 'user_auths/active_leaving_reason' => 'user_auths#active_leaving_reason', defaults:{format: 'json'}
+    get 'user_auths/display_notice_period' => 'user_auths#display_notice_period', defaults:{format: 'json'}
+    post 'user_auths/create_self_resignation' => 'user_auths#create_self_resignation', defaults:{format: 'json'}
+    get 'user_auths/pending_resignation_requests' => 'user_auths#pending_resignation_requests', defaults:{format: 'json'}
+    get 'user_auths/first_approved_resignation_requests' => 'user_auths#first_approved_resignation_requests', defaults:{format: 'json'}
+    post 'user_auths/employee_resignation_first_approve' => 'user_auths#employee_resignation_first_approve', defaults:{format: 'json'}
+    get 'user_auths/employee_resignation_first_reject' => 'user_auths#employee_resignation_first_reject', defaults:{format: 'json'}
+    get 'user_auths/all_resignation_requests' => 'user_auths#all_resignation_requests', defaults:{format: 'json'}
+    post 'user_auths/employee_resignation_final_approve' => 'user_auths#employee_resignation_final_approve', defaults:{format: 'json'}
+    get 'user_auths/employee_resignation_final_reject' => 'user_auths#employee_resignation_final_reject', defaults:{format: 'json'}
+    get 'user_auths/final_approval_emp_resignation_list' => 'user_auths#final_approval_emp_resignation_list', defaults:{format: 'json'}
+    get 'user_auths/resignation_status_records' => 'user_auths#resignation_status_records', defaults:{format: 'json'}
   end
 end
 

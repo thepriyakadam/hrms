@@ -154,11 +154,11 @@ class VacancyRequestsController < ApplicationController
 
   def admin_approval
     @vacancy_requests = VacancyRequest.where.not("current_status = ? OR current_status = ? OR current_status = ?", "FinalApproved","Rejected","Cancelled")
-    session[:active_tab] = "VacancyRequest"
+    session[:active_tab] = "AdminSelfService"
   end
 
   def admin_approval_detail
-     @vacancy_request = VacancyRequest.find(params[:vacancy_request])
+    @vacancy_request = VacancyRequest.find(params[:vacancy_request])
     @vacancy_requests = VacancyRequest.where(id: @vacancy_request.id)
     @employee = Employee.find_by(id: @vacancy_request.request_by_id)
   end

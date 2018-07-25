@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  resources :topics  do
+    collection do
+      get :view_topic_details
+      get :topic_discussion
+      post :add_comment
+    end
+  end
   resources :employee_insentives do
     collection do
       get :show_employee_insentive

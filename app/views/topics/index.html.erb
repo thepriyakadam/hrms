@@ -1,0 +1,23 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Top</h3>
+    <div class="pull-right">
+      <%#= link_to " PDF ", distributor_list_distributors_path(id: @distributor.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
+      
+      <%#= link_to " XLS ", distributor_list_distributors_path(id: @distributor.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
+      
+      <%#= link_to " Upload", import_xl_distributors_path, class: 'fa fa-upload btn btn-xl btn-primary' %>
+      
+      <%#= link_to " Template", "/Templates/10.Distributor.xls", :class=>"fa fa-download btn-xl btn btn-warning" %>
+    </div>
+    <div class="box-body">
+      <div id="form">
+        <%= render 'form' %>
+      </div>
+      <div id="distributor_list">
+        <br />
+        <%= render 'topic_list' %>
+      </div>
+    </div><!-- /.box-body -->
+  </div>
+</div><!-- /.box -->

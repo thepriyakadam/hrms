@@ -22,7 +22,8 @@ class Employee < ActiveRecord::Base
   has_many :trainees
   has_many :gps_dailies
   has_many :exit_interviews
-
+  has_many :topics
+  has_many :topic_comments
   has_many :reporting_masters
   has_many :employee_attendances
   has_many :leave_c_offs

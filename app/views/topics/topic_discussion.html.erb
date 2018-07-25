@@ -1,0 +1,79 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <tr><th colspan="4"><center><font color='#0077b3'><h3>Topic Discussion Desk </h3></font></center> </th></tr>
+    <div class="box-body">
+        <% @topics.each do |topic| %>
+            <ul class="timeline">
+                <!-- timeline time label -->
+                <li class="time-label">
+                    <span class="bg-red">
+                        <%= full_name(topic.employee) %>
+                    </span>
+                </li>
+                <!-- /.timeline-label -->
+                <!-- timeline item -->
+                <li>
+                    <!-- timeline icon -->
+                    <i class="fa bg-blue"><%= image_tag topic.employee.passport_photo.url, :size => "35x35", class: "img-circle" %></i>
+                    <div class="timeline-item">
+
+                        <span class="time"><i class="fa fa-clock-o"></i> <%= topic.date.to_date %> <%= topic.date.to_time %></span>
+                        <h3 class="timeline-header"><a href="#"><%= topic.post_topic %></a> ...</h3>
+                        <div class="timeline-body">     
+                            <%= topic.description %>
+                        </div>
+                        <div class="timeline-footer">
+                            <a class="btn btn-primary btn-xs">...</a>
+                        </div>
+                    </div>
+                </li>
+                <!-- END timeline item -->
+                <!-- timeline item -->
+                <li>
+                  <i class="fa fa-comments bg-yellow"></i>
+                  <div class="timeline-item">
+                    <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
+                    <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
+                    <div class="timeline-body">
+                      <%= bootstrap_form_for(:topic, url: { action: 'add_comment'}, remote: true) do |f| %>
+                        <%#= bootstrap_form_for [@post_comment, PostComment.new], remote:true do |f| %>
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <%= f.hidden_field :employee_id, value: current_user.employee_id %>
+                                <%= f.hidden_field :topic_id, value: topic.id %>
+                                <div class="field">
+                                    <%= f.text_field :comment, {hide_label: true,placeholder: " Write something about post..."} %>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-3">
+                                <div class="actions" style="padding-top: 5px">
+                                    <%= f.submit "Post", class: "btn btn-primary btn-xs" %>
+                                     <% end %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </li>
+                <!-- END timeline item -->
+                <!-- timeline item -->
+                <%# binding.pry %>
+                <% comment_list = TopicComment.where(topic_id: topic.id).order("id DESC") %>
+                <% comment_list.each do |comm| %>
+                <li>
+                  <i class="fa fa-user bg-aqua"></i>
+                  <div class="timeline-item">
+                    <span class="time"><i class="fa fa-clock-o"></i> <%= time_ago_in_words(comm.created_at)%> </span>
+                    <h3 class="timeline-header no-border"><%= short_name(comm.employee) %> <%= comm.comment %></h3>
+                  </div>
+                </li>
+                <% end %>
+                <!-- END timeline item -->
+                
+
+            </ul>
+        <% end %>
+    </div>
+  </div>
+</div>

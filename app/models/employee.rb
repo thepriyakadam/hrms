@@ -174,6 +174,7 @@ class Employee < ActiveRecord::Base
   validates :email, presence: true
   validates :adhar_no, presence: true
   validates :pan_no, presence: true
+  validates :department_id, presence: true
 
   has_attached_file :passport_photo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'Profile11.jpg'
   validates_attachment_content_type :passport_photo,  :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'

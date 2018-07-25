@@ -57,6 +57,6 @@ every 7.hours do
 end
 
 every 9.hours do 
-	rake 'log:clear'
+   rake 'log:clear'
 end
 

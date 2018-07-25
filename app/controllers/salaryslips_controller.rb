@@ -334,12 +334,21 @@ class SalaryslipsController < ApplicationController
             addable_calculated_amount = 0
             @template_id = item.salary_template_id
             addable_actual_amount = item.monthly_amount
+           if item.salary_component_id == 2
             if addable_actual_amount.nil?
               addable_actual_amount = 0
               addable_calculated_amount = 0
             else
-              addable_calculated_amount = addable_actual_amount / working_day.day_in_month * working_day.payable_day
+              addable_calculated_amount = addable_actual_amount
             end
+           else
+            if addable_actual_amount.nil?
+              addable_actual_amount = 0
+              addable_calculated_amount = 0
+            else
+  addable_calculated_amount = addable_actual_amount / working_day.day_in_month * working_day.payable_day
+            end
+           end
             addable_total_actual_amount += addable_actual_amount
             addable_total_calculated_amount += addable_calculated_amount.round
             @addable_salaryslip_item = SalaryslipComponent.new do |sc|

@@ -312,19 +312,19 @@
 #define HAVE_READDIR_R 1
 
 /* Define to 1 if you have the GNU Readline library. */
-/* #undef HAVE_READLINE */
+#define HAVE_READLINE 1
 
 /* Define to 1 if you have the `readpassphrase' function. */
 /* #undef HAVE_READPASSPHRASE */
 
 /* Define to 1 if you have rl_inhibit_completion. */
-/* #undef HAVE_RL_INHIBIT_COMPLETION */
+#define HAVE_RL_INHIBIT_COMPLETION 1
 
 /* Define to 1 if you have the `rl_on_new_line' function. */
-/* #undef HAVE_RL_ON_NEW_LINE */
+#define HAVE_RL_ON_NEW_LINE 1
 
 /* Define to 1 if you have the `rl_reset_line_state' function. */
-/* #undef HAVE_RL_RESET_LINE_STATE */
+#define HAVE_RL_RESET_LINE_STATE 1
 
 /* Define to 1 if you have the <roken.h> header file. */
 /* #undef HAVE_ROKEN_H */

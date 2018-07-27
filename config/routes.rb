@@ -3276,8 +3276,7 @@ end
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  
-
+    
   namespace :api do
     resources :user_auths,:only => [:create], defaults: {format: 'json'}
     post 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}

@@ -39,6 +39,18 @@ class TopicsController < ApplicationController
     redirect_to topic_discussion_topics_path
   end
 
+  def like_comment
+    emp_id = params[:lick_topic][:employee_id]
+    topic_comment_id = params[:lick_topic][:topic_comment_id]
+    @like = Like.where(employee_id: emp_id,topic_comment_id: topic_comment_id)
+    if @like.present?
+      @like.destroy_all
+    else
+      @like = Like.create(employee_id: emp_id, topic_comment_id: topic_comment_id, liked: true)
+    end
+    redirect_to topic_discussion_topics_path
+  end
+
   def add_comment
     employee_id = params[:topic_comment][:employee_id]
     topic_id = params[:topic_comment][:topic_id]

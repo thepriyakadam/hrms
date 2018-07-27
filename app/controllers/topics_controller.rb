@@ -23,14 +23,33 @@ class TopicsController < ApplicationController
   end
 
   def topic_discussion
-    @topics = Topic.all
+    @topics = Topic.all.order("id DESC")
+    @topic = Topic.new
+  end
+
+  def like_topic
+    emp_id = params[:lick_topic][:employee_id]
+    topic_id = params[:lick_topic][:topic_id]
+    like = Like.create(employee_id: emp_id, topic_id: topic_id, liked: true)
+    redirect_to topic_discussion_topics_path
   end
 
   def add_comment
-    employee_id = params[:topic][:employee_id]
-    topic_id = params[:topic][:topic_id]
-    comment = params[:topic][:comment]
+    employee_id = params[:topic_comment][:employee_id]
+    topic_id = params[:topic_comment][:topic_id]
+    comment = params[:topic_comment][:comment]
     @topic_comment = TopicComment.create(employee_id: employee_id, topic_id: topic_id, comment: comment, status: true)
+    # respond_to do |format|
+    #   if @topic_comment.save
+    #     #@topic_comment = TopicComment.new(employee_id: employee_id, topic_id: topic_id, comment: comment, status: true)
+    #     @topics = Topic.all.order("id DESC")
+    #     # @topic = Topic.new
+    #     # @topic = Topic.new
+    #     format.js { @flag = true }
+    #   else
+    #     format.js { @flag = false }
+    #   end
+    # end
     redirect_to topic_discussion_topics_path
   end
 

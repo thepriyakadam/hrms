@@ -5,7 +5,6 @@
         <th>Sr.No.</th>
         <th>Employee</th>
         <th>Post topic</th>
-        <th>Description</th>
         <th>Status</th>
         <th>Action</th>
       </tr>
@@ -18,7 +17,6 @@
           <td><%= i = i + 1 %></td>
           <td><%= full_name(topic.employee) %></td>
           <td><%= topic.post_topic %></td>
-          <td><%= topic.description %></td>
           <td><%= topic.status ? "Active" : "Inactive" %></td>
           <td><%= link_to ' ', view_topic_details_topics_path(topic), remote: true, class: 'btn btn-xs btn-default fa fa-eye' %>
           <%= link_to ' ', edit_topic_path(topic), remote: true,class: 'btn btn-xs btn-success fa fa-edit' %>

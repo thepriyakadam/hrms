@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       get :view_topic_details
       get :topic_discussion
       post :add_comment
+      post :like_topic
     end
   end
   resources :employee_insentives do

@@ -30,8 +30,12 @@
                                     <%= f.submit "Like", :class => "like_button",class: "fa fa-thumbs-up" %>
                                     <%# binding.pry %>
                                     <%= Like.where(topic_id: topic.id).try(:count)%>
-                                    <i class="fa fa-thumbs-up" aria-hidden="true">
-                                    </i>
+                                    <% @count = Like.where(topic_id: topic.id, employee_id: current_user.employee_id) %>
+                                    <% if @count.present? %>
+                                        <i class="fa fa-thumbs-up fa-2x" aria-hidden="true" style="color: blue;"></i>
+                                    <% else %>
+                                        <i class="fa fa-thumbs-up fa-2x" aria-hidden="true"></i>
+                                    <% end %>
                                 </div>
                             </div>
                         <% end %>
@@ -60,7 +64,7 @@
                         <div class="col-sm-3">
                             <div class="actions" style="padding-top: 5px">
                                 <%= f.submit "Post", class: "btn btn-primary btn-xs" %>
-                                 <% end %>
+                                <% end %>
                             </div>
                         </div>
                     </div>

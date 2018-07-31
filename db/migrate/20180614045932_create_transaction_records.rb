@@ -14,6 +14,6 @@ class CreateTransactionRecords < ActiveRecord::Migration
     #   t.boolean :is_confirm
 
     #   t.timestamps null: false
-    # end
+    end
   end
 end

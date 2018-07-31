@@ -1720,6 +1720,7 @@ end
   resources :daily_bill_details do
     collection do
     # post :is_confirm
+    get :all_expence_request
     get :modal_expense_edit
     post :update_expence
     get :select_form
@@ -1748,6 +1749,7 @@ end
   end
   resources :travel_requests do
     collection do
+      get :all_travel_request
       get :show_travel_process
       get :show_request_modal
       get :daily_bill

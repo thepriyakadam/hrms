@@ -238,10 +238,10 @@ class EmployeeWeekOffsController < ApplicationController
       if company == ""
         @employees = Employee.where(status: 'Active').pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: false)
-      elsif location == ""
+      elsif location == ""  || location == nil
         @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
-      elsif department == ""
+      elsif department == "" || department == nil
         @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
       else
@@ -253,10 +253,10 @@ class EmployeeWeekOffsController < ApplicationController
         if company == ""
           @employees = Employee.where(status: 'Active').pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: false)
-        elsif location == ""
+        elsif location == ""  || location == nil
           @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
-        elsif department == ""
+        elsif department == "" || department == nil
           @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
         else
@@ -267,10 +267,10 @@ class EmployeeWeekOffsController < ApplicationController
         if company == ""
           @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
-        elsif location == ""
+        elsif location == ""  || location == nil
           @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
-        elsif department == ""
+        elsif department == "" || department == nil
           @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
         else
@@ -278,10 +278,10 @@ class EmployeeWeekOffsController < ApplicationController
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
         end
       elsif current_user.role.name == 'Branch'
-        if company == "" || location == ""
+        if company == "" || location == ""  || location == nil
           @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
-        elsif department == ""
+        elsif department == "" || department == nil
           @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
         else 
@@ -289,7 +289,7 @@ class EmployeeWeekOffsController < ApplicationController
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
         end
       elsif current_user.role.name == 'HOD'
-        if company == "" || location == "" || department == ""
+        if company == "" || location == "" || department == "" || location == nil || department == nil
           @employees = Employee.where(status: 'Active',department_id: current_user.department_id).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
         else 

@@ -3,10 +3,11 @@
     <h3 class="box-title">Employee Particular Leave Request</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <table id="example6" class="table table-bordered table-hover table-condensed">
       <thead>
-        <tr><th>ID : <%= @particular_leave_records.first.employee.manual_employee_code %></th><th colspan="2">Employee Name : <%= full_name(@particular_leave_records.first.employee) %></th></tr>
+        <tr><th>ID : <%= @particular_leave_records.first.employee.manual_employee_code %></th><th colspan="4">Employee Name : <%= full_name(@particular_leave_records.first.employee) %></th></tr>
         <tr>
+          <th>Sr. No</th>
           <th>Date</th>
           <th>Leave Category</th>
           <th>Action</th>
@@ -14,15 +15,24 @@
       </thead>
 
       <tbody>
+        <% i = 0 %>
         <% @particular_leave_records.each do |p| %>
           <tr>
+            <td><%= i = i + 1 %></td>
             <td><%= p.leave_date.to_date %></td>
             <td><%= p.leav_category.name %></td>
-            <% if p.is_cancel_after_approve %>
-              <td><small class="label label-info">Cancelled After Approve</small></td>
-            <% else %>
-              <td><%= link_to 'Cancel',cancel_after_approve_leave_status_records_path(p), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-warning'%></td>
-            <% end %>
+            <td>
+              <% if p.is_cancel_after_approve %>
+                <small class="label label-info">Cancelled After Approve</small>
+              <% else %>
+                <% @employee_attendances = EmployeeAttendance.where(employee_leav_request_id: p.employee_leav_request_id).take %>
+                <% if @employee_attendances.is_confirm == true %>
+                    <small class="label label-success">Attendance Confirmed</small>
+                <% else %>
+                  <%= link_to 'Revert',cancel_after_approve_leave_status_records_path(p), data: { confirm: 'Are you sure? This will revert Leave' },class: 'btn btn-xs btn-danger'%>
+                <% end %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
@@ -31,3 +41,11 @@
       <%= link_to 'Back',hr_view_request_employee_leav_requests_path(@employee_leave_request.employee_id), class: 'btn btn-default btn-sm fa fa-arrow-left' %>
   </div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

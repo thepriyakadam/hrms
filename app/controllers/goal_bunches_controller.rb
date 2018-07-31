@@ -191,6 +191,7 @@ class GoalBunchesController < ApplicationController
     else
       redirect_to admin_level_goal_approval_goal_bunches_path(period_id: @period.id)
     end
+    
   end
 
   def revert_goal

@@ -15,8 +15,6 @@ class IssueRequest < ActiveRecord::Base
     on: :create,
     allow_nil: false
 
-
-
   has_attached_file :document1, :path => "attachments/attach_resume/:basename.:extension"
 
   has_attached_file :document2, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'missing.png'

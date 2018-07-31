@@ -4,7 +4,7 @@ class TopicsController < ApplicationController
   # GET /topics
   # GET /topics.json
   def index
-    @topics = Topic.all
+    @topics = Topic.all.page(params[:page]).per_page(1)
     @topic = Topic.new
   end
 
@@ -16,6 +16,7 @@ class TopicsController < ApplicationController
   # GET /topics/new
   def new
     @topic = Topic.new
+    session[:active_tab] = "EmployeeSelfService"
   end
 
   # GET /topics/1/edit

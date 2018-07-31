@@ -18,9 +18,9 @@
                     <div class="timeline-body">
                         <%= topic.description %>
                     </div>
-                    <div class="timeline-footer">
+                    <!-- <div class="timeline-footer">
                         <a class="btn btn-primary btn-xs">...</a>
-                    </div>
+                    </div> -->
                     <div class="timeline-body">
                         <%= bootstrap_form_for(:lick_topic, url: { action: 'like_topic'}) do |f| %>
                             <%= f.hidden_field :employee_id, value: current_user.employee_id %>
@@ -58,7 +58,6 @@
                                 <%= f.text_field :comment, {hide_label: true,placeholder: " Write something about post..."} %>
                             </div>
                         </div>
-                        
                         <div class="col-sm-3">
                             <div class="actions" style="padding-top: 5px">
                                 <%= f.submit "Post", class: "btn btn-primary btn-xs" %>
@@ -88,20 +87,21 @@
                         <%= f.hidden_field :topic_comment_id, value: comm.id %>
                         <!-- <div class="actions" style="padding-top: 5px"> --><br />
                             <%= f.submit "Like", class: "like_button btn btn-xs btn-default" %>
-                            <%# binding.pry %>
                             <%= Like.where(topic_comment_id: comm.id).try(:count)%>
-                            <% @count = Like.where(topic_comment_id: comm.id, employee_id: current_user.employee_id) %>
+                            <% @count = Like.where(topic_comment_id: comm.id, employee_id: current_user.employee_id)%>
                             <% if @count.present? %>
                                 <i class="fa fa-thumbs-up" aria-hidden="true" style="color: blue;"></i>
                             <% else %>
                                 <i class="fa fa-thumbs-up" aria-hidden="true"></i>
                             <% end %>
                         <!-- </div> -->
-                    <% end %></h3>
+                    <% end %>
+                    </h3>
                 </div>
             </li>
             <% end %>
             <!-- END timeline item -->
         </ul>
     <% end %>
+    <%#= will_paginate @topics %>
 </div>

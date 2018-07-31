@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       post :add_comment
       post :like_topic
       post :like_comment
+      get :all_comment
     end
   end
   resources :employee_insentives do

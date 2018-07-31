@@ -4,7 +4,9 @@ class TopicsController < ApplicationController
   # GET /topics
   # GET /topics.json
   def index
-    @topics = Topic.all.page(params[:page]).per_page(1)
+    # @topics = Topic.all.order("created_at DESC").paginate(:page => params[:page], :per_page => 1)
+    @topics = Topic.all.order("id DESC").paginate(:page => params[:page], :per_page => 1)
+    # User.paginate(:page => params[:page], :per_page => 1)
     @topic = Topic.new
   end
 
@@ -24,7 +26,7 @@ class TopicsController < ApplicationController
   end
 
   def topic_discussion
-    @topics = Topic.all.order("id DESC")
+    @topics = Topic.all.order("id DESC").paginate(:page => params[:page], :per_page => 2)
     @topic = Topic.new
   end
 
@@ -71,8 +73,13 @@ class TopicsController < ApplicationController
     redirect_to topic_discussion_topics_path
   end
 
-  def topic_wise_comment
+  def all_comment
+    topic_id = params[:format]
+    @topics = Topic.where(id: topic_id)
+    @comment_list = TopicComment.where(topic_id: topic_id)
+  end
 
+  def topic_wise_comment
   end
 
   def view_topic_details

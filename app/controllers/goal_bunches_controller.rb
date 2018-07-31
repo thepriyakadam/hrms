@@ -163,11 +163,12 @@ class GoalBunchesController < ApplicationController
     else
       flash[:alert] = "Goal weightage sum should be 100"
     end 
-    if @employee.id == current_user.employee_id
+    if @employee.manager_id == current_user.employee_id
       redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
     else
       redirect_to admin_level_goal_approval_goal_bunches_path(period_id: @period.id)
     end
+    
   end
 
   def revert_goal

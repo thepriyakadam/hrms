@@ -10,7 +10,10 @@ class IssueRequest < ActiveRecord::Base
   validates :issue_master_id, presence: true
   validates :issue_priority, presence: true
   
-
+  validates :description,presence: true,
+  length: {maximum: 255},
+  on: :create,
+  allow_nil: false
 
   has_attached_file :document1, :path => "attachments/attach_resume/:basename.:extension"
 

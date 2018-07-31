@@ -190,12 +190,12 @@ class WeekOffMastersController < ApplicationController
     params_to = week_off_master_params["to"]
 
     payroll_period = PayrollPeriod.where(status: true).take 
-    if  params_from.to_date >= payroll_period.from.to_date && params_to.to_date <= payroll_period.to.to_date
+    #if  params_from.to_date >= payroll_period.from.to_date && params_to.to_date <= payroll_period.to.to_date
       @week_off_master.update(week_off_master_params)
        flash[:notice] = 'Week Off Updated Successfully'
-    else
-      flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
-    end
+    # else
+    #   flash[:alert] = "Please select date between #{payroll_period.from.to_date} to #{payroll_period.to.to_date}"
+    # end
 
     redirect_to week_off_list_week_off_masters_path
   end

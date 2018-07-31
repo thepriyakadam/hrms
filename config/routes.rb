@@ -420,6 +420,7 @@ Rails.application.routes.draw do
       post :print_visitor_report
       get :print_visitor_report
       get :visitor_list
+      get :show_detail
 
     end
   end
@@ -588,6 +589,7 @@ Rails.application.routes.draw do
       get :revert_week_off_master
       post :show_weekoff_master_data
       get :revert_master_data
+      get :show_employee_attendance
     end
   end
   resources :machine_attendances do
@@ -1718,6 +1720,8 @@ end
   resources :daily_bill_details do
     collection do
     # post :is_confirm
+    get :modal_expense_edit
+    post :update_expence
     get :select_form
     get :is_confirm
     get :print_daily_bill
@@ -2631,6 +2635,7 @@ end
       post :assign_to_employee
       post :employee_list
       get :modal
+      get :show_employee_list
     end
   end
 
@@ -2844,6 +2849,7 @@ end
       get :modal_balance_detail
       get :leave_balance
       # post :leave_balance
+      get :leave
       post :leave
       get :import_xl
       post :import
@@ -2994,6 +3000,7 @@ end
   end
   resources :employees do
     collection do
+      get :personal_detail
       get :print_employee_data_formate
       get :employee_list_report
       post :selected_employee_list_report

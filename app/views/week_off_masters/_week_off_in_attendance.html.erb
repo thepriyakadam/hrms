@@ -1,0 +1,41 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <div class="box-body">
+			<table id="example6" class="table table-bordered table-hover table-condensed">
+			  <thead>
+			    <tr>
+			      <th>Employee</th>
+			      <th>Day</th>
+			      <th>From - To</th>
+			      <th>Action</th>
+			    </tr>
+			  </thead>
+
+			  <tbody>
+			    <% @week_off_masters.each do |week_off_master| %>
+			      <tr>
+			        <td><%= full_name(week_off_master.employee) %></td>
+			        <td><%= week_off_master.day %></td>
+			        <td><%= week_off_master.from.to_date %> to <%= week_off_master.to.to_date %></td>
+			        <td>
+			          <%= link_to '', show_employee_attendance_week_off_masters_path(week_off_master_id: week_off_master.id),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
+			          <%= link_to " PDF ", show_employee_attendance_week_off_masters_path(week_off_master_id: week_off_master.id, format: "pdf"), class: "btn btn-xs btn-info ",:target => "_blank" %>
+                <%= link_to " XLS ", show_employee_attendance_week_off_masters_path(week_off_master_id: week_off_master.id, format: "xls"), class: "btn btn-xs btn-success",:target => "_blank" %>
+			        </td>
+			      </tr>
+			    <% end %>
+			  </tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+<div id="show_employee_attendance" class="modal fade"></div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

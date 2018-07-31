@@ -24,6 +24,26 @@ class WeekOffMastersController < ApplicationController
   def edit
   end
 
+
+  def show_employee_attendance
+    @week_off_master = WeekOffMaster.find(params[:week_off_master_id])
+    @employee_week_off = EmployeeWeekOff.where(week_off_master_id: @week_off_master.id).pluck(:id)
+    @employee_attendances = EmployeeAttendance.where(employee_week_off_id: @employee_week_off)
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'week_off_masters/show_employee_attendance.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' show_employee_attendance',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'week_off_masters/show_employee_attendance.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
+
   # POST /week_off_masters
   # POST /week_off_masters.json
   def create

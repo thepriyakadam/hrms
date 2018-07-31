@@ -6,6 +6,7 @@
       <th>Holiday Date</th>
       <th>Type</th>
       <th>Select Department</th>
+       <th></th>
     </tr>
   </thead>
   <tbody>
@@ -19,19 +20,27 @@
             <!-- < if holiday.is_send == true %>
               <small class="label label-primary">Already Set</small>
             < else %> -->
+            <% if holiday.holiday_date < Date.today %>
+            <% else %>
               <%= link_to '', edit_holiday_path(holiday),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
-              <%= link_to '',  holiday, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+              <%= link_to '',  holiday, method: :delete, data: { confirm: 'Are you sure? May be Your data will be lost !',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+            <% end %>
               <%= link_to '', modal_holidays_path(holiday),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
           </td>
-
-              <td><%= select_tag 'department_id[]',options_for_select(all_department_list),{class: "form-control", hide_label: true,include_blank: " Select Department"} %>
-              <%= f.submit "+", class: 'btn btn-primary btn-sm fa fa-user-plus' %></td>
+          <td><%= select_tag 'department_id[]',options_for_select(all_department_list),{class: "form-control", hide_label: true,include_blank: " Select Department"} %>
+            <%= f.submit "+", class: 'btn btn-primary btn-sm fa fa-user-plus' %>
+          </td>
+          <td><%= link_to '', show_employee_list_holidays_path(holiday_id: holiday.id),class: 'btn btn-default btn-xs fa fa-eye',remote:true %>
+              <%= link_to " PDF ", show_employee_list_holidays_path(holiday_id: holiday.id, format: "pdf"), class: "btn btn-xs btn-info ",:target => "_blank" %>
+              <%= link_to " XLS ", show_employee_list_holidays_path(holiday_id: holiday.id, format: "xls"), class: "btn btn-xs btn-success",:target => "_blank" %>
+          </td>
         </tr>
       <% end %>
     <% end %>
   </tbody>
 </table>
 <div id="modal" class="modal fade"></div>
+<div id="show_employee_list" class="modal fade"></div>
 
 <script type="text/javascript">
 $(document).ready(function() {

@@ -62,6 +62,7 @@ class EmployeeWeekOffsController < ApplicationController
     end
   end
 
+
   def employee_week_off_list
     from_date = params[:employee_week_off][:from_date]
     to_date = params[:employee_week_off][:to_date]

@@ -152,6 +152,11 @@
     # @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
   end
   
+  def personal_detail
+    @employee = Employee.find_by(id: current_user.employee_id)
+    authorize! :show,@employee
+  end
+
   def display_emp_code_master
     @emp1= params[:employee_code_master_id]
     @emp_master_code = EmployeeCodeMaster.where(id: @emp1,is_active: true).take
@@ -637,12 +642,12 @@
       redirect_to all_emp_list_employees_path
     else
       @employee_ids.each do |eid|
-      @employee = Employee.find(eid)
-      @employee.update(status: @status) 
-      flash[:notice] = "Status Updated Successfully"
-    end 
-     redirect_to all_emp_list_employees_path
-  end
+        @employee = Employee.find(eid)
+        @employee.update(status: @status) 
+        flash[:notice] = "Status Updated Successfully"
+      end 
+        redirect_to all_emp_list_employees_path
+    end
   end
 
   def update_password

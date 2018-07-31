@@ -1,9 +1,15 @@
 <%= bootstrap_form_for(@email_reminder,htlm: {id: 'email_reminder'},remote: true) do |f| %>
 
   <div class="row">
+
     <div class="col-sm-3">
       <div class="form-group required">
-      <%= f.select :task_id,all_task,{hide_label: true,include_blank: " Select Task"} %>
+        <div class="input-group">
+          <div class="input-group-addon">
+            <%= link_to "", tasks_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+          </div>
+          <%= f.select :task_id,all_task,{hide_label: true,include_blank: " Select Task"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+        </div>
       </div>
     </div>
     <div class="col-sm-3">

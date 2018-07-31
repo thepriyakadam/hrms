@@ -1,0 +1,38 @@
+		
+		<%= link_to 'Basic Details',basic_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ', remote:true%>
+	
+		<%= link_to 'On Boarding',ajax_joining_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+	
+		<%= link_to 'Bank',ajax_bank_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+	
+		<%= link_to 'Qualification',ajax_qualification_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+	
+		<%= link_to 'Experience',ajax_experience_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+	
+		<%= link_to 'Skill Set',ajax_skillset_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+	
+		<%= link_to 'Certification',ajax_certification_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+	
+		<%= link_to 'Award',ajax_award_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+	
+		<%= link_to 'Physical',ajax_physical_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary',remote:true%>
+	
+		<%= link_to 'Family',ajax_family_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+
+		<!-- < link_to 'Nomination',ajax_employee_nomination_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>-->
+
+		<%= link_to 'Assets',ajax_assigned_asset_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+
+		<%= link_to 'Documents',ajax_employee_document_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+
+		<%= link_to 'Checklist',joining_checklist_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ', remote:true%>
+	
+		<!-- link_to 'Payroll',ajax_setup_payroll_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true %> -->
+<div id="message">
+</div>
+
+<div id='info'>
+<%= render 'show_detail'%>
+</div>
+
+<div id="myModal" class="modal fade"></div>

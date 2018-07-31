@@ -154,7 +154,6 @@ class EmployeeLeavRequestsController < ApplicationController
                   end
                 end
 
-
                 if @employee_leav_request.is_available_coff?
                   flash[:alert] = "Your Leave Request already has been sent"
                 elsif @employee_leav_request.is_salary_processed_coff?
@@ -187,21 +186,27 @@ class EmployeeLeavRequestsController < ApplicationController
                     @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ? AND is_active = ?', @employee.id, @employee_leav_request.leav_category_id,true).take
                     LeaveCOff.find_by(id: @leave_c_off_id).update(taken_date: start_date)
                     @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)
-                    @employee_leav_request.save
-                    @employee_leav_request.leave_record_create_coff(@employee_leav_request)
                     unless @emp_leave_bal.nil?
                       # if @employee_leav_request.leave_count == 0.5
                       #   no_of_leave = @emp_leave_bal.no_of_leave.to_f - @employee_leav_request.leave_count.to_f
                       #   @emp_leave_bal.update(no_of_leave: no_of_leave)
                       # else
+                      if @emp_leave_bal.no_of_leave.to_f >= @employee_leav_request.leave_count.to_f
                         no_of_leave = @emp_leave_bal.no_of_leave.to_f - @employee_leav_request.leave_count.to_f
                         @emp_leave_bal.update(no_of_leave: no_of_leave)
                       # end
     #emp_leav_bal_id
                         @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
+                      
+                        @employee_leav_request.save
+                        @employee_leav_request.leave_record_create_coff(@employee_leav_request)
+                        flash[:notice] = "Created successfully!"
+                        LeaveRequestMailer.pending(@employee_leav_request).deliver_now 
+                      else
+                        flash[:alert] = "You dont have enough COff balance"
+                      end   
                     end
-                    flash[:notice] = "Created successfully!"
-                       LeaveRequestMailer.pending(@employee_leav_request).deliver_now    
+                    
                 end#@leave_c_off.expiry_date < start_date.to_date
 
               else#start_date.to_date > @leave_c_off.c_off_date.to_date

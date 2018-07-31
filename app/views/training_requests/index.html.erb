@@ -7,7 +7,7 @@
 
 <div class="box-body">
 
-    <table id="example" class="table table-bordered table-hover table-condensed">
+    <table id="example6" class="table table-bordered table-hover table-condensed">
    <!--  <meta http-equiv="refresh" content="5" /> -->
       <thead>
         <tr>
@@ -55,3 +55,11 @@
   </div>
 </div>
 
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

@@ -42,15 +42,21 @@
                 </td>
                 <td>
                 <% if employee_plan.start_time.present? && employee_plan.end_time.present? %>
-               <small class="label label-success">Completed</small>
-                <% elsif employee_plan.end_time.nil? && employee_plan.current_status == "Pending" %>
+                  <small class="label label-success">Completed</small>
+                <% elsif employee_plan.start_time.nil? && employee_plan.current_status == "Pending" %>
                     <%= link_to 'Attend', employee_feedback_employee_plans_path(employee_plan), class: 'btn btn-xs btn-info '%>
                     <%= link_to 'Not Attend', employee_reason_employee_plans_path(employee_plan), class: 'btn btn-xs btn-danger ' %>
                     <%= link_to '', edit_employee_plan_path(employee_plan), class: 'btn btn-sm btn-success btn-xs fa fa-edit' %>
                     <%= link_to '', employee_plan, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-xs btn-danger fa fa-close' %>
-                <% elsif employee_plan.end_time.nil? && employee_plan.current_status == "Approved" %>
+                 <% elsif employee_plan.end_time.nil? && employee_plan.current_status == "Pending" %>
+                    <%= link_to 'Add Minutes', employee_feedback_employee_plans_path(employee_plan), class: 'btn btn-xs btn-info '%>
+                    
+                <% elsif employee_plan.start_time.nil? && employee_plan.current_status == "Approved" %>
                     <%= link_to 'Attend', employee_feedback_employee_plans_path(employee_plan), class: 'btn btn-sm btn-primary btn-xs fa fa-edit'%>
                     <%= link_to 'Not Attend', employee_reason_employee_plans_path(employee_plan), class: 'btn btn-sm btn-primary btn-xs fa fa-edit' %>
+                 <% elsif employee_plan.end_time.nil? && employee_plan.current_status == "Approved" %>
+                    <%= link_to 'Add Minutes', employee_feedback_employee_plans_path(employee_plan), class: 'btn btn-sm btn-primary btn-xs fa fa-edit'%>
+                   
                 <% elsif employee_plan.current_status == "Rejected" %>
                 
                 <% elsif employee_plan.current_status == "Cancelled" %>

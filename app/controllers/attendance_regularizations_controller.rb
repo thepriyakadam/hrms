@@ -40,6 +40,9 @@ class AttendanceRegularizationsController < ApplicationController
     @att_approve_list = AttendanceRegularization.where(manager_id: current_user.employee_id).where(status: "Pending")
   end
 
+  def admin_level_approval
+    @admin_approve_list = AttendanceRegularization.where(status: "Pending")
+  end
   # def admin_attendance_regularization_approve
   #   @att_approve_list = AttendanceRegularization.where(status: "Pending")
   # end
@@ -57,11 +60,17 @@ class AttendanceRegularizationsController < ApplicationController
       else
         @emp_atte.update_all(is_regularization: true, working_hrs: "09:00".to_i, present: "P", comment: "Attendance Regularized")
         @att_approve.update(status: "Approved")
+        flash[:notice] = 'Approved !'
       end
     else
       EmployeeAttendance.create(employee_id: @employee_id, day: @date, working_hrs: "09:00".to_i, present: "P", comment: "Attendance Regularized", is_regularization: true)
     end
-    redirect_to attendance_regularization_approve_attendance_regularizations_path
+    @employee = Employee.find_by(id: @employee_id)
+    if @employee.manager_id == current_user.employee_id
+      redirect_to attendance_regularization_approve_attendance_regularizations_path
+    else
+      redirect_to admin_level_approval_attendance_regularizations_path
+    end
   end
 
 
@@ -69,7 +78,12 @@ class AttendanceRegularizationsController < ApplicationController
     att_rejected_id = params[:format]
     @att_rejected = AttendanceRegularization.find(att_rejected_id)
     @att_rejected.update(status: "Rejected")
-    redirect_to attendance_regularization_approve_attendance_regularizations_path
+        flash[:alert] = 'Rejected !'
+    if @att_rejected.manager_id == current_user.employee_id
+      redirect_to attendance_regularization_approve_attendance_regularizations_path
+    else
+      redirect_to admin_level_approval_attendance_regularizations_path
+    end
   end
 
   def emp_attendance_details

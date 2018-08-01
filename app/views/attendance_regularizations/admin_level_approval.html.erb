@@ -18,7 +18,7 @@
   </thead>
   <tbody>
     <% i = 0 %>
-    <% @att_approve_list.each do |attendance_regularization| %>
+    <% @admin_approve_list.each do |attendance_regularization| %>
       <tr>
         <td><%= i = i+1 %></td>
         <td><%= attendance_regularization.employee.try(:manual_employee_code)%>

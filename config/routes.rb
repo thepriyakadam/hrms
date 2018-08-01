@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   end
   resources :attendance_regularizations do 
     collection do
+      get :admin_level_approval
       get :show_attendance_regularization
       get :attendance_regularization_approve
       get :approve_attendance

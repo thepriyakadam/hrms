@@ -11,7 +11,7 @@
             <!-- timeline item -->
             <li>
                 <!-- timeline icon -->
-                <i class="fa bg-blue"><%= image_tag topic.employee.passport_photo.url, :size => "35x35", class: "img-circle" %></i>
+                <i class="fa bg-blue"><%= image_tag topic.try(:employee).try(:passport_photo).try(:url), :size => "35x35", class: "img-circle" %></i>
                 <div class="timeline-item">
                     <span class="time"><i class="fa fa-clock-o"></i> <%= topic.date.to_date %> <%= topic.date.to_time %></span>
                     <h3 class="timeline-header"><a href="#"><%= topic.post_topic %></a> ...</h3>
@@ -71,18 +71,24 @@
             <!-- END timeline item -->
             <!-- timeline item -->
             <%# binding.pry %>
-            <% comment_count = TopicComment.where(topic_id: topic.id).order("id DESC").count %>
-            <% comment_list = TopicComment.where(topic_id: topic.id).order("id DESC").last(5) %>
+            <% comment_count = TopicComment.where(topic_id: topic.id, status: true).order("id DESC").count %>
+            <% comment_list = TopicComment.where(topic_id: topic.id, status: true).order("id DESC").last(5) %>
+            <%#binding.pry%>
             <% comment_list.each do |comm| %>
             <li>
-                <% if comm.employee.passport_photo.present? %>
-                    <i class="fa bg-aqua"><%= image_tag comm.employee.passport_photo.url, :size => "35x35", class: "img-circle" %></i>
+                <% if comm.try(:employee).try(:passport_photo).present? %>
+                    <i class="fa bg-aqua"><%= image_tag comm.try(:employee).try(:passport_photo).try(:url), :size => "35x35", class: "img-circle" %></i>
                 <% else %>
                     <i class="fa fa-user bg-aqua"></i>
                 <% end %>
                 <div class="timeline-item">
                     <span class="time"><i class="fa fa-clock-o"></i> <%= time_ago_in_words(comm.created_at)%> </span>
                     <h3 class="timeline-header123 no-border"><b><%= short_name(comm.employee).titleize %> :</b><%= comm.comment %>
+                    <% if comm.employee_id == current_user.employee_id %>
+                        <%= link_to ' ', topic_comm_update_topics_path(comm),remote: true, class: 'btn btn-success btn-xs fa fa-edit' %>
+                        <%= link_to ' ', inactive_comment_topics_path(comm), class: 'btn btn-danger btn-xs fa fa-close' %>
+                    <% end %>
+
                     <%= bootstrap_form_for(:lick_topic, url: { action: 'like_comment'}) do |f| %>
                         <%= f.hidden_field :employee_id, value: current_user.employee_id %>
                         <%= f.hidden_field :topic_comment_id, value: comm.id %>
@@ -99,6 +105,7 @@
                     <% end %>
                     </h3>
                 </div>
+                <div id="topic_comm_update" class="modal fade"></div>
             </li>
             <% end %>
             <div style="margin: 40px; width: 50%; padding: 1px; color:blue">

@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       get :inactive_topic
       get :inactive_comment
       get :all_topic_details
+      get :topic_comm_update
+      post :update_comment
     end
   end
   resources :employee_insentives do

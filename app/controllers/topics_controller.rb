@@ -5,7 +5,7 @@ class TopicsController < ApplicationController
   # GET /topics.json
   def index
     # @topics = Topic.all.order("created_at DESC").paginate(:page => params[:page], :per_page => 1)
-    @topics = Topic.all.order("id DESC").paginate(:page => params[:page], :per_page => 1)
+    @topics = Topic.where(employee_id: current_user.employee_id).order("id DESC").paginate(:page => params[:page], :per_page => 1)
     # User.paginate(:page => params[:page], :per_page => 1)
     @topic = Topic.new
   end
@@ -26,8 +26,27 @@ class TopicsController < ApplicationController
   end
 
   def topic_discussion
-    @topics = Topic.all.order("id DESC").paginate(:page => params[:page], :per_page => 2)
+    @topics = Topic.where(status: true).order("id DESC").paginate(:page => params[:page], :per_page => 2)
     @topic = Topic.new
+  end
+
+  def topic_comm_update
+    @comment = TopicComment.find(params[:format])
+  end
+  
+  def update_comment
+    comment_id = params[:comment][:comment_id]
+    comment = params[:comment][:comment]
+    @update_comm = TopicComment.find(comment_id)
+    @update_comm.update(comment: comment)
+    redirect_to topic_discussion_topics_path
+  end
+
+  def inactive_comment
+    comment_id = params[:format]
+    @update_comm = TopicComment.find(comment_id)
+    @update_comm.update(status: false)
+    redirect_to topic_discussion_topics_path
   end
 
   def like_topic

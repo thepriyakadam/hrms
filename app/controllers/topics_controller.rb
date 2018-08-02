@@ -83,12 +83,47 @@ class TopicsController < ApplicationController
   end
 
   def view_topic_details
-    topic_id = params[:format]
-    @topics = Topic.find(topic_id)
+    if params[:format] == "pdf" || params[:format] == "xls"
+      @topics = Topic.where(id: params[:topic_id])
+      @comment_list = TopicComment.where(topic_id: params[:topic_id])
+      respond_to do |f|
+        f.js
+        f.xls {render template: 'topics/topic_details.xls.erb'}
+        f.html
+        f.pdf do
+          render pdf: 'topic_details',
+          layout: 'pdf.html',
+          orientation: 'Landscape',
+          template: 'topics/topic_details.pdf.erb',
+          show_as_html: params[:debug].present?
+          #margin:  { top:1,bottom:1,left:1,right:1 }
+        end
+      end
+    else
+      topic_id = params[:format]
+      @topics = Topic.find(topic_id)
+    end
   end
 
   def topic_list
-    @topics = Topic.all
+    @topics = Topic.where(employee_id: current_user.employee_id)
+  end
+
+  def all_topic_list
+    @topics = Topic.where(status: true)
+  end
+
+  def all_topic_details
+    topic_id = params[:format]
+    @topics = Topic.where(id: topic_id)
+    @comment_list = TopicComment.where(topic_id: topic_id)
+  end
+
+  def inactive_topic
+    topic_id = params[:format]
+    @topic = Topic.find(topic_id)
+    @topic.update(status: false)
+    redirect_to all_topic_list_topics_path
   end
 
   # POST /topics

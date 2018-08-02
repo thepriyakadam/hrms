@@ -7,6 +7,10 @@ Rails.application.routes.draw do
       post :like_topic
       post :like_comment
       get :all_comment
+      get :all_topic_list
+      get :inactive_topic
+      get :inactive_comment
+      get :all_topic_details
     end
   end
   resources :employee_insentives do

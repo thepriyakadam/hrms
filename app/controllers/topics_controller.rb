@@ -95,7 +95,7 @@ class TopicsController < ApplicationController
   def all_comment
     topic_id = params[:format]
     @topics = Topic.where(id: topic_id)
-    @comment_list = TopicComment.where(topic_id: topic_id)
+    @comment_list = TopicComment.where(topic_id: topic_id,status: true)
   end
 
   def topic_wise_comment

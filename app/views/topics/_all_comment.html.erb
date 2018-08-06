@@ -88,7 +88,11 @@
                         <% end %>
                         <div class="timeline-item">
                             <span class="time"><i class="fa fa-clock-o"></i> <%= time_ago_in_words(comm.created_at)%> </span>
-                            <h3 class="timeline-header123 no-border"><b><%= short_name(comm.employee).titleize %> :</b><%= comm.comment %>
+                            <h3 class="timeline-header123 no-border"><b><%= short_name(comm.employee).titleize %> :</b><%= comm.comment %> &nbsp&nbsp&nbsp
+                                <% if comm.employee_id == current_user.employee_id %>
+                                    <%= link_to ' ', topic_comm_update_topics_path(comm),remote: true, class: 'btn-xs fa fa-edit' %>
+                                    <%= link_to ' ', inactive_comment_topics_path(comm), class: ' btn-xs fa fa-close' %>
+                                <% end %>
                             <%= bootstrap_form_for(:lick_topic, url: { action: 'like_comment'}) do |f| %>
                                 <%= f.hidden_field :employee_id, value: current_user.employee_id %>
                                 <%= f.hidden_field :topic_comment_id, value: comm.id %>

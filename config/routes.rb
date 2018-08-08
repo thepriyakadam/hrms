@@ -475,6 +475,11 @@ Rails.application.routes.draw do
 
   resources :manager_self_services do
     collection do
+      post :update_out_time
+      get :add_attendance
+      post :managerwise_attendance_list
+      get :managerwise_attendance_list
+      post :create_managerwise_attendance
       get :reporties_list
       get :reporties_profile_modal
       get :subordinate_list
@@ -1282,8 +1287,8 @@ end
       get :print_employee_wise
       get :detail_employee_wise_xls
       get :period_rating_wise
-      post :Period_rating_wise_employee
-      get :Period_rating_wise_employee
+      post :period_rating_wise_employee
+      get :period_rating_wise_employee
       get :period_rating_wise_pdf
       get :period_rating_wise_xls
       get :increment_index_report

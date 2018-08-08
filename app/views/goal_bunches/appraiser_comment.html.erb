@@ -268,7 +268,11 @@
                 <div class="col-sm-3">
                   <div class="actions">
                     <%#= f.submit "Create Comment & Rating", class: 'btn btn-primary btn-sm' %>
-                    <%= link_to 'Back',period_list_appraiser_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+                    <% if @employee.manager_id == current_user.employee_id %>
+                      <%= link_to 'Back',period_list_appraiser_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+                    <% else %>
+                      <%= link_to 'Back',admin_level_appraiser_evaluation_goal_ratings_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+                    <% end %>
                   </div>
                 </div>
               </div>
@@ -518,13 +522,23 @@
         
         <% unless @goal_bunch.nil? %>
         <% if @goal_bunch.appraiser_comment == nil or @goal_bunch.appraiser_confirm == true %>
-           <%= link_to 'Back',period_list_appraiser_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+
+          <% if @employee.manager_id == current_user.employee_id %>
+              <%= link_to 'Back',period_list_appraiser_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+          <% else %>
+            <%= link_to 'Back',admin_level_appraiser_evaluation_goal_ratings_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+          <% end %>
+
           <% else %>
             <div class="row">
               <div class="col-sm-6">
                 <div class="actions">
                   <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
-                   <%= link_to 'Back',period_list_appraiser_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+                  <% if @employee.manager_id == current_user.employee_id %>
+                    <%= link_to 'Back',period_list_appraiser_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+                  <% else %>
+                    <%= link_to 'Back',admin_level_appraiser_evaluation_goal_ratings_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+                  <% end %>
                 </div>
               </div>
             </div>

@@ -802,7 +802,7 @@ class GoalRatingsController < ApplicationController
     session[:active_tab1] ="perform_report"
   end
 
-  def Period_rating_wise_employee
+  def period_rating_wise_employee
     period_id = params[:salary][:period_id]
     rating1 = params[:salary][:rating1]
     rating2 = params[:salary][:rating2]
@@ -812,7 +812,7 @@ class GoalRatingsController < ApplicationController
       f.xls {render template: 'goal_ratings/period_rating_wise.xls.erb'}
       f.html
       f.pdf do
-        render pdf: 'Period_rating_wise_employee',
+        render pdf: 'period_rating_wise_employee',
         layout: 'pdf.html',
         orientation: 'Landscape',
         template: 'goal_ratings/period_rating_wise.pdf.erb',

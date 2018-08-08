@@ -60,11 +60,10 @@ class GoalRating < ActiveRecord::Base
           period_name = spreadsheet.cell(i,'C')
 
           if emp != nil && period_name != nil
-
+            
             period = Period.find_by(name: period_name)
             if period == nil
               period_name = spreadsheet.cell(i,'C')
-              
               @period = Period.create(name: period_name,status: true)
               period_id = @period.id
             else

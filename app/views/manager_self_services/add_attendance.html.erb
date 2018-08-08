@@ -1,0 +1,72 @@
+ 
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title"> Add Attendance</h3>
+  </div>
+  <div class="box-body">
+    <%= bootstrap_form_for(:salary, url: { action: 'managerwise_attendance_list'},html: {id: "salary"},remote: true) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <label>Date </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :salary,:day,hide_label: true,class: 'submission form-control'%>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-9" style="padding-top:20px;">
+          <div class="actions">
+            <%= submit_tag 'Create Attendance', name: 'save', id: "buttonCtc" %>
+            <%= submit_tag 'Report', name: 'report', id: "buttonCtc" %>
+            <%= submit_tag 'Update Out Time', name: 'outtime', id: "buttonCtc" %>
+           
+          </div>
+        </div>
+      </div>
+    <br>
+    <% end %>
+    <div class="ajax-progress"></div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div id="managerwise_list"></div>    
+      </div>
+    </div>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#salary").submit();
+  });
+</script>
+<script type="text/javascript">
+  $(function(){
+    $('.submission').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+8',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+<script type="text/javascript">
+   $("#salary").validate({
+  rules: {
+    "salary[day]":{
+      required: true
+    }
+  },
+  messages: {
+    "salary[day]":{
+      required: "Please specify date"
+    }
+  },
+  errorPlacement: function(error, element) {
+   error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+   error.insertAfter(element.parent(element));
+  }
+ });
+</script>

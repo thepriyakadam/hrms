@@ -210,7 +210,6 @@ class ManagerSelfServicesController < ApplicationController
   end
 
   def managerwise_attendance_list
-
     @date =  params[:salary][:day].to_date
 
     if params[:save]
@@ -311,6 +310,8 @@ class ManagerSelfServicesController < ApplicationController
       @employee_attendance_ids.each do |eid|
       @employee_attendance = EmployeeAttendance.find_by_id(eid)
       out_time = Time.now
+
+      #byebug
       total_hrs = out_time.to_time - @employee_attendance.in_time.to_time
       working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
 

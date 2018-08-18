@@ -34,6 +34,9 @@
       session[:active_tab1] ="Employee1"
   end
 
+  def org_chart
+  end
+
   def fetch_data
     empp = Employee.all 
     abc = empp.fetch_data

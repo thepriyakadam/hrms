@@ -1833,8 +1833,6 @@ end
         end
       else 1000000 <= @total_income
         @on_tax = @total_income - 250000
-        
-
       end
     else
       puts "Total Income not present"        

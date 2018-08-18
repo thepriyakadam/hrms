@@ -1914,6 +1914,12 @@ end
   end
   resources :vacancy_masters do
     collection do
+      get :datewise_report
+      post :show_datewise
+      get :show_datewise
+      get :recruiter_wise_report
+      post :show_recruiter_wise
+      get :show_recruiter_wise
       get :search_by_vacancy_post_date
       get :vacancy_request_confirmation
       get :vacancy_history

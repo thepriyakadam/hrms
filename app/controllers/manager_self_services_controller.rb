@@ -303,17 +303,18 @@ class ManagerSelfServicesController < ApplicationController
 
   def update_out_time
     @employee_attendance_ids = params[:employee_attendance_ids]
+    out_time = params[:employee_attendance][:out_time]
 
     if @employee_attendance_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
     else
       @employee_attendance_ids.each do |eid|
       @employee_attendance = EmployeeAttendance.find_by_id(eid)
-      out_time = Time.now
-
+      #out_time = Time.now
       #byebug
       total_hrs = out_time.to_time - @employee_attendance.in_time.to_time
-      working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+      #working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+      working_hrs = Time.at(total_hrs).strftime("%H:%M")
 
       @employee_attendance.update(out_time: out_time,working_hrs: working_hrs) 
       flash[:notice] = "Updated successfully"

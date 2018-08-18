@@ -1,0 +1,47 @@
+<div class="box">
+  <div class="box-header with-border">
+    <div class="pull-right"></div>
+    <h3 class="box-title">Vacancy List</h3><br>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div class="row">
+      <div class="col-sm-12">
+        <table id="example6" class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+              <th>Sr.No.</th>
+              <th>Vacancy Code</th>
+              <th>Title</th>
+              <th>No Of Position</th>
+              <th>Day</th>
+            </tr>
+          </thead>
+
+          <tbody>
+          <% i = 0 %>
+            <% @vacancy_masters.each do |vacancy_master| %>
+              <tr>
+                <td><%= i=i+1 %></td>
+                <td><%= vacancy_master.try(:vacancy_code) %></td>
+                <td><%= vacancy_master.vacancy_name %></td>
+                <td><%= vacancy_master.no_of_position %></td>
+                <td>
+                	<% today_date = Date.today %>
+                	<% days = today_date - vacancy_master.vacancy_post_date.to_date %>
+                	<%= days.to_i %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+   </div>
+  </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

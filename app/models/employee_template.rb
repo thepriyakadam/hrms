@@ -77,7 +77,8 @@ class EmployeeTemplate < ActiveRecord::Base
       else
         @employee_id = @employee.id
         salary_template = spreadsheet.cell(i,'C')
-        @cella = spreadsheet.cell(i,'D')
+        type = spreadsheet.cell(i,'D')
+        @cella = spreadsheet.cell(i,'E')
 
         @template = SalaryTemplate.find_by(code: salary_template)
         @template_id = @template.id
@@ -121,9 +122,19 @@ class EmployeeTemplate < ActiveRecord::Base
                       @value = spreadsheet.cell(i,@b)
 
                         employee_template.save
-                        @employee_salary_template = EmployeeSalaryTemplate.create(employee_id: @employee_id,
+                        if type == "Monthly" || type == "monthly"
+                          annual_value = @value.to_f*12
+                          @employee_salary_template = EmployeeSalaryTemplate.create(employee_id: @employee_id,
                           salary_template_id: @template_id,salary_component_id: s.salary_component_id,
-                          is_deducted: false,annual_amount: @value.to_f )
+                          is_deducted: false,annual_amount: annual_value.to_f,monthly_amount: @value.to_f )
+                        elsif type == "Yearly" || type == "yearly"
+                          monthly_value = @value.to_f/12
+                          @employee_salary_template = EmployeeSalaryTemplate.create(employee_id: @employee_id,
+                          salary_template_id: @template_id,salary_component_id: s.salary_component_id,
+                          is_deducted: false,annual_amount: @value.to_f,monthly_amount: monthly_value.to_f )
+                        else
+                        end
+
                       else
                       end
                     end#for a in 1

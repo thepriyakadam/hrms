@@ -204,7 +204,7 @@ end
 
   def vacancy_history
     @reporting_master = ReportingMaster.find_by(employee_id: current_user.employee_id,is_active: true)
-    @vacancy_masters = VacancyMaster.where("reporting_master_id = ? and (current_status = ? or current_status = ? or current_status = ?)",@reporting_master.id,"Pending","FirstApproved","Approved & Send Next")
+    @vacancy_masters = VacancyMaster.where("reporting_master_id = ? and (current_status = ? or current_status = ? or current_status = ?)",current_user.employee_id,"Pending","FirstApproved","Approved & Send Next")
     
     session[:active_tab] ="recruitment"
     session[:active_tab1] ="particular_vacancy"

@@ -3024,11 +3024,8 @@ end
   end
   resources :employees do
     collection do
-<<<<<<< HEAD
       get :personal_detail
-=======
       get :org_chart
->>>>>>> 68311acd92eb0cc7abe82e4fb674edd65f68293d
       get :print_employee_data_formate
       get :employee_list_report
       post :selected_employee_list_report

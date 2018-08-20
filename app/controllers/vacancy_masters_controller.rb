@@ -789,6 +789,8 @@ end
   end
 
   def recruiter_wise_report
+     session[:active_tab] ="recruitment"
+    session[:active_tab1] ="recruitment_report"
   end
 
   def show_recruiter_wise
@@ -799,6 +801,8 @@ end
   end
 
   def datewise_report
+     session[:active_tab] ="recruitment"
+    session[:active_tab1] ="recruitment_report"
   end
 
   def show_datewise

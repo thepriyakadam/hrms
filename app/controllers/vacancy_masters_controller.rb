@@ -805,6 +805,19 @@ end
     employee_id = params[:salary][:employee_id]
     recruiter = Recruiter.find_by(employee_id: employee_id)
     @vacancy_masters = VacancyMaster.where(recruiter_id: recruiter)
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'vacancy_masters/recruiter_wise.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'show_recruiter_wise',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'vacancy_masters/recruiter_wise.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
   end
 
   def datewise_report
@@ -815,7 +828,20 @@ end
   def show_datewise
     start_date = params[:vacancy_master][:from]
     end_date = params[:vacancy_master][:to]
-    @vacancy_masters = VacancyMaster.where(vacancy_post_date: start_date.to_date..end_date.to_date)
+    @vacancy_masters = VacancyMaster.where(vacancy_post_date: start_date.to_date..end_date.to_date).where.not(recruiter_id: nil)
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'vacancy_masters/datewise.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'show_recruiter_wise',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'vacancy_masters/datewise.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
   end
 
   private

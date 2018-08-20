@@ -1,7 +1,11 @@
 <div class="box">
   <div class="box-header with-border">
     <div class="pull-right"></div>
-    <h3 class="box-title">Vacancy List</h3><br>
+    <div class="pull-right">
+      <%= link_to " PDF ", show_datewise_vacancy_masters_path(:vacancy_master =>{from: params[:vacancy_master][:from],to: params[:vacancy_master][:to]}, format: "pdf"), class: "btn btn-sm btn-info",:target => "_blank" %>
+      
+      <%= link_to " XLS ", show_datewise_vacancy_masters_path(:vacancy_master =>{to: params[:vacancy_master][:to],from: params[:vacancy_master][:from]}, format: "xls"), class: "btn btn-sm btn-success",:target => "_blank" %>
+    </div>
   </div><!-- /.box-header -->
   <div class="box-body">
     <div class="row">

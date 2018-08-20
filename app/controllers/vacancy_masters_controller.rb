@@ -322,6 +322,7 @@ end
   def particular_vacancy_request_list_history
     @vacancy_master = VacancyMaster.find(params[:format])
     @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
+    @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id,shortlist_for_interview: true)
     session[:active_tab] ="recruitment"
   end
 
@@ -450,7 +451,7 @@ end
      @interview_schedule = InterviewSchedule.find(params[:format])
      InterviewSchedule.where(id: @interview_schedule.id).update_all(is_confirmed: true)
      @selected_resume = SelectedResume.where(id: @interview_schedule.selected_resume_id).take
-     #@selected_resume.update(status: "Confirmed")
+     @selected_resume.update(status: "Confirmed")
      @vacancy_master = VacancyMaster.where(id: @selected_resume.vacancy_master_id).take
      a=ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id,is_complete: nil).first
      ParticularVacancyRequest.where(id: a.id).update_all(is_complete: true,candidate_name: @interview_schedule.candidate_name,closed_date: Time.zone.now.to_date)
@@ -463,6 +464,12 @@ end
        end
      flash[:notice] = "Candidate Confirmed & Vacancy Closed Successfully"
     redirect_to confirm_interview_schedule_list_vacancy_masters_path
+  end
+
+  def candidate_info
+    @selected_resume = SelectedResume.find(params[:format])
+    @interview_schedule = InterviewSchedule.where(selected_resume_id: @selected_resume.id).pluck(:id)
+    @interview_analyses = InterviewAnalysis.where(interview_schedule_id: @interview_schedule)
   end
 
   def modal3

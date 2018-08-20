@@ -1924,6 +1924,7 @@ end
   end
   resources :vacancy_masters do
     collection do
+      get :candidate_info
       get :datewise_report
       post :show_datewise
       get :show_datewise

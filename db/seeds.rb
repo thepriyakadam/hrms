@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'roo'
-ex = Roo::Excel.new("#{Rails.root}/public/SparklineSalary.xls")
+ex = Roo::Excel.new("#{Rails.root}/public/SparklineSalary .xls")
 ex.default_sheet = ex.sheets[0]
 j = 1
 gross_salary = 0
@@ -9,6 +9,9 @@ ActiveRecord::Base.transaction do
   puts "Starting Record #{ex.cell(line,'')}---------------------------------------"
 
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+
+  if @employee.nil
+  else
   puts "#{@employee.manual_employee_code}---------------------"
   @salary_template = SalaryTemplate.find_by_code(ex.cell(line,'B'))
   @salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?

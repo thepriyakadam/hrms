@@ -802,13 +802,17 @@ end
     end
   end
 
+  def refferal_vacancy
+    @vacancy_masters = VacancyMaster.where(vacancy_of: 'Refferal',is_confirmed: nil) 
+    session[:active_tab] ="EmployeeSelfService"
+  end
+
   def recruiter_wise_report
      session[:active_tab] ="recruitment"
     session[:active_tab1] ="recruitment_report"
   end
 
   def show_recruiter_wise
-    #byebug
     employee_id = params[:salary][:employee_id]
     recruiter = Recruiter.find_by(employee_id: employee_id)
     @vacancy_masters = VacancyMaster.where(recruiter_id: recruiter)

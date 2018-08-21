@@ -694,7 +694,7 @@ end
       @selected_resume_ids.each do |eid|
         @selected_resume = SelectedResume.find(eid)
         @selected_resume.update(shortlist_for_interview: true) 
-        VacancyMasterMailer.shortlist_resume(@selected_resume).deliver_now
+#        VacancyMasterMailer.shortlist_resume(@selected_resume).deliver_now
         flash[:notice] = "Candidates Shortlisted For Interview"
       end 
       redirect_to hr_resume_vacancy_masters_path(vacancy_master_id: @vacancy_master.id)

@@ -362,17 +362,17 @@ end
       elsif current_user.role.name == 'Admin'
         @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
         # @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"FinalApproved")
-        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved").order("id DESC")
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved",recruiter_id: @vacancy_master.recruiter_id).order("id DESC")
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved").order("id DESC")
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved",recruiter_id: @vacancy_master.recruiter_id).order("id DESC")
       elsif current_user.role.name == 'HOD'
         @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
-        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved").order("id DESC")
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved",recruiter_id: @vacancy_master.recruiter_id).order("id DESC")
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
         @employees = @emp.subordinates
-        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved").order("id DESC")
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved",recruiter_id: @vacancy_master.recruiter_id).order("id DESC")
       elsif current_user.role.name == 'Recruitment'
         @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved").order("id DESC")
       else current_user.role.name == 'Employee'

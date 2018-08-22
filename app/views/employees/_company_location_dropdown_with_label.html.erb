@@ -28,6 +28,8 @@
 	<%= select :particular_leave_record, :company_location_id, (@company_locations.present? ? (@company_locations.collect {|b| [b.name,b.id]}) : {}),{hide_label: true,include_blank: " Select Company Location"}, class: "form-control" %>
 <%elsif @form == 'due_detail' %>
 	<%= select :due_detail, :company_location_id, (@company_locations.present? ? (@company_locations.collect {|b| [b.name,b.id]}) : {}),{hide_label: true,include_blank: " Select Company Location"}, class: "form-control" %>
+<%elsif @form == 'vacancy_master' %>
+	<%= select :vacancy_master, :company_location_id, (@company_locations.present? ? (@company_locations.collect {|b| [b.name,b.id]}) : {}),{hide_label: true,include_blank: " Select Company Location"},{onchange:"var a={company_location_id:$(this).val(), form : 'vacancy_master'}; $.get('/employees/collect_department',a,function(response){});",class: "form-control"}%>
 <%else %>
-	<%= select :company,:company_location_id,(@company_locations.present? ? (@company_locations.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Company Location",hide_label:true},{onchange:"var a={company_location_id:$(this).val(), form : 'company'}; $.get('/employees/collect_department,a,function(response){});",class: "form-control"}%>
+	<%= select :vacancy_master,:company_location_id,(@company_locations.present? ? (@company_locations.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Company Location",hide_label:true},{onchange:"var a={company_location_id:$(this).val(), form : 'vacancy_master'}; $.get('/employees/collect_department,a,function(response){});",class: "form-control"}%>
 <%end%>

@@ -4,7 +4,8 @@
     <div class="pull-right">
 
     <% if @goal_bunch.goal_confirm == true %>
-      <%= link_to " Template ", "/Templates/61.Goal Setting.xls", :class=>" fa fa-download btn-xl btn btn-warning" %>
+
+    <%= link_to " Template ", "/Templates/61.Goal Setting.xls", :class=>" fa fa-download btn-xl btn btn-warning" %>
     <% else %>
     	<%= link_to " Upload ", import_xl_goal_ratings_path(goal_bunch_id: @goal_bunch.id,emp_id: @employee.id), class: 'fa fa-upload btn btn-xl btn-primary' %>
     

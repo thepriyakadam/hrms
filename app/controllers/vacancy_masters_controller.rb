@@ -12,16 +12,16 @@ class VacancyMastersController < ApplicationController
       @vacancy_masters = VacancyMaster.all
       else
         if current_user.role.name == 'GroupAdmin'
-          @vacancy_masters = VacancyMaster.all
+          @vacancy_masters = VacancyMaster.all.order("id DESC")
         elsif current_user.role.name == 'Admin'
         @company_locations = CompanyLocation.where(company_id: current_user.company_location.company_id).pluck(:id)
-        @vacancy_masters = VacancyMaster.where(company_location_id: @company_locations)
+        @vacancy_masters = VacancyMaster.where(company_location_id: @company_locations).order("id DESC")
         elsif current_user.role.name == 'Branch'
-        @vacancy_masters = VacancyMaster.where(company_location_id: current_user.company_location_id)
+        @vacancy_masters = VacancyMaster.where(company_location_id: current_user.company_location_id).order("id DESC")
         elsif current_user.role.name == 'HOD'
-        @vacancy_masters = VacancyMaster.where(department_id: current_user.department_id)
+        @vacancy_masters = VacancyMaster.where(department_id: current_user.department_id).order("id DESC")
       elsif current_user.role.name == 'Recruitment'
-          @vacancy_masters = VacancyMaster.all
+          @vacancy_masters = VacancyMaster.all.order("id DESC")
       end
     end
     session[:active_tab] ="recruitment"
@@ -118,8 +118,8 @@ class VacancyMastersController < ApplicationController
         #@vacancy_master.reporting_master_id = employee.manager_id
         respond_to do |format|
       if @vacancy_master.save
-        dept_id = params[:vacancy_master][:department_id]
-        location = params[:vacancy_master][:company_location_id]
+        dept_id = params[:employee][:department_id]
+        location = params[:employee][:company_location_id]
         company = params[:vacancy_master][:company_id]
         VacancyMaster.where(id: @vacancy_master.id).update_all(company_id: company,company_location_id: location,department_id: dept_id)
         ReportingMastersVacancyMaster.create(reporting_master_id: current_user.employee_id, vacancy_master_id: @vacancy_master.id,vacancy_status: "Pending")
@@ -569,15 +569,20 @@ end
     @employee = Employee.find(@reporting_master.employee_id)
   end
 
-  def reporting_masters_vacancy_master_list
-    # @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+  def show_vacancy_master_modal
     @vacancy_master = VacancyMaster.find(params[:format])
-    # @reporting_master = ReportingMaster.find(@vacancy_master.reporting_master_id)
-    # @employee = Employee.find(@reporting_master.employee_id)
-    # @vacancy_master1 = VacancyMaster.where(id: @vacancy_master.id)
     @reporting_masters_vacancy_masters = ReportingMastersVacancyMaster.where(vacancy_master_id: @vacancy_master.id)
-    # @reporting_masters_vacancy_masters = ReportingMastersVacancyMaster.where(vacancy_master_id: @vacancy_master.id).order("id ASC")
   end
+
+  # def reporting_masters_vacancy_master_list
+  #   # @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+  #   @vacancy_master = VacancyMaster.find(params[:format])
+  #   # @reporting_master = ReportingMaster.find(@vacancy_master.reporting_master_id)
+  #   # @employee = Employee.find(@reporting_master.employee_id)
+  #   # @vacancy_master1 = VacancyMaster.where(id: @vacancy_master.id)
+  #   @reporting_masters_vacancy_masters = ReportingMastersVacancyMaster.where(vacancy_master_id: @vacancy_master.id)
+  #   # @reporting_masters_vacancy_masters = ReportingMastersVacancyMaster.where(vacancy_master_id: @vacancy_master.id).order("id ASC")
+  # end
 
   def vac_history
      @vacancy_masters = VacancyMaster.group(:employee_id)
@@ -706,6 +711,26 @@ end
       end 
       redirect_to hr_resume_vacancy_masters_path(vacancy_master_id: @vacancy_master.id)
     end
+  end
+
+  def shortlist_for_interview_single
+    selected_resume_id = SelectedResume.find(params[:format])
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+    @selected_resume = SelectedResume.find(selected_resume_id)
+    @selected_resume.update(shortlist_for_interview: true) 
+    VacancyMasterMailer.shortlist_resume(@selected_resume).deliver_now
+    flash[:notice] = "Candidates Shortlisted For Interview"
+    redirect_to hr_resume_vacancy_masters_path(vacancy_master_id: @vacancy_master.id)
+  end
+
+  def reject_single
+    selected_resume_id = SelectedResume.find(params[:format])
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+    @selected_resume = SelectedResume.find(selected_resume_id)
+    @selected_resume.update(shortlist_for_interview: false,status: "Rejected")
+    #VacancyMasterMailer.shortlist_resume(@selected_resume).deliver_now
+    flash[:notice] = "Candidates Rejected" 
+    redirect_to hr_resume_vacancy_masters_path(vacancy_master_id: @vacancy_master.id)
   end
 
   def show_selected_resume

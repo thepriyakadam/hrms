@@ -185,9 +185,11 @@ class EmployeeTemplatesController < ApplicationController
 
   def active_list
     if current_user.class == Group
+      @employees = Employee.where(status: "Active").pluck(:id)
       @employee_templates = EmployeeTemplate.where(is_active: true)
     elsif current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
+      @employees = Employee.where(status: "Active").pluck(:id)
         @employee_templates = EmployeeTemplate.where(is_active: true)
       elsif current_user.role.name == 'Admin'
         @employees = Employee.where(company_id: current_user.company_location.company_id)

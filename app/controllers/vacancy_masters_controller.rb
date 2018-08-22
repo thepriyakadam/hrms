@@ -708,6 +708,26 @@ end
     end
   end
 
+  def shortlist_for_interview_single
+    selected_resume_id = SelectedResume.find(params[:format])
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+    @selected_resume = SelectedResume.find(selected_resume_id)
+    @selected_resume.update(shortlist_for_interview: true) 
+    VacancyMasterMailer.shortlist_resume(@selected_resume).deliver_now
+    flash[:notice] = "Candidates Shortlisted For Interview"
+    redirect_to hr_resume_vacancy_masters_path(vacancy_master_id: @vacancy_master.id)
+  end
+
+  def reject_single
+    selected_resume_id = SelectedResume.find(params[:format])
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+    @selected_resume = SelectedResume.find(selected_resume_id)
+    @selected_resume.update(shortlist_for_interview: false,status: "Rejected")
+    #VacancyMasterMailer.shortlist_resume(@selected_resume).deliver_now
+    flash[:notice] = "Candidates Rejected" 
+    redirect_to hr_resume_vacancy_masters_path(vacancy_master_id: @vacancy_master.id)
+  end
+
   def show_selected_resume
     @selected_resume = SelectedResume.find(params[:id])
     @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])

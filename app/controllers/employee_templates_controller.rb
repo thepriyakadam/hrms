@@ -186,19 +186,20 @@ class EmployeeTemplatesController < ApplicationController
   def active_list
     if current_user.class == Group
       @employees = Employee.where(status: "Active").pluck(:id)
-      @employee_templates = EmployeeTemplate.where(is_active: true)
+
+      @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
     elsif current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
       @employees = Employee.where(status: "Active").pluck(:id)
-        @employee_templates = EmployeeTemplate.where(is_active: true)
+        @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_location.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id,status: "Active")
         @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
       elsif current_user.role.name == 'Branch'
-        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @employees = Employee.where(company_location_id: current_user.company_location_id,status: "Active")
         @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
       elsif current_user.role.name == 'HOD'
-        @employees = Employee.where(department_id: current_user.department_id)
+        @employees = Employee.where(department_id: current_user.department_id,status: "Active")
         @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
       else current_user.role.name == 'Employee'
          @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: current_user.employee_id)

@@ -7,10 +7,8 @@ gross_salary = 0
 ActiveRecord::Base.transaction do
 2.upto(109) do |line|
   puts "Starting Record #{ex.cell(line,'')}---------------------------------------"
-
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-
-  if @employee.nil
+  if @employee.nil?
   else
   puts "#{@employee.manual_employee_code}---------------------"
   @salary_template = SalaryTemplate.find_by_code(ex.cell(line,'B'))
@@ -84,5 +82,6 @@ ActiveRecord::Base.transaction do
     end
   end
   gross_salary = 0
+end
 end
 end

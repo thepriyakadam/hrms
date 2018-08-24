@@ -1924,6 +1924,9 @@ end
   end
   resources :vacancy_masters do
     collection do
+      get :show_vacancy_master_modal
+      get :shortlist_for_interview_single
+      get :reject_single
       get :refferal_vacancy
       get :candidate_info
       get :datewise_report

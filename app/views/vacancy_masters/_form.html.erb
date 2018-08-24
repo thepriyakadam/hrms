@@ -13,34 +13,27 @@
       <div class="row">
 
        <div class="col-sm-3">
+          <label>Company</label>
           <div class="form-group required">
+            <%= f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={company_id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <div id="company_location_with_label">
+              <%= render 'employees/company_location_dropdown_with_label' %> 
+          </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
             <div class="input-group">
-              <%=f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
+              <div id="department">
+                <%= render 'employees/department_dropdown' %> 
+              </div> 
             </div>
-          </div>
-        </div>
-
-        <div class="col-sm-3">
-          <div class="form-group required">
-            <div class="input-group">
-             <%=f.select :company_location_id, all_company_location,{include_blank: "Select Company Location"}%>
-            
-            </div> 
-          </div>
-        </div>
-
-        <div class="col-sm-3">
-         <div class="form-group required">
-          <div class="input-group">
-            <%=f.select :department_id, all_department_list,{include_blank: "Select Department"}%>
-          </div>
-         </div>
-        </div>
-
-      <div class="col-sm-3">
-         <div class="field">
-          <!--   <label>Job Title</label> -->
-            <%= f.select :sub_department_id,all_sub_department,{label: 'Sub Department',include_blank: " Select Sub Department"} %>
           </div>
         </div>
       </div>
@@ -49,7 +42,7 @@
        <div class="col-sm-3">
          <div class="form-group required">
           <!--   <label>Job Title</label> -->
-            <%= f.select :employee_designation_id,all_employee_designation,{label: 'Designation',include_blank: " Select Designation"} %>
+           <%= f.select :employee_designation_id, all_employee_designation, {include_blank: "Select Designation"},{:class=>"select2",:style=>"width: 100%;",:tabindex=>"-1"} %>
           </div>
         </div>
 
@@ -330,6 +323,7 @@ $("#vacancy_master").validate({
       },
       "vacancy_master[no_of_position]":{
         required: true,
+        numbersOnly: true
       },
       "vacancy_master[experience]":{
         required: true,

@@ -1,0 +1,26 @@
+<table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+  <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>Employee Grade</th>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% i = 0 %>
+    <% @expence_opestions.each do |expence_opestion| %>
+      <tr>
+        <td><%= i = i + 1 %></td>
+        <td><%= expence_opestion.employee_grade.try(:name) %></td>
+        <td><%= expence_opestion.code %></td>
+        <td><%= expence_opestion.name %></td>
+        <td><%= expence_opestion.description %></td>
+        <td><%= expence_opestion.status ? "Active" : "Inactive" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

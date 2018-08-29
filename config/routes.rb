@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  resources :billing_options
+  resources :modes
+  resources :expence_opestions do
+    collection do
+      get :import_xl
+      post :import
+    end
+  end
   resources :topics  do
     collection do
       get :view_topic_details

@@ -1,0 +1,52 @@
+<%= bootstrap_form_for(@expenses_master,html: {id: 'expenses_master'}) do |f| %> 
+  <%= f.hidden_field :employee_grade_id , value: current_user.employee.try(:joining_detail).try(:employee_grade).try(:id) %>
+  <div class="col-sm-4">
+    <label> Select Expence Opestion </label>
+    <div class="form-group required">
+      <%= f.select :expence_opestion_id, grade_wise_expence_opestions, { hide_label:true, include_blank: " Select Expence Opestion" },{onchange:"var a={expence_opestion_id:$(this).val(), form : 'expenses_master'}; $.get('/expenses_masters/collect_mode',a,function(response){});", class: "form-control"} %>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="form-group required">
+      <div class="input-group">
+        <div id="collect_mode">
+          <%= render 'expenses_masters/collect_mode' %> 
+        </div> 
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="form-group required">
+      <div class="input-group">
+        <div id="collect_opestion">
+          <%= render 'expenses_masters/collect_opestion' %> 
+        </div> 
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-3">
+    <div class="form-group required">
+      <%= f.select :billing_opestion, ["With Bill","without Bill"] ,{label: 'Billing Opestion',include_blank: " Select Opestion"} %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :min_amount %><br>
+    <%= f.text_field :min_amount %>
+  </div>
+  <div class="field">
+    <%= f.label :max_amount %><br>
+    <%= f.text_field :max_amount %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.check_box :status %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+

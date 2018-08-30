@@ -5,6 +5,7 @@ class ModesController < ApplicationController
   # GET /modes.json
   def index
     @modes = Mode.all
+    @mode = Mode.new
   end
 
   # GET /modes/1
@@ -14,6 +15,7 @@ class ModesController < ApplicationController
 
   # GET /modes/new
   def new
+    @modes = Mode.all
     @mode = Mode.new
   end
 

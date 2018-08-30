@@ -10,11 +10,12 @@
       </ul>
     </div>
   <% end %>
+  
+      <div class="form-group required">
+        <%= f.select :expence_opestion_id, all_expence_opestion ,{label: 'Expence Opestion',include_blank: " Select Expence Opestion"} %>
+      </div>
 
-  <div class="field">
-    <%= f.label :expence_opestion_id %><br>
-    <%= f.text_field :expence_opestion_id %>
-  </div>
+
   <div class="field">
     <%= f.label :code %><br>
     <%= f.text_field :code %>

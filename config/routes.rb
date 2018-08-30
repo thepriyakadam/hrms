@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  resources :expenses_masters do
+    collection do
+      get :collect_expence_opestion
+      get :collect_mode
+      get :collect_opestion
+    end
+  end
+
   resources :billing_options
   resources :modes
   resources :expence_opestions do

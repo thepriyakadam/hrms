@@ -6,8 +6,8 @@
         <tr><th colspan="8"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
       <tr>
         <td>ID : <%= current_user.employee.manual_employee_code %></td>
-        <td>Employee : <%= full_name(current_user.employee) %></td>
-        <td colspan="6">Department : <%= current_user.employee.company_location.try(:name) %> - <%= current_user.employee.try(:joining_detail).try(:cost_center).try(:name) %> - <%= current_user.employee.try(:department).try(:name) %> <%= current_user.employee.try(:sub_department).try(:name) %></td>
+        <td colspan="4">Employee : <%= full_name(current_user.employee) %></td>
+        <td colspan="3">Department : <%= current_user.employee.company_location.try(:name) %> - <%= current_user.employee.try(:joining_detail).try(:cost_center).try(:name) %> - <%= current_user.employee.try(:department).try(:name) %> <%= current_user.employee.try(:sub_department).try(:name) %></td>
       </tr>
         <tr>
           <th>Sr.No.</th>
@@ -16,8 +16,8 @@
           <th>In Time</th>
           <th>Out Time</th>
           <th>Working Hrs.</th>
-          <th>Comment</th>
           <th>Present</th>
+          <th>Comment</th>
         </tr>
       </thead>
       <tbody>
@@ -29,8 +29,8 @@
             <td><%= employee_attendance.try(:in_time) %></td>
             <td><%= employee_attendance.try(:out_time) %></td>
             <td><%= employee_attendance.try(:working_hrs) %></td>
-            <td><%= employee_attendance.try(:comment) %></td>
             <td><%= employee_attendance.try(:present) %></td>
+            <td><%= employee_attendance.try(:comment) %></td>
           </tr>
         <% end %>
       </tbody>

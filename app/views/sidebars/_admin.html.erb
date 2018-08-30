@@ -13,7 +13,7 @@
       <li><a href="/company_locations"><i class="fa fa-tags"></i> Locations</a></li>
       <li><a href="/departments/new"><i class="fa fa-tags"></i> Departments</a></li>
       <li><a href="/cost_centers/new"><i class="fa fa-tags"></i> Cost Center</a></li>
-      <li><a href="employees/org_chart"><i class="fa fa-tags"></i> Organisation Chart</a></li>
+      <li><a href="/employees/org_chart"><i class="fa fa-tags"></i> Organisation Chart</a></li>
     </ul>
   </li>
   
@@ -230,7 +230,7 @@
     <ul class="treeview-menu">
    <li><a href="/self_services/employee_contact_library" title="Contains contact list of all employee"><i class="fa fa-tags"></i> Contact Library </a></li>
      <li><a href="/contact_details" title="Contains contact person details"><i class="fa fa-tags"></i> Key Persons </a></li>
-    <li><a href="/self_services/employee" title="Contains full personal details of employee"><i class="fa fa-tags"></i> Personal Details </a></li>
+    <li><a href="/employees/personal_detail" title="Contains full personal details of employee"><i class="fa fa-tags"></i> Personal Details </a></li>
     <li><a href="/employee_leav_requests" title="For initiating self leave request"><i class="fa fa-tags"></i> Leave Request </a></li>
     <li><a href="/on_duty_requests" title="For initiating self on duty request"><i class="fa fa-tags"></i> On Duty Request </a></li>
     <li><a href="/self_services/leave_c_off" title="For creating self compensatory off"><i class="fa fa-tags"> </i> Comp. Off Request</a></li>
@@ -284,6 +284,7 @@
             <li><a href="/manager_self_services/reviewer_subordinate" title="For reviewer rating and comment"><i class="fa fa-tags"></i> Reviewer Evaluation </a></li>
             <li><a href="/employee_transfers/transfer_request" title="For approving the transfer , which is requested by the employee"><i class="fa fa-thumbs-up"></i> Transfer Approval </a></li>
             <li><a href="/manager_self_services/resignation_history" title="For approving the resignation request raise by employee"><i class="fa fa-thumbs-up"></i> Resignation Approval </a></li>
+            <li><a href="/manager_self_services/add_attendance" title="For add attendance"><i class="fa fa-tags"></i> Add Attendance </a></li>
     </ul>
   </li>
   
@@ -790,43 +791,98 @@
       </li>   
     </ul>
   </li>
-   
-   <li class="treeview" id="recruitment">
-    <a href="#">
-      <i class="fa fa-list-alt"></i> <span>Recruitment Management</span>
-      <i class="fa fa-angle-left pull-right"></i>
-    </a>
-    <ul class="treeview-menu" >
-     <li id="particular_vacancy">
-      <a href="#"><i class="fa fa-edit"></i> Vacancy <i class="fa fa-angle-left pull-right"></i></a>
-        <ul class="treeview-menu">
-        <li><a href="/vacancy_masters"><i class="fa fa-tags"></i> Create Vacancy </a></li>
-        <li><a href="/vacancy_masters/vacancy_history"><i class="fa fa-tags"></i> Approve Vacancy </a></li>
-       <!--  <li><a href="/vacancy_masters"><i class="fa fa-tags"></i> Cancel Vacancy </a></li>  -->
-        <li><a href="/vacancy_masters/approve_vacancy_list"><i class="fa fa-tags"></i> Vacancy List </a></li>
-        <!-- <li><a href="/vacancy_masters/approved_vacancy_request_history_list"><i class="fa fa-tags"></i> Approved Vacancy List </a></li> -->
-        <li><a href="/vacancy_masters/approved_vacancy_list"><i class="fa fa-tags"></i> Approved Vacancy List </a></li>
-         <li><a href="/vacancy_masters/vacancy_resume"><i class="fa fa-tags"></i> Job Profile </a></li>
-        <li><a href="/vacancy_masters/vacancy_profile"><i class="fa fa-tags"></i> Vacancywise Profile </a></li>
-<!--          <li><a href="/interview_schedules"><i class="fa fa-tags"></i> Interview Schedule List</a></li>
- -->        </ul>
-      </li>
-      <li id="general_vacancy">
-        <a href="#"><i class="fa fa-edit"></i>Candidate Profile <i class="fa fa-angle-left pull-right"></i></a>
-        <ul class="treeview-menu">
-        <li><a href="/selected_resumes/new1"><i class="fa fa-tags"></i> Candidate Profile </a></li>
-        <li><a href="/selected_resumes/all_resume_list"><i class="fa fa-tags"></i> Resume Shortlist </a></li>
-        <li><a href="/interview_schedules/new1"><i class="fa fa-tags"></i> Interview Schedule </a></li>
-        <li><a href="/interview_schedules"><i class="fa fa-tags"></i> Interview Round </a></li>
-        <li><a href="/interview_schedules/interviewee_list"><i class="fa fa-tags"></i> Interviewee List </a></li>
-        <li><a href="/interview_schedules/all_interview_schedule_list"><i class="fa fa-tags"></i> Report </a></li>
-        </ul>
-      </li>   
-       <li id="candidate_regist">
-        <a href="/capture_resumes/new"><i class="fa fa-edit"></i>Candidate Registration <i></i></a>
-      </li> 
-    </ul>
-  </li>
+    <li class="treeview" id="recruitment">
+          <a href="#">
+            <i class="fa fa-list-alt"></i> <span> Recruitment Management </span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu" >
+            <li id="particular_vacancy">
+              <a href="#"><i class="fa fa-edit"></i> Vacancy <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li><a href="/vacancy_masters/new" title="For initiating the vacancy request"><i class="fa fa-tags"></i> Create Vacancy </a></li>
+                <li><a href="/vacancy_masters/vacancy_history" title="For approval or rejection of vacancy request which was initiated"><i class="fa fa-thumbs-upfa fa-thumbs-up"></i> Approval </a></li>
+                <li><a href="/vacancy_masters/final_approval_vacancy_list" title="For final approval or rejection of vacancy request which was initiated"><i class="fa fa-thumbs-upfa fa-thumbs-up"></i> Final Approval </a></li> 
+                <!--  <li><a href="/vacancy_masters"><i class="fa fa-tags"></i> Cancel Vacancy </a></li>  -->
+                <!-- <li><a href="/vacancy_masters/approve_vacancy_list"><i class="fa fa-tags"></i> Vacancy List </a></li> -->
+                <li><a href="/vacancy_masters" title="To know the status of vacancy which was initiated"><i class="fa fa-tags"></i> Vacancy Status </a></li>
+                <!-- <li><a href="/vacancy_masters/approved_vacancy_request_history_list"><i class="fa fa-tags"></i> Approved Vacancy List </a></li> -->
+                <!-- <li><a href="/vacancy_masters/approved_vacancy_list"><i class="fa fa-tags"></i> Approved Vacancy List </a></li> -->
+                <!-- <li><a href="/vacancy_masters/vac_history"><i class="fa fa-tags"></i> Vacancy History </a></li> -->         
+                <!-- <li><a href="/interview_schedules"><i class="fa fa-tags"></i> Interview Schedule List</a></li> --> 
+              </ul>
+            </li>
+            <li id="interview_sched">
+              <a href="#"><i class="fa fa-edit"></i> Interview Process <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li><a href="/vacancy_masters/vacancy_resume" title="For adding the resumes of candidate for the vacancy which was created"><i class="fa fa-tags"></i> Job Profile </a></li>
+                <li><a href="/vacancy_masters/vacancy_hr_resume" title="Shortlisting of candidate resumes which are added for created vacancy"><i class="fa fa-tags"></i> Shortlist Resume </a></li>
+                <li><a href="/vacancy_masters/vacancy_shortlisted_list" title="Schedule for interview of candidate whose resumes are Shortlisted"><i class="fa fa-tags"></i> Schedule  Interview </a></li>
+                <li><a href="/vacancy_masters/vacancy_profile" title="To view the profile of candidate for particular vacancy"><i class="fa fa-tags"></i> Vacancy wise </a></li>
+                <li><a href="/interview_schedules" title="For creating the rounds of interview for candidate"><i class="fa fa-tags"></i> Interview Round </a></li>
+                <!-- <li><a href="/interview_schedules/interviewee_list"><i class="fa fa-tags"></i> Interviewee List </a></li> -->
+                <li><a href="/interview_schedules/interview_round_list" title="List for one who take interview"><i class="fa fa-tags"></i> Interview List </a></li>
+                <li><a href="/vacancy_masters/confirm_interview_schedule_list" title="Candidate confirmation list"><i class="fa fa-tags"></i> Confirm Candidate </a></li>
+                <li><a href="/vacancy_masters/approved_vacancy_request_history_list" title="To view the vacancy status list of particular vacancy"><i class="fa fa-tags"></i> Position Status </a></li>
+                <li><a href="/interview_schedules/all_interview_schedule_list" title="Interview schedule report"><i class="fa fa-tags"></i> Report </a></li>
+              </ul>
+            </li>   
+             <li id="recruitment_report">
+              <a href="#"><i class="fa fa-edit"></i> Reports <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li><a href="/vacancy_masters/recruiter_wise_report" title=" Form for creating the candidate profile"><i class="fa fa-tags"></i> Recruiter Wise </a></li>
+                <li><a href="/vacancy_masters/datewise_report" title="List of resume for shortlisting"><i class="fa fa-tags"></i> Datewise </a></li>
+                <!-- <li><a href="/interview_schedules/new1"><i class="fa fa-tags"></i> Interview Schedule </a></li>-->
+              </ul>
+            </li> 
+
+            <li id="general_vacancy">
+              <a href="#"><i class="fa fa-edit"></i> Candidate Profile <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li><a href="/selected_resumes/new1" title=" Form for creating the candidate profile"><i class="fa fa-tags"></i> Candidate Profile </a></li>
+                <li><a href="/selected_resumes/all_resume_list" title="List of resume for shortlisting"><i class="fa fa-tags"></i> Resume Shortlist </a></li>
+                <!-- <li><a href="/interview_schedules/new1"><i class="fa fa-tags"></i> Interview Schedule </a></li>-->
+              </ul>
+            </li>   
+            <li id="candidate_regist">
+              <a href="/capture_resumes/new" title="Candidate registration form"><i class="fa fa-edit"></i> Candidate Registration <i></i></a>
+            </li> 
+          </ul>
+        </li>
+
+    <!-- <li class="treeview" id="recruitment">
+      <a href="#">
+        <i class="fa fa-list-alt"></i> <span>Recruitment Management</span>
+        <i class="fa fa-angle-left pull-right"></i>
+      </a>
+      <ul class="treeview-menu" >
+       <li id="particular_vacancy">
+        <a href="#"><i class="fa fa-edit"></i> Vacancy <i class="fa fa-angle-left pull-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a href="/vacancy_masters"><i class="fa fa-tags"></i> Create Vacancy </a></li>
+            <li><a href="/vacancy_masters/vacancy_history"><i class="fa fa-tags"></i> Approve Vacancy </a></li>
+            <li><a href="/vacancy_masters/approve_vacancy_list"><i class="fa fa-tags"></i> Vacancy List </a></li>
+            <li><a href="/vacancy_masters/approved_vacancy_list"><i class="fa fa-tags"></i> Approved Vacancy List </a></li>
+             <li><a href="/vacancy_masters/vacancy_resume"><i class="fa fa-tags"></i> Job Profile </a></li>
+            <li><a href="/vacancy_masters/vacancy_profile"><i class="fa fa-tags"></i> Vacancywise Profile </a></li>
+          </ul>
+        </li>
+        <li id="general_vacancy">
+          <a href="#"><i class="fa fa-edit"></i>Candidate Profile <i class="fa fa-angle-left pull-right"></i></a>
+          <ul class="treeview-menu">
+          <li><a href="/selected_resumes/new1"><i class="fa fa-tags"></i> Candidate Profile </a></li>
+          <li><a href="/selected_resumes/all_resume_list"><i class="fa fa-tags"></i> Resume Shortlist </a></li>
+          <li><a href="/interview_schedules/new1"><i class="fa fa-tags"></i> Interview Schedule </a></li>
+          <li><a href="/interview_schedules"><i class="fa fa-tags"></i> Interview Round </a></li>
+          <li><a href="/interview_schedules/interviewee_list"><i class="fa fa-tags"></i> Interviewee List </a></li>
+          <li><a href="/interview_schedules/all_interview_schedule_list"><i class="fa fa-tags"></i> Report </a></li>
+          </ul>
+        </li>   
+         <li id="candidate_regist">
+          <a href="/capture_resumes/new"><i class="fa fa-edit"></i>Candidate Registration <i></i></a>
+        </li> 
+      </ul>
+    </li> -->
 
    <li class="treeview" id="trainingmgmt">
     <a href=""><i class="fa fa-briefcase"></i> <span> Training Management </span> <i class="fa fa-angle-left pull-right"></i></a>

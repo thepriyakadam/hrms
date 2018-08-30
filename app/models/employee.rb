@@ -252,6 +252,17 @@ class Employee < ActiveRecord::Base
     end
   end
 
+
+  def self.filter_by_date(date)
+    month = date.strftime("%B")
+    year = date.strftime("%Y")
+    @workingday = Workingday.where(month_name: month,year: year).pluck(:employee_id)
+    @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
+    finals = (@attendances - @workingday)
+    Employee.where.not(id: finals)
+  end
+  
+
   def self.filter_by_date_and_costcenter(date, costcenter, current_user)
     month = date.strftime("%B")
     year = date.strftime("%Y")

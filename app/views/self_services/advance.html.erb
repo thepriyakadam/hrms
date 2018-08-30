@@ -8,28 +8,27 @@
   </div><!-- /.box-header -->
   <div class="box-body">
   <div id="comments">
-    <table id="example1" class="table table-bordered table-hover table-condensed">
+    <table id="example6" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>ID</th>
-        <th>Employee</th>
+        <th>Sr. No</th>
+        <th>Advance Date</th>
         <th>Advance Amount</th>
         <th>No. of Installment</th>
-        <th>Installment Amount</th>
-        <th>Advance Date</th>
+        <!-- <th>Installment Amount</th> -->
         <th>Action</th>
       </tr>
     </thead>
 
     <tbody>
+      <% i = 0 %>
       <% @advance_salaries.each do |advance_salary| %>
         <tr>
-         <td><%= advance_salary.employee.try(:manual_employee_code) %></td>
-         <td><%= full_name(advance_salary.employee) %></td>
+         <td><%= i = i + 1 %></td>
+         <td><%= advance_salary.advance_date %></td>
          <td><%= advance_salary.advance_amount %></td>
          <td><%= advance_salary.no_of_instalment %></td>
-         <td><%= advance_salary.instalment_amount %></td>
-         <td><%= advance_salary.advance_date %></td>
+         <!-- <td><%#= advance_salary.instalment_amount %></td> -->
          <td>
             
             <!-- link_to '', advance_salary, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-sm  btn-danger fa fa-close' -->
@@ -43,3 +42,10 @@
  <!--  < link_to 'Back', advance_salaries_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %> -->
 </div>
 </div>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

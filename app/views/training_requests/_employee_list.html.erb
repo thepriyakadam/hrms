@@ -1,6 +1,6 @@
 <div class="box-header with-border">
   </div>
- <table id="example1" class="table table-bordered table-hover table-condensed">
+ <table id="example6" class="table table-bordered table-hover table-condensed">
   <thead>
      <tr>
       <td colspan="4"><center>Employee List For Training</center></td>
@@ -38,8 +38,11 @@ $('#selectAll').click(function() {
 });
 </script>
 
+
 <script type="text/javascript">
-  $(function () {
-    $('#example1').Datatable();
-  });
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
 </script>

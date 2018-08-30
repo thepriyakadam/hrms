@@ -1,7 +1,8 @@
 
 <%= bootstrap_form_for(:week_off_master, url: { action: 'employee_list'},html: {id: 'week_off_master'},remote: true) do |f| %>
+       <%= f.hidden_field :is_active, value: true %>
  <div class="row">
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <label>Day</label>
       <div class="form-group required">
          <%= select :week_off_master,:day, ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],{label: "Day",include_blank: " Select Day"},{class: 'form-control'} %>
@@ -31,26 +32,29 @@
       </div>
     </div>
 
-     <div class="col-sm-2">
+     <div class="col-sm-3">
       <label>Department</label>
       <div class="form-group required">
          <%= select :employee,:department_id,all_department_list,{label: "Department",include_blank: " Select Department"},{class: 'form-control'} %>
       </div>
     </div>
 
+  </div>
 
-    <div class="col-sm-1">
+    <!-- <div class="col-sm-1">
       <label>Status</label>
       <div class="form-group required">
-        <%= check_box :week_off_master,:is_active,label:'Active' %>
+        <%#= check_box :week_off_master,:is_active,label:'Active' %>
       </div>
-    </div>
+    </div> -->
+
    <!--  <div class="col-sm-1">
       <label>Prefix</label>
       <div class="form-group required">
         < check_box :week_off_master,:is_prefix,label:'Prefix' %>
       </div>
     </div> -->
+  <div class="row">
     <div class="col-sm-3">
     <label></label>
       <div class="actions">

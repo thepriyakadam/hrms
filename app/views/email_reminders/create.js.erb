@@ -1,0 +1,6 @@
+<% if @flag %>
+	$("#form").html("<%= j render 'form' %>")
+	$("#reminder_list").html("<%= j render 'reminder_list' %>")
+<% else %>
+	$("#form").html("<%= j render 'form' %>")
+<% end %>

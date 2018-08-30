@@ -64,6 +64,10 @@ class VisitorDetailsController < ApplicationController
     end
   end
 
+  def show_detail
+    @visitor_detail = VisitorDetail.find(params[:format])
+  end
+
   def download_person_image
     @visitor_detail = VisitorDetail.find(params[:id])
     if File.exist?(@visitor_detail.avatar.path)

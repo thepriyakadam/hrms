@@ -6,7 +6,12 @@ Rails.application.routes.draw do
       get :collect_opestion
     end
   end
-
+  resources :email_reminders do
+    collection do
+      get :modal_show
+    end
+  end
+  resources :tasks
   resources :billing_options
   resources :modes
   resources :expence_opestions do
@@ -31,6 +36,7 @@ Rails.application.routes.draw do
       post :update_comment
     end
   end
+
   resources :employee_insentives do
     collection do
       get :show_employee_insentive
@@ -41,6 +47,7 @@ Rails.application.routes.draw do
   end
   resources :attendance_regularizations do 
     collection do
+      get :admin_level_approval
       get :show_attendance_regularization
       get :attendance_regularization_approve
       get :approve_attendance
@@ -55,6 +62,7 @@ Rails.application.routes.draw do
     end
   end
   resources :regularization_reasons
+
   resources :food_options
   resources :compliance_records do
     collection do
@@ -443,6 +451,7 @@ Rails.application.routes.draw do
       post :print_visitor_report
       get :print_visitor_report
       get :visitor_list
+      get :show_detail
 
     end
   end
@@ -496,6 +505,11 @@ Rails.application.routes.draw do
 
   resources :manager_self_services do
     collection do
+      post :update_out_time
+      get :add_attendance
+      post :managerwise_attendance_list
+      get :managerwise_attendance_list
+      post :create_managerwise_attendance
       get :reporties_list
       get :reporties_profile_modal
       get :subordinate_list
@@ -611,6 +625,7 @@ Rails.application.routes.draw do
       get :revert_week_off_master
       post :show_weekoff_master_data
       get :revert_master_data
+      get :show_employee_attendance
     end
   end
   resources :machine_attendances do
@@ -1302,8 +1317,8 @@ end
       get :print_employee_wise
       get :detail_employee_wise_xls
       get :period_rating_wise
-      post :Period_rating_wise_employee
-      get :Period_rating_wise_employee
+      post :period_rating_wise_employee
+      get :period_rating_wise_employee
       get :period_rating_wise_pdf
       get :period_rating_wise_xls
       get :increment_index_report
@@ -1741,6 +1756,9 @@ end
   resources :daily_bill_details do
     collection do
     # post :is_confirm
+    get :all_expence_request
+    get :modal_expense_edit
+    post :update_expence
     get :select_form
     get :is_confirm
     get :print_daily_bill
@@ -1767,6 +1785,7 @@ end
   end
   resources :travel_requests do
     collection do
+      get :all_travel_request
       get :show_travel_process
       get :show_request_modal
       get :daily_bill
@@ -1925,6 +1944,17 @@ end
   end
   resources :vacancy_masters do
     collection do
+      get :show_vacancy_master_modal
+      get :shortlist_for_interview_single
+      get :reject_single
+      get :refferal_vacancy
+      get :candidate_info
+      get :datewise_report
+      post :show_datewise
+      get :show_datewise
+      get :recruiter_wise_report
+      post :show_recruiter_wise
+      get :show_recruiter_wise
       get :search_by_vacancy_post_date
       get :vacancy_request_confirmation
       get :vacancy_history
@@ -2654,6 +2684,7 @@ end
       post :assign_to_employee
       post :employee_list
       get :modal
+      get :show_employee_list
     end
   end
 
@@ -2867,6 +2898,7 @@ end
       get :modal_balance_detail
       get :leave_balance
       # post :leave_balance
+      get :leave
       post :leave
       get :import_xl
       post :import
@@ -3017,6 +3049,7 @@ end
   end
   resources :employees do
     collection do
+      get :personal_detail
       get :org_chart
       get :print_employee_data_formate
       get :employee_list_report

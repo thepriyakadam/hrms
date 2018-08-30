@@ -1,0 +1,31 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Recruiter Report</h3>
+    <div class="pull-right">
+   	</div>
+ <div class="box-body">
+   	<%= bootstrap_form_for(:vacancy_masters, url: { action: 'show_recruiter_wise'},html: {id: "vacancy_masters"},remote:true) do |f| %>
+			<div class="row">
+			  <div class="col-sm-3">
+			     <%= select :salary,:employee_id, all_recruiter, {include_blank: " Select Recruiter"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+			  </div>
+			  <div class="col-sm-6">
+		      <div class="actions">
+		        <%= f.submit "Submit" ,class: "btn btn-sm btn-primary",id: "buttonCtc" %>
+		      </div>
+		    </div>
+			</div>
+		<% end %>
+			<div id="show_recruiter_wise"></div>
+	</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#advance_salary").submit();
+  })
+  
+  }); 
+</script>

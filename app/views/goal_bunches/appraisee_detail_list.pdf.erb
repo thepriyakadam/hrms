@@ -152,6 +152,7 @@
       </thead>
       <tbody>
         <% @self_goal_ratings.each do |goal_rating| %>
+        <%# @goal_ratings.each do |goal_rating| %>
           <tr>
             <td><%= goal_rating.goal_perspective.try(:name) %></td>
             <td><%= goal_rating.goal_measure %></td>
@@ -184,6 +185,7 @@
       </thead>
       <tbody>
         <% @self_attribute_ratings.each do |goal_rating| %>
+        <%# @goal_attribute_ratings.each do |goal_rating| %>
           <tr>
             <td><%= goal_rating.attribute_master.try(:name) %></td>
             <td><%= goal_rating.goal_measure %></td>

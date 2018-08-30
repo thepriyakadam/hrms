@@ -6,7 +6,7 @@
   <body>
       <% day = Date.today - @employee.date_of_birth%>
       <% @day = day/365 %>
-    <h4>Wish You A Very Happy Birthday On Your <%= @day.to_i %> Birthday!</h4>
+    <h4>Wish You A Very Happy Birthday<%#= @day.to_i %></h4>
     <p>
       <%= @greeting.message %><br><br><br>
 

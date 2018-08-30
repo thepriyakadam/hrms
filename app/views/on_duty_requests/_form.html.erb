@@ -69,7 +69,7 @@
         <div id="checkbox1"></div>
 
         <div class="col-sm-6">
-          <div class="field">
+          <div class="form-group required">
             <%= f.text_field :reason %>
           </div>
         </div>
@@ -128,6 +128,9 @@ $("#on_duty_request").validate({
       },
       "on_duty_request[start_date]":{
         required: true,
+      },
+      "on_duty_request[reason]":{
+        required: true,
       }
     },
     messages: {
@@ -139,6 +142,9 @@ $("#on_duty_request").validate({
       },
       "on_duty_request[start_date]":{
         required: "Please specify Start Date",
+      },
+      "on_duty_request[reason]":{
+        required: "Please specify Reason",
       }
     },
     errorPlacement: function(error, element) {

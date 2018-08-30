@@ -20,8 +20,6 @@ class DailyBillDetailsController < ApplicationController
     session[:active_tab1] = "travelrequestreports"
  end
  
-
-
   # GET /daily_bill_details/new
   def new
     @daily_bill_detail = DailyBillDetail.new
@@ -98,18 +96,34 @@ class DailyBillDetailsController < ApplicationController
     @daily_bill_detail = DailyBillDetail.new
     @employee = Employee.find_by(id: current_user.employee_id)
     @travel_id = params[:travel_id]
-
-    if params[:travel_id] == "1" #travel
-      @flag = true
-    elsif params[:travel_id] == "2" #food
-      @flag = "5"
-    elsif params[:travel_id] == "3" #laundary
-      @flag = false
-    elsif params[:travel_id] == "4"
-      @flag = "0"
-    else
+    @request_id = params[:request_id]
+    @travel_request = TravelRequest.find_by(id: @request_id)
+    
+      if params[:travel_id] == "1" #travel
+        @flag = "first"
+      elsif params[:travel_id] == "2" #food
+        @flag = "second"
+      elsif params[:travel_id] == "3" #laundary
+        @flag = "third"
+      elsif params[:travel_id] == "4"
+        @flag = "forth"
+      else
+      end
     end
-  end
+
+    def modal_expense_edit
+      @daily_bill_detail = DailyBillDetail.find(params[:daily_bill_detail])
+      @travel_request = TravelRequest.find(params[:travel_request])
+    end
+
+    def update_expence
+      @daily_bill_detail = DailyBillDetail.find(params[:daily_bill_detail_id])
+      @travel_request = TravelRequest.find(params[:travel_request_id])
+
+      @daily_bill_detail.update(daily_bill_detail_params)
+      flash[:notice] = "Updated Successfully !"
+      redirect_to new_daily_bill_detail_path(travel_request_id: @travel_request.id)
+    end
 
   # def is_confirm
   #   @travel_request = TravelRequest.find(params[:travel_request_id])

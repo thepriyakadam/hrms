@@ -12,16 +12,16 @@ class VacancyMastersController < ApplicationController
       @vacancy_masters = VacancyMaster.all
       else
         if current_user.role.name == 'GroupAdmin'
-          @vacancy_masters = VacancyMaster.all
+          @vacancy_masters = VacancyMaster.all.order("id DESC")
         elsif current_user.role.name == 'Admin'
         @company_locations = CompanyLocation.where(company_id: current_user.company_location.company_id).pluck(:id)
-        @vacancy_masters = VacancyMaster.where(company_location_id: @company_locations)
+        @vacancy_masters = VacancyMaster.where(company_location_id: @company_locations).order("id DESC")
         elsif current_user.role.name == 'Branch'
-        @vacancy_masters = VacancyMaster.where(company_location_id: current_user.company_location_id)
+        @vacancy_masters = VacancyMaster.where(company_location_id: current_user.company_location_id).order("id DESC")
         elsif current_user.role.name == 'HOD'
-        @vacancy_masters = VacancyMaster.where(department_id: current_user.department_id)
+        @vacancy_masters = VacancyMaster.where(department_id: current_user.department_id).order("id DESC")
       elsif current_user.role.name == 'Recruitment'
-          @vacancy_masters = VacancyMaster.all
+          @vacancy_masters = VacancyMaster.all.order("id DESC")
       end
     end
     session[:active_tab] ="recruitment"
@@ -118,8 +118,8 @@ class VacancyMastersController < ApplicationController
         #@vacancy_master.reporting_master_id = employee.manager_id
         respond_to do |format|
       if @vacancy_master.save
-        dept_id = params[:vacancy_master][:department_id]
-        location = params[:vacancy_master][:company_location_id]
+        dept_id = params[:employee][:department_id]
+        location = params[:employee][:company_location_id]
         company = params[:vacancy_master][:company_id]
         VacancyMaster.where(id: @vacancy_master.id).update_all(company_id: company,company_location_id: location,department_id: dept_id)
         ReportingMastersVacancyMaster.create(reporting_master_id: current_user.employee_id, vacancy_master_id: @vacancy_master.id,vacancy_status: "Pending")
@@ -204,7 +204,7 @@ end
 
   def vacancy_history
     @reporting_master = ReportingMaster.find_by(employee_id: current_user.employee_id,is_active: true)
-    @vacancy_masters = VacancyMaster.where("reporting_master_id = ? and (current_status = ? or current_status = ? or current_status = ?)",@reporting_master.id,"Pending","FirstApproved","Approved & Send Next")
+    @vacancy_masters = VacancyMaster.where("reporting_master_id = ? and (current_status = ? or current_status = ? or current_status = ?)",current_user.employee_id,"Pending","FirstApproved","Approved & Send Next")
     
     session[:active_tab] ="recruitment"
     session[:active_tab1] ="particular_vacancy"
@@ -229,7 +229,7 @@ end
     VacancyRequestHistory.create(vacancy_master_id: @vacancy_master.id, vacancy_name: @vacancy_master.vacancy_name,no_of_position: @vacancy_master.no_of_position,description: @vacancy_master.description,vacancy_post_date: @vacancy_master.vacancy_post_date,budget: @vacancy_master.budget,department_id: @vacancy_master.department_id,employee_designation_id: @vacancy_master.employee_designation_id,company_location_id: @vacancy_master.company_location_id,degree_id: @vacancy_master.degree_id,degree_1_id: @vacancy_master.degree_1_id,degree_2_id: @vacancy_master.degree_2_id,experience: @vacancy_master.experience,keyword: @vacancy_master.keyword,other_organization: @vacancy_master.other_organization,industry: @vacancy_master.industry,reporting_master_id: @vacancy_master.reporting_master_id,current_status: @vacancy_master.current_status,employee_id: @vacancy_master.employee_id,justification: @vacancy_master.justification)
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: params[:vacancy_master][:reporting_master_id])
     @reporting_masters = ReportingMaster.where(employee_id: current_user.employee_id).pluck(:id)
-    ReportingMastersVacancyMaster.where(reporting_master_id: @reporting_masters,vacancy_master_id: @vacancy_master.id).update_all(vacancy_status: "Approved & Send Next")
+    ReportingMastersVacancyMaster.where(reporting_master_id: @vacancy_master.reporting_master_id,vacancy_master_id: @vacancy_master.id).update_all(vacancy_status: "Approved & Send Next")
     flash[:notice] = 'Vacancy Send to Higher Authority for Approval'
     redirect_to vacancy_history_vacancy_masters_path
   end
@@ -267,7 +267,7 @@ end
   def approve_and_send_next
     @vacancy_master = VacancyMaster.find(params[:format])
     reporting_master = @vacancy_master.reporting_master_id
-    employee = Employee.where(id: reporting_master).take
+    employee = Employee.find_by(id: reporting_master)
     first_manager_id = employee.manager_id
     @vacancy_master.update(reporting_master_id: first_manager_id,current_status: "Approved & Send Next")
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id,reporting_master_id: current_user.employee_id,vacancy_status: "Approved & Send Next")
@@ -322,6 +322,7 @@ end
   def particular_vacancy_request_list_history
     @vacancy_master = VacancyMaster.find(params[:format])
     @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
+    @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id,shortlist_for_interview: true)
     session[:active_tab] ="recruitment"
   end
 
@@ -356,24 +357,23 @@ end
       # @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"FinalApproved")
 
       if current_user.class == Member
-      if current_user.role.name == 'GroupAdmin'
+      if current_user.role.name == 'GroupAdmin' || current_user.role.name == 'AdminRecruitment'
         @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved").order("id DESC")
       elsif current_user.role.name == 'Admin'
         @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
         # @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"FinalApproved")
-        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved").order("id DESC")
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved",recruiter_id: current_user.employee_id).order("id DESC")
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved").order("id DESC")
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved",recruiter_id: current_user.employee_id).order("id DESC")
       elsif current_user.role.name == 'HOD'
-        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
-        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved").order("id DESC")
+        @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved",recruiter_id: current_user.employee_id).order("id DESC")
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
         @employees = @emp.subordinates
-        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved").order("id DESC")
+        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved",recruiter_id: current_user.employee_id).order("id DESC")
       elsif current_user.role.name == 'Recruitment'
-        @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved").order("id DESC")
+        @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved",recruiter_id: current_user.employee_id).order("id DESC")
       else current_user.role.name == 'Employee'
         @vacancy_masters = VacancyMaster.where(employee_id: current_user.employee_id,current_status: "FinalApproved").order("id DESC")
         redirect_to home_index_path
@@ -390,7 +390,7 @@ end
     # @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"FinalApproved")
 
     if current_user.class == Member
-      if current_user.role.name == 'GroupAdmin'
+      if current_user.role.name == 'GroupAdmin' || current_user.role.name == 'AdminRecruitment'
         @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved").order("vacancy_code DESC")
       elsif current_user.role.name == 'Admin'
         @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
@@ -450,7 +450,7 @@ end
      @interview_schedule = InterviewSchedule.find(params[:format])
      InterviewSchedule.where(id: @interview_schedule.id).update_all(is_confirmed: true)
      @selected_resume = SelectedResume.where(id: @interview_schedule.selected_resume_id).take
-     #@selected_resume.update(status: "Confirmed")
+     @selected_resume.update(status: "Confirmed")
      @vacancy_master = VacancyMaster.where(id: @selected_resume.vacancy_master_id).take
      a=ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id,is_complete: nil).first
      ParticularVacancyRequest.where(id: a.id).update_all(is_complete: true,candidate_name: @interview_schedule.candidate_name,closed_date: Time.zone.now.to_date)
@@ -463,6 +463,12 @@ end
        end
      flash[:notice] = "Candidate Confirmed & Vacancy Closed Successfully"
     redirect_to confirm_interview_schedule_list_vacancy_masters_path
+  end
+
+  def candidate_info
+    @selected_resume = SelectedResume.find(params[:format])
+    @interview_schedule = InterviewSchedule.where(selected_resume_id: @selected_resume.id).pluck(:id)
+    @interview_analyses = InterviewAnalysis.where(interview_schedule_id: @interview_schedule)
   end
 
   def modal3
@@ -563,15 +569,20 @@ end
     @employee = Employee.find(@reporting_master.employee_id)
   end
 
-  def reporting_masters_vacancy_master_list
-    # @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+  def show_vacancy_master_modal
     @vacancy_master = VacancyMaster.find(params[:format])
-    # @reporting_master = ReportingMaster.find(@vacancy_master.reporting_master_id)
-    # @employee = Employee.find(@reporting_master.employee_id)
-    # @vacancy_master1 = VacancyMaster.where(id: @vacancy_master.id)
     @reporting_masters_vacancy_masters = ReportingMastersVacancyMaster.where(vacancy_master_id: @vacancy_master.id)
-    # @reporting_masters_vacancy_masters = ReportingMastersVacancyMaster.where(vacancy_master_id: @vacancy_master.id).order("id ASC")
   end
+
+  # def reporting_masters_vacancy_master_list
+  #   # @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+  #   @vacancy_master = VacancyMaster.find(params[:format])
+  #   # @reporting_master = ReportingMaster.find(@vacancy_master.reporting_master_id)
+  #   # @employee = Employee.find(@reporting_master.employee_id)
+  #   # @vacancy_master1 = VacancyMaster.where(id: @vacancy_master.id)
+  #   @reporting_masters_vacancy_masters = ReportingMastersVacancyMaster.where(vacancy_master_id: @vacancy_master.id)
+  #   # @reporting_masters_vacancy_masters = ReportingMastersVacancyMaster.where(vacancy_master_id: @vacancy_master.id).order("id ASC")
+  # end
 
   def vac_history
      @vacancy_masters = VacancyMaster.group(:employee_id)
@@ -589,7 +600,11 @@ end
 
   def vacancy_hr_resume
     # @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Approved","Edit And Approved")
-    @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved",recruiter_id: current_user.employee_id).order("id DESC")
+    if current_user.role.name == 'GroupAdmin' || current_user.role.name == 'AdminRecruitment'
+      @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved").order("id DESC")
+    else
+      @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved",employee_id: current_user.employee_id).order("id DESC")
+    end
     session[:active_tab] ="recruitment"
     session[:active_tab1] ="interview_sched"
   end
@@ -641,28 +656,33 @@ end
       # @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Approved","Edit And Approved")
       # @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"FinalApproved")
 
-      if current_user.class == Member
-      if current_user.role.name == 'GroupAdmin'
+    if current_user.class == Member
+      # if current_user.role.name == 'GroupAdmin'
+      #   @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved",recruiter_id: current_user.employee_id).order("id DESC")
+      # elsif current_user.role.name == 'Admin'
+      #   @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+      #   # @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"FinalApproved")
+      #   @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved",recruiter_id: current_user.employee_id).order("id DESC")
+      # elsif current_user.role.name == 'Branch'
+      #   @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+      #   @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved",recruiter_id: current_user.employee_id).order("id DESC")
+      # elsif current_user.role.name == 'HOD'
+      #   @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+      #   @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved",recruiter_id: current_user.employee_id).order("id DESC")
+      # elsif current_user.role.name == 'Supervisor'
+      #   @emp = Employee.find(current_user.employee_id)
+      #   @employees = @emp.subordinates
+      #   @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved",recruiter_id: current_user.employee_id).order("id DESC")
+      # elsif current_user.role.name == 'Recruitment'
+      #   @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved",recruiter_id: current_user.employee_id).order("id DESC")
+      # else current_user.role.name == 'Employee'
+      #   @vacancy_masters = VacancyMaster.where(employee_id: current_user.employee_id,current_status: "FinalApproved",recruiter_id: current_user.employee_id).order("id DESC")
+      #   redirect_to home_index_path
+      # end
+      if current_user.role.name == 'GroupAdmin' || current_user.role.name == 'AdminRecruitment'
+        @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved").order("id DESC")
+      else
         @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved",recruiter_id: current_user.employee_id).order("id DESC")
-      elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-        # @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"FinalApproved")
-        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved",recruiter_id: current_user.employee_id).order("id DESC")
-      elsif current_user.role.name == 'Branch'
-        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved",recruiter_id: current_user.employee_id).order("id DESC")
-      elsif current_user.role.name == 'HOD'
-        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
-        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved",recruiter_id: current_user.employee_id).order("id DESC")
-      elsif current_user.role.name == 'Supervisor'
-        @emp = Employee.find(current_user.employee_id)
-        @employees = @emp.subordinates
-        @vacancy_masters = VacancyMaster.where(employee_id: @employees,current_status: "FinalApproved",recruiter_id: current_user.employee_id).order("id DESC")
-      elsif current_user.role.name == 'Recruitment'
-        @vacancy_masters = VacancyMaster.where(current_status: "FinalApproved",recruiter_id: current_user.employee_id).order("id DESC")
-      else current_user.role.name == 'Employee'
-        @vacancy_masters = VacancyMaster.where(employee_id: current_user.employee_id,current_status: "FinalApproved",recruiter_id: current_user.employee_id).order("id DESC")
-        redirect_to home_index_path
       end
     else
       @employees = Employee.all
@@ -691,6 +711,26 @@ end
       end 
       redirect_to hr_resume_vacancy_masters_path(vacancy_master_id: @vacancy_master.id)
     end
+  end
+
+  def shortlist_for_interview_single
+    selected_resume_id = SelectedResume.find(params[:format])
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+    @selected_resume = SelectedResume.find(selected_resume_id)
+    @selected_resume.update(shortlist_for_interview: true) 
+    VacancyMasterMailer.shortlist_resume(@selected_resume).deliver_now
+    flash[:notice] = "Candidates Shortlisted For Interview"
+    redirect_to hr_resume_vacancy_masters_path(vacancy_master_id: @vacancy_master.id)
+  end
+
+  def reject_single
+    selected_resume_id = SelectedResume.find(params[:format])
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+    @selected_resume = SelectedResume.find(selected_resume_id)
+    @selected_resume.update(shortlist_for_interview: false,status: "Rejected")
+    #VacancyMasterMailer.shortlist_resume(@selected_resume).deliver_now
+    flash[:notice] = "Candidates Rejected" 
+    redirect_to hr_resume_vacancy_masters_path(vacancy_master_id: @vacancy_master.id)
   end
 
   def show_selected_resume
@@ -784,6 +824,59 @@ end
       end
     else
       @employees = Employee.all
+    end
+  end
+
+  def refferal_vacancy
+    @vacancy_masters = VacancyMaster.where(vacancy_of: 'Refferal',is_confirmed: nil) 
+    session[:active_tab] ="EmployeeSelfService"
+  end
+
+  def recruiter_wise_report
+     session[:active_tab] ="recruitment"
+    session[:active_tab1] ="recruitment_report"
+  end
+
+  def show_recruiter_wise
+    employee_id = params[:salary][:employee_id]
+    recruiter = Recruiter.find_by(employee_id: employee_id)
+    @vacancy_masters = VacancyMaster.where(recruiter_id: recruiter)
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'vacancy_masters/recruiter_wise.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'show_recruiter_wise',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'vacancy_masters/recruiter_wise.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
+
+  def datewise_report
+     session[:active_tab] ="recruitment"
+    session[:active_tab1] ="recruitment_report"
+  end
+
+  def show_datewise
+    start_date = params[:vacancy_master][:from]
+    end_date = params[:vacancy_master][:to]
+    @vacancy_masters = VacancyMaster.where(vacancy_post_date: start_date.to_date..end_date.to_date).where.not(recruiter_id: nil)
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'vacancy_masters/datewise.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'show_recruiter_wise',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'vacancy_masters/datewise.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
     end
   end
 

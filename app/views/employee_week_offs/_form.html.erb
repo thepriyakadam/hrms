@@ -37,6 +37,8 @@
           </div>
         </div>
       </div>
+
+
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">
@@ -61,3 +63,11 @@
     dateFormat: 'dd-mm-yy' });
   }); 
 </script> 
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

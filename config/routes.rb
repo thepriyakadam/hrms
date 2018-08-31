@@ -485,6 +485,8 @@ Rails.application.routes.draw do
 
   resources :manager_self_services do
     collection do
+      get :system_base_attendance
+      get :create_systembase_attendance
       post :update_out_time
       get :add_attendance
       post :managerwise_attendance_list
@@ -2869,6 +2871,7 @@ end
 
   resources :employee_leav_balances do
     collection do
+      get :all_balance
       get :collect_employee_for_leave
       get :employee_leave_balance
       get :leave_balance_modal

@@ -36,6 +36,12 @@ class EmployeeLeavBalancesController < ApplicationController
   def show
   end
 
+  def all_balance
+    employee_id = Employee.where(status: "Active")
+    leav_category = LeavCategory.find_by(code: "C.Off")
+    @employee_leav_balances = EmployeeLeavBalance.where(employee_id: employee_id,leav_category_id: leav_category.id,is_active: true)
+  end
+
   # GET /employee_leav_balances/new
   def new
     @employee_leav_balance = EmployeeLeavBalance.new

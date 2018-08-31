@@ -25,7 +25,27 @@
             <td><%= @topics.status ? "Active" : "Inactive" %></td>
           </tr>
         </tbody>
-      </table> <br>
+      </table> <br />
+      <% @comment = TopicComment.where(topic_id: @topics.id)%>
+      <% if @comment.present? %>
+        <center><font color='#0077b3'>Comments</font></center>
+        <table id="example1" class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+              <th>Comment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @comment.each do |c| %>
+              <%emp = Employee.find(c.employee_id)%>
+              <tr>
+                <td><b><%= short_name(emp).titleize %>:</b> <%= c.comment %></td>
+                <!-- <td><%#= link_to ' ', inactive_comment_topics_path(c), class: 'btn btn-xs btn-danger fa fa-ban' %></td> -->
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
     </div><!-- /.modal-content -->
   </div>
 </div><!-- /.modal-dialog -->

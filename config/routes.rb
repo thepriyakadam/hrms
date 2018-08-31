@@ -1,19 +1,32 @@
 Rails.application.routes.draw do
-
-
   resources :email_reminders do
     collection do
       get :modal_show
     end
   end
   resources :tasks
-
+  resources :billing_options
+  resources :modes
+  resources :expence_opestions do
+    collection do
+      get :import_xl
+      post :import
+    end
+  end
   resources :topics  do
     collection do
       get :view_topic_details
       get :topic_discussion
       post :add_comment
       post :like_topic
+      post :like_comment
+      get :all_comment
+      get :all_topic_list
+      get :inactive_topic
+      get :inactive_comment
+      get :all_topic_details
+      get :topic_comm_update
+      post :update_comment
     end
   end
 

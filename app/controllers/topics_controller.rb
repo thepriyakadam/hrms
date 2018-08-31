@@ -4,7 +4,9 @@ class TopicsController < ApplicationController
   # GET /topics
   # GET /topics.json
   def index
-    @topics = Topic.all
+    # @topics = Topic.all.order("created_at DESC").paginate(:page => params[:page], :per_page => 1)
+    @topics = Topic.where(employee_id: current_user.employee_id).order("id DESC").paginate(:page => params[:page], :per_page => 1)
+    # User.paginate(:page => params[:page], :per_page => 1)
     @topic = Topic.new
   end
 
@@ -16,6 +18,7 @@ class TopicsController < ApplicationController
   # GET /topics/new
   def new
     @topic = Topic.new
+    session[:active_tab] = "EmployeeSelfService"
   end
 
   # GET /topics/1/edit
@@ -23,14 +26,50 @@ class TopicsController < ApplicationController
   end
 
   def topic_discussion
-    @topics = Topic.all.order("id DESC")
+    @topics = Topic.where(status: true).order("id DESC").paginate(:page => params[:page], :per_page => 2)
     @topic = Topic.new
+  end
+
+  def topic_comm_update
+    @comment = TopicComment.find(params[:format])
+  end
+  
+  def update_comment
+    comment_id = params[:comment][:comment_id]
+    comment = params[:comment][:comment]
+    @update_comm = TopicComment.find(comment_id)
+    @update_comm.update(comment: comment)
+    redirect_to topic_discussion_topics_path
+  end
+
+  def inactive_comment
+    comment_id = params[:format]
+    @update_comm = TopicComment.find(comment_id)
+    @update_comm.update(status: false)
+    redirect_to topic_discussion_topics_path
   end
 
   def like_topic
     emp_id = params[:lick_topic][:employee_id]
     topic_id = params[:lick_topic][:topic_id]
-    like = Like.create(employee_id: emp_id, topic_id: topic_id, liked: true)
+    @like = Like.where(employee_id: emp_id,topic_id: topic_id)
+    if @like.present?
+      @like.destroy_all
+    else
+      @like = Like.create(employee_id: emp_id, topic_id: topic_id, liked: true)
+    end
+    redirect_to topic_discussion_topics_path
+  end
+
+  def like_comment
+    emp_id = params[:lick_topic][:employee_id]
+    topic_comment_id = params[:lick_topic][:topic_comment_id]
+    @like = Like.where(employee_id: emp_id,topic_comment_id: topic_comment_id)
+    if @like.present?
+      @like.destroy_all
+    else
+      @like = Like.create(employee_id: emp_id, topic_comment_id: topic_comment_id, liked: true)
+    end
     redirect_to topic_discussion_topics_path
   end
 
@@ -53,17 +92,57 @@ class TopicsController < ApplicationController
     redirect_to topic_discussion_topics_path
   end
 
-  def topic_wise_comment
+  def all_comment
+    topic_id = params[:format]
+    @topics = Topic.where(id: topic_id)
+    @comment_list = TopicComment.where(topic_id: topic_id,status: true)
+  end
 
+  def topic_wise_comment
   end
 
   def view_topic_details
-    topic_id = params[:format]
-    @topics = Topic.find(topic_id)
+    if params[:format] == "pdf" || params[:format] == "xls"
+      @topics = Topic.where(id: params[:topic_id])
+      @comment_list = TopicComment.where(topic_id: params[:topic_id])
+      respond_to do |f|
+        f.js
+        f.xls {render template: 'topics/topic_details.xls.erb'}
+        f.html
+        f.pdf do
+          render pdf: 'topic_details',
+          layout: 'pdf.html',
+          orientation: 'Landscape',
+          template: 'topics/topic_details.pdf.erb',
+          show_as_html: params[:debug].present?
+          #margin:  { top:1,bottom:1,left:1,right:1 }
+        end
+      end
+    else
+      topic_id = params[:format]
+      @topics = Topic.find(topic_id)
+    end
   end
 
   def topic_list
-    @topics = Topic.all
+    @topics = Topic.where(employee_id: current_user.employee_id)
+  end
+
+  def all_topic_list
+    @topics = Topic.where(status: true)
+  end
+
+  def all_topic_details
+    topic_id = params[:format]
+    @topics = Topic.where(id: topic_id)
+    @comment_list = TopicComment.where(topic_id: topic_id)
+  end
+
+  def inactive_topic
+    topic_id = params[:format]
+    @topic = Topic.find(topic_id)
+    @topic.update(status: false)
+    redirect_to all_topic_list_topics_path
   end
 
   # POST /topics

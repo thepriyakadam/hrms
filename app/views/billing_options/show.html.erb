@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Expence opestion:</strong>
+  <%= @billing_option.expence_opestion %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @billing_option.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @billing_option.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @billing_option.description %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @billing_option.status %>
+</p>
+
+<%= link_to 'Edit', edit_billing_option_path(@billing_option) %> |
+<%= link_to 'Back', billing_options_path %>

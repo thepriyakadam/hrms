@@ -1135,6 +1135,7 @@ end
       post :create_attendance_datewise
 
       get :manager_attendance_form
+      post :display_attendance_for_manager
       get :display_attendance_for_manager
 
       post :import

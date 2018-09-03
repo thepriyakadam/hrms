@@ -3,7 +3,7 @@
   <div class="col-sm-4">
     <label> Select Expence Opestion </label>
     <div class="form-group required">
-      <%= f.select :expence_opestion_id, grade_wise_expence_opestions, { hide_label:true, include_blank: " Select Expence Opestion" },{onchange:"var a={expence_opestion_id:$(this).val(), form : 'expenses_master'}; $.get('/expenses_masters/collect_mode',a,function(response){});", class: "form-control"} %>
+      <%= f.select :expence_opestion_id, all_expence_opestion, { hide_label:true, include_blank: " Select Expence Opestion" },{onchange:"var a={expence_opestion_id:$(this).val(), form : 'expenses_master'}; $.get('/expenses_masters/collect_mode',a,function(response){});", class: "form-control"} %>
     </div>
   </div>
 

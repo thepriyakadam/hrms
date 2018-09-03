@@ -88,11 +88,28 @@ class ExpensesMastersController < ApplicationController
     file = params[:file]
       if file.nil?
         flash[:alert] = "Please Select File!"
-        redirect_to import_xl_expence_opestions_path
+        redirect_to import_xl_expenses_masters_path
       else
-     ExpenceOpestion.import(params[:file])
-     redirect_to expence_opestions_path, notice: "File imported."
+     ExpensesMaster.import(params[:file])
+     redirect_to new_expenses_master_path, notice: "File imported."
      end
+  end
+
+  def expence_detail
+    @expenses_masters = ExpensesMaster.all
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'expenses_masters/expence_detail.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'expence_detail',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'expenses_masters/expence_detail.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
   end
 
   private

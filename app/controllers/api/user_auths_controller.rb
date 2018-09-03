@@ -2013,7 +2013,7 @@ class Api::UserAuthsController < ApplicationController
   def claim_list
     travel_request_id = params[:travel_req_id]
     @daily_bill_details = DailyBillDetail.where(travel_request_id: travel_request_id).order("expence_date ASC") 
-    render :json => @daily_bill_details.present? ? @daily_bill_details.collect{|dbd| {:id => dbd.try(:id), :expence_date => dbd.try(:expence_date), :travel_request_id => dbd.try(:travel_request_id), :e_place => dbd.try(:e_place), :travel_expence_type => dbd.try(:travel_expence_type).try(:name), :travel_expence => dbd.try(:travel_expence), :currency_master => dbd.try(:currency_master).try(:name), :request_status => dbd.try(:request_status), :is_confirm => dbd.try(:is_confirm) }} : []
+    render :json => @daily_bill_details.present? ? @daily_bill_details.collect{|dbd| {:id => dbd.try(:id), :expence_date => dbd.try(:expence_date), :travel_request_id => dbd.try(:travel_request_id), :e_place => dbd.try(:e_place), :travel_expence_type => dbd.try(:travel_expence_type).try(:name), :travel_expence => dbd.try(:travel_expence), :currency_master => dbd.try(:currency_master).try(:name), :request_status => dbd.try(:request_status), :is_confirm => dbd.try(:is_confirm), :expence_opestion_id => dbd.try(:expence_opestion).try(:name), :mode_id => dbd.try(:mode).try(:name), :billing_option_id => dbd.try(:billing_option).try(:name), :billing_opestion => dbd.try(:billing_opestion) }} : []
   end
 
   def claim_list_total
@@ -2066,6 +2066,10 @@ class Api::UserAuthsController < ApplicationController
     currency_master_id = params[:currency]
     # image_file = params[:imageFile]
     # doc_file = params[:DocFile]
+    expence_opestion_id = params[:expence_option]
+    mode_id = params[:mode]
+    billing_opestion  = params[:billing_option]
+    billing_option_id = params[:option]
 
     @expenc = ExpensesMaster.where(expence_opestion_id: expence_opestion_id, mode_id: mode_id, billing_opestion: billing_opestion, billing_option_id: billing_option_id)
     if @expenc.present?

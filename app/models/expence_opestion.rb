@@ -3,6 +3,7 @@ class ExpenceOpestion < ActiveRecord::Base
   has_many :modes
   has_many :expenses_masters
   has_many :billing_options
+  has_many :daily_bill_details
 
   #validates :employee_grade_id
   validates :name, presence: true, uniqueness: { case_sensitive: false }

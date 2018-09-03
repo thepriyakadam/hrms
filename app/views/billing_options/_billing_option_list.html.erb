@@ -2,7 +2,7 @@
   <thead>
     <tr>  
     <tr>
-      <th>Expence Opestion</th>
+      <th>Expence Option</th>
       <th>Code</th>
       <th>Name</th>
       <th>Description</th>
@@ -14,11 +14,11 @@
   <tbody>
     <% @billing_options.each do |billing_option| %>
       <tr>
-        <td><%= billing_option.expence_opestion %></td>
+        <td><%= billing_option.expence_opestion.try(:name) %></td>
         <td><%= billing_option.code %></td>
         <td><%= billing_option.name %></td>
         <td><%= billing_option.description %></td>
-        <td><%= billing_option.status %></td>
+        <td><%= billing_option.status ? "Active" : "Inactive" %></td>
         <td>   
         	<%= link_to '', edit_billing_option_path(billing_option),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  billing_option, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>

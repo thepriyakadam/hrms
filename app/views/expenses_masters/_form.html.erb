@@ -1,10 +1,13 @@
-<%= bootstrap_form_for(@expenses_master,html: {id: 'expenses_master'}) do |f| %> 
-  <%= f.hidden_field :employee_grade_id , value: current_user.employee.try(:joining_detail).try(:employee_grade).try(:id) %>
-  <div class="col-sm-4">
-    <label> Select Expence Opestion </label>
-    <div class="form-group required">
-      <%= f.select :expence_opestion_id, all_expence_opestion, { hide_label:true, include_blank: " Select Expence Opestion" },{onchange:"var a={expence_opestion_id:$(this).val(), form : 'expenses_master'}; $.get('/expenses_masters/collect_mode',a,function(response){});", class: "form-control"} %>
-    </div>
+<%= bootstrap_form_for(@expenses_master,html: {id: 'expenses_master'},remote:true) do |f| %>
+
+<%= f.hidden_field :employee_grade_id , value: current_user.employee.try(:joining_detail).try(:employee_grade).try(:id) %>
+ <div class="row">
+   <div class="col-sm-3">
+     <label> Expence Option </label>
+     <div class="form-group required">
+       <%= f.select :expence_opestion_id, all_expence_opestion, { hide_label:true, include_blank: " Select Expence Option" },{onchange:"var a={expence_opestion_id:$(this).val(), form : 'expenses_master'}; $.get('/expenses_masters/collect_mode',a,function(response){});", class: "form-control"} %>
+     </div>
+   </div>
 
     <div class="col-sm-3">
       <div class="form-group required">

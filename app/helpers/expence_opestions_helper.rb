@@ -8,4 +8,8 @@ module ExpenceOpestionsHelper
 		employee_grade = emp.try(:joining_detail).try(:employee_grade).try(:id)
 		ExpenceOpestion.where(employee_grade_id: employee_grade).collect { |x| [x.name, x.id] }
 	end
+	
+	def all_expence_type
+    ExpenceOpestion.all.collect { |x| [x.name] }
+  end
 end

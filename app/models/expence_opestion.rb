@@ -2,6 +2,8 @@ class ExpenceOpestion < ActiveRecord::Base
   belongs_to :employee_grade
   has_many :modes
   has_many :expenses_masters
+  has_many :billing_options
+
   #validates :employee_grade_id
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 

@@ -8,6 +8,23 @@ class ModesController < ApplicationController
     @mode = Mode.new
   end
 
+  def mode_detail
+    @modes = Mode.all
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'modes/mode_detail.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'department_type_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'modes/mode_detail.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
+
   # GET /modes/1
   # GET /modes/1.json
   def show
@@ -63,7 +80,7 @@ class ModesController < ApplicationController
         redirect_to import_xl_modes_path
       else
      Mode.import(params[:file])
-     redirect_to modes_path, notice: "File imported."
+     redirect_to new_mode_path, notice: "File imported."
      end
   end
 

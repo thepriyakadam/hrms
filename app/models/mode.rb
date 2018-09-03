@@ -4,24 +4,30 @@ class Mode < ActiveRecord::Base
   def self.import(file)
     spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-        employee_grade_id = spreadsheet.cell(i,'B').to_i
-        code = spreadsheet.cell(i,'C')
-        if code == 0
-          code = spreadsheet.cell(i,'C')
-        else
-          code = spreadsheet.cell(i,'C')
-        end
-        name_mode = spreadsheet.cell(i,'D')
-        description = spreadsheet.cell(i,'E')
-       	status = spreadsheet.cell(i,'F')
+        expence_opestion = spreadsheet.cell(i,'B')
+        @expence_opestion = ExpenceOpestion.find_by(name: expence_opestion)
 
-       	@expence_opestions = Mode.find_by(name: name_mode)
-        if @expence_opestions == nil
-        	@expence_opestions_new = Mode.create(employee_grade_id: employee_grade_id, code: code,name: name_mode, description: description, status: status)
-        else 
-        	@expence_opestions.update(employee_grade_id: employee_grade_id, code: code,name: name_mode, description: description, status: status)
-      	end
-    end
+        if @expence_opestion.nil?
+        else
+          expence_opestion_id = @expence_opestion.id
+          code = spreadsheet.cell(i,'C')
+          if code == 0
+            code = spreadsheet.cell(i,'C')
+          else
+            code = spreadsheet.cell(i,'C')
+          end
+          name_mode = spreadsheet.cell(i,'D')
+          description = spreadsheet.cell(i,'E')
+         	status = spreadsheet.cell(i,'F')
+
+         	@mode = Mode.find_by(name: name_mode)
+          if @mode == nil
+          	@expence_opestions_new = Mode.create(expence_opestion_id: expence_opestion_id, code: code,name: name_mode, description: description, status: status)
+          else 
+          	@mode.update(expence_opestion_id: expence_opestion_id, code: code,name: name_mode, description: description, status: status)
+        	end
+        end#@expence_opestion.nil?
+    end#do
   end
 
 

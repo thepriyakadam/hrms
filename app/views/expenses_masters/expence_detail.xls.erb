@@ -1,6 +1,6 @@
 <table id="example6" class="table table-bordered table-hover table-condensed">
   <thead>
-    <tr>
+     <tr>
       <th>Expence Option</th>
       <th>Mode</th>
       <th>Option</th>
@@ -9,7 +9,6 @@
       <th>Min Amount</th>
       <th>Max Amount</th>
       <th>Status</th>
-      <th>Actions</th>
     </tr>
   </thead>
 
@@ -24,19 +23,8 @@
         <td><%= expenses_master.min_amount %></td>
         <td><%= expenses_master.max_amount %></td>
         <td><%= expenses_master.status ? "Active" : "Inactive" %></td>
-        <td>
-          <%= link_to '', edit_expenses_master_path(expenses_master),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
-          <%= link_to '',  expenses_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
-        </td>
+        
       </tr>
-    <% end %>
-  </tbody>
+     <% end %>
+	</tbody>
 </table>
-
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#example6').DataTable( {
-        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
-    } );
-} );
-</script>

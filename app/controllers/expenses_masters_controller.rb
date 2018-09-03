@@ -44,9 +44,20 @@ class ExpensesMastersController < ApplicationController
   # POST /expenses_masters
   # POST /expenses_masters.json
   def create
-    @expenses_master = ExpensesMaster.new(expenses_master_params)
+    employee_grade_id = [:expenses_master][:employee_grade_id]
+    expence_opestion_id = [:expenses_master][:expence_opestion_id]
+    mode_id = [:expenses_master][:mode_id]
+    billing_option_id = [:expenses_master][:billing_option_id]
+    billing_opestion = [:expenses_master][:billing_opestion]
+    min_amount = [:expenses_master][:min_amount]
+    max_amount = [:expenses_master][:max_amount]
+    @expenses = ExpensesMaster.where(employee_grade_id: employee_grade_id, expence_opestion_id: expence_opestion_id, mode_id: mode_id, billing_option_id: billing_option_id, billing_opestion: billing_opestion)
+    if  @expenses.present?
+      flash[:notice] = "This Record Already Exist"
+    else
+      @expenses_master = ExpensesMaster.new(expenses_master_params)
+    end
     @expenses_masters = ExpensesMaster.all
-
     respond_to do |format|
       if @expenses_master.save
         @expence_opestion = ExpenceOpestion.new

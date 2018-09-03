@@ -7,7 +7,7 @@
         <thead>
           <tr>
             <th>Date</th>
-            <% for i in 1..@day %>
+            <% for i in @from.to_date.strftime("%d")..@to.to_date.strftime("%d") %>
               <th><%= i %></th>
             <%end%>
           </tr>

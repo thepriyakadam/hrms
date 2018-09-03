@@ -15,6 +15,9 @@ class ExpensesMastersController < ApplicationController
   # GET /expenses_masters/new
   def new
     @expenses_master = ExpensesMaster.new
+    @expenses_masters = ExpensesMaster.all
+    session[:active_tab] = "GlobalSetup"
+    session[:active_tab1] = "TravelSetup"
   end
 
   # GET /expenses_masters/1/edit
@@ -42,14 +45,15 @@ class ExpensesMastersController < ApplicationController
   # POST /expenses_masters.json
   def create
     @expenses_master = ExpensesMaster.new(expenses_master_params)
+    @expenses_masters = ExpensesMaster.all
 
     respond_to do |format|
       if @expenses_master.save
-        format.html { redirect_to @expenses_master, notice: 'Expenses master was successfully created.' }
-        format.json { render :show, status: :created, location: @expenses_master }
+        @expence_opestion = ExpenceOpestion.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @expenses_master.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Expence Master Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -57,25 +61,27 @@ class ExpensesMastersController < ApplicationController
   # PATCH/PUT /expenses_masters/1
   # PATCH/PUT /expenses_masters/1.json
   def update
-    respond_to do |format|
-      if @expenses_master.update(expenses_master_params)
-        format.html { redirect_to @expenses_master, notice: 'Expenses master was successfully updated.' }
-        format.json { render :show, status: :ok, location: @expenses_master }
-      else
-        format.html { render :edit }
-        format.json { render json: @expenses_master.errors, status: :unprocessable_entity }
-      end
-    end
+    @expenses_master.update(expenses_master_params)
+    @expenses_masters = ExpensesMaster.all
+    @expenses_master = ExpensesMaster.new
   end
 
   # DELETE /expenses_masters/1
   # DELETE /expenses_masters/1.json
   def destroy
     @expenses_master.destroy
-    respond_to do |format|
-      format.html { redirect_to expenses_masters_url, notice: 'Expenses master was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @expenses_masters = ExpensesMaster.all
+  end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_expence_opestions_path
+      else
+     ExpenceOpestion.import(params[:file])
+     redirect_to expence_opestions_path, notice: "File imported."
+     end
   end
 
   private

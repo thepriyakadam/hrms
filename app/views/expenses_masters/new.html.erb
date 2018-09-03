@@ -1,5 +1,25 @@
-<h1>New Expenses Master</h1>
 
-<%= render 'form' %>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Expence Master</h3>
+      <div class="pull-right">
+    <%#= link_to " PDF ", expence_opestions_path(id: @expence_opestion.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
+    
+    <%#= link_to " XLS ", expence_opestions_path(id: @expence_opestion.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
 
-<%= link_to 'Back', expenses_masters_path %>
+    <%#= link_to " Upload ", import_xl_expence_opestions_path, class: 'fa fa-upload btn btn-xl btn-primary' %>
+    
+    <%#= link_to " Template ", "/Templates/67.ExpenceOpestions.xls", class: "fa fa-download btn-xl btn btn-warning" %>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div id="form">
+      <%= render 'form' %>  
+    </div>
+    
+    <div id="expence_master_list">
+      <%= render 'expence_master_list' %>
+    </div>
+    
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

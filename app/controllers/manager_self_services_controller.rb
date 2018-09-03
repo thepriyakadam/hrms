@@ -119,9 +119,9 @@ class ManagerSelfServicesController < ApplicationController
     @from = params[:employee][:from]
     @to = params[:employee][:to]
     @employee_id = params[:employee][:employee_id]
-    @latemark_master = LatemarkMaster.last
-    @latemark_master_time = @latemark_master.company_time
-    @company_time = @latemark_master_time.strftime("%I:%M")
+    # @latemark_master = LatemarkMaster.last
+    # @latemark_master_time = @latemark_master.company_time
+    # @company_time = @latemark_master_time.strftime("%I:%M")
     @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day ASC")
   end
 
@@ -204,6 +204,27 @@ class ManagerSelfServicesController < ApplicationController
     @employee_resignations = EmployeeResignation.where(employee_id: @employee).group(:employee_id)
   end
 
+  def system_base_attendance
+    @date = Date.today
+    joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
+    @employees = Employee.where(status: "Active",id: joining_detail).where("manager_id = ? OR manager_2_id = ?", current_user.employee_id,current_user.employee_id)
+  end
+
+  def create_systembase_attendance
+    @date = Date.today
+    @time = Time.now
+    employee = Employee.find(params[:format])
+    if EmployeeAttendance.exists?(day: @date.to_date,employee_id: employee.id)
+      emp_attendance = EmployeeAttendance.where(day: @date.to_date,employee_id: employee.id).take
+
+      total_hrs = @time.to_time - emp_attendance.try(:in_time).to_time
+      working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+      @employee_attendance = EmployeeAttendance.find_by(id: emp_attendance.id).update(out_time: @time.to_time,working_hrs: working_hrs)
+    else
+      EmployeeAttendance.create(employee_id: employee.id,day: @date.to_date,present: "P",in_time: @time.to_time,out_time: @time.to_time,count: 1.0,department_id: employee.department_id,comment: "System Base")
+    end
+    redirect_to system_base_attendance_manager_self_services_path
+  end
 
   def add_attendance
     session[:active_tab] ="ManagerSelfService"
@@ -248,7 +269,8 @@ class ManagerSelfServicesController < ApplicationController
       end #if current_user.class == Member 
     elsif params[:report]
       @name = false
-      @all_employee_attendances = EmployeeAttendance.where(day: @date)
+      employee = Employee.where("manager_id = ? OR manager_2_id = ?", current_user.employee_id,current_user.employee_id).pluck(:id)
+      @all_employee_attendances = EmployeeAttendance.where(day: @date,employee_id: employee)
       respond_to do |f|
         f.js
         f.xls {render template: 'manager_self_services/team_attendance.xls.erb'}

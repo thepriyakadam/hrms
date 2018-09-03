@@ -1,6 +1,6 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title"> Employee Attendance</h3>
+    <h3 class="box-title"> Subordinate Attendance</h3>
  <div class="box-body">
   <%= bootstrap_form_for(:employee, url: { action: 'show_subordinate_attendance'},html: {id: "employee"}) do |f| %>
     <div class="row">
@@ -34,13 +34,13 @@
       </div>
      </div>
   <% end %>
-  <div>
-      <%= link_to 'Refresh', attendance_daily_attendances_path ,class: "btn btn-xl btn-primary" %>
+ <!--  <div>
+      <%#= link_to 'Refresh', attendance_daily_attendances_path ,class: "btn btn-xl btn-primary" %>
   </div>
   <br />
   <div>
-      <%= link_to 'Calculate_Att.', calculate_daily_attendances_path ,class: "btn btn-xl btn-primary" %>
-  </div>
+      <%#= link_to 'Calculate_Att.', calculate_daily_attendances_path ,class: "btn btn-xl btn-primary" %>
+  </div> -->
 </div>
 </div>
 <script type="text/javascript">

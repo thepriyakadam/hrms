@@ -1,39 +1,35 @@
-<div class="box">
-  <div class="box-body">
-    <table id="example6" class="table table-bordered table-hover table-condensed">
-      <thead>
-        <tr>
-          <th>Sr.No</th>
-          <th>Employee Grade</th>
-          <th>Code</th>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
+<table id="example6" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>Employee Grade</th>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
 
-      <tbody>
-        <% i = 0 %>
-        <% @expence_opestions.each do |expence_opestion| %>
-          <tr>
-            <td><%= i = i + 1 %></td>
-            <td><%= expence_opestion.employee_grade.try(:name) %></td>
-            <td><%= expence_opestion.code %></td>
-            <td><%= expence_opestion.name %></td>
-            <td><%= expence_opestion.description %></td>
-            <td><%= expence_opestion.status ? "Active" : "Inactive" %></td>
-            <td>
-            <%#= link_to ' ', expence_opestion, class: 'btn btn-xs btn-default fa fa-eye' %>
-            <%= link_to ' ', edit_expence_opestion_path(expence_opestion), class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
-            <%= link_to ' ', expence_opestion, method: :destroy, data: { confirm: 'Are you sure?',remote:true }, class: 'btn btn-xs btn-danger fa fa-trash' %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-      <%#= link_to 'Back', root_url ,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
-  </div>
-</div>
+  <tbody>
+    <% i = 0 %>
+    <% @expence_opestions.each do |expence_opestion| %>
+      <tr>
+        <td><%= i = i + 1 %></td>
+        <td><%= expence_opestion.employee_grade.try(:name) %></td>
+        <td><%= expence_opestion.code %></td>
+        <td><%= expence_opestion.name %></td>
+        <td><%= expence_opestion.description %></td>
+        <td><%= expence_opestion.status ? "Active" : "Inactive" %></td>
+        <td>
+          <%= link_to '', edit_expence_opestion_path(expence_opestion),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+          <%= link_to '',  expence_opestion, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+  <%#= link_to 'Back', root_url ,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 
 <script type="text/javascript">
 $(document).ready(function() {

@@ -1,4 +1,4 @@
-<label class="control-label required" for="company_state" aria-required="true">Select Mode</label>
+<label class="control-label required" for="company_state" aria-required="true"> Mode</label>
 <%= select :expenses_master,:mode_id,(@mode.present? ? (@mode.collect {|b| [b.name,b.id]}) : {}),{hide_label:true, include_blank: "Select Mode"},{onchange:"var a={mode_id:$(this).val(), form : 'expenses_master'}; $.get('/expenses_masters/collect_opestion',a,function(response){});", class: "form-control"} %>
 
 <!-- ,{onchange:"var a={mode_id:$(this).val(), form : 'expenses_master'}; $.get('/expenses_masters/collect_opestion',a,function(response){});", class: "form-control"} -->

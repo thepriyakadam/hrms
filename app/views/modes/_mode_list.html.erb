@@ -4,7 +4,7 @@
       <thead>
         <tr>
           <th>Sr.No</th>
-          <th>Expence opestion</th>
+          <th>Expence Option</th>
           <th>Code</th>
           <th>Name</th>
           <th>Description</th>
@@ -18,15 +18,15 @@
         <% @modes.each do |mode| %>
           <tr>
             <td><%= i = i + 1 %></td>
-            <td><%= mode.expence_opestion %></td>
+            <td><%= mode.expence_opestion.name %></td>
             <td><%= mode.code %></td>
             <td><%= mode.name %></td>
             <td><%= mode.description %></td>
             <td><%= mode.status ? "Active" : "Inactive" %></td>
             <td>
-            <%#= link_to ' ', expence_opestion, class: 'btn btn-xs btn-default fa fa-eye' %>
-            <%= link_to ' ', edit_mode_path(mode), class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
-            <%= link_to ' ', mode, method: :destroy, data: { confirm: 'Are you sure?',remote:true }, class: 'btn btn-xs btn-danger fa fa-trash' %></td>
+              <%= link_to '', edit_mode_path(mode),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+              <%= link_to '',  mode, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+            </td>
           </tr>
         <% end %>
       </tbody>

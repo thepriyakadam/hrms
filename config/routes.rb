@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  resources :expenses_masters do
+    collection do
+      get :collect_expence_opestion
+      get :collect_mode
+      get :collect_opestion
+    end
+  end
   resources :email_reminders do
     collection do
       get :modal_show

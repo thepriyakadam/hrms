@@ -1208,7 +1208,7 @@ class Api::UserAuthsController < ApplicationController
     emp_name = emp_first + space + emp_last
     emp_code = emp.manual_employee_code
 
-    DailyAttendance.create(employee_code: emp_code, date: date, time: in_time, latitude: latitude, longitude: longitude, place: place, comment: "App Wise Updated") 
+    DailyAttendance.create(employee_code: emp_code, date: date, time: in_time, latitude: latitude, longitude: longitude, place: place, comment: "App Wise Updated")
     emp_att = EmployeeAttendance.where(employee_id: emp_id, day: date)
     if emp_att.present?
       time = emp_att.where(employee_id: emp_id).where.not(in_time: nil)

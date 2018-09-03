@@ -1,6 +1,7 @@
 $(".ajax-progress").hide();
 
-<% if @name == true %>
+// #create_attendance
+<% if @name == true %>  
 $("#managerwise_list").html("<%= j render 'managerwise_attendance_list' %>");
 <% elsif @name == false %>
 $("#managerwise_list").html("<%= j render 'team_attendance_list' %>");

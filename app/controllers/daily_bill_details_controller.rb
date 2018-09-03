@@ -47,21 +47,44 @@ class DailyBillDetailsController < ApplicationController
   # POST /daily_bill_details.json
 
   def create
-    @daily_bill_detail = DailyBillDetail.new(daily_bill_detail_params)
-    @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
-      if @daily_bill_detail.save
-        # @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).first
-        # @daily_bill_detail.update(reporting_master_id: @reporting_masters_travel_requests.reporting_master_id)
-        # @daily_bill_detail.update(reporting_master_id: @travel_request.reporting_master_id)
-        @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
-        # c1 = @daily_bill_details.sum(:travel_expence).to_i
-        # TravelRequest.where(id: @travel_request.id).update_all(expense: c1)
-        @daily_bill_detail = DailyBillDetail.new
-        flash[:notice] = 'Daily Bill Detail saved Successfully.'
+    travel_request_id = params[:daily_bill_detail][:travel_request_id]
+    expence_date = params[:daily_bill_detail][:expence_date]
+    e_place = params[:daily_bill_detail][:e_place]
+    expence_opestion_id = params[:daily_bill_detail][:expence_opestion_id]
+    billing_opestion = params[:daily_bill_detail][:billing_opestion]
+    currency_master_id = params[:daily_bill_detail][:currency_master_id]
+    travel_expence = params[:daily_bill_detail][:travel_expence]
+    mode_id = params[:expenses_master][:mode_id]
+    billing_option_id = params[:expenses_master][:billing_option_id]
+    avatar_file = params[:daily_bill_detail][:avatar_file]
+    passport_photo = params[:daily_bill_detail][:passport_photo]
+    @travel_request = TravelRequest.find(travel_request_id)
+    @expenc = ExpensesMaster.where(expence_opestion_id: expence_opestion_id, mode_id: mode_id, billing_opestion: billing_opestion, billing_option_id: billing_option_id)
+    if @expenc.present?
+      min_amount = @expenc.last.min_amount
+      max_amount = @expenc.last.max_amount
+      t_exp = travel_expence.to_f
+      if t_exp.between?(min_amount, max_amount).present?
+        @daily_bill_detail = DailyBillDetail.new(travel_request_id: travel_request_id, expence_date: expence_date, e_place: e_place, travel_expence: travel_expence, travel_expence_type_id: nil, reporting_master_id: nil, currency_master_id: currency_master_id, avatar_file_file_name: nil, expence_opestion_id: expence_opestion_id, mode_id: mode_id, billing_option_id: billing_option_id, billing_opestion: billing_opestion, avatar_file: avatar_file, passport_photo: passport_photo)
+        
+        if @daily_bill_detail.save
+          # @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).first
+          # @daily_bill_detail.update(reporting_master_id: @reporting_masters_travel_requests.reporting_master_id)
+          # @daily_bill_detail.update(reporting_master_id: @travel_request.reporting_master_id)
+          @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
+          # c1 = @daily_bill_details.sum(:travel_expence).to_i
+          # TravelRequest.where(id: @travel_request.id).update_all(expense: c1)
+          @daily_bill_detail = DailyBillDetail.new
+          flash[:notice] = 'Daily Bill Detail saved Successfully.'
+        end
+      else
+        flash[:notice] = "Please Enter Expense Amount from #{min_amount} to #{max_amount} Not Found"
       end
-      # byebug
-      @travel_request_id = TravelRequest.find(params[:daily_bill_detail][:travel_request_id])
-      redirect_to new_daily_bill_detail_path(travel_request_id: @travel_request_id.id)
+    else
+      flash[:notice] = "Please Contact to Admin"
+    end
+    @travel_request_id = TravelRequest.find(params[:daily_bill_detail][:travel_request_id])
+    redirect_to new_daily_bill_detail_path(travel_request_id: @travel_request_id.id)
   end
 
   # PATCH/PUT /daily_bill_details/1
@@ -554,6 +577,6 @@ class DailyBillDetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def daily_bill_detail_params
-      params.require(:daily_bill_detail).permit(:is_confirm, :comment,:avatar_file,:reporting_master_id,:passport_photo,:currency_master_id,:request_status,:travel_expence_type_id, :travel_request_id, :expence_date, :e_place, :travel_expence )
+      params.require(:daily_bill_detail).permit(:expence_opestion_id, :mode_id, :billing_option_id, :billing_opestion, :is_confirm, :comment,:avatar_file,:reporting_master_id,:passport_photo,:currency_master_id,:request_status,:travel_expence_type_id, :travel_request_id, :expence_date, :e_place, :travel_expence )
     end
 end

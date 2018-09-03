@@ -4,6 +4,8 @@ class EmployeeGrade < ActiveRecord::Base
   has_many :employee_promotions
   has_many :promotion_histories
   has_many :reimbursement_slabs
+  has_many :expence_opestion
+  has_many :expenses_masters
 
     def self.import(file)
      spreadsheet = open_spreadsheet(file)

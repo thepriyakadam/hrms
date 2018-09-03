@@ -1981,8 +1981,8 @@ end
   end
 
   def display_attendance_for_manager
-    @from = params[:from]
-    @to = params[:to]
+    @from = params[:employee][:from]
+    @to = params[:employee][:to]
     from = @from.to_date
     to = @to.to_date
 

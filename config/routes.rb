@@ -1,19 +1,44 @@
 Rails.application.routes.draw do
-
-
+  resources :expenses_masters do
+    collection do
+      get :collect_expence_opestion
+      get :collect_mode
+      get :collect_opestion
+    end
+  end
   resources :email_reminders do
     collection do
       get :modal_show
     end
   end
   resources :tasks
-
+  resources :billing_options
+  resources :modes do
+    collection do
+      get :import_xl
+      post :import
+    end
+  end
+  resources :expence_opestions do
+    collection do
+      get :import_xl
+      post :import
+    end
+  end
   resources :topics  do
     collection do
       get :view_topic_details
       get :topic_discussion
       post :add_comment
       post :like_topic
+      post :like_comment
+      get :all_comment
+      get :all_topic_list
+      get :inactive_topic
+      get :inactive_comment
+      get :all_topic_details
+      get :topic_comm_update
+      post :update_comment
     end
   end
 
@@ -485,6 +510,8 @@ Rails.application.routes.draw do
 
   resources :manager_self_services do
     collection do
+      get :system_base_attendance
+      get :create_systembase_attendance
       post :update_out_time
       get :add_attendance
       post :managerwise_attendance_list
@@ -1120,6 +1147,7 @@ end
       post :create_attendance_datewise
 
       get :manager_attendance_form
+      post :display_attendance_for_manager
       get :display_attendance_for_manager
 
       post :import
@@ -2869,6 +2897,7 @@ end
 
   resources :employee_leav_balances do
     collection do
+      get :all_balance
       get :collect_employee_for_leave
       get :employee_leave_balance
       get :leave_balance_modal
@@ -3469,6 +3498,8 @@ end
     get 'user_auths/employee_resignation_final_reject' => 'user_auths#employee_resignation_final_reject', defaults:{format: 'json'}
     get 'user_auths/final_approval_emp_resignation_list' => 'user_auths#final_approval_emp_resignation_list', defaults:{format: 'json'}
     get 'user_auths/resignation_status_records' => 'user_auths#resignation_status_records', defaults:{format: 'json'}
+    get 'user_auths/collect_expence_opestion' => 'user_auths#collect_expence_opestion', defaults:{format: 'json'}
+    get 'user_auths/collect_mode' => 'user_auths#collect_mode', defaults:{format: 'json'}
+    get 'user_auths/collect_opestion' => 'user_auths#collect_opestion', defaults:{format: 'json'}
   end
 end
-

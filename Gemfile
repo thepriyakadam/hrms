@@ -40,6 +40,8 @@ gem 'bootstrap-datepicker-rails'
 gem 'awesome_print'
 gem 'datagrid', '~> 1.4', '>= 1.4.1'
 gem 'quiet_assets'
+gem 'will_paginate'
+
 
 
 gem 'fullcalendar-rails', '~> 3.4.0.0'

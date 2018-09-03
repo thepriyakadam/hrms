@@ -8,9 +8,7 @@ gross_salary = 0
 ActiveRecord::Base.transaction do
   2.upto(109) do |line|
   puts "Starting Record #{ex.cell(line,'')}---------------------------------------"
-
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-
     if @employee.nil?
     else
       puts "#{@employee.manual_employee_code}---------------------"
@@ -18,7 +16,6 @@ ActiveRecord::Base.transaction do
       @salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?
       EmployeeTemplate.where(employee_id: @employee.try(:id)).update_all(is_active: false, end_date: Date.today)
       EmployeeTemplate.create(employee_id: @employee.try(:id), salary_template_id: @salary_template.id, start_date: Date.today)
-
       @salary_component_templates.each do |t|
         EmployeeSalaryTemplate.new do |est|
           est.employee_id = @employee.id
@@ -87,4 +84,5 @@ ActiveRecord::Base.transaction do
         gross_salary = 0
       end#if/else
   end
+end
 end

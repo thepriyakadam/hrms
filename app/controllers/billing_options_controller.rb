@@ -15,6 +15,7 @@ class BillingOptionsController < ApplicationController
   # GET /billing_options/new
   def new
     @billing_option = BillingOption.new
+     @billing_options = BillingOption.all
   end
 
   # GET /billing_options/1/edit
@@ -24,15 +25,15 @@ class BillingOptionsController < ApplicationController
   # POST /billing_options
   # POST /billing_options.json
   def create
-    @billing_option = BillingOption.new(billing_option_params)
-
+   @billing_option = BillingOption.new(billing_option_params)
+   @billing_options =BillingOption.all
     respond_to do |format|
       if @billing_option.save
-        format.html { redirect_to @billing_option, notice: 'Billing option was successfully created.' }
-        format.json { render :show, status: :created, location: @billing_option }
+        @billing_option = BillingOption.new
+          format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @billing_option.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Advance Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +41,16 @@ class BillingOptionsController < ApplicationController
   # PATCH/PUT /billing_options/1
   # PATCH/PUT /billing_options/1.json
   def update
-    respond_to do |format|
-      if @billing_option.update(billing_option_params)
-        format.html { redirect_to @billing_option, notice: 'Billing option was successfully updated.' }
-        format.json { render :show, status: :ok, location: @billing_option }
-      else
-        format.html { render :edit }
-        format.json { render json: @billing_option.errors, status: :unprocessable_entity }
-      end
-    end
+    @billing_option.update(billing_option_params)
+    @billing_options = BillingOption.all
+    @billing_option = BillingOption.new
   end
 
   # DELETE /billing_options/1
   # DELETE /billing_options/1.json
   def destroy
     @billing_option.destroy
-    respond_to do |format|
-      format.html { redirect_to billing_options_url, notice: 'Billing option was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @billing_options = BillingOption.all
   end
 
   private

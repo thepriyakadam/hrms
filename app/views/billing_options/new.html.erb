@@ -1,5 +1,17 @@
-<h1>New Billing Option</h1>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Billing Option</h3>
+    <div class="pull-right">
+  
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="billing_option_li">
+			<%= render 'billing_option_list' %>
+		</div>
+	</div><!-- /.box-body -->
+</div><!-- /.box -->
 
-<%= render 'form' %>
-
-<%= link_to 'Back', billing_options_path %>

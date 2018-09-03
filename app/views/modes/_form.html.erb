@@ -2,25 +2,25 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.select :expence_opestion_id, all_expence_opestion ,{label: 'Expence Opestion',include_blank: " Select Expence Opestion"} %>
+        <%= f.select :expence_opestion_id, all_expence_opestion ,{label: 'Expence Option',include_blank: " Select Expence Option"} %>
       </div>
     </div>
 
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :code, label: 'Mode Code', placeholder: 'Mode Code' %>
+        <%= f.text_field :code, label: 'Code', placeholder: 'Code' %>
       </div>
     </div>
 
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :name, label: 'Mode Name', placeholder: 'Mode Name' %>
+        <%= f.text_field :name, label: 'Name', placeholder: 'Name' %>
       </div>
     </div>
 
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :description,label: 'Mode Description' , placeholder: 'Mode Description' %>
+        <%= f.text_field :description,label: 'Description' , placeholder: 'Description' %>
       </div>
     </div>
   </div>

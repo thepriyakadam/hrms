@@ -17,6 +17,8 @@ class ModesController < ApplicationController
   def new
     @modes = Mode.all
     @mode = Mode.new
+    session[:active_tab] = "GlobalSetup"
+    session[:active_tab1] = "TravelSetup"
   end
 
   # GET /modes/1/edit

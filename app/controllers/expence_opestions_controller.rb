@@ -50,8 +50,8 @@ class ExpenceOpestionsController < ApplicationController
   def new
     @expence_opestions = ExpenceOpestion.all
     @expence_opestion = ExpenceOpestion.new
-    session[:active_tab] ="GlobalSetup"
-    session[:active_tab1] ="EmployeeProfile"
+    session[:active_tab] = "GlobalSetup"
+    session[:active_tab1] = "TravelSetup"
   end
 
   # GET /expence_opestions/1/edit

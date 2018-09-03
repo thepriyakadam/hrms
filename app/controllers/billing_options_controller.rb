@@ -16,6 +16,8 @@ class BillingOptionsController < ApplicationController
   def new
     @billing_option = BillingOption.new
      @billing_options = BillingOption.all
+    session[:active_tab] = "GlobalSetup"
+    session[:active_tab1] = "TravelSetup"
   end
 
   # GET /billing_options/1/edit

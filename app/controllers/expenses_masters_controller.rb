@@ -16,6 +16,8 @@ class ExpensesMastersController < ApplicationController
   def new
     @expenses_master = ExpensesMaster.new
     @expenses_masters = ExpensesMaster.all
+    session[:active_tab] = "GlobalSetup"
+    session[:active_tab1] = "TravelSetup"
   end
 
   # GET /expenses_masters/1/edit

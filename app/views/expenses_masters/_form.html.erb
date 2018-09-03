@@ -2,14 +2,14 @@
 
 <%= f.hidden_field :employee_grade_id , value: current_user.employee.try(:joining_detail).try(:employee_grade).try(:id) %>
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-3">
       <label> Expence Option </label>
       <div class="form-group required">
-        <%= f.select :expence_opestion_id, grade_wise_expence_opestions, { hide_label:true, include_blank: " Select Expence Opestion" },{onchange:"var a={expence_opestion_id:$(this).val(), form : 'expenses_master'}; $.get('/expenses_masters/collect_mode',a,function(response){});", class: "form-control"} %>
+        <%= f.select :expence_opestion_id, all_expence_opestion, { hide_label:true, include_blank: " Select Expence Option" },{onchange:"var a={expence_opestion_id:$(this).val(), form : 'expenses_master'}; $.get('/expenses_masters/collect_mode',a,function(response){});", class: "form-control"} %>
       </div>
     </div>
 
-    <div class="col-sm-4">
+    <div class="col-sm-3">
       <div class="form-group required">
         <div class="input-group">
           <div id="collect_mode">
@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <div class="col-sm-4">
+    <div class="col-sm-3">
       <div class="form-group required">
         <div class="input-group">
           <div id="collect_opestion">
@@ -28,15 +28,15 @@
         </div>
       </div>
     </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :billing_opestion, ["With Bill","Without Bill"] ,{label: 'Billing Option',include_blank: " Select Option"} %>
+      </div>
+    </div>
   </div>
 
   <div class="row">
-    <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.select :billing_opestion, ["With Bill","without Bill"] ,{label: 'Billing Option',include_blank: " Select Option"} %>
-      </div>
-    </div>
-
     <div class="col-sm-3">
       <div class="field">
         <%= f.text_field :min_amount, label: 'Min Amount', placeholder: 'Min Amount' %>
@@ -49,15 +49,13 @@
       </div>
     </div>
 
-    <div class="col-sm-3">
+    <div class="col-sm-3" style="padding-top: 20px;">
       <div class="field">
         <%= f.check_box :status, label:'Active' %>
       </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-3" style="padding-top: 20px;">
       <div class="actions">
         <%= f.submit "Create Expence Master" ,:class => class_name, data: { disable_with: data_info } %>
       </div>

@@ -7,7 +7,7 @@
     </div>
 
     <div class="col-sm-3">
-      <div class="form-group required">
+      <div class="field">
         <%= f.text_field :code, label: 'Mode Code', placeholder: 'Mode Code' %>
       </div>
     </div>
@@ -19,7 +19,7 @@
     </div>
 
     <div class="col-sm-3">
-      <div class="form-group required">
+      <div class="field">
         <%= f.text_field :description,label: 'Mode Description' , placeholder: 'Mode Description' %>
       </div>
     </div>
@@ -27,7 +27,7 @@
   
   <div class="row">
     <div class="col-sm-3">
-      <div class="form-group required">
+      <div class="field">
         <%= f.check_box :status, label:'Active' %>
       </div>
     </div>
@@ -44,7 +44,7 @@
 <script>
 $("#mode").validate({
     rules: {
-      "mode[employee_grade_id]":{
+      "mode[expence_opestion_id]":{
         required: true,
       },
       "mode[name]":{
@@ -52,7 +52,7 @@ $("#mode").validate({
       }
        },
     messages: {
-      "mode[employee_grade_id]":{
+      "mode[expence_opestion_id]":{
         required: "Please specify code",
       },
        "mode[name]":{

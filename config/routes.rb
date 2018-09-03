@@ -13,7 +13,12 @@ Rails.application.routes.draw do
   end
   resources :tasks
   resources :billing_options
-  resources :modes
+  resources :modes do
+    collection do
+      get :import_xl
+      post :import
+    end
+  end
   resources :expence_opestions do
     collection do
       get :import_xl

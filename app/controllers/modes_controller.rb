@@ -27,40 +27,42 @@ class ModesController < ApplicationController
   # POST /modes.json
   def create
     @mode = Mode.new(mode_params)
-
+    @modes = Mode.all
     respond_to do |format|
       if @mode.save
-        format.html { redirect_to @mode, notice: 'Mode was successfully created.' }
-        format.json { render :show, status: :created, location: @mode }
+        @mode = Mode.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @mode.errors, status: :unprocessable_entity }
-      end
+        flash.now[:alert] = 'Mode Already Exist.'
+        format.js { @flag = false }
+        end
     end
   end
 
   # PATCH/PUT /modes/1
   # PATCH/PUT /modes/1.json
   def update
-    respond_to do |format|
-      if @mode.update(mode_params)
-        format.html { redirect_to @mode, notice: 'Mode was successfully updated.' }
-        format.json { render :show, status: :ok, location: @mode }
-      else
-        format.html { render :edit }
-        format.json { render json: @mode.errors, status: :unprocessable_entity }
-      end
-    end
+    @mode.update(mode_params)
+    @modes = Mode.all
+    @mode = Mode.new
   end
 
   # DELETE /modes/1
   # DELETE /modes/1.json
   def destroy
     @mode.destroy
-    respond_to do |format|
-      format.html { redirect_to modes_url, notice: 'Mode was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @modes = Mode.all
+  end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_modes_path
+      else
+     Mode.import(params[:file])
+     redirect_to modes_path, notice: "File imported."
+     end
   end
 
   private

@@ -1,13 +1,14 @@
 class ExpenceOpestion < ActiveRecord::Base
   belongs_to :employee_grade
-
+  has_many :modes
+  has_many :expenses_masters
   #validates :employee_grade_id
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   def self.import(file)
     spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-        employee_grade_id = spreadsheet.cell(i,'B').to_i
+        expence_opestion_id = spreadsheet.cell(i,'B').to_i
         code = spreadsheet.cell(i,'C')
         if code == 0
           code = spreadsheet.cell(i,'C')
@@ -20,9 +21,9 @@ class ExpenceOpestion < ActiveRecord::Base
 
        	@expence_opestions = ExpenceOpestion.find_by(name: name)
         if @expence_opestions == nil
-        	@expence_opestions_new = ExpenceOpestion.create(employee_grade_id: employee_grade_id, code: code,name: name, description: description, status: status)
+        	@expence_opestions_new = ExpenceOpestion.create(expence_opestion_id: expence_opestion_id, code: code,name: name, description: description, status: status)
         else 
-        	@expence_opestions.update(employee_grade_id: employee_grade_id, code: code,name: name, description: description, status: status)
+        	@expence_opestions.update(expence_opestion_id: expence_opestion_id, code: code,name: name, description: description, status: status)
       	end
     end
   end

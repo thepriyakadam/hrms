@@ -1,7 +1,14 @@
 <%= bootstrap_form_for(@expenses_master,html: {id: 'expenses_master'},remote:true) do |f| %>
 
-<%= f.hidden_field :employee_grade_id , value: current_user.employee.try(:joining_detail).try(:employee_grade).try(:id) %>
+<%#= f.hidden_field :employee_grade_id , value: current_user.employee.try(:joining_detail).try(:employee_grade).try(:id) %>
  <div class="row">
+  <div class="col-sm-3">
+    <label> Employee Grade </label>
+    <div class="form-group required">
+       <%= f.select :employee_grade_id, all_employee_grade, { hide_label:true, include_blank: "Select Employee Grade" } %>
+    </div>
+   </div>
+
    <div class="col-sm-3">
      <label> Expence Option </label>
      <div class="form-group required">
@@ -28,15 +35,15 @@
         </div>
       </div>
     </div>
+  </div>
 
+  <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
         <%= f.select :billing_opestion, ["With Bill","Without Bill"] ,{label: 'Billing Option',include_blank: " Select Option"} %>
       </div>
     </div>
-  </div>
-
-  <div class="row">
+  
     <div class="col-sm-3">
       <div class="field">
         <%= f.text_field :min_amount, label: 'Min Amount', placeholder: 'Min Amount' %>
@@ -54,7 +61,9 @@
         <%= f.check_box :status, label:'Active' %>
       </div>
     </div>
+  </div>
 
+  <div class="row">
     <div class="col-sm-3" style="padding-top: 20px;">
       <div class="actions">
         <%= f.submit "Create Expence Master" ,:class => class_name, data: { disable_with: data_info } %>

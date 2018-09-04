@@ -16,10 +16,10 @@
   <tbody>
     <% @expenses_masters.each do |expenses_master| %>
       <tr>
-        <td><%= expenses_master.expence_opestion.try(:name) %></td>
-        <td><%= expenses_master.mode %></td>
-        <td><%= expenses_master.billing_opestion %></td>
-        <td><%= expenses_master.billing_option.try(:name) %></td>
+        <!-- <td><%#= expenses_master.expence_opestion.try(:name) %></td>
+        <td><%#= expenses_master.mode.try(:name) %></td>
+        <td><%#= expenses_master.billing_opestion %></td>
+        <td><%#= expenses_master.billing_option.try(:name) %></td> -->
         <td><%= expenses_master.employee_grade.try(:name) %></td>
         <td><%= expenses_master.expence_opestion.try(:name) %></td>
         <td><%= expenses_master.mode.try(:name) %></td>

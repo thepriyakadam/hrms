@@ -51,22 +51,21 @@ class ExpensesMastersController < ApplicationController
     billing_opestion = params[:expenses_master][:billing_opestion]
     min_amount = params[:expenses_master][:min_amount]
     max_amount = params[:expenses_master][:max_amount]
-    @expenses = ExpensesMaster.where(employee_grade_id: employee_grade_id, expence_opestion_id: expence_opestion_id, mode_id: mode_id, billing_option_id: billing_option_id, billing_opestion: billing_opestion)
-    if  @expenses.present?
-      flash[:notice] = "This Record Already Exist"
-    else
-      @expenses_master = ExpensesMaster.new(expenses_master_params)
-      respond_to do |format|
-        if @expenses_master.save
-          @expence_opestion = ExpenceOpestion.new
-          format.js { @flag = true }
-        else
-          flash.now[:alert] = 'Expence Master Already Exist.'
-          format.js { @flag = false }
-        end
+    # @expenses = ExpensesMaster.where(employee_grade_id: employee_grade_id, expence_opestion_id: expence_opestion_id, mode_id: mode_id, billing_option_id: billing_option_id, billing_opestion: billing_opestion)
+    # if  @expenses.present?
+    #   flash[:notice] = "This Record Already Exist"
+    # else
+    @expenses_master = ExpensesMaster.new(expenses_master_params)
+    @expenses_masters = ExpensesMaster.all
+    respond_to do |format|
+      if @expenses_master.save
+        @expence_opestion = ExpenceOpestion.new
+        format.js { @flag = true }
+      else
+        flash.now[:alert] = 'Expence Master Already Exist.'
+        format.js { @flag = false }
       end
     end
-    @expenses_masters = ExpensesMaster.all
   end
 
   # PATCH/PUT /expenses_masters/1

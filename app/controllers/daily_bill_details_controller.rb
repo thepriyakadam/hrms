@@ -65,9 +65,9 @@ class DailyBillDetailsController < ApplicationController
       max_amount = @expenc.last.max_amount
       t_exp = travel_expence.to_f
       if t_exp.between?(min_amount, max_amount).present?
-        @daily_bill_detail = DailyBillDetail.new(travel_request_id: travel_request_id, expence_date: expence_date, e_place: e_place, travel_expence: travel_expence, travel_expence_type_id: nil, reporting_master_id: nil, currency_master_id: currency_master_id, avatar_file_file_name: nil, expence_opestion_id: expence_opestion_id, mode_id: mode_id, billing_option_id: billing_option_id, billing_opestion: billing_opestion, avatar_file: avatar_file, passport_photo: passport_photo)
+        @daily_bill_detail = DailyBillDetail.create(travel_request_id: travel_request_id, expence_date: expence_date, e_place: e_place, travel_expence: travel_expence, travel_expence_type_id: nil, reporting_master_id: nil, currency_master_id: currency_master_id, avatar_file_file_name: nil, expence_opestion_id: expence_opestion_id, mode_id: mode_id, billing_option_id: billing_option_id, billing_opestion: billing_opestion, avatar_file: avatar_file, passport_photo: passport_photo)
         
-        if @daily_bill_detail.save
+        
           # @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).first
           # @daily_bill_detail.update(reporting_master_id: @reporting_masters_travel_requests.reporting_master_id)
           # @daily_bill_detail.update(reporting_master_id: @travel_request.reporting_master_id)
@@ -76,7 +76,7 @@ class DailyBillDetailsController < ApplicationController
           # TravelRequest.where(id: @travel_request.id).update_all(expense: c1)
           @daily_bill_detail = DailyBillDetail.new
           flash[:notice] = 'Daily Bill Detail saved Successfully.'
-        end
+        
       else
         flash[:notice] = "Please Enter Expense Amount from #{min_amount} to #{max_amount} Not Found"
       end

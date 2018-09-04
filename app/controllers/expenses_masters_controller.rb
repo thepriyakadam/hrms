@@ -56,17 +56,17 @@ class ExpensesMastersController < ApplicationController
       flash[:notice] = "This Record Already Exist"
     else
       @expenses_master = ExpensesMaster.new(expenses_master_params)
-    end
-    @expenses_masters = ExpensesMaster.all
-    respond_to do |format|
-      if @expenses_master.save
-        @expence_opestion = ExpenceOpestion.new
-        format.js { @flag = true }
-      else
-        flash.now[:alert] = 'Expence Master Already Exist.'
-        format.js { @flag = false }
+      respond_to do |format|
+        if @expenses_master.save
+          @expence_opestion = ExpenceOpestion.new
+          format.js { @flag = true }
+        else
+          flash.now[:alert] = 'Expence Master Already Exist.'
+          format.js { @flag = false }
+        end
       end
     end
+    @expenses_masters = ExpensesMaster.all
   end
 
   # PATCH/PUT /expenses_masters/1

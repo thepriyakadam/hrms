@@ -6,7 +6,7 @@ class ExpenceOpestion < ActiveRecord::Base
   has_many :daily_bill_details
 
   #validates :employee_grade_id
-  validates :name, presence: true, uniqueness: { case_sensitive: false }
+  #validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   def self.import(file)
     spreadsheet = open_spreadsheet(file)

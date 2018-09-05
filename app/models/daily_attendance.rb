@@ -101,13 +101,13 @@ class DailyAttendance < ActiveRecord::Base
         else
           employee_name = employee_first_name
         end
-        daily_att_employee_present = DailyAttendance.where(employee_code: user_id, time: punch_time)
+        daily_att_employee_present = DailyAttendance.where(employee_code: user_i, time: punch_time)
         if daily_att_employee_present.present?
           puts "--------------Employee Attendance Already Added"
         else
-          daily_att_employee_create = DailyAttendance.create(employee_code: user_id, date: punch_date.to_date, time: punch_time)
+          daily_att_employee_create = DailyAttendance.create(employee_code: user_i, date: punch_date.to_date, time: punch_time)
         end
-        daily_att_day = DailyAttendance.where(employee_code: user_id, date: punch_date).order("time ASC")
+        daily_att_day = DailyAttendance.where(employee_code: user_i, date: punch_date).order("time ASC")
         puts "--------------Employee DailyAttendance Table"
         if daily_att_day.present?
           @employee_in_time = daily_att_day.first.time.to_time
@@ -125,7 +125,7 @@ class DailyAttendance < ActiveRecord::Base
             puts "-----------EmployeeAttendance Out Time 2 updated #{Time.now}-----------"
           end
         else
-          emmployee_att_first = EmployeeAttendance.create(employee_id: employee_id, day: punch_date, present: "P", in_time: @employee_in_time, month_name: punch_month, employee_code: user_id, employee_name: employee_name)
+          emmployee_att_first = EmployeeAttendance.create(employee_id: employee_id, day: punch_date, present: "P", in_time: @employee_in_time, month_name: punch_month, employee_code: user_i, employee_name: employee_name)
           puts "-------EmployeeAttendance created 1 In Time created..#{Time.now.to_date} .. #{Time.now}---------"
         end
       end

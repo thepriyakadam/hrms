@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  resources :expenses_masters do
+    collection do
+      get :expence_detail
+      get :collect_expence_opestion
+      get :collect_mode
+      get :collect_opestion
+      get :import_xl
+      post :import
+    end
+  end
   resources :email_reminders do
     collection do
       get :modal_show
@@ -6,7 +16,13 @@ Rails.application.routes.draw do
   end
   resources :tasks
   resources :billing_options
-  resources :modes
+  resources :modes do
+    collection do
+      get :mode_detail
+      get :import_xl
+      post :import
+    end
+  end
   resources :expence_opestions do
     collection do
       get :import_xl

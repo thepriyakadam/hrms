@@ -23,7 +23,7 @@ class EmployeeLeavRequestsController < ApplicationController
     @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
 
     leav_category = LeavCategory.find_by(code: "C.Off")
-    @leav_category_id = leav_category.id
+    @leav_category_id = leav_category.try(:id)
     @leav_id = @leav_category_id.to_s.split('')
 
     @leave_id = params[:leav_category_id]

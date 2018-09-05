@@ -3,9 +3,28 @@ class ExpenceOpestionsController < ApplicationController
 
   # GET /expence_opestions
   # GET /expence_opestions.json
-  def index
+
+  # def index
+  #   @expence_opestions = ExpenceOpestion.all
+  #   @expence_opestion = ExpenceOpestion.new
+
+  #   respond_to do |f|
+  #     f.js
+  #     f.xls {render template: 'expence_opestions/expence_opestions_master.xls.erb'}
+  #     f.html
+  #     f.pdf do
+  #       render pdf: 'department_type_master',
+  #       layout: 'pdf.html',
+  #       orientation: 'Landscape',
+  #       template: 'expence_opestions/expence_opestions_master.pdf.erb',
+  #       show_as_html: params[:debug].present?
+  #       #margin:  { top:1,bottom:1,left:1,right:1 }
+  #     end
+  #   end
+  # end
+
+  def expence_opestion_master
     @expence_opestions = ExpenceOpestion.all
-    @expence_opestion = ExpenceOpestion.new
 
     respond_to do |f|
       f.js
@@ -31,6 +50,8 @@ class ExpenceOpestionsController < ApplicationController
   def new
     @expence_opestions = ExpenceOpestion.all
     @expence_opestion = ExpenceOpestion.new
+    session[:active_tab] = "GlobalSetup"
+    session[:active_tab1] = "TravelSetup"
   end
 
   # GET /expence_opestions/1/edit
@@ -40,19 +61,6 @@ class ExpenceOpestionsController < ApplicationController
   # POST /expence_opestions
   # POST /expence_opestions.json
   def create
-    # @expence_opestion = ExpenceOpestion.new(expence_opestion_params)
-
-    # respond_to do |format|
-    #   if @expence_opestion.save
-    #     format.html { redirect_to @expence_opestion, notice: 'Expence opestion was successfully created.' }
-    #     format.json { render :show, status: :created, location: @expence_opestion }
-    #   else
-    #     format.html { render :new }
-    #     format.json { render json: @expence_opestion.errors, status: :unprocessable_entity }
-    #   end
-    # end
-
-
     @expence_opestion = ExpenceOpestion.new(expence_opestion_params)
     @expence_opestions = ExpenceOpestion.all
     respond_to do |format|
@@ -62,7 +70,7 @@ class ExpenceOpestionsController < ApplicationController
       else
         flash.now[:alert] = 'Expence Opestion Type Already Exist.'
         format.js { @flag = false }
-        end
+      end
     end
   end
 

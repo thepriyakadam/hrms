@@ -1,9 +1,9 @@
 <div class="box box-default">
 	<div class="box-header with-border">
-		<h3 class="box-title">Expence Option - Import File</h3>
+		<h3 class="box-title">Mode - Import File</h3>
 	</div><!-- /.box-header -->
 	<div class="box-body">
-		<%= form_tag import_expence_opestions_path, multipart: true do %>
+		<%= form_tag import_modes_path, multipart: true do %>
 			<label> File </label>
   			<%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
   			<br>

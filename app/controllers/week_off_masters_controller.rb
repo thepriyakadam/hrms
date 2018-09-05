@@ -165,7 +165,7 @@ class WeekOffMastersController < ApplicationController
           for i in week_off_master.from.to_date..week_off_master.to.to_date
             if i.strftime("%a") == week_off_master.day
              @emp_attendance = EmployeeAttendance.where(employee_id: week_off_master.employee_id,day: i).take
-              if @emp_attendance.try(:present) == nil
+              if @emp_attendance.nil?
                 employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
                 EmployeeAttendance.create(employee_id: week_off_master.employee_id,day: i,present: "WO",department_id: week_off_master.employee.department_id,is_confirm: false,employee_week_off_id: employee_week_off.id,comment: "Week off set")
                 

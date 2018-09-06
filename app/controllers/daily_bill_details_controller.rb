@@ -28,6 +28,9 @@ class DailyBillDetailsController < ApplicationController
     @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id).order("expence_date ASC")
 
     @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
+    emp = Employee.find(current_user.employee.id)
+    employee_grade = emp.try(:joining_detail).try(:employee_grade).try(:id)
+    @expence_master = ExpensesMaster.where(employee_grade_id: employee_grade)
 
     # reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
     # @reporting_master = ReportingMaster.find(@travel_request.reporting_master_id)

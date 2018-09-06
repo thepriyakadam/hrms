@@ -16,6 +16,37 @@
       <%#= render 'show_reporting_masters_travel_request' %>
     </div>
 
+    <table class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr><td colspan="8"><font color='label-primary'><center> You Have To Only Apply This Expences</center></font></td></tr>
+        <tr>
+          <th>Sr.No.</th>
+          <th>Employee Grade</th>
+          <th>Expence Option </th>
+          <th>Expence Mode</th>
+          <th>Mode Option</th>
+          <th>Billing Option</th>
+          <th>Min Amount</th>
+          <th>Max Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% i = 0 %>
+        <% @expence_master.each do |ex| %>
+          <tr>
+            <td><%= i=i+1 %></td>
+            <td><%= ex.try(:employee_grade).try(:name) %></td>
+            <td><%= ex.try(:expence_opestion).try(:name)%></td>
+            <td><%= ex.try(:mode).try(:name)%></td>
+            <td><%= ex.try(:billing_option).try(:name)%></td>
+            <td><%= ex.try(:billing_opestion).try(:name)%></td>
+            <td><%= ex.try(:min_amount)%></td>
+            <td><%= ex.try(:max_amount)%></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
     <div class="row">
       <div class="col-sm-3">
         <div class="form-group required">

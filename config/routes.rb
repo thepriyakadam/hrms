@@ -437,6 +437,7 @@ Rails.application.routes.draw do
   resources :employee_jc_lists
   resources :joining_checklist_masters do
     collection do
+      get :set_checklist
       get :joining_checklist_master
       post :joining_checklist_master
       get :import_xl

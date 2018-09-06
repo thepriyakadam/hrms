@@ -515,6 +515,7 @@ Rails.application.routes.draw do
 
   resources :manager_self_services do
     collection do
+      get :view_attendance
       get :system_base_attendance
       get :create_systembase_attendance
       post :update_out_time

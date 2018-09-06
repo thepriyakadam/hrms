@@ -25,8 +25,8 @@ class ExpensesMastersController < ApplicationController
   end
 
   def collect_expence_opestion
-    employee_grade = params[:employee_grade_id]
-    @expence_opestion = ExpenceOpestion.where(employee_grade_id: employee_grade)
+    employee_grade = EmployeeGrade.find(params[:employee_grade_id])
+    @expence_opestion = ExpenceOpestion.where(employee_grade_id: employee_grade.id)
   end
 
   def collect_mode

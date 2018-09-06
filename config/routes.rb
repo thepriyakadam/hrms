@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   end
   resources :expence_opestions do
     collection do
+      get :expence_opestion_master
       get :import_xl
       post :import
     end

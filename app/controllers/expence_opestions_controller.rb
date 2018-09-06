@@ -110,7 +110,7 @@ class ExpenceOpestionsController < ApplicationController
         redirect_to import_xl_expence_opestions_path
       else
      ExpenceOpestion.import(params[:file])
-     redirect_to expence_opestions_path, notice: "File imported."
+     redirect_to new_expence_opestion_path, notice: "File imported."
      end
   end
 

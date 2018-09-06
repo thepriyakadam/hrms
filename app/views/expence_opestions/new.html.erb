@@ -3,9 +3,9 @@
   <div class="box-header with-border">
     <h3 class="box-title">Expence Option</h3>
       <div class="pull-right">
-    <%= link_to " PDF ", expence_opestions_path(id: @expence_opestion.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
+    <%= link_to " PDF ", expence_opestion_master_expence_opestions_path(id: @expence_opestion.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
     
-    <%= link_to " XLS ", expence_opestions_path(id: @expence_opestion.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
+    <%= link_to " XLS ", expence_opestion_master_expence_opestions_path(id: @expence_opestion.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print"%>
 
     <%= link_to " Upload ", import_xl_expence_opestions_path, class: 'fa fa-upload btn btn-xl btn-primary' %>
     

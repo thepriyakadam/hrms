@@ -1,6 +1,6 @@
 class Mode < ActiveRecord::Base
   belongs_to :expence_opestion
-
+  has_many :daily_bill_details
   def self.import(file)
     spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|

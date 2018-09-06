@@ -2,12 +2,15 @@
   <table id="example2" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <td colspan="5"><center><font color='label-primary'>Expense Claim List</center></td>
+        <td colspan="8"><center><font color='label-primary'>Expense Claim List</center></td>
       </tr>
       <tr>
         <th>Date</th>
         <th>Place</th>
-        <th>Expense Type</th>
+        <th>Expence Opestion</th>
+        <th>Expence Mode</th>
+        <th>Mode Option</th>
+        <th>Billing Option</th>
         <th>Expense Amount</th>
         <th>Action</th>
       </tr>
@@ -17,7 +20,11 @@
         <tr>
           <td><%= daily_bill_detail.expence_date %></td>
           <td><%= daily_bill_detail.e_place %></td>
-          <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
+          <td><%= daily_bill_detail.try(:expence_opestion).try(:name) %></td>
+          <td><%= daily_bill_detail.try(:mode).try(:name) %></td>
+          <td><%= daily_bill_detail.try(:billing_option).try(:name)%></td>
+          <td><%= daily_bill_detail.try(:billing_opestion)%></td>
+          <!-- <td><%#= daily_bill_detail.travel_expence_type.try(:name) %></td> -->
           <td><%= daily_bill_detail.travel_expence %></td>
           <td>
             <% if daily_bill_detail.is_confirm == true %>
@@ -39,7 +46,7 @@
         </tr>
       <% end %>
       <tr>
-        <th colspan="3">Total</th>
+        <th colspan="7">Total</th>
         <th><%= @daily_bill_details.sum(:travel_expence) %></th>
         <th></th>
       </tr>    

@@ -3,18 +3,29 @@
 <%#= f.hidden_field :employee_grade_id , value: current_user.employee.try(:joining_detail).try(:employee_grade).try(:id) %>
  <div class="row">
   <div class="col-sm-3">
-    <label> Employee Grade </label>
+   <!--  <label> Employee Grade </label> -->
     <div class="form-group required">
-       <%= f.select :employee_grade_id, all_employee_grade, { hide_label:true, include_blank: "Select Employee Grade" } %>
+      <%= f.select :employee_grade_id, all_employee_grade, {include_blank: " Select Expence Grade" },{onchange:"var a={employee_grade_id:$(this).val(), form : 'expenses_master'}; $.get('/expenses_masters/collect_expence_opestion',a,function(response){});"} %>
+       <%#= f.select :employee_grade_id, all_employee_grade, { hide_label:true, include_blank: "Select Employee Grade" } %>
     </div>
    </div>
 
    <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div id="collect_expence_opestion">
+            <%= render 'expenses_masters/collect_expence_opestion' %> 
+          </div> 
+        </div>
+      </div>
+    </div>
+
+   <!-- <div class="col-sm-3">
      <label> Expence Option </label>
      <div class="form-group required">
-       <%= f.select :expence_opestion_id, all_expence_opestion, { hide_label:true, include_blank: " Select Expence Option" },{onchange:"var a={expence_opestion_id:$(this).val(), form : 'expenses_master'}; $.get('/expenses_masters/collect_mode',a,function(response){});", class: "form-control"} %>
+       <%#= f.select :expence_opestion_id, all_expence_opestion, { hide_label:true, include_blank: " Select Expence Option" },{onchange:"var a={expence_opestion_id:$(this).val(), form : 'expenses_master'}; $.get('/expenses_masters/collect_mode',a,function(response){});", class: "form-control"} %>
      </div>
-   </div>
+   </div> -->
 
     <div class="col-sm-3">
       <div class="form-group required">

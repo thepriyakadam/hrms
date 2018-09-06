@@ -12,7 +12,7 @@ class ExpensesMaster < ActiveRecord::Base
         expence_opestion = spreadsheet.cell(i,'C')
         @expence_opestion = ExpenceOpestion.where(name: expence_opestion,employee_grade_id: @employee_grade.id).take
         mode = spreadsheet.cell(i,'D')
-        @mode = Mode.find_by(name: mode)
+        @mode = Mode.find_by(name: mode,expence_opestion_id: @expence_opestion.id)
         option = spreadsheet.cell(i,'E')
         @option = BillingOption.find_by(name: option)
         billing_option = spreadsheet.cell(i,'F')

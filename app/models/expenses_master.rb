@@ -10,7 +10,7 @@ class ExpensesMaster < ActiveRecord::Base
         employee_grade = spreadsheet.cell(i,'B')
         @employee_grade = EmployeeGrade.find_by(name: employee_grade)
         expence_opestion = spreadsheet.cell(i,'C')
-        @expence_opestion = ExpenceOpestion.find_by(name: expence_opestion)
+        @expence_opestion = ExpenceOpestion.where(name: expence_opestion,employee_grade_id: @employee_grade.id).take
         mode = spreadsheet.cell(i,'D')
         @mode = Mode.find_by(name: mode)
         option = spreadsheet.cell(i,'E')
@@ -28,13 +28,15 @@ class ExpensesMaster < ActiveRecord::Base
           expence_opestion_id = @expence_opestion.id
           mode_id = @mode.id
           billing_option_id = @option.id
-         	#@expence_master = ExpensesMaster.find_by(name: name_mode)
-          #if @mode == nil
+         	@expence_master = ExpensesMaster.Where(employee_grade_id: employee_grade_id, expence_opestion_id: expence_opestion_id,mode_id: mode_id,
+             billing_option_id: billing_option_id, billing_opestion: billing_option).take
+          if @expence_master == nil
           	@expence_opestions_new = ExpensesMaster.create(employee_grade_id: employee_grade_id, expence_opestion_id: expence_opestion_id,mode_id: mode_id,
           	 billing_option_id: billing_option_id, billing_opestion: billing_option,min_amount: min_amount,max_amount: max_amount,status: status)
-          #else 
-          	#@mode.update(expence_opestion_id: expence_opestion_id, code: code,name: name_mode, description: description, status: status)
-        	#end
+          else 
+          	@expence_master.update(employee_grade_id: employee_grade_id, expence_opestion_id: expence_opestion_id,mode_id: mode_id,
+             billing_option_id: billing_option_id, billing_opestion: billing_option,min_amount: min_amount,max_amount: max_amount,status: status)
+        	end
         end#@expence_opestion.nil?
     end#do
   end

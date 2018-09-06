@@ -25,6 +25,8 @@ class EmployeeLeavBalancesController < ApplicationController
         @employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employees)
       elsif current_user.role.name == 'Employee'
         @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
+      elsif current_user.role.name == 'Costomize'
+        @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
       end
     end
     session[:active_tab] ="LeaveManagement"

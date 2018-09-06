@@ -92,6 +92,9 @@ class WeekOffMastersController < ApplicationController
     elsif current_user.role.name == 'Branch'
       @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id)
       @week_off_masters = WeekOffMaster.where(is_send: nil).where(employee_id: @employees)
+    elsif current_user.role.name == 'Costomize'
+      @employees = Employee.where(status: 'Active')
+      @week_off_masters = WeekOffMaster.where(is_send: nil).where(employee_id: @employees)
     end
     session[:active_tab] ="TimeManagement"
     session[:active_tab1] ="WeekoffSetup"
@@ -104,6 +107,11 @@ class WeekOffMastersController < ApplicationController
     @day = params[:week_off_master][:day]
     @from = params[:week_off_master][:from]
     @to = params[:week_off_master][:to]
+    @first = params[:week_off_master][:first]
+    @second = params[:week_off_master][:second]
+    @third = params[:week_off_master][:third]
+    @forth = params[:week_off_master][:forth]
+    @fifth = params[:week_off_master][:fifth]
     @is_active = params[:week_off_master][:is_active]
 
       if @department_id == ""
@@ -141,13 +149,20 @@ class WeekOffMastersController < ApplicationController
     day = params[:week_off_masters][:day]
     from = params[:week_off_masters][:from]
     to = params[:week_off_masters][:to]
+    first = params[:week_off_masters][:first]
+    second = params[:week_off_masters][:second]
+    third = params[:week_off_masters][:third]
+    forth = params[:week_off_masters][:forth]
+    fifth = params[:week_off_masters][:fifth]
     is_active = params[:week_off_masters][:is_active]
     is_prefix = params[:week_off_masters][:is_prefix]
+
       if @employee_ids.nil?
         flash[:alert] = "Please Select the Checkbox"
       else
         @employee_ids.each do |eid|
-          WeekOffMaster.create(employee_id: eid,day: day,from: from,to: to,is_active: is_active,is_prefix: is_prefix)
+          WeekOffMaster.create(employee_id: eid,day: day,from: from,to: to,is_active: is_active,is_prefix: is_prefix,first: first,second: second,
+            third: third,forth: forth,fifth: fifth)
           flash[:notice] = "Created successfully"
         end
       end
@@ -164,15 +179,49 @@ class WeekOffMastersController < ApplicationController
         if week_off_master.is_active == true
           for i in week_off_master.from.to_date..week_off_master.to.to_date
             if i.strftime("%a") == week_off_master.day
+              count = (i.to_date.day - 1).to_i/7
+              
              @emp_attendance = EmployeeAttendance.where(employee_id: week_off_master.employee_id,day: i).take
               if @emp_attendance.nil?
-                employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
-                EmployeeAttendance.create(employee_id: week_off_master.employee_id,day: i,present: "WO",department_id: week_off_master.employee.department_id,is_confirm: false,employee_week_off_id: employee_week_off.id,comment: "Week off set")
-                
+                if week_off_master.first == true ||  week_off_master.second == true || week_off_master.third == true || week_off_master.forth == true || week_off_master.fifth == true
+                    
+                    if week_off_master.first == true && count == 0
+                      employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                      EmployeeAttendance.create(employee_id: week_off_master.employee_id,day: i,present: "WO",department_id: week_off_master.employee.department_id,is_confirm: false,employee_week_off_id: employee_week_off.id,comment: "Week off set")
+                    elsif week_off_master.second == true && count == 1
+                      employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                      EmployeeAttendance.create(employee_id: week_off_master.employee_id,day: i,present: "WO",department_id: week_off_master.employee.department_id,is_confirm: false,employee_week_off_id: employee_week_off.id,comment: "Week off set")
+                    elsif week_off_master.third == true && count == 2
+                      employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                      EmployeeAttendance.create(employee_id: week_off_master.employee_id,day: i,present: "WO",department_id: week_off_master.employee.department_id,is_confirm: false,employee_week_off_id: employee_week_off.id,comment: "Week off set")
+                    elsif week_off_master.forth == true && count == 3
+                      employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                      EmployeeAttendance.create(employee_id: week_off_master.employee_id,day: i,present: "WO",department_id: week_off_master.employee.department_id,is_confirm: false,employee_week_off_id: employee_week_off.id,comment: "Week off set")
+                    elsif week_off_master.fifth == true && count == 4
+                      employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                      EmployeeAttendance.create(employee_id: week_off_master.employee_id,day: i,present: "WO",department_id: week_off_master.employee.department_id,is_confirm: false,employee_week_off_id: employee_week_off.id,comment: "Week off set")
+                    end
+                else
+                end
+
               else
                 if @emp_attendance.try(:employee_leav_request_id) != nil
-                  employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
-                  @emp_attendance.update(employee_week_off_id: employee_week_off.id,comment: "Leave Request has been sent before week off set")
+                  if week_off_master.first == true && count == 0
+                    employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                    @emp_attendance.update(employee_week_off_id: employee_week_off.id,comment: "Leave Request has been sent before week off set")
+                  elsif week_off_master.second == true && count == 1
+                    employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                    @emp_attendance.update(employee_week_off_id: employee_week_off.id,comment: "Leave Request has been sent before week off set")
+                  elsif week_off_master.third == true && count == 2
+                    employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                    @emp_attendance.update(employee_week_off_id: employee_week_off.id,comment: "Leave Request has been sent before week off set")
+                  elsif week_off_master.forth == true && count == 3
+                    employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                    @emp_attendance.update(employee_week_off_id: employee_week_off.id,comment: "Leave Request has been sent before week off set")
+                  elsif week_off_master.fifth == true && count == 4
+                    employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                    @emp_attendance.update(employee_week_off_id: employee_week_off.id,comment: "Leave Request has been sent before week off set")
+                  end
                 elsif @emp_attendance.try(:on_duty_request_id) != nil
                   employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
                   @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WOOD",comment: "Od Request has been sent before week off")
@@ -257,6 +306,6 @@ class WeekOffMastersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def week_off_master_params
-      params.require(:week_off_master).permit(:is_prefix,:from,:to,:employee_id, :day, :is_active)
+      params.require(:week_off_master).permit(:is_prefix,:from,:to,:employee_id, :day, :is_active,:first,:second,:third,:forth,:fifth)
     end
 end

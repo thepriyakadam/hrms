@@ -90,6 +90,8 @@ module EmployeesHelper
         Employee.where(company_location_id: current_user.company_id,status: "Active").collect { |e| [e.manual_employee_code + '  ' + e.try(:prefix).to_s + ' ' +e.first_name.to_s + ' ' + e.try(:middle_name).to_s + ' ' + e.last_name.to_s, e.id] }
       elsif  current_user.role.name == 'HOD'
         Employee.where(department_id: current_user.department_id,status: "Active").collect { |e| [e.manual_employee_code + '  ' + e.try(:prefix).to_s + ' ' +e.first_name.to_s + ' ' +e.try(:middle_name).to_s + ' ' + e.last_name.to_s, e.id] }
+      elsif current_user.role.name == 'Costomize'
+        Employee.where(status: "Active").collect { |e| [e.manual_employee_code + '  ' +e.try(:prefix).to_s + ' ' + e.first_name.to_s + ' ' + e.try(:middle_name).to_s + ' ' + e.last_name.to_s, e.id] }
       end
     end
   end

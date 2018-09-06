@@ -1,31 +1,79 @@
+	<% @emp = @employee.id %>
+
 		<%= link_to 'Basic Details',basic_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ', remote:true%>
-	
+	<% if JoiningDetail.exists?(employee_id: @employee.id)%>
 		<%= link_to 'On Boarding',ajax_joining_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
-	
+	<%else%>
+	    <%= link_to 'On Boarding',ajax_joining_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-info ',remote:true%>
+	<%end%>
+
+	<% if EmployeeBankDetail.exists?(employee_id: @employee.id) %>
 		<%= link_to 'Bank',ajax_bank_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+	<%else%>
+	 	<%= link_to 'Bank',ajax_bank_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-info ',remote:true%>
+	<%end%>
 	
+	<%if Qualification.exists?(employee_id: @employee.id) %>
 		<%= link_to 'Qualification',ajax_qualification_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
-	
+	<%else%>
+		<%= link_to 'Qualification',ajax_qualification_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-info ',remote:true%>
+	<%end%>
+
+	<%if Experience.exists?(employee_id: @employee.id) %>
 		<%= link_to 'Experience',ajax_experience_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
-	
+	<%else%>
+		<%= link_to 'Experience',ajax_experience_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-info ',remote:true%>
+	<%end%>
+
+	<%if Skillset.exists?(employee_id: @employee.id) %>
 		<%= link_to 'Skill Set',ajax_skillset_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
-	
+	<%else%>
+		<%= link_to 'Skill Set',ajax_skillset_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-info ',remote:true%>
+	<%end%>
+
+	<%if Certification.exists?(employee_id: @employee.id) %>
 		<%= link_to 'Certification',ajax_certification_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
-	
+	<%else%>
+		<%= link_to 'Certification',ajax_certification_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-info ',remote:true%>
+	<%end%>
+
+	<%if Award.exists?(employee_id: @employee.id) %>
 		<%= link_to 'Award',ajax_award_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
-	
+	<%else%>
+		<%= link_to 'Award',ajax_award_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-info ',remote:true%>
+	<%end%>
+
+	<%if EmployeePhysical.exists?(employee_id: @employee.id) %>
 		<%= link_to 'Physical',ajax_physical_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary',remote:true%>
+	<%else%>
+		<%= link_to 'Physical',ajax_physical_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-info',remote:true%>
+	<%end%>
+
+	<%if Family.exists?(employee_id: @employee.id) %>
 	
 		<%= link_to 'Family',ajax_family_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+	<%else%>
+		<%= link_to 'Family',ajax_family_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-info ',remote:true%>
+	<%end%>
 
 		<!-- < link_to 'Nomination',ajax_employee_nomination_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
  -->
+ 	<%if AssignedAsset.exists?(employee_id: @employee.id) %>
 		<%= link_to 'Assets',ajax_assigned_asset_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+	<%else%>
+		<%= link_to 'Assets',ajax_assigned_asset_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-info ',remote:true%>
+	<%end%>
 
+	<%if EmployeeDocument.exists?(employee_id: @employee.id) %>
 		<%= link_to 'Documents',ajax_employee_document_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
-
-		<%= link_to 'Checklist',joining_checklist_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ', remote:true%>
-	
+	<%else%>
+		<%= link_to 'Documents',ajax_employee_document_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-info ',remote:true%>
+	<%end%>	
+ 	<%if EmployeeJcList.exists?(employee_id: @employee.id) %>
+ 		<%= link_to 'Checklist',joining_checklist_employees_path(id: @employee.id),class: 'btn btn-sm btn-info ', remote:true%>
+ 	<%else%>
+		 <%= link_to 'Checklist',joining_checklist_employees_path(id: @employee.id),class: 'btn btn-sm btn-info ', remote:true%>
+	<%end%>
 		<!-- link_to 'Payroll',ajax_setup_payroll_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true %> -->
 <div id="message">
 </div>

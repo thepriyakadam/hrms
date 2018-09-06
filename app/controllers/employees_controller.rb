@@ -560,6 +560,15 @@
 
   def joining_checklist
      @employee = Employee.find(params[:id])
+
+     @joining_checklist_masters = JoiningChecklistMaster.where(status: true)
+      @joining_checklist_masters.each do |jc|
+        if EmployeeJcList.exists?(joining_checklist_master_id: jc.id,employee_id: @employee.id)
+        else
+          EmployeeJcList.create(joining_checklist_master_id: jc.id,employee_id: @employee.id,status: false)
+        end
+      end#do |jc|
+
     # @employee = Employee.find(params[:id])
      # @employee1 = Employee.where(employee_id: current_user.employee_id)
   end

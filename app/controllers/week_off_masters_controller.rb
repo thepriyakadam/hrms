@@ -223,14 +223,56 @@ class WeekOffMastersController < ApplicationController
                     @emp_attendance.update(employee_week_off_id: employee_week_off.id,comment: "Leave Request has been sent before week off set")
                   end
                 elsif @emp_attendance.try(:on_duty_request_id) != nil
-                  employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
-                  @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WOOD",comment: "Od Request has been sent before week off")
+                  if week_off_master.first == true && count == 0
+                    employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                    @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WOOD",comment: "Od Request has been sent before week off")
+                  elsif week_off_master.second == true && count == 1
+                    employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                    @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WOOD",comment: "Od Request has been sent before week off")
+                  elsif week_off_master.third == true && count == 2
+                    employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                    @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WOOD",comment: "Od Request has been sent before week off")
+                  elsif week_off_master.forth == true && count == 3
+                    employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                    @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WOOD",comment: "Od Request has been sent before week off")
+                  elsif week_off_master.fifth == true && count == 4 
+                    employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                    @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WOOD",comment: "Od Request has been sent before week off")
+                  end
                 elsif @emp_attendance.try(:holiday_id) != nil
-                  employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
-                  @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WOH",comment: "Holiday has been set before week off") 
+                  if week_off_master.first == true && count == 0
+                    employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                    @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WOH",comment: "Holiday has been set before week off") 
+                  elsif week_off_master.second == true && count == 1
+                    employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                    @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WOH",comment: "Holiday has been set before week off") 
+                  elsif week_off_master.third == true && count == 2
+                    employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                    @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WOH",comment: "Holiday has been set before week off") 
+                  elsif week_off_master.forth == true && count == 3
+                    employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                    @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WOH",comment: "Holiday has been set before week off") 
+                  elsif week_off_master.fifth == true && count == 4 
+                    employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                    @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WOH",comment: "Holiday has been set before week off") 
+                  end
                 else
-                  employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
-                  @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WO",comment: "Week off set after attendance setup")
+                  if week_off_master.first == true && count == 0
+                    employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                    @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WO",comment: "Week off set after attendance setup") 
+                  elsif week_off_master.second == true && count == 1
+                    employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                    @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WO",comment: "Week off set after attendance setup") 
+                  elsif week_off_master.third == true && count == 2
+                    employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                    @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WO",comment: "Week off set after attendance setup") 
+                  elsif week_off_master.forth == true && count == 3
+                    employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                    @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WO",comment: "Week off set after attendance setup") 
+                  elsif week_off_master.fifth == true && count == 4 
+                    employee_week_off = EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
+                    @emp_attendance.update(employee_week_off_id: employee_week_off.id,present: "WO",comment: "Week off set after attendance setup") 
+                  end
                 end
               end
             else

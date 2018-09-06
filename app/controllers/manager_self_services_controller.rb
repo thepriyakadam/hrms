@@ -226,6 +226,12 @@ class ManagerSelfServicesController < ApplicationController
     redirect_to system_base_attendance_manager_self_services_path
   end
 
+  def view_attendance
+    employee = Employee.find(params[:format])
+    date = Date.today
+    @employee_attendances = EmployeeAttendance.where(employee_id: employee.id,day: date.to_date)
+  end
+
   def add_attendance
     session[:active_tab] ="ManagerSelfService"
   end

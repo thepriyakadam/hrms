@@ -25,8 +25,8 @@ class ExpensesMastersController < ApplicationController
   end
 
   def collect_expence_opestion
-    employee_grade = EmployeeGrade.find(params[:employee_grade_id])
-    @expence_opestion = ExpenceOpestion.where(employee_grade_id: employee_grade.id)
+    @employee_grade = EmployeeGrade.find(params[:employee_grade_id])
+    @expence_opestion = ExpenceOpestion.where(employee_grade_id: @employee_grade.id)
   end
 
   def collect_mode
@@ -61,6 +61,7 @@ class ExpensesMastersController < ApplicationController
       if @expenses_master.save
         @expence_opestion = ExpenceOpestion.new
         format.js { @flag = true }
+        format.html { redirect_to new_expenses_master_path, notice: 'Expence Master was successfully created.' }
       else
         flash.now[:alert] = 'Expence Master Already Exist.'
         format.js { @flag = false }

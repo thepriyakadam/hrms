@@ -2013,7 +2013,7 @@ class Api::UserAuthsController < ApplicationController
   def claim_list
     travel_request_id = params[:travel_req_id]
     @daily_bill_details = DailyBillDetail.where(travel_request_id: travel_request_id).order("expence_date ASC") 
-    render :json => @daily_bill_details.present? ? @daily_bill_details.collect{|dbd| {:id => dbd.try(:id), :expence_date => dbd.try(:expence_date), :travel_request_id => dbd.try(:travel_request_id), :e_place => dbd.try(:e_place), :travel_expence_type => dbd.try(:travel_expence_type).try(:name), :travel_expence => dbd.try(:travel_expence), :currency_master => dbd.try(:currency_master).try(:name), :request_status => dbd.try(:request_status), :is_confirm => dbd.try(:is_confirm) }} : []
+    render :json => @daily_bill_details.present? ? @daily_bill_details.collect{|dbd| {:id => dbd.try(:id), :expence_date => dbd.try(:expence_date), :travel_request_id => dbd.try(:travel_request_id), :e_place => dbd.try(:e_place), :travel_expence_type => dbd.try(:travel_expence_type).try(:name), :travel_expence => dbd.try(:travel_expence), :currency_master => dbd.try(:currency_master).try(:name), :request_status => dbd.try(:request_status), :is_confirm => dbd.try(:is_confirm), :expence_opestion_id => dbd.try(:expence_opestion).try(:name), :mode_id => dbd.try(:mode).try(:name), :billing_option_id => dbd.try(:billing_option).try(:name), :billing_opestion => dbd.try(:billing_opestion) }} : []
   end
 
   def claim_list_total
@@ -2064,18 +2064,46 @@ class Api::UserAuthsController < ApplicationController
     travel_expence_type_id = params[:expense_type]
     travel_expence = params[:expense_amount]
     currency_master_id = params[:currency]
-    # image_file = params[:imageFile]
-    # doc_file = params[:DocFile]
-
-    @daily_bill_detail = DailyBillDetail.new(travel_request_id: travel_request_id, expence_date: expence_date, e_place: e_place, travel_expence_type_id: travel_expence_type_id, travel_expence: travel_expence , currency_master_id: currency_master_id)
-    @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
-    if @daily_bill_detail.save
-      @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
-      @daily_bill_detail = DailyBillDetail.new
-      render :status=>200, :json=>{:status=> "Daily Bill Detail saved Successfully." }
+    expence_opestion_id = params[:expence_option]
+    mode_id = params[:mode]
+    billing_opestion  = params[:billing_option]
+    billing_option_id = params[:option]
+    @expenc = ExpensesMaster.where(expence_opestion_id: expence_opestion_id, mode_id: mode_id, billing_opestion: billing_opestion, billing_option_id: billing_option_id)
+    if @expenc.present?
+      min_amount = @expenc.last.min_amount
+      max_amount = @expenc.last.max_amount
+      t_exp = travel_expence.to_f
+      if t_exp.between?(min_amount, max_amount).present?
+        @daily_bill_detail = DailyBillDetail.create(travel_request_id: travel_request_id, expence_date: expence_date, e_place: e_place, travel_expence_type_id: travel_expence_type_id, travel_expence: travel_expence, currency_master_id: currency_master_id, expence_opestion_id: expence_opestion_id, mode_id: mode_id, billing_opestion: billing_opestion, billing_option_id: billing_option_id)
+        render :status=>200, :json=>{:status=> "Daily Bill Detail saved Successfully." }
+      else
+        render :status=>200, :json=>{:status=>  "Please Enter Expense Amount from #{min_amount} to #{max_amount} Not Found" }
+      end
     else
-      render :status=>200, :json=>{:status=> "Daily Bill Detail not saved!" }
+      render :status=>200, :json=>{:status=> "Please Contact To Admin" }
     end
+  end
+
+  def collect_expence_opestion
+    employee_id = params[:employee_id]
+    emp = Employee.find(employee_id)
+    employee_grade = emp.try(:joining_detail).try(:employee_grade).try(:id)
+    expence_opestion = ExpenceOpestion.where(employee_grade_id: employee_grade)
+    render :json => expence_opestion.present? ? expence_opestion.collect{|exp| {:id => exp.try(:id), :employee_grade_id => exp.try(:employee_grade_id), :code => exp.try(:code), :name => exp.try(:name), :description => exp.try(:description), :status => exp.try(:status)  }} : []
+  end
+
+  def collect_mode
+    expence_opestion_id = params[:expence_opestion_id]
+    @mode = Mode.where(expence_opestion_id: expence_opestion_id)
+    render :json => @mode.present? ? @mode.collect{|exp| {:id => exp.try(:id), :expence_opestion_id => exp.try(:expence_opestion_id), :code => exp.try(:code), :name => exp.try(:name), :description => exp.try(:description), :status => exp.try(:status)  }} : []
+  end
+
+  def collect_opestion
+    mode_id = params[:mode_id]
+    mode = Mode.find(mode_id)
+    expence_opestion = mode.expence_opestion_id
+    @billing_option = BillingOption.where(expence_opestion_id: expence_opestion)
+    render :json => @billing_option.present? ? @billing_option.collect{|exp| {:id => exp.try(:id), :expence_opestion_id => exp.try(:expence_opestion_id), :code => exp.try(:code), :name => exp.try(:name), :description => exp.try(:description), :status => exp.try(:status)  }} : []
   end
 
   def final_approve_travel_request

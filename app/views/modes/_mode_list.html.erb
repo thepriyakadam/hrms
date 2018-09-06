@@ -18,7 +18,7 @@
         <% @modes.each do |mode| %>
           <tr>
             <td><%= i = i + 1 %></td>
-            <td><%= mode.expence_opestion.name %></td>
+            <td><%= mode.try(:expence_opestion).try(:employee_grade).try(:name)%> - <%= mode.expence_opestion.name %></td>
             <td><%= mode.code %></td>
             <td><%= mode.name %></td>
             <td><%= mode.description %></td>

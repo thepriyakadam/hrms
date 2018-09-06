@@ -3503,6 +3503,8 @@ end
     get 'user_auths/employee_resignation_final_reject' => 'user_auths#employee_resignation_final_reject', defaults:{format: 'json'}
     get 'user_auths/final_approval_emp_resignation_list' => 'user_auths#final_approval_emp_resignation_list', defaults:{format: 'json'}
     get 'user_auths/resignation_status_records' => 'user_auths#resignation_status_records', defaults:{format: 'json'}
+    get 'user_auths/collect_expence_opestion' => 'user_auths#collect_expence_opestion', defaults:{format: 'json'}
+    get 'user_auths/collect_mode' => 'user_auths#collect_mode', defaults:{format: 'json'}
+    get 'user_auths/collect_opestion' => 'user_auths#collect_opestion', defaults:{format: 'json'}
   end
 end
-

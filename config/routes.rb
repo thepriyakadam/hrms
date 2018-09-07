@@ -2798,11 +2798,15 @@ end
   resources :districts do
     collection do
       get :district_master
+      get :import_xl
+      post :import
     end
   end
   resources :states do
     collection do
       get :state_master
+      get :import_xl
+      post :import
     end
   end
   resources :countries do

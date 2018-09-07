@@ -11,6 +11,43 @@ class State < ActiveRecord::Base
   # validates :code, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true
 
+  def self.import(file)
+    spreadsheet = open_spreadsheet(file)
+    (2..spreadsheet.last_row).each do |i|
+      country = spreadsheet.cell(i,'B')
+      @country = Country.find_by(name: country)
+      if @country.nil?
+      else
+        country = spreadsheet.cell(i,'B')
+
+        code = spreadsheet.cell(i,'C').to_i
+        if code == 0
+           code = spreadsheet.cell(i,'C')
+        else
+          code = spreadsheet.cell(i,'C').to_i
+        end
+        state = spreadsheet.cell(i,'D')
+        
+        @state = State.find_by(name: state)
+        if @state.nil?
+          @state = State.create(country_id: @country.id,code: code,name: state)     
+        else
+          @state.update(country_id: @country.id,code: code,name: state)
+        end
+      end#if @country.nil?
+    end#do
+  end
+
+
+  def self.open_spreadsheet(file)
+    case File.extname(file.original_filename)
+      when ".csv" then Roo::CSV.new(file.path, file_warning: :ignore)
+      when ".xls" then Roo::Excel.new(file.path, file_warning: :ignore)
+      when ".xlsx" then Roo::Excelx.new(file.path, file_warning: :ignore)
+      else raise "Unknown file type: #{file.original_filename}"
+    end
+  end
+
   def self.filter_records(current_user)
     @countries =  if current_user.class == Group
     Country.all

@@ -259,7 +259,9 @@ class GoalBunchesController < ApplicationController
   def goal_period_list
     @period = Period.find(params[:period_id])
     current_login = Employee.find(current_user.employee_id)
-    @emps = current_login.subordinates.pluck(:id)
+    emps = current_login.subordinates
+    @all = emps.where(status: "Active")
+    @emps = @all.pluck(:id)
     #@emp1 = Employee.where(id: @emps).pluck(:id)
     @employees = GoalBunch.where(employee_id: @emps,period_id: @period.id,goal_confirm: true,goal_approval: false)
     # end
@@ -277,7 +279,9 @@ class GoalBunchesController < ApplicationController
   def period_list_appraiser
      @period = Period.find(params[:period_id])
     current_login = Employee.find(current_user.employee_id)
-    @emps = current_login.subordinates.pluck(:id)
+    emps = current_login.subordinates.pluck(:id)
+    @all = emps.where(status: "Active")
+    @emps = @all.pluck(:id)
     @employees = GoalBunch.where(employee_id: @emps,goal_approval: true,period_id: @period.id)
   end
 
@@ -580,7 +584,9 @@ class GoalBunchesController < ApplicationController
   def period_list_reviewer
     @period = Period.find(params[:period_id])
     current_login = Employee.find(current_user.employee_id)
-    @emps = current_login.indirect_subordinates.pluck(:id)
+    emps = current_login.indirect_subordinates
+    @all = emps.where(status: "Active")
+    @emps = @all.pluck(:id)
     @employees = GoalBunch.where(employee_id: @emps,appraiser_confirm: true,period_id: @period.id)
   end
 
@@ -1072,7 +1078,8 @@ class GoalBunchesController < ApplicationController
 
   def subordinate_list_for_appraisee
     current_login = Employee.find(current_user.employee_id)
-    @employees = current_login.subordinates
+    employees = current_login.subordinates
+    @employees = employees.where(status: "Active")
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_report"
   end
@@ -1084,7 +1091,8 @@ class GoalBunchesController < ApplicationController
 
   def subordinate_list_for_reviewer
     current_login = Employee.find(current_user.employee_id)
-    @employees = current_login.indirect_subordinates
+    employees = current_login.indirect_subordinates
+    @employees = employees.where(status: "Active")
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_report"
   end

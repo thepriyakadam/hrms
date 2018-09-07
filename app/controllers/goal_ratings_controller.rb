@@ -498,7 +498,10 @@ class GoalRatingsController < ApplicationController
     @goal_bunch = GoalBunch.find_by(period_id: @period.id)
 
     goal_bunches = GoalBunch.where(period_id: @period.id).pluck(:employee_id)
-    subordinates = current_login.subordinates.pluck(:id)
+    emps = current_login.subordinates
+    @all = emps.where(status: "Active")
+    subordinates = @all.pluck(:id)
+
     total_employee = goal_bunches & subordinates
     @employees = Employee.where(id: total_employee)
   end

@@ -79,7 +79,7 @@ class DailyBillDetailsController < ApplicationController
         @daily_bill_detail = DailyBillDetail.new
         flash[:notice] = 'Daily Bill Detail saved Successfully.'
       else
-        flash[:notice] = "Please Enter Expense Amount Within  #{max_amount} "
+        flash[:notice] = "Please Enter Expense Amount Within #{max_amount} "
       end
     else
       flash[:notice] = "Please Contact To Admin"

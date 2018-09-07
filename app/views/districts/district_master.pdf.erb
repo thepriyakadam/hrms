@@ -14,7 +14,7 @@
 <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
   <thead>
         <tr>
-          <td colspan="5"><center> 
+          <td colspan="4"><center> 
             <% if current_user.employee.company_location.company.company_logo == nil %>
             <%else %>
               <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
@@ -22,21 +22,21 @@
               <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
           </td>
         </tr>
-         <tr><th colspan="5"><center>District Master</center></th></tr>
+         <tr><th colspan="4"><center>District Master</center></th></tr>
 
     <tr> 
+      <th>Sr. No</th>
       <th>State</th>
-      <th>ID</th>
       <th>Code</th>
-      <th>Name</th>
+      <th>District</th>
     </tr>
   </thead>
   <tbody>
   <%i = 0%>
        <% @districts.each do |district| %>
       <tr>
+        <td><%= i = i + 1 %></td>
         <td><%= district.state.try(:name) %></td>
-        <td><%= district.id %></td>
         <td><%= district.code %></td>
         <td><%= district.name %></td>
    </tr>

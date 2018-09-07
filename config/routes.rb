@@ -516,6 +516,10 @@ Rails.application.routes.draw do
 
   resources :manager_self_services do
     collection do
+      get :atten_report
+      get :edit_current_attendance
+      post :update_attendance
+      get :create_update_show_attendance
       get :view_attendance
       get :system_base_attendance
       get :create_systembase_attendance

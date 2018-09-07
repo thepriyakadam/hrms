@@ -27,8 +27,8 @@
 	            <td><%= a.try(:day) %></td>
 	            <td><%= a.try(:day).strftime('%A') %></td>
 	            <td><%= a.try(:present) %></td>
-	            <td><%= a.try(:in_time).to_time %></td>
-	            <td><%= a.try(:out_time).to_time %></td>
+	            <td><%= a.try(:in_time) %></td>
+	            <td><%= a.try(:out_time) %></td>
 	            <td><%= a.try(:working_hrs) %></td>
 	            
 	          </tr>

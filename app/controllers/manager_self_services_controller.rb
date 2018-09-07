@@ -295,6 +295,37 @@ class ManagerSelfServicesController < ApplicationController
     end#params[save]
   end
 
+  def atten_report
+    @date =  params[:salary][:day].to_date
+      employee = Employee.where("manager_id = ? OR manager_2_id = ?", current_user.employee_id,current_user.employee_id).pluck(:id)
+      @all_employee_attendances = EmployeeAttendance.where(day: @date,employee_id: employee)
+     respond_to do |f|
+        f.js
+        f.xls {render template: 'manager_self_services/team_attendance.xls.erb'}
+        f.html
+        f.pdf do
+          render pdf: 'team_attendance',
+          layout: 'pdf.html',
+          orientation: 'Landscape',
+          template: 'manager_self_services/team_attendance.pdf.erb',
+          show_as_html: params[:debug].present?
+        end
+      end
+  end
+
+  def create_update_show_attendance
+    @emp = Employee.find(current_user.employee_id)
+    sub_ord = @emp.subordinates
+    @sub = sub_ord.where(status: "Active")
+    ind_sub = @emp.indirect_subordinates
+    @ind_sub = ind_sub.where(status: "Active")
+    @employee = @sub + @ind_sub
+
+    date = Date.today
+    @employee_attendances = EmployeeAttendance.where(employee_id:  @employee,day: date.to_date)
+    session[:active_tab] ="ManagerSelfService"
+  end
+
   def create_managerwise_attendance
     @employee_ids = params[:employee_ids]
     day = params[:employee_attendances][:day]
@@ -326,7 +357,22 @@ class ManagerSelfServicesController < ApplicationController
       flash[:notice] = "Created successfully"
       end
     end
-    redirect_to add_attendance_manager_self_services_path
+    redirect_to create_update_show_attendance_manager_self_services_path
+  end
+
+  def edit_current_attendance
+    @employee_attendance = EmployeeAttendance.find(params[:employee_attendance])
+  end
+
+  def update_attendance
+    employee_attendance_id = params[:employee_attendance_id]
+    present = params[:employee_attendance][:present]
+    in_time = params[:employee_attendance][:in_time]
+    out_time = params[:employee_attendance][:out_time]
+    employee_attendance = EmployeeAttendance.find_by(id: employee_attendance_id)
+    employee_attendance.update(present: present,in_time: in_time,out_time: out_time,comment: "Updated By Manager")
+    flash[:notice] = "Updated successfully"
+    redirect_to create_update_show_attendance_manager_self_services_path
   end
 
   def update_out_time
@@ -348,7 +394,7 @@ class ManagerSelfServicesController < ApplicationController
       flash[:notice] = "Updated successfully"
       end
     end
-    redirect_to add_attendance_manager_self_services_path
+    redirect_to create_update_show_attendance_manager_self_services_path
   end
 
   def vacancy_request

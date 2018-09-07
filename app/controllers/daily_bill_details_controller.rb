@@ -65,7 +65,7 @@ class DailyBillDetailsController < ApplicationController
     @expenc = ExpensesMaster.where(expence_opestion_id: expence_opestion_id, mode_id: mode_id, billing_opestion: billing_opestion, billing_option_id: billing_option_id)
     if @expenc.present?
       min_amount = @expenc.last.min_amount
-      max_amount = @expenc.last.max_amount
+      max_amount = @expenc.last.max_amount.to_f
       t_exp = travel_expence.to_f
       total_ex = t_exp > max_amount
       if total_ex == true
@@ -79,10 +79,10 @@ class DailyBillDetailsController < ApplicationController
         @daily_bill_detail = DailyBillDetail.new
         flash[:notice] = 'Daily Bill Detail saved Successfully.'
       else
-        flash[:notice] = "Please Enter Expense Amount Within #{max_amount} "
+        flash[:notice] = "Please Enter Expense Amount Within  #{max_amount} "
       end
     else
-      flash[:notice] = "Please Contact to Admin"
+      flash[:notice] = "Please Contact To Admin"
     end
     @travel_request_id = TravelRequest.find(params[:daily_bill_detail][:travel_request_id])
     redirect_to new_daily_bill_detail_path(travel_request_id: @travel_request_id.id)

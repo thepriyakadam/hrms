@@ -2798,14 +2798,24 @@ end
   resources :districts do
     collection do
       get :district_master
+      get :import_xl
+      post :import
     end
   end
   resources :states do
     collection do
       get :state_master
+      get :import_xl
+      post :import
     end
   end
-  resources :countries
+  resources :countries do
+    collection do
+      get :print_all_country
+      get :import_xl
+      post :import
+    end
+  end
   resources :employee_designations do
     collection do
       get :is_confirm

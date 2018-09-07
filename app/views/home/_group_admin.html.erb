@@ -381,6 +381,8 @@
       </div><!-- /.box -->
 
 
+
+
 <!-- MANAGER Attendance Leave -->
        <div class="box box-info">
         <div class="box-header with-border">
@@ -396,6 +398,54 @@
           <% date = Date.today %>
             <% @employee = Employee.where("status = ? AND manager_id = ? OR manager_2_id = ?", "Active",current_user.employee_id,current_user.employee_id).pluck(:id) %>
            <% @employees = EmployeeAttendance.where(day: date,employee_id: @employee).where.not(employee_leav_request_id: nil) %>
+          <% if @employees.empty? %>
+          <%else%>
+            <table id="example2" class="table no-margin">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Employee</th>
+                  <th>Department</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <% @employees.each do |e| %>
+                  <tr>
+                    <td>
+                      <%unless e.nil? or e.nil? or  e.employee.member.nil? or e.employee.member.avatar.nil? %>
+                         <% if e.employee.gender == "Male" && e.employee.member.avatar_file_name == nil  %>
+                         <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                         <% elsif e.employee.gender == "Female" && e.employee.member.avatar_file_name == nil  %>
+                         <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                         <%else%>
+                         <%= image_tag e.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
+                         <%end%> <!-- if -->
+                      <%end%> <!-- unless -->
+                    </td>
+                    <td><%= e.employee.manual_employee_code %> - <%= full_name(e.employee) %></td>
+                    <td><%= e.employee.try(:department).try(:name) %></td>
+                    <td><%= e.present %></td>
+                  </tr>
+              <% end %> <!-- do -->
+            </table>
+          <%end%> <!-- if employee.empty? -->
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+
+       <div class="box box-info">
+        <div class="box-header with-border">
+            <% @employee = Employee.where(status: "Active").pluck(:id) %>
+         <% @employees = EmployeeAttendance.where(day: date,employee_id: @employee).where(present: "A") %>
+          <h3 class="box-title"><font color="red"> Absent - <%= @employees.count %></font></h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <% date = Date.today %>
+            <% @employee = Employee.where(status: "Active").pluck(:id) %>
+           <% @employees = EmployeeAttendance.where(day: date,employee_id: @employee).where(present: "A") %>
           <% if @employees.empty? %>
           <%else%>
             <table id="example2" class="table no-margin">

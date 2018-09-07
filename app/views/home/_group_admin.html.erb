@@ -400,7 +400,7 @@
            <% @employees = EmployeeAttendance.where(day: date,employee_id: @employee).where.not(employee_leav_request_id: nil) %>
           <% if @employees.empty? %>
           <%else%>
-            <table id="example2" class="table no-margin">
+           <table id="example6" class="table table-bordered table-hover table-condensed">
               <thead>
                 <tr>
                   <th></th>
@@ -448,7 +448,7 @@
            <% @employees = EmployeeAttendance.where(day: date,employee_id: @employee).where(present: "A") %>
           <% if @employees.empty? %>
           <%else%>
-            <table id="example2" class="table no-margin">
+              <table id="example9" class="table table-bordered table-hover table-condensed">
               <thead>
                 <tr>
                   <th></th>
@@ -479,7 +479,13 @@
           <%end%> <!-- if employee.empty? -->
         </div><!-- /.box-body -->
       </div><!-- /.box -->
-
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example9').DataTable( {
+        "lengthMenu": [[5,10, 25, 50,100, -1], [5,10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
       
       <div class="box box-info">
         <div class="box-header with-border">

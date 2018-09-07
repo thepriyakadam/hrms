@@ -283,12 +283,12 @@ class GoalRatingsController < ApplicationController
   end
 
   def send_mail_to_appraiser
-    goal_ratings = GoalRating.where(appraisee_id: @employee.id,goal_bunch_id: @goal_bunch.id)
+    #goal_ratings = GoalRating.where(appraisee_id: @employee.id,goal_bunch_id: @goal_bunch.id)
 
 
     @employee = Employee.find(params[:emp_id])
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
-
+    goal_ratings = GoalRating.where(appraisee_id: @employee.id,goal_bunch_id: @goal_bunch.id)
     sum = goal_ratings.sum(:goal_weightage)
     if sum.round == 100
       @emp = Employee.find(current_user.employee_id)

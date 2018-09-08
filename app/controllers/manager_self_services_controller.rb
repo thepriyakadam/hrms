@@ -370,7 +370,12 @@ class ManagerSelfServicesController < ApplicationController
     in_time = params[:employee_attendance][:in_time]
     out_time = params[:employee_attendance][:out_time]
     employee_attendance = EmployeeAttendance.find_by(id: employee_attendance_id)
-    employee_attendance.update(present: present,in_time: in_time,out_time: out_time,comment: "Updated By Manager")
+#byebug
+    total_hrs = out_time.to_time - in_time.to_time
+      #working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+      working_hrs = Time.at(total_hrs).strftime("%H:%M")
+
+    employee_attendance.update(present: present,in_time: in_time,out_time: out_time,working_hrs: working_hrs,comment: "Updated By Manager")
     flash[:notice] = "Updated successfully"
     redirect_to create_update_show_attendance_manager_self_services_path
   end

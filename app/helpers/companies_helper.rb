@@ -11,7 +11,7 @@ module CompaniesHelper
         Company.all.collect { |x| [x.name, x.id] }
       elsif current_user.role.name == 'Admin'
         Company.where(id: current_user.company_location.company_id).collect { |x| [x.name, x.id] }
-      elsif current_user.role.name == 'Branch' || current_user.role.name == 'HOD' || current_user.role.name == 'Supervisor' ||  current_user.role.name == 'CEO'
+      elsif current_user.role.name == 'Costomize' || current_user.role.name == 'Branch' || current_user.role.name == 'HOD' || current_user.role.name == 'Supervisor' ||  current_user.role.name == 'CEO'
         Company.where(id: current_user.company_location.company_id).collect { |x| [x.name, x.id] }
       elsif current_user.role.name == 'Recruitment'
         Company.all.collect { |x| [x.name, x.id] }

@@ -701,7 +701,7 @@
         @company_locations = CompanyLocation.where(company_id: @company.id)
       elsif current_user.role.name == 'Admin'
         @company_locations = CompanyLocation.where(company_id: current_user.company_location.company_id)
-      elsif current_user.role.name == 'Branch'
+      elsif current_user.role.name == 'Costomize' || current_user.role.name == 'Branch'
         @company_locations = CompanyLocation.where(id: current_user.company_location_id)
       elsif current_user.role.name == 'HOD'
         @company_locations = CompanyLocation.where(id: current_user.company_location_id)

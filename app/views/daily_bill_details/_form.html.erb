@@ -22,7 +22,7 @@
         <tr>
           <th>Sr.No.</th>
           <th>Employee Grade</th>
-          <th>Expence Option </th>
+          <th>Expense Option </th>
           <th>Expence Mode</th>
           <th>Mode Option</th>
           <th>Billing Option</th>
@@ -76,7 +76,7 @@
         </div>
       </div> -->
       <div class="col-sm-3">
-        <label> Select Expence Opestion </label>
+        <label> Select Expense Option </label>
         <div class="form-group required">
           <%= f.select :expence_opestion_id, grade_wise_expence_opestions, { hide_label:true, include_blank: " Select Expence Opestion" },{onchange:"var a={expence_opestion_id:$(this).val(), form : 'expenses_master'}; $.get('/expenses_masters/collect_mode',a,function(response){});", class: "form-control"} %>
         </div>

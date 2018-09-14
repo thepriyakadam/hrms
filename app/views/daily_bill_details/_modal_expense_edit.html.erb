@@ -2,7 +2,7 @@
   	<div class="modal-content">
 	    <div class="modal-header">
     		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      		<h4 class="modal-title"><center> Update Expence Detail </center></h4>
+      		<h4 class="modal-title"><center> Update Expense Detail </center></h4>
     	</div>
     	<div class="modal-body">
 		    <%= bootstrap_form_for :daily_bill_detail,url:{action: "update_expence",daily_bill_detail_id: @daily_bill_detail.id,travel_request_id: @travel_request.id} do |f| %>
@@ -35,7 +35,7 @@
 				      </div> -->
 		      		
 		      		<div class="col-sm-3">
-		        		<label> Select Expence Opestion </label>
+		        		<label> Select Expense Option </label>
 		        		<div class="form-group required">
 		          			<%= f.select :expence_opestion_id, grade_wise_expence_opestions, { hide_label:true, include_blank: " Select Expence Opestion" },{onchange:"var a={expence_opestion_id:$(this).val(), form : 'expenses_master'}; $.get('/expenses_masters/collect_mode',a,function(response){});", class: "form-control"} %>
 		        		</div>

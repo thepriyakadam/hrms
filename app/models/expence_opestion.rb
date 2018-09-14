@@ -11,7 +11,9 @@ class ExpenceOpestion < ActiveRecord::Base
   def self.import(file)
     spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-        expence_opestion_id = spreadsheet.cell(i,'B').to_i
+        employee_grade_name = spreadsheet.cell(i,'B')
+        @employee_grade = EmployeeGrade.find_by(name: employee_grade_name)
+
         code = spreadsheet.cell(i,'C')
         if code == 0
           code = spreadsheet.cell(i,'C')
@@ -22,11 +24,11 @@ class ExpenceOpestion < ActiveRecord::Base
         description = spreadsheet.cell(i,'E')
        	status = spreadsheet.cell(i,'F')
 
-       	@expence_opestions = ExpenceOpestion.find_by(name: name)
+       	@expence_opestions = ExpenceOpestion.find_by(name: name,employee_grade_id: @employee_grade.id)
         if @expence_opestions == nil
-        	@expence_opestions_new = ExpenceOpestion.create(expence_opestion_id: expence_opestion_id, code: code,name: name, description: description, status: status)
+        	@expence_opestions_new = ExpenceOpestion.create(employee_grade_id: @employee_grade.id, code: code,name: name, description: description, status: status)
         else 
-        	@expence_opestions.update(expence_opestion_id: expence_opestion_id, code: code,name: name, description: description, status: status)
+        	@expence_opestions.update(employee_grade_id: @employee_grade.id, code: code,name: name, description: description, status: status)
       	end
     end
   end

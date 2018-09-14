@@ -17,7 +17,7 @@
           <tr>
             <td><%= a.try(:employee).try(:manual_employee_code) %></td>
             <td><%= full_name(a.employee) %></td>
-            <td><%= a.try(:day) %></td>
+            <td><%= a.try(:day).to_date %></td>
             <td><%= a.try(:day).strftime('%A') %></td>
             <td><%= a.try(:present) %></td>
             <td><%= a.try(:in_time) %></td>

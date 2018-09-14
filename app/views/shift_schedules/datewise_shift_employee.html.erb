@@ -1,0 +1,65 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Shift </h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= bootstrap_form_for(:employee, url: { action: 'show_datewise_attendance'},html: {id: "employee"},remote: true) do |f| %>
+
+      <div class="row">
+        <div class="col-sm-3">
+        <label>From</label>
+          <div class="field">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+               <%= text_field :employee, :start_date, hide_label:true, class: 'from_date form-control'%>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <label>To</label>
+          <div class="field">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+               <%= text_field :employee, :end_date, hide_label:true, class: 'from_date form-control'%>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <label>Employee</label>
+          <div class="form-group required">
+            <%= f.select :employee_id,employee_manager_wise,{hide_label: true,include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+          </div>
+        </div>
+
+        <div class="col-sm-3" style="padding-top:20px;">
+          <%= f.submit "Show Employee List",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %>
+        </div>
+      </div><br>
+
+    <% end %>
+  </div>
+</div>
+
+<div id="show_datewise_attendance"></div>
+
+<script type="text/javascript">
+  $(function(){
+    $('.from_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-10:+25',
+    dateFormat: 'dd-mm-yy' });
+    });
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".select2").select2();
+  });
+</script>

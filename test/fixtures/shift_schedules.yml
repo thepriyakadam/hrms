@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  shift_time_id: 
+  from: 2018-09-10
+  to: 2018-09-10
+  status: false
+
+two:
+  shift_time_id: 
+  from: 2018-09-10
+  to: 2018-09-10
+  status: false

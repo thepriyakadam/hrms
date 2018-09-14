@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-body">
-    <%= bootstrap_form_for :employee_attendances,html: {id: "employee_attendances"}, url: { action: 'create_managerwise_attendance'} do |f| %>
+    <%= bootstrap_form_for :employee_attendances,html: {id: "employee_attendances"}, url: { action: 'create_managerwise_attendance',shift_time_id: @shift_time_id} do |f| %>
     <!-- <= f.hidden_field :department_id, value: @department %> -->
       <div class="row">
         <div class="col-sm-3">
@@ -48,13 +48,13 @@
           </tr>
         </thead>
         <tbody>
-          <% @employees.each do |e| %>
+          <% @employe_attendance.each do |e| %>
             <tr>        
-              <td><%= check_box_tag "employee_ids[]",e.id %></td>
-              <td><%= e.manual_employee_code %></td>
-              <td><%= full_name(e) %></td>
-              <td><%= e.try(:joining_detail).try(:cost_center).try(:name) %></td>
-              <%= f.hidden_field :department_id, value: e.department_id %>
+              <td><%= check_box_tag "employee_ids[]",e.employee_id %></td>
+              <td><%= e.employee.manual_employee_code %></td>
+              <td><%= full_name(e.employee) %></td>
+              <td><%= e.employee.try(:joining_detail).try(:cost_center).try(:name) %></td>
+              <%= f.hidden_field :department_id, value: e.employee.department_id %>
             </tr>
           <% end %>
         </tbody>

@@ -1,0 +1,43 @@
+<table id="example6" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr> 
+      <th>Sr. No</th>
+      <th>Shift</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% i = 0 %>
+    <% @shift_times.each do |shift_time| %>
+      <tr>
+        <td><%= i = i + 1 %></td>
+        <% if shift_time.status == true %>
+         <td><%= shift_time.shift %> - <%= shift_time.try(:name) %></td>
+        <%else%>
+         <td><font color='red'><%= shift_time.shift %> - <%= shift_time.try(:name) %></font></td>
+        <%end%>
+        <td><%= shift_time.try(:from) %></td>
+        <td><%= shift_time.try(:to) %></td>
+        <td><%= shift_time.status ? "Active" : "Inactive" %></td>
+        <td>
+            <%= link_to '', edit_shift_time_path(shift_time),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  shift_time, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+            <%= link_to '', modal_shift_time_shift_times_path(shift_time), class: 'btn btn-xs btn-default fa fa-eye',remote: true%>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div id="modal_shift_time" class="modal fade"></div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

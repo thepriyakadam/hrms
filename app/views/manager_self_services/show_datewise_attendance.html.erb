@@ -22,7 +22,7 @@
       <tbody>
         <% @employee_attendances.each do |employee_attendance| %>
           <tr>
-            <td><%= employee_attendance.try(:day) %></td>
+            <td><%= employee_attendance.try(:day).to_date %></td>
             <td><%= employee_attendance.try(:day).strftime('%A') %></td>
             <td><%= employee_attendance.try(:present) %></td>
             <td><%= employee_attendance.try(:in_time) %></td>

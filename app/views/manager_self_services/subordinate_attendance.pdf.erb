@@ -40,7 +40,7 @@ div.nobreak{ page-break-inside: avoid;
             <tr>
               <td><%= a.employee.manual_employee_code %></td>
               <td><%= full_name(a.employee) %></td>
-              <td><%= a.try(:day) %></td>
+              <td><%= a.try(:day).to_date %></td>
               <td><%= a.try(:day).strftime('%A') %></td>
               <td><%= a.try(:in_time) %></td>
               <td><%= a.try(:out_time) %></td>

@@ -100,6 +100,9 @@ class Employee < ActiveRecord::Base
   has_many :rembursments
   has_many :status_c_offs
   has_many :leave_transfers
+  has_many :shift_employees
+  has_many :shift_employees, class_name: "Employee",
+                          foreign_key: "created_by"
 
   has_many :leave_transfers, class_name: "Employee",
                           foreign_key: "transfer_to_id"

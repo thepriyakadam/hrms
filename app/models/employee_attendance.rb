@@ -8,6 +8,7 @@ class EmployeeAttendance < ActiveRecord::Base
   belongs_to :machine_attendance
   belongs_to :company_time_master
   belongs_to :holiday
+  belongs_to :shift_time
   validates :day, uniqueness: { scope: [:employee_id] }
   # validates_format_of :in_time, :with => /(([0][0-9]|[1][0-2])|[0-9]):([0-5][0-9])( *)((AM|PM)|(A|P))/,
   #   :message => "Only Proper HH:MM time allowed"

@@ -1,4 +1,22 @@
 Rails.application.routes.draw do
+  resources :shift_schedules do
+    collection do
+      get :employee_shift
+      post :set_employee_shift
+      get :view_employee_shift
+      get :shift_employee
+      get :datewise_shift_employee
+      post :show_datewise_attendance
+      get :show_datewise_attendance
+      get :edit_employee_shift
+      post :update_shift
+    end
+  end
+  resources :shift_times do
+    collection do
+      get :modal_shift_time
+    end
+  end
   resources :expenses_masters do
     collection do
       get :expence_detail
@@ -516,6 +534,7 @@ Rails.application.routes.draw do
 
   resources :manager_self_services do
     collection do
+      get :shift_wise_system_base
       get :atten_report
       get :edit_current_attendance
       post :update_attendance
@@ -2455,6 +2474,7 @@ end
       post :employee_category_master
       get :import_xl
       post :import
+      get :employee_detail
     end
   end
   resources :other_salary_components do

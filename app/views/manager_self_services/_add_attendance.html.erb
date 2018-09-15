@@ -7,6 +7,13 @@
     <%= bootstrap_form_for(:salary, url: { action: 'managerwise_attendance_list'},html: {id: "salary"},remote: true) do |f| %>
       <div class="row">
         <div class="col-sm-3">
+          <label>Shift</label>
+          <div class="form-group required">
+            <%= f.select :shift_time_id,all_shift_time,{hide_label: true,include_blank: "Select Shift"} %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
           <label>Date </label>
           <div class="form-group required">
             <div class="input-group">
@@ -17,12 +24,11 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-9" style="padding-top:20px;">
+        <div class="col-sm-6" style="padding-top:20px;">
           <div class="actions">
             <%= submit_tag 'Create Attendance', name: 'save', id: "buttonCtc" %>
-            <%= submit_tag 'Report', name: 'report', id: "buttonCtc" %>
             <%= submit_tag 'Update Out Time', name: 'outtime', id: "buttonCtc" %>
-           
+            <%= submit_tag 'Report', name: 'report', id: "buttonCtc" %>
           </div>
         </div>
       </div>
@@ -32,6 +38,7 @@
     <div class="row">
       <div class="col-sm-12">
         <div id="managerwise_list"></div>    
+        <div id="todays_attendance"></div>    
       </div>
     </div>
   </div><!-- /.box-body -->

@@ -38,7 +38,7 @@ div.nobreak{ page-break-inside: avoid;
         <tbody>
           <% @employee_attendances.each do |a| %>
             <tr>
-              <td><%= a.try(:day) %></td>
+              <td><%= a.try(:day).to_date %></td>
               <td><%= a.try(:day).strftime('%A') %></td>
               <td><%= a.try(:present) %></td>
               <td><%= a.try(:in_time) %></td>

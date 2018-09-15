@@ -6,7 +6,6 @@
 		<table id="example6" class="table table-bordered table-hover table-condensed">
 		  <thead>
 		    <tr>
-		      <!-- <th><input type="checkbox" id="selectAll" value="selectAll"></th> -->
 		      <th>Sr. No</th>
 		      <th>ID</th>
 		      <th>Employee</th>
@@ -16,15 +15,14 @@
 		  </thead>
 		  <tbody>
 		  <% i = 0 %>
-		    <% @employees.each do |e| %>
-		      <tr>        
-		        <!-- <td><%#= check_box_tag "employee_ids[]",e.id %></td> -->
+		    <% @shift_employees.each do |e| %>
+		      <tr> 
 		        <td><%= i = i + 1 %></td>
-		        <td><%= e.manual_employee_code %></td>
-		        <td><%= full_name(e) %></td>
-		        <td><%= e.try(:joining_detail).try(:cost_center).try(:name) %></td>
+		        <td><%= e.employee.manual_employee_code %></td>
+		        <td><%= full_name(e.employee) %></td>
+		        <td><%= e.employee.try(:joining_detail).try(:cost_center).try(:name) %></td>
 		        <td>
-		        	<% if EmployeeAttendance.exists?(employee_id: e.id,day: Date.today) %>
+		        	<% if EmployeeAttendance.exists?(employee_id: e.employee.id,day: @date) %>
 		        		<%= link_to "Out" ,create_systembase_attendance_manager_self_services_path(e), class: "btn btn-warning btn-xs" %>
 		        	<% else %>
 		        		<%= link_to "In" ,create_systembase_attendance_manager_self_services_path(e), class: "btn btn-primary btn-xs" %>
@@ -35,6 +33,7 @@
 		    <% end %>
 		  </tbody>
 		</table>
+		<%= link_to 'Back', shift_wise_system_base_manager_self_services_path,class:'btn btn-xs btn-default fa fa-arrow-left' %>
 	</div>
 </div>
 <div id="myModal" class="modal fade"></div>

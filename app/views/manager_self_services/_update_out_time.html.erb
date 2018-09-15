@@ -30,8 +30,8 @@
 	          <th>Date</th>
 	          <th>Day</th>
 	          <th>Present</th>
-	          <th>In Time</th>
-	          <th>Out Time</th>
+	          <th>In</th>
+	          <th>Out</th>
 	          <th>Working Hrs.</th>
 	        </tr>
 	      </thead>
@@ -40,12 +40,12 @@
 	          <tr>      
               <td><%= check_box_tag "employee_attendance_ids[]",a.id %></td>
 	            <td><%= a.try(:employee).try(:manual_employee_code) %></td>
-	            <td><%= full_name(a.employee) %></td>
-	            <td><%= a.try(:day) %></td>
+	            <td><%= a.try(:employee).try(:first_name) %> <%= a.try(:employee).try(:last_name) %></td>
+	            <td><%= a.try(:day).to_date %></td>
 	            <td><%= a.try(:day).strftime('%A') %></td>
 	            <td><%= a.try(:present) %></td>
-	            <td><%= a.try(:in_time).to_time %></td>
-	            <td><%= a.try(:out_time).to_time %></td>
+	            <td><%= a.try(:in_time) %></td>
+	            <td><%= a.try(:out_time) %></td>
 	            <td><%= a.try(:working_hrs) %></td>
 	          </tr>
 	        <% end %>

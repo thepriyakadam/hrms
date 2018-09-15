@@ -3,6 +3,7 @@ class CostCenter < ActiveRecord::Base
   has_many :slip_informations
   has_many :vacancy_masters
   has_many :employees
+  has_many :shift_times
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 end

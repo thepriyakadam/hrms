@@ -1,0 +1,111 @@
+<%= bootstrap_form_for @shift_time,html: {id: "shift_time"}, remote:true do |f| %>
+  <div class="row">
+     <div class="col-sm-3">
+      <label>Cost Center</label>
+      <div class="form-group required">
+        <%= f.select :cost_center_id,all_cost_center,{hide_label: true,include_blank: "Select Cost Center"} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+     <label>Shift</label>
+      <div class="form-group required">
+        <%= f.select :shift,['General','First','Second','Costomized'],{hide_label: true,include_blank: "Select Shift"} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+     <label>Name</label>
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label: true,placeholder: " Name" %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+     <label>In Time</label>
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div> 
+            <%= f.text_field :from,hide_label: true, placeholder: 'In Time',class: 'form-control timepicker',value: @shift_time.from %>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+  </div>
+  <div class="row">
+     <div class="col-sm-3">
+     <label>Out Time</label>
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+            <%= f.text_field :to,hide_label: true, placeholder: 'Out Time',class: 'form-control timepicker',value: @shift_time.to %>
+          </div>
+        </div>
+      </div>
+    </div> 
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :description ,label: "Description", placeholder: 'Description' %>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="col-sm-3" style="padding-top: 20px;">
+        <%= f.check_box :status, label: 'Active'%>
+      </div>
+    </div>
+
+    <div class="col-sm-3" style="padding-top: 20px;">
+      <div class="actions">
+      <%= f.submit "Create Shift Time", class: "btn btn-sm btn-primary" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  
+  $("#shift_time").validate({
+    rules: {
+      "shift_time[shift]":{
+        required: true
+      },
+      "shift_time[name]":{
+        required: true
+      }
+    },
+    messages: {
+      "shift_time[shift]":{
+        required: "Please Specify Shift"
+      },
+      "shift_time[name]":{
+        required: "Please Specify Name"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+<script type="text/javascript">
+  $(function(){
+     $(".timepicker").timepicker({
+    showInputs: false
+  });
+    $('.machine_attendance').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:-0',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

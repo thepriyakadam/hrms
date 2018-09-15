@@ -158,6 +158,7 @@ class Employee < ActiveRecord::Base
   has_many :change_designations, class_name: "Employee", foreign_key: "change_by_id"
   has_many :frequest_questions
   has_many :contact_details
+  has_many :shift_employees,class_name: "Employee", foreign_key: "created_by_id"
 
 
   # has_many :reporting_masters, class_name: "Employee",

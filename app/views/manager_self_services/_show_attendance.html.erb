@@ -7,32 +7,32 @@
     <div class="modal-body">
     	<table id="example6" class="table table-bordered table-hover table-condensed">
 	      <thead>
+	        <% @employee_attendances.each do |a| %>
 	        <tr>
 	          <th>ID</th>
+	            <td><%= a.try(:employee).try(:manual_employee_code) %></td>
 	          <th>Employee</th>
+	            <td><%= full_name(a.employee) %></td>
+	       	</tr><tr>
 	          <th>Date</th>
+	            <td><%= a.try(:day).to_date %></td>
 	          <th>Day</th>
-	          <th>Present</th>
+	            <td><%= a.try(:day).strftime('%A') %></td>
+	       	</tr><tr>
 	          <th>In Time</th>
+	            <td><%= a.try(:in_time) %></td>
 	          <th>Out Time</th>
+	            <td><%= a.try(:out_time) %></td>
+	       	</tr><tr>
 	          <th>Working Hrs.</th>
+	            <td><%= a.try(:working_hrs) %></td>
+	          <th>Present</th>
+	            <td><%= a.try(:present) %></td>
 	          
 	        </tr>
+	        <% end %>
 	      </thead>
 	      <tbody>
-	        <% @employee_attendances.each do |a| %>
-	          <tr>
-	            <td><%= a.try(:employee).try(:manual_employee_code) %></td>
-	            <td><%= full_name(a.employee) %></td>
-	            <td><%= a.try(:day) %></td>
-	            <td><%= a.try(:day).strftime('%A') %></td>
-	            <td><%= a.try(:present) %></td>
-	            <td><%= a.try(:in_time).to_time %></td>
-	            <td><%= a.try(:out_time).to_time %></td>
-	            <td><%= a.try(:working_hrs) %></td>
-	            
-	          </tr>
-	        <% end %>
 	      </tbody>
 	    </table>
 		</div>

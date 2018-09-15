@@ -534,6 +534,7 @@ Rails.application.routes.draw do
 
   resources :manager_self_services do
     collection do
+      get :detail_attendance_modal
       get :shift_wise_system_base
       get :atten_report
       get :edit_current_attendance

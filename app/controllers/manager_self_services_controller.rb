@@ -407,6 +407,10 @@ class ManagerSelfServicesController < ApplicationController
     redirect_to create_update_show_attendance_manager_self_services_path
   end
 
+  def detail_attendance_modal
+    @employee_attendance = EmployeeAttendance.find(params[:employee_attendance]) 
+  end
+
   def edit_current_attendance
     @employee_attendance = EmployeeAttendance.find(params[:employee_attendance])
   end

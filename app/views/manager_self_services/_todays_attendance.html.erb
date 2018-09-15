@@ -14,7 +14,7 @@
     <% @emp_attendance.each do |a| %>
       <tr>
         <td><%= a.try(:employee).try(:manual_employee_code) %></td>
-        <td><%= full_name(a.employee) %></td>
+        <td><%= a.try(:employee).try(:first_name) %> <%= a.try(:employee).try(:last_name) %></td>
         <td><%= a.try(:present) %></td>
         <td><%= a.try(:in_time) %></td>
         <td><%= a.try(:out_time) %></td>

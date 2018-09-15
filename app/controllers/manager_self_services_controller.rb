@@ -217,6 +217,7 @@ class ManagerSelfServicesController < ApplicationController
     shift_employee = ShiftEmployee.find(params[:shift_employee_id])
     @date = shift_employee.date
     # joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
+    
     @employees = Employee.where(status: "Active").where("manager_id = ? OR manager_2_id = ?", current_user.employee_id,current_user.employee_id)
     employee_id = @employees.pluck(:id)
     @shift_employees = ShiftEmployee.where(shift_schedule_id: shift_employee.shift_schedule_id,date: @date,employee_id: employee_id)

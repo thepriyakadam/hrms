@@ -3543,5 +3543,7 @@ end
     get 'user_auths/collect_expence_opestion' => 'user_auths#collect_expence_opestion', defaults:{format: 'json'}
     get 'user_auths/collect_mode' => 'user_auths#collect_mode', defaults:{format: 'json'}
     get 'user_auths/collect_opestion' => 'user_auths#collect_opestion', defaults:{format: 'json'}
+    get 'user_auths/shift_wise_system_base' => 'user_auths#shift_wise_system_base', defaults:{format: 'json'}
+    get 'user_auths/system_base_attendance' => 'user_auths#system_base_attendance', defaults:{format: 'json'}
   end
 end

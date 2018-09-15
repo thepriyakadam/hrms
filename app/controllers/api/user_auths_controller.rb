@@ -2604,4 +2604,46 @@ class Api::UserAuthsController < ApplicationController
     render :json => pending_employee_resignation.present? ? pending_employee_resignation.collect{|er| { :id => er.id, :manual_employee_code => er.try(:employee).try(:manual_employee_code), :prefix => er.try(:employee).try(:prefix), :employee_first_name => er.try(:employee).try(:first_name), :employee_middle_name => er.try(:employee).try(:middle_name), :employee_last_name => er.try(:employee).try(:last_name), :employee_id => er.employee_id, :resignation_date => er.resignation_date, :reason => er.reason, :notice_period => er.notice_period, :is_notice_period => er.is_notice_period, :short_notice_period => er.short_notice_period, :tentative_leaving_date => er.tentative_leaving_date, :remark => er.remark, :exit_interview_date => er.exit_interview_date, :note => er.note, :leaving_date => er.leaving_date, :settled_on => er.settled_on, :has_left => er.has_left, :notice_served => er.notice_served, :rehired => er.rehired, :resign_status => er.resign_status, :leaving_reason_id => er.leaving_reason.try(:name), :is_stop_pay_request => er.is_stop_pay_request, :second_reporter_id => er.second_reporter_id, :final_reporter_id => er.final_reporter_id, :is_pending => er.is_pending, :is_first_approved => er.is_first_approved, :is_second_approved => er.is_second_approved, :is_final_approved => er.is_final_approved, :is_cancelled => er.is_cancelled, :is_first_rejected => er.is_first_rejected, :is_second_rejected => er.is_second_rejected, :is_final_rejected => er.is_final_rejected, :application_date => er.application_date, :reporting_master_id => er.reporting_master_id }} : []
   end
 
+  def shift_wise_system_base
+    employee_id = params[:employee_id]
+    joining_detail = JoiningDetail.find_by(employee_id: employee_id)
+    shift_time = ShiftTime.where(cost_center_id: joining_detail.cost_center_id).pluck(:id)
+    @shift_employees = ShiftEmployee.where(shift_time_id: shift_time).group(:date,:shift_time_id).order("date desc")
+    render :json => @shift_employees.present? ? @shift_employees.collect{|sh| { :id => sh.id, :shift_schedule_id => sh.shift_schedule_id, :shift => sh.try(:shift_time).try(:shift), :shift_name => sh.try(:shift_time).try(:name), :employee_id => sh.employee_id, :date => sh.date, :comment => sh.comment, :justification => sh.justification, :status => sh.status, :shift_time_id => sh.shift_time_id, :created_by_id => sh.created_by_id }} : []
+  end
+
+  def system_base_attendance
+    employee_id = params[:employee_id]
+    shift_employee_id = params[:shift_employee_id]
+    date = Date.today
+    shift_employee = ShiftEmployee.find(params[:shift_employee_id])
+    @date = shift_employee.date
+    # joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
+    @employees = Employee.where(status: "Active").where("manager_id = ? OR manager_2_id = ?", employee_id, employee_id)
+    @employee_id = @employees.pluck(:id)
+    @shift_employees = ShiftEmployee.where(shift_schedule_id: shift_employee.shift_schedule_id,date: @date,employee_id: @employee_id)
+    render :json => @shift_employees.present? ? @shift_employees.collect{|sh| { :id => sh.id, :shift_schedule_id => sh.shift_schedule_id, :shift => sh.try(:shift_time).try(:shift), :shift_name => sh.try(:shift_time).try(:name), :employee_id => sh.employee_id, :date => sh.date, :comment => sh.comment, :justification => sh.justification, :status => sh.status, :shift_time_id => sh.shift_time_id, :created_by_id => sh.created_by_id }} : []
+  end
+
+  def create_systembase_attendance
+    shift_employee_id = params[:shift_employee_id]
+    time = Time.now
+    @time = time.strftime("%H:%M:%S")
+    shift_employee = ShiftEmployee.find(params[:format])
+    @date = shift_employee.date
+    emp = shift_employee.employee_id
+    employee = Employee.find_by(id: emp)
+    if EmployeeAttendance.exists?(day: @date.to_date,employee_id: employee.id)
+      emp_attendance = EmployeeAttendance.where(day: @date.to_date,employee_id: employee.id).take
+      total_hrs =  @time.to_time - emp_attendance.try(:in_time)
+      working_hrs = Time.at(total_hrs).strftime("%H:%M")
+      @employee_attendance = EmployeeAttendance.find_by(id: emp_attendance.id).update(out_time: @time,working_hrs: working_hrs)
+    else
+      EmployeeAttendance.create(employee_id: employee.id,day: @date.to_date,present: "P",in_time: @time,out_time: @time,count: 1.0,department_id: employee.department_id,comment: "System Base")
+    end
+    # redirect_to system_base_attendance_manager_self_services_path(shift_employee_id: shift_employee.id)
+    # render :status=>200, :json=>{:status=> "Resignation Request Rejected Successfully"}
+    render :status=>200, :json=>{:status=>"Attendance Successfully Stored."}
+  end
+
 end

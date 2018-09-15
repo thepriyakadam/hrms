@@ -224,8 +224,8 @@ class ManagerSelfServicesController < ApplicationController
 
   def create_systembase_attendance
     #date = Date.today
-    #byebug
-    @time = Time.now
+    time = Time.now
+    @time = time.strftime("%H:%M:%S")
     shift_employee = ShiftEmployee.find(params[:format])
     @date = shift_employee.date
     emp = shift_employee.employee_id
@@ -233,9 +233,9 @@ class ManagerSelfServicesController < ApplicationController
     if EmployeeAttendance.exists?(day: @date.to_date,employee_id: employee.id)
       emp_attendance = EmployeeAttendance.where(day: @date.to_date,employee_id: employee.id).take
 
-      total_hrs = @time - emp_attendance.try(:in_time)
-      working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
-      @employee_attendance = EmployeeAttendance.find_by(id: emp_attendance.id).update(out_time: Time.now,working_hrs: working_hrs)
+      total_hrs =  @time.to_time - emp_attendance.try(:in_time)
+      working_hrs = Time.at(total_hrs).strftime("%H:%M")
+      @employee_attendance = EmployeeAttendance.find_by(id: emp_attendance.id).update(out_time: @time,working_hrs: working_hrs)
     else
       EmployeeAttendance.create(employee_id: employee.id,day: @date.to_date,present: "P",in_time: @time,out_time: @time,count: 1.0,department_id: employee.department_id,comment: "System Base")
     end

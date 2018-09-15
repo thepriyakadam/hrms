@@ -84,7 +84,7 @@ class OnDutyRequest < ActiveRecord::Base
             else
             end
         else
-          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'A',count: 1,department_id: self.employee.try(:department_id),on_duty_request_id: self.id,comment: "OD Request Pending",)
+          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'A',count: 1,department_id: self.employee.try(:department_id),on_duty_request_id: self.id,comment: "OD Request Pending")
           OdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,status: "Pending", day: i)
          
         end

@@ -177,9 +177,9 @@ class ShiftSchedulesController < ApplicationController
 
   def update_shift
     shift_employee = ShiftEmployee.find(params[:shift_employee_id])
-    shift_time_id = params[:shift_employee][:shift_time_id]
+    shift_schedule_id = params[:shift_employee][:shift_schedule_id]
 
-    shift_employee.update(shift_time_id: shift_time_id)
+    shift_employee.update(shift_schedule_id: shift_schedule_id)
     flash[:notice] = "Updated Successfully!!"
     redirect_to new_shift_schedule_path
   end

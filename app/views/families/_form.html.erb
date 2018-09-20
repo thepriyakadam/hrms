@@ -232,6 +232,10 @@ $("#family").validate({
         },
       "family[gender]":{
         required: true,
+      },
+      "family[contact_no]":{
+        maxlength: 13,
+        mobileNo: true
       }
        },
     messages: {
@@ -252,6 +256,9 @@ $("#family").validate({
          },
       "family[gender]":{
         required: "Please specify gender",
+      },
+      "family[contact_no]":{
+        required: "Please Enter the Correct contact number",
       }
        },
     errorPlacement: function(error, element) {

@@ -58,8 +58,21 @@ class EmployeeLeavBalance < ActiveRecord::Base
     end
   end
   
-  def is_present(e)
+  def self.is_present(e)
     LeaveMaster.exists?(leav_category_id: e.leav_category_id)
+  end
+
+  def emp_available(e)
+    from_date = e.from_date
+    to_date = e.to_date
+
+    from_month = from_date.strftime('%B')
+    to_month = to_date.strftime('%B')
+    flag = 0
+    for i in from_month..to_month
+      flag = Workingday.exists?(employee_id: e.employee_id,month_name: i)
+    end
+    flag
   end
 
 
@@ -119,18 +132,5 @@ class EmployeeLeavBalance < ActiveRecord::Base
   #   LeaveMaster.exists?(leav_category_id: e.leav_category_id)
   # end
 
-
-  def emp_available(e)
-    from_date = e.from_date
-    to_date = e.to_date
-
-    from_month = from_date.strftime('%B')
-    to_month = to_date.strftime('%B')
-    flag = 0
-    for i in from_month..to_month
-      flag = Workingday.exists?(employee_id: e.employee_id,month_name: i)
-    end
-    flag
-  end
 
 end

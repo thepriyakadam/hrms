@@ -11,9 +11,25 @@ class LeaveStatusRecordsController < ApplicationController
       ActiveRecord::Base.transaction do
         if @leave_status.save
           @employee_leav_request.update(is_cancelled: true, current_status: 'Cancelled')
-
           LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Cancelled")
-          EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).update_all(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled")
+        #update_in_attendance
+          @employee_attendance = EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id)
+          @latemark_master = LatemarkMaster.last
+          @employee_attendance.each do |e|
+            if e.employee_week_off_id.present?  
+              e.update(employee_leav_request_id: nil,present: "WO",comment: "Leave Cancelled/WeekOff")
+            elsif e.holiday_id.present?  
+              e.update(employee_leav_request_id: nil,present: "HP",comment: "Leave Cancelled/Holiday")
+            elsif e.in_time.present? && e.out_time.present?
+              if e.working_hrs < @latemark_master.halfday_working_hrs
+                e.update(employee_leav_request_id: nil,present: "HD",comment: "Leave Cancelled/HalfDay")
+              else  
+                e.update(employee_leav_request_id: nil,present: "P",comment: "Leave Cancelled/Present")
+              end #workking_hrs
+            else  
+            e.update(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled/Absent")
+            end 
+          end #do
 
           @employee_leav_request.revert_leave(@employee_leav_request)
           if @employee_leav_request.first_reporter.email.nil? || @employee_leav_request.first_reporter.email == ''
@@ -254,7 +270,25 @@ class LeaveStatusRecordsController < ApplicationController
           @employee_leav_balance.update(no_of_leave: no_of_leave)
         end
         @particular_leave_record.update(is_cancel_after_approve: true)
-        EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id,day: @date).update_all(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled after approve")
+        
+      #Attendance Update
+        @employee_attendance = EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id,day: @date)
+          @latemark_master = LatemarkMaster.last
+          @employee_attendance.each do |e|
+            if e.employee_week_off_id.present?  
+              e.update(employee_leav_request_id: nil,present: "WO",comment: "Leave Cancelled After Approve/WeekOff")
+            elsif e.holiday_id.present?  
+              e.update(employee_leav_request_id: nil,present: "HP",comment: "Leave Cancelled After Approve/Holiday")
+            elsif e.in_time.present? && e.out_time.present?
+              if e.working_hrs < @latemark_master.halfday_working_hrs
+                e.update(employee_leav_request_id: nil,present: "HD",comment: "Leave Cancelled After Approve/HalfDay")
+              else  
+                e.update(employee_leav_request_id: nil,present: "P",comment: "Leave Cancelled After Approve/Present")
+              end #workking_hrs
+            else  
+            e.update(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled After Approve/Absent")
+            end 
+          end #do
           
         ActiveRecord::Base.transaction do
           @employee_leav_balance.save
@@ -284,7 +318,26 @@ class LeaveStatusRecordsController < ApplicationController
 
       else#@particular_leave_record.try(:leav_category).try(:is_balance) == false
         @particular_leave_record.update(is_cancel_after_approve: true)
-        EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id,day: @date).update_all(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled after approve")
+
+        #Attendance Update
+        @employee_attendance = EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id,day: @date)
+          @latemark_master = LatemarkMaster.last
+          @employee_attendance.each do |e|
+            if e.employee_week_off_id.present?  
+              e.update(employee_leav_request_id: nil,present: "WO",comment: "Leave Cancelled After Approve/WeekOff")
+            elsif e.holiday_id.present?  
+              e.update(employee_leav_request_id: nil,present: "HP",comment: "Leave Cancelled After Approve/Holiday")
+            elsif e.in_time.present? && e.out_time.present?
+              if e.working_hrs < @latemark_master.halfday_working_hrs
+                e.update(employee_leav_request_id: nil,present: "HD",comment: "Leave Cancelled After Approve/HalfDay")
+              else  
+                e.update(employee_leav_request_id: nil,present: "P",comment: "Leave Cancelled After Approve/Present")
+              end #workking_hrs
+            else  
+            e.update(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled After Approve/Absent")
+            end 
+          end #do
+        #EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id,day: @date).update_all(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled after approve")
           	
         ActiveRecord::Base.transaction do
           @particular_leave_record.save

@@ -1,0 +1,71 @@
+<%= bootstrap_form_for(@billing_option,html: {id: 'billing_option'},remote:true) do |f| %>
+  <div class="row">
+     <div class="col-sm-4">
+      <div class="form-group required">
+         <%= f.select :expence_opestion_id,all_expence_opestion,{hide_label: true,include_blank: " Expence Option"} %>
+      </div>
+    </div> 
+
+    <div class="col-sm-4">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: ' Code' %>
+      </div>
+    </div> 
+     <div class="col-sm-4">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Name' %>
+      </div>
+    </div>
+  </div>
+   
+   <div class="row">
+     <div class="col-sm-4">
+      <div class="field">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
+      </div>
+    </div>
+     <div class="col-sm-4">
+      <div class="field">       
+        <%= f.check_box :status,label:'Active' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Mode Option", class: 'btn btn-primary btn-sm' %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+ $("#billing_option").validate({
+    rules: {
+      "billing_option[expence_opestion_id]":{
+        required: true
+      },
+       "billing_option[name]":{
+        required: true
+      },
+      "billing_option[code]":{
+        required: true
+      }
+    },
+    messages: {
+      "billing_option[expence_opestion_id]":{
+        required: "Please specify Expence Options"
+      },
+       "billing_option[name]":{
+        required: "Please specify Code"
+      },
+      "billing_option[code]":{
+        required: "Please specify Name"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

@@ -83,6 +83,20 @@ class EmployeeTemplatesController < ApplicationController
     session[:active_tab2] ="SalarySetup"
   end
 
+  def import_xl
+  end
+
+  def import
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+      redirect_to import_xl_employee_templates_path
+    else
+    EmployeeTemplate.import(params[:file])
+    redirect_to import_xl_employee_templates_path, notice: "File imported."
+    end
+  end
+
   def fresh
     @employee = Employee.find(params[:format])
   end
@@ -171,18 +185,21 @@ class EmployeeTemplatesController < ApplicationController
 
   def active_list
     if current_user.class == Group
-      @employee_templates = EmployeeTemplate.where(is_active: true)
+      @employees = Employee.where(status: "Active").pluck(:id)
+
+      @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
     elsif current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
-        @employee_templates = EmployeeTemplate.where(is_active: true)
+      @employees = Employee.where(status: "Active").pluck(:id)
+        @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_location.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id,status: "Active")
         @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
       elsif current_user.role.name == 'Branch'
-        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @employees = Employee.where(company_location_id: current_user.company_location_id,status: "Active")
         @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
       elsif current_user.role.name == 'HOD'
-        @employees = Employee.where(department_id: current_user.department_id)
+        @employees = Employee.where(department_id: current_user.department_id,status: "Active")
         @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
       else current_user.role.name == 'Employee'
          @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: current_user.employee_id)

@@ -29,7 +29,7 @@
                   <small class="label label-info">Attendance Confirmed</small>
                 <% else %>
       						<%= link_to '', edit_week_off_modal_employee_week_offs_path(employee_week_off),class:'btn btn-xs btn-success fa fa-edit',remote: true %>
-                  <%= link_to 'Revert', revert_week_off_employee_week_offs_path(employee_week_off),class:'btn-danger btn-xs' %>
+                  <%= link_to 'Revert', revert_week_off_employee_week_offs_path(employee_week_off), data: { confirm: 'Are you sure? This will revert Week Off!'},class:'btn-danger btn-xs' %>
                 <% end %>
               </td>
             </tr>
@@ -41,7 +41,7 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">
-            <%= f.submit "Revert" ,class: 'btn btn-primary btn-sm' %>
+            <%= f.submit "Revert", data: { confirm: 'Are you sure? This will revert Week Off!'} ,class: 'btn btn-primary btn-sm' %>
           </div>
         </div>
       </div>

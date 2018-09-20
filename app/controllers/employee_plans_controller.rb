@@ -60,11 +60,12 @@ class EmployeePlansController < ApplicationController
 
   def employee_wise_report
     session[:active_tab] ="MeetingPlan"
-    session[:active_tab1] ="Reports"
+    session[:active_tab1] ="MeetingReport"
   end
 
   def gps_tracking
-    session[:active_tab] = "MeetingPlan"
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Report"
   end
 
   def employee_gps_tracking
@@ -147,7 +148,7 @@ class EmployeePlansController < ApplicationController
 
   def manager_wise_report
     session[:active_tab] = "MeetingPlan"
-    session[:active_tab1] = "Reports"
+    session[:active_tab1] = "MeetingReport"
     # session[:active_tab1] = "travelrequestreports"
   end
 
@@ -190,7 +191,7 @@ class EmployeePlansController < ApplicationController
 
   def company_wise_report
     session[:active_tab] = "MeetingPlan"
-    session[:active_tab1] = "Reports"
+    session[:active_tab1] = "MeetingReport"
 
   end
 
@@ -233,7 +234,7 @@ class EmployeePlansController < ApplicationController
 
   def status_wise_report
     session[:active_tab] = "MeetingPlan"
-    session[:active_tab1] = "Reports"
+    session[:active_tab1] = "MeetingReport"
   end
 
   def status_report
@@ -288,7 +289,7 @@ class EmployeePlansController < ApplicationController
 
   def meeting_minutes_history
     session[:active_tab] = "MeetingPlan"
-    session[:active_tab1] = "Reports"
+    session[:active_tab1] = "MeetingReport"
   end
 
   def meeting_minutes_history_report
@@ -429,8 +430,7 @@ class EmployeePlansController < ApplicationController
 
   def meeting_plan_approval
     @employee_plan = EmployeePlan.where(current_status: "Pending", manager_id: current_user.employee_id)
-    session[:active_tab] ="PayrollManagement"
-    session[:active_tab1] = "IncomeTax"
+    session[:active_tab] ="ManagerSelfService"
   end
 
   def view_plan

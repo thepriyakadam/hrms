@@ -1,0 +1,88 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="modal-title"><center><%= @topics.first.post_topic %> </center></h4>
+        <div class="box-body">
+            <% @topics.each do |topic| %>
+                <ul class="timeline">
+                    <!-- timeline time label -->
+                    <li class="time-label">
+                        <span class="bg-red">
+                            <%= full_name(topic.employee) %>
+                        </span>
+                    </li>
+                    <!-- /.timeline-label -->
+                    <!-- timeline item -->
+                    <li>
+                        <!-- timeline icon -->
+                        <i class="fa bg-blue"><%= image_tag topic.try(:employee).try(:passport_photo).try(:url), :size => "35x35", class: "img-circle" %></i>
+                        <div class="timeline-item">
+                            <span class="time"><i class="fa fa-clock-o"></i> <%= topic.date.to_date %> <%= topic.date.to_time %></span>
+                            <h3 class="timeline-header"><a href="#"><%= topic.post_topic %></a></h3>
+                            <div class="timeline-body">
+                                <%= topic.description %>
+                            </div>
+                            <!-- <div class="timeline-footer">
+                                <a class="btn btn-primary btn-xs">...</a>
+                            </div> -->
+                            <div class="timeline-body">
+                                <%= bootstrap_form_for(:lick_topic, url: { action: 'like_topic'}) do |f| %>
+                                    <%= f.hidden_field :employee_id, value: current_user.employee_id %>
+                                    <%= f.hidden_field :topic_id, value: topic.id %>
+                                    <div class="actions" style="padding-top: 5px">
+                                        <%= f.submit "Like", :class => "like_button",class: "fa fa-thumbs-up" %>
+                                        <%# binding.pry %>
+                                        <%= Like.where(topic_id: topic.id).try(:count)%>
+                                        <% @count = Like.where(topic_id: topic.id, employee_id: current_user.employee_id) %>
+                                        <% if @count.present? %>
+                                            <i class="fa fa-thumbs-up fa-2x" aria-hidden="true" style="color: blue;"></i>
+                                        <% else %>
+                                            <i class="fa fa-thumbs-up fa-2x" aria-hidden="true"></i>
+                                        <% end %>
+                                    </div>
+                                <% end %>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- END timeline item -->
+                    <!-- timeline item -->
+                    
+                    <!-- END timeline item -->
+                    <!-- timeline item -->
+                    <%# binding.pry %>
+                    <%# comment_count = TopicComment.where(topic_id: topic.id).order("id DESC").count %>
+                    <%# comment_list = TopicComment.where(topic_id: topic.id).order("id DESC") %>
+                    <% @comment_list.each do |comm| %>
+                    <li>
+                        <% if comm.try(:employee).try(:passport_photo).present? %>
+                            <i class="fa bg-aqua"><%= image_tag comm.try(:employee).try(:passport_photo).try(:url), :size => "35x35", class: "img-circle" %></i>
+                        <% else %>
+                            <i class="fa fa-user bg-aqua"></i>
+                        <% end %>
+                        <div class="timeline-item">
+                            <span class="time"><i class="fa fa-clock-o"></i> <%= time_ago_in_words(comm.created_at)%> </span>
+                            <%emp = Employee.find(comm.employee_id)%>
+                            <h3 class="timeline-header123 no-border"><b><%= short_name(emp).titleize %> :</b><%= comm.comment %> &nbsp
+                            <%= link_to ' ', inactive_comment_topics_path(comm), class: 'btn btn-xs btn-danger fa fa-ban' %>
+                            <%= bootstrap_form_for(:lick_topic, url: { action: 'like_comment'}) do |f| %>
+                                <%= f.hidden_field :employee_id, value: current_user.employee_id %>
+                                <%= f.hidden_field :topic_comment_id, value: comm.id %>
+                                <!-- <div class="actions" style="padding-top: 5px"> --><br />
+                                    <%= f.submit "Like", class: "like_button btn btn-xs btn-default" %>
+                                    <%= Like.where(topic_comment_id: comm.id).try(:count)%>
+                                    <% @count = Like.where(topic_comment_id: comm.id, employee_id: current_user.employee_id)%>
+                                    <% if @count.present? %>
+                                        <i class="fa fa-thumbs-up" aria-hidden="true" style="color: blue;"></i>
+                                    <% else %>
+                                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                    <% end %>
+                                <!-- </div> -->
+                            <% end %>
+                            </h3>
+                        </div>
+                    </li>
+                    <% end %>
+                    <!-- END timeline item -->
+                </ul>
+            <% end %>
+    </div>
+</div>

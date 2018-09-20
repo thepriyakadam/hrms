@@ -1,8 +1,6 @@
 <%= bootstrap_form_for(@employee_type,html: {id: 'employee_type'},remote:true) do |f| %>
   <div class="row">
-
-
-   <div class="col-sm-3">
+    <div class="col-sm-3">
       <div class="form-group required">
         <%= f.text_field :code,hide_label:true, placeholder: 'Employment Type Code' %>
       </div>
@@ -27,6 +25,7 @@
     </div>
   </div>
 <% end %>
+<br />
 
 
 <script>

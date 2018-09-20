@@ -119,9 +119,9 @@ class ManagerSelfServicesController < ApplicationController
     @from = params[:employee][:from]
     @to = params[:employee][:to]
     @employee_id = params[:employee][:employee_id]
-    @latemark_master = LatemarkMaster.last
-    @latemark_master_time = @latemark_master.company_time
-    @company_time = @latemark_master_time.strftime("%I:%M")
+    # @latemark_master = LatemarkMaster.last
+    # @latemark_master_time = @latemark_master.company_time
+    # @company_time = @latemark_master_time.strftime("%I:%M")
     @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day ASC")
   end
 
@@ -202,6 +202,153 @@ class ManagerSelfServicesController < ApplicationController
     @employee = @sub + @ind_sub
 
     @employee_resignations = EmployeeResignation.where(employee_id: @employee).group(:employee_id)
+  end
+
+  def system_base_attendance
+    @date = Date.today
+    joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
+    @employees = Employee.where(status: "Active",id: joining_detail).where("manager_id = ? OR manager_2_id = ?", current_user.employee_id,current_user.employee_id)
+  end
+
+  def create_systembase_attendance
+    @date = Date.today
+    @time = Time.now
+    employee = Employee.find(params[:format])
+    if EmployeeAttendance.exists?(day: @date.to_date,employee_id: employee.id)
+      emp_attendance = EmployeeAttendance.where(day: @date.to_date,employee_id: employee.id).take
+
+      total_hrs = @time.to_time - emp_attendance.try(:in_time).to_time
+      working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+      @employee_attendance = EmployeeAttendance.find_by(id: emp_attendance.id).update(out_time: @time.to_time,working_hrs: working_hrs)
+    else
+      EmployeeAttendance.create(employee_id: employee.id,day: @date.to_date,present: "P",in_time: @time.to_time,out_time: @time.to_time,count: 1.0,department_id: employee.department_id,comment: "System Base")
+    end
+    redirect_to system_base_attendance_manager_self_services_path
+  end
+
+  def view_attendance
+    employee = Employee.find(params[:format])
+    date = Date.today
+    @employee_attendances = EmployeeAttendance.where(employee_id: employee.id,day: date.to_date)
+  end
+
+  def add_attendance
+    session[:active_tab] ="ManagerSelfService"
+  end
+
+  def managerwise_attendance_list
+    @date =  params[:salary][:day].to_date
+
+    if params[:save]
+      @name = true
+      if current_user.class == Member
+        if current_user.role.name == 'GroupAdmin' || current_user.role.name == "GroupTimeManagement" || current_user.role.name == "GroupRecruiter"
+          joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
+          @employees = Employee.where(status: "Active",id: joining_detail).where("manager_id = ? OR manager_2_id = ?", current_user.employee_id,current_user.employee_id).filter_by_date(@date)
+        elsif current_user.role.name == 'Admin'|| current_user.role.name == "AdminTimeManagement" || current_user.role.name == "AdminRecruiter"
+          joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
+          @employees = Employee.where(status: "Active",company_id: current_user.company_location.company_id,id: joining_detail).where("manager_id = ? OR manager_2_id = ?", current_user.employee_id,current_user.employee_id).filter_by_date(@date)
+        elsif current_user.role.name == 'Branch' || current_user.role.name == 'TimeAndAttendance' || current_user.role.name == 'Recruitment'
+          joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
+          @employees = Employee.where(status: "Active",company_location_id: current_user.company_location_id,id: joining_detail).where("manager_id = ? OR manager_2_id = ?", current_user.employee_id,current_user.employee_id).filter_by_date(@date)
+        elsif current_user.role.name == 'Employee'
+          joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
+          @employees = Employee.where(status: "Active",id: current_user.employee_id,id: joining_detail).where("manager_id = ? OR manager_2_id = ?", current_user.employee_id,current_user.employee_id).filter_by_date(@date)
+        elsif
+          joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
+        @employees = Employee.where(status: "Active",id: joining_detail).where("manager_id = ? OR manager_2_id = ?", current_user.employee_id,current_user.employee_id).filter_by_date(@date)
+        #@employees = Employee.filter_by_date_costcenter_and_department(@date, @costcenter, @department, current_user)
+        end
+        @emp_attendances = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ? AND present = ?", @date.strftime('%m/%Y'), "W")
+        @emp_attendances.each do |e|
+          date = e.day.to_datetime
+          yd = (date-1).strftime('%Y-%m-%d')
+          tmr = (date+1).strftime('%Y-%m-%d')
+          yd_emp = EmployeeAttendance.where(day: yd,employee_id:e.employee_id).take
+          tmr_emp = EmployeeAttendance.where(day: tmr,employee_id:e.employee_id).take
+          if yd_emp.try(:present) == "A" && tmr_emp.try(:present) == "A"
+            EmployeeAttendance.find_by(id: e.id).update(present: "A")
+          else
+          end
+        end#do
+        @employee_attendance = EmployeeAttendance.new
+      end #if current_user.class == Member 
+    elsif params[:report]
+      @name = false
+      employee = Employee.where("manager_id = ? OR manager_2_id = ?", current_user.employee_id,current_user.employee_id).pluck(:id)
+      @all_employee_attendances = EmployeeAttendance.where(day: @date,employee_id: employee)
+      respond_to do |f|
+        f.js
+        f.xls {render template: 'manager_self_services/team_attendance.xls.erb'}
+        f.html
+        f.pdf do
+          render pdf: 'team_attendance',
+          layout: 'pdf.html',
+          orientation: 'Landscape',
+          template: 'manager_self_services/team_attendance.pdf.erb',
+          show_as_html: params[:debug].present?
+        end
+      end
+    elsif params[:outtime]
+      @name = 1
+      @all_employee_attendances = EmployeeAttendance.where.not(in_time: nil).where(day: @date)
+    end#params[save]
+  end
+
+  def create_managerwise_attendance
+    @employee_ids = params[:employee_ids]
+    day = params[:employee_attendances][:day]
+    present = params[:employee_attendances][:present]
+    in_time = params[:employee_attendance][:in_time]
+    out_time = params[:employee_attendance][:out_time]
+    #department = params[:employee_attendances][:department_id]
+    @employee = Employee.where(id: @employee_ids)
+
+    if in_time == "" && out_time == ""
+      in_time = "08:30" 
+      out_time = "17:30"
+    elsif in_time == "" 
+      in_time = "08:30"
+    elsif out_time == ""
+      out_time = "17:30"
+    end
+     total_hrs = out_time.to_time - in_time.to_time
+     working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+    
+    if @employee_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+    else
+      @employee_ids.each do |eid|
+        @emp = Employee.find_by_id(eid)
+
+      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id, is_confirm: false,in_time: in_time,out_time: out_time,working_hrs: working_hrs,comment: "(Admin)Manually Created")  
+      #Holiday.where(holiday_date: day).update_all(is_taken: true)
+      flash[:notice] = "Created successfully"
+      end
+    end
+    redirect_to add_attendance_manager_self_services_path
+  end
+
+  def update_out_time
+    @employee_attendance_ids = params[:employee_attendance_ids]
+    out_time = params[:employee_attendance][:out_time]
+
+    if @employee_attendance_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+    else
+      @employee_attendance_ids.each do |eid|
+      @employee_attendance = EmployeeAttendance.find_by_id(eid)
+      #out_time = Time.now
+      #byebug
+      total_hrs = out_time.to_time - @employee_attendance.in_time.to_time
+      #working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+      working_hrs = Time.at(total_hrs).strftime("%H:%M")
+
+      @employee_attendance.update(out_time: out_time,working_hrs: working_hrs) 
+      flash[:notice] = "Updated successfully"
+      end
+    end
+    redirect_to add_attendance_manager_self_services_path
   end
 
   def vacancy_request

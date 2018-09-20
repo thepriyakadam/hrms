@@ -74,62 +74,91 @@
            <%= f.select :employee_category_id, all_employee_category,{label: 'Employee Category',include_blank: "Select Employee Category" },{onchange:"var a={employee_category_id:$(this).val()}; $.get('/joining_details/show_contract',a,function(response){});",class: 'form-control'} %>
         </div>
       </div>
-     </div>
-
-      <div class="row">
 
       <div id="contract_month"></div>
-
         <div class="col-sm-3">
         <div class="field">
            <%= f.select :cost_center_id, all_cost_center, {label: 'Cost Center',include_blank: " Select Cost Center"} %>
         </div>
       </div>
+    </div>
 
-        <div class="col-sm-3">
-          <div class="form-group required">
-            <%= f.text_field :probation_period,label: 'Probation Period',placeholder: 'e.g. 6 months' %>
-          </div>
-        </div> 
-      </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <%#= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Reporting Manager"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1",hide_label: true} %>
 
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :notice_period,label: 'Notice Period',placeholder: 'e.g. 1 months' %>
-          </div>
-        </div> 
-
-            <div class="col-sm-3">
+          <%= f.select :probation_period,["1","2","3","4","5","6","7","8","9","10",
+                                          "11","12","13","14","15","16","17","18","19","20",
+                                          "21","22","23","24","25","26","27","28","29","30",
+                                          "31","32","33","34","35","36","37","38","39","40",
+                                          "41","42","43","44","45","46","47","48","49","50",
+                                          "51","52","53","54","55","56","57","58","59","60",
+                                          "61","62","63","64","65","66","67","68","69","70",
+                                          "71","72","73","74","75","76","77","78","79","80",
+                                          "81","82","83","84","85","86","87","88","89","90",
+                                          "91","92","93","94","95","96","97","98","99","100",
+                                          "101","102","103","104","105","106","107","108","109","110",
+                                          "111","112","113","114","115","116","117","118","119","120",
+                                          "121","122","123","124","125","126","127","128","129","130",
+                                          "131","132","133","134","135","136","137","138","139","140",
+                                          "141","142","143","144","145","146","147","148","149","150",
+                                          "151","152","153","154","155","156","157","158","159","160",
+                                          "161","162","163","164","165","166","167","168","169","170",
+                                          "171","172","173","174","175","176","177","178","179","180"],{include_blank: "Select Days"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1",hide_label: true} %>
+        </div>
+      </div> 
+  
+      <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :notice_period_after_probation,label: 'Notice Period After Probation',placeholder: 'e.g. 1 months' %>
+          <%= f.select :notice_period,["1","2","3","4","5","6","7","8","9","10",
+                                          "11","12","13","14","15","16","17","18","19","20",
+                                          "21","22","23","24","25","26","27","28","29","30",
+                                          "31","32","33","34","35","36","37","38","39","40",
+                                          "41","42","43","44","45","46","47","48","49","50",
+                                          "51","52","53","54","55","56","57","58","59","60",
+                                          "61","62","63","64","65","66","67","68","69","70",
+                                          "71","72","73","74","75","76","77","78","79","80",
+                                          "81","82","83","84","85","86","87","88","89","90"], {include_blank: "Select Days"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1",hide_label: true} %>
         </div>
       </div> 
 
-    
-
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :notice_period_after_probation,label: 'Notice Period After Probation',placeholder: 'e.g. 1 months' %>
+          <%= f.select :notice_period_after_probation, ["1","2","3","4","5","6","7","8","9","10",
+                                                      "11","12","13","14","15","16","17","18","19","20",
+                                                      "21","22","23","24","25","26","27","28","29","30",
+                                                      "31","32","33","34","35","36","37","38","39","40",
+                                                      "41","42","43","44","45","46","47","48","49","50",
+                                                      "51","52","53","54","55","56","57","58","59","60",
+                                                      "61","62","63","64","65","66","67","68","69","70",
+                                                      "71","72","73","74","75","76","77","78","79","80",
+                                                      "81","82","83","84","85","86","87","88","89","90"], {include_blank: "Select Days"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1",hide_label: true} %>
+              <%#= f.text_field :notice_period_after_probation,label: 'Notice Period After Probation',placeholder: 'e.g. 1 months' %>
         </div>
       </div>
-
       
       <div class="col-sm-3">
         <div class="field">
           <%= f.select :have_passport,['Yes','No'],{label: 'Passport',include_blank: " Select Passport Option"} %>
-       </div>
-    </div> 
-
-     </div>
-      <div class="row">
-       <div class="col-sm-3">
+        </div>
+      </div>
+    </div>
+<!--       <div class="col-sm-3">
+        <div class="field"> -->
+          <%#= f.text_field :notice_period_after_probation,label: 'Notice Period After Probation',placeholder: 'e.g. 1 months' %>
+<!--         </div>
+      </div>
+ -->
+    <div class="row"> 
+      <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :passport_no,label: 'Passport No.' ,placeholder: 'e.g. J8369854'%>
-       </div>
+        </div>
       </div> 
-    <div class="col-sm-3">
-      <label>Passport Issue Date </label>
+    
+      <div class="col-sm-3">
+        <label>Passport Issue Date </label>
         <div class="field">
           <div class="input-group">
             <div class="input-group-addon">
@@ -139,6 +168,7 @@
           </div>
         </div>
       </div>
+
       <div class="col-sm-3">
       <label>Passport Expiry Date </label>
         <div class="field">
@@ -151,7 +181,7 @@
         </div>
       </div>
     
-       <div class="col-sm-3">
+      <div class="col-sm-3">
       <label>Leaving Date </label>
         <div class="field">
           <div class="input-group">
@@ -162,8 +192,9 @@
           </div>
         </div>
       </div>
-       </div>
-      <div class="row">
+    </div>
+      
+    <div class="row">
        <!-- <div class="col-sm-3">
       <label>Retirement Date </label>
         <div class="field">
@@ -226,6 +257,16 @@
         <div class="field" style="padding: 10px">
           <% if current_user.role.name == 'GroupAdmin' %>
             <%= f.check_box :contact_library, label: 'Contact Library'%>
+          <%end%>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="field" style="padding: 10px">
+          <% if current_user.role.name == 'GroupAdmin' %>
+            <%= f.check_box :is_regularization, label: 'Attendance Regularization'%>
           <%end%>
         </div>
       </div>
@@ -338,6 +379,13 @@
 </div>
 </div>
 <%end%>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".select2").select2();
+  });
+</script>
+
 <script type="text/javascript">
   $(function(){
     $('.passport_issue_date').datepicker({

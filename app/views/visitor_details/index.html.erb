@@ -2,7 +2,7 @@
   <div class="box-header">
     <h3 class="box-title">Visitor Detail</h3>
     <div class="pull-right">
-       <%= link_to "New Visitor Detail", new_visitor_detail_path, class: 'btn btn-primary' %>
+       <%= link_to "New Entry", new_visitor_detail_path, class: 'btn btn-primary btn-sm' %>
     </div>
     </div>
 
@@ -11,38 +11,38 @@
 <table id="example1" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
+      <th>Sr. No</th>
       <th>Name</th>
-      <th>Age</th>
-      <th>Contact No.</th>
-      <th>From</th>
       <th>Meet To</th>
-      <th>Entry Time</th>
-      <th>Download Image</th>
+      <th>From</th>
+      <th>Time</th>
+      <th>Date</th>
       <th>Action</th>
     </tr>
   </thead>
 
   <tbody>
+    <% i = 0 %>
     <% @visitor_details.each do |visitor_detail| %>
       <tr>
+        <td><%= i = i + 1 %></td>
         <td><%= visitor_detail.name %></td>
-        <td><%= visitor_detail.age %></td>
-        <td><%= visitor_detail.contact_no %></td>
-        <td><%= visitor_detail.from %></td>
         <td><%= full_name(visitor_detail.employee) %></td>
+        <td><%= visitor_detail.from %></td>
         <td><%= visitor_detail.in_time %></td>
-        <td>
-           <% if visitor_detail.avatar_file_name == nil %>
+        <td><%= visitor_detail.visiting_date %></td>
+      <!--   <td>
+           <%# if visitor_detail.avatar_file_name == nil %>
            <small class="label label-default">Picture Not Available</small>
-             <% else %>
-             <%= link_to ' Picture',download_person_image_path(id: visitor_detail.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
-             <% end %>
-        </td>
-        <td><%= link_to '', edit_visitor_detail_path(visitor_detail),class:'btn-success btn-xs fa fa-edit' %>
-        <%= link_to '', visitor_detail, method: :delete, data: { confirm: 'Are you sure?' },class:'btn-danger btn-xs fa fa-close' %>
-        <%= link_to '', visitor_detail,class:'btn btn-xs btn-default fa fa-eye' %> 
+             <% #else %>
+             <%#= link_to ' Picture',download_person_image_path(id: visitor_detail.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
+             <%# end %>
+        </td> -->
+        <td><%= link_to '', edit_visitor_detail_path(visitor_detail),class: 'btn-success btn-xs fa fa-edit' %>
+          <%= link_to '', visitor_detail, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn-danger btn-xs fa fa-close' %>
+          <%= link_to '',show_detail_visitor_details_path(visitor_detail.id),class: 'btn btn-xs btn-default fa fa-eye',remote: true %>
          
-         <%= link_to 'Visiting Card', display_visiting_card_visitor_details_path(id: visitor_detail.id),class: 'btn btn-primary btn-xs ' %>
+          <%= link_to '',print_visitor_card_visitor_details_path(id: visitor_detail.id,format: "pdf") ,class: 'btn btn-warning btn-xs fa fa-print ',:target => "_blank" %>
 
         </td>
       </tr>
@@ -51,6 +51,7 @@
 </table>
 </div>
 </div>
+<div id="myModal" class="modal fade"></div>
 <script type="text/javascript">
   $(document).ready(function() {
     $('#example1').DataTable( {

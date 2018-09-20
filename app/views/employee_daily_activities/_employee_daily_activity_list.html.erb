@@ -3,22 +3,22 @@
         <h3 class="box-title">Employee Daily Activity List</h3> 
     </div><!-- /.box-header -->
         <div class="box-body"> 
-      <table id="example2" class="table table-bordered table-hover table-condensed">
+      <table id="example6" class="table table-bordered table-hover table-condensed">
        <thead>
           <tr>
-           
+            <th>Sr. No</th>
             <th>Date</th>
-            <th>Employee Name</th>
             <th>Project</th>
             <th>Day activity</th>
             <th>Next Day Plan</th>
           </tr>
         </thead>
         <tbody>
+          <% i = 0 %>
           <% @employee_daily_activities.each do |employee_daily_activity| %>
             <tr>
+              <td><%= i = i + 1 %></td>
               <td><%= employee_daily_activity.day %></td>
-              <td><%= full_name(employee_daily_activity.employee)%></td>
               <td><%= employee_daily_activity.project_master.try(:name) %></td>
               <td><%= employee_daily_activity.today_activity %></td>
               <td><%= employee_daily_activity.tomorrow_plan %></td>
@@ -27,9 +27,15 @@
         </tbody>
       </table>
       <br>
-       <%= link_to 'Back', employee_details_employee_daily_activities_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+       <%#= link_to 'Back', employee_details_employee_daily_activities_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
       </div>
 </div>
 
-
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
 

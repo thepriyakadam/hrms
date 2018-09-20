@@ -239,8 +239,7 @@ class TravelRequestsController < ApplicationController
     employee = Employee.find_by(id: current_user.employee_id)
     #manager = Employee.where("manager_id = ? OR manager_2_id = ?",employee.id,employee.id)
     @travel_requests = TravelRequest.where("reporting_master_id = ? and (current_status = ? or current_status = ? or current_status = ?)",employee.id,"Pending","FirstApproved","Approved & Send Next")
-    session[:active_tab] = "TravelManagemnt"
-    session[:active_tab1] = "travelrequestprocess" 
+    session[:active_tab] ="ManagerSelfService" 
   end
 
   def travel_request_list
@@ -479,7 +478,6 @@ class TravelRequestsController < ApplicationController
     def print_travel_request_id_report
     session[:active_tab] = "TravelManagemnt"
     session[:active_tab1] = "travelrequestreports"
-      # byebug
       @travel_request =  params[:travel_request] ? params[:travel_request][:travel_request_id] : params[:travel_request_id]
       @travel_requests = TravelRequest.where(id: @travel_request)
       @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request)
@@ -550,6 +548,6 @@ class TravelRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def travel_request_params
-      params.require(:travel_request).permit(:employee_id, :to, :day,:current_status, :expense,:reporting_master_id, :application_date, :traveling_date, :tour_purpose, :place, :traveling_advance, :lodging_boarding_advance, :extra_advance, :travel_option_id, :travel_mode_id, :total_advance)
+      params.require(:travel_request).permit(:from_time,:to_time,:approved_amount,:project_master_id,:employee_id, :to, :day,:current_status, :expense,:reporting_master_id, :application_date, :traveling_date, :tour_purpose, :place, :traveling_advance, :lodging_boarding_advance, :extra_advance, :travel_option_id, :travel_mode_id, :total_advance)
     end
 end

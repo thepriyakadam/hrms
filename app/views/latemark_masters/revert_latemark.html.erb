@@ -3,7 +3,7 @@
     <h3 class="box-title">Revert Latemark</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <%= bootstrap_form_for(:latemark_master, url: { action: 'revert_latemark_value'},html: {id: 'latemark_master'}) do |f| %>
+    <%= bootstrap_form_for(:latemark_master, url: { action: 'show_list_for_latemark'},html: {id: 'latemark_master'},remote: true) do |f| %>
       <div class="row">
         <div class="col-sm-3">
           <label>From Date</label>
@@ -30,11 +30,13 @@
         <div class="col-sm-2">
         <label></label>
           <div class="actions">
-            <%= f.submit "Revert Latemark", class: "btn btn-sm btn-primary",id: "buttonCtc" %>
+            <%= f.submit "Revert Latemark List", class: "btn btn-sm btn-primary",id: "buttonCtc" %>
           </div>
         </div>
-        
       </div>
+
+      <div id="list_for_latemark"></div>
+
     <% end %>
 </div>
 </div>

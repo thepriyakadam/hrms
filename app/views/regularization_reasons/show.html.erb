@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @regularization_reason.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @regularization_reason.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @regularization_reason.description %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @regularization_reason.status %>
+</p>
+
+<%= link_to 'Edit', edit_regularization_reason_path(@regularization_reason) %> |
+<%= link_to 'Back', regularization_reasons_path %>

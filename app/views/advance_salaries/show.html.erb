@@ -9,7 +9,7 @@
         <th><strong>Employee ID</strong></th>
         <td><%= @advance_salary.employee.try(:manual_employee_code) %></td>
 
-        <th><strong>Employee Name</strong></th>
+        <th><strong>Name</strong></th>
         <td> <%= full_name(@advance_salary.employee) %></td>
       </tr>
       <tr>
@@ -61,7 +61,7 @@
   
   <br>
   
-    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <table id="example6" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
         <th>Installment Date</th>
@@ -93,7 +93,18 @@
       <tr><th>Total</th><td align="right"><%= change_total %></td><td></td></tr>
     </tbody>
   </table>
-  
+  <% if @advance_salary.employee_id == current_user.employee_id %>
+    <%= link_to 'Back', advance_self_services_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  <% else %>
+    <%= link_to 'Back', advance_salaries_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  <% end %>
   </div>
-  <%= link_to 'Back', advance_salaries_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

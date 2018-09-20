@@ -58,14 +58,14 @@ class InterviewSchedulesController < ApplicationController
     if @interview_schedule.save
      @selected_resume = SelectedResume.find(@interview_schedule.selected_resume_id)
      @selected_resume.update(status: "Interview Scheduled")
-      VacancyMasterMailer.mail_to_candidate(@interview_schedule).deliver_now
+     # VacancyMasterMailer.mail_to_candidate(@interview_schedule).deliver_now
       @interview_schedule = InterviewSchedule.new
     end
     if @interview_schedule.email_id.nil?
       flash[:notice] = 'Interview Scheduled Successfully without Email'
       redirect_to interview_schedules_path
     else
-      VacancyMasterMailer.mail_to_candidate(@interview_schedule).deliver_now
+      # VacancyMasterMailer.mail_to_candidate(@interview_schedule).deliver_now
       flash[:notice] = 'Interview Scheduled Successfully & Email also Sent.'
       redirect_to interview_schedules_path
     end

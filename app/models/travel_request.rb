@@ -3,6 +3,7 @@ class TravelRequest < ActiveRecord::Base
   belongs_to :reporting_master
   belongs_to :travel_option
   belongs_to :travel_mode
+  belongs_to :project_master
   has_many :daily_bill_details
   has_many :reporting_masters_travel_requests
   has_many :reporting_masters, through: :reporting_masters_travel_requests

@@ -1,0 +1,48 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title"> System Base Attendance </h3>
+  </div>
+  <div class="box-body">
+		<table id="example6" class="table table-bordered table-hover table-condensed">
+		  <thead>
+		    <tr>
+		      <!-- <th><input type="checkbox" id="selectAll" value="selectAll"></th> -->
+		      <th>Sr. No</th>
+		      <th>ID</th>
+		      <th>Employee</th>
+		      <th>Cost Center</th>
+		      <th>Action</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  <% i = 0 %>
+		    <% @employees.each do |e| %>
+		      <tr>        
+		        <!-- <td><%#= check_box_tag "employee_ids[]",e.id %></td> -->
+		        <td><%= i = i + 1 %></td>
+		        <td><%= e.manual_employee_code %></td>
+		        <td><%= full_name(e) %></td>
+		        <td><%= e.try(:joining_detail).try(:cost_center).try(:name) %></td>
+		        <td>
+		        	<% if EmployeeAttendance.exists?(employee_id: e.id,day: Date.today) %>
+		        		<%= link_to "Out" ,create_systembase_attendance_manager_self_services_path(e), class: "btn btn-warning btn-xs" %>
+		        	<% else %>
+		        		<%= link_to "In" ,create_systembase_attendance_manager_self_services_path(e), class: "btn btn-primary btn-xs" %>
+		        	<% end %>
+		        	 <%= link_to '', view_attendance_manager_self_services_path(e),class:'btn btn-xs btn-default fa fa-eye',remote: true %>
+		        </td>
+		      </tr>
+		    <% end %>
+		  </tbody>
+		</table>
+	</div>
+</div>
+<div id="myModal" class="modal fade"></div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

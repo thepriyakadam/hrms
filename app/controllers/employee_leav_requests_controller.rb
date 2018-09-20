@@ -23,7 +23,7 @@ class EmployeeLeavRequestsController < ApplicationController
     @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
 
     leav_category = LeavCategory.find_by(code: "C.Off")
-    @leav_category_id = leav_category.id
+    @leav_category_id = leav_category.try(:id)
     @leav_id = @leav_category_id.to_s.split('')
 
     @leave_id = params[:leav_category_id]
@@ -186,21 +186,27 @@ class EmployeeLeavRequestsController < ApplicationController
                     @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ? AND is_active = ?', @employee.id, @employee_leav_request.leav_category_id,true).take
                     LeaveCOff.find_by(id: @leave_c_off_id).update(taken_date: start_date)
                     @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)
-                    @employee_leav_request.save
-                    @employee_leav_request.leave_record_create_coff(@employee_leav_request)
                     unless @emp_leave_bal.nil?
                       # if @employee_leav_request.leave_count == 0.5
                       #   no_of_leave = @emp_leave_bal.no_of_leave.to_f - @employee_leav_request.leave_count.to_f
                       #   @emp_leave_bal.update(no_of_leave: no_of_leave)
                       # else
+                      if @emp_leave_bal.no_of_leave.to_f >= @employee_leav_request.leave_count.to_f
                         no_of_leave = @emp_leave_bal.no_of_leave.to_f - @employee_leav_request.leave_count.to_f
                         @emp_leave_bal.update(no_of_leave: no_of_leave)
                       # end
     #emp_leav_bal_id
                         @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
+                      
+                        @employee_leav_request.save
+                        @employee_leav_request.leave_record_create_coff(@employee_leav_request)
+                        flash[:notice] = "Created successfully!"
+                        LeaveRequestMailer.pending(@employee_leav_request).deliver_now 
+                      else
+                        flash[:alert] = "You dont have enough COff balance"
+                      end   
                     end
-                    flash[:notice] = "Created successfully!"
-                       LeaveRequestMailer.pending(@employee_leav_request).deliver_now    
+                    
                 end#@leave_c_off.expiry_date < start_date.to_date
 
               else#start_date.to_date > @leave_c_off.c_off_date.to_date
@@ -587,8 +593,7 @@ class EmployeeLeavRequestsController < ApplicationController
     @emp_leav_req = EmployeeLeavRequest.where.not(second_reporter_id: false).pluck(:second_reporter_id)
     @second_level_request_lists = EmployeeLeavRequest.where("current_status = ? OR current_status = ?", "Pending","FirstApproved")
   # @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
-    session[:active_tab] ="LeaveManagement"
-    session[:active_tab1] ="LeaveProcess"
+    session[:active_tab] ="AdminSelfService"
   end
 
   def employee_list

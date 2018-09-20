@@ -1,4 +1,3 @@
-
 # require 'query_report/helper'  # need to require the helper
 class IssueRequestsController < ApplicationController
   before_action :set_issue_request, only: [:show, :edit, :update, :destroy]
@@ -20,10 +19,11 @@ class IssueRequestsController < ApplicationController
 
   # GET /issue_requests/new
   def new
+    show_issue_requests = IssueRequest.where(employee_id: current_user.employee_id)
     @issue_request = IssueRequest.new
-    @issue_requests = IssueRequest.where(employee_id: current_user.employee_id)
-    session[:active_tab] = "HelpDesk"
-    session[:active_tab1] = "Process"
+    @show_issue_requests = IssueRequest.where(employee_id: current_user.employee_id)
+    session[:active_tab] ="HelpDesk"
+    session[:active_tab1] ="Process"
   end
 
   # GET /issue_requests/1/edit
@@ -40,12 +40,10 @@ class IssueRequestsController < ApplicationController
 
 
   def create
-     # byebug
    @issue_request = IssueRequest.new(issue_request_params)
 
     respond_to do |format|
       if @issue_request.save
-        # byebug
         IssueHistory.create(issue_tracker_group_id: @issue_request.issue_tracker_group_id,issue_request_id: @issue_request.id,issue_master_id: @issue_request.issue_master_id,description: @issue_request.description,date: @issue_request.date,time: @issue_request.time,employee_id: @issue_request.employee_id,status: @issue_request.status,issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_priority: @issue_request.issue_priority)
         @c1 = IssueTrackerGroup.where(id: @issue_request.issue_tracker_group_id).pluck(:id)
         @c2 = IssueTrackerMember.where(issue_tracker_group_id: @c1).pluck(:employee_id)
@@ -153,6 +151,8 @@ class IssueRequestsController < ApplicationController
       redirect_to root_url
       #redirect_to solved_issue_list_issue_requests_path
     end
+    session[:active_tab] = "HelpDesk"
+    session[:active_tab1] = "Process"
   end
 
   def modal

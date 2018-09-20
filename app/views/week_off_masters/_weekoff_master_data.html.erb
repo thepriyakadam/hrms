@@ -23,7 +23,7 @@
             <td><%= week_off_master.day %></td>
             <td><%= week_off_master.from.to_date %> to <%= week_off_master.to.to_date %></td>
             <td>
-              <%= link_to 'Revert',revert_master_data_week_off_masters_path(week_off_master_id: week_off_master.id),class: 'btn btn-sm btn-primary' %>
+              <%= link_to 'Revert',revert_master_data_week_off_masters_path(week_off_master_id: week_off_master.id), data: { confirm: 'Are you sure? This will revert Week Off!'},class: 'btn btn-sm btn-primary' %>
             </td>
           </tr>
         <% end %>

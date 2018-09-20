@@ -11,10 +11,9 @@ class MonthlyExpence < ActiveRecord::Base
   def self.import(file)
     spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-
-        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
-        if @employee.nil?
-        else
+      @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+      if @employee.nil?
+      else
         employee_id = @employee.id
         @expencess_type = ExpencessType.find_by_name(spreadsheet.cell(i,'C'))
         if @expencess_type == nil
@@ -22,14 +21,21 @@ class MonthlyExpence < ActiveRecord::Base
            @expencess_type_entry = ExpencessType.create(name: expencess_type_name)
            expencess_type_id = @expencess_type_entry.id
         else
-        expencess_type_id = @expencess_type.id
+          expencess_type_id = @expencess_type.id
         end
-        amount = spreadsheet.cell(i,'D')
-        expence_date = spreadsheet.cell(i,'E')
-        description = spreadsheet.cell(i, 'F')   
-        @monthly_expence = MonthlyExpence.create(:employee_id => employee_id, :expencess_type_id => expencess_type_id,:amount => amount,:expence_date => expence_date, :description => description)
-      end
-    end
+          amount = spreadsheet.cell(i,'D')
+          expence_date = spreadsheet.cell(i,'E')
+          description = spreadsheet.cell(i, 'F') 
+          @monthly_expence_check = MonthlyExpence.where(employee_id: employee_id,expence_date: expence_date.to_date,expencess_type_id: expencess_type_id).take
+        
+        if @monthly_expence_check.nil?
+          @monthly_expence = MonthlyExpence.create(:employee_id => employee_id, :expencess_type_id => expencess_type_id,:amount => amount,:expence_date => expence_date.to_date, :description => description)
+        else
+          @monthly_expence_check.update(employee_id: employee_id,expencess_type_id: expencess_type_id,amount: amount,expence_date: expence_date.to_date,description: description)
+        end
+      end#@employee.nil?
+    end#do
+
     # spreadsheet = open_spreadsheet(file)
     # header = spreadsheet.row(1)
     # (2..spreadsheet.last_row).each do |i|
@@ -38,7 +44,7 @@ class MonthlyExpence < ActiveRecord::Base
     #   monthly_expence.attributes = row.to_hash.slice(*row.to_hash.keys)
     #   monthly_expence.save!
     # end
-  end
+  end#def
 
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)

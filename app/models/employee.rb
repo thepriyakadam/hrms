@@ -174,6 +174,7 @@ class Employee < ActiveRecord::Base
   validates :email, presence: true
   validates :adhar_no, presence: true
   validates :pan_no, presence: true
+  validates :department_id, presence: true
 
   has_attached_file :passport_photo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'Profile11.jpg'
   validates_attachment_content_type :passport_photo,  :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
@@ -221,7 +222,7 @@ class Employee < ActiveRecord::Base
     end
   end
 
-   def name
+  def name
        "#{self.department.try(:name)}"
     end
 
@@ -250,6 +251,17 @@ class Employee < ActiveRecord::Base
       end
     end
   end
+
+
+  def self.filter_by_date(date)
+    month = date.strftime("%B")
+    year = date.strftime("%Y")
+    @workingday = Workingday.where(month_name: month,year: year).pluck(:employee_id)
+    @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
+    finals = (@attendances - @workingday)
+    Employee.where.not(id: finals)
+  end
+  
 
   def self.filter_by_date_and_costcenter(date, costcenter, current_user)
     month = date.strftime("%B")

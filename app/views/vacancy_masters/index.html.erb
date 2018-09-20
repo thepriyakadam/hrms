@@ -8,10 +8,11 @@
 <p id="notice"><%= notice %></p>
 
 <div class="box-body">
-<table id="example" class="table table-bordered table-hover table-condensed">
+<table id="example6" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
       <th>Vacancy Code</th>
+      <th>Name</th>
       <th>Designation</th>
       <th>Department</th>
       <th>Total Position</th>
@@ -24,6 +25,7 @@
     <% @vacancy_masters.each do |vacancy_master| %>
       <tr>
         <td><%= vacancy_master.vacancy_code %></td>
+        <td><%= vacancy_master.vacancy_name %></td>
         <td><%= vacancy_master.employee_designation.try(:name) %></td>
         <td><%= vacancy_master.department.try(:name) %></td>
         <td><%= vacancy_master.no_of_position %></td>
@@ -49,7 +51,9 @@
             <% end %>
         </td>
         <td>
-        <%= link_to '', reporting_masters_vacancy_master_list_vacancy_masters_path(vacancy_master),class: 'btn btn-xs btn-default fa fa-eye' %>
+       
+        <%= link_to '',show_vacancy_master_modal_vacancy_masters_path(vacancy_master),class: 'btn btn-sm btn-default fa fa-eye',remote: true %>
+
         </td>
         <!-- <td> -->
          <!-- link_to ' Vacancy Request', particular_vacancy_request_list_vacancy_masters_path(vacancy_master),class: 'btn btn-xs btn-default' %> -->
@@ -60,6 +64,9 @@
     <% end %>
   </tbody>
 </table>
+
+<div id="myModal" class="modal fade"></div>
+
 <!-- <h2>Import</h2>
     <= form_tag import_vacancy_masters_path, multipart: true do %>
       <= file_field_tag :file %>
@@ -72,8 +79,11 @@
     </p> -->
 </div>
 </div>
-<script>
+
+<script type="text/javascript">
 $(document).ready(function() {
-    $('#example').DataTable();
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
 } );
 </script>

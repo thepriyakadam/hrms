@@ -52,7 +52,7 @@ class EmployeeAttendance < ActiveRecord::Base
     finals = (@joining_details - @attendances - @workingday) & @roles
     Employee.where(id: finals)
   end
-  
+
    def self.to_csv(options = {})
     CSV.generate(options) do |csv|
       csv << column_names

@@ -31,6 +31,9 @@ class LeaveCOffsController < ApplicationController
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
         @leave_c_offs = LeaveCOff.where(employee_id: @employees)
+      elsif current_user.role.name == 'Costomize'
+         @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @leave_c_offs = LeaveCOff.where(employee_id: @employees)
       end
     end
   end
@@ -43,6 +46,9 @@ class LeaveCOffsController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         @leave_c_offs = LeaveCOff.all
       elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
+        @leave_c_offs = LeaveCOff.where(employee_id: @employees)
+      elsif current_user.role.name == 'Costomize'
         @employees = Employee.where(company_id: current_user.company_location.company_id)
         @leave_c_offs = LeaveCOff.where(employee_id: @employees)
       elsif current_user.role.name == 'Branch'
@@ -547,9 +553,9 @@ class LeaveCOffsController < ApplicationController
   end
 
   def admin_c_off_approval
-
     @first_level_request_lists = LeaveCOff.where(is_taken: false,status: false,is_expire: false).where("current_status = ? OR current_status = ?","FirstApproved" , "Pending")
     # @second_level_request_lists = LeaveCOff.where(is_taken: false,status: false,is_expire: false,current_status: "FirstApproved")
+    session[:active_tab] ="AdminSelfService"
   end
 
   def admin_level_c_off_detail

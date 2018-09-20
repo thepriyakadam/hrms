@@ -1,0 +1,31 @@
+<br>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Payment Type</th>
+      <th>External Agency</th>
+      <th>Payment Date</th>
+      <th>Amount</th>
+      <th>Comment</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @compliance_records.each do |compliance_record| %>
+      <tr>
+        <td><%= compliance_record.try(:compliance_type).try(:name) %></td>
+        <td><%= compliance_record.try(:agency).try(:name) %></td>
+        <td><%= compliance_record.compliance_date %></td>
+        <td><%= compliance_record.amount %></td>
+        <td><%= compliance_record.comment %></td>
+        <td><%= compliance_record.status ? "Acknowledged" : "Pending Acknowledged" %></td>
+        <td>
+            <%#= link_to 'Show', compliance_record %>
+            <%= link_to '', edit_compliance_record_path(compliance_record),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+            <%= link_to '', compliance_record, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

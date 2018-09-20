@@ -95,6 +95,9 @@ $("#employee").validate({
       },
       "employee[to]":{
         required: true,
+      },
+      "employee[status]":{
+        required: true,
       }
        },
     messages: {
@@ -103,6 +106,9 @@ $("#employee").validate({
       },
        "employee[to]":{
         required: "Please Select to",
+      },
+       "employee[status]":{
+        required: "Please Select Status",
       }
        },
     errorPlacement: function(error, element) {

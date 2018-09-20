@@ -1,0 +1,53 @@
+<div class="box">
+  <div class="box-header">
+    <tr><th colspan="4"><center><font color='#0077b3'><h3>Organisation Chart</h3></font></center> </th></tr>
+    <div class="pull-right">
+      <!-- <%#= link_to "New Employee", new_employee_path, class: 'btn btn-sm btn-primary' %>  -->
+    </div>
+  </div><!-- /.box-header --><hr>
+  <div class="box-body", style="overflow:auto; height:500px;width:auto;">
+    <html>
+      <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load('current', {packages:["orgchart"]});
+          google.charts.setOnLoadCallback(drawChart);
+          function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Name');
+            data.addColumn('string', 'Manager');
+            data.addColumn('string', 'ToolTip');
+              <% @emp = Employee.where(status: "Active") %>
+              <% @emp.each do |emp| %>
+                <% @emp_id = emp.id %>
+                <% @man_id = emp.manager_id %>
+                <% @manual_emp_code = emp.manual_employee_code %>
+                <% @emp_desig = emp.try(:joining_detail).try(:employee_designation).try(:name) %>
+                <% @photo = emp.passport_photo%>
+                // For each orgchart box, provide the name, manager, and tooltip to show.
+                data.addRows([[{ v: '<%= @emp_id %>', f:'<div><%= image_tag emp.passport_photo.url, :size => "30x30", class: "img-circle" %></div>' + '<div><%= @manual_emp_code %></div>' + '<%= short_name(emp) %>' + '<div>(<span>' + '<%= @emp_desig %>' + '</span>)</div>'}, '<%= @man_id %>', '<%= @emp_desig %>' ]]);
+              <% end %>
+              // Create the chart.
+              var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+              // Draw the chart, setting the allowHtml option to true for the tooltips.
+              chart.draw(data, {allowHtml:true});
+          }
+        </script>
+      </head>
+      <body>
+        <div id="chart_div"></div>
+      </body>
+    </html>
+  </div>
+</div>
+
+
+<!-- ([[{ v: employeeId,f: employeeName + '<div>(<span>' + designation + '</span>)</div><img src = "Pictures/' + employeeId + '.jpg" />'
+                }, reportingManager, designation]]);
+
+data.addRows([[{ v: employeeId,
+                    f: employeeName + '<div>(<span>' + designation + '</span>)</div><img src = "Pictures/' + employeeId + '.jpg" />'
+                }, reportingManager, designation]]);
+
+[{v:'Mike', f:'Mike<div style="color:red; font-style:italic">President</div>'},'', 'The President'], 
+[{v: @emp_id, f: @manual_emp_code + '<div>(<span>' + @emp_desig + '</span>)</div>'}, @man_id, @emp_desig ] -->

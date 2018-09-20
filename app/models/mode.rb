@@ -4,8 +4,10 @@ class Mode < ActiveRecord::Base
   def self.import(file)
     spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
+        employee_grade = spreadsheet.cell(i,'A')
+        @employee_grade = EmployeeGrade.find_by(name: employee_grade)
         expence_opestion = spreadsheet.cell(i,'B')
-        @expence_opestion = ExpenceOpestion.find_by(name: expence_opestion)
+        @expence_opestion = ExpenceOpestion.find_by(name: expence_opestion,employee_grade_id: @employee_grade.id)
 
         if @expence_opestion.nil?
         else
@@ -19,8 +21,13 @@ class Mode < ActiveRecord::Base
           name_mode = spreadsheet.cell(i,'D')
           description = spreadsheet.cell(i,'E')
          	status = spreadsheet.cell(i,'F')
+           if status == "Yes" || status == "yes" || status == "Active" || status == "active" 
+             status = true
+            else
+            status = false
+           end
 
-         	@mode = Mode.find_by(name: name_mode)
+         	@mode = Mode.find_by(name: name_mode,expence_opestion_id: @expence_opestion.id)
           if @mode == nil
           	@expence_opestions_new = Mode.create(expence_opestion_id: expence_opestion_id, code: code,name: name_mode, description: description, status: status)
           else 
@@ -41,3 +48,4 @@ class Mode < ActiveRecord::Base
   end
 
 end
+

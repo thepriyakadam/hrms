@@ -65,3 +65,6 @@ db/schema.rb
 
 # Ignore salary_slip_xls.xls.erb
 app/views/salaryslips/salary_slip_xls.xls.erb
+
+#Attachment
+/attachments/*

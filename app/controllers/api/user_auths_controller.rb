@@ -2622,14 +2622,23 @@ class Api::UserAuthsController < ApplicationController
     @employees = Employee.where(status: "Active").where("manager_id = ? OR manager_2_id = ?", employee_id, employee_id)
     @employee_id = @employees.pluck(:id)
     @shift_employees = ShiftEmployee.where(shift_schedule_id: shift_employee.shift_schedule_id,date: @date,employee_id: @employee_id)
-    render :json => @shift_employees.present? ? @shift_employees.collect{|sh| { :id => sh.id, :shift_schedule_id => sh.shift_schedule_id, :shift => sh.try(:shift_time).try(:shift), :shift_name => sh.try(:shift_time).try(:name), :employee_id => sh.employee_id, :date => sh.date, :comment => sh.comment, :justification => sh.justification, :status => sh.status, :shift_time_id => sh.shift_time_id, :created_by_id => sh.created_by_id }} : []
+    render :json => @shift_employees.present? ? @shift_employees.collect{|sh| { :id => sh.id, :manual_employee_code => sh.try(:employee).try(:manual_employee_code), :prefix => sh.try(:employee).try(:prefix), :employee_first_name => sh.try(:employee).try(:first_name), :employee_middle_name => sh.try(:employee).try(:middle_name), :employee_last_name => sh.try(:employee).try(:last_name), :shift_schedule_id => sh.shift_schedule_id, :shift => sh.try(:shift_time).try(:shift), :shift_name => sh.try(:shift_time).try(:name), :employee_id => sh.employee_id, :date => sh.date, :comment => sh.comment, :justification => sh.justification, :status => sh.status, :shift_time_id => sh.shift_time_id, :created_by_id => sh.created_by_id }} : []
+  end
+
+  def attendance_check
+    shift_employee = ShiftEmployee.find(params[:shift_employee_id])
+    employee  = shift_employee.employee_id
+    date =shift_employee.date
+    @employee_attendances = EmployeeAttendance.where(employee_id: employee,day: date.to_date)
+    render :json => @employee_attendances.present? ? @employee_attendances.collect{|ea| { :id => ea.id,employee_id: ea.employee_id,in_time: ea.in_time,out_time: ea.out_time }} :[ ]
+
   end
 
   def create_systembase_attendance
     shift_employee_id = params[:shift_employee_id]
     time = Time.now
     @time = time.strftime("%H:%M:%S")
-    shift_employee = ShiftEmployee.find(params[:format])
+    shift_employee = ShiftEmployee.find(params[:shift_employee_id])
     @date = shift_employee.date
     emp = shift_employee.employee_id
     employee = Employee.find_by(id: emp)

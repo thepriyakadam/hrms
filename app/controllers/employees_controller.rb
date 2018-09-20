@@ -282,9 +282,9 @@
     @employee = Employee.new(employee_params)
 
     if @employee_option == "Rehire"
-      @employee_id = params[:common][:employee_id]
-      @emp = Employee.find_by(id: @employee_id)
-      @emp.update(employee_params)
+      # @employee_id = params[:common][:employee_id]
+      # @emp = Employee.find_by(id: @employee_id)
+      # @emp.update(employee_params)
       @employee.save
       flash[:notice] = "Updated Successfully !"
       #EmployeeMailer.employee_create(@employee).deliver_now   

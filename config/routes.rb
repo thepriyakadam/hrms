@@ -3545,5 +3545,8 @@ end
     get 'user_auths/collect_opestion' => 'user_auths#collect_opestion', defaults:{format: 'json'}
     get 'user_auths/shift_wise_system_base' => 'user_auths#shift_wise_system_base', defaults:{format: 'json'}
     get 'user_auths/system_base_attendance' => 'user_auths#system_base_attendance', defaults:{format: 'json'}
+    get 'user_auths/attendance_check' => 'user_auths#attendance_check', defaults:{format: 'json'}
+    get 'user_auths/create_systembase_attendance' => 'user_auths#create_systembase_attendance', defaults:{format: 'json'}
   end
 end
+

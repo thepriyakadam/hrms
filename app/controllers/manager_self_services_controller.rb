@@ -245,7 +245,7 @@ class ManagerSelfServicesController < ApplicationController
 
   def view_attendance
     shift_employee = ShiftEmployee.find(params[:format])
-    employee = shift_employee.employee.id
+    employee = shift_employee.employee_id
     date = shift_employee.date
     @employee_attendances = EmployeeAttendance.where(employee_id: employee,day: date.to_date)
   end

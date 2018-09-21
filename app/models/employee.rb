@@ -139,7 +139,9 @@ class Employee < ActiveRecord::Base
 
   has_many :reimbursement_requests, class_name: "Employee",
                           foreign_key: "approval_id"
-                          
+  
+  
+                                                
   belongs_to :user, class_name: 'Employee'
 
   has_many :second_reporters, class_name: 'EmployeeResignation', foreign_key: 'second_reporter_id'

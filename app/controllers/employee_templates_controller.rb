@@ -40,7 +40,7 @@ class EmployeeTemplatesController < ApplicationController
 
   def activate
     if params[:activate][:activate_date] == ''
-      flash[:alert] = 'Please specify date.'
+      flash[:alert] = 'Please specify date!'
       redirect_to template_list_employee_templates_path(format: params[:activate][:employee_id])
     else
       @employee_template = EmployeeTemplate.find(params[:activate][:id])

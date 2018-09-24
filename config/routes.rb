@@ -3547,6 +3547,7 @@ end
     get 'user_auths/system_base_attendance' => 'user_auths#system_base_attendance', defaults:{format: 'json'}
     get 'user_auths/attendance_check' => 'user_auths#attendance_check', defaults:{format: 'json'}
     get 'user_auths/create_systembase_attendance' => 'user_auths#create_systembase_attendance', defaults:{format: 'json'}
+    get 'user_auths/show_system_attendance' => 'user_auths#show_system_attendance', defaults:{format: 'json'}
   end
 end
 

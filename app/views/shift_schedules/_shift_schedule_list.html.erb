@@ -24,8 +24,10 @@
         <td>
           <% if ShiftEmployee.exists?(shift_schedule_id: shift_schedule.id) %>
           <% else %>
-            <%= link_to '', edit_shift_schedule_path(shift_schedule),class: 'btn btn-success btn-xs fa fa-edit',remote:true %> 
-            <%= link_to '',  shift_schedule, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
+            <% if current_user.role.name == "GroupAdmin" || current_user.role.name == "HOD" %>
+              <%= link_to '', edit_shift_schedule_path(shift_schedule),class: 'btn btn-success btn-xs fa fa-edit',remote:true %> 
+              <%= link_to '',  shift_schedule, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
+            <% end %>
           <% end %>
           <% if shift_schedule.status == true %>
             <%= link_to 'Shift',  employee_shift_shift_schedules_path(shift_schedule),class: "btn btn-xs btn-info ",remote:true %>

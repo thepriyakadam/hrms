@@ -48,3 +48,4 @@ class Mode < ActiveRecord::Base
   end
 
 end
+

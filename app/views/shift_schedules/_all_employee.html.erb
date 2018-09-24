@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-sm-12">
+    <table  id="example6" class="table table-bordered table-hover table-condensed">
+      <thead>
+      <tr><th colspan="4"><center>First Reporting Employee</center></th></tr>
+        <tr>
+          <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+          <th>ID</th>
+          <th>Employee Name</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @shift_employees.each do |shift_employee| %>
+          <tr>
+            <td><%= check_box_tag "shift_employee_ids[]", shift_employee.id %></td>
+            <td><%= shift_employee.employee.manual_employee_code %></td>
+            <td><%= full_name(shift_employee.employee) %></td>
+            <td><%= shift_employee.date %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+ </div>
+
+    <script type="text/javascript">
+      $(function () {
+        $('#selectAll').click(function() {
+          if (this.checked) {
+            $(':checkbox').each(function() {
+              this.checked = true;                       
+            });
+          } 
+          else {
+            $(':checkbox').each(function() {
+              this.checked = false;                        
+            });
+          }
+
+        });
+      });
+    </script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

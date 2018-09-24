@@ -224,6 +224,16 @@ class ManagerSelfServicesController < ApplicationController
     @shift_employees = ShiftEmployee.where(shift_schedule_id: shift_employee.shift_schedule_id,date: @date,employee_id: employee_id)
   end
 
+  def show_system_attendance
+    #byebug
+    @employees = Employee.where(status: "Active").where("manager_id = ? OR manager_2_id = ?", current_user.employee_id,current_user.employee_id)
+    employee_id = @employees.pluck(:id)
+    @shift_employee = ShiftEmployee.find(params[:shift_employee_id])
+
+    @shift_employees = ShiftEmployee.where(shift_schedule_id: @shift_employee.shift_schedule_id,date: @shift_employee.date,employee_id: employee_id).pluck(:employee_id)
+    @employee_attendances = EmployeeAttendance.where(employee_id: @shift_employees,day: @shift_employee.date)
+  end
+
   def create_systembase_attendance
     #date = Date.today
     time = Time.now

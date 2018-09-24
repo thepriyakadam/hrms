@@ -70,7 +70,7 @@ class EmployeeTemplate < ActiveRecord::Base
     (2..spreadsheet.last_row).each do |i|
 
       first = spreadsheet.cell(i,1)
-
+      
       @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
 
       if @employee == nil
@@ -78,105 +78,163 @@ class EmployeeTemplate < ActiveRecord::Base
         @employee_id = @employee.id
         salary_template = spreadsheet.cell(i,'C')
         type = spreadsheet.cell(i,'D')
-        @cella = spreadsheet.cell(i,'E')
+        effective_date = spreadsheet.cell(i,'E')
+        @cella = spreadsheet.cell(i,'F')
 
         @template = SalaryTemplate.find_by(code: salary_template)
-
-        if @template.nil?
+       
+        if @template.nil? || effective_date == nil
         else
            @template_id = @template.id
           # annual_amount = spreadsheet.cell(i,'D')
           # hra = spreadsheet.cell(i,'E')
           # conveyance = spreadsheet.cell(i,'F')
+          @salary_exist_true = 0
 
-          if EmployeeTemplate.exists?(employee_id: @employee.id,is_active: true)
-            @pre_employee_template = EmployeeTemplate.where(employee_id: @employee.id,is_active: true).take
-            @pre_employee_template.update(is_active: false, end_date: Date.today)
-            #@employee_template.update(is_active: true, start_date: params[:activate][:activate_date])
-          else
-          end#EmployeeTemplate.exists?
+            if EmployeeTemplate.exists?(employee_id: @employee.id,is_active: true)
+                  @employee_template = EmployeeTemplate.exists?(employee_id: @employee.id,salary_template_id: @template_id)
+                  if @employee_template == true
+                    present_template = EmployeeTemplate.where(employee_id: @employee.id,salary_template_id: @template_id).take
+                     @salary_exist_true = 1
 
-            employee_template = EmployeeTemplate.new do |et|
-              et.employee_id = @employee_id
-              et.salary_template_id = @template_id
-              et.is_active = true
-              et.start_date = Date.today
-            end
-            #employee_template.save
+                        
 
-            salary_component_template = SalaryComponentTemplate.where(salary_template_id: @template_id)
-            salary_component_template.each do |s|
-              #@employee_template = EmployeeTemplate.where(employee_id: @employee_id,salary_template_id: s.salary_template_id).take
+                  else#@employee_template ==true
+                   
 
-              if EmployeeSalaryTemplate.exists?(employee_id: @employee_id,salary_template_id: @template_id,
-                salary_component_id: s.salary_component_id)
-              else
-                salary_component = SalaryComponent.find_by(id: s.salary_component_id)
-                component_name = salary_component.name
-                #(2..spreadsheet.last_row).each do |cl|
-                    #@value = spreadsheet.cell(i,cl)
+                    @pre_employee_template = EmployeeTemplate.where(employee_id: @employee.id,is_active: true).take
+                    @pre_employee_template.update(is_active: false, end_date: effective_date.to_date)
+                    #@employee_template.update(is_active: true, start_date: params[:activate][:activate_date])
+                  end#@employee_template ==true
 
-                    @first_row = spreadsheet.row(1)
-                    total_value  = @first_row.count
+            else#EmployeeTemplate.exists?
+            end#EmployeeTemplate.exists?
 
-                    for a in 1..total_value.to_i
+              if @salary_exist_true == 1
 
-                      #byebug
-                      col_name = @first_row[a]
-                      if component_name == col_name
-                       @b = a.to_i + 1
-                      @value = spreadsheet.cell(i,@b)
+                salary_component_template = SalaryComponentTemplate.where(salary_template_id: @template_id)
+                        salary_component_template.each do |s|
 
-                        employee_template.save
-                        @emp_template = EmployeeTemplate.last
+                          if EmployeeSalaryTemplate.exists?(employee_id: @employee_id,salary_template_id: @template_id,
+                            salary_component_id: s.salary_component_id)
+                          else
+                          salary_component = SalaryComponent.find_by(id: s.salary_component_id)
+                          component_name = salary_component.name
+                          #(2..spreadsheet.last_row).each do |cl|
+                              #@value = spreadsheet.cell(i,cl)
+                              @first_row = spreadsheet.row(1)
+                              total_value  = @first_row.count
 
-                        if type == "Monthly" || type == "monthly"
-                          annual_value = @value.to_f*12
-                          @employee_salary_template = EmployeeSalaryTemplate.create(employee_id: @employee_id,
-                          salary_template_id: @template_id,salary_component_id: s.salary_component_id,
-                          is_deducted: false,annual_amount: annual_value.to_f,monthly_amount: @value.to_f,
-                          employee_template_id: @emp_template.id )
-                        elsif type == "Yearly" || type == "yearly"
-                          monthly_value = @value.to_f/12
-                          @employee_salary_template = EmployeeSalaryTemplate.create(employee_id: @employee_id,
-                          salary_template_id: @template_id,salary_component_id: s.salary_component_id,
-                          is_deducted: false,annual_amount: @value.to_f,monthly_amount: monthly_value.to_f,
-                          employee_template_id: @emp_template.id )
-                        else
-                        end
+                              for a in 1..total_value.to_i
+                                col_name = @first_row[a]
+                                if component_name == col_name
+                                  @b = a.to_i + 1
+                                  @value = spreadsheet.cell(i,@b)
+                                  # employee_template.save
+                                  # @emp_template = EmployeeTemplate.last
 
-                      else
-                      end
-                    end#for a in 1
+                                  @employee_salary_template = EmployeeSalaryTemplate.where(employee_template_id: @template_id,
+                                    employee_id: @employee.id,salary_component_id: s.salary_component_id)
+                                  if type == "Monthly" || type == "monthly"
+                                    annual_value = @value.to_f*12
+                                    @employee_salary_template.update(salary_component_id: s.salary_component_id,
+                                    is_deducted: false,annual_amount: annual_value.to_f,monthly_amount: @value.to_f)
+                                  elsif type == "Yearly" || type == "yearly"
+                                    monthly_value = @value.to_f/12
+                                    @employee_salary_template.update(employee_id: @employee_id,
+                                    salary_template_id: @template_id,salary_component_id: s.salary_component_id,
+                                    is_deducted: false,annual_amount: @value.to_f,monthly_amount: monthly_value.to_f,
+                                    employee_template_id: @emp_template.id )
+                                  else
+                                  end
+                                else
+                                end#component_name == col_name
+                              end#for a in 1
+                            end#EmployeeSalaryTemplate.exists?(e
+                          end#do |s|
 
-                    # @v = cl
-                    # @name = spreadsheet.cell(cl,@v)
-                    # @value = spreadsheet.cell(i,@v)
-                    #   if component_name == @name
-                    #     #byebug
-                    #      employee_template.save
-                    #      @employee_salary_template = EmployeeSalaryTemplate.create(employee_id: @employee_id,
-                    #         salary_template_id: @template_id,salary_component_id: s.salary_component_id,
-                    #         is_deducted: false,annual_amount: @value.to_f )
-                    #   else
-                    #   end
+              else#@salary_exist_true == 1
 
+                  employee_template = EmployeeTemplate.new do |et|                
+                    et.employee_id = @employee_id
+                    et.salary_template_id = @template_id
+                    et.is_active = true
+                    et.start_date = effective_date.to_date
+                  end
+                  #employee_template.save
 
+                  salary_component_template = SalaryComponentTemplate.where(salary_template_id: @template_id)
+                  salary_component_template.each do |s|
+                    #@employee_template = EmployeeTemplate.where(employee_id: @employee_id,salary_template_id: s.salary_template_id).take
 
-                    # @first_row = spreadsheet.row(1)
-                    # total_value  = @first_row.count
-                    # for i in 0..total_value.to_i
-                    #   col_name = @first_row[i]
-                    #   if col_name == component_name
-                    #     (2..spreadsheet.last_row).each do |cl|
-                    #       @value = spreadsheet.cell(i,cl)
-                    #   else
-                    #   end
-                    # end
+                    if EmployeeSalaryTemplate.exists?(employee_id: @employee_id,salary_template_id: @template_id,
+                      salary_component_id: s.salary_component_id)
+                    else
+                      salary_component = SalaryComponent.find_by(id: s.salary_component_id)
+                      component_name = salary_component.name
+                      #(2..spreadsheet.last_row).each do |cl|
+                          #@value = spreadsheet.cell(i,cl)
 
-                #end#do(1..spreadsheet.last_column).
-              end
-            end#do|s|
+                          @first_row = spreadsheet.row(1)
+                          total_value  = @first_row.count
+              #byebug
+                          for a in 1..total_value.to_i
+
+                            col_name = @first_row[a]
+                            if component_name == col_name
+                             @b = a.to_i + 1
+                            @value = spreadsheet.cell(i,@b)
+
+                              employee_template.save
+                              @emp_template = EmployeeTemplate.last
+
+                              if type == "Monthly" || type == "monthly"
+                                annual_value = @value.to_f*12
+                                @employee_salary_template = EmployeeSalaryTemplate.create(employee_id: @employee_id,
+                                salary_template_id: @template_id,salary_component_id: s.salary_component_id,
+                                is_deducted: false,annual_amount: annual_value.to_f,monthly_amount: @value.to_f,
+                                employee_template_id: @emp_template.id )
+                              elsif type == "Yearly" || type == "yearly"
+                                monthly_value = @value.to_f/12
+                                @employee_salary_template = EmployeeSalaryTemplate.create(employee_id: @employee_id,
+                                salary_template_id: @template_id,salary_component_id: s.salary_component_id,
+                                is_deducted: false,annual_amount: @value.to_f,monthly_amount: monthly_value.to_f,
+                                employee_template_id: @emp_template.id )
+                              else
+                              end
+
+                            else
+                            end#component_name == col_name
+                          end#for a in 1
+
+                          # @v = cl
+                          # @name = spreadsheet.cell(cl,@v)
+                          # @value = spreadsheet.cell(i,@v)
+                          #   if component_name == @name
+                          #     #byebug
+                          #      employee_template.save
+                          #      @employee_salary_template = EmployeeSalaryTemplate.create(employee_id: @employee_id,
+                          #         salary_template_id: @template_id,salary_component_id: s.salary_component_id,
+                          #         is_deducted: false,annual_amount: @value.to_f )
+                          #   else
+                          #   end
+
+                          # @first_row = spreadsheet.row(1)
+                          # total_value  = @first_row.count
+                          # for i in 0..total_value.to_i
+                          #   col_name = @first_row[i]
+                          #   if col_name == component_name
+                          #     (2..spreadsheet.last_row).each do |cl|
+                          #       @value = spreadsheet.cell(i,cl)
+                          #   else
+                          #   end
+                          # end
+
+                      #end#do(1..spreadsheet.last_column).
+                    end
+                  end#do|s|
+            
+            end##@salary_exist_true == 1
 
         end#template.nil?
       end#@employee == nil

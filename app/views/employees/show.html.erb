@@ -65,9 +65,9 @@
 	<%end%>
 
 	<%if EmployeeDocument.exists?(employee_id: @employee.id) %>
-		<%#= link_to 'Documents',ajax_employee_document_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+		<%= link_to 'Documents',ajax_employee_document_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
 	<%else%>
-		<%#= link_to 'Documents',ajax_employee_document_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-info ',remote:true%>
+		<%= link_to 'Documents',ajax_employee_document_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-info ',remote:true%>
 	<%end%>	
  	<%if EmployeeJcList.exists?(employee_id: @employee.id) %>
  		<%= link_to 'Checklist',joining_checklist_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ', remote:true%>
